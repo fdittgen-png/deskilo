@@ -19,15 +19,19 @@ import '../providers/money_providers.dart';
 /// failure is rethrown as a [ReportImageFailure] naming the image, so the
 /// export fails visibly instead of announcing a complete document; without
 /// it (a preview) the image is left out and the failure traced.
+///
+/// #2898 — [prepared] are the document's own pictures: never fetched,
+/// and they win over a library image of the same name.
 Future<Map<String, Uint8List>> resolveReportImages(
   WidgetRef ref,
   InvoiceReport? report, {
   bool strict = false,
+  Map<String, Uint8List> prepared = const {},
 }) async {
   if (report == null) return const {};
   final images = <String, Uint8List>{};
   ReportImageFailure? failure;
-  for (final name in reportImageRefs(report)) {
+  for (final name in reportImageRefs(report).difference(prepared.keys.toSet())) {
     try {
       final bytes = await ref.read(reportImageBytesProvider(name).future);
       if (bytes != null) images[name] = bytes;
@@ -44,5 +48,5 @@ Future<Map<String, Uint8List>> resolveReportImages(
     }
   }
   if (strict && failure != null) throw failure;
-  return images;
+  return {...images, ...prepared};
 }

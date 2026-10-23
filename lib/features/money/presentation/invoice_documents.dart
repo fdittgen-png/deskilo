@@ -54,6 +54,7 @@ import 'report_layout_defaults.dart';
 import 'report_strings_l10n.dart';
 import 'swiss_qr_page.dart';
 
+export 'letter_doc_pdf.dart';
 export 'report_image_resolve.dart' show resolveReportImages;
 
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
@@ -180,57 +181,6 @@ String developmentMark(BuildContext context, WidgetRef ref) =>
     (ref.read(currentWorkspaceProvider).value?.isDevelopment ?? false)
         ? (context.l10n.developmentWatermark)
         : '';
-
-/// The PDF of a rendered letter document (#494).
-///
-/// #875 — with [layoutXml] and [data] the positioned engine renders the
-/// letter and [report] is only the fallback for a layout that fails.
-Future<({Uint8List bytes, String fileName})> letterDocPdf(
-  BuildContext context,
-  WidgetRef ref, {
-  required InvoiceReport report,
-  required String title,
-  String? layoutXml,
-  Map<String, Object?> data = const {},
-}) async {
-  final l10n = context.l10n;
-  // #917 — read before the first await: the context must not be used
-  // across an async gap, and the answer cannot change mid-render.
-  final mark = developmentMark(context, ref);
-  Future<pw.Font> font(String asset) async =>
-      pw.Font.ttf(await rootBundle.load(asset));
-  if (layoutXml != null) {
-    final bytes = await tryLayoutPdf(
-      layoutXml: layoutXml,
-      data: data,
-      what: title,
-      documentTitle: title,
-      pageLabel: l10n.invoicePdfPage,
-      font: font,
-      image: (name) => layoutImage(ref, name),
-      // #917 — a report from a rehearsal space says so, like its
-      // invoices do.
-      watermark: mark,
-    );
-    if (bytes != null) {
-      return (bytes: bytes, fileName: '${safeFileSlug(title)}.pdf');
-    }
-  }
-  final images = await resolveReportImages(ref, report, strict: true);
-  final bytes = await buildBandedLetterPdf(
-    report: report,
-    reportImages: images,
-    pageLabel: l10n.invoicePdfPage,
-    documentTitle: title,
-    baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
-    boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
-    watermark: mark,
-  );
-  return (
-    bytes: Uint8List.fromList(bytes),
-    fileName: '${safeFileSlug(title)}.pdf',
-  );
-}
 
 /// What [buildInvoicePdfFile] renders besides the invoice itself.
 class InvoicePdfFileOptions {

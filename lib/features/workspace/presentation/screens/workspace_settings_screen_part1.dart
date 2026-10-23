@@ -313,14 +313,10 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
       message: 'workspace config PDF export failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-          final levelsList = await ref.read(levelsProvider.future);
-          final plans = <ConfigPdfLevel>[];
-          for (final level in levelsList) {
-            plans.add((
-              level: level,
-              plan: await ref.read(floorPlanProvider(level.id).future),
-            ));
-          }
+          // #2898 — each level's plan drawn as the data report draws it.
+          final printed = await levelReportPlans(ref,
+              colors: DeskiloTheme.light().colorScheme);
+          final plans = printed.levels;
           final members = await ref.read(workspaceMembersProvider.future);
           final names = await ref.read(memberNamesProvider.future);
           final granularity = await ref.read(bookingGranularityProvider.future);
@@ -387,6 +383,7 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
             readinessTitle: l10n.setupLaunchReportTitle,
             readiness: extras.readiness,
             levels: plans,
+            planImages: printed.pngs.keys.toSet(),
             levelPrices: {
               for (final entry in plans)
                 if (entry.level.bookableAsWhole)
@@ -400,9 +397,10 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
           if (!mounted || ref.read(currentWorkspaceProvider).value?.id != workspace.id) return;
           final report = renderLetterDoc(context, ref,
               docId: 'workspace_configuration', data: data);
-          final pdf = await letterDocPdf(context, ref,
-              report: report, title: strings.title, data: data,
-              layoutXml: letterLayoutXml(ref, docId: 'workspace_configuration', l10n: l10n));
+          final pdf = await letterPdfOf(ref, (report: report,
+              title: strings.title, data: data, images: configPlanImages(printed.pngs),
+              layoutXml: letterLayoutXml(ref, docId: 'workspace_configuration', l10n: l10n)),
+              pageLabel: l10n.invoicePdfPage, watermark: developmentMark(context, ref));
           if (!mounted) return;
           final path = await ref.read(fileSaverProvider)(
             bytes: pdf.bytes,
