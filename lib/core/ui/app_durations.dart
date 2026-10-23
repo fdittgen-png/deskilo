@@ -9,4 +9,7 @@ abstract final class AppDurations {
 
   /// A burst of realtime changes: one refresh after it settles.
   static const Duration realtimeDebounce = Duration(milliseconds: 300);
+
+  /// Editing a setup step: its draft is saved once the person pauses.
+  static const Duration draftAutosave = Duration(milliseconds: 800);
 }

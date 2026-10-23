@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/local_setup.dart';
 import '../domain/setup_status.dart';
+import '../domain/setup_step_draft.dart';
 import '../domain/workspace_readiness.dart';
 
 /// #1656 — template_local_needs and workspace_local_readiness (0280).
@@ -73,4 +74,54 @@ class SupabaseLocalSetupRepository implements LocalSetupRepository {
         'clear_setup_step_acknowledgement',
         params: {'p_workspace_id': workspaceId, 'p_step': step},
       );
+
+  @override
+  Future<SetupStepDraft?> stepDraft(String workspaceId, String step) async =>
+      SetupStepDraft.fromJson(
+        await _client.rpc<Object?>(
+          'get_setup_step_draft',
+          params: {'p_workspace_id': workspaceId, 'p_step': step},
+        ),
+      );
+
+  @override
+  Future<SetupDraftWrite> saveStepDraft(
+    String workspaceId,
+    String step, {
+    required Map<String, Object?> payload,
+    required int? expectedVersion,
+    required String requestId,
+  }) async => SetupDraftWrite.fromJson(
+    await _drafts('save_setup_step_draft', {
+      'p_workspace_id': workspaceId,
+      'p_step': step,
+      'p_payload': payload,
+      'p_expected_version': expectedVersion,
+      'p_request_id': requestId,
+    }),
+  );
+
+  @override
+  Future<bool> discardStepDraft(
+    String workspaceId,
+    String step, {
+    required int? expectedVersion,
+  }) async =>
+      await _drafts('discard_setup_step_draft', {
+        'p_workspace_id': workspaceId,
+        'p_step': step,
+        'p_expected_version': expectedVersion,
+      }) ==
+      true;
+
+  /// A draft write; the server's "changed by someone else" as its type.
+  Future<Object?> _drafts(String fn, Map<String, Object?> params) async {
+    try {
+      return await _client.rpc<Object?>(fn, params: params);
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the step page shows the conflict.
+      if (!SetupDraftConflict.isConflict(e.code, e.message)) rethrow;
+      Error.throwWithStackTrace(SetupDraftConflict(e.message), st);
+    }
+  }
 }

@@ -32622,6 +32622,54 @@ abstract class AppLocalizations {
   /// **'The basics could not be saved. Try again.'**
   String get setupBasicsSaveFailed;
 
+  /// #2869 setup drafts: another configurer changed the setup step's draft meanwhile
+  ///
+  /// In en, this message translates to:
+  /// **'Changed by someone else while you were editing.'**
+  String get setupDraftChanged;
+
+  /// #2869 setup drafts: the action on that notice: drop the draft
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get setupDraftDiscard;
+
+  /// #2869 setup drafts: save my answers over theirs
+  ///
+  /// In en, this message translates to:
+  /// **'Keep mine'**
+  String get setupDraftKeepMine;
+
+  /// #2869 setup drafts: a setup step's draft save failed; a retry button follows
+  ///
+  /// In en, this message translates to:
+  /// **'Draft not saved — your answers are still here.'**
+  String get setupDraftNotSaved;
+
+  /// #2869 setup drafts: take the other configurer's answers
+  ///
+  /// In en, this message translates to:
+  /// **'Reload'**
+  String get setupDraftReload;
+
+  /// #2869 setup drafts: the notice above a setup step whose unsaved answers were restored from the server
+  ///
+  /// In en, this message translates to:
+  /// **'Draft restored: these answers are not applied yet.'**
+  String get setupDraftRestored;
+
+  /// #2869 setup drafts: once the server confirmed the setup step's draft
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved'**
+  String get setupDraftSaved;
+
+  /// #2869 setup drafts: while a setup step's draft is being saved
+  ///
+  /// In en, this message translates to:
+  /// **'Saving draft…'**
+  String get setupDraftSaving;
+
   /// #2875 setup grow steps: setupGrowDocumentsApply
   ///
   /// In en, this message translates to:

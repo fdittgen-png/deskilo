@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "setupDraftRestored": "Bozza ripristinata: queste risposte non sono ancora applicate.",
+  "setupDraftDiscard": "Scarta",
+  "setupDraftSaving": "Salvataggio della bozza…",
+  "setupDraftSaved": "Bozza salvata",
+  "setupDraftNotSaved": "Bozza non salvata: le Sue risposte sono ancora qui.",
+  "setupDraftChanged": "Modificato da un’altra persona mentre Lei stava modificando.",
+  "setupDraftReload": "Ricarica",
+  "setupDraftKeepMine": "Mantieni le mie"
+}

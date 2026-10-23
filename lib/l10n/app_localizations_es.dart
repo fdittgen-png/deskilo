@@ -19417,6 +19417,33 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se han podido guardar los datos básicos. Inténtelo de nuevo.';
 
   @override
+  String get setupDraftChanged =>
+      'Otra persona lo ha cambiado mientras usted editaba.';
+
+  @override
+  String get setupDraftDiscard => 'Descartar';
+
+  @override
+  String get setupDraftKeepMine => 'Conservar las mías';
+
+  @override
+  String get setupDraftNotSaved =>
+      'Borrador no guardado: sus respuestas siguen aquí.';
+
+  @override
+  String get setupDraftReload => 'Recargar';
+
+  @override
+  String get setupDraftRestored =>
+      'Borrador restaurado: estas respuestas aún no se han aplicado.';
+
+  @override
+  String get setupDraftSaved => 'Borrador guardado';
+
+  @override
+  String get setupDraftSaving => 'Guardando el borrador…';
+
+  @override
   String get setupGrowDocumentsApply => 'Usar este estilo';
 
   @override

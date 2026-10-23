@@ -19449,6 +19449,33 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Grunddaten konnten nicht gespeichert werden. Versuchen Sie es erneut.';
 
   @override
+  String get setupDraftChanged =>
+      'Von jemand anderem geändert, während Sie bearbeitet haben.';
+
+  @override
+  String get setupDraftDiscard => 'Verwerfen';
+
+  @override
+  String get setupDraftKeepMine => 'Meine behalten';
+
+  @override
+  String get setupDraftNotSaved =>
+      'Entwurf nicht gespeichert – Ihre Angaben sind noch da.';
+
+  @override
+  String get setupDraftReload => 'Neu laden';
+
+  @override
+  String get setupDraftRestored =>
+      'Entwurf wiederhergestellt: Diese Angaben sind noch nicht übernommen.';
+
+  @override
+  String get setupDraftSaved => 'Entwurf gespeichert';
+
+  @override
+  String get setupDraftSaving => 'Entwurf wird gespeichert…';
+
+  @override
   String get setupGrowDocumentsApply => 'Diesen Stil verwenden';
 
   @override

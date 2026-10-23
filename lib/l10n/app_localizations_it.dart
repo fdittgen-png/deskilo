@@ -19432,6 +19432,33 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile salvare i dati di base. Riprovi.';
 
   @override
+  String get setupDraftChanged =>
+      'Modificato da un’altra persona mentre Lei stava modificando.';
+
+  @override
+  String get setupDraftDiscard => 'Scarta';
+
+  @override
+  String get setupDraftKeepMine => 'Mantieni le mie';
+
+  @override
+  String get setupDraftNotSaved =>
+      'Bozza non salvata: le Sue risposte sono ancora qui.';
+
+  @override
+  String get setupDraftReload => 'Ricarica';
+
+  @override
+  String get setupDraftRestored =>
+      'Bozza ripristinata: queste risposte non sono ancora applicate.';
+
+  @override
+  String get setupDraftSaved => 'Bozza salvata';
+
+  @override
+  String get setupDraftSaving => 'Salvataggio della bozza…';
+
+  @override
   String get setupGrowDocumentsApply => 'Usa questo stile';
 
   @override

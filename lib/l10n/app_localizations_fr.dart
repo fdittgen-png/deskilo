@@ -19470,6 +19470,33 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les informations de base n’ont pas pu être enregistrées. Réessayez.';
 
   @override
+  String get setupDraftChanged =>
+      'Modifié par quelqu’un d’autre pendant votre saisie.';
+
+  @override
+  String get setupDraftDiscard => 'Abandonner';
+
+  @override
+  String get setupDraftKeepMine => 'Garder les miennes';
+
+  @override
+  String get setupDraftNotSaved =>
+      'Brouillon non enregistré : vos réponses sont toujours là.';
+
+  @override
+  String get setupDraftReload => 'Recharger';
+
+  @override
+  String get setupDraftRestored =>
+      'Brouillon restauré : ces réponses ne sont pas encore appliquées.';
+
+  @override
+  String get setupDraftSaved => 'Brouillon enregistré';
+
+  @override
+  String get setupDraftSaving => 'Enregistrement du brouillon…';
+
+  @override
   String get setupGrowDocumentsApply => 'Utiliser ce style';
 
   @override

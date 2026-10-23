@@ -275,6 +275,7 @@ public.setting_definitions.mcp_delegated_deny
 public.setting_definitions.setting_definitions_select
 public.setting_values.mcp_delegated_deny
 public.setting_values.setting_values_select
+public.setup_step_drafts.mcp_delegated_deny
 public.sites.mcp_delegated_deny
 public.sites.sites_select
 public.space_inquiries.mcp_delegated_deny
