@@ -5,6 +5,7 @@
 // payment provider, an e-invoice platform, a site. Never carried by a
 // template, never guessed; only named, with where it is filled in.
 
+import 'setup_status.dart';
 import 'workspace_readiness.dart';
 
 enum LocalSlotKind {
@@ -80,4 +81,8 @@ abstract interface class LocalSetupRepository {
 
   /// 0307 — takes [section] back: it is next again when it is open.
   Future<void> clearAcknowledgement(String workspaceId, String section);
+
+  /// #2869 — every setup step of [workspaceId] and the four milestones
+  /// (`workspace_setup_status`, 0539).
+  Future<SetupStatus> setupStatus(String workspaceId);
 }

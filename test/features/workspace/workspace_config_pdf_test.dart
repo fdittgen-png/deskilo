@@ -91,7 +91,10 @@ Future<Uint8List> _build({
     (name: 'Anna', role: 'Owner', status: 'Active', details: ''),
     (name: 'Ben', role: 'Member', status: 'Active', details: ''),
   ],
-  List<String> featureLabels = const ['Calendar tab', 'Money tab'],
+  List<ConfigFeatureGroup> featureGroups = const [
+    (process: 'Coordination', features: ['Calendar tab']),
+    (process: 'Money', features: ['Money tab']),
+  ],
   List<String> closureLabels = const ['Jul 14, 2026 — Bastille Day'],
 }) async {
   final data = workspaceConfigurationReportData(WorkspaceConfigDocument(strings: _strings,
@@ -102,7 +105,7 @@ Future<Uint8List> _build({
       timezone: 'Europe/Paris',
       granularityLabel: 'Half day',
       members: members,
-      featureLabels: featureLabels,
+      featureGroups: featureGroups,
       openDaysLabel: 'Monday, Tuesday, Wednesday',
       closureLabels: closureLabels,
       levels: [
@@ -155,7 +158,7 @@ void main() {
       () async {
     final bytes = await _build(
       members: const [],
-      featureLabels: const [],
+      featureGroups: const [],
       closureLabels: const [],
     );
     expect(bytes, isNotEmpty);

@@ -11555,6 +11555,18 @@ abstract class AppLocalizations {
   /// **'Regrouped invoices fold'**
   String get featureSettlementFoldTitle;
 
+  /// #2869 setup guide feature description
+  ///
+  /// In en, this message translates to:
+  /// **'One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space.'**
+  String get featureSetupGuideDesc;
+
+  /// #2869 setup guide feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Setup guide'**
+  String get featureSetupGuideTitle;
+
   /// #1273 single-room level names: the feature switch description
   ///
   /// In en, this message translates to:
@@ -32357,6 +32369,125 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
   String get settlementVatNote;
+
+  /// #2869 setup guide: setupGuideAllDone
+  ///
+  /// In en, this message translates to:
+  /// **'Your space has everything you chose.'**
+  String get setupGuideAllDone;
+
+  /// #2869 setup guide: setupGuideBanner
+  ///
+  /// In en, this message translates to:
+  /// **'{milestone}: {ready} of {required} done · Next: {step}'**
+  String setupGuideBanner(
+    String milestone,
+    int ready,
+    int required,
+    String step,
+  );
+
+  /// #2869 setup guide: setupGuideDeferred
+  ///
+  /// In en, this message translates to:
+  /// **'Set aside'**
+  String get setupGuideDeferred;
+
+  /// #2869 setup guide: setupGuideDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get setupGuideDone;
+
+  /// #2869 setup guide: setupGuideEstimate
+  ///
+  /// In en, this message translates to:
+  /// **'about {minutes} min'**
+  String setupGuideEstimate(int minutes);
+
+  /// #2869 setup guide: setupGuideLater
+  ///
+  /// In en, this message translates to:
+  /// **'For a later milestone'**
+  String get setupGuideLater;
+
+  /// #2869 setup guide: setupGuideNext
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get setupGuideNext;
+
+  /// #2869 setup guide: setupGuideOptional
+  ///
+  /// In en, this message translates to:
+  /// **'More for your space'**
+  String get setupGuideOptional;
+
+  /// #2869 setup guide: setupGuideProgress
+  ///
+  /// In en, this message translates to:
+  /// **'{ready} of {required} done'**
+  String setupGuideProgress(int ready, int required);
+
+  /// #2869 setup guide: setupGuideResume
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get setupGuideResume;
+
+  /// #2869 setup guide: setupGuideTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Setup guide'**
+  String get setupGuideTitle;
+
+  /// #2869 setup guide: setupGuideToDo
+  ///
+  /// In en, this message translates to:
+  /// **'What it still needs'**
+  String get setupGuideToDo;
+
+  /// #2869 setup guide: setupGuideUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The setup status could not be read. Try again in a moment.'**
+  String get setupGuideUnavailable;
+
+  /// #2869 setup guide: setupGuideWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get setupGuideWaiting;
+
+  /// #2869 setup guide: setupGuideWaitsFor
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for: {steps}'**
+  String setupGuideWaitsFor(String steps);
+
+  /// #2869 setup guide: setupMilestoneName
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}'**
+  String setupMilestoneName(String key);
+
+  /// #2869 setup guide: setupStateName
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}'**
+  String setupStateName(String key);
+
+  /// #2869 setup guide: setupStepHint
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
+  String setupStepHint(String key);
+
+  /// #2869 setup guide: setupStepTitle
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}'**
+  String setupStepTitle(String key);
 
   /// Screen-reader announcement when the bar is swiped away (#1173)
   ///

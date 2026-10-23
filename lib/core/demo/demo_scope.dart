@@ -78,6 +78,7 @@ import '../../features/workspace/application/template_compare.dart';
 import '../../features/workspace/domain/cost_allocation_rules.dart';
 import '../../features/workspace/domain/kpi_overview.dart';
 import '../../features/workspace/domain/kpi_purchases.dart';
+import '../../features/workspace/domain/setup_steps.dart';
 import '../../features/workspace/providers/bi_providers.dart';
 import '../../features/workspace/providers/cost_allocation_providers.dart';
 import '../../features/workspace/providers/deployment_providers.dart';
@@ -133,9 +134,12 @@ import 'demo_fixture.dart';
 import 'demo_space_routing.dart';
 import 'seed/demo_asset_seed.dart';
 import 'seed/demo_book_period_seed.dart';
+import 'seed/demo_flags.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_room_seed.dart';
+import 'seed/demo_second_space_seed.dart';
+import 'seed/demo_setup_status.dart';
 import 'seed/demo_valuation_seed.dart';
 
 /// The purchase side -- suppliers, received supplier invoices, bills and
@@ -227,7 +231,21 @@ List<Override> demoOverrides(DemoFixture fixture) {
         (ref) => fixedMcpTarget(ref, _kDemoInstallationId),
       ),
       // #1656 — Demo lacks nothing locally.
-      localSetupRepositoryProvider.overrideWithValue(FakeLocalSetupRepository()),
+      // #2872 — Pézenas has everything; Leipzig is half way to bookings.
+      localSetupRepositoryProvider.overrideWithValue(
+        FakeLocalSetupRepository(
+          statuses: {
+            'ws-1': demoSetupStatus(
+              demoFeatureFlags,
+              ready: {for (final s in setupSteps) s.id},
+            ),
+            demoSecondSpaceId: demoSetupStatus(
+              demoSecondSpaceFeatureFlags,
+              ready: demoSecondSpaceReadySteps,
+            ),
+          },
+        ),
+      ),
       // #1659 — Demo searches only its own fixture templates.
       templateSearchRepositoryProvider
           .overrideWithValue(FakeTemplateSearchRepository(source: () => fixture.workspaces.templates)),

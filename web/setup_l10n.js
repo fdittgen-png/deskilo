@@ -1247,6 +1247,10 @@ window.SETUP_L10N={
    "workspaceOverview": [
     "Workspace overview",
     "One page with what needs the person and the figures they may read — capacity, sales, purchases and cash — each opening where it comes from. Off: the attention list and the analytics page stay as they are."
+   ],
+   "setupGuide": [
+    "Setup guide",
+    "One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space."
    ]
   },
   "process": {
@@ -2718,6 +2722,10 @@ window.SETUP_L10N={
    "workspaceOverview": [
     "Vue d'ensemble de l'espace",
     "Une page avec ce qui attend la personne et les indicateurs qu'elle peut lire — capacité, ventes, achats et trésorerie — chacun ouvrant sa source. Désactivé : la liste d'attention et la page d'analyses restent inchangées."
+   ],
+   "setupGuide": [
+    "Guide de mise en place",
+    "Une seule liste de tâches, de la création de l'espace à son ouverture : ce qui est fait, ce qui vient ensuite et pourquoi, au niveau que vous choisissez pour chaque partie de l'espace."
    ]
   },
   "process": {
@@ -4189,6 +4197,10 @@ window.SETUP_L10N={
    "workspaceOverview": [
     "Überblick über den Raum",
     "Eine Seite mit dem, was die Person erwartet, und den Kennzahlen, die sie lesen darf — Kapazität, Verkauf, Einkauf und Geld — jede öffnet ihre Quelle. Aus: Die Liste der offenen Punkte und die Analyseseite bleiben, wie sie sind."
+   ],
+   "setupGuide": [
+    "Einrichtungsassistent",
+    "Eine Aufgabenliste von der Gründung des Bereichs bis zur Eröffnung: was erledigt ist, was als Nächstes kommt und warum, in dem Umfang, den Sie für jeden Teil wählen."
    ]
   },
   "process": {
@@ -5660,6 +5672,10 @@ window.SETUP_L10N={
    "workspaceOverview": [
     "Resumen del espacio",
     "Una página con lo que espera a la persona y las cifras que puede leer — capacidad, ventas, compras y tesorería — cada una abriendo su origen. Desactivado: la lista de pendientes y la página de análisis quedan como están."
+   ],
+   "setupGuide": [
+    "Guía de configuración",
+    "Una sola lista de tareas, desde crear el espacio hasta abrirlo: qué está hecho, qué sigue y por qué, con el nivel que elija para cada parte del espacio."
    ]
   },
   "process": {
@@ -7131,6 +7147,10 @@ window.SETUP_L10N={
    "workspaceOverview": [
     "Panoramica dello spazio",
     "Una pagina con ciò che attende la persona e le cifre che può leggere — capacità, vendite, acquisti e cassa — ciascuna apre la sua fonte. Disattivato: l'elenco delle attività e la pagina delle analisi restano come sono."
+   ],
+   "setupGuide": [
+    "Guida alla configurazione",
+    "Un'unica lista di attività, dalla creazione dello spazio alla sua apertura: cosa è fatto, cosa viene dopo e perché, al livello che sceglie per ogni parte dello spazio."
    ]
   },
   "process": {

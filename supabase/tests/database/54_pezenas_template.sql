@@ -230,6 +230,7 @@ begin
       "biReportDesigner": false,
       "purchaseAnalytics": false,
       "workspaceOverview": false,
+      "setupGuide": true,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

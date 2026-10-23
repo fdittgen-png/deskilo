@@ -8,8 +8,6 @@
 // state from its evidence. Pure Dart: the CLI imports it.
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 import 'workspace_feature.dart';
 
 /// The guide's groups, in the order an owner meets them.
@@ -72,9 +70,7 @@ class SetupStep {
   };
 }
 
-/// The catalogue, in guide order. Read by the generator and the contract
-/// lint until the setup hub (#2869) lists it.
-@visibleForTesting
+/// The catalogue, in guide order.
 const List<SetupStep> setupSteps = [
   // ── Open: a member can book ─────────────────────────────────────────
   SetupStep(
