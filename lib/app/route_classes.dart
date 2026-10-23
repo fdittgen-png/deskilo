@@ -164,6 +164,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/reservations/period', RouteClass.workspace),
   RouteRule('/workspace-overview', RouteClass.workspace),
   RouteRule('/setup', RouteClass.workspace),
+  RouteRule('/setup/levels', RouteClass.workspace),
   RouteRule('/settings/number-sequences', RouteClass.workspace),
   RouteRule('/members/managed', RouteClass.workspace),
   RouteRule('/payment-methods', RouteClass.workspace),

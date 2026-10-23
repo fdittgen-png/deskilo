@@ -22141,6 +22141,10 @@
   "@setupGuideLater": {
     "description": "#2869 setup guide: setupGuideLater"
   },
+  "setupGuideLevelsLink": "Choose what your space does",
+  "@setupGuideLevelsLink": {
+    "description": "#2868 setup levels: setupGuideLevelsLink"
+  },
   "setupGuideNext": "Next",
   "@setupGuideNext": {
     "description": "#2869 setup guide: setupGuideNext"
@@ -22190,9 +22194,133 @@
       }
     }
   },
+  "setupLevelName": "{key, select, bookings_simple{Shared places} bookings_resources{Rooms and resources} bookings_measured{Measured use} community_basic{Basic} community_organised{Organised} money_none{No money} money_statements{Statements} money_invoices{Invoices} payments_off{By transfer} payments_online{Online} tax_none{No VAT} tax_vat{VAT} tax_books{Books} purchases_none{None} purchases_expenses{Expenses} purchases_full{Full purchasing} presentation_basic{Basic} presentation_branded{Your colours} presentation_public{Public page} operations_basic{Basic} operations_insight{Figures} operations_advanced{Advanced} assistant_off{Off} assistant_on{On} other{{key}}}",
+  "@setupLevelName": {
+    "description": "#2868 setup levels: setupLevelName",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLevelsApplied": "Your space now does what you chose.",
+  "@setupLevelsApplied": {
+    "description": "#2868 setup levels: setupLevelsApplied"
+  },
+  "setupLevelsApply": "Apply",
+  "@setupLevelsApply": {
+    "description": "#2868 setup levels: setupLevelsApply"
+  },
+  "setupLevelsBecause": "Because {reason}",
+  "@setupLevelsBecause": {
+    "description": "#2868 setup levels: setupLevelsBecause",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLevelsChoice": "What it needs",
+  "@setupLevelsChoice": {
+    "description": "#2868 setup levels: setupLevelsChoice"
+  },
+  "setupLevelsConfirmOff": "Some features will be switched off. What they hold stays, but they stop working until they are switched on again.",
+  "@setupLevelsConfirmOff": {
+    "description": "#2868 setup levels: setupLevelsConfirmOff"
+  },
+  "setupLevelsConflict": "The features changed meanwhile. Look again, then apply.",
+  "@setupLevelsConflict": {
+    "description": "#2868 setup levels: setupLevelsConflict"
+  },
+  "setupLevelsGap": "{level} needs {needed}",
+  "@setupLevelsGap": {
+    "description": "#2868 setup levels: a chosen level that needs another process at a minimum level",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      },
+      "needed": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLevelsIntro": "Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.",
+  "@setupLevelsIntro": {
+    "description": "#2868 setup levels: setupLevelsIntro"
+  },
+  "setupLevelsNoChange": "Nothing changes: the space already does this.",
+  "@setupLevelsNoChange": {
+    "description": "#2868 setup levels: setupLevelsNoChange"
+  },
+  "setupLevelsPresets": "Quick start",
+  "@setupLevelsPresets": {
+    "description": "#2868 setup levels: setupLevelsPresets"
+  },
+  "setupLevelsQuestions": "About your space",
+  "@setupLevelsQuestions": {
+    "description": "#2868 setup levels: setupLevelsQuestions"
+  },
+  "setupLevelsSwitchOff": "Switches off: {features}",
+  "@setupLevelsSwitchOff": {
+    "description": "#2868 setup levels: setupLevelsSwitchOff",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLevelsSwitchOn": "Switches on: {features}",
+  "@setupLevelsSwitchOn": {
+    "description": "#2868 setup levels: setupLevelsSwitchOn",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLevelsTitle": "What your space does",
+  "@setupLevelsTitle": {
+    "description": "#2868 setup levels: setupLevelsTitle"
+  },
   "setupMilestoneName": "{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}",
   "@setupMilestoneName": {
     "description": "#2869 setup guide: setupMilestoneName",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupPresetName": "{key, select, essentiel{Essential} standard{Standard} complet{Complete} other{{key}}}",
+  "@setupPresetName": {
+    "description": "#2868 setup levels: setupPresetName",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupProcessName": "{key, select, bookings{Bookings} community{Community} money{Money} payments{Payments} tax{Tax} purchases{Purchases} presentation{Presentation} operations{Operations} assistant{Assistant} other{{key}}}",
+  "@setupProcessName": {
+    "description": "#2868 setup levels: setupProcessName",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupQuestion": "{key, select, members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}",
+  "@setupQuestion": {
+    "description": "#2868 setup levels: setupQuestion",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupReason": "{key, select, door_tablet{a tablet at the door checks people in} keeps_books{you keep accounting books} later{an assistant can come later} members_only{only members see the space} members_owe{members owe the space money} no_money{no money changes hands} no_purchases{the space buys nothing it tracks} no_vat{the space is not registered for VAT} organised{several people decide together} pay_by_transfer{members pay by transfer} pay_online{members pay online} public_page{the space has a public page} several_rooms{there are several rooms or sites} shared_places{members share the places} small_community{a small community} start_simple{start simple} tracks_purchases{you track what the space buys} vat_registered{the space is registered for VAT} issues_invoices{you issue invoices} other{{key}}}",
+  "@setupReason": {
+    "description": "#2868 setup levels: setupReason",
     "placeholders": {
       "key": {
         "type": "String"
