@@ -29,6 +29,7 @@ import 'package:liquify/liquify.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import 'invoice_pdf_template.dart';
+import 'report_kind.dart';
 
 /// One renderable block of a band.
 sealed class ReportBlock {
@@ -141,6 +142,7 @@ class InvoiceReport {
     required this.body,
     required this.footer,
     this.continuation = const [],
+    this.numberFirstPage = false,
   });
 
   final List<ReportBlock> header;
@@ -150,6 +152,19 @@ class InvoiceReport {
   /// #872 — the header pages 2+ carry instead of the letterhead. Empty
   /// means the document draws its built-in identification strip.
   final List<ReportBlock> continuation;
+
+  /// #2862 — whether page 1 carries its number too: a report's pages are
+  /// counted from the first, a letter's from the second.
+  final bool numberFirstPage;
+
+  /// This report with page 1 numbered when the kind [kindId] asks for it.
+  InvoiceReport numberedFor(String kindId) {
+    final numbered = reportKindById(kindId)?.numbersFirstPage ?? false;
+    return numbered == numberFirstPage
+        ? this
+        : InvoiceReport(header: header, body: body, footer: footer,
+            continuation: continuation, numberFirstPage: numbered);
+  }
 }
 
 /// Renders ONE band set (#472: the invoice's own, or a reminder
