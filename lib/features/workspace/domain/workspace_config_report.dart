@@ -100,7 +100,7 @@ class WorkspaceConfigDocument {
     required this.timezone,
     required this.granularityLabel,
     required this.members,
-    required this.featureLabels,
+    required this.featureGroups,
     required this.openDaysLabel,
     required this.closureLabels,
     required this.levels,
@@ -116,7 +116,9 @@ class WorkspaceConfigDocument {
   final String timezone;
   final String granularityLabel;
   final List<ConfigPdfMember> members;
-  final List<String> featureLabels;
+  /// #2862 — the features that are on, grouped by process: one line per
+  /// process instead of a page of single names.
+  final List<ConfigFeatureGroup> featureGroups;
   final String openDaysLabel;
   final List<String> closureLabels;
   final List<ConfigPdfLevel> levels;
@@ -128,6 +130,9 @@ class WorkspaceConfigDocument {
   /// Whether the owner replaced the built-in invitation message (0049).
   final bool hasCustomInvitationTemplate;
 }
+
+/// One process and the names of its features that are on.
+typedef ConfigFeatureGroup = ({String process, List<String> features});
 
 Map<String, Object?> _row(
   String label, [
@@ -190,8 +195,9 @@ List<Map<String, Object?>> _featureRows(WorkspaceConfigDocument doc) {
   final strings = doc.strings;
   return [
     _heading(strings.features),
-    if (doc.featureLabels.isEmpty) _row(strings.none),
-    for (final feature in doc.featureLabels) _row(feature),
+    if (doc.featureGroups.isEmpty) _row(strings.none),
+    for (final group in doc.featureGroups)
+      _row(group.process, group.features.join(', ')),
   ];
 }
 
