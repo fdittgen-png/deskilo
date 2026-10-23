@@ -186,6 +186,11 @@ class SetupStatus {
       if (!s.required && s.state == SetupStepState.needsConfiguration) s,
   ];
 
+  /// #2869 — what the next milestone still needs, in minutes: the
+  /// estimates of its open steps.
+  int get minutesToNextMilestone =>
+      toDo.fold(0, (sum, s) => sum + s.estimateMinutes);
+
   List<SetupStepStatus> get done => [
     for (final s in steps)
       if (s.state == SetupStepState.ready) s,

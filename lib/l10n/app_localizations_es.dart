@@ -19295,6 +19295,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupGuideLevelsLink => 'Elegir lo que hace su espacio';
 
   @override
+  String get setupGuideMarkDone => 'Marcar como hecho';
+
+  @override
   String get setupGuideNext => 'A continuación';
 
   @override
@@ -19319,12 +19322,29 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo leer el estado de la configuración. Inténtelo de nuevo en un momento.';
 
   @override
+  String setupGuideUntil(int minutes, String milestone) {
+    return 'Unos $minutes min hasta: $milestone';
+  }
+
+  @override
   String get setupGuideWaiting => 'En espera';
 
   @override
   String setupGuideWaitsFor(String steps) {
     return 'Espera: $steps';
   }
+
+  @override
+  String get setupInvitePreviewNote =>
+      'Cada invitación que envía lleva su propio código de un solo uso en lugar del ID del espacio.';
+
+  @override
+  String get setupInvitePreviewTitle =>
+      'La invitación, tal como la reciben sus miembros';
+
+  @override
+  String get setupInviteShareFailed =>
+      'No se pudo compartir el código QR. Inténtelo de nuevo.';
 
   @override
   String get setupLaunchAnswers => 'Sus respuestas';
@@ -19577,6 +19597,38 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get setupRightsApplied => 'Los miembros ya tienen estos derechos.';
+
+  @override
+  String get setupRightsApplyFailed =>
+      'No se pudieron cambiar los derechos. Inténtelo de nuevo.';
+
+  @override
+  String get setupRightsNeedsManageRoles =>
+      'Solo quien gestiona los roles puede cambiar lo que pueden hacer los miembros.';
+
+  @override
+  String get setupRightsOpenRoles => 'Ajustar en Roles';
+
+  @override
+  String get setupRightsPresetBody =>
+      'Los miembros reciben exactamente estos derechos, y nada que gestione el espacio:';
+
+  @override
+  String get setupRightsPresetTitle => 'Los miembros pueden reservar';
+
+  @override
+  String get setupRightsPreviewAdmin =>
+      'Los miembros también pueden gestionar partes del espacio. Revíselo en Roles.';
+
+  @override
+  String get setupRightsPreviewNone =>
+      'Nada todavía: los miembros no pueden reservar.';
+
+  @override
+  String get setupRightsPreviewTitle => 'Lo que puede hacer un miembro';
+
+  @override
   String setupStateName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'ready': 'Hecho',
@@ -19590,6 +19642,9 @@ class AppLocalizationsEs extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupStepElsewhere => 'Este paso se hace en su propia pantalla.';
 
   @override
   String setupStepHint(String key) {
@@ -19629,6 +19684,12 @@ class AppLocalizationsEs extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupStepOpenScreen => 'Abrirlo';
+
+  @override
+  String get setupStepPreviewTitle => 'Lo que verán sus miembros';
 
   @override
   String setupStepTitle(String key) {

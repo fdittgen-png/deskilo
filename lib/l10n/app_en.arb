@@ -22164,6 +22164,10 @@
   "@setupGuideLevelsLink": {
     "description": "#2868 setup levels: setupGuideLevelsLink"
   },
+  "setupGuideMarkDone": "Mark as done",
+  "@setupGuideMarkDone": {
+    "description": "#2869 — marks a setup step the server cannot verify as done."
+  },
   "setupGuideNext": "Next",
   "@setupGuideNext": {
     "description": "#2869 setup guide: setupGuideNext"
@@ -22200,6 +22204,18 @@
   "@setupGuideUnavailable": {
     "description": "#2869 setup guide: setupGuideUnavailable"
   },
+  "setupGuideUntil": "About {minutes} min until: {milestone}",
+  "@setupGuideUntil": {
+    "description": "#2869 — the time the next milestone still needs, summed from its open steps' estimates.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
   "setupGuideWaiting": "Waiting",
   "@setupGuideWaiting": {
     "description": "#2869 setup guide: setupGuideWaiting"
@@ -22212,6 +22228,18 @@
         "type": "String"
       }
     }
+  },
+  "setupInvitePreviewNote": "Each invitation you send carries its own single-use code in place of the space's ID.",
+  "@setupInvitePreviewNote": {
+    "description": "#2870 setup steps: setupInvitePreviewNote"
+  },
+  "setupInvitePreviewTitle": "The invitation, as your members receive it",
+  "@setupInvitePreviewTitle": {
+    "description": "#2870 setup steps: setupInvitePreviewTitle"
+  },
+  "setupInviteShareFailed": "The QR code could not be shared. Try again.",
+  "@setupInviteShareFailed": {
+    "description": "#2870 setup steps: setupInviteShareFailed"
   },
   "setupLaunchAnswers": "Your answers",
   "@setupLaunchAnswers": {
@@ -22439,6 +22467,42 @@
       }
     }
   },
+  "setupRightsApplied": "Members already hold these rights.",
+  "@setupRightsApplied": {
+    "description": "#2870 setup steps: setupRightsApplied"
+  },
+  "setupRightsApplyFailed": "The rights could not be changed. Try again.",
+  "@setupRightsApplyFailed": {
+    "description": "#2870 setup steps: setupRightsApplyFailed"
+  },
+  "setupRightsNeedsManageRoles": "Only someone who manages roles can change what members may do.",
+  "@setupRightsNeedsManageRoles": {
+    "description": "#2870 setup steps: setupRightsNeedsManageRoles"
+  },
+  "setupRightsOpenRoles": "Fine-tune in Roles",
+  "@setupRightsOpenRoles": {
+    "description": "#2870 setup steps: setupRightsOpenRoles"
+  },
+  "setupRightsPresetBody": "Members get exactly these rights, and nothing that manages the space:",
+  "@setupRightsPresetBody": {
+    "description": "#2870 setup steps: setupRightsPresetBody"
+  },
+  "setupRightsPresetTitle": "Members can book",
+  "@setupRightsPresetTitle": {
+    "description": "#2870 setup steps: setupRightsPresetTitle"
+  },
+  "setupRightsPreviewAdmin": "Members can also manage parts of the space. Check this in Roles.",
+  "@setupRightsPreviewAdmin": {
+    "description": "#2870 setup steps: setupRightsPreviewAdmin"
+  },
+  "setupRightsPreviewNone": "Nothing yet: members cannot book.",
+  "@setupRightsPreviewNone": {
+    "description": "#2870 setup steps: setupRightsPreviewNone"
+  },
+  "setupRightsPreviewTitle": "What a member can do",
+  "@setupRightsPreviewTitle": {
+    "description": "#2870 setup steps: setupRightsPreviewTitle"
+  },
   "setupStateName": "{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}",
   "@setupStateName": {
     "description": "#2869 setup guide: setupStateName",
@@ -22448,6 +22512,10 @@
       }
     }
   },
+  "setupStepElsewhere": "This step is done on its own screen.",
+  "@setupStepElsewhere": {
+    "description": "#2870 setup steps: setupStepElsewhere"
+  },
   "setupStepHint": "{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space's code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space's colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space's data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}",
   "@setupStepHint": {
     "description": "#2869 setup guide: setupStepHint",
@@ -22456,6 +22524,14 @@
         "type": "String"
       }
     }
+  },
+  "setupStepOpenScreen": "Open it",
+  "@setupStepOpenScreen": {
+    "description": "#2870 setup steps: setupStepOpenScreen"
+  },
+  "setupStepPreviewTitle": "What your members will see",
+  "@setupStepPreviewTitle": {
+    "description": "#2870 setup steps: setupStepPreviewTitle"
   },
   "setupStepTitle": "{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}",
   "@setupStepTitle": {

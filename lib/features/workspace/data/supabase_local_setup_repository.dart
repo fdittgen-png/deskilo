@@ -59,4 +59,18 @@ class SupabaseLocalSetupRepository implements LocalSetupRepository {
         'clear_readiness_acknowledgement',
         params: {'p_workspace_id': workspaceId, 'p_section': section},
       );
+
+  @override
+  Future<void> acknowledgeStep(String workspaceId, String step) =>
+      _client.rpc<Object?>(
+        'acknowledge_setup_step',
+        params: {'p_workspace_id': workspaceId, 'p_step': step},
+      );
+
+  @override
+  Future<void> clearStepAcknowledgement(String workspaceId, String step) =>
+      _client.rpc<Object?>(
+        'clear_setup_step_acknowledgement',
+        params: {'p_workspace_id': workspaceId, 'p_step': step},
+      );
 }

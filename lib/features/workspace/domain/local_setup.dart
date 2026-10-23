@@ -85,4 +85,12 @@ abstract interface class LocalSetupRepository {
   /// #2869 — every setup step of [workspaceId] and the four milestones
   /// (`workspace_setup_status`, 0539).
   Future<SetupStatus> setupStatus(String workspaceId);
+
+  /// 0545 — marks the guide's step [step] done when the server cannot
+  /// verify it, else sets the optional step aside for later. The server
+  /// refuses a required step it verifies and one with nothing left to do.
+  Future<void> acknowledgeStep(String workspaceId, String step);
+
+  /// 0545 — takes [step] back: it is open again.
+  Future<void> clearStepAcknowledgement(String workspaceId, String step);
 }
