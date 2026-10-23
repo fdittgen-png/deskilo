@@ -1,0 +1,143 @@
+[
+ {
+  "name": "list_parameters",
+  "annotations": {
+   "readOnlyHint": true
+  },
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "feature": {
+     "type": "string"
+    },
+    "query": {
+     "type": "string"
+    }
+   },
+   "required": [],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "get_answers",
+  "annotations": {
+   "readOnlyHint": true
+  },
+  "inputSchema": {
+   "type": "object",
+   "properties": {},
+   "required": [],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "set_answer",
+  "annotations": null,
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string"
+    },
+    "value": {}
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "set_answers",
+  "annotations": null,
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "answers": {
+     "type": "object"
+    }
+   },
+   "required": [
+    "answers"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "explain_parameter",
+  "annotations": {
+   "readOnlyHint": true
+  },
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "key"
+   ],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "diff_with_default",
+  "annotations": {
+   "readOnlyHint": true
+  },
+  "inputSchema": {
+   "type": "object",
+   "properties": {},
+   "required": [],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "export_configuration",
+  "annotations": {
+   "readOnlyHint": true
+  },
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "format": {
+     "type": "string",
+     "enum": [
+      "xml"
+     ]
+    }
+   },
+   "required": [],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "reset",
+  "annotations": null,
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "keys": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   },
+   "required": [],
+   "additionalProperties": false
+  }
+ },
+ {
+  "name": "seed_vat_rates",
+  "annotations": null,
+  "inputSchema": {
+   "type": "object",
+   "properties": {},
+   "required": [],
+   "additionalProperties": false
+  }
+ }
+]

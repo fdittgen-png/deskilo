@@ -46,10 +46,10 @@ Edit ALL of these in the same commit:
    entries live in `feature_manifest_partN.dart` beside it (#2386): append to the last part.
 2. `feature_names.dart` — label; `features_screen.dart` — description.
 3. ARB fragments: keys `featureXxx`, `featureXxxDesc` + the feature's strings (§2 Strings).
-4. `web/setup.html` — a FEATURES line `['key',0|1],` (no label: name and
-   description come from the ARB) + the REQUIRES map entry; then
-   `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js` AND
-   `web/setup_catalogue.js` (the process grouping, #1330).
+4. `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js` AND
+   `web/setup_catalogue.js`: the questionnaire reads the feature, its default and
+   its parent from the generated registry (#2923) and its process grouping (#1330);
+   `web/setup.html` itself needs no line for a switch.
 5. `workspace_process.dart` — primary subprocess or explicit internal reason;
    `dart run tool/build_process_catalogue.dart`.
 6. `lib/features/workspace/domain/feature_lifecycle.dart` — the flag's

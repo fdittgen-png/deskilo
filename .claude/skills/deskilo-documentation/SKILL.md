@@ -64,7 +64,7 @@ describes in one section, more only where the guide has a section per part.
    exist (`help_screen_test`). Whole-form stitches live inside `<details>`, which
    `build_help` strips.
 5. **Five languages**, prose translated, structure identical; a parameter with a help
-   symbol in the app carries one in `web/setup.html` too: its `HELP` row names the anchor, and
+   symbol in the app carries one in `web/setup.html` too: its `HELP` row (`web/setup_params.js`) names the anchor, and
    the page links the guide site's section (`guide/<lang>.html#<anchor>`).
 6. **Check** (below), then one PR per module; body: the module, the new anchors, the
    image slots still empty. Mirror the wiki with `/doc-wiki` after the merge.

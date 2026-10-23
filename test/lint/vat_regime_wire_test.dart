@@ -9,6 +9,8 @@ import 'dart:io';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/setup/page_sources.dart';
+
 void main() {
   test('the database, the app and the setup page spell the regime alike', () {
     final contract = File('assets/instance/contract.txt').readAsLinesSync();
@@ -26,7 +28,8 @@ void main() {
       expect(vatRegimeWire(vatRegimeFromWire(wire)), wire, reason: wire);
     }
 
-    final html = File('web/setup.html').readAsStringSync();
+    // #2926 — the page with the scripts it is split into.
+    final html = setupPageSource();
     final export = RegExp(
       r"vat_regime:\(\{([^}]*)\}\)\[S\.vatRegime\]\|\|'(\w+)'",
     ).firstMatch(html);
