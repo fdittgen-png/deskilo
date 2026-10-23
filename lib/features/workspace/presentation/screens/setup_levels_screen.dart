@@ -9,11 +9,15 @@
 // anything off asks first. Applying also remembers the answers and the
 // levels on the server (workspace_setup_journeys), so the screen reopens
 // with them on any device; beside the questions, what the law of the
-// space's country asks, from the tax reference data.
+// space's country asks, from the tax reference data. Each level can be
+// seen in the demo's complete space, except from inside the demo.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/demo/demo_link.dart';
+import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -24,6 +28,7 @@ import '../../application/setup_journey_save.dart';
 import '../../domain/feature_flags_write.dart';
 import '../../domain/setup_journey.dart';
 import '../../domain/setup_level_change.dart';
+import '../../domain/setup_level_demo.dart';
 import '../../domain/setup_levels.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
@@ -279,8 +284,9 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       false;
 }
 
-/// One process: its name, the reason for its level, and the level.
-class _ProcessLevel extends StatelessWidget {
+/// One process: its name, the reason for its level, the level, and where
+/// the demo shows it.
+class _ProcessLevel extends ConsumerWidget {
   const _ProcessLevel({
     super.key,
     required this.process,
@@ -295,12 +301,28 @@ class _ProcessLevel extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final demo = DemoEnvironment.maybeOf(context) != null
+        ? null
+        : setupLevelDemoRoute(process, level);
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(l10n.setupProcessName(process.name)),
-      subtitle: reason == null ? null : Text(reason!),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (reason != null) Text(reason!),
+          if (demo != null)
+            TextButton(
+              key: ValueKey('setup-level-demo-${process.name}'),
+              style: TextButton.styleFrom(padding: EdgeInsets.zero),
+              onPressed: () =>
+                  ref.read(linkLauncherProvider)(demoLinkUri(to: demo)),
+              child: Text(l10n.setupLevelsSeeDemo),
+            ),
+        ],
+      ),
       trailing: DropdownButton<String>(
         key: ValueKey('setup-level-${process.name}'),
         value: level,

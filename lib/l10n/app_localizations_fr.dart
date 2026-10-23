@@ -11712,6 +11712,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette demande a expiré. Demandez à l\'assistant de la renvoyer.';
 
   @override
+  String mcpConfirmLevel(String process, String level) {
+    return '$process : $level';
+  }
+
+  @override
   String mcpConfirmNewShare(String pct) {
     return 'Nouvelle part d\'abonnement : $pct %';
   }
@@ -11736,6 +11741,22 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mcpConfirmStale =>
       'Cette demande ne correspond plus aux données actuelles ou à vos accès. Rien n\'a été fait.';
+
+  @override
+  String get mcpConfirmStepDone => 'Elle sera marquée comme faite.';
+
+  @override
+  String get mcpConfirmStepLater => 'Elle sera mise de côté pour plus tard.';
+
+  @override
+  String mcpConfirmSwitchOff(String features) {
+    return 'Désactive : $features. Leurs données sont conservées.';
+  }
+
+  @override
+  String mcpConfirmSwitchOn(String features) {
+    return 'Active : $features';
+  }
 
   @override
   String get mcpConfirmTitle => 'Confirmer une demande d\'assistant';
@@ -12225,6 +12246,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpGroupOwn => 'Réservations et compte personnels';
 
   @override
+  String get mcpGroupSetup => 'Mise en place de l\'espace';
+
+  @override
   String get mcpGroupValidations => 'Validations';
 
   @override
@@ -12346,6 +12370,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mcpOpSetFavorite => 'Marquer des lieux en favoris';
+
+  @override
+  String get mcpOpSetupLevels => 'Voir les niveaux de mise en place';
+
+  @override
+  String get mcpOpSetupLevelsApply => 'Changer les niveaux de mise en place';
+
+  @override
+  String get mcpOpSetupLevelsPreview =>
+      'Prévisualiser un changement de niveaux';
+
+  @override
+  String get mcpOpSetupStatus => 'Voir où en est la mise en place';
+
+  @override
+  String get mcpOpSetupStepMark =>
+      'Marquer une étape comme faite ou pour plus tard';
 
   @override
   String get mcpOpSubscription => 'Modifier la part d\'abonnement d\'un membre';
@@ -19815,6 +19856,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupGuideNext => 'Ensuite';
 
   @override
+  String setupGuideNoInvoicing(String money) {
+    String _temp0 = intl.Intl.selectLogic(money, {
+      'statements': 'La facturation n\'est pas choisie : les membres reçoivent des relevés de ce qu\'ils doivent et paient sur cette base. Ni TVA, ni numérotation, ni facturation électronique ne sont nécessaires, le guide ne les demande donc pas.',
+      'other': 'La facturation n\'est pas choisie : ni TVA, ni numérotation, ni facturation électronique ne sont nécessaires, le guide ne les demande donc pas.',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get setupGuideNotInSetup => 'Pas dans votre configuration';
 
   @override
@@ -20075,6 +20125,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLevelsQuestions => 'À propos de votre espace';
 
   @override
+  String get setupLevelsSeeDemo => 'Le voir dans la démo';
+
+  @override
   String setupLevelsSwitchOff(String features) {
     return 'Désactive : $features';
   }
@@ -20121,6 +20174,28 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get setupLimitsSaveFailed =>
       'Les limites de réservation n’ont pas pu être enregistrées. Réessayez.';
+
+  @override
+  String get setupLockConfirmTitle => 'Avant d\'enregistrer';
+
+  @override
+  String setupLockMoneyLocaleConfirm(String country, String currency) {
+    return '$country et $currency seront figés pour de bon dès que cet espace émettra un document ou enregistrera de l\'argent : ensuite, ni l\'un ni l\'autre ne pourra changer. En cas de doute, vérifiez-les avec votre comptable.';
+  }
+
+  @override
+  String get setupLockMoneyLocaleFixed =>
+      'Figé : cet espace a déjà émis un document ou enregistré de l\'argent, le pays et la devise ne peuvent donc plus changer.';
+
+  @override
+  String setupLockNumberingConfirm(String number) {
+    return 'La prochaine facture portera le numéro $number. Dès qu\'une facture prend un numéro de cette série, ce numéro est gardé pour toujours, la série ne revient jamais en arrière, et une date dans le numéro ne peut être retirée qu\'avec un nouveau préfixe ou suffixe.';
+  }
+
+  @override
+  String setupLockRegimeConfirm(String regime) {
+    return 'Chaque facture garde pour toujours le régime de TVA sous lequel elle est émise : « $regime » s\'applique à partir de la prochaine facture, et les factures déjà émises ne changent pas.';
+  }
 
   @override
   String get setupLookMore => 'Motif, couleurs des salles et logo';
@@ -20427,6 +20502,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
+      'association':
+          'L’espace est géré par une association, une coopérative ou un club',
+      'approve_bookings': 'Les réservations attendent une validation ; les membres ne réservent pas directement',
       'members_owe_money':
           'Les membres doivent de l’argent à l’espace (loyer, carnets, extras)',
       'issue_invoices': 'Vous émettez des factures',
@@ -20466,6 +20544,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'tracks_purchases': 'vous suivez les achats de l’espace',
       'vat_registered': 'l’espace est assujetti à la TVA',
       'issues_invoices': 'vous émettez des factures',
+      'association': 'une association décide ensemble, avec son bureau',
+      'approve_bookings': 'les réservations attendent une validation',
       'other': '$key',
     });
     return '$_temp0';

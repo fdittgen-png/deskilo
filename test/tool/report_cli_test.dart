@@ -13,6 +13,7 @@ library;
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/features/money/domain/configuration_report_bands.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -104,5 +105,45 @@ void main() {
         'px', '%', 'iban', 'lines']) {
       expect(result.stdout, contains(word), reason: word);
     }
+  }, timeout: const Timeout(Duration(minutes: 3)));
+
+  test('#2898 — the configuration sample names its level plan, and render '
+      'prints it from --images', () async {
+    final out = Directory.systemTemp.createTempSync('report-cli');
+    final json = '${out.path}/configuration.json';
+    final sampled = await _run(
+        ['sample', '--kind', 'workspace_configuration', '--out', json]);
+    expect(sampled.exitCode, 0, reason: '${sampled.stderr}');
+    final rows = (jsonDecode(File(json).readAsStringSync())
+        as Map)['configuration_rows'] as List;
+    expect(rows.map((r) => (r as Map)['image']), contains('plan-ground'));
+
+    // The configuration's own band markup, as an owner's layout keeps it.
+    final layout = File('${out.path}/configuration.xml')
+      ..writeAsStringSync('<report-layout margin="20mm"><body><markup>'
+          '${configurationReportBands('Configuration').body}'
+          '</markup></body></report-layout>');
+    final images = Directory('${out.path}/images')..createSync();
+    File('${images.path}/plan-ground.png').writeAsBytesSync(base64Decode(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=='));
+    Future<String> render(List<String> extra) async {
+      final pdf = '${out.path}/configuration-${extra.length}.pdf';
+      final result = await _run(
+          ['render', layout.path, '--data', json, '--out', pdf, ...extra]);
+      expect(result.exitCode, 0, reason: '${result.stderr}');
+      return latin1.decode(File(pdf).readAsBytesSync());
+    }
+
+    final image = RegExp(r'/Subtype\s*/Image');
+    expect(await render(['--images', images.path]), matches(image));
+    expect(await render(const []), isNot(matches(image)),
+        reason: 'without the picture the plan is left out, nothing breaks');
+  }, timeout: const Timeout(Duration(minutes: 3)));
+
+  test('describe names the configuration rows and their plan picture',
+      () async {
+    final result = await _run(['describe']);
+    expect(result.stdout, contains('configuration_rows'));
+    expect(result.stdout, contains('row.image'));
   }, timeout: const Timeout(Duration(minutes: 3)));
 }

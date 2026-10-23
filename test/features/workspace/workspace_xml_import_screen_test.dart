@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
@@ -14,6 +15,7 @@ import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_import.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
@@ -196,6 +198,7 @@ Future<void> pumpWorkspaceSettings(
   required RecordingImportRepository importRepository,
   required FakeWorkspaceRepository workspaceRepository,
   required CountingFloorPlanRepository floorPlan,
+  FakeLocalSetupRepository? localSetup,
 }) async {
   // The settings form outgrew the 800×600 test viewport long ago (#155);
   // the import tile sits below the export tile, keep the form built.
@@ -213,6 +216,7 @@ Future<void> pumpWorkspaceSettings(
         ...standardTestOverrides(
           workspace: workspaceRepository,
           floorPlan: floorPlan,
+          localSetup: localSetup,
         ),
         filePickerProvider.overrideWithValue(picker),
         workspaceImportRepositoryProvider.overrideWithValue(importRepository),
@@ -234,6 +238,12 @@ Future<void> tapImportTile(WidgetTester tester) async {
   await tester.ensureVisible(tile);
   await tester.pumpAndSettle();
   await tester.tap(tile);
+  await tester.pumpAndSettle();
+}
+
+/// Confirms the import preview and lets the import run.
+Future<void> confirmImport(WidgetTester tester) async {
+  await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
   await tester.pumpAndSettle();
 }
 
@@ -276,8 +286,7 @@ void main() {
     expect(find.text('Accessories: 2'), findsOneWidget);
     expect(importRepository.calls, isEmpty);
 
-    await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
-    await tester.pumpAndSettle();
+    await confirmImport(tester);
 
     // Floor plan went through the transactional RPC boundary...
     final (workspaceId, data) = importRepository.calls.single;
@@ -315,6 +324,49 @@ void main() {
     expect(find.text('Workspace imported.'), findsOneWidget);
     await container.read(levelsProvider.future);
     expect(floorPlan.fetchLevelsCalls, greaterThan(levelFetchesBefore));
+  });
+
+  testWidgets('#2868 — the <profile> of a file web/setup.html wrote becomes '
+      "the space's setup answers, saved against the version read", (
+    tester,
+  ) async {
+    final local = FakeLocalSetupRepository();
+    await local.saveSetupJourney(
+      'ws-1',
+      answers: const SetupAnswers(organised: true),
+      levels: const {},
+      expectedVersion: null,
+      requestId: 'earlier',
+    );
+    final xml = importableXml().replaceFirst(
+      '</deskilo-workspace>',
+      '  <setup>\n'
+          '    <profile>\n'
+          '      <answer question="issue_invoices" value="true"/>\n'
+          '      <answer question="organised" value="false"/>\n'
+          '      <answer question="retired_question" value="true"/>\n'
+          '      <level of="money" value="invoices"/>\n'
+          '      <level of="catering" value="full"/>\n'
+          '    </profile>\n'
+          '  </setup>\n'
+          '</deskilo-workspace>',
+    );
+    await pumpWorkspaceSettings(
+      tester,
+      picker: (_) async => xmlFile(xml),
+      importRepository: RecordingImportRepository(),
+      workspaceRepository: FakeWorkspaceRepository.withWorkspace(),
+      floorPlan: CountingFloorPlanRepository()..seedSmallPlan(),
+      localSetup: local,
+    );
+    await tapImportTile(tester);
+    await confirmImport(tester);
+
+    expect(find.text('Workspace imported.'), findsOneWidget);
+    final journey = (await local.setupJourney('ws-1'))!;
+    expect(journey.version, 2, reason: 'one save, against version 1');
+    expect(journey.answers, const SetupAnswers(issueInvoices: true));
+    expect(journey.levels, {SetupProcess.money: 'invoices'});
   });
 
   testWidgets('cancelling the preview applies nothing', (tester) async {
@@ -391,8 +443,7 @@ void main() {
     );
 
     await tapImportTile(tester);
-    await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
-    await tester.pumpAndSettle();
+    await confirmImport(tester);
 
     expect(
       find.text('This workspace already has reservations, so its floor plan '
@@ -423,8 +474,7 @@ void main() {
 
     expect(find.textContaining('Configuration: 2 settings, 1 rows in 1 tables'),
         findsOneWidget);
-    await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
-    await tester.pumpAndSettle();
+    await confirmImport(tester);
 
     expect(importRepository.configurations, [kTestConfiguration]);
     expect(importRepository.calls, hasLength(1), reason: 'then the plan');
@@ -448,8 +498,7 @@ void main() {
       floorPlan: floorPlan,
     );
     await tapImportTile(tester);
-    await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
-    await tester.pumpAndSettle();
+    await confirmImport(tester);
 
     expect(importRepository.configurations, [kTestConfiguration]);
     expect(
@@ -499,8 +548,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.textContaining('Configuration: 2 settings, 1 rows in 1 tables'),
           findsOneWidget);
-      await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
-      await tester.pumpAndSettle();
+      await confirmImport(tester);
 
       expect(importRepository.configurations, [kTestConfiguration]);
       expect(importRepository.calls, hasLength(1));
@@ -517,8 +565,7 @@ void main() {
       await tester.tap(find.byKey(const Key('configurationTransferSkip')));
       await tester.pumpAndSettle();
       expect(find.text('Configuration: not applied.'), findsOneWidget);
-      await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
-      await tester.pumpAndSettle();
+      await confirmImport(tester);
 
       expect(importRepository.configurations, isEmpty);
       expect(importRepository.calls, hasLength(1));
@@ -553,8 +600,7 @@ void main() {
     );
     await tapImportTile(tester);
     expect(find.textContaining('Configuration:'), findsNothing);
-    await tester.tap(find.byKey(const Key('workspaceXmlImportConfirm')));
-    await tester.pumpAndSettle();
+    await confirmImport(tester);
     expect(importRepository.configurations, isEmpty);
     expect(importRepository.calls, hasLength(1));
   });

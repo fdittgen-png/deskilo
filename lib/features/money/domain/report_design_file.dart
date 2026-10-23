@@ -148,7 +148,7 @@ Map<String, Object> reportDesignInstructions() => {
           {
             'syntax': '![name] or ![name|size|align]',
             'means': 'an image from the workspace image library. size is '
-                's, m or l; align is left, center or right. An unknown '
+                's, m, l or xl; align is left, center or right. An unknown '
                 'name renders as nothing rather than breaking the document.'
           },
           {

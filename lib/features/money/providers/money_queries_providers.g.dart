@@ -110,6 +110,94 @@ final class MemberAccountQueriesProvider
 String _$memberAccountQueriesHash() =>
     r'8c9565c2074e2144ca57eb073d3cc95f7bf9ad79';
 
+/// Whether [workspaceId] has issued a document or recorded money, which
+/// fixes its country and currency (0399). Not retried: a page that cannot
+/// tell treats the values as open, and the server still refuses.
+
+@ProviderFor(moneyRecorded)
+final moneyRecordedProvider = MoneyRecordedFamily._();
+
+/// Whether [workspaceId] has issued a document or recorded money, which
+/// fixes its country and currency (0399). Not retried: a page that cannot
+/// tell treats the values as open, and the server still refuses.
+
+final class MoneyRecordedProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// Whether [workspaceId] has issued a document or recorded money, which
+  /// fixes its country and currency (0399). Not retried: a page that cannot
+  /// tell treats the values as open, and the server still refuses.
+  MoneyRecordedProvider._({
+    required MoneyRecordedFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: _noRetry,
+         name: r'moneyRecordedProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$moneyRecordedHash();
+
+  @override
+  String toString() {
+    return r'moneyRecordedProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    final argument = this.argument as String;
+    return moneyRecorded(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MoneyRecordedProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$moneyRecordedHash() => r'4ceeff00944d59d19ed891fb480e6f17f4fbdd94';
+
+/// Whether [workspaceId] has issued a document or recorded money, which
+/// fixes its country and currency (0399). Not retried: a page that cannot
+/// tell treats the values as open, and the server still refuses.
+
+final class MoneyRecordedFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<bool>, String> {
+  MoneyRecordedFamily._()
+    : super(
+        retry: _noRetry,
+        name: r'moneyRecordedProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Whether [workspaceId] has issued a document or recorded money, which
+  /// fixes its country and currency (0399). Not retried: a page that cannot
+  /// tell treats the values as open, and the server still refuses.
+
+  MoneyRecordedProvider call(String workspaceId) =>
+      MoneyRecordedProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'moneyRecordedProvider';
+}
+
 /// #2591 C2 — the report template and image library: the preview and the
 /// editor depend on this and on nothing else of the money boundary.
 

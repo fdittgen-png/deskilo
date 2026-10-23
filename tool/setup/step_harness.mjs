@@ -105,10 +105,10 @@ const answers = (features) => ({
 // One page load: fresh globals, the resource, the script. `locale` is the
 // ?lang= parameter (null for none); the browser says `browser`; `remembered`
 // is the language this page stored on an earlier visit.
-function load(locale, stored, { browser = 'fr-FR', remembered = null, modelContext = null } = {}) {
+function load(locale, stored, { browser = 'fr-FR', remembered = null, modelContext = null, search = '' } = {}) {
   created = [];
   const byId = {};
-  for (const id of ['form','bar','rail','nav','saved','allmode','stepno','lang']) byId[id]=mk('div');
+  for (const id of ['form','bar','rail','nav','saved','allmode','expertview','expertwrap','stepno','lang']) byId[id]=mk('div');
   const chrome = { 'data-t': marked('data-t').map(k => ({k, e: mk('span')})), 'data-th': marked('data-th').map(k => ({k, e: mk('p')})) };
   for (const list of Object.values(chrome)) for (const x of list) x.e.setAttribute(list === chrome['data-t'] ? 'data-t' : 'data-th', x.k);
   const store = stored ? { 'deskilo-setup-v1': JSON.stringify(stored) } : {};
@@ -118,7 +118,7 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null, modelConte
     querySelectorAll:(sel)=>sel==='[data-t]'?chrome['data-t'].map(x=>x.e):sel==='[data-th]'?chrome['data-th'].map(x=>x.e):[],
   };
   globalThis.window = { scrollTo(){} };
-  globalThis.location = { search: locale ? `?lang=${locale}` : '' };
+  globalThis.location = { search: (locale ? `?lang=${locale}` : '') + (search ? (locale ? '&' : '?') + search : '') };
   Object.defineProperty(globalThis, 'navigator', { value:{ language:browser }, configurable:true, writable:true });
   globalThis.localStorage = { getItem:(k)=>store[k]??null, setItem:(k,v)=>{store[k]=v}, removeItem:(k)=>{delete store[k]} };
   globalThis.confirm = ()=>true;
@@ -133,6 +133,7 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null, modelConte
   eval(src + `
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
 globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
+globalThis.__applicable=()=>applicable().map(st=>st.id); globalThis.__go=go; globalThis.__setExpert=setExpert; globalThis.__cur=()=>cur;
 `);
   // The shared module and the questionnaire's tools, as the page loads them
   // after its own script (#2501).
@@ -164,7 +165,11 @@ const EXPORT_MODES = {
   },
   defaults: () => ({ name: 'Defaults Space', features: { configurationTransfer: true } }),
   'transfer-off': () => ({ name: 'Transfer Off Space', features: { configurationTransfer: false } }),
+  // #2868 — a first visit that answers the plain questions below: the file
+  // carries a <profile> the app's import keeps as the setup journey.
+  profile: () => ({ name: 'Profile Space' }),
 };
+const EXPORT_ANSWERS = { profile: ['association', 'issue_invoices', 'vat_registered', 'door_tablet'] };
 const exportFlag = process.argv.find((a) => a.startsWith('--export-xml'));
 if (exportFlag) {
   const mode = exportFlag.split('=')[1] || 'answered';
@@ -172,6 +177,7 @@ if (exportFlag) {
   if (!build) { console.error(`unknown --export-xml mode "${mode}"`); process.exit(2); }
   load('en', null); // one plain load, only to learn FEATURES
   const page = load('en', build(globalThis.__FEATURES));
+  for (const q of EXPORT_ANSWERS[mode] || []) globalThis.__answer(q, true);
   process.stdout.write(page.exportXml());
   process.exit(0);
 }
@@ -186,8 +192,11 @@ if (process.argv.includes('--recommend-all')) {
   const questions = globalThis.window.SETUP_LEVELS.questions;
   const ticked = () => Object.entries(P.S.features).filter(([, v]) => v).map(([k]) => k).sort();
   const out = { initial: ticked(), combos: [] };
+  // Answering touches only the switches and the journey: putting those two
+  // back is a fresh page, without drawing it 4096 times.
+  const fresh = JSON.stringify({ features: P.S.features, journey: P.S.journey });
   for (let bits = 0; bits < 1 << questions.length; bits++) {
-    P.reset();
+    Object.assign(P.S, JSON.parse(fresh));
     questions.forEach((q, i) => globalThis.__answer(q, (bits & (1 << i)) !== 0));
     const rec = globalThis.__recommend(P.S.journey.answers);
     out.combos.push({ bits, recommended: Object.fromEntries(Object.entries(rec).map(([p, r]) => [p, `${r.level}/${r.reason}`])),
@@ -489,6 +498,36 @@ const fakeContext = () => {
   // With the guide switched off the page is as before: no questions step.
   load('en', { name: 'Off Space', features: { setupGuide: false } });
   if (globalThis.__STEPS.find((st) => st.id === 'levels').applies()) fail('profile: the questions step shows with setupGuide off');
+}
+// #2868 — the switches are the expert view: the questions are the way
+// through, and every way to the features step still arrives there.
+{
+  const steps = () => globalThis.__applicable();
+  const page = load('en', { name: 'Expert Space' });
+  if (steps().includes('features') || !steps().includes('levels')) fail(`expert: the default path is ${steps().join(',')}`);
+  if (!page.byId.expertview || page.byId.expertview.checked) fail('expert: the expert switch is on by default');
+  const levels = globalThis.__STEPS.find((st) => st.id === 'levels');
+  const next = steps()[steps().indexOf('levels') + 1];
+  if (next === 'features') fail('expert: the questions lead to the switches');
+  // A "needs the feature" note, a finding, the rail: they all go() there.
+  globalThis.__go('features');
+  if (globalThis.__cur() !== 'features' || !steps().includes('features')) fail('expert: following a link to the features step does not open it');
+  if (!page.byId.expertview.checked) fail('expert: the switch does not show the expert view open');
+  globalThis.__setExpert(false);
+  if (steps().includes('features') || globalThis.__cur() !== 'levels') fail(`expert: closing the expert view leaves ${globalThis.__cur()}`);
+  // The levels step offers it too.
+  const shown = [];
+  const walk = (n) => { for (const c of (n.children || [])) { if (typeof c !== 'object') continue; if (c.tagName === 'BUTTON') shown.push(c); walk(c); } };
+  for (const k of levels.build()) if (k && typeof k === 'object') { if (k.tagName === 'BUTTON') shown.push(k); walk(k); }
+  if (!shown.some((b) => b._text === globalThis.window.SETUP_L10N.en.s.levelsExpertOpen || b.children.includes(globalThis.window.SETUP_L10N.en.s.levelsExpertOpen))) fail('expert: the questions step does not offer the expert view');
+  // A link straight to the step (the guide, a colleague) opens it.
+  load('en', { name: 'Linked Space' }, { search: 'step=features' });
+  if (globalThis.__cur() !== 'features' || !steps().includes('features')) fail('expert: ?step=features does not open the expert view');
+  // With the guide off, the switches are the way through, as before.
+  const off = load('en', { name: 'Off Space', features: { setupGuide: false } });
+  if (!steps().includes('features')) fail('expert: the features step is hidden with setupGuide off');
+  if (off.byId.expertwrap.style.display !== 'none') fail('expert: the expert switch shows with setupGuide off');
+  console.log('expert: the switches are the expert view; links open it');
 }
 console.log('steps:', globalThis.__STEPS.length, '| features:', globalThis.__FEATURES.length);
 console.log('locales:', LOCALES.join(','));

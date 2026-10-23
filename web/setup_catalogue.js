@@ -304,6 +304,8 @@ window.SETUP_PROCESSES=[
 ];
 window.SETUP_LEVELS={
  "questions": [
+  "association",
+  "approve_bookings",
   "members_owe_money",
   "issue_invoices",
   "pay_online",
@@ -718,6 +720,20 @@ window.SETUP_LEVELS={
     "reason": "organised",
     "any": [
      "organised"
+    ]
+   },
+   {
+    "level": "organised",
+    "reason": "association",
+    "any": [
+     "association"
+    ]
+   },
+   {
+    "level": "organised",
+    "reason": "approve_bookings",
+    "any": [
+     "approve_bookings"
     ]
    },
    {

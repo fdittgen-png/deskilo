@@ -147,6 +147,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<Statement> fetchStatement(String memberId, String period) => _accounts.fetchStatement(memberId, period);
   @override Future<List<LedgerEntry>> fetchLedger(String memberId) => _accounts.fetchLedger(memberId);
   @override Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) => _accounts.fetchWorkspaceLedger(workspaceId);
+  @override Future<bool> hasRecordedMoney(String workspaceId) => _accounts.hasRecordedMoney(workspaceId);
   @override Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) => _fetchPaymentIntentsImpl(workspaceId);
   @override Future<String> recordPayment({required String workspaceId, required String memberId, required int amountCents, String note = '', PaymentMethod? method, DateTime? paidOn, String? period}) => _recordPaymentImpl(workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, note: note, method: method, paidOn: paidOn, period: period);
   @override Future<void> recordServiceCharge({required String workspaceId, required String subjectMemberId, required String serviceId, required int quantity, String? period}) => _recordServiceChargeImpl(workspaceId: workspaceId, subjectMemberId: subjectMemberId, serviceId: serviceId, quantity: quantity, period: period);

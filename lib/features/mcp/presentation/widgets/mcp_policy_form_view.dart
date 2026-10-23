@@ -145,6 +145,7 @@ class McpPolicyFormView extends ConsumerWidget {
       McpOperationGroups.financial => l10n.mcpGroupFinancial,
       McpOperationGroups.membership => l10n.mcpGroupMembership,
       McpOperationGroups.validations => l10n.mcpGroupValidations,
+      McpOperationGroups.setup => l10n.mcpGroupSetup,
       _ => l10n.mcpGroupOther,
     };
     return [

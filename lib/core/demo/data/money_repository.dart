@@ -75,7 +75,6 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   final negotiations = <String, PriceNegotiation>{};
   final proposedNegotiations = <({String memberId, int? feeCents, int? overageFeeCents, double? discountPercent, String note, int? subscriptionPct, Map<String, Map<String, int>> items})>[];
   int negotiationReads = 0;
-
   int sweeps = 0;
 
   /// #925 — the series as the fake holds them.
@@ -440,6 +439,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<String> distributeExpense({required String workspaceId, required String title, required int amountCents, required RepartitionMethod method, required String period, required List<RepartitionShare> shares, String? sourceEventId}) => _distributeExpenseImpl(workspaceId: workspaceId, title: title, amountCents: amountCents, method: method, period: period, shares: shares, sourceEventId: sourceEventId);
   @override Future<List<ExpenseRepartition>> fetchExpenseRepartitions(String workspaceId) => _fetchExpenseRepartitionsImpl(workspaceId);
   @override Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) => _fetchWorkspaceLedgerImpl(workspaceId);
+  @override Future<bool> hasRecordedMoney(String workspaceId) async => invoices.isNotEmpty || ledger.isNotEmpty;
   @override Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) => _fetchPaymentIntentsImpl(workspaceId);
   @override Future<List<LedgerEntry>> fetchLedger(String memberId) => _fetchLedgerImpl(memberId);
   @override Future<String> recordPayment({required String workspaceId, required String memberId, required int amountCents, String note = '', PaymentMethod? method, DateTime? paidOn, String? period}) => _recordPaymentImpl(workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, note: note, method: method, paidOn: paidOn, period: period);

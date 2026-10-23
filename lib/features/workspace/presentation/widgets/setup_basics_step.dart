@@ -7,7 +7,10 @@
 // currency and time zone, redrawn as the owner picks. What the owner picks
 // and has not saved is kept as the step's draft on the server (#2869):
 // reopening the page, here or on another device, puts it back over the
-// stored values; Save applies it and drops it.
+// stored values; Save applies it and drops it. Once the space has issued a
+// document or recorded money the country and the currency are fixed
+// (0399): both show as stored, cannot be picked, and say why; before that,
+// saving a new country or currency first names what will become fixed.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,6 +21,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/lock_confirm.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/save_workspace_basics.dart';
@@ -30,8 +34,16 @@ import 'setup_basics_preview.dart';
 import 'setup_draft_frame.dart';
 
 class SetupBasicsStep extends ConsumerStatefulWidget {
-  const SetupBasicsStep({super.key, required this.workspace});
+  const SetupBasicsStep({
+    super.key,
+    required this.workspace,
+    this.moneyLocaleLocked = false,
+  });
   final Workspace workspace;
+
+  /// The space has issued a document or recorded money: its country and
+  /// currency stay as stored.
+  final bool moneyLocaleLocked;
 
   @override
   ConsumerState<SetupBasicsStep> createState() => _SetupBasicsStepState();
@@ -70,10 +82,20 @@ class _SetupBasicsStepState extends ConsumerState<SetupBasicsStep> {
   );
 
   void _fill(WorkspaceBasics basics) {
-    _country.value = basics.countryCode;
-    _currency.text = basics.currencyCode;
+    final locked = widget.moneyLocaleLocked;
+    _country.value = locked ? _stored.countryCode : basics.countryCode;
+    _currency.text = locked ? _stored.currencyCode : basics.currencyCode;
     _timezone.text = basics.timezone;
     _language.value = basics.language;
+  }
+
+  @override
+  void didUpdateWidget(SetupBasicsStep oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Known to be fixed only now: whatever a draft put back gives way.
+    if (widget.moneyLocaleLocked && !oldWidget.moneyLocaleLocked) {
+      _fill(_answers);
+    }
   }
 
   @override
@@ -104,9 +126,28 @@ class _SetupBasicsStepState extends ConsumerState<SetupBasicsStep> {
     _timezone.text = country.defaultTimezone;
   }
 
+  /// Before money is recorded, a new country or currency first names what
+  /// will become fixed; true when the save may go ahead.
+  Future<bool> _confirmLocale(WorkspaceBasics answers) async {
+    final moves =
+        answers.countryCode != _stored.countryCode ||
+        answers.currencyCode.trim() != _stored.currencyCode;
+    if (!moves || widget.moneyLocaleLocked) return true;
+    final l10n = context.l10n;
+    return confirmBeforeLock(
+      context,
+      l10n.setupLockMoneyLocaleConfirm(
+        localizedCountryName(l10n, answers.countryCode),
+        answers.currencyCode.trim(),
+      ),
+    );
+  }
+
   Future<void> _save() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     final l10n = context.l10n;
+    final answers = _answers;
+    if (!await _confirmLocale(answers) || !mounted) return;
     _busy.value = true;
     final ok = await runGuarded(
       context,
@@ -114,7 +155,7 @@ class _SetupBasicsStepState extends ConsumerState<SetupBasicsStep> {
       message: 'setup basics save failed',
       errorText: l10n.setupBasicsSaveFailed,
       action: () =>
-          ref.read(saveWorkspaceBasicsProvider).save(widget.workspace, _answers),
+          ref.read(saveWorkspaceBasicsProvider).save(widget.workspace, answers),
     );
     // Every surface that formats money or time watches the workspace
     // chain: it reads the row again whether or not both writes landed.
@@ -154,7 +195,10 @@ class _SetupBasicsStepState extends ConsumerState<SetupBasicsStep> {
               timezone: _timezone,
               language: _language,
               busy: busy,
-              onCountry: _pickCountry,
+              lockReason: widget.moneyLocaleLocked
+                  ? context.l10n.setupLockMoneyLocaleFixed
+                  : null,
+              onCountry: widget.moneyLocaleLocked ? null : _pickCountry,
               onSave: _save,
             ),
           ),
@@ -173,6 +217,7 @@ class _BasicsForm extends StatelessWidget {
     required this.timezone,
     required this.language,
     required this.busy,
+    required this.lockReason,
     required this.onCountry,
     required this.onSave,
   });
@@ -183,7 +228,12 @@ class _BasicsForm extends StatelessWidget {
   final TextEditingController timezone;
   final ValueNotifier<String> language;
   final bool busy;
-  final ValueChanged<String?> onCountry;
+
+  /// Why the country and the currency are fixed (0399); null while open.
+  final String? lockReason;
+
+  /// Null while the country is fixed.
+  final ValueChanged<String?>? onCountry;
   final VoidCallback onSave;
 
   @override
@@ -210,7 +260,11 @@ class _BasicsForm extends StatelessWidget {
             initialValue: CountryCatalog.countries.any((c) => c.code == code)
                 ? code
                 : null,
-            decoration: InputDecoration(labelText: l10n.workspaceCountryLabel),
+            decoration: InputDecoration(
+              labelText: l10n.workspaceCountryLabel,
+              helperMaxLines: 4,
+              helperText: lockReason,
+            ),
             items: [
               for (final c in CountryCatalog.countries)
                 DropdownMenuItem(
@@ -226,6 +280,7 @@ class _BasicsForm extends StatelessWidget {
           currency: currency,
           timezone: timezone,
           enabled: !busy,
+          currencyLocked: lockReason != null,
           onTimezonePicked: (zone) => timezone.text = zone,
         ),
         const SizedBox(height: AppSpacing.md),

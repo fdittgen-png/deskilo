@@ -28,6 +28,7 @@ abstract final class McpOperationGroups {
   static const financial = 'financial';
   static const membership = 'membership';
   static const validations = 'validations';
+  static const setup = 'setup';
 }
 
 @visibleForTesting

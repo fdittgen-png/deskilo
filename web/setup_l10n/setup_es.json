@@ -670,9 +670,11 @@
  "featuresUnavailableIn": "{desc} — no disponible en {country}; disponible en: {list}.",
  "featuresAvailabilityEu": "los Estados miembros de la UE",
  "setupDemoHtml": "¿Prefiere verlo primero? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Abra la guía de configuración en la demo</a>: un espacio a mitad de su configuración, solo en este dispositivo, sin enviar nada.",
- "levelsWhy": "Unas preguntas sencillas sobre su espacio fijan el nivel de cada proceso: lo que hace, nunca más. El paso siguiente conserva cada interruptor para los expertos.",
+ "levelsWhy": "Unas preguntas sencillas sobre su espacio fijan el nivel de cada proceso: lo que hace, nunca más. La vista experta conserva cada interruptor.",
  "levelsOffline": "Esta página prepara un archivo y funciona sin conexión: no ve su espacio y no dice nada de lo que está listo. La aplicación lo muestra una vez importado el archivo.",
- "levelsExpertHint": "Cada respuesta vuelve a fijar todos los niveles. Ajuste interruptores concretos en el paso siguiente; los niveles de aquí los siguen.",
+ "levelsExpertHint": "Cada respuesta vuelve a fijar todos los niveles. Ajuste interruptores concretos en la vista experta; los niveles de aquí los siguen.",
+ "levelsExpertOpen": "Abrir la vista experta: cada interruptor",
+ "setupExpertSwitches": "Mostrar cada interruptor (vista experta)",
  "levelsOk": "Niveles: {list}.",
  "levelsUnanswered": "Ninguna pregunta respondida: deciden los interruptores del paso siguiente."
 }

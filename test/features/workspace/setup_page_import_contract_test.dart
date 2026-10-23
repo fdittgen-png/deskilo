@@ -35,15 +35,17 @@ import 'package:deskilo/features/money/domain/vat_regime.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
+import 'package:deskilo/features/workspace/domain/setup_journey.dart';
+import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_import.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// The page's export in [mode] (see the harness), parsed by the app — or
-/// null when node is missing (same bargain as setup_runs_test).
-WorkspaceXmlData? pageExport(String mode) {
+/// The page's export in [mode] (see the harness) — or null when node is
+/// missing (same bargain as setup_runs_test).
+String? pageXml(String mode) {
   if (Process.runSync('node', ['--version']).exitCode != 0) {
     markTestSkipped('node is not on PATH');
     return null;
@@ -53,8 +55,14 @@ WorkspaceXmlData? pageExport(String mode) {
     '--export-xml=$mode',
   ]);
   expect(r.exitCode, 0, reason: 'the page failed to export:\n${r.stderr}');
-  return parseWorkspaceXml(r.stdout as String);
+  return r.stdout as String;
 }
+
+/// The page's export in [mode], parsed by the app.
+WorkspaceXmlData? pageExport(String mode) => switch (pageXml(mode)) {
+  final String xml => parseWorkspaceXml(xml),
+  null => null,
+};
 
 /// A space right after the import: the settings writers, the plan RPC's
 /// payload, and the configuration stored row for row.
@@ -309,6 +317,28 @@ void main() {
             'file left nothing to ask about',
       );
     });
+  });
+
+  test('#2868 — the answers of the questions step and the levels they '
+      'reached arrive as the setup journey the import keeps', () {
+    final xml = pageXml('profile');
+    if (xml == null) return;
+    const answers = SetupAnswers(
+      association: true,
+      issueInvoices: true,
+      vatRegistered: true,
+      doorTablet: true,
+    );
+    final profile = SetupProfile.fromWorkspaceXml(xml)!;
+    expect(profile.answers, answers);
+    expect(profile.levels, {
+      for (final MapEntry(:key, :value) in recommendSetupLevels(
+        answers,
+      ).entries)
+        key: value.level,
+    });
+    // The same file is one the import takes.
+    expect(parseWorkspaceXml(xml).settings.name, 'Profile Space');
   });
 
   group('the file speaks the importer\'s language', () {

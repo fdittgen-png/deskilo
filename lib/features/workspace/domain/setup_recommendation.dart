@@ -14,6 +14,8 @@ import 'setup_levels.dart';
 /// owner states about the space (ADR 0047 §3); legal obligations are not
 /// asked: they come from the tax reference data (`setup_obligations.dart`).
 const List<String> setupQuestions = [
+  'association',
+  'approve_bookings',
   'members_owe_money',
   'issue_invoices',
   'pay_online',
@@ -29,6 +31,8 @@ const List<String> setupQuestions = [
 /// The owner's answer to each of [setupQuestions].
 class SetupAnswers {
   const SetupAnswers({
+    this.association = false,
+    this.approveBookings = false,
     this.membersOweMoney = false,
     this.issueInvoices = false,
     this.payOnline = false,
@@ -47,6 +51,8 @@ class SetupAnswers {
     final r = JsonReader.of(json, context: 'setup answers');
     bool yes(String q) => r.boolOr(q, fallback: false);
     return SetupAnswers(
+      association: yes('association'),
+      approveBookings: yes('approve_bookings'),
       membersOweMoney: yes('members_owe_money'),
       issueInvoices: yes('issue_invoices'),
       payOnline: yes('pay_online'),
@@ -60,6 +66,13 @@ class SetupAnswers {
     );
   }
 
+  /// The kind of organisation: an association, a cooperative or a club
+  /// rather than a company.
+  final bool association;
+
+  /// Whether a booking waits for someone's approval; no means members
+  /// book directly.
+  final bool approveBookings;
   final bool membersOweMoney;
   final bool issueInvoices;
   final bool payOnline;
@@ -75,6 +88,8 @@ class SetupAnswers {
 
   /// The answer to [question], one of [setupQuestions].
   bool operator [](String question) => switch (question) {
+    'association' => association,
+    'approve_bookings' => approveBookings,
     'members_owe_money' => membersOweMoney,
     'issue_invoices' => issueInvoices,
     'pay_online' => payOnline,
@@ -129,6 +144,10 @@ const Map<SetupProcess, List<SetupRule>> setupRecommendationRules = {
   ],
   SetupProcess.community: [
     SetupRule('organised', 'organised', anyOf: {'organised'}),
+    // An association has its board (a treasurer, a secretary) and decides
+    // together; a booking that waits for approval needs who approves.
+    SetupRule('organised', 'association', anyOf: {'association'}),
+    SetupRule('organised', 'approve_bookings', anyOf: {'approve_bookings'}),
     SetupRule('basic', 'small_community'),
   ],
   SetupProcess.money: [
