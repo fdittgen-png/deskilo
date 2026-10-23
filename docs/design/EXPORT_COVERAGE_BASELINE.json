@@ -30,60 +30,37 @@
   ],
   "columns.levels": [
     "background_path",
-    "bookable_as_whole",
     "created_at",
-    "kind",
-    "price_cents"
+    "kind"
   ],
   "columns.offices": [
-    "area_kind",
-    "bookable_as_whole",
-    "color",
-    "created_at",
-    "h",
-    "level_id",
-    "price_cents",
-    "w",
-    "x",
-    "y"
+    "created_at"
   ],
   "columns.desks": [
-    "bookable_as_whole",
-    "created_at",
-    "price_cents"
+    "created_at"
   ],
   "columns.seats": [
-    "capacity",
     "created_at",
-    "nfc_uid",
-    "parking_kind",
-    "resource_kind",
-    "slot_minutes"
+    "nfc_uid"
   ],
   "columns.members": [
     "billing_subdivision",
     "can_reserve_level",
     "claimed_at",
-    "co_owner",
     "customer_capacity",
     "einvoice_endpoint_id",
     "einvoice_endpoint_scheme",
     "home_site_id",
-    "joined_at",
     "managed_access",
     "managed_by",
-    "managed_identity",
     "managed_name",
     "max_active_reservations",
     "max_simultaneous_reservations",
-    "member_number",
     "origin",
-    "payment_terms",
     "person_id",
     "plan_id",
     "preferred_locale_override",
     "vat_exemption_reason",
-    "vat_treatment",
     "vies_checked_at",
     "vies_consultation",
     "vies_detail",
@@ -92,27 +69,18 @@
   ],
   "columns.profiles": [
     "avatar_path",
-    "city",
     "clock",
-    "company",
     "courtesy",
     "created_at",
     "default_workspace_id",
-    "email",
-    "first_name",
     "format_locale",
     "id",
-    "last_name",
-    "legal_id",
     "person_id",
-    "phone",
     "pin_set_at",
-    "postal_code",
     "preferred_locale",
     "privacy_accepted_at",
     "privacy_accepted_version",
     "status_text",
-    "street",
     "time_zone_mode",
     "updated_at"
   ],
@@ -122,7 +90,6 @@
   ],
   "columns.ledger_entries": [
     "event_id",
-    "id",
     "supply_class",
     "vat_percent"
   ],
@@ -135,12 +102,10 @@
     "request_id"
   ],
   "columns.events": [
-    "action",
-    "actor_member_id",
-    "decided_at",
-    "id",
-    "reservation_id",
-    "status"
+    "reservation_id"
+  ],
+  "columns.event_decisions": [
+    "id"
   ],
   "columns.services": [
     "created_at",
@@ -150,10 +115,7 @@
   ],
   "columns.invoices": [
     "issuer_member_id",
-    "issuer_name",
-    "kind",
     "legal_snapshot",
-    "lines",
     "member_address",
     "member_name",
     "parties",
@@ -162,11 +124,16 @@
     "settles",
     "signature",
     "signature_algo",
-    "title",
-    "vat_totals",
     "voided_by_name",
     "workspace_address",
     "workspace_name"
+  ],
+  "columns.invoice_maturities": [
+    "basis",
+    "created_at",
+    "evidence",
+    "id",
+    "terms_days"
   ],
   "columns.invoice_transmissions": [
     "by_name",
@@ -183,15 +150,11 @@
     "status"
   ],
   "partialSources": [
-    "events",
     "invoice_transmissions",
-    "ledger_entries",
-    "offices",
     "profiles"
   ],
   "undecidedChildTables": [
     "conversation_participants",
-    "event_decisions",
     "guest_participation_audit",
     "member_employment",
     "member_preference_overrides",

@@ -76,12 +76,12 @@ part 'workspace_xml_part2.dart';
 @visibleForTesting
 abstract final class WorkspaceXmlSchema {
   /// The version the app EXPORTS.
-  static const int version = 3;
+  static const int version = 4;
 
   /// The versions the parser ACCEPTS: v1 (pre-accessories, #164), v2
   /// (#180) and v3 (#916). Anything else was exported by a newer app →
   /// unsupported.
-  static const Set<int> supportedVersions = {1, 2, 3};
+  static const Set<int> supportedVersions = {1, 2, 3, 4};
 
   static const String rootElement = 'deskilo-workspace';
   static const String versionAttr = 'version';
@@ -129,6 +129,15 @@ abstract final class WorkspaceXmlSchema {
   static const String priceCentsAttr = 'price-cents';
   static const String siteAttr = 'site';
   static const String nfcUidAttr = 'nfc-uid';
+
+  // v4 (#2860): what kind of place a seat is — a desk seat, a meeting room
+  // with its capacity and slot, a parking bay — and an area's kind. All
+  // optional: a v3 file reads as seats in workspace areas, as before.
+  static const String resourceKindAttr = 'resource-kind';
+  static const String capacityAttr = 'capacity';
+  static const String parkingKindAttr = 'parking-kind';
+  static const String slotMinutesAttr = 'slot-minutes';
+  static const String areaKindAttr = 'area-kind';
   static const String vatRateAttr = 'vat-rate';
   static const String configurationElement =
       WorkspaceXmlConfigurationSchema.element;
@@ -166,8 +175,35 @@ WorkspaceXmlSeat _parseSeat(XmlElement element) {
     blockedFrom: _optionalUtc(element, WorkspaceXmlSchema.blockedFromAttr),
     blockedTo: _optionalUtc(element, WorkspaceXmlSchema.blockedToAttr),
     nfcUid: element.getAttribute(WorkspaceXmlSchema.nfcUidAttr) ?? '',
+    resourceKind: _optionalEnum(
+            element, WorkspaceXmlSchema.resourceKindAttr, ResourceKind.values) ??
+        ResourceKind.seat,
+    capacity: _nullableInt(element, WorkspaceXmlSchema.capacityAttr),
+    parkingKind: _optionalEnum(
+        element, WorkspaceXmlSchema.parkingKindAttr, ParkingKind.values),
+    slotMinutes: _nullableInt(element, WorkspaceXmlSchema.slotMinutesAttr),
   );
 }
+
+/// v4 — an optional enum attribute, by its name; absent reads as null, an
+/// unknown word is refused with the words it may be.
+T? _optionalEnum<T extends Enum>(
+    XmlElement element, String attribute, List<T> values) {
+  final raw = element.getAttribute(attribute);
+  if (raw == null || raw.isEmpty) return null;
+  for (final v in values) {
+    if (v.name == raw) return v;
+  }
+  throw WorkspaceXmlException(WorkspaceXmlError.invalidValue,
+      '<${element.name.local}> $attribute="$raw" is not one of '
+      '${values.map((v) => v.name).join('|')}');
+}
+
+/// v4 — an optional whole number; absent reads as null.
+int? _nullableInt(XmlElement element, String attribute) =>
+    element.getAttribute(attribute) == null
+        ? null
+        : _requireInt(element, attribute, min: 1);
 
 /// v3 optional attributes: absent means the default (0 / false).
 int _optionalInt(XmlElement element, String name) =>

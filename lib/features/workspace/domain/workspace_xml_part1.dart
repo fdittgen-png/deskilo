@@ -136,6 +136,10 @@ class WorkspaceXmlSeat {
     this.blockedFrom,
     this.blockedTo,
     this.nfcUid = '',
+    this.resourceKind = ResourceKind.seat,
+    this.capacity,
+    this.parkingKind,
+    this.slotMinutes,
   });
 
   final String name;
@@ -153,6 +157,13 @@ class WorkspaceXmlSeat {
   /// The seat's NFC tag identifier (v3, #916), empty when untagged.
   final String nfcUid;
 
+  /// v4 (#2860): a desk seat, a meeting room or a parking bay; a room's
+  /// capacity, a bay's kind, the place's own booking slot.
+  final ResourceKind resourceKind;
+  final int? capacity;
+  final ParkingKind? parkingKind;
+  final int? slotMinutes;
+
   @override
   bool operator ==(Object other) =>
       other is WorkspaceXmlSeat &&
@@ -165,12 +176,16 @@ class WorkspaceXmlSeat {
       _listEquals(other.accessoryNames, accessoryNames) &&
       other.blockedFrom == blockedFrom &&
       other.blockedTo == blockedTo &&
-      other.nfcUid == nfcUid;
+      other.nfcUid == nfcUid &&
+      other.resourceKind == resourceKind &&
+      other.capacity == capacity &&
+      other.parkingKind == parkingKind &&
+      other.slotMinutes == slotMinutes;
 
   @override
   int get hashCode => Object.hash(name, x, y, orientation, chair,
       Object.hashAll(amenities), Object.hashAll(accessoryNames), blockedFrom,
-      blockedTo, nfcUid);
+      blockedTo, nfcUid, resourceKind, capacity, parkingKind, slotMinutes);
 }
 
 /// A `<desk>` with its seats nested inside.
@@ -214,10 +229,15 @@ class WorkspaceXmlOffice {
     required this.rect,
     this.desks = const [],
     this.priceCents = 0,
+    this.areaKind = 'workspace',
   });
 
   final String name;
   final int color;
+
+  /// v4 (#2860): the area's kind by its stored word (`workspace`,
+  /// `parking`); the server's check refuses any other.
+  final String areaKind;
   final bool bookableAsWhole;
   final GridRect rect;
   final List<WorkspaceXmlDesk> desks;
@@ -233,11 +253,12 @@ class WorkspaceXmlOffice {
       other.bookableAsWhole == bookableAsWhole &&
       other.rect == rect &&
       _listEquals(other.desks, desks) &&
-      other.priceCents == priceCents;
+      other.priceCents == priceCents &&
+      other.areaKind == areaKind;
 
   @override
   int get hashCode => Object.hash(name, color, bookableAsWhole, rect,
-      Object.hashAll(desks), priceCents);
+      Object.hashAll(desks), priceCents, areaKind);
 }
 
 /// A `<level>` (floor) with its offices nested inside.
