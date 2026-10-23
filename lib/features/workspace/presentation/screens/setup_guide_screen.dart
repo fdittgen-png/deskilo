@@ -11,8 +11,6 @@
 // Steps outside the levels the owner chose are not in the plan: they wait,
 // folded, under "Add more to your space". Times are ranges, never
 // promises.
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -243,11 +241,7 @@ Future<void> _open(
       .read(setupReturnPendingProvider.notifier)
     ..set(open: true);
   try {
-    // The push's own answer is not enough: a router refresh while the step
-    // is open rebuilds the stack from the reported location, and that
-    // answer never comes. The guide is back once it is on top again.
-    final back = _onTopAgain(ModalRoute.of(context));
-    await Future.any([context.push(step.route), back]);
+    await context.push(step.route);
   } finally {
     pending.set(open: false);
   }
@@ -262,24 +256,6 @@ Future<void> _openLevels(
 ) async {
   await context.push('/setup/levels');
   await reload();
-}
-
-/// Completes when [route], covered by a route pushed after this call, is
-/// the top route again and uncovered; never without a route, and not when
-/// the whole navigator goes away with the cover still on top.
-Future<void> _onTopAgain(ModalRoute<Object?>? route) {
-  final back = Completer<void>();
-  final animation = route?.secondaryAnimation;
-  void listen(AnimationStatus status) {
-    if (status != AnimationStatus.dismissed || !(route?.isCurrent ?? false)) {
-      return;
-    }
-    animation?.removeStatusListener(listen);
-    back.complete();
-  }
-
-  animation?.addStatusListener(listen);
-  return back.future;
 }
 
 class _NextCard extends ConsumerWidget {
