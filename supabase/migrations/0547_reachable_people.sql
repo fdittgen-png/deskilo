@@ -43,4 +43,4 @@ $fn$;
 revoke execute on function public.my_reachable_people() from public, anon;
 grant execute on function public.my_reachable_people() to authenticated;
 
-select public.set_deskilo_schema_version(548);
+select public.set_deskilo_schema_version(547);
