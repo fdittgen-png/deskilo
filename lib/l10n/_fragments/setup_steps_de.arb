@@ -1,0 +1,17 @@
+{
+  "setupStepPreviewTitle": "Was Ihre Mitglieder sehen",
+  "setupStepElsewhere": "Dieser Schritt wird auf einem eigenen Bildschirm erledigt.",
+  "setupStepOpenScreen": "Öffnen",
+  "setupRightsPresetTitle": "Mitglieder können buchen",
+  "setupRightsPresetBody": "Mitglieder erhalten genau diese Rechte und nichts, was den Bereich verwaltet:",
+  "setupRightsApplied": "Mitglieder haben diese Rechte bereits.",
+  "setupRightsApplyFailed": "Die Rechte konnten nicht geändert werden. Bitte versuchen Sie es erneut.",
+  "setupRightsNeedsManageRoles": "Nur wer Rollen verwaltet, kann ändern, was Mitglieder dürfen.",
+  "setupRightsOpenRoles": "In Rollen anpassen",
+  "setupRightsPreviewTitle": "Was ein Mitglied tun kann",
+  "setupRightsPreviewNone": "Noch nichts: Mitglieder können nicht buchen.",
+  "setupRightsPreviewAdmin": "Mitglieder können auch Teile des Bereichs verwalten. Prüfen Sie das unter Rollen.",
+  "setupInvitePreviewTitle": "Die Einladung, wie Ihre Mitglieder sie erhalten",
+  "setupInvitePreviewNote": "Jede Einladung, die Sie senden, trägt statt der ID des Bereichs einen eigenen Einmalcode.",
+  "setupInviteShareFailed": "Der QR-Code konnte nicht geteilt werden. Bitte versuchen Sie es erneut."
+}

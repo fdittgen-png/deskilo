@@ -24,7 +24,7 @@ import 'invite_roles_picker.dart';
 
 /// The five help/app languages, by endonym — the invitee reads the
 /// message, so the sender picks THEIR language, defaulting to the app's.
-const _inviteLanguages = <String, String>{
+const inviteLanguages = <String, String>{
   'en': 'English',
   'fr': 'Français',
   'de': 'Deutsch',
@@ -40,7 +40,6 @@ const _inviteLanguages = <String, String>{
 /// (#318) so it renders as a visually distinct code; [InviteUriCodec.
 /// extractCode] strips the markers back out when the whole message is
 /// pasted into the join field.
-@visibleForTesting
 String buildInvitationMessage({
   required Workspace workspace,
   required String code,
@@ -156,7 +155,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
   /// else the sender's app language.
   String _defaultLanguage(BuildContext context) {
     final configured = widget.workspace.defaultLocale;
-    if (_inviteLanguages.containsKey(configured)) return configured;
+    if (inviteLanguages.containsKey(configured)) return configured;
     return Localizations.localeOf(context).languageCode;
   }
 
@@ -366,7 +365,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
         Wrap(
           spacing: AppSpacing.xs,
           children: [
-            for (final entry in _inviteLanguages.entries)
+            for (final entry in inviteLanguages.entries)
               ChoiceChip(
                 key: ValueKey('invite-lang-${entry.key}'),
                 label: Text(entry.value),
