@@ -8,6 +8,23 @@
   "capabilities": {
     "operation_header": "The server revalidates `x-deskilo-operation: <id>@<version>` before a participant mutation and refuses a version it does not support. An unlabelled request is a client from before negotiation and means the operation's `unlabelled` version."
   },
+  "roles": {
+    "description": "#2561 L1 (#2413 D1). What kind of installation answers. A personal home hosts people and no workspace; a workspace host hosts coworking spaces; a combined installation (every installation from before the split, and the default) is both. The descriptor lists `roles` as installation_identity.roles holds them and `role_capabilities`, the capability version each held role carries. A role grants nothing: a client that needs a personal home checks the role and understands its capability before it trusts the installation; a server from before the roles lists neither key and is read as combined.",
+    "default": [
+      "personal_home",
+      "workspace_host"
+    ],
+    "values": {
+      "personal_home": {
+        "capability": "personal@1",
+        "description": "Hosts the person's home: profile, preferences, privacy, personal conversations. Refuses every workspace row (SQLSTATE DKR01)."
+      },
+      "workspace_host": {
+        "capability": "workspace@1",
+        "description": "Hosts coworking workspaces: members, roles, bookings, money, approvals, workspace conversations."
+      }
+    }
+  },
   "lifecycle": "Reserved for #1850's capability maturity and lifecycle metadata. This installation publishes none: the descriptor carries no `lifecycle`, and a client never infers a maturity from its absence. A lifecycle term a client does not understand, listed in its `must_understand`, makes that one operation unavailable, never the others.",
   "surfaces": {
     "public": "Anonymous discovery of deliberately published projections. The request carries the installation's publishable key only; a session bearer is never sent (a fresh client per origin behind OriginOnlyClient).",
@@ -314,6 +331,12 @@
           "required": true
         },
         "capabilities": {
+          "type": "string_list"
+        },
+        "roles": {
+          "type": "string_list"
+        },
+        "role_capabilities": {
           "type": "string_list"
         },
         "operations": {

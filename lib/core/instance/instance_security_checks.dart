@@ -239,3 +239,79 @@ List<DoctorFinding> checkGuards(List<Map<String, Object?>> rows) {
     ),
   ];
 }
+
+/// #2561 — what this installation is (`installation_identity.roles`)
+/// beside the operational rows it holds. `to_jsonb(i) -> 'roles'` answers
+/// null on a schema from before the column instead of failing the probe.
+const String installationRolesSql = '''
+select to_jsonb(i) -> 'roles' as roles,
+       (select count(*) from public.workspaces) as workspaces,
+       (select count(*) from public.members) as members
+  from public.installation_identity i;
+''';
+
+/// #2561 — the roles the operator declared, and the one state that must
+/// never be: a personal home holding workspaces or members.
+List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
+  if (rows.isEmpty) {
+    return const [
+      DoctorFinding(DoctorLevel.alarm, 'Installation roles',
+          'the identity query returned no row: installation_identity has '
+              'no singleton (0269)'),
+    ];
+  }
+  final row = rows.first;
+  final raw = row['roles'];
+  final roles = raw is List ? [for (final r in raw) '$r'] : const <String>[];
+  int count(String key) => int.tryParse('${row[key] ?? 0}') ?? 0;
+  final workspaces = count('workspaces');
+  final members = count('members');
+  final held = '$workspaces workspace${workspaces == 1 ? '' : 's'}, '
+      '$members member${members == 1 ? '' : 's'}';
+  if (raw == null) {
+    return [
+      DoctorFinding(
+        DoctorLevel.warn,
+        'Installation roles not declared',
+        'the schema predates the roles column; the installation behaves as '
+            'combined (personal home and workspace host) — $held.\n'
+            '        Fix: dart run tool/instance.dart install --ref <ref>',
+      ),
+    ];
+  }
+  const known = {'personal_home', 'workspace_host'};
+  if (roles.isEmpty || !roles.every(known.contains)) {
+    return [
+      DoctorFinding(
+        DoctorLevel.alarm,
+        'Installation roles are not a known set',
+        '${roles.join(', ')}\n'
+            '        Only personal_home and workspace_host exist; '
+            'operator_set_installation_roles writes a valid set.',
+      ),
+    ];
+  }
+  final hostsWorkspaces = roles.contains('workspace_host');
+  if (!hostsWorkspaces && (workspaces > 0 || members > 0)) {
+    return [
+      DoctorFinding(
+        DoctorLevel.alarm,
+        'A personal home holds operational rows',
+        '$held on an installation declared personal_home only.\n'
+            '        operator_set_installation_roles refuses this state, so '
+            'the rows arrived around it: inspect before anyone relies on '
+            'this host.',
+        count: workspaces + members,
+      ),
+    ];
+  }
+  final kind = !roles.contains('personal_home')
+      ? 'workspace host'
+      : hostsWorkspaces
+          ? 'combined'
+          : 'personal home';
+  return [
+    DoctorFinding(DoctorLevel.ok, 'Installation roles',
+        '$kind (${roles.join(', ')}) — $held'),
+  ];
+}

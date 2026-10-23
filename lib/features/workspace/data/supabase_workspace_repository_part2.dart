@@ -136,6 +136,10 @@ extension _SupabaseWorkspaceRepositoryPart2 on SupabaseWorkspaceRepository {
     }
   }
 
+  /// The stored birth record; empty on a server from before the column.
+  String _networkIdOf(Map<String, dynamic> row) =>
+      row['network_id'] as String? ?? '';
+
   Workspace _workspaceFromRow(Map<String, dynamic> row) => Workspace(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,
@@ -154,6 +158,7 @@ extension _SupabaseWorkspaceRepositoryPart2 on SupabaseWorkspaceRepository {
         // 0160, and those are development spaces.
         environment: row['environment'] as String? ?? 'dev',
         pairId: row['pair_id'] as String? ?? '',
+        networkId: _networkIdOf(row),
         paymentInstructions:
             row['payment_instructions'] as Map<String, dynamic>? ?? const {},
         whatsappGroup: row['whatsapp_group'] as String? ?? '',

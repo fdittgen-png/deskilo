@@ -398,4 +398,10 @@ const Map<String, Set<String>> _notExportedColumns = {
     // workbook that is shared on.
     'pin_hash',
   },
+  'workspaces': {
+    // The birth record `installation id:local id` (#2561): stamped by the
+    // host the row was born on and recomputable from it; a workbook that
+    // moves between installations must not carry it as data.
+    'network_id',
+  },
 };

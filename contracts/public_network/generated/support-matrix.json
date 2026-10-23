@@ -218,19 +218,19 @@
   ],
   "hashes": {
     "sources": {
-      "contracts/public_network/operations.json": "cc86cc3061ba7051408aa462a13de468b5f8e217ae4d71223ecb9982ba53b1d8",
+      "contracts/public_network/operations.json": "d83a924de595bebd4003640e2253b14826d7635fae5bd262fffe8d2bccbad546",
       "contracts/public_network/support.json": "8457a89593641d6ef7fe028be57520f5884deb49ca28d69ba265f54b1cf85585"
     },
     "artifacts": {
-      "lib/core/public_network/public_network_operations.dart": "198c3c3a79951b301de58f99bdd5f6523daf2cb0f77cce96176570fd9af32e11",
-      "public_network_descriptor()": "a241bc44f17f7029f49195b02412d5142de31e1522037aa5fdf97a030891ea55"
+      "lib/core/public_network/public_network_operations.dart": "cd62ee381f86dd96c2be2247363d184cf3f7035780271c794e67358e06f6cb77",
+      "public_network_descriptor()": "1b402a737cbf96f352a3f19f067bddfde280fa2f1dfa176eaa0699d62f9372e7"
     },
     "evidence": {
       "supabase/tests/database/130_public_network_negotiation.sql": "1e9e84cc05cacff545b9e686c65d14066fdacf49fd15a48fd797c53fc953acb8",
       "test/core/public_network/public_network_codec_test.dart": "f40b0596cea349131d15d97311672ba58861aa7da3922d3cdb77df52760bf15c",
-      "test/core/public_network/public_network_negotiation_test.dart": "106e53c751b096087d212a28fd3f5be387569fabdaf7ff45ccb0a3bd195f175e",
+      "test/core/public_network/public_network_negotiation_test.dart": "c3c75df7c058ff975575d76e7107fbc565d68353bbea8a294b2ea7b138d93c86",
       "test/features/directory/participant_negotiation_test.dart": "df6291acac00af0a99da82fb055cb161d35a69a7c7b4c1535990086d06da276a",
-      "test/fixtures/public_network/descriptor_current.json": "51fb6f5b32d4a232b3ad92865c03dcd2eb6e8cc21c24176fc5aa7cb95b683189",
+      "test/fixtures/public_network/descriptor_current.json": "2014d47c86cc9d02d7795ab6eda460208304d0f6a120c6b4eca9ce71bf9638a9",
       "test/fixtures/public_network/legacy_server_no_descriptor.json": "577eea25d7b5cd945504ed49c6eef95096155d8d46185587fab3efdbd86b9859",
       "test/fixtures/public_network/released_client_requests.json": "35192f11ad727121ab15c4f108efb99315afdcbd973506f01dab57d6c9cd42e0",
       "test/fixtures/public_network/synthetic_newer_server.json": "92c5f27107d9d09b21b8bf0e667508e822c31754f38c6a845f9ba053319cfdbf",

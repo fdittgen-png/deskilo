@@ -72,6 +72,13 @@ sealed class Workspace with _$Workspace implements SystemStamped, SpaceSide {
     /// share it. Empty for a lone workspace.
     @Default('') String pairId,
 
+    /// The workspace's network identity (`workspaces.network_id`): the
+    /// birth record `installation id:local id` the server stamped, unique
+    /// across installations, never updated. Empty for a row read from a
+    /// server that predates the column; the target then falls back to
+    /// `installation:workspace`.
+    @Default('') String networkId,
+
     /// Owner-configured payment instructions (#155) as stored — decode
     /// with [PaymentInstructions.fromDb]. Empty = none configured.
     @Default(<String, dynamic>{}) Map<String, dynamic> paymentInstructions,

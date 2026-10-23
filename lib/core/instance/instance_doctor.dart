@@ -65,13 +65,11 @@ class InstanceDoctor {
   static const Set<String> expectedBuckets = {'avatars', 'floor-plans'};
 
   /// Every question on its own, so one that fails never silences the
-  /// others (#1314).
-  ///
-  /// The install used to be asked in ONE statement with the security
-  /// checks, and that statement read `supabase_migrations` — which a
-  /// wizard-built instance did not have. The query raised, `examine`
-  /// returned nothing, and a real RLS or definer problem on that instance
-  /// sat behind a bookkeeping error.
+  /// others (#1314): the install used to be asked in ONE statement with
+  /// the security checks, and that statement read `supabase_migrations`,
+  /// which a wizard-built instance did not have. The query raised,
+  /// `examine` returned nothing, and a real RLS or definer problem on
+  /// that instance sat behind a bookkeeping error.
   Future<List<DoctorFinding>> examine(
     String ref, {
     List<String> bundleMigrations = const [],
@@ -101,6 +99,8 @@ class InstanceDoctor {
                 checkStorageScoping(await api.query(ref, storageReadPolicySql))),
         ...await _probe('Hardening',
             () async => checkGuards(await api.query(ref, guardHealthSql))),
+        ...await _probe('Installation roles',
+            () async => checkInstallationRoles(await api.query(ref, installationRolesSql))),
       ];
 
   Future<List<DoctorFinding>> _probe(

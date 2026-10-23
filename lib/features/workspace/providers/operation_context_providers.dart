@@ -83,7 +83,10 @@ Future<WorkspaceContext?> workspaceContext(Ref ref) async {
       }),
     );
   }
-  final target = WorkspaceTarget.local(
+  // The stored birth record names the target; a row from a server without
+  // the column falls back to installation:workspace.
+  final target = WorkspaceTarget.stored(
+    networkId: workspace.networkId,
     installationId: host.installationId,
     workspaceId: workspace.id,
   );

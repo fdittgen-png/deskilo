@@ -1,7 +1,7 @@
 {
   "provenance": {
     "kind": "captured",
-    "source": "public_network_descriptor() as migration 0347 defines it, read on the dev project inside a rolled-back transaction (pgTAP 106 probe), 2026-10-01; equal to renderPublicNetworkDescriptorSql's JSON (pinned by public_network_contract_test)"
+    "source": "public_network_descriptor() as migration 0347 defines it, read on the dev project inside a rolled-back transaction (pgTAP 106 probe), 2026-10-01; equal to renderPublicNetworkDescriptorSql's JSON (pinned by public_network_contract_test). The `roles` and `role_capabilities` keys are what the 9999 definition answers on a combined installation (the default of installation_identity.roles, #2561 L1): predicted from the renderer and pgTAP 261, to be re-read on the dev project once 9999 is applied there."
   },
   "descriptor": {
     "protocol": "deskilo.public-network",
@@ -56,6 +56,14 @@
         "requires": [],
         "unlabelled": 1
       }
+    ],
+    "roles": [
+      "personal_home",
+      "workspace_host"
+    ],
+    "role_capabilities": [
+      "personal@1",
+      "workspace@1"
     ]
   }
 }

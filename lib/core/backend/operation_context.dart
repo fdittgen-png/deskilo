@@ -77,8 +77,9 @@ class WorkspaceTarget {
     required this.workspaceId,
   });
 
-  /// The target as the installation's own birth record names it:
-  /// `installationId:workspaceId` until `workspaces.network_id` exists.
+  /// The target of a row that carries no stored `network_id` (a server
+  /// from before the column, a fixture): the birth record as the server
+  /// would stamp it, `installationId:workspaceId`.
   factory WorkspaceTarget.local({
     required String installationId,
     required String workspaceId,
@@ -88,6 +89,25 @@ class WorkspaceTarget {
         installationId: installationId,
         workspaceId: workspaceId,
       );
+
+  /// The target as the workspace row names it: the stored `network_id`
+  /// (the installation's own birth record, never recomputed here) when the
+  /// row carries one, [WorkspaceTarget.local] otherwise.
+  factory WorkspaceTarget.stored({
+    required String networkId,
+    required String installationId,
+    required String workspaceId,
+  }) =>
+      networkId.isEmpty
+          ? WorkspaceTarget.local(
+              installationId: installationId,
+              workspaceId: workspaceId,
+            )
+          : WorkspaceTarget(
+              networkId: networkId,
+              installationId: installationId,
+              workspaceId: workspaceId,
+            );
 
   final String networkId;
   final String installationId;

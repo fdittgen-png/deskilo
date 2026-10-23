@@ -468,6 +468,70 @@ void _securityChecks() {
     });
   });
 
+  group('installation roles (#2561)', () {
+    List<Map<String, Object?>> identity(
+      Object? roles, {
+      Object workspaces = 0,
+      Object members = 0,
+    }) =>
+        [
+          {'roles': roles, 'workspaces': workspaces, 'members': members},
+        ];
+
+    test('a combined installation with rows is healthy and says what it is',
+        () {
+      final f = checkInstallationRoles(identity(
+          ['personal_home', 'workspace_host'],
+          workspaces: 4, members: 12)).single;
+      expect(f.level, DoctorLevel.ok);
+      expect(f.title, 'Installation roles');
+      expect(f.detail, contains('combined'));
+      expect(f.detail, contains('4 workspaces, 12 members'));
+    });
+
+    test('a personal home with nothing operational is healthy', () {
+      final f = checkInstallationRoles(identity(['personal_home'])).single;
+      expect(f.level, DoctorLevel.ok);
+      expect(f.detail, contains('personal home'));
+    });
+
+    test('a workspace host that is nobody\'s home is healthy', () {
+      final f = checkInstallationRoles(
+          identity(['workspace_host'], workspaces: 2, members: 3)).single;
+      expect(f.level, DoctorLevel.ok);
+      expect(f.detail, contains('workspace host'));
+    });
+
+    test('a personal home holding workspaces or members is the alarm, '
+        'counted', () {
+      final f = checkInstallationRoles(
+          identity(['personal_home'], workspaces: '1', members: '2')).single;
+      expect(f.level, DoctorLevel.alarm);
+      expect(f.title, 'A personal home holds operational rows');
+      expect(f.count, 3);
+      expect(f.detail, contains('1 workspace, 2 members'));
+    });
+
+    test('a schema from before the roles warns and names the fix, never a '
+        'green tick', () {
+      final f = checkInstallationRoles(identity(null, workspaces: 1)).single;
+      expect(f.level, DoctorLevel.warn);
+      expect(f.title, contains('not declared'));
+      expect(f.detail, contains('install --ref'));
+    });
+
+    test('a set the contract does not know is an alarm', () {
+      expect(checkInstallationRoles(identity(['owner'])).single.level,
+          DoctorLevel.alarm);
+      expect(checkInstallationRoles(identity(const [])).single.level,
+          DoctorLevel.alarm);
+    });
+
+    test('no row is an alarm: the singleton is missing', () {
+      expect(checkInstallationRoles(const []).single.level, DoctorLevel.alarm);
+    });
+  });
+
   group('the public report', () {
     test('a scheduled run publishes levels, titles and counts — never a '
         'policy, a table or a function', () {

@@ -44,6 +44,25 @@ void main() {
     expect(a.sameOperationAs(b), isFalse);
   });
 
+  test('a stored network id names the target; a row without one falls back '
+      'to installation:workspace', () {
+    final born = WorkspaceTarget.stored(
+      networkId: 'inst-born:ws-1',
+      installationId: 'inst-a',
+      workspaceId: 'ws-1',
+    );
+    expect(born.networkId, 'inst-born:ws-1');
+    expect(born.installationId, 'inst-a');
+    expect(
+      WorkspaceTarget.stored(
+        networkId: '',
+        installationId: 'inst-a',
+        workspaceId: 'ws-1',
+      ),
+      WorkspaceTarget.local(installationId: 'inst-a', workspaceId: 'ws-1'),
+    );
+  });
+
   test('another local account on the same target has its own namespace', () {
     expect(
       _context(localUser: 'u-1').cacheNamespace,

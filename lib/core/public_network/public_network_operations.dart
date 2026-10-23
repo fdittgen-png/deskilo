@@ -109,6 +109,8 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
       'protocol': PublicField(PublicFieldType.enum_, required: true, values: ['deskilo.public-network']),
       'protocol_versions': PublicField(PublicFieldType.integerList, required: true),
       'capabilities': PublicField(PublicFieldType.stringList),
+      'roles': PublicField(PublicFieldType.stringList),
+      'role_capabilities': PublicField(PublicFieldType.stringList),
       'operations': PublicField(PublicFieldType.array, required: true, schema: 'DescriptorOperation', maxItems: 200),
     },
     mustUnderstand: 'must_understand',

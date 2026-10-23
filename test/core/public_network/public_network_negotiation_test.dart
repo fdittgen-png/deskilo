@@ -59,6 +59,17 @@ void main() {
         for (final op in publicNetworkOperations.values)
           if (op.surface.name != 'management') op.id,
       });
+      // #2561 L1 -- a combined installation advertises both roles and the
+      // capability version each one carries.
+      expect(s.roles, ['personal_home', 'workspace_host']);
+      expect(s.roleCapabilities, ['personal@1', 'workspace@1']);
+    });
+
+    test('a server from before the roles is read as a combined installation',
+        () {
+      final s = server('synthetic_retired_v1') as PublicNegotiatingServer;
+      expect(s.roles, isEmpty);
+      expect(s.roleCapabilities, isEmpty);
     });
   });
 

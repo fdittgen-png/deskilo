@@ -156,6 +156,8 @@ List<TemplateFieldSpec> _workspaceColumns() => [
         'created_datetime', 'modified_datetime', 'company_id', 'site_id',
         'created_by_user', 'modified_by_user'])
         _f('workspace.$c', 'workspace', _text, p: _never, reason: 'which row and which twin this is'),
+      _f('workspace.network_id', 'workspace', _text, p: _never,
+          reason: 'the birth record of this row on its own installation'),
       _f('workspace.dev_mode', 'workspace', _bool, p: _never, reason: "this space's own switch"),
       for (final c in ['visibility', 'visibility_set_at'])
         _f('workspace.$c', 'workspace', _text, p: _never,
