@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/backend/connected_installations.dart';
 import '../../../core/data/system_columns.dart';
+import '../../workspace/domain/workspace.dart';
 import '../domain/linked_me_repository.dart';
 import '../domain/my_spaces.dart';
 import '../domain/visibility.dart';
@@ -49,7 +50,9 @@ class SupabaseLinkedMeRepository implements LinkedMeRepository {
           id: row['id'] as String,
           name: row['name'] as String? ?? '',
           pairId: row['pair_id'] as String? ?? '',
-          environment: row['environment'] as String? ?? '',
+          environment: WorkspaceEnvironment.fromWire(
+            row['environment'] as String?,
+          ),
           standing: standingOf(byWorkspace[row['id']]?['status'] as String?),
           isOwner: byWorkspace[row['id']]?['is_owner'] == true,
           isAdmin: byWorkspace[row['id']]?['is_admin'] == true,

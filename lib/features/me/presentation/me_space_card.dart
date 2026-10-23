@@ -22,6 +22,7 @@ import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/space_pairs.dart';
 import '../providers/me_providers.dart';
 import '../providers/space_attention_provider.dart';
 import '../providers/space_prefs_provider.dart';
@@ -55,14 +56,14 @@ class MeSpaceCard extends ConsumerWidget {
     final words = l10n;
     final role = member == null ? null : memberRoleLabel(l10n, member!);
     final demo = DemoEnvironment.maybeOf(context) != null;
-    final environment = demo ? words.demoSessionBadge : space.environment == 'prod'
+    final isProd = space.env.isProduction;
+    final environment = demo ? words.demoSessionBadge : isProd
         ? words.uxRealWorkspace
         : words.uxTestSpace;
     final status = _pending
         ? (l10n.meSpacePending)
         : role;
     final brightness = Theme.of(context).brightness;
-    final isProd = space.environment == 'prod';
     // #2313 — what waits for me on THIS side, so the app icon's count
     // can be traced to its space and environment.
     final waiting = _hasAccess

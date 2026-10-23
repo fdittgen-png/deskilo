@@ -20,6 +20,7 @@ import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/presentation/widgets/brand_swatch.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
+import '../domain/space_pairs.dart';
 import '../providers/space_prefs_provider.dart';
 import 'me_space_card.dart';
 import 'me_workspace_row.dart';
@@ -151,14 +152,14 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
     final l10n = context.l10n;
     final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
     final notifier = ref.read(spacePrefsProvider.notifier);
-    final byKey = <String, List<Workspace>>{};
     // Unplaced spaces keep the order they come in, the last used one first.
-    for (final space in [
-      ...widget.spaces.where((w) => w.id == widget.lastUsedId),
-      ...widget.spaces.where((w) => w.id != widget.lastUsedId),
-    ]) {
-      byKey.putIfAbsent(spaceRowKeyOf(space), () => []).add(space);
-    }
+    final byKey = {
+      for (final sides in pairSides([
+        ...widget.spaces.where((w) => w.id == widget.lastUsedId),
+        ...widget.spaces.where((w) => w.id != widget.lastUsedId),
+      ]))
+        spaceRowKeyOf(sides.first): sides,
+    };
     String nameOf(String key) => byKey[key]!.first.name;
     final query = _query.trim().toLowerCase();
     final visible = [
@@ -267,8 +268,6 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
   ) {
     final l10n = context.l10n;
     final notifier = ref.read(spacePrefsProvider.notifier);
-    final sides = [...group]
-      ..sort((a, b) => b.environment.compareTo(a.environment));
     return MeWorkspaceRow(
       key: ValueKey('me-space-pair-${group.first.pairId.isEmpty ? group.first.id : group.first.pairId}'),
       dragIndex: dragIndex,
@@ -282,7 +281,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
         onMoveToGroup: () => _pickGroup(context, key),
         hostedOn: _hostedOn(l10n),
         leave: [
-          for (final space in sides)
+          for (final space in group)
             SpaceLeaveItem(
               id: space.id,
               label: (_memberOf(space)?.isOwner ?? false)
@@ -290,7 +289,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
                   : group.length == 1
                   ? (l10n.meLeaveAction)
                   : (l10n.meLeaveSide(
-                          space.environment == 'prod'
+                          space.env.isProduction
                               ? l10n.profilesPairProd
                               : l10n.profilesPairDev,
                         )),
@@ -311,7 +310,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
           : null,
       avatar: WorkspaceAvatar(workspace: group.first),
       // #2313 — production's identity when the pair has one.
-      brand: spaceBrand(sides.first),
+      brand: spaceBrand(group.first),
       name: group.first.name,
       lastUsed: group.any((s) => s.id == widget.lastUsedId),
       detail: {
@@ -321,9 +320,9 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
       }.join(' · '),
       actions: [
         // A space without a production side keeps development at the right.
-        if (!group.any((s) => s.environment == 'prod'))
+        if (!group.any((s) => s.env.isProduction))
           const Spacer(flex: MeSpaceCard.prodFlex),
-        for (final space in sides)
+        for (final space in group)
           MeSpaceCard(
             space: space,
             member: _memberOf(space),

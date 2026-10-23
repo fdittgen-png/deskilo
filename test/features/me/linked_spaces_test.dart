@@ -76,13 +76,12 @@ void main() {
           id: 'dev',
           name: 'COWORKONTI',
           pairId: 'pair',
-          environment: 'dev',
         ),
         LinkedSpace(
           id: 'prod',
           name: 'COWORKONTI',
           pairId: 'pair',
-          environment: 'prod',
+          environment: WorkspaceEnvironment.production,
         ),
       ];
     final router = await pumpMeApp(

@@ -18,6 +18,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/server_label.dart';
 import '../domain/visibility.dart';
 import '../providers/me_providers.dart';
 import 'visibility_card.dart';
@@ -49,17 +50,17 @@ class LinkedVisibilityCard extends ConsumerWidget {
             Builder(
               builder: (context) {
                 final url = source.endpoint.url;
-                final host = Uri.tryParse(url)?.host ?? url;
+                final label = serverLabel(words, url);
                 return ListTile(
-                  key: ValueKey('linked-visibility-$host'),
+                  key: ValueKey('linked-visibility-${source.endpoint.host}'),
                   leading: const Icon(Icons.dns_outlined),
-                  title: Text(words.visibilityOnServer(host)),
+                  title: Text(words.visibilityOnServer(label)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => showAppSheet<void>(
                     context: context,
                     isScrollControlled: true,
                     builder: (_) =>
-                        LinkedVisibilitySheet(source: url, host: host),
+                        LinkedVisibilitySheet(source: url, label: label),
                   ),
                 );
               },
@@ -75,11 +76,13 @@ class LinkedVisibilitySheet extends ConsumerWidget {
   const LinkedVisibilitySheet({
     super.key,
     required this.source,
-    required this.host,
+    required this.label,
   });
 
   final String source;
-  final String host;
+
+  /// How the server is named to the person ([serverLabel]).
+  final String label;
 
   Future<void> _choose(
     BuildContext context,
@@ -138,7 +141,7 @@ class LinkedVisibilitySheet extends ConsumerWidget {
         children: [
           ListTile(
             title: Text(
-              words.visibilityOnServer(host),
+              words.visibilityOnServer(label),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -146,7 +149,7 @@ class LinkedVisibilitySheet extends ConsumerWidget {
             InlineBanner(
               key: const ValueKey('linked-visibility-unavailable'),
               icon: Icons.cloud_off_outlined,
-              text: words.visibilityOnServerUnavailable(host),
+              text: words.visibilityOnServerUnavailable(label),
               actionLabel: words.commonRetry,
               onAction: () => ref.invalidate(linkedVisibilityProvider(source)),
             )
