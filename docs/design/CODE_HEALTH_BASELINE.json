@@ -1,8 +1,8 @@
 {
-  "recordedSha": "c0807a15647e08e662b3964a002a34906e99bec0",
+  "recordedSha": "a59b2e0559da457490673a2530b3225fba52af95",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1804,"functions":10078,"cyclomatic>=9":1071,"cyclomatic>=25":106,"cognitive>=15":432,"cognitive>=30":95,"length>=150":74,"parameters>=5":488,"parameters>=7":151,"partOfFiles":42},
+  "totals": {"files":1805,"functions":10081,"cyclomatic>=9":1071,"cyclomatic>=25":106,"cognitive>=15":432,"cognitive>=30":95,"length>=150":74,"parameters>=5":488,"parameters>=7":151,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -2287,6 +2287,7 @@
     {"p":"lib/features/workspace/domain/public_holidays.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":10,"cyc":12,"len":28,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/role_assignment.dart","loc":97,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":8,"cyc":10,"len":29,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/role_permission_repository.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/domain/setup_steps.dart","loc":301,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":12,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/site.dart","loc":79,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":12,"len":25,"params":9,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/workspace/domain/site_repository.dart","loc":11,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/space_code_entries.dart","loc":85,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":20,"cyc":13,"len":82,"params":5,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
