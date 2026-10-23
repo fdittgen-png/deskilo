@@ -21,7 +21,7 @@ import 'package:archive/archive.dart';
 /// time zone first. [XlsxDate] marks a day without a time, [XlsxAmount] a
 /// money amount shown with two decimals.
 class XlsxSheet {
-  const XlsxSheet({required this.name, required this.rows});
+  const XlsxSheet({required this.name, required this.rows, this.totals});
 
   /// Tab name. Sanitised on write: Excel refuses names longer than 31
   /// chars or containing []:*?/\ — silently producing an unopenable file
@@ -31,6 +31,11 @@ class XlsxSheet {
   /// First row is the header. Cells: String, num, bool, DateTime,
   /// [XlsxDate], [XlsxAmount] or null.
   final List<List<Object?>> rows;
+
+  /// The label of a totals row under the data, outside the filter: every
+  /// amount column summed with SUBTOTAL, so a filtered sheet totals what
+  /// it shows. Null writes none.
+  final String? totals;
 }
 
 /// #2861 — a calendar day, written as a date without a time.
@@ -95,6 +100,8 @@ const _header = 1;
 const _dateTime = 2;
 const _date = 3;
 const _amount = 4;
+const _total = 5;
+const _totalAmount = 6;
 
 /// Days since Excel's epoch (1899-12-30) at [d]'s wall-clock time.
 num _serial(DateTime d) =>
@@ -135,6 +142,48 @@ double _width(List<List<Object?>> rows, int column) {
   return (widest > 60 ? 60 : widest) + 2.0;
 }
 
+/// Whether column [c] holds amounts and nothing else (blanks aside).
+bool _amountColumn(XlsxSheet sheet, int c) {
+  var any = false;
+  for (final row in sheet.rows.skip(1)) {
+    final value = c < row.length ? row[c] : null;
+    if (value is XlsxAmount) {
+      any = true;
+    } else if (value != null) {
+      return false;
+    }
+  }
+  return any;
+}
+
+/// The totals row, one blank row below the data so a re-applied filter
+/// does not take it in: [label] in the first column that sums nothing, a
+/// SUBTOTAL under every amount column with the whole sum as its value.
+String _totalsRow(XlsxSheet sheet, String label) {
+  final r = sheet.rows.length + 2;
+  final cells = StringBuffer();
+  var labelled = false;
+  for (var c = 0; c < sheet.rows.first.length; c++) {
+    final ref = '${_column(c)}$r';
+    if (_amountColumn(sheet, c)) {
+      final sum = sheet.rows.skip(1).fold<num>(
+        0,
+        (s, row) => c < row.length && row[c] is XlsxAmount
+            ? s + (row[c]! as XlsxAmount).value
+            : s,
+      );
+      final column = _column(c);
+      cells.write('<c r="$ref" s="$_totalAmount"><f>SUBTOTAL(109,'
+          '${column}2:$column${sheet.rows.length})</f>'
+          '<v>${num.parse(sum.toStringAsFixed(6))}</v></c>');
+    } else if (!labelled) {
+      labelled = true;
+      cells.write(_text(ref, label, style: _total));
+    }
+  }
+  return '<row r="$r">$cells</row>';
+}
+
 /// The cell range a sheet's filter covers: the header and every row.
 String _range(XlsxSheet sheet) {
   final columns = sheet.rows.fold(0, (m, r) => r.length > m ? r.length : m);
@@ -153,6 +202,9 @@ String _worksheet(XlsxSheet sheet) {
           : _cell(ref, cells[c]));
     }
     rows.write('</row>');
+  }
+  if (sheet.totals case final label? when sheet.rows.length > 1) {
+    rows.write(_totalsRow(sheet, label));
   }
   final header = sheet.rows.isEmpty ? const <Object?>[] : sheet.rows.first;
   final cols = StringBuffer();
@@ -193,6 +245,9 @@ String _workbook(List<XlsxSheet> sheets) {
       'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/'
       'relationships"><sheets>$entries</sheets>'
       '${filters.isEmpty ? '' : '<definedNames>$filters</definedNames>'}'
+      // A totals row's cached value is its whole sum; recalculating on
+      // open makes it follow the filter at once.
+      '<calcPr fullCalcOnLoad="1"/>'
       '</workbook>';
 }
 
@@ -238,7 +293,8 @@ const _rootRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
     'Target="xl/workbook.xml"/></Relationships>';
 
 /// The styles: 0 plain, 1 the header (bold on a light fill), 2 a date and
-/// time, 3 a date, 4 an amount with two decimals.
+/// time, 3 a date, 4 an amount with two decimals, 5 a totals label and 6
+/// a total (both bold).
 const _styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
     '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/'
     '2006/main">'
@@ -253,7 +309,7 @@ const _styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
     '<borders count="1"><border/></borders>'
     '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" '
     'borderId="0"/></cellStyleXfs>'
-    '<cellXfs count="5">'
+    '<cellXfs count="7">'
     '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
     '<xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" '
     'applyFont="1" applyFill="1"/>'
@@ -263,6 +319,10 @@ const _styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
     'applyNumberFormat="1"/>'
     '<xf numFmtId="4" fontId="0" fillId="0" borderId="0" xfId="0" '
     'applyNumberFormat="1"/>'
+    '<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" '
+    'applyFont="1"/>'
+    '<xf numFmtId="4" fontId="1" fillId="0" borderId="0" xfId="0" '
+    'applyFont="1" applyNumberFormat="1"/>'
     '</cellXfs>'
     '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/>'
     '</cellStyles></styleSheet>';
