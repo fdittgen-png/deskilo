@@ -3092,6 +3092,13 @@
   "directoryReservedToday": "Prenotato oggi",
   "directoryTitle": "Membri",
   "directoryWhatsapp": "Chatta su WhatsApp",
+  "discoveryBookmark": "Salva",
+  "discoveryNoSaved": "Nessuno spazio salvato su questo dispositivo per ora.",
+  "discoveryRemoveBookmark": "Rimuovi dai salvati",
+  "discoverySaved": "Salvato su questo dispositivo",
+  "discoverySavedFilter": "Salvati",
+  "discoveryTitle": "Scoprire spazi",
+  "discoveryView": "Vedi",
   "documentsAdd": "Aggiungi un documento",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"

@@ -3092,6 +3092,13 @@
   "directoryReservedToday": "Heute reserviert",
   "directoryTitle": "Mitglieder",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
+  "discoveryBookmark": "Merken",
+  "discoveryNoSaved": "Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.",
+  "discoveryRemoveBookmark": "Lesezeichen entfernen",
+  "discoverySaved": "Auf diesem Gerät gespeichert",
+  "discoverySavedFilter": "Gespeichert",
+  "discoveryTitle": "Arbeitsräume entdecken",
+  "discoveryView": "Ansehen",
   "documentsAdd": "Dokument hinzufügen",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"

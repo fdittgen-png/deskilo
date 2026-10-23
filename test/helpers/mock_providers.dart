@@ -8,6 +8,7 @@ import 'package:deskilo/app/shell/shell_drawer.dart' show navigationDefaultProvi
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/operation_context.dart' as personal;
 import 'package:deskilo/core/backend/schema_version.dart';
 import 'package:deskilo/core/backend/secondary_federation.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
@@ -69,8 +70,10 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/auth/providers/oauth_consent_providers.dart';
 import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
+import 'package:deskilo/features/directory/domain/saved_place.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
+import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
@@ -236,6 +239,7 @@ List<Override> standardTestOverrides({
   UpdateSeenStore Function(String)? updateSeenStore,
   NotificationFilterStore? notificationFilters,
   HelpHintStore? helpHints,
+  SavedPlacesStore? savedPlaces,
   ShellFlagStore? shellBarHidden,
   ShellFlagStore? shellSwipeCoach,
   NavigationStyleStore? navigationStyle,
@@ -402,6 +406,24 @@ List<Override> standardTestOverrides({
         .overrideWithValue(defaultWorkspace ?? InMemoryDefaultWorkspaceStore()),
     defaultLevelStoreProvider
         .overrideWithValue(defaultLevel ?? InMemoryDefaultLevelStore()),
+    // The saved public pages live in memory, and the personal context is
+    // the fake account at the test home: the real provider reads the
+    // installation row through `Supabase.instance`.
+    savedPlacesStoreProvider
+        .overrideWithValue(savedPlaces ?? InMemorySavedPlacesStore()),
+    personalContextProvider.overrideWith((ref) async {
+      final subject = await ref.watch(authStateProvider.future);
+      if (subject == null) return null;
+      return personal.PersonalContext(
+        identity: personal.CanonicalIdentity(
+          issuer: 'https://test.local/auth/v1',
+          subject: subject,
+        ),
+        homeInstallationId: 'inst-test',
+        personalLocalUserId: subject,
+        personalEpoch: 1,
+      );
+    }),
     // #586: the default booking period persists on-device.
     defaultPeriodStoreProvider
         .overrideWithValue(defaultPeriod ?? InMemoryDefaultPeriodStore()),

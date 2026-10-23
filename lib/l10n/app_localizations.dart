@@ -7573,6 +7573,48 @@ abstract class AppLocalizations {
   /// **'Chat on WhatsApp'**
   String get directoryWhatsapp;
 
+  /// No description provided for @discoveryBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmark'**
+  String get discoveryBookmark;
+
+  /// No description provided for @discoveryNoSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'No places saved on this device yet.'**
+  String get discoveryNoSaved;
+
+  /// No description provided for @discoveryRemoveBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove bookmark'**
+  String get discoveryRemoveBookmark;
+
+  /// No description provided for @discoverySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device'**
+  String get discoverySaved;
+
+  /// No description provided for @discoverySavedFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get discoverySavedFilter;
+
+  /// No description provided for @discoveryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover workspaces'**
+  String get discoveryTitle;
+
+  /// No description provided for @discoveryView.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get discoveryView;
+
   /// Workspace document library (#500)
   ///
   /// In en, this message translates to:

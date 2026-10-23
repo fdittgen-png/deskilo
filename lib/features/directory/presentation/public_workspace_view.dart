@@ -19,6 +19,7 @@ import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import 'connect_with_identity_sheet.dart';
 import 'messenger/inquiry_sheet.dart';
+import 'saved_place_button.dart';
 import 'space_offers.dart';
 import 'workspace_feedback.dart';
 
@@ -241,9 +242,9 @@ class PublicWorkspaceView extends ConsumerWidget {
     final image = Uri.tryParse(workspace.text('image_url'));
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          preview ? (l.portalPreview) : workspace.name,
-        ),
+        title: Text(preview ? l.portalPreview : workspace.name),
+        actions: [SavedPlaceButton(workspace: workspace, iconOnly: true,
+            enabled: !preview, keyPrefix: 'public-workspace-bookmark-')],
       ),
       body: ListView(
         padding: AppSpacing.mdAll,

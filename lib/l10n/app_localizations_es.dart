@@ -4438,6 +4438,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get directoryWhatsapp => 'Chatear por WhatsApp';
 
   @override
+  String get discoveryBookmark => 'Guardar';
+
+  @override
+  String get discoveryNoSaved =>
+      'Todavía no hay espacios guardados en este dispositivo.';
+
+  @override
+  String get discoveryRemoveBookmark => 'Quitar de guardados';
+
+  @override
+  String get discoverySaved => 'Guardado en este dispositivo';
+
+  @override
+  String get discoverySavedFilter => 'Guardados';
+
+  @override
+  String get discoveryTitle => 'Descubrir espacios';
+
+  @override
+  String get discoveryView => 'Ver';
+
+  @override
   String get documentsAdd => 'Añadir un documento';
 
   @override
