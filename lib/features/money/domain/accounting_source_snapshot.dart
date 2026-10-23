@@ -55,6 +55,27 @@ typedef SourcePurchase = ({
   List<SourcePurchaseLine> lines,
 });
 
+/// #2564 — the revision of each reference family a period's export depends
+/// on, named by the producer in the SAME statement as the rows (9999): the
+/// settings, the tax reference, the book profiles and the calendar. Each is
+/// an opaque server token that names data, not rows: equal data gives an
+/// equal token. An export states them so a reader knows which version of
+/// each it was made with.
+typedef AccountingSourceRevisions = ({
+  String settings,
+  String taxReference,
+  String bookProfile,
+  String calendar,
+});
+
+/// The demo's books live in memory: no server versions them.
+const AccountingSourceRevisions _demoAccountingSourceRevisions = (
+  settings: 'in-memory',
+  taxReference: 'in-memory',
+  bookProfile: 'in-memory',
+  calendar: 'in-memory',
+);
+
 /// The books of one workspace and period as ONE server response under ONE
 /// statement snapshot (`accounting_source_snapshot_v1`, #2365): the ledger
 /// and repartitions an export is built from, the invoice headers they sit
@@ -70,6 +91,7 @@ class AccountingSourceSnapshot {
     required this.bookProfiles,
     required this.matchedCents,
     required this.purchases,
+    required this.revisions,
   });
 
   /// The in-memory demo workspace has no server to snapshot: its books are
@@ -80,12 +102,17 @@ class AccountingSourceSnapshot {
     required this.repartitions,
     this.bookProfiles = const [],
     this.purchases = const [],
+    this.revisions = _demoAccountingSourceRevisions,
   })  : provenance = const ReadProvenance.traversal(
           reason: 'in-memory demo books',
         ),
         matchedCents = 0;
 
   final ReadProvenance provenance;
+
+  /// The settings, tax-reference, book-profile and calendar revisions the
+  /// books were read with, from the same statement (#2564).
+  final AccountingSourceRevisions revisions;
   final List<SourceInvoice> invoices;
   final List<LedgerEntry> ledger;
   final List<ExpenseRepartition> repartitions;
@@ -131,6 +158,7 @@ class AccountingSourceSnapshot {
     if (r.string('principal') != principal) bad('another principal');
     final cutoff = r.string('cutoff');
     if (cutoff.isEmpty) bad('no snapshot named');
+    final revisions = _revisions(r, bad);
 
     final invoices = r.objects(
       'invoices',
@@ -214,6 +242,7 @@ class AccountingSourceSnapshot {
       bookProfiles: profiles,
       matchedCents: sum(matched),
       purchases: purchases,
+      revisions: revisions,
     );
   }
 
@@ -232,6 +261,26 @@ class AccountingSourceSnapshot {
       }
     }
   }
+}
+
+/// An answer without the four revisions is an older producer: the export
+/// could not state which settings, tax reference, book profile and calendar
+/// it was made with, so it stops (#2564). Each token must be named, as text.
+AccountingSourceRevisions _revisions(JsonReader r, Never Function(String) bad) {
+  if (r.raw('revisions') is! Map) bad('no revisions in the answer');
+  final named = r.objectOrAbsent('revisions');
+  String token(String key) {
+    final value = named.raw(key);
+    if (value is! String || value.isEmpty) bad('no $key revision in the answer');
+    return value;
+  }
+
+  return (
+    settings: token('settings'),
+    taxReference: token('tax_reference'),
+    bookProfile: token('book_profile'),
+    calendar: token('calendar'),
+  );
 }
 
 SourcePurchase _purchase(JsonReader row) {
