@@ -10,7 +10,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../domain/workspace_feature.dart';
+import '../../domain/workspace_readiness.dart';
 import '../../providers/local_setup_providers.dart';
+import '../../providers/workspace_providers.dart';
 
 class SetupResumeBanner extends ConsumerWidget {
   const SetupResumeBanner({super.key, required this.workspaceId});
@@ -51,3 +54,30 @@ class SetupResumeBanner extends ConsumerWidget {
     );
   }
 }
+
+/// The guide's banner for [workspaceId] when the guide is on, the reader
+/// [configures] the space and a milestone is still open; null otherwise.
+Widget? setupResumeBannerFor(
+  WidgetRef ref,
+  String? workspaceId, {
+  required bool configures,
+}) {
+  if (workspaceId == null ||
+      !configures ||
+      !ref
+          .watch(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.setupGuide)) {
+    return null;
+  }
+  final status = ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
+  return status?.nextMilestone == null || status?.nextStep == null
+      ? null
+      : SetupResumeBanner(workspaceId: workspaceId);
+}
+
+/// The readiness sections of [workspaceId], for a surface outside this
+/// feature that guides by them (Reserve's get-started card).
+List<ReadinessSection>? watchWorkspaceReadiness(
+  WidgetRef ref,
+  String workspaceId,
+) => ref.watch(workspaceReadinessProvider(workspaceId)).value;
