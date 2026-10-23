@@ -494,6 +494,7 @@ class AccountingExportRun {
           events: buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger),
           generatedAt: now,
           workspaceName: workspace.name,
+          source: books.revisions,
         ));
         addArchiveFec(files, country, buildFecFile(FecRequest(
           invoices: yearInvoices,
@@ -567,6 +568,7 @@ class AccountingExportRun {
             ),
             generatedAt: now,
             workspaceName: workspace.name,
+            source: books.revisions,
           ),
           named('audit trail'),
         );

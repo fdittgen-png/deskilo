@@ -31,6 +31,7 @@ library;
 
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
+import 'accounting_source_snapshot.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
 
@@ -191,16 +192,26 @@ List<AuditEvent> buildAuditEvents({
   return events;
 }
 
+/// [source] — the revisions of the settings, tax reference, book profile and
+/// calendar the one fiscal source was read with (#2564): when given, the
+/// trail states which version of each it was made with.
 String buildAuditTrailCsv({
   required List<AuditEvent> events,
   required DateTime generatedAt,
   required String workspaceName,
+  AccountingSourceRevisions? source,
 }) {
 
   final buffer = StringBuffer()
     ..writeln('# DesKilo audit trail — $workspaceName')
     ..writeln('# generated ${generatedAt.toIso8601String()}')
-    ..writeln('# ${events.length} event(s), oldest first')
+    ..writeln('# ${events.length} event(s), oldest first');
+  if (source != null) {
+    buffer.writeln('# made with: settings ${source.settings}; '
+        'tax reference ${source.taxReference}; '
+        'book profile ${source.bookProfile}; calendar ${source.calendar}');
+  }
+  buffer
     // The disclaimer is not boilerplate: someone will be handed this
     // file in an audit, and they must not present it as a national
     // audit file.
