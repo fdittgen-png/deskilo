@@ -201,180 +201,27 @@ function applyChrome(){
  sel.value=LANG;
 }
 
-// Rows are [key, defaultOn]; the name and description come from the app's
-// ARB catalogue through setup_l10n.js (regenerate after adding a row).
-const FEATURES=[
- ['carnets',0],
- ['publicHolidays',0],
- ['holidayImport',0],
- ['capacityKpi',0],
- ['accountingBook',0],
- ['workspaceVocabulary',0],
- ['workspaceBranding',0],
- ['publicListings',0],
- ['customRoles',0],
- ['customFields',0],
- ['decisionSurface',0],
- ['recordingPrivacy',0],
- ['memberAccountMenu',0],
- ['mcpAccess',0],
- ['calendarFileExport',1],
- ['memberGettingStarted',1],
- ['placeFeedback',1],
- ['taskRecorder',0],
- ['guestParticipation',0],
- ['spaceInquiries',1],
- ['messageForwarding',1],
- ['captureProtection',1],
- ['messageMentions',1],
- ['calendarTab',1],
- ['eventsTab',1],
- ['moneyTab',1],
- ['services',1],
- ['accessorySupplements',0],
- ['onlinePayments',0],
- ['invoicing',1],
- ['adminInvoicing',0],
- ['pdfExport',1],
- ['seriesBooking',1],
- ['bookForOthers',1],
- ['pushNotifications',1],
- ['adminSeatBlocking',0],
- ['levelBooking',0],
- ['adminLevelAssign',0],
- ['kioskMode',0],
- ['nfcBadges',0],
- ['membersDirectory',1],
- ['whatsappIntegration',0],
- ['spaceQrCodes',1],
- ['coOwner',0],
- ['autoCheckInOut',0],
- ['dataExport',1],
- ['workingHours',1],
- ['invoicePdfTemplate',0],
- ['memberNotifications',1],
- ['documents',1],
- ['dunning',0],
- ['memberReports',0],
- ['deletionRequests',1],
- ['roleManagement',1],
- ['roleAssignment',1],
- ['vatManagement',0],
- ['vatDeclarations',0],
- ['einvoiceCustomerDelivery',0],
- ['planObjectDelete',1],
- ['notificationGrouping',1],
- ['bookingPolicies',1],
- ['nfcSeatTags',0],
- ['qrBadges',0],
- ['badgeSignIn',0],
- ['formHelpHints',1],
- ['kioskMemberPhotos',0],
- ['planMemberPhotos',0],
- ['regionalFormats',1],
- ['calendarHub',1],
- ['dataAccessLog',0],
- ['memberDataExport',1],
- ['financeFaces',1],
- ['paymentReminders',0],
- ['supplyExpenses',0],
- ['validationScopes',0],
- ['validationChain',0],
- ['richMessageRefs',1],
- ['calendarValidations',0],
- ['usageRecords',0],
- ['reportDesignExchange',0],
- ['reportLayouts',0],
- ['personalInfo',1],
- ['memberPaymentTerms',0],
- ['letterStandard',0],
- ['multiSite',0],
- ['vatGroups',0],
- ['vatRateHistory',0],
- ['vatCounterparty',0],
- ['supplyClassification',0],
- ['viesVerification',0],
- ['recapitulativeStatement',0],
- ['inputVat',0],
- ['configurableSettings',0],
- ['salesTax',0],
- ['meetingRooms',0],
- ['parking',0],
- ['webMcp',0],
- ['purchases',0],
- ['premisesLease',0],
- ['assetRegister',0],
- ['externalRooms',0],
- ['accountingPeriods',0],
- ['biReportDesigner',0],
- ['purchaseAnalytics',0],
- ['workspaceOverview',0],
- ['setupGuide',1],
- ['dataReport',1],
- ['environmentPairs',0],
- ['deployments',0],
- ['siteDocuments',0],
- ['workspaceStatus',0],
- ['expenseRepartitionWizard',0],
- ['numberSequences',0],
- ['managedProfileAccess',0],
- ['managedProfiles',0],
- ['seatDayTimeline',1],
- ['reportTexts',0],
- ['usageReport',0],
- ['vatReport',0],
- ['invoiceAddressWindow',0],
- ['scheduledExpenses',0],
- ['priceNegotiations',0],
- ['memberEnvironments',0],
- ['workspaceLibrary',0],
- ['singleRoomLevelNames',1],
- ['memberOrigin',0],
- ['uiAnimations',1],
- ['uniqueMonograms',1],
- ['messageGestures',1],
- ['subscriptionInvoices',0],
- ['usageInvoices',0],
- ['invoiceSettlement',0],
- ['settlementFold',0],
- ['expenseRepartition',0],
- ['invoicingWizard',0],
- ['memberPage',1],
- ['reportDesigner',0],
- ['messagesHub',1],
- ['calendarViews',1],
- ['bookingGate',1],
- ['invoiceJourney',0],
- ['configurationTransfer',0],
- ['navigationStyle',1],
- ['instanceWizard',0],
- ['demoMode',0],
-];
-// Permission keys in the roles screen's order; names from the app's perm* strings.
-// #2331 — all of them (WorkspacePermission, pinned by test): the matrix now
-// travels in <configuration> as `role_permissions`, and a stored role row
-// REPLACES the app's defaults, so a permission the page did not offer would
-// be taken away. The everyday six are what lets a member book at all.
-const PERMS=['manageRoles','manageMembers','manageValidation','workspaceSettings','issueInvoices','viewFinances','manageDocuments','manageServices','approveExpenses','viewNegotiations','manageNegotiations','paymentTermsEdit','manageSites','manageBilling','manageReservations','operateKiosk','exportData','designDocuments','viewPersonalData','manageIntegrations','manageConfiguration','deployToProd','deployToDev','accessProd','viewAnalytics','useMessages','makeReservations','viewCalendar','viewDirectory','viewMyMoney','viewDocuments','managePurchases','recordOutgoingPayments','manageLease'];
-const EVERYDAY_PERMS=['useMessages','makeReservations','viewCalendar','viewDirectory','viewMyMoney','viewDocuments'];
-// The app's everydayMatrix(): the role defaults plus the everyday six.
-const PERM_DEFAULTS={co_owner:PERMS.slice(),admin:['manageMembers','manageDocuments','manageServices','approveExpenses','viewFinances','viewNegotiations','manageNegotiations','paymentTermsEdit','manageSites','manageReservations','operateKiosk','exportData','viewPersonalData','deployToDev','accessProd','viewAnalytics',...EVERYDAY_PERMS],member:EVERYDAY_PERMS.slice()};
-// The ten a page older than #2331 never offered: an answer saved then has
-// none of them, and gets their defaults instead of losing them.
-const PERMS_ADDED_2331=['deployToProd','deployToDev','accessProd','viewAnalytics',...EVERYDAY_PERMS];
+// #2923 — the app's registries, generated from their Dart owners into
+// setup_catalogue.js (tool/build_setup_l10n.dart); the page keeps no copy.
+// features: [key, defaultOn] in registry order, the default a NEW
+// workspace gets; requires / availableIn: featureManifest's tree and
+// countries; permissions: WorkspacePermission in the roles screen's order;
+// defaultMatrix: every permission for the co-owner, everydayMatrix() for
+// the admin and the member; domains: the validation cards the page offers,
+// domainGates the switch each needs, domainEventTypes the server's name
+// where it differs from the page's key; invoicingCountries: where the app
+// issues invoices itself; countries: [ISO code, currency, time zone, bank
+// scheme]. Names and descriptions come from the ARB through setup_l10n.js.
+const {features:FEATURES,requires:REQUIRES,availableIn:AVAILABLE_IN,permissions:PERMS,defaultMatrix:PERM_DEFAULTS,
+ domains:DOMAINS,domainGates:DOMAIN_GATE,domainEventTypes:DOMAIN_EVENT_TYPE,invoicingCountries:INVOICING_COUNTRIES,countries:COUNTRIES}=window.SETUP_REGISTRY;
+// #2331 — the matrix travels in <configuration> as `role_permissions`, and
+// a stored role row REPLACES the app's defaults, so the page offers every
+// permission: one it did not offer would be taken away. The ten a page
+// older than #2331 never offered: an answer saved then has none of them,
+// and gets their defaults instead of losing them.
+const PERMS_ADDED_2331=['deployToProd','deployToDev','accessProd','viewAnalytics','useMessages','makeReservations','viewCalendar','viewDirectory','viewMyMoney','viewDocuments'];
 function upgradePerms(perms){for(const role of Object.keys(PERM_DEFAULTS)){const list=perms[role];if(!Array.isArray(list))continue;
  if(!list.some(p=>PERMS_ADDED_2331.includes(p)))perms[role]=[...list,...PERM_DEFAULTS[role].filter(p=>PERMS_ADDED_2331.includes(p))]}return perms}
-// #2331 — where DesKilo can issue an invoice itself today (server:
-// `seller_country_unsupported`; client: the invoiceMissingSellerCountry
-// refusal). #2356 — every member state of the European Union (0409) but
-// those whose law routes invoices through a national channel the app does
-// not speak yet: IT, ES, PL, RO (0410, #2358). #2359 — and the United
-// Kingdom (0419): VAT in sterling, land exempt unless opted to tax. #2360 —
-// and Switzerland (0422): the UID with its MWST suffix, MWST in francs, the
-// letting a package or exempt unless opted.
-const INVOICING_COUNTRIES=['AT','BE','BG','CA','CH','CY','CZ','DE','DK','EE','FI','FR','GB','GR','HR','HU','IE','LT','LU','LV','MT','NL','PT','SE','SI','SK','US'];
-// [ISO code, currency, time zone, bank scheme]; names from the app's countryName* strings.
-const COUNTRIES=[['AT','EUR','Europe/Vienna','sepa'],['BE','EUR','Europe/Brussels','sepa'],['CY','EUR','Asia/Nicosia','sepa'],['DE','EUR','Europe/Berlin','sepa'],['EE','EUR','Europe/Tallinn','sepa'],['ES','EUR','Europe/Madrid','sepa'],['FI','EUR','Europe/Helsinki','sepa'],['FR','EUR','Europe/Paris','sepa'],['GR','EUR','Europe/Athens','sepa'],['HR','EUR','Europe/Zagreb','sepa'],['IE','EUR','Europe/Dublin','sepa'],['IT','EUR','Europe/Rome','sepa'],['LT','EUR','Europe/Vilnius','sepa'],['LU','EUR','Europe/Luxembourg','sepa'],['LV','EUR','Europe/Riga','sepa'],['MT','EUR','Europe/Malta','sepa'],['NL','EUR','Europe/Amsterdam','sepa'],['PT','EUR','Europe/Lisbon','sepa'],['SI','EUR','Europe/Ljubljana','sepa'],['SK','EUR','Europe/Bratislava','sepa'],['BG','BGN','Europe/Sofia','sepa'],['CZ','CZK','Europe/Prague','sepa'],['DK','DKK','Europe/Copenhagen','sepa'],['HU','HUF','Europe/Budapest','sepa'],['PL','PLN','Europe/Warsaw','sepa'],['RO','RON','Europe/Bucharest','sepa'],['SE','SEK','Europe/Stockholm','sepa'],['CH','CHF','Europe/Zurich','ch'],['NO','NOK','Europe/Oslo','sepa'],['GB','GBP','Europe/London','uk'],['US','USD','America/New_York','us'],['CA','CAD','America/Toronto','ca']];
 // #711 — the currencies the app can format (decimal digits included) and the catalogue countries' time zones.
 const CURRENCIES=['AUD','BGN','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HRK','HUF','ILS','INR','ISK','JPY','KRW','MXN','NOK','NZD','PLN','RON','SEK','SGD','TRY','USD','ZAR'];
 const TIMEZONES=[...new Set(COUNTRIES.map(c=>c[2]).concat(['America/Los_Angeles','America/Chicago','America/Denver','America/Vancouver','America/Montreal','Australia/Sydney','Asia/Tokyo','Asia/Singapore','Europe/Dublin','Atlantic/Canary','UTC']))].sort();
@@ -403,15 +250,6 @@ const seedVatRates=()=>{S.vatRates=(VAT_RATES[S.country]||[]).map(([label,percen
 const XML_LEVEL_FALLBACK='Étage',XML_SEAT_FALLBACK='Place';
 // l10n-exempt-end
 const VAT_NOTES={US:'vatNoteUS',CA:'vatNoteCA',CH:'vatNoteCH'};
-// The validation domains beside the default rule; names from the app's
-// eventType* strings. Each inherits from the default rule until a card is
-// edited, which is exactly what `on` models here.
-const DOMAINS=['payment','expense','service','quota','reservation_delete','role_change','member_join','reservation','space_reservation','invoice_payment','adjustment','invoice_writeoff','price_negotiation','expense_schedule','payment_terms_change','invoice_issue','invoice_void','refund','member_status_change','subscription_change','matrix_change','lease_change','commitment_variance'];
-// The feature a domain's card needs; without it the card is not offered.
-const DOMAIN_GATE={lease_change:'premisesLease',commitment_variance:'purchases',payment_terms_change:'memberPaymentTerms',expense_schedule:'scheduledExpenses',service:'services',reservation_delete:'deletionRequests',space_reservation:'levelBooking',invoice_payment:'invoicing',invoice_writeoff:'invoicing',payment:'moneyTab',expense:'moneyTab',adjustment:'moneyTab'};
-// #2331 — the page's domain keys that are not the event type the server
-// stores (validation_policies_event_type_check): 'service' is a service charge.
-const DOMAIN_EVENT_TYPE={service:'service_charge'};
 const HORIZON=[['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDays',{n:30}],['60','optDays',{n:60}],['90','optDaysDefault',{n:90}],['120','optDays',{n:120}],['180','optDays',{n:180}],['365','optOneYear'],['730','optYears',{n:2}]];
 const DURATIONS=[['5','optMinutes',{n:5}],['10','optMinutes',{n:10}],['15','optMinutes',{n:15}],['30','optMinutesDefaultMin',{n:30}],['45','optMinutes',{n:45}],['60','optOneHour'],['90','optHourAndHalf'],['120','optHours',{n:2}],['180','optHours',{n:3}],['240','optHours',{n:4}],['300','optHours',{n:5}],['360','optHours',{n:6}],['480','optHours',{n:8}],['600','optHours',{n:10}],['720','optHours',{n:12}],['1440','optHoursDefaultMax',{n:24}]];
 // #2357 — a questionnaire saved before 'annual' existed reads as it was.
@@ -458,7 +296,7 @@ const DEFAULTS={
  vatPeriod:'quarter',
  // #2359 — the UK treats land as exempt unless the owner opted to tax it.
  landTax:{option:false,date:'',ref:'',facilities:false,bare:false,qst:'',quick:false},
- // FEATURES says what a NEW workspace starts with (pinned to the registry);
+ // FEATURES says what a NEW workspace starts with (the registry's default);
  // the page's own answer for the configuration transfer starts ON (#2331):
  // every questionnaire carries configuration answers, and the switch is
  // what lets the importing space keep applying them.
@@ -507,13 +345,10 @@ function save(){localStorage.setItem(LS,JSON.stringify(S));document.getElementBy
 function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.shift()];o[p[0]]=val;save()}
 
 // ------------------------------------------------------------------ dependencies (#723)
-// The feature tree as the app declares it (featureManifest `requires`):
-// a child is only offered while its parent is on, and switching a parent
-// off switches its children off — exactly what effectiveFeatures does.
-const REQUIRES={carnets:'invoicing',configurationTransfer:'dataExport',services:'moneyTab',accessorySupplements:'moneyTab',onlinePayments:'moneyTab',invoicing:'moneyTab',adminInvoicing:'invoicing',adminLevelAssign:'levelBooking',nfcBadges:'kioskMode',whatsappIntegration:'membersDirectory',invoicePdfTemplate:'invoicing',dunning:'invoicing',vatManagement:'invoicing',vatDeclarations:'vatManagement',einvoiceCustomerDelivery:'invoicing',notificationGrouping:'eventsTab',qrBadges:'kioskMode',kioskMemberPhotos:'kioskMode',badgeSignIn:'nfcBadges',paymentReminders:'dunning',supplyExpenses:'services',priceNegotiations:'moneyTab',scheduledExpenses:'moneyTab',memberReports:'moneyTab',financeFaces:'moneyTab',dataAccessLog:'moneyTab',subscriptionInvoices:'invoicing',usageInvoices:'invoicing',invoiceSettlement:'invoicing',invoiceJourney:'invoicing',bookingGate:'bookingPolicies',calendarHub:'calendarTab',calendarViews:'calendarHub',reportDesigner:'invoicePdfTemplate',memberEnvironments:'environmentPairs',memberOrigin:'membersDirectory',memberPage:'membersDirectory',invoicingWizard:'invoicing',expenseRepartition:'invoicing',settlementFold:'invoiceSettlement',richMessageRefs:'memberNotifications',calendarValidations:'calendarHub',usageRecords:'invoicing',reportDesignExchange:'reportDesigner',invoiceAddressWindow:'invoicing',reportLayouts:'reportDesigner',managedProfiles:'membersDirectory',managedProfileAccess:'managedProfiles',numberSequences:'invoicing',workspaceStatus:'invoicing',siteDocuments:'multiSite',vatGroups:'vatManagement',vatRateHistory:'vatManagement',vatCounterparty:'vatManagement',supplyClassification:'vatManagement',inputVat:'vatDeclarations',viesVerification:'supplyClassification',recapitulativeStatement:'vatDeclarations',deployments:'environmentPairs',expenseRepartitionWizard:'expenseRepartition',memberPaymentTerms:'invoicing',reportTexts:'reportDesigner',usageReport:'usageRecords',vatReport:'vatDeclarations',letterStandard:'reportLayouts',messageForwarding:'memberNotifications',captureProtection:'memberNotifications',messageMentions:'memberNotifications',holidayImport:'publicHolidays',accountingBook:'invoicing',roleAssignment:'roleManagement',salesTax:'invoicing',webMcp:'mcpAccess',purchases:'moneyTab',premisesLease:'scheduledExpenses',assetRegister:'purchases',purchaseAnalytics:'purchases',externalRooms:'levelBooking',accountingPeriods:'accountingBook',dataReport:'dataExport'};
-// #2454 — the countries a switch is available in (the manifest's availableIn;
-// '@eu' = the EU member states). Pinned to featureManifest by setup_html_test.
-const AVAILABLE_IN={recapitulativeStatement:['@eu']};
+// The feature tree as the app declares it (REQUIRES): a child is only
+// offered while its parent is on, and switching a parent off switches its
+// children off — exactly what effectiveFeatures does. #2454 — AVAILABLE_IN:
+// the countries a switch is available in ('@eu' = the EU member states).
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
 const availableHere=k=>{const a=AVAILABLE_IN[k];return !a||a.includes(S.country)||(a.includes('@eu')&&EU.has(S.country))};
 const on=k=>{let f=k;while(f){if(!S.features[f]||!availableHere(f))return false;f=REQUIRES[f]}return true};

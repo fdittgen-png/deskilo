@@ -272,13 +272,16 @@ A parameter change therefore lands as one commit touching all of:
 2. the five guides + regenerated `assets/help/*.md`,
 3. `web/setup.html` — the **field**, the **XML export** and the **XML import**
    (a new feature also goes into `workspaceProcesses`; `dart run tool/build_setup_l10n.dart`
-   then regenerates `web/setup_catalogue.js`, the process grouping the page shows — #1330),
+   then regenerates `web/setup_catalogue.js` — never edited by hand: the process grouping
+   the page shows (#1330) and, since #2923, the registries it reads: the features with
+   their defaults, `requires` and `availableIn`, the permissions and default matrix, the
+   validation domains with their gates, the invoicing countries and the country catalogue),
 4. the jsdom harness that drives the page.
 
-`test/lint/setup_html_test.dart` enforces the mechanical half: every `WorkspaceFeature`
-must appear with the registry's own `defaultOn`, every `booking_rules` key the client
-writes must be carried by the XML, all four outside-hours modes and every granularity must
-be selectable. It fails the build on drift and names the offender — it does not need a
+`test/lint/setup_html_test.dart` enforces the mechanical half: every `booking_rules` key
+the client writes must be carried by the XML, all four outside-hours modes and every
+granularity must be selectable; `test/lint/setup_l10n_test.dart` regenerates the catalogue
+in memory and pins what `SETUP_REGISTRY` means against the app's registries. It fails the build on drift and names the offender — it does not need a
 human to notice.
 
 What the gate cannot check is prose. When a rule changes meaning, the questionnaire's
@@ -528,8 +531,8 @@ A new server-side validation domain (`events_type_check` +
 `validation_policies` check) is not finished until the SAME PR carries:
 the client card in `validation_settings_screen.dart` (`_cardTypes` — the
 price-negotiation domain shipped server-side in #739 and stayed
-unconfigurable for weeks because this list lagged), the `DOMAINS` entry
-plus feature gate in `web/setup.html`, and the guides' card count/list
+unconfigurable for weeks because this list lagged), the `setupValidationDomains`
+entry plus feature gate in `tool/build_setup_l10n.dart` (regenerated into `web/setup_catalogue.js`), and the guides' card count/list
 ×5. The events feed line must give validators what they DECIDE on (a
 deviated amount shows the validated amount and the member's reason).
 
@@ -696,7 +699,7 @@ never does.
 
 Every functionality adds itself to the SAME lines: the `WorkspaceFeature`
 enum and manifest, `feature_names.dart`, `features_screen.dart`, the
-process catalogue, `web/setup.html` FEATURES/REQUIRES, the file budgets, the
+process catalogue, the file budgets, the
 placeholder list and its pin. Two branches cut from the same master
 that both add there CONFLICT on merge, and the merge-and-regenerate
 repeats for every branch behind. So: cut a branch from master, open its PR, merge it, THEN

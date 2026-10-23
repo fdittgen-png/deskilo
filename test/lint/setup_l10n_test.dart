@@ -29,7 +29,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo/features/workspace/presentation/feature_copy.dart';
 import 'package:deskilo/features/workspace/presentation/feature_names.dart';
@@ -341,22 +344,77 @@ void main() {
         expect(wrong, isEmpty);
       });
     }
+  });
 
-    test('FEATURES rows carry no label — the name comes from the ARB', () {
-      final start = html.indexOf('const FEATURES=[');
-      final block = html.substring(start, html.indexOf('\n];', start));
-      final rows = block.split('\n').skip(1).toList();
-      final labelled = rows
-          .where((r) => !RegExp(r"^ \['[A-Za-z]+',[01]\],$").hasMatch(r))
-          .toList();
+  // #2923 — the page keeps no copy of the app's registries: the switches,
+  // their defaults and tree, the permissions and their default matrix, the
+  // validation domains and the countries arrive in SETUP_REGISTRY. The file
+  // is drift-gated above; this pins what it MEANS against the app's own
+  // functions, so a generator that read the wrong source fails here.
+  group('registry', () {
+    late Map<String, dynamic> registry;
+    setUpAll(() {
+      const prefix = 'window.SETUP_REGISTRY=';
+      final js = File(setupCatalogueOutput).readAsStringSync();
+      final start = js.indexOf(prefix) + prefix.length;
+      registry =
+          jsonDecode(js.substring(start, js.indexOf('\n};\n', start) + 2))
+              as Map<String, dynamic>;
+    });
+
+    test('every WorkspaceFeature, with the default a new workspace gets', () {
+      final defaults = defaultFeatureFlagsForNewWorkspace();
+      expect(registry['features'], [
+        for (final f in WorkspaceFeature.values) [f.name, defaults[f.name]],
+      ]);
+    });
+
+    test('requires and availableIn are featureManifest\'s', () {
+      expect(registry['requires'], {
+        for (final e in featureManifest.entries)
+          if (e.value.requires != null) e.key.name: e.value.requires!.name,
+      });
       expect(
-        labelled,
-        isEmpty,
-        reason:
-            'a FEATURES row is [key, defaultOn]; a label written '
-            'here is a setup-only copy that drifts from the app',
+        (registry['availableIn'] as Map).map(
+          (k, v) => MapEntry(k, (v as List).toSet()),
+        ),
+        {
+          for (final e in featureManifest.entries)
+            if (e.value.availableIn != null)
+              e.key.name: e.value.availableIn!.toSet(),
+        },
       );
-      expect(rows, hasLength(WorkspaceFeature.values.length));
+    });
+
+    test('every permission in the roles screen order, and the default '
+        'matrix the app starts a workspace from', () {
+      final all = [for (final p in WorkspacePermission.values) p.wireName];
+      expect(registry['permissions'], all);
+      final everyday = everydayMatrix();
+      final matrix = registry['defaultMatrix'] as Map<String, dynamic>;
+      expect(matrix.keys, ['co_owner', 'admin', 'member']);
+      expect(matrix['co_owner'], all);
+      expect(matrix['admin'], everyday['admin']);
+      expect(matrix['member'], everyday['member']);
+    });
+
+    test('every validation domain is an event type the server stores', () {
+      final wire = {for (final t in EventType.values) t.dbName};
+      final types = registry['domainEventTypes'] as Map<String, dynamic>;
+      for (final d in (registry['domains'] as List).cast<String>()) {
+        expect(wire, contains(types[d] ?? d), reason: d);
+      }
+      final features = {for (final f in WorkspaceFeature.values) f.name};
+      for (final gate in (registry['domainGates'] as Map).values) {
+        expect(features, contains(gate));
+      }
+    });
+
+    test('the countries are the CountryCatalog', () {
+      expect(registry['countries'], [
+        for (final c in CountryCatalog.countries)
+          [c.code, c.currencyCode, c.defaultTimezone, c.scheme.name],
+      ]);
     });
   });
 
