@@ -62,7 +62,7 @@ void main() {
 
   test('the command refuses what the server would, before calling it', () async {
     final repo = FakeMeRepository();
-    final actions = MeActions(repo);
+    final actions = MeActions(repo, FakeLinkedMeRepository());
     expect(() => actions.choose(VisibilityField.presence,
             const FieldAudience(VisibilityAudience.chosenSpaces)),
         throwsA(isA<MeRefused>()));

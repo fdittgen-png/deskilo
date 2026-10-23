@@ -8,12 +8,19 @@
 // that installation's own pinned client (ConnectedSpaceEntry); a refusal is
 // said and changes nothing. The entry itself is proved in
 // test/features/workspace/connected_space_entry_test.dart.
+import 'dart:async';
+
 import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/features/me/domain/linked_me_repository.dart';
 import 'package:deskilo/features/me/domain/my_spaces.dart';
+import 'package:deskilo/features/me/domain/visibility.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/connected_space_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,10 +37,40 @@ ConnectedInstallation _linked(String url) => ConnectedInstallation(
 );
 
 void main() {
+  test('every linked server is asked at once; one that fails is said, the '
+      'others answer in their order', () async {
+    final gated = _GatedSpaces();
+    final container = ProviderContainer(
+      overrides: [
+        linkedMeRepositoryProvider.overrideWithValue(gated),
+        connectedSourcesProvider.overrideWith(
+          (ref) async => [_linked(_other), _linked(_down)],
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+    final listener = container.listen(linkedServerSpacesProvider, (_, _) {});
+    addTearDown(listener.close);
+
+    final read = container.read(linkedServerSpacesProvider.future);
+    await pumpEventQueue();
+    expect(gated.asked, [_other, _down],
+        reason: 'the second server is asked before the first one answers');
+
+    gated.answers[_down]!.completeError(StateError('down'));
+    gated.answers[_other]!.complete(const [
+      LinkedSpace(id: 'remote-1', name: 'COWORKONTI'),
+    ]);
+    final servers = await read;
+    expect([for (final s in servers) s.source], [_other, _down]);
+    expect(servers.first.spaces.single.id, 'remote-1');
+    expect(servers.last.unavailable, isTrue);
+  });
+
   testWidgets('linked environments share one workspace heading', (
     tester,
   ) async {
-    final me = FakeMeRepository()
+    final linked = FakeLinkedMeRepository()
       ..linkedSpaces[_other] = const [
         LinkedSpace(
           id: 'dev',
@@ -50,7 +87,7 @@ void main() {
       ];
     final router = await pumpMeApp(
       tester,
-      me: me,
+      linkedMe: linked,
       connectedSources: [_linked(_other)],
     );
     await goTo(tester, router, '/me');
@@ -71,7 +108,7 @@ void main() {
   testWidgets('spaces on a linked server join the list, named by host', (
     tester,
   ) async {
-    final me = FakeMeRepository()
+    final linked = FakeLinkedMeRepository()
       ..linkedSpaces[_other] = const [
         LinkedSpace(id: 'remote-1', name: 'COWORKONTI'),
         LinkedSpace(
@@ -83,7 +120,7 @@ void main() {
       ..unavailable.add(_down);
     final router = await pumpMeApp(
       tester,
-      me: me,
+      linkedMe: linked,
       connectedSources: [_linked(_other), _linked(_down)],
     );
     await goTo(tester, router, '/me');
@@ -133,6 +170,30 @@ void main() {
   });
 }
 
+/// Holds every server's answer until the test releases it, and records the
+/// order the servers were asked in.
+class _GatedSpaces implements LinkedMeRepository {
+  final asked = <String>[];
+  final answers = <String, Completer<List<LinkedSpace>>>{};
+
+  @override
+  Future<List<LinkedSpace>> spaces(String source) {
+    asked.add(source);
+    return (answers[source] = Completer<List<LinkedSpace>>()).future;
+  }
+
+  @override
+  Future<MyVisibility> visibility(String source) =>
+      Future.value(MyVisibility.defaults);
+
+  @override
+  Future<void> setVisibility(
+    String source,
+    VisibilityField field,
+    FieldAudience audience,
+  ) => Future.value();
+}
+
 /// What the fake entry was asked, and how it answers.
 class _Entry {
   final calls = <(String, String)>[];
@@ -162,13 +223,13 @@ class _FakeEntry extends ConnectedSpaceEntry {
 }
 
 Future<GoRouter> _openLinked(WidgetTester tester, _Entry entry) async {
-  final me = FakeMeRepository()
+  final linked = FakeLinkedMeRepository()
     ..linkedSpaces[_other] = const [
       LinkedSpace(id: 'remote-1', name: 'COWORKONTI'),
     ];
   final router = await pumpMeApp(
     tester,
-    me: me,
+    linkedMe: linked,
     connectedSources: [_linked(_other)],
     extraOverrides: [connectedSpaceEntryProvider.overrideWith(() => _FakeEntry(entry))],
   );
