@@ -1,0 +1,17 @@
+{
+  "setupStepPreviewTitle": "Lo que verán sus miembros",
+  "setupStepElsewhere": "Este paso se hace en su propia pantalla.",
+  "setupStepOpenScreen": "Abrirlo",
+  "setupRightsPresetTitle": "Los miembros pueden reservar",
+  "setupRightsPresetBody": "Los miembros reciben exactamente estos derechos, y nada que gestione el espacio:",
+  "setupRightsApplied": "Los miembros ya tienen estos derechos.",
+  "setupRightsApplyFailed": "No se pudieron cambiar los derechos. Inténtelo de nuevo.",
+  "setupRightsNeedsManageRoles": "Solo quien gestiona los roles puede cambiar lo que pueden hacer los miembros.",
+  "setupRightsOpenRoles": "Ajustar en Roles",
+  "setupRightsPreviewTitle": "Lo que puede hacer un miembro",
+  "setupRightsPreviewNone": "Nada todavía: los miembros no pueden reservar.",
+  "setupRightsPreviewAdmin": "Los miembros también pueden gestionar partes del espacio. Revíselo en Roles.",
+  "setupInvitePreviewTitle": "La invitación, tal como la reciben sus miembros",
+  "setupInvitePreviewNote": "Cada invitación que envía lleva su propio código de un solo uso en lugar del ID del espacio.",
+  "setupInviteShareFailed": "No se pudo compartir el código QR. Inténtelo de nuevo."
+}

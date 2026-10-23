@@ -4,7 +4,6 @@
 // owner grants it, so every new space is born unable to take a booking.
 // One tap grants the everyday set to the members role, permission by
 // permission (#1089), so a concurrent change to another one survives.
-import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/role_permission_repository.dart';
@@ -15,7 +14,6 @@ part 'grant_member_essentials.g.dart';
 
 /// What a member needs to use the space day to day: book, see the
 /// calendar, write to the others and see their own account.
-@visibleForTesting
 const List<WorkspacePermission> memberEssentials = [
   WorkspacePermission.makeReservations,
   WorkspacePermission.viewCalendar,
