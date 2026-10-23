@@ -50,6 +50,12 @@ const demoLinkRoutes = {
   '/settings/assistant-setup',
 };
 
+/// A screen the demo may start on: one of [demoLinkRoutes], or a setup
+/// step's own page (`/setup/step/<id>`, #2870).
+bool _demoLinkAllows(String? to) =>
+    to != null &&
+    (demoLinkRoutes.contains(to) || RegExp(r'^/setup/step/[a-z_]+$').hasMatch(to));
+
 /// #2872 — the public demo opened at [to], as [persona], in [space]
 /// (`pezenas`, where everything is set up, or `leipzig`, half way): what a
 /// setup step's "Try it in the demo" opens. A [to] the demo does not allow
@@ -61,7 +67,7 @@ Uri demoLinkUri({
 }) => Uri.parse(
   '${InstanceAuthConfig.siteUrl}#/auth?demo=1&space=$space'
   '&persona=${persona.name}'
-  '${to != null && demoLinkRoutes.contains(to) ? '&to=$to' : ''}',
+  '${_demoLinkAllows(to) ? '&to=$to' : ''}',
 );
 
 /// Where a link asks the demo to start.
@@ -69,7 +75,7 @@ class DemoLink {
   const DemoLink({this.persona, this.workspaceId, this.to});
 
   /// From the auth link's query: `persona` by name, `space` as `pezenas`
-  /// or `leipzig`, `to` only when it is one of [demoLinkRoutes].
+  /// or `leipzig`, `to` only when [_demoLinkAllows] it.
   factory DemoLink.parse(Map<String, String> query) => DemoLink(
     persona: DemoPersona.values
         .where((p) => p.name == query['persona'])
@@ -79,7 +85,7 @@ class DemoLink {
       'leipzig' => demoSecondSpaceId,
       _ => null,
     },
-    to: demoLinkRoutes.contains(query['to']) ? query['to'] : null,
+    to: _demoLinkAllows(query['to']) ? query['to'] : null,
   );
 
   final DemoPersona? persona;
