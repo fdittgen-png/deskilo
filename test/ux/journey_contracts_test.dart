@@ -23,9 +23,9 @@
 // that supplies its own version of the behaviour under test proves
 // nothing, which is how #1564 hid behind the demo journeys for weeks.
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -88,7 +88,8 @@ void main() {
           reason: 'the twin rides the creation itself (#1303). A separate '
               'createWorkspaceTwin call would run once per retry and is '
               'exactly the duplicate this contract forbids');
-      expect(find.byType(ShellBottomBar), findsOneWidget,
+      // #2869 — the new space opens on its setup guide, over Reserve.
+      expect(find.byType(SetupGuideScreen), findsOneWidget,
           reason: 'and the member is in the app, not staring at the error');
     });
 
