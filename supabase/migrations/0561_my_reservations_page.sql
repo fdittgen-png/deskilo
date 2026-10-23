@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2553 C1) -- a person's own reservations, read on the installation
+-- 0561 (#2553 C1) -- a person's own reservations, read on the installation
 -- that holds them. The personal home (P) never copies operational rows: it
 -- asks each workspace host (W) for the caller's own reservations through
 -- this read, which runs as the caller (SECURITY INVOKER, the row policies
@@ -27,8 +27,8 @@
 --   personal.read_concurrency              1..8, default 4
 --   personal.read_timeout_seconds          3..60 s, default 12
 --   personal.reservation_max_window_days   31..1000, default 400, guardrail
---   personal.reservation_page_size         10..200, default 50
---   personal.reservation_window_days       7..400, default 31
+--   personal.reservation_page_size         1..100, default 50
+--   personal.reservation_window_days       1..400, default 31
 --
 -- Output: {schema_version: 1, items: [...], next: {after_start, after_id} |
 -- null, has_more: bool}. An item names the reservation, its workspace, the
@@ -44,8 +44,8 @@ values
 ('personal.read_concurrency', 'int', '4'::jsonb, 1, 8, 'requests', 'personal', array['platform'], 'workspaceSettings', null, true, null, 'personal source reads (#2553)', 'How many servers the personal space asks at once when it gathers a person''s own records. A bound on the device''s parallel reads, not on any server.'),
 ('personal.read_timeout_seconds', 'duration', '12'::jsonb, 3, 60, 'seconds', 'personal', array['platform'], 'workspaceSettings', null, true, null, 'personal source reads (#2553)', 'Seconds the personal space waits for one server''s answer before it shows that server as unavailable and goes on with the others.'),
 ('personal.reservation_max_window_days', 'int', '400'::jsonb, 31, 1000, 'days', 'personal', array['platform'], 'workspaceSettings', null, false, null, 'my_reservations_page_v1 (#2553)', 'Guardrail: the longest period one read of a person''s reservations may ask for. A platform-owned bound on the query, resolved by the server that answers.'),
-('personal.reservation_page_size', 'int', '50'::jsonb, 10, 200, 'rows', 'personal', array['platform'], 'workspaceSettings', null, true, null, 'my_reservations_page_v1 (#2553)', 'How many of a person''s reservations one server returns per page. The server that answers resolves it once per read, whatever workspaces the page spans.'),
-('personal.reservation_window_days', 'int', '31'::jsonb, 7, 400, 'days', 'personal', array['platform'], 'workspaceSettings', null, true, null, 'my_reservations_page_v1 (#2553); MyReservationsWindow', 'Days the personal space shows by default when it lists a person''s reservations, and the window a read without an end date covers. A query default, not a booking rule.')
+('personal.reservation_page_size', 'int', '50'::jsonb, 1, 100, 'rows', 'personal', array['platform'], 'workspaceSettings', null, true, null, 'my_reservations_page_v1 (#2553)', 'How many of a person''s reservations one server returns per page. The server that answers resolves it once per read, whatever workspaces the page spans.'),
+('personal.reservation_window_days', 'int', '31'::jsonb, 1, 400, 'days', 'personal', array['platform'], 'workspaceSettings', null, true, null, 'my_reservations_page_v1 (#2553); MyReservationsWindow', 'Days the personal space shows by default when it lists a person''s reservations, and the window a read without an end date covers. A query default, not a booking rule.')
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
@@ -172,4 +172,4 @@ grant execute on function public.my_reservations_page_v1(timestamptz, timestampt
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(561);

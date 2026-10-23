@@ -2202,6 +2202,7 @@ routine public.my_message_requests() -> jsonb | function | definer | stable | ex
 routine public.my_personal_preferences(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:213deec91380
 routine public.my_public_profile() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3c381728dd4f
 routine public.my_reachable_people() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7e4e6a455cf0
+routine public.my_reservations_page_v1(p_from timestamp with time zone, p_to timestamp with time zone, p_workspace_id uuid, p_direction text, p_after_start timestamp with time zone, p_after_id uuid) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:a32390072be3
 routine public.my_rights_requests() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12aed4f107e0
 routine public.my_settings(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:388bdc624969
 routine public.my_starred_messages() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6910f2684291

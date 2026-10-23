@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2553 C1 (9999): a person's own reservations on one installation, through
+-- #2553 C1 (0561): a person's own reservations on one installation, through
 -- my_reservations_page_v1. Two workspaces on one host: the caller sees their
 -- own bookings of both and nobody else's, a workspace filter narrows and
 -- never widens (a workspace the caller is no member of answers empty), an
@@ -57,7 +57,7 @@ select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
   from generate_series(1, 3) i;
 
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, environment, booking_rules, feature_flags) values
- ('00000000-0000-4000-8000-00002553c001', 'One', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 'dev', '{}', '{}'),
+ ('00000000-0000-4000-8000-00002553c001', 'One', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 'dev', '{"simultaneous_reservations": 2}', '{}'),
  ('00000000-0000-4000-8000-00002553c002', 'Two', 'DE', 'EUR', 'Europe/Berlin', pg_temp.u(1), 'dev', '{}', '{}'),
  ('00000000-0000-4000-8000-00002553c003', 'Three', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(3), 'dev', '{}', '{}');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values
@@ -67,7 +67,8 @@ insert into public.members (id, workspace_id, user_id, is_owner, is_admin, statu
  ('00000000-0000-4000-8000-00002553d004', '00000000-0000-4000-8000-00002553c003', pg_temp.u(3), true, true, 'active');
 
 -- One: a level, a room, a desk, two seats. Two: a level and a room booked
--- whole. Three: a seat for its owner.
+-- whole. Three: a seat for its owner. One allows two bookings at once, so
+-- the two equal starts below are a valid fixture.
 insert into public.levels (id, workspace_id, name) values
  ('00000000-0000-4000-8000-00002553e001', '00000000-0000-4000-8000-00002553c001', 'Ground floor'),
  ('00000000-0000-4000-8000-00002553e002', '00000000-0000-4000-8000-00002553c002', 'Erdgeschoss'),
