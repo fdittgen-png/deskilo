@@ -21,6 +21,39 @@ class SpaceLeaveItem {
   final bool enabled;
 }
 
+/// What the row menu can ask for: one type per entry, so the handler
+/// below reads its choice instead of parsing it.
+sealed class _MenuAction {
+  const _MenuAction();
+}
+
+class _Favorite extends _MenuAction {
+  const _Favorite();
+}
+
+class _MoveToGroup extends _MenuAction {
+  const _MoveToGroup();
+}
+
+class _Up extends _MenuAction {
+  const _Up();
+}
+
+class _Down extends _MenuAction {
+  const _Down();
+}
+
+/// [stars] 1–5, or null to clear the rating.
+class _Rate extends _MenuAction {
+  const _Rate(this.stars);
+  final int? stars;
+}
+
+class _Leave extends _MenuAction {
+  const _Leave(this.item);
+  final SpaceLeaveItem item;
+}
+
 class SpaceRowControls extends StatelessWidget {
   const SpaceRowControls({
     super.key,
@@ -80,7 +113,7 @@ class SpaceRowControls extends StatelessWidget {
             style: Theme.of(context).textTheme.labelMedium,
           ),
         ],
-        PopupMenuButton<String>(
+        PopupMenuButton<_MenuAction>(
           style: IconButton.styleFrom(
             foregroundColor: scheme.onSurfaceVariant,
             backgroundColor: Colors.transparent,
@@ -88,24 +121,20 @@ class SpaceRowControls extends StatelessWidget {
           ),
           key: ValueKey(key),
           tooltip: l10n.spaceOptions(name),
-          onSelected: (v) {
-            switch (v) {
-              case 'favorite':
+          onSelected: (action) {
+            switch (action) {
+              case _Favorite():
                 onFavorite();
-              case 'group':
+              case _MoveToGroup():
                 onMoveToGroup?.call();
-              case 'up':
+              case _Up():
                 onUp?.call();
-              case 'down':
+              case _Down():
                 onDown?.call();
-              case 'clear':
-                onRate(null);
-              default:
-                if (v.startsWith('leave:')) {
-                  leave.firstWhere((l) => 'leave:${l.id}' == v).onLeave();
-                } else {
-                  onRate(int.parse(v));
-                }
+              case _Rate(:final stars):
+                onRate(stars);
+              case _Leave(:final item):
+                item.onLeave();
             }
           },
           itemBuilder: (_) => [
@@ -129,7 +158,7 @@ class SpaceRowControls extends StatelessWidget {
             ],
             PopupMenuItem(
               key: ValueKey('$key-favorite'),
-              value: 'favorite',
+              value: const _Favorite(),
               child: Text(
                 favorite
                     ? (l10n.spaceFavoriteRemove)
@@ -139,18 +168,18 @@ class SpaceRowControls extends StatelessWidget {
             if (onMoveToGroup != null)
               PopupMenuItem(
                 key: ValueKey('$key-group'),
-                value: 'group',
+                value: const _MoveToGroup(),
                 child: Text(l10n.meGroupMove),
               ),
             PopupMenuItem(
               key: ValueKey('$key-up'),
-              value: 'up',
+              value: const _Up(),
               enabled: onUp != null,
               child: Text(l10n.spaceMoveUp),
             ),
             PopupMenuItem(
               key: ValueKey('$key-down'),
-              value: 'down',
+              value: const _Down(),
               enabled: onDown != null,
               child: Text(l10n.spaceMoveDown),
             ),
@@ -158,12 +187,12 @@ class SpaceRowControls extends StatelessWidget {
             for (var n = 5; n >= 1; n--)
               PopupMenuItem(
                 key: ValueKey('$key-rate-$n'),
-                value: '$n',
+                value: _Rate(n),
                 child: _Stars(n),
               ),
             PopupMenuItem(
               key: ValueKey('$key-clear'),
-              value: 'clear',
+              value: const _Rate(null),
               child: Text(l10n.spaceRatingClear),
             ),
             if (leave.isNotEmpty) const PopupMenuDivider(),
@@ -173,7 +202,7 @@ class SpaceRowControls extends StatelessWidget {
                 : leave)
               PopupMenuItem(
                 key: ValueKey('$key-leave-${l.id}'),
-                value: 'leave:${l.id}',
+                value: _Leave(l),
                 enabled: l.enabled,
                 child: Text(l.label),
               ),

@@ -17,7 +17,7 @@ class BlockedPeopleCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final blocks = ref.watch(myBlocksProvider('')).value ?? const [];
+    final blocks = ref.watch(myBlocksProvider(thisServerSource)).value ?? const [];
     return ExpansionTile(
       key: const ValueKey('me-blocked-people'),
       leading: const Icon(Icons.block_outlined),
@@ -51,7 +51,7 @@ class BlockedPeopleCard extends ConsumerWidget {
                       .read(messengerActionsProvider())
                       .unblockAccount(b.userId),
                 );
-                if (ok) ref.invalidate(myBlocksProvider(''));
+                if (ok) ref.invalidate(myBlocksProvider(thisServerSource));
               },
               child: Text(l10n.unblockAction),
             ),
