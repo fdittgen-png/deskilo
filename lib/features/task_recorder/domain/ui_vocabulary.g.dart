@@ -3441,7 +3441,6 @@ const List<String> uiKeyPatterns = [
   'me-space-pair-{}',
   'me-space-{}',
   'me-spaces-sort-{}',
-  'me-tab-{}',
   'me-visit-cancel-{}',
   'me-visit-status-{}',
   'me-visit-{}',

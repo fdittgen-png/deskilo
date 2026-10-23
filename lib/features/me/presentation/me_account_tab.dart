@@ -13,12 +13,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../auth/providers/sign_out.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
 import '../../profile/presentation/widgets/settings_section_header.dart';
-import '../../task_recorder/presentation/route_classification.dart'
-    show taskWizardRoute;
-import '../../workspace/domain/workspace_feature.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import 'blocked_people_card.dart';
 import 'linked_visibility_card.dart';
+import 'task_wizard_entry.dart';
 import 'visibility_card.dart';
 
 class MeAccountTab extends ConsumerStatefulWidget {
@@ -82,13 +79,8 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
         _Door('me-activity', Icons.account_balance_wallet_outlined,
             l10n.financesTitle, '/account-activity'),
       ]),
-      _Section(3, l10n.uxAdvancedSection, [
-        // The task wizard: recording, guides and tools in one place.
-        if (ref
-            .watch(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.taskRecorder))
-          _Door('me-task-wizard', Icons.assistant_navigation,
-              l10n.taskWizardTitle, taskWizardRoute),
+      _Section(3, l10n.uxAdvancedSection, const [
+        TaskWizardEntry(entryKey: 'me-task-wizard', chevron: true),
       ]),
       _Section(4, l10n.meGroupWorkspaces, [
         _Door('me-workspaces', Icons.workspaces_outline,

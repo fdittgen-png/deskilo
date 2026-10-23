@@ -1,8 +1,8 @@
 {
-  "recordedSha": "871f8f2336286de531dcb04eddcdab0c4c597357",
+  "recordedSha": "c691f2bd39f29f63cbe5a6b85d8b81cfb0afc936",
   "recordedDate": "2026-10-23",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1911,"functions":10604,"cyclomatic>=9":1105,"cyclomatic>=25":105,"cognitive>=15":443,"cognitive>=30":94,"length>=150":74,"parameters>=5":499,"parameters>=7":151,"partOfFiles":42},
+  "totals": {"files":1912,"functions":10606,"cyclomatic>=9":1105,"cyclomatic>=25":105,"cognitive>=15":443,"cognitive>=30":94,"length>=150":74,"parameters>=5":499,"parameters>=7":151,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -287,7 +287,7 @@
 
       "me -> money": 2,
 
-      "me -> task_recorder": 2,
+      "me -> task_recorder": 1,
 
       "members -> money": 9,
 
@@ -1005,7 +1005,7 @@
     {"p":"lib/core/money/money_text.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":4,"len":26,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/motion/motion.dart","loc":92,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":3,"cyc":4,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/navigation/event_sources.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/navigation/navigation_style.dart","loc":66,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":4,"cyc":5,"len":14,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/navigation/navigation_style.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":4,"cyc":5,"len":14,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/navigation/page_spec.dart","loc":58,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":3,"len":13,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/nfc/nfc_uid_reader.dart","loc":91,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":7,"cyc":9,"len":32,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/nfc/web_nfc_stub.dart","loc":4,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":2,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1244,7 +1244,7 @@
     {"p":"lib/features/directory/providers/directory_providers.dart","loc":122,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":1,"cyc":2,"len":18,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/providers/inbox_marks.dart","loc":65,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":1,"cyc":4,"len":13,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/providers/message_marks_providers.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/directory/providers/messenger_providers.dart","loc":92,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":4,"cyc":6,"len":41,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/directory/providers/messenger_providers.dart","loc":104,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":4,"cyc":6,"len":41,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/delete_confirm_text.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":4,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/plan_media_write.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":5,"len":40,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/screens/editor_screen.dart","loc":328,"part":false,"setState":1,"repositoryReads":1,"fn":7,"cog":20,"cyc":10,"len":150,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
@@ -1377,10 +1377,10 @@
     {"p":"lib/features/me/presentation/hold_to_move.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":3,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/linked_spaces_section.dart","loc":134,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":14,"cyc":8,"len":56,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/linked_visibility_card.dart","loc":146,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":10,"cyc":5,"len":52,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/me/presentation/me_account_tab.dart","loc":154,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":2,"cyc":3,"len":60,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/me/presentation/me_account_tab.dart","loc":147,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":2,"cyc":3,"len":55,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/me_home_tab.dart","loc":256,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":6,"cyc":9,"len":92,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/me_messages_tab.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":7,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/me/presentation/me_shell.dart","loc":239,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":29,"cyc":18,"len":146,"params":1,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/me/presentation/me_shell.dart","loc":204,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":23,"cyc":19,"len":113,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/me_space_card.dart","loc":188,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":29,"cyc":18,"len":111,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/me_spaces_chrome.dart","loc":171,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":6,"cyc":6,"len":77,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/me_spaces_list.dart","loc":286,"part":false,"setState":1,"repositoryReads":0,"fn":11,"cog":14,"cyc":13,"len":65,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1388,6 +1388,7 @@
     {"p":"lib/features/me/presentation/public_person_screen.dart","loc":69,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":7,"len":57,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/public_profile_tile.dart","loc":102,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":7,"cyc":7,"len":54,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/space_row_controls.dart","loc":209,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":19,"cyc":16,"len":123,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/me/presentation/task_wizard_entry.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":4,"len":17,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/visibility_card.dart","loc":186,"part":false,"setState":2,"repositoryReads":0,"fn":5,"cog":10,"cyc":7,"len":75,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/visibility_flow.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":6,"cyc":8,"len":29,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/presentation/visibility_labels.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":1,"cyc":6,"len":11,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
