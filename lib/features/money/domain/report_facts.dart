@@ -114,3 +114,31 @@ class ReminderFacts {
   final Workspace? workspace;
   final PaymentTerms? memberTerms;
 }
+
+/// The seller lines of a legal identity the owner is typing and has not
+/// saved yet: laid over the stored identity, they show what the invoice
+/// would print once saved.
+typedef SellerDraft = ({
+  String vatRegime,
+  String vatId,
+  String legalId,
+  String legalForm,
+  String registration,
+});
+
+/// The setup guide's sample invoice: the workspace that issues it, the
+/// identity being typed (null for the stored one) and the rate its one
+/// line is taxed at.
+class SampleInvoiceFacts {
+  const SampleInvoiceFacts({
+    required this.now,
+    this.workspace,
+    this.seller,
+    this.vatPercent = 0,
+  });
+
+  final DateTime now;
+  final Workspace? workspace;
+  final SellerDraft? seller;
+  final double vatPercent;
+}

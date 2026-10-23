@@ -342,3 +342,20 @@ class InvoiceLegal {
         facilitiesPackage, lettingKind, quickMethod,
       ]);
 }
+
+/// [stored] (`workspaces.invoice_legal`) with the seller's legal form and
+/// registration replaced and every other key kept exactly as stored, so a
+/// form that edits only those two lines never resets the others.
+Map<String, Object?> withSellerLines(
+  Map<String, Object?> stored, {
+  required String legalForm,
+  required String registration,
+}) {
+  final lines = InvoiceLegal(legalForm: legalForm, registration: registration)
+      .toJson();
+  return {
+    ...stored,
+    'legal_form': lines['legal_form'],
+    'registration': lines['registration'],
+  };
+}
