@@ -165,7 +165,7 @@ final class WorkspaceContextProvider
   }
 }
 
-String _$workspaceContextHash() => r'8e2d468d5f131c66b6fe99f574971d19f66de38f';
+String _$workspaceContextHash() => r'03a65a9a20abdefaf4bb0964dc958a7e76921eb7';
 
 /// #2561 L4 -- the captured context as a synchronous reader may use it NOW:
 /// null while it is being captured for a new selection (the previous
