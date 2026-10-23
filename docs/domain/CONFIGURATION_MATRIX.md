@@ -71,7 +71,7 @@ configuration.
 | dev_mode | `workspaces.dev_mode` | A | no | replace | #419 | `developer_screen_test` |
 | visibility, visibility_set_at | `workspaces.*` | A | **never** — the space's own listing choice; a template must not publish a space | — | 0367 | `152_workspace_visibility_licence` |
 | environment, pair_id | `workspaces.*` | C | **never** — which twin this is | — | #1160 | `environment_pairs_test` |
-| network_id | `workspaces.network_id` | E | never — the birth record `installation id:local id`, stamped by the host the row was born on | — | #2561 | `261_installation_roles` |
+| network_id | `workspaces.network_id` | E | never — the birth record `installation id:local id`, stamped by the host the row was born on | — | #2561 | `262_installation_roles` |
 | created_by, created_at, id | `workspaces.*` | E | never | — | — | — |
 | created_datetime, modified_datetime, company_id, site_id, created_by_user, modified_by_user | system columns | C | never | — | #992 | `system_columns_test` |
 

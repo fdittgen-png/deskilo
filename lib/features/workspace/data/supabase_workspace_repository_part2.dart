@@ -137,7 +137,7 @@ extension _SupabaseWorkspaceRepositoryPart2 on SupabaseWorkspaceRepository {
   }
 
   /// The stored birth record; empty on a server from before the column.
-  String _networkIdOf(Map<String, dynamic> row) =>
+  String _networkIdOf(Map<String, Object?> row) =>
       row['network_id'] as String? ?? '';
 
   Workspace _workspaceFromRow(Map<String, dynamic> row) => Workspace(

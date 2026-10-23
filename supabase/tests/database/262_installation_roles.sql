@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2561 L1 (9999): an installation declares what it is. Combined by
+-- #2561 L1 (0559): an installation declares what it is. Combined by
 -- default; the operator function refuses to make a personal home of an
 -- installation that holds a workspace or a member and changes nothing;
 -- a personal home refuses a workspace row at the table, so every creation

@@ -6,7 +6,7 @@
 -- deleted, no other column moves (user triggers are stood down for the
 -- backfill so the modification stamp does not).
 --
--- 9999 (#2561 L1) -- what kind of installation this database is, and the
+-- 0559 (#2561 L1) -- what kind of installation this database is, and the
 -- network identity of every workspace it hosts.
 --
 -- A personal home is an ORDINARY installation on the same migration
@@ -212,4 +212,4 @@ revoke execute on function public.public_network_descriptor() from public;
 grant execute on function public.public_network_descriptor() to anon, authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(559);

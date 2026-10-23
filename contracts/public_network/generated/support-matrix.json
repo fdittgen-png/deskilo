@@ -230,7 +230,7 @@
       "test/core/public_network/public_network_codec_test.dart": "f40b0596cea349131d15d97311672ba58861aa7da3922d3cdb77df52760bf15c",
       "test/core/public_network/public_network_negotiation_test.dart": "c3c75df7c058ff975575d76e7107fbc565d68353bbea8a294b2ea7b138d93c86",
       "test/features/directory/participant_negotiation_test.dart": "df6291acac00af0a99da82fb055cb161d35a69a7c7b4c1535990086d06da276a",
-      "test/fixtures/public_network/descriptor_current.json": "2014d47c86cc9d02d7795ab6eda460208304d0f6a120c6b4eca9ce71bf9638a9",
+      "test/fixtures/public_network/descriptor_current.json": "13296b451a37ebec77714a509406a3947ed1f745aa852fc90437a58d81e0a2a2",
       "test/fixtures/public_network/legacy_server_no_descriptor.json": "577eea25d7b5cd945504ed49c6eef95096155d8d46185587fab3efdbd86b9859",
       "test/fixtures/public_network/released_client_requests.json": "35192f11ad727121ab15c4f108efb99315afdcbd973506f01dab57d6c9cd42e0",
       "test/fixtures/public_network/synthetic_newer_server.json": "92c5f27107d9d09b21b8bf0e667508e822c31754f38c6a845f9ba053319cfdbf",

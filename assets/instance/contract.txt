@@ -2235,6 +2235,7 @@ routine public.operator_register_identity_federation_client(p_client_id uuid, p_
 routine public.operator_reset_mcp_authority(p_installation_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:22d43b34dfd3
 routine public.operator_revoke_database_admin(p_target uuid) -> jsonb | function | definer | volatile | exec:service_role | body:e0e61a0c3fc6
 routine public.operator_set_identity_federation_client(p_client_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec: | body:484cb66063dc
+routine public.operator_set_installation_roles(p_roles text[], p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:7dbbfd986503
 routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:service_role | body:c659b2933f84
 routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:46902c960cbd
 routine public.outgoing_payments_guard() -> trigger | function | invoker | volatile | exec:service_role | body:4bbded633c7e
@@ -2278,7 +2279,7 @@ routine public.protect_last_owner() -> trigger | function | definer | volatile |
 routine public.provision_database_admin(p_target uuid, p_can_provision boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ac8050f2c40a
 routine public.public_holidays(p_country text, p_year integer) -> TABLE(day date, key text) | function | invoker | immutable | exec:authenticated,service_role | body:1c6cfdb4de71
 routine public.public_identity_authority() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:4e3256312a3b
-routine public.public_network_descriptor() -> jsonb | function | invoker | immutable | exec:anon,authenticated,service_role | body:49f5223bb487
+routine public.public_network_descriptor() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:3c93dadf6767
 routine public.public_network_require(p_operation text) -> void | function | invoker | stable | exec:service_role | body:fee911e507ab
 routine public.public_person_card_sync() -> trigger | function | definer | volatile | exec:service_role | body:542c705cbafa
 routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:924f6f1fc7b1
@@ -2680,7 +2681,10 @@ routine public.workspace_template_readable(p_template_id uuid) -> boolean | func
 routine public.workspace_twin_id(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:02071934850f
 routine public.workspaces_administrator_role() -> trigger | function | definer | volatile | exec:service_role | body:7826864bdda3
 routine public.workspaces_delegated_columns() -> trigger | function | invoker | volatile | exec:service_role | body:b9a923b53a18
+routine public.workspaces_hosted_here() -> trigger | function | definer | volatile | exec:service_role | body:80161ebd0ca7
 routine public.workspaces_money_locale_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:e93c2718d56e
+routine public.workspaces_network_id_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:09c693249fe1
+routine public.workspaces_network_id_stamp() -> trigger | function | definer | volatile | exec:service_role | body:7859aca20bbd
 routine public.workspaces_permitting(p_perms text[]) -> SETOF uuid | function | definer | stable | exec:authenticated,service_role | body:ec6bb1c27b83
 routine public.workspaces_sample_data_stays_test() -> trigger | function | definer | volatile | exec:service_role | body:d260749b5b84
 routine public.write_account_audience(p_user uuid, p_field text, p_audience text, p_workspaces uuid[]) -> void | function | definer | volatile | exec:service_role | body:1e02b8454571
