@@ -111,6 +111,20 @@ void main() {
     expect(status.toNextMilestone, (low: 6, high: 12));
   });
 
+  test('a step the instance observed says its observed range; the others '
+      'keep the catalogue rule, and the milestone sums them end to end', () {
+    final observed = status.withObserved({'places': (low: 4, high: 7)});
+    final places = observed.steps.singleWhere((s) => s.step == 'places');
+    final rights = observed.steps.singleWhere(
+      (s) => s.step == 'member_rights',
+    );
+    expect(places.estimate, (low: 4, high: 7));
+    expect(places.estimateMinutes, 3, reason: 'the catalogue figure stays');
+    expect(rights.estimate, (low: 3, high: 6));
+    expect(observed.toNextMilestone, (low: 7, high: 13));
+    expect(_ids(observed.toDo), _ids(status.toDo), reason: 'nothing moved');
+  });
+
   test('a route that is not in the app is never followed', () {
     final s = SetupStatus.fromJson({
       'steps': [

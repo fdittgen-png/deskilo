@@ -13,6 +13,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../application/setup_step_timing_recorder.dart';
 import '../../domain/setup_steps.dart';
 import '../../domain/site.dart';
 import '../../domain/workspace.dart';
@@ -63,7 +64,13 @@ class SetupStepScreen extends ConsumerWidget {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.setupStepTitle(stepId))),
-      body: workspace == null ? const LoadingView() : _page(ref, workspace),
+      body: workspace == null
+          ? const LoadingView()
+          : _Session(
+              workspaceId: workspace.id,
+              stepId: stepId,
+              child: _page(ref, workspace),
+            ),
     );
   }
 
@@ -93,6 +100,45 @@ class SetupStepScreen extends ConsumerWidget {
 
 /// Watches whether the space [workspaceId] has recorded money.
 typedef SetupMoneyRecorded = bool Function(WidgetRef ref, String workspaceId);
+
+/// The page's opening and leaving, told to the recorder (9999): the
+/// guide's observed times are these sessions, settled by the status the
+/// guide reads on the way back.
+class _Session extends ConsumerStatefulWidget {
+  const _Session({
+    required this.workspaceId,
+    required this.stepId,
+    required this.child,
+  });
+
+  final String workspaceId;
+  final String stepId;
+  final Widget child;
+
+  @override
+  ConsumerState<_Session> createState() => _SessionState();
+}
+
+class _SessionState extends ConsumerState<_Session> {
+  late final SetupStepTimingRecorder _recorder = ref.read(
+    setupStepTimingRecorderProvider.notifier,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _recorder.opened(widget.workspaceId, widget.stepId);
+  }
+
+  @override
+  void dispose() {
+    _recorder.closed(widget.workspaceId, widget.stepId);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
+}
 
 /// The places page from what this feature knows: the sites when there are
 /// several (default first) and whether the library is on.

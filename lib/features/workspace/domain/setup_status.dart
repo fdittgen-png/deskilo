@@ -12,10 +12,11 @@ import '../../../core/data/json_reader.dart';
 typedef SetupEstimate = ({int low, int high});
 
 /// #2869 — a catalogue estimate as a range: from the estimate to twice
-/// it. The refinement asks for ranges from observed sessions per route
-/// through setup; those timings are not collected yet, so the catalogue's
-/// one figure (`setup_steps.dart`) is widened by this fixed rule until
-/// they are.
+/// it. The rule for a step the instance has not observed often enough:
+/// the server answers an observed range (`setup_step_timing_ranges`, the
+/// median to the 80th percentile of the sessions that finished the step,
+/// 9999) only from five sessions on, and the catalogue's one figure
+/// (`setup_steps.dart`) is widened by this fixed rule below that.
 SetupEstimate _estimateRange(int minutes) =>
     (low: minutes, high: minutes * 2);
 
@@ -51,6 +52,7 @@ class SetupStepStatus {
     this.blockedBy = const [],
     this.manual = false,
     this.estimateMinutes = 5,
+    this.observed,
   });
 
   final String step;
@@ -68,8 +70,26 @@ class SetupStepStatus {
   final bool manual;
   final int estimateMinutes;
 
-  /// [estimateMinutes] as the guide says it.
-  SetupEstimate get estimate => _estimateRange(estimateMinutes);
+  /// What the instance observed for this step, when it has seen enough
+  /// sessions; null otherwise.
+  final SetupEstimate? observed;
+
+  /// The time as the guide says it: what was observed, else the
+  /// catalogue's [estimateMinutes] widened.
+  SetupEstimate get estimate => observed ?? _estimateRange(estimateMinutes);
+
+  /// This step with [observed] set to what the instance knows, if anything.
+  SetupStepStatus withObserved(SetupEstimate? range) => SetupStepStatus(
+    step: step,
+    milestone: milestone,
+    required: required,
+    state: state,
+    route: route,
+    blockedBy: blockedBy,
+    manual: manual,
+    estimateMinutes: estimateMinutes,
+    observed: range,
+  );
 
   bool get open =>
       state == SetupStepState.needsConfiguration ||
@@ -200,10 +220,19 @@ class SetupStatus {
       if (!s.required && s.state == SetupStepState.needsConfiguration) s,
   ];
 
-  /// #2869 — what the next milestone still needs, as a range: the
-  /// estimates of its open steps, summed, widened as one.
-  SetupEstimate get toNextMilestone =>
-      _estimateRange(toDo.fold(0, (sum, s) => sum + s.estimateMinutes));
+  /// #2869 — what the next milestone still needs, as a range: its open
+  /// steps' ranges summed end to end, each observed or from the catalogue.
+  SetupEstimate get toNextMilestone => (
+    low: toDo.fold(0, (sum, s) => sum + s.estimate.low),
+    high: toDo.fold(0, (sum, s) => sum + s.estimate.high),
+  );
+
+  /// This status with every step's observed range taken from [ranges]
+  /// (by step id); a step the instance has not observed keeps none.
+  SetupStatus withObserved(Map<String, SetupEstimate> ranges) => SetupStatus(
+    steps: [for (final s in steps) s.withObserved(ranges[s.step])],
+    milestones: milestones,
+  );
 
   /// #2869 — steps outside the levels the owner chose. The server marks a
   /// step `not_applicable` only when its feature is off (0539), so these
