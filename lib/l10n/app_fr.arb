@@ -14440,6 +14440,174 @@
   "subprocessStructureDesc": "Gérer les sites et la disponibilité des objets du plan.",
   "subprocessTax": "Gestion de la TVA",
   "subprocessTaxDesc": "Gérer les groupes, taux et déclarations de TVA.",
+  "supplierFieldEdited": "Modifié par vous",
+  "@supplierFieldEdited": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldNotReturned": "Non renvoyé par le registre",
+  "@supplierFieldNotReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldRetrieved": "Récupéré depuis {provider}",
+  "@supplierFieldRetrieved": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierFieldValidated": "Validé par {provider}",
+  "@supplierFieldValidated": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupContinueManually": "Continuer manuellement",
+  "@supplierLookupContinueManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountry": "Pays",
+  "@supplierLookupCountry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountryMissing": "Choisissez le pays du fournisseur.",
+  "@supplierLookupCountryMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupDuplicate": "Un fournisseur porte déjà cet identifiant : {supplier}. Rien n'a été créé.",
+  "@supplierLookupDuplicate": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupEnterManually": "Saisir manuellement",
+  "@supplierLookupEnterManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupFind": "Rechercher la société",
+  "@supplierLookupFind": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifier": "Numéro de TVA",
+  "@supplierLookupIdentifier": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierHelp": "Avec ou sans préfixe pays ; les espaces, points et tirets sont ignorés.",
+  "@supplierLookupIdentifierHelp": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMalformed": "Ceci ne ressemble pas à un numéro de TVA : lettres et chiffres uniquement.",
+  "@supplierLookupIdentifierMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMissing": "Saisissez le numéro de TVA à rechercher.",
+  "@supplierLookupIdentifierMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIntro": "Saisissez le numéro de TVA du fournisseur. Le registre répond avec ce qu'il détient ; vous vérifiez tout avant d'enregistrer.",
+  "@supplierLookupIntro": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupInvalidInput": "Le registre a rejeté le format de ce numéro. Vérifiez-le, ou continuez manuellement.",
+  "@supplierLookupInvalidInput": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupMalformed": "La réponse du registre n'a pas pu être lue. Réessayez, ou continuez manuellement.",
+  "@supplierLookupMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupManualHint": "Ou saisissez les informations ci-dessous.",
+  "@supplierLookupManualHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNotFound": "Le registre ne connaît pas ce numéro de TVA. Vérifiez le numéro et le pays, ou continuez manuellement.",
+  "@supplierLookupNotFound": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNothingReturned": "Le numéro de TVA est valide, mais le registre n'a renvoyé ni nom ni adresse. Complétez les champs vous-même.",
+  "@supplierLookupNothingReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupOpenExisting": "Ouvrir le fournisseur existant",
+  "@supplierLookupOpenExisting": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupProviderVies": "VIES",
+  "@supplierLookupProviderVies": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRefused": "La recherche a été refusée : vous ne gérez pas les fournisseurs ici, ou la vérification de TVA est désactivée.",
+  "@supplierLookupRefused": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRetry": "Réessayer",
+  "@supplierLookupRetry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupReviewHint": "Vérifiez chaque champ ci-dessous ; vous pouvez tout modifier avant d'enregistrer.",
+  "@supplierLookupReviewHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSearching": "Interrogation du registre…",
+  "@supplierLookupSearching": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSource": "Source : {provider}, {time}",
+  "@supplierLookupSource": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupStatusCouldNotVerify": "Impossible de vérifier le numéro de TVA",
+  "@supplierLookupStatusCouldNotVerify": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusRetrievedNotValidated": "Informations récupérées ; numéro de TVA non validé",
+  "@supplierLookupStatusRetrievedNotValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusUnavailable": "Registre indisponible",
+  "@supplierLookupStatusUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusValidated": "Numéro de TVA validé",
+  "@supplierLookupStatusValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupThrottled": "Le registre est saturé. Patientez un instant et réessayez, ou continuez manuellement.",
+  "@supplierLookupThrottled": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupTimeout": "Le registre n'a pas répondu à temps. Réessayez, ou continuez manuellement.",
+  "@supplierLookupTimeout": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnavailable": "Le registre est indisponible pour le moment. Réessayez plus tard, ou continuez manuellement.",
+  "@supplierLookupUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnsupported": "Aucun registre ne répond encore pour {country}. Vous pouvez saisir les informations vous-même.",
+  "@supplierLookupUnsupported": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersAdd": "Ajouter un fournisseur",
   "@suppliersAdd": {
     "description": "#2567 suppliers"

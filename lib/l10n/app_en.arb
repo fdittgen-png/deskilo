@@ -24087,6 +24087,174 @@
   "subprocessStructureDesc": "Manage sites and the availability of plan objects.",
   "subprocessTax": "VAT management",
   "subprocessTaxDesc": "Maintain VAT groups, rates and declarations.",
+  "supplierFieldEdited": "Edited by you",
+  "@supplierFieldEdited": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldNotReturned": "Not returned by the registry",
+  "@supplierFieldNotReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldRetrieved": "Retrieved from {provider}",
+  "@supplierFieldRetrieved": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierFieldValidated": "Validated by {provider}",
+  "@supplierFieldValidated": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupContinueManually": "Continue manually",
+  "@supplierLookupContinueManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountry": "Country",
+  "@supplierLookupCountry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountryMissing": "Choose the supplier's country.",
+  "@supplierLookupCountryMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupDuplicate": "A supplier with this identifier already exists: {supplier}. Nothing was created.",
+  "@supplierLookupDuplicate": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupEnterManually": "Enter manually",
+  "@supplierLookupEnterManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupFind": "Find company details",
+  "@supplierLookupFind": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifier": "VAT number",
+  "@supplierLookupIdentifier": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierHelp": "With or without the country prefix; spaces, dots and dashes are ignored.",
+  "@supplierLookupIdentifierHelp": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMalformed": "This does not look like a VAT number: letters and digits only.",
+  "@supplierLookupIdentifierMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMissing": "Enter the VAT number to look up.",
+  "@supplierLookupIdentifierMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIntro": "Enter the supplier's VAT number. The registry answers with what it holds; you review everything before saving.",
+  "@supplierLookupIntro": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupInvalidInput": "The registry rejected the format of this number. Check it, or continue manually.",
+  "@supplierLookupInvalidInput": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupMalformed": "The registry's answer could not be read. Retry, or continue manually.",
+  "@supplierLookupMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupManualHint": "Or enter the details yourself below.",
+  "@supplierLookupManualHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNotFound": "The registry does not know this VAT number. Check the number and the country, or continue manually.",
+  "@supplierLookupNotFound": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNothingReturned": "The VAT number is valid, but the registry returned no name or address. Complete the fields yourself.",
+  "@supplierLookupNothingReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupOpenExisting": "Open existing supplier",
+  "@supplierLookupOpenExisting": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupProviderVies": "VIES",
+  "@supplierLookupProviderVies": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRefused": "The lookup was refused: you may not manage suppliers here, or VAT verification is switched off.",
+  "@supplierLookupRefused": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRetry": "Retry",
+  "@supplierLookupRetry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupReviewHint": "Review every field below; you can change anything before saving.",
+  "@supplierLookupReviewHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSearching": "Asking the registry…",
+  "@supplierLookupSearching": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSource": "Source: {provider}, {time}",
+  "@supplierLookupSource": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupStatusCouldNotVerify": "Could not verify the VAT number",
+  "@supplierLookupStatusCouldNotVerify": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusRetrievedNotValidated": "Details retrieved; VAT number not validated",
+  "@supplierLookupStatusRetrievedNotValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusUnavailable": "Registry unavailable",
+  "@supplierLookupStatusUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusValidated": "VAT number validated",
+  "@supplierLookupStatusValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupThrottled": "The registry is busy. Wait a moment and retry, or continue manually.",
+  "@supplierLookupThrottled": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupTimeout": "The registry did not answer in time. Retry, or continue manually.",
+  "@supplierLookupTimeout": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnavailable": "The registry is unavailable right now. Retry later, or continue manually.",
+  "@supplierLookupUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnsupported": "No registry answers for {country} yet. You can enter the details yourself.",
+  "@supplierLookupUnsupported": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersAdd": "Add supplier",
   "@suppliersAdd": {
     "description": "#2567 suppliers"

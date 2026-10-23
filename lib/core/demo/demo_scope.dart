@@ -2,6 +2,7 @@
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
@@ -46,6 +47,7 @@ import 'package:deskilo/features/money/providers/asset_providers.dart';
 import 'package:deskilo/features/money/providers/asset_valuation_providers.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
+import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
@@ -210,6 +212,8 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
   return [
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
     supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
+    // #2863 — the registry a supplier is looked up in answers from fixtures.
+    companyLookupRepositoryProvider.overrideWithValue(FakeCompanyLookupRepository()),
     purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
     bookProfileRepositoryProvider.overrideWithValue(main.books),
     premisesLeaseRepositoryProvider.overrideWithValue(main.lease),

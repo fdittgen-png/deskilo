@@ -21143,6 +21143,138 @@ class AppLocalizationsDe extends AppLocalizations {
       'Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.';
 
   @override
+  String get supplierFieldEdited => 'Von Ihnen geändert';
+
+  @override
+  String get supplierFieldNotReturned => 'Vom Register nicht geliefert';
+
+  @override
+  String supplierFieldRetrieved(String provider) {
+    return 'Aus $provider abgerufen';
+  }
+
+  @override
+  String supplierFieldValidated(String provider) {
+    return 'Bestätigt durch $provider';
+  }
+
+  @override
+  String get supplierLookupContinueManually => 'Manuell fortfahren';
+
+  @override
+  String get supplierLookupCountry => 'Land';
+
+  @override
+  String get supplierLookupCountryMissing =>
+      'Wählen Sie das Land des Lieferanten.';
+
+  @override
+  String supplierLookupDuplicate(String supplier) {
+    return 'Ein Lieferant trägt diese Nummer bereits: $supplier. Es wurde nichts angelegt.';
+  }
+
+  @override
+  String get supplierLookupEnterManually => 'Manuell eingeben';
+
+  @override
+  String get supplierLookupFind => 'Firmendaten suchen';
+
+  @override
+  String get supplierLookupIdentifier => 'USt-IdNr.';
+
+  @override
+  String get supplierLookupIdentifierHelp =>
+      'Mit oder ohne Länderpräfix; Leerzeichen, Punkte und Bindestriche werden ignoriert.';
+
+  @override
+  String get supplierLookupIdentifierMalformed =>
+      'Das sieht nicht wie eine USt-IdNr. aus: nur Buchstaben und Ziffern.';
+
+  @override
+  String get supplierLookupIdentifierMissing =>
+      'Geben Sie die zu suchende USt-IdNr. ein.';
+
+  @override
+  String get supplierLookupIntro =>
+      'Geben Sie die USt-IdNr. des Lieferanten ein. Das Register antwortet mit dem, was es hat; Sie prüfen alles vor dem Speichern.';
+
+  @override
+  String get supplierLookupInvalidInput =>
+      'Das Register hat das Format dieser Nummer abgelehnt. Prüfen Sie sie oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupMalformed =>
+      'Die Antwort des Registers konnte nicht gelesen werden. Versuchen Sie es erneut oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupManualHint =>
+      'Oder tragen Sie die Angaben unten selbst ein.';
+
+  @override
+  String get supplierLookupNotFound =>
+      'Das Register kennt diese USt-IdNr. nicht. Prüfen Sie Nummer und Land oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupNothingReturned =>
+      'Die USt-IdNr. ist gültig, aber das Register hat weder Namen noch Adresse geliefert. Ergänzen Sie die Felder selbst.';
+
+  @override
+  String get supplierLookupOpenExisting => 'Vorhandenen Lieferanten öffnen';
+
+  @override
+  String get supplierLookupProviderVies => 'VIES';
+
+  @override
+  String get supplierLookupRefused =>
+      'Die Suche wurde abgelehnt: Sie verwalten hier keine Lieferanten, oder die USt-Prüfung ist ausgeschaltet.';
+
+  @override
+  String get supplierLookupRetry => 'Erneut versuchen';
+
+  @override
+  String get supplierLookupReviewHint =>
+      'Prüfen Sie jedes Feld unten; Sie können alles vor dem Speichern ändern.';
+
+  @override
+  String get supplierLookupSearching => 'Register wird abgefragt…';
+
+  @override
+  String supplierLookupSource(String provider, String time) {
+    return 'Quelle: $provider, $time';
+  }
+
+  @override
+  String get supplierLookupStatusCouldNotVerify =>
+      'USt-IdNr. konnte nicht geprüft werden';
+
+  @override
+  String get supplierLookupStatusRetrievedNotValidated =>
+      'Daten abgerufen; USt-IdNr. nicht bestätigt';
+
+  @override
+  String get supplierLookupStatusUnavailable => 'Register nicht erreichbar';
+
+  @override
+  String get supplierLookupStatusValidated => 'USt-IdNr. bestätigt';
+
+  @override
+  String get supplierLookupThrottled =>
+      'Das Register ist überlastet. Warten Sie kurz und versuchen Sie es erneut, oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupTimeout =>
+      'Das Register hat nicht rechtzeitig geantwortet. Versuchen Sie es erneut oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupUnavailable =>
+      'Das Register ist derzeit nicht erreichbar. Versuchen Sie es später erneut oder fahren Sie manuell fort.';
+
+  @override
+  String supplierLookupUnsupported(String country) {
+    return 'Für $country antwortet noch kein Register. Sie können die Angaben selbst eintragen.';
+  }
+
+  @override
   String get suppliersAdd => 'Lieferant hinzufügen';
 
   @override

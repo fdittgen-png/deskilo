@@ -338,6 +338,7 @@ const Set<String> demoOverriddenProviders = {
   'expenseRepositoryProvider', // #2591
   'accountingSourceQueriesProvider', // #2365
   'viesRepositoryProvider', // #2354
+  'companyLookupRepositoryProvider', // #2863
   'creditRepositoryProvider',
   'accessoryRepositoryProvider',
   'profileRepositoryProvider',
