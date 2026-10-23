@@ -659,19 +659,17 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
   for (final op in ops) {
     final input = Map<String, dynamic>.from(op['input'] as Map);
     final authority = Map<String, dynamic>.from(op['authority'] as Map);
+    // The scalar properties three to a line: one block per
+    // operation still, a third of the length.
     dart
       ..writeln("  '${op['id']}': McpOperationSpec(")
-      ..writeln("    id: '${op['id']}',")
-      ..writeln('    rpc: ${op['rpc'] == null ? 'null' : "'${op['rpc']}'"},')
-      ..writeln('    handler: ${op['handler'] == true},')
-      ..writeln('    dispatch: ${op['dispatch'] == true},')
-      ..writeln('    authority: McpAuthority.${authority['kind']},')
-      ..writeln('    permission: ${authority['permission'] == null ? 'null' : "'${authority['permission']}'"},')
-      ..writeln('    features: [${[for (final f in op['features'] as List) "'$f'"].join(', ')}],')
-      ..writeln('    scope: McpScope.${op['scope']},')
-      ..writeln('    mutation: McpMutation.${op['mutation']},')
-      ..writeln('    idempotent: ${op['idempotency'] == 'request_id'},')
-      ..writeln('    nativeConfirmation: ${op['confirmation'] == 'native'},')
+      ..writeln("    id: '${op['id']}', rpc: ${op['rpc'] == null ? 'null' : "'${op['rpc']}'"}, "
+          'handler: ${op['handler'] == true}, dispatch: ${op['dispatch'] == true},')
+      ..writeln('    authority: McpAuthority.${authority['kind']}, '
+          'permission: ${authority['permission'] == null ? 'null' : "'${authority['permission']}'"}, '
+          'features: [${[for (final f in op['features'] as List) "'$f'"].join(', ')}],')
+      ..writeln('    scope: McpScope.${op['scope']}, mutation: McpMutation.${op['mutation']}, '
+          "idempotent: ${op['idempotency'] == 'request_id'}, nativeConfirmation: ${op['confirmation'] == 'native'},")
       ..writeln('    fields: {');
     for (final e in input.entries) {
       final f = Map<String, dynamic>.from(e.value as Map);
@@ -686,8 +684,8 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     }
     dart
       ..writeln('    },')
-      ..writeln('    output: [${[for (final o in op['output'] as List) "'$o'"].join(', ')}],')
-      ..writeln("    group: '${mcpOperationGroupOf(op)}',")
+      ..writeln('    output: [${[for (final o in op['output'] as List) "'$o'"].join(', ')}], '
+          "group: '${mcpOperationGroupOf(op)}',")
       ..writeln('  ),');
   }
   dart.writeln('};');

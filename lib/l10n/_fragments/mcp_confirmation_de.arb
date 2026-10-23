@@ -15,5 +15,10 @@
   "mcpConfirmRefuse": "Ihre Antwort: ablehnen",
   "mcpConfirmPeriod": "Zeitraum: {period}",
   "mcpConfirmWorkspace": "Arbeitsbereich: {workspace}",
-  "mcpConfirmClient": "Angefragt von: {client}"
+  "mcpConfirmClient": "Angefragt von: {client}",
+  "mcpConfirmLevel": "{process}: {level}",
+  "mcpConfirmSwitchOn": "Schaltet ein: {features}",
+  "mcpConfirmSwitchOff": "Schaltet aus: {features}. Ihre Daten bleiben erhalten.",
+  "mcpConfirmStepDone": "Er wird als erledigt markiert.",
+  "mcpConfirmStepLater": "Er wird für später zurückgestellt."
 }
