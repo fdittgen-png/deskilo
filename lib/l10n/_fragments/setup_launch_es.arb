@@ -1,0 +1,95 @@
+{
+  "setupLaunchTitle": "Revisar y abrir",
+  "@setupLaunchTitle": {
+    "description": "#2876 setup launch: setupLaunchTitle"
+  },
+  "setupLaunchLink": "Revisar sus respuestas y abrir",
+  "@setupLaunchLink": {
+    "description": "#2876 setup launch: setupLaunchLink"
+  },
+  "setupLaunchMilestones": "Hitos",
+  "@setupLaunchMilestones": {
+    "description": "#2876 setup launch: setupLaunchMilestones"
+  },
+  "setupLaunchReached": "Alcanzado",
+  "@setupLaunchReached": {
+    "description": "#2876 setup launch: setupLaunchReached"
+  },
+  "setupLaunchBlockers": "Aún no se puede abrir. Estos pasos lo impiden:",
+  "@setupLaunchBlockers": {
+    "description": "#2876 setup launch: setupLaunchBlockers"
+  },
+  "setupLaunchFix": "Corregir",
+  "@setupLaunchFix": {
+    "description": "#2876 setup launch: setupLaunchFix"
+  },
+  "setupLaunchChange": "Cambiar",
+  "@setupLaunchChange": {
+    "description": "#2876 setup launch: setupLaunchChange"
+  },
+  "setupLaunchAnswers": "Sus respuestas",
+  "@setupLaunchAnswers": {
+    "description": "#2876 setup launch: setupLaunchAnswers"
+  },
+  "setupLaunchGroup": "{key, select, open{Abrir} run{Operar} grow{Crecer} launch{Lanzar} other{{key}}}",
+  "@setupLaunchGroup": {
+    "description": "#2876 setup launch: setupLaunchGroup",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLaunchOperator": "Solo su operador puede hacer esto:",
+  "@setupLaunchOperator": {
+    "description": "#2876 setup launch: setupLaunchOperator"
+  },
+  "setupLaunchCopyOperator": "Copiar para su operador",
+  "@setupLaunchCopyOperator": {
+    "description": "#2876 setup launch: setupLaunchCopyOperator"
+  },
+  "setupLaunchPublicOn": "Su página pública es visible para todos.",
+  "@setupLaunchPublicOn": {
+    "description": "#2876 setup launch: setupLaunchPublicOn"
+  },
+  "setupLaunchPublicOff": "Nada de su espacio es público todavía.",
+  "@setupLaunchPublicOff": {
+    "description": "#2876 setup launch: setupLaunchPublicOff"
+  },
+  "setupLaunchReport": "Copiar el informe de preparación",
+  "@setupLaunchReport": {
+    "description": "#2876 setup launch: setupLaunchReport"
+  },
+  "setupLaunchReportTitle": "Informe de preparación",
+  "@setupLaunchReportTitle": {
+    "description": "#2876 setup launch: setupLaunchReportTitle"
+  },
+  "setupLaunchCopied": "Copiado",
+  "@setupLaunchCopied": {
+    "description": "#2876 setup launch: setupLaunchCopied"
+  },
+  "setupLaunchGoLive": "Abrir",
+  "@setupLaunchGoLive": {
+    "description": "#2876 setup launch: setupLaunchGoLive"
+  },
+  "setupLaunchGoLiveTitle": "¿Abrir el espacio?",
+  "@setupLaunchGoLiveTitle": {
+    "description": "#2876 setup launch: setupLaunchGoLiveTitle"
+  },
+  "setupLaunchGoLiveBody": "Su configuración se copia al espacio real de este par, donde los miembros la ven de inmediato. Las reservas, facturas y pagos hechos allí son reales y no se pueden deshacer. En la siguiente pantalla elige qué copiar.",
+  "@setupLaunchGoLiveBody": {
+    "description": "#2876 setup launch: setupLaunchGoLiveBody"
+  },
+  "setupLaunchGoLiveConfirm": "Continuar al despliegue",
+  "@setupLaunchGoLiveConfirm": {
+    "description": "#2876 setup launch: setupLaunchGoLiveConfirm"
+  },
+  "setupLaunchIsLive": "Este es el espacio real: está abierto.",
+  "@setupLaunchIsLive": {
+    "description": "#2876 setup launch: setupLaunchIsLive"
+  },
+  "setupLaunchCannot": "Abrir será posible cuando se alcancen todos los hitos.",
+  "@setupLaunchCannot": {
+    "description": "#2876 setup launch: setupLaunchCannot"
+  }
+}

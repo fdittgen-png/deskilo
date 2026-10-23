@@ -13768,6 +13768,99 @@
   "setupGuideUnavailable": "Non è stato possibile leggere lo stato della configurazione. Riprovi tra poco.",
   "setupGuideWaiting": "In attesa",
   "setupGuideWaitsFor": "Attende: {steps}",
+  "setupLaunchAnswers": "Le Sue risposte",
+  "@setupLaunchAnswers": {
+    "description": "#2876 setup launch: setupLaunchAnswers"
+  },
+  "setupLaunchBlockers": "Non è ancora possibile aprire. Questi passaggi lo impediscono:",
+  "@setupLaunchBlockers": {
+    "description": "#2876 setup launch: setupLaunchBlockers"
+  },
+  "setupLaunchCannot": "Aprire sarà possibile quando ogni traguardo sarà raggiunto.",
+  "@setupLaunchCannot": {
+    "description": "#2876 setup launch: setupLaunchCannot"
+  },
+  "setupLaunchChange": "Modificare",
+  "@setupLaunchChange": {
+    "description": "#2876 setup launch: setupLaunchChange"
+  },
+  "setupLaunchCopied": "Copiato",
+  "@setupLaunchCopied": {
+    "description": "#2876 setup launch: setupLaunchCopied"
+  },
+  "setupLaunchCopyOperator": "Copi per il Suo operatore",
+  "@setupLaunchCopyOperator": {
+    "description": "#2876 setup launch: setupLaunchCopyOperator"
+  },
+  "setupLaunchFix": "Correggere",
+  "@setupLaunchFix": {
+    "description": "#2876 setup launch: setupLaunchFix"
+  },
+  "setupLaunchGoLive": "Aprire",
+  "@setupLaunchGoLive": {
+    "description": "#2876 setup launch: setupLaunchGoLive"
+  },
+  "setupLaunchGoLiveBody": "La Sua configurazione viene copiata nello spazio reale di questa coppia, dove i membri la vedono subito. Prenotazioni, fatture e pagamenti fatti lì sono reali e non si possono annullare. Nella schermata successiva sceglie cosa copiare.",
+  "@setupLaunchGoLiveBody": {
+    "description": "#2876 setup launch: setupLaunchGoLiveBody"
+  },
+  "setupLaunchGoLiveConfirm": "Continui verso la distribuzione",
+  "@setupLaunchGoLiveConfirm": {
+    "description": "#2876 setup launch: setupLaunchGoLiveConfirm"
+  },
+  "setupLaunchGoLiveTitle": "Aprire lo spazio?",
+  "@setupLaunchGoLiveTitle": {
+    "description": "#2876 setup launch: setupLaunchGoLiveTitle"
+  },
+  "setupLaunchGroup": "{key, select, open{Aprire} run{Gestire} grow{Crescere} launch{Avviare} other{{key}}}",
+  "@setupLaunchGroup": {
+    "description": "#2876 setup launch: setupLaunchGroup",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLaunchIsLive": "Questo è lo spazio reale: è aperto.",
+  "@setupLaunchIsLive": {
+    "description": "#2876 setup launch: setupLaunchIsLive"
+  },
+  "setupLaunchLink": "Verifichi le Sue risposte e apra",
+  "@setupLaunchLink": {
+    "description": "#2876 setup launch: setupLaunchLink"
+  },
+  "setupLaunchMilestones": "Traguardi",
+  "@setupLaunchMilestones": {
+    "description": "#2876 setup launch: setupLaunchMilestones"
+  },
+  "setupLaunchOperator": "Solo il Suo operatore può farlo:",
+  "@setupLaunchOperator": {
+    "description": "#2876 setup launch: setupLaunchOperator"
+  },
+  "setupLaunchPublicOff": "Nulla del Suo spazio è ancora pubblico.",
+  "@setupLaunchPublicOff": {
+    "description": "#2876 setup launch: setupLaunchPublicOff"
+  },
+  "setupLaunchPublicOn": "La Sua pagina pubblica è visibile a tutti.",
+  "@setupLaunchPublicOn": {
+    "description": "#2876 setup launch: setupLaunchPublicOn"
+  },
+  "setupLaunchReached": "Raggiunto",
+  "@setupLaunchReached": {
+    "description": "#2876 setup launch: setupLaunchReached"
+  },
+  "setupLaunchReport": "Copi il rapporto di preparazione",
+  "@setupLaunchReport": {
+    "description": "#2876 setup launch: setupLaunchReport"
+  },
+  "setupLaunchReportTitle": "Rapporto di preparazione",
+  "@setupLaunchReportTitle": {
+    "description": "#2876 setup launch: setupLaunchReportTitle"
+  },
+  "setupLaunchTitle": "Verifichi e apra",
+  "@setupLaunchTitle": {
+    "description": "#2876 setup launch: setupLaunchTitle"
+  },
   "setupLevelName": "{key, select, bookings_simple{Posti condivisi} bookings_resources{Sale e risorse} bookings_measured{Uso misurato} community_basic{Semplice} community_organised{Organizzata} money_none{Nessun denaro} money_statements{Estratti} money_invoices{Fatture} payments_off{Con bonifico} payments_online{Online} tax_none{Nessuna IVA} tax_vat{IVA} tax_books{Contabilità} purchases_none{Nessuno} purchases_expenses{Spese} purchases_full{Acquisti completi} presentation_basic{Semplice} presentation_branded{I suoi colori} presentation_public{Pagina pubblica} operations_basic{Semplice} operations_insight{Indicatori} operations_advanced{Avanzata} assistant_off{Spento} assistant_on{Acceso} other{{key}}}",
   "setupLevelsApplied": "Il suo spazio ora fa ciò che ha scelto.",
   "setupLevelsApply": "Applica",

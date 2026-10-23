@@ -117,6 +117,8 @@ class WorkspaceConfigDocument {
     this.workingHoursLabel = '',
     this.vatRates = const [],
     this.sites = const [],
+    this.readinessTitle = '',
+    this.readiness = const [],
   });
 
   final WorkspaceConfigPdfStrings strings;
@@ -147,7 +149,15 @@ class WorkspaceConfigDocument {
   /// #2862 — one line per VAT rate in force, and per site.
   final List<String> vatRates;
   final List<String> sites;
+
+  /// #2876 — the readiness report: each milestone, where it stands and
+  /// its evidence; empty when the setup guide is off.
+  final String readinessTitle;
+  final List<ConfigReadinessLine> readiness;
 }
+
+/// A milestone of the readiness report, its standing and its evidence.
+typedef ConfigReadinessLine = ({String label, String value, String detail});
 
 /// One process and the names of its features that are on.
 typedef ConfigFeatureGroup = ({String process, List<String> features});
@@ -183,6 +193,10 @@ Map<String, Object?> workspaceConfigurationReportData(
       _heading(strings.floorPlan),
       if (doc.levels.isEmpty) _row(strings.emptyLevel),
       for (final entry in doc.levels) ..._levelRows(doc, entry),
+      if (doc.readiness.isNotEmpty) ...[
+        _heading(doc.readinessTitle),
+        for (final r in doc.readiness) _row(r.label, r.value, r.detail),
+      ],
     ],
   };
 }

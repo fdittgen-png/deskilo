@@ -275,14 +275,21 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
   }
 
   /// #2862 — the configuration PDF's hours, VAT rates in force and sites;
-  /// the rates and sites only when their features are on.
-  Future<({String hours, List<String> vatRates, List<String> sites})>
-      _configPdfExtras(Set<WorkspaceFeature> features, String? locale) async {
+  /// the rates and sites only when their features are on; #2876 — the
+  /// readiness report when the setup guide is.
+  Future<({String hours, List<String> vatRates, List<String> sites,
+      List<LaunchReportLine> readiness})>
+      _configPdfExtras(Set<WorkspaceFeature> features, String? locale,
+          String workspaceId) async {
+    final l10n = context.l10n;
     final hours = await ref.read(workHoursProvider.future);
     final rates = features.contains(WorkspaceFeature.vatManagement)
         ? await ref.read(vatRatesProvider.future) : null;
     final sites = features.contains(WorkspaceFeature.multiSite)
         ? await ref.read(sitesProvider.future) : null;
+    final setup = features.contains(WorkspaceFeature.setupGuide)
+        ? await ref.read(workspaceSetupStatusProvider(workspaceId).future)
+        : null;
     return (
       hours: configWorkingHours(hours),
       vatRates: configVatRates(locale, [
@@ -290,6 +297,9 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
             .map((r) => (label: r.label, percent: r.percent)),
       ]),
       sites: configSites(sites ?? []),
+      readiness: setup == null
+          ? const <LaunchReportLine>[]
+          : launchReportLines(l10n, LaunchReview.from(setup)),
     );
   }
 
@@ -317,7 +327,8 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
           final features = await ref.read(enabledFeaturesProvider.future);
           final openWeekdays = await ref.read(openWeekdaysProvider.future);
           final closures = await ref.read(closureDaysProvider.future);
-          final extras = await _configPdfExtras(features, locale);
+          final extras =
+              await _configPdfExtras(features, locale, workspace.id);
           // Formatted once: the l10n branch and its fallback must carry
           // the same stamp.
           final generatedOn =
@@ -373,6 +384,8 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
             workingHoursLabel: extras.hours,
             vatRates: extras.vatRates,
             sites: extras.sites,
+            readinessTitle: l10n.setupLaunchReportTitle,
+            readiness: extras.readiness,
             levels: plans,
             levelPrices: {
               for (final entry in plans)
