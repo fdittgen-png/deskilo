@@ -18962,6 +18962,10 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "pushAllowAction": "Allow",
+  "@pushAllowAction": {
+    "description": "#2559 Settings button: the deliberate action that raises the system notification prompt"
+  },
   "pushCancelledBody": "A reservation was removed by an admin.",
   "@pushCancelledBody": {
     "description": "Push body for the removed-reservation ping — generic, no personal data (#424)"
@@ -18970,6 +18974,14 @@
   "@pushCancelledTitle": {
     "description": "Push title when an admin removed a reservation (#424)"
   },
+  "pushMentionBody": "You were mentioned in a conversation.",
+  "@pushMentionBody": {
+    "description": "#2559 generic push body for a mention: no sender, no conversation name"
+  },
+  "pushMessageBody": "You have a new message.",
+  "@pushMessageBody": {
+    "description": "#2559 generic push body for a new message: no sender, no words of the message"
+  },
   "pushPendingBody": "Someone needs your confirmation.",
   "@pushPendingBody": {
     "description": "Generic push body for a pending confirmation; deliberately carries no personal data"
@@ -18977,6 +18989,10 @@
   "pushPendingTitle": "DesKilo",
   "@pushPendingTitle": {
     "description": "Push notification title (#72) — brand name, usually untranslated"
+  },
+  "pushReminderBody": "A payment reminder is waiting for you.",
+  "@pushReminderBody": {
+    "description": "#2559 generic push body for a payment reminder: never an amount"
   },
   "pushStatusNoTransport": "This build has no push notifications",
   "@pushStatusNoTransport": {
@@ -18994,9 +19010,21 @@
   "@pushStatusNotConfiguredHint": {
     "description": "Fix hint under the not-configured line (#428)"
   },
+  "pushStatusPermissionNeeded": "Notifications are not allowed on this device",
+  "@pushStatusPermissionNeeded": {
+    "description": "#2559 Settings status: push works but this device does not allow notifications"
+  },
+  "pushStatusPermissionNeededHint": "Tap Allow to receive them. Everything stays available in the app either way.",
+  "@pushStatusPermissionNeededHint": {
+    "description": "#2559 hint under the status: the Allow button, and that nothing in the app depends on it"
+  },
   "pushStatusRegistered": "Push notifications are active",
   "@pushStatusRegistered": {
     "description": "Settings status line: push pipeline registered (#424)"
+  },
+  "pushUpdateBody": "You have an update.",
+  "@pushUpdateBody": {
+    "description": "#2559 generic push body for any other or unknown kind"
   },
   "qrBillAcceptancePoint": "Acceptance point",
   "@qrBillAcceptancePoint": {

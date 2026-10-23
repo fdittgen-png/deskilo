@@ -11,6 +11,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../trace/trace_logger.dart';
 import 'notification_service.dart';
+import 'notification_taps.dart';
 
 /// flutter_local_notifications implementation. Scheduling converts absolute
 /// instants with TZDateTime.from, so the device zone name is irrelevant.
@@ -35,9 +36,22 @@ class LocalNotificationService implements NotificationService {
     priority: Priority.high,
   );
 
-  static Future<LocalNotificationService> initialize() async {
+  /// #2559 C2 — no permission prompt at start: Darwin is told not to ask
+  /// on initialize, and Android's request moved to [requestPermission],
+  /// which runs only after the person deliberately asked for
+  /// notifications. A tapped notification's payload goes to [taps].
+  static Future<LocalNotificationService> initialize({
+    NotificationTaps? taps,
+  }) async {
     tzdata.initializeTimeZones();
     final plugin = FlutterLocalNotificationsPlugin();
+    void onResponse(NotificationResponse response) =>
+        _handOn(taps, response.id, response.payload);
+    const darwin = DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
     try {
       await plugin.initialize(
         settings: const InitializationSettings(
@@ -47,9 +61,10 @@ class LocalNotificationService implements NotificationService {
           // keep.xml (#442: it was stripped and this threw invalid_icon
           // on EVERY release boot, killing all notifications silently).
           android: AndroidInitializationSettings('@drawable/ic_stat_deskilo'),
-          iOS: DarwinInitializationSettings(),
-          macOS: DarwinInitializationSettings(),
+          iOS: darwin,
+          macOS: darwin,
         ),
+        onDidReceiveNotificationResponse: onResponse,
       );
     } on PlatformException catch (e, st) {
       // Belt and braces (#442): a missing glyph must degrade to the
@@ -61,27 +76,56 @@ class LocalNotificationService implements NotificationService {
       await plugin.initialize(
         settings: const InitializationSettings(
           android: AndroidInitializationSettings('@mipmap/ic_launcher'),
-          iOS: DarwinInitializationSettings(),
-          macOS: DarwinInitializationSettings(),
+          iOS: darwin,
+          macOS: darwin,
         ),
+        onDidReceiveNotificationResponse: onResponse,
       );
     }
-    // #442: the permission request is BEST-EFFORT — it must never take
-    // the whole service down. When it threw here, main() fell back to
-    // the Noop service and every notification (reminders, the badge
-    // mirror) silently no-oped for the entire session.
+    // The tap that launched the app.
     try {
-      await plugin
-          .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
-          ?.requestNotificationsPermission();
+      final launch = await plugin.getNotificationAppLaunchDetails();
+      final response = launch?.notificationResponse;
+      if (launch?.didNotificationLaunchApp == true && response != null) {
+        onResponse(response);
+      }
     } on Object catch (e, st) {
+      TraceLogger.instance.warn('notifications', 'launch details unreadable',
+          error: e, stackTrace: st);
+    }
+    return LocalNotificationService(plugin);
+  }
+
+  static void _handOn(NotificationTaps? taps, int? id, String? payload) {
+    final data = NotificationTap.decodePayload(payload);
+    if (taps == null || data == null) return;
+    taps.add(NotificationTap(id: 'local:$id:$payload', data: data));
+  }
+
+  @override
+  Future<bool?> requestPermission() async {
+    try {
+      final android = _plugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+      if (android != null) return await android.requestNotificationsPermission();
+      final ios = _plugin.resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>();
+      if (ios != null) {
+        return await ios.requestPermissions(
+            alert: true, badge: true, sound: true);
+      }
+      return await _plugin
+          .resolvePlatformSpecificImplementation<
+              MacOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
+    } on Object catch (e, st) {
+      // Best-effort (#442): a failed request leaves the app usable.
       debugPrint('notification permission request failed: $e\n$st');
       TraceLogger.instance.warn(
           'notifications', 'permission request failed (non-fatal)',
           error: e, stackTrace: st);
+      return null;
     }
-    return LocalNotificationService(plugin);
   }
 
   /// Reminder ids scheduled by THIS run — cancelled selectively so the
@@ -147,24 +191,11 @@ class LocalNotificationService implements NotificationService {
   static int _pendingIdOf(String eventId) =>
       0x20000000 | (eventId.hashCode & 0x0fffffff);
 
-  /// One in-context permission re-request per app run (#436): the boot
-  /// dialog fires over the splash and is easy to dismiss — when pending
-  /// confirmations exist but Android says notifications are off, ask
-  /// again at the moment the user can see why it matters.
-  bool _permissionReasked = false;
-
   @override
   Future<void> syncPendingNotifications(List<PendingNotice> notices) async {
     try {
-      if (notices.isNotEmpty &&
-          !_permissionReasked &&
-          await notificationsEnabled() == false) {
-        _permissionReasked = true;
-        await _plugin
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
-            ?.requestNotificationsPermission();
-      }
+      // #2559 C2 — no automatic re-ask (#436 asked here): the prompt is
+      // the person's deliberate choice, in Settings.
       final wanted = {for (final n in notices) _pendingIdOf(n.id): n};
       for (final stale in _pendingIds.difference(wanted.keys.toSet())) {
         await _plugin.cancel(id: stale);
@@ -196,13 +227,18 @@ class LocalNotificationService implements NotificationService {
   }
 
   @override
-  Future<void> showNow({required String title, required String body}) async {
+  Future<void> showNow({
+    required String title,
+    required String body,
+    String? payload,
+  }) async {
     try {
       await _plugin.show(
         id: DateTime.now().millisecondsSinceEpoch & 0x3fffffff,
         title: title,
         body: body,
         notificationDetails: const NotificationDetails(android: _pushChannel),
+        payload: payload,
       );
     } on Object catch (e, st) {
       debugPrint('push notification display failed: $e\n$st');

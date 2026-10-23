@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/push/push_opt_out.dart';
 import '../../../core/push/push_providers.dart';
+import '../../../core/push/push_status_tile.dart' show allowNotifications;
 import '../providers/profile_providers.dart';
 
 Future<void> acknowledgeSpaceNotice(
@@ -23,10 +24,12 @@ Future<void> acknowledgeSpaceNotice(
 
 /// Off: the server forgets this device first, then the choice is stored,
 /// so nothing registers again on the next start. On: the push pipeline
-/// starts again by itself.
+/// starts again by itself, and — the person's deliberate choice (#2559
+/// C2) — the system may ask whether notifications are allowed.
 Future<void> setPushOnThisDevice(WidgetRef ref, {required bool on}) async {
   if (!on) {
     await ref.read(pushBootstrapProvider).value?.optOut();
   }
   await ref.read(pushOptedOutProvider.notifier).set(optedOut: !on);
+  if (on) await allowNotifications(ref);
 }

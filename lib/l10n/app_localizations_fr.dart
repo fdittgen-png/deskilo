@@ -16441,16 +16441,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesTotal => 'Total';
 
   @override
+  String get pushAllowAction => 'Autoriser';
+
+  @override
   String get pushCancelledBody => 'Une réservation a été retirée par un admin.';
 
   @override
   String get pushCancelledTitle => 'Réservation retirée';
 
   @override
+  String get pushMentionBody =>
+      'Vous avez été mentionné dans une conversation.';
+
+  @override
+  String get pushMessageBody => 'Vous avez un nouveau message.';
+
+  @override
   String get pushPendingBody => 'Quelqu\'un attend votre confirmation.';
 
   @override
   String get pushPendingTitle => 'DesKilo';
+
+  @override
+  String get pushReminderBody => 'Un rappel de paiement vous attend.';
 
   @override
   String get pushStatusNoTransport =>
@@ -16469,7 +16482,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le propriétaire termine la configuration Firebase (guide push-setup).';
 
   @override
+  String get pushStatusPermissionNeeded =>
+      'Les notifications ne sont pas autorisées sur cet appareil';
+
+  @override
+  String get pushStatusPermissionNeededHint =>
+      'Touchez Autoriser pour les recevoir. Tout reste disponible dans l\'application dans tous les cas.';
+
+  @override
   String get pushStatusRegistered => 'Les notifications push sont actives';
+
+  @override
+  String get pushUpdateBody => 'Vous avez du nouveau.';
 
   @override
   String get qrBillAcceptancePoint => 'Point de dépôt';

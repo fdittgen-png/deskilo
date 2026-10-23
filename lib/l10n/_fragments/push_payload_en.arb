@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "pushMessageBody": "You have a new message.",
+  "@pushMessageBody": {
+    "description": "#2559 generic push body for a new message: no sender, no words of the message"
+  },
+  "pushMentionBody": "You were mentioned in a conversation.",
+  "@pushMentionBody": {
+    "description": "#2559 generic push body for a mention: no sender, no conversation name"
+  },
+  "pushReminderBody": "A payment reminder is waiting for you.",
+  "@pushReminderBody": {
+    "description": "#2559 generic push body for a payment reminder: never an amount"
+  },
+  "pushUpdateBody": "You have an update.",
+  "@pushUpdateBody": {
+    "description": "#2559 generic push body for any other or unknown kind"
+  },
+  "pushAllowAction": "Allow",
+  "@pushAllowAction": {
+    "description": "#2559 Settings button: the deliberate action that raises the system notification prompt"
+  },
+  "pushStatusPermissionNeeded": "Notifications are not allowed on this device",
+  "@pushStatusPermissionNeeded": {
+    "description": "#2559 Settings status: push works but this device does not allow notifications"
+  },
+  "pushStatusPermissionNeededHint": "Tap Allow to receive them. Everything stays available in the app either way.",
+  "@pushStatusPermissionNeededHint": {
+    "description": "#2559 hint under the status: the Allow button, and that nothing in the app depends on it"
+  }
+}

@@ -17,9 +17,25 @@ class FakeNotificationService implements NotificationService {
 
   final shown = <({String title, String body})>[];
 
+  /// The payload of each shown notification, in the same order (#2559).
+  final payloads = <String?>[];
+
   @override
-  Future<void> showNow({required String title, required String body}) async {
+  Future<void> showNow({
+    required String title,
+    required String body,
+    String? payload,
+  }) async {
     shown.add((title: title, body: body));
+    payloads.add(payload);
+  }
+
+  int permissionRequests = 0;
+
+  @override
+  Future<bool?> requestPermission() async {
+    permissionRequests++;
+    return true;
   }
 
   @override

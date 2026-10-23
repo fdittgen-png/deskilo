@@ -19,7 +19,7 @@ import 'push_connector.dart';
 /// OS displays the function's generic English text (never personal
 /// data, 0012 doctrine).
 class FirebasePushConnector implements PushConnector {
-  FirebasePushConnector({this.onWarn, this.tokenSource});
+  FirebasePushConnector({this.onWarn, this.tokenSource, this.permission});
 
   final PushWarn? onWarn;
 
@@ -29,6 +29,12 @@ class FirebasePushConnector implements PushConnector {
   /// nothing else about the connector is replaced.
   final Future<String?> Function()? tokenSource;
 
+  /// #2559 C2 — whether notifications are allowed, asking first only when
+  /// `ask` is true. Null in the app — Firebase answers. A test injects one;
+  /// with a [tokenSource] and no [permission] the test path counts as
+  /// allowed.
+  final Future<bool> Function({required bool ask})? permission;
+
   void Function(String url)? _onNewEndpoint;
 
   @override
@@ -36,6 +42,7 @@ class FirebasePushConnector implements PushConnector {
     required void Function(String url) onNewEndpoint,
     required void Function() onUnregistered,
     required void Function(Uint8List content) onMessage,
+    void Function(Map<String, String> data, String? messageId)? onOpened,
   }) async {
     final options = DeskiloFirebaseOptions.currentPlatformOrNull;
     if (options == null) return false; // stub in place — not configured
@@ -46,6 +53,17 @@ class FirebasePushConnector implements PushConnector {
         onMessage(Uint8List.fromList(utf8.encode(jsonEncode(message.data))));
       });
       FirebaseMessaging.instance.onTokenRefresh.listen(publishToken);
+      if (onOpened != null) {
+        // #2559 C2 — a tap while the app was in the background, and the
+        // tap that launched it: only the data travels, never the text.
+        FirebaseMessaging.onMessageOpenedApp.listen(
+          (message) => onOpened(openedData(message.data), message.messageId),
+        );
+        final initial = await FirebaseMessaging.instance.getInitialMessage();
+        if (initial != null) {
+          onOpened(openedData(initial.data), initial.messageId);
+        }
+      }
       return true;
     } on Object catch (e, st) {
       // Best-effort (#86 boot doctrine): a broken Firebase setup must
@@ -57,20 +75,43 @@ class FirebasePushConnector implements PushConnector {
   }
 
   @override
-  Future<void> register() async {
+  Future<bool> register({bool ask = false}) async {
+    if (!await _allowed(ask: ask)) return false;
     final token = await _readToken();
     if (token != null) publishToken(token);
+    return true;
+  }
+
+  /// #2559 C2 — the system prompt is the person's deliberate choice: a
+  /// start reads the current answer, only [ask] raises the prompt (iOS,
+  /// macOS, web and Android 13+ alike). Not allowed -> no token is read,
+  /// so nothing is registered for a device that shows nothing.
+  Future<bool> _allowed({required bool ask}) async {
+    final injected = permission;
+    if (injected != null) return injected(ask: ask);
+    if (tokenSource != null) return true;
+    final messaging = FirebaseMessaging.instance;
+    final settings = ask
+        ? await messaging.requestPermission()
+        : await messaging.getNotificationSettings();
+    final status = settings.authorizationStatus;
+    return status == AuthorizationStatus.authorized ||
+        status == AuthorizationStatus.provisional;
   }
 
   Future<String?> _readToken() async {
     final injected = tokenSource;
     if (injected != null) return injected();
-    final messaging = FirebaseMessaging.instance;
-    // iOS/macOS/web ask the user; Android 13+ raises the system prompt
-    // through the notifications plugin already in place.
-    await messaging.requestPermission();
-    return messaging.getToken();
+    return FirebaseMessaging.instance.getToken();
   }
+
+  /// The data of a tapped message as strings: FCM data values are strings
+  /// already; anything else is dropped rather than coerced.
+  @visibleForTesting
+  static Map<String, String> openedData(Map<String, dynamic> data) => {
+        for (final e in data.entries)
+          if (e.value is String) e.key: e.value as String,
+      };
 
   /// The ONE place a token becomes an endpoint row — the first one and
   /// every refresh alike. The 0084 sender strips the `fcm:` prefix and

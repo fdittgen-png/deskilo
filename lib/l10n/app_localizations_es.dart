@@ -16390,16 +16390,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchasesTotal => 'Total';
 
   @override
+  String get pushAllowAction => 'Permitir';
+
+  @override
   String get pushCancelledBody => 'Un admin eliminó una reserva.';
 
   @override
   String get pushCancelledTitle => 'Reserva eliminada';
 
   @override
+  String get pushMentionBody => 'Le han mencionado en una conversación.';
+
+  @override
+  String get pushMessageBody => 'Tiene un mensaje nuevo.';
+
+  @override
   String get pushPendingBody => 'Alguien necesita su confirmación.';
 
   @override
   String get pushPendingTitle => 'DesKilo';
+
+  @override
+  String get pushReminderBody => 'Tiene un recordatorio de pago.';
 
   @override
   String get pushStatusNoTransport =>
@@ -16418,7 +16430,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'El propietario completa la configuración de Firebase (guía push-setup).';
 
   @override
+  String get pushStatusPermissionNeeded =>
+      'Las notificaciones no están permitidas en este dispositivo';
+
+  @override
+  String get pushStatusPermissionNeededHint =>
+      'Toque Permitir para recibirlas. En cualquier caso, todo sigue disponible en la aplicación.';
+
+  @override
   String get pushStatusRegistered => 'Las notificaciones push están activas';
+
+  @override
+  String get pushUpdateBody => 'Tiene una novedad.';
 
   @override
   String get qrBillAcceptancePoint => 'Acceptance point';

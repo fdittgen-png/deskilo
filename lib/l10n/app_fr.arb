@@ -11018,10 +11018,14 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "pushAllowAction": "Autoriser",
   "pushCancelledBody": "Une réservation a été retirée par un admin.",
   "pushCancelledTitle": "Réservation retirée",
+  "pushMentionBody": "Vous avez été mentionné dans une conversation.",
+  "pushMessageBody": "Vous avez un nouveau message.",
   "pushPendingBody": "Quelqu'un attend votre confirmation.",
   "pushPendingTitle": "DesKilo",
+  "pushReminderBody": "Un rappel de paiement vous attend.",
   "pushStatusNoTransport": "Cette version n'a pas de notifications push",
   "@pushStatusNoTransport": {
     "description": "#716 - F-Droid build without a push transport"
@@ -11032,7 +11036,10 @@
   },
   "pushStatusNotConfigured": "Les notifications push ne sont pas encore configurées",
   "pushStatusNotConfiguredHint": "Le propriétaire termine la configuration Firebase (guide push-setup).",
+  "pushStatusPermissionNeeded": "Les notifications ne sont pas autorisées sur cet appareil",
+  "pushStatusPermissionNeededHint": "Touchez Autoriser pour les recevoir. Tout reste disponible dans l'application dans tous les cas.",
   "pushStatusRegistered": "Les notifications push sont actives",
+  "pushUpdateBody": "Vous avez du nouveau.",
   "qrBillAcceptancePoint": "Point de dépôt",
   "@qrBillAcceptancePoint": {
     "description": "#2360: qrBillAcceptancePoint"
