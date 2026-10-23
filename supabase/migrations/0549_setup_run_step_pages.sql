@@ -14,4 +14,4 @@ $fn$;
 revoke execute on function public.setup_step_catalogue() from public, anon;
 grant execute on function public.setup_step_catalogue() to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(549);
