@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The setup questionnaire's WebMCP tools (W1 of epic #2500). They read the
-// page's own state and handlers through `window.__setup` (defined at the end
-// of setup.html): the parameters come from DEFAULTS and FEATURES, the
-// dependencies from REQUIRES, the words from T(), the export from the page's
-// own buildXml. No second parameter table lives here — a new answer is a row
-// in setup.html's PARAM_META, which the same-PR rule already demands.
+// page's own state and handlers through `window.__setup` (set by setup.html's
+// boot()): the parameters come from DEFAULTS and FEATURES, the dependencies
+// from REQUIRES, the words from T(), the export from the page's own
+// buildXml. No second parameter table lives here — a new answer is a row in
+// PARAM_META (setup_params.js), which the same-PR rule already demands.
 //
 // Without a WebMCP-capable browser WebMcp.register does nothing and the page
 // behaves exactly as before.
@@ -131,9 +131,9 @@
     return { value: value };
   }
 
-  // Applies one answer through the page's own handlers; returns the error
-  // or null. `check` false skips validation (used to restore defaults).
-  function apply(key, value, check) {
+  // Applies one answer through the page's own handlers, checked as the UI
+  // checks it; returns the error or null.
+  function apply(key, value) {
     if (isFeature(key)) {
       var f = key.slice(FEAT.length);
       if (typeof value !== 'boolean') return bad(key, 'validation_error', T('webmcpReasonBool'), [true, false]);
@@ -145,10 +145,10 @@
       if (Object.prototype.hasOwnProperty.call(P.PARAM_EXCLUDED, key)) return M.fail('unsupported', T('webmcpErrCollection', { key: key }));
       return M.fail('not_found', T('webmcpErrUnknownKey', { key: key }), parameters().map(function (p) { return p.key; }));
     }
-    if (check && m[4] && m[4].needs && !P.on(m[4].needs)) {
+    if (m[4] && m[4].needs && !P.on(m[4].needs)) {
       return M.fail('requires_feature', T('webmcpErrNeeds', { key: key, feature: P.featureTitle(m[4].needs) }), undefined, { requires: FEAT + m[4].needs });
     }
-    var r = check ? validate(key, m, value) : { value: value };
+    var r = validate(key, m, value);
     if (r.error) return r.error;
     P.set(key, r.value);
     if (key === 'country') P.onCountry(r.value);
@@ -192,7 +192,7 @@
     var errors = [];
     var keys = ordered(answers);
     keys.forEach(function (k) {
-      var e = apply(k, answers[k], true);
+      var e = apply(k, answers[k]);
       if (e) errors.push({ key: k, error: e.error });
     });
     if (errors.length) {
@@ -266,7 +266,13 @@
     if (unknown.length) return M.fail('not_found', T('webmcpErrUnknownKey', { key: unknown.join(', ') }), known);
     var defaults = {};
     parameters().forEach(function (p) { defaults[p.key] = p.default; });
-    input.keys.forEach(function (k) { apply(k, copy(defaults[k]), false); });
+    // A default needs no check: a switch through the page's handler (which
+    // ticks what it needs), every other answer written as it is.
+    input.keys.forEach(function (k) {
+      if (isFeature(k)) { P.applyFeature(k.slice(FEAT.length), defaults[k]); return; }
+      P.set(k, copy(defaults[k]));
+      if (k === 'country') P.onCountry(defaults[k]);
+    });
     P.rerender();
     return M.ok({ reset: input.keys });
   }

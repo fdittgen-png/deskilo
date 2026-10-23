@@ -44,6 +44,8 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../tool/setup/page_sources.dart';
+
 /// The page's export in [mode] (see the harness) — or null when node is
 /// missing (same bargain as setup_runs_test).
 String? pageXml(String mode) {
@@ -163,7 +165,8 @@ Map<String, dynamic> pageRegistry() {
 }
 
 void main() {
-  final html = File('web/setup.html').readAsStringSync();
+  // #2926 — the page with the scripts it is split into.
+  final html = setupPageSource();
 
   group('every answer the page labels "applied by import" arrives', () {
     test('identity, region, features, payment details and the plan', () {

@@ -42,6 +42,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_setup_l10n.dart';
+import '../../tool/setup/page_sources.dart';
 
 const _html = 'web/setup.html';
 const _prefix = 'window.SETUP_L10N=';
@@ -136,10 +137,13 @@ List<String> frenchLiterals(String html) {
 
 void main() {
   late String html;
+  // #2926 — the page with the scripts it is split into.
+  late String page;
   late Map<String, dynamic> resource;
 
   setUpAll(() {
     html = File(_html).readAsStringSync();
+    page = setupPageSource();
     resource = _decode(File(setupL10nOutput).readAsStringSync());
   });
 
@@ -291,9 +295,9 @@ void main() {
       // The WebMCP tools (#2501) speak through the same resource.
       final tools = File('web/setup_webmcp.js').readAsStringSync();
       final asked = {
-        for (final m in RegExp(r"\bT\('(\w+)'").allMatches('$html\n$tools'))
+        for (final m in RegExp(r"\bT\('(\w+)'").allMatches('$page\n$tools'))
           m.group(1)!,
-        for (final m in RegExp(r'data-th?="(\w+)"').allMatches(html))
+        for (final m in RegExp(r'data-th?="(\w+)"').allMatches(page))
           m.group(1)!,
       };
       expect(
@@ -305,8 +309,8 @@ void main() {
       );
       final orphans = [
         for (final key in en.keys)
-          if (!html.contains("'$key'") &&
-              !html.contains('"$key"') &&
+          if (!page.contains("'$key'") &&
+              !page.contains('"$key"') &&
               !tools.contains("'$key'"))
             key,
       ];
@@ -439,7 +443,7 @@ void main() {
 
     test('carries no French literal outside the l10n resource', () {
       expect(
-        frenchLiterals(html),
+        frenchLiterals(page),
         isEmpty,
         reason:
             'user-facing text belongs in web/setup_l10n/setup_*.json '
@@ -448,11 +452,11 @@ void main() {
     });
 
     test('the exempt block stays small', () {
-      final start = html.indexOf('l10n-exempt-begin');
-      final end = html.indexOf('l10n-exempt-end');
-      expect('l10n-exempt-begin'.allMatches(html), hasLength(1));
+      final start = page.indexOf('l10n-exempt-begin');
+      final end = page.indexOf('l10n-exempt-end');
+      expect('l10n-exempt-begin'.allMatches(page), hasLength(1));
       expect(
-        html.substring(start, end).split('\n').length,
+        page.substring(start, end).split('\n').length,
         lessThanOrEqualTo(26),
         reason:
             'the exemption is for language names, statutory VAT '

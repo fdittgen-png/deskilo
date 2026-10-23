@@ -23,13 +23,22 @@ const l10nSource = fs.readFileSync(new URL('../../web/setup_l10n.js', import.met
 const catalogueSource = fs.readFileSync(new URL('../../web/setup_catalogue.js', import.meta.url), 'utf8');
 const webmcpSource = fs.readFileSync(new URL('../../web/webmcp.js', import.meta.url), 'utf8');
 const setupWebmcpSource = fs.readFileSync(new URL('../../web/setup_webmcp.js', import.meta.url), 'utf8');
-const src = /<script>([\s\S]*?)<\/script>/.exec(html)[1];
+// #2926 — the page's own code: its inline scripts and the files it splits
+// into (setup_params.js, setup_steps.js, setup_xml.js), in the page's
+// order, as ONE source — classic scripts share one global scope in the
+// browser. The generated resources and the WebMCP files load on their own.
+const SHARED = new Set(['setup_catalogue.js', 'setup_l10n.js', 'webmcp.js', 'setup_webmcp.js']);
+const pageScripts = [...html.matchAll(/<script(?: src="([^"]+)")?>([\s\S]*?)<\/script>/g)].filter((m) => !SHARED.has(m[1]));
+const src = pageScripts.map((m) => (m[1] ? fs.readFileSync(new URL(`../../web/${m[1]}`, import.meta.url), 'utf8') : m[2])).join('\n');
 // #2925 — files a page before the <answers> tree wrote, with the state each
 // loads to (read here: load() replaces URL with a stub).
 const FIXTURES = new URL('./fixtures/', import.meta.url);
 const fixtures = Object.fromEntries(fs.readdirSync(FIXTURES).map((f) => [f, fs.readFileSync(new URL(f, FIXTURES), 'utf8')]));
 const fixture = (name) => fixtures[name];
 const fixtureNames = Object.keys(fixtures).filter((f) => f.endsWith('.xml')).map((f) => f.slice(0, -4)).sort();
+// #2926 — the WebMCP tools' names, annotations and input schemas (words
+// aside), pinned: moving the page's code must not change what agents see.
+const toolPin = fs.readFileSync(new URL('./webmcp_tools.json', import.meta.url), 'utf8');
 const LOCALES = ['en', 'fr', 'de', 'es', 'it'];
 
 let created = [];
@@ -368,6 +377,8 @@ const fakeContext = () => {
   let ctx = fakeContext();
   load('en', null, { modelContext: ctx });
   eq([...ctx.tools.keys()], toolNames, 'registered tools');
+  const wordless = (v) => Array.isArray(v) ? v.map(wordless) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => k !== 'description').map(([k, x]) => [k, wordless(x)])) : v;
+  eq([...ctx.tools.values()].map(({ name, annotations, inputSchema }) => ({ name, annotations: annotations || null, inputSchema: wordless(inputSchema) })), JSON.parse(toolPin), 'the tools and their schemas (tool/setup/webmcp_tools.json)');
   eq(ctx.registered, toolNames.length, 'registerTool calls');
   const P = globalThis.window.__setup;
 

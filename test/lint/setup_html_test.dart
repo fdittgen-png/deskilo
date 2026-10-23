@@ -19,13 +19,33 @@ import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../tool/setup/page_sources.dart';
 import 'lint_sources.dart';
 
 void main() {
   late String html;
 
+  // #2926 — the page and the scripts it is split into, read as one.
   setUpAll(() {
-    html = File('web/setup.html').readAsStringSync();
+    html = setupPageSource();
+  });
+
+  test('the page and each of its own scripts stay under 500 lines (#2926)',
+      () {
+    final scripts = setupPageScripts();
+    expect(scripts, containsAll([
+      'web/setup_params.js',
+      'web/setup_steps.js',
+      'web/setup_xml.js',
+    ]));
+    final over = [
+      for (final path in [setupPagePath, ...scripts])
+        if (File(path).readAsLinesSync().length >= 500)
+          '$path: ${File(path).readAsLinesSync().length}',
+    ];
+    expect(over, isEmpty,
+        reason: 'split by concern, as #2926 split web/setup.html; a '
+            '_part file is not a concern');
   });
 
   // #2923 — the feature list, its defaults, REQUIRES and AVAILABLE_IN are
