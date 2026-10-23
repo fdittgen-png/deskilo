@@ -14,16 +14,35 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/setup_steps.dart';
+import '../../domain/site.dart';
 import '../../domain/workspace.dart';
+import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/setup_basics_step.dart';
+import '../widgets/setup_hours_step.dart';
 import '../widgets/setup_invite_step.dart';
 import '../widgets/setup_member_rights_step.dart';
+import '../widgets/setup_run_pages.dart';
 
 class SetupStepScreen extends ConsumerWidget {
-  const SetupStepScreen({super.key, required this.stepId});
+  const SetupStepScreen({
+    super.key,
+    required this.stepId,
+    this.placesStep,
+    this.runPages,
+  });
 
   /// The catalogue id of the step (`setup_steps.dart`).
   final String stepId;
+
+  /// Builds the places page. The plan feature owns it and sits above this
+  /// one in the feature graph (`test/lint/feature_layers.yaml`), so the
+  /// router hands the builder in; without it the step opens the editor.
+  final SetupPlacesBuilder? placesStep;
+
+  /// The Run steps' pages, handed in by the router for the same reason;
+  /// without them those steps open their own screens.
+  final SetupRunPages? runPages;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,10 +54,41 @@ class SetupStepScreen extends ConsumerWidget {
   }
 
   Widget _page(Workspace workspace) => switch (stepId) {
+    'basics' => SetupBasicsStep(workspace: workspace),
+    'hours' => const SetupHoursStep(),
+    'places' => switch (placesStep) {
+      final page? => _PlacesHost(page: page),
+      null => _Elsewhere(stepId: stepId),
+    },
     'member_rights' => SetupMemberRightsStep(workspace: workspace),
     'invite' => SetupInviteStep(workspace: workspace),
-    _ => _Elsewhere(stepId: stepId),
+    _ => runPages?.pageFor(stepId, workspace) ?? _Elsewhere(stepId: stepId),
   };
+}
+
+/// The places page from what this feature knows: the sites when there are
+/// several (default first) and whether the library is on.
+typedef SetupPlacesBuilder =
+    Widget Function({
+      required Map<String, String> sites,
+      required bool libraryOn,
+    });
+
+class _PlacesHost extends ConsumerWidget {
+  const _PlacesHost({required this.page});
+  final SetupPlacesBuilder page;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final List<Site> sites = features.contains(WorkspaceFeature.multiSite)
+        ? ref.watch(sitesProvider).value ?? const []
+        : const [];
+    return page(
+      sites: {if (sites.length > 1) for (final s in sites) s.id: s.name},
+      libraryOn: features.contains(WorkspaceFeature.workspaceLibrary),
+    );
+  }
 }
 
 /// A step done on its own screen, or an id the catalogue does not know.

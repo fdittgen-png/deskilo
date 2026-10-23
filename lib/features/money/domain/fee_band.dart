@@ -21,3 +21,8 @@ sealed class FeeBand with _$FeeBand implements SystemStamped {
     @Default(SystemColumns.none) SystemColumns system,
   }) = _FeeBand;
 }
+
+/// The band that prices [pct], or null when none covers it: bands are
+/// inclusive-upper, so 50 % falls into (25, 50], never into (50, 100].
+FeeBand? feeBandFor(List<FeeBand> bands, int pct) =>
+    bands.where((b) => b.fromPct < pct && pct <= b.toPct).firstOrNull;

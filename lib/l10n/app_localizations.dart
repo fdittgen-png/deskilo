@@ -32502,6 +32502,126 @@ abstract class AppLocalizations {
   /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
   String get settlementVatNote;
 
+  /// #2871 setup run steps: setupApprovalsApply
+  ///
+  /// In en, this message translates to:
+  /// **'Use this rule'**
+  String get setupApprovalsApply;
+
+  /// #2871 setup run steps: setupApprovalsApplyFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The approval rule could not be saved. Try again.'**
+  String get setupApprovalsApplyFailed;
+
+  /// #2871 setup run steps: setupApprovalsFlowOutcome
+  ///
+  /// In en, this message translates to:
+  /// **'It applies'**
+  String get setupApprovalsFlowOutcome;
+
+  /// #2871 setup run steps: setupApprovalsFlowOutcomeBody
+  ///
+  /// In en, this message translates to:
+  /// **'{required, plural, =1{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.'**
+  String setupApprovalsFlowOutcomeBody(int required);
+
+  /// #2871 setup run steps: setupApprovalsFlowRequest
+  ///
+  /// In en, this message translates to:
+  /// **'A member asks'**
+  String get setupApprovalsFlowRequest;
+
+  /// #2871 setup run steps: setupApprovalsFlowRequestBody
+  ///
+  /// In en, this message translates to:
+  /// **'A refund, a booking deletion, an expense…'**
+  String get setupApprovalsFlowRequestBody;
+
+  /// #2871 setup run steps: setupApprovalsFlowValidators
+  ///
+  /// In en, this message translates to:
+  /// **'{required} of {people} approve'**
+  String setupApprovalsFlowValidators(int required, int people);
+
+  /// #2871 setup run steps: setupApprovalsFlowWho
+  ///
+  /// In en, this message translates to:
+  /// **'{owners, plural, =1{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} =1{1 administrator} other{{admins} administrators}}'**
+  String setupApprovalsFlowWho(int owners, int admins);
+
+  /// #2871 setup run steps: setupApprovalsOpenRules
+  ///
+  /// In en, this message translates to:
+  /// **'Rules for each kind of request'**
+  String get setupApprovalsOpenRules;
+
+  /// #2871 setup run steps: setupApprovalsPeople
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 person can approve.} other{{count} people can approve.}}'**
+  String setupApprovalsPeople(int count);
+
+  /// #2871 setup run steps: setupApprovalsPresetBody
+  ///
+  /// In en, this message translates to:
+  /// **'One rule for every request without a rule of its own: refunds, booking deletions, expenses, membership changes.'**
+  String get setupApprovalsPresetBody;
+
+  /// #2871 setup run steps: setupApprovalsPresetTitle
+  ///
+  /// In en, this message translates to:
+  /// **'The owner or an administrator approves'**
+  String get setupApprovalsPresetTitle;
+
+  /// #2871 setup run steps: setupApprovalsPreviewRequest
+  ///
+  /// In en, this message translates to:
+  /// **'Your request'**
+  String get setupApprovalsPreviewRequest;
+
+  /// #2871 setup run steps: setupApprovalsPreviewWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'{required, plural, =1{Waiting for 1 approval} other{Waiting for {required} approvals}}'**
+  String setupApprovalsPreviewWaiting(int required);
+
+  /// #2871 setup run steps: setupApprovalsTooMany
+  ///
+  /// In en, this message translates to:
+  /// **'{required} approvals can never be gathered: {people, plural, =1{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.'**
+  String setupApprovalsTooMany(int required, int people);
+
+  /// #2870 setup steps: setupBasicsPreviewDate
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s date'**
+  String get setupBasicsPreviewDate;
+
+  /// #2870 setup steps: setupBasicsPreviewMoney
+  ///
+  /// In en, this message translates to:
+  /// **'An amount'**
+  String get setupBasicsPreviewMoney;
+
+  /// #2870 setup steps: setupBasicsPreviewTime
+  ///
+  /// In en, this message translates to:
+  /// **'The time now'**
+  String get setupBasicsPreviewTime;
+
+  /// #2870 setup steps: setupBasicsPreviewTimeIn
+  ///
+  /// In en, this message translates to:
+  /// **'{time} ({offset})'**
+  String setupBasicsPreviewTimeIn(String time, String offset);
+
+  /// #2870 setup steps: setupBasicsSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The basics could not be saved. Try again.'**
+  String get setupBasicsSaveFailed;
+
   /// #2869 setup guide: setupGuideAllDone
   ///
   /// In en, this message translates to:
@@ -32614,6 +32734,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Waits for: {steps}'**
   String setupGuideWaitsFor(String steps);
+
+  /// #2870 setup steps: setupHoursClosed
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get setupHoursClosed;
+
+  /// #2870 setup steps: setupHoursNextClosures
+  ///
+  /// In en, this message translates to:
+  /// **'Next closures and holidays'**
+  String get setupHoursNextClosures;
+
+  /// #2870 setup steps: setupHoursNoClosures
+  ///
+  /// In en, this message translates to:
+  /// **'No closures or holidays planned.'**
+  String get setupHoursNoClosures;
+
+  /// #2870 setup steps: setupHoursOpenAvailability
+  ///
+  /// In en, this message translates to:
+  /// **'Booking unit and rules in Availability'**
+  String get setupHoursOpenAvailability;
+
+  /// #2870 setup steps: setupHoursRange
+  ///
+  /// In en, this message translates to:
+  /// **'{from}–{to}'**
+  String setupHoursRange(String from, String to);
+
+  /// #2870 setup steps: setupHoursWeekTitle
+  ///
+  /// In en, this message translates to:
+  /// **'When members can book'**
+  String get setupHoursWeekTitle;
 
   /// #2870 setup steps: setupInvitePreviewNote
   ///
@@ -32861,11 +33017,167 @@ abstract class AppLocalizations {
   /// **'{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}'**
   String setupMilestoneName(String key);
 
+  /// #2871 setup run steps: setupOnlineOpenConfig
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment settings'**
+  String get setupOnlineOpenConfig;
+
+  /// #2871 setup run steps: setupOnlineOperatorNotice
+  ///
+  /// In en, this message translates to:
+  /// **'Your operator connects the payment provider and enters its secret key. It is never asked of you, and nobody sees it again once it is saved.'**
+  String get setupOnlineOperatorNotice;
+
+  /// #2871 setup run steps: setupOnlinePreviewOff
+  ///
+  /// In en, this message translates to:
+  /// **'No provider is connected yet: members pay by the instructions alone.'**
+  String get setupOnlinePreviewOff;
+
+  /// #2871 setup run steps: setupOnlinePreviewOn
+  ///
+  /// In en, this message translates to:
+  /// **'A provider is connected: members can pay their statement online.'**
+  String get setupOnlinePreviewOn;
+
+  /// #2871 setup run steps: setupPaymentsPreviewEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'Members see no payment instructions until you fill one in.'**
+  String get setupPaymentsPreviewEmpty;
+
+  /// #2871 setup run steps: setupPaymentsPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'On an unpaid statement, under what the member owes:'**
+  String get setupPaymentsPreviewNote;
+
+  /// #2871 setup run steps: setupPaymentsSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The payment instructions could not be saved. Try again.'**
+  String get setupPaymentsSaveFailed;
+
+  /// #2870 setup steps: setupPlacesCounts
+  ///
+  /// In en, this message translates to:
+  /// **'{rooms, plural, =1{1 room} other{{rooms} rooms}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}'**
+  String setupPlacesCounts(int rooms, int desks, int seats);
+
+  /// #2870 setup steps: setupPlacesEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No places yet. Draw the rooms, desks and seats in the editor, or start from a template.'**
+  String get setupPlacesEmpty;
+
+  /// #2870 setup steps: setupPlacesFromTemplate
+  ///
+  /// In en, this message translates to:
+  /// **'Start from a template'**
+  String get setupPlacesFromTemplate;
+
+  /// #2870 setup steps: setupPlacesOpenEditor
+  ///
+  /// In en, this message translates to:
+  /// **'Open the editor'**
+  String get setupPlacesOpenEditor;
+
+  /// #2870 setup steps: setupPlacesPlanLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Plan of {level}'**
+  String setupPlacesPlanLabel(String level);
+
+  /// #2870 setup steps: setupPlacesPreviewNone
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to book yet.'**
+  String get setupPlacesPreviewNone;
+
+  /// #2870 setup steps: setupPlacesPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What a member can book'**
+  String get setupPlacesPreviewTitle;
+
+  /// #2870 setup steps: setupPlacesWholeSpace
+  ///
+  /// In en, this message translates to:
+  /// **'Booked as a whole'**
+  String get setupPlacesWholeSpace;
+
   /// #2868 setup levels: setupPresetName
   ///
   /// In en, this message translates to:
   /// **'{key, select, essentiel{Essential} standard{Standard} complet{Complete} other{{key}}}'**
   String setupPresetName(String key);
+
+  /// #2871 setup run steps: setupPricingBand
+  ///
+  /// In en, this message translates to:
+  /// **'{from}–{to} %: {fee} a month, {extra} per extra half-day'**
+  String setupPricingBand(int from, int to, String fee, String extra);
+
+  /// #2871 setup run steps: setupPricingLevel
+  ///
+  /// In en, this message translates to:
+  /// **'Membership at {pct} %'**
+  String setupPricingLevel(int pct);
+
+  /// #2871 setup run steps: setupPricingLevelsBody
+  ///
+  /// In en, this message translates to:
+  /// **'The levels members can choose. Each one is priced by the fee band it falls into.'**
+  String get setupPricingLevelsBody;
+
+  /// #2871 setup run steps: setupPricingNoBands
+  ///
+  /// In en, this message translates to:
+  /// **'No price yet: set the monthly fees in Billing.'**
+  String get setupPricingNoBands;
+
+  /// #2871 setup run steps: setupPricingNoLevels
+  ///
+  /// In en, this message translates to:
+  /// **'No level is offered: members cannot choose a membership.'**
+  String get setupPricingNoLevels;
+
+  /// #2871 setup run steps: setupPricingNoPrice
+  ///
+  /// In en, this message translates to:
+  /// **'No price for this level yet.'**
+  String get setupPricingNoPrice;
+
+  /// #2871 setup run steps: setupPricingOffer
+  ///
+  /// In en, this message translates to:
+  /// **'Offer these levels'**
+  String get setupPricingOffer;
+
+  /// #2871 setup run steps: setupPricingOpenBilling
+  ///
+  /// In en, this message translates to:
+  /// **'Fees, packages and carnets in Billing'**
+  String get setupPricingOpenBilling;
+
+  /// #2871 setup run steps: setupPricingPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What a member pays'**
+  String get setupPricingPreviewTitle;
+
+  /// #2871 setup run steps: setupPricingSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The levels could not be saved. Try again.'**
+  String get setupPricingSaveFailed;
+
+  /// #2871 setup run steps: setupPricingTerms
+  ///
+  /// In en, this message translates to:
+  /// **'{monthly} a month\nAn extra half-day {half} · an extra day {day}'**
+  String setupPricingTerms(String monthly, String half, String day);
 
   /// #2868 setup levels: setupProcessName
   ///
@@ -32956,6 +33268,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
   String setupStepHint(String key);
+
+  /// #2870 setup steps: setupStepLoadFailed
+  ///
+  /// In en, this message translates to:
+  /// **'This step could not be loaded. Try again later.'**
+  String get setupStepLoadFailed;
 
   /// #2870 setup steps: setupStepOpenScreen
   ///

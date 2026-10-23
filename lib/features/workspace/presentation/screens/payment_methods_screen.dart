@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/country/country_catalog.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -10,8 +9,10 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../application/save_payment_instructions.dart';
 import '../../domain/payment_instructions.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/payment_instructions_fields.dart';
 
 /// The workspace's manual PAYMENT METHODS (#155/#192, extracted to its
 /// own screen in #486): what members see on an unpaid statement — IBAN,
@@ -28,37 +29,17 @@ class PaymentMethodsScreen extends ConsumerStatefulWidget {
 
 class _PaymentMethodsScreenState
     extends ConsumerState<PaymentMethodsScreen> {
-  final _iban = TextEditingController();
-  final _accountNumber = TextEditingController();
-  final _bankCode = TextEditingController();
-  final _bankName = TextEditingController();
-  final _bic = TextEditingController();
-  final _qrIban = TextEditingController();
-  final _paypalMe = TextEditingController();
-  final _reference = TextEditingController();
-  final _wero = TextEditingController();
-  final _lydia = TextEditingController();
-  final _wise = TextEditingController();
-  bool _seeded = false;
+  /// Seeded once, from the first workspace row that arrives.
+  PaymentInstructionsDraft? _draft;
   bool _busy = false;
 
   @override
   void dispose() {
-    _iban.dispose();
-    _accountNumber.dispose();
-    _bankCode.dispose();
-    _bankName.dispose();
-    _bic.dispose();
-    _qrIban.dispose();
-    _paypalMe.dispose();
-    _reference.dispose();
-    _wero.dispose();
-    _lydia.dispose();
-    _wise.dispose();
+    _draft?.dispose();
     super.dispose();
   }
 
-  Future<void> _save(String workspaceId) async {
+  Future<void> _save(String workspaceId, PaymentInstructions value) async {
     final l10n = context.l10n;
     setState(() => _busy = true);
     await runGuarded(
@@ -67,22 +48,9 @@ class _PaymentMethodsScreenState
       message: 'payment instructions save failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-        await ref.read(workspaceRepositoryProvider).setPaymentInstructions(
-              workspaceId,
-              PaymentInstructions(
-                iban: _iban.text,
-                accountNumber: _accountNumber.text,
-                bankCode: _bankCode.text,
-                bankName: _bankName.text,
-                bic: _bic.text,
-                qrIban: _qrIban.text,
-                paypalMe: _paypalMe.text,
-                reference: _reference.text,
-                wero: _wero.text,
-                lydia: _lydia.text,
-                wise: _wise.text,
-              ),
-            );
+        await ref
+            .read(savePaymentInstructionsProvider)
+            .save(workspaceId, value);
         ref.invalidate(myWorkspacesProvider);
         if (!mounted) return;
         AppSnack.success(
@@ -107,35 +75,9 @@ class _PaymentMethodsScreenState
         body: const LoadingView(),
       );
     }
-    if (!_seeded) {
-      _seeded = true;
-      final instructions =
-          PaymentInstructions.fromDb(workspace.paymentInstructions);
-      _iban.text = instructions.iban;
-      _accountNumber.text = instructions.accountNumber;
-      _bankCode.text = instructions.bankCode;
-      _bankName.text = instructions.bankName;
-      _bic.text = instructions.bic;
-      _qrIban.text = instructions.qrIban;
-      _paypalMe.text = instructions.paypalMe;
-      _reference.text = instructions.reference;
-      _wero.text = instructions.wero;
-      _lydia.text = instructions.lydia;
-      _wise.text = instructions.wise;
-    }
-    Widget field(String key, TextEditingController controller,
-            String label) =>
-        Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.md),
-          child: TextField(
-            key: Key(key),
-            controller: controller,
-            enabled: !_busy,
-            decoration: InputDecoration(
-              labelText: label,
-            ),
-          ),
-        );
+    final draft = _draft ??= PaymentInstructionsDraft(
+      PaymentInstructions.fromDb(workspace.paymentInstructions),
+    );
     return Scaffold(
       appBar: AppBar(
         title:
@@ -157,50 +99,14 @@ class _PaymentMethodsScreenState
                 ),
           ),
           const SizedBox(height: AppSpacing.lg),
-          field('workspaceSettingsIban', _iban,
-              l10n.paymentInstructionsIbanTitle),
-          // #711 — the fields a non-IBAN country needs, labelled by the
-          // workspace's banking scheme: "Sort code" in London, "Routing
-          // number" in New York, "Transit · institution" in Toronto.
-          // All optional; the how-to-pay card prints what is filled.
-          field('workspaceSettingsBankName', _bankName,
-              l10n.paymentBankNameLabel),
-          field('workspaceSettingsAccountNumber', _accountNumber,
-              l10n.paymentAccountNumberLabel),
-          field(
-              'workspaceSettingsBankCode',
-              _bankCode,
-              bankCodeLabelFor(
-                CountryCatalog.byCode(
-                        ref.watch(currentWorkspaceProvider).value?.countryCode ?? '')
-                    .scheme,
-                sortCode: l10n.paymentSortCodeLabel,
-                routingNumber: l10n.paymentRoutingNumberLabel,
-                transitNumber:
-                    l10n.paymentTransitNumberLabel,
-                bankCode: l10n.paymentBankCodeLabel,
-              )),
-          // #2360 — a Swiss space also states the QR-IBAN of its QR-bill.
-          if (CountryCatalog.byCode(
-                      ref.watch(currentWorkspaceProvider).value?.countryCode ?? '')
-                  .scheme ==
-              BankingScheme.ch)
-            field('workspaceSettingsQrIban', _qrIban, l10n.paymentQrIbanLabel),
-          field('workspaceSettingsBic', _bic,
-              l10n.paymentBicLabel),
-          field('workspaceSettingsPaypalMe', _paypalMe,
-              l10n.paymentInstructionsPaypalLabel),
-          field('workspaceSettingsWero', _wero,
-              l10n.paymentInstructionsWeroLabel),
-          field('workspaceSettingsLydia', _lydia,
-              l10n.paymentInstructionsLydiaLabel),
-          field('workspaceSettingsWise', _wise,
-              l10n.paymentInstructionsWiseLabel),
-          field('workspaceSettingsReference', _reference,
-              l10n.paymentInstructionsReferenceLabel),
+          PaymentInstructionsFields(
+            draft: draft,
+            countryCode: workspace.countryCode,
+            enabled: !_busy,
+          ),
           FilledButton(
             key: const ValueKey('payment-methods-save'),
-            onPressed: _busy ? null : () => _save(workspace.id),
+            onPressed: _busy ? null : () => _save(workspace.id, draft.value),
             child: Text(l10n.commonSave),
           ),
         ],

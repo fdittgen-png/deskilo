@@ -19354,6 +19354,122 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.';
 
   @override
+  String get setupApprovalsApply => 'Appliquer cette règle';
+
+  @override
+  String get setupApprovalsApplyFailed =>
+      'La règle d\'approbation n\'a pas pu être enregistrée. Réessayez.';
+
+  @override
+  String get setupApprovalsFlowOutcome => 'Elle s\'applique';
+
+  @override
+  String setupApprovalsFlowOutcomeBody(int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'Dès que $required approbations sont données.',
+      one: 'Dès qu\'une approbation est donnée.',
+    );
+    return '$_temp0 Un refus la clôt, et personne n\'approuve sa propre demande.';
+  }
+
+  @override
+  String get setupApprovalsFlowRequest => 'Un membre demande';
+
+  @override
+  String get setupApprovalsFlowRequestBody =>
+      'Un remboursement, la suppression d\'une réservation, une dépense…';
+
+  @override
+  String setupApprovalsFlowValidators(int required, int people) {
+    return '$required sur $people approuvent';
+  }
+
+  @override
+  String setupApprovalsFlowWho(int owners, int admins) {
+    String _temp0 = intl.Intl.pluralLogic(
+      owners,
+      locale: localeName,
+      other: '$owners propriétaires',
+      one: 'Le propriétaire',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      admins,
+      locale: localeName,
+      other: '$admins administrateurs',
+      one: '1 administrateur',
+      zero: 'aucun administrateur',
+    );
+    return '$_temp0 et $_temp1';
+  }
+
+  @override
+  String get setupApprovalsOpenRules => 'Règles par type de demande';
+
+  @override
+  String setupApprovalsPeople(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count personnes peuvent approuver.',
+      one: '1 personne peut approuver.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupApprovalsPresetBody =>
+      'Une règle pour chaque demande sans règle propre : remboursements, suppressions de réservation, dépenses, changements d\'adhésion.';
+
+  @override
+  String get setupApprovalsPresetTitle =>
+      'Le propriétaire ou un administrateur approuve';
+
+  @override
+  String get setupApprovalsPreviewRequest => 'Votre demande';
+
+  @override
+  String setupApprovalsPreviewWaiting(int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'En attente de $required approbations',
+      one: 'En attente d\'une approbation',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupApprovalsTooMany(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: 'seules $people personnes peuvent',
+      one: 'seule 1 personne peut',
+    );
+    return '$required approbations ne pourront jamais être réunies : $_temp0 approuver. Demandez-en moins, ou nommez d\'autres membres administrateurs.';
+  }
+
+  @override
+  String get setupBasicsPreviewDate => 'La date du jour';
+
+  @override
+  String get setupBasicsPreviewMoney => 'Un montant';
+
+  @override
+  String get setupBasicsPreviewTime => 'L’heure actuelle';
+
+  @override
+  String setupBasicsPreviewTimeIn(String time, String offset) {
+    return '$time ($offset)';
+  }
+
+  @override
+  String get setupBasicsSaveFailed =>
+      'Les informations de base n’ont pas pu être enregistrées. Réessayez.';
+
+  @override
   String get setupGuideAllDone =>
       'Votre espace a tout ce que vous avez choisi.';
 
@@ -19423,6 +19539,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String setupGuideWaitsFor(String steps) {
     return 'Attend : $steps';
   }
+
+  @override
+  String get setupHoursClosed => 'Fermé';
+
+  @override
+  String get setupHoursNextClosures => 'Prochaines fermetures et jours fériés';
+
+  @override
+  String get setupHoursNoClosures =>
+      'Aucune fermeture ni aucun jour férié prévu.';
+
+  @override
+  String get setupHoursOpenAvailability =>
+      'Unité et règles de réservation dans Disponibilités';
+
+  @override
+  String setupHoursRange(String from, String to) {
+    return '$from–$to';
+  }
+
+  @override
+  String get setupHoursWeekTitle => 'Quand les membres peuvent réserver';
 
   @override
   String get setupInvitePreviewNote =>
@@ -19614,6 +19752,83 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get setupOnlineOpenConfig => 'Réglages du paiement en ligne';
+
+  @override
+  String get setupOnlineOperatorNotice =>
+      'Votre opérateur connecte le prestataire de paiement et saisit sa clé secrète. Elle ne vous est jamais demandée, et personne ne la revoit une fois enregistrée.';
+
+  @override
+  String get setupOnlinePreviewOff =>
+      'Aucun prestataire n\'est encore connecté : les membres paient selon les seules instructions.';
+
+  @override
+  String get setupOnlinePreviewOn =>
+      'Un prestataire est connecté : les membres peuvent payer leur relevé en ligne.';
+
+  @override
+  String get setupPaymentsPreviewEmpty =>
+      'Les membres ne voient aucune instruction de paiement tant que vous n\'en renseignez pas.';
+
+  @override
+  String get setupPaymentsPreviewNote =>
+      'Sur un relevé impayé, sous ce que le membre doit :';
+
+  @override
+  String get setupPaymentsSaveFailed =>
+      'Les instructions de paiement n\'ont pas pu être enregistrées. Réessayez.';
+
+  @override
+  String setupPlacesCounts(int rooms, int desks, int seats) {
+    String _temp0 = intl.Intl.pluralLogic(
+      rooms,
+      locale: localeName,
+      other: '$rooms salles',
+      one: '1 salle',
+      zero: 'aucune salle',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      desks,
+      locale: localeName,
+      other: '$desks bureaux',
+      one: '1 bureau',
+      zero: 'aucun bureau',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      seats,
+      locale: localeName,
+      other: '$seats postes',
+      one: '1 poste',
+      zero: 'aucun poste',
+    );
+    return '$_temp0 · $_temp1 · $_temp2';
+  }
+
+  @override
+  String get setupPlacesEmpty =>
+      'Aucune place pour l’instant. Dessinez les salles, les bureaux et les postes dans l’éditeur, ou partez d’un modèle.';
+
+  @override
+  String get setupPlacesFromTemplate => 'Partir d’un modèle';
+
+  @override
+  String get setupPlacesOpenEditor => 'Ouvrir l’éditeur';
+
+  @override
+  String setupPlacesPlanLabel(String level) {
+    return 'Plan de $level';
+  }
+
+  @override
+  String get setupPlacesPreviewNone => 'Rien à réserver pour l’instant.';
+
+  @override
+  String get setupPlacesPreviewTitle => 'Ce qu’un membre peut réserver';
+
+  @override
+  String get setupPlacesWholeSpace => 'Réservable en entier';
+
+  @override
   String setupPresetName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'essentiel': 'Essentiel',
@@ -19622,6 +19837,50 @@ class AppLocalizationsFr extends AppLocalizations {
       'other': '$key',
     });
     return '$_temp0';
+  }
+
+  @override
+  String setupPricingBand(int from, int to, String fee, String extra) {
+    return '$from–$to % : $fee par mois, $extra par demi-journée en plus';
+  }
+
+  @override
+  String setupPricingLevel(int pct) {
+    return 'Abonnement à $pct %';
+  }
+
+  @override
+  String get setupPricingLevelsBody =>
+      'Les niveaux que les membres peuvent choisir. Chacun est tarifé par la tranche dans laquelle il tombe.';
+
+  @override
+  String get setupPricingNoBands =>
+      'Pas encore de prix : fixez les montants mensuels dans Facturation.';
+
+  @override
+  String get setupPricingNoLevels =>
+      'Aucun niveau proposé : les membres ne peuvent pas choisir d\'abonnement.';
+
+  @override
+  String get setupPricingNoPrice => 'Pas encore de prix pour ce niveau.';
+
+  @override
+  String get setupPricingOffer => 'Proposer ces niveaux';
+
+  @override
+  String get setupPricingOpenBilling =>
+      'Montants, forfaits et carnets dans Facturation';
+
+  @override
+  String get setupPricingPreviewTitle => 'Ce que paie un membre';
+
+  @override
+  String get setupPricingSaveFailed =>
+      'Les niveaux n\'ont pas pu être enregistrés. Réessayez.';
+
+  @override
+  String setupPricingTerms(String monthly, String half, String day) {
+    return '$monthly par mois\nUne demi-journée en plus $half · une journée en plus $day';
   }
 
   @override
@@ -19779,6 +20038,10 @@ class AppLocalizationsFr extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupStepLoadFailed =>
+      'Cette étape n’a pas pu être chargée. Réessayez plus tard.';
 
   @override
   String get setupStepOpenScreen => 'L’ouvrir';
