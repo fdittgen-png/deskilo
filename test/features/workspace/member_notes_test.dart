@@ -176,8 +176,9 @@ void main() {
   });
 
   testWidgets('CATCH-UP (#464/#687): a note sent while the app was '
-      'closed is announced on next start — WITH the message text — and '
-      'does NOT land on the bell', (tester) async {
+      'closed is announced on next start — generically, never with the '
+      'sender or the text (#2559) — and does NOT land on the bell',
+      (tester) async {
     final notifications = FakeNotificationService();
     final noteSeen = InMemoryNoteSeenStore();
     final workspace = FakeWorkspaceRepository.withWorkspace()
@@ -214,10 +215,15 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // The device announced the note ONCE, with sender AND text.
+    // The device announced the note ONCE — #2559 C2: the app's name and a
+    // generic line, neither the sender nor the words of the message.
     expect(notifications.shown, hasLength(1));
-    expect(notifications.shown.single.title, 'Message from Ana');
-    expect(notifications.shown.single.body, 'Your desk lamp is still on!');
+    expect(notifications.shown.single.title, 'DesKilo');
+    expect(notifications.shown.single.body, 'You have a new message.');
+    for (final private in ['Ana', 'lamp']) {
+      expect(notifications.shown.single.title, isNot(contains(private)));
+      expect(notifications.shown.single.body, isNot(contains(private)));
+    }
     expect(noteSeen.notified, DateTime.utc(2026, 8, 4, 9));
 
     // #687 — THE BELL DOES NOT COUNT IT. Messages are not notifications
@@ -233,8 +239,9 @@ void main() {
     );
 
     // The ANNOUNCEMENT is the part that matters and it survives: the
-    // device told them, once, with sender and text. Catch-up on next
+    // device told them, once. Catch-up on next
     // start is why #464 exists, and moving the surface must not lose it.
+    // (#2559: the announcement is generic; the text is in the thread.)
     expect(notifications.shown, hasLength(1));
   });
 

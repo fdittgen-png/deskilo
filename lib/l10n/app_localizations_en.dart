@@ -16220,16 +16220,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesTotal => 'Total';
 
   @override
+  String get pushAllowAction => 'Allow';
+
+  @override
   String get pushCancelledBody => 'A reservation was removed by an admin.';
 
   @override
   String get pushCancelledTitle => 'Reservation removed';
 
   @override
+  String get pushMentionBody => 'You were mentioned in a conversation.';
+
+  @override
+  String get pushMessageBody => 'You have a new message.';
+
+  @override
   String get pushPendingBody => 'Someone needs your confirmation.';
 
   @override
   String get pushPendingTitle => 'DesKilo';
+
+  @override
+  String get pushReminderBody => 'A payment reminder is waiting for you.';
 
   @override
   String get pushStatusNoTransport => 'This build has no push notifications';
@@ -16246,7 +16258,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace owner completes the Firebase setup (push-setup guide).';
 
   @override
+  String get pushStatusPermissionNeeded =>
+      'Notifications are not allowed on this device';
+
+  @override
+  String get pushStatusPermissionNeededHint =>
+      'Tap Allow to receive them. Everything stays available in the app either way.';
+
+  @override
   String get pushStatusRegistered => 'Push notifications are active';
+
+  @override
+  String get pushUpdateBody => 'You have an update.';
 
   @override
   String get qrBillAcceptancePoint => 'Acceptance point';

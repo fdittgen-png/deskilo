@@ -27342,6 +27342,12 @@ abstract class AppLocalizations {
   /// **'Total'**
   String get purchasesTotal;
 
+  /// #2559 Settings button: the deliberate action that raises the system notification prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get pushAllowAction;
+
   /// Push body for the removed-reservation ping — generic, no personal data (#424)
   ///
   /// In en, this message translates to:
@@ -27354,6 +27360,18 @@ abstract class AppLocalizations {
   /// **'Reservation removed'**
   String get pushCancelledTitle;
 
+  /// #2559 generic push body for a mention: no sender, no conversation name
+  ///
+  /// In en, this message translates to:
+  /// **'You were mentioned in a conversation.'**
+  String get pushMentionBody;
+
+  /// #2559 generic push body for a new message: no sender, no words of the message
+  ///
+  /// In en, this message translates to:
+  /// **'You have a new message.'**
+  String get pushMessageBody;
+
   /// Generic push body for a pending confirmation; deliberately carries no personal data
   ///
   /// In en, this message translates to:
@@ -27365,6 +27383,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'DesKilo'**
   String get pushPendingTitle;
+
+  /// #2559 generic push body for a payment reminder: never an amount
+  ///
+  /// In en, this message translates to:
+  /// **'A payment reminder is waiting for you.'**
+  String get pushReminderBody;
 
   /// #716 - F-Droid build without a push transport
   ///
@@ -27390,11 +27414,29 @@ abstract class AppLocalizations {
   /// **'The workspace owner completes the Firebase setup (push-setup guide).'**
   String get pushStatusNotConfiguredHint;
 
+  /// #2559 Settings status: push works but this device does not allow notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are not allowed on this device'**
+  String get pushStatusPermissionNeeded;
+
+  /// #2559 hint under the status: the Allow button, and that nothing in the app depends on it
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Allow to receive them. Everything stays available in the app either way.'**
+  String get pushStatusPermissionNeededHint;
+
   /// Settings status line: push pipeline registered (#424)
   ///
   /// In en, this message translates to:
   /// **'Push notifications are active'**
   String get pushStatusRegistered;
+
+  /// #2559 generic push body for any other or unknown kind
+  ///
+  /// In en, this message translates to:
+  /// **'You have an update.'**
+  String get pushUpdateBody;
 
   /// #2360: qrBillAcceptancePoint
   ///

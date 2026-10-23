@@ -113,13 +113,17 @@ class DemoPushConnector implements PushConnector {
     required void Function(String url) onNewEndpoint,
     required void Function() onUnregistered,
     required void Function(Uint8List content) onMessage,
+    void Function(Map<String, String> data, String? messageId)? onOpened,
   }) async {
     initializeCalls++;
     return false;
   }
 
   @override
-  Future<void> register() async => registerCalls++;
+  Future<bool> register({bool ask = false}) async {
+    registerCalls++;
+    return false;
+  }
 }
 
 /// #1564 — the server-side endpoint registry, in memory.
