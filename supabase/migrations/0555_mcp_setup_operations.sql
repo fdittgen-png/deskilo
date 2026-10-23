@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2873, ADR 0047) -- an assistant can run the setup guide, with the
+-- #2873 (ADR 0047) -- an assistant can run the setup guide, with the
 -- person's confirmation for every change and never with a credential.
 --
 --   reads   get_setup_status      the one setup status (0539) with, per
