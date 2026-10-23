@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2564 (the handoff of #2587) / 9999: accounting_source_snapshot_v1 names,
+-- #2564 (the handoff of #2587) / 0558: accounting_source_snapshot_v1 names,
 -- beside its cutoff, the revision of the settings, the tax reference, the
 -- book profiles and the calendar it was read with -- four tokens, each a
 -- digest of the rows read in the same statement, naming data and not rows.

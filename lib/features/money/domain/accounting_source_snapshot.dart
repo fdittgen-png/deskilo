@@ -56,7 +56,7 @@ typedef SourcePurchase = ({
 });
 
 /// #2564 — the revision of each reference family a period's export depends
-/// on, named by the producer in the SAME statement as the rows (9999): the
+/// on, named by the producer in the SAME statement as the rows (0558): the
 /// settings, the tax reference, the book profiles and the calendar. Each is
 /// an opaque server token that names data, not rows: equal data gives an
 /// equal token. An export states them so a reader knows which version of

@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2564, the handoff of #2587) -- the one bounded fiscal source
+-- 0558 (#2564, the handoff of #2587) -- the one bounded fiscal source
 -- (0453/0454/0533) names, beside its cutoff, the revision of each reference
 -- family a period's export depends on: the settings, the tax reference, the
 -- book profiles and the calendar. An export can then state which version of
@@ -247,4 +247,4 @@ $fn$;
 revoke execute on function public.accounting_source_snapshot_v1(uuid, date, date) from public, anon;
 grant execute on function public.accounting_source_snapshot_v1(uuid, date, date) to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(558);
