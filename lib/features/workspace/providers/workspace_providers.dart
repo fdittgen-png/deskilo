@@ -13,6 +13,7 @@ import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/storage/active_workspace_store.dart';
 import '../../../core/storage/note_seen_store.dart';
 import '../../../core/time/work_hours.dart';
+import '../../../core/time/workspace_calendar.dart';
 import '../../../core/trace/refusal_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -228,14 +229,12 @@ Future<List<WorkspaceDocument>> workspaceDocuments(Ref ref) async {
   return ref.read(workspaceRepositoryProvider).fetchDocuments(workspace.id);
 }
 
+/// #2561 L4: open days, hours and closures are the context's calendar; an
+/// edit invalidates [workspaceContextProvider].
 @riverpod
-Future<List<int>> openWeekdays(Ref ref) async {
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return const [1, 2, 3, 4, 5];
-  return ref
-      .watch(workspaceRepositoryProvider)
-      .fetchOpenWeekdays(workspace.id);
-}
+Future<List<int>> openWeekdays(Ref ref) async =>
+    (await ref.watch(workspaceContextProvider.future))?.calendar.openWeekdays ??
+    const [1, 2, 3, 4, 5];
 
 /// Booking-granularity rule of the active workspace (#200); flexible
 /// while no workspace is selected or the key is absent.
@@ -316,13 +315,9 @@ Future<Map<String, dynamic>> lexicon(Ref ref) async {
 /// Working day of the active workspace (#446); [WorkHours.defaults]
 /// while no workspace is selected or the keys are absent.
 @riverpod
-Future<WorkHours> workHours(Ref ref) async {
-  // #1218 — the repository is watched BEFORE the gap.
-  final repository = ref.watch(workspaceRepositoryProvider);
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return WorkHours.defaults;
-  return repository.fetchWorkHours(workspace.id);
-}
+Future<WorkHours> workHours(Ref ref) async =>
+    (await ref.watch(workspaceContextProvider.future))?.calendar.workHours ??
+    WorkHours.defaults;
 
 /// #1307 S4 — where the active workspace's working day came from. Watches
 /// [workHoursProvider], so an edit or a reset re-asks.
@@ -420,11 +415,12 @@ class UnreadNoteCount extends _$UnreadNoteCount {
 /// One-off closure days of the active workspace, ordered by day (#127).
 @riverpod
 Future<List<ClosureDay>> closureDays(Ref ref) async {
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return const [];
-  return ref
-      .watch(workspaceRepositoryProvider)
-      .fetchClosureDays(workspace.id);
+  final context = await ref.watch(workspaceContextProvider.future);
+  return [
+    for (final c in context?.calendar.closures ?? const <CalendarClosure>[])
+      ClosureDay(id: c.id, workspaceId: context!.target.workspaceId,
+          day: c.day, reason: c.reason, system: c.system),
+  ];
 }
 
 /// Features enabled for the active workspace (#146). Deriving from

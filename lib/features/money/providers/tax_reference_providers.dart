@@ -5,7 +5,6 @@ import '../../../core/backend/context_client_providers.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/tax_reference_bundle_asset.dart';
 import '../../../core/vat/tax_reference.dart';
-import '../../../core/vat/tax_reference_active.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/tax_reference_commands.dart';
 import '../data/supabase_tax_reference_repository.dart';
@@ -43,12 +42,4 @@ Future<TaxReferenceSet> taxReferenceSet(Ref ref) async {
   final signedIn = ref.watch(authStateProvider).value != null;
   if (!signedIn) return const TaxReferenceSet([]);
   return source.load();
-}
-
-/// #2478 -- the installation's rows become the snapshot the VAT functions run
-/// on (the bundled copy stands until they arrive, and when they cannot).
-@riverpod
-void activeTaxReference(Ref ref) {
-  final set = ref.watch(taxReferenceSetProvider).value;
-  if (set != null && !set.isEmpty) ActiveTaxReference.install(set);
 }
