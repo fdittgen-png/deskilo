@@ -11712,6 +11712,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette demande a expiré. Demandez à l\'assistant de la renvoyer.';
 
   @override
+  String mcpConfirmLevel(String process, String level) {
+    return '$process : $level';
+  }
+
+  @override
   String mcpConfirmNewShare(String pct) {
     return 'Nouvelle part d\'abonnement : $pct %';
   }
@@ -11736,6 +11741,22 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mcpConfirmStale =>
       'Cette demande ne correspond plus aux données actuelles ou à vos accès. Rien n\'a été fait.';
+
+  @override
+  String get mcpConfirmStepDone => 'Elle sera marquée comme faite.';
+
+  @override
+  String get mcpConfirmStepLater => 'Elle sera mise de côté pour plus tard.';
+
+  @override
+  String mcpConfirmSwitchOff(String features) {
+    return 'Désactive : $features. Leurs données sont conservées.';
+  }
+
+  @override
+  String mcpConfirmSwitchOn(String features) {
+    return 'Active : $features';
+  }
 
   @override
   String get mcpConfirmTitle => 'Confirmer une demande d\'assistant';
@@ -12225,6 +12246,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpGroupOwn => 'Réservations et compte personnels';
 
   @override
+  String get mcpGroupSetup => 'Mise en place de l\'espace';
+
+  @override
   String get mcpGroupValidations => 'Validations';
 
   @override
@@ -12346,6 +12370,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mcpOpSetFavorite => 'Marquer des lieux en favoris';
+
+  @override
+  String get mcpOpSetupLevels => 'Voir les niveaux de mise en place';
+
+  @override
+  String get mcpOpSetupLevelsApply => 'Changer les niveaux de mise en place';
+
+  @override
+  String get mcpOpSetupLevelsPreview =>
+      'Prévisualiser un changement de niveaux';
+
+  @override
+  String get mcpOpSetupStatus => 'Voir où en est la mise en place';
+
+  @override
+  String get mcpOpSetupStepMark =>
+      'Marquer une étape comme faite ou pour plus tard';
 
   @override
   String get mcpOpSubscription => 'Modifier la part d\'abonnement d\'un membre';

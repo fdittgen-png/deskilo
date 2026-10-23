@@ -31,7 +31,15 @@
   "approval",
   "approved",
   "decided_by",
-  "status_override"
+  "status_override",
+  "secret",
+  "password",
+  "api_key",
+  "token",
+  "access_token",
+  "client_secret",
+  "private_key",
+  "credentials"
  ],
  "page": {
   "default": 25,
@@ -56,6 +64,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "actor": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "afternoon": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -68,6 +80,14 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "applies": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "assistant": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "average": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -75,6 +95,10 @@
   "balance_cents": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "blocked_by": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "bookable_as_whole": {
    "class": "operational",
@@ -87,6 +111,10 @@
   "can_respond": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "changes": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "checked_in_at": {
    "class": "operational",
@@ -111,6 +139,10 @@
   "currency": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "current": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "decision_recorded": {
    "class": "operational",
@@ -156,6 +188,10 @@
    "class": "operational",
    "purpose": "the caller's own role and the workspace environment (#1644)"
   },
+  "estimate_minutes": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "event_id": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -176,6 +212,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "features": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "fee_cents": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -192,6 +232,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "gaps": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "granted_half_days": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -199,6 +243,10 @@
   "granularity": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "group": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "half_boundary": {
    "class": "operational",
@@ -240,6 +288,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "level": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "level_id": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -248,6 +300,18 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "levels": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "manual": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "marked": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "member_id": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -255,6 +319,14 @@
   "member_status": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "milestone": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "milestones": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "mine": {
    "class": "operational",
@@ -269,6 +341,10 @@
    "disclosure": "optional",
    "purpose": "a human label; omitted by default because it can name or describe a person (#1644); sent only when the installation maximum, the workspace policy and the person's consent all name it (#1645)"
   },
+  "needs": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "negotiated": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -276,6 +352,14 @@
   "next_cursor": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "next_milestone": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "next_step": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "not_checked": {
    "class": "operational",
@@ -337,9 +421,37 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "preset": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "presets": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "process": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "processes": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "rating": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "reached": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "ready": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "ready_to_apply": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "reason": {
    "class": "operational",
@@ -361,6 +473,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "required": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "reservation_id": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -372,6 +488,10 @@
   "role": {
    "class": "operational",
    "purpose": "the caller's own role and the workspace environment (#1644)"
+  },
+  "route": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "seat_id": {
    "class": "operational",
@@ -385,6 +505,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "state": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "state_digest": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -393,9 +517,25 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "step": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "steps": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "subscription_pct": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "switch_off": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "switch_on": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "target_ceiling": {
    "class": "operational",
@@ -2323,6 +2463,487 @@
     "de": "Auf eine Freigabeanfrage antworten",
     "es": "Responder a una solicitud de validaci\u00f3n",
     "it": "Rispondere a una richiesta di validazione"
+   }
+  },
+  {
+   "id": "get_setup_status",
+   "handler": true,
+   "dispatch": true,
+   "title": "How far is the space's setup?",
+   "description": "For someone who configures the workspace: every setup step with its state (ready, needs_configuration, blocked, needs_operator, deferred, not_applicable), the milestones in order (bookable, money, invoice, live) with how many of their required steps are ready, next_milestone and next_step (the one thing to do now), the current level of each process, and per step what an assistant may do (`assistant`): mark_done (only the person can tell it is done), set_aside (optional: it can wait), in_app (the person does it on the app screen named by `route`), in_app_only (it takes credentials such as payment or e-invoicing keys: never ask for them, send the person to that screen) or none. Read only.",
+   "rpc": "workspace_setup_status",
+   "authority": {
+    "kind": "permission",
+    "permission": "manageConfiguration"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_workspace_id",
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    }
+   },
+   "output": [
+    "steps",
+    "step",
+    "group",
+    "milestone",
+    "required",
+    "state",
+    "reason",
+    "blocked_by",
+    "route",
+    "actor",
+    "manual",
+    "estimate_minutes",
+    "assistant",
+    "milestones",
+    "applies",
+    "ready",
+    "reached",
+    "next_milestone",
+    "next_step",
+    "levels",
+    "process",
+    "level"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupStatus",
+    "en": "See how far the setup is",
+    "fr": "Voir o\u00f9 en est la mise en place",
+    "de": "Sehen, wie weit die Einrichtung ist",
+    "es": "Ver en qu\u00e9 punto est\u00e1 la configuraci\u00f3n",
+    "it": "Vedere a che punto \u00e8 la configurazione"
+   }
+  },
+  {
+   "id": "list_setup_levels",
+   "handler": true,
+   "dispatch": true,
+   "title": "The setup levels",
+   "description": "The levels each process can be set to (bookings, community, money, payments, tax, purchases, presentation, operations, assistant), lowest first, with the features each level adds and the level of another process it needs; the three quick starts (essentiel, standard, complet); and the space's current level of each process (`current`). Read only: deskilo_preview_setup_levels says what a choice would switch on and off.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageConfiguration"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    }
+   },
+   "output": [
+    "processes",
+    "process",
+    "levels",
+    "level",
+    "features",
+    "needs",
+    "presets",
+    "preset",
+    "current"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupLevels",
+    "en": "See the setup levels",
+    "fr": "Voir les niveaux de mise en place",
+    "de": "Die Einrichtungsstufen sehen",
+    "es": "Ver los niveles de configuraci\u00f3n",
+    "it": "Vedere i livelli di configurazione"
+   }
+  },
+  {
+   "id": "preview_setup_levels",
+   "handler": true,
+   "dispatch": true,
+   "title": "Preview a change of levels",
+   "description": "What choosing levels would change, without changing anything: per process `changes` (from, to), the features switched on and off, and `gaps` (a chosen level that needs a higher level of another process: raise that one too). Name a preset, single processes, or both; a process left out keeps its level. Show the person this answer, in words, before deskilo_apply_setup_levels with the same choice. ready_to_apply is false when there is a gap or nothing changes.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageConfiguration"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "preset": {
+     "type": "enum",
+     "values": [
+      "essentiel",
+      "standard",
+      "complet"
+     ],
+     "description": "A quick start: essentiel (bookings and statements, no invoices or VAT), standard or complet. A process named alongside overrides its level.",
+     "examples": [
+      "essentiel"
+     ]
+    },
+    "bookings": {
+     "type": "enum",
+     "values": [
+      "simple",
+      "resources",
+      "measured"
+     ],
+     "description": "The level of bookings, lowest first: simple, resources, measured. Left out: it keeps its level."
+    },
+    "community": {
+     "type": "enum",
+     "values": [
+      "basic",
+      "organised"
+     ],
+     "description": "The level of community, lowest first: basic, organised. Left out: it keeps its level."
+    },
+    "money": {
+     "type": "enum",
+     "values": [
+      "none",
+      "statements",
+      "invoices"
+     ],
+     "description": "The level of money, lowest first: none, statements, invoices. Left out: it keeps its level."
+    },
+    "payments": {
+     "type": "enum",
+     "values": [
+      "off",
+      "online"
+     ],
+     "description": "The level of payments, lowest first: off, online. Left out: it keeps its level."
+    },
+    "tax": {
+     "type": "enum",
+     "values": [
+      "none",
+      "vat",
+      "books"
+     ],
+     "description": "The level of tax, lowest first: none, vat, books. Left out: it keeps its level."
+    },
+    "purchases": {
+     "type": "enum",
+     "values": [
+      "none",
+      "expenses",
+      "full"
+     ],
+     "description": "The level of purchases, lowest first: none, expenses, full. Left out: it keeps its level."
+    },
+    "presentation": {
+     "type": "enum",
+     "values": [
+      "basic",
+      "branded",
+      "public"
+     ],
+     "description": "The level of presentation, lowest first: basic, branded, public. Left out: it keeps its level."
+    },
+    "operations": {
+     "type": "enum",
+     "values": [
+      "basic",
+      "insight",
+      "advanced"
+     ],
+     "description": "The level of operations, lowest first: basic, insight, advanced. Left out: it keeps its level."
+    },
+    "assistant": {
+     "type": "enum",
+     "values": [
+      "off",
+      "on"
+     ],
+     "description": "The level of assistant, lowest first: off, on. Left out: it keeps its level."
+    }
+   },
+   "output": [
+    "changes",
+    "process",
+    "from",
+    "to",
+    "switch_on",
+    "switch_off",
+    "gaps",
+    "level",
+    "needs",
+    "ready_to_apply"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupLevelsPreview",
+    "en": "Preview a change of levels",
+    "fr": "Pr\u00e9visualiser un changement de niveaux",
+    "de": "Eine \u00c4nderung der Stufen vorab ansehen",
+    "es": "Previsualizar un cambio de niveles",
+    "it": "Visualizzare in anteprima un cambio di livelli"
+   }
+  },
+  {
+   "id": "apply_setup_levels",
+   "handler": true,
+   "dispatch": true,
+   "title": "Change the setup levels",
+   "description": "Sets the levels exactly as deskilo_preview_setup_levels showed them (pass the same choice). Needs the person's confirmation in the DesKilo app first (status requires_confirmation): they see every feature switched on and off; then call again with the same request_id and arguments. A lower level hides features and keeps their data. Refused when the choice has a gap or changes nothing; a change to the space's features in the meantime makes the confirmation stale: preview again with a new request_id.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageConfiguration"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": false,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "preset": {
+     "type": "enum",
+     "values": [
+      "essentiel",
+      "standard",
+      "complet"
+     ],
+     "description": "A quick start: essentiel (bookings and statements, no invoices or VAT), standard or complet. A process named alongside overrides its level.",
+     "examples": [
+      "essentiel"
+     ]
+    },
+    "bookings": {
+     "type": "enum",
+     "values": [
+      "simple",
+      "resources",
+      "measured"
+     ],
+     "description": "The level of bookings, lowest first: simple, resources, measured. Left out: it keeps its level."
+    },
+    "community": {
+     "type": "enum",
+     "values": [
+      "basic",
+      "organised"
+     ],
+     "description": "The level of community, lowest first: basic, organised. Left out: it keeps its level."
+    },
+    "money": {
+     "type": "enum",
+     "values": [
+      "none",
+      "statements",
+      "invoices"
+     ],
+     "description": "The level of money, lowest first: none, statements, invoices. Left out: it keeps its level."
+    },
+    "payments": {
+     "type": "enum",
+     "values": [
+      "off",
+      "online"
+     ],
+     "description": "The level of payments, lowest first: off, online. Left out: it keeps its level."
+    },
+    "tax": {
+     "type": "enum",
+     "values": [
+      "none",
+      "vat",
+      "books"
+     ],
+     "description": "The level of tax, lowest first: none, vat, books. Left out: it keeps its level."
+    },
+    "purchases": {
+     "type": "enum",
+     "values": [
+      "none",
+      "expenses",
+      "full"
+     ],
+     "description": "The level of purchases, lowest first: none, expenses, full. Left out: it keeps its level."
+    },
+    "presentation": {
+     "type": "enum",
+     "values": [
+      "basic",
+      "branded",
+      "public"
+     ],
+     "description": "The level of presentation, lowest first: basic, branded, public. Left out: it keeps its level."
+    },
+    "operations": {
+     "type": "enum",
+     "values": [
+      "basic",
+      "insight",
+      "advanced"
+     ],
+     "description": "The level of operations, lowest first: basic, insight, advanced. Left out: it keeps its level."
+    },
+    "assistant": {
+     "type": "enum",
+     "values": [
+      "off",
+      "on"
+     ],
+     "description": "The level of assistant, lowest first: off, on. Left out: it keeps its level."
+    }
+   },
+   "output": [
+    "changes",
+    "process",
+    "from",
+    "to",
+    "switch_on",
+    "switch_off",
+    "levels",
+    "level"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupLevelsApply",
+    "en": "Change the setup levels",
+    "fr": "Changer les niveaux de mise en place",
+    "de": "Die Einrichtungsstufen \u00e4ndern",
+    "es": "Cambiar los niveles de configuraci\u00f3n",
+    "it": "Cambiare i livelli di configurazione"
+   }
+  },
+  {
+   "id": "mark_setup_step",
+   "handler": true,
+   "dispatch": true,
+   "title": "Mark a setup step done or for later",
+   "description": "For a step deskilo_get_setup_status lists with assistant mark_done (the server cannot verify it: it becomes done) or set_aside (optional: it waits for later and stops counting as open). Needs the person's confirmation in the DesKilo app first (status requires_confirmation), then call again with the same request_id and arguments. A step the server verifies from the space's data is never marked done this way, and a step that takes credentials is never acted on by an assistant.",
+   "rpc": "acknowledge_setup_step",
+   "authority": {
+    "kind": "permission",
+    "permission": "manageConfiguration"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": false,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "param": "p_workspace_id",
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "step": {
+     "type": "enum",
+     "required": true,
+     "param": "p_step",
+     "values": [
+      "invite",
+      "services",
+      "new_members",
+      "kiosk",
+      "purchases",
+      "lease",
+      "assets",
+      "look",
+      "public_page",
+      "documents",
+      "reminders",
+      "recovery",
+      "assistant"
+     ],
+     "description": "The step id, from deskilo_get_setup_status.",
+     "examples": [
+      "new_members"
+     ]
+    }
+   },
+   "output": [
+    "step",
+    "state",
+    "marked"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupStepMark",
+    "en": "Mark a setup step done or for later",
+    "fr": "Marquer une \u00e9tape comme faite ou pour plus tard",
+    "de": "Einen Einrichtungsschritt als erledigt oder f\u00fcr sp\u00e4ter markieren",
+    "es": "Marcar un paso como hecho o para m\u00e1s tarde",
+    "it": "Segnare un passo come fatto o per dopo"
    }
   }
  ],

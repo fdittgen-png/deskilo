@@ -301,5 +301,64 @@
     },
     "input": "e0aabcbea8cf558b",
     "output": "c35402e8904135f2"
+  },
+  "get_setup_status": {
+    "name": "deskilo_get_setup_status",
+    "title": "How far is the space's setup?",
+    "annotations": {
+      "title": "How far is the space's setup?",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "09338a5eebae270a",
+    "output": "32d937e6cf20dad1"
+  },
+  "list_setup_levels": {
+    "name": "deskilo_list_setup_levels",
+    "title": "The setup levels",
+    "annotations": {
+      "title": "The setup levels",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "09338a5eebae270a",
+    "output": "25b372280b4f1176"
+  },
+  "preview_setup_levels": {
+    "name": "deskilo_preview_setup_levels",
+    "title": "Preview a change of levels",
+    "annotations": {
+      "title": "Preview a change of levels",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "4a88ffe88bbf9673",
+    "output": "7ca0a9be385f7fc4"
+  },
+  "apply_setup_levels": {
+    "name": "deskilo_apply_setup_levels",
+    "title": "Change the setup levels",
+    "annotations": {
+      "title": "Change the setup levels",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "b82e409d6d5e5eab",
+    "output": "3be1e275bcd701b6"
+  },
+  "mark_setup_step": {
+    "name": "deskilo_mark_setup_step",
+    "title": "Mark a setup step done or for later",
+    "annotations": {
+      "title": "Mark a setup step done or for later",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "d4ad1f3b5c95f4da",
+    "output": "a17d819e76025b35"
   }
 }

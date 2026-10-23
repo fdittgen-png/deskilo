@@ -50,5 +50,6 @@
   "mfaWrong": "Ce code n'a pas été accepté. Essayez le code actuel.",
   "mfaVerify": "Vérifier",
   "mcpApiReference": "Référence de l’API",
-  "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé"
+  "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé",
+  "mcpGroupSetup": "Mise en place de l'espace"
 }

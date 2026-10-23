@@ -23,5 +23,10 @@
   "mcpOpSubscription": "Modifier la part d'abonnement d'un membre",
   "mcpOpPendingValidations": "Voir les demandes de validation en attente",
   "mcpOpGetValidation": "Lire une demande de validation",
-  "mcpOpRespond": "Répondre à une demande de validation"
+  "mcpOpRespond": "Répondre à une demande de validation",
+  "mcpOpSetupStatus": "Voir où en est la mise en place",
+  "mcpOpSetupLevels": "Voir les niveaux de mise en place",
+  "mcpOpSetupLevelsPreview": "Prévisualiser un changement de niveaux",
+  "mcpOpSetupLevelsApply": "Changer les niveaux de mise en place",
+  "mcpOpSetupStepMark": "Marquer une étape comme faite ou pour plus tard"
 }
