@@ -19432,6 +19432,135 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile salvare i dati di base. Riprovi.';
 
   @override
+  String get setupGrowDocumentsApply => 'Usa questo stile';
+
+  @override
+  String get setupGrowDocumentsBuiltIn =>
+      'Le Sue fatture vengono stampate con il design integrato, con il Suo nome e i Suoi dati legali.';
+
+  @override
+  String get setupGrowDocumentsChoose => 'Oppure parta da uno di questi stili:';
+
+  @override
+  String get setupGrowDocumentsLayout =>
+      'La Sua fattura ha un layout posizionato: la pagina stampata lo segue, questo esempio ne mostra il contenuto.';
+
+  @override
+  String get setupGrowDocumentsOpenDesigner => 'Apri l\'editor dei documenti';
+
+  @override
+  String get setupGrowDocumentsOwn =>
+      'Le Sue fatture vengono stampate con il Suo design.';
+
+  @override
+  String get setupGrowDocumentsReplaces =>
+      'Scegliere uno stile sostituisce il Suo design della fattura.';
+
+  @override
+  String get setupGrowDocumentsSaved =>
+      'Lo stile delle fatture è stato salvato.';
+
+  @override
+  String get setupGrowLegalAskForm =>
+      'La forma giuridica e il capitale sociale, come devono essere stampati.';
+
+  @override
+  String get setupGrowLegalAskIntro =>
+      'Il Suo commercialista conosce queste risposte. Le chieda prima di compilare:';
+
+  @override
+  String get setupGrowLegalAskNumber =>
+      'Quale numero devono riportare le Sue fatture: la partita IVA o il numero di registrazione dell\'impresa.';
+
+  @override
+  String get setupGrowLegalAskRegime =>
+      'Quale regime IVA si applica allo spazio.';
+
+  @override
+  String get setupGrowLegalAskRegister =>
+      'Il registro in cui è iscritta l\'impresa, con il relativo numero.';
+
+  @override
+  String get setupGrowLegalAskTitle => 'Chieda al Suo commercialista';
+
+  @override
+  String get setupGrowLegalLock =>
+      'Una volta emessa la prima fattura, il paese e la valuta non possono più cambiare, e ogni fattura emessa conserva l\'identità con cui è stata emessa.';
+
+  @override
+  String get setupGrowLegalOpenFull =>
+      'Clausole di pagamento, indirizzo di fatturazione elettronica e tutti gli altri dati legali';
+
+  @override
+  String get setupGrowLegalPreviewNote =>
+      'La parte superiore di ogni fattura, così come viene stampata:';
+
+  @override
+  String get setupGrowNumberingLock =>
+      'Una fattura emessa conserva il suo numero per sempre, e la serie prosegue senza interruzioni.';
+
+  @override
+  String get setupGrowNumberingNothingTaken =>
+      'Solo un\'anteprima: un numero viene preso quando si emette una fattura, mai prima.';
+
+  @override
+  String get setupGrowNumberingPreviewNote =>
+      'La Sua prossima fattura riporterà il numero';
+
+  @override
+  String get setupGrowSampleBadge =>
+      'ESEMPIO: non è una fattura reale e non viene preso alcun numero';
+
+  @override
+  String get setupGrowSampleLine => 'Abbonamento';
+
+  @override
+  String get setupGrowSampleMember => 'Un membro';
+
+  @override
+  String get setupGrowSampleNumber => 'ESEMPIO';
+
+  @override
+  String get setupGrowSaveFailed => 'Non è stato possibile salvare. Riprovi.';
+
+  @override
+  String get setupGrowVatInForce => 'Le aliquote in vigore';
+
+  @override
+  String get setupGrowVatNoCatalogue =>
+      'L\'app non conosce le aliquote di questo paese. Inserisca le Sue nelle aliquote IVA.';
+
+  @override
+  String get setupGrowVatOpen => 'Modifica le aliquote IVA';
+
+  @override
+  String setupGrowVatPreviewNoVat(String gross) {
+    return 'Non si addebita IVA: una riga di $gross viene fatturata così com\'è.';
+  }
+
+  @override
+  String setupGrowVatPreviewNote(String gross) {
+    return 'Una riga di esempio di $gross, IVA inclusa, scomposta come in una fattura:';
+  }
+
+  @override
+  String setupGrowVatPreviewRate(String rate) {
+    return 'IVA $rate %';
+  }
+
+  @override
+  String setupGrowVatRate(String rate) {
+    return '$rate %';
+  }
+
+  @override
+  String get setupGrowVatUsualNote =>
+      'Un punto di partenza, non una consulenza fiscale: il Suo commercialista conferma quale aliquota si applica a ciò che vende.';
+
+  @override
+  String get setupGrowVatUsualTitle => 'Le aliquote abituali del Suo paese';
+
+  @override
   String get setupGuideAllDone => 'Il suo spazio ha tutto ciò che ha scelto.';
 
   @override

@@ -16,6 +16,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/save_vat_rates.dart';
 import '../../domain/vat_catalogue.dart';
 import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
@@ -284,8 +285,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       domain: 'money',
       message: 'vat rates save failed',
       errorText: l10n.workspaceGenericError,
-      action: () =>
-          ref.read(taxReportingRepositoryProvider).setVatRates(workspace.id, rates),
+      action: () => ref.read(saveVatRatesProvider).save(workspace.id, rates),
     );
     if (!mounted) return;
     setState(() => _saving = false);

@@ -19470,6 +19470,135 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les informations de base n’ont pas pu être enregistrées. Réessayez.';
 
   @override
+  String get setupGrowDocumentsApply => 'Utiliser ce style';
+
+  @override
+  String get setupGrowDocumentsBuiltIn =>
+      'Vos factures sont imprimées avec la mise en page intégrée, sous votre nom et vos mentions légales.';
+
+  @override
+  String get setupGrowDocumentsChoose => 'Ou partez de l\'un de ces styles :';
+
+  @override
+  String get setupGrowDocumentsLayout =>
+      'Votre facture a une mise en page positionnée : la page imprimée la suit, cet exemple en montre le contenu.';
+
+  @override
+  String get setupGrowDocumentsOpenDesigner => 'Ouvrir l\'éditeur de documents';
+
+  @override
+  String get setupGrowDocumentsOwn =>
+      'Vos factures sont imprimées avec votre propre mise en page.';
+
+  @override
+  String get setupGrowDocumentsReplaces =>
+      'Choisir un style remplace votre propre mise en page de facture.';
+
+  @override
+  String get setupGrowDocumentsSaved => 'Le style des factures est enregistré.';
+
+  @override
+  String get setupGrowLegalAskForm =>
+      'La forme juridique et le capital social, tels qu\'ils doivent être imprimés.';
+
+  @override
+  String get setupGrowLegalAskIntro =>
+      'Votre expert-comptable connaît ces réponses. Demandez-les avant de remplir :';
+
+  @override
+  String get setupGrowLegalAskNumber =>
+      'Quel numéro vos factures doivent porter : le numéro de TVA ou le numéro d\'immatriculation de l\'entreprise.';
+
+  @override
+  String get setupGrowLegalAskRegime =>
+      'Quel régime de TVA s\'applique à l\'espace.';
+
+  @override
+  String get setupGrowLegalAskRegister =>
+      'Le registre où l\'entreprise est immatriculée, avec son numéro.';
+
+  @override
+  String get setupGrowLegalAskTitle => 'Demandez à votre expert-comptable';
+
+  @override
+  String get setupGrowLegalLock =>
+      'Dès la première facture émise, le pays et la devise ne peuvent plus changer, et chaque facture émise garde l\'identité sous laquelle elle a été émise.';
+
+  @override
+  String get setupGrowLegalOpenFull =>
+      'Clauses de paiement, adresse de facturation électronique et toutes les autres mentions légales';
+
+  @override
+  String get setupGrowLegalPreviewNote =>
+      'Le haut de chaque facture, tel qu\'il est imprimé :';
+
+  @override
+  String get setupGrowNumberingLock =>
+      'Une facture émise garde son numéro pour toujours, et la série continue sans trou.';
+
+  @override
+  String get setupGrowNumberingNothingTaken =>
+      'Un simple aperçu : un numéro n\'est pris qu\'à l\'émission d\'une facture, jamais avant.';
+
+  @override
+  String get setupGrowNumberingPreviewNote =>
+      'Votre prochaine facture portera le numéro';
+
+  @override
+  String get setupGrowSampleBadge =>
+      'EXEMPLE : ce n\'est pas une vraie facture, et aucun numéro n\'est pris';
+
+  @override
+  String get setupGrowSampleLine => 'Abonnement';
+
+  @override
+  String get setupGrowSampleMember => 'Un membre';
+
+  @override
+  String get setupGrowSampleNumber => 'EXEMPLE';
+
+  @override
+  String get setupGrowSaveFailed =>
+      'L\'enregistrement n\'a pas abouti. Réessayez.';
+
+  @override
+  String get setupGrowVatInForce => 'Les taux en vigueur';
+
+  @override
+  String get setupGrowVatNoCatalogue =>
+      'L\'application ne connaît pas les taux de ce pays. Saisissez les vôtres dans les taux de TVA.';
+
+  @override
+  String get setupGrowVatOpen => 'Modifier les taux de TVA';
+
+  @override
+  String setupGrowVatPreviewNoVat(String gross) {
+    return 'Aucune TVA n\'est facturée : une ligne de $gross est facturée telle quelle.';
+  }
+
+  @override
+  String setupGrowVatPreviewNote(String gross) {
+    return 'Une ligne d\'exemple de $gross, TVA comprise, ventilée comme sur une facture :';
+  }
+
+  @override
+  String setupGrowVatPreviewRate(String rate) {
+    return 'TVA $rate %';
+  }
+
+  @override
+  String setupGrowVatRate(String rate) {
+    return '$rate %';
+  }
+
+  @override
+  String get setupGrowVatUsualNote =>
+      'Un point de départ, pas un conseil fiscal : votre expert-comptable confirme quel taux s\'applique à ce que vous vendez.';
+
+  @override
+  String get setupGrowVatUsualTitle => 'Les taux habituels de votre pays';
+
+  @override
   String get setupGuideAllDone =>
       'Votre espace a tout ce que vous avez choisi.';
 

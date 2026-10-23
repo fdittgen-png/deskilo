@@ -40,7 +40,7 @@ class NumberSequencesScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: AppSpacing.lg),
-            for (final s in rows) _SequenceCard(sequence: s),
+            for (final s in rows) NumberSequenceCard(sequence: s),
           ],
         ),
         AsyncError(:final error) => Center(child: Text(error.toString())),
@@ -50,14 +50,16 @@ class NumberSequencesScreen extends ConsumerWidget {
   }
 }
 
-class _SequenceCard extends ConsumerStatefulWidget {
-  const _SequenceCard({required this.sequence});
+/// One series: its format, the next number it would draw, and its own
+/// Save. The setup guide's numbering step shows the invoice series' card.
+class NumberSequenceCard extends ConsumerStatefulWidget {
+  const NumberSequenceCard({super.key, required this.sequence});
   final NumberSequence sequence;
   @override
-  ConsumerState<_SequenceCard> createState() => _SequenceCardState();
+  ConsumerState<NumberSequenceCard> createState() => _SequenceCardState();
 }
 
-class _SequenceCardState extends ConsumerState<_SequenceCard> {
+class _SequenceCardState extends ConsumerState<NumberSequenceCard> {
   // #1320 — a stored pair that restarts more often than it prints its date
   // opens as the finest restart the date can carry; Save repairs it.
   late NumberSequence _draft = widget.sequence.copyWith(
@@ -135,11 +137,11 @@ class _SequenceCardState extends ConsumerState<_SequenceCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
+            Wrap(
+              spacing: AppSpacing.sm,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                Expanded(
-                  child: Text(journalLabel, style: theme.textTheme.titleMedium),
-                ),
+                Text(journalLabel, style: theme.textTheme.titleMedium),
                 Chip(
                   label: Text(
                     l10n.numberSequenceGapless,

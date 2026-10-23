@@ -32622,6 +32622,210 @@ abstract class AppLocalizations {
   /// **'The basics could not be saved. Try again.'**
   String get setupBasicsSaveFailed;
 
+  /// #2875 setup grow steps: setupGrowDocumentsApply
+  ///
+  /// In en, this message translates to:
+  /// **'Use this look'**
+  String get setupGrowDocumentsApply;
+
+  /// #2875 setup grow steps: setupGrowDocumentsBuiltIn
+  ///
+  /// In en, this message translates to:
+  /// **'Your invoices are printed with the built-in design, under your name and legal details.'**
+  String get setupGrowDocumentsBuiltIn;
+
+  /// #2875 setup grow steps: setupGrowDocumentsChoose
+  ///
+  /// In en, this message translates to:
+  /// **'Or start from one of these looks:'**
+  String get setupGrowDocumentsChoose;
+
+  /// #2875 setup grow steps: setupGrowDocumentsLayout
+  ///
+  /// In en, this message translates to:
+  /// **'Your invoice has a positioned layout: the printed page follows it, while this sample shows its content.'**
+  String get setupGrowDocumentsLayout;
+
+  /// #2875 setup grow steps: setupGrowDocumentsOpenDesigner
+  ///
+  /// In en, this message translates to:
+  /// **'Open the document designer'**
+  String get setupGrowDocumentsOpenDesigner;
+
+  /// #2875 setup grow steps: setupGrowDocumentsOwn
+  ///
+  /// In en, this message translates to:
+  /// **'Your invoices are printed with your own design.'**
+  String get setupGrowDocumentsOwn;
+
+  /// #2875 setup grow steps: setupGrowDocumentsReplaces
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing a look replaces your own invoice design.'**
+  String get setupGrowDocumentsReplaces;
+
+  /// #2875 setup grow steps: setupGrowDocumentsSaved
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice look is saved.'**
+  String get setupGrowDocumentsSaved;
+
+  /// #2875 setup grow steps: setupGrowLegalAskForm
+  ///
+  /// In en, this message translates to:
+  /// **'The legal form and the share capital, as they must be printed.'**
+  String get setupGrowLegalAskForm;
+
+  /// #2875 setup grow steps: setupGrowLegalAskIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Your accountant knows these answers. Ask before you fill them in:'**
+  String get setupGrowLegalAskIntro;
+
+  /// #2875 setup grow steps: setupGrowLegalAskNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Which number your invoices must carry: the VAT number or the company registration number.'**
+  String get setupGrowLegalAskNumber;
+
+  /// #2875 setup grow steps: setupGrowLegalAskRegime
+  ///
+  /// In en, this message translates to:
+  /// **'Which VAT regime applies to the space.'**
+  String get setupGrowLegalAskRegime;
+
+  /// #2875 setup grow steps: setupGrowLegalAskRegister
+  ///
+  /// In en, this message translates to:
+  /// **'The register the business is entered in, with its number.'**
+  String get setupGrowLegalAskRegister;
+
+  /// #2875 setup grow steps: setupGrowLegalAskTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Ask your accountant'**
+  String get setupGrowLegalAskTitle;
+
+  /// #2875 setup grow steps: setupGrowLegalLock
+  ///
+  /// In en, this message translates to:
+  /// **'Once the first invoice is issued, the country and the currency can no longer change, and every issued invoice keeps the identity it was issued with.'**
+  String get setupGrowLegalLock;
+
+  /// #2875 setup grow steps: setupGrowLegalOpenFull
+  ///
+  /// In en, this message translates to:
+  /// **'Payment clauses, e-invoicing address and every other legal detail'**
+  String get setupGrowLegalOpenFull;
+
+  /// #2875 setup grow steps: setupGrowLegalPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'The top of every invoice, as it is printed:'**
+  String get setupGrowLegalPreviewNote;
+
+  /// #2875 setup grow steps: setupGrowNumberingLock
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice keeps its number for good, and the series continues without gaps.'**
+  String get setupGrowNumberingLock;
+
+  /// #2875 setup grow steps: setupGrowNumberingNothingTaken
+  ///
+  /// In en, this message translates to:
+  /// **'A preview only: a number is taken when an invoice is issued, never before.'**
+  String get setupGrowNumberingNothingTaken;
+
+  /// #2875 setup grow steps: setupGrowNumberingPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'Your next invoice will carry the number'**
+  String get setupGrowNumberingPreviewNote;
+
+  /// #2875 setup grow steps: setupGrowSampleBadge
+  ///
+  /// In en, this message translates to:
+  /// **'SAMPLE: not a real invoice, and no number is taken'**
+  String get setupGrowSampleBadge;
+
+  /// #2875 setup grow steps: setupGrowSampleLine
+  ///
+  /// In en, this message translates to:
+  /// **'Membership'**
+  String get setupGrowSampleLine;
+
+  /// #2875 setup grow steps: setupGrowSampleMember
+  ///
+  /// In en, this message translates to:
+  /// **'A member'**
+  String get setupGrowSampleMember;
+
+  /// #2875 setup grow steps: setupGrowSampleNumber
+  ///
+  /// In en, this message translates to:
+  /// **'SAMPLE'**
+  String get setupGrowSampleNumber;
+
+  /// #2875 setup grow steps: setupGrowSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'This could not be saved. Try again.'**
+  String get setupGrowSaveFailed;
+
+  /// #2875 setup grow steps: setupGrowVatInForce
+  ///
+  /// In en, this message translates to:
+  /// **'The rates in force'**
+  String get setupGrowVatInForce;
+
+  /// #2875 setup grow steps: setupGrowVatNoCatalogue
+  ///
+  /// In en, this message translates to:
+  /// **'The app does not know this country\'s rates. Enter yours in the VAT rates.'**
+  String get setupGrowVatNoCatalogue;
+
+  /// #2875 setup grow steps: setupGrowVatOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the VAT rates'**
+  String get setupGrowVatOpen;
+
+  /// #2875 setup grow steps: setupGrowVatPreviewNoVat
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT is charged: a line of {gross} is invoiced as it is.'**
+  String setupGrowVatPreviewNoVat(String gross);
+
+  /// #2875 setup grow steps: setupGrowVatPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'A sample line of {gross}, VAT included, split the way an invoice splits it:'**
+  String setupGrowVatPreviewNote(String gross);
+
+  /// #2875 setup grow steps: setupGrowVatPreviewRate
+  ///
+  /// In en, this message translates to:
+  /// **'VAT {rate} %'**
+  String setupGrowVatPreviewRate(String rate);
+
+  /// #2875 setup grow steps: setupGrowVatRate
+  ///
+  /// In en, this message translates to:
+  /// **'{rate} %'**
+  String setupGrowVatRate(String rate);
+
+  /// #2875 setup grow steps: setupGrowVatUsualNote
+  ///
+  /// In en, this message translates to:
+  /// **'A starting point, not tax advice: your accountant confirms which rate applies to what you sell.'**
+  String get setupGrowVatUsualNote;
+
+  /// #2875 setup grow steps: setupGrowVatUsualTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Your country\'s usual rates'**
+  String get setupGrowVatUsualTitle;
+
   /// #2869 setup guide: setupGuideAllDone
   ///
   /// In en, this message translates to:

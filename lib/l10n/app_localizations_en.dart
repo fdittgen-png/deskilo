@@ -19256,6 +19256,134 @@ class AppLocalizationsEn extends AppLocalizations {
       'The basics could not be saved. Try again.';
 
   @override
+  String get setupGrowDocumentsApply => 'Use this look';
+
+  @override
+  String get setupGrowDocumentsBuiltIn =>
+      'Your invoices are printed with the built-in design, under your name and legal details.';
+
+  @override
+  String get setupGrowDocumentsChoose => 'Or start from one of these looks:';
+
+  @override
+  String get setupGrowDocumentsLayout =>
+      'Your invoice has a positioned layout: the printed page follows it, while this sample shows its content.';
+
+  @override
+  String get setupGrowDocumentsOpenDesigner => 'Open the document designer';
+
+  @override
+  String get setupGrowDocumentsOwn =>
+      'Your invoices are printed with your own design.';
+
+  @override
+  String get setupGrowDocumentsReplaces =>
+      'Choosing a look replaces your own invoice design.';
+
+  @override
+  String get setupGrowDocumentsSaved => 'The invoice look is saved.';
+
+  @override
+  String get setupGrowLegalAskForm =>
+      'The legal form and the share capital, as they must be printed.';
+
+  @override
+  String get setupGrowLegalAskIntro =>
+      'Your accountant knows these answers. Ask before you fill them in:';
+
+  @override
+  String get setupGrowLegalAskNumber =>
+      'Which number your invoices must carry: the VAT number or the company registration number.';
+
+  @override
+  String get setupGrowLegalAskRegime =>
+      'Which VAT regime applies to the space.';
+
+  @override
+  String get setupGrowLegalAskRegister =>
+      'The register the business is entered in, with its number.';
+
+  @override
+  String get setupGrowLegalAskTitle => 'Ask your accountant';
+
+  @override
+  String get setupGrowLegalLock =>
+      'Once the first invoice is issued, the country and the currency can no longer change, and every issued invoice keeps the identity it was issued with.';
+
+  @override
+  String get setupGrowLegalOpenFull =>
+      'Payment clauses, e-invoicing address and every other legal detail';
+
+  @override
+  String get setupGrowLegalPreviewNote =>
+      'The top of every invoice, as it is printed:';
+
+  @override
+  String get setupGrowNumberingLock =>
+      'An issued invoice keeps its number for good, and the series continues without gaps.';
+
+  @override
+  String get setupGrowNumberingNothingTaken =>
+      'A preview only: a number is taken when an invoice is issued, never before.';
+
+  @override
+  String get setupGrowNumberingPreviewNote =>
+      'Your next invoice will carry the number';
+
+  @override
+  String get setupGrowSampleBadge =>
+      'SAMPLE: not a real invoice, and no number is taken';
+
+  @override
+  String get setupGrowSampleLine => 'Membership';
+
+  @override
+  String get setupGrowSampleMember => 'A member';
+
+  @override
+  String get setupGrowSampleNumber => 'SAMPLE';
+
+  @override
+  String get setupGrowSaveFailed => 'This could not be saved. Try again.';
+
+  @override
+  String get setupGrowVatInForce => 'The rates in force';
+
+  @override
+  String get setupGrowVatNoCatalogue =>
+      'The app does not know this country\'s rates. Enter yours in the VAT rates.';
+
+  @override
+  String get setupGrowVatOpen => 'Edit the VAT rates';
+
+  @override
+  String setupGrowVatPreviewNoVat(String gross) {
+    return 'No VAT is charged: a line of $gross is invoiced as it is.';
+  }
+
+  @override
+  String setupGrowVatPreviewNote(String gross) {
+    return 'A sample line of $gross, VAT included, split the way an invoice splits it:';
+  }
+
+  @override
+  String setupGrowVatPreviewRate(String rate) {
+    return 'VAT $rate %';
+  }
+
+  @override
+  String setupGrowVatRate(String rate) {
+    return '$rate %';
+  }
+
+  @override
+  String get setupGrowVatUsualNote =>
+      'A starting point, not tax advice: your accountant confirms which rate applies to what you sell.';
+
+  @override
+  String get setupGrowVatUsualTitle => 'Your country\'s usual rates';
+
+  @override
   String get setupGuideAllDone => 'Your space has everything you chose.';
 
   @override

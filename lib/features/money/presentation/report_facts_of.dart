@@ -23,6 +23,7 @@ import '../domain/fee_band.dart';
 import '../domain/invoice.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/package.dart';
+import '../domain/report_data_sample.dart';
 import '../domain/report_facts.dart';
 import '../domain/service_item.dart';
 import '../providers/money_providers.dart';
@@ -94,3 +95,18 @@ ReminderFacts reminderFactsOf(WidgetRef ref, Invoice invoice) => ReminderFacts(
       workspace: ref.read(currentWorkspaceProvider).value,
       memberTerms: memberTermsFor(ref, invoice.memberId),
     );
+
+/// The setup guide's sample invoice: the current workspace, [seller] laid
+/// over its stored identity, its line taxed as an issued one would be.
+SampleInvoiceFacts sampleInvoiceFactsOf(WidgetRef ref, {SellerDraft? seller}) {
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  return SampleInvoiceFacts(
+    now: ref.read(clockProvider).now(),
+    workspace: workspace,
+    seller: seller,
+    vatPercent: sampleVatPercentOf(
+      seller?.vatRegime ?? workspace?.vatRegime ?? '',
+      ref.read(vatRatesProvider).value ?? const [],
+    ),
+  );
+}
