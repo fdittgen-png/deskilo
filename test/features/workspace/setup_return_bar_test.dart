@@ -79,6 +79,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(SetupGuideScreen), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
+    // The way back was taken: the step's push never answers, so the flag
+    // is lowered by the bar itself, or the bar would come back later.
+    expect(
+      ProviderScope.containerOf(tester.element(find.byType(SetupGuideScreen)))
+          .read(setupReturnPendingProvider),
+      isFalse,
+    );
   });
 
   // #2870 — the bar comes and goes without the router noticing: a tree

@@ -104,7 +104,12 @@ class _SetupReturnBarState extends ConsumerState<SetupReturnBar> {
                     key: const ValueKey('setup-return'),
                     icon: const Icon(Icons.checklist_outlined),
                     label: Text(context.l10n.setupGuideReturn),
-                    onPressed: () => widget.router.go('/setup'),
+                    // Going there drops the step page, whose push then never
+                    // answers: the way back is taken, so the bar goes too.
+                    onPressed: () {
+                      ref.read(setupReturnPendingProvider.notifier).set(open: false);
+                      widget.router.go('/setup');
+                    },
                   ),
                 ),
               ),
