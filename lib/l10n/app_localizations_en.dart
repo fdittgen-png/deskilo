@@ -18265,6 +18265,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'No sales-tax invoice was issued in this period.';
 
   @override
+  String get sampleDataClear => 'Clear sample data';
+
+  @override
+  String sampleDataCounts(int members, int bookings, int payments) {
+    return 'This space holds sample data: $members members, $bookings bookings, $payments payments.';
+  }
+
+  @override
+  String get sampleDataExplain =>
+      'Fill this test space with a few sample members, their bookings over the past and the coming two weeks and some payments, made from your own places and prices. Nothing is sent to anyone, and you can clear it all again.';
+
+  @override
+  String get sampleDataFill => 'Fill with sample data';
+
+  @override
+  String get sampleDataFillFailed => 'The sample data could not be created.';
+
+  @override
+  String get sampleDataNotCleared =>
+      'Not cleared: the sample data is still in this space.';
+
+  @override
+  String get sampleDataTitle => 'Sample data';
+
+  @override
   String get scanCameraWebUnavailable =>
       'Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).';
 

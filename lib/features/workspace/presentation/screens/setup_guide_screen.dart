@@ -24,6 +24,7 @@ import '../../application/setup_step_actions.dart';
 import '../../domain/setup_status.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/sample_data_card.dart';
 import '../widgets/setup_return_bar.dart';
 
 class SetupGuideScreen extends ConsumerWidget {
@@ -100,6 +101,8 @@ class _SetupGuideBody extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.md),
             ..._sections(context, value, actions),
+            const SizedBox(height: AppSpacing.md),
+            SampleDataCard(workspaceId: workspaceId),
           ],
         ),
       ),
