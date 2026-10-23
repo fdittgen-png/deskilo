@@ -15110,6 +15110,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalDescription => 'Description';
 
   @override
+  String portalDirectoryCount(String name, int count) {
+    return '$name ($count)';
+  }
+
+  @override
   String get portalDirectoryIncompatible =>
       'Some workspaces need a newer version of the app and are not shown.';
 
@@ -15214,6 +15219,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalReachableHeading => 'People you can write to';
 
   @override
+  String get portalRecipientHint =>
+      'Type a name: suggestions appear from the first letter';
+
+  @override
   String get portalRegisterDirectory => 'Link a server to the global directory';
 
   @override
@@ -15247,6 +15256,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'A server is unavailable. This overview is incomplete. Tap to retry.';
 
   @override
+  String get portalSuggestionGroup => 'Group';
+
+  @override
   String get portalThisServer => 'This server';
 
   @override
@@ -15263,6 +15275,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get portalWebsite => 'Website';
+
+  @override
+  String portalWriteTo(String name) {
+    return 'Write to $name';
+  }
 
   @override
   String get preferencesSaveFailed =>

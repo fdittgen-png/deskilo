@@ -17640,6 +17640,18 @@
   },
   "portalCustomised": "Customised",
   "portalDescription": "Description",
+  "portalDirectoryCount": "{name} ({count})",
+  "@portalDirectoryCount": {
+    "description": "A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
   "portalDirectoryUnavailable": "Some directories could not be reached. Results are incomplete.",
   "portalDisconnect": "Disconnect",
@@ -17682,6 +17694,7 @@
   "portalPublished": "Visible in the public directory",
   "portalReachableEmpty": "No one is reachable yet. Search by name to find people.",
   "portalReachableHeading": "People you can write to",
+  "portalRecipientHint": "Type a name: suggestions appear from the first letter",
   "portalRegisterDirectory": "Link a server to the global directory",
   "portalRequestProfile": "Request a workspace profile",
   "portalRequestSent": "Request sent. The workspace will review your profile.",
@@ -17692,6 +17705,7 @@
   "portalSearch": "Search workspaces",
   "portalSendCode": "Send sign-in code",
   "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
+  "portalSuggestionGroup": "Group",
   "portalThisServer": "This server",
   "portalUseCode": "Use an email code",
   "portalUseWorkspaceInfo": "Use workspace information",
@@ -17704,6 +17718,15 @@
     "description": "Subtitle: where that choice is made."
   },
   "portalWebsite": "Website",
+  "portalWriteTo": "Write to {name}",
+  "@portalWriteTo": {
+    "description": "Screen-reader label of a person or group suggested while typing in the new-discussion search (#2472)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "preferencesSaveFailed": "Could not save your preferences. Please try again.",
   "preferencesScopeHint": "Language, appearance and regional formats. Off: edit my defaults.",
   "preferencesUseDefaults": "Use my defaults",

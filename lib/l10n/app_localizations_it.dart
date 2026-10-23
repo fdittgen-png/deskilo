@@ -15231,6 +15231,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalDescription => 'Descrizione';
 
   @override
+  String portalDirectoryCount(String name, int count) {
+    return '$name ($count)';
+  }
+
+  @override
   String get portalDirectoryIncompatible =>
       'Alcuni spazi richiedono una versione più recente dell’app e non vengono mostrati.';
 
@@ -15334,6 +15339,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalReachableHeading => 'Persone a cui può scrivere';
 
   @override
+  String get portalRecipientHint =>
+      'Digiti un nome: i suggerimenti compaiono dalla prima lettera';
+
+  @override
   String get portalRegisterDirectory =>
       'Collega un server alla directory globale';
 
@@ -15369,6 +15378,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un server non è disponibile. La panoramica è incompleta. Tocchi per riprovare.';
 
   @override
+  String get portalSuggestionGroup => 'Gruppo';
+
+  @override
   String get portalThisServer => 'Questo server';
 
   @override
@@ -15385,6 +15397,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalWebsite => 'Sito web';
+
+  @override
+  String portalWriteTo(String name) {
+    return 'Scrivere a $name';
+  }
 
   @override
   String get preferencesSaveFailed =>
