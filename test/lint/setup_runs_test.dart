@@ -40,7 +40,9 @@ void main() {
     );
     // A harness that silently stopped finding the steps would pass while
     // testing nothing.
-    expect(out, contains('steps: 12'));
+    expect(out, contains('steps: 13'));
+    // #2868 — and the questions step round-trips through its own file.
+    expect(out, contains('profile: round-trips'));
     expect(out, contains('features: ${WorkspaceFeature.values.length}'));
     // #1330 — and grouped every switch under a process of the registry.
     expect(out, contains('processes: ${workspaceProcesses.length}'));

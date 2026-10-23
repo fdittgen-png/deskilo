@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "setupObligationsTitle": "Was das Gesetz verlangt: {country}",
+  "setupObligationThreshold": "{effect, select, immediate{Die Kleinunternehmerregelung endet mit dem Umsatz, der den Nettoumsatz des Jahres über {limit} bringt.} other{Die Kleinunternehmerregelung endet mit dem Jahr, dessen Nettoumsatz {limit} übersteigt.}}",
+  "setupObligationUnconfirmed": "Für dieses Land nicht bestätigt — fragen Sie Ihre Steuerberatung.",
+  "setupObligationNone": "Die geprüften Steuerdaten enthalten für dieses Land noch nichts — fragen Sie Ihre Steuerberatung, was gilt.",
+  "setupObligationSource": "Quelle: {source}",
+  "setupJourneyConflict": "Inzwischen hat jemand anderes andere Antworten gespeichert. Hier sind sie: prüfen Sie sie, dann übernehmen.",
+  "setupJourneySavedBy": "Zuletzt gespeichert von {name}."
+}

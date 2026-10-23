@@ -132,6 +132,7 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null, modelConte
   eval(l10nSource);
   eval(src + `
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
+globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
 `);
   // The shared module and the questionnaire's tools, as the page loads them
   // after its own script (#2501).
@@ -173,6 +174,52 @@ if (exportFlag) {
   const page = load('en', build(globalThis.__FEATURES));
   process.stdout.write(page.exportXml());
   process.exit(0);
+}
+
+// #2868 — `--recommend-all` answers every combination of the plain
+// questions, in order, on a fresh page, and prints what the page then
+// recommends and which switches it ticked: setup_levels_web_test compares
+// both with setup_levels.dart, so the page cannot drift from the app.
+if (process.argv.includes('--recommend-all')) {
+  load('en', null);
+  const P = globalThis.window.__setup;
+  const questions = globalThis.window.SETUP_LEVELS.questions;
+  const ticked = () => Object.entries(P.S.features).filter(([, v]) => v).map(([k]) => k).sort();
+  const out = { initial: ticked(), combos: [] };
+  for (let bits = 0; bits < 1 << questions.length; bits++) {
+    P.reset();
+    questions.forEach((q, i) => globalThis.__answer(q, (bits & (1 << i)) !== 0));
+    const rec = globalThis.__recommend(P.S.journey.answers);
+    out.combos.push({ bits, recommended: Object.fromEntries(Object.entries(rec).map(([p, r]) => [p, `${r.level}/${r.reason}`])),
+      levels: globalThis.__levelsNow(), on: ticked() });
+  }
+  // A pipe takes the text in chunks: exit only once it is all written.
+  await new Promise((done) => process.stdout.write(JSON.stringify(out), done));
+  process.exit(0);
+}
+
+// A small XML reader for the page's own export: elements, attributes,
+// `a > b` and descendant selectors — what parseBack asks of DOMParser.
+function miniXml(text) {
+  const unescape = (v) => v.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+  const node = (tagName, attrs, parent) => ({ tagName, attrs, parent, children: [],
+    getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; }, hasAttribute(k) { return k in this.attrs; },
+    querySelectorAll(sel) {
+      const steps = sel.split('>').map((x) => x.trim());
+      const all = []; const walk = (n) => { for (const c of n.children) { all.push(c); walk(c); } }; walk(this);
+      return all.filter((e) => { let cur = e; for (let i = steps.length - 1; i >= 0; i--) { if (!cur || cur.tagName !== steps[i]) return false; if (i > 0) cur = cur.parent; if (cur === this && i > 0) return false; } return true; });
+    },
+    querySelector(sel) { return this.querySelectorAll(sel)[0] ?? null; } });
+  const doc = node('#document', {}, null);
+  let cur = doc;
+  for (const m of text.matchAll(/<(\/?)([\w-]+)((?:\s+[\w-]+="[^"]*")*)\s*(\/?)>/g)) {
+    if (m[1]) { cur = cur.parent; continue; }
+    const attrs = {}; for (const a of m[3].matchAll(/([\w-]+)="([^"]*)"/g)) attrs[a[1]] = unescape(a[2]);
+    const e = node(m[2], attrs, cur); cur.children.push(e);
+    if (!m[4]) cur = e;
+  }
+  doc.documentElement = doc.children[0];
+  return doc;
 }
 
 // Every string the page put on screen: text children, text set directly,
@@ -416,6 +463,32 @@ const fakeContext = () => {
     if (c.tools.get('get_answers').description === english) fail('webmcp: the description did not follow the language');
     if (c.tools.get('get_answers').description !== globalThis.window.SETUP_L10N.de.s.webmcpGetAnswers) fail('webmcp: the German description is not the German string');
   }
+}
+// #2868 — the questions step round-trips: the answers and the levels the
+// switches reach come back from the file the page exported, and a file
+// made without the step carries no profile.
+{
+  const page = load('en', { name: 'Profile Space' });
+  if (page.exportXml().includes('<profile')) fail('profile: exported although no question was answered');
+  globalThis.__answer('issue_invoices', true);
+  globalThis.__answer('vat_registered', true);
+  globalThis.__answer('door_tablet', true);
+  const P = globalThis.window.__setup;
+  const levels = JSON.stringify(globalThis.__levelsNow());
+  const answers = JSON.stringify(P.S.journey.answers);
+  const first = page.exportXml();
+  if (!first.includes('<answer question="vat_registered" value="true"/>') || !first.includes('<level of="tax" value="vat"/>')) fail('profile: the export lacks the answers or the levels');
+  P.reset();
+  globalThis.DOMParser = class { parseFromString(text) { return miniXml(text); } };
+  globalThis.__parseBack(first);
+  if (JSON.stringify(globalThis.__levelsNow()) !== levels) fail(`profile: levels after import ${JSON.stringify(globalThis.__levelsNow())}, want ${levels}`);
+  const back = Object.fromEntries(Object.entries(P.S.journey.answers).filter(([, v]) => v));
+  if (JSON.stringify(back) !== answers) fail(`profile: answers after import ${JSON.stringify(back)}, want ${answers}`);
+  if (page.exportXml() !== first) fail('profile: the re-exported file differs from the imported one');
+  else console.log('profile: round-trips');
+  // With the guide switched off the page is as before: no questions step.
+  load('en', { name: 'Off Space', features: { setupGuide: false } });
+  if (globalThis.__STEPS.find((st) => st.id === 'levels').applies()) fail('profile: the questions step shows with setupGuide off');
 }
 console.log('steps:', globalThis.__STEPS.length, '| features:', globalThis.__FEATURES.length);
 console.log('locales:', LOCALES.join(','));

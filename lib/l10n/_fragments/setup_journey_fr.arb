@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "setupObligationsTitle": "Ce que demande la loi : {country}",
+  "setupObligationThreshold": "{effect, select, immediate{La franchise en base de TVA prend fin avec la prestation qui fait dépasser {limit} au chiffre d’affaires net de l’année.} other{La franchise en base de TVA prend fin avec l’année dont le chiffre d’affaires net dépasse {limit}.}}",
+  "setupObligationUnconfirmed": "Non confirmé pour ce pays — demandez à votre comptable.",
+  "setupObligationNone": "Les données fiscales vérifiées ne contiennent encore rien pour ce pays — demandez à votre comptable ce qui s’applique.",
+  "setupObligationSource": "Source : {source}",
+  "setupJourneyConflict": "Quelqu’un d’autre a enregistré d’autres réponses entre-temps. Les voici : vérifiez-les, puis appliquez.",
+  "setupJourneySavedBy": "Enregistré en dernier par {name}."
+}
