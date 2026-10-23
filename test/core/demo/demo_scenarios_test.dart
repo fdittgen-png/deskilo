@@ -830,6 +830,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) => w.bookings.any((r) => r.memberId == 'member-2'),
   ),
   WorkspaceFeature.dataExport: _toggle('the whole space as a workbook'),
+  WorkspaceFeature.dataReport: _toggle('the whole space as a printed report'),
   // ── operations ───────────────────────────────────────────────────────
   WorkspaceFeature.workspaceStatus: _state(
     _owner,
