@@ -3251,6 +3251,8 @@
               "invite",
               "services",
               "new_members",
+              "notifications",
+              "limits",
               "kiosk",
               "purchases",
               "lease",
