@@ -2,10 +2,11 @@
 //
 // The demo's second space: a small coworking in Leipzig that started the
 // way a new space starts — core features only, no VAT, no accounting book,
-// no purchases. Ada (the owner at home) and Bruno are ordinary members
-// here, which is what Me is for: one person, several spaces, one place to
-// see them all — the spaces, what each one waits for, and what is owed in
-// each.
+// no purchases. Ada (the owner at home) opened it with Jonas and holds it
+// as co-owner, so the demo's owner persona can walk its setup; Bruno is an
+// ordinary member here. That is what Me is for: one person, several spaces,
+// one place to see them all — the spaces, what each one waits for, and
+// what is owed in each.
 //
 // Ada and Bruno keep the member ids they have at home. On a server every
 // membership row has its own id; the in-memory repositories key the person
@@ -137,7 +138,13 @@ Member _rowOf(DemoPerson person) => Member(
 /// The memberships, names and e-mails of the Leipzig space, seen by
 /// Ada; a persona switch moves the "mine" pointer (`DemoSecondSpaceData`).
 void seedLeipzigPeople(FakeWorkspaceRepository space) {
-  final rows = [for (final p in demoSecondCast) _rowOf(p)];
+  final rows = [
+    for (final p in demoSecondCast)
+      if (p.memberId == 'member-1')
+        _rowOf(p).copyWith(coOwner: CoOwnerStatus.active)
+      else
+        _rowOf(p),
+  ];
   space
     ..myMember = rows.firstWhere((m) => m.id == 'member-1')
     ..memberNames = {for (final p in demoSecondCast) p.memberId: p.name}

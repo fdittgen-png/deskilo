@@ -4034,6 +4034,36 @@ class AppLocalizationsIt extends AppLocalizations {
   String get demoSessionViewAs => 'Vedi come';
 
   @override
+  String get demoSetupCardBody =>
+      'Nulla di ciò che fa qui lascia questo dispositivo, e può reimpostare la demo com\'era all\'inizio in qualsiasi momento.';
+
+  @override
+  String get demoSetupCardComplete =>
+      'Questo spazio ha completato ogni passo della sua configurazione.';
+
+  @override
+  String get demoSetupCardHalfDone =>
+      'Questo spazio è a metà della sua configurazione.';
+
+  @override
+  String demoSetupCardOpenComplete(String space) {
+    return 'Vedere uno spazio completamente configurato: $space';
+  }
+
+  @override
+  String demoSetupCardOpenHalfDone(String space) {
+    return 'Vedere uno spazio a metà: $space';
+  }
+
+  @override
+  String get demoSetupCardTitle => 'Come funziona la demo';
+
+  @override
+  String demoSetupCardWhere(String space, String persona) {
+    return 'Si trova in $space, visto come: $persona';
+  }
+
+  @override
   String get deployEntityAccessories => 'Accessori';
 
   @override

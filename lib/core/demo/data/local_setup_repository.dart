@@ -10,8 +10,7 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
     this.missing = const [],
     this.readinessSections = const [],
     this.status = const SetupStatus(),
-    Map<String, SetupStatus> statuses = const {},
-  }) : statuses = {...statuses};
+  });
   final Map<String, List<LocalSlot>> needs;
   List<LocalSlot> missing;
 
@@ -21,16 +20,13 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
   /// #2869 — what [setupStatus] answers.
   SetupStatus status;
 
-  /// #2872 — each demo space's own status; [status] for any other.
-  final Map<String, SetupStatus> statuses;
-
   /// 0545 — every step call, as `ack:<step>` or `clear:<step>`.
   final List<String> stepCalls = [];
 
   @override
   Future<void> acknowledgeStep(String workspaceId, String step) async {
     stepCalls.add('ack:$step');
-    _markStep(workspaceId, step, (s) => s.manual
+    _markStep(step, (s) => s.manual
         ? SetupStepState.ready
         : SetupStepState.deferred);
   }
@@ -38,14 +34,13 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
   @override
   Future<void> clearStepAcknowledgement(String workspaceId, String step) async {
     stepCalls.add('clear:$step');
-    _markStep(workspaceId, step, (_) => SetupStepState.needsConfiguration);
+    _markStep(step, (_) => SetupStepState.needsConfiguration);
   }
 
   /// Like the server: the step's state follows the acknowledgement.
-  void _markStep(String workspaceId, String step,
-      SetupStepState Function(SetupStepStatus) state) {
-    final before = statuses[workspaceId] ?? status;
-    final after = SetupStatus(
+  void _markStep(String step, SetupStepState Function(SetupStepStatus) state) {
+    final before = status;
+    status = SetupStatus(
       milestones: before.milestones,
       steps: [
         for (final s in before.steps)
@@ -64,16 +59,10 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
             s,
       ],
     );
-    if (statuses.containsKey(workspaceId)) {
-      statuses[workspaceId] = after;
-    } else {
-      status = after;
-    }
   }
 
   @override
-  Future<SetupStatus> setupStatus(String workspaceId) async =>
-      statuses[workspaceId] ?? status;
+  Future<SetupStatus> setupStatus(String workspaceId) async => status;
 
   @override
   Future<List<LocalSlot>> templateNeeds(String templateId) async =>
