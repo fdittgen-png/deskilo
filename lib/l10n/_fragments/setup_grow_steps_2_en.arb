@@ -1,0 +1,157 @@
+{
+  "setupGrowEinvoicingNone": "No e-invoicing platform is set up yet.",
+  "@setupGrowEinvoicingNone": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingNone"
+  },
+  "setupGrowEinvoicingReady": "Invoices are sent through {provider}.",
+  "@setupGrowEinvoicingReady": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingReady",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowEinvoicingIncomplete": "{provider} is saved, but it cannot send yet: some of its fields are still missing.",
+  "@setupGrowEinvoicingIncomplete": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingIncomplete",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowEinvoicingTestTitle": "Test environment",
+  "@setupGrowEinvoicingTestTitle": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingTestTitle"
+  },
+  "setupGrowEinvoicingTestReady": "Ready for test sends: {environments}.",
+  "@setupGrowEinvoicingTestReady": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingTestReady",
+    "placeholders": {
+      "environments": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowEinvoicingSandboxIntro": "No test environment is saved yet. Rehearse on the platform's test address before the real one:",
+  "@setupGrowEinvoicingSandboxIntro": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingSandboxIntro"
+  },
+  "setupGrowEinvoicingNoSandbox": "No test environment is saved yet, and this platform has no shared test address: ask it for yours.",
+  "@setupGrowEinvoicingNoSandbox": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingNoSandbox"
+  },
+  "setupGrowEinvoicingTestSend": "The guide sends nothing. A test send starts from an issued invoice: choose Send e-invoice, then a test environment. That choice appears once developer mode is on and a test environment is saved.",
+  "@setupGrowEinvoicingTestSend": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingTestSend"
+  },
+  "setupGrowEinvoicingOpen": "Set up the e-invoicing platform",
+  "@setupGrowEinvoicingOpen": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingOpen"
+  },
+  "setupGrowEinvoicingLawTitle": "What the law asks in your country",
+  "@setupGrowEinvoicingLawTitle": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingLawTitle"
+  },
+  "setupGrowEinvoicingNoMandate": "The tax reference data records no e-invoicing obligation for this country. Ask your accountant whether one applies: the operator records it in the tax reference data.",
+  "@setupGrowEinvoicingNoMandate": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingNoMandate"
+  },
+  "setupGrowEinvoicingUnconfirmed": "Not yet confirmed against the law it cites: the operator confirms these dates in the tax reference data, and your accountant tells you which apply to the space.",
+  "@setupGrowEinvoicingUnconfirmed": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingUnconfirmed"
+  },
+  "setupGrowEinvoicingChannel": "Here every invoice has to go through a national channel the app does not speak yet, so the server refuses to issue invoices.",
+  "@setupGrowEinvoicingChannel": {
+    "description": "#2875 setup grow steps: setupGrowEinvoicingChannel"
+  },
+  "setupGrowBooksPreviewNote": "What the books will show:",
+  "@setupGrowBooksPreviewNote": {
+    "description": "#2875 setup grow steps: setupGrowBooksPreviewNote"
+  },
+  "setupGrowBooksPre": "DesKilo keeps the member balances and the invoices; nothing is posted to a ledger.",
+  "@setupGrowBooksPre": {
+    "description": "#2875 setup grow steps: setupGrowBooksPre"
+  },
+  "setupGrowBooksLocal": "DesKilo keeps the books: invoices and payments are posted to the chart of accounts.",
+  "@setupGrowBooksLocal": {
+    "description": "#2875 setup grow steps: setupGrowBooksLocal"
+  },
+  "setupGrowBooksExternal": "{system} keeps the official books; what DesKilo shows is derived and says so.",
+  "@setupGrowBooksExternal": {
+    "description": "#2875 setup grow steps: setupGrowBooksExternal",
+    "placeholders": {
+      "system": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowBooksAccrual": "Income counts when it is invoiced.",
+  "@setupGrowBooksAccrual": {
+    "description": "#2875 setup grow steps: setupGrowBooksAccrual"
+  },
+  "setupGrowBooksCash": "Income counts when it is paid.",
+  "@setupGrowBooksCash": {
+    "description": "#2875 setup grow steps: setupGrowBooksCash"
+  },
+  "setupGrowBooksCurrency": "Amounts are kept in {currency}.",
+  "@setupGrowBooksCurrency": {
+    "description": "#2875 setup grow steps: setupGrowBooksCurrency",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowRemindersPreviewNote": "The first reminder a member receives, with the letter attached:",
+  "@setupGrowRemindersPreviewNote": {
+    "description": "#2875 setup grow steps: setupGrowRemindersPreviewNote"
+  },
+  "setupGrowRemindersFirst": "Reminder 1: {days} days after the invoice, once its payment term has passed.",
+  "@setupGrowRemindersFirst": {
+    "description": "#2875 setup grow steps: setupGrowRemindersFirst",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowRemindersNext": "Reminder {level}: {days} days after the previous one.",
+  "@setupGrowRemindersNext": {
+    "description": "#2875 setup grow steps: setupGrowRemindersNext",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowRemindersAuto": "The app sends each reminder by itself once a day, for the amount still owed.",
+  "@setupGrowRemindersAuto": {
+    "description": "#2875 setup grow steps: setupGrowRemindersAuto"
+  },
+  "setupGrowRemindersManual": "You send each reminder yourself; the app shows when one is due.",
+  "@setupGrowRemindersManual": {
+    "description": "#2875 setup grow steps: setupGrowRemindersManual"
+  },
+  "setupGrowRemindersTerms": "Payment conditions and late-payment clauses",
+  "@setupGrowRemindersTerms": {
+    "description": "#2875 setup grow steps: setupGrowRemindersTerms"
+  },
+  "setupGrowRemindersTermsPrinted": "The letter recalls your payment conditions: {terms}",
+  "@setupGrowRemindersTermsPrinted": {
+    "description": "#2875 setup grow steps: setupGrowRemindersTermsPrinted",
+    "placeholders": {
+      "terms": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowRemindersNoTerms": "No payment conditions are written yet: the letter cites none.",
+  "@setupGrowRemindersNoTerms": {
+    "description": "#2875 setup grow steps: setupGrowRemindersNoTerms"
+  }
+}

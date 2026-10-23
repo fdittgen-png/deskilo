@@ -19256,6 +19256,33 @@ class AppLocalizationsEn extends AppLocalizations {
       'The basics could not be saved. Try again.';
 
   @override
+  String get setupGrowBooksAccrual => 'Income counts when it is invoiced.';
+
+  @override
+  String get setupGrowBooksCash => 'Income counts when it is paid.';
+
+  @override
+  String setupGrowBooksCurrency(String currency) {
+    return 'Amounts are kept in $currency.';
+  }
+
+  @override
+  String setupGrowBooksExternal(String system) {
+    return '$system keeps the official books; what DesKilo shows is derived and says so.';
+  }
+
+  @override
+  String get setupGrowBooksLocal =>
+      'DesKilo keeps the books: invoices and payments are posted to the chart of accounts.';
+
+  @override
+  String get setupGrowBooksPre =>
+      'DesKilo keeps the member balances and the invoices; nothing is posted to a ledger.';
+
+  @override
+  String get setupGrowBooksPreviewNote => 'What the books will show:';
+
+  @override
   String get setupGrowDocumentsApply => 'Use this look';
 
   @override
@@ -19282,6 +19309,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupGrowDocumentsSaved => 'The invoice look is saved.';
+
+  @override
+  String get setupGrowEinvoicingChannel =>
+      'Here every invoice has to go through a national channel the app does not speak yet, so the server refuses to issue invoices.';
+
+  @override
+  String setupGrowEinvoicingIncomplete(String provider) {
+    return '$provider is saved, but it cannot send yet: some of its fields are still missing.';
+  }
+
+  @override
+  String get setupGrowEinvoicingLawTitle => 'What the law asks in your country';
+
+  @override
+  String get setupGrowEinvoicingNoMandate =>
+      'The tax reference data records no e-invoicing obligation for this country. Ask your accountant whether one applies: the operator records it in the tax reference data.';
+
+  @override
+  String get setupGrowEinvoicingNoSandbox =>
+      'No test environment is saved yet, and this platform has no shared test address: ask it for yours.';
+
+  @override
+  String get setupGrowEinvoicingNone =>
+      'No e-invoicing platform is set up yet.';
+
+  @override
+  String get setupGrowEinvoicingOpen => 'Set up the e-invoicing platform';
+
+  @override
+  String setupGrowEinvoicingReady(String provider) {
+    return 'Invoices are sent through $provider.';
+  }
+
+  @override
+  String get setupGrowEinvoicingSandboxIntro =>
+      'No test environment is saved yet. Rehearse on the platform\'s test address before the real one:';
+
+  @override
+  String setupGrowEinvoicingTestReady(String environments) {
+    return 'Ready for test sends: $environments.';
+  }
+
+  @override
+  String get setupGrowEinvoicingTestSend =>
+      'The guide sends nothing. A test send starts from an issued invoice: choose Send e-invoice, then a test environment. That choice appears once developer mode is on and a test environment is saved.';
+
+  @override
+  String get setupGrowEinvoicingTestTitle => 'Test environment';
+
+  @override
+  String get setupGrowEinvoicingUnconfirmed =>
+      'Not yet confirmed against the law it cites: the operator confirms these dates in the tax reference data, and your accountant tells you which apply to the space.';
 
   @override
   String get setupGrowLegalAskForm =>
@@ -19329,6 +19408,41 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupGrowNumberingPreviewNote =>
       'Your next invoice will carry the number';
+
+  @override
+  String get setupGrowRemindersAuto =>
+      'The app sends each reminder by itself once a day, for the amount still owed.';
+
+  @override
+  String setupGrowRemindersFirst(String days) {
+    return 'Reminder 1: $days days after the invoice, once its payment term has passed.';
+  }
+
+  @override
+  String get setupGrowRemindersManual =>
+      'You send each reminder yourself; the app shows when one is due.';
+
+  @override
+  String setupGrowRemindersNext(String level, String days) {
+    return 'Reminder $level: $days days after the previous one.';
+  }
+
+  @override
+  String get setupGrowRemindersNoTerms =>
+      'No payment conditions are written yet: the letter cites none.';
+
+  @override
+  String get setupGrowRemindersPreviewNote =>
+      'The first reminder a member receives, with the letter attached:';
+
+  @override
+  String get setupGrowRemindersTerms =>
+      'Payment conditions and late-payment clauses';
+
+  @override
+  String setupGrowRemindersTermsPrinted(String terms) {
+    return 'The letter recalls your payment conditions: $terms';
+  }
 
   @override
   String get setupGrowSampleBadge =>
