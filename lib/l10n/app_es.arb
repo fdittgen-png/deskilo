@@ -13828,8 +13828,10 @@
   "setupGuideOptional": "Más para su espacio",
   "setupGuideProgress": "{ready} de {required} hechos",
   "setupGuideResume": "Continuar",
+  "setupGuideReturn": "Volver a la guía de configuración",
   "setupGuideTitle": "Guía de configuración",
   "setupGuideToDo": "Lo que aún falta",
+  "setupGuideTryDemo": "Probarlo en la demo",
   "setupGuideUnavailable": "No se pudo leer el estado de la configuración. Inténtelo de nuevo en un momento.",
   "setupGuideUntil": "Unos {minutes} min hasta: {milestone}",
   "setupGuideWaiting": "En espera",
@@ -13843,6 +13845,99 @@
   "setupInvitePreviewNote": "Cada invitación que envía lleva su propio código de un solo uso en lugar del ID del espacio.",
   "setupInvitePreviewTitle": "La invitación, tal como la reciben sus miembros",
   "setupInviteShareFailed": "No se pudo compartir el código QR. Inténtelo de nuevo.",
+  "setupLaunchAnswers": "Sus respuestas",
+  "@setupLaunchAnswers": {
+    "description": "#2876 setup launch: setupLaunchAnswers"
+  },
+  "setupLaunchBlockers": "Aún no se puede abrir. Estos pasos lo impiden:",
+  "@setupLaunchBlockers": {
+    "description": "#2876 setup launch: setupLaunchBlockers"
+  },
+  "setupLaunchCannot": "Abrir será posible cuando se alcancen todos los hitos.",
+  "@setupLaunchCannot": {
+    "description": "#2876 setup launch: setupLaunchCannot"
+  },
+  "setupLaunchChange": "Cambiar",
+  "@setupLaunchChange": {
+    "description": "#2876 setup launch: setupLaunchChange"
+  },
+  "setupLaunchCopied": "Copiado",
+  "@setupLaunchCopied": {
+    "description": "#2876 setup launch: setupLaunchCopied"
+  },
+  "setupLaunchCopyOperator": "Copiar para su operador",
+  "@setupLaunchCopyOperator": {
+    "description": "#2876 setup launch: setupLaunchCopyOperator"
+  },
+  "setupLaunchFix": "Corregir",
+  "@setupLaunchFix": {
+    "description": "#2876 setup launch: setupLaunchFix"
+  },
+  "setupLaunchGoLive": "Abrir",
+  "@setupLaunchGoLive": {
+    "description": "#2876 setup launch: setupLaunchGoLive"
+  },
+  "setupLaunchGoLiveBody": "Su configuración se copia al espacio real de este par, donde los miembros la ven de inmediato. Las reservas, facturas y pagos hechos allí son reales y no se pueden deshacer. En la siguiente pantalla elige qué copiar.",
+  "@setupLaunchGoLiveBody": {
+    "description": "#2876 setup launch: setupLaunchGoLiveBody"
+  },
+  "setupLaunchGoLiveConfirm": "Continuar al despliegue",
+  "@setupLaunchGoLiveConfirm": {
+    "description": "#2876 setup launch: setupLaunchGoLiveConfirm"
+  },
+  "setupLaunchGoLiveTitle": "¿Abrir el espacio?",
+  "@setupLaunchGoLiveTitle": {
+    "description": "#2876 setup launch: setupLaunchGoLiveTitle"
+  },
+  "setupLaunchGroup": "{key, select, open{Abrir} run{Operar} grow{Crecer} launch{Lanzar} other{{key}}}",
+  "@setupLaunchGroup": {
+    "description": "#2876 setup launch: setupLaunchGroup",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLaunchIsLive": "Este es el espacio real: está abierto.",
+  "@setupLaunchIsLive": {
+    "description": "#2876 setup launch: setupLaunchIsLive"
+  },
+  "setupLaunchLink": "Revisar sus respuestas y abrir",
+  "@setupLaunchLink": {
+    "description": "#2876 setup launch: setupLaunchLink"
+  },
+  "setupLaunchMilestones": "Hitos",
+  "@setupLaunchMilestones": {
+    "description": "#2876 setup launch: setupLaunchMilestones"
+  },
+  "setupLaunchOperator": "Solo su operador puede hacer esto:",
+  "@setupLaunchOperator": {
+    "description": "#2876 setup launch: setupLaunchOperator"
+  },
+  "setupLaunchPublicOff": "Nada de su espacio es público todavía.",
+  "@setupLaunchPublicOff": {
+    "description": "#2876 setup launch: setupLaunchPublicOff"
+  },
+  "setupLaunchPublicOn": "Su página pública es visible para todos.",
+  "@setupLaunchPublicOn": {
+    "description": "#2876 setup launch: setupLaunchPublicOn"
+  },
+  "setupLaunchReached": "Alcanzado",
+  "@setupLaunchReached": {
+    "description": "#2876 setup launch: setupLaunchReached"
+  },
+  "setupLaunchReport": "Copiar el informe de preparación",
+  "@setupLaunchReport": {
+    "description": "#2876 setup launch: setupLaunchReport"
+  },
+  "setupLaunchReportTitle": "Informe de preparación",
+  "@setupLaunchReportTitle": {
+    "description": "#2876 setup launch: setupLaunchReportTitle"
+  },
+  "setupLaunchTitle": "Revisar y abrir",
+  "@setupLaunchTitle": {
+    "description": "#2876 setup launch: setupLaunchTitle"
+  },
   "setupLevelName": "{key, select, bookings_simple{Plazas compartidas} bookings_resources{Salas y recursos} bookings_measured{Uso medido} community_basic{Básico} community_organised{Organizada} money_none{Sin dinero} money_statements{Extractos} money_invoices{Facturas} payments_off{Por transferencia} payments_online{En línea} tax_none{Sin IVA} tax_vat{IVA} tax_books{Contabilidad} purchases_none{Ninguna} purchases_expenses{Gastos} purchases_full{Compras completas} presentation_basic{Básica} presentation_branded{Sus colores} presentation_public{Página pública} operations_basic{Básica} operations_insight{Indicadores} operations_advanced{Avanzada} assistant_off{Desactivado} assistant_on{Activado} other{{key}}}",
   "setupLevelsApplied": "Su espacio hace ahora lo que eligió.",
   "setupLevelsApply": "Aplicar",

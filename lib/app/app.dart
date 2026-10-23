@@ -15,6 +15,7 @@ import '../features/profile/providers/personal_appearance_providers.dart';
 import '../features/profile/providers/presence_providers.dart';
 import '../features/task_recorder/presentation/widgets/recording_indicator.dart';
 import '../features/workspace/domain/workspace_feature.dart';
+import '../features/workspace/presentation/widgets/setup_return_bar.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import '../l10n/app_localizations.dart';
 import 'boot_splash.dart';
@@ -119,7 +120,11 @@ class DeskiloApp extends ConsumerWidget {
                   maxWidth: frameWidthFor(
                     router.routeInformationProvider.value.uri.path,
                   ),
-                  child: child ?? const SizedBox.shrink(),
+                  // #2869 — the way back to the setup guide.
+                  child: SetupReturnBar(
+                    router: router,
+                    child: child ?? const SizedBox.shrink(),
+                  ),
                 ),
               ))),
             ),

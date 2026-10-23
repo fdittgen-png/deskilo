@@ -11,7 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/demo/demo_link.dart';
+import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -22,6 +25,7 @@ import '../../domain/setup_status.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/sample_data_card.dart';
+import '../widgets/setup_return_bar.dart';
 
 class SetupGuideScreen extends ConsumerWidget {
   const SetupGuideScreen({super.key});
@@ -91,6 +95,19 @@ class _SetupGuideBody extends ConsumerWidget {
                 label: Text(l10n.setupGuideLevelsLink),
                 onPressed: () async {
                   await context.push('/setup/levels');
+                  await reload();
+                },
+              ),
+            ),
+            // #2876 — check the answers and go live.
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton.icon(
+                key: const ValueKey('setup-guide-launch'),
+                icon: const Icon(Icons.fact_check_outlined),
+                label: Text(l10n.setupLaunchLink),
+                onPressed: () async {
+                  await context.push('/setup/launch');
                   await reload();
                 },
               ),
@@ -205,7 +222,15 @@ Future<void> _open(
   SetupStepStatus step,
   Future<void> Function() reload,
 ) async {
-  await context.push(step.route);
+  // #2869 — the screen it opens carries the way back to the guide.
+  final pending = ProviderScope.containerOf(context, listen: false)
+      .read(setupReturnPendingProvider.notifier)
+    ..set(open: true);
+  try {
+    await context.push(step.route);
+  } finally {
+    pending.set(open: false);
+  }
   await reload();
 }
 
@@ -248,15 +273,18 @@ class _Milestones extends StatelessWidget {
   }
 }
 
-class _NextCard extends StatelessWidget {
+class _NextCard extends ConsumerWidget {
   const _NextCard({required this.step, required this.actions});
   final SetupStepStatus step;
   final _Actions actions;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
+    // #2872 — see the step done in a space where it is set up; not from
+    // inside the demo itself.
+    final inDemo = DemoEnvironment.maybeOf(context) != null;
     return Card(
       key: const ValueKey('setup-guide-next'),
       color: theme.colorScheme.primaryContainer,
@@ -281,6 +309,13 @@ class _NextCard extends StatelessWidget {
                   style: theme.textTheme.bodySmall,
                 ),
                 const Spacer(),
+                if (!inDemo)
+                  TextButton(
+                    key: ValueKey('setup-guide-demo-${step.step}'),
+                    onPressed: () =>
+                        ref.read(linkLauncherProvider)(demoLinkUri(to: step.route)),
+                    child: Text(l10n.setupGuideTryDemo),
+                  ),
                 FilledButton(
                   key: ValueKey('setup-guide-next-${step.step}'),
                   onPressed: () => _open(context, step, actions.reload),
