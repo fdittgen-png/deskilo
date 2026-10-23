@@ -3092,6 +3092,13 @@
   "directoryReservedToday": "Prenotato oggi",
   "directoryTitle": "Membri",
   "directoryWhatsapp": "Chatta su WhatsApp",
+  "discoveryBookmark": "Salva",
+  "discoveryNoSaved": "Nessuno spazio salvato su questo dispositivo per ora.",
+  "discoveryRemoveBookmark": "Rimuovi dai salvati",
+  "discoverySaved": "Salvato su questo dispositivo",
+  "discoverySavedFilter": "Salvati",
+  "discoveryTitle": "Scoprire spazi",
+  "discoveryView": "Vedi",
   "documentsAdd": "Aggiungi un documento",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -5327,6 +5334,82 @@
       }
     }
   },
+  "fileDeliveryCancelled": "Annullato: nulla è stato salvato.",
+  "@fileDeliveryCancelled": {
+    "description": "Notice when the person closed the Export… choice or the share sheet: nothing saved"
+  },
+  "fileDownloadAgain": "Scarica di nuovo",
+  "@fileDownloadAgain": {
+    "description": "Snackbar action on a browser download request: re-issue the download from a user gesture"
+  },
+  "fileDownloadRequested": "Download richiesto: {fileName}. Dove finisce lo decide il Suo browser.",
+  "@fileDownloadRequested": {
+    "description": "Notice after a browser download request: the page cannot confirm where the file landed",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileExportKeep": "Conserva in Deskilo",
+  "@fileExportKeep": {
+    "description": "iPhone Export… row: keep a private copy inside the app"
+  },
+  "fileExportKeepHint": "Una copia privata nell'app. Non compare in File.",
+  "@fileExportKeepHint": {
+    "description": "iPhone Export… row subtitle: the copy is app-private, not in Files"
+  },
+  "fileExportShare": "Condividi…",
+  "@fileExportShare": {
+    "description": "iPhone Export… row: hand the file to the system share sheet"
+  },
+  "fileExportShareHint": "Il foglio di sistema: Salva su File quando è proposto, Mail, AirDrop o un'altra app.",
+  "@fileExportShareHint": {
+    "description": "iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)"
+  },
+  "fileExportTitle": "Esporta…",
+  "@fileExportTitle": {
+    "description": "iPhone Export… sheet title: the choice between a private copy in the app and the system share sheet"
+  },
+  "fileHandedToShareSheet": "{fileName} è stato consegnato al foglio di condivisione. Dove sia finito dipende dall'app che Lei ha scelto.",
+  "@fileHandedToShareSheet": {
+    "description": "Notice after the system share sheet took the file: not a delivery receipt",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileKeptInApp": "Conservato in Deskilo: {fileName}. Non è in Download né in File: Condividi… lo invia altrove.",
+  "@fileKeptInApp": {
+    "description": "Notice after a save that only the app can see (Android fallback, iPhone Keep in Deskilo)",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailedBecause": "Impossibile salvare il file: {reason}.",
+  "@fileSaveFailedBecause": {
+    "description": "Error notice with the reason a file could not be saved",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailureNoStorage": "nessuna cartella di questo dispositivo lo ha accettato",
+  "@fileSaveFailureNoStorage": {
+    "description": "Reason phrase for fileSaveFailedBecause: no writable folder on the device"
+  },
+  "fileSaveFailureShare": "il foglio di condivisione non si è aperto",
+  "@fileSaveFailureShare": {
+    "description": "Reason phrase for fileSaveFailedBecause: the system share sheet could not open"
+  },
+  "fileSaveFailureWrite": "il dispositivo ha rifiutato la scrittura",
+  "@fileSaveFailureWrite": {
+    "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
   "financesAllSpaces": "Tutti gli spazi",
   "financesAutomatic": "automatico",
   "@financesAutomatic": {
@@ -5427,6 +5510,15 @@
   "financesReminders": "Solleciti",
   "@financesReminders": {
     "description": "Me › Finances"
+  },
+  "financesSourceUnavailable": "I documenti di {host} non sono stati letti per ora; quanto mostrato proviene dai Suoi altri spazi.",
+  "@financesSourceUnavailable": {
+    "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   },
   "financesStateClosed": "Chiusa",
   "@financesStateClosed": {
@@ -14059,6 +14151,11 @@
   "setupLevelsSwitchOff": "Disattiva: {features}",
   "setupLevelsSwitchOn": "Attiva: {features}",
   "setupLevelsTitle": "Che cosa fa il suo spazio",
+  "setupLimitsPerMember": "Un’autorizzazione impostata sulla pagina di un membro prevale sul numero di posti indicato qui.",
+  "setupLimitsPreviewAhead": "{days, plural, =1{Può prenotare fino a un giorno prima.} other{Può prenotare fino a {days} giorni prima.}}",
+  "setupLimitsPreviewAtOnce": "{count, plural, =1{Può occupare un posto alla volta.} other{Può occupare fino a {count} posti alla volta.}}",
+  "setupLimitsPreviewLength": "Una prenotazione dura almeno {shortest} e al massimo {longest}.",
+  "setupLimitsSaveFailed": "Non è stato possibile salvare i limiti di prenotazione. Riprova.",
   "setupLockConfirmTitle": "Prima di salvare",
   "setupLockMoneyLocaleConfirm": "{country} e {currency} saranno fissati per sempre non appena questo spazio emetterà un documento o registrerà denaro: dopo, nessuno dei due potrà più cambiare. In caso di dubbio, li verifichi con il Suo commercialista.",
   "setupLockMoneyLocaleFixed": "Fissato: questo spazio ha già emesso un documento o registrato denaro, quindi il paese e la valuta non possono più cambiare.",
@@ -14073,6 +14170,17 @@
   "setupNewMembersPreviewStart": "Un nuovo membro inizia con un abbonamento al {pct} % ({policy}).",
   "setupNewMembersQuestions": "Domande poste all’adesione",
   "setupNewMembersSaveFailed": "Non è stato possibile salvare le impostazioni dei nuovi membri. Riprovi.",
+  "setupNotificationsAudience": "{audience, select, deciders{Chi la decide} members{I membri} other{{audience}}}",
+  "setupNotificationsChannels": "{channels, select, app{nell’app} app_push{nell’app e come notifica sul telefono} device{come promemoria sul proprio telefono, anche senza notifiche} other{{channels}}}",
+  "setupNotificationsEvent": "{event, select, pending_request{Una richiesta attende una decisione} reservation_cancelled{Qualcun altro ha rimosso una prenotazione} check_in{Una prenotazione sta per iniziare: è ora del check-in} member_note{Un messaggio o un annuncio} member_mention{Qualcuno lo cita in una conversazione} invoice_reminder{Un sollecito di pagamento} other{{event}}}",
+  "setupNotificationsLeadFixed": "Il promemoria di check-in appare {lead} prima dell’inizio di una prenotazione.",
+  "setupNotificationsLineHow": "{audience}: {channels}",
+  "setupNotificationsPreviewPlace": "Scrivania 4",
+  "setupNotificationsPreviewWhen": "{lead} prima dell’inizio della prenotazione, il telefono del membro mostra:",
+  "setupNotificationsPushOff": "Le notifiche sul telefono sono disattivate: tutto, tranne il promemoria di check-in, resta nell’app.",
+  "setupNotificationsPushOn": "Le notifiche sul telefono sono attive. Un telefono le riceve quando l’operatore ha collegato il push per questo server; fino ad allora, tutto resta nell’app.",
+  "setupNotificationsSaveFailed": "Non è stato possibile salvare l’anticipo del promemoria. Riprova.",
+  "setupNotificationsWho": "Chi viene avvisato di cosa",
   "setupObligationNone": "I dati fiscali verificati non contengono ancora nulla per questo paese — chieda al Suo commercialista cosa si applica.",
   "setupObligationSource": "Fonte: {source}",
   "setupObligationThreshold": "{effect, select, immediate{Il regime IVA delle piccole imprese termina con l’operazione che porta il fatturato netto dell’anno oltre {limit}.} other{Il regime IVA delle piccole imprese termina con l’anno il cui fatturato netto supera {limit}.}}",
@@ -14129,11 +14237,11 @@
   "setupServicesSaveFailed": "Non è stato possibile aggiungere il servizio. Riprovi.",
   "setupStateName": "{key, select, ready{Fatto} needsConfiguration{Da fare} blocked{Attende un altro passo} needsOperator{Interviene il suo operatore} notApplicable{Non usato} deferred{Messo da parte} unknown{Sconosciuto} other{{key}}}",
   "setupStepElsewhere": "Questo passaggio si svolge in una schermata dedicata.",
-  "setupStepHint": "{key, select, basics{Come si chiama lo spazio e dove si trova: date, valuta e festività ne derivano.} hours{Quando i membri possono prenotare: giorni, orari e chiusure.} places{Disegni le sale, le scrivanie e i posti che i membri prenotano.} member_rights{Consenta ai membri di prenotare, vedere il calendario e il proprio conto.} invite{Condivida il codice dello spazio o invii inviti.} pricing{Quanto costa un posto, un abbonamento o una giornata.} services{Caffè, stampa, armadietti: ciò che i membri possono aggiungere.} payment_methods{I suoi dati bancari e le istruzioni di pagamento.} online_payments{Pagamento con carta tramite un fornitore collegato dal suo operatore.} approvals{Chi convalida le richieste e quante persone devono essere d'accordo.} new_members{Con cosa inizia un nuovo membro.} kiosk{Un tablet all'ingresso e badge per i membri.} purchases{Cosa acquista lo spazio e da chi.} lease{L'affitto e le spese che lo spazio paga.} assets{Ciò che lo spazio possiede e come perde valore.} look{I colori dello spazio e le sue parole.} public_page{Cosa possono vedere le persone esterne allo spazio.} legal_identity{I dati che ogni fattura deve riportare.} vat{Le aliquote che applica e le sue dichiarazioni.} numbering{Come si formano i numeri di fattura.} documents{La sua intestazione su fatture e lettere.} einvoicing{Inviare le fatture tramite la piattaforma di fatturazione elettronica.} accounting{Il piano dei conti e le esportazioni per il suo commercialista.} reminders{Quando e come vengono sollecitate le fatture non pagate.} first_booking{Prenoti un posto come farebbe un membro.} recovery{Esporti una volta i dati dello spazio.} assistant{Lasci che un assistente IA aiuti, sempre con la sua conferma.} other{{key}}}",
+  "setupStepHint": "{key, select, basics{Come si chiama lo spazio e dove si trova: date, valuta e festività ne derivano.} hours{Quando i membri possono prenotare: giorni, orari e chiusure.} places{Disegni le sale, le scrivanie e i posti che i membri prenotano.} member_rights{Consenta ai membri di prenotare, vedere il calendario e il proprio conto.} invite{Condivida il codice dello spazio o invii inviti.} pricing{Quanto costa un posto, un abbonamento o una giornata.} services{Caffè, stampa, armadietti: ciò che i membri possono aggiungere.} payment_methods{I suoi dati bancari e le istruzioni di pagamento.} online_payments{Pagamento con carta tramite un fornitore collegato dal suo operatore.} approvals{Chi convalida le richieste e quante persone devono essere d'accordo.} new_members{Con cosa inizia un nuovo membro.} notifications{Chi viene avvisato di cosa, e come: nell’app, sul telefono, come promemoria.} limits{Con quanto anticipo, per quanto tempo e quanti posti alla volta prenotano i membri.} kiosk{Un tablet all'ingresso e badge per i membri.} purchases{Cosa acquista lo spazio e da chi.} lease{L'affitto e le spese che lo spazio paga.} assets{Ciò che lo spazio possiede e come perde valore.} look{I colori dello spazio e le sue parole.} public_page{Cosa possono vedere le persone esterne allo spazio.} legal_identity{I dati che ogni fattura deve riportare.} vat{Le aliquote che applica e le sue dichiarazioni.} numbering{Come si formano i numeri di fattura.} documents{La sua intestazione su fatture e lettere.} einvoicing{Inviare le fatture tramite la piattaforma di fatturazione elettronica.} accounting{Il piano dei conti e le esportazioni per il suo commercialista.} reminders{Quando e come vengono sollecitate le fatture non pagate.} first_booking{Prenoti un posto come farebbe un membro.} recovery{Esporti una volta i dati dello spazio.} assistant{Lasci che un assistente IA aiuti, sempre con la sua conferma.} other{{key}}}",
   "setupStepLoadFailed": "Non è stato possibile caricare questo passaggio. Riprovi più tardi.",
   "setupStepOpenScreen": "Apra",
   "setupStepPreviewTitle": "Cosa vedranno i Suoi membri",
-  "setupStepTitle": "{key, select, basics{Nome, paese e fuso orario} hours{Orari di apertura} places{Posti sulla pianta} member_rights{Cosa possono fare i membri} invite{Invitare membri} pricing{Prezzi e piani} services{Servizi} payment_methods{Come pagano i membri} online_payments{Pagamenti online} approvals{Approvazioni} new_members{Nuovi membri} kiosk{Chiosco e badge} purchases{Fornitori e acquisti} lease{Il suo affitto} assets{Attrezzature} look{Colori e vocabolario} public_page{Pagina pubblica} legal_identity{Identità legale} vat{IVA} numbering{Numerazione delle fatture} documents{Aspetto delle fatture} einvoicing{Fatturazione elettronica} accounting{Contabilità} reminders{Solleciti di pagamento} first_booking{Una prima prenotazione} recovery{Una copia dei suoi dati} assistant{Assistente} other{{key}}}",
+  "setupStepTitle": "{key, select, basics{Nome, paese e fuso orario} hours{Orari di apertura} places{Posti sulla pianta} member_rights{Cosa possono fare i membri} invite{Invitare membri} pricing{Prezzi e piani} services{Servizi} payment_methods{Come pagano i membri} online_payments{Pagamenti online} approvals{Approvazioni} new_members{Nuovi membri} notifications{Notifiche} limits{Limiti di prenotazione} kiosk{Chiosco e badge} purchases{Fornitori e acquisti} lease{Il suo affitto} assets{Attrezzature} look{Colori e vocabolario} public_page{Pagina pubblica} legal_identity{Identità legale} vat{IVA} numbering{Numerazione delle fatture} documents{Aspetto delle fatture} einvoicing{Fatturazione elettronica} accounting{Contabilità} reminders{Solleciti di pagamento} first_booking{Una prima prenotazione} recovery{Una copia dei suoi dati} assistant{Assistente} other{{key}}}",
   "shellBarHiddenAnnounce": "Barra di navigazione nascosta",
   "shellBarHideHint": "Tenga premuto per la vista a schermo intero",
   "shellBarShowHint": "Tenga premuto per mostrare la barra di navigazione",
@@ -14424,6 +14532,174 @@
   "subprocessStructureDesc": "Gestire sedi e disponibilità degli elementi della planimetria.",
   "subprocessTax": "Gestione dell’IVA",
   "subprocessTaxDesc": "Gestire gruppi, aliquote e dichiarazioni IVA.",
+  "supplierFieldEdited": "Modificato da Lei",
+  "@supplierFieldEdited": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldNotReturned": "Non restituito dal registro",
+  "@supplierFieldNotReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldRetrieved": "Recuperato da {provider}",
+  "@supplierFieldRetrieved": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierFieldValidated": "Convalidato da {provider}",
+  "@supplierFieldValidated": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupContinueManually": "Continua manualmente",
+  "@supplierLookupContinueManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountry": "Paese",
+  "@supplierLookupCountry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountryMissing": "Scelga il paese del fornitore.",
+  "@supplierLookupCountryMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupDuplicate": "Esiste già un fornitore con questo identificativo: {supplier}. Non è stato creato nulla.",
+  "@supplierLookupDuplicate": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupEnterManually": "Inserire manualmente",
+  "@supplierLookupEnterManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupFind": "Cerca i dati dell'azienda",
+  "@supplierLookupFind": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifier": "Partita IVA",
+  "@supplierLookupIdentifier": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierHelp": "Con o senza prefisso paese; spazi, punti e trattini sono ignorati.",
+  "@supplierLookupIdentifierHelp": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMalformed": "Non sembra una partita IVA: solo lettere e cifre.",
+  "@supplierLookupIdentifierMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMissing": "Inserisca la partita IVA da cercare.",
+  "@supplierLookupIdentifierMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIntro": "Inserisca la partita IVA del fornitore. Il registro risponde con ciò che possiede; Lei verifica tutto prima di salvare.",
+  "@supplierLookupIntro": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupInvalidInput": "Il registro ha rifiutato il formato di questo numero. Lo verifichi, oppure continui manualmente.",
+  "@supplierLookupInvalidInput": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupMalformed": "La risposta del registro non è leggibile. Riprovi, oppure continui manualmente.",
+  "@supplierLookupMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupManualHint": "Oppure inserisca i dati qui sotto.",
+  "@supplierLookupManualHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNotFound": "Il registro non conosce questa partita IVA. Verifichi il numero e il paese, oppure continui manualmente.",
+  "@supplierLookupNotFound": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNothingReturned": "La partita IVA è valida, ma il registro non ha restituito né nome né indirizzo. Completi i campi Lei stesso.",
+  "@supplierLookupNothingReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupOpenExisting": "Apri il fornitore esistente",
+  "@supplierLookupOpenExisting": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupProviderVies": "VIES",
+  "@supplierLookupProviderVies": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRefused": "La ricerca è stata rifiutata: Lei non gestisce i fornitori qui, oppure la verifica IVA è disattivata.",
+  "@supplierLookupRefused": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRetry": "Riprova",
+  "@supplierLookupRetry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupReviewHint": "Verifichi ogni campo qui sotto; può modificare tutto prima di salvare.",
+  "@supplierLookupReviewHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSearching": "Interrogazione del registro…",
+  "@supplierLookupSearching": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSource": "Fonte: {provider}, {time}",
+  "@supplierLookupSource": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupStatusCouldNotVerify": "Impossibile verificare la partita IVA",
+  "@supplierLookupStatusCouldNotVerify": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusRetrievedNotValidated": "Dati recuperati; partita IVA non convalidata",
+  "@supplierLookupStatusRetrievedNotValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusUnavailable": "Registro non disponibile",
+  "@supplierLookupStatusUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusValidated": "Partita IVA convalidata",
+  "@supplierLookupStatusValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupThrottled": "Il registro è sovraccarico. Attenda un momento e riprovi, oppure continui manualmente.",
+  "@supplierLookupThrottled": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupTimeout": "Il registro non ha risposto in tempo. Riprovi, oppure continui manualmente.",
+  "@supplierLookupTimeout": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnavailable": "Il registro al momento non è disponibile. Riprovi più tardi, oppure continui manualmente.",
+  "@supplierLookupUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnsupported": "Nessun registro risponde ancora per {country}. Può inserire i dati Lei stesso.",
+  "@supplierLookupUnsupported": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersAdd": "Aggiungi fornitore",
   "@suppliersAdd": {
     "description": "#2567 suppliers"

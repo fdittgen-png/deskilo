@@ -267,9 +267,7 @@ void main() {
         workspace,
       ]);
     await showPortal(tester, const DirectoryScreen(), directory: repository);
-    // The map is the first face; these walk the list.
-    await tester.tap(find.byTooltip('List'));
-    await tester.pumpAndSettle();
+    // The list is the first face; these walk it.
     final locate = find.byKey(const ValueKey('directory-locate-https://host.example/unlocated'));
     await tester.scrollUntilVisible(locate, 400, scrollable: find.descendant(
       of: find.byType(ListView), matching: find.byType(Scrollable)).first);
@@ -338,7 +336,9 @@ void main() {
       await tester.enterText(find.byType(TextField), 'Quiet');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Quiet office'));
+      await tester.tap(
+        find.byKey(const ValueKey('directory-view-https://host.example/space')),
+      );
       await tester.pumpAndSettle();
       expect(find.text('Alice'), findsOneWidget);
       expect(find.text('Owner'), findsOneWidget);
@@ -364,7 +364,9 @@ void main() {
       final repo = FakeDirectoryRepository()..cards.add(card);
       await showPortal(tester, const DirectoryScreen(), directory: repo);
       repo.cards.clear();
-      await tester.tap(find.text('Closed office'));
+      await tester.tap(
+        find.byKey(const ValueKey('directory-view-https://host.example/gone')),
+      );
       await tester.pumpAndSettle();
       expect(
         find.byKey(const ValueKey('public-workspace-withdrawn')),
@@ -396,7 +398,9 @@ void main() {
         findsOneWidget,
       );
       expect(find.textContaining('https://newer.example'), findsOneWidget);
-      await tester.tap(find.text('Open office'));
+      await tester.tap(
+        find.byKey(const ValueKey('directory-view-https://host.example/open')),
+      );
       await tester.pumpAndSettle();
       expect(
         find.byKey(const ValueKey('public-workspace-withdrawn')),
@@ -423,7 +427,9 @@ void main() {
           PublicRefusalReason.versionUnsupported,
         );
       await showPortal(tester, const DirectoryScreen(), directory: repo);
-      await tester.tap(find.text('Newer office'));
+      await tester.tap(
+        find.byKey(const ValueKey('directory-view-https://demo.invalid/newer')),
+      );
       await tester.pumpAndSettle();
       final request = find.text('Request a workspace profile');
       await tester.ensureVisible(request);

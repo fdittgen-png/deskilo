@@ -68,7 +68,10 @@ Future<FakeMoneyRepository> pumpInvoices(
           events: events,
           fileSharer: sharer,
         ),
-        if (saver != null) fileSaverProvider.overrideWithValue(saver),
+        if (saver != null) ...[
+          fileSaverProvider.overrideWithValue(saver),
+          typedFileSaverProvider.overrideWithValue(typedSaverOf(saver)),
+        ],
         if (picker != null) filePickerProvider.overrideWithValue(picker),
       ],
       child: const DeskiloApp(),

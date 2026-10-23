@@ -18,116 +18,41 @@
 import 'dart:io';
 
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
-import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../tool/setup/page_sources.dart';
 import 'lint_sources.dart';
 
 void main() {
   late String html;
 
+  // #2926 — the page and the scripts it is split into, read as one.
   setUpAll(() {
-    html = File('web/setup.html').readAsStringSync();
+    html = setupPageSource();
   });
 
-  /// The `FEATURES` array literal, as `key -> defaultOn`.
-  Map<String, bool> parseFeatures(String source) {
-    final start = source.indexOf('const FEATURES=[');
-    expect(start, isNot(-1), reason: 'the FEATURES array must exist');
-    final end = source.indexOf('\n];', start);
-    final block = source.substring(start, end);
-    // Key first, default last. Since #1366 a row is just [key, default] —
-    // the label comes from the app's ARB through web/setup_l10n.js — but a
-    // row with anything between the two still parses.
-    final row =
-        RegExp(r"^ \['([A-Za-z]+)',(?:.*,)?([01])\],$", multiLine: true);
-    return {
-      for (final m in row.allMatches(block))
-        m.group(1)!: m.group(2) == '1',
-    };
-  }
-
-  group('features', () {
-    test('every WorkspaceFeature is offered, and nothing invented', () {
-      final inHtml = parseFeatures(html);
-      final inApp = WorkspaceFeature.values.map((f) => f.name).toSet();
-
-      expect(
-        inApp.difference(inHtml.keys.toSet()),
-        isEmpty,
-        reason: 'a feature the app has but the questionnaire never asks '
-            'about — add it to the FEATURES array in web/setup.html',
-      );
-      expect(
-        inHtml.keys.toSet().difference(inApp),
-        isEmpty,
-        reason: 'the questionnaire offers a feature the app does not '
-            'have — it was renamed or removed; fix web/setup.html',
-      );
-    });
-
-    test('every default matches featureManifest — the questionnaire must '
-        'not pre-tick a module a new workspace would not get', () {
-      // #1063 — the contract is the TIER-aware default, not `defaultOn`
-      // alone. The questionnaire is the creation path for a self-hoster,
-      // so it has to agree with what `create_workspace` is handed;
-      // otherwise a self-hosted instance starts with the whole surface
-      // while a hosted one starts with Core, and the two answer
-      // differently to the same question.
-      final inHtml = parseFeatures(html);
-      final want = defaultFeatureFlagsForNewWorkspace();
-      final wrong = <String>[];
-      for (final entry in featureManifest.entries) {
-        final key = entry.key.name;
-        if (inHtml[key] != want[key]) {
-          wrong.add('$key: html=${inHtml[key]} registry=${want[key]} '
-              '(${entry.value.tier.name})');
-        }
-      }
-      expect(wrong, isEmpty,
-          reason: 'defaults drifted from the registry:\n${wrong.join('\n')}');
-    });
+  test('the page and each of its own scripts stay under 500 lines (#2926)',
+      () {
+    final scripts = setupPageScripts();
+    expect(scripts, containsAll([
+      'web/setup_params.js',
+      'web/setup_steps.js',
+      'web/setup_xml.js',
+    ]));
+    final over = [
+      for (final path in [setupPagePath, ...scripts])
+        if (File(path).readAsLinesSync().length >= 500)
+          '$path: ${File(path).readAsLinesSync().length}',
+    ];
+    expect(over, isEmpty,
+        reason: 'split by concern, as #2926 split web/setup.html; a '
+            '_part file is not a concern');
   });
 
-  // #1330 — `REQUIRES` mirrors featureManifest so `on()` / `enableWith()`
-  // agree with the app's effectiveFeatures / featureFlagsToggleDelta. It
-  // matched by discipline only (59/59 when audited); now it is pinned.
+  // #2923 — the feature list, its defaults, REQUIRES and AVAILABLE_IN are
+  // no longer copied into the page: they arrive generated in
+  // web/setup_catalogue.js (SETUP_REGISTRY), drift-gated by
+  // setup_l10n_test, so there is no copy left here to pin.
   group('dependencies', () {
-    test('REQUIRES equals featureManifest.requires, entry for entry', () {
-      final start = html.indexOf('const REQUIRES={');
-      expect(start, isNot(-1));
-      final block = html.substring(start, html.indexOf('};', start));
-      final inHtml = {
-        for (final m in RegExp(r"([A-Za-z]+):'([A-Za-z]+)'").allMatches(block))
-          m.group(1)!: m.group(2)!,
-      };
-      final inApp = {
-        for (final e in featureManifest.entries)
-          if (e.value.requires != null) e.key.name: e.value.requires!.name,
-      };
-      expect(inHtml, inApp,
-          reason: 'REQUIRES in web/setup.html drifted from featureManifest');
-    });
-
-    test('AVAILABLE_IN equals featureManifest.availableIn, entry for entry', () {
-      final start = html.indexOf('const AVAILABLE_IN={');
-      expect(start, isNot(-1));
-      final block = html.substring(start, html.indexOf('};', start));
-      final inHtml = {
-        for (final m in RegExp(r"([A-Za-z]+):\[([^\]]*)\]").allMatches(block))
-          m.group(1)!: {
-            for (final c in RegExp(r"'([^']+)'").allMatches(m.group(2)!))
-              c.group(1)!,
-          },
-      };
-      final inApp = {
-        for (final e in featureManifest.entries)
-          if (e.value.availableIn != null)
-            e.key.name: e.value.availableIn!.toSet(),
-      };
-      expect(inHtml, inApp,
-          reason: 'AVAILABLE_IN in web/setup.html drifted from featureManifest');
-    });
-
     test('processes are presentation only: the XML carries no process key',
         () {
       // The page groups by process (setup_catalogue.js) and the import

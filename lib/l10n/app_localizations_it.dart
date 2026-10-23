@@ -4436,6 +4436,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get directoryWhatsapp => 'Chatta su WhatsApp';
 
   @override
+  String get discoveryBookmark => 'Salva';
+
+  @override
+  String get discoveryNoSaved =>
+      'Nessuno spazio salvato su questo dispositivo per ora.';
+
+  @override
+  String get discoveryRemoveBookmark => 'Rimuovi dai salvati';
+
+  @override
+  String get discoverySaved => 'Salvato su questo dispositivo';
+
+  @override
+  String get discoverySavedFilter => 'Salvati';
+
+  @override
+  String get discoveryTitle => 'Scoprire spazi';
+
+  @override
+  String get discoveryView => 'Vedi';
+
+  @override
   String get documentsAdd => 'Aggiungi un documento';
 
   @override
@@ -7554,6 +7576,60 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get fileDeliveryCancelled => 'Annullato: nulla è stato salvato.';
+
+  @override
+  String get fileDownloadAgain => 'Scarica di nuovo';
+
+  @override
+  String fileDownloadRequested(String fileName) {
+    return 'Download richiesto: $fileName. Dove finisce lo decide il Suo browser.';
+  }
+
+  @override
+  String get fileExportKeep => 'Conserva in Deskilo';
+
+  @override
+  String get fileExportKeepHint =>
+      'Una copia privata nell\'app. Non compare in File.';
+
+  @override
+  String get fileExportShare => 'Condividi…';
+
+  @override
+  String get fileExportShareHint =>
+      'Il foglio di sistema: Salva su File quando è proposto, Mail, AirDrop o un\'altra app.';
+
+  @override
+  String get fileExportTitle => 'Esporta…';
+
+  @override
+  String fileHandedToShareSheet(String fileName) {
+    return '$fileName è stato consegnato al foglio di condivisione. Dove sia finito dipende dall\'app che Lei ha scelto.';
+  }
+
+  @override
+  String fileKeptInApp(String fileName) {
+    return 'Conservato in Deskilo: $fileName. Non è in Download né in File: Condividi… lo invia altrove.';
+  }
+
+  @override
+  String fileSaveFailedBecause(String reason) {
+    return 'Impossibile salvare il file: $reason.';
+  }
+
+  @override
+  String get fileSaveFailureNoStorage =>
+      'nessuna cartella di questo dispositivo lo ha accettato';
+
+  @override
+  String get fileSaveFailureShare =>
+      'il foglio di condivisione non si è aperto';
+
+  @override
+  String get fileSaveFailureWrite => 'il dispositivo ha rifiutato la scrittura';
+
+  @override
   String get financesAllSpaces => 'Tutti gli spazi';
 
   @override
@@ -7629,6 +7705,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get financesReminders => 'Solleciti';
+
+  @override
+  String financesSourceUnavailable(String host) {
+    return 'I documenti di $host non sono stati letti per ora; quanto mostrato proviene dai Suoi altri spazi.';
+  }
 
   @override
   String get financesStateClosed => 'Chiusa';
@@ -20099,6 +20180,41 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupLevelsTitle => 'Che cosa fa il suo spazio';
 
   @override
+  String get setupLimitsPerMember =>
+      'Un’autorizzazione impostata sulla pagina di un membro prevale sul numero di posti indicato qui.';
+
+  @override
+  String setupLimitsPreviewAhead(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Può prenotare fino a $days giorni prima.',
+      one: 'Può prenotare fino a un giorno prima.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewAtOnce(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Può occupare fino a $count posti alla volta.',
+      one: 'Può occupare un posto alla volta.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewLength(String shortest, String longest) {
+    return 'Una prenotazione dura almeno $shortest e al massimo $longest.';
+  }
+
+  @override
+  String get setupLimitsSaveFailed =>
+      'Non è stato possibile salvare i limiti di prenotazione. Riprova.';
+
+  @override
   String get setupLockConfirmTitle => 'Prima di salvare';
 
   @override
@@ -20161,6 +20277,74 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'Non è stato possibile salvare le impostazioni dei nuovi membri. Riprovi.';
+
+  @override
+  String setupNotificationsAudience(String audience) {
+    String _temp0 = intl.Intl.selectLogic(audience, {
+      'deciders': 'Chi la decide',
+      'members': 'I membri',
+      'other': '$audience',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsChannels(String channels) {
+    String _temp0 = intl.Intl.selectLogic(channels, {
+      'app': 'nell’app',
+      'app_push': 'nell’app e come notifica sul telefono',
+      'device': 'come promemoria sul proprio telefono, anche senza notifiche',
+      'other': '$channels',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsEvent(String event) {
+    String _temp0 = intl.Intl.selectLogic(event, {
+      'pending_request': 'Una richiesta attende una decisione',
+      'reservation_cancelled': 'Qualcun altro ha rimosso una prenotazione',
+      'check_in': 'Una prenotazione sta per iniziare: è ora del check-in',
+      'member_note': 'Un messaggio o un annuncio',
+      'member_mention': 'Qualcuno lo cita in una conversazione',
+      'invoice_reminder': 'Un sollecito di pagamento',
+      'other': '$event',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsLeadFixed(String lead) {
+    return 'Il promemoria di check-in appare $lead prima dell’inizio di una prenotazione.';
+  }
+
+  @override
+  String setupNotificationsLineHow(String audience, String channels) {
+    return '$audience: $channels';
+  }
+
+  @override
+  String get setupNotificationsPreviewPlace => 'Scrivania 4';
+
+  @override
+  String setupNotificationsPreviewWhen(String lead) {
+    return '$lead prima dell’inizio della prenotazione, il telefono del membro mostra:';
+  }
+
+  @override
+  String get setupNotificationsPushOff =>
+      'Le notifiche sul telefono sono disattivate: tutto, tranne il promemoria di check-in, resta nell’app.';
+
+  @override
+  String get setupNotificationsPushOn =>
+      'Le notifiche sul telefono sono attive. Un telefono le riceve quando l’operatore ha collegato il push per questo server; fino ad allora, tutto resta nell’app.';
+
+  @override
+  String get setupNotificationsSaveFailed =>
+      'Non è stato possibile salvare l’anticipo del promemoria. Riprova.';
+
+  @override
+  String get setupNotificationsWho => 'Chi viene avvisato di cosa';
 
   @override
   String get setupObligationNone =>
@@ -20495,6 +20679,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'online_payments': 'Pagamento con carta tramite un fornitore collegato dal suo operatore.',
       'approvals': 'Chi convalida le richieste e quante persone devono essere d\'accordo.',
       'new_members': 'Con cosa inizia un nuovo membro.',
+      'notifications': 'Chi viene avvisato di cosa, e come: nell’app, sul telefono, come promemoria.',
+      'limits': 'Con quanto anticipo, per quanto tempo e quanti posti alla volta prenotano i membri.',
       'kiosk': 'Un tablet all\'ingresso e badge per i membri.',
       'purchases': 'Cosa acquista lo spazio e da chi.',
       'lease': 'L\'affitto e le spese che lo spazio paga.',
@@ -20542,6 +20728,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'online_payments': 'Pagamenti online',
       'approvals': 'Approvazioni',
       'new_members': 'Nuovi membri',
+      'notifications': 'Notifiche',
+      'limits': 'Limiti di prenotazione',
       'kiosk': 'Chiosco e badge',
       'purchases': 'Fornitori e acquisti',
       'lease': 'Il suo affitto',
@@ -21007,6 +21195,136 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get subprocessTaxDesc =>
       'Gestire gruppi, aliquote e dichiarazioni IVA.';
+
+  @override
+  String get supplierFieldEdited => 'Modificato da Lei';
+
+  @override
+  String get supplierFieldNotReturned => 'Non restituito dal registro';
+
+  @override
+  String supplierFieldRetrieved(String provider) {
+    return 'Recuperato da $provider';
+  }
+
+  @override
+  String supplierFieldValidated(String provider) {
+    return 'Convalidato da $provider';
+  }
+
+  @override
+  String get supplierLookupContinueManually => 'Continua manualmente';
+
+  @override
+  String get supplierLookupCountry => 'Paese';
+
+  @override
+  String get supplierLookupCountryMissing => 'Scelga il paese del fornitore.';
+
+  @override
+  String supplierLookupDuplicate(String supplier) {
+    return 'Esiste già un fornitore con questo identificativo: $supplier. Non è stato creato nulla.';
+  }
+
+  @override
+  String get supplierLookupEnterManually => 'Inserire manualmente';
+
+  @override
+  String get supplierLookupFind => 'Cerca i dati dell\'azienda';
+
+  @override
+  String get supplierLookupIdentifier => 'Partita IVA';
+
+  @override
+  String get supplierLookupIdentifierHelp =>
+      'Con o senza prefisso paese; spazi, punti e trattini sono ignorati.';
+
+  @override
+  String get supplierLookupIdentifierMalformed =>
+      'Non sembra una partita IVA: solo lettere e cifre.';
+
+  @override
+  String get supplierLookupIdentifierMissing =>
+      'Inserisca la partita IVA da cercare.';
+
+  @override
+  String get supplierLookupIntro =>
+      'Inserisca la partita IVA del fornitore. Il registro risponde con ciò che possiede; Lei verifica tutto prima di salvare.';
+
+  @override
+  String get supplierLookupInvalidInput =>
+      'Il registro ha rifiutato il formato di questo numero. Lo verifichi, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupMalformed =>
+      'La risposta del registro non è leggibile. Riprovi, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupManualHint => 'Oppure inserisca i dati qui sotto.';
+
+  @override
+  String get supplierLookupNotFound =>
+      'Il registro non conosce questa partita IVA. Verifichi il numero e il paese, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupNothingReturned =>
+      'La partita IVA è valida, ma il registro non ha restituito né nome né indirizzo. Completi i campi Lei stesso.';
+
+  @override
+  String get supplierLookupOpenExisting => 'Apri il fornitore esistente';
+
+  @override
+  String get supplierLookupProviderVies => 'VIES';
+
+  @override
+  String get supplierLookupRefused =>
+      'La ricerca è stata rifiutata: Lei non gestisce i fornitori qui, oppure la verifica IVA è disattivata.';
+
+  @override
+  String get supplierLookupRetry => 'Riprova';
+
+  @override
+  String get supplierLookupReviewHint =>
+      'Verifichi ogni campo qui sotto; può modificare tutto prima di salvare.';
+
+  @override
+  String get supplierLookupSearching => 'Interrogazione del registro…';
+
+  @override
+  String supplierLookupSource(String provider, String time) {
+    return 'Fonte: $provider, $time';
+  }
+
+  @override
+  String get supplierLookupStatusCouldNotVerify =>
+      'Impossibile verificare la partita IVA';
+
+  @override
+  String get supplierLookupStatusRetrievedNotValidated =>
+      'Dati recuperati; partita IVA non convalidata';
+
+  @override
+  String get supplierLookupStatusUnavailable => 'Registro non disponibile';
+
+  @override
+  String get supplierLookupStatusValidated => 'Partita IVA convalidata';
+
+  @override
+  String get supplierLookupThrottled =>
+      'Il registro è sovraccarico. Attenda un momento e riprovi, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupTimeout =>
+      'Il registro non ha risposto in tempo. Riprovi, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupUnavailable =>
+      'Il registro al momento non è disponibile. Riprovi più tardi, oppure continui manualmente.';
+
+  @override
+  String supplierLookupUnsupported(String country) {
+    return 'Nessun registro risponde ancora per $country. Può inserire i dati Lei stesso.';
+  }
 
   @override
   String get suppliersAdd => 'Aggiungi fornitore';

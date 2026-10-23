@@ -83,7 +83,7 @@ const demoMainSpaceDecidedEvidence = {
 
 /// The manual steps Pézenas's owner marked done: the server cannot verify
 /// them, so only the owner's word makes them ready.
-const demoMainSpaceMarkedDone = {'new_members'};
+const demoMainSpaceMarkedDone = {'new_members', 'notifications', 'limits'};
 
 /// The setup guide of the demo's spaces, each from its [spaces] sources;
 /// [rows] holds the spaces' rows, whose features decide what applies, and

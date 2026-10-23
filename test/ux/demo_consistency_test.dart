@@ -220,16 +220,16 @@ void main() {
 
   Future<void> openListed(WidgetTester tester, String id) async {
     await _go(tester, '/discover');
-    await tester.tap(find.byKey(const ValueKey('directory-portal-list')));
     for (var i = 0; i < 5; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }
-    final tile = find.byKey(
-      ValueKey('directory-locate-$kDemoServerOrigin-$id'),
+    // The list is the first face; View opens the space's page.
+    final view = find.byKey(
+      ValueKey('directory-view-$kDemoServerOrigin/$id'),
       skipOffstage: false,
     );
-    await tester.ensureVisible(tile);
-    await tester.tap(tile);
+    await tester.ensureVisible(view);
+    await tester.tap(view);
     for (var i = 0; i < 10; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }
