@@ -629,4 +629,4 @@ revoke execute on function public.mcp_op_mark_setup_step(public.mcp_call_context
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(555);
