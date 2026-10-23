@@ -116,10 +116,10 @@ void main() {
       ProviderScope(
         overrides: [
           ...standardTestOverrides(money: money),
-          fileSaverProvider.overrideWithValue(
+          typedFileSaverProvider.overrideWithValue(
             ({required bytes, required fileName}) async {
               saved.add((name: fileName, body: utf8.decode(bytes)));
-              return 'Download/$fileName';
+              return SavedFile('Download/$fileName');
             },
           ),
         ],
@@ -196,10 +196,10 @@ void main() {
       ProviderScope(
         overrides: [
           ...standardTestOverrides(money: money, workspace: workspace),
-          fileSaverProvider.overrideWithValue(
+          typedFileSaverProvider.overrideWithValue(
             ({required bytes, required fileName}) async {
               saved.add((name: fileName, body: utf8.decode(bytes)));
-              return 'Download/$fileName';
+              return SavedFile('Download/$fileName');
             },
           ),
         ],

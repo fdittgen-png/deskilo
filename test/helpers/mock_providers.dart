@@ -44,6 +44,7 @@ import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_fields_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_roles_repository.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/i18n/app_format.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
@@ -170,6 +171,16 @@ export 'test_clock.dart' show kTestNow, kTestPeriod;
 
 /// #1625 — the installation every standard test's MCP target is on.
 const kTestInstallationId = '00000000-0000-4000-8000-0000000071e5';
+
+/// The typed twin of an untyped test saver: a string answer is a file the
+/// person can find, null a failure — what the untyped fakes always meant.
+/// A fake that throws keeps throwing, so a test of a failed save still
+/// sees the failure.
+TypedFileSaver typedSaverOf(FileSaver saver) =>
+    ({required bytes, required fileName}) async {
+      final path = await saver(bytes: bytes, fileName: fileName);
+      return path == null ? const SaveFailed() : SavedFile(path);
+    };
 
 List<Override> standardTestOverrides({
   FakeMeRepository? me,

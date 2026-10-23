@@ -5334,6 +5334,82 @@
       }
     }
   },
+  "fileDeliveryCancelled": "Abgebrochen – nichts wurde gespeichert.",
+  "@fileDeliveryCancelled": {
+    "description": "Notice when the person closed the Export… choice or the share sheet: nothing saved"
+  },
+  "fileDownloadAgain": "Erneut herunterladen",
+  "@fileDownloadAgain": {
+    "description": "Snackbar action on a browser download request: re-issue the download from a user gesture"
+  },
+  "fileDownloadRequested": "Download angefordert: {fileName}. Wohin die Datei geht, entscheidet Ihr Browser.",
+  "@fileDownloadRequested": {
+    "description": "Notice after a browser download request: the page cannot confirm where the file landed",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileExportKeep": "In Deskilo behalten",
+  "@fileExportKeep": {
+    "description": "iPhone Export… row: keep a private copy inside the app"
+  },
+  "fileExportKeepHint": "Eine private Kopie in der App. Sie erscheint nicht in Dateien.",
+  "@fileExportKeepHint": {
+    "description": "iPhone Export… row subtitle: the copy is app-private, not in Files"
+  },
+  "fileExportShare": "Teilen…",
+  "@fileExportShare": {
+    "description": "iPhone Export… row: hand the file to the system share sheet"
+  },
+  "fileExportShareHint": "Das Systemblatt: In Dateien sichern, wenn es angeboten wird, Mail, AirDrop oder eine andere App.",
+  "@fileExportShareHint": {
+    "description": "iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)"
+  },
+  "fileExportTitle": "Exportieren…",
+  "@fileExportTitle": {
+    "description": "iPhone Export… sheet title: the choice between a private copy in the app and the system share sheet"
+  },
+  "fileHandedToShareSheet": "{fileName} wurde an das Teilen-Blatt übergeben. Wohin die Datei ging, hängt von der gewählten App ab.",
+  "@fileHandedToShareSheet": {
+    "description": "Notice after the system share sheet took the file: not a delivery receipt",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileKeptInApp": "In Deskilo behalten: {fileName}. Die Datei liegt weder in Downloads noch in Dateien – Teilen… schickt sie weiter.",
+  "@fileKeptInApp": {
+    "description": "Notice after a save that only the app can see (Android fallback, iPhone Keep in Deskilo)",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailedBecause": "Datei konnte nicht gespeichert werden: {reason}.",
+  "@fileSaveFailedBecause": {
+    "description": "Error notice with the reason a file could not be saved",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailureNoStorage": "kein Ordner auf diesem Gerät hat sie angenommen",
+  "@fileSaveFailureNoStorage": {
+    "description": "Reason phrase for fileSaveFailedBecause: no writable folder on the device"
+  },
+  "fileSaveFailureShare": "das Teilen-Blatt ließ sich nicht öffnen",
+  "@fileSaveFailureShare": {
+    "description": "Reason phrase for fileSaveFailedBecause: the system share sheet could not open"
+  },
+  "fileSaveFailureWrite": "das Gerät hat das Schreiben verweigert",
+  "@fileSaveFailureWrite": {
+    "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
   "financesAllSpaces": "Alle Spaces",
   "financesAutomatic": "automatisch",
   "@financesAutomatic": {
@@ -5434,6 +5510,15 @@
   "financesReminders": "Erinnerungen",
   "@financesReminders": {
     "description": "Me › Finances"
+  },
+  "financesSourceUnavailable": "Die Dokumente von {host} konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.",
+  "@financesSourceUnavailable": {
+    "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   },
   "financesStateClosed": "Abgeschlossen",
   "@financesStateClosed": {

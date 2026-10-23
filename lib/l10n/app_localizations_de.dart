@@ -7581,6 +7581,59 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get fileDeliveryCancelled => 'Abgebrochen – nichts wurde gespeichert.';
+
+  @override
+  String get fileDownloadAgain => 'Erneut herunterladen';
+
+  @override
+  String fileDownloadRequested(String fileName) {
+    return 'Download angefordert: $fileName. Wohin die Datei geht, entscheidet Ihr Browser.';
+  }
+
+  @override
+  String get fileExportKeep => 'In Deskilo behalten';
+
+  @override
+  String get fileExportKeepHint =>
+      'Eine private Kopie in der App. Sie erscheint nicht in Dateien.';
+
+  @override
+  String get fileExportShare => 'Teilen…';
+
+  @override
+  String get fileExportShareHint =>
+      'Das Systemblatt: In Dateien sichern, wenn es angeboten wird, Mail, AirDrop oder eine andere App.';
+
+  @override
+  String get fileExportTitle => 'Exportieren…';
+
+  @override
+  String fileHandedToShareSheet(String fileName) {
+    return '$fileName wurde an das Teilen-Blatt übergeben. Wohin die Datei ging, hängt von der gewählten App ab.';
+  }
+
+  @override
+  String fileKeptInApp(String fileName) {
+    return 'In Deskilo behalten: $fileName. Die Datei liegt weder in Downloads noch in Dateien – Teilen… schickt sie weiter.';
+  }
+
+  @override
+  String fileSaveFailedBecause(String reason) {
+    return 'Datei konnte nicht gespeichert werden: $reason.';
+  }
+
+  @override
+  String get fileSaveFailureNoStorage =>
+      'kein Ordner auf diesem Gerät hat sie angenommen';
+
+  @override
+  String get fileSaveFailureShare => 'das Teilen-Blatt ließ sich nicht öffnen';
+
+  @override
+  String get fileSaveFailureWrite => 'das Gerät hat das Schreiben verweigert';
+
+  @override
   String get financesAllSpaces => 'Alle Spaces';
 
   @override
@@ -7657,6 +7710,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get financesReminders => 'Erinnerungen';
+
+  @override
+  String financesSourceUnavailable(String host) {
+    return 'Die Dokumente von $host konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.';
+  }
 
   @override
   String get financesStateClosed => 'Abgeschlossen';

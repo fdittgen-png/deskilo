@@ -179,26 +179,28 @@ Future<void> sendEInvoice(
   );
 }
 
-/// Saves [bytes] to Downloads and reports where they landed.
-/// Saves [bytes] into the device Downloads and reports the path — the
-/// shared "download, don't just share" path (#474).
+/// Delivers [bytes] as [fileName] the way this platform can be truthful
+/// about — Downloads, the browser's download, an iPhone's Export… choice —
+/// and tells the person what actually happened: the shared "download,
+/// don't just share" path of every money document (#474). A browser
+/// request offers "Download again", the user gesture a blocked hand-over
+/// needs.
 Future<void> savePdfToDownloads(
   BuildContext context,
   WidgetRef ref, {
   required Uint8List bytes,
   required String fileName,
 }) async {
-  final l10n = context.l10n;
-  final path = await ref.read(fileSaverProvider)(
-    bytes: bytes,
-    fileName: fileName,
-  );
+  final delivery =
+      await deliverFile(context, ref, bytes: bytes, fileName: fileName);
   if (!context.mounted) return;
-  if (path == null) {
-    AppSnack.error(context, l10n.commonSaveFailed);
-  } else {
-    AppSnack.success(context, l10n.commonSavedTo(path));
-  }
+  announceFileDelivery(
+    context,
+    delivery,
+    retry: () => unawaited(
+      savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName),
+    ),
+  );
 }
 
 Future<void> downloadInvoicePdf(

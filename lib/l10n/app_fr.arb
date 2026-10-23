@@ -5334,6 +5334,82 @@
       }
     }
   },
+  "fileDeliveryCancelled": "Annulé — rien n'a été enregistré.",
+  "@fileDeliveryCancelled": {
+    "description": "Notice when the person closed the Export… choice or the share sheet: nothing saved"
+  },
+  "fileDownloadAgain": "Télécharger à nouveau",
+  "@fileDownloadAgain": {
+    "description": "Snackbar action on a browser download request: re-issue the download from a user gesture"
+  },
+  "fileDownloadRequested": "Téléchargement demandé : {fileName}. Votre navigateur décide où il va.",
+  "@fileDownloadRequested": {
+    "description": "Notice after a browser download request: the page cannot confirm where the file landed",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileExportKeep": "Garder dans Deskilo",
+  "@fileExportKeep": {
+    "description": "iPhone Export… row: keep a private copy inside the app"
+  },
+  "fileExportKeepHint": "Une copie privée dans l'application. Elle n'apparaît pas dans Fichiers.",
+  "@fileExportKeepHint": {
+    "description": "iPhone Export… row subtitle: the copy is app-private, not in Files"
+  },
+  "fileExportShare": "Partager…",
+  "@fileExportShare": {
+    "description": "iPhone Export… row: hand the file to the system share sheet"
+  },
+  "fileExportShareHint": "La feuille système : Enregistrer dans Fichiers quand elle le propose, Mail, AirDrop ou une autre application.",
+  "@fileExportShareHint": {
+    "description": "iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)"
+  },
+  "fileExportTitle": "Exporter…",
+  "@fileExportTitle": {
+    "description": "iPhone Export… sheet title: the choice between a private copy in the app and the system share sheet"
+  },
+  "fileHandedToShareSheet": "{fileName} a été remis à la feuille de partage. Sa destination dépend de l'application que vous avez choisie.",
+  "@fileHandedToShareSheet": {
+    "description": "Notice after the system share sheet took the file: not a delivery receipt",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileKeptInApp": "Gardé dans Deskilo : {fileName}. Il n'est ni dans Téléchargements ni dans Fichiers — Partager… l'envoie ailleurs.",
+  "@fileKeptInApp": {
+    "description": "Notice after a save that only the app can see (Android fallback, iPhone Keep in Deskilo)",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailedBecause": "Impossible d'enregistrer le fichier : {reason}.",
+  "@fileSaveFailedBecause": {
+    "description": "Error notice with the reason a file could not be saved",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailureNoStorage": "aucun dossier de cet appareil ne l'a accepté",
+  "@fileSaveFailureNoStorage": {
+    "description": "Reason phrase for fileSaveFailedBecause: no writable folder on the device"
+  },
+  "fileSaveFailureShare": "la feuille de partage n'a pas pu s'ouvrir",
+  "@fileSaveFailureShare": {
+    "description": "Reason phrase for fileSaveFailedBecause: the system share sheet could not open"
+  },
+  "fileSaveFailureWrite": "l'appareil a refusé l'écriture",
+  "@fileSaveFailureWrite": {
+    "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
   "financesAllSpaces": "Tous les espaces",
   "financesAutomatic": "automatique",
   "@financesAutomatic": {
@@ -5434,6 +5510,15 @@
   "financesReminders": "Rappels",
   "@financesReminders": {
     "description": "Me › Finances"
+  },
+  "financesSourceUnavailable": "Les documents de {host} n'ont pas pu être lus pour l'instant ; ce qui est affiché vient de vos autres espaces.",
+  "@financesSourceUnavailable": {
+    "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   },
   "financesStateClosed": "Clôturée",
   "@financesStateClosed": {

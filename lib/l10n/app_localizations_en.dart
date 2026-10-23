@@ -7523,6 +7523,59 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fileDeliveryCancelled => 'Cancelled — nothing was saved.';
+
+  @override
+  String get fileDownloadAgain => 'Download again';
+
+  @override
+  String fileDownloadRequested(String fileName) {
+    return 'Download requested: $fileName. Your browser decides where it goes.';
+  }
+
+  @override
+  String get fileExportKeep => 'Keep in Deskilo';
+
+  @override
+  String get fileExportKeepHint =>
+      'A private copy inside the app. It does not appear in Files.';
+
+  @override
+  String get fileExportShare => 'Share…';
+
+  @override
+  String get fileExportShareHint =>
+      'The system sheet: Save to Files when it is offered, Mail, AirDrop or another app.';
+
+  @override
+  String get fileExportTitle => 'Export…';
+
+  @override
+  String fileHandedToShareSheet(String fileName) {
+    return '$fileName was handed to the share sheet. Where it went is up to the app you chose.';
+  }
+
+  @override
+  String fileKeptInApp(String fileName) {
+    return 'Kept inside Deskilo: $fileName. It is not in Downloads or Files — Share… sends it elsewhere.';
+  }
+
+  @override
+  String fileSaveFailedBecause(String reason) {
+    return 'Could not save the file: $reason.';
+  }
+
+  @override
+  String get fileSaveFailureNoStorage =>
+      'no folder on this device would take it';
+
+  @override
+  String get fileSaveFailureShare => 'the share sheet could not be opened';
+
+  @override
+  String get fileSaveFailureWrite => 'the device refused the write';
+
+  @override
   String get financesAllSpaces => 'All spaces';
 
   @override
@@ -7598,6 +7651,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesReminders => 'Reminders';
+
+  @override
+  String financesSourceUnavailable(String host) {
+    return 'The documents of $host could not be read right now; what is shown comes from your other spaces.';
+  }
 
   @override
   String get financesStateClosed => 'Closed';
