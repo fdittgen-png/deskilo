@@ -111,4 +111,51 @@ void main() {
       expect(repo.answers, isEmpty);
     }
   });
+
+  testWidgets('a change of setup levels names each level and every feature '
+      'it switches on and off', (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'apply_setup_levels',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'presentation': 'public'},
+        target: {
+          'kind': 'setup_levels',
+          'changes': [
+            {'process': 'presentation', 'from': 'branded', 'to': 'public'},
+          ],
+          'switch_on': ['publicListings'],
+          'switch_off': ['workspaceBranding'],
+        },
+      ),
+    );
+    expect(find.text('Change the setup levels'), findsOneWidget);
+    expect(find.text('Presentation: Public page'), findsOneWidget);
+    expect(find.textContaining('Switches on: Public workspace listing'), findsOneWidget);
+    expect(find.textContaining('Switches off: Workspace colours. Their data is kept.'),
+        findsOneWidget);
+  });
+
+  testWidgets('a setup step names the step and what becomes of it',
+      (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'mark_setup_step',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'step': 'new_members'},
+        target: {'kind': 'setup_step', 'step': 'new_members', 'marked': 'done'},
+      ),
+    );
+    expect(find.text('Mark a setup step done or for later'), findsOneWidget);
+    expect(find.text('New members'), findsOneWidget);
+    expect(find.text('It will be marked as done.'), findsOneWidget);
+  });
 }

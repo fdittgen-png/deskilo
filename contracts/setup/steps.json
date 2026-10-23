@@ -9,7 +9,8 @@
     "required": true,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 3
+    "estimate_minutes": 3,
+    "secret": false
   },
   {
     "id": "hours",
@@ -23,7 +24,8 @@
       "basics"
     ],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "places",
@@ -37,7 +39,8 @@
       "basics"
     ],
     "actor": "owner",
-    "estimate_minutes": 10
+    "estimate_minutes": 10,
+    "secret": false
   },
   {
     "id": "member_rights",
@@ -49,7 +52,8 @@
     "required": true,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 1
+    "estimate_minutes": 1,
+    "secret": false
   },
   {
     "id": "invite",
@@ -63,7 +67,8 @@
       "member_rights"
     ],
     "actor": "owner",
-    "estimate_minutes": 3
+    "estimate_minutes": 3,
+    "secret": false
   },
   {
     "id": "pricing",
@@ -75,7 +80,8 @@
     "required": true,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 10
+    "estimate_minutes": 10,
+    "secret": false
   },
   {
     "id": "services",
@@ -87,7 +93,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "payment_methods",
@@ -101,7 +108,8 @@
       "pricing"
     ],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "online_payments",
@@ -115,7 +123,8 @@
       "payment_methods"
     ],
     "actor": "operator",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": true
   },
   {
     "id": "approvals",
@@ -129,7 +138,8 @@
       "invite"
     ],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "new_members",
@@ -141,7 +151,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 3
+    "estimate_minutes": 3,
+    "secret": false
   },
   {
     "id": "kiosk",
@@ -153,7 +164,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "purchases",
@@ -165,7 +177,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "lease",
@@ -177,7 +190,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "assets",
@@ -189,7 +203,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "look",
@@ -201,7 +216,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "public_page",
@@ -213,7 +229,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "legal_identity",
@@ -225,7 +242,8 @@
     "required": true,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "vat",
@@ -239,7 +257,8 @@
       "legal_identity"
     ],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "numbering",
@@ -253,7 +272,8 @@
       "legal_identity"
     ],
     "actor": "owner",
-    "estimate_minutes": 3
+    "estimate_minutes": 3,
+    "secret": false
   },
   {
     "id": "documents",
@@ -267,7 +287,8 @@
       "legal_identity"
     ],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "einvoicing",
@@ -282,7 +303,8 @@
       "numbering"
     ],
     "actor": "owner",
-    "estimate_minutes": 15
+    "estimate_minutes": 15,
+    "secret": true
   },
   {
     "id": "accounting",
@@ -296,7 +318,8 @@
       "vat"
     ],
     "actor": "owner",
-    "estimate_minutes": 10
+    "estimate_minutes": 10,
+    "secret": false
   },
   {
     "id": "reminders",
@@ -308,7 +331,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "first_booking",
@@ -323,7 +347,8 @@
       "member_rights"
     ],
     "actor": "owner",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   },
   {
     "id": "recovery",
@@ -335,7 +360,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 2
+    "estimate_minutes": 2,
+    "secret": false
   },
   {
     "id": "assistant",
@@ -347,6 +373,7 @@
     "required": false,
     "depends_on": [],
     "actor": "operator",
-    "estimate_minutes": 5
+    "estimate_minutes": 5,
+    "secret": false
   }
 ]

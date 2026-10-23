@@ -82,7 +82,12 @@
                           "deskilo_request_subscription_change",
                           "deskilo_list_pending_validations",
                           "deskilo_get_validation",
-                          "deskilo_respond_to_validation"
+                          "deskilo_respond_to_validation",
+                          "deskilo_get_setup_status",
+                          "deskilo_list_setup_levels",
+                          "deskilo_preview_setup_levels",
+                          "deskilo_apply_setup_levels",
+                          "deskilo_mark_setup_step"
                         ]
                       },
                       "arguments": {
@@ -1203,7 +1208,12 @@
               "request_subscription_change",
               "list_pending_validations",
               "get_validation",
-              "respond_to_validation"
+              "respond_to_validation",
+              "get_setup_status",
+              "list_setup_levels",
+              "preview_setup_levels",
+              "apply_setup_levels",
+              "mark_setup_step"
             ]
           },
           "workspace_id": {
@@ -2384,6 +2394,327 @@
         ],
         "x-operation": "respond_to_validation",
         "x-rpc": "respond_to_event",
+        "x-handler": true
+      },
+      "GetSetupStatusInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "x-operation": "get_setup_status",
+        "x-rpc": "workspace_setup_status",
+        "x-handler": true
+      },
+      "ListSetupLevelsInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "x-operation": "list_setup_levels",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "PreviewSetupLevelsInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "preset": {
+            "type": "string",
+            "enum": [
+              "essentiel",
+              "standard",
+              "complet"
+            ],
+            "description": "A quick start: essentiel (bookings and statements, no invoices or VAT), standard or complet. A process named alongside overrides its level.",
+            "examples": [
+              "essentiel"
+            ]
+          },
+          "bookings": {
+            "type": "string",
+            "enum": [
+              "simple",
+              "resources",
+              "measured"
+            ],
+            "description": "The level of bookings, lowest first: simple, resources, measured. Left out: it keeps its level."
+          },
+          "community": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "organised"
+            ],
+            "description": "The level of community, lowest first: basic, organised. Left out: it keeps its level."
+          },
+          "money": {
+            "type": "string",
+            "enum": [
+              "none",
+              "statements",
+              "invoices"
+            ],
+            "description": "The level of money, lowest first: none, statements, invoices. Left out: it keeps its level."
+          },
+          "payments": {
+            "type": "string",
+            "enum": [
+              "off",
+              "online"
+            ],
+            "description": "The level of payments, lowest first: off, online. Left out: it keeps its level."
+          },
+          "tax": {
+            "type": "string",
+            "enum": [
+              "none",
+              "vat",
+              "books"
+            ],
+            "description": "The level of tax, lowest first: none, vat, books. Left out: it keeps its level."
+          },
+          "purchases": {
+            "type": "string",
+            "enum": [
+              "none",
+              "expenses",
+              "full"
+            ],
+            "description": "The level of purchases, lowest first: none, expenses, full. Left out: it keeps its level."
+          },
+          "presentation": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "branded",
+              "public"
+            ],
+            "description": "The level of presentation, lowest first: basic, branded, public. Left out: it keeps its level."
+          },
+          "operations": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "insight",
+              "advanced"
+            ],
+            "description": "The level of operations, lowest first: basic, insight, advanced. Left out: it keeps its level."
+          },
+          "assistant": {
+            "type": "string",
+            "enum": [
+              "off",
+              "on"
+            ],
+            "description": "The level of assistant, lowest first: off, on. Left out: it keeps its level."
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "x-operation": "preview_setup_levels",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "ApplySetupLevelsInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "preset": {
+            "type": "string",
+            "enum": [
+              "essentiel",
+              "standard",
+              "complet"
+            ],
+            "description": "A quick start: essentiel (bookings and statements, no invoices or VAT), standard or complet. A process named alongside overrides its level.",
+            "examples": [
+              "essentiel"
+            ]
+          },
+          "bookings": {
+            "type": "string",
+            "enum": [
+              "simple",
+              "resources",
+              "measured"
+            ],
+            "description": "The level of bookings, lowest first: simple, resources, measured. Left out: it keeps its level."
+          },
+          "community": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "organised"
+            ],
+            "description": "The level of community, lowest first: basic, organised. Left out: it keeps its level."
+          },
+          "money": {
+            "type": "string",
+            "enum": [
+              "none",
+              "statements",
+              "invoices"
+            ],
+            "description": "The level of money, lowest first: none, statements, invoices. Left out: it keeps its level."
+          },
+          "payments": {
+            "type": "string",
+            "enum": [
+              "off",
+              "online"
+            ],
+            "description": "The level of payments, lowest first: off, online. Left out: it keeps its level."
+          },
+          "tax": {
+            "type": "string",
+            "enum": [
+              "none",
+              "vat",
+              "books"
+            ],
+            "description": "The level of tax, lowest first: none, vat, books. Left out: it keeps its level."
+          },
+          "purchases": {
+            "type": "string",
+            "enum": [
+              "none",
+              "expenses",
+              "full"
+            ],
+            "description": "The level of purchases, lowest first: none, expenses, full. Left out: it keeps its level."
+          },
+          "presentation": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "branded",
+              "public"
+            ],
+            "description": "The level of presentation, lowest first: basic, branded, public. Left out: it keeps its level."
+          },
+          "operations": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "insight",
+              "advanced"
+            ],
+            "description": "The level of operations, lowest first: basic, insight, advanced. Left out: it keeps its level."
+          },
+          "assistant": {
+            "type": "string",
+            "enum": [
+              "off",
+              "on"
+            ],
+            "description": "The level of assistant, lowest first: off, on. Left out: it keeps its level."
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id"
+        ],
+        "x-operation": "apply_setup_levels",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "MarkSetupStepInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "step": {
+            "type": "string",
+            "enum": [
+              "invite",
+              "services",
+              "new_members",
+              "kiosk",
+              "purchases",
+              "lease",
+              "assets",
+              "look",
+              "public_page",
+              "documents",
+              "reminders",
+              "recovery",
+              "assistant"
+            ],
+            "description": "The step id, from deskilo_get_setup_status.",
+            "examples": [
+              "new_members"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "step"
+        ],
+        "x-operation": "mark_setup_step",
+        "x-rpc": "acknowledge_setup_step",
         "x-handler": true
       }
     }

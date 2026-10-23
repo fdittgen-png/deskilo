@@ -50,5 +50,6 @@
   "mfaWrong": "Dieser Code wurde nicht akzeptiert. Versuchen Sie den aktuellen.",
   "mfaVerify": "Bestätigen",
   "mcpApiReference": "API-Referenz",
-  "mcpApiReferenceHint": "Was ein Assistent aufrufen kann und wie es autorisiert wird"
+  "mcpApiReferenceHint": "Was ein Assistent aufrufen kann und wie es autorisiert wird",
+  "mcpGroupSetup": "Einrichtung des Raums"
 }
