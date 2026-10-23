@@ -19256,6 +19256,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupGuideLater => 'Für ein späteres Ziel';
 
   @override
+  String get setupGuideLevelsLink => 'Wählen, was Ihr Raum tut';
+
+  @override
   String get setupGuideMarkDone => 'Als erledigt markieren';
 
   @override
@@ -19296,12 +19299,173 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String setupLevelName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'bookings_simple': 'Geteilte Plätze',
+      'bookings_resources': 'Räume und Ressourcen',
+      'bookings_measured': 'Gemessene Nutzung',
+      'community_basic': 'Einfach',
+      'community_organised': 'Organisiert',
+      'money_none': 'Kein Geld',
+      'money_statements': 'Kontoauszüge',
+      'money_invoices': 'Rechnungen',
+      'payments_off': 'Per Überweisung',
+      'payments_online': 'Online',
+      'tax_none': 'Keine USt.',
+      'tax_vat': 'USt.',
+      'tax_books': 'Buchhaltung',
+      'purchases_none': 'Keiner',
+      'purchases_expenses': 'Ausgaben',
+      'purchases_full': 'Voller Einkauf',
+      'presentation_basic': 'Einfach',
+      'presentation_branded': 'Ihre Farben',
+      'presentation_public': 'Öffentliche Seite',
+      'operations_basic': 'Einfach',
+      'operations_insight': 'Kennzahlen',
+      'operations_advanced': 'Fortgeschritten',
+      'assistant_off': 'Aus',
+      'assistant_on': 'An',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupLevelsApplied => 'Ihr Raum tut jetzt, was Sie gewählt haben.';
+
+  @override
+  String get setupLevelsApply => 'Anwenden';
+
+  @override
+  String setupLevelsBecause(String reason) {
+    return 'Weil $reason';
+  }
+
+  @override
+  String get setupLevelsChoice => 'Was er braucht';
+
+  @override
+  String get setupLevelsConfirmOff =>
+      'Einige Funktionen werden ausgeschaltet. Ihre Daten bleiben, aber sie arbeiten nicht mehr, bis sie wieder eingeschaltet werden.';
+
+  @override
+  String get setupLevelsConflict =>
+      'Die Funktionen haben sich inzwischen geändert. Sehen Sie erneut nach und wenden Sie dann an.';
+
+  @override
+  String setupLevelsGap(String level, String needed) {
+    return '$level braucht $needed';
+  }
+
+  @override
+  String get setupLevelsIntro =>
+      'Beantworten Sie ein paar einfache Fragen: Jeder Prozess erhält die Stufe, die sie verlangen, mit Begründung. Ändern Sie eine Stufe von Hand. Nichts ändert sich vor dem Anwenden, und die Vorschau nennt jede Funktion, die ein- oder ausgeschaltet wird.';
+
+  @override
+  String get setupLevelsNoChange =>
+      'Nichts ändert sich: Der Raum tut das bereits.';
+
+  @override
+  String get setupLevelsPresets => 'Schnellstart';
+
+  @override
+  String get setupLevelsQuestions => 'Über Ihren Raum';
+
+  @override
+  String setupLevelsSwitchOff(String features) {
+    return 'Schaltet aus: $features';
+  }
+
+  @override
+  String setupLevelsSwitchOn(String features) {
+    return 'Schaltet ein: $features';
+  }
+
+  @override
+  String get setupLevelsTitle => 'Was Ihr Raum tut';
+
+  @override
   String setupMilestoneName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookable': 'Buchungen annehmen',
       'money': 'Bereit für Zahlungen',
       'invoice': 'Bereit zur Rechnungsstellung',
       'live': 'Live',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupPresetName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'essentiel': 'Basis',
+      'standard': 'Standard',
+      'complet': 'Komplett',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupProcessName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'bookings': 'Buchungen',
+      'community': 'Gemeinschaft',
+      'money': 'Geld',
+      'payments': 'Zahlungen',
+      'tax': 'Steuern',
+      'purchases': 'Einkauf',
+      'presentation': 'Auftritt',
+      'operations': 'Betrieb',
+      'assistant': 'Assistent',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupQuestion(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'members_owe_money':
+          'Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)',
+      'issue_invoices': 'Sie stellen Rechnungen',
+      'pay_online': 'Mitglieder zahlen online',
+      'vat_registered': 'Der Raum ist umsatzsteuerpflichtig',
+      'keep_books': 'Sie führen Bücher',
+      'tracks_purchases': 'Sie verfolgen, was der Raum einkauft',
+      'several_rooms_or_sites':
+          'Mehrere Räume, ein Besprechungsraum oder mehrere Standorte',
+      'door_tablet': 'Ein Tablet am Eingang erfasst die Ankunft',
+      'public_page': 'Eine öffentliche Seite zeigt den Raum',
+      'organised': 'Gremien, eigene Rollen oder Freigaben durch mehrere',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupReason(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'door_tablet': 'ein Tablet am Eingang die Ankunft erfasst',
+      'keeps_books': 'Sie Bücher führen',
+      'later': 'ein Assistent später kommen kann',
+      'members_only': 'nur Mitglieder den Raum sehen',
+      'members_owe': 'Mitglieder dem Raum Geld schulden',
+      'no_money': 'kein Geld fließt',
+      'no_purchases': 'der Raum keine Einkäufe verfolgt',
+      'no_vat': 'der Raum nicht umsatzsteuerpflichtig ist',
+      'organised': 'mehrere gemeinsam entscheiden',
+      'pay_by_transfer': 'Mitglieder per Überweisung zahlen',
+      'pay_online': 'Mitglieder online zahlen',
+      'public_page': 'der Raum eine öffentliche Seite hat',
+      'several_rooms': 'es mehrere Räume oder Standorte gibt',
+      'shared_places': 'Mitglieder die Plätze teilen',
+      'small_community': 'die Gemeinschaft klein ist',
+      'start_simple': 'es einfach beginnen soll',
+      'tracks_purchases': 'Sie verfolgen, was der Raum einkauft',
+      'vat_registered': 'der Raum umsatzsteuerpflichtig ist',
+      'issues_invoices': 'Sie Rechnungen stellen',
       'other': '$key',
     });
     return '$_temp0';

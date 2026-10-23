@@ -19277,6 +19277,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupGuideLater => 'Pour une étape suivante';
 
   @override
+  String get setupGuideLevelsLink => 'Choisir ce que fait votre espace';
+
+  @override
   String get setupGuideMarkDone => 'Marquer comme fait';
 
   @override
@@ -19317,12 +19320,173 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String setupLevelName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'bookings_simple': 'Places partagées',
+      'bookings_resources': 'Salles et ressources',
+      'bookings_measured': 'Usage mesuré',
+      'community_basic': 'Simple',
+      'community_organised': 'Organisée',
+      'money_none': 'Pas d’argent',
+      'money_statements': 'Relevés',
+      'money_invoices': 'Factures',
+      'payments_off': 'Par virement',
+      'payments_online': 'En ligne',
+      'tax_none': 'Pas de TVA',
+      'tax_vat': 'TVA',
+      'tax_books': 'Comptabilité',
+      'purchases_none': 'Aucun',
+      'purchases_expenses': 'Dépenses',
+      'purchases_full': 'Achats complets',
+      'presentation_basic': 'Simple',
+      'presentation_branded': 'Vos couleurs',
+      'presentation_public': 'Page publique',
+      'operations_basic': 'Simple',
+      'operations_insight': 'Indicateurs',
+      'operations_advanced': 'Avancé',
+      'assistant_off': 'Désactivé',
+      'assistant_on': 'Activé',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupLevelsApplied =>
+      'Votre espace fait désormais ce que vous avez choisi.';
+
+  @override
+  String get setupLevelsApply => 'Appliquer';
+
+  @override
+  String setupLevelsBecause(String reason) {
+    return 'Parce que $reason';
+  }
+
+  @override
+  String get setupLevelsChoice => 'Ce qu’il lui faut';
+
+  @override
+  String get setupLevelsConfirmOff =>
+      'Certaines fonctions seront désactivées. Leurs données restent, mais elles ne fonctionnent plus jusqu’à leur réactivation.';
+
+  @override
+  String get setupLevelsConflict =>
+      'Les fonctions ont changé entre-temps. Regardez à nouveau, puis appliquez.';
+
+  @override
+  String setupLevelsGap(String level, String needed) {
+    return '$level demande $needed';
+  }
+
+  @override
+  String get setupLevelsIntro =>
+      'Répondez à quelques questions simples : chaque processus reçoit le niveau qu’elles demandent, avec la raison. Modifiez un niveau à la main. Rien ne change avant d’appliquer, et l’aperçu nomme chaque fonction activée ou désactivée.';
+
+  @override
+  String get setupLevelsNoChange => 'Rien ne change : l’espace le fait déjà.';
+
+  @override
+  String get setupLevelsPresets => 'Démarrage rapide';
+
+  @override
+  String get setupLevelsQuestions => 'À propos de votre espace';
+
+  @override
+  String setupLevelsSwitchOff(String features) {
+    return 'Désactive : $features';
+  }
+
+  @override
+  String setupLevelsSwitchOn(String features) {
+    return 'Active : $features';
+  }
+
+  @override
+  String get setupLevelsTitle => 'Ce que fait votre espace';
+
+  @override
   String setupMilestoneName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookable': 'Prendre des réservations',
       'money': 'Prêt pour l\'argent',
       'invoice': 'Prêt à facturer',
       'live': 'En service',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupPresetName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'essentiel': 'Essentiel',
+      'standard': 'Standard',
+      'complet': 'Complet',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupProcessName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'bookings': 'Réservations',
+      'community': 'Communauté',
+      'money': 'Argent',
+      'payments': 'Paiements',
+      'tax': 'Fiscalité',
+      'purchases': 'Achats',
+      'presentation': 'Présentation',
+      'operations': 'Fonctionnement',
+      'assistant': 'Assistant',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupQuestion(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'members_owe_money':
+          'Les membres doivent de l’argent à l’espace (loyer, carnets, extras)',
+      'issue_invoices': 'Vous émettez des factures',
+      'pay_online': 'Les membres paient en ligne',
+      'vat_registered': 'L’espace est assujetti à la TVA',
+      'keep_books': 'Vous tenez une comptabilité',
+      'tracks_purchases': 'Vous suivez les achats de l’espace',
+      'several_rooms_or_sites':
+          'Plusieurs salles, une salle de réunion ou plusieurs sites',
+      'door_tablet': 'Une tablette à l’entrée enregistre les arrivées',
+      'public_page': 'Une page publique présente l’espace',
+      'organised': 'Comités, rôles propres ou validations à plusieurs',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupReason(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'door_tablet': 'une tablette à l’entrée enregistre les arrivées',
+      'keeps_books': 'vous tenez une comptabilité',
+      'later': 'un assistant peut venir plus tard',
+      'members_only': 'seuls les membres voient l’espace',
+      'members_owe': 'les membres doivent de l’argent à l’espace',
+      'no_money': 'aucun argent ne circule',
+      'no_purchases': 'l’espace ne suit pas ses achats',
+      'no_vat': 'l’espace n’est pas assujetti à la TVA',
+      'organised': 'plusieurs personnes décident ensemble',
+      'pay_by_transfer': 'les membres paient par virement',
+      'pay_online': 'les membres paient en ligne',
+      'public_page': 'l’espace a une page publique',
+      'several_rooms': 'il y a plusieurs salles ou sites',
+      'shared_places': 'les membres partagent les places',
+      'small_community': 'une petite communauté',
+      'start_simple': 'commencer simplement',
+      'tracks_purchases': 'vous suivez les achats de l’espace',
+      'vat_registered': 'l’espace est assujetti à la TVA',
+      'issues_invoices': 'vous émettez des factures',
       'other': '$key',
     });
     return '$_temp0';
