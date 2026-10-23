@@ -6895,6 +6895,48 @@ abstract class AppLocalizations {
   /// **'View as'**
   String get demoSessionViewAs;
 
+  /// #2872 the setup guide in the demo: demoSetupCardBody
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing you do here leaves this device, and you can reset the demo to how it started at any time.'**
+  String get demoSetupCardBody;
+
+  /// #2872 the setup guide in the demo: demoSetupCardComplete
+  ///
+  /// In en, this message translates to:
+  /// **'This space has done every step of its setup.'**
+  String get demoSetupCardComplete;
+
+  /// #2872 the setup guide in the demo: demoSetupCardHalfDone
+  ///
+  /// In en, this message translates to:
+  /// **'This space is half way through its setup.'**
+  String get demoSetupCardHalfDone;
+
+  /// #2872 the setup guide in the demo: demoSetupCardOpenComplete
+  ///
+  /// In en, this message translates to:
+  /// **'See a space fully set up: {space}'**
+  String demoSetupCardOpenComplete(String space);
+
+  /// #2872 the setup guide in the demo: demoSetupCardOpenHalfDone
+  ///
+  /// In en, this message translates to:
+  /// **'See a space half way: {space}'**
+  String demoSetupCardOpenHalfDone(String space);
+
+  /// #2872 the setup guide in the demo: demoSetupCardTitle
+  ///
+  /// In en, this message translates to:
+  /// **'How the demo works'**
+  String get demoSetupCardTitle;
+
+  /// #2872 the setup guide in the demo: demoSetupCardWhere
+  ///
+  /// In en, this message translates to:
+  /// **'You are in {space}, viewing it as: {persona}'**
+  String demoSetupCardWhere(String space, String persona);
+
   /// #988/#990 deployments: deployEntityAccessories
   ///
   /// In en, this message translates to:
@@ -32621,6 +32663,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The basics could not be saved. Try again.'**
   String get setupBasicsSaveFailed;
+
+  /// #2869 setup drafts: another configurer changed the setup step's draft meanwhile
+  ///
+  /// In en, this message translates to:
+  /// **'Changed by someone else while you were editing.'**
+  String get setupDraftChanged;
+
+  /// #2869 setup drafts: the action on that notice: drop the draft
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get setupDraftDiscard;
+
+  /// #2869 setup drafts: save my answers over theirs
+  ///
+  /// In en, this message translates to:
+  /// **'Keep mine'**
+  String get setupDraftKeepMine;
+
+  /// #2869 setup drafts: a setup step's draft save failed; a retry button follows
+  ///
+  /// In en, this message translates to:
+  /// **'Draft not saved — your answers are still here.'**
+  String get setupDraftNotSaved;
+
+  /// #2869 setup drafts: take the other configurer's answers
+  ///
+  /// In en, this message translates to:
+  /// **'Reload'**
+  String get setupDraftReload;
+
+  /// #2869 setup drafts: the notice above a setup step whose unsaved answers were restored from the server
+  ///
+  /// In en, this message translates to:
+  /// **'Draft restored: these answers are not applied yet.'**
+  String get setupDraftRestored;
+
+  /// #2869 setup drafts: once the server confirmed the setup step's draft
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved'**
+  String get setupDraftSaved;
+
+  /// #2869 setup drafts: while a setup step's draft is being saved
+  ///
+  /// In en, this message translates to:
+  /// **'Saving draft…'**
+  String get setupDraftSaving;
 
   /// #2875 setup grow steps: setupGrowBooksAccrual
   ///

@@ -4704,6 +4704,52 @@
   "@demoSessionViewAs": {
     "description": "#1376 demo personas: demoSessionViewAs"
   },
+  "demoSetupCardBody": "Nothing you do here leaves this device, and you can reset the demo to how it started at any time.",
+  "@demoSetupCardBody": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardBody"
+  },
+  "demoSetupCardComplete": "This space has done every step of its setup.",
+  "@demoSetupCardComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardComplete"
+  },
+  "demoSetupCardHalfDone": "This space is half way through its setup.",
+  "@demoSetupCardHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardHalfDone"
+  },
+  "demoSetupCardOpenComplete": "See a space fully set up: {space}",
+  "@demoSetupCardOpenComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenComplete",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardOpenHalfDone": "See a space half way: {space}",
+  "@demoSetupCardOpenHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenHalfDone",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardTitle": "How the demo works",
+  "@demoSetupCardTitle": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
+  },
+  "demoSetupCardWhere": "You are in {space}, viewing it as: {persona}",
+  "@demoSetupCardWhere": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardWhere",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "persona": {
+        "type": "String"
+      }
+    }
+  },
   "deployEntityAccessories": "Accessories",
   "@deployEntityAccessories": {
     "description": "#988/#990 deployments: deployEntityAccessories"
@@ -22285,6 +22331,38 @@
   "setupBasicsSaveFailed": "The basics could not be saved. Try again.",
   "@setupBasicsSaveFailed": {
     "description": "#2870 setup steps: setupBasicsSaveFailed"
+  },
+  "setupDraftChanged": "Changed by someone else while you were editing.",
+  "@setupDraftChanged": {
+    "description": "#2869 setup drafts: another configurer changed the setup step's draft meanwhile"
+  },
+  "setupDraftDiscard": "Discard",
+  "@setupDraftDiscard": {
+    "description": "#2869 setup drafts: the action on that notice: drop the draft"
+  },
+  "setupDraftKeepMine": "Keep mine",
+  "@setupDraftKeepMine": {
+    "description": "#2869 setup drafts: save my answers over theirs"
+  },
+  "setupDraftNotSaved": "Draft not saved — your answers are still here.",
+  "@setupDraftNotSaved": {
+    "description": "#2869 setup drafts: a setup step's draft save failed; a retry button follows"
+  },
+  "setupDraftReload": "Reload",
+  "@setupDraftReload": {
+    "description": "#2869 setup drafts: take the other configurer's answers"
+  },
+  "setupDraftRestored": "Draft restored: these answers are not applied yet.",
+  "@setupDraftRestored": {
+    "description": "#2869 setup drafts: the notice above a setup step whose unsaved answers were restored from the server"
+  },
+  "setupDraftSaved": "Draft saved",
+  "@setupDraftSaved": {
+    "description": "#2869 setup drafts: once the server confirmed the setup step's draft"
+  },
+  "setupDraftSaving": "Saving draft…",
+  "@setupDraftSaving": {
+    "description": "#2869 setup drafts: while a setup step's draft is being saved"
   },
   "setupGrowBooksAccrual": "Income counts when it is invoiced.",
   "@setupGrowBooksAccrual": {

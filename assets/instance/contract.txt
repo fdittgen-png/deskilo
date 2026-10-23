@@ -1308,6 +1308,14 @@ constraint setting_values.setting_values_scope_check CHECK ((scope = ANY (ARRAY[
 constraint setting_values.setting_values_scope_workspace CHECK (((scope = 'platform'::text) = (workspace_id IS NULL)))
 constraint setting_values.setting_values_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint setting_values.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint setup_step_drafts.setup_step_drafts_key UNIQUE (workspace_id, step)
+constraint setup_step_drafts.setup_step_drafts_payload_object CHECK (((payload IS NULL) OR (jsonb_typeof(payload) = 'object'::text)))
+constraint setup_step_drafts.setup_step_drafts_pkey PRIMARY KEY (id)
+constraint setup_step_drafts.setup_step_drafts_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES auth.users(id) ON DELETE SET NULL
+constraint setup_step_drafts.setup_step_drafts_version_check CHECK ((version > 0))
+constraint setup_step_drafts.setup_step_drafts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint setup_step_drafts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint setup_step_drafts.system_company_present CHECK ((company_id IS NOT NULL))
 constraint sites.sites_city_check CHECK ((char_length(city) <= 120))
 constraint sites.sites_country_code_check CHECK ((char_length(country_code) <= 2))
 constraint sites.sites_legal_id_check CHECK ((char_length(legal_id) <= 40))
@@ -1813,6 +1821,7 @@ routine public.desk_room_visible(p_desk uuid) -> boolean | function | definer | 
 routine public.deskilo_schema_version() -> integer | function | invoker | stable | exec:anon,authenticated,service_role | body:f2f88751992a
 routine public.direct_conversation(p_workspace_id uuid, p_other_member_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:317959433a98
 routine public.directory_identity_unlinked() -> trigger | function | definer | volatile | exec:service_role | body:ee068aa5fb8e
+routine public.discard_setup_step_draft(p_workspace_id uuid, p_step text, p_expected_version integer) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:f3a158307f8f
 routine public.distribute_expense(p_workspace_id uuid, p_title text, p_amount_cents integer, p_method text, p_period text, p_shares jsonb, p_source_event_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:3010ff33462d
 routine public.document_site_for_member(p_member_id uuid) -> sites | function | definer | stable | exec:authenticated,service_role | body:f9884a94d124
 routine public.dunning_rules_sync_setting() -> trigger | function | definer | volatile | exec:service_role | body:42537c6febc6
@@ -1867,6 +1876,7 @@ routine public.floor_plan_rows(p_tree jsonb) -> TABLE(key text, data jsonb) | fu
 routine public.forward_message(p_kind text, p_message_id uuid, p_target_kind text, p_target_id uuid, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c8d07684e4eb
 routine public.gen_invite_code() -> text | function | invoker | volatile | exec:service_role | body:250cc8705573
 routine public.generate_closure_days(p_workspace_id uuid, p_country text, p_year integer, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:880a7391ee48
+routine public.get_setup_step_draft(p_workspace_id uuid, p_step text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:25b8cb9ff27d
 routine public.give_lease_notice_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_notice_given_on date, p_effective_end date, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:dc904a69eea9
 routine public.grant_database_admin_internal(p_target uuid, p_can_provision boolean, p_granted_by text) -> jsonb | function | definer | volatile | exec:service_role | body:f424674c09a4
 routine public.grant_workspace_template(p_template_id uuid, p_email text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:234a872cde5d
@@ -2407,6 +2417,7 @@ routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer,
 routine public.save_premises_lease_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_payload jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61eb984039bb
 routine public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:29680ce96d4a
 routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supplier_id uuid, p_available_from date, p_available_until date, p_cost_kind text, p_cost_cents bigint, p_period text, p_status text, p_document_id uuid, p_revision integer, p_audience_all boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:558593482042
+routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
 routine public.save_supplier(p_workspace_id uuid, p_supplier_id uuid, p_name text, p_tax_id text, p_tax_id_kind text, p_street text, p_postal_code text, p_city text, p_country_code text, p_contact text, p_number text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:fb9648b86402
 routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_period_end date, p_lines jsonb, p_total_net_cents integer, p_total_vat_cents integer, p_currency text, p_invoice_count integer) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0729051c79e0
 routine public.save_workspace_as_template(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[]) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:21c016636d3b
@@ -2506,6 +2517,7 @@ routine public.settle_invoices_v1(p_workspace_id uuid, p_member_id uuid, p_invoi
 routine public.settle_lease_charges_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_period_start date, p_period_end date, p_actual_cents bigint, p_due_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8768f6aaadf
 routine public.settle_online_payment(p_provider text, p_order_id text, p_capture_id text, p_amount_cents integer) -> void | function | definer | volatile | exec:service_role | body:a0e1b0cafb37
 routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:1280fabc1a66
+routine public.setup_step_drafts_step_known() -> trigger | function | invoker | volatile | exec:service_role | body:37c49c4ff5dc
 routine public.shared_workspaces_of_group(p_group uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:1335fc9c3a85
 routine public.shared_workspaces_with(p_user uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:ab5de07c3a62
 routine public.shares_workspace_with(other uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:e85ad0fc6fb5
@@ -2892,6 +2904,8 @@ trigger seats.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEF
 trigger services.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.services FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setting_definitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_definitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setting_values.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_values FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger setup_step_drafts.setup_step_drafts_step_known CREATE TRIGGER setup_step_drafts_step_known BEFORE INSERT OR UPDATE OF step ON public.setup_step_drafts FOR EACH ROW EXECUTE FUNCTION setup_step_drafts_step_known()
+trigger setup_step_drafts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setup_step_drafts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger sites.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.sites FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger space_inquiries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.space_inquiries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger space_inquiry_messages.inquiry_messages_refs_guard CREATE TRIGGER inquiry_messages_refs_guard BEFORE INSERT OR UPDATE OF body ON public.space_inquiry_messages FOR EACH ROW EXECUTE FUNCTION inquiry_messages_refs_guard()

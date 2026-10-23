@@ -19,16 +19,16 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_money_seed.dart:221` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:227` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:243` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:137` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:145` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:153` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:162` | label | Chiara · QR | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:174` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:181` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:188` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:276` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_second_space_seed.dart:320` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_second_space_seed.dart:327` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:144` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:152` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:160` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:169` | label | Chiara · QR | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:181` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:188` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:195` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:283` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_second_space_seed.dart:327` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_second_space_seed.dart:334` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:12` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:13` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/core/instance/instance_builder.dart:14` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |

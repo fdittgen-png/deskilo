@@ -2740,6 +2740,52 @@
   "@demoSessionViewAs": {
     "description": "#1376 demo personas: demoSessionViewAs"
   },
+  "demoSetupCardBody": "Nichts, was Sie hier tun, verlässt dieses Gerät, und Sie können die Demo jederzeit auf ihren Anfang zurücksetzen.",
+  "@demoSetupCardBody": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardBody"
+  },
+  "demoSetupCardComplete": "Dieser Raum hat jeden Schritt seiner Einrichtung erledigt.",
+  "@demoSetupCardComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardComplete"
+  },
+  "demoSetupCardHalfDone": "Dieser Raum ist zur Hälfte eingerichtet.",
+  "@demoSetupCardHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardHalfDone"
+  },
+  "demoSetupCardOpenComplete": "Einen fertig eingerichteten Raum ansehen: {space}",
+  "@demoSetupCardOpenComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenComplete",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardOpenHalfDone": "Einen halb eingerichteten Raum ansehen: {space}",
+  "@demoSetupCardOpenHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenHalfDone",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardTitle": "So funktioniert die Demo",
+  "@demoSetupCardTitle": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
+  },
+  "demoSetupCardWhere": "Sie sind in {space}, gesehen als: {persona}",
+  "@demoSetupCardWhere": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardWhere",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "persona": {
+        "type": "String"
+      }
+    }
+  },
   "deployEntityAccessories": "Zubehör",
   "@deployEntityAccessories": {
     "description": "#988/#990 deployments: deployEntityAccessories"
@@ -13782,6 +13828,14 @@
   "setupBasicsPreviewTime": "Die aktuelle Uhrzeit",
   "setupBasicsPreviewTimeIn": "{time} ({offset})",
   "setupBasicsSaveFailed": "Die Grunddaten konnten nicht gespeichert werden. Versuchen Sie es erneut.",
+  "setupDraftChanged": "Von jemand anderem geändert, während Sie bearbeitet haben.",
+  "setupDraftDiscard": "Verwerfen",
+  "setupDraftKeepMine": "Meine behalten",
+  "setupDraftNotSaved": "Entwurf nicht gespeichert – Ihre Angaben sind noch da.",
+  "setupDraftReload": "Neu laden",
+  "setupDraftRestored": "Entwurf wiederhergestellt: Diese Angaben sind noch nicht übernommen.",
+  "setupDraftSaved": "Entwurf gespeichert",
+  "setupDraftSaving": "Entwurf wird gespeichert…",
   "setupGrowBooksAccrual": "Erträge zählen bei der Rechnungsstellung.",
   "setupGrowBooksCash": "Erträge zählen bei Zahlungseingang.",
   "setupGrowBooksCurrency": "Beträge werden in {currency} geführt.",

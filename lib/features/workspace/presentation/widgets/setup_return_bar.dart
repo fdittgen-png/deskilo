@@ -39,32 +39,36 @@ class SetupReturnBar extends ConsumerWidget {
       builder: (context, _) {
         final onGuide =
             router.routeInformationProvider.value.uri.path == '/setup';
-        if (!pending || onGuide) return child;
+        // One shape whether the bar shows or not: a parent of the Router
+        // that changes type rebuilds the Router, which restores the stack
+        // from the location last reported, so a step just closed by Back
+        // opened again.
         return Column(
           children: [
             Expanded(child: child),
-            Material(
-              key: const ValueKey('setup-return-bar'),
-              color: Theme.of(context).colorScheme.secondaryContainer,
-              child: SafeArea(
-                top: false,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.md,
-                    vertical: AppSpacing.xs,
-                  ),
-                  child: Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: TextButton.icon(
-                      key: const ValueKey('setup-return'),
-                      icon: const Icon(Icons.checklist_outlined),
-                      label: Text(context.l10n.setupGuideReturn),
-                      onPressed: () => router.go('/setup'),
+            if (pending && !onGuide)
+              Material(
+                key: const ValueKey('setup-return-bar'),
+                color: Theme.of(context).colorScheme.secondaryContainer,
+                child: SafeArea(
+                  top: false,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.xs,
+                    ),
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: TextButton.icon(
+                        key: const ValueKey('setup-return'),
+                        icon: const Icon(Icons.checklist_outlined),
+                        label: Text(context.l10n.setupGuideReturn),
+                        onPressed: () => router.go('/setup'),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
           ],
         );
       },

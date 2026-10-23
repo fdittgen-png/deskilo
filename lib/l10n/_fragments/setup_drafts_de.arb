@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "setupDraftRestored": "Entwurf wiederhergestellt: Diese Angaben sind noch nicht übernommen.",
+  "setupDraftDiscard": "Verwerfen",
+  "setupDraftSaving": "Entwurf wird gespeichert…",
+  "setupDraftSaved": "Entwurf gespeichert",
+  "setupDraftNotSaved": "Entwurf nicht gespeichert – Ihre Angaben sind noch da.",
+  "setupDraftChanged": "Von jemand anderem geändert, während Sie bearbeitet haben.",
+  "setupDraftReload": "Neu laden",
+  "setupDraftKeepMine": "Meine behalten"
+}

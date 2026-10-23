@@ -79,7 +79,6 @@ import '../../features/workspace/domain/cost_allocation_rules.dart';
 import '../../features/workspace/domain/kpi_overview.dart';
 import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/domain/sample_data.dart';
-import '../../features/workspace/domain/setup_steps.dart';
 import '../../features/workspace/providers/bi_providers.dart';
 import '../../features/workspace/providers/cost_allocation_providers.dart';
 import '../../features/workspace/providers/deployment_providers.dart';
@@ -119,54 +118,102 @@ import '../theme/theme_controller.dart';
 import '../time/clock.dart';
 import '../webmcp/webmcp_device_switch.dart';
 import 'data/action_confirmation_repository.dart';
+import 'data/demo_setup_repository.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
 import 'data/kpi_repositories.dart';
-import 'data/local_setup_repository.dart';
 import 'data/mcp_admin_repository.dart';
 import 'data/mcp_connection_repository.dart';
 import 'data/mcp_onboarding_repository.dart';
 import 'data/oauth_consent_repository.dart';
 import 'data/personal_preferences_repository.dart';
 import 'data/place_feedback_repository.dart';
+import 'data/premises_lease_repository.dart';
 import 'data/template_search_repository.dart';
 import 'data/usage_preparation.dart';
 import 'data/workbook_origin_repository.dart';
+import 'data/workspace_asset_repository.dart';
 import 'demo_fixture.dart';
 import 'demo_space_routing.dart';
 import 'seed/demo_asset_seed.dart';
 import 'seed/demo_book_period_seed.dart';
-import 'seed/demo_flags.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_setup_status.dart';
+import 'seed/demo_setup_seed.dart';
 import 'seed/demo_valuation_seed.dart';
+
+/// The main space's purchase side, seeded once for the session: its
+/// providers and the setup guide's evidence read the same repositories.
+typedef _MainBooks = ({
+  DemoPurchasing purchasing,
+  FakeBookProfileRepository books,
+  FakePremisesLeaseRepository lease,
+  FakeWorkspaceAssetRepository assets,
+});
+
+_MainBooks _seedMainBooks(DemoFixture fixture) {
+  final purchasing = seedDemoPurchasing(fixture.seededAt, money: fixture.money);
+  return (
+    purchasing: purchasing,
+    // #1869 in memory; #2365 posts the demo money and its supplier bills.
+    books: FakeBookProfileRepository(
+      money: fixture.money,
+      purchases: purchasing.purchases,
+    )..profiles.add(demoBookProfile(fixture.seededAt)),
+    // #2569 — the lease the demo space holds as tenant.
+    lease: seedDemoLease(fixture.seededAt),
+    // #2576 — the equipment the demo space bought.
+    assets: seedDemoAssets(fixture.seededAt),
+  );
+}
+
+/// The setup guide over each space's own fixture: Pézenas holds what
+/// every step names, Leipzig what a space a few weeks old holds.
+DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
+  final second = fixture.secondSpace;
+  return DemoSetupRepository(
+    rows: fixture.workspaces,
+    spaces: {
+      'ws-1': DemoSetupSources(
+        space: fixture.workspaces,
+        plan: fixture.floorPlan,
+        reservations: fixture.reservations,
+        money: fixture.money,
+        events: fixture.events,
+        books: DemoSetupBooks(
+          suppliers: main.purchasing.suppliers,
+          leases: main.lease,
+          assets: main.assets,
+          books: main.books,
+          directory: fixture.directory,
+        ),
+        decided: demoMainSpaceDecidedEvidence,
+      ),
+      demoSecondSpaceId: DemoSetupSources(
+        space: second.workspaces,
+        plan: second.floorPlan,
+        reservations: second.reservations,
+        money: second.money,
+        events: second.events,
+      ),
+    },
+    acknowledged: {'ws-1': demoMainSpaceMarkedDone},
+  );
+}
 
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
-List<Override> _purchasingOverrides(DemoFixture fixture) {
-  final purchasing = seedDemoPurchasing(fixture.seededAt, money: fixture.money);
+List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
+  final purchasing = main.purchasing;
   return [
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
     supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
     purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
-    // #1869 in memory; #2365 posts the demo money and its supplier bills.
-    bookProfileRepositoryProvider.overrideWithValue(
-      FakeBookProfileRepository(
-        money: fixture.money,
-        purchases: purchasing.purchases,
-      ),
-    ),
-    // #2569 — the lease the demo space holds as tenant.
-    premisesLeaseRepositoryProvider.overrideWithValue(
-      seedDemoLease(fixture.seededAt),
-    ),
-    // #2576 — the equipment the demo space bought.
-    workspaceAssetRepositoryProvider.overrideWithValue(
-      seedDemoAssets(fixture.seededAt),
-    ),
+    bookProfileRepositoryProvider.overrideWithValue(main.books),
+    premisesLeaseRepositoryProvider.overrideWithValue(main.lease),
+    workspaceAssetRepositoryProvider.overrideWithValue(main.assets),
     // #2365 — last year's books, closed and exported.
     bookPeriodRepositoryProvider.overrideWithValue(
       seedDemoBookPeriods(fixture.seededAt),
@@ -219,6 +266,7 @@ List<Override> _serverOnlyOverrides() => [
 List<Override> demoOverrides(DemoFixture fixture) {
   // #1847 — the one in-memory directory behind its three interfaces.
   final directory = fixture.directory;
+  final main = _seedMainBooks(fixture);
   return [
       // The clock first: everything the fixture seeded is relative to it,
       // so a demo opened next year still shows a booking for today.
@@ -253,22 +301,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       activeMcpTargetProvider.overrideWith(
         (ref) => fixedMcpTarget(ref, _kDemoInstallationId),
       ),
-      // #1656 — Demo lacks nothing locally.
-      // #2872 — Pézenas has everything; Leipzig is half way to bookings.
-      localSetupRepositoryProvider.overrideWithValue(
-        FakeLocalSetupRepository(
-          statuses: {
-            'ws-1': demoSetupStatus(
-              demoFeatureFlags,
-              ready: {for (final s in setupSteps) s.id},
-            ),
-            demoSecondSpaceId: demoSetupStatus(
-              demoSecondSpaceFeatureFlags,
-              ready: demoSecondSpaceReadySteps,
-            ),
-          },
-        ),
-      ),
+      // #1656 — Demo lacks nothing locally; #2872 — its setup guide reads
+      // each space's own fixture.
+      localSetupRepositoryProvider.overrideWithValue(_setupGuide(fixture, main)),
       // #1659 — Demo searches only its own fixture templates.
       templateSearchRepositoryProvider
           .overrideWithValue(FakeTemplateSearchRepository(source: () => fixture.workspaces.templates)),
@@ -282,7 +317,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
-      ..._purchasingOverrides(fixture), // #2358, #2567, #2573
+      ..._purchasingOverrides(fixture, main), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),

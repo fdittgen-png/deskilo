@@ -2740,6 +2740,52 @@
   "@demoSessionViewAs": {
     "description": "#1376 demo personas: demoSessionViewAs"
   },
+  "demoSetupCardBody": "Nulla di ciò che fa qui lascia questo dispositivo, e può reimpostare la demo com'era all'inizio in qualsiasi momento.",
+  "@demoSetupCardBody": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardBody"
+  },
+  "demoSetupCardComplete": "Questo spazio ha completato ogni passo della sua configurazione.",
+  "@demoSetupCardComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardComplete"
+  },
+  "demoSetupCardHalfDone": "Questo spazio è a metà della sua configurazione.",
+  "@demoSetupCardHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardHalfDone"
+  },
+  "demoSetupCardOpenComplete": "Vedere uno spazio completamente configurato: {space}",
+  "@demoSetupCardOpenComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenComplete",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardOpenHalfDone": "Vedere uno spazio a metà: {space}",
+  "@demoSetupCardOpenHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenHalfDone",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardTitle": "Come funziona la demo",
+  "@demoSetupCardTitle": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
+  },
+  "demoSetupCardWhere": "Si trova in {space}, visto come: {persona}",
+  "@demoSetupCardWhere": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardWhere",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "persona": {
+        "type": "String"
+      }
+    }
+  },
   "deployEntityAccessories": "Accessori",
   "@deployEntityAccessories": {
     "description": "#988/#990 deployments: deployEntityAccessories"
@@ -13782,6 +13828,14 @@
   "setupBasicsPreviewTime": "L’ora attuale",
   "setupBasicsPreviewTimeIn": "{time} ({offset})",
   "setupBasicsSaveFailed": "Non è stato possibile salvare i dati di base. Riprovi.",
+  "setupDraftChanged": "Modificato da un’altra persona mentre Lei stava modificando.",
+  "setupDraftDiscard": "Scarta",
+  "setupDraftKeepMine": "Mantieni le mie",
+  "setupDraftNotSaved": "Bozza non salvata: le Sue risposte sono ancora qui.",
+  "setupDraftReload": "Ricarica",
+  "setupDraftRestored": "Bozza ripristinata: queste risposte non sono ancora applicate.",
+  "setupDraftSaved": "Bozza salvata",
+  "setupDraftSaving": "Salvataggio della bozza…",
   "setupGrowBooksAccrual": "I ricavi contano alla fatturazione.",
   "setupGrowBooksCash": "I ricavi contano all'incasso.",
   "setupGrowBooksCurrency": "Gli importi sono tenuti in {currency}.",

@@ -4046,6 +4046,36 @@ class AppLocalizationsDe extends AppLocalizations {
   String get demoSessionViewAs => 'Ansicht als';
 
   @override
+  String get demoSetupCardBody =>
+      'Nichts, was Sie hier tun, verlässt dieses Gerät, und Sie können die Demo jederzeit auf ihren Anfang zurücksetzen.';
+
+  @override
+  String get demoSetupCardComplete =>
+      'Dieser Raum hat jeden Schritt seiner Einrichtung erledigt.';
+
+  @override
+  String get demoSetupCardHalfDone =>
+      'Dieser Raum ist zur Hälfte eingerichtet.';
+
+  @override
+  String demoSetupCardOpenComplete(String space) {
+    return 'Einen fertig eingerichteten Raum ansehen: $space';
+  }
+
+  @override
+  String demoSetupCardOpenHalfDone(String space) {
+    return 'Einen halb eingerichteten Raum ansehen: $space';
+  }
+
+  @override
+  String get demoSetupCardTitle => 'So funktioniert die Demo';
+
+  @override
+  String demoSetupCardWhere(String space, String persona) {
+    return 'Sie sind in $space, gesehen als: $persona';
+  }
+
+  @override
   String get deployEntityAccessories => 'Zubehör';
 
   @override
@@ -19447,6 +19477,33 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupBasicsSaveFailed =>
       'Die Grunddaten konnten nicht gespeichert werden. Versuchen Sie es erneut.';
+
+  @override
+  String get setupDraftChanged =>
+      'Von jemand anderem geändert, während Sie bearbeitet haben.';
+
+  @override
+  String get setupDraftDiscard => 'Verwerfen';
+
+  @override
+  String get setupDraftKeepMine => 'Meine behalten';
+
+  @override
+  String get setupDraftNotSaved =>
+      'Entwurf nicht gespeichert – Ihre Angaben sind noch da.';
+
+  @override
+  String get setupDraftReload => 'Neu laden';
+
+  @override
+  String get setupDraftRestored =>
+      'Entwurf wiederhergestellt: Diese Angaben sind noch nicht übernommen.';
+
+  @override
+  String get setupDraftSaved => 'Entwurf gespeichert';
+
+  @override
+  String get setupDraftSaving => 'Entwurf wird gespeichert…';
 
   @override
   String get setupGrowBooksAccrual =>

@@ -67,4 +67,51 @@ void main() {
     final query = Uri.parse(link.fragment).queryParameters;
     expect(query, {'demo': '1', 'space': 'leipzig', 'persona': 'owner'});
   });
+
+  test('every persona in either space survives the round trip', () {
+    for (final persona in DemoPersona.values) {
+      for (final (space, id) in [
+        ('pezenas', 'ws-1'),
+        ('leipzig', demoSecondSpaceId),
+      ]) {
+        final uri = demoLinkUri(space: space, persona: persona, to: '/calendar');
+        final link = DemoLink.parse(Uri.parse(uri.fragment).queryParameters);
+        expect(
+          (link.persona, link.workspaceId, link.to),
+          (persona, id, '/calendar'),
+          reason: '$space as ${persona.name}',
+        );
+      }
+    }
+  });
+
+  test("a setup step's page opens; a path that only looks like one does "
+      'not', () {
+    expect(
+      DemoLink.parse({'to': '/setup/step/member_rights'}).to,
+      '/setup/step/member_rights',
+    );
+    for (final to in [
+      '/setup/step/',
+      '/setup/step/Places',
+      '/setup/step/places/../../database',
+      '//example.com/setup/step/places',
+      '/reserve?next=https://example.com',
+    ]) {
+      expect(DemoLink.parse({'to': to}).to, isNull, reason: to);
+    }
+  });
+
+  test('a screen the demo does not allow is ignored, and the rest of the '
+      'link still applies', () {
+    final link = DemoLink.parse({
+      'demo': '1',
+      'space': 'pezenas',
+      'persona': 'kiosk',
+      'to': '/database/assistant-approvals',
+    });
+    expect(link.persona, DemoPersona.kiosk);
+    expect(link.workspaceId, 'ws-1');
+    expect(link.to, isNull);
+  });
 }

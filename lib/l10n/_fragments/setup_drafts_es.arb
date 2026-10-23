@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "setupDraftRestored": "Borrador restaurado: estas respuestas aún no se han aplicado.",
+  "setupDraftDiscard": "Descartar",
+  "setupDraftSaving": "Guardando el borrador…",
+  "setupDraftSaved": "Borrador guardado",
+  "setupDraftNotSaved": "Borrador no guardado: sus respuestas siguen aquí.",
+  "setupDraftChanged": "Otra persona lo ha cambiado mientras usted editaba.",
+  "setupDraftReload": "Recargar",
+  "setupDraftKeepMine": "Conservar las mías"
+}

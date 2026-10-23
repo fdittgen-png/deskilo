@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "setupDraftRestored": "Brouillon restauré : ces réponses ne sont pas encore appliquées.",
+  "setupDraftDiscard": "Abandonner",
+  "setupDraftSaving": "Enregistrement du brouillon…",
+  "setupDraftSaved": "Brouillon enregistré",
+  "setupDraftNotSaved": "Brouillon non enregistré : vos réponses sont toujours là.",
+  "setupDraftChanged": "Modifié par quelqu’un d’autre pendant votre saisie.",
+  "setupDraftReload": "Recharger",
+  "setupDraftKeepMine": "Garder les miennes"
+}

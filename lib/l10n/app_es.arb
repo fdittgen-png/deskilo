@@ -2740,6 +2740,52 @@
   "@demoSessionViewAs": {
     "description": "#1376 demo personas: demoSessionViewAs"
   },
+  "demoSetupCardBody": "Nada de lo que haga aquí sale de este dispositivo, y puede reiniciar la demo a su estado inicial en cualquier momento.",
+  "@demoSetupCardBody": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardBody"
+  },
+  "demoSetupCardComplete": "Este espacio ha completado cada paso de su configuración.",
+  "@demoSetupCardComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardComplete"
+  },
+  "demoSetupCardHalfDone": "Este espacio está a mitad de su configuración.",
+  "@demoSetupCardHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardHalfDone"
+  },
+  "demoSetupCardOpenComplete": "Ver un espacio totalmente configurado: {space}",
+  "@demoSetupCardOpenComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenComplete",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardOpenHalfDone": "Ver un espacio a mitad de camino: {space}",
+  "@demoSetupCardOpenHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenHalfDone",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardTitle": "Cómo funciona la demo",
+  "@demoSetupCardTitle": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
+  },
+  "demoSetupCardWhere": "Está en {space}, visto como: {persona}",
+  "@demoSetupCardWhere": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardWhere",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "persona": {
+        "type": "String"
+      }
+    }
+  },
   "deployEntityAccessories": "Accesorios",
   "@deployEntityAccessories": {
     "description": "#988/#990 deployments: deployEntityAccessories"
@@ -13782,6 +13828,14 @@
   "setupBasicsPreviewTime": "La hora actual",
   "setupBasicsPreviewTimeIn": "{time} ({offset})",
   "setupBasicsSaveFailed": "No se han podido guardar los datos básicos. Inténtelo de nuevo.",
+  "setupDraftChanged": "Otra persona lo ha cambiado mientras usted editaba.",
+  "setupDraftDiscard": "Descartar",
+  "setupDraftKeepMine": "Conservar las mías",
+  "setupDraftNotSaved": "Borrador no guardado: sus respuestas siguen aquí.",
+  "setupDraftReload": "Recargar",
+  "setupDraftRestored": "Borrador restaurado: estas respuestas aún no se han aplicado.",
+  "setupDraftSaved": "Borrador guardado",
+  "setupDraftSaving": "Guardando el borrador…",
   "setupGrowBooksAccrual": "Los ingresos cuentan al facturarse.",
   "setupGrowBooksCash": "Los ingresos cuentan al cobrarse.",
   "setupGrowBooksCurrency": "Los importes se llevan en {currency}.",

@@ -4036,6 +4036,36 @@ class AppLocalizationsEs extends AppLocalizations {
   String get demoSessionViewAs => 'Ver como';
 
   @override
+  String get demoSetupCardBody =>
+      'Nada de lo que haga aquí sale de este dispositivo, y puede reiniciar la demo a su estado inicial en cualquier momento.';
+
+  @override
+  String get demoSetupCardComplete =>
+      'Este espacio ha completado cada paso de su configuración.';
+
+  @override
+  String get demoSetupCardHalfDone =>
+      'Este espacio está a mitad de su configuración.';
+
+  @override
+  String demoSetupCardOpenComplete(String space) {
+    return 'Ver un espacio totalmente configurado: $space';
+  }
+
+  @override
+  String demoSetupCardOpenHalfDone(String space) {
+    return 'Ver un espacio a mitad de camino: $space';
+  }
+
+  @override
+  String get demoSetupCardTitle => 'Cómo funciona la demo';
+
+  @override
+  String demoSetupCardWhere(String space, String persona) {
+    return 'Está en $space, visto como: $persona';
+  }
+
+  @override
   String get deployEntityAccessories => 'Accesorios';
 
   @override
@@ -19415,6 +19445,33 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupBasicsSaveFailed =>
       'No se han podido guardar los datos básicos. Inténtelo de nuevo.';
+
+  @override
+  String get setupDraftChanged =>
+      'Otra persona lo ha cambiado mientras usted editaba.';
+
+  @override
+  String get setupDraftDiscard => 'Descartar';
+
+  @override
+  String get setupDraftKeepMine => 'Conservar las mías';
+
+  @override
+  String get setupDraftNotSaved =>
+      'Borrador no guardado: sus respuestas siguen aquí.';
+
+  @override
+  String get setupDraftReload => 'Recargar';
+
+  @override
+  String get setupDraftRestored =>
+      'Borrador restaurado: estas respuestas aún no se han aplicado.';
+
+  @override
+  String get setupDraftSaved => 'Borrador guardado';
+
+  @override
+  String get setupDraftSaving => 'Guardando el borrador…';
 
   @override
   String get setupGrowBooksAccrual => 'Los ingresos cuentan al facturarse.';

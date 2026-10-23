@@ -4034,6 +4034,36 @@ class AppLocalizationsIt extends AppLocalizations {
   String get demoSessionViewAs => 'Vedi come';
 
   @override
+  String get demoSetupCardBody =>
+      'Nulla di ciò che fa qui lascia questo dispositivo, e può reimpostare la demo com\'era all\'inizio in qualsiasi momento.';
+
+  @override
+  String get demoSetupCardComplete =>
+      'Questo spazio ha completato ogni passo della sua configurazione.';
+
+  @override
+  String get demoSetupCardHalfDone =>
+      'Questo spazio è a metà della sua configurazione.';
+
+  @override
+  String demoSetupCardOpenComplete(String space) {
+    return 'Vedere uno spazio completamente configurato: $space';
+  }
+
+  @override
+  String demoSetupCardOpenHalfDone(String space) {
+    return 'Vedere uno spazio a metà: $space';
+  }
+
+  @override
+  String get demoSetupCardTitle => 'Come funziona la demo';
+
+  @override
+  String demoSetupCardWhere(String space, String persona) {
+    return 'Si trova in $space, visto come: $persona';
+  }
+
+  @override
   String get deployEntityAccessories => 'Accessori';
 
   @override
@@ -19430,6 +19460,33 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupBasicsSaveFailed =>
       'Non è stato possibile salvare i dati di base. Riprovi.';
+
+  @override
+  String get setupDraftChanged =>
+      'Modificato da un’altra persona mentre Lei stava modificando.';
+
+  @override
+  String get setupDraftDiscard => 'Scarta';
+
+  @override
+  String get setupDraftKeepMine => 'Mantieni le mie';
+
+  @override
+  String get setupDraftNotSaved =>
+      'Bozza non salvata: le Sue risposte sono ancora qui.';
+
+  @override
+  String get setupDraftReload => 'Ricarica';
+
+  @override
+  String get setupDraftRestored =>
+      'Bozza ripristinata: queste risposte non sono ancora applicate.';
+
+  @override
+  String get setupDraftSaved => 'Bozza salvata';
+
+  @override
+  String get setupDraftSaving => 'Salvataggio della bozza…';
 
   @override
   String get setupGrowBooksAccrual => 'I ricavi contano alla fatturazione.';
