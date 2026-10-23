@@ -19286,6 +19286,33 @@ class AppLocalizationsEn extends AppLocalizations {
       'The basics could not be saved. Try again.';
 
   @override
+  String get setupDraftChanged =>
+      'Changed by someone else while you were editing.';
+
+  @override
+  String get setupDraftDiscard => 'Discard';
+
+  @override
+  String get setupDraftKeepMine => 'Keep mine';
+
+  @override
+  String get setupDraftNotSaved =>
+      'Draft not saved — your answers are still here.';
+
+  @override
+  String get setupDraftReload => 'Reload';
+
+  @override
+  String get setupDraftRestored =>
+      'Draft restored: these answers are not applied yet.';
+
+  @override
+  String get setupDraftSaved => 'Draft saved';
+
+  @override
+  String get setupDraftSaving => 'Saving draft…';
+
+  @override
   String get setupGrowDocumentsApply => 'Use this look';
 
   @override

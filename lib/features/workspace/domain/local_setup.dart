@@ -6,6 +6,7 @@
 // template, never guessed; only named, with where it is filled in.
 
 import 'setup_status.dart';
+import 'setup_step_draft.dart';
 import 'workspace_readiness.dart';
 
 enum LocalSlotKind {
@@ -93,4 +94,26 @@ abstract interface class LocalSetupRepository {
 
   /// 0545 — takes [step] back: it is open again.
   Future<void> clearStepAcknowledgement(String workspaceId, String step);
+
+  /// #2869 — the draft [step] of [workspaceId] holds, or null.
+  Future<SetupStepDraft?> stepDraft(String workspaceId, String step);
+
+  /// #2869 — stores [payload] as [step]'s draft against [expectedVersion]
+  /// (null: there was no draft). Throws [SetupDraftConflict] when the draft
+  /// moved since; the same [requestId] answers its first write again.
+  Future<SetupDraftWrite> saveStepDraft(
+    String workspaceId,
+    String step, {
+    required Map<String, Object?> payload,
+    required int? expectedVersion,
+    required String requestId,
+  });
+
+  /// #2869 — discards [step]'s draft at [expectedVersion]; false when there
+  /// was none. Throws [SetupDraftConflict] when it moved since.
+  Future<bool> discardStepDraft(
+    String workspaceId,
+    String step, {
+    required int? expectedVersion,
+  });
 }

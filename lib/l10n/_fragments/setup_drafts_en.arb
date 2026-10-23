@@ -1,0 +1,35 @@
+{
+  "@@locale": "en",
+  "setupDraftRestored": "Draft restored: these answers are not applied yet.",
+  "@setupDraftRestored": {
+    "description": "#2869 setup drafts: the notice above a setup step whose unsaved answers were restored from the server"
+  },
+  "setupDraftDiscard": "Discard",
+  "@setupDraftDiscard": {
+    "description": "#2869 setup drafts: the action on that notice: drop the draft"
+  },
+  "setupDraftSaving": "Saving draft…",
+  "@setupDraftSaving": {
+    "description": "#2869 setup drafts: while a setup step's draft is being saved"
+  },
+  "setupDraftSaved": "Draft saved",
+  "@setupDraftSaved": {
+    "description": "#2869 setup drafts: once the server confirmed the setup step's draft"
+  },
+  "setupDraftNotSaved": "Draft not saved — your answers are still here.",
+  "@setupDraftNotSaved": {
+    "description": "#2869 setup drafts: a setup step's draft save failed; a retry button follows"
+  },
+  "setupDraftChanged": "Changed by someone else while you were editing.",
+  "@setupDraftChanged": {
+    "description": "#2869 setup drafts: another configurer changed the setup step's draft meanwhile"
+  },
+  "setupDraftReload": "Reload",
+  "@setupDraftReload": {
+    "description": "#2869 setup drafts: take the other configurer's answers"
+  },
+  "setupDraftKeepMine": "Keep mine",
+  "@setupDraftKeepMine": {
+    "description": "#2869 setup drafts: save my answers over theirs"
+  }
+}
