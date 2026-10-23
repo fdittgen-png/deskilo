@@ -6,6 +6,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/workspace/domain/template_outline.dart';
 import 'package:deskilo/features/workspace/domain/template_preview.dart';
+import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -58,6 +59,11 @@ void main() {
     expect(repo.workspaces.single.name, 'Kraftwerk Coworking');
     expect(repo.workspaces.single.countryCode, 'DE');
     expect(repo.workspaces.single.currencyCode, 'EUR');
+    // #2869 — the setup guide opens over the shell; back returns to it.
+    expect(find.byType(SetupGuideScreen), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byType(ShellBottomBar), findsOneWidget);
   });
 
