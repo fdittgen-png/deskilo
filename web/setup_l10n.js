@@ -674,7 +674,12 @@ window.SETUP_L10N={
    "webmcpArgKeys": "Parameter keys to reset; omit to reset everything.",
    "featuresUnavailableIn": "{desc} — not available in {country}; available in: {list}.",
    "featuresAvailabilityEu": "the EU member states",
-   "setupDemoHtml": "Prefer to see it first? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Open the setup guide in the demo</a>: a space half way through its setup, on this device only, nothing sent anywhere."
+   "setupDemoHtml": "Prefer to see it first? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Open the setup guide in the demo</a>: a space half way through its setup, on this device only, nothing sent anywhere.",
+   "levelsWhy": "Plain questions about your space set the level of each process: what it does, never more. The next step keeps every switch for an expert.",
+   "levelsOffline": "This page prepares a file and works offline: it cannot see your space and says nothing about what is ready. The app shows that once the file is imported.",
+   "levelsExpertHint": "An answer sets every level again. Fine-tune single switches in the next step; the levels here follow them.",
+   "levelsOk": "Levels: {list}.",
+   "levelsUnanswered": "No question answered: the switches of the next step decide."
   },
   "feature": {
    "calendarTab": [
@@ -1480,6 +1485,108 @@ window.SETUP_L10N={
    "GB": "United Kingdom",
    "US": "United States",
    "CA": "Canada"
+  },
+  "journey": {
+   "question": {
+    "members_owe_money": "Members owe the space money (rent, passes, extras)",
+    "issue_invoices": "You issue invoices",
+    "pay_online": "Members pay online",
+    "vat_registered": "The space is registered for VAT",
+    "keep_books": "You keep accounting books",
+    "tracks_purchases": "You track what the space buys",
+    "several_rooms_or_sites": "Several rooms, a meeting room or several sites",
+    "door_tablet": "A tablet at the door checks people in",
+    "public_page": "A public page shows the space",
+    "organised": "Committees, own roles or approvals by several people"
+   },
+   "process": {
+    "bookings": "Bookings",
+    "community": "Community",
+    "money": "Money",
+    "payments": "Payments",
+    "tax": "Tax",
+    "purchases": "Purchases",
+    "presentation": "Presentation",
+    "operations": "Operations",
+    "assistant": "Assistant"
+   },
+   "level": {
+    "bookings_simple": "Shared places",
+    "bookings_resources": "Rooms and resources",
+    "bookings_measured": "Measured use",
+    "community_basic": "Basic",
+    "community_organised": "Organised",
+    "money_none": "No money",
+    "money_statements": "Statements",
+    "money_invoices": "Invoices",
+    "payments_off": "By transfer",
+    "payments_online": "Online",
+    "tax_none": "No VAT",
+    "tax_vat": "VAT",
+    "tax_books": "Books",
+    "purchases_none": "None",
+    "purchases_expenses": "Expenses",
+    "purchases_full": "Full purchasing",
+    "presentation_basic": "Basic",
+    "presentation_branded": "Your colours",
+    "presentation_public": "Public page",
+    "operations_basic": "Basic",
+    "operations_insight": "Figures",
+    "operations_advanced": "Advanced",
+    "assistant_off": "Off",
+    "assistant_on": "On"
+   },
+   "reason": {
+    "door_tablet": "a tablet at the door checks people in",
+    "keeps_books": "you keep accounting books",
+    "later": "an assistant can come later",
+    "members_only": "only members see the space",
+    "members_owe": "members owe the space money",
+    "no_money": "no money changes hands",
+    "no_purchases": "the space buys nothing it tracks",
+    "no_vat": "the space is not registered for VAT",
+    "organised": "several people decide together",
+    "pay_by_transfer": "members pay by transfer",
+    "pay_online": "members pay online",
+    "public_page": "the space has a public page",
+    "several_rooms": "there are several rooms or sites",
+    "shared_places": "members share the places",
+    "small_community": "a small community",
+    "start_simple": "start simple",
+    "tracks_purchases": "you track what the space buys",
+    "vat_registered": "the space is registered for VAT",
+    "issues_invoices": "you issue invoices"
+   },
+   "preset": {
+    "essentiel": "Essential",
+    "standard": "Standard",
+    "complet": "Complete"
+   },
+   "threshold": {
+    "immediate": "The small-business VAT exemption ends on the supply that takes the net turnover of the year past {limit}.",
+    "other": "The small-business VAT exemption ends with the year whose net turnover passes {limit}."
+   },
+   "duty": {
+    "receive_all": "every business must be able to receive e-invoices",
+    "issue_large": "large and mid-sized businesses must issue e-invoices",
+    "issue_all": "every business must issue e-invoices",
+    "e_reporting": "sales to consumers and abroad, and the payments of services, must be e-reported",
+    "invoice_records": "every invoice must be recorded in a hash-chained register (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "What your space does",
+    "setupLevelsQuestions": "About your space",
+    "setupLevelsPresets": "Quick start",
+    "setupLevelsChoice": "What it needs",
+    "setupLevelsBecause": "Because {reason}",
+    "setupLevelsGap": "{level} needs {needed}",
+    "setupObligationsTitle": "What the law asks in {country}",
+    "setupObligationUnconfirmed": "Not confirmed for this country — ask your accountant.",
+    "setupObligationNone": "The reviewed tax data holds nothing for this country yet — ask your accountant what applies.",
+    "setupObligationSource": "Source: {source}",
+    "eInvoiceMandateSince": "Since {date}: {duty}.",
+    "eInvoiceMandateFrom": "From {date}: {duty}."
+   }
   }
  },
  "fr": {
@@ -2154,7 +2261,12 @@ window.SETUP_L10N={
    "webmcpArgKeys": "Clés de paramètres à réinitialiser ; omettre pour tout réinitialiser.",
    "featuresUnavailableIn": "{desc} — non disponible en {country} ; disponible : {list}.",
    "featuresAvailabilityEu": "les États membres de l'UE",
-   "setupDemoHtml": "Envie de voir d’abord ? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Ouvrez le guide de mise en place dans la démo</a> : un espace à mi-chemin de sa mise en place, sur cet appareil seulement, rien n’est envoyé."
+   "setupDemoHtml": "Envie de voir d’abord ? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Ouvrez le guide de mise en place dans la démo</a> : un espace à mi-chemin de sa mise en place, sur cet appareil seulement, rien n’est envoyé.",
+   "levelsWhy": "Des questions simples sur votre espace fixent le niveau de chaque processus : ce qu’il fait, jamais plus. L’étape suivante garde chaque interrupteur pour les experts.",
+   "levelsOffline": "Cette page prépare un fichier et fonctionne hors ligne : elle ne voit pas votre espace et ne dit rien de ce qui est prêt. L’application le montre une fois le fichier importé.",
+   "levelsExpertHint": "Chaque réponse fixe à nouveau tous les niveaux. Ajustez un interrupteur précis à l’étape suivante ; les niveaux ici le suivent.",
+   "levelsOk": "Niveaux : {list}.",
+   "levelsUnanswered": "Aucune question répondue : les interrupteurs de l’étape suivante décident."
   },
   "feature": {
    "calendarTab": [
@@ -2960,6 +3072,108 @@ window.SETUP_L10N={
    "GB": "Royaume-Uni",
    "US": "États-Unis",
    "CA": "Canada"
+  },
+  "journey": {
+   "question": {
+    "members_owe_money": "Les membres doivent de l’argent à l’espace (loyer, carnets, extras)",
+    "issue_invoices": "Vous émettez des factures",
+    "pay_online": "Les membres paient en ligne",
+    "vat_registered": "L’espace est assujetti à la TVA",
+    "keep_books": "Vous tenez une comptabilité",
+    "tracks_purchases": "Vous suivez les achats de l’espace",
+    "several_rooms_or_sites": "Plusieurs salles, une salle de réunion ou plusieurs sites",
+    "door_tablet": "Une tablette à l’entrée enregistre les arrivées",
+    "public_page": "Une page publique présente l’espace",
+    "organised": "Comités, rôles propres ou validations à plusieurs"
+   },
+   "process": {
+    "bookings": "Réservations",
+    "community": "Communauté",
+    "money": "Argent",
+    "payments": "Paiements",
+    "tax": "Fiscalité",
+    "purchases": "Achats",
+    "presentation": "Présentation",
+    "operations": "Fonctionnement",
+    "assistant": "Assistant"
+   },
+   "level": {
+    "bookings_simple": "Places partagées",
+    "bookings_resources": "Salles et ressources",
+    "bookings_measured": "Usage mesuré",
+    "community_basic": "Simple",
+    "community_organised": "Organisée",
+    "money_none": "Pas d’argent",
+    "money_statements": "Relevés",
+    "money_invoices": "Factures",
+    "payments_off": "Par virement",
+    "payments_online": "En ligne",
+    "tax_none": "Pas de TVA",
+    "tax_vat": "TVA",
+    "tax_books": "Comptabilité",
+    "purchases_none": "Aucun",
+    "purchases_expenses": "Dépenses",
+    "purchases_full": "Achats complets",
+    "presentation_basic": "Simple",
+    "presentation_branded": "Vos couleurs",
+    "presentation_public": "Page publique",
+    "operations_basic": "Simple",
+    "operations_insight": "Indicateurs",
+    "operations_advanced": "Avancé",
+    "assistant_off": "Désactivé",
+    "assistant_on": "Activé"
+   },
+   "reason": {
+    "door_tablet": "une tablette à l’entrée enregistre les arrivées",
+    "keeps_books": "vous tenez une comptabilité",
+    "later": "un assistant peut venir plus tard",
+    "members_only": "seuls les membres voient l’espace",
+    "members_owe": "les membres doivent de l’argent à l’espace",
+    "no_money": "aucun argent ne circule",
+    "no_purchases": "l’espace ne suit pas ses achats",
+    "no_vat": "l’espace n’est pas assujetti à la TVA",
+    "organised": "plusieurs personnes décident ensemble",
+    "pay_by_transfer": "les membres paient par virement",
+    "pay_online": "les membres paient en ligne",
+    "public_page": "l’espace a une page publique",
+    "several_rooms": "il y a plusieurs salles ou sites",
+    "shared_places": "les membres partagent les places",
+    "small_community": "une petite communauté",
+    "start_simple": "commencer simplement",
+    "tracks_purchases": "vous suivez les achats de l’espace",
+    "vat_registered": "l’espace est assujetti à la TVA",
+    "issues_invoices": "vous émettez des factures"
+   },
+   "preset": {
+    "essentiel": "Essentiel",
+    "standard": "Standard",
+    "complet": "Complet"
+   },
+   "threshold": {
+    "immediate": "La franchise en base de TVA prend fin avec la prestation qui fait dépasser {limit} au chiffre d’affaires net de l’année.",
+    "other": "La franchise en base de TVA prend fin avec l’année dont le chiffre d’affaires net dépasse {limit}."
+   },
+   "duty": {
+    "receive_all": "toute entreprise doit pouvoir recevoir des factures électroniques",
+    "issue_large": "les grandes entreprises et les ETI doivent émettre des factures électroniques",
+    "issue_all": "toute entreprise doit émettre des factures électroniques",
+    "e_reporting": "les ventes aux particuliers et à l’étranger, et les encaissements des prestations de services, doivent être transmis (e-reporting)",
+    "invoice_records": "chaque facture doit être enregistrée dans un registre chaîné (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "Ce que fait votre espace",
+    "setupLevelsQuestions": "À propos de votre espace",
+    "setupLevelsPresets": "Démarrage rapide",
+    "setupLevelsChoice": "Ce qu’il lui faut",
+    "setupLevelsBecause": "Parce que {reason}",
+    "setupLevelsGap": "{level} demande {needed}",
+    "setupObligationsTitle": "Ce que demande la loi : {country}",
+    "setupObligationUnconfirmed": "Non confirmé pour ce pays — demandez à votre comptable.",
+    "setupObligationNone": "Les données fiscales vérifiées ne contiennent encore rien pour ce pays — demandez à votre comptable ce qui s’applique.",
+    "setupObligationSource": "Source : {source}",
+    "eInvoiceMandateSince": "Depuis le {date} : {duty}.",
+    "eInvoiceMandateFrom": "À partir du {date} : {duty}."
+   }
   }
  },
  "de": {
@@ -3634,7 +3848,12 @@ window.SETUP_L10N={
    "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen.",
    "featuresUnavailableIn": "{desc} — in {country} nicht verfügbar; verfügbar in: {list}.",
    "featuresAvailabilityEu": "den EU-Mitgliedstaaten",
-   "setupDemoHtml": "Lieber erst ansehen? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Den Einrichtungsleitfaden in der Demo öffnen</a>: ein halb eingerichteter Raum, nur auf diesem Gerät, nichts wird gesendet."
+   "setupDemoHtml": "Lieber erst ansehen? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Den Einrichtungsleitfaden in der Demo öffnen</a>: ein halb eingerichteter Raum, nur auf diesem Gerät, nichts wird gesendet.",
+   "levelsWhy": "Einfache Fragen zu Ihrem Space legen die Stufe jedes Prozesses fest: was er tut, nie mehr. Der nächste Schritt behält jeden Schalter für Fachleute.",
+   "levelsOffline": "Diese Seite bereitet eine Datei vor und arbeitet offline: Sie sieht Ihren Space nicht und sagt nichts darüber, was bereit ist. Das zeigt die App, sobald die Datei importiert ist.",
+   "levelsExpertHint": "Jede Antwort setzt alle Stufen neu. Einzelne Schalter stellen Sie im nächsten Schritt ein; die Stufen hier folgen ihnen.",
+   "levelsOk": "Stufen: {list}.",
+   "levelsUnanswered": "Keine Frage beantwortet: die Schalter des nächsten Schritts entscheiden."
   },
   "feature": {
    "calendarTab": [
@@ -4440,6 +4659,108 @@ window.SETUP_L10N={
    "GB": "Vereinigtes Königreich",
    "US": "Vereinigte Staaten",
    "CA": "Kanada"
+  },
+  "journey": {
+   "question": {
+    "members_owe_money": "Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)",
+    "issue_invoices": "Sie stellen Rechnungen",
+    "pay_online": "Mitglieder zahlen online",
+    "vat_registered": "Der Raum ist umsatzsteuerpflichtig",
+    "keep_books": "Sie führen Bücher",
+    "tracks_purchases": "Sie verfolgen, was der Raum einkauft",
+    "several_rooms_or_sites": "Mehrere Räume, ein Besprechungsraum oder mehrere Standorte",
+    "door_tablet": "Ein Tablet am Eingang erfasst die Ankunft",
+    "public_page": "Eine öffentliche Seite zeigt den Raum",
+    "organised": "Gremien, eigene Rollen oder Freigaben durch mehrere"
+   },
+   "process": {
+    "bookings": "Buchungen",
+    "community": "Gemeinschaft",
+    "money": "Geld",
+    "payments": "Zahlungen",
+    "tax": "Steuern",
+    "purchases": "Einkauf",
+    "presentation": "Auftritt",
+    "operations": "Betrieb",
+    "assistant": "Assistent"
+   },
+   "level": {
+    "bookings_simple": "Geteilte Plätze",
+    "bookings_resources": "Räume und Ressourcen",
+    "bookings_measured": "Gemessene Nutzung",
+    "community_basic": "Einfach",
+    "community_organised": "Organisiert",
+    "money_none": "Kein Geld",
+    "money_statements": "Kontoauszüge",
+    "money_invoices": "Rechnungen",
+    "payments_off": "Per Überweisung",
+    "payments_online": "Online",
+    "tax_none": "Keine USt.",
+    "tax_vat": "USt.",
+    "tax_books": "Buchhaltung",
+    "purchases_none": "Keiner",
+    "purchases_expenses": "Ausgaben",
+    "purchases_full": "Voller Einkauf",
+    "presentation_basic": "Einfach",
+    "presentation_branded": "Ihre Farben",
+    "presentation_public": "Öffentliche Seite",
+    "operations_basic": "Einfach",
+    "operations_insight": "Kennzahlen",
+    "operations_advanced": "Fortgeschritten",
+    "assistant_off": "Aus",
+    "assistant_on": "An"
+   },
+   "reason": {
+    "door_tablet": "ein Tablet am Eingang die Ankunft erfasst",
+    "keeps_books": "Sie Bücher führen",
+    "later": "ein Assistent später kommen kann",
+    "members_only": "nur Mitglieder den Raum sehen",
+    "members_owe": "Mitglieder dem Raum Geld schulden",
+    "no_money": "kein Geld fließt",
+    "no_purchases": "der Raum keine Einkäufe verfolgt",
+    "no_vat": "der Raum nicht umsatzsteuerpflichtig ist",
+    "organised": "mehrere gemeinsam entscheiden",
+    "pay_by_transfer": "Mitglieder per Überweisung zahlen",
+    "pay_online": "Mitglieder online zahlen",
+    "public_page": "der Raum eine öffentliche Seite hat",
+    "several_rooms": "es mehrere Räume oder Standorte gibt",
+    "shared_places": "Mitglieder die Plätze teilen",
+    "small_community": "die Gemeinschaft klein ist",
+    "start_simple": "es einfach beginnen soll",
+    "tracks_purchases": "Sie verfolgen, was der Raum einkauft",
+    "vat_registered": "der Raum umsatzsteuerpflichtig ist",
+    "issues_invoices": "Sie Rechnungen stellen"
+   },
+   "preset": {
+    "essentiel": "Basis",
+    "standard": "Standard",
+    "complet": "Komplett"
+   },
+   "threshold": {
+    "immediate": "Die Kleinunternehmerregelung endet mit dem Umsatz, der den Nettoumsatz des Jahres über {limit} bringt.",
+    "other": "Die Kleinunternehmerregelung endet mit dem Jahr, dessen Nettoumsatz {limit} übersteigt."
+   },
+   "duty": {
+    "receive_all": "jedes Unternehmen muss E-Rechnungen empfangen können",
+    "issue_large": "große Unternehmen (Umsatz über 800 000 €) müssen E-Rechnungen ausstellen",
+    "issue_all": "jedes Unternehmen muss E-Rechnungen ausstellen",
+    "e_reporting": "Umsätze an Verbraucher und ins Ausland sowie Zahlungen für Dienstleistungen müssen gemeldet werden",
+    "invoice_records": "jede Rechnung muss in einem verketteten Register erfasst werden (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "Was Ihr Raum tut",
+    "setupLevelsQuestions": "Über Ihren Raum",
+    "setupLevelsPresets": "Schnellstart",
+    "setupLevelsChoice": "Was er braucht",
+    "setupLevelsBecause": "Weil {reason}",
+    "setupLevelsGap": "{level} braucht {needed}",
+    "setupObligationsTitle": "Was das Gesetz verlangt: {country}",
+    "setupObligationUnconfirmed": "Für dieses Land nicht bestätigt — fragen Sie Ihre Steuerberatung.",
+    "setupObligationNone": "Die geprüften Steuerdaten enthalten für dieses Land noch nichts — fragen Sie Ihre Steuerberatung, was gilt.",
+    "setupObligationSource": "Quelle: {source}",
+    "eInvoiceMandateSince": "Seit {date}: {duty}.",
+    "eInvoiceMandateFrom": "Ab {date}: {duty}."
+   }
   }
  },
  "es": {
@@ -5114,7 +5435,12 @@ window.SETUP_L10N={
    "webmcpArgKeys": "Claves de parámetros a restablecer; omitir para restablecer todo.",
    "featuresUnavailableIn": "{desc} — no disponible en {country}; disponible en: {list}.",
    "featuresAvailabilityEu": "los Estados miembros de la UE",
-   "setupDemoHtml": "¿Prefiere verlo primero? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Abra la guía de configuración en la demo</a>: un espacio a mitad de su configuración, solo en este dispositivo, sin enviar nada."
+   "setupDemoHtml": "¿Prefiere verlo primero? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Abra la guía de configuración en la demo</a>: un espacio a mitad de su configuración, solo en este dispositivo, sin enviar nada.",
+   "levelsWhy": "Unas preguntas sencillas sobre su espacio fijan el nivel de cada proceso: lo que hace, nunca más. El paso siguiente conserva cada interruptor para los expertos.",
+   "levelsOffline": "Esta página prepara un archivo y funciona sin conexión: no ve su espacio y no dice nada de lo que está listo. La aplicación lo muestra una vez importado el archivo.",
+   "levelsExpertHint": "Cada respuesta vuelve a fijar todos los niveles. Ajuste interruptores concretos en el paso siguiente; los niveles de aquí los siguen.",
+   "levelsOk": "Niveles: {list}.",
+   "levelsUnanswered": "Ninguna pregunta respondida: deciden los interruptores del paso siguiente."
   },
   "feature": {
    "calendarTab": [
@@ -5920,6 +6246,108 @@ window.SETUP_L10N={
    "GB": "Reino Unido",
    "US": "Estados Unidos",
    "CA": "Canadá"
+  },
+  "journey": {
+   "question": {
+    "members_owe_money": "Los miembros deben dinero al espacio (alquiler, bonos, extras)",
+    "issue_invoices": "Emite facturas",
+    "pay_online": "Los miembros pagan en línea",
+    "vat_registered": "El espacio está sujeto al IVA",
+    "keep_books": "Lleva la contabilidad",
+    "tracks_purchases": "Sigue lo que compra el espacio",
+    "several_rooms_or_sites": "Varias salas, una sala de reuniones o varias sedes",
+    "door_tablet": "Una tableta en la entrada registra las llegadas",
+    "public_page": "Una página pública presenta el espacio",
+    "organised": "Comités, roles propios o aprobaciones de varias personas"
+   },
+   "process": {
+    "bookings": "Reservas",
+    "community": "Comunidad",
+    "money": "Dinero",
+    "payments": "Pagos",
+    "tax": "Impuestos",
+    "purchases": "Compras",
+    "presentation": "Presentación",
+    "operations": "Operación",
+    "assistant": "Asistente"
+   },
+   "level": {
+    "bookings_simple": "Plazas compartidas",
+    "bookings_resources": "Salas y recursos",
+    "bookings_measured": "Uso medido",
+    "community_basic": "Básico",
+    "community_organised": "Organizada",
+    "money_none": "Sin dinero",
+    "money_statements": "Extractos",
+    "money_invoices": "Facturas",
+    "payments_off": "Por transferencia",
+    "payments_online": "En línea",
+    "tax_none": "Sin IVA",
+    "tax_vat": "IVA",
+    "tax_books": "Contabilidad",
+    "purchases_none": "Ninguna",
+    "purchases_expenses": "Gastos",
+    "purchases_full": "Compras completas",
+    "presentation_basic": "Básica",
+    "presentation_branded": "Sus colores",
+    "presentation_public": "Página pública",
+    "operations_basic": "Básica",
+    "operations_insight": "Indicadores",
+    "operations_advanced": "Avanzada",
+    "assistant_off": "Desactivado",
+    "assistant_on": "Activado"
+   },
+   "reason": {
+    "door_tablet": "una tableta en la entrada registra las llegadas",
+    "keeps_books": "lleva la contabilidad",
+    "later": "un asistente puede venir más tarde",
+    "members_only": "solo los miembros ven el espacio",
+    "members_owe": "los miembros deben dinero al espacio",
+    "no_money": "no circula dinero",
+    "no_purchases": "el espacio no sigue sus compras",
+    "no_vat": "el espacio no está sujeto al IVA",
+    "organised": "varias personas deciden juntas",
+    "pay_by_transfer": "los miembros pagan por transferencia",
+    "pay_online": "los miembros pagan en línea",
+    "public_page": "el espacio tiene una página pública",
+    "several_rooms": "hay varias salas o sedes",
+    "shared_places": "los miembros comparten las plazas",
+    "small_community": "es una comunidad pequeña",
+    "start_simple": "conviene empezar sencillo",
+    "tracks_purchases": "sigue lo que compra el espacio",
+    "vat_registered": "el espacio está sujeto al IVA",
+    "issues_invoices": "emite facturas"
+   },
+   "preset": {
+    "essentiel": "Esencial",
+    "standard": "Estándar",
+    "complet": "Completo"
+   },
+   "threshold": {
+    "immediate": "La franquicia de IVA para pequeñas empresas termina con la operación que lleva el volumen de negocio neto del año por encima de {limit}.",
+    "other": "La franquicia de IVA para pequeñas empresas termina con el año cuyo volumen de negocio neto supera {limit}."
+   },
+   "duty": {
+    "receive_all": "toda empresa debe poder recibir facturas electrónicas",
+    "issue_large": "las grandes y medianas empresas deben emitir facturas electrónicas",
+    "issue_all": "toda empresa debe emitir facturas electrónicas",
+    "e_reporting": "las ventas a consumidores y al extranjero, y los cobros de servicios, deben declararse",
+    "invoice_records": "cada factura debe registrarse en un registro encadenado (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "Lo que hace su espacio",
+    "setupLevelsQuestions": "Sobre su espacio",
+    "setupLevelsPresets": "Inicio rápido",
+    "setupLevelsChoice": "Lo que necesita",
+    "setupLevelsBecause": "Porque {reason}",
+    "setupLevelsGap": "{level} necesita {needed}",
+    "setupObligationsTitle": "Lo que exige la ley en {country}",
+    "setupObligationUnconfirmed": "No confirmado para este país — consulte a su asesor contable.",
+    "setupObligationNone": "Los datos fiscales revisados aún no contienen nada para este país — consulte a su asesor contable qué se aplica.",
+    "setupObligationSource": "Fuente: {source}",
+    "eInvoiceMandateSince": "Desde el {date}: {duty}.",
+    "eInvoiceMandateFrom": "A partir del {date}: {duty}."
+   }
   }
  },
  "it": {
@@ -6594,7 +7022,12 @@ window.SETUP_L10N={
    "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto.",
    "featuresUnavailableIn": "{desc} — non disponibile in {country}; disponibile in: {list}.",
    "featuresAvailabilityEu": "gli Stati membri dell'UE",
-   "setupDemoHtml": "Preferisce vederlo prima? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Apra la guida di configurazione nella demo</a>: uno spazio a metà della configurazione, solo su questo dispositivo, senza inviare nulla."
+   "setupDemoHtml": "Preferisce vederlo prima? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Apra la guida di configurazione nella demo</a>: uno spazio a metà della configurazione, solo su questo dispositivo, senza inviare nulla.",
+   "levelsWhy": "Semplici domande sul Suo spazio fissano il livello di ogni processo: ciò che fa, mai di più. Il passo successivo conserva ogni interruttore per gli esperti.",
+   "levelsOffline": "Questa pagina prepara un file e funziona offline: non vede il Suo spazio e non dice nulla su ciò che è pronto. Lo mostra l’app una volta importato il file.",
+   "levelsExpertHint": "Ogni risposta fissa di nuovo tutti i livelli. Regoli i singoli interruttori nel passo successivo; i livelli qui li seguono.",
+   "levelsOk": "Livelli: {list}.",
+   "levelsUnanswered": "Nessuna domanda con risposta: decidono gli interruttori del passo successivo."
   },
   "feature": {
    "calendarTab": [
@@ -7400,6 +7833,108 @@ window.SETUP_L10N={
    "GB": "Regno Unito",
    "US": "Stati Uniti",
    "CA": "Canada"
+  },
+  "journey": {
+   "question": {
+    "members_owe_money": "I membri devono denaro allo spazio (affitto, carnet, extra)",
+    "issue_invoices": "Emette fatture",
+    "pay_online": "I membri pagano online",
+    "vat_registered": "Lo spazio è soggetto a IVA",
+    "keep_books": "Tiene la contabilità",
+    "tracks_purchases": "Segue gli acquisti dello spazio",
+    "several_rooms_or_sites": "Più sale, una sala riunioni o più sedi",
+    "door_tablet": "Un tablet all’ingresso registra gli arrivi",
+    "public_page": "Una pagina pubblica presenta lo spazio",
+    "organised": "Comitati, ruoli propri o approvazioni di più persone"
+   },
+   "process": {
+    "bookings": "Prenotazioni",
+    "community": "Comunità",
+    "money": "Denaro",
+    "payments": "Pagamenti",
+    "tax": "Fisco",
+    "purchases": "Acquisti",
+    "presentation": "Presentazione",
+    "operations": "Gestione",
+    "assistant": "Assistente"
+   },
+   "level": {
+    "bookings_simple": "Posti condivisi",
+    "bookings_resources": "Sale e risorse",
+    "bookings_measured": "Uso misurato",
+    "community_basic": "Semplice",
+    "community_organised": "Organizzata",
+    "money_none": "Nessun denaro",
+    "money_statements": "Estratti",
+    "money_invoices": "Fatture",
+    "payments_off": "Con bonifico",
+    "payments_online": "Online",
+    "tax_none": "Nessuna IVA",
+    "tax_vat": "IVA",
+    "tax_books": "Contabilità",
+    "purchases_none": "Nessuno",
+    "purchases_expenses": "Spese",
+    "purchases_full": "Acquisti completi",
+    "presentation_basic": "Semplice",
+    "presentation_branded": "I suoi colori",
+    "presentation_public": "Pagina pubblica",
+    "operations_basic": "Semplice",
+    "operations_insight": "Indicatori",
+    "operations_advanced": "Avanzata",
+    "assistant_off": "Spento",
+    "assistant_on": "Acceso"
+   },
+   "reason": {
+    "door_tablet": "un tablet all’ingresso registra gli arrivi",
+    "keeps_books": "tiene la contabilità",
+    "later": "un assistente può arrivare più tardi",
+    "members_only": "solo i membri vedono lo spazio",
+    "members_owe": "i membri devono denaro allo spazio",
+    "no_money": "non circola denaro",
+    "no_purchases": "lo spazio non segue i suoi acquisti",
+    "no_vat": "lo spazio non è soggetto a IVA",
+    "organised": "più persone decidono insieme",
+    "pay_by_transfer": "i membri pagano con bonifico",
+    "pay_online": "i membri pagano online",
+    "public_page": "lo spazio ha una pagina pubblica",
+    "several_rooms": "ci sono più sale o sedi",
+    "shared_places": "i membri condividono i posti",
+    "small_community": "è una piccola comunità",
+    "start_simple": "conviene iniziare in modo semplice",
+    "tracks_purchases": "segue gli acquisti dello spazio",
+    "vat_registered": "lo spazio è soggetto a IVA",
+    "issues_invoices": "emette fatture"
+   },
+   "preset": {
+    "essentiel": "Essenziale",
+    "standard": "Standard",
+    "complet": "Completo"
+   },
+   "threshold": {
+    "immediate": "Il regime IVA delle piccole imprese termina con l’operazione che porta il fatturato netto dell’anno oltre {limit}.",
+    "other": "Il regime IVA delle piccole imprese termina con l’anno il cui fatturato netto supera {limit}."
+   },
+   "duty": {
+    "receive_all": "ogni impresa deve poter ricevere fatture elettroniche",
+    "issue_large": "le grandi e medie imprese devono emettere fatture elettroniche",
+    "issue_all": "ogni impresa deve emettere fatture elettroniche",
+    "e_reporting": "le vendite a consumatori e all’estero, e gli incassi dei servizi, devono essere trasmessi",
+    "invoice_records": "ogni fattura deve essere registrata in un registro concatenato (Verifactu)"
+   },
+   "s": {
+    "setupLevelsTitle": "Che cosa fa il suo spazio",
+    "setupLevelsQuestions": "Sul suo spazio",
+    "setupLevelsPresets": "Avvio rapido",
+    "setupLevelsChoice": "Che cosa serve",
+    "setupLevelsBecause": "Perché {reason}",
+    "setupLevelsGap": "{level} richiede {needed}",
+    "setupObligationsTitle": "Cosa chiede la legge in {country}",
+    "setupObligationUnconfirmed": "Non confermato per questo paese — chieda al Suo commercialista.",
+    "setupObligationNone": "I dati fiscali verificati non contengono ancora nulla per questo paese — chieda al Suo commercialista cosa si applica.",
+    "setupObligationSource": "Fonte: {source}",
+    "eInvoiceMandateSince": "Dal {date}: {duty}.",
+    "eInvoiceMandateFrom": "Dal {date}: {duty}."
+   }
   }
  }
 };

@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../data/supabase_local_setup_repository.dart';
 import '../domain/local_setup.dart';
+import '../domain/setup_journey.dart';
 import '../domain/setup_status.dart';
 import '../domain/workspace_readiness.dart';
 import 'operation_context_providers.dart';
@@ -47,3 +48,8 @@ Future<SetupStatus> workspaceSetupStatus(Ref ref, String workspaceId) =>
 @riverpod
 Future<List<ReadinessSection>> workspaceReadiness(Ref ref, String workspaceId) =>
     ref.watch(localSetupRepositoryProvider).sections(workspaceId);
+
+/// #2868 — the answers and levels saved for the space, or null.
+@riverpod
+Future<SetupJourney?> setupJourney(Ref ref, String workspaceId) =>
+    ref.watch(localSetupRepositoryProvider).setupJourney(workspaceId);

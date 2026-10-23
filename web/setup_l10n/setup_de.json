@@ -669,5 +669,10 @@
  "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen.",
  "featuresUnavailableIn": "{desc} — in {country} nicht verfügbar; verfügbar in: {list}.",
  "featuresAvailabilityEu": "den EU-Mitgliedstaaten",
- "setupDemoHtml": "Lieber erst ansehen? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Den Einrichtungsleitfaden in der Demo öffnen</a>: ein halb eingerichteter Raum, nur auf diesem Gerät, nichts wird gesendet."
+ "setupDemoHtml": "Lieber erst ansehen? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Den Einrichtungsleitfaden in der Demo öffnen</a>: ein halb eingerichteter Raum, nur auf diesem Gerät, nichts wird gesendet.",
+ "levelsWhy": "Einfache Fragen zu Ihrem Space legen die Stufe jedes Prozesses fest: was er tut, nie mehr. Der nächste Schritt behält jeden Schalter für Fachleute.",
+ "levelsOffline": "Diese Seite bereitet eine Datei vor und arbeitet offline: Sie sieht Ihren Space nicht und sagt nichts darüber, was bereit ist. Das zeigt die App, sobald die Datei importiert ist.",
+ "levelsExpertHint": "Jede Antwort setzt alle Stufen neu. Einzelne Schalter stellen Sie im nächsten Schritt ein; die Stufen hier folgen ihnen.",
+ "levelsOk": "Stufen: {list}.",
+ "levelsUnanswered": "Keine Frage beantwortet: die Schalter des nächsten Schritts entscheiden."
 }

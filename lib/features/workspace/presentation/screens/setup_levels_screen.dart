@@ -6,7 +6,10 @@
 // Until the owner answers, every process stays at what the space does
 // now; the preview names every feature the choice switches on and off,
 // only the processes whose level changes take part, and switching
-// anything off asks first.
+// anything off asks first. Applying also remembers the answers and the
+// levels on the server (workspace_setup_journeys), so the screen reopens
+// with them on any device; beside the questions, what the law of the
+// space's country asks, from the tax reference data.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,13 +20,17 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/process_activation.dart';
+import '../../application/setup_journey_save.dart';
 import '../../domain/feature_flags_write.dart';
+import '../../domain/setup_journey.dart';
 import '../../domain/setup_level_change.dart';
 import '../../domain/setup_levels.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../feature_names.dart';
+import '../widgets/setup_obligations_card.dart';
 
 class SetupLevelsScreen extends ConsumerStatefulWidget {
   const SetupLevelsScreen({super.key});
@@ -31,35 +38,6 @@ class SetupLevelsScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<SetupLevelsScreen> createState() => _SetupLevelsScreenState();
 }
-
-/// The questions, by the key their words are read under.
-final _questions = <String, bool Function(SetupAnswers)>{
-  'members_owe_money': (a) => a.membersOweMoney,
-  'issue_invoices': (a) => a.issueInvoices,
-  'pay_online': (a) => a.payOnline,
-  'vat_registered': (a) => a.vatRegistered,
-  'keep_books': (a) => a.keepBooks,
-  'tracks_purchases': (a) => a.tracksPurchases,
-  'several_rooms_or_sites': (a) => a.severalRoomsOrSites,
-  'door_tablet': (a) => a.doorTablet,
-  'public_page': (a) => a.publicPage,
-  'organised': (a) => a.organised,
-};
-
-SetupAnswers _answer(SetupAnswers a, String key, bool v) => SetupAnswers(
-  membersOweMoney: key == 'members_owe_money' ? v : a.membersOweMoney,
-  issueInvoices: key == 'issue_invoices' ? v : a.issueInvoices,
-  payOnline: key == 'pay_online' ? v : a.payOnline,
-  vatRegistered: key == 'vat_registered' ? v : a.vatRegistered,
-  keepBooks: key == 'keep_books' ? v : a.keepBooks,
-  tracksPurchases: key == 'tracks_purchases' ? v : a.tracksPurchases,
-  severalRoomsOrSites: key == 'several_rooms_or_sites'
-      ? v
-      : a.severalRoomsOrSites,
-  doorTablet: key == 'door_tablet' ? v : a.doorTablet,
-  publicPage: key == 'public_page' ? v : a.publicPage,
-  organised: key == 'organised' ? v : a.organised,
-);
 
 String _levelWord(AppLocalizations l10n, SetupProcess p, String level) =>
     l10n.setupLevelName('${p.name}_$level');
@@ -82,6 +60,10 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   /// Until the owner answers, every process stays at what the space does.
   var _answered = false;
 
+  /// The saved answers were taken over once; a later save does not
+  /// overwrite what the owner is answering.
+  var _restored = false;
+
   /// Levels the owner set by hand or by a quick start; the rest follow
   /// the recommendation.
   final _chosen = <SetupProcess, String>{};
@@ -98,6 +80,9 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   }
 
   Widget _body(AppLocalizations l10n, Workspace workspace) {
+    final journey = ref.watch(setupJourneyProvider(workspace.id));
+    if (journey case AsyncLoading(hasValue: false)) return const LoadingView();
+    final saved = _restoreOnce(journey);
     final stored = resolveEnabledFeatures(workspace.featureFlags);
     final recommended = recommendSetupLevels(_answers);
     final current = currentSetupLevels(stored);
@@ -111,6 +96,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       chosen: vector,
     );
     final gaps = setupVectorGaps(vector);
+    final nothingToApply = _nothingToApply(change, saved, vector);
     final title = Theme.of(context).textTheme.titleMedium;
     return ListView(
       key: const ValueKey('setup-levels'),
@@ -119,18 +105,8 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
         Text(l10n.setupLevelsIntro),
         const SizedBox(height: AppSpacing.md),
         Text(l10n.setupLevelsQuestions, style: title),
-        for (final MapEntry(key: key, value: read) in _questions.entries)
-          SwitchListTile(
-            key: ValueKey('setup-question-$key'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(l10n.setupQuestion(key)),
-            value: read(_answers),
-            onChanged: (v) => setState(() {
-              _answers = _answer(_answers, key, v);
-              _answered = true;
-              _chosen.clear();
-            }),
-          ),
+        ..._questions(l10n, saved),
+        SetupObligationsCard(country: workspace.countryCode),
         const SizedBox(height: AppSpacing.md),
         Text(l10n.setupLevelsPresets, style: title),
         Wrap(
@@ -171,9 +147,9 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
           alignment: AlignmentDirectional.centerEnd,
           child: FilledButton(
             key: const ValueKey('setup-levels-apply'),
-            onPressed: change.isEmpty || gaps.isNotEmpty || _busy
+            onPressed: nothingToApply || gaps.isNotEmpty || _busy
                 ? null
-                : () => _apply(workspace, change),
+                : () => _apply(workspace, change, vector, saved?.version),
             child: Text(l10n.setupLevelsApply),
           ),
         ),
@@ -181,7 +157,55 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     );
   }
 
-  Future<void> _apply(Workspace workspace, SetupLevelChange change) async {
+  /// The saved journey; its answers are taken over once loaded, and again
+  /// once a conflict reloaded it.
+  SetupJourney? _restoreOnce(AsyncValue<SetupJourney?> journey) {
+    final saved = journey.value;
+    if (!_restored && journey.hasValue && !journey.isLoading) {
+      _restored = true;
+      if (saved != null) _answers = saved.answers;
+    }
+    return saved;
+  }
+
+  /// Whether applying would change nothing: no feature, and nothing new to
+  /// remember — the answers are kept with what they led to, also when the
+  /// space already does it.
+  bool _nothingToApply(
+    SetupLevelChange change,
+    SetupJourney? saved,
+    SetupLevelVector vector,
+  ) =>
+      change.isEmpty &&
+      !((_answered || _chosen.isNotEmpty) &&
+          (saved == null ||
+              saved.answers != _answers ||
+              SetupProcess.values.any((p) => saved.levels[p] != vector[p])));
+
+  /// Who saved the answers last, and each question with its answer.
+  List<Widget> _questions(AppLocalizations l10n, SetupJourney? saved) => [
+    if (saved?.updatedByName case final String name)
+      Text(l10n.setupJourneySavedBy(name)),
+    for (final key in setupQuestions)
+      SwitchListTile(
+        key: ValueKey('setup-question-$key'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(l10n.setupQuestion(key)),
+        value: _answers[key],
+        onChanged: (v) => setState(() {
+          _answers = _answers.withAnswer(key, yes: v);
+          _answered = true;
+          _chosen.clear();
+        }),
+      ),
+  ];
+
+  Future<void> _apply(
+    Workspace workspace,
+    SetupLevelChange change,
+    SetupLevelVector vector,
+    int? journeyVersion,
+  ) async {
     final l10n = context.l10n;
     if (change.switchOff.isNotEmpty && !await _confirmOff(l10n)) return;
     if (!mounted) return;
@@ -198,9 +222,27 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
             workspaceId: workspace.id,
             change: change,
           );
+          await saveSetupJourney(
+            ref,
+            workspaceId: workspace.id,
+            answers: _answers,
+            levels: vector,
+            expectedVersion: journeyVersion,
+          );
           messenger.showSnackBar(
             SnackBar(content: Text(l10n.setupLevelsApplied)),
           );
+          // The space now does what was chosen: the levels read from it.
+          _answered = false;
+          _chosen.clear();
+        } on SetupJourneyConflict {
+          // The features are applied; the answers someone else saved are
+          // shown instead of these, never overwritten.
+          messenger.showSnackBar(
+            SnackBar(content: Text(l10n.setupJourneyConflict)),
+          );
+          _restored = false;
+          _answered = false;
           _chosen.clear();
         } on FeatureFlagsConflict {
           // Nothing was written: the owner looks again at what is there.

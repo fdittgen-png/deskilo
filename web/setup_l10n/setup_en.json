@@ -669,5 +669,10 @@
  "webmcpArgKeys": "Parameter keys to reset; omit to reset everything.",
  "featuresUnavailableIn": "{desc} — not available in {country}; available in: {list}.",
  "featuresAvailabilityEu": "the EU member states",
- "setupDemoHtml": "Prefer to see it first? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Open the setup guide in the demo</a>: a space half way through its setup, on this device only, nothing sent anywhere."
+ "setupDemoHtml": "Prefer to see it first? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Open the setup guide in the demo</a>: a space half way through its setup, on this device only, nothing sent anywhere.",
+ "levelsWhy": "Plain questions about your space set the level of each process: what it does, never more. The next step keeps every switch for an expert.",
+ "levelsOffline": "This page prepares a file and works offline: it cannot see your space and says nothing about what is ready. The app shows that once the file is imported.",
+ "levelsExpertHint": "An answer sets every level again. Fine-tune single switches in the next step; the levels here follow them.",
+ "levelsOk": "Levels: {list}.",
+ "levelsUnanswered": "No question answered: the switches of the next step decide."
 }

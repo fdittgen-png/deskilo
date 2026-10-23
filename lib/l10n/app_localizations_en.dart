@@ -19682,6 +19682,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'The QR code could not be shared. Try again.';
 
   @override
+  String get setupJourneyConflict =>
+      'Someone else saved other answers meanwhile. Here they are: look again, then apply.';
+
+  @override
+  String setupJourneySavedBy(String name) {
+    return 'Last saved by $name.';
+  }
+
+  @override
   String setupKioskCurrent(String name) {
     return '$name runs the kiosk.';
   }
@@ -19929,6 +19938,35 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'The new-member defaults could not be saved. Try again.';
+
+  @override
+  String get setupObligationNone =>
+      'The reviewed tax data holds nothing for this country yet — ask your accountant what applies.';
+
+  @override
+  String setupObligationSource(String source) {
+    return 'Source: $source';
+  }
+
+  @override
+  String setupObligationThreshold(String effect, String limit) {
+    String _temp0 = intl.Intl.selectLogic(effect, {
+      'immediate':
+          'The small-business VAT exemption ends on the supply that takes the net turnover of the year past $limit.',
+      'other':
+          'The small-business VAT exemption ends with the year whose net turnover passes $limit.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupObligationUnconfirmed =>
+      'Not confirmed for this country — ask your accountant.';
+
+  @override
+  String setupObligationsTitle(String country) {
+    return 'What the law asks in $country';
+  }
 
   @override
   String get setupOnlineOpenConfig => 'Online payment settings';

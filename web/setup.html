@@ -168,6 +168,15 @@ const PROCESSES=window.SETUP_PROCESSES||[];
 const processTitle=k=>(cat('process',k)||[k])[0];
 const processDesc=k=>(cat('process',k)||[k,''])[1];
 const subprocessTitle=k=>(cat('subprocess',k)||[k])[0];
+// #2868 — the plain questions, the level of each process, the quick starts
+// and the rules that turn answers into levels: generated from the app's
+// setup_levels.dart (setup_catalogue.js), so this page recommends exactly
+// what the app's levels screen does; the words are the app's own. What the
+// law of a country asks comes from the bundled tax reference rows.
+const LEVELS=window.SETUP_LEVELS||{questions:[],processes:[],presets:{},rules:{}};
+const OBLIGATIONS=window.SETUP_OBLIGATIONS||{};
+const jw=(group,key)=>L10N[LANG]?.journey?.[group]?.[key]??L10N.en?.journey?.[group]?.[key]??key;
+const JT=(key,params)=>{const s=jw('s',key);return params?s.replace(/\{(\w+)\}/g,(m,k)=>k in params?String(params[k]):m):s};
 const permName=p=>cat('perm',p)||p;
 const domainName=d=>cat('domain',d)||d;
 const countryName=c=>cat('country',c)||c;
@@ -455,6 +464,7 @@ const DEFAULTS={
  // what lets the importing space keep applying them.
  features:{...Object.fromEntries(FEATURES.map(f=>[f[0],!!f[1]])),configurationTransfer:true,dataExport:true},
  sites:[],levels:[{name:T('defaultFirstLevel'),offices:[newOffice(1)]}],
+ journey:{used:false,answers:{}},
  accessories:[],services:[],tiers:[{from:0,to:100,fee:'',over:''}],subLevels:['25','50','75','100'],freeLevel:false,packages:[],
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:'',qr_iban:''},
  org:'association',customerCapacity:'',vatRegime:'not_subject',vatExigibility:'standard',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
@@ -576,6 +586,7 @@ const PARAM_META=[
 const PARAM_EXCLUDED={
  sites:'collection',levels:'collection',accessories:'collection',services:'collection',tiers:'collection',subLevels:'collection',packages:'collection',
  vatRates:'collection',members:'collection',perms:'collection',permsV:'internal',domains:'collection',features:'switches',
+ journey:'the plain questions (#2868): one answer sets every level through its rules, which one answer at a time cannot express; the switches they tick are offered one by one',
  'mentions.register':'no question of its own in the UI (the registration number is regNumber)','landTax.facilities':'no question of its own in the UI yet','pay.paypal_me':'unlabelled in the UI','pay.bank_name':'unlabelled in the UI',
  'pay.account_number':'unlabelled in the UI','pay.bank_code':'unlabelled in the UI','pay.bic':'unlabelled in the UI',
 };
@@ -631,7 +642,7 @@ const FEATURE_HELP={calendarTab:'calendar',calendarHub:'calendar',eventsTab:'val
  vatManagement:'vat',vatDeclarations:'vat',einvoiceCustomerDelivery:'einvoice',memberReports:'faces',
  regionalFormats:'region',dataAccessLog:'privacy',memberDataExport:'privacy',planMemberPhotos:'plan',planObjectDelete:'plan'};
 let BUILDING='';
-const STEP_HELP={identity:'identity',features:'features',availability:'availability',plan:'plan',billing:'billing',services:'services',pay:'pay',legal:'legal',roles:'validation',members:'members',summary:'features',review:'identity'};
+const STEP_HELP={identity:'identity',levels:'features',features:'features',availability:'availability',plan:'plan',billing:'billing',services:'services',pay:'pay',legal:'legal',roles:'validation',members:'members',summary:'features',review:'identity'};
 // The little ? beside every field: straight to the guide section, the app
 // location in the tooltip. Falls back to the step's own section.
 function helpIcon(key){key=key&&HELP[key]?key:STEP_HELP[BUILDING];if(!key||!HELP[key])return null;const[app,anchor]=HELP[key];return h('a',{class:'helpq',href:guideUrl(anchor),target:'_blank',rel:'noopener',title:T('helpIconTitle',{app:T(app)})},'?')}
@@ -724,6 +735,41 @@ const F={ok:(t,step)=>({lvl:'ok',t,step}),warn:(t,step)=>({lvl:'warn',t,step}),e
 // answers, and what it checks. Order IS the dependency order: a later
 // step only reads answers from earlier ones. Titles and explanations are
 // getters, so switching the language re-reads them.
+// ------------------------------------------------------------------ levels (#2868)
+const levelIds=p=>(LEVELS.processes.find(x=>x.key===p)?.levels||[]).map(l=>l.id);
+const levelRank=(p,id)=>levelIds(p).indexOf(id);
+// The first rule of each process that holds: a rule without questions
+// always does — recommendSetupLevels, read from the same rules.
+function recommendLevels(answers){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>!x.any.length||x.any.some(q=>answers[q]===true));out[p]={level:r.level,reason:r.reason}}return out}
+// Each process's level as the switches say: the highest whose switches and
+// every lower level's are all ticked — currentSetupLevels.
+function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]))break;reached=l.id}out[pr.key]=reached}return out}
+// A level ticks its switches and every lower level's, and unticks the
+// higher ones' — setupFeatureDelta. The expert view keeps every switch.
+function applyLevel(p,id){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)return;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in S.features)S.features[k]=i<=r}));S.journey.used=true;save()}
+function answerQuestion(q,v){S.journey.answers[q]=v;const rec=recommendLevels(S.journey.answers);for(const[p,r]of Object.entries(rec))applyLevel(p,r.level)}
+function applyPreset(name){for(const[p,id]of Object.entries(LEVELS.presets[name]||{}))applyLevel(p,id)}
+const presetOf=now=>Object.keys(LEVELS.presets).find(n=>LEVELS.processes.every(pr=>LEVELS.presets[n][pr.key]===now[pr.key]))||'';
+// What a vector lacks: each chosen level (and those below it) whose needs
+// another process does not meet — setupVectorGaps.
+function levelGaps(now){const out=[];for(const pr of LEVELS.processes){pr.levels.slice(0,levelRank(pr.key,now[pr.key])+1).forEach(l=>{for(const[np,min]of Object.entries(l.needs||{}))if(levelRank(np,now[np]??'')<levelRank(np,min))out.push(JT('setupLevelsGap',{level:jw('process',pr.key)+': '+jw('level',pr.key+'_'+l.id),needed:jw('process',np)+': '+jw('level',np+'_'+min)}))})}return out}
+function obligationText(o){
+ if(o.kind==='vatThreshold'){let limit=String(o.cents/100);try{limit=new Intl.NumberFormat(LANG,{style:'currency',currency:o.currency}).format(o.cents/100)}catch(e){limit=String(o.cents/100)}
+  const s=L10N[LANG]?.journey?.threshold?.[o.detail]??jw('threshold','other');return s.replace(/\{limit\}/g,limit)}
+ let date=o.from;try{date=new Intl.DateTimeFormat(LANG,{year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}).format(new Date(o.from+'T00:00:00Z'))}catch(e){date=o.from}
+ return JT(o.from<=new Date().toISOString().slice(0,10)?'eInvoiceMandateSince':'eInvoiceMandateFrom',{date,duty:jw('duty',o.detail)})}
+// What the law of the country asks, from the reviewed reference rows; a
+// row nobody confirmed, or no row, says to ask an accountant.
+function obligationsCard(){const rows=OBLIGATIONS[S.country]||[];
+ const kids=[lbl(JT('setupObligationsTitle',{country:countryName(S.country)}))];
+ if(!rows.length)kids.push(h('p',{class:'hint'},JT('setupObligationNone')));
+ for(const o of rows)kids.push(h('p',{},obligationText(o)),h('p',{class:'hint'},(o.confirmed?'':JT('setupObligationUnconfirmed')+' ')+JT('setupObligationSource',{source:o.source})));
+ return h('div',{class:'card'},...kids)}
+function levelSelect(pr,now,rec){const s=h('select');for(const l of pr.levels)s.append(h('option',{value:l.id},jw('level',pr.key+'_'+l.id)));s.value=now[pr.key];
+ s.onchange=()=>{applyLevel(pr.key,s.value);render()};
+ const why=S.journey.used&&rec[pr.key]&&rec[pr.key].level===now[pr.key]?JT('setupLevelsBecause',{reason:jw('reason',rec[pr.key].reason)}):'';
+ return h('div',{},h('label',{},jw('process',pr.key)),s,why?h('p',{class:'hint'},why):null)}
+
 const STEPS=[
 {id:'identity',get title(){return T('identityTitle')},get why(){return T('identityWhy')},
  build(){return[
@@ -741,6 +787,25 @@ const STEPS=[
  check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
   // #2331 — the server refuses to issue for any other seller country.
   if(on('invoicing')&&!INVOICING_COUNTRIES.includes(S.country))f.push(F.warn(T('identityWarnInvoicingCountry',{country:countryName(S.country),list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),'identity'));return f}},
+
+// #2868 — the plain questions, right after the country: each answer sets
+// the level of every process through the app's own rules. The page works
+// offline and never claims what the space is ready for.
+{id:'levels',applies(){return on('setupGuide')},get title(){return JT('setupLevelsTitle')},get why(){return T('levelsWhy')},
+ build(){const now=levelsNow(),rec=recommendLevels(S.journey.answers),preset=S.journey.used?presetOf(now):'';
+  return[h('p',{class:'hint'},T('levelsOffline')),
+   lbl(JT('setupLevelsQuestions')),
+   ...LEVELS.questions.map(q=>checkbox(jw('question',q),null,S.journey.answers[q]===true,v=>answerQuestion(q,v))),
+   obligationsCard(),
+   lbl(JT('setupLevelsPresets')),
+   h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
+   lbl(JT('setupLevelsChoice')),
+   ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)),
+   ...levelGaps(now).map(g=>h('div',{class:'dep'},g)),
+   h('p',{class:'hint'},T('levelsExpertHint'))]},
+ check(){const now=levelsNow(),gaps=levelGaps(now);const f=gaps.map(g=>F.warn(g,'levels'));
+  if(!gaps.length)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
+  return f}},
 
 {id:'features',get title(){return T('featuresTitle')},get why(){return T('featuresWhy')},
  build(){const kids=[h('p',{class:'hint'},T('featuresIndentHint')),help('features')];
@@ -1348,6 +1413,13 @@ function buildXml(){
  push('    <members>');
  S.members.filter(m=>m.email.trim()).forEach(m=>push(`      <member name="${esc(m.name)}" email="${esc(m.email)}" role="${m.role||'member'}" subscription-pct="${m.pct||100}" overage-policy="${m.overage||'blocked'}" may-reserve-whole-spaces="${!!m.wholeSpaces}"${String(m.simultaneous||'').trim()?` simultaneous-reservations="${m.simultaneous}"`:''}${String(m.limit||'').trim()?` reservation-limit="${m.limit}"`:''}/>`));
  push('    </members>');
+ // #2868 — the answers and the levels the switches above reach; only once
+ // the questions step was used, so a file made without it is as before.
+ if(on('setupGuide')&&S.journey.used){const now=levelsNow(),preset=presetOf(now);
+  push(`    <profile${preset?` preset="${preset}"`:''}>`);
+  for(const q of LEVELS.questions)push(`      <answer question="${q}" value="${S.journey.answers[q]===true}"/>`);
+  for(const pr of LEVELS.processes)push(`      <level of="${pr.key}" value="${now[pr.key]}"/>`);
+  push('    </profile>')}
  push('  </setup>');
  push('</deskilo-workspace>');
  return x.join('\n');
@@ -1389,6 +1461,9 @@ S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')|
   va.querySelectorAll('domain').forEach(d=>{const k=d.getAttribute('event-type');if(!(k in S.domains))return;
    if(d.hasAttribute('required'))S.domains[k]={on:true,required:d.getAttribute('required'),ownerSignOff:d.getAttribute('owner-sign-off')==='true',validators:d.getAttribute('validators')||'admins'};
    if(k==='reservation_delete'){S.autoValidate={admin:d.getAttribute('auto-validate-admin')==='true',owner:d.getAttribute('auto-validate-owner')==='true'}}})}
+ // #2868 — the answers come back as given; the levels are the switches
+ // the file already carries.
+ const pf=su.querySelector('profile');S.journey=pf?{used:true,answers:Object.fromEntries([...pf.querySelectorAll('answer')].map(a=>[a.getAttribute('question'),a.getAttribute('value')==='true']))}:{used:false,answers:{}};
  S.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct'),overage:m.getAttribute('overage-policy')||'blocked',wholeSpaces:m.getAttribute('may-reserve-whole-spaces')==='true',simultaneous:m.getAttribute('simultaneous-reservations')||'',limit:m.getAttribute('reservation-limit')||''}));
 }
 // The surface the WebMCP tools (setup_webmcp.js) use: the page's own state
