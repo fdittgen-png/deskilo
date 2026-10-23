@@ -2,6 +2,9 @@
 //
 // #2869 — a screen opened from the setup guide carries the way back to it,
 // and the bar is gone once the owner is back on the guide.
+import 'dart:async';
+
+import 'package:deskilo/app/entry_resumption.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/features/workspace/domain/setup_status.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
@@ -77,4 +80,134 @@ void main() {
     expect(find.byType(SetupGuideScreen), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
   });
+
+  // #2870 — the bar comes and goes without the router noticing: a tree
+  // above the navigator that changed shape rebuilt the Router, which
+  // restored the stack from the location last reported, so Back from a
+  // step opened the step again.
+  testWidgets('Back from a step opened over another screen lands on the '
+      'guide, and the step stays closed', (tester) async {
+    final router = GoRouter(
+      initialLocation: '/home',
+      routes: [
+        GoRoute(path: '/home', builder: (_, _) => const Text('home')),
+        GoRoute(path: '/setup', builder: (_, _) => const SetupGuideScreen()),
+        GoRoute(
+          path: '/editor',
+          builder: (_, _) =>
+              Scaffold(appBar: AppBar(), body: const Text('editor')),
+        ),
+      ],
+    );
+    addTearDown(router.dispose);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          localSetup: FakeLocalSetupRepository(status: _status),
+        ),
+        child: MaterialApp.router(
+          routerConfig: router,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) =>
+              SetupReturnBar(router: router, child: child!),
+        ),
+      ),
+    );
+    await _frames(tester);
+    // The guide opens over another screen, as it does over Reserve.
+    unawaited(router.push('/setup'));
+    await _frames(tester);
+    for (var visit = 0; visit < 2; visit++) {
+      await tester.tap(find.byKey(const ValueKey('setup-guide-next-places')));
+      await _frames(tester);
+      expect(find.text('editor'), findsOneWidget);
+      expect(find.byKey(const ValueKey('setup-return-bar')), findsOneWidget);
+
+      await tester.tap(find.byType(BackButton).hitTestable());
+      await _frames(tester);
+      expect(find.text('editor'), findsNothing, reason: 'visit $visit');
+      expect(find.byType(SetupGuideScreen), findsOneWidget);
+    }
+  });
+
+  // #2870 — the app's router re-reads where the person is whenever a
+  // membership, a feature or the session changes, and rebuilds the stack
+  // from it: the step's push never answers then. The guide still reads
+  // the status again on the way back, and the bar still goes.
+  testWidgets('a router refresh while a step is open: Back still reads the '
+      'status again and lowers the bar', (tester) async {
+    final local = FakeLocalSetupRepository(status: _status);
+    final router = GoRouter(
+      initialLocation: '/home',
+      routes: [
+        GoRoute(path: '/home', builder: (_, _) => const Text('home')),
+        GoRoute(path: '/setup', builder: (_, _) => const SetupGuideScreen()),
+        GoRoute(
+          path: '/editor',
+          builder: (_, _) =>
+              Scaffold(appBar: AppBar(), body: const Text('editor')),
+        ),
+      ],
+    );
+    addTearDown(router.dispose);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(localSetup: local),
+        child: MaterialApp.router(
+          routerConfig: router,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) =>
+              SetupReturnBar(router: router, child: child!),
+        ),
+      ),
+    );
+    await _frames(tester);
+    unawaited(router.push('/setup'));
+    await _frames(tester);
+    await tester.tap(find.byKey(const ValueKey('setup-guide-next-places')));
+    await _frames(tester);
+
+    // The step did its work, and the app's router refreshed meanwhile.
+    local.status = _placesReady;
+    reportCurrentLocation(router);
+    router.refresh();
+    await _frames(tester);
+    expect(find.text('editor'), findsOneWidget);
+
+    await tester.tap(find.byType(BackButton).hitTestable());
+    await _frames(tester);
+    expect(find.byType(SetupGuideScreen), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-guide-all-done')), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
+  });
 }
+
+/// A second of frames: a page transition and the fake's answers.
+Future<void> _frames(WidgetTester tester) async {
+  for (var i = 0; i < 10; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+}
+
+final _placesReady = SetupStatus.fromJson({
+  'steps': [
+    {
+      'step': 'places',
+      'milestone': 'bookable',
+      'required': true,
+      'state': 'ready',
+      'route': '/editor',
+    },
+  ],
+  'milestones': [
+    {
+      'milestone': 'bookable',
+      'applies': true,
+      'required': 1,
+      'ready': 1,
+      'reached': true,
+    },
+  ],
+});

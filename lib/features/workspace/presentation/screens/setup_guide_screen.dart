@@ -7,6 +7,8 @@
 // aside and what is done stay folded. Every state is a word, never only a
 // colour or an icon. The status is the server's (0539); a step opens the
 // screen where it is done, and the guide reads again on the way back.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -227,11 +229,33 @@ Future<void> _open(
       .read(setupReturnPendingProvider.notifier)
     ..set(open: true);
   try {
-    await context.push(step.route);
+    // The push's own answer is not enough: a router refresh while the step
+    // is open rebuilds the stack from the reported location, and that
+    // answer never comes. The guide is back once it is on top again.
+    final back = _onTopAgain(ModalRoute.of(context));
+    await Future.any([context.push(step.route), back]);
   } finally {
     pending.set(open: false);
   }
   await reload();
+}
+
+/// Completes when [route], covered by a route pushed after this call, is
+/// the top route again and uncovered; never without a route, and not when
+/// the whole navigator goes away with the cover still on top.
+Future<void> _onTopAgain(ModalRoute<Object?>? route) {
+  final back = Completer<void>();
+  final animation = route?.secondaryAnimation;
+  void listen(AnimationStatus status) {
+    if (status != AnimationStatus.dismissed || !(route?.isCurrent ?? false)) {
+      return;
+    }
+    animation?.removeStatusListener(listen);
+    back.complete();
+  }
+
+  animation?.addStatusListener(listen);
+  return back.future;
 }
 
 /// The milestones the space chose, each with where it stands.
