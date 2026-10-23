@@ -111,4 +111,40 @@ void main() {
     final rels = _part(archive, 'xl/_rels/workbook.xml.rels');
     expect(rels, contains('Target="worksheets/sheet2.xml"'));
   });
+
+  test('a totals row sums every amount column with SUBTOTAL, one row '
+      'below the filtered data (#2861)', () {
+    final archive = _unzip(buildXlsx([
+      const XlsxSheet(
+        name: 'Payments',
+        totals: 'Total',
+        rows: [
+          ['state', 'amount', 'note'],
+          ['confirmed', XlsxAmount(10.1), 'a'],
+          ['pending', XlsxAmount(0.2), null],
+          ['confirmed', null, 'c'],
+        ],
+      ),
+      const XlsxSheet(name: 'Plain', rows: [
+        ['name'],
+        ['x'],
+      ]),
+    ]));
+    final sheet = _part(archive, 'xl/worksheets/sheet1.xml');
+    // The filter covers the header and the data only.
+    expect(sheet, contains('<autoFilter ref="A1:C4"/>'));
+    expect(sheet, contains('<row r="6">'));
+    expect(sheet, contains('<c r="A6" s="5" t="inlineStr">'));
+    expect(
+      sheet,
+      contains('<c r="B6" s="6"><f>SUBTOTAL(109,B2:B4)</f><v>10.3</v></c>'),
+    );
+    expect(sheet, isNot(contains('C6')), reason: 'a text column sums nothing');
+    expect(
+      _part(archive, 'xl/worksheets/sheet2.xml'),
+      isNot(contains('SUBTOTAL')),
+      reason: 'a sheet without a totals label has no totals row',
+    );
+    expect(_part(archive, 'xl/workbook.xml'), contains('fullCalcOnLoad="1"'));
+  });
 }
