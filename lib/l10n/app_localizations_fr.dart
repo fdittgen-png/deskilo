@@ -19815,6 +19815,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupGuideNext => 'Ensuite';
 
   @override
+  String setupGuideNoInvoicing(String money) {
+    String _temp0 = intl.Intl.selectLogic(money, {
+      'statements': 'La facturation n\'est pas choisie : les membres reçoivent des relevés de ce qu\'ils doivent et paient sur cette base. Ni TVA, ni numérotation, ni facturation électronique ne sont nécessaires, le guide ne les demande donc pas.',
+      'other': 'La facturation n\'est pas choisie : ni TVA, ni numérotation, ni facturation électronique ne sont nécessaires, le guide ne les demande donc pas.',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get setupGuideNotInSetup => 'Pas dans votre configuration';
 
   @override
@@ -20086,6 +20095,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupLevelsTitle => 'Ce que fait votre espace';
+
+  @override
+  String get setupLockConfirmTitle => 'Avant d\'enregistrer';
+
+  @override
+  String setupLockMoneyLocaleConfirm(String country, String currency) {
+    return '$country et $currency seront figés pour de bon dès que cet espace émettra un document ou enregistrera de l\'argent : ensuite, ni l\'un ni l\'autre ne pourra changer. En cas de doute, vérifiez-les avec votre comptable.';
+  }
+
+  @override
+  String get setupLockMoneyLocaleFixed =>
+      'Figé : cet espace a déjà émis un document ou enregistré de l\'argent, le pays et la devise ne peuvent donc plus changer.';
+
+  @override
+  String setupLockNumberingConfirm(String number) {
+    return 'La prochaine facture portera le numéro $number. Dès qu\'une facture prend un numéro de cette série, ce numéro est gardé pour toujours, la série ne revient jamais en arrière, et une date dans le numéro ne peut être retirée qu\'avec un nouveau préfixe ou suffixe.';
+  }
+
+  @override
+  String setupLockRegimeConfirm(String regime) {
+    return 'Chaque facture garde pour toujours le régime de TVA sous lequel elle est émise : « $regime » s\'applique à partir de la prochaine facture, et les factures déjà émises ne changent pas.';
+  }
 
   @override
   String get setupLookMore => 'Motif, couleurs des salles et logo';

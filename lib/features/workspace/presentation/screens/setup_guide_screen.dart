@@ -31,6 +31,7 @@ import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/sample_data_card.dart';
 import '../widgets/setup_guide_progress.dart';
+import '../widgets/setup_no_invoicing_banner.dart';
 import '../widgets/setup_return_bar.dart';
 
 class SetupGuideScreen extends ConsumerWidget {
@@ -105,6 +106,7 @@ class _SetupGuideBody extends ConsumerWidget {
                 onPressed: () => _openLevels(context, reload),
               ),
             ),
+            SetupNoInvoicingBanner(reload: reload),
             // #2876 — check the answers and go live.
             Align(
               alignment: AlignmentDirectional.centerStart,

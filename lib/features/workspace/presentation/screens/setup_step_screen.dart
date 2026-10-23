@@ -34,6 +34,7 @@ class SetupStepScreen extends ConsumerWidget {
     this.placesStep,
     this.runPages,
     this.growPages,
+    this.moneyRecorded,
   });
 
   /// The catalogue id of the step (`setup_steps.dart`).
@@ -51,17 +52,29 @@ class SetupStepScreen extends ConsumerWidget {
   /// The Grow steps' pages, handed in by the router for the same reason.
   final SetupGrowPages? growPages;
 
+  /// Whether the space has issued a document or recorded money, which
+  /// fixes its country and currency: the money feature reads it, so the
+  /// router hands the read in; without it the basics page treats them as
+  /// open and the server still refuses.
+  final SetupMoneyRecorded? moneyRecorded;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.setupStepTitle(stepId))),
-      body: workspace == null ? const LoadingView() : _page(workspace),
+      body: workspace == null ? const LoadingView() : _page(ref, workspace),
     );
   }
 
-  Widget _page(Workspace workspace) => switch (stepId) {
-    'basics' => SetupBasicsStep(workspace: workspace),
+  bool _moneyRecorded(WidgetRef ref, String workspaceId) =>
+      moneyRecorded?.call(ref, workspaceId) ?? false;
+
+  Widget _page(WidgetRef ref, Workspace workspace) => switch (stepId) {
+    'basics' => SetupBasicsStep(
+      workspace: workspace,
+      moneyLocaleLocked: _moneyRecorded(ref, workspace.id),
+    ),
     'hours' => const SetupHoursStep(),
     'places' => switch (placesStep) {
       final page? => _PlacesHost(page: page),
@@ -77,6 +90,9 @@ class SetupStepScreen extends ConsumerWidget {
           _Elsewhere(stepId: stepId),
   };
 }
+
+/// Watches whether the space [workspaceId] has recorded money.
+typedef SetupMoneyRecorded = bool Function(WidgetRef ref, String workspaceId);
 
 /// The places page from what this feature knows: the sites when there are
 /// several (default first) and whether the library is on.

@@ -103,6 +103,9 @@ class _AccountReads implements MemberAccountQueries {
       const [];
 
   @override
+  Future<bool> hasRecordedMoney(String workspaceId) async => false;
+
+  @override
   Future<UsageRead> readUsageRecords({
     required String workspaceId,
     required String period,

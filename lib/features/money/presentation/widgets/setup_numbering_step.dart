@@ -4,7 +4,9 @@
 // number sequences screen (format, live next number, Save), and beside it
 // the number the next invoice will carry, formatted by the series itself
 // from the stored next value. Nothing here draws a number: the database
-// takes one only when an invoice is issued.
+// takes one only when an invoice is issued. Saving names first what the
+// first invoice fixes: its number, a series that never goes back, a date
+// that stays unless the prefix or suffix changes with it.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,6 +16,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/lock_confirm.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../domain/number_sequence.dart';
 import '../../providers/money_providers.dart';
@@ -63,7 +66,15 @@ class SetupNumberingStep extends ConsumerWidget {
             text: l10n.setupGrowNumberingLock,
           ),
           const FormGap(),
-          NumberSequenceCard(sequence: invoice),
+          NumberSequenceCard(
+            sequence: invoice,
+            confirmSave: (draft) => confirmBeforeLock(
+              context,
+              l10n.setupLockNumberingConfirm(
+                draft.format(draft.nextValue, ref.read(clockProvider).now()),
+              ),
+            ),
+          ),
         ],
       ),
       preview: Column(
