@@ -19627,10 +19627,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupGuideResume => 'Fortsetzen';
 
   @override
+  String get setupGuideReturn => 'Zurück zum Einrichtungsleitfaden';
+
+  @override
   String get setupGuideTitle => 'Einrichtungsassistent';
 
   @override
   String get setupGuideToDo => 'Was noch fehlt';
+
+  @override
+  String get setupGuideTryDemo => 'In der Demo ausprobieren';
 
   @override
   String get setupGuideUnavailable =>
@@ -19704,6 +19710,86 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupKioskSaveFailed =>
       'Der Kiosk konnte nicht eingerichtet werden. Versuchen Sie es erneut.';
+
+  @override
+  String get setupLaunchAnswers => 'Ihre Antworten';
+
+  @override
+  String get setupLaunchBlockers =>
+      'Noch nicht live möglich. Diese Schritte fehlen:';
+
+  @override
+  String get setupLaunchCannot =>
+      'Live gehen ist möglich, sobald jeder Meilenstein erreicht ist.';
+
+  @override
+  String get setupLaunchChange => 'Ändern';
+
+  @override
+  String get setupLaunchCopied => 'Kopiert';
+
+  @override
+  String get setupLaunchCopyOperator => 'Für Ihren Betreiber kopieren';
+
+  @override
+  String get setupLaunchFix => 'Beheben';
+
+  @override
+  String get setupLaunchGoLive => 'Live gehen';
+
+  @override
+  String get setupLaunchGoLiveBody =>
+      'Ihre Konfiguration wird in den echten Space dieses Paares kopiert, wo Mitglieder sie sofort sehen. Buchungen, Rechnungen und Zahlungen dort sind echt und lassen sich nicht zurücknehmen. Im nächsten Schritt wählen Sie, was kopiert wird.';
+
+  @override
+  String get setupLaunchGoLiveConfirm => 'Weiter zur Bereitstellung';
+
+  @override
+  String get setupLaunchGoLiveTitle => 'Live gehen?';
+
+  @override
+  String setupLaunchGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'open': 'Öffnen',
+      'run': 'Betreiben',
+      'grow': 'Ausbauen',
+      'launch': 'Starten',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupLaunchIsLive => 'Dies ist der echte Space: er ist live.';
+
+  @override
+  String get setupLaunchLink => 'Antworten prüfen und live gehen';
+
+  @override
+  String get setupLaunchMilestones => 'Meilensteine';
+
+  @override
+  String get setupLaunchOperator => 'Nur Ihr Betreiber kann das tun:';
+
+  @override
+  String get setupLaunchPublicOff =>
+      'Noch ist nichts von Ihrem Space öffentlich.';
+
+  @override
+  String get setupLaunchPublicOn =>
+      'Ihre öffentliche Seite ist für alle sichtbar.';
+
+  @override
+  String get setupLaunchReached => 'Erreicht';
+
+  @override
+  String get setupLaunchReport => 'Bereitschaftsbericht kopieren';
+
+  @override
+  String get setupLaunchReportTitle => 'Bereitschaftsbericht';
+
+  @override
+  String get setupLaunchTitle => 'Prüfen und live gehen';
 
   @override
   String setupLevelName(String key) {

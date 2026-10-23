@@ -673,7 +673,8 @@ window.SETUP_L10N={
    "webmcpArgFormat": "The export format; only xml exists.",
    "webmcpArgKeys": "Parameter keys to reset; omit to reset everything.",
    "featuresUnavailableIn": "{desc} — not available in {country}; available in: {list}.",
-   "featuresAvailabilityEu": "the EU member states"
+   "featuresAvailabilityEu": "the EU member states",
+   "setupDemoHtml": "Prefer to see it first? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Open the setup guide in the demo</a>: a space half way through its setup, on this device only, nothing sent anywhere."
   },
   "feature": {
    "calendarTab": [
@@ -2152,7 +2153,8 @@ window.SETUP_L10N={
    "webmcpArgFormat": "Le format d’export ; seul xml existe.",
    "webmcpArgKeys": "Clés de paramètres à réinitialiser ; omettre pour tout réinitialiser.",
    "featuresUnavailableIn": "{desc} — non disponible en {country} ; disponible : {list}.",
-   "featuresAvailabilityEu": "les États membres de l'UE"
+   "featuresAvailabilityEu": "les États membres de l'UE",
+   "setupDemoHtml": "Envie de voir d’abord ? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Ouvrez le guide de mise en place dans la démo</a> : un espace à mi-chemin de sa mise en place, sur cet appareil seulement, rien n’est envoyé."
   },
   "feature": {
    "calendarTab": [
@@ -3631,7 +3633,8 @@ window.SETUP_L10N={
    "webmcpArgFormat": "Das Exportformat; es gibt nur xml.",
    "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen.",
    "featuresUnavailableIn": "{desc} — in {country} nicht verfügbar; verfügbar in: {list}.",
-   "featuresAvailabilityEu": "den EU-Mitgliedstaaten"
+   "featuresAvailabilityEu": "den EU-Mitgliedstaaten",
+   "setupDemoHtml": "Lieber erst ansehen? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Den Einrichtungsleitfaden in der Demo öffnen</a>: ein halb eingerichteter Raum, nur auf diesem Gerät, nichts wird gesendet."
   },
   "feature": {
    "calendarTab": [
@@ -5110,7 +5113,8 @@ window.SETUP_L10N={
    "webmcpArgFormat": "El formato de exportación; solo existe xml.",
    "webmcpArgKeys": "Claves de parámetros a restablecer; omitir para restablecer todo.",
    "featuresUnavailableIn": "{desc} — no disponible en {country}; disponible en: {list}.",
-   "featuresAvailabilityEu": "los Estados miembros de la UE"
+   "featuresAvailabilityEu": "los Estados miembros de la UE",
+   "setupDemoHtml": "¿Prefiere verlo primero? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Abra la guía de configuración en la demo</a>: un espacio a mitad de su configuración, solo en este dispositivo, sin enviar nada."
   },
   "feature": {
    "calendarTab": [
@@ -6589,7 +6593,8 @@ window.SETUP_L10N={
    "webmcpArgFormat": "Il formato di esportazione; esiste solo xml.",
    "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto.",
    "featuresUnavailableIn": "{desc} — non disponibile in {country}; disponibile in: {list}.",
-   "featuresAvailabilityEu": "gli Stati membri dell'UE"
+   "featuresAvailabilityEu": "gli Stati membri dell'UE",
+   "setupDemoHtml": "Preferisce vederlo prima? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Apra la guida di configurazione nella demo</a>: uno spazio a metà della configurazione, solo su questo dispositivo, senza inviare nulla."
   },
   "feature": {
    "calendarTab": [

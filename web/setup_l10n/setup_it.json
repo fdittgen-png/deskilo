@@ -668,5 +668,6 @@
  "webmcpArgFormat": "Il formato di esportazione; esiste solo xml.",
  "webmcpArgKeys": "Chiavi dei parametri da ripristinare; omettere per ripristinare tutto.",
  "featuresUnavailableIn": "{desc} — non disponibile in {country}; disponibile in: {list}.",
- "featuresAvailabilityEu": "gli Stati membri dell'UE"
+ "featuresAvailabilityEu": "gli Stati membri dell'UE",
+ "setupDemoHtml": "Preferisce vederlo prima? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Apra la guida di configurazione nella demo</a>: uno spazio a metà della configurazione, solo su questo dispositivo, senza inviare nulla."
 }

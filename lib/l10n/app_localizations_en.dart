@@ -19431,10 +19431,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupGuideResume => 'Resume';
 
   @override
+  String get setupGuideReturn => 'Back to the setup guide';
+
+  @override
   String get setupGuideTitle => 'Setup guide';
 
   @override
   String get setupGuideToDo => 'What it still needs';
+
+  @override
+  String get setupGuideTryDemo => 'Try it in the demo';
 
   @override
   String get setupGuideUnavailable =>
@@ -19507,6 +19513,83 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupKioskSaveFailed =>
       'The kiosk could not be set up. Try again.';
+
+  @override
+  String get setupLaunchAnswers => 'Your answers';
+
+  @override
+  String get setupLaunchBlockers => 'Cannot go live yet. These steps stop it:';
+
+  @override
+  String get setupLaunchCannot =>
+      'Go live becomes possible once every milestone is reached.';
+
+  @override
+  String get setupLaunchChange => 'Change';
+
+  @override
+  String get setupLaunchCopied => 'Copied';
+
+  @override
+  String get setupLaunchCopyOperator => 'Copy for your operator';
+
+  @override
+  String get setupLaunchFix => 'Fix it';
+
+  @override
+  String get setupLaunchGoLive => 'Go live';
+
+  @override
+  String get setupLaunchGoLiveBody =>
+      'Your configuration is copied to the real space of this pair, where members see it at once. Bookings, invoices and payments made there are real and cannot be taken back. On the next screen you choose what to copy.';
+
+  @override
+  String get setupLaunchGoLiveConfirm => 'Continue to the deployment';
+
+  @override
+  String get setupLaunchGoLiveTitle => 'Go live?';
+
+  @override
+  String setupLaunchGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'open': 'Open',
+      'run': 'Run',
+      'grow': 'Grow',
+      'launch': 'Launch',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupLaunchIsLive => 'This is the real space: it is live.';
+
+  @override
+  String get setupLaunchLink => 'Check your answers and go live';
+
+  @override
+  String get setupLaunchMilestones => 'Milestones';
+
+  @override
+  String get setupLaunchOperator => 'Only your operator can do these:';
+
+  @override
+  String get setupLaunchPublicOff => 'Nothing about your space is public yet.';
+
+  @override
+  String get setupLaunchPublicOn => 'Your public page is visible to everyone.';
+
+  @override
+  String get setupLaunchReached => 'Reached';
+
+  @override
+  String get setupLaunchReport => 'Copy the readiness report';
+
+  @override
+  String get setupLaunchReportTitle => 'Readiness report';
+
+  @override
+  String get setupLaunchTitle => 'Check and go live';
 
   @override
   String setupLevelName(String key) {

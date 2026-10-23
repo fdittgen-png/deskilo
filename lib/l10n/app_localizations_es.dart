@@ -19594,10 +19594,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupGuideResume => 'Continuar';
 
   @override
+  String get setupGuideReturn => 'Volver a la guía de configuración';
+
+  @override
   String get setupGuideTitle => 'Guía de configuración';
 
   @override
   String get setupGuideToDo => 'Lo que aún falta';
+
+  @override
+  String get setupGuideTryDemo => 'Probarlo en la demo';
 
   @override
   String get setupGuideUnavailable =>
@@ -19670,6 +19676,84 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupKioskSaveFailed =>
       'No se ha podido configurar el quiosco. Inténtelo de nuevo.';
+
+  @override
+  String get setupLaunchAnswers => 'Sus respuestas';
+
+  @override
+  String get setupLaunchBlockers =>
+      'Aún no se puede abrir. Estos pasos lo impiden:';
+
+  @override
+  String get setupLaunchCannot =>
+      'Abrir será posible cuando se alcancen todos los hitos.';
+
+  @override
+  String get setupLaunchChange => 'Cambiar';
+
+  @override
+  String get setupLaunchCopied => 'Copiado';
+
+  @override
+  String get setupLaunchCopyOperator => 'Copiar para su operador';
+
+  @override
+  String get setupLaunchFix => 'Corregir';
+
+  @override
+  String get setupLaunchGoLive => 'Abrir';
+
+  @override
+  String get setupLaunchGoLiveBody =>
+      'Su configuración se copia al espacio real de este par, donde los miembros la ven de inmediato. Las reservas, facturas y pagos hechos allí son reales y no se pueden deshacer. En la siguiente pantalla elige qué copiar.';
+
+  @override
+  String get setupLaunchGoLiveConfirm => 'Continuar al despliegue';
+
+  @override
+  String get setupLaunchGoLiveTitle => '¿Abrir el espacio?';
+
+  @override
+  String setupLaunchGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'open': 'Abrir',
+      'run': 'Operar',
+      'grow': 'Crecer',
+      'launch': 'Lanzar',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupLaunchIsLive => 'Este es el espacio real: está abierto.';
+
+  @override
+  String get setupLaunchLink => 'Revisar sus respuestas y abrir';
+
+  @override
+  String get setupLaunchMilestones => 'Hitos';
+
+  @override
+  String get setupLaunchOperator => 'Solo su operador puede hacer esto:';
+
+  @override
+  String get setupLaunchPublicOff => 'Nada de su espacio es público todavía.';
+
+  @override
+  String get setupLaunchPublicOn => 'Su página pública es visible para todos.';
+
+  @override
+  String get setupLaunchReached => 'Alcanzado';
+
+  @override
+  String get setupLaunchReport => 'Copiar el informe de preparación';
+
+  @override
+  String get setupLaunchReportTitle => 'Informe de preparación';
+
+  @override
+  String get setupLaunchTitle => 'Revisar y abrir';
 
   @override
   String setupLevelName(String key) {

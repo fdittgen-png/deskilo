@@ -48,6 +48,9 @@ class WorkspaceConfigPdfStrings {
     required this.invitationCustomTemplate,
     required this.invitationDefault,
     required this.invitationSingleUse,
+    required this.workingHours,
+    required this.vatRates,
+    required this.sites,
   });
 
   final String title;
@@ -85,6 +88,11 @@ class WorkspaceConfigPdfStrings {
   final String invitationCustomTemplate;
   final String invitationDefault;
   final String invitationSingleUse;
+
+  /// #2862 — the working hours, VAT rates and sites sections' titles.
+  final String workingHours;
+  final String vatRates;
+  final String sites;
 }
 
 /// What the owner-only configuration snapshot renders from: the workspace's
@@ -106,6 +114,11 @@ class WorkspaceConfigDocument {
     required this.levels,
     required this.levelPrices,
     required this.hasCustomInvitationTemplate,
+    this.workingHoursLabel = '',
+    this.vatRates = const [],
+    this.sites = const [],
+    this.readinessTitle = '',
+    this.readiness = const [],
   });
 
   final WorkspaceConfigPdfStrings strings;
@@ -129,7 +142,22 @@ class WorkspaceConfigDocument {
 
   /// Whether the owner replaced the built-in invitation message (0049).
   final bool hasCustomInvitationTemplate;
+
+  /// #2862 — the day's hours as hh:mm, '' when not shown.
+  final String workingHoursLabel;
+
+  /// #2862 — one line per VAT rate in force, and per site.
+  final List<String> vatRates;
+  final List<String> sites;
+
+  /// #2876 — the readiness report: each milestone, where it stands and
+  /// its evidence; empty when the setup guide is off.
+  final String readinessTitle;
+  final List<ConfigReadinessLine> readiness;
 }
+
+/// A milestone of the readiness report, its standing and its evidence.
+typedef ConfigReadinessLine = ({String label, String value, String detail});
 
 /// One process and the names of its features that are on.
 typedef ConfigFeatureGroup = ({String process, List<String> features});
@@ -159,10 +187,16 @@ Map<String, Object?> workspaceConfigurationReportData(
       ..._memberRows(doc),
       ..._featureRows(doc),
       ..._availabilityRows(doc),
+      ..._listRows(strings.vatRates, doc.vatRates),
+      ..._listRows(strings.sites, doc.sites),
       ..._invitationRows(doc),
       _heading(strings.floorPlan),
       if (doc.levels.isEmpty) _row(strings.emptyLevel),
       for (final entry in doc.levels) ..._levelRows(doc, entry),
+      if (doc.readiness.isNotEmpty) ...[
+        _heading(doc.readinessTitle),
+        for (final r in doc.readiness) _row(r.label, r.value, r.detail),
+      ],
     ],
   };
 }
@@ -206,10 +240,20 @@ List<Map<String, Object?>> _availabilityRows(WorkspaceConfigDocument doc) {
   return [
     _heading(strings.availability),
     _row(strings.openDays, doc.openDaysLabel),
+    if (doc.workingHoursLabel.isNotEmpty)
+      _row(strings.workingHours, doc.workingHoursLabel),
     _row(strings.closures, doc.closureLabels.isEmpty ? strings.none : ''),
     for (final closure in doc.closureLabels) _row(closure),
   ];
 }
+
+/// A section of one line per item; nothing when there is none.
+List<Map<String, Object?>> _listRows(String title, List<String> lines) => [
+  if (lines.isNotEmpty) ...[
+    _heading(title),
+    for (final line in lines) _row(line),
+  ],
+];
 
 List<Map<String, Object?>> _invitationRows(WorkspaceConfigDocument doc) {
   final strings = doc.strings;

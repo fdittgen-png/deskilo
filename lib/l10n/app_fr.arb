@@ -13828,8 +13828,10 @@
   "setupGuideOptional": "Plus pour votre espace",
   "setupGuideProgress": "{ready} sur {required} faits",
   "setupGuideResume": "Reprendre",
+  "setupGuideReturn": "Retour au guide de mise en place",
   "setupGuideTitle": "Guide de mise en place",
   "setupGuideToDo": "Ce qu'il reste à faire",
+  "setupGuideTryDemo": "L’essayer dans la démo",
   "setupGuideUnavailable": "L'état de la mise en place n'a pas pu être lu. Réessayez dans un instant.",
   "setupGuideUntil": "Environ {minutes} min avant : {milestone}",
   "setupGuideWaiting": "En attente",
@@ -13849,6 +13851,99 @@
   "setupKioskNone": "Aucun compte borne pour l’instant.",
   "setupKioskPick": "Compte de la tablette",
   "setupKioskSaveFailed": "La borne n’a pas pu être configurée. Réessayez.",
+  "setupLaunchAnswers": "Vos réponses",
+  "@setupLaunchAnswers": {
+    "description": "#2876 setup launch: setupLaunchAnswers"
+  },
+  "setupLaunchBlockers": "Impossible d’ouvrir pour l’instant. Ces étapes l’empêchent :",
+  "@setupLaunchBlockers": {
+    "description": "#2876 setup launch: setupLaunchBlockers"
+  },
+  "setupLaunchCannot": "L’ouverture devient possible quand toutes les étapes clés sont atteintes.",
+  "@setupLaunchCannot": {
+    "description": "#2876 setup launch: setupLaunchCannot"
+  },
+  "setupLaunchChange": "Modifier",
+  "@setupLaunchChange": {
+    "description": "#2876 setup launch: setupLaunchChange"
+  },
+  "setupLaunchCopied": "Copié",
+  "@setupLaunchCopied": {
+    "description": "#2876 setup launch: setupLaunchCopied"
+  },
+  "setupLaunchCopyOperator": "Copier pour votre opérateur",
+  "@setupLaunchCopyOperator": {
+    "description": "#2876 setup launch: setupLaunchCopyOperator"
+  },
+  "setupLaunchFix": "Corriger",
+  "@setupLaunchFix": {
+    "description": "#2876 setup launch: setupLaunchFix"
+  },
+  "setupLaunchGoLive": "Ouvrir",
+  "@setupLaunchGoLive": {
+    "description": "#2876 setup launch: setupLaunchGoLive"
+  },
+  "setupLaunchGoLiveBody": "Votre configuration est copiée dans l’espace réel de cette paire, où les membres la voient aussitôt. Les réservations, factures et paiements qui y sont faits sont réels et ne peuvent pas être annulés. À l’écran suivant, vous choisissez ce qui est copié.",
+  "@setupLaunchGoLiveBody": {
+    "description": "#2876 setup launch: setupLaunchGoLiveBody"
+  },
+  "setupLaunchGoLiveConfirm": "Continuer vers le déploiement",
+  "@setupLaunchGoLiveConfirm": {
+    "description": "#2876 setup launch: setupLaunchGoLiveConfirm"
+  },
+  "setupLaunchGoLiveTitle": "Ouvrir l’espace ?",
+  "@setupLaunchGoLiveTitle": {
+    "description": "#2876 setup launch: setupLaunchGoLiveTitle"
+  },
+  "setupLaunchGroup": "{key, select, open{Ouvrir} run{Faire tourner} grow{Développer} launch{Lancer} other{{key}}}",
+  "@setupLaunchGroup": {
+    "description": "#2876 setup launch: setupLaunchGroup",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLaunchIsLive": "C’est l’espace réel : il est ouvert.",
+  "@setupLaunchIsLive": {
+    "description": "#2876 setup launch: setupLaunchIsLive"
+  },
+  "setupLaunchLink": "Vérifier vos réponses et ouvrir",
+  "@setupLaunchLink": {
+    "description": "#2876 setup launch: setupLaunchLink"
+  },
+  "setupLaunchMilestones": "Étapes clés",
+  "@setupLaunchMilestones": {
+    "description": "#2876 setup launch: setupLaunchMilestones"
+  },
+  "setupLaunchOperator": "Seul votre opérateur peut faire ceci :",
+  "@setupLaunchOperator": {
+    "description": "#2876 setup launch: setupLaunchOperator"
+  },
+  "setupLaunchPublicOff": "Rien de votre espace n’est encore public.",
+  "@setupLaunchPublicOff": {
+    "description": "#2876 setup launch: setupLaunchPublicOff"
+  },
+  "setupLaunchPublicOn": "Votre page publique est visible par tous.",
+  "@setupLaunchPublicOn": {
+    "description": "#2876 setup launch: setupLaunchPublicOn"
+  },
+  "setupLaunchReached": "Atteint",
+  "@setupLaunchReached": {
+    "description": "#2876 setup launch: setupLaunchReached"
+  },
+  "setupLaunchReport": "Copier le rapport de préparation",
+  "@setupLaunchReport": {
+    "description": "#2876 setup launch: setupLaunchReport"
+  },
+  "setupLaunchReportTitle": "Rapport de préparation",
+  "@setupLaunchReportTitle": {
+    "description": "#2876 setup launch: setupLaunchReportTitle"
+  },
+  "setupLaunchTitle": "Vérifier et ouvrir",
+  "@setupLaunchTitle": {
+    "description": "#2876 setup launch: setupLaunchTitle"
+  },
   "setupLevelName": "{key, select, bookings_simple{Places partagées} bookings_resources{Salles et ressources} bookings_measured{Usage mesuré} community_basic{Simple} community_organised{Organisée} money_none{Pas d’argent} money_statements{Relevés} money_invoices{Factures} payments_off{Par virement} payments_online{En ligne} tax_none{Pas de TVA} tax_vat{TVA} tax_books{Comptabilité} purchases_none{Aucun} purchases_expenses{Dépenses} purchases_full{Achats complets} presentation_basic{Simple} presentation_branded{Vos couleurs} presentation_public{Page publique} operations_basic{Simple} operations_insight{Indicateurs} operations_advanced{Avancé} assistant_off{Désactivé} assistant_on{Activé} other{{key}}}",
   "setupLevelsApplied": "Votre espace fait désormais ce que vous avez choisi.",
   "setupLevelsApply": "Appliquer",

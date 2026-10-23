@@ -5,6 +5,9 @@
 // verify is marked done, and a required step the server verifies offers
 // neither — it has to be set up.
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/features/workspace/domain/setup_status.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -45,18 +48,37 @@ final _status = SetupStatus.fromJson({
   ],
 });
 
-Future<FakeLocalSetupRepository> _pump(WidgetTester tester) async {
+Future<FakeLocalSetupRepository> _pump(
+  WidgetTester tester, {
+  List<Uri>? opened,
+  bool inDemo = false,
+}) async {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final repository = FakeLocalSetupRepository(status: _status);
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(localSetup: repository),
-      child: const MaterialApp(
+      overrides: [
+        ...standardTestOverrides(localSetup: repository),
+        if (opened != null)
+          linkLauncherProvider.overrideWithValue((uri) async {
+            opened.add(uri);
+            return true;
+          }),
+      ],
+      child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: SetupGuideScreen(),
+        home: inDemo
+            ? DemoEnvironment(
+                persona: DemoPersona.owner,
+                onReset: () {},
+                onViewAs: (_) {},
+                onLeave: () {},
+                child: const SetupGuideScreen(),
+              )
+            : const SetupGuideScreen(),
       ),
     ),
   );
@@ -109,5 +131,26 @@ void main() {
     // Only the required open step counts: places, at its default 5 min.
     expect(find.byKey(const ValueKey('setup-guide-until')), findsOneWidget);
     expect(find.textContaining('About 5 min until'), findsOneWidget);
+  });
+
+  testWidgets('the next step can be tried in the demo, at its own screen', (
+    tester,
+  ) async {
+    final opened = <Uri>[];
+    await _pump(tester, opened: opened);
+    await tester.tap(find.byKey(const ValueKey('setup-guide-demo-places')));
+    await tester.pump();
+    expect(opened, hasLength(1));
+    expect(
+      Uri.parse(opened.single.fragment).queryParameters['to'],
+      '/workspace-settings',
+    );
+  });
+
+  testWidgets('inside the demo, the guide does not send to the demo', (
+    tester,
+  ) async {
+    await _pump(tester, inDemo: true);
+    expect(find.byKey(const ValueKey('setup-guide-demo-places')), findsNothing);
   });
 }

@@ -45,6 +45,9 @@ final _strings = WorkspaceConfigPdfStrings(
   invitationCustomTemplate: 'Custom invitation message configured',
   invitationDefault: 'Built-in invitation message',
   invitationSingleUse: 'Single-use codes; approval required',
+  workingHours: 'Working hours',
+  vatRates: 'VAT rates',
+  sites: 'Sites',
 );
 
 pw.Font _ttf(String path) => pw.Font.ttf(

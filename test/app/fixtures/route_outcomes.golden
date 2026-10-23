@@ -93,6 +93,7 @@ signed-out on  /settings/sites -> /auth
 signed-out on  /settings/what-you-can-do -> /auth
 signed-out on  /settings/wording -> /auth
 signed-out on  /setup -> /auth
+signed-out on  /setup/launch -> /auth
 signed-out on  /setup/levels -> /auth
 signed-out on  /setup/step/:id -> /auth
 signed-out on  /space/:kind/:id -> /auth
@@ -205,6 +206,7 @@ signed-out off /settings/sites -> /auth
 signed-out off /settings/what-you-can-do -> /auth
 signed-out off /settings/wording -> /auth
 signed-out off /setup -> /auth
+signed-out off /setup/launch -> /auth
 signed-out off /setup/levels -> /auth
 signed-out off /setup/step/:id -> /auth
 signed-out off /space/:kind/:id -> /auth
@@ -317,6 +319,7 @@ no-space on  /settings/sites -> /me
 no-space on  /settings/what-you-can-do -> /me
 no-space on  /settings/wording -> /me
 no-space on  /setup -> /me
+no-space on  /setup/launch -> /me
 no-space on  /setup/levels -> /me
 no-space on  /setup/step/:id -> /me
 no-space on  /space/:kind/:id -> /me
@@ -429,6 +432,7 @@ no-space off /settings/sites -> /me
 no-space off /settings/what-you-can-do -> /me
 no-space off /settings/wording -> /me
 no-space off /setup -> /me
+no-space off /setup/launch -> /me
 no-space off /setup/levels -> /me
 no-space off /setup/step/:id -> /me
 no-space off /space/:kind/:id -> /me
@@ -541,6 +545,7 @@ member on  /settings/sites -> /calendar
 member on  /settings/what-you-can-do -> (open)
 member on  /settings/wording -> /calendar
 member on  /setup -> /calendar
+member on  /setup/launch -> /calendar
 member on  /setup/levels -> /calendar
 member on  /setup/step/:id -> /calendar
 member on  /space/:kind/:id -> (open)
@@ -653,6 +658,7 @@ member off /settings/sites -> /messages
 member off /settings/what-you-can-do -> /settings
 member off /settings/wording -> /messages
 member off /setup -> /messages
+member off /setup/launch -> /messages
 member off /setup/levels -> /messages
 member off /setup/step/:id -> /messages
 member off /space/:kind/:id -> /messages
@@ -765,6 +771,7 @@ admin on  /settings/sites -> /settings
 admin on  /settings/what-you-can-do -> (open)
 admin on  /settings/wording -> /calendar
 admin on  /setup -> /calendar
+admin on  /setup/launch -> /calendar
 admin on  /setup/levels -> /calendar
 admin on  /setup/step/:id -> /calendar
 admin on  /space/:kind/:id -> (open)
@@ -877,6 +884,7 @@ admin off /settings/sites -> /settings
 admin off /settings/what-you-can-do -> /settings
 admin off /settings/wording -> /messages
 admin off /setup -> /messages
+admin off /setup/launch -> /messages
 admin off /setup/levels -> /messages
 admin off /setup/step/:id -> /messages
 admin off /space/:kind/:id -> /messages
@@ -989,6 +997,7 @@ owner on  /settings/sites -> /settings
 owner on  /settings/what-you-can-do -> (open)
 owner on  /settings/wording -> /settings
 owner on  /setup -> (open)
+owner on  /setup/launch -> (open)
 owner on  /setup/levels -> (open)
 owner on  /setup/step/:id -> (open)
 owner on  /space/:kind/:id -> (open)
@@ -1101,6 +1110,7 @@ owner off /settings/sites -> /settings
 owner off /settings/what-you-can-do -> /settings
 owner off /settings/wording -> /settings
 owner off /setup -> /workspace-settings
+owner off /setup/launch -> /workspace-settings
 owner off /setup/levels -> /workspace-settings
 owner off /setup/step/:id -> /workspace-settings
 owner off /space/:kind/:id -> /messages

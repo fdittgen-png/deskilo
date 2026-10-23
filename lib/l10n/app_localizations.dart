@@ -32903,6 +32903,12 @@ abstract class AppLocalizations {
   /// **'Resume'**
   String get setupGuideResume;
 
+  /// #2869 — the bar under a screen opened from the setup guide.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the setup guide'**
+  String get setupGuideReturn;
+
   /// #2869 setup guide: setupGuideTitle
   ///
   /// In en, this message translates to:
@@ -32914,6 +32920,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What it still needs'**
   String get setupGuideToDo;
+
+  /// #2872 — opens the public demo at the screen where this step is done, in a space where it is already set up.
+  ///
+  /// In en, this message translates to:
+  /// **'Try it in the demo'**
+  String get setupGuideTryDemo;
 
   /// #2869 setup guide: setupGuideUnavailable
   ///
@@ -33028,6 +33040,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The kiosk could not be set up. Try again.'**
   String get setupKioskSaveFailed;
+
+  /// #2876 setup launch: setupLaunchAnswers
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers'**
+  String get setupLaunchAnswers;
+
+  /// #2876 setup launch: setupLaunchBlockers
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot go live yet. These steps stop it:'**
+  String get setupLaunchBlockers;
+
+  /// #2876 setup launch: setupLaunchCannot
+  ///
+  /// In en, this message translates to:
+  /// **'Go live becomes possible once every milestone is reached.'**
+  String get setupLaunchCannot;
+
+  /// #2876 setup launch: setupLaunchChange
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get setupLaunchChange;
+
+  /// #2876 setup launch: setupLaunchCopied
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get setupLaunchCopied;
+
+  /// #2876 setup launch: setupLaunchCopyOperator
+  ///
+  /// In en, this message translates to:
+  /// **'Copy for your operator'**
+  String get setupLaunchCopyOperator;
+
+  /// #2876 setup launch: setupLaunchFix
+  ///
+  /// In en, this message translates to:
+  /// **'Fix it'**
+  String get setupLaunchFix;
+
+  /// #2876 setup launch: setupLaunchGoLive
+  ///
+  /// In en, this message translates to:
+  /// **'Go live'**
+  String get setupLaunchGoLive;
+
+  /// #2876 setup launch: setupLaunchGoLiveBody
+  ///
+  /// In en, this message translates to:
+  /// **'Your configuration is copied to the real space of this pair, where members see it at once. Bookings, invoices and payments made there are real and cannot be taken back. On the next screen you choose what to copy.'**
+  String get setupLaunchGoLiveBody;
+
+  /// #2876 setup launch: setupLaunchGoLiveConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to the deployment'**
+  String get setupLaunchGoLiveConfirm;
+
+  /// #2876 setup launch: setupLaunchGoLiveTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Go live?'**
+  String get setupLaunchGoLiveTitle;
+
+  /// #2876 setup launch: setupLaunchGroup
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, open{Open} run{Run} grow{Grow} launch{Launch} other{{key}}}'**
+  String setupLaunchGroup(String key);
+
+  /// #2876 setup launch: setupLaunchIsLive
+  ///
+  /// In en, this message translates to:
+  /// **'This is the real space: it is live.'**
+  String get setupLaunchIsLive;
+
+  /// #2876 setup launch: setupLaunchLink
+  ///
+  /// In en, this message translates to:
+  /// **'Check your answers and go live'**
+  String get setupLaunchLink;
+
+  /// #2876 setup launch: setupLaunchMilestones
+  ///
+  /// In en, this message translates to:
+  /// **'Milestones'**
+  String get setupLaunchMilestones;
+
+  /// #2876 setup launch: setupLaunchOperator
+  ///
+  /// In en, this message translates to:
+  /// **'Only your operator can do these:'**
+  String get setupLaunchOperator;
+
+  /// #2876 setup launch: setupLaunchPublicOff
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing about your space is public yet.'**
+  String get setupLaunchPublicOff;
+
+  /// #2876 setup launch: setupLaunchPublicOn
+  ///
+  /// In en, this message translates to:
+  /// **'Your public page is visible to everyone.'**
+  String get setupLaunchPublicOn;
+
+  /// #2876 setup launch: setupLaunchReached
+  ///
+  /// In en, this message translates to:
+  /// **'Reached'**
+  String get setupLaunchReached;
+
+  /// #2876 setup launch: setupLaunchReport
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the readiness report'**
+  String get setupLaunchReport;
+
+  /// #2876 setup launch: setupLaunchReportTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Readiness report'**
+  String get setupLaunchReportTitle;
+
+  /// #2876 setup launch: setupLaunchTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Check and go live'**
+  String get setupLaunchTitle;
 
   /// #2868 setup levels: setupLevelName
   ///
