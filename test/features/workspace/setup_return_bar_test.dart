@@ -181,6 +181,60 @@ void main() {
     expect(find.byKey(const ValueKey('setup-guide-all-done')), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
   });
+
+  // #2912 — the onboarding hand-off pushes the guide over Reserve, so the
+  // location the router reports is /reserve while the guide is on top.
+  testWidgets('the bar is hidden on the guide pushed over Reserve, with a '
+      'step in progress, and shows on any screen above it', (tester) async {
+    final router = GoRouter(
+      initialLocation: '/reserve',
+      routes: [
+        GoRoute(path: '/reserve', builder: (_, _) => const Text('reserve')),
+        GoRoute(path: '/setup', builder: (_, _) => const SetupGuideScreen()),
+        GoRoute(
+          path: '/editor',
+          builder: (_, _) =>
+              Scaffold(appBar: AppBar(), body: const Text('editor')),
+        ),
+      ],
+    );
+    addTearDown(router.dispose);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(
+          localSetup: FakeLocalSetupRepository(status: _status),
+        ),
+        child: MaterialApp.router(
+          routerConfig: router,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) =>
+              SetupReturnBar(router: router, child: child!),
+        ),
+      ),
+    );
+    await _frames(tester);
+    unawaited(router.push('/setup'));
+    await _frames(tester);
+    expect(router.routeInformationProvider.value.uri.path, '/reserve',
+        reason: 'the reported location is the route under the push');
+    final pending = ProviderScope.containerOf(
+      tester.element(find.byType(SetupReturnBar)),
+    ).read(setupReturnPendingProvider.notifier)..set(open: true);
+    await _frames(tester);
+    expect(find.byType(SetupGuideScreen), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
+
+    unawaited(router.push('/editor'));
+    await _frames(tester);
+    expect(find.byKey(const ValueKey('setup-return-bar')), findsOneWidget);
+
+    await tester.tap(find.byType(BackButton).hitTestable());
+    await _frames(tester);
+    expect(find.byType(SetupGuideScreen), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-return-bar')), findsNothing);
+    pending.set(open: false);
+  });
 }
 
 /// A second of frames: a page transition and the fake's answers.
