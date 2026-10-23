@@ -50,14 +50,45 @@ void main() {
   });
 
   test('cells round-trip: text is XML-escaped, numbers stay numeric, '
-      'dates are ISO text', () {
+      'dates and booleans are real ones (#2861)', () {
     final sheet = _part(_unzip(bytes), 'xl/worksheets/sheet1.xml');
     expect(sheet, contains('Flo &amp; Co &lt;3'),
         reason: 'unescaped & or < breaks the whole part');
     expect(sheet, contains('<c r="C2"><v>42.5</v></c>'),
         reason: 'numbers must be native cells so Excel can sum them');
-    expect(sheet, contains('2026-05-13T09:00:00.000Z'));
-    expect(sheet, contains('TRUE'));
+    // 13 May 2026 09:00 is day 46155 plus 9/24 since Excel's epoch, at the
+    // wall-clock time the cell carries: 09:00 reads 09:00.
+    expect(sheet, contains('<c r="D2" s="2"><v>46155.375</v></c>'));
+    expect(sheet, contains('<c r="E2" t="b"><v>1</v></c>'));
+  });
+
+  test('every sheet has a frozen, filtered, bold header and sized columns '
+      '(#2861)', () {
+    final archive = _unzip(bytes);
+    for (final part in ['xl/worksheets/sheet1.xml', 'xl/worksheets/sheet2.xml']) {
+      final sheet = _part(archive, part);
+      expect(sheet, contains('state="frozen"'), reason: part);
+      expect(sheet, contains('<autoFilter ref="A1:'), reason: part);
+      expect(sheet, contains('customWidth="1"'), reason: part);
+      expect(sheet, contains('s="1" t="inlineStr"'), reason: '$part header');
+    }
+    expect(_part(archive, 'xl/worksheets/sheet1.xml'),
+        contains('<autoFilter ref="A1:E2"/>'));
+    expect(_part(archive, 'xl/workbook.xml'),
+        contains(r"'Reservations'!$A$1:$E$2"));
+  });
+
+  test('a day and an amount carry their own formats (#2861)', () {
+    final sheet = _part(
+        _unzip(buildXlsx([
+          XlsxSheet(name: 'S', rows: [
+            ['day', 'amount'],
+            [XlsxDate(DateTime(2026, 1, 2)), const XlsxAmount(12.5)],
+          ]),
+        ])),
+        'xl/worksheets/sheet1.xml');
+    expect(sheet, contains('<c r="A2" s="3"><v>46024.0</v></c>'));
+    expect(sheet, contains('<c r="B2" s="4"><v>12.5</v></c>'));
   });
 
   test('sheet names are sanitised to what Excel accepts — forbidden '
