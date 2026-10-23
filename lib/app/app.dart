@@ -19,6 +19,7 @@ import '../features/workspace/presentation/widgets/setup_return_bar.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import '../l10n/app_localizations.dart';
 import 'boot_splash.dart';
+import 'notification_tap_routing.dart';
 import 'router.dart';
 import 'shell/layer_chrome.dart';
 import 'switcher_cover_host.dart';
@@ -53,7 +54,9 @@ class DeskiloApp extends ConsumerWidget {
     ref
       ..watch(presenceBootstrapProvider)
       // #2478 — the VAT functions run on the installation's reference data.
-      ..watch(activeTaxReferenceProvider);
+      ..watch(activeTaxReferenceProvider)
+      // #2559 C2 — a tapped notification opens only what it may.
+      ..watch(notificationTapRoutingProvider);
     // Motion pass (#611): the `uiAnimations` flag decides route
     // transitions (baked into the theme) and, via [MotionSettings] in
     // the builder, every in-app animation. Watching the feature set here

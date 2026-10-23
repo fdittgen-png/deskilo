@@ -47,10 +47,10 @@ const _tracked = <_Tracked>[
    pattern: r"\?\? 'EUR'", ceiling: 1, movesIn: 'S5'),
   (what: 'currency fallback of the letter data maps', file: 'lib/features/money/domain/report_data_letters.dart',
    pattern: r"currencyCode \?\? 'EUR'", ceiling: 3, movesIn: 'S5'),
-  (what: 'geocoder endpoint default', file: 'lib/features/directory/data/photon_directory_geocoder.dart',
-   pattern: r"defaultValue: 'https://", ceiling: 1, movesIn: 'S5'),
-  (what: 'map tile endpoint default', file: 'lib/features/directory/presentation/directory_map.dart',
-   pattern: r"defaultValue: 'https://", ceiling: 1, movesIn: 'S5'),
+  // Both defaults live in the one description of the map services that
+  // the map disclosure names.
+  (what: 'map tile and geocoder endpoint defaults', file: 'lib/features/directory/domain/discovery_view.dart',
+   pattern: r"defaultValue: 'https://", ceiling: 2, movesIn: 'S5'),
   // Reviewed as NOT business values (see _allowed): still counted, so a new
   // one next to them is a failing test.
   (what: 'presence heartbeat interval (protocol constant)', file: 'lib/core/presence/presence_rules.dart',

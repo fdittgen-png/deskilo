@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../features/directory/domain/discovery_paging.dart';
 import '../../../features/directory/domain/public_workspace.dart';
 import '../../public_network/public_network_negotiator.dart';
+import '../../public_network/public_network_operations.dart';
 
 /// #1847 — one in-memory directory behind all three interfaces: what the
 /// public reads, what the owner manages and what a participant asks.
@@ -22,20 +24,48 @@ class FakeDirectoryRepository
   /// #1847 B — when set, apply is refused before anything is sent, as the
   /// real repository refuses an action it could not negotiate.
   PublicActionRefusal? refuseApply;
+
+  /// Every page of cards asked, as `origin#page`, in order.
+  final reads = <String>[];
+
+  /// Pages of a source that fail, as `origin#page`; a test clears one to
+  /// let its retry succeed.
+  final failPages = <String>{};
+
+  /// Cards per page of one source; the contract's page size by default.
+  int pageSize = PublicNetworkOperations.directoryWorkspacesSearch.pageSize!;
+
+  /// Every source the cards name, in the order they first appear, on one
+  /// page of the directory.
   @override
-  Future<DirectoryPage> search(
-    String query, {
-    int sourcePage = 0,
-    int workspacePage = 0,
-  }) async {
+  Future<DirectorySourcesPage> sources({int page = 0}) async {
     if (fail) throw StateError('directory unavailable');
-    return DirectoryPage(
-      cards
-          .where((w) => w.name.toLowerCase().contains(query.toLowerCase()))
-          .skip(workspacePage * 25)
-          .take(25)
-          .toList(),
-    );
+    final origins = <String, String>{};
+    for (final c in cards) {
+      origins.putIfAbsent(c.source, () => c.key);
+    }
+    return DirectorySourcesPage([
+      if (page == 0)
+        for (final e in origins.entries) DirectorySource(e.key, e.value),
+    ], more: false);
+  }
+
+  @override
+  Future<SourceCardsPage> workspaces(
+    DirectorySource source,
+    String query, {
+    int page = 0,
+  }) async {
+    reads.add('${source.origin}#$page');
+    if (fail || failPages.contains('${source.origin}#$page')) {
+      throw StateError('directory unavailable');
+    }
+    final matching = cards
+        .where((w) => w.source == source.origin)
+        .where((w) => w.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    final slice = matching.skip(page * pageSize).take(pageSize).toList();
+    return SourceCardsPage(slice, more: slice.length == pageSize);
   }
 
   @override

@@ -4439,6 +4439,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get discoveryBookmark => 'Salva';
 
   @override
+  String discoveryLoadedCount(
+    int loaded,
+    int shown,
+    int answered,
+    int sources,
+  ) {
+    return 'Luoghi caricati: $loaded · mostrati: $shown · directory che hanno risposto: $answered su $sources';
+  }
+
+  @override
+  String get discoveryMapContinue => 'Continua verso la mappa';
+
+  @override
+  String discoveryMapDisclosureBody(String tiles, String geocoder) {
+    return 'La mappa è disegnata da $tiles e gli indirizzi senza coordinate sono collocati da $geocoder. Il fornitore della mappa riceve informazioni di connessione e sull\'area visualizzata: l\'indirizzo IP del Suo dispositivo e la parte di mappa che Lei guarda. Non gli viene inviato nulla se Lei non continua.';
+  }
+
+  @override
+  String get discoveryMapDisclosureTitle => 'Prima di aprire la mappa';
+
+  @override
+  String get discoveryMapRemembered =>
+      'La Sua scelta è conservata su questo dispositivo per questo fornitore di mappe.';
+
+  @override
+  String get discoveryMapStay => 'Resta sull\'elenco';
+
+  @override
+  String get discoveryMoreDirectoriesFailed =>
+      'Non è stato possibile caricare altre directory.';
+
+  @override
   String get discoveryNoSaved =>
       'Nessuno spazio salvato su questo dispositivo per ora.';
 
@@ -4450,6 +4482,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get discoverySavedFilter => 'Salvati';
+
+  @override
+  String discoveryShowMoreFrom(String source) {
+    return 'Mostra altri da $source';
+  }
+
+  @override
+  String discoverySourceFailed(String source) {
+    return '$source non ha risposto. I luoghi già mostrati restano.';
+  }
 
   @override
   String get discoveryTitle => 'Scoprire spazi';
@@ -16364,6 +16406,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesTotal => 'Totale';
 
   @override
+  String get pushAllowAction => 'Consenti';
+
+  @override
   String get pushCancelledBody =>
       'Una prenotazione è stata rimossa da un admin.';
 
@@ -16371,10 +16416,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get pushCancelledTitle => 'Prenotazione rimossa';
 
   @override
+  String get pushMentionBody => 'È stato menzionato in una conversazione.';
+
+  @override
+  String get pushMessageBody => 'Ha un nuovo messaggio.';
+
+  @override
   String get pushPendingBody => 'Qualcuno attende la sua conferma.';
 
   @override
   String get pushPendingTitle => 'DesKilo';
+
+  @override
+  String get pushReminderBody => 'La attende un promemoria di pagamento.';
 
   @override
   String get pushStatusNoTransport => 'Questa versione non ha notifiche push';
@@ -16392,7 +16446,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il proprietario completa la configurazione Firebase (guida push-setup).';
 
   @override
+  String get pushStatusPermissionNeeded =>
+      'Le notifiche non sono consentite su questo dispositivo';
+
+  @override
+  String get pushStatusPermissionNeededHint =>
+      'Tocchi Consenti per riceverle. In ogni caso tutto resta disponibile nell\'app.';
+
+  @override
   String get pushStatusRegistered => 'Le notifiche push sono attive';
+
+  @override
+  String get pushUpdateBody => 'Ha una novità.';
 
   @override
   String get qrBillAcceptancePoint => 'Punto di accettazione';

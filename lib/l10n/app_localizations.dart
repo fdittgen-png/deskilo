@@ -7579,6 +7579,48 @@ abstract class AppLocalizations {
   /// **'Bookmark'**
   String get discoveryBookmark;
 
+  /// No description provided for @discoveryLoadedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}'**
+  String discoveryLoadedCount(int loaded, int shown, int answered, int sources);
+
+  /// No description provided for @discoveryMapContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to the map'**
+  String get discoveryMapContinue;
+
+  /// No description provided for @discoveryMapDisclosureBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The map is drawn by {tiles}, and addresses without coordinates are placed by {geocoder}. The map provider receives connection and viewed-area information: your device\'s IP address and the part of the map you look at. Nothing is sent to them unless you continue.'**
+  String discoveryMapDisclosureBody(String tiles, String geocoder);
+
+  /// No description provided for @discoveryMapDisclosureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before the map opens'**
+  String get discoveryMapDisclosureTitle;
+
+  /// No description provided for @discoveryMapRemembered.
+  ///
+  /// In en, this message translates to:
+  /// **'Your choice is kept on this device for this map provider.'**
+  String get discoveryMapRemembered;
+
+  /// No description provided for @discoveryMapStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay with the list'**
+  String get discoveryMapStay;
+
+  /// No description provided for @discoveryMoreDirectoriesFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'More directories could not be loaded.'**
+  String get discoveryMoreDirectoriesFailed;
+
   /// No description provided for @discoveryNoSaved.
   ///
   /// In en, this message translates to:
@@ -7602,6 +7644,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved'**
   String get discoverySavedFilter;
+
+  /// No description provided for @discoveryShowMoreFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more from {source}'**
+  String discoveryShowMoreFrom(String source);
+
+  /// No description provided for @discoverySourceFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'{source} did not answer. The places already shown stay.'**
+  String discoverySourceFailed(String source);
 
   /// No description provided for @discoveryTitle.
   ///
@@ -27366,6 +27420,12 @@ abstract class AppLocalizations {
   /// **'Total'**
   String get purchasesTotal;
 
+  /// #2559 Settings button: the deliberate action that raises the system notification prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get pushAllowAction;
+
   /// Push body for the removed-reservation ping — generic, no personal data (#424)
   ///
   /// In en, this message translates to:
@@ -27378,6 +27438,18 @@ abstract class AppLocalizations {
   /// **'Reservation removed'**
   String get pushCancelledTitle;
 
+  /// #2559 generic push body for a mention: no sender, no conversation name
+  ///
+  /// In en, this message translates to:
+  /// **'You were mentioned in a conversation.'**
+  String get pushMentionBody;
+
+  /// #2559 generic push body for a new message: no sender, no words of the message
+  ///
+  /// In en, this message translates to:
+  /// **'You have a new message.'**
+  String get pushMessageBody;
+
   /// Generic push body for a pending confirmation; deliberately carries no personal data
   ///
   /// In en, this message translates to:
@@ -27389,6 +27461,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'DesKilo'**
   String get pushPendingTitle;
+
+  /// #2559 generic push body for a payment reminder: never an amount
+  ///
+  /// In en, this message translates to:
+  /// **'A payment reminder is waiting for you.'**
+  String get pushReminderBody;
 
   /// #716 - F-Droid build without a push transport
   ///
@@ -27414,11 +27492,29 @@ abstract class AppLocalizations {
   /// **'The workspace owner completes the Firebase setup (push-setup guide).'**
   String get pushStatusNotConfiguredHint;
 
+  /// #2559 Settings status: push works but this device does not allow notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are not allowed on this device'**
+  String get pushStatusPermissionNeeded;
+
+  /// #2559 hint under the status: the Allow button, and that nothing in the app depends on it
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Allow to receive them. Everything stays available in the app either way.'**
+  String get pushStatusPermissionNeededHint;
+
   /// Settings status line: push pipeline registered (#424)
   ///
   /// In en, this message translates to:
   /// **'Push notifications are active'**
   String get pushStatusRegistered;
+
+  /// #2559 generic push body for any other or unknown kind
+  ///
+  /// In en, this message translates to:
+  /// **'You have an update.'**
+  String get pushUpdateBody;
 
   /// #2360: qrBillAcceptancePoint
   ///

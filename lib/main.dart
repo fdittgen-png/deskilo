@@ -16,6 +16,7 @@ import 'core/instance/tax_reference_bundle_asset.dart';
 import 'core/notifications/deferred_notification_service.dart';
 import 'core/notifications/local_notification_service.dart';
 import 'core/notifications/notification_providers.dart';
+import 'core/notifications/notification_taps.dart';
 import 'core/trace/trace_hooks.dart';
 import 'core/trace/trace_logger.dart';
 import 'core/trace/trace_provider_observer.dart';
@@ -87,6 +88,9 @@ Future<void> main() async {
   // the deferred service now, the platform one attaches when it is ready
   // (#86: a failed init leaves the honest no-op behaviour).
   final notifications = DeferredNotificationService();
+  // #2559 C2 — the taps inbox exists before the platform service, so the
+  // tap that launched the app waits for the router instead of being lost.
+  final taps = NotificationTaps();
   // #614: the web has no local-notification scheduling (zonedSchedule
   // and the pending mirror both throw) — the no-op behaviour IS the web
   // implementation, said once instead of erroring on every sweep.
@@ -94,7 +98,7 @@ Future<void> main() async {
     trace.log(TraceLevel.info, 'notifications',
         'web build — local notifications disabled');
   } else {
-    unawaited(LocalNotificationService.initialize().then(
+    unawaited(LocalNotificationService.initialize(taps: taps).then(
       notifications.attach,
       onError: (Object e, StackTrace st) {
         debugPrint('Notification initialization failed: $e\n$st');
@@ -109,6 +113,7 @@ Future<void> main() async {
       observers: const [TraceProviderObserver()],
       overrides: [
         notificationServiceProvider.overrideWithValue(notifications),
+        notificationTapsProvider.overrideWithValue(taps),
         sessionSourceFromAuth, // #2495
         captureReaderNameFromProfile, // #2495
         enabledFeatureKeysFromWorkspace, // #2495

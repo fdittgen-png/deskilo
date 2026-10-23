@@ -18,10 +18,13 @@ class _Recording implements NotificationService {
   Future<void> syncPendingNotifications(List<PendingNotice> n) async =>
       syncs.add(n);
   @override
-  Future<void> showNow({required String title, required String body}) async =>
+  Future<void> showNow(
+      {required String title, required String body, String? payload}) async =>
       shown.add(title);
   @override
   Future<bool?> notificationsEnabled() async => true;
+  @override
+  Future<bool?> requestPermission() async => true;
 }
 
 void main() {

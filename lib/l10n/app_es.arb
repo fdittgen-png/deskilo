@@ -3093,10 +3093,19 @@
   "directoryTitle": "Miembros",
   "directoryWhatsapp": "Chatear por WhatsApp",
   "discoveryBookmark": "Guardar",
+  "discoveryLoadedCount": "Lugares cargados: {loaded} · mostrados: {shown} · directorios que respondieron: {answered} de {sources}",
+  "discoveryMapContinue": "Continuar al mapa",
+  "discoveryMapDisclosureBody": "El mapa lo dibuja {tiles} y las direcciones sin coordenadas las sitúa {geocoder}. El proveedor del mapa recibe información de conexión y del área visualizada: la dirección IP de su dispositivo y la parte del mapa que usted mira. No se le envía nada si usted no continúa.",
+  "discoveryMapDisclosureTitle": "Antes de abrir el mapa",
+  "discoveryMapRemembered": "Su elección se guarda en este dispositivo para este proveedor de mapas.",
+  "discoveryMapStay": "Quedarse en la lista",
+  "discoveryMoreDirectoriesFailed": "No se pudieron cargar más directorios.",
   "discoveryNoSaved": "Todavía no hay espacios guardados en este dispositivo.",
   "discoveryRemoveBookmark": "Quitar de guardados",
   "discoverySaved": "Guardado en este dispositivo",
   "discoverySavedFilter": "Guardados",
+  "discoveryShowMoreFrom": "Mostrar más de {source}",
+  "discoverySourceFailed": "{source} no respondió. Los lugares ya mostrados se mantienen.",
   "discoveryTitle": "Descubrir espacios",
   "discoveryView": "Ver",
   "documentsAdd": "Añadir un documento",
@@ -11009,10 +11018,14 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "pushAllowAction": "Permitir",
   "pushCancelledBody": "Un admin eliminó una reserva.",
   "pushCancelledTitle": "Reserva eliminada",
+  "pushMentionBody": "Le han mencionado en una conversación.",
+  "pushMessageBody": "Tiene un mensaje nuevo.",
   "pushPendingBody": "Alguien necesita su confirmación.",
   "pushPendingTitle": "DesKilo",
+  "pushReminderBody": "Tiene un recordatorio de pago.",
   "pushStatusNoTransport": "Esta versión no tiene notificaciones push",
   "@pushStatusNoTransport": {
     "description": "#716 - F-Droid build without a push transport"
@@ -11023,7 +11036,10 @@
   },
   "pushStatusNotConfigured": "Las notificaciones push aún no están configuradas",
   "pushStatusNotConfiguredHint": "El propietario completa la configuración de Firebase (guía push-setup).",
+  "pushStatusPermissionNeeded": "Las notificaciones no están permitidas en este dispositivo",
+  "pushStatusPermissionNeededHint": "Toque Permitir para recibirlas. En cualquier caso, todo sigue disponible en la aplicación.",
   "pushStatusRegistered": "Las notificaciones push están activas",
+  "pushUpdateBody": "Tiene una novedad.",
   "qrBillAcceptancePoint": "Acceptance point",
   "@qrBillAcceptancePoint": {
     "description": "#2360: qrBillAcceptancePoint (the SIX guidelines define de, fr, it and en; es prints the English words)"

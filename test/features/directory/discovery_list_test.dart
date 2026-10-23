@@ -102,6 +102,10 @@ void main() {
     expect(find.byType(ListTile), findsNothing);
     await tester.tap(find.byKey(const ValueKey('directory-portal-list')));
     await tester.pumpAndSettle();
+    // The map provider is named before the map loads (#2555 C2).
+    expect(find.byType(DirectoryMap), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('directory-map-continue')));
+    await tester.pumpAndSettle();
     expect(find.byType(DirectoryMap), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

@@ -3093,10 +3093,19 @@
   "directoryTitle": "Membri",
   "directoryWhatsapp": "Chatta su WhatsApp",
   "discoveryBookmark": "Salva",
+  "discoveryLoadedCount": "Luoghi caricati: {loaded} · mostrati: {shown} · directory che hanno risposto: {answered} su {sources}",
+  "discoveryMapContinue": "Continua verso la mappa",
+  "discoveryMapDisclosureBody": "La mappa è disegnata da {tiles} e gli indirizzi senza coordinate sono collocati da {geocoder}. Il fornitore della mappa riceve informazioni di connessione e sull'area visualizzata: l'indirizzo IP del Suo dispositivo e la parte di mappa che Lei guarda. Non gli viene inviato nulla se Lei non continua.",
+  "discoveryMapDisclosureTitle": "Prima di aprire la mappa",
+  "discoveryMapRemembered": "La Sua scelta è conservata su questo dispositivo per questo fornitore di mappe.",
+  "discoveryMapStay": "Resta sull'elenco",
+  "discoveryMoreDirectoriesFailed": "Non è stato possibile caricare altre directory.",
   "discoveryNoSaved": "Nessuno spazio salvato su questo dispositivo per ora.",
   "discoveryRemoveBookmark": "Rimuovi dai salvati",
   "discoverySaved": "Salvato su questo dispositivo",
   "discoverySavedFilter": "Salvati",
+  "discoveryShowMoreFrom": "Mostra altri da {source}",
+  "discoverySourceFailed": "{source} non ha risposto. I luoghi già mostrati restano.",
   "discoveryTitle": "Scoprire spazi",
   "discoveryView": "Vedi",
   "documentsAdd": "Aggiungi un documento",
@@ -11009,10 +11018,14 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "pushAllowAction": "Consenti",
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
   "pushCancelledTitle": "Prenotazione rimossa",
+  "pushMentionBody": "È stato menzionato in una conversazione.",
+  "pushMessageBody": "Ha un nuovo messaggio.",
   "pushPendingBody": "Qualcuno attende la sua conferma.",
   "pushPendingTitle": "DesKilo",
+  "pushReminderBody": "La attende un promemoria di pagamento.",
   "pushStatusNoTransport": "Questa versione non ha notifiche push",
   "@pushStatusNoTransport": {
     "description": "#716 - F-Droid build without a push transport"
@@ -11023,7 +11036,10 @@
   },
   "pushStatusNotConfigured": "Le notifiche push non sono ancora configurate",
   "pushStatusNotConfiguredHint": "Il proprietario completa la configurazione Firebase (guida push-setup).",
+  "pushStatusPermissionNeeded": "Le notifiche non sono consentite su questo dispositivo",
+  "pushStatusPermissionNeededHint": "Tocchi Consenti per riceverle. In ogni caso tutto resta disponibile nell'app.",
   "pushStatusRegistered": "Le notifiche push sono attive",
+  "pushUpdateBody": "Ha una novità.",
   "qrBillAcceptancePoint": "Punto di accettazione",
   "@qrBillAcceptancePoint": {
     "description": "#2360: qrBillAcceptancePoint"

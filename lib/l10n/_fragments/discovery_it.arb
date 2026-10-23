@@ -5,5 +5,14 @@
   "discoveryRemoveBookmark": "Rimuovi dai salvati",
   "discoveryView": "Vedi",
   "discoverySavedFilter": "Salvati",
-  "discoveryNoSaved": "Nessuno spazio salvato su questo dispositivo per ora."
+  "discoveryNoSaved": "Nessuno spazio salvato su questo dispositivo per ora.",
+  "discoveryLoadedCount": "Luoghi caricati: {loaded} · mostrati: {shown} · directory che hanno risposto: {answered} su {sources}",
+  "discoveryShowMoreFrom": "Mostra altri da {source}",
+  "discoverySourceFailed": "{source} non ha risposto. I luoghi già mostrati restano.",
+  "discoveryMoreDirectoriesFailed": "Non è stato possibile caricare altre directory.",
+  "discoveryMapDisclosureTitle": "Prima di aprire la mappa",
+  "discoveryMapDisclosureBody": "La mappa è disegnata da {tiles} e gli indirizzi senza coordinate sono collocati da {geocoder}. Il fornitore della mappa riceve informazioni di connessione e sull'area visualizzata: l'indirizzo IP del Suo dispositivo e la parte di mappa che Lei guarda. Non gli viene inviato nulla se Lei non continua.",
+  "discoveryMapRemembered": "La Sua scelta è conservata su questo dispositivo per questo fornitore di mappe.",
+  "discoveryMapContinue": "Continua verso la mappa",
+  "discoveryMapStay": "Resta sull'elenco"
 }

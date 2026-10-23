@@ -33,7 +33,6 @@ import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/domain/check_in_reminders.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/domain/member_note.dart';
-import '../../features/workspace/domain/member_note_refs.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -154,8 +153,8 @@ void _announceMemberNotes(
   ShellSession session,
 ) {
   // Member notes (#456/#464): every note for me that this DEVICE has
-  // not yet announced pops as a local notification with sender and
-  // text — INCLUDING catch-up: without the owner's Firebase setup no
+  // not yet announced pops as a local notification — generic since
+  // #2559 C2 (no sender, no text) — INCLUDING catch-up: without the owner's Firebase setup no
   // push endpoint exists, so notes sent while the app was closed
   // must be announced on the next start. The persisted NOTIFIED
   // stamp makes each note announce exactly once per device.
@@ -178,7 +177,6 @@ Future<void> _announceNotes(
   try {
     final myId = (await ref.read(myMemberProvider.future))?.id;
     if (myId == null) return;
-    final names = await ref.read(memberNamesProvider.future);
     final store = ref.read(noteSeenStoreProvider);
     final notifiedUntil = await store.readNotified();
     // #821 — a MUTED conversation is announced by nobody: its
@@ -195,7 +193,7 @@ Future<void> _announceNotes(
       }
       if (!session.notifiedNoteIds.add(note.id)) continue;
       if (!muted.contains(note.conversationId)) {
-        await _announce(ref, l10n, note, names);
+        await _announce(ref, l10n);
       }
       newest = _later(newest, note.createdAt);
     }
@@ -212,25 +210,14 @@ Future<void> _announceNotes(
   }
 }
 
-Future<void> _announce(
-  WidgetRef ref,
-  AppLocalizations l10n,
-  MemberNote note,
-  Map<String, String> names,
-) {
-  // The names cache can lag a fresh boot — a nameless "Message
-  // from" reads broken, so fall back to the app title (#460).
-  final sender = names[note.fromMemberId] ?? '';
-  return ref
-      .read(notificationServiceProvider)
-      .showNow(
-        title: sender.isEmpty
-            ? l10n.pushPendingTitle
-            : l10n.memberNoteReceived(sender),
-        // #523 — reference tokens read as their labels.
-        body: notePlainText(note.body),
-      );
-}
+/// #2559 C2 — a locked screen, a watch or a notification log keeps what a
+/// notification shows: the app's name and a generic line, never the
+/// sender or the message's words. The message itself is one tap away.
+Future<void> _announce(WidgetRef ref, AppLocalizations l10n) =>
+    ref.read(notificationServiceProvider).showNow(
+          title: l10n.pushPendingTitle,
+          body: l10n.pushMessageBody,
+        );
 
 DateTime _later(DateTime? current, DateTime candidate) =>
     current == null || candidate.isAfter(current) ? candidate : current;

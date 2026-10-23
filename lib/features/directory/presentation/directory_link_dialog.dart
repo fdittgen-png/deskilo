@@ -12,6 +12,7 @@ import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
+import '../providers/discovery_listing_providers.dart';
 import 'connection_dialog.dart';
 import 'connection_outcome_text.dart';
 
@@ -110,7 +111,7 @@ class _DirectoryLinkState extends ConsumerState<DirectoryLinkDialog> {
       if (ok) _state = DirectoryLinkState.linked;
     });
     if (ok) {
-      ref.invalidate(publicDirectoryProvider);
+      ref.invalidate(discoveryListingProvider);
       AppSnack.success(context, l.directoryLinkDone);
     } else if (!missing) {
       AppSnack.error(
