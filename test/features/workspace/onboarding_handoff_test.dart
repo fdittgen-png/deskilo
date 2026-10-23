@@ -44,7 +44,10 @@ Future<ProviderContainer> pumpStart(WidgetTester tester, HeldJoin repo,
   addTearDown(tester.view.reset);
   final router = GoRouter(routes: [GoRoute(path: '/',
     builder: (_, _) => const OnboardingScreen()),
-    GoRoute(path: '/reserve', builder: (_, _) => const SizedBox()),
+    GoRoute(path: '/reserve',
+      builder: (_, _) => const SizedBox(key: ValueKey('at-reserve'))),
+    GoRoute(path: '/setup',
+      builder: (_, _) => const SizedBox(key: ValueKey('at-setup'))),
     GoRoute(path: '/money', builder: (_, _) => const SizedBox())]);
   addTearDown(router.dispose);
   await tester.pumpWidget(ProviderScope(
@@ -96,6 +99,9 @@ void main() {
     expect(container.read(activeWorkspaceIdProvider).value, joined);
     expect(repo.serverDefaultWorkspaceId, 'ws-1');
     expect((await container.read(currentWorkspaceProvider.future))?.id, joined);
+    // #2869 — someone joining lands on Reserve, never on the setup guide.
+    expect(find.byKey(const ValueKey('at-reserve')), findsOneWidget);
+    expect(find.byKey(const ValueKey('at-setup')), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
@@ -133,6 +139,8 @@ void main() {
     expect(created, isNot('ws-1'));
     expect(container.read(activeWorkspaceIdProvider).value, created);
     expect((await container.read(currentWorkspaceProvider.future))?.id, created);
+    // #2869 — the creator lands on the setup guide.
+    expect(find.byKey(const ValueKey('at-setup')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
