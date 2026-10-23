@@ -6703,6 +6703,66 @@ abstract class AppLocalizations {
   /// **'The customer capacity was not saved.'**
   String get customerCapacitySaveError;
 
+  /// #2862 data report: dataReportArchived
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get dataReportArchived;
+
+  /// #2862 data report column header by key; other keys fall back to the export column names
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, month{Month} bookings{Bookings} held{Held} attended{Attended} cancelled{Cancelled} hours{Hours} paid{Paid} open{Open} charges{Charged} credits{Settled} balance{Balance} seats{Places} reference{Reference} role{Role} other{{key}}}'**
+  String dataReportColumn(String key);
+
+  /// #2862 data report: dataReportContents
+  ///
+  /// In en, this message translates to:
+  /// **'Contents'**
+  String get dataReportContents;
+
+  /// #2862 data report: the report could not be made
+  ///
+  /// In en, this message translates to:
+  /// **'The data report could not be made. Try again in a moment.'**
+  String get dataReportFailed;
+
+  /// #2862 data report: dataReportNo
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get dataReportNo;
+
+  /// #2862 data report: dataReportNone
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded'**
+  String get dataReportNone;
+
+  /// #2862 data report section title by key
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, members{Members} bookings{Bookings by month} invoices{Invoice register} payments{Payments and balances} purchases{Purchases and suppliers} plan{Plan and prices} other{{key}}}'**
+  String dataReportPart(String key);
+
+  /// #2862 data report: dataReportSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Members, bookings, invoices, payments, purchases and the plan with its prices, with totals, to read or print.'**
+  String get dataReportSubtitle;
+
+  /// #2862 data report: dataReportTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace data report'**
+  String get dataReportTitle;
+
+  /// #2862 data report: dataReportYes
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get dataReportYes;
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -10336,6 +10396,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Download all workspace data as an Excel workbook.'**
   String get featureDataExportDesc;
+
+  /// #2862 data report feature description
+  ///
+  /// In en, this message translates to:
+  /// **'The space\'s data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals.'**
+  String get featureDataReportDesc;
+
+  /// #2862 data report feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Data report (PDF)'**
+  String get featureDataReportTitle;
 
   /// #1247: featureDecisionSurfaceDesc
   ///
@@ -32411,6 +32483,12 @@ abstract class AppLocalizations {
   /// **'For a later milestone'**
   String get setupGuideLater;
 
+  /// #2868 setup levels: setupGuideLevelsLink
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what your space does'**
+  String get setupGuideLevelsLink;
+
   /// #2869 — marks a setup step the server cannot verify as done.
   ///
   /// In en, this message translates to:
@@ -32489,11 +32567,125 @@ abstract class AppLocalizations {
   /// **'Waits for: {steps}'**
   String setupGuideWaitsFor(String steps);
 
+  /// #2868 setup levels: setupLevelName
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, bookings_simple{Shared places} bookings_resources{Rooms and resources} bookings_measured{Measured use} community_basic{Basic} community_organised{Organised} money_none{No money} money_statements{Statements} money_invoices{Invoices} payments_off{By transfer} payments_online{Online} tax_none{No VAT} tax_vat{VAT} tax_books{Books} purchases_none{None} purchases_expenses{Expenses} purchases_full{Full purchasing} presentation_basic{Basic} presentation_branded{Your colours} presentation_public{Public page} operations_basic{Basic} operations_insight{Figures} operations_advanced{Advanced} assistant_off{Off} assistant_on{On} other{{key}}}'**
+  String setupLevelName(String key);
+
+  /// #2868 setup levels: setupLevelsApplied
+  ///
+  /// In en, this message translates to:
+  /// **'Your space now does what you chose.'**
+  String get setupLevelsApplied;
+
+  /// #2868 setup levels: setupLevelsApply
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get setupLevelsApply;
+
+  /// #2868 setup levels: setupLevelsBecause
+  ///
+  /// In en, this message translates to:
+  /// **'Because {reason}'**
+  String setupLevelsBecause(String reason);
+
+  /// #2868 setup levels: setupLevelsChoice
+  ///
+  /// In en, this message translates to:
+  /// **'What it needs'**
+  String get setupLevelsChoice;
+
+  /// #2868 setup levels: setupLevelsConfirmOff
+  ///
+  /// In en, this message translates to:
+  /// **'Some features will be switched off. What they hold stays, but they stop working until they are switched on again.'**
+  String get setupLevelsConfirmOff;
+
+  /// #2868 setup levels: setupLevelsConflict
+  ///
+  /// In en, this message translates to:
+  /// **'The features changed meanwhile. Look again, then apply.'**
+  String get setupLevelsConflict;
+
+  /// #2868 setup levels: a chosen level that needs another process at a minimum level
+  ///
+  /// In en, this message translates to:
+  /// **'{level} needs {needed}'**
+  String setupLevelsGap(String level, String needed);
+
+  /// #2868 setup levels: setupLevelsIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Answer a few plain questions: each process gets the level they call for, with the reason. Change any level by hand. Nothing changes until you apply, and the preview names every feature that is switched on or off.'**
+  String get setupLevelsIntro;
+
+  /// #2868 setup levels: setupLevelsNoChange
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing changes: the space already does this.'**
+  String get setupLevelsNoChange;
+
+  /// #2868 setup levels: setupLevelsPresets
+  ///
+  /// In en, this message translates to:
+  /// **'Quick start'**
+  String get setupLevelsPresets;
+
+  /// #2868 setup levels: setupLevelsQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'About your space'**
+  String get setupLevelsQuestions;
+
+  /// #2868 setup levels: setupLevelsSwitchOff
+  ///
+  /// In en, this message translates to:
+  /// **'Switches off: {features}'**
+  String setupLevelsSwitchOff(String features);
+
+  /// #2868 setup levels: setupLevelsSwitchOn
+  ///
+  /// In en, this message translates to:
+  /// **'Switches on: {features}'**
+  String setupLevelsSwitchOn(String features);
+
+  /// #2868 setup levels: setupLevelsTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What your space does'**
+  String get setupLevelsTitle;
+
   /// #2869 setup guide: setupMilestoneName
   ///
   /// In en, this message translates to:
   /// **'{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}'**
   String setupMilestoneName(String key);
+
+  /// #2868 setup levels: setupPresetName
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, essentiel{Essential} standard{Standard} complet{Complete} other{{key}}}'**
+  String setupPresetName(String key);
+
+  /// #2868 setup levels: setupProcessName
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, bookings{Bookings} community{Community} money{Money} payments{Payments} tax{Tax} purchases{Purchases} presentation{Presentation} operations{Operations} assistant{Assistant} other{{key}}}'**
+  String setupProcessName(String key);
+
+  /// #2868 setup levels: setupQuestion
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}'**
+  String setupQuestion(String key);
+
+  /// #2868 setup levels: setupReason
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, door_tablet{a tablet at the door checks people in} keeps_books{you keep accounting books} later{an assistant can come later} members_only{only members see the space} members_owe{members owe the space money} no_money{no money changes hands} no_purchases{the space buys nothing it tracks} no_vat{the space is not registered for VAT} organised{several people decide together} pay_by_transfer{members pay by transfer} pay_online{members pay online} public_page{the space has a public page} several_rooms{there are several rooms or sites} shared_places{members share the places} small_community{a small community} start_simple{start simple} tracks_purchases{you track what the space buys} vat_registered{the space is registered for VAT} issues_invoices{you issue invoices} other{{key}}}'**
+  String setupReason(String key);
 
   /// #2869 setup guide: setupStateName
   ///

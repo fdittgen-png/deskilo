@@ -63,6 +63,10 @@ enum AttentionAction {
   /// readiness section's code and [Attention.route] where it is set up.
   setUp,
 
+  /// #2867 — take a step of the setup guide; [Attention.subject] is the
+  /// step's id and [Attention.route] its screen.
+  setUpStep,
+
   /// #2332 — switch on a prerequisite that switched-on features wait for;
   /// [Attention.subject] is that feature's name, [Attention.count] how
   /// many wait.

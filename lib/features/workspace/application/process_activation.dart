@@ -27,6 +27,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/feature_flags_write.dart';
+import '../domain/setup_level_change.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_process.dart';
@@ -230,4 +231,29 @@ Future<ProcessApplyResult> applyProcessChange(
     Error.throwWithStackTrace(FeatureFlagsUnconfirmed(e), st);
   }
   return ProcessApplyResult.applied;
+}
+
+/// #2868 — a level change the owner confirmed, by the same contract: its
+/// read-set, then the forced refetch.
+/// Writes [change] to [workspaceId]. Returns false, writing nothing, for an
+/// empty change. Throws [FeatureFlagsConflict] when the read-set moved and
+/// [FeatureFlagsUnconfirmed] when the write went through but the refetch
+/// did not.
+Future<bool> applySetupLevels(
+  WidgetRef ref, {
+  required String workspaceId,
+  required SetupLevelChange change,
+}) async {
+  if (change.isEmpty) return false;
+  await ref
+      .read(workspaceRepositoryProvider)
+      .setFeatureFlags(workspaceId, change.flags, expected: change.expected);
+  ref.invalidate(myWorkspacesProvider);
+  try {
+    await ref.read(myWorkspacesProvider.future);
+  } catch (e, st) {
+    // trace-exempt: rethrown typed with its stack; the screen traces and says the write is unconfirmed.
+    Error.throwWithStackTrace(FeatureFlagsUnconfirmed(e), st);
+  }
+  return true;
 }

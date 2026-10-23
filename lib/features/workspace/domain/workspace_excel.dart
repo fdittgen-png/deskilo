@@ -256,14 +256,13 @@ class _ExcelExport {
   // Confirmed / unconfirmed / online in ONE tab, told apart by `state`
   // — the reconciliation view the request asked for is a filter away.
   XlsxSheet _payments() =>
-      XlsxSheet(name: 'Payments', rows: [
+      XlsxSheet(name: 'Payments', totals: 'total', rows: [
     [
       'state', 'member', 'amount', 'currency', 'period', 'occurred_on',
       'recorded_at', 'description', 'provider', 'order_id',
     ],
     for (final entry in ledger)
-      if (entry.kind == LedgerKind.credit &&
-          entry.category == LedgerCategory.payment)
+      if (isExportedPayment(entry))
         [
           'confirmed', memberName[entry.memberId],
           major(entry.amountCents), workspace.currencyCode, entry.period,
@@ -288,7 +287,7 @@ class _ExcelExport {
   ]);
 
   XlsxSheet _services() =>
-      XlsxSheet(name: 'Services', rows: [
+      XlsxSheet(name: 'Services', totals: 'total', rows: [
     [
       'state', 'member', 'description', 'amount', 'currency', 'period',
       'recorded_at',
@@ -322,7 +321,7 @@ class _ExcelExport {
   ]);
 
   XlsxSheet _invoices() =>
-      XlsxSheet(name: 'Invoices', rows: [
+      XlsxSheet(name: 'Invoices', totals: 'total', rows: [
     [
       'number', 'member', 'period', 'issued_at', 'total', 'currency',
       'voided_at', 'replaces', 'detailed', 'last_sent_at', 'kind', 'title',
@@ -377,6 +376,9 @@ class WorkspaceExportDetails {
     required this.events,
     required this.decisions,
     required this.invoices,
+    this.members = const [],
+    this.reservations = const [],
+    this.invoiceMatches = const {},
   });
 
   final Workspace workspace;
@@ -394,7 +396,21 @@ class WorkspaceExportDetails {
   /// sweep, when).
   final Map<String, List<ExportedDecision>> decisions;
   final List<Invoice> invoices;
+
+  /// The rows the data report reads beside the detail sheets' (#2862).
+  final List<Member> members;
+  final List<Reservation> reservations;
+  final Map<String, InvoiceMatch> invoiceMatches;
 }
+
+/// A confirmed member payment: a row of the Payments sheet.
+bool isExportedPayment(LedgerEntry e) =>
+    e.kind == LedgerKind.credit && e.category == LedgerCategory.payment;
+
+/// What a ledger row does to the member's balance (the Ledger sheet's
+/// `signed_amount`): a charge adds, a credit settles.
+int exportedSignedCents(LedgerEntry e) =>
+    e.kind == LedgerKind.charge ? e.amountCents : -e.amountCents;
 
 /// The detail sheets, in workbook order.
 List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
@@ -421,7 +437,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
     ]),
     // Every row of the member accounts: a charge is what a member owes, a
     // credit what settles it — the signed amount sums to the balance.
-    XlsxSheet(name: 'Ledger', rows: [
+    XlsxSheet(name: 'Ledger', totals: 'total', rows: [
       [
         'id', 'member', 'kind', 'category', 'amount', 'signed_amount',
         'currency', 'period', 'occurred_on', 'recorded_at', 'description',
@@ -430,7 +446,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
         [
           e.id, name(e.memberId), e.kind.name, e.category.name,
           major(e.amountCents),
-          major(e.kind == LedgerKind.charge ? e.amountCents : -e.amountCents),
+          major(exportedSignedCents(e)),
           d.workspace.currencyCode, e.period, _day(e.occurredOn), _at(e.createdAt),
           e.description,
         ],
@@ -458,7 +474,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
             if (x.accept) 'accepted' else 'declined', x.bySystem, _at(x.at),
           ],
     ]),
-    XlsxSheet(name: 'Invoice lines', rows: [
+    XlsxSheet(name: 'Invoice lines', totals: 'total', rows: [
       [
         'invoice', 'line', 'label', 'kind', 'quantity', 'amount',
         'currency', 'vat_percent', 'vat_category', 'source_invoice',

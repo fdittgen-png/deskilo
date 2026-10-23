@@ -253,6 +253,14 @@ void main() {
         waitingSince: _now,
         route: '/roles',
       ),
+      // #2867 — a step of the setup guide, by its own title.
+      Attention(
+        kind: AttentionKind.configuration,
+        subject: 'places',
+        action: AttentionAction.setUpStep,
+        waitingSince: _now,
+        route: '/editor',
+      ),
       Attention(
         kind: AttentionKind.configuration,
         subject: 'invoicing',
@@ -267,6 +275,7 @@ void main() {
         .map((t) => (t.title! as Text).data)
         .toList();
     expect(titles, contains('Set up: What members may do'));
+    expect(titles, contains('Set up: Places on the plan'));
     expect(titles.any((t) => t!.startsWith('2 switched-on features wait for')),
         isTrue,
         reason: '$titles');

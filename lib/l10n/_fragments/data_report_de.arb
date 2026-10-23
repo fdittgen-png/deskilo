@@ -1,0 +1,14 @@
+{
+  "featureDataReportTitle": "Datenbericht (PDF)",
+  "featureDataReportDesc": "Die Daten des Spaces als lesbares PDF: Mitglieder, Buchungen nach Monat, Rechnungsregister, Zahlungen und Salden, Einkäufe und Lieferanten sowie der Plan mit seinen Preisen. Dieselben Zeilen wie die Excel-Arbeitsmappe, mit Summen.",
+  "dataReportTitle": "Datenbericht des Spaces",
+  "dataReportSubtitle": "Mitglieder, Buchungen, Rechnungen, Zahlungen, Einkäufe und der Plan mit seinen Preisen, mit Summen, zum Lesen oder Drucken.",
+  "dataReportContents": "Inhalt",
+  "dataReportNone": "Nichts erfasst",
+  "dataReportYes": "Ja",
+  "dataReportNo": "Nein",
+  "dataReportArchived": "Archiviert",
+  "dataReportPart": "{key, select, members{Mitglieder} bookings{Buchungen nach Monat} invoices{Rechnungsregister} payments{Zahlungen und Salden} purchases{Einkäufe und Lieferanten} plan{Plan und Preise} other{{key}}}",
+  "dataReportColumn": "{key, select, month{Monat} bookings{Buchungen} held{Bestehend} attended{Anwesend} cancelled{Storniert} hours{Stunden} paid{Bezahlt} open{Offen} charges{Belastet} credits{Beglichen} balance{Saldo} seats{Plätze} reference{Referenz} role{Rolle} other{{key}}}",
+  "dataReportFailed": "Der Datenbericht konnte nicht erstellt werden. Versuchen Sie es gleich noch einmal."
+}

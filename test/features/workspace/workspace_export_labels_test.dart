@@ -37,13 +37,14 @@ void main() {
     final fr = _in('fr');
     expect(en.first.name, 'Attendance');
     expect(fr.first.name, 'Présences');
-    expect(en.first.rows.first, ['Booking', 'Starts', 'Brand new column']);
-    expect(fr.first.rows.first.take(2), ['Réservation', 'Début']);
+    // The id column goes last; what a reader looks for comes first.
+    expect(en.first.rows.first, ['Starts', 'Brand new column', 'Booking']);
+    expect(fr.first.rows.first, ['Début', 'Brand new column', 'Réservation']);
     expect(fr.last.name, 'Profils comptables');
     expect(
       fr.first.rows[1],
-      _sheets.first.rows[1],
-      reason: 'only names and headers change, never a value',
+      [..._sheets.first.rows[1].skip(1), 'r1'],
+      reason: 'only names, headers and the order change, never a value',
     );
   });
 
@@ -108,11 +109,31 @@ void _valuesTest() {
       [sheet],
       workspaceExportLabels(lookupAppLocalizations(const Locale('fr'))),
     ).single;
-    expect(fr.rows[1], ['checkedIn', 'Arrivé', 'checkedIn']);
+    // The id column goes last in the workbook, never in the CSV.
+    expect(fr.rows[1], ['Arrivé', 'checkedIn', 'checkedIn']);
     expect(
       exportSheetCsv(sheet).split('\r\n')[1],
       'checkedIn,checkedIn,checkedIn',
     );
+  });
+
+  test('a totals row keeps its place and reads in the reader\'s words; '
+      'ids go last in their order (#2861)', () {
+    final fr = localizeExportSheets(
+      [
+        const XlsxSheet(
+          name: 'Payments',
+          totals: 'total',
+          rows: [
+            ['id', 'member', 'order_id', 'amount'],
+            ['p1', 'Anna', 'o1', XlsxAmount(10)],
+          ],
+        ),
+      ],
+      workspaceExportLabels(lookupAppLocalizations(const Locale('fr'))),
+    ).single;
+    expect(fr.totals, 'Total');
+    expect(fr.rows[1], ['Anna', const XlsxAmount(10), 'p1', 'o1']);
   });
 }
 

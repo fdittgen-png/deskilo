@@ -85,6 +85,19 @@ class _SetupGuideBody extends ConsumerWidget {
                 key: const ValueKey('setup-guide-until'),
               ),
             ],
+            // #2868 — what the space does decides which steps there are.
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton.icon(
+                key: const ValueKey('setup-guide-levels'),
+                icon: const Icon(Icons.tune),
+                label: Text(l10n.setupGuideLevelsLink),
+                onPressed: () async {
+                  await context.push('/setup/levels');
+                  await reload();
+                },
+              ),
+            ),
             const SizedBox(height: AppSpacing.md),
             ..._sections(context, value, actions),
           ],

@@ -7,12 +7,12 @@
 // presets are level vectors; the recommendation reads plain answers about
 // the space and says why. Declarative and pure Dart: the app, the MCP and
 // `web/setup.html` read the same table.
+
 import 'package:meta/meta.dart';
 
 import 'workspace_feature.dart';
 
 /// The owner-facing processes, in the guide's order.
-@visibleForTesting
 enum SetupProcess {
   bookings,
   community,
@@ -42,7 +42,6 @@ class SetupLevel {
 
 /// Every process's levels, lowest first. The first level of a process
 /// that can be switched off entirely adds nothing.
-@visibleForTesting
 const Map<SetupProcess, List<SetupLevel>> setupLevels = {
   SetupProcess.bookings: [
     SetupLevel(
@@ -273,6 +272,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.documents,
         WorkspaceFeature.pdfExport,
         WorkspaceFeature.dataExport,
+        WorkspaceFeature.dataReport,
         WorkspaceFeature.memberDataExport,
       },
     ),
@@ -315,11 +315,9 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
 typedef SetupLevelVector = Map<SetupProcess, String>;
 
 /// The quick starts (ADR 0047 §3).
-@visibleForTesting
 enum SetupPreset { essentiel, standard, complet }
 
 /// Each preset's levels.
-@visibleForTesting
 const Map<SetupPreset, SetupLevelVector> setupPresets = {
   SetupPreset.essentiel: {
     SetupProcess.bookings: 'simple',
@@ -364,7 +362,6 @@ int setupLevelRank(SetupProcess process, String level) =>
 
 /// The features [vector] turns on and off: on up to each chosen level, off
 /// above it. A process the vector does not name is left as it is.
-@visibleForTesting
 ({Set<WorkspaceFeature> on, Set<WorkspaceFeature> off}) setupFeatureDelta(
   SetupLevelVector vector,
 ) {
@@ -381,7 +378,6 @@ int setupLevelRank(SetupProcess process, String level) =>
 
 /// What [vector] lacks: each level whose [SetupLevel.needs] the vector
 /// does not meet, as `process.level → process.minimum`.
-@visibleForTesting
 List<String> setupVectorGaps(SetupLevelVector vector) => [
   for (final MapEntry(key: process, value: chosen) in vector.entries)
     // A level carries the needs of the levels below it: their features are
@@ -397,7 +393,6 @@ List<String> setupVectorGaps(SetupLevelVector vector) => [
 
 /// The plain facts the owner states about the space (ADR 0047 §3). Legal
 /// obligations are not asked: they come from the tax reference data.
-@visibleForTesting
 class SetupAnswers {
   const SetupAnswers({
     this.membersOweMoney = false,
@@ -431,7 +426,6 @@ typedef SetupRecommendation = ({String level, String reason});
 
 /// The levels [answers] call for, each with its reason; every process is
 /// named, and the result never has a gap ([setupVectorGaps] is empty).
-@visibleForTesting
 Map<SetupProcess, SetupRecommendation> recommendSetupLevels(
   SetupAnswers answers,
 ) {

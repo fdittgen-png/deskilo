@@ -410,12 +410,13 @@ enum WorkspaceFeature {
   /// #2568 rooms the space rents (under levelBooking). Platform, OFF.
   externalRooms,
   /// #2365 book periods; #2579 editable reports; #2582 purchase figures;
-  /// #2583 the overview (all platform, OFF); #2869 setup guide (core, ON).
+  /// #2583 overview (platform, OFF); #2869 setup guide, #2862 data report.
   accountingPeriods,
   biReportDesigner,
   purchaseAnalytics,
   workspaceOverview,
-  setupGuide;
+  setupGuide,
+  dataReport;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

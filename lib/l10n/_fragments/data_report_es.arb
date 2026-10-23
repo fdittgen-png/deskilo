@@ -1,0 +1,14 @@
+{
+  "featureDataReportTitle": "Informe de datos (PDF)",
+  "featureDataReportDesc": "Los datos del espacio en un PDF legible: miembros, reservas por mes, registro de facturas, pagos y saldos, compras y proveedores, y el plano con sus precios. Las mismas filas que el libro de Excel, con totales.",
+  "dataReportTitle": "Informe de datos del espacio",
+  "dataReportSubtitle": "Miembros, reservas, facturas, pagos, compras y el plano con sus precios, con totales, para leer o imprimir.",
+  "dataReportContents": "Índice",
+  "dataReportNone": "Nada registrado",
+  "dataReportYes": "Sí",
+  "dataReportNo": "No",
+  "dataReportArchived": "Archivado",
+  "dataReportPart": "{key, select, members{Miembros} bookings{Reservas por mes} invoices{Registro de facturas} payments{Pagos y saldos} purchases{Compras y proveedores} plan{Plano y precios} other{{key}}}",
+  "dataReportColumn": "{key, select, month{Mes} bookings{Reservas} held{Mantenidas} attended{Asistencias} cancelled{Canceladas} hours{Horas} paid{Pagado} open{Pendiente} charges{Cargado} credits{Abonado} balance{Saldo} seats{Plazas} reference{Referencia} role{Función} other{{key}}}",
+  "dataReportFailed": "No se pudo crear el informe de datos. Inténtelo de nuevo en un momento."
+}

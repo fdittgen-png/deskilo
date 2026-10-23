@@ -27,6 +27,7 @@ import '../../../../core/locale/report_language.dart';
 import '../../../../core/settings/settings.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -45,6 +46,7 @@ import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
 import '../../../money/providers/money_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
+import '../../../plan/presentation/plan_png.dart';
 import '../../../plan/providers/accessory_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -60,12 +62,16 @@ import '../../domain/space_code_entries.dart';
 import '../../domain/space_codes_pdf.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_config_report.dart';
+import '../../domain/workspace_data_report_builder.dart';
+import '../../domain/workspace_data_report_pdf.dart';
+import '../../domain/workspace_excel.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_import.dart';
 import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_settings_save.dart';
 import '../../domain/workspace_xml.dart';
 import '../../domain/workspace_xml_configuration.dart';
+import '../../providers/data_report_sources.dart';
 import '../../providers/workspace_import_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../config_feature_groups.dart';
@@ -82,6 +88,7 @@ import '../widgets/workspace_form_group.dart';
 import '../widgets/workspace_own_screens.dart';
 import '../widgets/workspace_reports.dart';
 import '../workspace_configuration_report_strings.dart';
+import '../workspace_data_report_strings.dart';
 
 part 'workspace_settings_screen_part1.dart';
 part 'workspace_settings_screen_part2.dart';
@@ -340,12 +347,10 @@ class _WorkspaceSettingsScreenState
                       l10n.workspaceExcelExportSubtitle,
                     ),
                     enabled: !_busy,
-                    onTap: () async {
-                      _update(() => _busy = true);
-                      await exportWorkspaceExcel(context, ref, workspace);
-                      if (mounted) _update(() => _busy = false);
-                    },
+                    onTap: () => _whileBusy(
+                        () => exportWorkspaceExcel(context, ref, workspace)),
                   ),
+                  ..._dataReportTiles(l10n, workspace),
                   ],
                   if (!reports)
                   // #165 — restore from an exported file. Replaces the
