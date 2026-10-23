@@ -104,7 +104,7 @@ void main() {
   ) async {
     final pushed = await _pump(tester, _status());
     expect(find.text('Places on the plan'), findsOneWidget);
-    expect(find.text('about 10 min'), findsOneWidget);
+    expect(find.text('about 10–20 min'), findsOneWidget);
     expect(find.textContaining('Take bookings · 1 of 2 done'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('setup-guide-next-places')));
     await tester.pump();
