@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The setup guide's Run step pages, from the features that own them: the
-// step screen lives in the workspace feature, below money and events, so
-// the router composes them here and hands them in.
+// step screen lives in the workspace feature, below money, events,
+// directory and kiosk, so the router composes them here and hands them in.
 import 'package:flutter/widgets.dart';
 
+import '../../features/directory/presentation/setup_public_page_step.dart';
 import '../../features/events/presentation/widgets/setup_approvals_step.dart';
+import '../../features/kiosk/presentation/widgets/kiosk_greeting.dart';
 import '../../features/money/presentation/widgets/bill_view.dart';
 import '../../features/money/presentation/widgets/setup_online_payments_step.dart';
 import '../../features/money/presentation/widgets/setup_pricing_step.dart';
+import '../../features/money/presentation/widgets/setup_purchase_side_step.dart';
+import '../../features/money/presentation/widgets/setup_services_step.dart';
 import '../../features/workspace/domain/payment_instructions.dart';
 import '../../features/workspace/presentation/widgets/setup_run_pages.dart';
 
@@ -17,6 +21,10 @@ const SetupRunPages setupRunPages = SetupRunPages(
   checkout: _checkout,
   onlinePayments: SetupOnlinePaymentsStep.new,
   approvals: SetupApprovalsStep.new,
+  services: SetupServicesStep.new,
+  purchaseSide: SetupPurchaseSideStep.new,
+  publicPage: SetupPublicPageStep.new,
+  kioskGreeting: KioskGreeting.new,
 );
 
 /// The how-to-pay card of a member's unpaid statement. The steps show it

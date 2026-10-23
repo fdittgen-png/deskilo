@@ -30,7 +30,7 @@ import '../widgets/symbol_editor.dart';
 /// takes any `#RRGGBB` — but a colour wheel answers "which of the
 /// sixteen million" with nothing, and these are the ones a coworking
 /// space actually asks for.
-const List<(String, String)> _suggestedBrandColours = [
+const List<(String, String)> suggestedBrandColours = [
   ('#C2410C', 'burnt orange'),
   ('#1F3A5F', 'navy'),
   ('#1B5E20', 'forest'),
@@ -203,7 +203,7 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
             spacing: AppSpacing.sm,
             runSpacing: AppSpacing.sm,
             children: [
-              for (final (hex, name) in _suggestedBrandColours)
+              for (final (hex, name) in suggestedBrandColours)
                 _Swatch(
                   key: ValueKey('colours-pick-$hex'),
                   argb: parseHexColor(hex)!,

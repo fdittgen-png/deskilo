@@ -22598,6 +22598,35 @@
   "@setupInviteShareFailed": {
     "description": "#2870 setup steps: setupInviteShareFailed"
   },
+  "setupKioskCurrent": "{name} runs the kiosk.",
+  "@setupKioskCurrent": {
+    "description": "#2871 setup run steps: setupKioskCurrent",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "setupKioskMake": "Make it the kiosk",
+  "@setupKioskMake": {
+    "description": "#2871 setup run steps: setupKioskMake"
+  },
+  "setupKioskNoCandidate": "Invite the tablet’s account first: it joins like a member, then becomes the kiosk here.",
+  "@setupKioskNoCandidate": {
+    "description": "#2871 setup run steps: setupKioskNoCandidate"
+  },
+  "setupKioskNone": "No kiosk account yet.",
+  "@setupKioskNone": {
+    "description": "#2871 setup run steps: setupKioskNone"
+  },
+  "setupKioskPick": "Account for the tablet",
+  "@setupKioskPick": {
+    "description": "#2871 setup run steps: setupKioskPick"
+  },
+  "setupKioskSaveFailed": "The kiosk could not be set up. Try again.",
+  "@setupKioskSaveFailed": {
+    "description": "#2871 setup run steps: setupKioskSaveFailed"
+  },
   "setupLevelName": "{key, select, bookings_simple{Shared places} bookings_resources{Rooms and resources} bookings_measured{Measured use} community_basic{Basic} community_organised{Organised} money_none{No money} money_statements{Statements} money_invoices{Invoices} payments_off{By transfer} payments_online{Online} tax_none{No VAT} tax_vat{VAT} tax_books{Books} purchases_none{None} purchases_expenses{Expenses} purchases_full{Full purchasing} presentation_basic{Basic} presentation_branded{Your colours} presentation_public{Public page} operations_basic{Basic} operations_insight{Figures} operations_advanced{Advanced} assistant_off{Off} assistant_on{On} other{{key}}}",
   "@setupLevelName": {
     "description": "#2868 setup levels: setupLevelName",
@@ -22686,6 +22715,10 @@
   "@setupLevelsTitle": {
     "description": "#2868 setup levels: setupLevelsTitle"
   },
+  "setupLookMore": "Pattern, room colours and logo",
+  "@setupLookMore": {
+    "description": "#2871 setup run steps: setupLookMore"
+  },
   "setupMilestoneName": "{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}",
   "@setupMilestoneName": {
     "description": "#2869 setup guide: setupMilestoneName",
@@ -22694,6 +22727,42 @@
         "type": "String"
       }
     }
+  },
+  "setupNewMembersEditQuestions": "Write the questions",
+  "@setupNewMembersEditQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersEditQuestions"
+  },
+  "setupNewMembersNoQuestions": "No question: people join with their name and e-mail address.",
+  "@setupNewMembersNoQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersNoQuestions"
+  },
+  "setupNewMembersPreviewJoin": "When they ask to join, they answer:",
+  "@setupNewMembersPreviewJoin": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewJoin"
+  },
+  "setupNewMembersPreviewNoQuestions": "Someone asking to join gives their name and e-mail address, nothing more.",
+  "@setupNewMembersPreviewNoQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewNoQuestions"
+  },
+  "setupNewMembersPreviewStart": "A new member starts on a {pct} % subscription ({policy}).",
+  "@setupNewMembersPreviewStart": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewStart",
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      },
+      "policy": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNewMembersQuestions": "Questions asked when someone joins",
+  "@setupNewMembersQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersQuestions"
+  },
+  "setupNewMembersSaveFailed": "The new-member defaults could not be saved. Try again.",
+  "@setupNewMembersSaveFailed": {
+    "description": "#2871 setup run steps: setupNewMembersSaveFailed"
   },
   "setupOnlineOpenConfig": "Online payment settings",
   "@setupOnlineOpenConfig": {
@@ -22863,6 +22932,18 @@
       }
     }
   },
+  "setupPublicPageMore": "Address, image and plans in the page editor",
+  "@setupPublicPageMore": {
+    "description": "#2871 setup run steps: setupPublicPageMore"
+  },
+  "setupPublicPageNotPublished": "Not published: nobody outside the space sees this page.",
+  "@setupPublicPageNotPublished": {
+    "description": "#2871 setup run steps: setupPublicPageNotPublished"
+  },
+  "setupPurchaseSidePreview": "Members do not see this: it stays with the people who manage the money.",
+  "@setupPurchaseSidePreview": {
+    "description": "#2871 setup run steps: setupPurchaseSidePreview"
+  },
   "setupQuestion": "{key, select, members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}",
   "@setupQuestion": {
     "description": "#2868 setup levels: setupQuestion",
@@ -22916,6 +22997,39 @@
   "setupRightsPreviewTitle": "What a member can do",
   "@setupRightsPreviewTitle": {
     "description": "#2870 setup steps: setupRightsPreviewTitle"
+  },
+  "setupServicesAdd": "Add this service",
+  "@setupServicesAdd": {
+    "description": "#2871 setup run steps: setupServicesAdd"
+  },
+  "setupServicesAdded": "{name} added.",
+  "@setupServicesAdded": {
+    "description": "#2871 setup run steps: setupServicesAdded",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "setupServicesInvalid": "Give the service a name and a price.",
+  "@setupServicesInvalid": {
+    "description": "#2871 setup run steps: setupServicesInvalid"
+  },
+  "setupServicesMore": "VAT rate, place of supply and stock in Services",
+  "@setupServicesMore": {
+    "description": "#2871 setup run steps: setupServicesMore"
+  },
+  "setupServicesPreviewEmpty": "No service yet: members have nothing to add to their bill.",
+  "@setupServicesPreviewEmpty": {
+    "description": "#2871 setup run steps: setupServicesPreviewEmpty"
+  },
+  "setupServicesPreviewNote": "Members pick from this list when they add a consumption to their bill.",
+  "@setupServicesPreviewNote": {
+    "description": "#2871 setup run steps: setupServicesPreviewNote"
+  },
+  "setupServicesSaveFailed": "The service could not be added. Try again.",
+  "@setupServicesSaveFailed": {
+    "description": "#2871 setup run steps: setupServicesSaveFailed"
   },
   "setupStateName": "{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}",
   "@setupStateName": {
