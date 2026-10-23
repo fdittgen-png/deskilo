@@ -99,11 +99,14 @@
       }
     }
   },
-  "setupGuideEstimate": "about {minutes} min",
+  "setupGuideEstimate": "about {low}–{high} min",
   "@setupGuideEstimate": {
-    "description": "#2869 setup guide: setupGuideEstimate",
+    "description": "#2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise",
     "placeholders": {
-      "minutes": {
+      "low": {
+        "type": "int"
+      },
+      "high": {
         "type": "int"
       }
     }
@@ -139,11 +142,14 @@
   "@setupGuideMarkDone": {
     "description": "#2869 — marks a setup step the server cannot verify as done."
   },
-  "setupGuideUntil": "About {minutes} min until: {milestone}",
+  "setupGuideUntil": "About {low}–{high} min until: {milestone}",
   "@setupGuideUntil": {
-    "description": "#2869 — the time the next milestone still needs, summed from its open steps' estimates.",
+    "description": "#2869 — the time the next milestone still needs, as a range summed from its open steps' estimates.",
     "placeholders": {
-      "minutes": {
+      "low": {
+        "type": "int"
+      },
+      "high": {
         "type": "int"
       },
       "milestone": {
@@ -158,5 +164,17 @@
   "setupGuideReturn": "Back to the setup guide",
   "@setupGuideReturn": {
     "description": "#2869 — the bar under a screen opened from the setup guide."
+  },
+  "setupGuideAddMore": "Add more to your space",
+  "@setupGuideAddMore": {
+    "description": "#2869 setup guide: the folded group of steps whose feature is outside the levels the owner chose"
+  },
+  "setupGuideNotInSetup": "Not in your setup",
+  "@setupGuideNotInSetup": {
+    "description": "#2869 setup guide: the state of a step outside the chosen levels"
+  },
+  "setupGuideAddIt": "Add it",
+  "@setupGuideAddIt": {
+    "description": "#2869 setup guide: opens the levels screen to add the step's part of the space"
   }
 }

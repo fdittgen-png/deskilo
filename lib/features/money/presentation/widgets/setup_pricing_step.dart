@@ -6,7 +6,9 @@
 // carnets that price them, as stored; those are edited in Billing, one tap
 // away. The preview is what a member pays at each offered level, found
 // the way the agreement letter finds it ([memberPriceList]), and follows
-// the chips before anything is saved.
+// the chips before anything is saved. Levels picked and not offered are
+// kept as the step's draft on the server (#2869), through the frame the
+// guide hands in.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +20,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/offer_subscription_levels.dart';
 import '../../domain/credit_product.dart';
@@ -34,6 +37,7 @@ class SetupPricingStep extends ConsumerWidget {
     required this.workspaceId,
     required this.currencyCode,
     required this.carnetsOn,
+    required this.draft,
   });
 
   final String workspaceId;
@@ -41,6 +45,9 @@ class SetupPricingStep extends ConsumerWidget {
 
   /// Whether the workspace sells carnets: off, none is read or listed.
   final bool carnetsOn;
+
+  /// Keeps the levels picked and not offered as the step's draft.
+  final SetupDraftFrameBuilder draft;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,6 +70,7 @@ class SetupPricingStep extends ConsumerWidget {
     }
     if (all.any((v) => !v.hasValue)) return const LoadingView();
     return _PricingPage(
+      draft: draft,
       workspaceId: workspaceId,
       currencyCode: currencyCode,
       stored: levels.requireValue,
@@ -83,6 +91,7 @@ class SetupPricingStep extends ConsumerWidget {
 
 class _PricingPage extends ConsumerStatefulWidget {
   const _PricingPage({
+    required this.draft,
     required this.workspaceId,
     required this.currencyCode,
     required this.stored,
@@ -99,6 +108,7 @@ class _PricingPage extends ConsumerStatefulWidget {
 
   /// Null while carnets are off.
   final List<CreditProduct>? carnets;
+  final SetupDraftFrameBuilder draft;
 
   @override
   ConsumerState<_PricingPage> createState() => _PricingPageState();
@@ -109,6 +119,17 @@ class _PricingPageState extends ConsumerState<_PricingPage> {
     ...widget.stored.enabledPresets,
   });
   final _busy = ValueNotifier<bool>(false);
+
+  late final _kept = SetupDraftForm(
+    edits: _presets,
+    answers: () => {
+      'presets': [..._presets.value]..sort(),
+    },
+    fill: (answers) => _presets.value = switch (answers?['presets']) {
+      final List<Object?> picked => {...picked.whereType<int>()},
+      _ => {...widget.stored.enabledPresets},
+    },
+  );
 
   @override
   void dispose() {
@@ -139,35 +160,40 @@ class _PricingPageState extends ConsumerState<_PricingPage> {
     ref.invalidate(subscriptionLevelsProvider);
     if (!mounted) return;
     _busy.value = false;
-    if (ok) AppSnack.success(context, l10n.billingSaved);
+    if (!ok) return;
+    AppSnack.success(context, l10n.billingSaved);
+    await _kept.applied();
   }
 
   @override
   Widget build(BuildContext context) {
     final money = moneyFormat(widget.currencyCode);
     return SetupStepLayout(
-      form: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(context.l10n.setupStepHint('pricing')),
-          const SizedBox(height: AppSpacing.lg),
-          ListenableBuilder(
-            listenable: Listenable.merge([_presets, _busy]),
-            builder: (context, _) => _LevelsPreset(
-              presets: _presets.value,
-              busy: _busy.value,
-              onToggle: _toggle,
-              onOffer: _offer,
+      form: widget.draft(
+        form: _kept,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(context.l10n.setupStepHint('pricing')),
+            const SizedBox(height: AppSpacing.lg),
+            ListenableBuilder(
+              listenable: Listenable.merge([_presets, _busy]),
+              builder: (context, _) => _LevelsPreset(
+                presets: _presets.value,
+                busy: _busy.value,
+                onToggle: _toggle,
+                onOffer: _offer,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _Catalogue(
-            bands: widget.bands,
-            packages: widget.packages,
-            carnets: widget.carnets,
-            money: money.formatMinor,
-          ),
-        ],
+            const SizedBox(height: AppSpacing.lg),
+            _Catalogue(
+              bands: widget.bands,
+              packages: widget.packages,
+              carnets: widget.carnets,
+              money: money.formatMinor,
+            ),
+          ],
+        ),
       ),
       preview: ValueListenableBuilder<Set<int>>(
         valueListenable: _presets,
