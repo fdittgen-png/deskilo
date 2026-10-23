@@ -1,0 +1,171 @@
+{
+  "@@locale": "es",
+  "supplierLookupFind": "Buscar los datos de la empresa",
+  "@supplierLookupFind": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupManualHint": "O introduzca usted los datos a continuación.",
+  "@supplierLookupManualHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupEnterManually": "Introducir manualmente",
+  "@supplierLookupEnterManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIntro": "Introduzca el NIF-IVA del proveedor. El registro responde con lo que tiene; usted revisa todo antes de guardar.",
+  "@supplierLookupIntro": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountry": "País",
+  "@supplierLookupCountry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountryMissing": "Elija el país del proveedor.",
+  "@supplierLookupCountryMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifier": "NIF-IVA",
+  "@supplierLookupIdentifier": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierHelp": "Con o sin prefijo de país; los espacios, puntos y guiones se ignoran.",
+  "@supplierLookupIdentifierHelp": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMissing": "Introduzca el NIF-IVA que desea buscar.",
+  "@supplierLookupIdentifierMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMalformed": "Esto no parece un NIF-IVA: solo letras y cifras.",
+  "@supplierLookupIdentifierMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSearching": "Consultando el registro…",
+  "@supplierLookupSearching": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRetry": "Reintentar",
+  "@supplierLookupRetry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupContinueManually": "Continuar manualmente",
+  "@supplierLookupContinueManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupOpenExisting": "Abrir el proveedor existente",
+  "@supplierLookupOpenExisting": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupDuplicate": "Ya existe un proveedor con este identificador: {supplier}. No se ha creado nada.",
+  "@supplierLookupDuplicate": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupUnsupported": "Todavía ningún registro responde para {country}. Puede introducir los datos usted mismo.",
+  "@supplierLookupUnsupported": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupNotFound": "El registro no conoce este NIF-IVA. Compruebe el número y el país, o continúe manualmente.",
+  "@supplierLookupNotFound": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupInvalidInput": "El registro rechazó el formato de este número. Compruébelo, o continúe manualmente.",
+  "@supplierLookupInvalidInput": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupTimeout": "El registro no respondió a tiempo. Reintente, o continúe manualmente.",
+  "@supplierLookupTimeout": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupThrottled": "El registro está saturado. Espere un momento y reintente, o continúe manualmente.",
+  "@supplierLookupThrottled": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnavailable": "El registro no está disponible ahora. Reintente más tarde, o continúe manualmente.",
+  "@supplierLookupUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupMalformed": "No se pudo leer la respuesta del registro. Reintente, o continúe manualmente.",
+  "@supplierLookupMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRefused": "La búsqueda fue rechazada: usted no gestiona proveedores aquí, o la verificación del IVA está desactivada.",
+  "@supplierLookupRefused": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusValidated": "NIF-IVA validado",
+  "@supplierLookupStatusValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusRetrievedNotValidated": "Datos recuperados; NIF-IVA no validado",
+  "@supplierLookupStatusRetrievedNotValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusCouldNotVerify": "No se pudo verificar el NIF-IVA",
+  "@supplierLookupStatusCouldNotVerify": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusUnavailable": "Registro no disponible",
+  "@supplierLookupStatusUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSource": "Fuente: {provider}, {time}",
+  "@supplierLookupSource": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupProviderVies": "VIES",
+  "@supplierLookupProviderVies": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNothingReturned": "El NIF-IVA es válido, pero el registro no devolvió ni nombre ni dirección. Complete los campos usted mismo.",
+  "@supplierLookupNothingReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupReviewHint": "Revise cada campo a continuación; puede cambiar lo que quiera antes de guardar.",
+  "@supplierLookupReviewHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldRetrieved": "Recuperado de {provider}",
+  "@supplierFieldRetrieved": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierFieldValidated": "Validado por {provider}",
+  "@supplierFieldValidated": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierFieldNotReturned": "No devuelto por el registro",
+  "@supplierFieldNotReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldEdited": "Editado por usted",
+  "@supplierFieldEdited": {
+    "description": "#2863 supplier lookup"
+  }
+}

@@ -59,5 +59,28 @@
   "portalResetAllConfirm": "Reset",
   "portalReachableHeading": "People you can write to",
   "portalReachableEmpty": "No one is reachable yet. Search by name to find people.",
-  "portalGroupsHeading": "Groups"
+  "portalGroupsHeading": "Groups",
+  "portalRecipientHint": "Type a name: suggestions appear from the first letter",
+  "portalDirectoryCount": "{name} ({count})",
+  "@portalDirectoryCount": {
+    "description": "A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "portalSuggestionGroup": "Group",
+  "portalWriteTo": "Write to {name}",
+  "@portalWriteTo": {
+    "description": "Screen-reader label of a person or group suggested while typing in the new-discussion search (#2472)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

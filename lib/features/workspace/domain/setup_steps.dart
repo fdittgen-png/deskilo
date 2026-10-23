@@ -180,6 +180,30 @@ const List<SetupStep> setupSteps = [
     required: false,
     estimateMinutes: 3,
   ),
+  // Who is told what, and by which channel, is the product's own rule; the
+  // owner sets the reminder's lead time. Nothing the server holds proves
+  // the owner read it, so the owner marks it done.
+  SetupStep(
+    'notifications',
+    group: SetupGroup.run,
+    milestone: SetupMilestone.live,
+    route: '/setup/step/notifications',
+    evidence: 'manual',
+    required: false,
+    estimateMinutes: 3,
+  ),
+  // An untouched workspace already books within the server's own limits,
+  // so no row tells a chosen limit from the default one: manual too.
+  SetupStep(
+    'limits',
+    group: SetupGroup.run,
+    milestone: SetupMilestone.live,
+    route: '/setup/step/limits',
+    evidence: 'manual',
+    feature: WorkspaceFeature.bookingPolicies,
+    required: false,
+    estimateMinutes: 3,
+  ),
   SetupStep(
     'kiosk',
     group: SetupGroup.run,

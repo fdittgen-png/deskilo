@@ -10,6 +10,8 @@ import 'package:meta/meta.dart';
 
 import '../cache/cache_scope.dart';
 import '../settings/settings_capture.dart';
+import '../time/workspace_calendar.dart';
+import '../vat/tax_reference_snapshot.dart';
 
 /// Who a person is across installations: the authority that vouches
 /// ([issuer]) and the id it gave ([subject]). Never an email.
@@ -77,8 +79,9 @@ class WorkspaceTarget {
     required this.workspaceId,
   });
 
-  /// The target as the installation's own birth record names it:
-  /// `installationId:workspaceId` until `workspaces.network_id` exists.
+  /// The target of a row that carries no stored `network_id` (a server
+  /// from before the column, a fixture): the birth record as the server
+  /// would stamp it, `installationId:workspaceId`.
   factory WorkspaceTarget.local({
     required String installationId,
     required String workspaceId,
@@ -88,6 +91,25 @@ class WorkspaceTarget {
         installationId: installationId,
         workspaceId: workspaceId,
       );
+
+  /// The target as the workspace row names it: the stored `network_id`
+  /// (the installation's own birth record, never recomputed here) when the
+  /// row carries one, [WorkspaceTarget.local] otherwise.
+  factory WorkspaceTarget.stored({
+    required String networkId,
+    required String installationId,
+    required String workspaceId,
+  }) =>
+      networkId.isEmpty
+          ? WorkspaceTarget.local(
+              installationId: installationId,
+              workspaceId: workspaceId,
+            )
+          : WorkspaceTarget(
+              networkId: networkId,
+              installationId: installationId,
+              workspaceId: workspaceId,
+            );
 
   final String networkId;
   final String installationId;
@@ -108,9 +130,12 @@ class WorkspaceTarget {
 }
 
 /// What a workspace operation runs on: the person, the verified target, the
-/// local account there, both epochs and the immutable business inputs
-/// (settings revision pair, the workspace's own time zone). The calendar
-/// object and the tax-reference dataset join it with their consumers.
+/// local account there, both epochs and the immutable business inputs:
+/// the settings revision pair, the workspace's own calendar (zone, open
+/// days, working day, closures) and the tax reference dataset its
+/// installation answered (#2561 L4). All of them are read from the selected
+/// workspace's own host and travel with its epoch, so W-B's context never
+/// carries W-A's calendar or tax data.
 @immutable
 class WorkspaceContext {
   const WorkspaceContext({
@@ -120,7 +145,8 @@ class WorkspaceContext {
     required this.personalEpoch,
     required this.workspaceEpoch,
     required this.settings,
-    required this.timezone,
+    required this.calendar,
+    required this.taxReference,
   });
 
   final CanonicalIdentity identity;
@@ -130,16 +156,24 @@ class WorkspaceContext {
   final int workspaceEpoch;
   final SettingsCapture settings;
 
+  /// The workspace's calendar, captured with the context.
+  final WorkspaceCalendar calendar;
+
+  /// The tax reference dataset of the workspace's installation.
+  final TaxReferenceSnapshot taxReference;
+
   /// The workspace's IANA zone as stored, captured with the context.
-  final String timezone;
+  String get timezone => calendar.timezone;
 
   /// The namespace a per-target cache or in-flight map is keyed by: target
   /// AND local account, so another account on the same target (or the same
   /// local ids elsewhere) never shares it.
-  String get cacheNamespace => cacheDigest('workspace-context', [
-        target.networkId,
-        workspaceLocalUserId,
-      ], 24);
+  String get cacheNamespace => namespaceOf(target, workspaceLocalUserId);
+
+  /// [cacheNamespace] before the context exists (#2561 L4: its own business
+  /// inputs are read under it while it is captured).
+  static String namespaceOf(WorkspaceTarget target, String localUserId) =>
+      cacheDigest('workspace-context', [target.networkId, localUserId], 24);
 
   /// Whether [other] is the very same operation context: a late result
   /// computed for one may be applied only while this holds.
@@ -150,7 +184,8 @@ class WorkspaceContext {
       other.personalEpoch == personalEpoch &&
       other.workspaceEpoch == workspaceEpoch &&
       other.settings == settings &&
-      other.timezone == timezone;
+      other.calendar == calendar &&
+      other.taxReference == taxReference;
 
   @override
   bool operator ==(Object other) =>
@@ -164,7 +199,8 @@ class WorkspaceContext {
         personalEpoch,
         workspaceEpoch,
         settings,
-        timezone,
+        calendar,
+        taxReference,
       );
 }
 

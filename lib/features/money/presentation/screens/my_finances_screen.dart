@@ -90,7 +90,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
               ),
             ),
           AsyncData() => Column(
-              children: [
+              children: [FinancesSourceBanners(sources: all.unavailableSources),
                 if (options.length > 1 || _workspace != null)
                   FinancesWorkspaceFilter(
                     key: const ValueKey('my-finances-finances-workspace-filter'),

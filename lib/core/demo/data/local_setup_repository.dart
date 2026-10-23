@@ -4,6 +4,7 @@ import '../../../features/workspace/domain/setup_journey.dart';
 import '../../../features/workspace/domain/setup_levels.dart';
 import '../../../features/workspace/domain/setup_status.dart';
 import '../../../features/workspace/domain/setup_step_draft.dart';
+import '../../../features/workspace/domain/setup_step_timing.dart';
 import '../../../features/workspace/domain/workspace_readiness.dart';
 import 'fixture_clock.dart';
 
@@ -188,6 +189,7 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
               blockedBy: s.blockedBy,
               manual: s.manual,
               estimateMinutes: s.estimateMinutes,
+              observed: s.observed,
             )
           else
             s,
@@ -197,6 +199,29 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
 
   @override
   Future<SetupStatus> setupStatus(String workspaceId) async => status;
+
+  /// 9999 — what [stepTimingRanges] answers: the instance's observed
+  /// ranges by step; empty in Demo and when nothing was seeded.
+  Map<String, SetupEstimate> timingRanges = const {};
+
+  /// 9999 — every session reported, in order; like the server, the same
+  /// session (workspace, step, opened at) is kept once.
+  final List<SetupStepObservation> recordedTimings = [];
+
+  @override
+  Future<void> recordStepTiming(SetupStepObservation observation) async {
+    final seen = recordedTimings.any(
+      (o) =>
+          o.workspaceId == observation.workspaceId &&
+          o.step == observation.step &&
+          o.openedAt == observation.openedAt,
+    );
+    if (!seen) recordedTimings.add(observation);
+  }
+
+  @override
+  Future<Map<String, SetupEstimate>> stepTimingRanges() async =>
+      {...timingRanges};
 
   @override
   Future<List<LocalSlot>> templateNeeds(String templateId) async =>

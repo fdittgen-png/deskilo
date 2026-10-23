@@ -9,6 +9,7 @@ import 'setup_journey.dart';
 import 'setup_levels.dart';
 import 'setup_status.dart';
 import 'setup_step_draft.dart';
+import 'setup_step_timing.dart';
 import 'workspace_readiness.dart';
 
 enum LocalSlotKind {
@@ -133,4 +134,14 @@ abstract interface class LocalSetupRepository {
     required int? expectedVersion,
     required String requestId,
   });
+
+  /// 9999 — reports one finished session on a step. The same session
+  /// (workspace, step, opened at) reported again changes nothing; the
+  /// server keeps no person with it, and none while the workspace films
+  /// with invented people.
+  Future<void> recordStepTiming(SetupStepObservation observation);
+
+  /// 9999 — per step, the range the instance observed (median to 80th
+  /// percentile, in minutes), only for steps with enough sessions.
+  Future<Map<String, SetupEstimate>> stepTimingRanges();
 }

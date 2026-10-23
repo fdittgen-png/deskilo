@@ -124,6 +124,11 @@ dev_dependencies:
   riverpod_generator: ^4.0.2
   riverpod_lint: ^3.1.3
   mocktail: ^1.0.4
+  # The share seam's test swaps share_plus's platform half for a fake
+  # that answers sent, dismissed, unavailable or a refusal. The package
+  # ships with share_plus as a transitive dependency; naming it here is
+  # what lets a test import it.
+  share_plus_platform_interface: ^7.1.0
   # #1090 — the leak tracker is what turns "this object is never
   # disposed" into a failing test. It ships with flutter_test as a
   # transitive dependency; naming it here is what lets a test import it.

@@ -10,7 +10,6 @@ import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
 import '../core/ui/app_frame.dart';
 import '../core/ui/system_insets_guard.dart';
-import '../features/money/providers/tax_reference_providers.dart';
 import '../features/profile/providers/personal_appearance_providers.dart';
 import '../features/profile/providers/presence_providers.dart';
 import '../features/task_recorder/presentation/widgets/recording_indicator.dart';
@@ -18,9 +17,12 @@ import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/presentation/widgets/setup_return_bar.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import '../l10n/app_localizations.dart';
+import 'active_tax_reference.dart';
 import 'boot_splash.dart';
+import 'notification_tap_routing.dart';
 import 'router.dart';
 import 'shell/layer_chrome.dart';
+import 'switcher_cover_host.dart';
 import 'theme.dart';
 
 /// The composition root: the real app, or the demonstration space
@@ -52,7 +54,9 @@ class DeskiloApp extends ConsumerWidget {
     ref
       ..watch(presenceBootstrapProvider)
       // #2478 — the VAT functions run on the installation's reference data.
-      ..watch(activeTaxReferenceProvider);
+      ..watch(activeTaxReferenceProvider)
+      // #2559 C2 — a tapped notification opens only what it may.
+      ..watch(notificationTapRoutingProvider);
     // Motion pass (#611): the `uiAnimations` flag decides route
     // transitions (baked into the theme) and, via [MotionSettings] in
     // the builder, every in-app animation. Watching the feature set here
@@ -111,6 +115,10 @@ class DeskiloApp extends ConsumerWidget {
           child: RecordingIndicator(
             router: router,
             child: RecordingBanner(
+            // #2559 C1 -- tells the native app-switcher cover which frame
+            // is on screen; renders LayerChrome untouched.
+            child: SwitcherCoverHost(
+            router: router,
             child: LayerChrome(
               router: router,
               animations: animations,
@@ -127,6 +135,7 @@ class DeskiloApp extends ConsumerWidget {
                   ),
                 ),
               ))),
+            ),
             ),
           ),
           ),

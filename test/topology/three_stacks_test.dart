@@ -65,7 +65,8 @@ class _Stack {
       user = j['user'] as Map<String, dynamic>,
       stranger = j['stranger'] as Map<String, dynamic>?,
       reservationId = j['reservationId'] as String?,
-      timezone = j['timezone'] as String? {
+      timezone = j['timezone'] as String?,
+      roles = (j['roles'] as List?)?.cast<String>() ?? const [] {
     client = SupabaseClient(
       url,
       anon,
@@ -84,6 +85,9 @@ class _Stack {
   final Map<String, dynamic>? stranger;
   final String? reservationId;
   final String? timezone;
+
+  /// What the seed declared this stack to be (#2561 L1).
+  final List<String> roles;
   final wire = _Wire();
   late final SupabaseClient client;
   late final SupabaseClient readback;
@@ -108,6 +112,21 @@ class _Stack {
 
   Future<int> rows(String table) async =>
       (await readback.from(table).select('id')).length;
+
+  /// The roles the stack's own database holds, read with its service key.
+  Future<List<String>> storedRoles() async {
+    final row = await readback
+        .from('installation_identity')
+        .select('roles')
+        .single();
+    return (row['roles'] as List).cast<String>();
+  }
+
+  /// The anonymous descriptor, as any client reads it before trusting the
+  /// installation.
+  Future<Map<String, dynamic>> descriptor() async =>
+      (await client.rpc<dynamic>('public_network_descriptor') as Map)
+          .cast<String, dynamic>();
 }
 
 class _Settings implements SettingsSource {
@@ -403,6 +422,94 @@ void main() {
       expect(ok.map((r) => r.id), [a.reservationId]);
     },
   );
+
+  test('SEP-06: the personal home refuses a workspace creation and writes no '
+      'row, a workspace host accepts the same request and stamps its birth '
+      'record, a role change over rows is refused, and every stack advertises '
+      'its roles', () async {
+    // The seed declared the roles through the operator function; each
+    // database holds them and each anonymous descriptor advertises them.
+    expect(p.roles, ['personal_home'], reason: 'the seed wrote the descriptor');
+    expect(await p.storedRoles(), ['personal_home']);
+    for (final w in [a, b]) {
+      expect(
+        await w.storedRoles(),
+        ['personal_home', 'workspace_host'],
+        reason: '${w.role} keeps both roles',
+      );
+    }
+    final atP = await p.descriptor();
+    expect(atP['roles'], ['personal_home']);
+    expect(atP['role_capabilities'], ['personal@1']);
+    final atA = await a.descriptor();
+    expect(atA['roles'], ['personal_home', 'workspace_host']);
+    expect(atA['role_capabilities'], ['personal@1', 'workspace@1']);
+
+    // The creation the app performs (create_workspace_once, 0228), signed
+    // by the stack's own user, with a request id of this run.
+    final requestId =
+        '0000000e-5e06-4000-8000-${'${d['run']}'.padLeft(12, '0')}';
+    Map<String, Object?> creation(String name) => {
+      'p_client_request_id': requestId,
+      'p_name': name,
+      'p_country_code': 'FR',
+      'p_currency_code': 'EUR',
+      'p_timezone': 'Europe/Paris',
+      'p_with_twin': false,
+    };
+    Future<int> claimsAtP() async => (await p.readback
+            .from('workspace_creation_requests')
+            .select('client_request_id'))
+        .length;
+    await expectOperationalCountsZeroAtP();
+    await expectLater(
+      p.client.rpc<dynamic>('create_workspace_once', params: creation('SEP-06 refused')),
+      throwsA(
+        isA<PostgrestException>()
+            .having((e) => e.code, 'code', 'DKR01')
+            .having((e) => e.message, 'message', contains('personal home')),
+      ),
+    );
+    await expectOperationalCountsZeroAtP();
+    expect(await claimsAtP(), 0, reason: 'the claim rolled back with the refusal');
+
+    // Positive control: the same request at W-A is a workspace, born there.
+    final created = await a.client.rpc<dynamic>(
+      'create_workspace_once',
+      params: creation('SEP-06 control ${d['run']}'),
+    ) as String;
+    final host = await a.readback
+        .from('installation_identity')
+        .select('installation_id')
+        .single();
+    final born = await a.readback
+        .from('workspaces')
+        .select('network_id')
+        .eq('id', created)
+        .single();
+    expect(born['network_id'], '${host['installation_id']}:$created');
+
+    // A role change over W-A's rows is refused, and nothing moved.
+    final before = [await a.rows('workspaces'), await a.rows('members')];
+    await expectLater(
+      a.readback.rpc<dynamic>(
+        'operator_set_installation_roles',
+        params: {'p_roles': ['personal_home']},
+      ),
+      throwsA(isA<PostgrestException>().having((e) => e.code, 'code', 'DKR02')),
+    );
+    expect(await a.storedRoles(), ['personal_home', 'workspace_host']);
+    expect([await a.rows('workspaces'), await a.rows('members')], before);
+
+    // At P the same change is the state it is in: accepted, unchanged.
+    final again = await p.readback.rpc<dynamic>(
+      'operator_set_installation_roles',
+      params: {'p_roles': ['personal_home']},
+    ) as Map;
+    expect(again['unchanged'], true);
+    expect(again['roles'], ['personal_home']);
+    await expectOperationalCountsZeroAtP();
+  });
 
   test('a stranger at W-A is denied the rows the member reads, and the rows '
       'exist', () async {

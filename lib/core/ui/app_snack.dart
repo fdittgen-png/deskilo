@@ -64,8 +64,11 @@ abstract final class AppSnack {
     BuildContext context,
     String text, {
     bool replace = false,
+    /// A follow-up the notice offers ("Download again" on a browser
+    /// download the page could not confirm).
+    SnackBarAction? action,
   }) {
-    _show(context, text, replace: replace);
+    _show(context, text, replace: replace, action: action);
   }
 
   static void _show(

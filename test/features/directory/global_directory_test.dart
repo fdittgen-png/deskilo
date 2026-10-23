@@ -211,13 +211,14 @@ void main() {
     sources = [
       {'origin': other.url, 'publishable_key': other.key},
     ];
-    final page = await SupabasePublicDiscoveryRepository(
+    final repository = SupabasePublicDiscoveryRepository(
       origin: directory.url,
       publishableKey: directory.key,
       local: own,
       transport: transport,
-    ).search('');
-    expect(page.workspaces.map((w) => w.source).toSet(), {
+    );
+    final page = await repository.sources();
+    expect(page.sources.map((s) => s.origin).toSet(), {
       directory.url,
       other.url,
       own.url,

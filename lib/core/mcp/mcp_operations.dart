@@ -434,7 +434,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
     fields: {
       'request_id': McpField(McpFieldType.uuid, required: true),
       'workspace_id': McpField(McpFieldType.uuid, required: true, param: 'p_workspace_id'),
-      'step': McpField(McpFieldType.enum_, required: true, values: ['invite', 'services', 'new_members', 'kiosk', 'purchases', 'lease', 'assets', 'look', 'public_page', 'documents', 'reminders', 'recovery', 'assistant'], param: 'p_step'),
+      'step': McpField(McpFieldType.enum_, required: true, values: ['invite', 'services', 'new_members', 'notifications', 'limits', 'kiosk', 'purchases', 'lease', 'assets', 'look', 'public_page', 'documents', 'reminders', 'recovery', 'assistant'], param: 'p_step'),
     },
     output: ['step', 'state', 'marked'], group: 'setup',
   ),

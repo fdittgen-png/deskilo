@@ -309,7 +309,11 @@ class MoneyActionSet {
       if (data.suppliersOn && data.workspace != null)
         OutlinedButton.icon(
           key: const ValueKey('suppliers-button'),
-          onPressed: () => showSuppliersSheet(context, data.workspace!.id),
+          onPressed: () => showSuppliersSheet(
+            context,
+            data.workspace!.id,
+            lookupOn: data.supplierLookupOn,
+          ),
           icon: const Icon(Icons.storefront_outlined),
           label: fitted(l10n.suppliersTitle),
         ),

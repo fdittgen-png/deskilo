@@ -120,3 +120,60 @@ final class TypedFileSaverProvider
 }
 
 String _$typedFileSaverHash() => r'a55ade7563d9d229dcb2192cbc2301a32fc8ec84';
+
+/// Where "download" leads on this device: straight to the local saver, or
+/// (an iPhone, whose sandbox is not Files) to the Export… choice between a
+/// private copy and the system sheet. Overridden by tests to drive either.
+
+@ProviderFor(fileDeliveryMode)
+final fileDeliveryModeProvider = FileDeliveryModeProvider._();
+
+/// Where "download" leads on this device: straight to the local saver, or
+/// (an iPhone, whose sandbox is not Files) to the Export… choice between a
+/// private copy and the system sheet. Overridden by tests to drive either.
+
+final class FileDeliveryModeProvider
+    extends
+        $FunctionalProvider<
+          FileDeliveryMode,
+          FileDeliveryMode,
+          FileDeliveryMode
+        >
+    with $Provider<FileDeliveryMode> {
+  /// Where "download" leads on this device: straight to the local saver, or
+  /// (an iPhone, whose sandbox is not Files) to the Export… choice between a
+  /// private copy and the system sheet. Overridden by tests to drive either.
+  FileDeliveryModeProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'fileDeliveryModeProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$fileDeliveryModeHash();
+
+  @$internal
+  @override
+  $ProviderElement<FileDeliveryMode> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  FileDeliveryMode create(Ref ref) {
+    return fileDeliveryMode(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(FileDeliveryMode value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<FileDeliveryMode>(value),
+    );
+  }
+}
+
+String _$fileDeliveryModeHash() => r'73c974a05fdf7daf29e778fbf32206404733b246';

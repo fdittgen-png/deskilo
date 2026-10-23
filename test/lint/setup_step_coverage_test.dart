@@ -15,7 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// Level features no step names as its own, on 2026-10-23. Most are a
 /// switch with nothing to configure; the rest wait for the Open, Run and
 /// Grow steps (#2870, #2871, #2875). Lower it when a step takes one in.
-const _withoutStepBaseline = 126;
+const _withoutStepBaseline = 125;
 
 /// Level features added since the baseline that are a switch with nothing
 /// to set up, named one by one so the ratchet still counts every other.
