@@ -371,4 +371,106 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                       onTap: () => showBillingRulesDialog(context, ref),
                     ),
       ];
+
+  /// #2862 — the same rows as the workbook, as a readable report, under
+  /// the export it reads and the same permission.
+  List<Widget> _dataReportTiles(AppLocalizations l10n, Workspace workspace) => [
+        if (ref
+                .watch(enabledFeaturesSyncProvider)
+                .contains(WorkspaceFeature.dataReport) &&
+            ref
+                .watch(myPermissionsProvider)
+                .contains(WorkspacePermission.exportData))
+          ListTile(
+            key: const Key('workspaceSettingsDataReport'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.picture_as_pdf_outlined),
+            title: Text(l10n.featureDataReportTitle),
+            subtitle: Text(l10n.dataReportSubtitle),
+            enabled: !_busy,
+            onTap: () => _exportDataReport(workspace),
+          ),
+      ];
+
+  /// The workspace data report: the workbook's rows as a readable PDF,
+  /// with the plan of each level drawn as the app draws it.
+  Future<void> _exportDataReport(Workspace workspace) async {
+    final l10n = context.l10n;
+    final locale = Localizations.maybeLocaleOf(context)?.toString();
+    final watermark = developmentMark(context, ref);
+    await _whileBusy(() => runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'workspace data report failed',
+      errorText: l10n.dataReportFailed,
+      action: () async {
+        final details = await _dataReportDetails(workspace);
+        final buying = await readDataReportPurchasing(ref, workspace.id);
+        final report = buildWorkspaceDataReport(details,
+            purchases: buying.purchases, suppliers: buying.suppliers);
+        final colors = DeskiloTheme.light().colorScheme;
+        final images = {
+          for (final entry in details.plansByLevel.entries)
+            entry.key: ?await buildPlanPng(entry.value, colors: colors),
+        };
+        final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+        final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+        final pdf = await buildWorkspaceDataReportPdf(
+          WorkspaceDataReportPdfRequest(
+            report: report,
+            strings: workspaceDataReportStrings(l10n,
+                currency: workspace.currencyCode, locale: locale),
+            generatedAt: WorkspaceTime.wall(ref.read(clockProvider).now()),
+            baseFont: pw.Font.ttf(regular),
+            boldFont: pw.Font.ttf(bold),
+            planImages: images,
+            watermark: watermark,
+          ),
+        );
+        if (!mounted) return;
+        final path = await ref.read(fileSaverProvider)(
+          bytes: pdf,
+          fileName: '${safeFileSlug(workspace.name)}-data-report.pdf',
+        );
+        if (!mounted) return;
+        _announceSaved(l10n, path);
+      },
+    ));
+  }
+
+  /// Runs [action] with the screen's tools disabled until it ends.
+  Future<void> _whileBusy(Future<void> Function() action) async {
+    _update(() => _busy = true);
+    try {
+      await action();
+    } finally {
+      if (mounted) _update(() => _busy = false);
+    }
+  }
+
+  /// The rows the workbook's sheets are written from.
+  Future<WorkspaceExportDetails> _dataReportDetails(Workspace workspace) async {
+    final levels = await ref.read(levelsProvider.future);
+    final invoices = ref.read(invoiceQueriesProvider);
+    return WorkspaceExportDetails(
+      workspace: workspace,
+      levels: levels,
+      plansByLevel: {
+        for (final level in levels)
+          level.id: await ref.read(floorPlanProvider(level.id).future),
+      },
+      memberName: await ref.read(memberNamesProvider.future),
+      ledger: await ref
+          .read(memberAccountQueriesProvider)
+          .fetchWorkspaceLedger(workspace.id),
+      events: const [],
+      decisions: const {},
+      invoices: await invoices.fetchInvoices(workspace.id),
+      members: await ref.read(workspaceMembersProvider.future),
+      reservations: await ref
+          .read(reservationRepositoryProvider)
+          .fetchAllForExport(workspace.id),
+      invoiceMatches: await invoices.fetchInvoiceMatches(workspace.id),
+    );
+  }
 }

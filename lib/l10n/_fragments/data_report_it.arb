@@ -1,0 +1,14 @@
+{
+  "featureDataReportTitle": "Rapporto dati (PDF)",
+  "featureDataReportDesc": "I dati dello spazio in un PDF leggibile: membri, prenotazioni per mese, registro delle fatture, pagamenti e saldi, acquisti e fornitori, e la pianta con i suoi prezzi. Le stesse righe della cartella Excel, con i totali.",
+  "dataReportTitle": "Rapporto dati dello spazio",
+  "dataReportSubtitle": "Membri, prenotazioni, fatture, pagamenti, acquisti e la pianta con i suoi prezzi, con i totali, da leggere o stampare.",
+  "dataReportContents": "Indice",
+  "dataReportNone": "Nulla di registrato",
+  "dataReportYes": "Sì",
+  "dataReportNo": "No",
+  "dataReportArchived": "Archiviato",
+  "dataReportPart": "{key, select, members{Membri} bookings{Prenotazioni per mese} invoices{Registro delle fatture} payments{Pagamenti e saldi} purchases{Acquisti e fornitori} plan{Pianta e prezzi} other{{key}}}",
+  "dataReportColumn": "{key, select, month{Mese} bookings{Prenotazioni} held{Mantenute} attended{Presenze} cancelled{Annullate} hours{Ore} paid{Pagato} open{Da pagare} charges{Addebitato} credits{Saldato} balance{Saldo} seats{Posti} reference{Riferimento} role{Ruolo} other{{key}}}",
+  "dataReportFailed": "Non è stato possibile creare il rapporto dati. Riprovi tra un momento."
+}

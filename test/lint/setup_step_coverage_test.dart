@@ -17,6 +17,12 @@ import 'package:flutter_test/flutter_test.dart';
 /// Grow steps (#2870, #2871, #2875). Lower it when a step takes one in.
 const _withoutStepBaseline = 126;
 
+/// Level features added since the baseline that are a switch with nothing
+/// to set up, named one by one so the ratchet still counts every other.
+const _switches = {
+  WorkspaceFeature.dataReport, // #2862: a printed report, no settings
+};
+
 Set<WorkspaceFeature> _withoutStep() {
   final levelled = {
     for (final levels in setupLevels.values)
@@ -25,6 +31,7 @@ Set<WorkspaceFeature> _withoutStep() {
   return levelled.difference({
     for (final s in setupSteps)
       if (s.feature != null) s.feature!,
+    ..._switches,
   });
 }
 

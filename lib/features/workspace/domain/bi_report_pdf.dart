@@ -9,13 +9,13 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:deskilo_document_pdf/report_flow_page.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../money/domain/invoice_pdf.dart' show watermarkForeground;
 import '../../money/domain/invoice_report.dart';
 import '../../money/domain/report_block_widgets.dart';
-import '../../money/domain/report_flow_page.dart';
 import 'bi_analysis.dart';
 import 'bi_report_content.dart';
 
