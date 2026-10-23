@@ -66,5 +66,7 @@
   "readinessSetAsideAction": "Plus tard",
   "readinessSetAside": "Mis de côté pour plus tard",
   "readinessSetAsideUndo": "Annuler",
-  "readinessSetAsideFailed": "Impossible d’enregistrer. Réessayez."
+  "readinessSetAsideFailed": "Impossible d’enregistrer. Réessayez.",
+  "readinessGrantMembers": "Permettre aux membres de réserver",
+  "readinessGrantMembersDone": "Les membres peuvent maintenant réserver, voir le calendrier, s’écrire et voir leur compte."
 }

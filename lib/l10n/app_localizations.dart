@@ -5425,6 +5425,18 @@ abstract class AppLocalizations {
   /// **'Carnets'**
   String get carnetsTitle;
 
+  /// #2577 the cash page
+  ///
+  /// In en, this message translates to:
+  /// **'Money in and out by month'**
+  String get cashHubInOut;
+
+  /// #2577 the cash page
+  ///
+  /// In en, this message translates to:
+  /// **'To pay'**
+  String get cashHubToPay;
+
   /// #2360: chBareLetting
   ///
   /// In en, this message translates to:
@@ -13648,6 +13660,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whit Monday'**
   String get holidayWhitMonday;
+
+  /// #2577 the cash page
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded money in and out, and what is still to pay'**
+  String get hubCashSubtitle;
+
+  /// #2577 the cash page
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get hubCashTitle;
 
   /// #2577 the sales and purchases pages
   ///
@@ -27401,6 +27425,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ready for a first booking'**
   String get readinessFirstBookingReady;
+
+  /// #2865 — one-tap button on the setup card granting the members role the everyday permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Let members book'**
+  String get readinessGrantMembers;
+
+  /// #2865 — confirmation after the members role got the everyday permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Members can now book, see the calendar, write to each other and see their own account.'**
+  String get readinessGrantMembersDone;
 
   /// #1636 workspace_readiness
   ///

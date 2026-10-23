@@ -2139,6 +2139,8 @@
   "carnetValidity": "Gültig (Monate, leer = läuft nie ab)",
   "carnetsEmpty": "Noch keine Mehrfachkarte.",
   "carnetsTitle": "Mehrfachkarten",
+  "cashHubInOut": "Ein- und Ausgänge nach Monat",
+  "cashHubToPay": "Zu zahlen",
   "chBareLetting": "Wir vermieten nur Räume",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -5761,6 +5763,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubCashSubtitle": "Erfasste Ein- und Ausgänge und was noch zu zahlen ist",
+  "hubCashTitle": "Geld",
   "hubPurchasesSubtitle": "Was der Raum kauft und schuldet: Ausgaben, Lieferantenrechnungen, Lieferanten, Mietvertrag, Ausstattung",
   "hubPurchasesTitle": "Einkauf",
   "hubSalesSubtitle": "Was der Raum verkauft und fakturiert: Leistungen, Rechnungen, Abrechnung",
@@ -11070,6 +11074,8 @@
     "description": "#2332: readinessBlockedInvoicing"
   },
   "readinessFirstBookingReady": "Bereit für eine erste Buchung",
+  "readinessGrantMembers": "Mitglieder buchen lassen",
+  "readinessGrantMembersDone": "Mitglieder können jetzt buchen, den Kalender sehen, einander schreiben und ihr eigenes Konto sehen.",
   "readinessLater": "Später nötig",
   "readinessNeededFirst": "Nötig für eine erste Buchung",
   "readinessNeededInvoicing": "Vor der Rechnungsstellung nötig",

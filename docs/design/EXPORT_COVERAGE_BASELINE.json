@@ -1,0 +1,184 @@
+{
+  "columns.workspaces": [
+    "accessory_supplements_since",
+    "address",
+    "billing_rules",
+    "booking_rules",
+    "branding",
+    "created_at",
+    "created_by",
+    "default_locale",
+    "desk_opacity",
+    "dev_mode",
+    "dunning_rules",
+    "environment",
+    "invitation_template",
+    "invitation_templates",
+    "invoice_legal",
+    "invoice_pdf_template",
+    "lexicon",
+    "pair_id",
+    "payment_instructions",
+    "role_permissions",
+    "subscription_levels",
+    "subscription_vat_rate_id",
+    "tax_exemption_reason",
+    "vat_account",
+    "visibility",
+    "visibility_set_at",
+    "whatsapp_group"
+  ],
+  "columns.levels": [
+    "background_path",
+    "created_at",
+    "kind"
+  ],
+  "columns.offices": [
+    "created_at"
+  ],
+  "columns.desks": [
+    "created_at"
+  ],
+  "columns.seats": [
+    "created_at",
+    "nfc_uid"
+  ],
+  "columns.members": [
+    "billing_subdivision",
+    "can_reserve_level",
+    "claimed_at",
+    "customer_capacity",
+    "einvoice_endpoint_id",
+    "einvoice_endpoint_scheme",
+    "home_site_id",
+    "managed_access",
+    "managed_by",
+    "managed_name",
+    "max_active_reservations",
+    "max_simultaneous_reservations",
+    "origin",
+    "person_id",
+    "plan_id",
+    "preferred_locale_override",
+    "vat_exemption_reason",
+    "vies_checked_at",
+    "vies_consultation",
+    "vies_detail",
+    "vies_status",
+    "vies_vat_id"
+  ],
+  "columns.profiles": [
+    "avatar_path",
+    "clock",
+    "courtesy",
+    "created_at",
+    "default_workspace_id",
+    "format_locale",
+    "id",
+    "person_id",
+    "pin_set_at",
+    "preferred_locale",
+    "privacy_accepted_at",
+    "privacy_accepted_version",
+    "status_text",
+    "time_zone_mode",
+    "updated_at"
+  ],
+  "columns.reservations": [
+    "created_at",
+    "space_label"
+  ],
+  "columns.ledger_entries": [
+    "event_id",
+    "supply_class",
+    "vat_percent"
+  ],
+  "columns.payment_intents": [
+    "capture_id",
+    "currency",
+    "id",
+    "ledger_entry_id",
+    "reference",
+    "request_id"
+  ],
+  "columns.events": [
+    "reservation_id"
+  ],
+  "columns.event_decisions": [
+    "id"
+  ],
+  "columns.services": [
+    "created_at",
+    "stock",
+    "supply_class",
+    "vat_rate_id"
+  ],
+  "columns.invoices": [
+    "issuer_member_id",
+    "legal_snapshot",
+    "member_address",
+    "member_name",
+    "parties",
+    "replaces_invoice_id",
+    "settled_by_invoice_id",
+    "settles",
+    "signature",
+    "signature_algo",
+    "voided_by_name",
+    "workspace_address",
+    "workspace_name"
+  ],
+  "columns.invoice_maturities": [
+    "basis",
+    "created_at",
+    "evidence",
+    "id",
+    "terms_days"
+  ],
+  "columns.invoice_transmissions": [
+    "by_name",
+    "destination",
+    "detail",
+    "document_hash",
+    "environment",
+    "external_id",
+    "format",
+    "id",
+    "provider",
+    "receipt",
+    "receipt_at",
+    "status"
+  ],
+  "partialSources": [
+    "invoice_transmissions",
+    "profiles"
+  ],
+  "undecidedChildTables": [
+    "conversation_participants",
+    "guest_participation_audit",
+    "member_employment",
+    "member_preference_overrides",
+    "member_public_contact",
+    "privacy_notice_acknowledgments",
+    "push_endpoints",
+    "space_inquiry_messages"
+  ],
+  "importArguedExemptions": [
+    "analytics_history",
+    "asset_valuation_batches",
+    "bi_cost_allocation_rules",
+    "book_periods",
+    "invoice_dunning_holds",
+    "premises_leases",
+    "purchase_documents",
+    "reminder_intents",
+    "room_rentals",
+    "seat_history",
+    "suppliers",
+    "vat_return_entries",
+    "workspace_assets",
+    "workspace_licences",
+    "workspace_mcp_policies",
+    "workspace_public_pages"
+  ]
+}

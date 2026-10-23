@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `af42026872c0c33c89317dd8bece5c757bbd741d` on 2026-10-22.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `a59b2e0559da457490673a2530b3225fba52af95` on 2026-10-22.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,15 +10,15 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1803 |
-| functions | 10071 |
-| cyclomatic>=9 | 1066 |
+| files | 1805 |
+| functions | 10081 |
+| cyclomatic>=9 | 1071 |
 | cyclomatic>=25 | 106 |
-| cognitive>=15 | 430 |
-| cognitive>=30 | 94 |
-| length>=150 | 73 |
+| cognitive>=15 | 432 |
+| cognitive>=30 | 95 |
+| length>=150 | 74 |
 | parameters>=5 | 488 |
-| parameters>=7 | 150 |
+| parameters>=7 | 151 |
 | partOfFiles | 42 |
 
 ## Worst functions by cognitive complexity (baseline)
@@ -46,8 +46,8 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 46 | 20 | 87 | 2 | `lib/features/workspace/presentation/screens/sites_screen.dart#SitesScreen.build` |
 | 45 | 33 | 199 | 3 | `lib/features/calendar/presentation/widgets/day_timeline_part1.dart#_DayTimelineStatePart1._grid` |
 | 45 | 39 | 198 | 6 | `lib/features/mcp/application/connect_checklist.dart#ConnectChecklist.new.derive` |
+| 45 | 36 | 170 | 2 | `lib/features/workspace/presentation/widgets/workspace_readiness_card.dart#WorkspaceReadinessCard.build` |
 | 44 | 50 | 140 | 3 | `lib/features/task_recorder/guide/guide_codec.dart#_GuideDecoder._step` |
 | 43 | 21 | 118 | 1 | `lib/core/ui/wizard_scaffold.dart#WizardScaffold.build` |
 | 43 | 18 | 60 | 1 | `lib/features/money/domain/invoice_report.dart#_parseLines` |
-| 43 | 31 | 68 | 4 | `lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction` |
 

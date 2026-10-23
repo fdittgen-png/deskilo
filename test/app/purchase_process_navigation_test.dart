@@ -102,4 +102,24 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('purchase-supplier')), findsOneWidget);
   });
+
+  testWidgets('the cash page says its money is recorded, not a bank '
+      'balance, and offers what is still to pay only with purchases on', (
+    tester,
+  ) async {
+    await _pump(tester, const CashHubScreen());
+    await tester.pump();
+    await tester.pump();
+    expect(find.byKey(const ValueKey('cash-hub-recorded')), findsOneWidget);
+    expect(find.byKey(const ValueKey('cash-hub-to-pay')), findsNothing);
+
+    await _pump(
+      tester,
+      const CashHubScreen(),
+      features: {WorkspaceFeature.purchases},
+    );
+    await tester.pump();
+    await tester.pump();
+    expect(find.byKey(const ValueKey('cash-hub-to-pay')), findsOneWidget);
+  });
 }

@@ -3193,6 +3193,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get carnetsTitle => 'Mehrfachkarten';
 
   @override
+  String get cashHubInOut => 'Ein- und Ausgänge nach Monat';
+
+  @override
+  String get cashHubToPay => 'Zu zahlen';
+
+  @override
   String get chBareLetting => 'Wir vermieten nur Räume';
 
   @override
@@ -7993,6 +7999,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Pfingstmontag';
+
+  @override
+  String get hubCashSubtitle =>
+      'Erfasste Ein- und Ausgänge und was noch zu zahlen ist';
+
+  @override
+  String get hubCashTitle => 'Geld';
 
   @override
   String get hubPurchasesSubtitle =>
@@ -16110,6 +16123,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get readinessFirstBookingReady => 'Bereit für eine erste Buchung';
+
+  @override
+  String get readinessGrantMembers => 'Mitglieder buchen lassen';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Mitglieder können jetzt buchen, den Kalender sehen, einander schreiben und ihr eigenes Konto sehen.';
 
   @override
   String get readinessLater => 'Später nötig';
