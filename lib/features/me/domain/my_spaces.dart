@@ -2,18 +2,19 @@
 //
 // #1823 — "My spaces", from every server this account is linked to.
 import '../../../core/data/system_columns.dart';
+import '../../workspace/domain/workspace.dart';
 
 /// Where I stand in a space.
 enum MySpaceStanding { member, pending, left }
 
 /// One space on another server, as that server's own session reads it.
-class LinkedSpace implements SystemStamped {
+class LinkedSpace implements SystemStamped, SpaceSide {
   const LinkedSpace({
     required this.id,
     required this.name,
     this.standing = MySpaceStanding.member,
     this.pairId = '',
-    this.environment = '',
+    this.environment = WorkspaceEnvironment.development,
     this.isOwner = false,
     this.isAdmin = false,
     this.system = SystemColumns.none,
@@ -22,13 +23,18 @@ class LinkedSpace implements SystemStamped {
   @override
   final SystemColumns system;
 
+  @override
   final String id;
   final String name;
+  @override
   final String pairId;
-  final String environment;
+  final WorkspaceEnvironment environment;
   final MySpaceStanding standing;
   final bool isOwner;
   final bool isAdmin;
+
+  @override
+  WorkspaceEnvironment get env => environment;
 }
 
 /// The spaces one linked server holds for me, or why it could not say.
@@ -49,9 +55,6 @@ class LinkedServerSpaces {
 
   /// The server did not answer: the list is incomplete, not empty.
   final bool unavailable;
-
-  /// The quiet subtitle: the host alone, never the whole URL.
-  String get host => Uri.tryParse(source)?.host ?? source;
 }
 
 /// The member statuses the server writes (0052), as standings.

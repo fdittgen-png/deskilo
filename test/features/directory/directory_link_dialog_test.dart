@@ -162,7 +162,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Server: own.example'), findsOneWidget);
       expect(
-        tester.widget<PopupMenuItem<String>>(_key('space-menu-r-host')).enabled,
+        tester.widget<PopupMenuItem<Object?>>(_key('space-menu-r-host')).enabled,
         isFalse,
       );
     });

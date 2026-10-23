@@ -98,12 +98,12 @@ enum PreviewAudience {
 
 /// One field's choice.
 class FieldAudience {
-  const FieldAudience(this.audience, [this.workspaces = const []]);
+  const FieldAudience(this.audience, [this.workspaces = const {}]);
 
   final VisibilityAudience audience;
 
   /// The chosen spaces, meaningful only for [VisibilityAudience.chosenSpaces].
-  final List<String> workspaces;
+  final Set<String> workspaces;
 
   /// Whether this choice shows the field to more people than [before]: a
   /// wider audience, or the same chosen spaces plus more of them.
@@ -125,10 +125,10 @@ class FieldAudience {
     final r = JsonReader.of(raw, context: 'field_audience');
     return FieldAudience(
       VisibilityAudience.fromWire(r.json['audience']) ?? field.defaultAudience,
-      [
+      {
         for (final id in r.listOrAbsent('workspaces'))
           if (id is String) id,
-      ],
+      },
     );
   }
 
@@ -137,10 +137,11 @@ class FieldAudience {
       other is FieldAudience &&
       other.audience == audience &&
       other.workspaces.length == workspaces.length &&
-      other.workspaces.every(workspaces.contains);
+      other.workspaces.containsAll(workspaces);
 
   @override
-  int get hashCode => Object.hash(audience, workspaces.length);
+  int get hashCode =>
+      Object.hash(audience, Object.hashAllUnordered(workspaces));
 }
 
 /// `my_visibility()`: every field, reachability included, with the
@@ -170,13 +171,20 @@ class MyVisibility {
         for (final field in VisibilityField.values)
           field: FieldAudience.fromJson(
             field == VisibilityField.reachability
-                ? (r.json['reachability'] ?? fields.json['reachability'])
+                ? _reachability(r, fields)
                 : fields.json[field.wire],
             field,
           ),
       },
     );
   }
+
+  /// Who may write to me, as the reply carries it. `my_visibility` (0315)
+  /// answers it at the top level, beside `fields`, because it is chosen
+  /// apart from what others see; a reply that carries it among `fields`
+  /// instead is still read, as the fallback.
+  static Object? _reachability(JsonReader reply, JsonReader fields) =>
+      reply.json['reachability'] ?? fields.json['reachability'];
 
   MyVisibility withField(VisibilityField field, FieldAudience audience) =>
       MyVisibility({...fields, field: audience}, profession: profession, bio: bio);

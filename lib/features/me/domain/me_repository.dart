@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'my_spaces.dart';
 import 'public_person.dart';
 import 'visibility.dart';
 
-/// #1823 — the account layer's own calls. Every one is about the signed-in
-/// person; none reads or writes inside a workspace beyond leaving it.
+/// #1823 — the account layer's own calls on this server. Every one is about
+/// the signed-in person; none reads or writes inside a workspace beyond
+/// leaving it. The linked servers' calls are `LinkedMeRepository`'s.
 abstract interface class MeRepository {
   /// `leave_workspace` (0001): my membership becomes `exited`. My data
   /// stays; erasing it is the separate, stronger action in Privacy.
@@ -35,19 +35,4 @@ abstract interface class MeRepository {
   /// The public card (0390, `public_person_cards`): what anyone, signed in or not, may read of
   /// [userId] — null when the profile is not published (or unknown).
   Future<PublicPerson?> publicPerson(String userId);
-
-  /// My spaces on the linked server [source], read with that server's
-  /// own session.
-  Future<List<LinkedSpace>> spacesOn(String source);
-
-  /// #2211 — `my_visibility()` on the linked server [source], for the
-  /// account I have there: what people on that server see of me.
-  Future<MyVisibility> myVisibilityOn(String source);
-
-  /// #2211 — `set_visibility` on the linked server [source].
-  Future<void> setVisibilityOn(
-    String source,
-    VisibilityField field,
-    FieldAudience audience,
-  );
 }

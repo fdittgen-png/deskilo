@@ -22,6 +22,7 @@ import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/space_pairs.dart';
 import '../providers/me_providers.dart';
 import '../providers/space_attention_provider.dart';
 import '../providers/space_prefs_provider.dart';
@@ -52,17 +53,16 @@ class MeSpaceCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final words = l10n;
     final role = member == null ? null : memberRoleLabel(l10n, member!);
     final demo = DemoEnvironment.maybeOf(context) != null;
-    final environment = demo ? words.demoSessionBadge : space.environment == 'prod'
-        ? words.uxRealWorkspace
-        : words.uxTestSpace;
+    final isProd = space.env.isProduction;
+    final environment = demo ? l10n.demoSessionBadge : isProd
+        ? l10n.uxRealWorkspace
+        : l10n.uxTestSpace;
     final status = _pending
         ? (l10n.meSpacePending)
         : role;
     final brightness = Theme.of(context).brightness;
-    final isProd = space.environment == 'prod';
     // #2313 — what waits for me on THIS side, so the app icon's count
     // can be traced to its space and environment.
     final waiting = _hasAccess
@@ -83,10 +83,10 @@ class MeSpaceCard extends ConsumerWidget {
             message: [
               space.name,
               environment,
-              if (demo) words.demoSessionBadgeHint else if (space.isDevelopment) words.uxTestSpaceHint else words.uxRealSpaceHint,
+              if (demo) l10n.demoSessionBadgeHint else if (space.isDevelopment) l10n.uxTestSpaceHint else l10n.uxRealSpaceHint,
               ?status,
               if (lastUsed) l10n.meSpaceLastUsed,
-              if (waiting > 0) words.meSpaceNotifications(waiting),
+              if (waiting > 0) l10n.meSpaceNotifications(waiting),
             ].join(' · '),
             child: Badge.count(
               key: ValueKey('me-space-badge-${space.id}'),
@@ -146,7 +146,7 @@ class MeSpaceCard extends ConsumerWidget {
                     ],
                     Flexible(
                       child: Text(
-                        isProd ? words.uxOpenWorkspace : words.uxTestSpace,
+                        isProd ? l10n.uxOpenWorkspace : l10n.uxTestSpace,
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge?.strong,
