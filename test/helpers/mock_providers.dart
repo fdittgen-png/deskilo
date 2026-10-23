@@ -8,6 +8,7 @@ import 'package:deskilo/app/shell/shell_drawer.dart' show navigationDefaultProvi
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/operation_context.dart' as personal;
 import 'package:deskilo/core/backend/schema_version.dart';
 import 'package:deskilo/core/backend/secondary_federation.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
@@ -17,6 +18,7 @@ import 'package:deskilo/core/capture/capture_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/auth_repository.dart';
+import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
@@ -42,6 +44,7 @@ import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_fields_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_roles_repository.dart';
+import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/i18n/app_format.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
@@ -51,6 +54,7 @@ import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
 import 'package:deskilo/core/notifications/notification_service.dart';
+import 'package:deskilo/core/privacy/switcher_cover.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
 import 'package:deskilo/core/scan/front_camera.dart';
@@ -69,8 +73,10 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/auth/providers/oauth_consent_providers.dart';
 import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
+import 'package:deskilo/features/directory/domain/saved_place.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
+import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
@@ -82,6 +88,7 @@ import 'package:deskilo/features/money/domain/credit_product.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
@@ -166,6 +173,16 @@ export 'test_clock.dart' show kTestNow, kTestPeriod;
 /// #1625 — the installation every standard test's MCP target is on.
 const kTestInstallationId = '00000000-0000-4000-8000-0000000071e5';
 
+/// The typed twin of an untyped test saver: a string answer is a file the
+/// person can find, null a failure — what the untyped fakes always meant.
+/// A fake that throws keeps throwing, so a test of a failed save still
+/// sees the failure.
+TypedFileSaver typedSaverOf(FileSaver saver) =>
+    ({required bytes, required fileName}) async {
+      final path = await saver(bytes: bytes, fileName: fileName);
+      return path == null ? const SaveFailed() : SavedFile(path);
+    };
+
 List<Override> standardTestOverrides({
   FakeMeRepository? me,
   FakeLinkedMeRepository? linkedMe,
@@ -236,6 +253,7 @@ List<Override> standardTestOverrides({
   UpdateSeenStore Function(String)? updateSeenStore,
   NotificationFilterStore? notificationFilters,
   HelpHintStore? helpHints,
+  SavedPlacesStore? savedPlaces,
   ShellFlagStore? shellBarHidden,
   ShellFlagStore? shellSwipeCoach,
   NavigationStyleStore? navigationStyle,
@@ -321,6 +339,8 @@ List<Override> standardTestOverrides({
           (ref, source) => messengers[source] ?? homeMessenger),
       captureProtectionProvider
           .overrideWithValue(capture ?? CaptureProtection.inert()),
+      // #2559 C1 -- no app-switcher cover outside a native runner.
+      switcherCoverProvider.overrideWithValue(SwitcherCover.inert()),
       accountActivityRepositoryProvider.overrideWithValue(accountActivity ?? FakeAccountActivityRepository()),
       workspaceApplicationRepositoryProvider.overrideWithValue(applications ?? FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(personalPreferences ?? FakePersonalPreferencesRepository()),
@@ -372,6 +392,8 @@ List<Override> standardTestOverrides({
     placeFeedbackRepositoryProvider
         .overrideWithValue(placeFeedback ?? FakePlaceFeedbackRepository()),
     viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
+    companyLookupRepositoryProvider
+        .overrideWithValue(FakeCompanyLookupRepository()), // #2863
     // #1855 — the booking-intent ledger and its scope: one fixed account
     // on one fixed server, so a test's intents never meet the device's.
     bookingIntentStoreProvider
@@ -402,6 +424,24 @@ List<Override> standardTestOverrides({
         .overrideWithValue(defaultWorkspace ?? InMemoryDefaultWorkspaceStore()),
     defaultLevelStoreProvider
         .overrideWithValue(defaultLevel ?? InMemoryDefaultLevelStore()),
+    // The saved public pages live in memory, and the personal context is
+    // the fake account at the test home: the real provider reads the
+    // installation row through `Supabase.instance`.
+    savedPlacesStoreProvider
+        .overrideWithValue(savedPlaces ?? InMemorySavedPlacesStore()),
+    personalContextProvider.overrideWith((ref) async {
+      final subject = await ref.watch(authStateProvider.future);
+      if (subject == null) return null;
+      return personal.PersonalContext(
+        identity: personal.CanonicalIdentity(
+          issuer: 'https://test.local/auth/v1',
+          subject: subject,
+        ),
+        homeInstallationId: 'inst-test',
+        personalLocalUserId: subject,
+        personalEpoch: 1,
+      );
+    }),
     // #586: the default booking period persists on-device.
     defaultPeriodStoreProvider
         .overrideWithValue(defaultPeriod ?? InMemoryDefaultPeriodStore()),

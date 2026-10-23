@@ -2,7 +2,7 @@
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
-import 'workspace_xml.dart' show WorkspaceXmlError, WorkspaceXmlException;
+import 'workspace_xml_model.dart' show WorkspaceXmlError, WorkspaceXmlException;
 
 /// The `<configuration>` section of schema v3 (#916): everything a
 /// workspace IS beyond its settings and its floor plan — tariffs, legal

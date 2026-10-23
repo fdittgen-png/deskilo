@@ -1,0 +1,593 @@
+{
+ "accessories": [
+  {
+   "name": "Screen",
+   "supp": "2.5"
+  }
+ ],
+ "address": "1 Harness Road",
+ "autoValidate": {
+  "admin": true,
+  "owner": false
+ },
+ "boundary": "12:30",
+ "brandColor": "#1F3A5F",
+ "city": "Montpellier",
+ "closures": [
+  "2026-12-25"
+ ],
+ "country": "FR",
+ "currency": "EUR",
+ "customerCapacity": "",
+ "dayEnd": "19:00",
+ "dayStart": "07:30",
+ "deskOpacity": "80",
+ "domains": {
+  "adjustment": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "commitment_variance": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "expense": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "expense_schedule": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "invoice_issue": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "invoice_payment": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "invoice_void": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "invoice_writeoff": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "lease_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "matrix_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "member_join": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "member_status_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "payment": {
+   "on": true,
+   "ownerSignOff": true,
+   "required": "2",
+   "validators": "members"
+  },
+  "payment_terms_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "price_negotiation": {
+   "on": true,
+   "ownerSignOff": false,
+   "required": "1",
+   "validators": "named"
+  },
+  "quota": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "refund": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "reservation": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "reservation_delete": {
+   "on": true,
+   "ownerSignOff": false,
+   "required": "1",
+   "validators": "admins"
+  },
+  "role_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "service": {
+   "on": true,
+   "ownerSignOff": false,
+   "required": "3",
+   "validators": "admins"
+  },
+  "space_reservation": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "subscription_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  }
+ },
+ "einvoice": {
+  "customerField": "",
+  "customerHeader": "",
+  "customerToken": "ctok",
+  "customerUrl": "https://customer.example/in",
+  "devToken": "",
+  "devUrl": "",
+  "field": "file",
+  "header": "Authorization",
+  "token": "tok",
+  "uatToken": "",
+  "uatUrl": "",
+  "url": "https://einvoice.example/upload"
+ },
+ "environment": "prod",
+ "exemption": "",
+ "features": {
+  "accessorySupplements": true,
+  "accountingBook": true,
+  "accountingPeriods": true,
+  "adminInvoicing": true,
+  "adminLevelAssign": true,
+  "adminSeatBlocking": true,
+  "assetRegister": true,
+  "autoCheckInOut": true,
+  "badgeSignIn": true,
+  "biReportDesigner": true,
+  "bookForOthers": true,
+  "bookingGate": true,
+  "bookingPolicies": true,
+  "calendarFileExport": true,
+  "calendarHub": true,
+  "calendarTab": true,
+  "calendarValidations": true,
+  "calendarViews": true,
+  "capacityKpi": true,
+  "captureProtection": true,
+  "carnets": true,
+  "coOwner": true,
+  "configurableSettings": true,
+  "configurationTransfer": true,
+  "customFields": true,
+  "customRoles": true,
+  "dataAccessLog": true,
+  "dataExport": true,
+  "dataReport": true,
+  "decisionSurface": true,
+  "deletionRequests": true,
+  "demoMode": true,
+  "deployments": true,
+  "documents": true,
+  "dunning": true,
+  "einvoiceCustomerDelivery": true,
+  "environmentPairs": true,
+  "eventsTab": true,
+  "expenseRepartition": true,
+  "expenseRepartitionWizard": true,
+  "externalRooms": true,
+  "financeFaces": true,
+  "formHelpHints": true,
+  "guestParticipation": true,
+  "holidayImport": true,
+  "inputVat": true,
+  "instanceWizard": true,
+  "invoiceAddressWindow": true,
+  "invoiceJourney": true,
+  "invoicePdfTemplate": true,
+  "invoiceSettlement": true,
+  "invoicing": true,
+  "invoicingWizard": true,
+  "kioskMemberPhotos": true,
+  "kioskMode": true,
+  "letterStandard": true,
+  "levelBooking": true,
+  "managedProfileAccess": true,
+  "managedProfiles": true,
+  "mcpAccess": true,
+  "meetingRooms": true,
+  "memberAccountMenu": true,
+  "memberDataExport": true,
+  "memberEnvironments": true,
+  "memberGettingStarted": true,
+  "memberNotifications": true,
+  "memberOrigin": true,
+  "memberPage": true,
+  "memberPaymentTerms": true,
+  "memberReports": true,
+  "membersDirectory": true,
+  "messageForwarding": true,
+  "messageGestures": true,
+  "messageMentions": true,
+  "messagesHub": true,
+  "moneyTab": true,
+  "multiSite": true,
+  "navigationStyle": true,
+  "nfcBadges": true,
+  "nfcSeatTags": true,
+  "notificationGrouping": true,
+  "numberSequences": true,
+  "onlinePayments": true,
+  "parking": true,
+  "paymentReminders": true,
+  "pdfExport": true,
+  "personalInfo": true,
+  "placeFeedback": true,
+  "planMemberPhotos": true,
+  "planObjectDelete": true,
+  "premisesLease": true,
+  "priceNegotiations": true,
+  "publicHolidays": true,
+  "publicListings": true,
+  "purchaseAnalytics": true,
+  "purchases": true,
+  "pushNotifications": true,
+  "qrBadges": true,
+  "recapitulativeStatement": true,
+  "recordingPrivacy": true,
+  "regionalFormats": true,
+  "reportDesignExchange": true,
+  "reportDesigner": true,
+  "reportLayouts": true,
+  "reportTexts": true,
+  "richMessageRefs": true,
+  "roleAssignment": true,
+  "roleManagement": true,
+  "salesTax": true,
+  "scheduledExpenses": true,
+  "seatDayTimeline": true,
+  "seriesBooking": true,
+  "services": true,
+  "settlementFold": true,
+  "setupGuide": true,
+  "singleRoomLevelNames": true,
+  "siteDocuments": true,
+  "spaceInquiries": true,
+  "spaceQrCodes": true,
+  "subscriptionInvoices": true,
+  "supplyClassification": true,
+  "supplyExpenses": true,
+  "taskRecorder": true,
+  "uiAnimations": true,
+  "uniqueMonograms": true,
+  "usageInvoices": true,
+  "usageRecords": true,
+  "usageReport": true,
+  "validationChain": true,
+  "validationScopes": true,
+  "vatCounterparty": true,
+  "vatDeclarations": true,
+  "vatGroups": true,
+  "vatManagement": true,
+  "vatRateHistory": true,
+  "vatReport": true,
+  "viesVerification": true,
+  "webMcp": true,
+  "whatsappIntegration": true,
+  "workingHours": true,
+  "workspaceBranding": true,
+  "workspaceLibrary": true,
+  "workspaceOverview": true,
+  "workspaceStatus": true,
+  "workspaceVocabulary": true
+ },
+ "freeLevel": false,
+ "fullDayHours": "9",
+ "granularity": "hours",
+ "halfDayHours": "4",
+ "horizonDays": "365",
+ "invites": {
+  "de": "",
+  "en": "Hello {firstName}",
+  "es": "",
+  "fr": "Bonjour {firstName}",
+  "it": ""
+ },
+ "journey": {
+  "answers": {},
+  "used": false
+ },
+ "landTax": {
+  "bare": false,
+  "date": "",
+  "facilities": false,
+  "option": false,
+  "qst": "",
+  "quick": false,
+  "ref": ""
+ },
+ "language": "de",
+ "levels": [
+  {
+   "bookable": true,
+   "name": "Ground",
+   "offices": [
+    {
+     "bookable": true,
+     "desks": [
+      {
+       "name": "Long desk",
+       "prefix": "Seat",
+       "seats": 6
+      }
+     ],
+     "name": "Main room",
+     "price": "40"
+    }
+   ],
+   "site": "North"
+  },
+  {
+   "bookable": false,
+   "name": "Étage 2",
+   "offices": [
+    {
+     "bookable": false,
+     "desks": [
+      {
+       "name": "D1",
+       "prefix": "Place",
+       "seats": 3
+      }
+     ],
+     "name": "Loft",
+     "price": ""
+    }
+   ],
+   "site": ""
+  }
+ ],
+ "maxDuration": "720",
+ "memberNumbering": {
+  "digits": "3",
+  "prefix": "M-"
+ },
+ "members": [
+  {
+   "email": "ada@example.com",
+   "limit": "5",
+   "name": "Ada",
+   "overage": "packages",
+   "pct": "100",
+   "role": "admin",
+   "simultaneous": "3",
+   "wholeSpaces": true
+  },
+  {
+   "email": "bob@example.com",
+   "limit": "",
+   "name": "Bob",
+   "overage": "payg",
+   "pct": "50",
+   "role": "member",
+   "simultaneous": "",
+   "wholeSpaces": false
+  }
+ ],
+ "mentions": {
+  "escompte": "",
+  "insurance": "",
+  "legalForm": "SAS",
+  "penalty": "",
+  "recovery": "40",
+  "register": "",
+  "special": "",
+  "terms": "30 days"
+ },
+ "minDuration": "60",
+ "name": "Harness Space",
+ "numbering": {
+  "datePart": "year_month",
+  "digits": "5",
+  "prefix": "F-",
+  "reset": "monthly"
+ },
+ "org": "company",
+ "packages": [
+  {
+   "days": "10",
+   "name": "Ten days",
+   "price": "200"
+  }
+ ],
+ "pay": {
+  "account_number": "",
+  "bank_code": "",
+  "bank_name": "Bank",
+  "bic": "AGRIFRPP",
+  "iban": "FR7630006000011234567890189",
+  "lydia": "",
+  "paypal_me": "harness",
+  "qr_iban": "",
+  "reference": "Name and month",
+  "wero": "",
+  "wise": ""
+ },
+ "perms": {
+  "admin": [
+   "manageMembers",
+   "manageDocuments",
+   "manageServices",
+   "approveExpenses",
+   "viewFinances",
+   "viewNegotiations",
+   "manageNegotiations",
+   "paymentTermsEdit",
+   "manageSites",
+   "manageReservations",
+   "operateKiosk",
+   "exportData",
+   "viewPersonalData",
+   "deployToDev",
+   "accessProd",
+   "viewAnalytics",
+   "useMessages",
+   "makeReservations",
+   "viewCalendar",
+   "viewDirectory",
+   "viewMyMoney",
+   "viewDocuments"
+  ],
+  "co_owner": [
+   "manageRoles",
+   "manageMembers",
+   "manageValidation",
+   "workspaceSettings",
+   "issueInvoices",
+   "viewFinances",
+   "manageDocuments",
+   "manageServices",
+   "approveExpenses",
+   "viewNegotiations",
+   "manageNegotiations",
+   "paymentTermsEdit",
+   "manageSites",
+   "manageBilling",
+   "manageReservations",
+   "operateKiosk",
+   "exportData",
+   "designDocuments",
+   "viewPersonalData",
+   "manageIntegrations",
+   "manageConfiguration",
+   "managePurchases",
+   "recordOutgoingPayments",
+   "manageLease",
+   "deployToProd",
+   "deployToDev",
+   "accessProd",
+   "viewAnalytics",
+   "useMessages",
+   "makeReservations",
+   "viewCalendar",
+   "viewDirectory",
+   "viewMyMoney",
+   "viewDocuments"
+  ],
+  "member": [
+   "useMessages",
+   "makeReservations",
+   "viewCalendar",
+   "viewDirectory",
+   "viewMyMoney",
+   "viewDocuments"
+  ]
+ },
+ "permsV": 2,
+ "policies": {
+  "adminCheckout": true,
+  "allowPast": true,
+  "legendProfile": "full",
+  "outsideHours": "walkup_only",
+  "simultaneous": "2"
+ },
+ "postal": "34000",
+ "regNumber": "RCS 123",
+ "reminders": {
+  "automatic": false,
+  "betweenDays": "7",
+  "firstDays": "10",
+  "levels": "3"
+ },
+ "services": [
+  {
+   "name": "Locker",
+   "price": "10",
+   "supply": "property",
+   "vat": "20"
+  }
+ ],
+ "sites": [
+  {
+   "city": "Northtown",
+   "legalId": "123",
+   "name": "North",
+   "postal": "1000",
+   "street": "2 North Street"
+  }
+ ],
+ "street": "1 Harness Road",
+ "subLevels": [
+  "50",
+  "100"
+ ],
+ "tiers": [
+  {
+   "fee": "150",
+   "from": "0",
+   "over": "20",
+   "to": "50"
+  },
+  {
+   "fee": "250",
+   "from": "50",
+   "over": "18",
+   "to": "100"
+  }
+ ],
+ "timezone": "Europe/Paris",
+ "validation": {
+  "ownerSignOff": true,
+  "required": "2"
+ },
+ "vatExigibility": "cash",
+ "vatId": "FR12345678901",
+ "vatPeriod": "month",
+ "vatRates": [
+  {
+   "group": "standard",
+   "label": "Standard",
+   "percent": "20"
+  },
+  {
+   "group": "reduced",
+   "label": "Reduced",
+   "percent": "5.5"
+  }
+ ],
+ "vatRegime": "registered",
+ "weekdays": [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6"
+ ],
+ "whatsapp": "https://chat.whatsapp.com/harness"
+}

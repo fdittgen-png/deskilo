@@ -338,6 +338,7 @@ const Set<String> demoOverriddenProviders = {
   'expenseRepositoryProvider', // #2591
   'accountingSourceQueriesProvider', // #2365
   'viesRepositoryProvider', // #2354
+  'companyLookupRepositoryProvider', // #2863
   'creditRepositoryProvider',
   'accessoryRepositoryProvider',
   'profileRepositoryProvider',
@@ -345,10 +346,12 @@ const Set<String> demoOverriddenProviders = {
   'personalPreferencesRepositoryProvider',
   'workspaceApplicationRepositoryProvider',
   'accountActivityRepositoryProvider',
+  'selectedWorkspaceAccountActivityRepositoryProvider',
   'connectedInstallationsProvider', 'connectedSourcesProvider',
   'identityConnectorProvider', // #1834
   'publicDiscoveryRepositoryProvider', 'publicationRepositoryProvider',
   'directoryParticipantRepositoryProvider', 'accountContactRepositoryProvider',
+  'savedPlacesStoreProvider', // #2555 — saved public pages, device-local
   'meRepositoryProvider', // #1823
   'linkedMeRepositoryProvider',
   'guestParticipationRepositoryProvider', // #1835

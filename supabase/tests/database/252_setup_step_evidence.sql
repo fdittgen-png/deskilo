@@ -4,9 +4,10 @@
 -- once it does — a positive and a negative case per step. A configurer
 -- sets an optional step aside and takes it back; a manual step is marked
 -- done; a required verified step, a ready one and an unknown one cannot be
--- set aside; someone who does not configure the space cannot either.
+-- set aside; someone who does not configure the space cannot either. The
+-- notifications and limits steps (#2871) are manual like new members.
 begin;
-select plan(31);
+select plan(35);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000002868'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -81,6 +82,12 @@ select is(pg_temp.state('recovery'), 'needs_configuration', 'and the step is ope
 select lives_ok($$select public.acknowledge_setup_step('00000000-0000-4000-8000-0000002868b1','new_members')$$,
   'a manual step can be marked done');
 select is(pg_temp.state('new_members'), 'ready', 'and then reads ready');
+-- Manual steps of their own ids: notifications and limits need no detector.
+select is(pg_temp.state('notifications'), 'needs_configuration', 'notifications: a manual step starts open');
+select lives_ok($$select public.acknowledge_setup_step('00000000-0000-4000-8000-0000002868b1','notifications')$$,
+  'the notifications step can be marked done');
+select is(pg_temp.state('notifications'), 'ready', 'and then reads ready');
+select is(pg_temp.state('limits'), 'needs_configuration', 'limits: open while booking policies are on, until marked done');
 select throws_ok($$select public.acknowledge_setup_step('00000000-0000-4000-8000-0000002868b1','places')$$,
   '22023', null, 'a required step the server verifies cannot be set aside');
 select throws_ok($$select public.acknowledge_setup_step('00000000-0000-4000-8000-0000002868b1','nope')$$,

@@ -7573,6 +7573,48 @@ abstract class AppLocalizations {
   /// **'Chat on WhatsApp'**
   String get directoryWhatsapp;
 
+  /// No description provided for @discoveryBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmark'**
+  String get discoveryBookmark;
+
+  /// No description provided for @discoveryNoSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'No places saved on this device yet.'**
+  String get discoveryNoSaved;
+
+  /// No description provided for @discoveryRemoveBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove bookmark'**
+  String get discoveryRemoveBookmark;
+
+  /// No description provided for @discoverySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device'**
+  String get discoverySaved;
+
+  /// No description provided for @discoverySavedFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get discoverySavedFilter;
+
+  /// No description provided for @discoveryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover workspaces'**
+  String get discoveryTitle;
+
+  /// No description provided for @discoveryView.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get discoveryView;
+
   /// Workspace document library (#500)
   ///
   /// In en, this message translates to:
@@ -12437,6 +12479,90 @@ abstract class AppLocalizations {
   /// **'At least {min}.'**
   String fieldProblemTooSmall(String min);
 
+  /// Notice when the person closed the Export… choice or the share sheet: nothing saved
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled — nothing was saved.'**
+  String get fileDeliveryCancelled;
+
+  /// Snackbar action on a browser download request: re-issue the download from a user gesture
+  ///
+  /// In en, this message translates to:
+  /// **'Download again'**
+  String get fileDownloadAgain;
+
+  /// Notice after a browser download request: the page cannot confirm where the file landed
+  ///
+  /// In en, this message translates to:
+  /// **'Download requested: {fileName}. Your browser decides where it goes.'**
+  String fileDownloadRequested(String fileName);
+
+  /// iPhone Export… row: keep a private copy inside the app
+  ///
+  /// In en, this message translates to:
+  /// **'Keep in Deskilo'**
+  String get fileExportKeep;
+
+  /// iPhone Export… row subtitle: the copy is app-private, not in Files
+  ///
+  /// In en, this message translates to:
+  /// **'A private copy inside the app. It does not appear in Files.'**
+  String get fileExportKeepHint;
+
+  /// iPhone Export… row: hand the file to the system share sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Share…'**
+  String get fileExportShare;
+
+  /// iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)
+  ///
+  /// In en, this message translates to:
+  /// **'The system sheet: Save to Files when it is offered, Mail, AirDrop or another app.'**
+  String get fileExportShareHint;
+
+  /// iPhone Export… sheet title: the choice between a private copy in the app and the system share sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Export…'**
+  String get fileExportTitle;
+
+  /// Notice after the system share sheet took the file: not a delivery receipt
+  ///
+  /// In en, this message translates to:
+  /// **'{fileName} was handed to the share sheet. Where it went is up to the app you chose.'**
+  String fileHandedToShareSheet(String fileName);
+
+  /// Notice after a save that only the app can see (Android fallback, iPhone Keep in Deskilo)
+  ///
+  /// In en, this message translates to:
+  /// **'Kept inside Deskilo: {fileName}. It is not in Downloads or Files — Share… sends it elsewhere.'**
+  String fileKeptInApp(String fileName);
+
+  /// Error notice with the reason a file could not be saved
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the file: {reason}.'**
+  String fileSaveFailedBecause(String reason);
+
+  /// Reason phrase for fileSaveFailedBecause: no writable folder on the device
+  ///
+  /// In en, this message translates to:
+  /// **'no folder on this device would take it'**
+  String get fileSaveFailureNoStorage;
+
+  /// Reason phrase for fileSaveFailedBecause: the system share sheet could not open
+  ///
+  /// In en, this message translates to:
+  /// **'the share sheet could not be opened'**
+  String get fileSaveFailureShare;
+
+  /// Reason phrase for fileSaveFailedBecause: the write was refused
+  ///
+  /// In en, this message translates to:
+  /// **'the device refused the write'**
+  String get fileSaveFailureWrite;
+
   /// No description provided for @financesAllSpaces.
   ///
   /// In en, this message translates to:
@@ -12562,6 +12688,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminders'**
   String get financesReminders;
+
+  /// Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete
+  ///
+  /// In en, this message translates to:
+  /// **'The documents of {host} could not be read right now; what is shown comes from your other spaces.'**
+  String financesSourceUnavailable(String host);
 
   /// Me › Finances
   ///
@@ -33629,6 +33761,36 @@ abstract class AppLocalizations {
   /// **'What your space does'**
   String get setupLevelsTitle;
 
+  /// #2871 setup run steps: setupLimitsPerMember
+  ///
+  /// In en, this message translates to:
+  /// **'An allowance set on a member\'s own page goes before the number of places here.'**
+  String get setupLimitsPerMember;
+
+  /// #2871 setup run steps: setupLimitsPreviewAhead
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}'**
+  String setupLimitsPreviewAhead(int days);
+
+  /// #2871 setup run steps: setupLimitsPreviewAtOnce
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}'**
+  String setupLimitsPreviewAtOnce(int count);
+
+  /// #2871 setup run steps: setupLimitsPreviewLength
+  ///
+  /// In en, this message translates to:
+  /// **'A booking lasts at least {shortest} and at most {longest}.'**
+  String setupLimitsPreviewLength(String shortest, String longest);
+
+  /// #2871 setup run steps: setupLimitsSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The booking limits could not be saved. Try again.'**
+  String get setupLimitsSaveFailed;
+
   /// #2875 setup guide locks: setupLockConfirmTitle
   ///
   /// In en, this message translates to:
@@ -33712,6 +33874,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The new-member defaults could not be saved. Try again.'**
   String get setupNewMembersSaveFailed;
+
+  /// #2871 setup run steps: setupNotificationsAudience
+  ///
+  /// In en, this message translates to:
+  /// **'{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}'**
+  String setupNotificationsAudience(String audience);
+
+  /// #2871 setup run steps: setupNotificationsChannels
+  ///
+  /// In en, this message translates to:
+  /// **'{channels, select, app{in the app} app_push{in the app and as a phone notification} device{as a reminder on their own phone, even without phone notifications} other{{channels}}}'**
+  String setupNotificationsChannels(String channels);
+
+  /// #2871 setup run steps: setupNotificationsEvent
+  ///
+  /// In en, this message translates to:
+  /// **'{event, select, pending_request{A request waits for a decision} reservation_cancelled{A booking was removed by someone else} check_in{A booking is about to start: time to check in} member_note{A message or an announcement} member_mention{Someone names them in a conversation} invoice_reminder{A payment reminder} other{{event}}}'**
+  String setupNotificationsEvent(String event);
+
+  /// #2871 setup run steps: setupNotificationsLeadFixed
+  ///
+  /// In en, this message translates to:
+  /// **'The check-in reminder appears {lead} before a booking starts.'**
+  String setupNotificationsLeadFixed(String lead);
+
+  /// #2871 setup run steps: setupNotificationsLineHow
+  ///
+  /// In en, this message translates to:
+  /// **'{audience}: {channels}'**
+  String setupNotificationsLineHow(String audience, String channels);
+
+  /// #2871 setup run steps: setupNotificationsPreviewPlace
+  ///
+  /// In en, this message translates to:
+  /// **'Desk 4'**
+  String get setupNotificationsPreviewPlace;
+
+  /// #2871 setup run steps: setupNotificationsPreviewWhen
+  ///
+  /// In en, this message translates to:
+  /// **'{lead} before the booking starts, the member\'s phone shows:'**
+  String setupNotificationsPreviewWhen(String lead);
+
+  /// #2871 setup run steps: setupNotificationsPushOff
+  ///
+  /// In en, this message translates to:
+  /// **'Phone notifications are off: everything but the check-in reminder stays in the app.'**
+  String get setupNotificationsPushOff;
+
+  /// #2871 setup run steps: setupNotificationsPushOn
+  ///
+  /// In en, this message translates to:
+  /// **'Phone notifications are on. A phone receives them once the operator has connected push for this server; until then, everything stays in the app.'**
+  String get setupNotificationsPushOn;
+
+  /// #2871 setup run steps: setupNotificationsSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The reminder time could not be saved. Try again.'**
+  String get setupNotificationsSaveFailed;
+
+  /// #2871 setup run steps: setupNotificationsWho
+  ///
+  /// In en, this message translates to:
+  /// **'Who is told what'**
+  String get setupNotificationsWho;
 
   /// #2868 setup questions: no reference row for the country
   ///
@@ -34052,7 +34280,7 @@ abstract class AppLocalizations {
   /// #2869 setup guide: setupStepHint
   ///
   /// In en, this message translates to:
-  /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
+  /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} notifications{Who is told what, and how: in the app, on the phone, as a reminder.} limits{How far ahead, how long and how many places at once members book.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
   String setupStepHint(String key);
 
   /// #2870 setup steps: setupStepLoadFailed
@@ -34076,7 +34304,7 @@ abstract class AppLocalizations {
   /// #2869 setup guide: setupStepTitle
   ///
   /// In en, this message translates to:
-  /// **'{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}'**
+  /// **'{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} notifications{Notifications} limits{Booking limits} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}'**
   String setupStepTitle(String key);
 
   /// Screen-reader announcement when the bar is swiped away (#1173)
@@ -34846,6 +35074,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Maintain VAT groups, rates and declarations.'**
   String get subprocessTaxDesc;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Edited by you'**
+  String get supplierFieldEdited;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Not returned by the registry'**
+  String get supplierFieldNotReturned;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Retrieved from {provider}'**
+  String supplierFieldRetrieved(String provider);
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Validated by {provider}'**
+  String supplierFieldValidated(String provider);
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Continue manually'**
+  String get supplierLookupContinueManually;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get supplierLookupCountry;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the supplier\'s country.'**
+  String get supplierLookupCountryMissing;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier with this identifier already exists: {supplier}. Nothing was created.'**
+  String supplierLookupDuplicate(String supplier);
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Enter manually'**
+  String get supplierLookupEnterManually;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Find company details'**
+  String get supplierLookupFind;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number'**
+  String get supplierLookupIdentifier;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'With or without the country prefix; spaces, dots and dashes are ignored.'**
+  String get supplierLookupIdentifierHelp;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'This does not look like a VAT number: letters and digits only.'**
+  String get supplierLookupIdentifierMalformed;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the VAT number to look up.'**
+  String get supplierLookupIdentifierMissing;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the supplier\'s VAT number. The registry answers with what it holds; you review everything before saving.'**
+  String get supplierLookupIntro;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry rejected the format of this number. Check it, or continue manually.'**
+  String get supplierLookupInvalidInput;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry\'s answer could not be read. Retry, or continue manually.'**
+  String get supplierLookupMalformed;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Or enter the details yourself below.'**
+  String get supplierLookupManualHint;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry does not know this VAT number. Check the number and the country, or continue manually.'**
+  String get supplierLookupNotFound;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT number is valid, but the registry returned no name or address. Complete the fields yourself.'**
+  String get supplierLookupNothingReturned;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Open existing supplier'**
+  String get supplierLookupOpenExisting;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'VIES'**
+  String get supplierLookupProviderVies;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The lookup was refused: you may not manage suppliers here, or VAT verification is switched off.'**
+  String get supplierLookupRefused;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get supplierLookupRetry;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Review every field below; you can change anything before saving.'**
+  String get supplierLookupReviewHint;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Asking the registry…'**
+  String get supplierLookupSearching;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {provider}, {time}'**
+  String supplierLookupSource(String provider, String time);
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Could not verify the VAT number'**
+  String get supplierLookupStatusCouldNotVerify;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Details retrieved; VAT number not validated'**
+  String get supplierLookupStatusRetrievedNotValidated;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Registry unavailable'**
+  String get supplierLookupStatusUnavailable;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number validated'**
+  String get supplierLookupStatusValidated;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry is busy. Wait a moment and retry, or continue manually.'**
+  String get supplierLookupThrottled;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry did not answer in time. Retry, or continue manually.'**
+  String get supplierLookupTimeout;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry is unavailable right now. Retry later, or continue manually.'**
+  String get supplierLookupUnavailable;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'No registry answers for {country} yet. You can enter the details yourself.'**
+  String supplierLookupUnsupported(String country);
 
   /// #2567 suppliers
   ///

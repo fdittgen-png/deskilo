@@ -107,6 +107,7 @@ const Map<String, String> _notExported = {
   'sample_data_batches': 'which sample data this test space generated (#2872); it names rows of this server, and the sample rows themselves are exported like any other until they are cleared',
   'sample_data_records': 'the ids of one sample batch\'s rows (#2872), so clearing removes exactly them; they name rows of this server',
   'setup_step_drafts': 'a setup step\'s unfinished answers (#2869), never configuration; the copy re-asks, and what was applied is exported where it lives',
+  'setup_step_timings': 'how long setup sessions took on this server (#2915), kept without a person and read only as an aggregate over the whole instance; it describes this server\'s guide, not the workspace, and a copy would skew another instance\'s ranges',
   'workspace_setup_journeys': 'the owner\'s answers to the setup questions and the levels they applied (#2868), never configuration; the features the levels wrote are exported where they live, and the copy re-asks',
   // --- the workspace's own questions (#1288) ------------------------
   'workspace_field_labels': 'the question in each language; the definition '

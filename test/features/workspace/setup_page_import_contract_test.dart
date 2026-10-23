@@ -20,6 +20,7 @@
 // names against the importer's source, and the values against the
 // server's CHECK constraints, so a renamed key or a refused value fails
 // here instead of on the owner's first import.
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/time/work_hours.dart';
@@ -42,6 +43,8 @@ import 'package:deskilo/features/workspace/domain/workspace_import.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../../tool/setup/page_sources.dart';
 
 /// The page's export in [mode] (see the harness) — or null when node is
 /// missing (same bargain as setup_runs_test).
@@ -151,8 +154,19 @@ String pageConst(String html, String name) {
   return html.substring(start, html.indexOf(';', start));
 }
 
+/// #2923 — the registry the page reads, generated into
+/// web/setup_catalogue.js from the app's Dart sources.
+Map<String, dynamic> pageRegistry() {
+  const prefix = 'window.SETUP_REGISTRY=';
+  final js = File('web/setup_catalogue.js').readAsStringSync();
+  final start = js.indexOf(prefix) + prefix.length;
+  return jsonDecode(js.substring(start, js.indexOf('\n};\n', start) + 2))
+      as Map<String, dynamic>;
+}
+
 void main() {
-  final html = File('web/setup.html').readAsStringSync();
+  // #2926 — the page with the scripts it is split into.
+  final html = setupPageSource();
 
   group('every answer the page labels "applied by import" arrives', () {
     test('identity, region, features, payment details and the plan', () {
@@ -398,22 +412,20 @@ void main() {
     });
 
     test('the page offers every permission, in the roles screen order', () {
-      final perms = RegExp(r"'(\w+)'")
-          .allMatches(pageConst(html, 'PERMS'))
-          .map((m) => m.group(1))
-          .toList();
+      final perms = (pageRegistry()['permissions'] as List).cast<String>();
       expect(perms, [for (final p in WorkspacePermission.values) p.wireName]);
     });
 
     test('the countries marked "DesKilo issues invoices" are the ones the '
         'app issues for', () {
-      final marked = RegExp(r"'([A-Z]{2})'")
-          .allMatches(pageConst(html, 'INVOICING_COUNTRIES'))
-          .map((m) => m.group(1)!)
+      final registry = pageRegistry();
+      final marked = (registry['invoicingCountries'] as List)
+          .cast<String>()
           .toSet();
-      final countries = RegExp(r"\['([A-Z]{2})'")
-          .allMatches(pageConst(html, 'COUNTRIES'))
-          .map((m) => m.group(1)!);
+      final countries = [
+        for (final c in registry['countries'] as List)
+          (c as List).first as String,
+      ];
       for (final c in countries) {
         final issues =
             legalProfileOf(LegalClauseSnapshot(sellerCountry: c)) !=
