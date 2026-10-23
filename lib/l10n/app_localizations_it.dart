@@ -20969,6 +20969,136 @@ class AppLocalizationsIt extends AppLocalizations {
       'Gestire gruppi, aliquote e dichiarazioni IVA.';
 
   @override
+  String get supplierFieldEdited => 'Modificato da Lei';
+
+  @override
+  String get supplierFieldNotReturned => 'Non restituito dal registro';
+
+  @override
+  String supplierFieldRetrieved(String provider) {
+    return 'Recuperato da $provider';
+  }
+
+  @override
+  String supplierFieldValidated(String provider) {
+    return 'Convalidato da $provider';
+  }
+
+  @override
+  String get supplierLookupContinueManually => 'Continua manualmente';
+
+  @override
+  String get supplierLookupCountry => 'Paese';
+
+  @override
+  String get supplierLookupCountryMissing => 'Scelga il paese del fornitore.';
+
+  @override
+  String supplierLookupDuplicate(String supplier) {
+    return 'Esiste già un fornitore con questo identificativo: $supplier. Non è stato creato nulla.';
+  }
+
+  @override
+  String get supplierLookupEnterManually => 'Inserire manualmente';
+
+  @override
+  String get supplierLookupFind => 'Cerca i dati dell\'azienda';
+
+  @override
+  String get supplierLookupIdentifier => 'Partita IVA';
+
+  @override
+  String get supplierLookupIdentifierHelp =>
+      'Con o senza prefisso paese; spazi, punti e trattini sono ignorati.';
+
+  @override
+  String get supplierLookupIdentifierMalformed =>
+      'Non sembra una partita IVA: solo lettere e cifre.';
+
+  @override
+  String get supplierLookupIdentifierMissing =>
+      'Inserisca la partita IVA da cercare.';
+
+  @override
+  String get supplierLookupIntro =>
+      'Inserisca la partita IVA del fornitore. Il registro risponde con ciò che possiede; Lei verifica tutto prima di salvare.';
+
+  @override
+  String get supplierLookupInvalidInput =>
+      'Il registro ha rifiutato il formato di questo numero. Lo verifichi, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupMalformed =>
+      'La risposta del registro non è leggibile. Riprovi, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupManualHint => 'Oppure inserisca i dati qui sotto.';
+
+  @override
+  String get supplierLookupNotFound =>
+      'Il registro non conosce questa partita IVA. Verifichi il numero e il paese, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupNothingReturned =>
+      'La partita IVA è valida, ma il registro non ha restituito né nome né indirizzo. Completi i campi Lei stesso.';
+
+  @override
+  String get supplierLookupOpenExisting => 'Apri il fornitore esistente';
+
+  @override
+  String get supplierLookupProviderVies => 'VIES';
+
+  @override
+  String get supplierLookupRefused =>
+      'La ricerca è stata rifiutata: Lei non gestisce i fornitori qui, oppure la verifica IVA è disattivata.';
+
+  @override
+  String get supplierLookupRetry => 'Riprova';
+
+  @override
+  String get supplierLookupReviewHint =>
+      'Verifichi ogni campo qui sotto; può modificare tutto prima di salvare.';
+
+  @override
+  String get supplierLookupSearching => 'Interrogazione del registro…';
+
+  @override
+  String supplierLookupSource(String provider, String time) {
+    return 'Fonte: $provider, $time';
+  }
+
+  @override
+  String get supplierLookupStatusCouldNotVerify =>
+      'Impossibile verificare la partita IVA';
+
+  @override
+  String get supplierLookupStatusRetrievedNotValidated =>
+      'Dati recuperati; partita IVA non convalidata';
+
+  @override
+  String get supplierLookupStatusUnavailable => 'Registro non disponibile';
+
+  @override
+  String get supplierLookupStatusValidated => 'Partita IVA convalidata';
+
+  @override
+  String get supplierLookupThrottled =>
+      'Il registro è sovraccarico. Attenda un momento e riprovi, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupTimeout =>
+      'Il registro non ha risposto in tempo. Riprovi, oppure continui manualmente.';
+
+  @override
+  String get supplierLookupUnavailable =>
+      'Il registro al momento non è disponibile. Riprovi più tardi, oppure continui manualmente.';
+
+  @override
+  String supplierLookupUnsupported(String country) {
+    return 'Nessun registro risponde ancora per $country. Può inserire i dati Lei stesso.';
+  }
+
+  @override
   String get suppliersAdd => 'Aggiungi fornitore';
 
   @override

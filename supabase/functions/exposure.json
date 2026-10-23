@@ -17,6 +17,10 @@
       "class": "user_facing",
       "authority": "an invoice issuer's native session, checked by vies_check_subject"
     },
+    "supplier-lookup": {
+      "class": "user_facing",
+      "authority": "a billing manager's native session, checked by has_permission and feature_effective"
+    },
     "send-push": {
       "class": "system",
       "authority": "database triggers through the gateway"

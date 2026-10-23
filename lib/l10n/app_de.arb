@@ -14413,6 +14413,174 @@
   "subprocessStructureDesc": "Standorte und die Verfügbarkeit von Planobjekten verwalten.",
   "subprocessTax": "Umsatzsteuerverwaltung",
   "subprocessTaxDesc": "Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.",
+  "supplierFieldEdited": "Von Ihnen geändert",
+  "@supplierFieldEdited": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldNotReturned": "Vom Register nicht geliefert",
+  "@supplierFieldNotReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldRetrieved": "Aus {provider} abgerufen",
+  "@supplierFieldRetrieved": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierFieldValidated": "Bestätigt durch {provider}",
+  "@supplierFieldValidated": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupContinueManually": "Manuell fortfahren",
+  "@supplierLookupContinueManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountry": "Land",
+  "@supplierLookupCountry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountryMissing": "Wählen Sie das Land des Lieferanten.",
+  "@supplierLookupCountryMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupDuplicate": "Ein Lieferant trägt diese Nummer bereits: {supplier}. Es wurde nichts angelegt.",
+  "@supplierLookupDuplicate": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupEnterManually": "Manuell eingeben",
+  "@supplierLookupEnterManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupFind": "Firmendaten suchen",
+  "@supplierLookupFind": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifier": "USt-IdNr.",
+  "@supplierLookupIdentifier": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierHelp": "Mit oder ohne Länderpräfix; Leerzeichen, Punkte und Bindestriche werden ignoriert.",
+  "@supplierLookupIdentifierHelp": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMalformed": "Das sieht nicht wie eine USt-IdNr. aus: nur Buchstaben und Ziffern.",
+  "@supplierLookupIdentifierMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMissing": "Geben Sie die zu suchende USt-IdNr. ein.",
+  "@supplierLookupIdentifierMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIntro": "Geben Sie die USt-IdNr. des Lieferanten ein. Das Register antwortet mit dem, was es hat; Sie prüfen alles vor dem Speichern.",
+  "@supplierLookupIntro": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupInvalidInput": "Das Register hat das Format dieser Nummer abgelehnt. Prüfen Sie sie oder fahren Sie manuell fort.",
+  "@supplierLookupInvalidInput": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupMalformed": "Die Antwort des Registers konnte nicht gelesen werden. Versuchen Sie es erneut oder fahren Sie manuell fort.",
+  "@supplierLookupMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupManualHint": "Oder tragen Sie die Angaben unten selbst ein.",
+  "@supplierLookupManualHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNotFound": "Das Register kennt diese USt-IdNr. nicht. Prüfen Sie Nummer und Land oder fahren Sie manuell fort.",
+  "@supplierLookupNotFound": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNothingReturned": "Die USt-IdNr. ist gültig, aber das Register hat weder Namen noch Adresse geliefert. Ergänzen Sie die Felder selbst.",
+  "@supplierLookupNothingReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupOpenExisting": "Vorhandenen Lieferanten öffnen",
+  "@supplierLookupOpenExisting": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupProviderVies": "VIES",
+  "@supplierLookupProviderVies": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRefused": "Die Suche wurde abgelehnt: Sie verwalten hier keine Lieferanten, oder die USt-Prüfung ist ausgeschaltet.",
+  "@supplierLookupRefused": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRetry": "Erneut versuchen",
+  "@supplierLookupRetry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupReviewHint": "Prüfen Sie jedes Feld unten; Sie können alles vor dem Speichern ändern.",
+  "@supplierLookupReviewHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSearching": "Register wird abgefragt…",
+  "@supplierLookupSearching": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSource": "Quelle: {provider}, {time}",
+  "@supplierLookupSource": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupStatusCouldNotVerify": "USt-IdNr. konnte nicht geprüft werden",
+  "@supplierLookupStatusCouldNotVerify": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusRetrievedNotValidated": "Daten abgerufen; USt-IdNr. nicht bestätigt",
+  "@supplierLookupStatusRetrievedNotValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusUnavailable": "Register nicht erreichbar",
+  "@supplierLookupStatusUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusValidated": "USt-IdNr. bestätigt",
+  "@supplierLookupStatusValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupThrottled": "Das Register ist überlastet. Warten Sie kurz und versuchen Sie es erneut, oder fahren Sie manuell fort.",
+  "@supplierLookupThrottled": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupTimeout": "Das Register hat nicht rechtzeitig geantwortet. Versuchen Sie es erneut oder fahren Sie manuell fort.",
+  "@supplierLookupTimeout": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnavailable": "Das Register ist derzeit nicht erreichbar. Versuchen Sie es später erneut oder fahren Sie manuell fort.",
+  "@supplierLookupUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnsupported": "Für {country} antwortet noch kein Register. Sie können die Angaben selbst eintragen.",
+  "@supplierLookupUnsupported": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersAdd": "Lieferant hinzufügen",
   "@suppliersAdd": {
     "description": "#2567 suppliers"

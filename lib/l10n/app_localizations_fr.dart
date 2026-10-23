@@ -21016,6 +21016,138 @@ class AppLocalizationsFr extends AppLocalizations {
       'Gérer les groupes, taux et déclarations de TVA.';
 
   @override
+  String get supplierFieldEdited => 'Modifié par vous';
+
+  @override
+  String get supplierFieldNotReturned => 'Non renvoyé par le registre';
+
+  @override
+  String supplierFieldRetrieved(String provider) {
+    return 'Récupéré depuis $provider';
+  }
+
+  @override
+  String supplierFieldValidated(String provider) {
+    return 'Validé par $provider';
+  }
+
+  @override
+  String get supplierLookupContinueManually => 'Continuer manuellement';
+
+  @override
+  String get supplierLookupCountry => 'Pays';
+
+  @override
+  String get supplierLookupCountryMissing =>
+      'Choisissez le pays du fournisseur.';
+
+  @override
+  String supplierLookupDuplicate(String supplier) {
+    return 'Un fournisseur porte déjà cet identifiant : $supplier. Rien n\'a été créé.';
+  }
+
+  @override
+  String get supplierLookupEnterManually => 'Saisir manuellement';
+
+  @override
+  String get supplierLookupFind => 'Rechercher la société';
+
+  @override
+  String get supplierLookupIdentifier => 'Numéro de TVA';
+
+  @override
+  String get supplierLookupIdentifierHelp =>
+      'Avec ou sans préfixe pays ; les espaces, points et tirets sont ignorés.';
+
+  @override
+  String get supplierLookupIdentifierMalformed =>
+      'Ceci ne ressemble pas à un numéro de TVA : lettres et chiffres uniquement.';
+
+  @override
+  String get supplierLookupIdentifierMissing =>
+      'Saisissez le numéro de TVA à rechercher.';
+
+  @override
+  String get supplierLookupIntro =>
+      'Saisissez le numéro de TVA du fournisseur. Le registre répond avec ce qu\'il détient ; vous vérifiez tout avant d\'enregistrer.';
+
+  @override
+  String get supplierLookupInvalidInput =>
+      'Le registre a rejeté le format de ce numéro. Vérifiez-le, ou continuez manuellement.';
+
+  @override
+  String get supplierLookupMalformed =>
+      'La réponse du registre n\'a pas pu être lue. Réessayez, ou continuez manuellement.';
+
+  @override
+  String get supplierLookupManualHint =>
+      'Ou saisissez les informations ci-dessous.';
+
+  @override
+  String get supplierLookupNotFound =>
+      'Le registre ne connaît pas ce numéro de TVA. Vérifiez le numéro et le pays, ou continuez manuellement.';
+
+  @override
+  String get supplierLookupNothingReturned =>
+      'Le numéro de TVA est valide, mais le registre n\'a renvoyé ni nom ni adresse. Complétez les champs vous-même.';
+
+  @override
+  String get supplierLookupOpenExisting => 'Ouvrir le fournisseur existant';
+
+  @override
+  String get supplierLookupProviderVies => 'VIES';
+
+  @override
+  String get supplierLookupRefused =>
+      'La recherche a été refusée : vous ne gérez pas les fournisseurs ici, ou la vérification de TVA est désactivée.';
+
+  @override
+  String get supplierLookupRetry => 'Réessayer';
+
+  @override
+  String get supplierLookupReviewHint =>
+      'Vérifiez chaque champ ci-dessous ; vous pouvez tout modifier avant d\'enregistrer.';
+
+  @override
+  String get supplierLookupSearching => 'Interrogation du registre…';
+
+  @override
+  String supplierLookupSource(String provider, String time) {
+    return 'Source : $provider, $time';
+  }
+
+  @override
+  String get supplierLookupStatusCouldNotVerify =>
+      'Impossible de vérifier le numéro de TVA';
+
+  @override
+  String get supplierLookupStatusRetrievedNotValidated =>
+      'Informations récupérées ; numéro de TVA non validé';
+
+  @override
+  String get supplierLookupStatusUnavailable => 'Registre indisponible';
+
+  @override
+  String get supplierLookupStatusValidated => 'Numéro de TVA validé';
+
+  @override
+  String get supplierLookupThrottled =>
+      'Le registre est saturé. Patientez un instant et réessayez, ou continuez manuellement.';
+
+  @override
+  String get supplierLookupTimeout =>
+      'Le registre n\'a pas répondu à temps. Réessayez, ou continuez manuellement.';
+
+  @override
+  String get supplierLookupUnavailable =>
+      'Le registre est indisponible pour le moment. Réessayez plus tard, ou continuez manuellement.';
+
+  @override
+  String supplierLookupUnsupported(String country) {
+    return 'Aucun registre ne répond encore pour $country. Vous pouvez saisir les informations vous-même.';
+  }
+
+  @override
   String get suppliersAdd => 'Ajouter un fournisseur';
 
   @override

@@ -20955,6 +20955,137 @@ class AppLocalizationsEs extends AppLocalizations {
       'Gestionar grupos, tipos y declaraciones de IVA.';
 
   @override
+  String get supplierFieldEdited => 'Editado por usted';
+
+  @override
+  String get supplierFieldNotReturned => 'No devuelto por el registro';
+
+  @override
+  String supplierFieldRetrieved(String provider) {
+    return 'Recuperado de $provider';
+  }
+
+  @override
+  String supplierFieldValidated(String provider) {
+    return 'Validado por $provider';
+  }
+
+  @override
+  String get supplierLookupContinueManually => 'Continuar manualmente';
+
+  @override
+  String get supplierLookupCountry => 'País';
+
+  @override
+  String get supplierLookupCountryMissing => 'Elija el país del proveedor.';
+
+  @override
+  String supplierLookupDuplicate(String supplier) {
+    return 'Ya existe un proveedor con este identificador: $supplier. No se ha creado nada.';
+  }
+
+  @override
+  String get supplierLookupEnterManually => 'Introducir manualmente';
+
+  @override
+  String get supplierLookupFind => 'Buscar los datos de la empresa';
+
+  @override
+  String get supplierLookupIdentifier => 'NIF-IVA';
+
+  @override
+  String get supplierLookupIdentifierHelp =>
+      'Con o sin prefijo de país; los espacios, puntos y guiones se ignoran.';
+
+  @override
+  String get supplierLookupIdentifierMalformed =>
+      'Esto no parece un NIF-IVA: solo letras y cifras.';
+
+  @override
+  String get supplierLookupIdentifierMissing =>
+      'Introduzca el NIF-IVA que desea buscar.';
+
+  @override
+  String get supplierLookupIntro =>
+      'Introduzca el NIF-IVA del proveedor. El registro responde con lo que tiene; usted revisa todo antes de guardar.';
+
+  @override
+  String get supplierLookupInvalidInput =>
+      'El registro rechazó el formato de este número. Compruébelo, o continúe manualmente.';
+
+  @override
+  String get supplierLookupMalformed =>
+      'No se pudo leer la respuesta del registro. Reintente, o continúe manualmente.';
+
+  @override
+  String get supplierLookupManualHint =>
+      'O introduzca usted los datos a continuación.';
+
+  @override
+  String get supplierLookupNotFound =>
+      'El registro no conoce este NIF-IVA. Compruebe el número y el país, o continúe manualmente.';
+
+  @override
+  String get supplierLookupNothingReturned =>
+      'El NIF-IVA es válido, pero el registro no devolvió ni nombre ni dirección. Complete los campos usted mismo.';
+
+  @override
+  String get supplierLookupOpenExisting => 'Abrir el proveedor existente';
+
+  @override
+  String get supplierLookupProviderVies => 'VIES';
+
+  @override
+  String get supplierLookupRefused =>
+      'La búsqueda fue rechazada: usted no gestiona proveedores aquí, o la verificación del IVA está desactivada.';
+
+  @override
+  String get supplierLookupRetry => 'Reintentar';
+
+  @override
+  String get supplierLookupReviewHint =>
+      'Revise cada campo a continuación; puede cambiar lo que quiera antes de guardar.';
+
+  @override
+  String get supplierLookupSearching => 'Consultando el registro…';
+
+  @override
+  String supplierLookupSource(String provider, String time) {
+    return 'Fuente: $provider, $time';
+  }
+
+  @override
+  String get supplierLookupStatusCouldNotVerify =>
+      'No se pudo verificar el NIF-IVA';
+
+  @override
+  String get supplierLookupStatusRetrievedNotValidated =>
+      'Datos recuperados; NIF-IVA no validado';
+
+  @override
+  String get supplierLookupStatusUnavailable => 'Registro no disponible';
+
+  @override
+  String get supplierLookupStatusValidated => 'NIF-IVA validado';
+
+  @override
+  String get supplierLookupThrottled =>
+      'El registro está saturado. Espere un momento y reintente, o continúe manualmente.';
+
+  @override
+  String get supplierLookupTimeout =>
+      'El registro no respondió a tiempo. Reintente, o continúe manualmente.';
+
+  @override
+  String get supplierLookupUnavailable =>
+      'El registro no está disponible ahora. Reintente más tarde, o continúe manualmente.';
+
+  @override
+  String supplierLookupUnsupported(String country) {
+    return 'Todavía ningún registro responde para $country. Puede introducir los datos usted mismo.';
+  }
+
+  @override
   String get suppliersAdd => 'Añadir proveedor';
 
   @override
