@@ -54,6 +54,7 @@ import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/nfc/nfc_uid_reader.dart';
 import 'package:deskilo/core/notifications/notification_providers.dart';
 import 'package:deskilo/core/notifications/notification_service.dart';
+import 'package:deskilo/core/privacy/switcher_cover.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
 import 'package:deskilo/core/scan/front_camera.dart';
@@ -338,6 +339,8 @@ List<Override> standardTestOverrides({
           (ref, source) => messengers[source] ?? homeMessenger),
       captureProtectionProvider
           .overrideWithValue(capture ?? CaptureProtection.inert()),
+      // #2559 C1 -- no app-switcher cover outside a native runner.
+      switcherCoverProvider.overrideWithValue(SwitcherCover.inert()),
       accountActivityRepositoryProvider.overrideWithValue(accountActivity ?? FakeAccountActivityRepository()),
       workspaceApplicationRepositoryProvider.overrideWithValue(applications ?? FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(personalPreferences ?? FakePersonalPreferencesRepository()),
