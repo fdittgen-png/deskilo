@@ -37,4 +37,7 @@ WorkspaceConfigPdfStrings workspaceConfigurationStrings(
       l10n.workspaceConfigInvitationDefault,
   invitationSingleUse:
       l10n.workspaceConfigInvitationSingleUse,
+  workingHours: l10n.availabilityWorkHoursTitle,
+  vatRates: l10n.vatRatesTile,
+  sites: l10n.sitesTitle,
 );

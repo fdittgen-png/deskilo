@@ -274,6 +274,25 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
     if (mounted) _update(() => _busy = false);
   }
 
+  /// #2862 — the configuration PDF's hours, VAT rates in force and sites;
+  /// the rates and sites only when their features are on.
+  Future<({String hours, List<String> vatRates, List<String> sites})>
+      _configPdfExtras(Set<WorkspaceFeature> features, String? locale) async {
+    final hours = await ref.read(workHoursProvider.future);
+    final rates = features.contains(WorkspaceFeature.vatManagement)
+        ? await ref.read(vatRatesProvider.future) : null;
+    final sites = features.contains(WorkspaceFeature.multiSite)
+        ? await ref.read(sitesProvider.future) : null;
+    return (
+      hours: configWorkingHours(hours),
+      vatRates: configVatRates(locale, [
+        ...?rates?.where((r) => r.active)
+            .map((r) => (label: r.label, percent: r.percent)),
+      ]),
+      sites: configSites(sites ?? []),
+    );
+  }
+
   Future<void> _exportConfigPdf(Workspace workspace) async {
     final l10n = context.l10n;
     final locale = Localizations.maybeLocaleOf(context)?.toString();
@@ -298,25 +317,11 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
           final features = await ref.read(enabledFeaturesProvider.future);
           final openWeekdays = await ref.read(openWeekdaysProvider.future);
           final closures = await ref.read(closureDaysProvider.future);
-
-          // ISO weekday (1=Mon..7=Sun) → localized name via a known Monday.
-          final weekdayFormat = DateFormat.EEEE(locale);
-          String weekdayName(int isoWeekday) =>
-              weekdayFormat.format(DateTime(2026, 6, 1 + (isoWeekday - 1)));
-          final openDaysLabel = (openWeekdays.toList()..sort())
-              .map(weekdayName)
-              .join(', ');
-
-          final dateFormat = DateFormat.yMMMd(locale);
+          final extras = await _configPdfExtras(features, locale);
           // Formatted once: the l10n branch and its fallback must carry
           // the same stamp.
           final generatedOn =
-              dateFormat.format(ref.read(clockProvider).now());
-          final closureLabels = [
-            for (final closure in closures)
-              if (closure.reason.trim().isEmpty) dateFormat.format(closure.day.toLocal()) else '${dateFormat.format(closure.day.toLocal())} — '
-                      '${closure.reason}',
-          ];
+              DateFormat.yMMMd(locale).format(ref.read(clockProvider).now());
 
           // Members sorted by name, like the directory.
           final sortedMembers = [...members]..sort(
@@ -363,8 +368,11 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
             granularityLabel: _granularityLabel(l10n, granularity),
             members: configMembers,
             featureGroups: configFeatureGroups(l10n, features),
-            openDaysLabel: openDaysLabel,
-            closureLabels: closureLabels,
+            openDaysLabel: configOpenDays(locale, openWeekdays),
+            closureLabels: configClosures(locale, closures),
+            workingHoursLabel: extras.hours,
+            vatRates: extras.vatRates,
+            sites: extras.sites,
             levels: plans,
             levelPrices: {
               for (final entry in plans)
