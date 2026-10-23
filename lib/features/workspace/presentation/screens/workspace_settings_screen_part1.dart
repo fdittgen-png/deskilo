@@ -362,11 +362,7 @@ extension _WorkspaceSettingsScreenStatePart1 on _WorkspaceSettingsScreenState {
             timezone: workspace.timezone,
             granularityLabel: _granularityLabel(l10n, granularity),
             members: configMembers,
-            featureLabels: [
-              // Registry order for a stable list.
-              for (final feature in WorkspaceFeature.values)
-                if (features.contains(feature)) featureName(l10n, feature),
-            ],
+            featureGroups: configFeatureGroups(l10n, features),
             openDaysLabel: openDaysLabel,
             closureLabels: closureLabels,
             levels: plans,
