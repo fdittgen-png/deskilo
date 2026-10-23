@@ -225,7 +225,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     // error to tell a template refusal from an unknown outcome, and clears
     // the creation draft once the server confirmed the workspace.
     final succeeded = await runOnboardingAction(context: context, ref: ref,
-      navigation: widget.navigation, action: () async {
+      navigation: widget.navigation, home: '/setup', action: () async {
         final String? id;
         try {
           id = await action();

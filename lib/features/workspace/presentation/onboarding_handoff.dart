@@ -16,7 +16,10 @@ import '../providers/workspace_providers.dart';
 
 Future<bool> runOnboardingAction({required BuildContext context,
     required WidgetRef ref, required Future<String?> Function() action,
-    WizardNavigationController? navigation}) async {
+    WizardNavigationController? navigation,
+    // #2869 — where the new space opens when no task was asked for: the
+    // creator lands on the setup guide, someone joining on Reserve.
+    String home = kDefaultHome}) async {
   var current = true;
   var accepted = false;
   final subscriptions = [
@@ -74,7 +77,7 @@ Future<bool> runOnboardingAction({required BuildContext context,
         if (!context.mounted || !current) return;
         // An explicit destination wins; otherwise enter the existing hub.
         // Popping can race router refreshes and can leave a direct visit here.
-        context.go(explicitTask ? intent.destination! : kDefaultHome);
+        context.go(explicitTask ? intent.destination! : home);
       });
     // A superseded completion must not put failure feedback on the new context.
     return !current || (succeeded && accepted);

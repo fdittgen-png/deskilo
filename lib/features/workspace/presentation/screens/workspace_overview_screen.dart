@@ -25,10 +25,12 @@ import '../../domain/attention.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/kpi_contract.dart';
+import '../../domain/workspace_permission.dart';
 import '../../providers/attention_providers.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/bi_module_section.dart';
+import '../widgets/setup_resume_banner.dart';
 import 'attention_screen.dart';
 
 /// The groups of the key indicators, in their order.
@@ -68,6 +70,10 @@ class WorkspaceOverviewScreen extends ConsumerWidget {
       for (final m in visibleBiModules(features, rights))
         if (biModuleViews.containsKey(m.id)) m,
     ];
+    // #2869 — a configurer whose space is not set up yet sees where to
+    // resume first.
+    final setup = setupResumeBannerFor(ref, workspace?.id,
+        configures: rights.contains(WorkspacePermission.manageConfiguration));
     final title = Theme.of(context).textTheme.titleMedium;
     Widget heading(String text, String key) => Padding(
       padding: const EdgeInsets.only(top: AppSpacing.lg, bottom: AppSpacing.sm),
@@ -79,6 +85,7 @@ class WorkspaceOverviewScreen extends ConsumerWidget {
         key: const ValueKey('workspace-overview'),
         padding: AppSpacing.gutterAll,
         children: [
+          ?setup,
           heading(l10n.overviewNeedsAttention, 'overview-attention'),
           if (attention.isEmpty)
             Text(
