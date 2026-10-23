@@ -33533,6 +33533,12 @@ abstract class AppLocalizations {
   /// **'About your space'**
   String get setupLevelsQuestions;
 
+  /// #2868 setup levels: opens the demo at the screen that shows this process at this level
+  ///
+  /// In en, this message translates to:
+  /// **'See it in the demo'**
+  String get setupLevelsSeeDemo;
+
   /// #2868 setup levels: setupLevelsSwitchOff
   ///
   /// In en, this message translates to:
@@ -33824,13 +33830,13 @@ abstract class AppLocalizations {
   /// #2868 setup levels: setupQuestion
   ///
   /// In en, this message translates to:
-  /// **'{key, select, members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}'**
+  /// **'{key, select, association{The space is run by an association, a cooperative or a club} approve_bookings{Bookings wait for an approval; members do not book directly} members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}'**
   String setupQuestion(String key);
 
   /// #2868 setup levels: setupReason
   ///
   /// In en, this message translates to:
-  /// **'{key, select, door_tablet{a tablet at the door checks people in} keeps_books{you keep accounting books} later{an assistant can come later} members_only{only members see the space} members_owe{members owe the space money} no_money{no money changes hands} no_purchases{the space buys nothing it tracks} no_vat{the space is not registered for VAT} organised{several people decide together} pay_by_transfer{members pay by transfer} pay_online{members pay online} public_page{the space has a public page} several_rooms{there are several rooms or sites} shared_places{members share the places} small_community{a small community} start_simple{start simple} tracks_purchases{you track what the space buys} vat_registered{the space is registered for VAT} issues_invoices{you issue invoices} other{{key}}}'**
+  /// **'{key, select, door_tablet{a tablet at the door checks people in} keeps_books{you keep accounting books} later{an assistant can come later} members_only{only members see the space} members_owe{members owe the space money} no_money{no money changes hands} no_purchases{the space buys nothing it tracks} no_vat{the space is not registered for VAT} organised{several people decide together} pay_by_transfer{members pay by transfer} pay_online{members pay online} public_page{the space has a public page} several_rooms{there are several rooms or sites} shared_places{members share the places} small_community{a small community} start_simple{start simple} tracks_purchases{you track what the space buys} vat_registered{the space is registered for VAT} issues_invoices{you issue invoices} association{an association decides together, with its board} approve_bookings{bookings wait for an approval} other{{key}}}'**
   String setupReason(String key);
 
   /// #2870 setup steps: setupRightsApplied

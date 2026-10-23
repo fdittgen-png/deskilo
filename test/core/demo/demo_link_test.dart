@@ -7,6 +7,8 @@ import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/features/workspace/domain/setup_level_demo.dart';
+import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/setup_steps.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -57,6 +59,25 @@ void main() {
       final link = demoLinkUri(to: step.route);
       final query = Uri.parse(link.fragment).queryParameters;
       expect(DemoLink.parse(query).to, step.route, reason: step.id);
+    }
+  });
+
+  test('#2868 — every level that adds something can be seen in the demo, '
+      'at a screen the link allows; a level that adds nothing has none', () {
+    for (final MapEntry(key: process, value: levels) in setupLevels.entries) {
+      for (final level in levels) {
+        final route = setupLevelDemoRoute(process, level.id);
+        final where = '${process.name}.${level.id}';
+        if (level.features.isEmpty) {
+          expect(route, isNull, reason: where);
+          continue;
+        }
+        expect(route, isNotNull, reason: where);
+        final link = demoLinkUri(to: route);
+        final query = Uri.parse(link.fragment).queryParameters;
+        expect(DemoLink.parse(query).to, route, reason: where);
+        expect(query['space'], 'pezenas', reason: where);
+      }
     }
   });
 
