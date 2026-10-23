@@ -32441,6 +32441,12 @@ abstract class AppLocalizations {
   /// **'Resume'**
   String get setupGuideResume;
 
+  /// #2869 — the bar under a screen opened from the setup guide.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the setup guide'**
+  String get setupGuideReturn;
+
   /// #2869 setup guide: setupGuideTitle
   ///
   /// In en, this message translates to:

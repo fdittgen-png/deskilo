@@ -22130,6 +22130,10 @@
   "@setupGuideResume": {
     "description": "#2869 setup guide: setupGuideResume"
   },
+  "setupGuideReturn": "Back to the setup guide",
+  "@setupGuideReturn": {
+    "description": "#2869 — the bar under a screen opened from the setup guide."
+  },
   "setupGuideTitle": "Setup guide",
   "@setupGuideTitle": {
     "description": "#2869 setup guide: setupGuideTitle"

@@ -22,5 +22,6 @@
   "setupGuideBanner": "{milestone}: {ready} von {required} erledigt · Als Nächstes: {step}",
   "setupGuideMarkDone": "Als erledigt markieren",
   "setupGuideUntil": "Etwa {minutes} Min. bis: {milestone}",
-  "setupGuideTryDemo": "In der Demo ausprobieren"
+  "setupGuideTryDemo": "In der Demo ausprobieren",
+  "setupGuideReturn": "Zurück zum Einrichtungsleitfaden"
 }

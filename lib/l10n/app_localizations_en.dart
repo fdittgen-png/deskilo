@@ -19080,6 +19080,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupGuideResume => 'Resume';
 
   @override
+  String get setupGuideReturn => 'Back to the setup guide';
+
+  @override
   String get setupGuideTitle => 'Setup guide';
 
   @override

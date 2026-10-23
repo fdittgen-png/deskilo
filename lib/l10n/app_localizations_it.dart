@@ -19255,6 +19255,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupGuideResume => 'Riprenda';
 
   @override
+  String get setupGuideReturn => 'Torna alla guida di configurazione';
+
+  @override
   String get setupGuideTitle => 'Guida alla configurazione';
 
   @override

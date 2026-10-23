@@ -24,6 +24,7 @@ import '../../application/setup_step_actions.dart';
 import '../../domain/setup_status.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/setup_return_bar.dart';
 
 class SetupGuideScreen extends ConsumerWidget {
   const SetupGuideScreen({super.key});
@@ -192,7 +193,15 @@ Future<void> _open(
   SetupStepStatus step,
   Future<void> Function() reload,
 ) async {
-  await context.push(step.route);
+  // #2869 — the screen it opens carries the way back to the guide.
+  final pending = ProviderScope.containerOf(context, listen: false)
+      .read(setupReturnPendingProvider.notifier)
+    ..set(open: true);
+  try {
+    await context.push(step.route);
+  } finally {
+    pending.set(open: false);
+  }
   await reload();
 }
 

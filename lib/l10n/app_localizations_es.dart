@@ -19240,6 +19240,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupGuideResume => 'Continuar';
 
   @override
+  String get setupGuideReturn => 'Volver a la guía de configuración';
+
+  @override
   String get setupGuideTitle => 'Guía de configuración';
 
   @override

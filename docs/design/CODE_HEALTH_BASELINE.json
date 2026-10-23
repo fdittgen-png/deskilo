@@ -1,8 +1,8 @@
 {
-  "recordedSha": "9a7e3bdca6fb3c26893bf94382ad54b24a87c0bb",
+  "recordedSha": "514ac4b4ba98a99f4d6181796dba4c398f076606",
   "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1816,"functions":10158,"cyclomatic>=9":1080,"cyclomatic>=25":105,"cognitive>=15":438,"cognitive>=30":96,"length>=150":74,"parameters>=5":490,"parameters>=7":152,"partOfFiles":42},
+  "totals": {"files":1817,"functions":10162,"cyclomatic>=9":1080,"cyclomatic>=25":105,"cognitive>=15":438,"cognitive>=30":96,"length>=150":74,"parameters>=5":490,"parameters>=7":152,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -717,7 +717,7 @@
     }
   },
   "files": [
-    {"p":"lib/app/app.dart","loc":84,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":4,"len":87,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/app/app.dart","loc":88,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":4,"len":91,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/app_initializer.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":2,"cyc":4,"len":40,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/boot.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":3,"len":34,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/boot_splash.dart","loc":64,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":3,"len":43,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -907,7 +907,7 @@
     {"p":"lib/core/demo/demo_entry.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":6,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_finances.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":19,"cyc":18,"len":56,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_fixture.dart","loc":232,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":136,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/demo/demo_link.dart","loc":49,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":5,"len":13,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/demo/demo_link.dart","loc":76,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":2,"cyc":5,"len":13,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_outward_edges.dart","loc":86,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":1,"cyc":5,"len":11,"params":4,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_persona.dart","loc":18,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":5,"len":7,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_scope.dart","loc":286,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":4,"len":201,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
@@ -2382,7 +2382,7 @@
     {"p":"lib/features/workspace/presentation/screens/roles_screen.dart","loc":249,"part":false,"setState":0,"repositoryReads":1,"fn":4,"cog":29,"cyc":21,"len":146,"params":5,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/roles_screen_labels.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":27,"len":54,"params":2,"nest":1,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/scan_join_screen.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":3,"len":37,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/screens/setup_guide_screen.dart","loc":367,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":16,"cyc":12,"len":71,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/screens/setup_guide_screen.dart","loc":386,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":16,"cyc":12,"len":71,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/sites_screen.dart","loc":206,"part":false,"setState":0,"repositoryReads":1,"fn":2,"cog":46,"cyc":26,"len":107,"params":3,"nest":6,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/template_compare_screen.dart","loc":297,"part":false,"setState":6,"repositoryReads":0,"fn":7,"cog":25,"cyc":18,"len":134,"params":4,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/template_detail_screen.dart","loc":131,"part":false,"setState":1,"repositoryReads":0,"fn":4,"cog":13,"cyc":7,"len":85,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2476,6 +2476,7 @@
     {"p":"lib/features/workspace/presentation/widgets/save_template_sheet.dart","loc":259,"part":false,"setState":6,"repositoryReads":0,"fn":6,"cog":43,"cyc":26,"len":161,"params":3,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/settings_editor.dart","loc":242,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":21,"cyc":13,"len":64,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_resume_banner.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":34,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/setup_return_bar.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":3,"len":39,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/space_codes_options_dialog.dart","loc":117,"part":false,"setState":3,"repositoryReads":0,"fn":5,"cog":7,"cyc":6,"len":76,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/symbol_editor.dart","loc":168,"part":false,"setState":3,"repositoryReads":0,"fn":6,"cog":12,"cyc":11,"len":95,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/template_apply_sheet.dart","loc":342,"part":false,"setState":3,"repositoryReads":0,"fn":8,"cog":51,"cyc":19,"len":111,"params":4,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},

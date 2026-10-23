@@ -22,5 +22,6 @@
   "setupGuideBanner": "{milestone}: {ready} su {required} fatti · Prossimo: {step}",
   "setupGuideMarkDone": "Segnare come fatto",
   "setupGuideUntil": "Circa {minutes} min a: {milestone}",
-  "setupGuideTryDemo": "Provarlo nella demo"
+  "setupGuideTryDemo": "Provarlo nella demo",
+  "setupGuideReturn": "Torna alla guida di configurazione"
 }

@@ -13751,6 +13751,7 @@
   "setupGuideOptional": "Más para su espacio",
   "setupGuideProgress": "{ready} de {required} hechos",
   "setupGuideResume": "Continuar",
+  "setupGuideReturn": "Volver a la guía de configuración",
   "setupGuideTitle": "Guía de configuración",
   "setupGuideToDo": "Lo que aún falta",
   "setupGuideTryDemo": "Probarlo en la demo",
