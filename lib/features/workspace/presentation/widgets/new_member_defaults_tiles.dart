@@ -23,6 +23,15 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/new_member_defaults.dart';
 import '../../domain/overage_policy.dart';
 
+/// What happens to a new member once their entitlement is used up, in
+/// the reader's words.
+String newMemberOverageLabel(AppLocalizations l10n, OveragePolicy policy) =>
+    switch (policy) {
+      OveragePolicy.blocked => l10n.newMemberOverageBlocked,
+      OveragePolicy.payg => l10n.newMemberOveragePayg,
+      OveragePolicy.package => l10n.newMemberOveragePackage,
+    };
+
 class NewMemberDefaultsTiles extends StatelessWidget {
   const NewMemberDefaultsTiles({
     super.key,
@@ -46,16 +55,6 @@ class NewMemberDefaultsTiles extends StatelessWidget {
   final bool enabled;
   final ValueChanged<int> onSubscriptionChanged;
   final ValueChanged<OveragePolicy> onOveragePolicyChanged;
-
-  String _policyLabel(AppLocalizations l10n, OveragePolicy policy) =>
-      switch (policy) {
-        OveragePolicy.blocked =>
-          l10n.newMemberOverageBlocked,
-        OveragePolicy.payg =>
-          l10n.newMemberOveragePayg,
-        OveragePolicy.package =>
-          l10n.newMemberOveragePackage,
-      };
 
   /// The section's heading, shown whatever state the read is in — the
   /// rows below it are what appears or does not.
@@ -149,7 +148,7 @@ class NewMemberDefaultsTiles extends StatelessWidget {
                   key: ValueKey('new-member-overage-${policy.name}'),
                   dense: true,
                   value: policy,
-                  title: Text(_policyLabel(l10n, policy)),
+                  title: Text(newMemberOverageLabel(l10n, policy)),
                 ),
             ],
           ),

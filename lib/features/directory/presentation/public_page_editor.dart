@@ -23,16 +23,7 @@ class PublicPageEditor extends ConsumerStatefulWidget {
 }
 
 class _EditorState extends ConsumerState<PublicPageEditor> {
-  static const _fields = [
-    'description',
-    'address',
-    'email',
-    'phone',
-    'website',
-    'image_url',
-    'plan_url',
-    'plans',
-  ];
+  static const _fields = publicPageFields;
   final _controllers = {
     for (final field in _fields) field: TextEditingController(),
   };

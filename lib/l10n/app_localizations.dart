@@ -33047,6 +33047,42 @@ abstract class AppLocalizations {
   /// **'The QR code could not be shared. Try again.'**
   String get setupInviteShareFailed;
 
+  /// #2871 setup run steps: setupKioskCurrent
+  ///
+  /// In en, this message translates to:
+  /// **'{name} runs the kiosk.'**
+  String setupKioskCurrent(String name);
+
+  /// #2871 setup run steps: setupKioskMake
+  ///
+  /// In en, this message translates to:
+  /// **'Make it the kiosk'**
+  String get setupKioskMake;
+
+  /// #2871 setup run steps: setupKioskNoCandidate
+  ///
+  /// In en, this message translates to:
+  /// **'Invite the tablet’s account first: it joins like a member, then becomes the kiosk here.'**
+  String get setupKioskNoCandidate;
+
+  /// #2871 setup run steps: setupKioskNone
+  ///
+  /// In en, this message translates to:
+  /// **'No kiosk account yet.'**
+  String get setupKioskNone;
+
+  /// #2871 setup run steps: setupKioskPick
+  ///
+  /// In en, this message translates to:
+  /// **'Account for the tablet'**
+  String get setupKioskPick;
+
+  /// #2871 setup run steps: setupKioskSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The kiosk could not be set up. Try again.'**
+  String get setupKioskSaveFailed;
+
   /// #2876 setup launch: setupLaunchAnswers
   ///
   /// In en, this message translates to:
@@ -33269,11 +33305,59 @@ abstract class AppLocalizations {
   /// **'What your space does'**
   String get setupLevelsTitle;
 
+  /// #2871 setup run steps: setupLookMore
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern, room colours and logo'**
+  String get setupLookMore;
+
   /// #2869 setup guide: setupMilestoneName
   ///
   /// In en, this message translates to:
   /// **'{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}'**
   String setupMilestoneName(String key);
+
+  /// #2871 setup run steps: setupNewMembersEditQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'Write the questions'**
+  String get setupNewMembersEditQuestions;
+
+  /// #2871 setup run steps: setupNewMembersNoQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'No question: people join with their name and e-mail address.'**
+  String get setupNewMembersNoQuestions;
+
+  /// #2871 setup run steps: setupNewMembersPreviewJoin
+  ///
+  /// In en, this message translates to:
+  /// **'When they ask to join, they answer:'**
+  String get setupNewMembersPreviewJoin;
+
+  /// #2871 setup run steps: setupNewMembersPreviewNoQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'Someone asking to join gives their name and e-mail address, nothing more.'**
+  String get setupNewMembersPreviewNoQuestions;
+
+  /// #2871 setup run steps: setupNewMembersPreviewStart
+  ///
+  /// In en, this message translates to:
+  /// **'A new member starts on a {pct} % subscription ({policy}).'**
+  String setupNewMembersPreviewStart(int pct, String policy);
+
+  /// #2871 setup run steps: setupNewMembersQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'Questions asked when someone joins'**
+  String get setupNewMembersQuestions;
+
+  /// #2871 setup run steps: setupNewMembersSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The new-member defaults could not be saved. Try again.'**
+  String get setupNewMembersSaveFailed;
 
   /// #2871 setup run steps: setupOnlineOpenConfig
   ///
@@ -33443,6 +33527,24 @@ abstract class AppLocalizations {
   /// **'{key, select, bookings{Bookings} community{Community} money{Money} payments{Payments} tax{Tax} purchases{Purchases} presentation{Presentation} operations{Operations} assistant{Assistant} other{{key}}}'**
   String setupProcessName(String key);
 
+  /// #2871 setup run steps: setupPublicPageMore
+  ///
+  /// In en, this message translates to:
+  /// **'Address, image and plans in the page editor'**
+  String get setupPublicPageMore;
+
+  /// #2871 setup run steps: setupPublicPageNotPublished
+  ///
+  /// In en, this message translates to:
+  /// **'Not published: nobody outside the space sees this page.'**
+  String get setupPublicPageNotPublished;
+
+  /// #2871 setup run steps: setupPurchaseSidePreview
+  ///
+  /// In en, this message translates to:
+  /// **'Members do not see this: it stays with the people who manage the money.'**
+  String get setupPurchaseSidePreview;
+
   /// #2868 setup levels: setupQuestion
   ///
   /// In en, this message translates to:
@@ -33508,6 +33610,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What a member can do'**
   String get setupRightsPreviewTitle;
+
+  /// #2871 setup run steps: setupServicesAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add this service'**
+  String get setupServicesAdd;
+
+  /// #2871 setup run steps: setupServicesAdded
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added.'**
+  String setupServicesAdded(String name);
+
+  /// #2871 setup run steps: setupServicesInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Give the service a name and a price.'**
+  String get setupServicesInvalid;
+
+  /// #2871 setup run steps: setupServicesMore
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate, place of supply and stock in Services'**
+  String get setupServicesMore;
+
+  /// #2871 setup run steps: setupServicesPreviewEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No service yet: members have nothing to add to their bill.'**
+  String get setupServicesPreviewEmpty;
+
+  /// #2871 setup run steps: setupServicesPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'Members pick from this list when they add a consumption to their bill.'**
+  String get setupServicesPreviewNote;
+
+  /// #2871 setup run steps: setupServicesSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The service could not be added. Try again.'**
+  String get setupServicesSaveFailed;
 
   /// #2869 setup guide: setupStateName
   ///
