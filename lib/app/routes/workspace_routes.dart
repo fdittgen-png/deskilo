@@ -28,6 +28,7 @@ import '../../features/workspace/presentation/screens/roles_screen.dart';
 import '../../features/workspace/presentation/screens/scan_join_screen.dart';
 import '../../features/workspace/presentation/screens/setup_guide_screen.dart';
 import '../../features/workspace/presentation/screens/setup_levels_screen.dart';
+import '../../features/workspace/presentation/screens/setup_step_screen.dart';
 import '../../features/workspace/presentation/screens/sites_screen.dart';
 import '../../features/workspace/presentation/screens/what_you_can_do_screen.dart';
 import '../../features/workspace/presentation/screens/wording_screen.dart';
@@ -307,6 +308,19 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const SetupLevelsScreen(),
+    ),
+    // #2870 — one step of the guide: its form beside what members will see.
+    GoRoute(
+      path: '/setup/step/:id',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.setupGuide],
+          permission: WorkspacePermission.manageConfiguration,
+          to: '/workspace-settings',
+        ),
+      ),
+      builder: (context, state) =>
+          SetupStepScreen(stepId: state.pathParameters['id'] ?? ''),
     ),
     // #2583 — the overview: what needs the person, then the figures.
     GoRoute(

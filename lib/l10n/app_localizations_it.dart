@@ -19376,6 +19376,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get setupInvitePreviewNote =>
+      'Ogni invito che invia porta un proprio codice monouso al posto dell’ID dello spazio.';
+
+  @override
+  String get setupInvitePreviewTitle =>
+      'L’invito, come lo ricevono i Suoi membri';
+
+  @override
+  String get setupInviteShareFailed =>
+      'Non è stato possibile condividere il codice QR. Riprovi.';
+
+  @override
   String setupLevelName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookings_simple': 'Posti condivisi',
@@ -19547,6 +19559,38 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get setupRightsApplied => 'I membri hanno già questi diritti.';
+
+  @override
+  String get setupRightsApplyFailed =>
+      'Non è stato possibile modificare i diritti. Riprovi.';
+
+  @override
+  String get setupRightsNeedsManageRoles =>
+      'Solo chi gestisce i ruoli può cambiare ciò che i membri possono fare.';
+
+  @override
+  String get setupRightsOpenRoles => 'Perfezioni in Ruoli';
+
+  @override
+  String get setupRightsPresetBody =>
+      'I membri ricevono esattamente questi diritti, e nulla che gestisca lo spazio:';
+
+  @override
+  String get setupRightsPresetTitle => 'I membri possono prenotare';
+
+  @override
+  String get setupRightsPreviewAdmin =>
+      'I membri possono anche gestire parti dello spazio. Lo verifichi in Ruoli.';
+
+  @override
+  String get setupRightsPreviewNone =>
+      'Ancora nulla: i membri non possono prenotare.';
+
+  @override
+  String get setupRightsPreviewTitle => 'Cosa può fare un membro';
+
+  @override
   String setupStateName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'ready': 'Fatto',
@@ -19560,6 +19604,10 @@ class AppLocalizationsIt extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupStepElsewhere =>
+      'Questo passaggio si svolge in una schermata dedicata.';
 
   @override
   String setupStepHint(String key) {
@@ -19599,6 +19647,12 @@ class AppLocalizationsIt extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupStepOpenScreen => 'Apra';
+
+  @override
+  String get setupStepPreviewTitle => 'Cosa vedranno i Suoi membri';
 
   @override
   String setupStepTitle(String key) {
