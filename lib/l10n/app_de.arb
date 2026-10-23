@@ -13809,6 +13809,99 @@
   "setupInvitePreviewNote": "Jede Einladung, die Sie senden, trägt statt der ID des Bereichs einen eigenen Einmalcode.",
   "setupInvitePreviewTitle": "Die Einladung, wie Ihre Mitglieder sie erhalten",
   "setupInviteShareFailed": "Der QR-Code konnte nicht geteilt werden. Bitte versuchen Sie es erneut.",
+  "setupLaunchAnswers": "Ihre Antworten",
+  "@setupLaunchAnswers": {
+    "description": "#2876 setup launch: setupLaunchAnswers"
+  },
+  "setupLaunchBlockers": "Noch nicht live möglich. Diese Schritte fehlen:",
+  "@setupLaunchBlockers": {
+    "description": "#2876 setup launch: setupLaunchBlockers"
+  },
+  "setupLaunchCannot": "Live gehen ist möglich, sobald jeder Meilenstein erreicht ist.",
+  "@setupLaunchCannot": {
+    "description": "#2876 setup launch: setupLaunchCannot"
+  },
+  "setupLaunchChange": "Ändern",
+  "@setupLaunchChange": {
+    "description": "#2876 setup launch: setupLaunchChange"
+  },
+  "setupLaunchCopied": "Kopiert",
+  "@setupLaunchCopied": {
+    "description": "#2876 setup launch: setupLaunchCopied"
+  },
+  "setupLaunchCopyOperator": "Für Ihren Betreiber kopieren",
+  "@setupLaunchCopyOperator": {
+    "description": "#2876 setup launch: setupLaunchCopyOperator"
+  },
+  "setupLaunchFix": "Beheben",
+  "@setupLaunchFix": {
+    "description": "#2876 setup launch: setupLaunchFix"
+  },
+  "setupLaunchGoLive": "Live gehen",
+  "@setupLaunchGoLive": {
+    "description": "#2876 setup launch: setupLaunchGoLive"
+  },
+  "setupLaunchGoLiveBody": "Ihre Konfiguration wird in den echten Space dieses Paares kopiert, wo Mitglieder sie sofort sehen. Buchungen, Rechnungen und Zahlungen dort sind echt und lassen sich nicht zurücknehmen. Im nächsten Schritt wählen Sie, was kopiert wird.",
+  "@setupLaunchGoLiveBody": {
+    "description": "#2876 setup launch: setupLaunchGoLiveBody"
+  },
+  "setupLaunchGoLiveConfirm": "Weiter zur Bereitstellung",
+  "@setupLaunchGoLiveConfirm": {
+    "description": "#2876 setup launch: setupLaunchGoLiveConfirm"
+  },
+  "setupLaunchGoLiveTitle": "Live gehen?",
+  "@setupLaunchGoLiveTitle": {
+    "description": "#2876 setup launch: setupLaunchGoLiveTitle"
+  },
+  "setupLaunchGroup": "{key, select, open{Öffnen} run{Betreiben} grow{Ausbauen} launch{Starten} other{{key}}}",
+  "@setupLaunchGroup": {
+    "description": "#2876 setup launch: setupLaunchGroup",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLaunchIsLive": "Dies ist der echte Space: er ist live.",
+  "@setupLaunchIsLive": {
+    "description": "#2876 setup launch: setupLaunchIsLive"
+  },
+  "setupLaunchLink": "Antworten prüfen und live gehen",
+  "@setupLaunchLink": {
+    "description": "#2876 setup launch: setupLaunchLink"
+  },
+  "setupLaunchMilestones": "Meilensteine",
+  "@setupLaunchMilestones": {
+    "description": "#2876 setup launch: setupLaunchMilestones"
+  },
+  "setupLaunchOperator": "Nur Ihr Betreiber kann das tun:",
+  "@setupLaunchOperator": {
+    "description": "#2876 setup launch: setupLaunchOperator"
+  },
+  "setupLaunchPublicOff": "Noch ist nichts von Ihrem Space öffentlich.",
+  "@setupLaunchPublicOff": {
+    "description": "#2876 setup launch: setupLaunchPublicOff"
+  },
+  "setupLaunchPublicOn": "Ihre öffentliche Seite ist für alle sichtbar.",
+  "@setupLaunchPublicOn": {
+    "description": "#2876 setup launch: setupLaunchPublicOn"
+  },
+  "setupLaunchReached": "Erreicht",
+  "@setupLaunchReached": {
+    "description": "#2876 setup launch: setupLaunchReached"
+  },
+  "setupLaunchReport": "Bereitschaftsbericht kopieren",
+  "@setupLaunchReport": {
+    "description": "#2876 setup launch: setupLaunchReport"
+  },
+  "setupLaunchReportTitle": "Bereitschaftsbericht",
+  "@setupLaunchReportTitle": {
+    "description": "#2876 setup launch: setupLaunchReportTitle"
+  },
+  "setupLaunchTitle": "Prüfen und live gehen",
+  "@setupLaunchTitle": {
+    "description": "#2876 setup launch: setupLaunchTitle"
+  },
   "setupLevelName": "{key, select, bookings_simple{Geteilte Plätze} bookings_resources{Räume und Ressourcen} bookings_measured{Gemessene Nutzung} community_basic{Einfach} community_organised{Organisiert} money_none{Kein Geld} money_statements{Kontoauszüge} money_invoices{Rechnungen} payments_off{Per Überweisung} payments_online{Online} tax_none{Keine USt.} tax_vat{USt.} tax_books{Buchhaltung} purchases_none{Keiner} purchases_expenses{Ausgaben} purchases_full{Voller Einkauf} presentation_basic{Einfach} presentation_branded{Ihre Farben} presentation_public{Öffentliche Seite} operations_basic{Einfach} operations_insight{Kennzahlen} operations_advanced{Fortgeschritten} assistant_off{Aus} assistant_on{An} other{{key}}}",
   "setupLevelsApplied": "Ihr Raum tut jetzt, was Sie gewählt haben.",
   "setupLevelsApply": "Anwenden",

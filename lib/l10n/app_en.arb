@@ -22442,6 +22442,99 @@
   "@setupInviteShareFailed": {
     "description": "#2870 setup steps: setupInviteShareFailed"
   },
+  "setupLaunchAnswers": "Your answers",
+  "@setupLaunchAnswers": {
+    "description": "#2876 setup launch: setupLaunchAnswers"
+  },
+  "setupLaunchBlockers": "Cannot go live yet. These steps stop it:",
+  "@setupLaunchBlockers": {
+    "description": "#2876 setup launch: setupLaunchBlockers"
+  },
+  "setupLaunchCannot": "Go live becomes possible once every milestone is reached.",
+  "@setupLaunchCannot": {
+    "description": "#2876 setup launch: setupLaunchCannot"
+  },
+  "setupLaunchChange": "Change",
+  "@setupLaunchChange": {
+    "description": "#2876 setup launch: setupLaunchChange"
+  },
+  "setupLaunchCopied": "Copied",
+  "@setupLaunchCopied": {
+    "description": "#2876 setup launch: setupLaunchCopied"
+  },
+  "setupLaunchCopyOperator": "Copy for your operator",
+  "@setupLaunchCopyOperator": {
+    "description": "#2876 setup launch: setupLaunchCopyOperator"
+  },
+  "setupLaunchFix": "Fix it",
+  "@setupLaunchFix": {
+    "description": "#2876 setup launch: setupLaunchFix"
+  },
+  "setupLaunchGoLive": "Go live",
+  "@setupLaunchGoLive": {
+    "description": "#2876 setup launch: setupLaunchGoLive"
+  },
+  "setupLaunchGoLiveBody": "Your configuration is copied to the real space of this pair, where members see it at once. Bookings, invoices and payments made there are real and cannot be taken back. On the next screen you choose what to copy.",
+  "@setupLaunchGoLiveBody": {
+    "description": "#2876 setup launch: setupLaunchGoLiveBody"
+  },
+  "setupLaunchGoLiveConfirm": "Continue to the deployment",
+  "@setupLaunchGoLiveConfirm": {
+    "description": "#2876 setup launch: setupLaunchGoLiveConfirm"
+  },
+  "setupLaunchGoLiveTitle": "Go live?",
+  "@setupLaunchGoLiveTitle": {
+    "description": "#2876 setup launch: setupLaunchGoLiveTitle"
+  },
+  "setupLaunchGroup": "{key, select, open{Open} run{Run} grow{Grow} launch{Launch} other{{key}}}",
+  "@setupLaunchGroup": {
+    "description": "#2876 setup launch: setupLaunchGroup",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLaunchIsLive": "This is the real space: it is live.",
+  "@setupLaunchIsLive": {
+    "description": "#2876 setup launch: setupLaunchIsLive"
+  },
+  "setupLaunchLink": "Check your answers and go live",
+  "@setupLaunchLink": {
+    "description": "#2876 setup launch: setupLaunchLink"
+  },
+  "setupLaunchMilestones": "Milestones",
+  "@setupLaunchMilestones": {
+    "description": "#2876 setup launch: setupLaunchMilestones"
+  },
+  "setupLaunchOperator": "Only your operator can do these:",
+  "@setupLaunchOperator": {
+    "description": "#2876 setup launch: setupLaunchOperator"
+  },
+  "setupLaunchPublicOff": "Nothing about your space is public yet.",
+  "@setupLaunchPublicOff": {
+    "description": "#2876 setup launch: setupLaunchPublicOff"
+  },
+  "setupLaunchPublicOn": "Your public page is visible to everyone.",
+  "@setupLaunchPublicOn": {
+    "description": "#2876 setup launch: setupLaunchPublicOn"
+  },
+  "setupLaunchReached": "Reached",
+  "@setupLaunchReached": {
+    "description": "#2876 setup launch: setupLaunchReached"
+  },
+  "setupLaunchReport": "Copy the readiness report",
+  "@setupLaunchReport": {
+    "description": "#2876 setup launch: setupLaunchReport"
+  },
+  "setupLaunchReportTitle": "Readiness report",
+  "@setupLaunchReportTitle": {
+    "description": "#2876 setup launch: setupLaunchReportTitle"
+  },
+  "setupLaunchTitle": "Check and go live",
+  "@setupLaunchTitle": {
+    "description": "#2876 setup launch: setupLaunchTitle"
+  },
   "setupLevelName": "{key, select, bookings_simple{Shared places} bookings_resources{Rooms and resources} bookings_measured{Measured use} community_basic{Basic} community_organised{Organised} money_none{No money} money_statements{Statements} money_invoices{Invoices} payments_off{By transfer} payments_online{Online} tax_none{No VAT} tax_vat{VAT} tax_books{Books} purchases_none{None} purchases_expenses{Expenses} purchases_full{Full purchasing} presentation_basic{Basic} presentation_branded{Your colours} presentation_public{Public page} operations_basic{Basic} operations_insight{Figures} operations_advanced{Advanced} assistant_off{Off} assistant_on{On} other{{key}}}",
   "@setupLevelName": {
     "description": "#2868 setup levels: setupLevelName",
