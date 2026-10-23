@@ -377,6 +377,11 @@ const List<RouteCoverage> routeCoverage = [
     owner: '#1884',
   ),
   RouteCoverage(
+    '/setup/step/:id',
+    CoverageStatus.planned,
+    owner: '#1884',
+  ),
+  RouteCoverage(
     '/settings/number-sequences',
     CoverageStatus.planned,
     owner: '#1884',
