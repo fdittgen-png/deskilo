@@ -8,6 +8,17 @@
 
 import '../../../core/data/json_reader.dart';
 
+/// A time as the guide says it: a range, never a promise.
+typedef SetupEstimate = ({int low, int high});
+
+/// #2869 — a catalogue estimate as a range: from the estimate to twice
+/// it. The refinement asks for ranges from observed sessions per route
+/// through setup; those timings are not collected yet, so the catalogue's
+/// one figure (`setup_steps.dart`) is widened by this fixed rule until
+/// they are.
+SetupEstimate _estimateRange(int minutes) =>
+    (low: minutes, high: minutes * 2);
+
 /// A step's state, as the server words it.
 enum SetupStepState {
   ready,
@@ -56,6 +67,9 @@ class SetupStepStatus {
   /// A step the server cannot verify: the owner marks it done.
   final bool manual;
   final int estimateMinutes;
+
+  /// [estimateMinutes] as the guide says it.
+  SetupEstimate get estimate => _estimateRange(estimateMinutes);
 
   bool get open =>
       state == SetupStepState.needsConfiguration ||
@@ -186,10 +200,20 @@ class SetupStatus {
       if (!s.required && s.state == SetupStepState.needsConfiguration) s,
   ];
 
-  /// #2869 — what the next milestone still needs, in minutes: the
-  /// estimates of its open steps.
-  int get minutesToNextMilestone =>
-      toDo.fold(0, (sum, s) => sum + s.estimateMinutes);
+  /// #2869 — what the next milestone still needs, as a range: the
+  /// estimates of its open steps, summed, widened as one.
+  SetupEstimate get toNextMilestone =>
+      _estimateRange(toDo.fold(0, (sum, s) => sum + s.estimateMinutes));
+
+  /// #2869 — steps outside the levels the owner chose. The server marks a
+  /// step `not_applicable` only when its feature is off (0539), so these
+  /// are not in the plan: no milestone counts them and no group above
+  /// lists them. The guide offers them, folded, under "Add more to your
+  /// space", and every counter of the plan stays what it was.
+  List<SetupStepStatus> get addable => [
+    for (final s in steps)
+      if (s.state == SetupStepState.notApplicable) s,
+  ];
 
   List<SetupStepStatus> get done => [
     for (final s in steps)

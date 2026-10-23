@@ -33084,6 +33084,18 @@ abstract class AppLocalizations {
   /// **'Your country\'s usual rates'**
   String get setupGrowVatUsualTitle;
 
+  /// #2869 setup guide: opens the levels screen to add the step's part of the space
+  ///
+  /// In en, this message translates to:
+  /// **'Add it'**
+  String get setupGuideAddIt;
+
+  /// #2869 setup guide: the folded group of steps whose feature is outside the levels the owner chose
+  ///
+  /// In en, this message translates to:
+  /// **'Add more to your space'**
+  String get setupGuideAddMore;
+
   /// #2869 setup guide: setupGuideAllDone
   ///
   /// In en, this message translates to:
@@ -33113,11 +33125,11 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get setupGuideDone;
 
-  /// #2869 setup guide: setupGuideEstimate
+  /// #2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise
   ///
   /// In en, this message translates to:
-  /// **'about {minutes} min'**
-  String setupGuideEstimate(int minutes);
+  /// **'about {low}–{high} min'**
+  String setupGuideEstimate(int low, int high);
 
   /// #2869 setup guide: setupGuideLater
   ///
@@ -33142,6 +33154,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next'**
   String get setupGuideNext;
+
+  /// #2869 setup guide: the state of a step outside the chosen levels
+  ///
+  /// In en, this message translates to:
+  /// **'Not in your setup'**
+  String get setupGuideNotInSetup;
 
   /// #2869 setup guide: setupGuideOptional
   ///
@@ -33191,11 +33209,11 @@ abstract class AppLocalizations {
   /// **'The setup status could not be read. Try again in a moment.'**
   String get setupGuideUnavailable;
 
-  /// #2869 — the time the next milestone still needs, summed from its open steps' estimates.
+  /// #2869 — the time the next milestone still needs, as a range summed from its open steps' estimates.
   ///
   /// In en, this message translates to:
-  /// **'About {minutes} min until: {milestone}'**
-  String setupGuideUntil(int minutes, String milestone);
+  /// **'About {low}–{high} min until: {milestone}'**
+  String setupGuideUntil(int low, int high, String milestone);
 
   /// #2869 setup guide: setupGuideWaiting
   ///

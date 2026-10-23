@@ -89,6 +89,28 @@ void main() {
     expect(_ids(status.done), ['basics']);
   });
 
+  test('a step whose feature is off is outside the plan: no group lists '
+      'it, it waits under Add more', () {
+    expect(_ids(status.addable), ['vat']);
+    for (final group in [
+      status.toDo,
+      status.waiting,
+      status.later,
+      status.optional,
+      status.deferred,
+      status.done,
+    ]) {
+      expect(_ids(group), isNot(contains('vat')));
+    }
+  });
+
+  test('a time is a range: the estimate to twice it, summed for the '
+      'next milestone', () {
+    expect(status.steps.first.estimate, (low: 3, high: 6));
+    // places and member_rights, 3 min each.
+    expect(status.toNextMilestone, (low: 6, high: 12));
+  });
+
   test('a route that is not in the app is never followed', () {
     final s = SetupStatus.fromJson({
       'steps': [

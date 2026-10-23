@@ -6,7 +6,9 @@
 // (the payment clauses, the e-invoicing address, the tax point...) is
 // written back exactly as stored, and the full screen is one tap away.
 // Beside the form, the top of the sample invoice as it prints, redrawn as
-// the owner types; above it, what to ask an accountant first.
+// the owner types; above it, what to ask an accountant first. What the
+// owner typed and has not saved is kept as the step's draft on the server
+// (#2869), through the frame the guide hands in.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +19,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../domain/invoice_legal.dart';
 import '../../domain/invoice_report.dart';
@@ -32,12 +35,16 @@ class SetupLegalIdentityStep extends ConsumerStatefulWidget {
     super.key,
     required this.workspaceId,
     required this.onSaved,
+    required this.draft,
   });
 
   final String workspaceId;
 
   /// Reads the workspace row again: the identity lives on it.
   final VoidCallback onSaved;
+
+  /// Keeps what the owner typed and has not saved as the step's draft.
+  final SetupDraftFrameBuilder draft;
 
   @override
   ConsumerState<SetupLegalIdentityStep> createState() =>
@@ -49,7 +56,9 @@ class _SetupLegalIdentityStepState
   /// The identity as stored: what an invoice prints today.
   late final _stored = sampleInvoiceFactsOf(ref).workspace;
   late final _regime = ValueNotifier(vatRegimeFromWire(_stored?.vatRegime));
-  late final _fields = FormControllers({
+
+  /// The fields as stored, by key.
+  late final _initial = {
     'vatId': _stored?.vatId ?? '',
     'legalId': _stored?.legalId ?? '',
     'legalForm': _legal.legalForm,
@@ -61,13 +70,36 @@ class _SetupLegalIdentityStepState
         : _stored?.address ?? '',
     'postalCode': _stored?.postalCode ?? '',
     'city': _stored?.city ?? '',
-  });
+  };
+  late final _fields = FormControllers(_initial);
   late final _changes = Listenable.merge([
     _regime,
     for (final key in const ['vatId', 'legalId', 'legalForm', 'registration'])
       _fields[key],
   ]);
   final _busy = ValueNotifier<bool>(false);
+
+  late final _kept = SetupDraftForm(
+    edits: Listenable.merge([
+      _regime,
+      for (final key in _initial.keys) _fields[key],
+    ]),
+    answers: () => {
+      'vat_regime': vatRegimeWire(_regime.value),
+      for (final key in _initial.keys) key: _fields[key].text,
+    },
+    fill: (answers) {
+      _regime.value = answers == null
+          ? vatRegimeFromWire(_stored?.vatRegime)
+          : vatRegimeFromWire(answers['vat_regime'] as String?);
+      for (final MapEntry(:key, :value) in _initial.entries) {
+        _fields[key].text = switch (answers?[key]) {
+          final String typed => typed,
+          _ => value,
+        };
+      }
+    },
+  );
 
   InvoiceLegal get _legal =>
       InvoiceLegal.fromJson(_stored?.invoiceLegal ?? const {});
@@ -120,7 +152,9 @@ class _SetupLegalIdentityStepState
     widget.onSaved();
     if (!mounted) return;
     _busy.value = false;
-    if (ok) AppSnack.success(context, l10n.legalIdentitySaved);
+    if (!ok) return;
+    AppSnack.success(context, l10n.legalIdentitySaved);
+    await _kept.applied();
   }
 
   /// The header band of the sample invoice: the seller's block as it prints.
@@ -139,108 +173,111 @@ class _SetupLegalIdentityStepState
     // The save writes the template first: it waits until it is read.
     final templateRead = ref.watch(invoicePdfTemplateProvider).hasValue;
     return SetupStepLayout(
-      form: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(l10n.setupStepHint('legal_identity')),
-          const FormGap.large(),
-          const _AskYourAccountant(),
-          const FormGap.large(),
-          ValueListenableBuilder<VatRegime>(
-            valueListenable: _regime,
-            builder: (context, regime, _) => Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                DropdownButtonFormField<VatRegime>(
-                  key: const ValueKey('setup-legal-regime'),
-                  isExpanded: true,
-                  initialValue: regime,
-                  items: [
-                    for (final (value, label) in [
-                      (
-                        VatRegime.notSubject,
-                        l10n.legalIdentityRegimeNotSubject,
-                      ),
-                      (VatRegime.exempt, l10n.legalIdentityRegimeExempt),
-                      (
-                        VatRegime.vatRegistered,
-                        l10n.legalIdentityRegimeVatRegistered,
-                      ),
-                    ])
-                      DropdownMenuItem(value: value, child: Text(label)),
-                  ],
-                  onChanged: (value) => _regime.value = value ?? regime,
-                  decoration: InputDecoration(
-                    labelText: l10n.legalIdentityRegime,
-                    helperMaxLines: 3,
-                    helperText: l10n.legalIdentityRegimeHint,
+      form: widget.draft(
+        form: _kept,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l10n.setupStepHint('legal_identity')),
+            const FormGap.large(),
+            const _AskYourAccountant(),
+            const FormGap.large(),
+            ValueListenableBuilder<VatRegime>(
+              valueListenable: _regime,
+              builder: (context, regime, _) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  DropdownButtonFormField<VatRegime>(
+                    key: const ValueKey('setup-legal-regime'),
+                    isExpanded: true,
+                    initialValue: regime,
+                    items: [
+                      for (final (value, label) in [
+                        (
+                          VatRegime.notSubject,
+                          l10n.legalIdentityRegimeNotSubject,
+                        ),
+                        (VatRegime.exempt, l10n.legalIdentityRegimeExempt),
+                        (
+                          VatRegime.vatRegistered,
+                          l10n.legalIdentityRegimeVatRegistered,
+                        ),
+                      ])
+                        DropdownMenuItem(value: value, child: Text(label)),
+                    ],
+                    onChanged: (value) => _regime.value = value ?? regime,
+                    decoration: InputDecoration(
+                      labelText: l10n.legalIdentityRegime,
+                      helperMaxLines: 3,
+                      helperText: l10n.legalIdentityRegimeHint,
+                    ),
                   ),
-                ),
-                const FormGap(),
-                // Only the number the regime needs, as on the full screen.
-                if (regime.requiresVatId)
-                  AppTextField(
-                    key: const ValueKey('setup-legal-vat-id'),
-                    controller: _fields['vatId'],
-                    label: l10n.legalIdentityVatId,
-                  )
-                else
-                  AppTextField(
-                    key: const ValueKey('setup-legal-legal-id'),
-                    controller: _fields['legalId'],
-                    label: l10n.legalIdentityLegalId,
-                  ),
-              ],
-            ),
-          ),
-          const FormGap(),
-          AppTextField(
-            key: const ValueKey('setup-legal-form'),
-            controller: _fields['legalForm'],
-            label: l10n.invoiceLegalFormField,
-            helper: l10n.invoiceLegalFormHint,
-          ),
-          const FormGap(),
-          AppTextField(
-            key: const ValueKey('setup-legal-registration'),
-            controller: _fields['registration'],
-            label: l10n.invoiceLegalRegistrationField,
-            helper: l10n.invoiceLegalRegistrationHint,
-          ),
-          const FormGap(),
-          LegalAddressFields(
-            street: _fields['street'],
-            postalCode: _fields['postalCode'],
-            city: _fields['city'],
-          ),
-          const FormGap(),
-          InlineBanner(
-            key: const ValueKey('setup-legal-lock'),
-            icon: Icons.lock_outline,
-            severity: InlineBannerSeverity.info,
-            text: l10n.setupGrowLegalLock,
-          ),
-          const FormGap(),
-          ValueListenableBuilder<bool>(
-            valueListenable: _busy,
-            builder: (context, busy, _) => Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: FilledButton(
-                key: const ValueKey('setup-legal-save'),
-                onPressed: busy || !templateRead ? null : _save,
-                child: Text(l10n.commonSave),
+                  const FormGap(),
+                  // Only the number the regime needs, as on the full screen.
+                  if (regime.requiresVatId)
+                    AppTextField(
+                      key: const ValueKey('setup-legal-vat-id'),
+                      controller: _fields['vatId'],
+                      label: l10n.legalIdentityVatId,
+                    )
+                  else
+                    AppTextField(
+                      key: const ValueKey('setup-legal-legal-id'),
+                      controller: _fields['legalId'],
+                      label: l10n.legalIdentityLegalId,
+                    ),
+                ],
               ),
             ),
-          ),
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: TextButton(
-              key: const ValueKey('setup-legal-open-full'),
-              onPressed: () => context.push('/legal-identity'),
-              child: Text(l10n.setupGrowLegalOpenFull),
+            const FormGap(),
+            AppTextField(
+              key: const ValueKey('setup-legal-form'),
+              controller: _fields['legalForm'],
+              label: l10n.invoiceLegalFormField,
+              helper: l10n.invoiceLegalFormHint,
             ),
-          ),
-        ],
+            const FormGap(),
+            AppTextField(
+              key: const ValueKey('setup-legal-registration'),
+              controller: _fields['registration'],
+              label: l10n.invoiceLegalRegistrationField,
+              helper: l10n.invoiceLegalRegistrationHint,
+            ),
+            const FormGap(),
+            LegalAddressFields(
+              street: _fields['street'],
+              postalCode: _fields['postalCode'],
+              city: _fields['city'],
+            ),
+            const FormGap(),
+            InlineBanner(
+              key: const ValueKey('setup-legal-lock'),
+              icon: Icons.lock_outline,
+              severity: InlineBannerSeverity.info,
+              text: l10n.setupGrowLegalLock,
+            ),
+            const FormGap(),
+            ValueListenableBuilder<bool>(
+              valueListenable: _busy,
+              builder: (context, busy, _) => Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: FilledButton(
+                  key: const ValueKey('setup-legal-save'),
+                  onPressed: busy || !templateRead ? null : _save,
+                  child: Text(l10n.commonSave),
+                ),
+              ),
+            ),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton(
+                key: const ValueKey('setup-legal-open-full'),
+                onPressed: () => context.push('/legal-identity'),
+                child: Text(l10n.setupGrowLegalOpenFull),
+              ),
+            ),
+          ],
+        ),
       ),
       preview: ListenableBuilder(
         listenable: _changes,

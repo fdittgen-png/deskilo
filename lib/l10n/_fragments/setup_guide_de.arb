@@ -17,11 +17,14 @@
   "setupGuideUnavailable": "Der Einrichtungsstand konnte nicht gelesen werden. Bitte gleich erneut versuchen.",
   "setupGuideResume": "Fortsetzen",
   "setupGuideProgress": "{ready} von {required} erledigt",
-  "setupGuideEstimate": "etwa {minutes} Min.",
+  "setupGuideEstimate": "etwa {low}–{high} Min.",
   "setupGuideWaitsFor": "Wartet auf: {steps}",
   "setupGuideBanner": "{milestone}: {ready} von {required} erledigt · Als Nächstes: {step}",
   "setupGuideMarkDone": "Als erledigt markieren",
-  "setupGuideUntil": "Etwa {minutes} Min. bis: {milestone}",
+  "setupGuideUntil": "Etwa {low}–{high} Min. bis: {milestone}",
   "setupGuideTryDemo": "In der Demo ausprobieren",
-  "setupGuideReturn": "Zurück zum Einrichtungsleitfaden"
+  "setupGuideReturn": "Zurück zum Einrichtungsleitfaden",
+  "setupGuideAddMore": "Mehr zu Ihrem Bereich hinzufügen",
+  "setupGuideNotInSetup": "Nicht in Ihrer Einrichtung",
+  "setupGuideAddIt": "Hinzufügen"
 }
