@@ -1,0 +1,9 @@
+{
+  "sampleDataTitle": "Beispieldaten",
+  "sampleDataExplain": "Füllen Sie diesen Testbereich mit einigen Beispielmitgliedern, ihren Buchungen der letzten und der kommenden zwei Wochen und einigen Zahlungen, gebildet aus Ihren eigenen Plätzen und Preisen. Es wird nichts an jemanden gesendet, und Sie können alles wieder löschen.",
+  "sampleDataFill": "Mit Beispieldaten füllen",
+  "sampleDataCounts": "Dieser Bereich enthält Beispieldaten: {members} Mitglieder, {bookings} Buchungen, {payments} Zahlungen.",
+  "sampleDataClear": "Beispieldaten löschen",
+  "sampleDataNotCleared": "Nicht gelöscht: Die Beispieldaten sind noch in diesem Bereich.",
+  "sampleDataFillFailed": "Die Beispieldaten konnten nicht angelegt werden."
+}

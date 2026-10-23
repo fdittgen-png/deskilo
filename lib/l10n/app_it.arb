@@ -13023,6 +13023,13 @@
   "@salesTaxWorksheetEmpty": {
     "description": "#2362 sales tax: salesTaxWorksheetEmpty"
   },
+  "sampleDataClear": "Cancella i dati di esempio",
+  "sampleDataCounts": "Questo spazio contiene dati di esempio: {members} membri, {bookings} prenotazioni, {payments} pagamenti.",
+  "sampleDataExplain": "Riempia questo spazio di prova con alcuni membri di esempio, le loro prenotazioni delle ultime e delle prossime due settimane e alcuni pagamenti, creati a partire dai suoi posti e dai suoi prezzi. Non viene inviato nulla a nessuno e può cancellare tutto in seguito.",
+  "sampleDataFill": "Riempi con dati di esempio",
+  "sampleDataFillFailed": "Non è stato possibile creare i dati di esempio.",
+  "sampleDataNotCleared": "Non cancellati: i dati di esempio sono ancora in questo spazio.",
+  "sampleDataTitle": "Dati di esempio",
   "scanCameraWebUnavailable": "La scansione con fotocamera non è disponibile nel browser — digiti il codice o avvicini un tag NFC al dispositivo (Chrome su Android).",
   "scanJoinHelp": "Inquadri il QR d’invito con la fotocamera — vedrà lo spazio prima di aderire.",
   "@scanJoinHelp": {

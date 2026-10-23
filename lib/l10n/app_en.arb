@@ -21258,6 +21258,45 @@
   "@salesTaxWorksheetEmpty": {
     "description": "#2362 sales tax: salesTaxWorksheetEmpty"
   },
+  "sampleDataClear": "Clear sample data",
+  "@sampleDataClear": {
+    "description": "#2872 setup guide: button that removes the sample data batch"
+  },
+  "sampleDataCounts": "This space holds sample data: {members} members, {bookings} bookings, {payments} payments.",
+  "@sampleDataCounts": {
+    "description": "#2872 setup guide: what the open sample data batch holds",
+    "placeholders": {
+      "members": {
+        "type": "int"
+      },
+      "bookings": {
+        "type": "int"
+      },
+      "payments": {
+        "type": "int"
+      }
+    }
+  },
+  "sampleDataExplain": "Fill this test space with a few sample members, their bookings over the past and the coming two weeks and some payments, made from your own places and prices. Nothing is sent to anyone, and you can clear it all again.",
+  "@sampleDataExplain": {
+    "description": "#2872 setup guide: what filling the test space with sample data creates"
+  },
+  "sampleDataFill": "Fill with sample data",
+  "@sampleDataFill": {
+    "description": "#2872 setup guide: button that creates the sample data"
+  },
+  "sampleDataFillFailed": "The sample data could not be created.",
+  "@sampleDataFillFailed": {
+    "description": "#2872 setup guide: a fill that did not happen"
+  },
+  "sampleDataNotCleared": "Not cleared: the sample data is still in this space.",
+  "@sampleDataNotCleared": {
+    "description": "#2872 setup guide: a clear that did not happen; never reads as done"
+  },
+  "sampleDataTitle": "Sample data",
+  "@sampleDataTitle": {
+    "description": "#2872 setup guide: title of the sample data card, shown only in a test space"
+  },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
   "scanJoinHelp": "Point the camera at the invitation QR — you see the workspace before you join.",
   "@scanJoinHelp": {
