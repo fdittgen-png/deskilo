@@ -7,6 +7,7 @@ import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/features/workspace/domain/setup_steps.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -49,5 +50,21 @@ void main() {
       '/setup',
     );
     expect(container.read(pendingDemoLinkProvider.notifier).take(), isNull);
+  });
+
+  test('every setup step can be tried in the demo, at its own screen', () {
+    for (final step in setupSteps) {
+      final link = demoLinkUri(to: step.route);
+      final query = Uri.parse(link.fragment).queryParameters;
+      expect(DemoLink.parse(query).to, step.route, reason: step.id);
+    }
+  });
+
+  test('the demo link names the space and the persona, and leaves out a '
+      'screen the demo does not allow', () {
+    final link = demoLinkUri(space: 'leipzig', to: '/nowhere');
+    expect(link.toString(), startsWith('https://'));
+    final query = Uri.parse(link.fragment).queryParameters;
+    expect(query, {'demo': '1', 'space': 'leipzig', 'persona': 'owner'});
   });
 }

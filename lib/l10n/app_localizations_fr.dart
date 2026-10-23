@@ -19518,10 +19518,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupGuideResume => 'Reprendre';
 
   @override
+  String get setupGuideReturn => 'Retour au guide de mise en place';
+
+  @override
   String get setupGuideTitle => 'Guide de mise en place';
 
   @override
   String get setupGuideToDo => 'Ce qu\'il reste à faire';
+
+  @override
+  String get setupGuideTryDemo => 'L’essayer dans la démo';
 
   @override
   String get setupGuideUnavailable =>

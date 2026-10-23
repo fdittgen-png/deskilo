@@ -19497,10 +19497,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupGuideResume => 'Fortsetzen';
 
   @override
+  String get setupGuideReturn => 'Zurück zum Einrichtungsleitfaden';
+
+  @override
   String get setupGuideTitle => 'Einrichtungsassistent';
 
   @override
   String get setupGuideToDo => 'Was noch fehlt';
+
+  @override
+  String get setupGuideTryDemo => 'In der Demo ausprobieren';
 
   @override
   String get setupGuideUnavailable =>

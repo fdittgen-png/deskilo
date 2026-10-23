@@ -22361,6 +22361,10 @@
   "@setupGuideResume": {
     "description": "#2869 setup guide: setupGuideResume"
   },
+  "setupGuideReturn": "Back to the setup guide",
+  "@setupGuideReturn": {
+    "description": "#2869 — the bar under a screen opened from the setup guide."
+  },
   "setupGuideTitle": "Setup guide",
   "@setupGuideTitle": {
     "description": "#2869 setup guide: setupGuideTitle"
@@ -22368,6 +22372,10 @@
   "setupGuideToDo": "What it still needs",
   "@setupGuideToDo": {
     "description": "#2869 setup guide: setupGuideToDo"
+  },
+  "setupGuideTryDemo": "Try it in the demo",
+  "@setupGuideTryDemo": {
+    "description": "#2872 — opens the public demo at the screen where this step is done, in a space where it is already set up."
   },
   "setupGuideUnavailable": "The setup status could not be read. Try again in a moment.",
   "@setupGuideUnavailable": {

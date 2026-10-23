@@ -19303,10 +19303,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupGuideResume => 'Resume';
 
   @override
+  String get setupGuideReturn => 'Back to the setup guide';
+
+  @override
   String get setupGuideTitle => 'Setup guide';
 
   @override
   String get setupGuideToDo => 'What it still needs';
+
+  @override
+  String get setupGuideTryDemo => 'Try it in the demo';
 
   @override
   String get setupGuideUnavailable =>

@@ -32699,6 +32699,12 @@ abstract class AppLocalizations {
   /// **'Resume'**
   String get setupGuideResume;
 
+  /// #2869 — the bar under a screen opened from the setup guide.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the setup guide'**
+  String get setupGuideReturn;
+
   /// #2869 setup guide: setupGuideTitle
   ///
   /// In en, this message translates to:
@@ -32710,6 +32716,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What it still needs'**
   String get setupGuideToDo;
+
+  /// #2872 — opens the public demo at the screen where this step is done, in a space where it is already set up.
+  ///
+  /// In en, this message translates to:
+  /// **'Try it in the demo'**
+  String get setupGuideTryDemo;
 
   /// #2869 setup guide: setupGuideUnavailable
   ///

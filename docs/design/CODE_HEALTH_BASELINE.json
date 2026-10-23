@@ -1,8 +1,8 @@
 {
-  "recordedSha": "11d46cf699c7199e4b658845698aa96a75fb4efd",
+  "recordedSha": "3f5da1ef2223321ac948c149d61d4e48186e115f",
   "recordedDate": "2026-10-23",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1862,"functions":10370,"cyclomatic>=9":1096,"cyclomatic>=25":105,"cognitive>=15":443,"cognitive>=30":96,"length>=150":74,"parameters>=5":489,"parameters>=7":151,"partOfFiles":42},
+  "totals": {"files":1863,"functions":10375,"cyclomatic>=9":1096,"cyclomatic>=25":105,"cognitive>=15":443,"cognitive>=30":96,"length>=150":74,"parameters>=5":489,"parameters>=7":151,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -717,7 +717,7 @@
     }
   },
   "files": [
-    {"p":"lib/app/app.dart","loc":84,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":4,"len":87,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/app/app.dart","loc":88,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":4,"len":91,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/app_initializer.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":2,"cyc":4,"len":40,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/boot.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":3,"len":34,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/boot_splash.dart","loc":64,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":3,"len":43,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -908,7 +908,7 @@
     {"p":"lib/core/demo/demo_entry.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":6,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_finances.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":19,"cyc":18,"len":56,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_fixture.dart","loc":232,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":136,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/demo/demo_link.dart","loc":49,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":5,"len":13,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/demo/demo_link.dart","loc":79,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":2,"cyc":5,"len":13,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_outward_edges.dart","loc":86,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":1,"cyc":5,"len":11,"params":4,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_persona.dart","loc":18,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":5,"len":7,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_scope.dart","loc":294,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":4,"len":190,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
@@ -2411,7 +2411,7 @@
     {"p":"lib/features/workspace/presentation/screens/roles_screen.dart","loc":249,"part":false,"setState":0,"repositoryReads":1,"fn":4,"cog":29,"cyc":21,"len":146,"params":5,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/roles_screen_labels.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":27,"len":54,"params":2,"nest":1,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/scan_join_screen.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":3,"len":37,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/screens/setup_guide_screen.dart","loc":394,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":16,"cyc":12,"len":88,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/screens/setup_guide_screen.dart","loc":413,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":16,"cyc":12,"len":88,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/setup_launch_screen.dart","loc":282,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":8,"cyc":7,"len":52,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/setup_levels_screen.dart","loc":277,"part":false,"setState":5,"repositoryReads":0,"fn":10,"cog":11,"cyc":12,"len":83,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/setup_step_screen.dart","loc":92,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":4,"cyc":10,"len":21,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2516,6 +2516,7 @@
     {"p":"lib/features/workspace/presentation/widgets/setup_member_rights_step.dart","loc":152,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":6,"cyc":6,"len":44,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_payment_methods_step.dart","loc":111,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":8,"cyc":5,"len":54,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_resume_banner.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":34,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/setup_return_bar.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":3,"len":39,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_run_pages.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":13,"cyc":13,"len":24,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_step_layout.dart","loc":67,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":2,"len":29,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_week_strip.dart","loc":142,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":6,"cyc":5,"len":58,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
