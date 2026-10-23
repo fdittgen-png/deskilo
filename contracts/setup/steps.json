@@ -155,6 +155,32 @@
     "secret": false
   },
   {
+    "id": "notifications",
+    "group": "run",
+    "milestone": "live",
+    "route": "/setup/step/notifications",
+    "evidence": "manual",
+    "feature": null,
+    "required": false,
+    "depends_on": [],
+    "actor": "owner",
+    "estimate_minutes": 3,
+    "secret": false
+  },
+  {
+    "id": "limits",
+    "group": "run",
+    "milestone": "live",
+    "route": "/setup/step/limits",
+    "evidence": "manual",
+    "feature": "bookingPolicies",
+    "required": false,
+    "depends_on": [],
+    "actor": "owner",
+    "estimate_minutes": 3,
+    "secret": false
+  },
+  {
     "id": "kiosk",
     "group": "run",
     "milestone": "live",

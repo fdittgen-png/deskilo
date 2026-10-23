@@ -19997,6 +19997,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupLevelsTitle => 'What your space does';
 
   @override
+  String get setupLimitsPerMember =>
+      'An allowance set on a member\'s own page goes before the number of places here.';
+
+  @override
+  String setupLimitsPreviewAhead(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'You can book up to $days days ahead.',
+      one: 'You can book up to one day ahead.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewAtOnce(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'You can hold up to $count places at a time.',
+      one: 'You can hold one place at a time.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewLength(String shortest, String longest) {
+    return 'A booking lasts at least $shortest and at most $longest.';
+  }
+
+  @override
+  String get setupLimitsSaveFailed =>
+      'The booking limits could not be saved. Try again.';
+
+  @override
   String get setupLockConfirmTitle => 'Before you save';
 
   @override
@@ -20059,6 +20094,75 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'The new-member defaults could not be saved. Try again.';
+
+  @override
+  String setupNotificationsAudience(String audience) {
+    String _temp0 = intl.Intl.selectLogic(audience, {
+      'deciders': 'Whoever decides it',
+      'members': 'Members',
+      'other': '$audience',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsChannels(String channels) {
+    String _temp0 = intl.Intl.selectLogic(channels, {
+      'app': 'in the app',
+      'app_push': 'in the app and as a phone notification',
+      'device':
+          'as a reminder on their own phone, even without phone notifications',
+      'other': '$channels',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsEvent(String event) {
+    String _temp0 = intl.Intl.selectLogic(event, {
+      'pending_request': 'A request waits for a decision',
+      'reservation_cancelled': 'A booking was removed by someone else',
+      'check_in': 'A booking is about to start: time to check in',
+      'member_note': 'A message or an announcement',
+      'member_mention': 'Someone names them in a conversation',
+      'invoice_reminder': 'A payment reminder',
+      'other': '$event',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsLeadFixed(String lead) {
+    return 'The check-in reminder appears $lead before a booking starts.';
+  }
+
+  @override
+  String setupNotificationsLineHow(String audience, String channels) {
+    return '$audience: $channels';
+  }
+
+  @override
+  String get setupNotificationsPreviewPlace => 'Desk 4';
+
+  @override
+  String setupNotificationsPreviewWhen(String lead) {
+    return '$lead before the booking starts, the member\'s phone shows:';
+  }
+
+  @override
+  String get setupNotificationsPushOff =>
+      'Phone notifications are off: everything but the check-in reminder stays in the app.';
+
+  @override
+  String get setupNotificationsPushOn =>
+      'Phone notifications are on. A phone receives them once the operator has connected push for this server; until then, everything stays in the app.';
+
+  @override
+  String get setupNotificationsSaveFailed =>
+      'The reminder time could not be saved. Try again.';
+
+  @override
+  String get setupNotificationsWho => 'Who is told what';
 
   @override
   String get setupObligationNone =>
@@ -20390,6 +20494,10 @@ class AppLocalizationsEn extends AppLocalizations {
           'Card payments through a provider your operator connects.',
       'approvals': 'Who validates requests, and how many people must agree.',
       'new_members': 'What a new member starts with.',
+      'notifications':
+          'Who is told what, and how: in the app, on the phone, as a reminder.',
+      'limits':
+          'How far ahead, how long and how many places at once members book.',
       'kiosk': 'A tablet at the door and member badges.',
       'purchases': 'What the space buys, and from whom.',
       'lease': 'The rent and charges the space pays.',
@@ -20436,6 +20544,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'online_payments': 'Online payments',
       'approvals': 'Approvals',
       'new_members': 'New members',
+      'notifications': 'Notifications',
+      'limits': 'Booking limits',
       'kiosk': 'Kiosk and badges',
       'purchases': 'Suppliers and purchases',
       'lease': 'Your lease',

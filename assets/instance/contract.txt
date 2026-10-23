@@ -2543,7 +2543,7 @@ routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e6938ac89e2d
 routine public.setup_step_acknowledge(p_workspace_id uuid, p_step text) -> readiness_acknowledgements | function | definer | volatile | exec:service_role | body:54d48a072d2e
-routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c40e69502829
+routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d9f446bc1494
 routine public.setup_step_drafts_step_known() -> trigger | function | invoker | volatile | exec:service_role | body:37c49c4ff5dc
 routine public.setup_step_holds_secret(p_step text) -> boolean | function | invoker | immutable | exec:service_role | body:a73e8cca762c
 routine public.setup_step_markable(p_workspace_id uuid, p_step text) -> jsonb | function | definer | stable | exec:service_role | body:5667dc2ba638
