@@ -5169,6 +5169,13 @@
   "@directoryWhatsapp": {
     "description": "Tooltip of the wa.me contact button on a directory row (#223 opt-in); also the swipe-right background label and the contact button in the member detail sheet (#232)"
   },
+  "discoveryBookmark": "Bookmark",
+  "discoveryNoSaved": "No places saved on this device yet.",
+  "discoveryRemoveBookmark": "Remove bookmark",
+  "discoverySaved": "Saved on this device",
+  "discoverySavedFilter": "Saved",
+  "discoveryTitle": "Discover workspaces",
+  "discoveryView": "View",
   "documentsAdd": "Add a document",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"

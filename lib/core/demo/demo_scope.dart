@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
+import 'package:deskilo/core/backend/operation_context.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
@@ -39,8 +40,10 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/instance/settings_bundle_asset.dart';
+import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
+import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/asset_providers.dart';
@@ -324,8 +327,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ..._purchasingOverrides(fixture, main), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
-      connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
-      connectedSourcesProvider.overrideWith((ref) async=>[]),
+      connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]),
+      _demoPersonalContext, savedPlacesStoreProvider.overrideWithValue(fixture.prefs.savedPlaces), // #2555 — the persona at the fictional installation; saved pages in the session
       // #1834 — Demo never opens another server's sign-in.
       identityConnectorProvider.overrideWithValue(const OfflineIdentityConnector()),
       // #1847 — public discovery, publication management and participant
@@ -445,3 +448,22 @@ List<Override> demoOverrides(DemoFixture fixture) {
 
 /// #1625 — Demo's fictional installation id (never a real server's).
 const _kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
+
+/// The visitor's personal context: the demonstration's persona at its one
+/// fictional installation. The real provider reads the installation row of
+/// the device's server, which a demonstration never touches.
+final Override _demoPersonalContext = personalContextProvider.overrideWith(
+  (ref) async {
+    final subject = await ref.watch(sessionStateProvider.future);
+    if (subject == null) return null;
+    return PersonalContext(
+      identity: CanonicalIdentity(
+        issuer: '$kDemoServerOrigin/auth/v1',
+        subject: subject,
+      ),
+      homeInstallationId: _kDemoInstallationId,
+      personalLocalUserId: subject,
+      personalEpoch: 1,
+    );
+  },
+);

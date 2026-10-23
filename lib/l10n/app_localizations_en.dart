@@ -4419,6 +4419,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get directoryWhatsapp => 'Chat on WhatsApp';
 
   @override
+  String get discoveryBookmark => 'Bookmark';
+
+  @override
+  String get discoveryNoSaved => 'No places saved on this device yet.';
+
+  @override
+  String get discoveryRemoveBookmark => 'Remove bookmark';
+
+  @override
+  String get discoverySaved => 'Saved on this device';
+
+  @override
+  String get discoverySavedFilter => 'Saved';
+
+  @override
+  String get discoveryTitle => 'Discover workspaces';
+
+  @override
+  String get discoveryView => 'View';
+
+  @override
   String get documentsAdd => 'Add a document';
 
   @override

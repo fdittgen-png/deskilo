@@ -4449,6 +4449,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get directoryWhatsapp => 'Auf WhatsApp schreiben';
 
   @override
+  String get discoveryBookmark => 'Merken';
+
+  @override
+  String get discoveryNoSaved =>
+      'Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.';
+
+  @override
+  String get discoveryRemoveBookmark => 'Lesezeichen entfernen';
+
+  @override
+  String get discoverySaved => 'Auf diesem Gerät gespeichert';
+
+  @override
+  String get discoverySavedFilter => 'Gespeichert';
+
+  @override
+  String get discoveryTitle => 'Arbeitsräume entdecken';
+
+  @override
+  String get discoveryView => 'Ansehen';
+
+  @override
   String get documentsAdd => 'Dokument hinzufügen';
 
   @override

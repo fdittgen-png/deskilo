@@ -4448,6 +4448,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get directoryWhatsapp => 'Discuter sur WhatsApp';
 
   @override
+  String get discoveryBookmark => 'Enregistrer';
+
+  @override
+  String get discoveryNoSaved =>
+      'Aucun espace enregistré sur cet appareil pour l’instant.';
+
+  @override
+  String get discoveryRemoveBookmark => 'Retirer l’enregistrement';
+
+  @override
+  String get discoverySaved => 'Enregistré sur cet appareil';
+
+  @override
+  String get discoverySavedFilter => 'Enregistrés';
+
+  @override
+  String get discoveryTitle => 'Découvrir des espaces';
+
+  @override
+  String get discoveryView => 'Voir';
+
+  @override
   String get documentsAdd => 'Ajouter un document';
 
   @override

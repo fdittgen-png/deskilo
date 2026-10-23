@@ -9,14 +9,15 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/loading_view.dart';
-import '../../../core/ui/server_label.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
+import '../providers/saved_places_providers.dart';
 import 'directory_carousel.dart';
 import 'directory_link_dialog.dart';
 import 'directory_map.dart';
 import 'directory_pages.dart';
+import 'directory_row.dart';
 import 'public_workspace_view.dart';
 
 class DirectoryScreen extends ConsumerStatefulWidget {
@@ -30,7 +31,10 @@ class DirectoryScreen extends ConsumerStatefulWidget {
 class _DirectoryState extends ConsumerState<DirectoryScreen> {
   final _search = TextEditingController();
   String _query = '';
-  bool _map = true;
+
+  /// The list is the first face; the map is a disclosure behind the
+  /// toggle, never what a visitor lands on.
+  bool _map = false;
   int _sources = 0, _page = 0;
   PublicWorkspace? _selected;
   @override
@@ -47,30 +51,12 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
 
   void _select(PublicWorkspace w) => setState(() => _selected = w);
 
-  Widget _card(PublicWorkspace w) {
-    final l = context.l10n;
-    return Card(
-    child: ListTile(
-      key: ValueKey('directory-locate-${w.source}-${w.id}'),
-      selected: _selected?.id == w.id && _selected?.source == w.source,
-      title: Text(w.name),
-      // #2343 — the server a listed space lives on, beside its address.
-      subtitle: Text(
-        [
-          w.text('address'),
-          if (w.source.isNotEmpty) serverLabel(l, w.source),
-        ].where((part) => part.isNotEmpty).join(' · '),
-      ),
-      trailing: IconButton(
-        key: ValueKey('directory-locate-${w.source}/${w.id}'),
-        tooltip: l.directoryLocate,
-        icon: const Icon(Icons.location_on_outlined),
-        onPressed: () => setState(() { _selected = w; _map = true; }),
-      ),
-      onTap: () => _open(w),
-    ),
-  );
-  }
+  Widget _row(PublicWorkspace w) => DirectoryRow(
+        workspace: w,
+        selected: _selected?.id == w.id && _selected?.source == w.source,
+        onView: () => _open(w),
+        onLocate: () => setState(() { _selected = w; _map = true; }),
+      );
 
   void _open(PublicWorkspace w) {
     _select(w);
@@ -113,6 +99,17 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
 
   Widget _listView(DirectoryPage result) {
     final l = context.l10n;
+    // Saved places exist only for someone signed in at the personal home;
+    // the filter narrows the loaded page to them.
+    final canSave = ref.watch(savedPlacesNamespaceProvider).value != null;
+    final savedOnly = canSave && ref.watch(discoverSavedOnlyProvider);
+    final saved = ref.watch(savedPlacesProvider).value ?? const [];
+    final shown = savedOnly
+        ? [
+            for (final w in result.workspaces)
+              if (saved.any((p) => p.matches(w))) w,
+          ]
+        : result.workspaces;
     return ListView(
       padding: AppSpacing.mdAll,
       children: [
@@ -131,11 +128,20 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
             key: const ValueKey('directory-incompatible'),
             '${l.portalDirectoryIncompatible}\n${result.incompatible.join('\n')}',
           ),
-        if (result.workspaces.isEmpty)
-          Text(
-            l.portalNoWorkspaces,
+        if (canSave)
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: FilterChip(
+              key: const ValueKey('directory-saved-filter'),
+              label: Text(l.discoverySavedFilter),
+              selected: savedOnly,
+              onSelected: (_) =>
+                  ref.read(discoverSavedOnlyProvider.notifier).toggle(),
+            ),
           ),
-        for (final w in result.workspaces) _card(w),
+        if (shown.isEmpty)
+          Text(savedOnly ? l.discoveryNoSaved : l.portalNoWorkspaces),
+        for (final w in shown) _row(w),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -305,7 +311,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         automaticallyImplyLeading: !widget.embedded,
         title: widget.embedded
             ? null
-            : Text(l.portalDiscover),
+            : Text(l.discoveryTitle),
         actions: [
           IconButton(
             key: const ValueKey('directory-portal-list'),
