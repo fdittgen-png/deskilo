@@ -18390,6 +18390,32 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune facture avec taxe de vente n\'a été émise sur cette période.';
 
   @override
+  String get sampleDataClear => 'Effacer les données d\'exemple';
+
+  @override
+  String sampleDataCounts(int members, int bookings, int payments) {
+    return 'Cet espace contient des données d\'exemple : $members membres, $bookings réservations, $payments paiements.';
+  }
+
+  @override
+  String get sampleDataExplain =>
+      'Remplissez cet espace de test avec quelques membres d\'exemple, leurs réservations des deux dernières et des deux prochaines semaines et quelques paiements, construits à partir de vos propres places et de vos prix. Rien n\'est envoyé à personne, et vous pouvez tout effacer ensuite.';
+
+  @override
+  String get sampleDataFill => 'Remplir avec des données d\'exemple';
+
+  @override
+  String get sampleDataFillFailed =>
+      'Les données d\'exemple n\'ont pas pu être créées.';
+
+  @override
+  String get sampleDataNotCleared =>
+      'Non effacées : les données d\'exemple sont toujours dans cet espace.';
+
+  @override
+  String get sampleDataTitle => 'Données d\'exemple';
+
+  @override
   String get scanCameraWebUnavailable =>
       'Le scan par caméra n\'est pas disponible dans le navigateur — saisissez le code, ou approchez un tag NFC de l\'appareil (Chrome sur Android).';
 

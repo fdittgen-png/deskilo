@@ -19,6 +19,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/setup_status.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/sample_data_card.dart';
 
 class SetupGuideScreen extends ConsumerWidget {
   const SetupGuideScreen({super.key});
@@ -56,6 +57,8 @@ class _SetupGuideBody extends ConsumerWidget {
             _Milestones(status: value),
             const SizedBox(height: AppSpacing.md),
             ..._sections(context, value, reload),
+            const SizedBox(height: AppSpacing.md),
+            SampleDataCard(workspaceId: workspaceId),
           ],
         ),
       ),

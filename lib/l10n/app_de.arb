@@ -13008,6 +13008,13 @@
   "@salesTaxWorksheetEmpty": {
     "description": "#2362 sales tax: salesTaxWorksheetEmpty"
   },
+  "sampleDataClear": "Beispieldaten löschen",
+  "sampleDataCounts": "Dieser Bereich enthält Beispieldaten: {members} Mitglieder, {bookings} Buchungen, {payments} Zahlungen.",
+  "sampleDataExplain": "Füllen Sie diesen Testbereich mit einigen Beispielmitgliedern, ihren Buchungen der letzten und der kommenden zwei Wochen und einigen Zahlungen, gebildet aus Ihren eigenen Plätzen und Preisen. Es wird nichts an jemanden gesendet, und Sie können alles wieder löschen.",
+  "sampleDataFill": "Mit Beispieldaten füllen",
+  "sampleDataFillFailed": "Die Beispieldaten konnten nicht angelegt werden.",
+  "sampleDataNotCleared": "Nicht gelöscht: Die Beispieldaten sind noch in diesem Bereich.",
+  "sampleDataTitle": "Beispieldaten",
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
   "scanJoinHelp": "Richten Sie die Kamera auf den Einladungs-QR — Sie sehen den Bereich, bevor Sie beitreten.",
   "@scanJoinHelp": {

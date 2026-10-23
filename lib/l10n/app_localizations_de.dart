@@ -18375,6 +18375,32 @@ class AppLocalizationsDe extends AppLocalizations {
       'In diesem Zeitraum wurde keine Rechnung mit Sales Tax ausgestellt.';
 
   @override
+  String get sampleDataClear => 'Beispieldaten löschen';
+
+  @override
+  String sampleDataCounts(int members, int bookings, int payments) {
+    return 'Dieser Bereich enthält Beispieldaten: $members Mitglieder, $bookings Buchungen, $payments Zahlungen.';
+  }
+
+  @override
+  String get sampleDataExplain =>
+      'Füllen Sie diesen Testbereich mit einigen Beispielmitgliedern, ihren Buchungen der letzten und der kommenden zwei Wochen und einigen Zahlungen, gebildet aus Ihren eigenen Plätzen und Preisen. Es wird nichts an jemanden gesendet, und Sie können alles wieder löschen.';
+
+  @override
+  String get sampleDataFill => 'Mit Beispieldaten füllen';
+
+  @override
+  String get sampleDataFillFailed =>
+      'Die Beispieldaten konnten nicht angelegt werden.';
+
+  @override
+  String get sampleDataNotCleared =>
+      'Nicht gelöscht: Die Beispieldaten sind noch in diesem Bereich.';
+
+  @override
+  String get sampleDataTitle => 'Beispieldaten';
+
+  @override
   String get scanCameraWebUnavailable =>
       'Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).';
 
