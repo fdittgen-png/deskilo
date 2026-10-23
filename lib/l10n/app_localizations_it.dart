@@ -19310,6 +19310,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupGuideLevelsLink => 'Scegliere che cosa fa il suo spazio';
 
   @override
+  String get setupGuideMarkDone => 'Segnare come fatto';
+
+  @override
   String get setupGuideNext => 'Prossimo passo';
 
   @override
@@ -19332,6 +19335,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupGuideUnavailable =>
       'Non è stato possibile leggere lo stato della configurazione. Riprovi tra poco.';
+
+  @override
+  String setupGuideUntil(int minutes, String milestone) {
+    return 'Circa $minutes min a: $milestone';
+  }
 
   @override
   String get setupGuideWaiting => 'In attesa';
