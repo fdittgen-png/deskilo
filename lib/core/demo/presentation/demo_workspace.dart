@@ -20,10 +20,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../app/router.dart';
+import '../../../features/workspace/providers/active_workspace_providers.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
 import '../demo_entry.dart';
+import '../demo_link.dart';
 import '../demo_persona.dart';
 import '../demo_scope.dart';
 import '../demo_session.dart';
@@ -53,8 +56,26 @@ class _DemoWorkspaceState extends ConsumerState<DemoWorkspace> {
     if (_key == session.scopeKey && existing != null) return existing;
     existing?.dispose();
     _key = session.scopeKey;
-    return _container =
+    final container = _container =
         ProviderContainer(overrides: demoOverrides(session.fixture));
+    // #2872 — a link the visitor arrived with applies after this frame:
+    // no provider changes while the tree builds.
+    if (ref.read(pendingDemoLinkProvider) != null) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _applyLink(container));
+    }
+    return container;
+  }
+
+  /// #2872 — the space and the screen the visitor's link named, once.
+  void _applyLink(ProviderContainer container) {
+    if (!mounted || !identical(container, _container)) return;
+    final link = ref.read(pendingDemoLinkProvider.notifier).take();
+    if (link == null) return;
+    if (link.workspaceId case final id?) {
+      container.read(activeWorkspaceIdProvider.notifier).activate(id);
+    }
+    if (link.to case final to?) container.read(routerProvider).go(to);
   }
 
   /// Leaves the demonstration space, and forgets the session with it: the

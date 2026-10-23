@@ -21,6 +21,7 @@ none: it is read as reassurance.
 | The canonical dataset is coherent, and its cast is stable | `test/core/demo/demo_dataset_test.dart` |
 | Every feature of the registry, in every step of the process catalogue, has a scenario a persona can perform or watch — the seeded state it starts from (a bill to approve, a lease difference to accept, a room request waiting), the precondition of an action, or a switch that is on — unless it is left off for a stated reason | `test/core/demo/demo_scenarios_test.dart` |
 | The setup guide in the demo: one space has reached every milestone it chose, the other, created today, is half way to its first booking and names what is next (#2872) | `test/core/demo/demo_setup_status_test.dart` |
+| A link into the demo chooses the space, the viewpoint and the screen — and nothing else: an unknown persona or space is ignored, a screen outside the allow-list never opens, and the link applies once (#2872) | `test/core/demo/demo_link_test.dart` |
 | The second space (Leipzig): German, basic (a new space's features, no VAT, no accounting), coherent, answered from its own repositories; Ada and Bruno are members of both, so Me lists two spaces and the bills of both | `test/core/demo/demo_second_space_test.dart` |
 | The cast is a whole person on screen — a name, an e-mail, a number that could reach nobody — so a guide image can be shot here instead of in a real space (#1514) | `test/core/demo/demo_identity_test.dart` |
 | Reset to baseline, and the fence against an in-flight write | `test/core/demo/demo_session_test.dart` |
