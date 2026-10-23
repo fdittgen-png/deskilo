@@ -110,10 +110,10 @@ declare
   -- step; the app widens the catalogue's figure instead.
   c_minimum_sessions constant int := 5;
 begin
-  perform public.mcp_require_native();
   if auth.uid() is null then
     raise exception 'sign in to read the setup guide''s times' using errcode = '42501';
   end if;
+  perform public.mcp_require_native();
   return coalesce((
     select jsonb_agg(jsonb_build_object(
              'step', t.step,
@@ -122,10 +122,13 @@ begin
              'samples', t.samples)
            order by t.step)
       from (
+        -- The percentiles interpolate in floating point (300 + 0.2 * 300
+        -- is 360.00000000000006): rounded to the millisecond before the
+        -- minute is cut, so 360 s reads as 6 min, not 7.
         select s.step,
                count(*) as samples,
-               greatest(1, floor(percentile_cont(0.5) within group (order by s.duration_seconds) / 60.0))::int as low,
-               ceil(percentile_cont(0.8) within group (order by s.duration_seconds) / 60.0)::int as high
+               greatest(1, floor(round((percentile_cont(0.5) within group (order by s.duration_seconds))::numeric, 3) / 60))::int as low,
+               ceil(round((percentile_cont(0.8) within group (order by s.duration_seconds))::numeric, 3) / 60)::int as high
           from public.setup_step_timings s
          group by s.step
         having count(*) >= c_minimum_sessions
@@ -136,4 +139,4 @@ $fn$;
 revoke execute on function public.setup_step_timing_ranges() from public, anon;
 grant execute on function public.setup_step_timing_ranges() to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(557);
