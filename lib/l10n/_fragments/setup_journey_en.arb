@@ -1,0 +1,54 @@
+{
+  "@@locale": "en",
+  "setupObligationsTitle": "What the law asks in {country}",
+  "@setupObligationsTitle": {
+    "description": "#2868 setup questions: the obligations card's title",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "setupObligationThreshold": "{effect, select, immediate{The small-business VAT exemption ends on the supply that takes the net turnover of the year past {limit}.} other{The small-business VAT exemption ends with the year whose net turnover passes {limit}.}}",
+  "@setupObligationThreshold": {
+    "description": "#2868 setup questions: a small-business VAT limit from the tax reference data",
+    "placeholders": {
+      "effect": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "setupObligationUnconfirmed": "Not confirmed for this country — ask your accountant.",
+  "@setupObligationUnconfirmed": {
+    "description": "#2868 setup questions: a reference row nobody confirmed"
+  },
+  "setupObligationNone": "The reviewed tax data holds nothing for this country yet — ask your accountant what applies.",
+  "@setupObligationNone": {
+    "description": "#2868 setup questions: no reference row for the country"
+  },
+  "setupObligationSource": "Source: {source}",
+  "@setupObligationSource": {
+    "description": "#2868 setup questions: the law a reference row cites",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "setupJourneyConflict": "Someone else saved other answers meanwhile. Here they are: look again, then apply.",
+  "@setupJourneyConflict": {
+    "description": "#2868 setup questions: the saved answers moved since they were read"
+  },
+  "setupJourneySavedBy": "Last saved by {name}.",
+  "@setupJourneySavedBy": {
+    "description": "#2868 setup questions: who saved the answers last",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
+}

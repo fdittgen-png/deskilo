@@ -19727,6 +19727,15 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile condividere il codice QR. Riprovi.';
 
   @override
+  String get setupJourneyConflict =>
+      'Nel frattempo qualcun altro ha salvato altre risposte. Eccole: le verifichi, poi applichi.';
+
+  @override
+  String setupJourneySavedBy(String name) {
+    return 'Salvato per ultimo da $name.';
+  }
+
+  @override
   String setupKioskCurrent(String name) {
     return '$name gestisce il chiosco.';
   }
@@ -19953,6 +19962,35 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'Non è stato possibile salvare le impostazioni dei nuovi membri. Riprovi.';
+
+  @override
+  String get setupObligationNone =>
+      'I dati fiscali verificati non contengono ancora nulla per questo paese — chieda al Suo commercialista cosa si applica.';
+
+  @override
+  String setupObligationSource(String source) {
+    return 'Fonte: $source';
+  }
+
+  @override
+  String setupObligationThreshold(String effect, String limit) {
+    String _temp0 = intl.Intl.selectLogic(effect, {
+      'immediate':
+          'Il regime IVA delle piccole imprese termina con l’operazione che porta il fatturato netto dell’anno oltre $limit.',
+      'other':
+          'Il regime IVA delle piccole imprese termina con l’anno il cui fatturato netto supera $limit.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupObligationUnconfirmed =>
+      'Non confermato per questo paese — chieda al Suo commercialista.';
+
+  @override
+  String setupObligationsTitle(String country) {
+    return 'Cosa chiede la legge in $country';
+  }
 
   @override
   String get setupOnlineOpenConfig => 'Impostazioni dei pagamenti online';

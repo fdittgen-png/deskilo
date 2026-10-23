@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/json_reader.dart';
 import '../domain/local_setup.dart';
+import '../domain/setup_journey.dart';
+import '../domain/setup_levels.dart';
 import '../domain/setup_status.dart';
 import '../domain/setup_step_draft.dart';
 import '../domain/workspace_readiness.dart';
@@ -113,6 +116,46 @@ class SupabaseLocalSetupRepository implements LocalSetupRepository {
         'p_expected_version': expectedVersion,
       }) ==
       true;
+
+  @override
+  Future<SetupJourney?> setupJourney(String workspaceId) async =>
+      SetupJourney.fromJson(
+        await _client.rpc<Object?>(
+          'get_setup_journey',
+          params: {'p_workspace_id': workspaceId},
+        ),
+      );
+
+  @override
+  Future<int> saveSetupJourney(
+    String workspaceId, {
+    required SetupAnswers answers,
+    required SetupLevelVector levels,
+    required int? expectedVersion,
+    required String requestId,
+  }) async {
+    try {
+      final saved = await _client.rpc<Object?>(
+        'save_setup_journey',
+        params: {
+          'p_workspace_id': workspaceId,
+          'p_answers': answers.toJson(),
+          'p_levels': {
+            for (final MapEntry(:key, :value) in levels.entries)
+              key.name: value,
+          },
+          'p_expected_version': expectedVersion,
+          'p_request_id': requestId,
+        },
+      );
+      return JsonReader.of(saved, context: 'save_setup_journey')
+          .integer('version');
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the levels screen shows the conflict.
+      if (!SetupJourneyConflict.isConflict(e.code, e.message)) rethrow;
+      Error.throwWithStackTrace(SetupJourneyConflict(e.message), st);
+    }
+  }
 
   /// A draft write; the server's "changed by someone else" as its type.
   Future<Object?> _drafts(String fn, Map<String, Object?> params) async {

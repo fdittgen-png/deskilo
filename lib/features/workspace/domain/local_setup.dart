@@ -5,6 +5,8 @@
 // payment provider, an e-invoice platform, a site. Never carried by a
 // template, never guessed; only named, with where it is filled in.
 
+import 'setup_journey.dart';
+import 'setup_levels.dart';
 import 'setup_status.dart';
 import 'setup_step_draft.dart';
 import 'workspace_readiness.dart';
@@ -115,5 +117,20 @@ abstract interface class LocalSetupRepository {
     String workspaceId,
     String step, {
     required int? expectedVersion,
+  });
+
+  /// #2868 — the answers and levels saved for [workspaceId], or null.
+  Future<SetupJourney?> setupJourney(String workspaceId);
+
+  /// #2868 — stores [answers] and [levels] against [expectedVersion]
+  /// (null: nothing was saved yet) and answers the new version. Throws
+  /// [SetupJourneyConflict] when the journey moved since; the same
+  /// [requestId] answers its first write again.
+  Future<int> saveSetupJourney(
+    String workspaceId, {
+    required SetupAnswers answers,
+    required SetupLevelVector levels,
+    required int? expectedVersion,
+    required String requestId,
   });
 }
