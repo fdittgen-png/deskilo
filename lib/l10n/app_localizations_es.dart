@@ -18408,6 +18408,32 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se emitió ninguna factura con impuesto sobre las ventas en este período.';
 
   @override
+  String get sampleDataClear => 'Borrar los datos de ejemplo';
+
+  @override
+  String sampleDataCounts(int members, int bookings, int payments) {
+    return 'Este espacio contiene datos de ejemplo: $members miembros, $bookings reservas, $payments pagos.';
+  }
+
+  @override
+  String get sampleDataExplain =>
+      'Llene este espacio de prueba con algunos miembros de ejemplo, sus reservas de las dos últimas y las dos próximas semanas y algunos pagos, creados a partir de sus propios puestos y precios. No se envía nada a nadie y puede borrarlo todo después.';
+
+  @override
+  String get sampleDataFill => 'Llenar con datos de ejemplo';
+
+  @override
+  String get sampleDataFillFailed =>
+      'No se pudieron crear los datos de ejemplo.';
+
+  @override
+  String get sampleDataNotCleared =>
+      'No borrados: los datos de ejemplo siguen en este espacio.';
+
+  @override
+  String get sampleDataTitle => 'Datos de ejemplo';
+
+  @override
   String get scanCameraWebUnavailable =>
       'El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).';
 
