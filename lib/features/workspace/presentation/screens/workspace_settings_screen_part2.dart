@@ -155,6 +155,24 @@ extension _WorkspaceSettingsScreenStatePart2 on _WorkspaceSettingsScreenState {
           l10n.workspaceXmlErrorInvalidValue,
       };
 
+  /// What an XML import may have rewritten, read again.
+  void _refreshImported({required bool configuration}) {
+    ref
+      ..invalidate(myWorkspacesProvider)
+      ..invalidate(levelsProvider)
+      ..invalidate(floorPlanProvider)
+      ..invalidate(targetNamesProvider)
+      // #180 — the import may have upserted the catalog and re-created
+      // every seat assignment.
+      ..invalidate(accessoriesProvider)
+      ..invalidate(seatAccessoriesProvider);
+    if (configuration) {
+      ref
+        ..invalidate(sitesProvider)
+        ..invalidate(vatRatesProvider);
+    }
+  }
+
   /// Owner-only XML import (#165): pick file → parse (typed errors) →
   /// client-side placement validation → preview + destructive confirm →
   /// transactional replace via the import RPC, settings via the existing
@@ -359,20 +377,10 @@ extension _WorkspaceSettingsScreenStatePart2 on _WorkspaceSettingsScreenState {
             [for (final f in DeskiloTheme.refusals(Color(argb))) f.pair],
       );
 
-      ref
-        ..invalidate(myWorkspacesProvider)
-        ..invalidate(levelsProvider)
-        ..invalidate(floorPlanProvider)
-        ..invalidate(targetNamesProvider)
-      // #180 — the import may have upserted the catalog and re-created
-      // every seat assignment.
-        ..invalidate(accessoriesProvider)
-        ..invalidate(seatAccessoriesProvider);
-      if (applyConfiguration) {
-        ref
-          ..invalidate(sitesProvider)
-          ..invalidate(vatRatesProvider);
-      }
+      // #2868 — the file's <profile> becomes the space's setup journey.
+      await saveImportedSetupProfile(ref,
+          workspaceId: workspace.id, xml: content);
+      _refreshImported(configuration: applyConfiguration);
       if (!mounted) return;
       // Re-seed the form so the imported settings show immediately.
       _update(() => _seeded = false);

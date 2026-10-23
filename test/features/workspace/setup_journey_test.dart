@@ -70,6 +70,44 @@ void main() {
     expect(SetupJourney.fromJson(null), isNull);
   });
 
+  test('a file from web/setup.html carries its profile; one without has '
+      'none', () {
+    const file =
+        '<deskilo-workspace version="3"><setup><profile preset="essentiel">'
+        '<answer question="approve_bookings" value="true"/>'
+        '<answer question="pay_online" value="false"/>'
+        '<answer question="retired_question" value="true"/>'
+        '<level of="community" value="organised"/>'
+        '<level of="tax" value="gold"/><level of="catering" value="full"/>'
+        '</profile></setup></deskilo-workspace>';
+    final profile = SetupProfile.fromWorkspaceXml(file)!;
+    expect(profile.answers, const SetupAnswers(approveBookings: true));
+    expect(profile.levels, {SetupProcess.community: 'organised'});
+    expect(
+      SetupProfile.fromWorkspaceXml(
+        '<deskilo-workspace version="3"><setup/></deskilo-workspace>',
+      ),
+      isNull,
+    );
+    expect(
+      SetupProfile.fromWorkspaceXml('<deskilo-workspace version="4"/>'),
+      isNull,
+    );
+  });
+
+  test('the kind of organisation and booking through approval each call for '
+      'an organised community, with their own reason', () {
+    for (final (question, reason) in [
+      ('association', 'association'),
+      ('approve_bookings', 'approve_bookings'),
+    ]) {
+      final r = recommendSetupLevels(
+        const SetupAnswers().withAnswer(question, yes: true),
+      )[SetupProcess.community]!;
+      expect((r.level, r.reason), ('organised', reason), reason: question);
+    }
+  });
+
   test('the recommendation rules are data the page can run', () {
     expect(setupRecommendationRules.keys.toSet(), SetupProcess.values.toSet());
     for (final MapEntry(key: process, value: rules)

@@ -675,9 +675,11 @@ window.SETUP_L10N={
    "featuresUnavailableIn": "{desc} — not available in {country}; available in: {list}.",
    "featuresAvailabilityEu": "the EU member states",
    "setupDemoHtml": "Prefer to see it first? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Open the setup guide in the demo</a>: a space half way through its setup, on this device only, nothing sent anywhere.",
-   "levelsWhy": "Plain questions about your space set the level of each process: what it does, never more. The next step keeps every switch for an expert.",
+   "levelsWhy": "Plain questions about your space set the level of each process: what it does, never more. The expert view keeps every switch.",
    "levelsOffline": "This page prepares a file and works offline: it cannot see your space and says nothing about what is ready. The app shows that once the file is imported.",
-   "levelsExpertHint": "An answer sets every level again. Fine-tune single switches in the next step; the levels here follow them.",
+   "levelsExpertHint": "An answer sets every level again. Fine-tune single switches in the expert view; the levels here follow them.",
+   "levelsExpertOpen": "Open the expert view: every switch",
+   "setupExpertSwitches": "Show every switch (expert view)",
    "levelsOk": "Levels: {list}.",
    "levelsUnanswered": "No question answered: the switches of the next step decide."
   },
@@ -1488,6 +1490,8 @@ window.SETUP_L10N={
   },
   "journey": {
    "question": {
+    "association": "The space is run by an association, a cooperative or a club",
+    "approve_bookings": "Bookings wait for an approval; members do not book directly",
     "members_owe_money": "Members owe the space money (rent, passes, extras)",
     "issue_invoices": "You issue invoices",
     "pay_online": "Members pay online",
@@ -1555,7 +1559,9 @@ window.SETUP_L10N={
     "start_simple": "start simple",
     "tracks_purchases": "you track what the space buys",
     "vat_registered": "the space is registered for VAT",
-    "issues_invoices": "you issue invoices"
+    "issues_invoices": "you issue invoices",
+    "association": "an association decides together, with its board",
+    "approve_bookings": "bookings wait for an approval"
    },
    "preset": {
     "essentiel": "Essential",
@@ -2262,9 +2268,11 @@ window.SETUP_L10N={
    "featuresUnavailableIn": "{desc} — non disponible en {country} ; disponible : {list}.",
    "featuresAvailabilityEu": "les États membres de l'UE",
    "setupDemoHtml": "Envie de voir d’abord ? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Ouvrez le guide de mise en place dans la démo</a> : un espace à mi-chemin de sa mise en place, sur cet appareil seulement, rien n’est envoyé.",
-   "levelsWhy": "Des questions simples sur votre espace fixent le niveau de chaque processus : ce qu’il fait, jamais plus. L’étape suivante garde chaque interrupteur pour les experts.",
+   "levelsWhy": "Des questions simples sur votre espace fixent le niveau de chaque processus : ce qu’il fait, jamais plus. La vue experte garde chaque interrupteur.",
    "levelsOffline": "Cette page prépare un fichier et fonctionne hors ligne : elle ne voit pas votre espace et ne dit rien de ce qui est prêt. L’application le montre une fois le fichier importé.",
-   "levelsExpertHint": "Chaque réponse fixe à nouveau tous les niveaux. Ajustez un interrupteur précis à l’étape suivante ; les niveaux ici le suivent.",
+   "levelsExpertHint": "Chaque réponse fixe à nouveau tous les niveaux. Ajustez un interrupteur précis dans la vue experte ; les niveaux ici le suivent.",
+   "levelsExpertOpen": "Ouvrir la vue experte : chaque interrupteur",
+   "setupExpertSwitches": "Afficher chaque interrupteur (vue experte)",
    "levelsOk": "Niveaux : {list}.",
    "levelsUnanswered": "Aucune question répondue : les interrupteurs de l’étape suivante décident."
   },
@@ -3075,6 +3083,8 @@ window.SETUP_L10N={
   },
   "journey": {
    "question": {
+    "association": "L’espace est géré par une association, une coopérative ou un club",
+    "approve_bookings": "Les réservations attendent une validation ; les membres ne réservent pas directement",
     "members_owe_money": "Les membres doivent de l’argent à l’espace (loyer, carnets, extras)",
     "issue_invoices": "Vous émettez des factures",
     "pay_online": "Les membres paient en ligne",
@@ -3142,7 +3152,9 @@ window.SETUP_L10N={
     "start_simple": "commencer simplement",
     "tracks_purchases": "vous suivez les achats de l’espace",
     "vat_registered": "l’espace est assujetti à la TVA",
-    "issues_invoices": "vous émettez des factures"
+    "issues_invoices": "vous émettez des factures",
+    "association": "une association décide ensemble, avec son bureau",
+    "approve_bookings": "les réservations attendent une validation"
    },
    "preset": {
     "essentiel": "Essentiel",
@@ -3849,9 +3861,11 @@ window.SETUP_L10N={
    "featuresUnavailableIn": "{desc} — in {country} nicht verfügbar; verfügbar in: {list}.",
    "featuresAvailabilityEu": "den EU-Mitgliedstaaten",
    "setupDemoHtml": "Lieber erst ansehen? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Den Einrichtungsleitfaden in der Demo öffnen</a>: ein halb eingerichteter Raum, nur auf diesem Gerät, nichts wird gesendet.",
-   "levelsWhy": "Einfache Fragen zu Ihrem Space legen die Stufe jedes Prozesses fest: was er tut, nie mehr. Der nächste Schritt behält jeden Schalter für Fachleute.",
+   "levelsWhy": "Einfache Fragen zu Ihrem Space legen die Stufe jedes Prozesses fest: was er tut, nie mehr. Die Expertenansicht behält jeden Schalter.",
    "levelsOffline": "Diese Seite bereitet eine Datei vor und arbeitet offline: Sie sieht Ihren Space nicht und sagt nichts darüber, was bereit ist. Das zeigt die App, sobald die Datei importiert ist.",
-   "levelsExpertHint": "Jede Antwort setzt alle Stufen neu. Einzelne Schalter stellen Sie im nächsten Schritt ein; die Stufen hier folgen ihnen.",
+   "levelsExpertHint": "Jede Antwort setzt alle Stufen neu. Einzelne Schalter stellen Sie in der Expertenansicht ein; die Stufen hier folgen ihnen.",
+   "levelsExpertOpen": "Expertenansicht öffnen: jeder Schalter",
+   "setupExpertSwitches": "Jeden Schalter zeigen (Expertenansicht)",
    "levelsOk": "Stufen: {list}.",
    "levelsUnanswered": "Keine Frage beantwortet: die Schalter des nächsten Schritts entscheiden."
   },
@@ -4662,6 +4676,8 @@ window.SETUP_L10N={
   },
   "journey": {
    "question": {
+    "association": "Ein Verein, eine Genossenschaft oder ein Club betreibt den Raum",
+    "approve_bookings": "Buchungen warten auf eine Freigabe; Mitglieder buchen nicht direkt",
     "members_owe_money": "Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)",
     "issue_invoices": "Sie stellen Rechnungen",
     "pay_online": "Mitglieder zahlen online",
@@ -4729,7 +4745,9 @@ window.SETUP_L10N={
     "start_simple": "es einfach beginnen soll",
     "tracks_purchases": "Sie verfolgen, was der Raum einkauft",
     "vat_registered": "der Raum umsatzsteuerpflichtig ist",
-    "issues_invoices": "Sie Rechnungen stellen"
+    "issues_invoices": "Sie Rechnungen stellen",
+    "association": "ein Verein mit seinem Vorstand gemeinsam entscheidet",
+    "approve_bookings": "Buchungen auf eine Freigabe warten"
    },
    "preset": {
     "essentiel": "Basis",
@@ -5436,9 +5454,11 @@ window.SETUP_L10N={
    "featuresUnavailableIn": "{desc} — no disponible en {country}; disponible en: {list}.",
    "featuresAvailabilityEu": "los Estados miembros de la UE",
    "setupDemoHtml": "¿Prefiere verlo primero? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Abra la guía de configuración en la demo</a>: un espacio a mitad de su configuración, solo en este dispositivo, sin enviar nada.",
-   "levelsWhy": "Unas preguntas sencillas sobre su espacio fijan el nivel de cada proceso: lo que hace, nunca más. El paso siguiente conserva cada interruptor para los expertos.",
+   "levelsWhy": "Unas preguntas sencillas sobre su espacio fijan el nivel de cada proceso: lo que hace, nunca más. La vista experta conserva cada interruptor.",
    "levelsOffline": "Esta página prepara un archivo y funciona sin conexión: no ve su espacio y no dice nada de lo que está listo. La aplicación lo muestra una vez importado el archivo.",
-   "levelsExpertHint": "Cada respuesta vuelve a fijar todos los niveles. Ajuste interruptores concretos en el paso siguiente; los niveles de aquí los siguen.",
+   "levelsExpertHint": "Cada respuesta vuelve a fijar todos los niveles. Ajuste interruptores concretos en la vista experta; los niveles de aquí los siguen.",
+   "levelsExpertOpen": "Abrir la vista experta: cada interruptor",
+   "setupExpertSwitches": "Mostrar cada interruptor (vista experta)",
    "levelsOk": "Niveles: {list}.",
    "levelsUnanswered": "Ninguna pregunta respondida: deciden los interruptores del paso siguiente."
   },
@@ -6249,6 +6269,8 @@ window.SETUP_L10N={
   },
   "journey": {
    "question": {
+    "association": "El espacio lo gestiona una asociación, una cooperativa o un club",
+    "approve_bookings": "Las reservas esperan una aprobación; los miembros no reservan directamente",
     "members_owe_money": "Los miembros deben dinero al espacio (alquiler, bonos, extras)",
     "issue_invoices": "Emite facturas",
     "pay_online": "Los miembros pagan en línea",
@@ -6316,7 +6338,9 @@ window.SETUP_L10N={
     "start_simple": "conviene empezar sencillo",
     "tracks_purchases": "sigue lo que compra el espacio",
     "vat_registered": "el espacio está sujeto al IVA",
-    "issues_invoices": "emite facturas"
+    "issues_invoices": "emite facturas",
+    "association": "una asociación decide en conjunto, con su junta",
+    "approve_bookings": "las reservas esperan una aprobación"
    },
    "preset": {
     "essentiel": "Esencial",
@@ -7023,9 +7047,11 @@ window.SETUP_L10N={
    "featuresUnavailableIn": "{desc} — non disponibile in {country}; disponibile in: {list}.",
    "featuresAvailabilityEu": "gli Stati membri dell'UE",
    "setupDemoHtml": "Preferisce vederlo prima? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Apra la guida di configurazione nella demo</a>: uno spazio a metà della configurazione, solo su questo dispositivo, senza inviare nulla.",
-   "levelsWhy": "Semplici domande sul Suo spazio fissano il livello di ogni processo: ciò che fa, mai di più. Il passo successivo conserva ogni interruttore per gli esperti.",
+   "levelsWhy": "Semplici domande sul Suo spazio fissano il livello di ogni processo: ciò che fa, mai di più. La vista esperta conserva ogni interruttore.",
    "levelsOffline": "Questa pagina prepara un file e funziona offline: non vede il Suo spazio e non dice nulla su ciò che è pronto. Lo mostra l’app una volta importato il file.",
-   "levelsExpertHint": "Ogni risposta fissa di nuovo tutti i livelli. Regoli i singoli interruttori nel passo successivo; i livelli qui li seguono.",
+   "levelsExpertHint": "Ogni risposta fissa di nuovo tutti i livelli. Regoli i singoli interruttori nella vista esperta; i livelli qui li seguono.",
+   "levelsExpertOpen": "Apri la vista esperta: ogni interruttore",
+   "setupExpertSwitches": "Mostra ogni interruttore (vista esperta)",
    "levelsOk": "Livelli: {list}.",
    "levelsUnanswered": "Nessuna domanda con risposta: decidono gli interruttori del passo successivo."
   },
@@ -7836,6 +7862,8 @@ window.SETUP_L10N={
   },
   "journey": {
    "question": {
+    "association": "Lo spazio è gestito da un’associazione, una cooperativa o un club",
+    "approve_bookings": "Le prenotazioni attendono un’approvazione; i membri non prenotano direttamente",
     "members_owe_money": "I membri devono denaro allo spazio (affitto, carnet, extra)",
     "issue_invoices": "Emette fatture",
     "pay_online": "I membri pagano online",
@@ -7903,7 +7931,9 @@ window.SETUP_L10N={
     "start_simple": "conviene iniziare in modo semplice",
     "tracks_purchases": "segue gli acquisti dello spazio",
     "vat_registered": "lo spazio è soggetto a IVA",
-    "issues_invoices": "emette fatture"
+    "issues_invoices": "emette fatture",
+    "association": "un’associazione decide insieme, con il suo consiglio",
+    "approve_bookings": "le prenotazioni attendono un’approvazione"
    },
    "preset": {
     "essentiel": "Essenziale",

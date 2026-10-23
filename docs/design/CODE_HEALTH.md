@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `d95f148a87c3fb3c11e972109663556600c1588f` on 2026-10-23.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `c054c495886c6665bab88810e00f0b1a4d2e23c2` on 2026-10-23.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,8 +10,8 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 1904 |
-| functions | 10592 |
+| files | 1905 |
+| functions | 10597 |
 | cyclomatic>=9 | 1107 |
 | cyclomatic>=25 | 105 |
 | cognitive>=15 | 446 |
@@ -29,9 +29,9 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 58 | 47 | 176 | 1 | `lib/features/workspace/presentation/widgets/conversation_thread.dart#_ConversationThreadState.build` |
 | 53 | 37 | 181 | 2 | `lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen.build` |
 | 52 | 32 | 261 | 1 | `lib/features/money/presentation/screens/vat_screen.dart#_VatScreenState.build` |
-| 52 | 40 | 264 | 1 | `lib/features/workspace/presentation/screens/workspace_settings_screen_part2.dart#_WorkspaceSettingsScreenStatePart2._importXml` |
 | 51 | 54 | 105 | 4 | `lib/core/public_network/public_network_codec.dart#_decodeValue` |
 | 51 | 26 | 130 | 1 | `lib/features/workspace/domain/bi_report_pdf.dart#_evolution` |
+| 51 | 39 | 254 | 1 | `lib/features/workspace/presentation/screens/workspace_settings_screen_part2.dart#_WorkspaceSettingsScreenStatePart2._importXml` |
 | 51 | 19 | 111 | 1 | `lib/features/workspace/presentation/widgets/template_apply_sheet.dart#_TemplateApplySheetState.build` |
 | 50 | 46 | 342 | 6 | `lib/features/reservations/presentation/reserve_seat_actions.dart#ReserveSeatActions.bookingSheet` |
 | 49 | 27 | 129 | 1 | `lib/features/directory/presentation/public_page_editor.dart#_EditorState.build` |

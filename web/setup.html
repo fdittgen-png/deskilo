@@ -113,7 +113,7 @@ input.missing,select.missing,textarea.missing{border-color:var(--err);background
 <main>
   <div class="progress"><div id="bar" style="width:0"></div></div>
   <div class="rail" id="rail"></div>
-  <div class="mode"><span class="stepno" id="stepno"></span><label style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="allmode" onchange="setMode(this.checked)"> <span data-t="setupExpertMode"></span></label></div>
+  <div class="mode"><span class="stepno" id="stepno"></span><label style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="allmode" onchange="setMode(this.checked)"> <span data-t="setupExpertMode"></span></label><label id="expertwrap" style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="expertview" onchange="setExpert(this.checked)"> <span data-t="setupExpertSwitches"></span></label></div>
   <div id="form"></div>
   <div class="nav" id="nav"></div>
 </main>
@@ -121,7 +121,7 @@ input.missing,select.missing,textarea.missing{border-color:var(--err);background
   <button class="btn primary" onclick="exportChecked()">⬇ <span data-t="setupExportXml"></span></button>
   <button class="btn ghost" onclick="document.getElementById('load').click()" data-t="setupLoadFile"></button>
   <input type="file" id="load" accept=".xml" style="display:none" onchange="loadFile(this.files[0])">
-  <button class="btn ghost" onclick="if(confirm(T('setupClearAnswersConfirm'))){localStorage.removeItem(LS);localStorage.removeItem(LS+'-step');location.reload()}" data-t="setupReset"></button>
+  <button class="btn ghost" onclick="if(confirm(T('setupClearAnswersConfirm'))){localStorage.removeItem(LS);localStorage.removeItem(LS+'-step');localStorage.removeItem(LS+'-expert');location.reload()}" data-t="setupReset"></button>
   <span class="saved" id="saved"></span>
 </footer>
 <script src="setup_catalogue.js"></script>
@@ -746,7 +746,8 @@ function recommendLevels(answers){const out={};for(const[p,rules]of Object.entri
 function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]))break;reached=l.id}out[pr.key]=reached}return out}
 // A level ticks its switches and every lower level's, and unticks the
 // higher ones' — setupFeatureDelta. The expert view keeps every switch.
-function applyLevel(p,id){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)return;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in S.features)S.features[k]=i<=r}));S.journey.used=true;save()}
+// Every caller draws the page again, and drawing saves.
+function applyLevel(p,id){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)return;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in S.features)S.features[k]=i<=r}));S.journey.used=true}
 function answerQuestion(q,v){S.journey.answers[q]=v;const rec=recommendLevels(S.journey.answers);for(const[p,r]of Object.entries(rec))applyLevel(p,r.level)}
 function applyPreset(name){for(const[p,id]of Object.entries(LEVELS.presets[name]||{}))applyLevel(p,id)}
 const presetOf=now=>Object.keys(LEVELS.presets).find(n=>LEVELS.processes.every(pr=>LEVELS.presets[n][pr.key]===now[pr.key]))||'';
@@ -802,12 +803,14 @@ const STEPS=[
    lbl(JT('setupLevelsChoice')),
    ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)),
    ...levelGaps(now).map(g=>h('div',{class:'dep'},g)),
-   h('p',{class:'hint'},T('levelsExpertHint'))]},
+   h('p',{class:'hint'},T('levelsExpertHint')),
+   h('button',{class:'btn ghost',type:'button',onclick:()=>go('features')},T('levelsExpertOpen'))]},
  check(){const now=levelsNow(),gaps=levelGaps(now);const f=gaps.map(g=>F.warn(g,'levels'));
   if(!gaps.length)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
   return f}},
 
-{id:'features',get title(){return T('featuresTitle')},get why(){return T('featuresWhy')},
+// #2868 — every switch: the expert view once the questions are the way in.
+{id:'features',expertOnly:true,get title(){return T('featuresTitle')},get why(){return T('featuresWhy')},
  build(){const kids=[h('p',{class:'hint'},T('featuresIndentHint')),help('features')];
   const row=k=>{const name=featureTitle(k),d=featureDesc(k);const parent=REQUIRES[k];const also=alsoEnabled(k);
    const note=!availableHere(k)?T('featuresUnavailableIn',{desc:d,country:countryName(S.country),list:AVAILABLE_IN[k].map(c=>c==='@eu'?T('featuresAvailabilityEu'):countryName(c)).join(T('listSep'))}):(!S.features[k]&&also.length)?T('featuresAlsoEnables',{desc:d,list:quotedList(also)}):(S.features[k]&&parent&&!on(parent)?T('featuresWaitingFor',{desc:d,feature:quoted(featureTitle(waitsFor(k)))}):d);
@@ -1162,11 +1165,20 @@ let mode=Q.get('mode')||localStorage.getItem(LS+'-mode')||'wizard';
 let cur=Q.get('step')||localStorage.getItem(LS+'-step')||STEPS[0].id;
 function setMode(all){mode=all?'all':'wizard';localStorage.setItem(LS+'-mode',mode);render()}
 function go(id){cur=id;localStorage.setItem(LS+'-step',id);render();window.scrollTo({top:0,behavior:'smooth'})}
-function applicable(){return STEPS.filter(s=>!s.applies||s.applies())}
+// #2868 — with the setup guide on, the questions are the way through and
+// the ~140 switches are the expert view, behind a switch. Every way to the
+// features step — a "needs" note, a finding, the rail, ?step=features —
+// still arrives there: following it opens the expert view. With the guide
+// off the page is as it always was.
+let expert=localStorage.getItem(LS+'-expert')==='1';
+const expertView=()=>expert||!on('setupGuide');
+function setExpert(v){expert=!!v;localStorage.setItem(LS+'-expert',expert?'1':'0');if(!expertView()&&STEPS.find(s=>s.id===cur)?.expertOnly)cur='levels';render()}
+function applicable(){return STEPS.filter(s=>(!s.applies||s.applies())&&(!s.expertOnly||expertView()))}
 function render(){
  // #800 — a sub-feature's choice SURVIVES its parent being switched off,
  // as in the app: switching the parent back on finds it as it was.
  const F_=document.getElementById('form');F_.textContent='';
+ if(!expertView()&&STEPS.find(s=>s.id===cur)?.expertOnly){expert=true;localStorage.setItem(LS+'-expert','1')}
  F_.append(h('div',{class:'legend'},...Object.keys(DEST_TEXT).map(d=>h('span',{},h('span',{class:'dest '+d},T(DEST_TEXT[d][0])),' '+T(DEST_TEXT[d][1])))));
  const list=applicable();if(!list.some(s=>s.id===cur))cur=list[0].id;
  const idx=list.findIndex(s=>s.id===cur);
@@ -1175,6 +1187,8 @@ function render(){
  const rail=document.getElementById('rail');rail.textContent='';
  STEPS.forEach((st,i)=>{const s=stepStatus(st);const b=h('button',{class:'step'+(st.id===cur&&mode==='wizard'?' cur':'')+(s==='na'?' na':''),type:'button',onclick:()=>{if(s!=='na')go(st.id)}},h('span',{class:'dot '+s}),(i+1)+' · '+st.title);rail.append(b)});
  document.getElementById('allmode').checked=mode==='all';
+ document.getElementById('expertview').checked=expertView();
+ document.getElementById('expertwrap').style.display=on('setupGuide')?'':'none';
  const show=mode==='all'?list:[list[idx]];
  // A step that throws used to take the WHOLE page with it: the body was
  // empty, and because render() never reached the end, the navigation was

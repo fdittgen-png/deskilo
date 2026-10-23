@@ -131,5 +131,5 @@
 12 test/features/workspace/workspace_readiness_test.dart
 52 test/features/workspace/workspace_settings_screen_test.dart
 10 test/features/workspace/workspace_xml_export_test.dart
-16 test/features/workspace/workspace_xml_import_screen_test.dart
+10 test/features/workspace/workspace_xml_import_screen_test.dart
 11 test/ux/journey_contracts_test.dart
