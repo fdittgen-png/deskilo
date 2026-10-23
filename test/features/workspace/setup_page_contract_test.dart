@@ -18,6 +18,8 @@ import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../tool/setup/page_sources.dart';
+
 /// A document shaped exactly like web/setup.html's exportXml() output:
 /// 1 level, 1 office, 1 desk with 4 seats (2 columns × 2 rows, seat
 /// footprint 6×4), one accessory, features, payment instructions, and
@@ -98,16 +100,20 @@ void main() {
 
   test('the page ships in web/ so the web deploy publishes it at '
       '/deskilo/setup.html', () {
-    final page = File('web/setup.html').readAsStringSync();
+    // #2926 — the page with the scripts it is split into.
+    final page = setupPageSource();
     expect(page, contains('deskilo-workspace version="3"'));
     // The setup extension the configurator reads.
     expect(page, contains('<setup>'));
-    // Every workspace feature key appears exactly as the enum names it.
+    // Every workspace feature key appears exactly as the enum names it —
+    // in the registry the page loads (#2923: generated, not copied).
+    expect(page, contains('<script src="setup_catalogue.js"></script>'));
+    final registry = File('web/setup_catalogue.js').readAsStringSync();
     for (final key in [
       'calendarTab', 'invoicing', 'roleManagement', 'deletionRequests',
       'dunning', 'memberReports', 'documents',
     ]) {
-      expect(page, contains("'$key'"),
+      expect(registry, contains('"$key"'),
           reason: '$key must be offered by the questionnaire');
     }
   });
