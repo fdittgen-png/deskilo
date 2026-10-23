@@ -102,7 +102,7 @@ final class WorkspaceContextProvider
   }
 }
 
-String _$workspaceContextHash() => r'6eda323a1f36093b1eb7c12c9ed4e195b730ce42';
+String _$workspaceContextHash() => r'35f13ea6733a87d2e8480b2155cbe9d6335ce052';
 
 /// #2564 O1 -- the client the selected workspace's operations run on: the
 /// verified host client of the captured [WorkspaceContext]'s installation.
