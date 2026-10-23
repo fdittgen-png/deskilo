@@ -239,6 +239,58 @@ final class UnifiedInboxProvider
 
 String _$unifiedInboxHash() => r'045a4b4a92065d8b94b7931ed200dd3ce48b6587';
 
+/// While watched, re-reads [unifiedInboxProvider] every inbox poll, so an
+/// unread badge stays current before the inbox itself is open (the open
+/// inbox polls on its own). Answers the period it refreshes at.
+
+@ProviderFor(inboxBadgeRefresh)
+final inboxBadgeRefreshProvider = InboxBadgeRefreshProvider._();
+
+/// While watched, re-reads [unifiedInboxProvider] every inbox poll, so an
+/// unread badge stays current before the inbox itself is open (the open
+/// inbox polls on its own). Answers the period it refreshes at.
+
+final class InboxBadgeRefreshProvider
+    extends $FunctionalProvider<Duration, Duration, Duration>
+    with $Provider<Duration> {
+  /// While watched, re-reads [unifiedInboxProvider] every inbox poll, so an
+  /// unread badge stays current before the inbox itself is open (the open
+  /// inbox polls on its own). Answers the period it refreshes at.
+  InboxBadgeRefreshProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'inboxBadgeRefreshProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$inboxBadgeRefreshHash();
+
+  @$internal
+  @override
+  $ProviderElement<Duration> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Duration create(Ref ref) {
+    return inboxBadgeRefresh(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Duration value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Duration>(value),
+    );
+  }
+}
+
+String _$inboxBadgeRefreshHash() => r'2a1d788f6630d4e8d3844a1f0222fee53e07e41f';
+
 /// The display name of each connected server, by origin — the subtitle
 /// a row carries only when it is not this server.
 

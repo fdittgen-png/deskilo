@@ -9,6 +9,14 @@ import '../storage/prefs_stores.dart';
 
 part 'navigation_style.g.dart';
 
+/// The narrowest window, in logical pixels, whose menu keeps its
+/// destinations in a permanent sidebar instead of a drawer.
+const double kWideNavigationMinWidth = 900;
+
+/// The largest text scale, in percent, at which that sidebar still leaves
+/// the page room beside it.
+const double kWideNavigationMaxTextScale = 150;
+
 /// How the shell navigates (#969): the classic bottom bar with the
 /// round Reserve button, or the hamburger menu the web uses.
 enum NavigationStyle {

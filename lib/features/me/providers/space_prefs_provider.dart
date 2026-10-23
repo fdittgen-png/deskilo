@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/time/clock.dart';
-import '../../workspace/domain/workspace.dart';
 
 /// The person's own layout of Me › Home (order, favourites, stars).
 final spacePrefsProvider =
@@ -134,8 +133,3 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
     ),
   );
 }
-
-/// The key a space's row has in [SpacePrefs]: both sides of an environment
-/// pair share one.
-String spaceRowKeyOf(Workspace space) =>
-    space.pairId.isEmpty ? 'space:${space.id}' : 'pair:${space.pairId}';

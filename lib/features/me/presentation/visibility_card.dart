@@ -16,51 +16,12 @@ import '../domain/visibility.dart';
 import '../providers/me_providers.dart';
 import 'about_dialog.dart';
 import 'public_profile_tile.dart';
+import 'visibility_flow.dart';
 import 'visibility_labels.dart';
 import 'visibility_preview.dart';
 
 class VisibilityCard extends ConsumerWidget {
   const VisibilityCard({super.key});
-
-  Future<void> _choose(
-    BuildContext context,
-    WidgetRef ref,
-    VisibilityField field,
-    FieldAudience current,
-  ) async {
-    final l10n = context.l10n;
-    final spaces =
-        ref.read(myWorkspacesProvider).value ?? const <Workspace>[];
-    final choice = await showAppSheet<FieldAudience>(
-      context: context,
-      isScrollControlled: true,
-      constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(context).height * 0.85),
-      builder: (_) =>
-          _AudienceSheet(field: field, current: current, spaces: spaces),
-    );
-    if (choice == null || choice == current || !context.mounted) return;
-    // Widening asks first, naming who will see it (#2211).
-    if (choice.widens(current) &&
-        !await _confirmWiden(context, field, choice)) {
-      return;
-    }
-    if (!context.mounted) return;
-    final ok = await runGuarded(
-      context,
-      domain: 'me',
-      message: 'save visibility failed',
-      errorText: l10n.visibilitySaveFailed,
-      action: () => ref.read(meActionsProvider).choose(field, choice),
-    );
-    if (ok) ref.invalidate(myVisibilityProvider);
-  }
-
-  Future<bool> _confirmWiden(
-    BuildContext context,
-    VisibilityField field,
-    FieldAudience choice,
-  ) => confirmVisibilityWiden(context, field, choice);
 
   Future<void> _editAbout(
       BuildContext context, WidgetRef ref, MyVisibility current) async {
@@ -94,7 +55,25 @@ class VisibilityCard extends ConsumerWidget {
         title: Text(visibilityFieldLabel(l10n, field)),
         subtitle: Text(audienceSummary(l10n, choice)),
         trailing: const Icon(Icons.chevron_right),
-        onTap: () => _choose(context, ref, field, choice),
+        onTap: () => chooseAudience(
+          context,
+          field: field,
+          current: choice,
+          pick: () => showAppSheet<FieldAudience>(
+            context: context,
+            isScrollControlled: true,
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(context).height * 0.85),
+            builder: (_) => _AudienceSheet(
+              field: field,
+              current: choice,
+              spaces:
+                  ref.read(myWorkspacesProvider).value ?? const <Workspace>[],
+            ),
+          ),
+          save: (picked) => ref.read(meActionsProvider).choose(field, picked),
+          reread: () => ref.invalidate(myVisibilityProvider),
+        ),
       );
     }
 
@@ -160,10 +139,10 @@ class _AudienceSheetState extends State<_AudienceSheet> {
   late VisibilityAudience _audience = widget.current.audience;
   late final Set<String> _chosen = {...widget.current.workspaces};
 
-  FieldAudience get _choice => FieldAudience(_audience, [
+  FieldAudience get _choice => FieldAudience(_audience, {
         for (final space in widget.spaces)
           if (_chosen.contains(space.id)) space.id,
-      ]);
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -223,37 +202,4 @@ class _AudienceSheetState extends State<_AudienceSheet> {
       ),
     );
   }
-}
-
-/// #2211 — widening a field asks first, naming who will see it; shared by
-/// this card and the linked servers'.
-Future<bool> confirmVisibilityWiden(
-  BuildContext context,
-  VisibilityField field,
-  FieldAudience choice,
-) async {
-  final l10n = context.l10n;
-  final fieldName = visibilityFieldLabel(l10n, field);
-  final who = audienceSummary(l10n, choice);
-  return await showDialog<bool>(
-        context: context,
-        builder: (dialog) => AlertDialog(
-          content: Text(
-            l10n.visibilityWidenConfirm(fieldName, who),
-          ),
-          actions: [
-            TextButton(
-              key: const ValueKey('visibility-widen-cancel'),
-              onPressed: () => Navigator.of(dialog).pop(false),
-              child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
-            ),
-            FilledButton(
-              key: const ValueKey('visibility-widen-confirm'),
-              onPressed: () => Navigator.of(dialog).pop(true),
-              child: Text(l10n.visibilityWidenAction),
-            ),
-          ],
-        ),
-      ) ??
-      false;
 }
