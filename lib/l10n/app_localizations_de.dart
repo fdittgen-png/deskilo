@@ -19913,6 +19913,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der QR-Code konnte nicht geteilt werden. Bitte versuchen Sie es erneut.';
 
   @override
+  String get setupJourneyConflict =>
+      'Inzwischen hat jemand anderes andere Antworten gespeichert. Hier sind sie: prüfen Sie sie, dann übernehmen.';
+
+  @override
+  String setupJourneySavedBy(String name) {
+    return 'Zuletzt gespeichert von $name.';
+  }
+
+  @override
   String setupKioskCurrent(String name) {
     return '$name betreibt den Kiosk.';
   }
@@ -20141,6 +20150,35 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'Die Vorgaben für neue Mitglieder konnten nicht gespeichert werden. Versuchen Sie es erneut.';
+
+  @override
+  String get setupObligationNone =>
+      'Die geprüften Steuerdaten enthalten für dieses Land noch nichts — fragen Sie Ihre Steuerberatung, was gilt.';
+
+  @override
+  String setupObligationSource(String source) {
+    return 'Quelle: $source';
+  }
+
+  @override
+  String setupObligationThreshold(String effect, String limit) {
+    String _temp0 = intl.Intl.selectLogic(effect, {
+      'immediate':
+          'Die Kleinunternehmerregelung endet mit dem Umsatz, der den Nettoumsatz des Jahres über $limit bringt.',
+      'other':
+          'Die Kleinunternehmerregelung endet mit dem Jahr, dessen Nettoumsatz $limit übersteigt.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupObligationUnconfirmed =>
+      'Für dieses Land nicht bestätigt — fragen Sie Ihre Steuerberatung.';
+
+  @override
+  String setupObligationsTitle(String country) {
+    return 'Was das Gesetz verlangt: $country';
+  }
 
   @override
   String get setupOnlineOpenConfig => 'Einstellungen für Online-Zahlungen';

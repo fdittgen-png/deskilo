@@ -33347,6 +33347,18 @@ abstract class AppLocalizations {
   /// **'The QR code could not be shared. Try again.'**
   String get setupInviteShareFailed;
 
+  /// #2868 setup questions: the saved answers moved since they were read
+  ///
+  /// In en, this message translates to:
+  /// **'Someone else saved other answers meanwhile. Here they are: look again, then apply.'**
+  String get setupJourneyConflict;
+
+  /// #2868 setup questions: who saved the answers last
+  ///
+  /// In en, this message translates to:
+  /// **'Last saved by {name}.'**
+  String setupJourneySavedBy(String name);
+
   /// #2871 setup run steps: setupKioskCurrent
   ///
   /// In en, this message translates to:
@@ -33658,6 +33670,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The new-member defaults could not be saved. Try again.'**
   String get setupNewMembersSaveFailed;
+
+  /// #2868 setup questions: no reference row for the country
+  ///
+  /// In en, this message translates to:
+  /// **'The reviewed tax data holds nothing for this country yet — ask your accountant what applies.'**
+  String get setupObligationNone;
+
+  /// #2868 setup questions: the law a reference row cites
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {source}'**
+  String setupObligationSource(String source);
+
+  /// #2868 setup questions: a small-business VAT limit from the tax reference data
+  ///
+  /// In en, this message translates to:
+  /// **'{effect, select, immediate{The small-business VAT exemption ends on the supply that takes the net turnover of the year past {limit}.} other{The small-business VAT exemption ends with the year whose net turnover passes {limit}.}}'**
+  String setupObligationThreshold(String effect, String limit);
+
+  /// #2868 setup questions: a reference row nobody confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Not confirmed for this country — ask your accountant.'**
+  String get setupObligationUnconfirmed;
+
+  /// #2868 setup questions: the obligations card's title
+  ///
+  /// In en, this message translates to:
+  /// **'What the law asks in {country}'**
+  String setupObligationsTitle(String country);
 
   /// #2871 setup run steps: setupOnlineOpenConfig
   ///

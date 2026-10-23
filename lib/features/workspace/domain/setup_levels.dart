@@ -12,6 +12,9 @@ import 'package:meta/meta.dart';
 
 import 'workspace_feature.dart';
 
+// The plain questions and the rules that turn them into levels.
+export 'setup_recommendation.dart';
+
 /// The owner-facing processes, in the guide's order.
 enum SetupProcess {
   bookings,
@@ -390,93 +393,3 @@ List<String> setupVectorGaps(SetupLevelVector vector) => [
             setupLevelRank(needed, minimum))
           '${process.name}.${level.id} → ${needed.name}.$minimum',
 ];
-
-/// The plain facts the owner states about the space (ADR 0047 §3). Legal
-/// obligations are not asked: they come from the tax reference data.
-class SetupAnswers {
-  const SetupAnswers({
-    this.membersOweMoney = false,
-    this.issueInvoices = false,
-    this.payOnline = false,
-    this.vatRegistered = false,
-    this.keepBooks = false,
-    this.tracksPurchases = false,
-    this.severalRoomsOrSites = false,
-    this.doorTablet = false,
-    this.publicPage = false,
-    this.organised = false,
-  });
-
-  final bool membersOweMoney;
-  final bool issueInvoices;
-  final bool payOnline;
-  final bool vatRegistered;
-  final bool keepBooks;
-  final bool tracksPurchases;
-  final bool severalRoomsOrSites;
-  final bool doorTablet;
-  final bool publicPage;
-
-  /// Committees, custom roles and questions, approvals by several people.
-  final bool organised;
-}
-
-/// One recommended level and the reason it is recommended, by key.
-typedef SetupRecommendation = ({String level, String reason});
-
-/// The levels [answers] call for, each with its reason; every process is
-/// named, and the result never has a gap ([setupVectorGaps] is empty).
-Map<SetupProcess, SetupRecommendation> recommendSetupLevels(
-  SetupAnswers answers,
-) {
-  // Tracking purchases shares their costs on invoices (expenseRepartition).
-  final invoices =
-      answers.issueInvoices ||
-      answers.vatRegistered ||
-      answers.keepBooks ||
-      answers.tracksPurchases;
-  final money =
-      invoices ||
-      answers.membersOweMoney ||
-      answers.payOnline ||
-      answers.tracksPurchases;
-  return {
-    SetupProcess.bookings: answers.doorTablet
-        ? (level: 'measured', reason: 'door_tablet')
-        : answers.severalRoomsOrSites
-        ? (level: 'resources', reason: 'several_rooms')
-        : (level: 'simple', reason: 'shared_places'),
-    SetupProcess.community: answers.organised
-        ? (level: 'organised', reason: 'organised')
-        : (level: 'basic', reason: 'small_community'),
-    SetupProcess.money: invoices
-        ? (
-            level: 'invoices',
-            reason:
-                answers.issueInvoices ||
-                    answers.vatRegistered ||
-                    answers.keepBooks
-                ? 'issues_invoices'
-                : 'tracks_purchases',
-          )
-        : money
-        ? (level: 'statements', reason: 'members_owe')
-        : (level: 'none', reason: 'no_money'),
-    SetupProcess.payments: answers.payOnline
-        ? (level: 'online', reason: 'pay_online')
-        : (level: 'off', reason: 'pay_by_transfer'),
-    SetupProcess.tax: answers.keepBooks
-        ? (level: 'books', reason: 'keeps_books')
-        : answers.vatRegistered
-        ? (level: 'vat', reason: 'vat_registered')
-        : (level: 'none', reason: 'no_vat'),
-    SetupProcess.purchases: answers.tracksPurchases
-        ? (level: 'full', reason: 'tracks_purchases')
-        : (level: 'none', reason: 'no_purchases'),
-    SetupProcess.presentation: answers.publicPage
-        ? (level: 'public', reason: 'public_page')
-        : (level: 'basic', reason: 'members_only'),
-    SetupProcess.operations: (level: 'basic', reason: 'start_simple'),
-    SetupProcess.assistant: (level: 'off', reason: 'later'),
-  };
-}

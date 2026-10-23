@@ -1,0 +1,10 @@
+{
+  "@@locale": "es",
+  "setupObligationsTitle": "Lo que exige la ley en {country}",
+  "setupObligationThreshold": "{effect, select, immediate{La franquicia de IVA para pequeñas empresas termina con la operación que lleva el volumen de negocio neto del año por encima de {limit}.} other{La franquicia de IVA para pequeñas empresas termina con el año cuyo volumen de negocio neto supera {limit}.}}",
+  "setupObligationUnconfirmed": "No confirmado para este país — consulte a su asesor contable.",
+  "setupObligationNone": "Los datos fiscales revisados aún no contienen nada para este país — consulte a su asesor contable qué se aplica.",
+  "setupObligationSource": "Fuente: {source}",
+  "setupJourneyConflict": "Otra persona guardó otras respuestas mientras tanto. Aquí están: revíselas y después aplique.",
+  "setupJourneySavedBy": "Guardado por última vez por {name}."
+}

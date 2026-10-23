@@ -669,5 +669,10 @@
  "webmcpArgKeys": "Clés de paramètres à réinitialiser ; omettre pour tout réinitialiser.",
  "featuresUnavailableIn": "{desc} — non disponible en {country} ; disponible : {list}.",
  "featuresAvailabilityEu": "les États membres de l'UE",
- "setupDemoHtml": "Envie de voir d’abord ? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Ouvrez le guide de mise en place dans la démo</a> : un espace à mi-chemin de sa mise en place, sur cet appareil seulement, rien n’est envoyé."
+ "setupDemoHtml": "Envie de voir d’abord ? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Ouvrez le guide de mise en place dans la démo</a> : un espace à mi-chemin de sa mise en place, sur cet appareil seulement, rien n’est envoyé.",
+ "levelsWhy": "Des questions simples sur votre espace fixent le niveau de chaque processus : ce qu’il fait, jamais plus. L’étape suivante garde chaque interrupteur pour les experts.",
+ "levelsOffline": "Cette page prépare un fichier et fonctionne hors ligne : elle ne voit pas votre espace et ne dit rien de ce qui est prêt. L’application le montre une fois le fichier importé.",
+ "levelsExpertHint": "Chaque réponse fixe à nouveau tous les niveaux. Ajustez un interrupteur précis à l’étape suivante ; les niveaux ici le suivent.",
+ "levelsOk": "Niveaux : {list}.",
+ "levelsUnanswered": "Aucune question répondue : les interrupteurs de l’étape suivante décident."
 }

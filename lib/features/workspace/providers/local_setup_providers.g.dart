@@ -483,3 +483,87 @@ final class WorkspaceReadinessFamily extends $Family
   @override
   String toString() => r'workspaceReadinessProvider';
 }
+
+/// #2868 — the answers and levels saved for the space, or null.
+
+@ProviderFor(setupJourney)
+final setupJourneyProvider = SetupJourneyFamily._();
+
+/// #2868 — the answers and levels saved for the space, or null.
+
+final class SetupJourneyProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<SetupJourney?>,
+          SetupJourney?,
+          FutureOr<SetupJourney?>
+        >
+    with $FutureModifier<SetupJourney?>, $FutureProvider<SetupJourney?> {
+  /// #2868 — the answers and levels saved for the space, or null.
+  SetupJourneyProvider._({
+    required SetupJourneyFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'setupJourneyProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$setupJourneyHash();
+
+  @override
+  String toString() {
+    return r'setupJourneyProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<SetupJourney?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<SetupJourney?> create(Ref ref) {
+    final argument = this.argument as String;
+    return setupJourney(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SetupJourneyProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$setupJourneyHash() => r'3595904aeff9a7c771c159c282ae42cd93d9c424';
+
+/// #2868 — the answers and levels saved for the space, or null.
+
+final class SetupJourneyFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<SetupJourney?>, String> {
+  SetupJourneyFamily._()
+    : super(
+        retry: null,
+        name: r'setupJourneyProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #2868 — the answers and levels saved for the space, or null.
+
+  SetupJourneyProvider call(String workspaceId) =>
+      SetupJourneyProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'setupJourneyProvider';
+}
