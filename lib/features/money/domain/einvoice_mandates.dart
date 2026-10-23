@@ -33,7 +33,7 @@ enum MandateDuty {
 
 /// One dated obligation of one country.
 class EInvoiceMandate {
-  const EInvoiceMandate(this.country, this.duty, this.from);
+  const EInvoiceMandate(this.country, this.duty, this.from, {this.confirmed = false});
 
   /// ISO 3166-1 alpha-2.
   final String country;
@@ -41,6 +41,10 @@ class EInvoiceMandate {
 
   /// The first day the duty applies.
   final DateTime from;
+
+  /// Whether somebody confirmed the row against the law it names; an
+  /// unconfirmed date is shown as such, never as settled.
+  final bool confirmed;
 
   bool inForceOn(DateTime day) => !day.isBefore(from);
 }
@@ -53,7 +57,6 @@ class EInvoiceMandate {
 ///
 /// [country]'s duties in date order -- the ones in force on [today] and
 /// the ones still ahead. Empty for a country with no mandate.
-@visibleForTesting
 List<EInvoiceMandate> mandatesFor(
   String country, {
   String? asOf,
@@ -68,6 +71,7 @@ List<EInvoiceMandate> mandatesFor(
             (d) => d.wire == (row.value as MandateValue).duty,
           ),
           DateTime.parse((row.value as MandateValue).from),
+          confirmed: row.confirmed,
         ),
     ]..sort((a, b) {
         final byDay = a.from.compareTo(b.from);

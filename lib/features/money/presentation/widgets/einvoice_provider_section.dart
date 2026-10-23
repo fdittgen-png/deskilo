@@ -55,7 +55,7 @@ class EInvoiceProviderForm {
   }
 }
 
-String _providerName(AppLocalizations l10n, String provider) =>
+String eInvoiceProviderName(AppLocalizations l10n, String provider) =>
     switch (provider) {
       'peppol' => l10n.eInvoiceProviderPeppol,
       'fr_pa' => l10n.eInvoiceProviderFrPa,
@@ -65,7 +65,7 @@ String _providerName(AppLocalizations l10n, String provider) =>
       _ => l10n.eInvoiceProviderGeneric,
     };
 
-String _fieldLabel(AppLocalizations l10n, String field) => switch (field) {
+String eInvoiceFieldLabel(AppLocalizations l10n, String field) => switch (field) {
   'base_url' => l10n.eInvoiceFieldBaseUrl,
   'api_key' => l10n.eInvoiceFieldApiKey,
   'legal_entity_id' => l10n.eInvoiceFieldLegalEntityId,
@@ -114,7 +114,7 @@ class EInvoiceProviderSection extends StatelessWidget {
               DropdownMenuItem(
                 value: name,
                 child: Text(
-                  _providerName(l10n, name),
+                  eInvoiceProviderName(l10n, name),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -138,7 +138,7 @@ class EInvoiceProviderSection extends StatelessWidget {
             AppTextField(
               key: ValueKey('einvoice-provider-$field'),
               controller: form.controllerFor(field),
-              label: _fieldLabel(l10n, field),
+              label: eInvoiceFieldLabel(l10n, field),
               obscureText: eInvoiceSecretFields.contains(field),
               keyboardType: field.endsWith('_url')
                   ? TextInputType.url

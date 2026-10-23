@@ -15,8 +15,6 @@
 // Pure Dart; the server enforces the same rules in save_book_profile
 // (0335).
 
-import 'package:meta/meta.dart';
-
 import '../../../core/data/json_reader.dart';
 import '../../../core/time/date_text.dart';
 import 'accounting_amount.dart';
@@ -169,7 +167,6 @@ List<BookProfileProblem> validateBookProfile(BookProfile p) => [
 
 /// The version of [issuerSiteId]'s profile in force on [day]: the latest
 /// one effective by then; null before the first, or for another issuer.
-@visibleForTesting
 BookProfile? profileOn(
   List<BookProfile> versions,
   String issuerSiteId,
