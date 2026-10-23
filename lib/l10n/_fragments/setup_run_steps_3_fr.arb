@@ -1,0 +1,18 @@
+{
+  "setupNotificationsWho": "Qui est prévenu de quoi",
+  "setupNotificationsEvent": "{event, select, pending_request{Une demande attend une décision} reservation_cancelled{Une réservation a été supprimée par quelqu’un d’autre} check_in{Une réservation va commencer : il est temps d’arriver} member_note{Un message ou une annonce} member_mention{Quelqu’un le cite dans une conversation} invoice_reminder{Une relance de paiement} other{{event}}}",
+  "setupNotificationsAudience": "{audience, select, deciders{Celui qui décide} members{Les membres} other{{audience}}}",
+  "setupNotificationsLineHow": "{audience} : {channels}",
+  "setupNotificationsChannels": "{channels, select, app{dans l’application} app_push{dans l’application et par une notification sur le téléphone} device{par un rappel sur son propre téléphone, même sans notifications} other{{channels}}}",
+  "setupNotificationsPushOn": "Les notifications sur le téléphone sont activées. Un téléphone les reçoit une fois que l’opérateur a raccordé le push pour ce serveur ; d’ici là, tout reste dans l’application.",
+  "setupNotificationsPushOff": "Les notifications sur le téléphone sont désactivées : tout, sauf le rappel d’arrivée, reste dans l’application.",
+  "setupNotificationsLeadFixed": "Le rappel d’arrivée apparaît {lead} avant le début d’une réservation.",
+  "setupNotificationsSaveFailed": "Le délai du rappel n’a pas pu être enregistré. Réessayez.",
+  "setupNotificationsPreviewWhen": "{lead} avant le début de la réservation, le téléphone du membre affiche :",
+  "setupNotificationsPreviewPlace": "Bureau 4",
+  "setupLimitsSaveFailed": "Les limites de réservation n’ont pas pu être enregistrées. Réessayez.",
+  "setupLimitsPerMember": "Une autorisation fixée sur la page d’un membre passe avant le nombre de places indiqué ici.",
+  "setupLimitsPreviewAhead": "{days, plural, =1{Vous pouvez réserver jusqu’à un jour à l’avance.} other{Vous pouvez réserver jusqu’à {days} jours à l’avance.}}",
+  "setupLimitsPreviewLength": "Une réservation dure au moins {shortest} et au plus {longest}.",
+  "setupLimitsPreviewAtOnce": "{count, plural, =1{Vous pouvez occuper une place à la fois.} other{Vous pouvez occuper jusqu’à {count} places à la fois.}}"
+}

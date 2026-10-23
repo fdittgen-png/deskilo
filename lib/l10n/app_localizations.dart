@@ -33551,6 +33551,36 @@ abstract class AppLocalizations {
   /// **'What your space does'**
   String get setupLevelsTitle;
 
+  /// #2871 setup run steps: setupLimitsPerMember
+  ///
+  /// In en, this message translates to:
+  /// **'An allowance set on a member\'s own page goes before the number of places here.'**
+  String get setupLimitsPerMember;
+
+  /// #2871 setup run steps: setupLimitsPreviewAhead
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}'**
+  String setupLimitsPreviewAhead(int days);
+
+  /// #2871 setup run steps: setupLimitsPreviewAtOnce
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}'**
+  String setupLimitsPreviewAtOnce(int count);
+
+  /// #2871 setup run steps: setupLimitsPreviewLength
+  ///
+  /// In en, this message translates to:
+  /// **'A booking lasts at least {shortest} and at most {longest}.'**
+  String setupLimitsPreviewLength(String shortest, String longest);
+
+  /// #2871 setup run steps: setupLimitsSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The booking limits could not be saved. Try again.'**
+  String get setupLimitsSaveFailed;
+
   /// #2871 setup run steps: setupLookMore
   ///
   /// In en, this message translates to:
@@ -33604,6 +33634,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The new-member defaults could not be saved. Try again.'**
   String get setupNewMembersSaveFailed;
+
+  /// #2871 setup run steps: setupNotificationsAudience
+  ///
+  /// In en, this message translates to:
+  /// **'{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}'**
+  String setupNotificationsAudience(String audience);
+
+  /// #2871 setup run steps: setupNotificationsChannels
+  ///
+  /// In en, this message translates to:
+  /// **'{channels, select, app{in the app} app_push{in the app and as a phone notification} device{as a reminder on their own phone, even without phone notifications} other{{channels}}}'**
+  String setupNotificationsChannels(String channels);
+
+  /// #2871 setup run steps: setupNotificationsEvent
+  ///
+  /// In en, this message translates to:
+  /// **'{event, select, pending_request{A request waits for a decision} reservation_cancelled{A booking was removed by someone else} check_in{A booking is about to start: time to check in} member_note{A message or an announcement} member_mention{Someone names them in a conversation} invoice_reminder{A payment reminder} other{{event}}}'**
+  String setupNotificationsEvent(String event);
+
+  /// #2871 setup run steps: setupNotificationsLeadFixed
+  ///
+  /// In en, this message translates to:
+  /// **'The check-in reminder appears {lead} before a booking starts.'**
+  String setupNotificationsLeadFixed(String lead);
+
+  /// #2871 setup run steps: setupNotificationsLineHow
+  ///
+  /// In en, this message translates to:
+  /// **'{audience}: {channels}'**
+  String setupNotificationsLineHow(String audience, String channels);
+
+  /// #2871 setup run steps: setupNotificationsPreviewPlace
+  ///
+  /// In en, this message translates to:
+  /// **'Desk 4'**
+  String get setupNotificationsPreviewPlace;
+
+  /// #2871 setup run steps: setupNotificationsPreviewWhen
+  ///
+  /// In en, this message translates to:
+  /// **'{lead} before the booking starts, the member\'s phone shows:'**
+  String setupNotificationsPreviewWhen(String lead);
+
+  /// #2871 setup run steps: setupNotificationsPushOff
+  ///
+  /// In en, this message translates to:
+  /// **'Phone notifications are off: everything but the check-in reminder stays in the app.'**
+  String get setupNotificationsPushOff;
+
+  /// #2871 setup run steps: setupNotificationsPushOn
+  ///
+  /// In en, this message translates to:
+  /// **'Phone notifications are on. A phone receives them once the operator has connected push for this server; until then, everything stays in the app.'**
+  String get setupNotificationsPushOn;
+
+  /// #2871 setup run steps: setupNotificationsSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The reminder time could not be saved. Try again.'**
+  String get setupNotificationsSaveFailed;
+
+  /// #2871 setup run steps: setupNotificationsWho
+  ///
+  /// In en, this message translates to:
+  /// **'Who is told what'**
+  String get setupNotificationsWho;
 
   /// #2868 setup questions: no reference row for the country
   ///
@@ -33944,7 +34040,7 @@ abstract class AppLocalizations {
   /// #2869 setup guide: setupStepHint
   ///
   /// In en, this message translates to:
-  /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
+  /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} notifications{Who is told what, and how: in the app, on the phone, as a reminder.} limits{How far ahead, how long and how many places at once members book.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
   String setupStepHint(String key);
 
   /// #2870 setup steps: setupStepLoadFailed
@@ -33968,7 +34064,7 @@ abstract class AppLocalizations {
   /// #2869 setup guide: setupStepTitle
   ///
   /// In en, this message translates to:
-  /// **'{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}'**
+  /// **'{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} notifications{Notifications} limits{Booking limits} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}'**
   String setupStepTitle(String key);
 
   /// Screen-reader announcement when the bar is swiped away (#1173)

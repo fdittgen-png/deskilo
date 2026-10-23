@@ -20088,6 +20088,41 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLevelsTitle => 'Ce que fait votre espace';
 
   @override
+  String get setupLimitsPerMember =>
+      'Une autorisation fixée sur la page d’un membre passe avant le nombre de places indiqué ici.';
+
+  @override
+  String setupLimitsPreviewAhead(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Vous pouvez réserver jusqu’à $days jours à l’avance.',
+      one: 'Vous pouvez réserver jusqu’à un jour à l’avance.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewAtOnce(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Vous pouvez occuper jusqu’à $count places à la fois.',
+      one: 'Vous pouvez occuper une place à la fois.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewLength(String shortest, String longest) {
+    return 'Une réservation dure au moins $shortest et au plus $longest.';
+  }
+
+  @override
+  String get setupLimitsSaveFailed =>
+      'Les limites de réservation n’ont pas pu être enregistrées. Réessayez.';
+
+  @override
   String get setupLookMore => 'Motif, couleurs des salles et logo';
 
   @override
@@ -20128,6 +20163,76 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'Les réglages des nouveaux membres n’ont pas pu être enregistrés. Réessayez.';
+
+  @override
+  String setupNotificationsAudience(String audience) {
+    String _temp0 = intl.Intl.selectLogic(audience, {
+      'deciders': 'Celui qui décide',
+      'members': 'Les membres',
+      'other': '$audience',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsChannels(String channels) {
+    String _temp0 = intl.Intl.selectLogic(channels, {
+      'app': 'dans l’application',
+      'app_push': 'dans l’application et par une notification sur le téléphone',
+      'device':
+          'par un rappel sur son propre téléphone, même sans notifications',
+      'other': '$channels',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsEvent(String event) {
+    String _temp0 = intl.Intl.selectLogic(event, {
+      'pending_request': 'Une demande attend une décision',
+      'reservation_cancelled':
+          'Une réservation a été supprimée par quelqu’un d’autre',
+      'check_in': 'Une réservation va commencer : il est temps d’arriver',
+      'member_note': 'Un message ou une annonce',
+      'member_mention': 'Quelqu’un le cite dans une conversation',
+      'invoice_reminder': 'Une relance de paiement',
+      'other': '$event',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsLeadFixed(String lead) {
+    return 'Le rappel d’arrivée apparaît $lead avant le début d’une réservation.';
+  }
+
+  @override
+  String setupNotificationsLineHow(String audience, String channels) {
+    return '$audience : $channels';
+  }
+
+  @override
+  String get setupNotificationsPreviewPlace => 'Bureau 4';
+
+  @override
+  String setupNotificationsPreviewWhen(String lead) {
+    return '$lead avant le début de la réservation, le téléphone du membre affiche :';
+  }
+
+  @override
+  String get setupNotificationsPushOff =>
+      'Les notifications sur le téléphone sont désactivées : tout, sauf le rappel d’arrivée, reste dans l’application.';
+
+  @override
+  String get setupNotificationsPushOn =>
+      'Les notifications sur le téléphone sont activées. Un téléphone les reçoit une fois que l’opérateur a raccordé le push pour ce serveur ; d’ici là, tout reste dans l’application.';
+
+  @override
+  String get setupNotificationsSaveFailed =>
+      'Le délai du rappel n’a pas pu être enregistré. Réessayez.';
+
+  @override
+  String get setupNotificationsWho => 'Qui est prévenu de quoi';
 
   @override
   String get setupObligationNone =>
@@ -20462,6 +20567,8 @@ class AppLocalizationsFr extends AppLocalizations {
           'Paiement par carte via un prestataire que votre opérateur connecte.',
       'approvals': 'Qui valide les demandes, et combien de personnes doivent être d\'accord.',
       'new_members': 'Ce avec quoi commence un nouveau membre.',
+      'notifications': 'Qui est prévenu de quoi, et comment : dans l’application, sur le téléphone, par un rappel.',
+      'limits': 'Combien de temps à l’avance, pour quelle durée et combien de places à la fois les membres réservent.',
       'kiosk': 'Une tablette à l\'entrée et des badges pour les membres.',
       'purchases': 'Ce que l\'espace achète, et auprès de qui.',
       'lease': 'Le loyer et les charges que l\'espace paie.',
@@ -20509,6 +20616,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'online_payments': 'Paiement en ligne',
       'approvals': 'Validations',
       'new_members': 'Nouveaux membres',
+      'notifications': 'Notifications',
+      'limits': 'Limites de réservation',
       'kiosk': 'Borne et badges',
       'purchases': 'Fournisseurs et achats',
       'lease': 'Votre bail',
