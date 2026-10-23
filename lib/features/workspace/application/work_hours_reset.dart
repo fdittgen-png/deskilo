@@ -14,11 +14,11 @@ Future<void> resetWorkHoursToTemplate(
   await ref
       .read(workspaceRepositoryProvider)
       .setWorkHours(workspaceId, templateHours);
-  ref.invalidate(workHoursProvider);
+  ref.invalidate(workspaceContextProvider); // #2561 L4: the calendar is the context's
 }
 
 Future<void> resetWorkHoursToProductDefault(
     WidgetRef ref, String workspaceId) async {
   await ref.read(workspaceRepositoryProvider).resetWorkHoursToDefault(workspaceId);
-  ref.invalidate(workHoursProvider);
+  ref.invalidate(workspaceContextProvider); // #2561 L4: the calendar is the context's
 }
