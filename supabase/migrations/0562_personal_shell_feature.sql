@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 9999 (#2552) -- the `personalShell` flag: Me as five route-owned destinations
+-- 0562 (#2552) -- the `personalShell` flag: Me as five route-owned destinations
 -- (Overview, My spaces, Discover, Messages, My data) in the personal layer's
 -- own tokens. Platform tier, off by default, a root of its own.
 --
@@ -1072,4 +1072,4 @@ on conflict (key) where owner_workspace_id is null do update
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(562);
