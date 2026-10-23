@@ -18,8 +18,8 @@ void main() {
     expect(mine.widens(nobody), isTrue);
     expect(nobody.widens(mine), isFalse);
     expect(mine.widens(mine), isFalse);
-    const one = FieldAudience(VisibilityAudience.chosenSpaces, ['a']);
-    const two = FieldAudience(VisibilityAudience.chosenSpaces, ['a', 'b']);
+    const one = FieldAudience(VisibilityAudience.chosenSpaces, {'a'});
+    const two = FieldAudience(VisibilityAudience.chosenSpaces, {'a', 'b'});
     expect(two.widens(one), isTrue);
     expect(one.widens(two), isFalse);
     expect(one.widens(nobody), isTrue);
@@ -35,7 +35,7 @@ void main() {
       'about': {'profession': 'Architect', 'bio': 'Plans.'},
     });
     expect(v.of(VisibilityField.identity).audience, VisibilityAudience.signedIn);
-    expect(v.of(VisibilityField.about), const FieldAudience(VisibilityAudience.chosenSpaces, ['ws-2']));
+    expect(v.of(VisibilityField.about), const FieldAudience(VisibilityAudience.chosenSpaces, {'ws-2'}));
     expect(v.of(VisibilityField.reachability).audience, VisibilityAudience.nobody);
     // Not named: the server's default.
     expect(v.of(VisibilityField.presence).audience, VisibilityAudience.nobody);
@@ -70,10 +70,47 @@ void main() {
     expect(() => actions.leave('ws-1', isOwner: true), throwsA(isA<MeRefused>()));
     // A non-chosen audience drops stale spaces rather than sending them.
     await actions.choose(VisibilityField.identity,
-        const FieldAudience(VisibilityAudience.signedIn, ['ws-1']));
+        const FieldAudience(VisibilityAudience.signedIn, {'ws-1'}));
     expect((await repo.myVisibility()).of(VisibilityField.identity).workspaces, isEmpty);
     await actions.saveAbout('  Architect ', ' Plans. ');
     expect(repo.accounts['user-1']!.profession, 'Architect');
+  });
+
+  test('the command refuses an audience the field may not have, as the '
+      'linked command does', () async {
+    final repo = FakeMeRepository();
+    final actions = MeActions(repo, FakeLinkedMeRepository());
+    await expectLater(
+      () => actions.choose(VisibilityField.contactChannels,
+          const FieldAudience(VisibilityAudience.signedIn)),
+      throwsA(isA<MeRefused>().having(
+          (r) => r.reason, 'reason', MeRefusal.audienceNotAllowed)),
+    );
+    expect((await repo.myVisibility()).of(VisibilityField.contactChannels).audience,
+        VisibilityAudience.nobody, reason: 'nothing reached the server');
+  });
+
+  test('a choice of spaces is the same choice in any order, and hashes so', () {
+    const ab = FieldAudience(VisibilityAudience.chosenSpaces, {'a', 'b'});
+    const ba = FieldAudience(VisibilityAudience.chosenSpaces, {'b', 'a'});
+    const ac = FieldAudience(VisibilityAudience.chosenSpaces, {'a', 'c'});
+    expect(ab, ba);
+    expect(ab.hashCode, ba.hashCode);
+    expect(ab, isNot(ac));
+    expect({ab, ba, ac}, hasLength(2));
+  });
+
+  test('reachability is read at the top level, and among the fields only '
+      'when the top level does not carry it', () {
+    final top = MyVisibility.fromJson({
+      'fields': {'reachability': {'audience': 'nobody'}},
+      'reachability': {'audience': 'signed_in'},
+    });
+    expect(top.of(VisibilityField.reachability).audience, VisibilityAudience.signedIn);
+    final fallback = MyVisibility.fromJson({
+      'fields': {'reachability': {'audience': 'nobody'}},
+    });
+    expect(fallback.of(VisibilityField.reachability).audience, VisibilityAudience.nobody);
   });
 
   test('#2211 — contact channels and presence stop at my spaces', () {

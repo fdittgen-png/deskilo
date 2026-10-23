@@ -68,8 +68,12 @@ class MeActions {
   Future<void> publishProfile({required bool publish}) =>
       _repository.setPublicProfile(publish: publish);
 
-  /// Give [field] the audience [choice].
+  /// Give [field] the audience [choice]: one this field may have, and with
+  /// a space when the audience is chosen spaces.
   Future<void> choose(VisibilityField field, FieldAudience choice) {
+    if (!field.allowedAudiences.contains(choice.audience)) {
+      throw const MeRefused(MeRefusal.audienceNotAllowed);
+    }
     if (choice.incomplete) throw const MeRefused(MeRefusal.noSpaceChosen);
     return _repository.setVisibility(
       field,

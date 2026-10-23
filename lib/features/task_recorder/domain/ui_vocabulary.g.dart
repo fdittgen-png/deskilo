@@ -4128,7 +4128,6 @@ const Set<String> uiCommandMessages = {
   'save book profile failed',
   'save format prefs failed',
   'save language failed',
-  'save linked visibility failed',
   'save member employment failed',
   'save preferred payment provider failed',
   'save template failed',

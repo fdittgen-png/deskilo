@@ -23,7 +23,7 @@ Future<void> writeVisibility(
     'p_field': field.wire,
     'p_audience': audience.audience.wire,
     'p_workspaces': audience.audience == VisibilityAudience.chosenSpaces
-        ? audience.workspaces
+        ? audience.workspaces.toList()
         : null,
   },
 );
