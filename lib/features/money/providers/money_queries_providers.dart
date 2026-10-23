@@ -35,6 +35,15 @@ InvoiceQueries invoiceQueries(Ref ref) =>
 MemberAccountQueries memberAccountQueries(Ref ref) =>
     SupabaseMemberAccountQueries(ref.watch(moneyClientProvider));
 
+/// Whether [workspaceId] has issued a document or recorded money, which
+/// fixes its country and currency (0399). Not retried: a page that cannot
+/// tell treats the values as open, and the server still refuses.
+@Riverpod(retry: _noRetry)
+Future<bool> moneyRecorded(Ref ref, String workspaceId) =>
+    ref.watch(memberAccountQueriesProvider).hasRecordedMoney(workspaceId);
+
+Duration? _noRetry(int retryCount, Object error) => null;
+
 /// #2591 C2 — the report template and image library: the preview and the
 /// editor depend on this and on nothing else of the money boundary.
 @Riverpod(keepAlive: true)

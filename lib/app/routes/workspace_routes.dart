@@ -341,6 +341,7 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
             placesStep: SetupPlacesStep.new,
             runPages: setupRunPages,
             growPages: setupGrowPages,
+            moneyRecorded: setupMoneyRecorded,
           ),
     ),
     // #2583 — the overview: what needs the person, then the figures.

@@ -19597,6 +19597,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupGuideNext => 'Next';
 
   @override
+  String setupGuideNoInvoicing(String money) {
+    String _temp0 = intl.Intl.selectLogic(money, {
+      'statements': 'Invoicing is not chosen: members get statements of what they owe and pay against them. No VAT, numbering or e-invoicing is needed, so the guide does not ask for them.',
+      'other': 'Invoicing is not chosen: no VAT, numbering or e-invoicing is needed, so the guide does not ask for them.',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get setupGuideNotInSetup => 'Not in your setup';
 
   @override
@@ -19865,6 +19874,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupLevelsTitle => 'What your space does';
+
+  @override
+  String get setupLockConfirmTitle => 'Before you save';
+
+  @override
+  String setupLockMoneyLocaleConfirm(String country, String currency) {
+    return '$country and $currency become fixed for good once this space issues a document or records money: after that, neither can change. Check them with your accountant if you are unsure.';
+  }
+
+  @override
+  String get setupLockMoneyLocaleFixed =>
+      'Fixed: this space has already issued a document or recorded money, so the country and the currency can no longer change.';
+
+  @override
+  String setupLockNumberingConfirm(String number) {
+    return 'The next invoice will be numbered $number. Once an invoice takes a number from this series, that number is kept for good, the series never goes back, and a date in the number can only be removed together with a new prefix or suffix.';
+  }
+
+  @override
+  String setupLockRegimeConfirm(String regime) {
+    return 'Every invoice keeps the VAT regime it is issued with, for good: “$regime” applies from the next invoice on, and invoices already issued do not change.';
+  }
 
   @override
   String get setupLookMore => 'Pattern, room colours and logo';

@@ -56,6 +56,20 @@ class SupabaseMemberAccountQueries implements MemberAccountQueries {
   }
 
   @override
+  Future<bool> hasRecordedMoney(String workspaceId) async {
+    // The two tables 0399's guard reads, one row each at most.
+    for (final table in const ['invoices', 'ledger_entries']) {
+      final rows = await _client
+          .from(table)
+          .select('id')
+          .eq('workspace_id', workspaceId)
+          .limit(1);
+      if (rows.isNotEmpty) return true;
+    }
+    return false;
+  }
+
+  @override
   Future<List<LedgerEntry>> fetchLedger(String memberId) async {
     final rows = await _client
         .from('ledger_entries')
