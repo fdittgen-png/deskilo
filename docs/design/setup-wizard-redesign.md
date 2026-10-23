@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 # The setup wizard, redesigned for a person who has never run a coworking space
 
-Status: proposal. Facts come from `docs/design/owner-setup-research.md` (read it for the code citations);
+Status: background — the contracts are decided in [ADR 0047](../decisions/0047-the-setup-guide-levels-milestones-and-one-status.md) (#2864), which wins where the two differ. Facts come from `docs/design/owner-setup-research.md` (read it for the code citations);
 the matching guide for owners is `docs/guide/setup/` (the *Setup Guide*).
 Defects found on the way are filed as #2331 (the wizard promises more than the app imports) and #2332
 (configuration mistakes the guards do not catch).

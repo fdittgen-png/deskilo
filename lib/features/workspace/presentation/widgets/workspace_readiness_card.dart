@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/grant_member_essentials.dart';
 import '../../application/set_readiness_aside.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_readiness.dart';
@@ -150,6 +151,27 @@ class WorkspaceReadinessCard extends ConsumerWidget {
     ref.invalidate(workspaceReadinessProvider(workspaceId));
   }
 
+  /// #2865 — the members role gets the everyday permissions in one tap.
+  Future<void> _grantMembers(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    try {
+      await ref.read(memberEssentialsGrantProvider).grant(workspaceId);
+      if (context.mounted) AppSnack.success(context, l10n.readinessGrantMembersDone);
+    } on Object catch (e, st) {
+      TraceLogger.instance.error(
+        'workspace',
+        'grant member essentials failed',
+        error: e,
+        stackTrace: st,
+      );
+      if (context.mounted) AppSnack.error(context, l10n.readinessSetAsideFailed);
+    }
+    // The role matrix lives on the workspace row (see the roles screen).
+    ref
+      ..invalidate(myWorkspacesProvider)
+      ..invalidate(workspaceReadinessProvider(workspaceId));
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (!ref
@@ -212,6 +234,17 @@ class WorkspaceReadinessCard extends ConsumerWidget {
                                 readinessAreaLabel(l10n, next.area),
                               )),
                   ),
+                ),
+              ),
+            if (next != null &&
+                next.area == ReadinessArea.memberPermissions &&
+                next.state != ReadinessState.ready)
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: FilledButton.tonal(
+                  key: const ValueKey('workspace-readiness-grant-members'),
+                  onPressed: () => _grantMembers(context, ref),
+                  child: Text(l10n.readinessGrantMembers),
                 ),
               ),
             ExpansionTile(

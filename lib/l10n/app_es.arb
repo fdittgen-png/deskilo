@@ -2139,6 +2139,8 @@
   "carnetValidity": "Validez (meses, vacío = no caduca)",
   "carnetsEmpty": "Aún no hay bonos.",
   "carnetsTitle": "Bonos",
+  "cashHubInOut": "Entradas y salidas por mes",
+  "cashHubToPay": "Por pagar",
   "chBareLetting": "Solo alquilamos locales desnudos",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -5761,6 +5763,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubCashSubtitle": "Entradas y salidas registradas, y lo que queda por pagar",
+  "hubCashTitle": "Tesorería",
   "hubPurchasesSubtitle": "Lo que el espacio compra y debe: gastos, facturas de proveedores, proveedores, arrendamiento, equipos",
   "hubPurchasesTitle": "Compras",
   "hubSalesSubtitle": "Lo que el espacio vende y factura: servicios, facturas, facturación",
@@ -9298,13 +9302,18 @@
   "overagePolicyPayg": "Cobrar el exceso (pago por uso)",
   "overviewActiveMemberships": "Membresías activas",
   "overviewAllIndicators": "Todos los indicadores",
+  "overviewCurrentState": "Cifra de hoy: no se guarda historial para un periodo pasado.",
   "overviewGroupCapacity": "Capacidad",
   "overviewGroupCash": "Tesorería",
   "overviewGroupPeople": "Personas",
   "overviewGroupPurchases": "Compras",
   "overviewGroupSales": "Ventas",
   "overviewIndicators": "Indicadores clave",
+  "overviewMembershipsDefinition": "Las membresías del espacio activas hoy, todos los roles incluidos: membresías, no personas distintas.",
   "overviewNeedsAttention": "Pendiente",
+  "overviewOverdueBasis": "{count} facturas vencidas; {unknown} sin vencimiento probado y {held} en suspenso, aparte",
+  "overviewOverdueDefinition": "Lo que los miembros aún deben de facturas emitidas pasado su vencimiento probado, tras abonos, pagos parciales y pérdidas, según las reglas de recordatorio. Una factura sin vencimiento probado, o en suspenso, se cuenta aparte y no entra en el importe.",
+  "overviewOverdueTitle": "Cobros vencidos",
   "overviewThisMonth": "Este mes",
   "overviewTitle": "Resumen",
   "overviewUnavailable": "No disponible",
@@ -11065,6 +11074,8 @@
     "description": "#2332: readinessBlockedInvoicing"
   },
   "readinessFirstBookingReady": "Listo para una primera reserva",
+  "readinessGrantMembers": "Permitir que los miembros reserven",
+  "readinessGrantMembersDone": "Los miembros ya pueden reservar, ver el calendario, escribirse y ver su propia cuenta.",
   "readinessLater": "Necesario más adelante",
   "readinessNeededFirst": "Necesario para una primera reserva",
   "readinessNeededInvoicing": "Necesario antes de facturar",

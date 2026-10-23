@@ -3193,6 +3193,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get carnetsTitle => 'Carnets';
 
   @override
+  String get cashHubInOut => 'Entrées et sorties par mois';
+
+  @override
+  String get cashHubToPay => 'À payer';
+
+  @override
   String get chBareLetting => 'Nous ne louons que des locaux nus';
 
   @override
@@ -8006,6 +8012,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Lundi de Pentecôte';
+
+  @override
+  String get hubCashSubtitle =>
+      'Entrées et sorties enregistrées, et ce qui reste à payer';
+
+  @override
+  String get hubCashTitle => 'Trésorerie';
 
   @override
   String get hubPurchasesSubtitle =>
@@ -13759,6 +13772,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get overviewAllIndicators => 'Tous les indicateurs';
 
   @override
+  String get overviewCurrentState =>
+      'Chiffre du jour : aucun historique n\'en est gardé pour une période passée.';
+
+  @override
   String get overviewGroupCapacity => 'Capacité';
 
   @override
@@ -13777,7 +13794,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get overviewIndicators => 'Indicateurs clés';
 
   @override
+  String get overviewMembershipsDefinition =>
+      'Les adhésions de l\'espace actives aujourd\'hui, tous rôles compris : des adhésions, pas des personnes distinctes.';
+
+  @override
   String get overviewNeedsAttention => 'À traiter';
+
+  @override
+  String overviewOverdueBasis(String count, String unknown, String held) {
+    return '$count factures échues ; $unknown sans échéance prouvée et $held suspendues, à part';
+  }
+
+  @override
+  String get overviewOverdueDefinition =>
+      'Ce que les membres doivent encore sur les factures émises dont l\'échéance prouvée est dépassée, après avoirs, paiements partiels et pertes, selon les règles de relance. Une facture sans échéance prouvée, ou suspendue, est comptée à part et n\'entre pas dans le montant.';
+
+  @override
+  String get overviewOverdueTitle => 'Créances échues';
 
   @override
   String get overviewThisMonth => 'Ce mois-ci';
@@ -16101,6 +16134,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get readinessFirstBookingReady => 'Prêt pour une première réservation';
+
+  @override
+  String get readinessGrantMembers => 'Permettre aux membres de réserver';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Les membres peuvent maintenant réserver, voir le calendrier, s’écrire et voir leur compte.';
 
   @override
   String get readinessLater => 'Nécessaire plus tard';

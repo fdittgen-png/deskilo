@@ -128,13 +128,13 @@ void main() {
     final view = accountingView(money.invoices, money.invoiceMatchesStore);
     expect(view.invoices.any((i) => i.kind == InvoiceKind.settlement), isFalse);
     expect(view.matches.keys.toSet(), {x, y});
-    final fec = buildFecFile(
+    final fec = buildFecFile(FecRequest(
       invoices: view.invoices,
       matches: view.matches,
       company: const InvoiceParty(name: 'ws'),
       accounts: const FecAccounts(),
       lineText: (l) => l.label,
-    );
+    ));
     expect(fec, isNot(contains(settlement.number)));
     for (final id in [x, y]) {
       final number = money.invoices.firstWhere((i) => i.id == id).number;

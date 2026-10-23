@@ -3193,6 +3193,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get carnetsTitle => 'Mehrfachkarten';
 
   @override
+  String get cashHubInOut => 'Ein- und Ausgänge nach Monat';
+
+  @override
+  String get cashHubToPay => 'Zu zahlen';
+
+  @override
   String get chBareLetting => 'Wir vermieten nur Räume';
 
   @override
@@ -7993,6 +7999,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Pfingstmontag';
+
+  @override
+  String get hubCashSubtitle =>
+      'Erfasste Ein- und Ausgänge und was noch zu zahlen ist';
+
+  @override
+  String get hubCashTitle => 'Geld';
 
   @override
   String get hubPurchasesSubtitle =>
@@ -13746,6 +13759,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get overviewAllIndicators => 'Alle Kennzahlen';
 
   @override
+  String get overviewCurrentState =>
+      'Heutiger Wert: für einen vergangenen Zeitraum wird kein Verlauf gespeichert.';
+
+  @override
   String get overviewGroupCapacity => 'Kapazität';
 
   @override
@@ -13764,7 +13781,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get overviewIndicators => 'Kennzahlen';
 
   @override
+  String get overviewMembershipsDefinition =>
+      'Die heute aktiven Mitgliedschaften des Raums, alle Rollen eingeschlossen: Mitgliedschaften, nicht einzelne Personen.';
+
+  @override
   String get overviewNeedsAttention => 'Zu erledigen';
+
+  @override
+  String overviewOverdueBasis(String count, String unknown, String held) {
+    return '$count Rechnungen überfällig; $unknown ohne belegte Fälligkeit und $held angehalten, gesondert';
+  }
+
+  @override
+  String get overviewOverdueDefinition =>
+      'Was Mitglieder auf ausgestellte Rechnungen nach ihrer belegten Fälligkeit noch schulden, nach Gutschriften, Teilzahlungen und Abschreibungen, nach den Mahnregeln. Eine Rechnung ohne belegte Fälligkeit oder mit Mahnsperre wird gesondert gezählt und ist nicht im Betrag.';
+
+  @override
+  String get overviewOverdueTitle => 'Überfällige Forderungen';
 
   @override
   String get overviewThisMonth => 'Dieser Monat';
@@ -16090,6 +16123,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get readinessFirstBookingReady => 'Bereit für eine erste Buchung';
+
+  @override
+  String get readinessGrantMembers => 'Mitglieder buchen lassen';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Mitglieder können jetzt buchen, den Kalender sehen, einander schreiben und ihr eigenes Konto sehen.';
 
   @override
   String get readinessLater => 'Später nötig';

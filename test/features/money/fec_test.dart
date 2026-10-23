@@ -60,13 +60,13 @@ List<Map<String, String>> _rows({
   Map<String, InvoiceMatch> matches = const {},
   FecAccounts accounts = const FecAccounts(),
 }) {
-  final file = buildFecFile(
+  final file = buildFecFile(FecRequest(
     invoices: invoices ?? [_invoice()],
     matches: matches,
     company: _company,
     accounts: accounts,
     lineText: (line) => invoiceLineText(const ReportStrings(), line),
-  );
+  ));
   final lines = file.split('\r\n');
   final header = lines.first.split('\t');
   return [
@@ -78,13 +78,13 @@ List<Map<String, String>> _rows({
 void main() {
   test('the first line is the 18 mandated columns, in the mandated order',
       () {
-    final file = buildFecFile(
+    final file = buildFecFile(FecRequest(
       invoices: [_invoice()],
       matches: const {},
       company: _company,
       accounts: const FecAccounts(),
       lineText: (line) => invoiceLineText(const ReportStrings(), line),
-    );
+    ));
 
     expect(file.split('\r\n').first.split('\t'), fecColumns);
     expect(fecColumns, hasLength(18));
