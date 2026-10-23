@@ -26,6 +26,7 @@ import '../../money/providers/money_providers.dart';
 import '../application/process_status.dart';
 import '../domain/attention.dart';
 import '../domain/member.dart';
+import '../domain/setup_status.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/workspace_readiness.dart';
@@ -144,34 +145,61 @@ Future<List<Attention>> attention(Ref ref) async {
     if (ref
         .watch(myPermissionsProvider)
         .contains(WorkspacePermission.manageConfiguration)) {
-      try {
-        final sections =
-            await ref.watch(workspaceReadinessProvider(workspace.id).future);
-        for (final s in sections) {
-          if (!s.required ||
-              s.area == ReadinessArea.unknown ||
-              s.state == ReadinessState.ready ||
-              s.state == ReadinessState.notApplicable) {
-            continue;
-          }
-          items.add(
-            Attention(
-              kind: AttentionKind.configuration,
-              subject: readinessSectionCode(s.area) ?? '',
-              action: AttentionAction.setUp,
-              waitingSince: now,
-              route: s.route,
-            ),
-          );
-        }
-      } on Object catch (e, st) {
-        // The readiness card says the same thing on its own screen; a
-        // refusal here must not cost the person the rest of the list.
-        TraceLogger.instance.warn('workspace', 'attention: readiness unread',
-            error: e, stackTrace: st);
-      }
+      items.addAll(await _setupLines(ref, workspace.id, now));
     }
   }
 
   return rankAttention(items);
+}
+
+/// The setup a configurer still owes the space. #2867 — with the setup
+/// guide on, the steps its next milestone can take now, by the guide's
+/// own status; without it, the required readiness sections.
+Future<List<Attention>> _setupLines(
+  Ref ref,
+  String workspaceId,
+  DateTime now,
+) async {
+  try {
+    if (ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.setupGuide)) {
+      final status =
+          await ref.watch(workspaceSetupStatusProvider(workspaceId).future);
+      return [
+        for (final s in status.toDo)
+          if (s.state == SetupStepState.needsConfiguration)
+            Attention(
+              kind: AttentionKind.configuration,
+              subject: s.step,
+              action: AttentionAction.setUpStep,
+              waitingSince: now,
+              route: s.route,
+            ),
+      ];
+    }
+    final sections =
+        await ref.watch(workspaceReadinessProvider(workspaceId).future);
+    return [
+      for (final s in sections)
+        if (s.required &&
+            s.area != ReadinessArea.unknown &&
+            s.state != ReadinessState.ready &&
+            s.state != ReadinessState.notApplicable)
+          Attention(
+            kind: AttentionKind.configuration,
+            subject: readinessSectionCode(s.area) ?? '',
+            action: AttentionAction.setUp,
+            waitingSince: now,
+            route: s.route,
+          ),
+    ];
+  } on Object catch (e, st) {
+    // The guide and the readiness card say the same thing on their own
+    // screens; a refusal here must not cost the person the rest of the
+    // list.
+    TraceLogger.instance.warn('workspace', 'attention: setup unread',
+        error: e, stackTrace: st);
+    return const [];
+  }
 }
