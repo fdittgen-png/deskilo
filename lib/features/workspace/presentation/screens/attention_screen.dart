@@ -133,6 +133,8 @@ String _attentionTitle(AppLocalizations l10n, Attention item) =>
       AttentionAction.setUp => l10n.attentionSetUp(
           readinessAreaLabel(l10n, readinessAreaOf(item.subject)),
         ),
+      AttentionAction.setUpStep =>
+        l10n.attentionSetUp(l10n.setupStepTitle(item.subject)),
       AttentionAction.unblock => l10n.attentionUnblock(
           item.count,
           featureName(
@@ -153,5 +155,6 @@ String attentionRoute(Attention item) =>
       AttentionAction.admit => '/members',
       AttentionAction.issue => '/invoicing/wizard',
       AttentionAction.setUp => '/workspace-settings',
+      AttentionAction.setUpStep => '/setup',
       AttentionAction.unblock => '/features',
     };
