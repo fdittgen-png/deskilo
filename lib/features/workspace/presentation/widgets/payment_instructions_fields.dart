@@ -70,6 +70,21 @@ class PaymentInstructionsDraft {
     wise: wise.text,
   );
 
+  /// Puts [p] into the fields (#2869: a restored setup draft).
+  void fill(PaymentInstructions p) {
+    iban.text = p.iban;
+    accountNumber.text = p.accountNumber;
+    bankCode.text = p.bankCode;
+    bankName.text = p.bankName;
+    bic.text = p.bic;
+    qrIban.text = p.qrIban;
+    paypalMe.text = p.paypalMe;
+    reference.text = p.reference;
+    wero.text = p.wero;
+    lydia.text = p.lydia;
+    wise.text = p.wise;
+  }
+
   void dispose() {
     for (final c in _all) {
       c.dispose();

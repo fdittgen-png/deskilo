@@ -6,7 +6,9 @@
 // sit above this one in the feature graph (`test/lint/feature_layers.yaml`):
 // the router hands their pages in as builders, and this file gives each one
 // what only this feature knows (the workspace row, the switched-on
-// features, who the members are, what the owner may do) as plain values.
+// features, who the members are, what the owner may do) as plain values,
+// and to the pages whose form holds unsaved answers, the frame that keeps
+// them as the step's draft (#2869).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,11 +16,13 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/setup_draft_form.dart';
 import '../../domain/member.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
+import 'setup_draft_frame.dart';
 import 'setup_kiosk_step.dart';
 import 'setup_payment_methods_step.dart';
 
@@ -26,6 +30,7 @@ typedef SetupPricingBuilder = Widget Function({
   required String workspaceId,
   required String currencyCode,
   required bool carnetsOn,
+  required SetupDraftFrameBuilder draft,
 });
 
 /// A member's checkout on an unpaid statement, with or without the
@@ -63,6 +68,7 @@ typedef SetupPurchaseSideBuilder = Widget Function({
 typedef SetupPublicPageBuilder = Widget Function({
   required String workspaceId,
   required String workspaceName,
+  required SetupDraftFrameBuilder draft,
 });
 
 class SetupRunPages {
@@ -114,6 +120,7 @@ class SetupRunPages {
     'public_page' => publicPage(
       workspaceId: workspace.id,
       workspaceName: workspace.name,
+      draft: setupDraftFrameFor(workspace.id, stepId),
     ),
     'kiosk' => SetupKioskStep(workspace: workspace, greeting: kioskGreeting),
     _ => null,
@@ -153,6 +160,7 @@ class _PricingHost extends ConsumerWidget {
     carnetsOn: ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.carnets),
+    draft: setupDraftFrameFor(workspace.id, 'pricing'),
   );
 }
 

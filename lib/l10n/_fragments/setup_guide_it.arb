@@ -17,11 +17,14 @@
   "setupGuideUnavailable": "Non è stato possibile leggere lo stato della configurazione. Riprovi tra poco.",
   "setupGuideResume": "Riprenda",
   "setupGuideProgress": "{ready} su {required} fatti",
-  "setupGuideEstimate": "circa {minutes} min",
+  "setupGuideEstimate": "circa {low}–{high} min",
   "setupGuideWaitsFor": "Attende: {steps}",
   "setupGuideBanner": "{milestone}: {ready} su {required} fatti · Prossimo: {step}",
   "setupGuideMarkDone": "Segnare come fatto",
-  "setupGuideUntil": "Circa {minutes} min a: {milestone}",
+  "setupGuideUntil": "Circa {low}–{high} min a: {milestone}",
   "setupGuideTryDemo": "Provarlo nella demo",
-  "setupGuideReturn": "Torna alla guida di configurazione"
+  "setupGuideReturn": "Torna alla guida di configurazione",
+  "setupGuideAddMore": "Aggiunga altro al suo spazio",
+  "setupGuideNotInSetup": "Non nella sua configurazione",
+  "setupGuideAddIt": "Lo aggiunga"
 }

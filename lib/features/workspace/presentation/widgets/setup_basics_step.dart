@@ -8,8 +8,6 @@
 // and has not saved is kept as the step's draft on the server (#2869):
 // reopening the page, here or on another device, puts it back over the
 // stored values; Save applies it and drops it.
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,19 +17,17 @@ import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/save_workspace_basics.dart';
-import '../../application/setup_draft_autosave.dart';
 import '../../domain/feature_countries.dart';
-import '../../domain/setup_step_draft.dart';
 import '../../domain/workspace.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_change_confirm.dart';
 import 'invite_sheet.dart';
 import 'setup_basics_preview.dart';
-import 'setup_draft_bar.dart';
+import 'setup_draft_frame.dart';
 
 class SetupBasicsStep extends ConsumerStatefulWidget {
   const SetupBasicsStep({super.key, required this.workspace});
@@ -51,24 +47,13 @@ class _SetupBasicsStepState extends ConsumerState<SetupBasicsStep> {
   late final _language = ValueNotifier<String>(widget.workspace.defaultLocale);
   final _busy = ValueNotifier<bool>(false);
 
-  late final _draft = setupDraftAutosaveProvider(widget.workspace.id, 'basics');
-
-  /// The form shows answers restored from the draft.
-  final _restored = ValueNotifier<bool>(false);
-
-  /// Set while the page itself fills the form: that is not an edit.
-  var _filling = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // The draft lives as long as the page; leaving sends what is pending.
-    ref.listenManual(_draft, (_, _) {});
-    for (final field in [_country, _currency, _timezone, _language]) {
-      field.addListener(_edited);
-    }
-    unawaited(_restore());
-  }
+  late final _draft = SetupDraftForm(
+    edits: Listenable.merge([_country, _currency, _timezone, _language]),
+    answers: () => _answers.toDraft(),
+    fill: (answers) => _fill(
+      answers == null ? _stored : WorkspaceBasics.fromDraft(answers, _stored),
+    ),
+  );
 
   WorkspaceBasics get _answers => WorkspaceBasics(
     countryCode: _country.value,
@@ -84,54 +69,15 @@ class _SetupBasicsStepState extends ConsumerState<SetupBasicsStep> {
     language: widget.workspace.defaultLocale,
   );
 
-  void _edited() {
-    if (_filling) return;
-    ref.read(_draft.notifier).changed(_answers.toDraft());
-  }
-
   void _fill(WorkspaceBasics basics) {
-    _filling = true;
     _country.value = basics.countryCode;
     _currency.text = basics.currencyCode;
     _timezone.text = basics.timezone;
     _language.value = basics.language;
-    _filling = false;
-  }
-
-  Future<void> _restore() async {
-    final SetupStepDraft? draft;
-    try {
-      draft = await ref.read(_draft.notifier).load();
-    } on Object catch (e, st) {
-      // The stored values stay; the next save tells a conflict apart.
-      TraceLogger.instance.warn('workspace', 'setup draft not read',
-          error: e, stackTrace: st);
-      return;
-    }
-    if (draft == null || !mounted) return;
-    _fill(WorkspaceBasics.fromDraft(draft.payload, _stored));
-    _restored.value = true;
-  }
-
-  Future<void> _discard() async {
-    _restored.value = false;
-    _fill(_stored);
-    await ref.read(_draft.notifier).discard();
-  }
-
-  /// After a conflict: the other configurer's answers, or the stored
-  /// values when they discarded the draft.
-  void _reload(SetupStepDraft? theirs) {
-    _fill(
-      theirs == null ? _stored : WorkspaceBasics.fromDraft(theirs.payload, _stored),
-    );
-    _restored.value = theirs != null;
-    ref.read(_draft.notifier).reloaded();
   }
 
   @override
   void dispose() {
-    _restored.dispose();
     _country.dispose();
     _currency.dispose();
     _timezone.dispose();
@@ -178,8 +124,7 @@ class _SetupBasicsStepState extends ConsumerState<SetupBasicsStep> {
     if (!ok) return;
     AppSnack.success(context, l10n.workspaceSettingsSaved);
     // Applied: the answers are configuration now, not a draft.
-    _restored.value = false;
-    await ref.read(_draft.notifier).discard();
+    await _draft.applied();
   }
 
   @override
@@ -196,29 +141,23 @@ class _SetupBasicsStepState extends ConsumerState<SetupBasicsStep> {
     return SetupStepLayout(
       form: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SetupDraftBar(
-              draft: _draft,
-              restored: _restored,
-              onDiscard: _discard,
-              onReload: _reload,
+        child: SetupDraftFrame(
+          workspaceId: widget.workspace.id,
+          step: 'basics',
+          form: _draft,
+          child: ValueListenableBuilder<bool>(
+            valueListenable: _busy,
+            builder: (context, busy, _) => _BasicsForm(
+              name: widget.workspace.name,
+              country: _country,
+              currency: _currency,
+              timezone: _timezone,
+              language: _language,
+              busy: busy,
+              onCountry: _pickCountry,
+              onSave: _save,
             ),
-            ValueListenableBuilder<bool>(
-              valueListenable: _busy,
-              builder: (context, busy, _) => _BasicsForm(
-                name: widget.workspace.name,
-                country: _country,
-                currency: _currency,
-                timezone: _timezone,
-                language: _language,
-                busy: busy,
-                onCountry: _pickCountry,
-                onSave: _save,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
       preview: preview,

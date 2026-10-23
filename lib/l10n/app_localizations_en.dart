@@ -19555,6 +19555,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupGrowVatUsualTitle => 'Your country\'s usual rates';
 
   @override
+  String get setupGuideAddIt => 'Add it';
+
+  @override
+  String get setupGuideAddMore => 'Add more to your space';
+
+  @override
   String get setupGuideAllDone => 'Your space has everything you chose.';
 
   @override
@@ -19574,8 +19580,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupGuideDone => 'Done';
 
   @override
-  String setupGuideEstimate(int minutes) {
-    return 'about $minutes min';
+  String setupGuideEstimate(int low, int high) {
+    return 'about $low–$high min';
   }
 
   @override
@@ -19589,6 +19595,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupGuideNext => 'Next';
+
+  @override
+  String get setupGuideNotInSetup => 'Not in your setup';
 
   @override
   String get setupGuideOptional => 'More for your space';
@@ -19618,8 +19627,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'The setup status could not be read. Try again in a moment.';
 
   @override
-  String setupGuideUntil(int minutes, String milestone) {
-    return 'About $minutes min until: $milestone';
+  String setupGuideUntil(int low, int high, String milestone) {
+    return 'About $low–$high min until: $milestone';
   }
 
   @override
