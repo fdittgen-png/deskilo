@@ -113,3 +113,34 @@ Future<Uint8List> buildLayoutPdf({
 );
 
 Object? _nonEmpty(Object? v) => v == null || '$v'.isEmpty ? null : v;
+
+/// #2898 — every image a rendered [document] names: its `<image>`
+/// elements and the `![name]` lines of its `<markup>`, which is band
+/// markup and prints a band's pictures.
+Set<String> layoutDocumentImageNames(LayoutDocument document) {
+  final names = {...doc.layoutImageNames(document)};
+  void walk(List<LayoutElement> elements) {
+    for (final element in elements) {
+      if (element is LayoutMarkup) {
+        names.addAll(reportImageRefs(InvoiceReport(
+            header: const [],
+            body: parseReportMarkup(element.source),
+            footer: const [])));
+      } else if (element is LayoutBox) {
+        walk(element.children);
+      } else if (element is LayoutColumns) {
+        element.columns.forEach(walk);
+      }
+    }
+  }
+
+  for (final zone in [
+    document.header,
+    document.continuation,
+    document.body,
+    document.footer,
+  ]) {
+    walk(zone.children);
+  }
+  return names;
+}

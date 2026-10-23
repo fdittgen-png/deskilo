@@ -7,16 +7,20 @@
 // #2898 — a level's background photo prints under the plan where the
 // editor shows it: contain-fit to the whole canvas, at the editor's
 // opacity, the plan on top. A photo that cannot be read prints the plan
-// exactly as without one.
+// exactly as without one. [levelReportPlans] reads every level with its
+// plan and photo for a report, so each printed report draws them alike.
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../domain/floor_plan.dart';
+import '../domain/level.dart';
+import '../providers/floor_plan_providers.dart';
 import 'widgets/floor_plan_painter.dart';
 import 'widgets/plan_canvas.dart';
 
@@ -108,4 +112,25 @@ Future<ui.Image?> _photoOf(
     );
     return null;
   }
+}
+
+/// #2898 — every level in order with its plan, and the picture of each
+/// plan that has something to draw, keyed by level id: drawn through
+/// [reportPlanPngs], the photo read the way the editor reads it.
+Future<({List<({Level level, FloorPlan plan})> levels, Map<String, Uint8List> pngs})>
+    levelReportPlans(WidgetRef ref, {required ColorScheme colors}) async {
+  final levels = <({Level level, FloorPlan plan})>[
+    for (final level in await ref.read(levelsProvider.future))
+      (level: level, plan: await ref.read(floorPlanProvider(level.id).future)),
+  ];
+  final pngs = await reportPlanPngs(
+    {for (final entry in levels) entry.level.id: entry.plan},
+    colors: colors,
+    photoLevels: {
+      for (final entry in levels)
+        if (entry.level.hasBackground) entry.level.id,
+    },
+    background: (id) => ref.read(levelBackgroundProvider(id).future),
+  );
+  return (levels: levels, pngs: pngs);
 }
