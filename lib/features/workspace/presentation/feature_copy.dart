@@ -276,6 +276,7 @@ String _lateDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
         WorkspaceFeature.biReportDesigner => l10n.featureBiReportDesignerDesc,
         WorkspaceFeature.purchaseAnalytics => l10n.featurePurchaseAnalyticsDesc,
         WorkspaceFeature.workspaceOverview => l10n.featureWorkspaceOverviewDesc,
+        WorkspaceFeature.setupGuide => l10n.featureSetupGuideDesc,
       _ => feature.name,
     };
 

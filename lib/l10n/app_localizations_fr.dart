@@ -5902,6 +5902,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'workspace_code': 'Code de l\'espace',
       'x': 'X',
       'y': 'Y',
+      'field': 'Champ',
+      'value': 'Valeur',
+      'process': 'Processus',
+      'feature': 'Fonction',
+      'on': 'Activée',
       'other': '$key',
     });
     return '$_temp0';
@@ -5982,6 +5987,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'einvoice_inbox': 'Factures électroniques reçues',
       'guest_participations': 'Visites d\'invités',
       'rights_requests': 'Demandes RGPD',
+      'overview': 'Vue d\'ensemble',
+      'features': 'Fonctions',
       'other': '$key',
     });
     return '$_temp0';
@@ -5990,6 +5997,64 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get exportUncertifiedSoftware =>
       'Conforme à la spécification publiée, mais DesKilo n’est pas un logiciel certifié dans ce pays — vérifiez avec votre comptable si cela vous est imposé.';
+
+  @override
+  String exportValueName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'reserved': 'Réservé',
+      'checkedIn': 'Arrivé',
+      'completed': 'Terminé',
+      'cancelled': 'Annulé',
+      'released': 'Libéré',
+      'active': 'Actif',
+      'paused': 'En pause',
+      'pending': 'En attente',
+      'exited': 'Parti',
+      'applied': 'Appliqué',
+      'confirmed': 'Confirmé',
+      'rejected': 'Refusé',
+      'expired': 'Expiré',
+      'created': 'Créé',
+      'modified': 'Modifié',
+      'submitted': 'Soumis',
+      'approved': 'Approuvé',
+      'accepted': 'Accepté',
+      'declined': 'Refusé',
+      'charge': 'Débit',
+      'credit': 'Crédit',
+      'subscription': 'Abonnement',
+      'overage': 'Hors forfait',
+      'expense': 'Dépense',
+      'payment': 'Paiement',
+      'adjustment': 'Ajustement',
+      'service': 'Service',
+      'package': 'Forfait',
+      'refund': 'Remboursement',
+      'reimbursement': 'Défraiement',
+      'seat': 'Place',
+      'room': 'Salle',
+      'parking': 'Parking',
+      'standard': 'Standard',
+      'ev': 'Électrique',
+      'accessible': 'Accessible',
+      'workspace': 'Espace de travail',
+      'n': 'Nord',
+      'e': 'Est',
+      's': 'Sud',
+      'w': 'Ouest',
+      'blocked': 'Non autorisé',
+      'payg': 'Payé à l\'usage',
+      'none': 'Non',
+      'passive': 'Successeur',
+      'founder': 'Fondateur',
+      'invited': 'Invité',
+      'full': 'Facture',
+      'usage': 'Consommation',
+      'settlement': 'Règlement',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get featureAccessorySupplements => 'Suppléments d\'accessoires';
@@ -6946,6 +7011,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureSettlementFoldTitle => 'Factures regroupées repliées';
+
+  @override
+  String get featureSetupGuideDesc =>
+      'Une seule liste de tâches, de la création de l\'espace à son ouverture : ce qui est fait, ce qui vient ensuite et pourquoi, au niveau que vous choisissez pour chaque partie de l\'espace.';
+
+  @override
+  String get featureSetupGuideTitle => 'Guide de mise en place';
 
   @override
   String get featureSingleRoomLevelNamesDesc =>
@@ -19175,6 +19247,170 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settlementVatNote =>
       'Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.';
+
+  @override
+  String get setupGuideAllDone =>
+      'Votre espace a tout ce que vous avez choisi.';
+
+  @override
+  String setupGuideBanner(
+    String milestone,
+    int ready,
+    int required,
+    String step,
+  ) {
+    return '$milestone : $ready sur $required faits · Ensuite : $step';
+  }
+
+  @override
+  String get setupGuideDeferred => 'Mis de côté';
+
+  @override
+  String get setupGuideDone => 'Fait';
+
+  @override
+  String setupGuideEstimate(int minutes) {
+    return 'environ $minutes min';
+  }
+
+  @override
+  String get setupGuideLater => 'Pour une étape suivante';
+
+  @override
+  String get setupGuideNext => 'Ensuite';
+
+  @override
+  String get setupGuideOptional => 'Plus pour votre espace';
+
+  @override
+  String setupGuideProgress(int ready, int required) {
+    return '$ready sur $required faits';
+  }
+
+  @override
+  String get setupGuideResume => 'Reprendre';
+
+  @override
+  String get setupGuideTitle => 'Guide de mise en place';
+
+  @override
+  String get setupGuideToDo => 'Ce qu\'il reste à faire';
+
+  @override
+  String get setupGuideUnavailable =>
+      'L\'état de la mise en place n\'a pas pu être lu. Réessayez dans un instant.';
+
+  @override
+  String get setupGuideWaiting => 'En attente';
+
+  @override
+  String setupGuideWaitsFor(String steps) {
+    return 'Attend : $steps';
+  }
+
+  @override
+  String setupMilestoneName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'bookable': 'Prendre des réservations',
+      'money': 'Prêt pour l\'argent',
+      'invoice': 'Prêt à facturer',
+      'live': 'En service',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupStateName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'ready': 'Fait',
+      'needsConfiguration': 'À faire',
+      'blocked': 'Attend une autre étape',
+      'needsOperator': 'Votre opérateur intervient',
+      'notApplicable': 'Non utilisé',
+      'deferred': 'Mis de côté',
+      'unknown': 'Inconnu',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupStepHint(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'basics': 'Le nom de l\'espace et son lieu : les dates, la monnaie et les jours fériés en découlent.',
+      'hours':
+          'Quand les membres peuvent réserver : jours, heures et fermetures.',
+      'places':
+          'Dessinez les salles, bureaux et places que les membres réservent.',
+      'member_rights': 'Permettez aux membres de réserver, de voir le calendrier et leur compte.',
+      'invite': 'Partagez le code de l\'espace ou envoyez des invitations.',
+      'pricing': 'Ce que coûte une place, un abonnement ou une journée.',
+      'services':
+          'Café, impressions, casiers : ce que les membres peuvent ajouter.',
+      'payment_methods':
+          'Vos coordonnées bancaires et vos instructions de paiement.',
+      'online_payments':
+          'Paiement par carte via un prestataire que votre opérateur connecte.',
+      'approvals': 'Qui valide les demandes, et combien de personnes doivent être d\'accord.',
+      'new_members': 'Ce avec quoi commence un nouveau membre.',
+      'kiosk': 'Une tablette à l\'entrée et des badges pour les membres.',
+      'purchases': 'Ce que l\'espace achète, et auprès de qui.',
+      'lease': 'Le loyer et les charges que l\'espace paie.',
+      'assets': 'Ce que l\'espace possède et comment cela se déprécie.',
+      'look': 'Les couleurs de l\'espace et ses propres mots.',
+      'public_page':
+          'Ce que les personnes extérieures à l\'espace peuvent voir.',
+      'legal_identity': 'Les mentions que chaque facture doit porter.',
+      'vat': 'Les taux que vous appliquez et vos déclarations.',
+      'numbering': 'Comment les numéros de facture sont construits.',
+      'documents': 'Votre en-tête sur les factures et les courriers.',
+      'einvoicing': 'L\'envoi des factures par la plateforme de facturation électronique.',
+      'accounting': 'Le plan comptable et les exports pour votre comptable.',
+      'reminders': 'Quand et comment les factures impayées sont relancées.',
+      'first_booking': 'Réservez une place comme le ferait un membre.',
+      'recovery': 'Exportez une fois les données de l\'espace.',
+      'assistant':
+          'Laissez un assistant IA aider, toujours avec votre confirmation.',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupStepTitle(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'basics': 'Nom, pays et fuseau horaire',
+      'hours': 'Horaires d\'ouverture',
+      'places': 'Places sur le plan',
+      'member_rights': 'Ce que les membres peuvent faire',
+      'invite': 'Inviter des membres',
+      'pricing': 'Tarifs et formules',
+      'services': 'Services',
+      'payment_methods': 'Comment les membres paient',
+      'online_payments': 'Paiement en ligne',
+      'approvals': 'Validations',
+      'new_members': 'Nouveaux membres',
+      'kiosk': 'Borne et badges',
+      'purchases': 'Fournisseurs et achats',
+      'lease': 'Votre bail',
+      'assets': 'Équipements',
+      'look': 'Couleurs et vocabulaire',
+      'public_page': 'Page publique',
+      'legal_identity': 'Identité légale',
+      'vat': 'TVA',
+      'numbering': 'Numérotation des factures',
+      'documents': 'Présentation des factures',
+      'einvoicing': 'Facturation électronique',
+      'accounting': 'Comptabilité',
+      'reminders': 'Relances',
+      'first_booking': 'Une première réservation',
+      'recovery': 'Une copie de vos données',
+      'assistant': 'Assistant',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get shellBarHiddenAnnounce => 'Barre de navigation masquée';

@@ -54,11 +54,16 @@ class ReportReminderSlot extends ReportSlot {
 
 /// One report the designer can edit and the exchange format can carry.
 class ReportKind {
-  const ReportKind({required this.id, required this.slot});
+  const ReportKind({required this.id, required this.slot,
+      this.numbersFirstPage = false});
 
   /// The id used in the editor, the export file and every widget key.
   final String id;
   final ReportSlot slot;
+
+  /// #2862 — a report read as a whole ("Page 1/5" on every page) rather
+  /// than a letter, whose number starts on page 2.
+  final bool numbersFirstPage;
 
   bool get isReminder => slot is ReportReminderSlot;
 }
@@ -77,7 +82,8 @@ const List<ReportKind> fixedReportKinds = [
   ReportKind(id: 'usage', slot: ReportDocSlot('usage')),
   ReportKind(id: 'workspace', slot: ReportDocSlot('workspace')),
   ReportKind(id: 'bi_analytics', slot: ReportDocSlot('bi_analytics')),
-  ReportKind(id: 'workspace_configuration', slot: ReportDocSlot('workspace_configuration')),
+  ReportKind(id: 'workspace_configuration', slot: ReportDocSlot('workspace_configuration'),
+      numbersFirstPage: true),
   // #934 — the treasurer's view over a range of months.
   ReportKind(id: 'status', slot: ReportDocSlot('status')),
   // #878 — the period's VAT positions, for the accountant.

@@ -4,11 +4,13 @@
 // analytics module they may read, grouped Capacity / Sales / Purchases /
 // Cash, each the module's own figure; a figure the server cannot give says
 // so, never 0; the memberships only for who manages the members.
+import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/features/workspace/domain/attention.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/cost_allocation_rules.dart';
 import 'package:deskilo/features/workspace/domain/kpi_overview.dart';
 import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
+import 'package:deskilo/features/workspace/domain/setup_status.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/presentation/screens/workspace_overview_screen.dart';
@@ -71,8 +73,12 @@ List<Override> _overrides({
   required Set<WorkspaceFeature> features,
   required Set<WorkspacePermission> rights,
   List<Attention> attention = const [],
+  SetupStatus? setup,
 }) => [
-  ...standardTestOverrides(workspace: FakeWorkspaceRepository.withWorkspace()),
+  ...standardTestOverrides(
+    workspace: FakeWorkspaceRepository.withWorkspace(),
+    localSetup: setup == null ? null : FakeLocalSetupRepository(status: setup),
+  ),
   enabledFeaturesSyncProvider.overrideWithValue(features),
   myPermissionsProvider.overrideWithValue(rights),
   attentionProvider.overrideWith((ref) async => attention),
@@ -207,5 +213,56 @@ void main() {
     });
     expect(f.value, isNull);
     expect(f.reasons, contains('amount_not_exact'));
+  });
+
+  group('#2869 — an unfinished setup', () {
+    final open = SetupStatus.fromJson({
+      'steps': [
+        {
+          'step': 'places',
+          'milestone': 'bookable',
+          'required': true,
+          'state': 'needs_configuration',
+          'route': '/editor',
+        },
+      ],
+      'milestones': [
+        {
+          'milestone': 'bookable',
+          'applies': true,
+          'required': 1,
+          'ready': 0,
+          'reached': false,
+        },
+      ],
+    });
+
+    testWidgets('a configurer sees where to resume first', (tester) async {
+      await pumpApp(
+        tester,
+        const WorkspaceOverviewScreen(),
+        overrides: _overrides(
+          features: const {WorkspaceFeature.setupGuide},
+          rights: const {WorkspacePermission.manageConfiguration},
+          setup: open,
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('setup-resume-banner')), findsOneWidget);
+    });
+
+    testWidgets('someone who cannot configure does not', (tester) async {
+      await pumpApp(
+        tester,
+        const WorkspaceOverviewScreen(),
+        overrides: _overrides(
+          features: const {WorkspaceFeature.setupGuide},
+          rights: const {},
+          setup: open,
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('setup-resume-banner')), findsNothing);
+    });
   });
 }

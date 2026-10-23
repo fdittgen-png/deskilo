@@ -338,4 +338,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     defaultOn: false,
   ),
+  // #2869 (ADR 0047 §7) — the setup guide: one task list from creation to
+  // go-live at the completeness the owner chooses. Core and on: off, the
+  // settings cards and the get-started line stay exactly as they were.
+  WorkspaceFeature.setupGuide: FeatureManifestEntry(
+    feature: WorkspaceFeature.setupGuide,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.core,
+  ),
 };

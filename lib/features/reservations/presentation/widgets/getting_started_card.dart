@@ -11,7 +11,7 @@ import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../workspace/providers/local_setup_providers.dart';
+import '../../../workspace/presentation/widgets/setup_resume_banner.dart';
 import '../../application/getting_started_hint.dart';
 import '../getting_started_copy.dart';
 
@@ -39,7 +39,7 @@ GettingStartedHint? _visibleGettingStartedHint(
   final readiness = workspaceId != null &&
           (standing == MembershipStanding.owner ||
               standing == MembershipStanding.administrator)
-      ? ref.watch(workspaceReadinessProvider(workspaceId)).value
+      ? watchWorkspaceReadiness(ref, workspaceId)
       : null;
   final hint = chooseGettingStartedHint(facts,
       dismissed: seenKey == null || dismissed.contains(seenKey),
@@ -68,6 +68,18 @@ class ReserveHelpHost extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // #2869 (ADR 0047 §6) — for whoever configures the space, the setup
+    // guide's banner takes the slot while a milestone is still open.
+    final standing = facts.membership.known ? facts.membership.value : null;
+    if (setupResumeBannerFor(
+          ref,
+          workspaceId,
+          configures: standing == MembershipStanding.owner ||
+              standing == MembershipStanding.administrator,
+        )
+        case final banner?) {
+      return banner;
+    }
     final next = _visibleGettingStartedHint(ref,
         facts: facts, seenKey: seenKey, workspaceId: workspaceId);
     if (next == null) return const HelpHint(HelpHintId.reserve);

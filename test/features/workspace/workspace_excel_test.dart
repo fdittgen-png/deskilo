@@ -104,7 +104,7 @@ void main() {
     ];
 
     expect(sheets.map((s) => s.name).toList(), [
-      'Workspace', 'Levels', 'Desks', 'Seats', 'Users', 'Reservations',
+      'Overview', 'Features', 'Levels', 'Desks', 'Seats', 'Users', 'Reservations',
       'Check-ins', 'Payments', 'Services', 'Service catalog', 'Invoices',
       'Offices', 'Ledger', 'Events', 'Decisions', 'Invoice lines',
     ]);
@@ -128,8 +128,15 @@ void main() {
     expect(row('Payments', 2)['state'], 'online (captured)');
     expect(row('Payments', 2)['provider'], 'paypal');
 
-    // The workspace row names its enabled features.
-    expect(row('Workspace', 1)['enabled_features'], 'dataExport, moneyTab');
+    // #2861 — the workspace is an Overview of fields, and every feature is
+    // a row of the Features sheet, by process, with whether it is on.
+    expect(row('Overview', 1), {'field': 'name', 'value': workspace.name});
+    final features = sheets.singleWhere((s) => s.name == 'Features').rows;
+    expect(
+      features.where((r) => r[1] == 'moneyTab').single,
+      ['billingPayments', 'moneyTab', true],
+    );
+    expect(features.where((r) => r[1] == 'invoicing').single[2], isFalse);
 
     // #2859 — a source the workbook declares whole writes every row it
     // was given; dropping rows from the builder fails here, not silently.
@@ -141,7 +148,7 @@ void main() {
             .where(where ?? (_) => true)
             .length;
     final written = <String, (int, int)>{
-      'workspaces': (rowsOf('Workspace'), 1),
+      'workspaces': (rowsOf('Overview'), 12),
       'levels': (rowsOf('Levels'), levels.length),
       'desks': (rowsOf('Desks'), plan.desks.length),
       'seats': (rowsOf('Seats'), plan.seats.length),

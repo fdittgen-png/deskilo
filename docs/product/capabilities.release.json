@@ -1427,6 +1427,12 @@
       "capabilities": []
     },
     {
+      "key": "setupGuide",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "singleRoomLevelNames",
       "maturity": "beta",
       "lifecycle": "active",

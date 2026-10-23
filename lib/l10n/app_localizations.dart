@@ -9938,7 +9938,7 @@ abstract class AppLocalizations {
   /// #2861 workspace export: exportColumnName
   ///
   /// In en, this message translates to:
-  /// **'{key, select, action{Action} active{Active} actor{Done by} address{Address} admin{Administrator} amenities{Amenities} amount{Amount} area_kind{Area type} blocked_from{Blocked from} blocked_to{Blocked until} bookable_as_whole{Bookable as a whole} by_system{Automatic} capacity{Capacity} category{Category} chair{Chair} checked_in_at{Checked in} checked_out_at{Checked out} city{City} co_owner{Co-owner} color{Colour} company{Company} country{Country} created_at{Recorded on} currency{Currency} decided_at{Decided on} decided_by{Decided by} decision{Decision} decisions{Decisions} description{Description} desk{Desk} detailed{Detailed} details{Details} due_on{Due on} email{E-mail} enabled_features{Features on} ends_at{Ends} event_id{Request} event_type{Request type} first_name{First name} height{Height} id{Id} invoice{Invoice} issued_at{Issued on} issued_by{Issued by} joined_at{Member since} kind{Type} kiosk{Kiosk} label{Wording} last_name{Last name} last_seen{Last seen} last_sent_at{Last sent} legal_id{Registration number} level{Level} line{Line} member{Member} member_id{Member id} member_number{Member number} minutes_present{Minutes present} name{Name} net{Net} number{Number} occurred_on{Date} office{Room} order_id{Order} orientation{Orientation} overage_policy{When over quota} owner{Owner} parking_kind{Parking type} payment_terms{Payment terms} period{Period} phone{Phone} postal_code{Postcode} price{Price} provider{Provider} quantity{Quantity} recorded_at{Recorded on} replaces{Replaces} reservation_id{Booking} resource_kind{Place type} series_id{Series} series_pattern{Repeats} signed_amount{Effect on balance} slot_minutes{Slot (minutes)} sort_order{Order} source_invoice{From invoice} space{Place} starts_at{Starts} state{State} status{Status} street{Street} subject{Concerns} subscription_pct{Subscription (%)} timezone{Time zone} title{Title} total{Total} type{Type} vat{VAT} vat_by_rate{VAT by rate} vat_category{VAT category} vat_id{VAT number} vat_percent{VAT %} vat_regime{VAT regime} vat_treatment{VAT treatment} voided_at{Cancelled on} whatsapp{WhatsApp} width{Width} workspace_code{Workspace code} x{X} y{Y} other{{key}}}'**
+  /// **'{key, select, action{Action} active{Active} actor{Done by} address{Address} admin{Administrator} amenities{Amenities} amount{Amount} area_kind{Area type} blocked_from{Blocked from} blocked_to{Blocked until} bookable_as_whole{Bookable as a whole} by_system{Automatic} capacity{Capacity} category{Category} chair{Chair} checked_in_at{Checked in} checked_out_at{Checked out} city{City} co_owner{Co-owner} color{Colour} company{Company} country{Country} created_at{Recorded on} currency{Currency} decided_at{Decided on} decided_by{Decided by} decision{Decision} decisions{Decisions} description{Description} desk{Desk} detailed{Detailed} details{Details} due_on{Due on} email{E-mail} enabled_features{Features on} ends_at{Ends} event_id{Request} event_type{Request type} first_name{First name} height{Height} id{Id} invoice{Invoice} issued_at{Issued on} issued_by{Issued by} joined_at{Member since} kind{Type} kiosk{Kiosk} label{Wording} last_name{Last name} last_seen{Last seen} last_sent_at{Last sent} legal_id{Registration number} level{Level} line{Line} member{Member} member_id{Member id} member_number{Member number} minutes_present{Minutes present} name{Name} net{Net} number{Number} occurred_on{Date} office{Room} order_id{Order} orientation{Orientation} overage_policy{When over quota} owner{Owner} parking_kind{Parking type} payment_terms{Payment terms} period{Period} phone{Phone} postal_code{Postcode} price{Price} provider{Provider} quantity{Quantity} recorded_at{Recorded on} replaces{Replaces} reservation_id{Booking} resource_kind{Place type} series_id{Series} series_pattern{Repeats} signed_amount{Effect on balance} slot_minutes{Slot (minutes)} sort_order{Order} source_invoice{From invoice} space{Place} starts_at{Starts} state{State} status{Status} street{Street} subject{Concerns} subscription_pct{Subscription (%)} timezone{Time zone} title{Title} total{Total} type{Type} vat{VAT} vat_by_rate{VAT by rate} vat_category{VAT category} vat_id{VAT number} vat_percent{VAT %} vat_regime{VAT regime} vat_treatment{VAT treatment} voided_at{Cancelled on} whatsapp{WhatsApp} width{Width} workspace_code{Workspace code} x{X} y{Y} field{Field} value{Value} process{Process} feature{Feature} on{On} other{{key}}}'**
   String exportColumnName(String key);
 
   /// #1868 - accounting capability: no complete posted books
@@ -9950,7 +9950,7 @@ abstract class AppLocalizations {
   /// #2861 workspace export: exportSheetName
   ///
   /// In en, this message translates to:
-  /// **'{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} other{{key}}}'**
+  /// **'{key, select, about{About this export} workspace{Workspace} levels{Levels} desks{Desks} seats{Places} users{Members} reservations{Bookings} check_ins{Attendance} payments{Payments} services{Services used} service_catalog{Service prices} invoices{Invoices} offices{Rooms} ledger{Member accounts} events{Requests} decisions{Decisions} invoice_lines{Invoice lines} sites{Sites} plans{Plans} fee_bands{Fee bands} packages{Packages} credit_products{Carnet types} vat_rates{VAT rates} accessories{Accessories} seat_accessories{Place accessories} closure_days{Closure days} validation_policies{Approval rules} workspace_roles{Roles} workspace_role_members{Role holders} workspace_field_definitions{Questions} workspace_field_values{Answers} number_sequences{Number sequences} charging_stations{Charging stations} plan_images{Plan images} setting_values{Settings} member_credits{Carnets} member_credit_uses{Carnet uses} price_negotiations{Price negotiations} quota_extensions{Quota extensions} usage_records{Usage} invoice_matches{Invoice settlements} invoice_reminders{Reminders} invoice_dunning_holds{Reminder holds} tax_exemption_certificates{Exemption certificates} suppliers{Suppliers} purchase_documents{Purchase documents} purchase_lines{Purchase lines} purchase_obligations{Amounts to pay} outgoing_payments{Outgoing payments} expense_schedules{Scheduled expenses} expense_occurrences{Expense dates} expense_repartitions{Shared costs} premises_leases{Leases} lease_terms{Lease terms} lease_settlements{Lease settlements} room_rentals{Room rentals} room_rental_fees{Room rental fees} workspace_assets{Assets} asset_valuation_batches{Asset valuations} asset_valuation_rows{Asset valuation lines} book_profiles{Book profiles} book_accounts{Chart of accounts} book_mappings{Account mappings} book_periods{Accounting periods} vat_declarations{VAT returns} einvoice_inbox{Received e-invoices} guest_participations{Guest visits} rights_requests{Privacy requests} overview{Overview} features{Features} other{{key}}}'**
   String exportSheetName(String key);
 
   /// #669 - accounting export formats
@@ -9958,6 +9958,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.'**
   String get exportUncertifiedSoftware;
+
+  /// #2861 workspace export: a status or type value as the reader reads it
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, reserved{Booked} checkedIn{Checked in} completed{Completed} cancelled{Cancelled} released{Released} active{Active} paused{Paused} pending{Pending} exited{Left} applied{Applied} confirmed{Confirmed} rejected{Declined} expired{Expired} created{Created} modified{Changed} submitted{Submitted} approved{Approved} accepted{Accepted} declined{Declined} charge{Charge} credit{Credit} subscription{Subscription} overage{Over quota} expense{Expense} payment{Payment} adjustment{Adjustment} service{Service} package{Package} refund{Refund} reimbursement{Reimbursement} seat{Seat} room{Room} parking{Parking} standard{Standard} ev{Electric} accessible{Accessible} workspace{Workspace} n{North} e{East} s{South} w{West} blocked{Not allowed} payg{Pay as you go} none{No} passive{Successor} founder{Founder} invited{Invited} full{Invoice} usage{Usage} settlement{Settlement} other{{key}}}'**
+  String exportValueName(String key);
 
   /// Feature switch: bill priced seat accessories on monthly statements (#170)
   ///
@@ -11548,6 +11554,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Regrouped invoices fold'**
   String get featureSettlementFoldTitle;
+
+  /// #2869 setup guide feature description
+  ///
+  /// In en, this message translates to:
+  /// **'One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space.'**
+  String get featureSetupGuideDesc;
+
+  /// #2869 setup guide feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Setup guide'**
+  String get featureSetupGuideTitle;
 
   /// #1273 single-room level names: the feature switch description
   ///
@@ -32351,6 +32369,125 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
   String get settlementVatNote;
+
+  /// #2869 setup guide: setupGuideAllDone
+  ///
+  /// In en, this message translates to:
+  /// **'Your space has everything you chose.'**
+  String get setupGuideAllDone;
+
+  /// #2869 setup guide: setupGuideBanner
+  ///
+  /// In en, this message translates to:
+  /// **'{milestone}: {ready} of {required} done · Next: {step}'**
+  String setupGuideBanner(
+    String milestone,
+    int ready,
+    int required,
+    String step,
+  );
+
+  /// #2869 setup guide: setupGuideDeferred
+  ///
+  /// In en, this message translates to:
+  /// **'Set aside'**
+  String get setupGuideDeferred;
+
+  /// #2869 setup guide: setupGuideDone
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get setupGuideDone;
+
+  /// #2869 setup guide: setupGuideEstimate
+  ///
+  /// In en, this message translates to:
+  /// **'about {minutes} min'**
+  String setupGuideEstimate(int minutes);
+
+  /// #2869 setup guide: setupGuideLater
+  ///
+  /// In en, this message translates to:
+  /// **'For a later milestone'**
+  String get setupGuideLater;
+
+  /// #2869 setup guide: setupGuideNext
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get setupGuideNext;
+
+  /// #2869 setup guide: setupGuideOptional
+  ///
+  /// In en, this message translates to:
+  /// **'More for your space'**
+  String get setupGuideOptional;
+
+  /// #2869 setup guide: setupGuideProgress
+  ///
+  /// In en, this message translates to:
+  /// **'{ready} of {required} done'**
+  String setupGuideProgress(int ready, int required);
+
+  /// #2869 setup guide: setupGuideResume
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get setupGuideResume;
+
+  /// #2869 setup guide: setupGuideTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Setup guide'**
+  String get setupGuideTitle;
+
+  /// #2869 setup guide: setupGuideToDo
+  ///
+  /// In en, this message translates to:
+  /// **'What it still needs'**
+  String get setupGuideToDo;
+
+  /// #2869 setup guide: setupGuideUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'The setup status could not be read. Try again in a moment.'**
+  String get setupGuideUnavailable;
+
+  /// #2869 setup guide: setupGuideWaiting
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get setupGuideWaiting;
+
+  /// #2869 setup guide: setupGuideWaitsFor
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for: {steps}'**
+  String setupGuideWaitsFor(String steps);
+
+  /// #2869 setup guide: setupMilestoneName
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}'**
+  String setupMilestoneName(String key);
+
+  /// #2869 setup guide: setupStateName
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}'**
+  String setupStateName(String key);
+
+  /// #2869 setup guide: setupStepHint
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
+  String setupStepHint(String key);
+
+  /// #2869 setup guide: setupStepTitle
+  ///
+  /// In en, this message translates to:
+  /// **'{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}'**
+  String setupStepTitle(String key);
 
   /// Screen-reader announcement when the bar is swiped away (#1173)
   ///

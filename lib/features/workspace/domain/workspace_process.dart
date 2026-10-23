@@ -217,6 +217,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.configurableSettings,
       WorkspaceFeature.workspaceLibrary,
       WorkspaceFeature.instanceWizard,
+      // #2869 — the setup guide: how an owner configures the whole space.
+      WorkspaceFeature.setupGuide,
     ]),
     WorkspaceSubprocess('experience', [
       // #1247 — what needs a person, ranked. Under operations because

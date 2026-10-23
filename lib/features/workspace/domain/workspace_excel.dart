@@ -15,6 +15,7 @@ import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
 import 'member.dart';
 import 'workspace.dart';
+import 'workspace_overview_sheets.dart';
 
 /// The data export's workbook (#395): one tab per dataset, one row per
 /// record, every stored detail a client may read.
@@ -128,7 +129,7 @@ class _ExcelExport {
       cents / Currencies.minorPerMajor(workspace.currencyCode));
 
   List<XlsxSheet> sheets() => [
-        _workspace(),
+        ...workspaceOverviewSheets(workspace, enabledFeatures),
         _levels(),
         _desks(),
         _seats(),
@@ -140,22 +141,6 @@ class _ExcelExport {
         _servicecatalog(),
         _invoices(),
       ];
-
-  XlsxSheet _workspace() =>
-      XlsxSheet(name: 'Workspace', rows: [
-    [
-      'id', 'name', 'country', 'currency', 'timezone', 'workspace_code',
-      'vat_regime', 'vat_id', 'legal_id', 'street', 'postal_code',
-      'city', 'enabled_features',
-    ],
-    [
-      workspace.id, workspace.name, workspace.countryCode,
-      workspace.currencyCode, workspace.timezone, workspace.inviteCode,
-      workspace.vatRegime, workspace.vatId, workspace.legalId,
-      workspace.street, workspace.postalCode, workspace.city,
-      (enabledFeatures.toList()..sort()).join(', '),
-    ],
-  ]);
 
   XlsxSheet _levels() =>
       XlsxSheet(name: 'Levels', rows: [
@@ -271,7 +256,7 @@ class _ExcelExport {
   // Confirmed / unconfirmed / online in ONE tab, told apart by `state`
   // — the reconciliation view the request asked for is a filter away.
   XlsxSheet _payments() =>
-      XlsxSheet(name: 'Payments', rows: [
+      XlsxSheet(name: 'Payments', totals: 'total', rows: [
     [
       'state', 'member', 'amount', 'currency', 'period', 'occurred_on',
       'recorded_at', 'description', 'provider', 'order_id',
@@ -303,7 +288,7 @@ class _ExcelExport {
   ]);
 
   XlsxSheet _services() =>
-      XlsxSheet(name: 'Services', rows: [
+      XlsxSheet(name: 'Services', totals: 'total', rows: [
     [
       'state', 'member', 'description', 'amount', 'currency', 'period',
       'recorded_at',
@@ -337,7 +322,7 @@ class _ExcelExport {
   ]);
 
   XlsxSheet _invoices() =>
-      XlsxSheet(name: 'Invoices', rows: [
+      XlsxSheet(name: 'Invoices', totals: 'total', rows: [
     [
       'number', 'member', 'period', 'issued_at', 'total', 'currency',
       'voided_at', 'replaces', 'detailed', 'last_sent_at', 'kind', 'title',
@@ -436,7 +421,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
     ]),
     // Every row of the member accounts: a charge is what a member owes, a
     // credit what settles it — the signed amount sums to the balance.
-    XlsxSheet(name: 'Ledger', rows: [
+    XlsxSheet(name: 'Ledger', totals: 'total', rows: [
       [
         'id', 'member', 'kind', 'category', 'amount', 'signed_amount',
         'currency', 'period', 'occurred_on', 'recorded_at', 'description',
@@ -473,7 +458,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
             if (x.accept) 'accepted' else 'declined', x.bySystem, _at(x.at),
           ],
     ]),
-    XlsxSheet(name: 'Invoice lines', rows: [
+    XlsxSheet(name: 'Invoice lines', totals: 'total', rows: [
       [
         'invoice', 'line', 'label', 'kind', 'quantity', 'amount',
         'currency', 'vat_percent', 'vat_category', 'source_invoice',

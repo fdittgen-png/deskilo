@@ -15,6 +15,9 @@ class ExportLabels {
     required this.sheet,
     required this.column,
     required this.about,
+    this.value,
+    this.process,
+    this.feature,
   });
 
   /// A sheet's name by its key; the key itself when there is none.
@@ -25,7 +28,32 @@ class ExportLabels {
 
   /// The About sheet's own words.
   final ExportAboutLabels about;
+
+  /// A status or type value by its stored word; the word itself when there
+  /// is none. Only the columns in [_exportValueColumns] are read through it.
+  final String Function(String key)? value;
+
+  /// A process's and a feature's name by their keys (the Features sheet).
+  final String Function(String key)? process;
+  final String Function(String key)? feature;
 }
+
+/// #2861 — the columns that hold a stored word (a status, a kind) rather
+/// than a name or a free text: the reader sees them in their language.
+const _exportValueColumns = {
+  'status',
+  'kind',
+  'category',
+  'state',
+  'decision',
+  'action',
+  'resource_kind',
+  'parking_kind',
+  'area_kind',
+  'orientation',
+  'overage_policy',
+  'co_owner',
+};
 
 /// The About sheet's words.
 class ExportAboutLabels {
@@ -71,9 +99,15 @@ String _word(String Function(String) lookup, String key) {
   return word.isEmpty || word == key ? _humanize(key) : word;
 }
 
-/// [sheets] with their names and header rows in [labels]' words; the rows
+/// Whether [header] names an identifier (`id`, `member_id`): a reader
+/// looks for the names and amounts first, so these go last.
+bool _isIdColumn(Object? header) =>
+    header is String && (header == 'id' || header.endsWith('_id'));
+
+/// [sheets] with their names and header rows in [labels]' words, their
+/// id columns last and a totals row's label translated; the cells
 /// themselves are unchanged. Names stay unique after Excel's 31-character
-/// cut.
+/// cut. The CSV copy keeps the builders' order.
 List<XlsxSheet> localizeExportSheets(
   List<XlsxSheet> sheets,
   ExportLabels labels,
@@ -92,8 +126,25 @@ List<XlsxSheet> localizeExportSheets(
     return candidate;
   }
 
+  // The lookup a column's stored words are read through, if any.
+  String Function(String)? lookupFor(Object? column) => switch (column) {
+    'field' => labels.column,
+    'process' => labels.process,
+    'feature' => labels.feature,
+    final String c when _exportValueColumns.contains(c) => labels.value,
+    _ => null,
+  };
+
+  List<Object?> values(List<Object?> header, List<Object?> row) => [
+    for (final (i, cell) in row.indexed)
+      switch (i < header.length ? lookupFor(header[i]) : null) {
+        final lookup? when cell is String => _word(lookup, cell),
+        _ => cell,
+      },
+  ];
+
   return [
-    for (final s in sheets)
+    for (final s in sheets.map(_idsLast))
       XlsxSheet(
         name: unique(_word(labels.sheet, exportKeyOf(s.name))),
         rows: [
@@ -102,10 +153,35 @@ List<XlsxSheet> localizeExportSheets(
               for (final h in s.rows.first)
                 if (h is String) _word(labels.column, h) else h,
             ],
-          ...s.rows.skip(1),
+          for (final row in s.rows.skip(1)) values(s.rows.first, row),
         ],
+        totals: s.totals == null ? null : _word(labels.column, s.totals!),
       ),
   ];
+}
+
+/// [sheet] with its id columns moved after the others, in their order.
+XlsxSheet _idsLast(XlsxSheet sheet) {
+  if (sheet.rows.isEmpty) return sheet;
+  final header = sheet.rows.first;
+  final order = [
+    for (final (i, h) in header.indexed)
+      if (!_isIdColumn(h)) i,
+    for (final (i, h) in header.indexed)
+      if (_isIdColumn(h)) i,
+  ];
+  return XlsxSheet(
+    name: sheet.name,
+    totals: sheet.totals,
+    rows: [
+      for (final row in sheet.rows)
+        [
+          for (final i in order) if (i < row.length) row[i] else null,
+          // A row longer than its header keeps its extra cells.
+          ...row.skip(header.length),
+        ],
+    ],
+  );
 }
 
 /// The first sheet: what this export is, then one line per sheet with its
