@@ -32567,6 +32567,24 @@ abstract class AppLocalizations {
   /// **'Waits for: {steps}'**
   String setupGuideWaitsFor(String steps);
 
+  /// #2870 setup steps: setupInvitePreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'Each invitation you send carries its own single-use code in place of the space\'s ID.'**
+  String get setupInvitePreviewNote;
+
+  /// #2870 setup steps: setupInvitePreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'The invitation, as your members receive it'**
+  String get setupInvitePreviewTitle;
+
+  /// #2870 setup steps: setupInviteShareFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The QR code could not be shared. Try again.'**
+  String get setupInviteShareFailed;
+
   /// #2868 setup levels: setupLevelName
   ///
   /// In en, this message translates to:
@@ -32687,17 +32705,89 @@ abstract class AppLocalizations {
   /// **'{key, select, door_tablet{a tablet at the door checks people in} keeps_books{you keep accounting books} later{an assistant can come later} members_only{only members see the space} members_owe{members owe the space money} no_money{no money changes hands} no_purchases{the space buys nothing it tracks} no_vat{the space is not registered for VAT} organised{several people decide together} pay_by_transfer{members pay by transfer} pay_online{members pay online} public_page{the space has a public page} several_rooms{there are several rooms or sites} shared_places{members share the places} small_community{a small community} start_simple{start simple} tracks_purchases{you track what the space buys} vat_registered{the space is registered for VAT} issues_invoices{you issue invoices} other{{key}}}'**
   String setupReason(String key);
 
+  /// #2870 setup steps: setupRightsApplied
+  ///
+  /// In en, this message translates to:
+  /// **'Members already hold these rights.'**
+  String get setupRightsApplied;
+
+  /// #2870 setup steps: setupRightsApplyFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The rights could not be changed. Try again.'**
+  String get setupRightsApplyFailed;
+
+  /// #2870 setup steps: setupRightsNeedsManageRoles
+  ///
+  /// In en, this message translates to:
+  /// **'Only someone who manages roles can change what members may do.'**
+  String get setupRightsNeedsManageRoles;
+
+  /// #2870 setup steps: setupRightsOpenRoles
+  ///
+  /// In en, this message translates to:
+  /// **'Fine-tune in Roles'**
+  String get setupRightsOpenRoles;
+
+  /// #2870 setup steps: setupRightsPresetBody
+  ///
+  /// In en, this message translates to:
+  /// **'Members get exactly these rights, and nothing that manages the space:'**
+  String get setupRightsPresetBody;
+
+  /// #2870 setup steps: setupRightsPresetTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Members can book'**
+  String get setupRightsPresetTitle;
+
+  /// #2870 setup steps: setupRightsPreviewAdmin
+  ///
+  /// In en, this message translates to:
+  /// **'Members can also manage parts of the space. Check this in Roles.'**
+  String get setupRightsPreviewAdmin;
+
+  /// #2870 setup steps: setupRightsPreviewNone
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet: members cannot book.'**
+  String get setupRightsPreviewNone;
+
+  /// #2870 setup steps: setupRightsPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What a member can do'**
+  String get setupRightsPreviewTitle;
+
   /// #2869 setup guide: setupStateName
   ///
   /// In en, this message translates to:
   /// **'{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}'**
   String setupStateName(String key);
 
+  /// #2870 setup steps: setupStepElsewhere
+  ///
+  /// In en, this message translates to:
+  /// **'This step is done on its own screen.'**
+  String get setupStepElsewhere;
+
   /// #2869 setup guide: setupStepHint
   ///
   /// In en, this message translates to:
   /// **'{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space\'s code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space\'s colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space\'s data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}'**
   String setupStepHint(String key);
+
+  /// #2870 setup steps: setupStepOpenScreen
+  ///
+  /// In en, this message translates to:
+  /// **'Open it'**
+  String get setupStepOpenScreen;
+
+  /// #2870 setup steps: setupStepPreviewTitle
+  ///
+  /// In en, this message translates to:
+  /// **'What your members will see'**
+  String get setupStepPreviewTitle;
 
   /// #2869 setup guide: setupStepTitle
   ///

@@ -19181,6 +19181,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get setupInvitePreviewNote =>
+      'Each invitation you send carries its own single-use code in place of the space\'s ID.';
+
+  @override
+  String get setupInvitePreviewTitle =>
+      'The invitation, as your members receive it';
+
+  @override
+  String get setupInviteShareFailed =>
+      'The QR code could not be shared. Try again.';
+
+  @override
   String setupLevelName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookings_simple': 'Shared places',
@@ -19353,6 +19365,37 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get setupRightsApplied => 'Members already hold these rights.';
+
+  @override
+  String get setupRightsApplyFailed =>
+      'The rights could not be changed. Try again.';
+
+  @override
+  String get setupRightsNeedsManageRoles =>
+      'Only someone who manages roles can change what members may do.';
+
+  @override
+  String get setupRightsOpenRoles => 'Fine-tune in Roles';
+
+  @override
+  String get setupRightsPresetBody =>
+      'Members get exactly these rights, and nothing that manages the space:';
+
+  @override
+  String get setupRightsPresetTitle => 'Members can book';
+
+  @override
+  String get setupRightsPreviewAdmin =>
+      'Members can also manage parts of the space. Check this in Roles.';
+
+  @override
+  String get setupRightsPreviewNone => 'Nothing yet: members cannot book.';
+
+  @override
+  String get setupRightsPreviewTitle => 'What a member can do';
+
+  @override
   String setupStateName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'ready': 'Done',
@@ -19366,6 +19409,9 @@ class AppLocalizationsEn extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupStepElsewhere => 'This step is done on its own screen.';
 
   @override
   String setupStepHint(String key) {
@@ -19404,6 +19450,12 @@ class AppLocalizationsEn extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupStepOpenScreen => 'Open it';
+
+  @override
+  String get setupStepPreviewTitle => 'What your members will see';
 
   @override
   String setupStepTitle(String key) {
