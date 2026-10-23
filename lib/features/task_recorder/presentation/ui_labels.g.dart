@@ -4206,6 +4206,7 @@ Map<String, _Getter> _part15() => {
   'setupGrowLegalOpenFull': (l) => l.setupGrowLegalOpenFull,
   'setupInviteShareFailed': (l) => l.setupInviteShareFailed,
   'setupLaunchReportTitle': (l) => l.setupLaunchReportTitle,
+  'setupLevelsSeeDemo': (l) => l.setupLevelsSeeDemo,
   'setupNewMembersSaveFailed': (l) => l.setupNewMembersSaveFailed,
   'setupPaymentsPreviewNote': (l) => l.setupPaymentsPreviewNote,
   'setupRightsPreviewTitle': (l) => l.setupRightsPreviewTitle,

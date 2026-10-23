@@ -20106,6 +20106,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLevelsQuestions => 'Über Ihren Raum';
 
   @override
+  String get setupLevelsSeeDemo => 'In der Demo ansehen';
+
+  @override
   String setupLevelsSwitchOff(String features) {
     return 'Schaltet aus: $features';
   }
@@ -20372,6 +20375,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
+      'association':
+          'Ein Verein, eine Genossenschaft oder ein Club betreibt den Raum',
+      'approve_bookings':
+          'Buchungen warten auf eine Freigabe; Mitglieder buchen nicht direkt',
       'members_owe_money':
           'Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)',
       'issue_invoices': 'Sie stellen Rechnungen',
@@ -20411,6 +20418,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'tracks_purchases': 'Sie verfolgen, was der Raum einkauft',
       'vat_registered': 'der Raum umsatzsteuerpflichtig ist',
       'issues_invoices': 'Sie Rechnungen stellen',
+      'association': 'ein Verein mit seinem Vorstand gemeinsam entscheidet',
+      'approve_bookings': 'Buchungen auf eine Freigabe warten',
       'other': '$key',
     });
     return '$_temp0';

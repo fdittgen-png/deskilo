@@ -20083,6 +20083,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupLevelsQuestions => 'Sul suo spazio';
 
   @override
+  String get setupLevelsSeeDemo => 'Vederlo nella demo';
+
+  @override
   String setupLevelsSwitchOff(String features) {
     return 'Disattiva: $features';
   }
@@ -20349,6 +20352,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
+      'association':
+          'Lo spazio è gestito da un’associazione, una cooperativa o un club',
+      'approve_bookings': 'Le prenotazioni attendono un’approvazione; i membri non prenotano direttamente',
       'members_owe_money':
           'I membri devono denaro allo spazio (affitto, carnet, extra)',
       'issue_invoices': 'Emette fatture',
@@ -20387,6 +20393,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'tracks_purchases': 'segue gli acquisti dello spazio',
       'vat_registered': 'lo spazio è soggetto a IVA',
       'issues_invoices': 'emette fatture',
+      'association': 'un’associazione decide insieme, con il suo consiglio',
+      'approve_bookings': 'le prenotazioni attendono un’approvazione',
       'other': '$key',
     });
     return '$_temp0';

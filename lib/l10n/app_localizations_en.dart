@@ -19902,6 +19902,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupLevelsQuestions => 'About your space';
 
   @override
+  String get setupLevelsSeeDemo => 'See it in the demo';
+
+  @override
   String setupLevelsSwitchOff(String features) {
     return 'Switches off: $features';
   }
@@ -20167,6 +20170,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
+      'association':
+          'The space is run by an association, a cooperative or a club',
+      'approve_bookings':
+          'Bookings wait for an approval; members do not book directly',
       'members_owe_money': 'Members owe the space money (rent, passes, extras)',
       'issue_invoices': 'You issue invoices',
       'pay_online': 'Members pay online',
@@ -20205,6 +20212,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'tracks_purchases': 'you track what the space buys',
       'vat_registered': 'the space is registered for VAT',
       'issues_invoices': 'you issue invoices',
+      'association': 'an association decides together, with its board',
+      'approve_bookings': 'bookings wait for an approval',
       'other': '$key',
     });
     return '$_temp0';
