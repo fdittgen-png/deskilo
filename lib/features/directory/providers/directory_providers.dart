@@ -114,6 +114,14 @@ Future<List<Map<String, dynamic>>> accountContacts(
 }) => ref
     .watch(accountContactRepositoryProvider(source: source))
     .search(query, before: before);
+/// Who I can write to, by shared workspace.
+@riverpod
+Future<List<ReachablePerson>> reachablePeople(
+  Ref ref, {
+  String source = '',
+}) => ref
+    .watch(accountContactRepositoryProvider(source: source))
+    .reachablePeople();
 @riverpod
 Future<List<Map<String, dynamic>>> accountConversations(
   Ref ref, {

@@ -1,5 +1,29 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/json_reader.dart';
 import 'directory_location.dart';
+
+/// One row of `my_reachable_people`: a person I may write to, in
+/// one workspace I share with them.
+class ReachablePerson {
+  const ReachablePerson({
+    required this.workspaceId,
+    required this.workspaceName,
+    required this.id,
+    required this.name,
+  });
+
+  factory ReachablePerson.fromRow(Object? raw) {
+    final r = JsonReader.of(raw, context: 'my_reachable_people');
+    return ReachablePerson(
+      workspaceId: r.string('workspace_id'),
+      workspaceName: r.stringOr('workspace_name'),
+      id: r.string('id'),
+      name: r.stringOr('name'),
+    );
+  }
+
+  final String workspaceId, workspaceName, id, name;
+}
 
 /// The deliberately public projection, separate from the private workspace.
 ///
@@ -126,6 +150,9 @@ abstract interface class AccountContactRepository {
   Future<bool> adminVisibility(String workspace, {bool? visible});
   Future<bool> employment(String member, {bool? employed});
   Future<List<Map<String, dynamic>>> search(String query, {String? before});
+
+  /// The people I may write to, one row per shared workspace.
+  Future<List<ReachablePerson>> reachablePeople();
   Future<List<Map<String, dynamic>>> conversations({
     DateTime? beforeAt,
     String? beforeId,
