@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
 import '../../../core/files/xlsx.dart';
 import '../../../core/i18n/currencies.dart';
 import '../../events/domain/workspace_event.dart';
@@ -57,6 +59,16 @@ List<XlsxSheet> buildWorkspaceExcelExport({
   ).sheets();
 }
 
+/// Member id → the name every sheet prints: the account's display name,
+/// else the id (#395).
+Map<String, String> workspaceMemberNames(
+  List<Member> members,
+  Map<String, Profile> profilesByUserId,
+) => {
+  for (final m in members)
+    m.id: profilesByUserId[m.userId]?.displayName ?? m.id,
+};
+
 /// The context every sheet reads: the workspace, its name lookups and
 /// the currency scale. One method per sheet keeps each tab a unit.
 class _ExcelExport {
@@ -75,10 +87,7 @@ class _ExcelExport {
     required this.invoices,
     required this.transmissionsByInvoice,
   })  : levelName = {for (final l in levels) l.id: l.name},
-        memberName = {
-          for (final m in members)
-            m.id: profilesByUserId[m.userId]?.displayName ?? m.id,
-        },
+        memberName = workspaceMemberNames(members, profilesByUserId),
         attended = reservations.where((r) => r.checkedInAt != null).toList();
 
   final Workspace workspace;
@@ -149,13 +158,17 @@ class _ExcelExport {
 
   XlsxSheet _levels() =>
       XlsxSheet(name: 'Levels', rows: [
-    ['id', 'name', 'sort_order'],
-    for (final l in levels) [l.id, l.name, l.sortOrder],
+    ['id', 'name', 'sort_order', 'bookable_as_whole', 'price'],
+    for (final l in levels)
+      [l.id, l.name, l.sortOrder, l.bookableAsWhole, major(l.priceCents)],
   ]);
 
   XlsxSheet _desks() =>
       XlsxSheet(name: 'Desks', rows: [
-    ['id', 'level', 'office', 'name', 'x', 'y', 'width', 'height'],
+    [
+      'id', 'level', 'office', 'name', 'x', 'y', 'width', 'height',
+      'bookable_as_whole', 'price',
+    ],
     for (final entry in plansByLevel.entries)
       for (final d in entry.value.desks)
         [
@@ -167,6 +180,7 @@ class _ExcelExport {
               .firstOrNull,
           d.name,
           d.rect.x, d.rect.y, d.rect.w, d.rect.h,
+          d.bookableAsWhole, major(d.priceCents),
         ],
   ]);
 
@@ -174,7 +188,8 @@ class _ExcelExport {
       XlsxSheet(name: 'Seats', rows: [
     [
       'id', 'level', 'desk', 'name', 'x', 'y', 'orientation', 'chair',
-      'amenities', 'blocked_from', 'blocked_to',
+      'amenities', 'blocked_from', 'blocked_to', 'resource_kind',
+      'capacity', 'parking_kind', 'slot_minutes',
     ],
     for (final entry in plansByLevel.entries)
       for (final s in entry.value.seats)
@@ -187,6 +202,8 @@ class _ExcelExport {
               .firstOrNull,
           s.name, s.x, s.y, s.orientation.name, s.chair,
           s.amenities.join(', '), s.blockedFrom, s.blockedTo,
+          s.resourceKind.name, s.capacity, s.parkingKind?.name,
+          s.slotMinutes,
         ],
   ]);
 
@@ -195,7 +212,10 @@ class _ExcelExport {
     [
       'member_id', 'name', 'status', 'owner', 'admin', 'kiosk',
       'subscription_pct', 'overage_policy', 'country', 'vat_id',
-      'address', 'whatsapp', 'last_seen',
+      'address', 'whatsapp', 'last_seen', 'member_number', 'joined_at',
+      'co_owner', 'vat_treatment', 'payment_terms', 'first_name',
+      'last_name', 'company', 'street', 'postal_code', 'city', 'email',
+      'phone', 'legal_id',
     ],
     for (final m in members)
       [
@@ -210,6 +230,12 @@ class _ExcelExport {
         profilesByUserId[m.userId]?.address,
         profilesByUserId[m.userId]?.whatsapp,
         profilesByUserId[m.userId]?.lastSeenAt,
+        if (m.memberNumber.isEmpty) null else m.memberNumber,
+        m.joinedAt,
+        m.coOwner.name,
+        m.vatTreatment,
+        m.paymentTerms?.paymentTerms,
+        ..._identityCells(m),
       ],
   ]);
 
@@ -313,7 +339,8 @@ class _ExcelExport {
       XlsxSheet(name: 'Invoices', rows: [
     [
       'number', 'member', 'period', 'issued_at', 'total', 'currency',
-      'voided_at', 'replaces', 'detailed', 'last_sent_at',
+      'voided_at', 'replaces', 'detailed', 'last_sent_at', 'kind', 'title',
+      'net', 'vat', 'vat_by_rate', 'due_on', 'issued_by',
     ],
     for (final i in invoices)
       [
@@ -321,6 +348,142 @@ class _ExcelExport {
         major(i.totalCents), i.currency, i.voidedAt,
         if (i.replacesNumber.isEmpty) null else i.replacesNumber, i.detailed,
         transmissionsByInvoice[i.id],
+        i.kind.name, i.title, major(i.netCents), major(i.vatCents),
+        [
+          for (final t in i.vatTotals)
+            '${t.percent}%: ${major(t.vatCents)}',
+        ].join('; '),
+        i.dueOn, i.issuerName,
       ],
   ]);
+
+  /// The member's structured identity cells: a managed profile's own, else
+  /// the account's (#1310).
+  List<Object?> _identityCells(Member m) {
+    final p = m.managedName.isNotEmpty
+        ? m.managedIdentity
+        : profilesByUserId[m.userId]?.identity;
+    return [
+      for (final v in [
+        p?.firstName, p?.lastName, p?.company, p?.street, p?.postalCode,
+        p?.city, p?.email, p?.phone, p?.legalId,
+      ])
+        if (v == null || v.isEmpty) null else v,
+    ];
+  }
+}
+
+/// One decision on an event, as the Decisions tab writes it.
+typedef ExportedDecision =
+    ({String? memberId, bool accept, bool bySystem, DateTime at});
+
+// #2860 — the sheets the first workbook (#395) left out: every office,
+// every ledger row, every event with its decisions, every invoice line.
+
+/// What the detail sheets are built from.
+class WorkspaceExportDetails {
+  const WorkspaceExportDetails({
+    required this.workspace,
+    required this.levels,
+    required this.plansByLevel,
+    required this.memberName,
+    required this.ledger,
+    required this.events,
+    required this.decisions,
+    required this.invoices,
+  });
+
+  final Workspace workspace;
+  final List<Level> levels;
+  final Map<String, FloorPlan> plansByLevel;
+
+  /// Member id → the name the workbook prints for them.
+  final Map<String, String> memberName;
+  final List<LedgerEntry> ledger;
+
+  /// Every event of the space, decided or not.
+  final List<WorkspaceEvent> events;
+
+  /// Event id → the decisions taken on it (who, accepted, by the timeout
+  /// sweep, when).
+  final Map<String, List<ExportedDecision>> decisions;
+  final List<Invoice> invoices;
+}
+
+/// The detail sheets, in workbook order.
+List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
+  double major(int cents) =>
+      cents / Currencies.minorPerMajor(d.workspace.currencyCode);
+  String? name(String? memberId) =>
+      memberId == null ? null : d.memberName[memberId] ?? memberId;
+  final levelName = {for (final l in d.levels) l.id: l.name};
+
+  return [
+    XlsxSheet(name: 'Offices', rows: [
+      [
+        'id', 'level', 'name', 'area_kind', 'x', 'y', 'width', 'height',
+        'color', 'bookable_as_whole', 'price', 'currency',
+      ],
+      for (final entry in d.plansByLevel.entries)
+        for (final o in entry.value.offices)
+          [
+            o.id, levelName[entry.key], o.name, o.areaKind.name,
+            o.rect.x, o.rect.y, o.rect.w, o.rect.h,
+            '#${(o.color & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}',
+            o.bookableAsWhole, major(o.priceCents), d.workspace.currencyCode,
+          ],
+    ]),
+    // Every row of the member accounts: a charge is what a member owes, a
+    // credit what settles it — the signed amount sums to the balance.
+    XlsxSheet(name: 'Ledger', rows: [
+      [
+        'id', 'member', 'kind', 'category', 'amount', 'signed_amount',
+        'currency', 'period', 'occurred_on', 'recorded_at', 'description',
+      ],
+      for (final e in d.ledger)
+        [
+          e.id, name(e.memberId), e.kind.name, e.category.name,
+          major(e.amountCents),
+          major(e.kind == LedgerKind.charge ? e.amountCents : -e.amountCents),
+          d.workspace.currencyCode, e.period, e.occurredOn, e.createdAt,
+          e.description,
+        ],
+    ]),
+    XlsxSheet(name: 'Events', rows: [
+      [
+        'id', 'type', 'action', 'status', 'subject', 'actor', 'created_at',
+        'decided_at', 'decisions', 'details',
+      ],
+      for (final e in d.events)
+        [
+          e.id, e.type.dbName, e.action.name, e.status.name,
+          name(e.subjectMemberId), name(e.actorMemberId), e.createdAt,
+          e.decidedAt, d.decisions[e.id]?.length ?? 0,
+          if (e.payload.isEmpty) null else jsonEncode(e.payload),
+        ],
+    ]),
+    XlsxSheet(name: 'Decisions', rows: [
+      ['event_id', 'event_type', 'decided_by', 'decision', 'by_system',
+          'decided_at'],
+      for (final e in d.events)
+        for (final x in d.decisions[e.id] ?? const <ExportedDecision>[])
+          [
+            e.id, e.type.dbName, name(x.memberId),
+            if (x.accept) 'accepted' else 'declined', x.bySystem, x.at,
+          ],
+    ]),
+    XlsxSheet(name: 'Invoice lines', rows: [
+      [
+        'invoice', 'line', 'label', 'kind', 'quantity', 'amount',
+        'currency', 'vat_percent', 'vat_category', 'source_invoice',
+      ],
+      for (final i in d.invoices)
+        for (final (n, l) in i.lines.indexed)
+          [
+            i.number, n + 1, l.label, l.kind, l.quantity,
+            l.amountCents / Currencies.minorPerMajor(i.currency), i.currency, l.vatPercent, l.vatCategory,
+            if (l.sourceNumber.isEmpty) null else l.sourceNumber,
+          ],
+    ]),
+  ];
 }

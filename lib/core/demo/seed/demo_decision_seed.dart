@@ -51,7 +51,7 @@ void seedDemoDecisions(FakeEventRepository events, DateTime now) {
     event('demo-service-charge', EventType.serviceCharge, 'member-2', {
       'name': 'Coffee',
       'quantity': 6,
-      'amount_cents': 900,
+      'price_cents': 150, // #2860: a unit price, as 0016 writes it
     }, hoursAgo: 26),
     event(
       'demo-negotiation',

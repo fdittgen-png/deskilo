@@ -228,10 +228,9 @@ String _rebuild(WorkspaceXmlData data, {bool dropDeskPrice = false}) {
 }
 
 void main() {
-  test('the export is schema 3 and carries the plan attributes by name',
-      () {
+  test('the export carries the v3 plan attributes by name', () {
     final xml = _export();
-    expect(xml, contains('<deskilo-workspace version="3">'));
+    expect(xml, contains('<deskilo-workspace version="4">'));
     expect(xml, contains('price-cents="50000" bookable-as-whole="true" site="Pézenas"'));
     expect(xml, contains('<office name="Open space" color="1" bookable-as-whole="false" x="0" y="0" w="10" h="10" price-cents="7000">'));
     expect(xml, contains('<desk name="Table 1" x="1" y="1" w="6" h="4" price-cents="3000" bookable-as-whole="true">'));

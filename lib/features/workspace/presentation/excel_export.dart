@@ -60,21 +60,29 @@ Future<void> exportWorkspaceExcel(
       final transmissions =
           await money.fetchInvoiceTransmissions(workspace.id);
 
-      final sheets = buildWorkspaceExcelExport(
+      final profilesByUserId = <String, Profile>{
+        for (final p in profiles) p.id: p,
+      };
+      final ledger = await ref
+          .read(memberAccountQueriesProvider)
+          .fetchWorkspaceLedger(workspace.id);
+      final invoices = await invoiceQueries.fetchInvoices(workspace.id);
+      // #2860 — every decision taken on every event, for the Decisions tab.
+      final decisions = await ref
+          .read(eventRepositoryProvider)
+          .fetchDecisions(workspace.id, [for (final e in events) e.id]);
+      final sheets = [
+        ...buildWorkspaceExcelExport(
         workspace: workspace,
         enabledFeatures: {for (final f in features) f.dbKey},
         levels: levels,
         plansByLevel: plans,
         members: members,
-        profilesByUserId: <String, Profile>{
-          for (final p in profiles) p.id: p,
-        },
+        profilesByUserId: profilesByUserId,
         reservations: await ref
             .read(reservationRepositoryProvider)
             .fetchAllForExport(workspace.id),
-        ledger: await ref
-            .read(memberAccountQueriesProvider)
-            .fetchWorkspaceLedger(workspace.id),
+        ledger: ledger,
         pendingEvents: [
           for (final e in events)
             if (e.status == EventStatus.pending) e,
@@ -82,12 +90,38 @@ Future<void> exportWorkspaceExcel(
         paymentIntents: await money.fetchPaymentIntents(workspace.id),
         services:
             await ref.read(commercialTermsProvider).fetchServices(workspace.id, includeInactive: true),
-        invoices: await invoiceQueries.fetchInvoices(workspace.id),
+        invoices: invoices,
         transmissionsByInvoice: {
           for (final entry in transmissions.entries)
             entry.key: entry.value.sentAt,
         },
-      );
+      ),
+        ...buildWorkspaceExcelDetailSheets(WorkspaceExportDetails(
+          workspace: workspace,
+          levels: levels,
+          plansByLevel: plans,
+          memberName: workspaceMemberNames(members, profilesByUserId),
+          ledger: ledger,
+          events: events,
+          decisions: {
+            for (final MapEntry(:key, :value) in decisions.entries)
+              key: [
+                for (final x in value)
+                  (
+                    memberId: x.memberId,
+                    accept: x.accept,
+                    bySystem: x.decidedBySystem,
+                    at: x.decidedAt,
+                  ),
+              ],
+          },
+          invoices: invoices,
+        )),
+        // #2860 — the tables the app holds no model of, one sheet each.
+        ...exportedTableSheets(await ref
+            .read(workspaceFilesRepositoryProvider)
+            .fetchRecords(workspace.id)),
+      ];
 
       // #1310 — the space's own stored files travel with its rows. A
       // file that cannot be read fails the export: a copy that silently

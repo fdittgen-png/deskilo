@@ -140,6 +140,7 @@ void main() {
               'w': 30,
               'h': 20,
               'price_cents': 0,
+              'area_kind': 'workspace',
               'desks': [
                 {
                   'name': 'Window desk',
@@ -160,6 +161,10 @@ void main() {
                       'accessories': ['Monitor', 'Docking station'],
                       'blocked_from': null,
                       'blocked_to': null,
+                      'resource_kind': 'seat',
+                      'capacity': null,
+                      'parking_kind': null,
+                      'slot_minutes': null,
                     },
                     {
                       'name': 'A2',
@@ -171,6 +176,10 @@ void main() {
                       'accessories': <String>[],
                       'blocked_from': '2026-07-01T08:00:00.000Z',
                       'blocked_to': '2026-07-15T18:00:00.000Z',
+                      'resource_kind': 'seat',
+                      'capacity': null,
+                      'parking_kind': null,
+                      'slot_minutes': null,
                     },
                   ],
                 },

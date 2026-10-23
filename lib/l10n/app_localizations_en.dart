@@ -3164,6 +3164,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get carnetsTitle => 'Carnets';
 
   @override
+  String get cashHubInOut => 'Money in and out by month';
+
+  @override
+  String get cashHubToPay => 'To pay';
+
+  @override
   String get chBareLetting => 'We only let bare rooms';
 
   @override
@@ -7934,6 +7940,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Whit Monday';
+
+  @override
+  String get hubCashSubtitle =>
+      'Recorded money in and out, and what is still to pay';
+
+  @override
+  String get hubCashTitle => 'Cash';
 
   @override
   String get hubPurchasesSubtitle =>
@@ -15963,6 +15976,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readinessFirstBookingReady => 'Ready for a first booking';
+
+  @override
+  String get readinessGrantMembers => 'Let members book';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Members can now book, see the calendar, write to each other and see their own account.';
 
   @override
   String get readinessLater => 'Needed later';

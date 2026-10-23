@@ -28,6 +28,10 @@ const Map<String, String> _allowed = {
       '#2869 — the hub refuses a vector with a gap',
   'lib/features/workspace/domain/setup_levels.dart::recommendSetupLevels':
       '#2869 — the hub recommends levels from the answers',
+  // The workbook's sources as data: the export coverage lint reads them now,
+  // the about-this-export sheet will list them for the operator.
+  'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':
+      '#2861 — the about sheet names each source and what it leaves out',
   // The countries the store holds rates for: the unchanged vat_versions_test
   // walks them (it did before the move, over the constant it replaced).
   'lib/features/money/domain/vat_catalogue.dart::vatCatalogueCountries':

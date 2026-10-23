@@ -148,6 +148,10 @@ void _levelXml(
             '${office.bookableAsWhole}');
         _rectAttributes(builder, office.rect);
         _priceAttributes(builder, office.priceCents);
+        if (office.areaKind.name != 'workspace') {
+          builder.attribute(
+              WorkspaceXmlSchema.areaKindAttr, office.areaKind.name);
+        }
         for (final desk in plan.desksOf(office.id)) {
           builder.element(WorkspaceXmlSchema.deskElement, nest: () {
             builder.attribute(WorkspaceXmlSchema.nameAttr, desk.name);
@@ -220,6 +224,23 @@ void _seatElement(
     final nfcUid = seat.nfcUid;
     if (nfcUid != null && nfcUid.isNotEmpty) {
       builder.attribute(WorkspaceXmlSchema.nfcUidAttr, nfcUid);
+    }
+    // v4 (#2860) — written only when they differ from a plain seat, so a
+    // plan of desk seats reads exactly as it did in v3.
+    if (seat.resourceKind != ResourceKind.seat) {
+      builder.attribute(
+          WorkspaceXmlSchema.resourceKindAttr, seat.resourceKind.name);
+    }
+    for (final (attribute, value) in [
+      (WorkspaceXmlSchema.capacityAttr, seat.capacity),
+      (WorkspaceXmlSchema.slotMinutesAttr, seat.slotMinutes),
+    ]) {
+      if (value != null) builder.attribute(attribute, '$value');
+    }
+    final parkingKind = seat.parkingKind;
+    if (parkingKind != null) {
+      builder.attribute(
+          WorkspaceXmlSchema.parkingKindAttr, parkingKind.name);
     }
     final from = seat.blockedFrom;
     if (from != null) {
@@ -410,6 +431,8 @@ WorkspaceXmlOffice _parseOffice(XmlElement element) => WorkspaceXmlOffice(
           _requireBool(element, WorkspaceXmlSchema.bookableAsWholeAttr),
       rect: _parseRect(element),
       priceCents: _optionalInt(element, WorkspaceXmlSchema.priceCentsAttr),
+      areaKind:
+          element.getAttribute(WorkspaceXmlSchema.areaKindAttr) ?? 'workspace',
       desks: [
         for (final desk
             in element.findElements(WorkspaceXmlSchema.deskElement))

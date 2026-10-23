@@ -2139,6 +2139,8 @@
   "carnetValidity": "Validité (mois, vide = n'expire jamais)",
   "carnetsEmpty": "Aucun carnet pour l'instant.",
   "carnetsTitle": "Carnets",
+  "cashHubInOut": "Entrées et sorties par mois",
+  "cashHubToPay": "À payer",
   "chBareLetting": "Nous ne louons que des locaux nus",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -5763,6 +5765,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubCashSubtitle": "Entrées et sorties enregistrées, et ce qui reste à payer",
+  "hubCashTitle": "Trésorerie",
   "hubPurchasesSubtitle": "Ce que l'espace achète et doit : dépenses, factures fournisseurs, fournisseurs, bail, équipements",
   "hubPurchasesTitle": "Achats",
   "hubSalesSubtitle": "Ce que l'espace vend et facture : services, factures, facturation",
@@ -11072,6 +11076,8 @@
     "description": "#2332: readinessBlockedInvoicing"
   },
   "readinessFirstBookingReady": "Prêt pour une première réservation",
+  "readinessGrantMembers": "Permettre aux membres de réserver",
+  "readinessGrantMembersDone": "Les membres peuvent maintenant réserver, voir le calendrier, s’écrire et voir leur compte.",
   "readinessLater": "Nécessaire plus tard",
   "readinessNeededFirst": "Nécessaire pour une première réservation",
   "readinessNeededInvoicing": "Nécessaire avant de facturer",

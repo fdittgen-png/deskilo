@@ -50,6 +50,13 @@ abstract final class WorkspaceImportPlanKeys {
   static const String site = 'site';
   static const String nfcUid = 'nfc_uid';
   static const String vatRate = 'vat_rate';
+
+  // v4 (#2860): the kind of place, read by import_floor_plan_v3 since 0538.
+  static const String resourceKind = 'resource_kind';
+  static const String capacity = 'capacity';
+  static const String parkingKind = 'parking_kind';
+  static const String slotMinutes = 'slot_minutes';
+  static const String areaKind = 'area_kind';
 }
 
 /// Owner-only import boundary (#165). Separate from [WorkspaceRepository]
@@ -101,6 +108,7 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
               WorkspaceImportPlanKeys.w: office.rect.w,
               WorkspaceImportPlanKeys.h: office.rect.h,
               WorkspaceImportPlanKeys.priceCents: office.priceCents,
+              WorkspaceImportPlanKeys.areaKind: office.areaKind,
               WorkspaceImportPlanKeys.desks: [
                 for (final desk in office.desks)
                   {
@@ -131,6 +139,13 @@ List<Map<String, Object?>> workspaceXmlPlanToJson(
                               seat.blockedTo?.toUtc().toIso8601String(),
                           if (seat.nfcUid.isNotEmpty)
                             WorkspaceImportPlanKeys.nfcUid: seat.nfcUid,
+                          WorkspaceImportPlanKeys.resourceKind:
+                              seat.resourceKind.name,
+                          WorkspaceImportPlanKeys.capacity: seat.capacity,
+                          WorkspaceImportPlanKeys.parkingKind:
+                              seat.parkingKind?.name,
+                          WorkspaceImportPlanKeys.slotMinutes:
+                              seat.slotMinutes,
                         },
                     ],
                   },
@@ -251,6 +266,10 @@ List<Map<String, Object?>> workspaceXmlAccessoriesToJson(
             blockedFrom: seat.blockedFrom,
             blockedTo: seat.blockedTo,
             nfcUid: seat.nfcUid.isEmpty ? null : seat.nfcUid,
+            resourceKind: seat.resourceKind,
+            capacity: seat.capacity,
+            parkingKind: seat.parkingKind,
+            slotMinutes: seat.slotMinutes,
           );
           final seatProblem =
               validateSeatPlacement(seatModel, deskModel, placedSeats);

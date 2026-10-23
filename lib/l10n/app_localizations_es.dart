@@ -3183,6 +3183,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get carnetsTitle => 'Bonos';
 
   @override
+  String get cashHubInOut => 'Entradas y salidas por mes';
+
+  @override
+  String get cashHubToPay => 'Por pagar';
+
+  @override
   String get chBareLetting => 'Solo alquilamos locales desnudos';
 
   @override
@@ -7991,6 +7997,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Lunes de Pentecostés';
+
+  @override
+  String get hubCashSubtitle =>
+      'Entradas y salidas registradas, y lo que queda por pagar';
+
+  @override
+  String get hubCashTitle => 'Tesorería';
 
   @override
   String get hubPurchasesSubtitle =>
@@ -16082,6 +16095,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get readinessFirstBookingReady => 'Listo para una primera reserva';
+
+  @override
+  String get readinessGrantMembers => 'Permitir que los miembros reserven';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Los miembros ya pueden reservar, ver el calendario, escribirse y ver su propia cuenta.';
 
   @override
   String get readinessLater => 'Necesario más adelante';
