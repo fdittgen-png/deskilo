@@ -56,5 +56,8 @@
   "portalUseWorkspaceInfo": "Arbeitsbereichsangaben verwenden",
   "portalResetAll": "Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen",
   "portalResetAllBody": "Die öffentlichen Werte aller Felder, für die es Arbeitsbereichsangaben gibt, werden durch diese ersetzt. Felder ohne Entsprechung im Arbeitsbereich behalten Ihre Eingabe.",
-  "portalResetAllConfirm": "Zurücksetzen"
+  "portalResetAllConfirm": "Zurücksetzen",
+  "portalReachableHeading": "Personen, denen Sie schreiben können",
+  "portalReachableEmpty": "Noch ist niemand erreichbar. Suchen Sie nach einem Namen, um Personen zu finden.",
+  "portalGroupsHeading": "Gruppen"
 }

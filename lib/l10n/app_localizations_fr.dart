@@ -15152,6 +15152,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalFollowsWorkspace => 'Repris des informations de l’espace';
 
   @override
+  String get portalGroupsHeading => 'Groupes';
+
+  @override
   String get portalImage => 'URL de l’image de l’espace';
 
   @override
@@ -15204,6 +15207,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get portalPublished => 'Visible dans l’annuaire public';
+
+  @override
+  String get portalReachableEmpty =>
+      'Personne n\'est encore joignable. Cherchez un nom pour trouver des personnes.';
+
+  @override
+  String get portalReachableHeading => 'Personnes à qui vous pouvez écrire';
 
   @override
   String get portalRegisterDirectory => 'Relier un serveur à l’annuaire global';
@@ -18457,6 +18467,32 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get salesTaxWorksheetEmpty =>
       'Aucune facture avec taxe de vente n\'a été émise sur cette période.';
+
+  @override
+  String get sampleDataClear => 'Effacer les données d\'exemple';
+
+  @override
+  String sampleDataCounts(int members, int bookings, int payments) {
+    return 'Cet espace contient des données d\'exemple : $members membres, $bookings réservations, $payments paiements.';
+  }
+
+  @override
+  String get sampleDataExplain =>
+      'Remplissez cet espace de test avec quelques membres d\'exemple, leurs réservations des deux dernières et des deux prochaines semaines et quelques paiements, construits à partir de vos propres places et de vos prix. Rien n\'est envoyé à personne, et vous pouvez tout effacer ensuite.';
+
+  @override
+  String get sampleDataFill => 'Remplir avec des données d\'exemple';
+
+  @override
+  String get sampleDataFillFailed =>
+      'Les données d\'exemple n\'ont pas pu être créées.';
+
+  @override
+  String get sampleDataNotCleared =>
+      'Non effacées : les données d\'exemple sont toujours dans cet espace.';
+
+  @override
+  String get sampleDataTitle => 'Données d\'exemple';
 
   @override
   String get scanCameraWebUnavailable =>

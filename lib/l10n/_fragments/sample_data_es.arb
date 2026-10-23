@@ -1,0 +1,9 @@
+{
+  "sampleDataTitle": "Datos de ejemplo",
+  "sampleDataExplain": "Llene este espacio de prueba con algunos miembros de ejemplo, sus reservas de las dos últimas y las dos próximas semanas y algunos pagos, creados a partir de sus propios puestos y precios. No se envía nada a nadie y puede borrarlo todo después.",
+  "sampleDataFill": "Llenar con datos de ejemplo",
+  "sampleDataCounts": "Este espacio contiene datos de ejemplo: {members} miembros, {bookings} reservas, {payments} pagos.",
+  "sampleDataClear": "Borrar los datos de ejemplo",
+  "sampleDataNotCleared": "No borrados: los datos de ejemplo siguen en este espacio.",
+  "sampleDataFillFailed": "No se pudieron crear los datos de ejemplo."
+}

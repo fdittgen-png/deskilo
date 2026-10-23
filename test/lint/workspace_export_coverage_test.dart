@@ -104,6 +104,8 @@ const Map<String, String> _notExported = {
   'bi_views': 'saved Web-BI views (#1923 C) are questions a reader asked of this installation\'s analytics, kept under its rights; a private one travels in its author\'s access export, and none is portable configuration',
   'workspace_recovery_evidence': 'the record that an export was taken; a copy of it would claim a backup the copy never had (#1636)',
   'readiness_acknowledgements': 'a person\'s own "later" on a setup section, per installation; a copy must re-ask (#1636)',
+  'sample_data_batches': 'which sample data this test space generated (#2872); it names rows of this server, and the sample rows themselves are exported like any other until they are cleared',
+  'sample_data_records': 'the ids of one sample batch\'s rows (#2872), so clearing removes exactly them; they name rows of this server',
   // --- the workspace's own questions (#1288) ------------------------
   'workspace_field_labels': 'the question in each language; the definition '
       'itself is exported whole (0540)',

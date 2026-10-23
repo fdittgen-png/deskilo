@@ -25248,6 +25248,12 @@ abstract class AppLocalizations {
   /// **'From workspace information'**
   String get portalFollowsWorkspace;
 
+  /// No description provided for @portalGroupsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Groups'**
+  String get portalGroupsHeading;
+
   /// No description provided for @portalImage.
   ///
   /// In en, this message translates to:
@@ -25355,6 +25361,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visible in the public directory'**
   String get portalPublished;
+
+  /// No description provided for @portalReachableEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No one is reachable yet. Search by name to find people.'**
+  String get portalReachableEmpty;
+
+  /// No description provided for @portalReachableHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'People you can write to'**
+  String get portalReachableHeading;
 
   /// No description provided for @portalRegisterDirectory.
   ///
@@ -31043,6 +31061,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No sales-tax invoice was issued in this period.'**
   String get salesTaxWorksheetEmpty;
+
+  /// #2872 setup guide: button that removes the sample data batch
+  ///
+  /// In en, this message translates to:
+  /// **'Clear sample data'**
+  String get sampleDataClear;
+
+  /// #2872 setup guide: what the open sample data batch holds
+  ///
+  /// In en, this message translates to:
+  /// **'This space holds sample data: {members} members, {bookings} bookings, {payments} payments.'**
+  String sampleDataCounts(int members, int bookings, int payments);
+
+  /// #2872 setup guide: what filling the test space with sample data creates
+  ///
+  /// In en, this message translates to:
+  /// **'Fill this test space with a few sample members, their bookings over the past and the coming two weeks and some payments, made from your own places and prices. Nothing is sent to anyone, and you can clear it all again.'**
+  String get sampleDataExplain;
+
+  /// #2872 setup guide: button that creates the sample data
+  ///
+  /// In en, this message translates to:
+  /// **'Fill with sample data'**
+  String get sampleDataFill;
+
+  /// #2872 setup guide: a fill that did not happen
+  ///
+  /// In en, this message translates to:
+  /// **'The sample data could not be created.'**
+  String get sampleDataFillFailed;
+
+  /// #2872 setup guide: a clear that did not happen; never reads as done
+  ///
+  /// In en, this message translates to:
+  /// **'Not cleared: the sample data is still in this space.'**
+  String get sampleDataNotCleared;
+
+  /// #2872 setup guide: title of the sample data card, shown only in a test space
+  ///
+  /// In en, this message translates to:
+  /// **'Sample data'**
+  String get sampleDataTitle;
 
   /// No description provided for @scanCameraWebUnavailable.
   ///

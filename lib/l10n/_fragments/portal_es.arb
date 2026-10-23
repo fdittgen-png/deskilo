@@ -56,5 +56,8 @@
   "portalUseWorkspaceInfo": "Usar la información del espacio",
   "portalResetAll": "Restablecer todos los datos públicos con la información del espacio",
   "portalResetAllBody": "Los valores públicos de cada campo que tiene información en el espacio se sustituyen por ella. Los campos sin equivalente en el espacio conservan lo que escribió.",
-  "portalResetAllConfirm": "Restablecer"
+  "portalResetAllConfirm": "Restablecer",
+  "portalReachableHeading": "Personas a las que puede escribir",
+  "portalReachableEmpty": "Todavía no hay nadie disponible. Busque un nombre para encontrar personas.",
+  "portalGroupsHeading": "Grupos"
 }

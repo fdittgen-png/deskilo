@@ -15104,6 +15104,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get portalFollowsWorkspace => 'De la información del espacio';
 
   @override
+  String get portalGroupsHeading => 'Grupos';
+
+  @override
   String get portalImage => 'URL de la imagen del espacio';
 
   @override
@@ -15156,6 +15159,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get portalPublished => 'Visible en el directorio público';
+
+  @override
+  String get portalReachableEmpty =>
+      'Todavía no hay nadie disponible. Busque un nombre para encontrar personas.';
+
+  @override
+  String get portalReachableHeading => 'Personas a las que puede escribir';
 
   @override
   String get portalRegisterDirectory =>
@@ -18406,6 +18416,32 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get salesTaxWorksheetEmpty =>
       'No se emitió ninguna factura con impuesto sobre las ventas en este período.';
+
+  @override
+  String get sampleDataClear => 'Borrar los datos de ejemplo';
+
+  @override
+  String sampleDataCounts(int members, int bookings, int payments) {
+    return 'Este espacio contiene datos de ejemplo: $members miembros, $bookings reservas, $payments pagos.';
+  }
+
+  @override
+  String get sampleDataExplain =>
+      'Llene este espacio de prueba con algunos miembros de ejemplo, sus reservas de las dos últimas y las dos próximas semanas y algunos pagos, creados a partir de sus propios puestos y precios. No se envía nada a nadie y puede borrarlo todo después.';
+
+  @override
+  String get sampleDataFill => 'Llenar con datos de ejemplo';
+
+  @override
+  String get sampleDataFillFailed =>
+      'No se pudieron crear los datos de ejemplo.';
+
+  @override
+  String get sampleDataNotCleared =>
+      'No borrados: los datos de ejemplo siguen en este espacio.';
+
+  @override
+  String get sampleDataTitle => 'Datos de ejemplo';
 
   @override
   String get scanCameraWebUnavailable =>
