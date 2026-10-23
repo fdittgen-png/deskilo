@@ -53,13 +53,12 @@ class MeSpaceCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final words = l10n;
     final role = member == null ? null : memberRoleLabel(l10n, member!);
     final demo = DemoEnvironment.maybeOf(context) != null;
     final isProd = space.env.isProduction;
-    final environment = demo ? words.demoSessionBadge : isProd
-        ? words.uxRealWorkspace
-        : words.uxTestSpace;
+    final environment = demo ? l10n.demoSessionBadge : isProd
+        ? l10n.uxRealWorkspace
+        : l10n.uxTestSpace;
     final status = _pending
         ? (l10n.meSpacePending)
         : role;
@@ -84,10 +83,10 @@ class MeSpaceCard extends ConsumerWidget {
             message: [
               space.name,
               environment,
-              if (demo) words.demoSessionBadgeHint else if (space.isDevelopment) words.uxTestSpaceHint else words.uxRealSpaceHint,
+              if (demo) l10n.demoSessionBadgeHint else if (space.isDevelopment) l10n.uxTestSpaceHint else l10n.uxRealSpaceHint,
               ?status,
               if (lastUsed) l10n.meSpaceLastUsed,
-              if (waiting > 0) words.meSpaceNotifications(waiting),
+              if (waiting > 0) l10n.meSpaceNotifications(waiting),
             ].join(' · '),
             child: Badge.count(
               key: ValueKey('me-space-badge-${space.id}'),
@@ -147,7 +146,7 @@ class MeSpaceCard extends ConsumerWidget {
                     ],
                     Flexible(
                       child: Text(
-                        isProd ? words.uxOpenWorkspace : words.uxTestSpace,
+                        isProd ? l10n.uxOpenWorkspace : l10n.uxTestSpace,
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge?.strong,
