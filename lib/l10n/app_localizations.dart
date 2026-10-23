@@ -25416,6 +25416,12 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get portalDescription;
 
+  /// A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472)
+  ///
+  /// In en, this message translates to:
+  /// **'{name} ({count})'**
+  String portalDirectoryCount(String name, int count);
+
   /// No description provided for @portalDirectoryIncompatible.
   ///
   /// In en, this message translates to:
@@ -25614,6 +25620,12 @@ abstract class AppLocalizations {
   /// **'People you can write to'**
   String get portalReachableHeading;
 
+  /// No description provided for @portalRecipientHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a name: suggestions appear from the first letter'**
+  String get portalRecipientHint;
+
   /// No description provided for @portalRegisterDirectory.
   ///
   /// In en, this message translates to:
@@ -25674,6 +25686,12 @@ abstract class AppLocalizations {
   /// **'A server is unavailable. This overview is incomplete. Tap to retry.'**
   String get portalSourceUnavailable;
 
+  /// No description provided for @portalSuggestionGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get portalSuggestionGroup;
+
   /// No description provided for @portalThisServer.
   ///
   /// In en, this message translates to:
@@ -25709,6 +25727,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Website'**
   String get portalWebsite;
+
+  /// Screen-reader label of a person or group suggested while typing in the new-discussion search (#2472)
+  ///
+  /// In en, this message translates to:
+  /// **'Write to {name}'**
+  String portalWriteTo(String name);
 
   /// No description provided for @preferencesSaveFailed.
   ///
