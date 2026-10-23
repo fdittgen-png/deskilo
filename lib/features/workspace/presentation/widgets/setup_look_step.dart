@@ -6,7 +6,8 @@
 // make readable. The pattern, the room colours and the logo stay on the
 // colours screen, one tap away. The preview is the app as members get it:
 // the bar with the space's name and a button, in the light and the dark
-// theme the colour derives, redrawn as the owner picks.
+// theme the colour derives, redrawn as the owner picks. A colour typed or
+// picked and not saved is kept as the step's draft on the server (#2869).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,12 +20,14 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/workspace_colours.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_branding.dart';
 import '../../providers/workspace_providers.dart';
 import '../screens/colours_screen.dart';
+import 'setup_draft_frame.dart';
 
 class SetupLookStep extends ConsumerStatefulWidget {
   const SetupLookStep({super.key, required this.workspace});
@@ -36,13 +39,24 @@ class SetupLookStep extends ConsumerStatefulWidget {
 }
 
 class _SetupLookStepState extends ConsumerState<SetupLookStep> {
-  late final _hex = TextEditingController(
-    text: switch (WorkspaceBranding.fromJson(widget.workspace.branding)) {
-      WorkspaceBranding(:final seedArgb?) => hexOfColor(seedArgb),
-      _ => '',
+  /// The colour as stored.
+  late final _storedHex = switch (WorkspaceBranding.fromJson(
+    widget.workspace.branding,
+  )) {
+    WorkspaceBranding(:final seedArgb?) => hexOfColor(seedArgb),
+    _ => '',
+  };
+  late final _hex = TextEditingController(text: _storedHex);
+  final _busy = ValueNotifier<bool>(false);
+
+  late final _draft = SetupDraftForm(
+    edits: _hex,
+    answers: () => {'hex': _hex.text},
+    fill: (answers) => _hex.text = switch (answers?['hex']) {
+      final String hex => hex,
+      _ => _storedHex,
     },
   );
-  final _busy = ValueNotifier<bool>(false);
 
   @override
   void dispose() {
@@ -71,9 +85,11 @@ class _SetupLookStepState extends ConsumerState<SetupLookStep> {
       case ColourApplied(:final hex):
         ref.invalidate(myWorkspacesProvider);
         AppSnack.success(context, l10n.coloursApplied(hex));
+        await _draft.applied();
       case ColourReset():
         ref.invalidate(myWorkspacesProvider);
         AppSnack.success(context, l10n.coloursResetDone);
+        await _draft.applied();
       case ColourMalformed(:final text):
         AppSnack.error(context, l10n.coloursMalformed(text));
       case ColourRefused(:final pair):
@@ -93,7 +109,12 @@ class _SetupLookStepState extends ConsumerState<SetupLookStep> {
           ? const <String>[]
           : [for (final f in DeskiloTheme.refusals(brand)) f.pair];
       return SetupStepLayout(
-        form: _form(context, refusals),
+        form: SetupDraftFrame(
+          workspaceId: widget.workspace.id,
+          step: 'look',
+          form: _draft,
+          child: _form(context, refusals),
+        ),
         preview: _Preview(name: widget.workspace.name, brand: brand),
       );
     },

@@ -8,7 +8,9 @@
 // keeps following it unless the owner changed it here. The address, the
 // image and the plans stay in the page editor, one tap away. The preview
 // is the space as the directory lists it, then what its page says, drawn
-// from the fields as the owner types.
+// from the fields as the owner types. What the owner typed and has not
+// saved is kept as the step's draft on the server (#2869), through the
+// frame the guide hands in.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +22,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/setup_draft_form.dart';
 import '../../../core/ui/setup_step_layout.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/public_workspace.dart';
@@ -33,12 +36,16 @@ class SetupPublicPageStep extends ConsumerStatefulWidget {
     super.key,
     required this.workspaceId,
     required this.workspaceName,
+    required this.draft,
   });
 
   final String workspaceId;
 
   /// Shown until the stored page names the space itself.
   final String workspaceName;
+
+  /// Keeps what the owner typed and has not saved as the step's draft.
+  final SetupDraftFrameBuilder draft;
 
   @override
   ConsumerState<SetupPublicPageStep> createState() =>
@@ -60,6 +67,29 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
   Map<String, Object?>? _document;
   Set<String> _following = const {};
 
+  /// Whether the page was published when last read or saved.
+  var _storedPublished = false;
+
+  late final _kept = SetupDraftForm(
+    edits: Listenable.merge([_published, ..._controllers.values]),
+    answers: () => {
+      'published': _published.value,
+      for (final field in _edited) field: _controllers[field]!.text,
+    },
+    fill: (answers) {
+      _published.value = switch (answers?['published']) {
+        final bool published => published,
+        _ => _storedPublished,
+      };
+      for (final field in _edited) {
+        _controllers[field]!.text = switch (answers?[field]) {
+          final String typed => typed,
+          _ => _document?[field] as String? ?? '',
+        };
+      }
+    },
+  );
+
   @override
   void dispose() {
     for (final c in _controllers.values) {
@@ -75,7 +105,7 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
     final doc = Map<String, Object?>.from(page['document'] as Map);
     _document = doc;
     _following = publicFollowing(page);
-    _published.value = page['published'] == true;
+    _published.value = _storedPublished = page['published'] == true;
     for (final field in _edited) {
       _controllers[field]!.text = doc[field] as String? ?? '';
     }
@@ -119,8 +149,10 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
     if (!ok) return;
     _document = saved ?? _document;
     _following = following;
+    _storedPublished = _published.value;
     ref.invalidate(publicDirectoryProvider);
     AppSnack.success(context, l10n.billingSaved);
+    await _kept.applied();
   }
 
   @override
@@ -141,7 +173,7 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
       if (page == null) return const LoadingView();
       _prefill(page);
       return SetupStepLayout(
-        form: _form(context),
+        form: widget.draft(form: _kept, child: _form(context)),
         preview: ListenableBuilder(
           listenable: Listenable.merge([_published, ..._controllers.values]),
           builder: (context, _) => _Preview(

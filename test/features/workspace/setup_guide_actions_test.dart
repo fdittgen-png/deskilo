@@ -128,9 +128,10 @@ void main() {
     tester,
   ) async {
     await _pump(tester);
-    // Only the required open step counts: places, at its default 5 min.
+    // Only the required open step counts: places, at its default 5 min,
+    // read as 5 to twice 5.
     expect(find.byKey(const ValueKey('setup-guide-until')), findsOneWidget);
-    expect(find.textContaining('About 5 min until'), findsOneWidget);
+    expect(find.textContaining('About 5–10 min until'), findsOneWidget);
   });
 
   testWidgets('the next step can be tried in the demo, at its own screen', (

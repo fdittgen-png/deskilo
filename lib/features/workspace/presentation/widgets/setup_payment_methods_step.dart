@@ -4,6 +4,8 @@
 // fields, prefilled from the workspace, saved through
 // [SavePaymentInstructions]. Beside them the instructions exactly as a
 // member reads them on an unpaid statement, redrawn as the owner types.
+// What the owner typed and has not saved is kept as the step's draft on
+// the server (#2869).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,12 +13,14 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/save_payment_instructions.dart';
 import '../../domain/payment_instructions.dart';
 import '../../domain/workspace.dart';
 import '../../providers/workspace_providers.dart';
 import 'payment_instructions_fields.dart';
+import 'setup_draft_frame.dart';
 
 class SetupPaymentMethodsStep extends ConsumerStatefulWidget {
   const SetupPaymentMethodsStep({
@@ -41,10 +45,20 @@ class SetupPaymentMethodsStep extends ConsumerStatefulWidget {
 
 class _SetupPaymentMethodsStepState
     extends ConsumerState<SetupPaymentMethodsStep> {
-  late final _draft = PaymentInstructionsDraft(
-    PaymentInstructions.fromDb(widget.workspace.paymentInstructions),
+  late final _stored = PaymentInstructions.fromDb(
+    widget.workspace.paymentInstructions,
   );
+  late final _draft = PaymentInstructionsDraft(_stored);
   final _busy = ValueNotifier<bool>(false);
+
+  /// The fields as the step's draft on the server.
+  late final _kept = SetupDraftForm(
+    edits: _draft.changes,
+    answers: () => _draft.value.toDb(),
+    fill: (answers) => _draft.fill(
+      answers == null ? _stored : PaymentInstructions.fromDb(answers),
+    ),
+  );
 
   @override
   void dispose() {
@@ -69,34 +83,41 @@ class _SetupPaymentMethodsStepState
     ref.invalidate(myWorkspacesProvider);
     if (!mounted) return;
     _busy.value = false;
-    if (ok) AppSnack.success(context, l10n.workspaceSettingsSaved);
+    if (!ok) return;
+    AppSnack.success(context, l10n.workspaceSettingsSaved);
+    await _kept.applied();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return SetupStepLayout(
-      form: ValueListenableBuilder<bool>(
-        valueListenable: _busy,
-        builder: (context, busy, _) => Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(l10n.setupStepHint('payment_methods')),
-            const SizedBox(height: AppSpacing.lg),
-            PaymentInstructionsFields(
-              draft: _draft,
-              countryCode: widget.workspace.countryCode,
-              enabled: !busy,
-            ),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: FilledButton(
-                key: const ValueKey('setup-payments-save'),
-                onPressed: busy ? null : _save,
-                child: Text(l10n.commonSave),
+      form: SetupDraftFrame(
+        workspaceId: widget.workspace.id,
+        step: 'payment_methods',
+        form: _kept,
+        child: ValueListenableBuilder<bool>(
+          valueListenable: _busy,
+          builder: (context, busy, _) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(l10n.setupStepHint('payment_methods')),
+              const SizedBox(height: AppSpacing.lg),
+              PaymentInstructionsFields(
+                draft: _draft,
+                countryCode: widget.workspace.countryCode,
+                enabled: !busy,
               ),
-            ),
-          ],
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: FilledButton(
+                  key: const ValueKey('setup-payments-save'),
+                  onPressed: busy ? null : _save,
+                  child: Text(l10n.commonSave),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       preview: ListenableBuilder(

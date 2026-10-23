@@ -5,8 +5,12 @@
 // one next action, then what the next milestone still needs; what waits,
 // what a later milestone needs, what more the space could use, what was set
 // aside and what is done stay folded. Every state is a word, never only a
-// colour or an icon. The status is the server's (0539); a step opens the
+// colour or an icon, and where the space stands is announced as words to
+// a screen reader. The status is the server's (0539); a step opens the
 // screen where it is done, and the guide reads again on the way back.
+// Steps outside the levels the owner chose are not in the plan: they wait,
+// folded, under "Add more to your space". Times are ranges, never
+// promises.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -28,6 +32,7 @@ import '../../domain/setup_status.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/sample_data_card.dart';
+import '../widgets/setup_guide_progress.dart';
 import '../widgets/setup_return_bar.dart';
 
 class SetupGuideScreen extends ConsumerWidget {
@@ -79,13 +84,14 @@ class _SetupGuideBody extends ConsumerWidget {
           children: [
             // Inside the demo: what it is, and the other space.
             const DemoSetupCard(),
-            _Milestones(status: value),
+            SetupGuideMilestones(status: value),
             if (value.nextMilestone case final next?
-                when value.minutesToNextMilestone > 0) ...[
+                when value.toNextMilestone.low > 0) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
                 l10n.setupGuideUntil(
-                  value.minutesToNextMilestone,
+                  value.toNextMilestone.low,
+                  value.toNextMilestone.high,
                   l10n.setupMilestoneName(next.milestone),
                 ),
                 key: const ValueKey('setup-guide-until'),
@@ -98,10 +104,7 @@ class _SetupGuideBody extends ConsumerWidget {
                 key: const ValueKey('setup-guide-levels'),
                 icon: const Icon(Icons.tune),
                 label: Text(l10n.setupGuideLevelsLink),
-                onPressed: () async {
-                  await context.push('/setup/levels');
-                  await reload();
-                },
+                onPressed: () => _openLevels(context, reload),
               ),
             ),
             // #2876 — check the answers and go live.
@@ -159,6 +162,10 @@ class _SetupGuideBody extends ConsumerWidget {
           ('done', l10n.setupGuideDone, status.done),
         ])
           _Folded(id: id, title: title, steps: steps, actions: actions),
+        SetupGuideAddMore(
+          steps: status.addable,
+          onAdd: () => _openLevels(context, actions.reload),
+        ),
       ];
     }
     final toDo = [
@@ -210,6 +217,10 @@ class _SetupGuideBody extends ConsumerWidget {
         steps: status.done,
         actions: actions,
       ),
+      SetupGuideAddMore(
+        steps: status.addable,
+        onAdd: () => _openLevels(context, actions.reload),
+      ),
     ];
   }
 }
@@ -243,6 +254,16 @@ Future<void> _open(
   await reload();
 }
 
+/// #2868 — the levels screen: what the space does decides which steps
+/// there are. The guide reads again on the way back.
+Future<void> _openLevels(
+  BuildContext context,
+  Future<void> Function() reload,
+) async {
+  await context.push('/setup/levels');
+  await reload();
+}
+
 /// Completes when [route], covered by a route pushed after this call, is
 /// the top route again and uncovered; never without a route, and not when
 /// the whole navigator goes away with the cover still on top.
@@ -259,45 +280,6 @@ Future<void> _onTopAgain(ModalRoute<Object?>? route) {
 
   animation?.addStatusListener(listen);
   return back.future;
-}
-
-/// The milestones the space chose, each with where it stands.
-class _Milestones extends StatelessWidget {
-  const _Milestones({required this.status});
-  final SetupStatus status;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final next = status.nextMilestone;
-    return Wrap(
-      key: const ValueKey('setup-guide-milestones'),
-      spacing: AppSpacing.sm,
-      runSpacing: AppSpacing.sm,
-      children: [
-        for (final m in status.milestones)
-          if (m.applies)
-            Chip(
-              key: ValueKey('setup-milestone-${m.milestone}'),
-              avatar: Icon(
-                m.reached
-                    ? Icons.check_circle
-                    : m == next
-                    ? Icons.adjust
-                    : Icons.radio_button_unchecked,
-                size: 18,
-              ),
-              label: Text(
-                m.reached
-                    ? '${l10n.setupMilestoneName(m.milestone)} · '
-                          '${l10n.setupStateName('ready')}'
-                    : '${l10n.setupMilestoneName(m.milestone)} · '
-                          '${l10n.setupGuideProgress(m.ready, m.required)}',
-              ),
-            ),
-      ],
-    );
-  }
 }
 
 class _NextCard extends ConsumerWidget {
@@ -332,7 +314,8 @@ class _NextCard extends ConsumerWidget {
             Row(
               children: [
                 Text(
-                  l10n.setupGuideEstimate(step.estimateMinutes),
+                  l10n.setupGuideEstimate(step.estimate.low, step.estimate.high),
+                  key: const ValueKey('setup-guide-estimate'),
                   style: theme.textTheme.bodySmall,
                 ),
                 const Spacer(),

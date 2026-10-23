@@ -17,11 +17,14 @@
   "setupGuideUnavailable": "L'état de la mise en place n'a pas pu être lu. Réessayez dans un instant.",
   "setupGuideResume": "Reprendre",
   "setupGuideProgress": "{ready} sur {required} faits",
-  "setupGuideEstimate": "environ {minutes} min",
+  "setupGuideEstimate": "environ {low} à {high} min",
   "setupGuideWaitsFor": "Attend : {steps}",
   "setupGuideBanner": "{milestone} : {ready} sur {required} faits · Ensuite : {step}",
   "setupGuideMarkDone": "Marquer comme fait",
-  "setupGuideUntil": "Environ {minutes} min avant : {milestone}",
+  "setupGuideUntil": "Environ {low} à {high} min avant : {milestone}",
   "setupGuideTryDemo": "L’essayer dans la démo",
-  "setupGuideReturn": "Retour au guide de mise en place"
+  "setupGuideReturn": "Retour au guide de mise en place",
+  "setupGuideAddMore": "Ajouter à votre espace",
+  "setupGuideNotInSetup": "Pas dans votre configuration",
+  "setupGuideAddIt": "L'ajouter"
 }

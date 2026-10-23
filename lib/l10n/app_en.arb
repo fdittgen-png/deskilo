@@ -22520,6 +22520,14 @@
   "@setupGrowVatUsualTitle": {
     "description": "#2875 setup grow steps: setupGrowVatUsualTitle"
   },
+  "setupGuideAddIt": "Add it",
+  "@setupGuideAddIt": {
+    "description": "#2869 setup guide: opens the levels screen to add the step's part of the space"
+  },
+  "setupGuideAddMore": "Add more to your space",
+  "@setupGuideAddMore": {
+    "description": "#2869 setup guide: the folded group of steps whose feature is outside the levels the owner chose"
+  },
   "setupGuideAllDone": "Your space has everything you chose.",
   "@setupGuideAllDone": {
     "description": "#2869 setup guide: setupGuideAllDone"
@@ -22550,11 +22558,14 @@
   "@setupGuideDone": {
     "description": "#2869 setup guide: setupGuideDone"
   },
-  "setupGuideEstimate": "about {minutes} min",
+  "setupGuideEstimate": "about {low}–{high} min",
   "@setupGuideEstimate": {
-    "description": "#2869 setup guide: setupGuideEstimate",
+    "description": "#2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise",
     "placeholders": {
-      "minutes": {
+      "low": {
+        "type": "int"
+      },
+      "high": {
         "type": "int"
       }
     }
@@ -22574,6 +22585,10 @@
   "setupGuideNext": "Next",
   "@setupGuideNext": {
     "description": "#2869 setup guide: setupGuideNext"
+  },
+  "setupGuideNotInSetup": "Not in your setup",
+  "@setupGuideNotInSetup": {
+    "description": "#2869 setup guide: the state of a step outside the chosen levels"
   },
   "setupGuideOptional": "More for your space",
   "@setupGuideOptional": {
@@ -22615,11 +22630,14 @@
   "@setupGuideUnavailable": {
     "description": "#2869 setup guide: setupGuideUnavailable"
   },
-  "setupGuideUntil": "About {minutes} min until: {milestone}",
+  "setupGuideUntil": "About {low}–{high} min until: {milestone}",
   "@setupGuideUntil": {
-    "description": "#2869 — the time the next milestone still needs, summed from its open steps' estimates.",
+    "description": "#2869 — the time the next milestone still needs, as a range summed from its open steps' estimates.",
     "placeholders": {
-      "minutes": {
+      "low": {
+        "type": "int"
+      },
+      "high": {
         "type": "int"
       },
       "milestone": {

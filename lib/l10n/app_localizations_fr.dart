@@ -19656,6 +19656,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupGrowVatUsualTitle => 'Les taux habituels de votre pays';
 
   @override
+  String get setupGuideAddIt => 'L\'ajouter';
+
+  @override
+  String get setupGuideAddMore => 'Ajouter à votre espace';
+
+  @override
   String get setupGuideAllDone =>
       'Votre espace a tout ce que vous avez choisi.';
 
@@ -19676,8 +19682,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupGuideDone => 'Fait';
 
   @override
-  String setupGuideEstimate(int minutes) {
-    return 'environ $minutes min';
+  String setupGuideEstimate(int low, int high) {
+    return 'environ $low à $high min';
   }
 
   @override
@@ -19691,6 +19697,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupGuideNext => 'Ensuite';
+
+  @override
+  String get setupGuideNotInSetup => 'Pas dans votre configuration';
 
   @override
   String get setupGuideOptional => 'Plus pour votre espace';
@@ -19720,8 +19729,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'état de la mise en place n\'a pas pu être lu. Réessayez dans un instant.';
 
   @override
-  String setupGuideUntil(int minutes, String milestone) {
-    return 'Environ $minutes min avant : $milestone';
+  String setupGuideUntil(int low, int high, String milestone) {
+    return 'Environ $low à $high min avant : $milestone';
   }
 
   @override
