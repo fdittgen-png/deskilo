@@ -21,8 +21,12 @@ abstract final class WhatsappGroupRules {
 /// One coworking community (spec §3). Currency defaults from the country;
 /// the owner may override it (decided 2026-07-07).
 @freezed
-sealed class Workspace with _$Workspace implements SystemStamped {
+sealed class Workspace with _$Workspace implements SystemStamped, SpaceSide {
   const Workspace._();
+
+  /// The declared environment; anything unknown reads as development.
+  @override
+  WorkspaceEnvironment get env => WorkspaceEnvironment.fromWire(environment);
 
   const factory Workspace({
     required String id,
@@ -166,12 +170,19 @@ enum WorkspaceEnvironment {
       values.where((e) => e.wire == wire).firstOrNull ?? development;
 
   bool get isDevelopment => this == WorkspaceEnvironment.development;
+
+  bool get isProduction => this == WorkspaceEnvironment.production;
+}
+
+/// One side of a space as a list shows it: its environment, and the pair
+/// its two sides share ('' for a space without a twin).
+abstract interface class SpaceSide {
+  String get id;
+  String get pairId;
+  WorkspaceEnvironment get env;
 }
 
 extension WorkspaceEnvironmentX on Workspace {
-  /// The declared environment; anything unknown reads as development.
-  WorkspaceEnvironment get env => WorkspaceEnvironment.fromWire(environment);
-
   /// Shorthand for the many places that only care whether to warn.
   bool get isDevelopment => env.isDevelopment;
 }

@@ -19,9 +19,11 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/server_label.dart';
 import '../../directory/presentation/connection_outcome_text.dart';
 import '../../workspace/providers/connected_space_providers.dart';
 import '../domain/my_spaces.dart';
+import '../domain/space_pairs.dart';
 import '../providers/me_providers.dart';
 import 'me_workspace_row.dart';
 
@@ -35,6 +37,7 @@ class LinkedSpacesSection extends ConsumerWidget {
     LinkedSpace space,
   ) async {
     final l10n = context.l10n;
+    final label = serverLabel(l10n, server.source);
     final go = await showAppSheet<bool>(
       context: context,
       builder: (sheetContext) => SafeArea(
@@ -50,14 +53,14 @@ class LinkedSpacesSection extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                l10n.meLinkedOpenBody(server.host),
+                l10n.meLinkedOpenBody(label),
               ),
               const SizedBox(height: AppSpacing.lg),
               FilledButton.icon(
                 key: const ValueKey('linked-space-open'),
                 icon: const Icon(Icons.swap_horiz),
                 label: Text(
-                  l10n.meLinkedOpen(server.host),
+                  l10n.meLinkedOpen(label),
                 ),
                 onPressed: () => Navigator.of(sheetContext).pop(true),
               ),
@@ -86,68 +89,63 @@ class LinkedSpacesSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
     final servers = ref.watch(linkedServerSpacesProvider).value ?? const [];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final server in servers) ...[
-          if (server.unavailable)
-            InlineBanner(
-              key: ValueKey('linked-unavailable-${server.host}'),
-              icon: Icons.cloud_off_outlined,
-              severity: InlineBannerSeverity.info,
-              text:
-                  l10n.meLinkedUnavailable(server.host),
-              actionLabel: l10n.commonRetry,
-              onAction: () => ref.invalidate(linkedServerSpacesProvider),
-            ),
-          for (final group in _groups(server.spaces))
-            MeWorkspaceRow(
-              environmentHint: group.any((s) => s.environment == 'dev')
-                  ? l10n.uxTestSpaceHint : null,
-              avatar: const CircleAvatar(child: Icon(Icons.dns_outlined)),
-              name: group.first.name,
-              detail: group.any((s) => s.standing == MySpaceStanding.pending)
-                  ? (l10n.meLinkedPendingOn(server.host))
-                  : server.host,
-              actions: [
-                for (final space in group)
-                  Tooltip(
-                    message: space.standing == MySpaceStanding.pending
-                        ? (l10n.meLinkedPendingOn(server.host))
-                        : space.name,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: AppSpacing.sm),
-                      child: OutlinedButton(
-                        key: ValueKey('linked-space-${server.host}-${space.id}'),
-                        onPressed: () => _open(context, ref, server, space),
-                        child: Text(space.environment.isEmpty
-                            ? (l10n.meSpaceOpen)
-                            : space.environment == 'prod'
-                            ? l10n.uxOpenWorkspace
-                            : l10n.uxTestSpace),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-        ],
+        for (final server in servers)
+          ..._server(context, ref, server),
       ],
     );
   }
-}
 
-List<List<LinkedSpace>> _groups(List<LinkedSpace> spaces) {
-  final groups = <String, List<LinkedSpace>>{};
-  for (final space in spaces) {
-    final key = space.pairId.isEmpty
-        ? 'space:${space.id}'
-        : 'pair:${space.pairId}';
-    groups.putIfAbsent(key, () => []).add(space);
+  List<Widget> _server(
+    BuildContext context,
+    WidgetRef ref,
+    LinkedServerSpaces server,
+  ) {
+    final l10n = context.l10n;
+    final host = serverHost(server.source);
+    final label = serverLabel(l10n, server.source);
+    return [
+      if (server.unavailable)
+        InlineBanner(
+          key: ValueKey('linked-unavailable-$host'),
+          icon: Icons.cloud_off_outlined,
+          severity: InlineBannerSeverity.info,
+          text:
+              l10n.meLinkedUnavailable(label),
+          actionLabel: l10n.commonRetry,
+          onAction: () => ref.invalidate(linkedServerSpacesProvider),
+        ),
+      for (final group in pairSides(server.spaces))
+        MeWorkspaceRow(
+          environmentHint: group.any((s) => s.env.isDevelopment)
+              ? l10n.uxTestSpaceHint : null,
+          avatar: const CircleAvatar(child: Icon(Icons.dns_outlined)),
+          name: group.first.name,
+          detail: group.any((s) => s.standing == MySpaceStanding.pending)
+              ? (l10n.meLinkedPendingOn(label))
+              : label,
+          actions: [
+            for (final space in group)
+              Tooltip(
+                message: space.standing == MySpaceStanding.pending
+                    ? (l10n.meLinkedPendingOn(label))
+                    : space.name,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: AppSpacing.sm),
+                  child: OutlinedButton(
+                    key: ValueKey('linked-space-$host-${space.id}'),
+                    onPressed: () => _open(context, ref, server, space),
+                    child: Text(space.env.isProduction
+                        ? l10n.uxOpenWorkspace
+                        : l10n.uxTestSpace),
+                  ),
+                ),
+              ),
+          ],
+        ),
+    ];
   }
-  return [
-    for (final group in groups.values)
-      group..sort((a, b) => b.environment.compareTo(a.environment)),
-  ];
 }

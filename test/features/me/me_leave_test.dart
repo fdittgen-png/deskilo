@@ -45,7 +45,7 @@ void main() {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me');
     await _openMenu(tester, 'ws-1');
-    final item = tester.widget<PopupMenuItem<String>>(_leave('ws-1'));
+    final item = tester.widget<PopupMenuItem<Object?>>(_leave('ws-1'));
     expect(item.enabled, isFalse);
     expect(find.text('Owners hand the space over before leaving'), findsOneWidget);
     await tester.tap(_leave('ws-1'), warnIfMissed: false);

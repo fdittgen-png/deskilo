@@ -7,6 +7,7 @@
 // an audience of "my spaces" is met when the two accounts share a space,
 // "chosen spaces" when they share one of the chosen ones, "signed in"
 // always, "nobody" never.
+import 'package:deskilo/features/me/domain/linked_me_repository.dart';
 import 'package:deskilo/features/me/domain/me_repository.dart';
 import 'package:deskilo/features/me/domain/my_spaces.dart';
 import 'package:deskilo/features/me/domain/public_person.dart';
@@ -53,10 +54,6 @@ class FakeMeRepository implements MeRepository {
 
   /// When set, [leaveSpace] and [setVisibility] throw it.
   Exception? failure;
-
-  /// Linked servers' spaces, by source; a source in [unavailable] throws.
-  final Map<String, List<LinkedSpace>> linkedSpaces = {};
-  final Set<String> unavailable = {};
 
   FakeAccount get _me => accounts.putIfAbsent(
       _currentUser(), () => FakeAccount(name: _currentUser()));
@@ -170,24 +167,32 @@ class FakeMeRepository implements MeRepository {
       bio: account.bio,
     );
   }
+}
+
+/// #2211 — the linked servers' side of the account layer in memory: each
+/// server's spaces and my visibility there, by source.
+class FakeLinkedMeRepository implements LinkedMeRepository {
+  /// Linked servers' spaces, by source; a source in [unavailable] throws.
+  final Map<String, List<LinkedSpace>> linkedSpaces = {};
+  final Set<String> unavailable = {};
+
+  /// My visibility on each linked server, by source.
+  final Map<String, MyVisibility> linkedVisibility = {};
 
   @override
-  Future<List<LinkedSpace>> spacesOn(String source) async {
+  Future<List<LinkedSpace>> spaces(String source) async {
     if (unavailable.contains(source)) throw StateError('server unavailable');
     return linkedSpaces[source] ?? const [];
   }
 
-  /// #2211 — my visibility on each linked server, by source.
-  final Map<String, MyVisibility> linkedVisibility = {};
-
   @override
-  Future<MyVisibility> myVisibilityOn(String source) async {
+  Future<MyVisibility> visibility(String source) async {
     if (unavailable.contains(source)) throw StateError('server unavailable');
     return linkedVisibility[source] ?? MyVisibility.defaults;
   }
 
   @override
-  Future<void> setVisibilityOn(
+  Future<void> setVisibility(
     String source,
     VisibilityField field,
     FieldAudience audience,

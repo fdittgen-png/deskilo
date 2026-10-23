@@ -168,6 +168,7 @@ const kTestInstallationId = '00000000-0000-4000-8000-0000000071e5';
 
 List<Override> standardTestOverrides({
   FakeMeRepository? me,
+  FakeLinkedMeRepository? linkedMe,
   // #2590 — a test of the usage month's preparation brings its own.
   UsagePreparation? usagePreparation,
   // #1835 — the account's guest visits; none unless a test seeds them.
@@ -311,6 +312,8 @@ List<Override> standardTestOverrides({
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directoryFake),
       // #1823 — the account layer, in memory; the account is the session's.
       meRepositoryProvider.overrideWith((ref) => me ?? FakeMeRepository()),
+      linkedMeRepositoryProvider
+          .overrideWith((ref) => linkedMe ?? FakeLinkedMeRepository()),
       guestParticipationRepositoryProvider
           .overrideWithValue(guestVisits ?? FakeGuestParticipationRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),

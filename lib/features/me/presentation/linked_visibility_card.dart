@@ -14,13 +14,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/server_label.dart';
 import '../domain/visibility.dart';
 import '../providers/me_providers.dart';
-import 'visibility_card.dart';
+import 'visibility_flow.dart';
 import 'visibility_labels.dart';
 
 /// One row per connected server; nothing when there is none.
@@ -49,17 +49,17 @@ class LinkedVisibilityCard extends ConsumerWidget {
             Builder(
               builder: (context) {
                 final url = source.endpoint.url;
-                final host = Uri.tryParse(url)?.host ?? url;
+                final label = serverLabel(words, url);
                 return ListTile(
-                  key: ValueKey('linked-visibility-$host'),
+                  key: ValueKey('linked-visibility-${source.endpoint.host}'),
                   leading: const Icon(Icons.dns_outlined),
-                  title: Text(words.visibilityOnServer(host)),
+                  title: Text(words.visibilityOnServer(label)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => showAppSheet<void>(
                     context: context,
                     isScrollControlled: true,
                     builder: (_) =>
-                        LinkedVisibilitySheet(source: url, host: host),
+                        LinkedVisibilitySheet(source: url, label: label),
                   ),
                 );
               },
@@ -75,15 +75,18 @@ class LinkedVisibilitySheet extends ConsumerWidget {
   const LinkedVisibilitySheet({
     super.key,
     required this.source,
-    required this.host,
+    required this.label,
   });
 
   final String source;
-  final String host;
 
-  Future<void> _choose(
+  /// How the server is named to the person ([serverLabel]).
+  final String label;
+
+  /// The audiences this field may have on another server: chosen spaces
+  /// are not offered, the spaces to choose from live there.
+  Future<FieldAudience?> _pick(
     BuildContext context,
-    WidgetRef ref,
     VisibilityField field,
     FieldAudience current,
   ) async {
@@ -108,23 +111,7 @@ class LinkedVisibilitySheet extends ConsumerWidget {
         ],
       ),
     );
-    if (picked == null || picked == current.audience || !context.mounted) {
-      return;
-    }
-    final choice = FieldAudience(picked);
-    if (choice.widens(current) &&
-        !await confirmVisibilityWiden(context, field, choice)) {
-      return;
-    }
-    if (!context.mounted) return;
-    final ok = await runGuarded(
-      context,
-      domain: 'me',
-      message: 'save linked visibility failed',
-      errorText: words.visibilitySaveFailed,
-      action: () => ref.read(meActionsProvider).chooseOn(source, field, choice),
-    );
-    if (ok) ref.invalidate(linkedVisibilityProvider(source));
+    return picked == null ? null : FieldAudience(picked);
   }
 
   @override
@@ -138,7 +125,7 @@ class LinkedVisibilitySheet extends ConsumerWidget {
         children: [
           ListTile(
             title: Text(
-              words.visibilityOnServer(host),
+              words.visibilityOnServer(label),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -146,7 +133,7 @@ class LinkedVisibilitySheet extends ConsumerWidget {
             InlineBanner(
               key: const ValueKey('linked-visibility-unavailable'),
               icon: Icons.cloud_off_outlined,
-              text: words.visibilityOnServerUnavailable(host),
+              text: words.visibilityOnServerUnavailable(label),
               actionLabel: words.commonRetry,
               onAction: () => ref.invalidate(linkedVisibilityProvider(source)),
             )
@@ -161,7 +148,17 @@ class LinkedVisibilitySheet extends ConsumerWidget {
                 title: Text(visibilityFieldLabel(words, field)),
                 subtitle: Text(audienceSummary(words, visibility.of(field))),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => _choose(context, ref, field, visibility.of(field)),
+                onTap: () => chooseAudience(
+                  context,
+                  field: field,
+                  current: visibility.of(field),
+                  pick: () => _pick(context, field, visibility.of(field)),
+                  save: (choice) => ref
+                      .read(meActionsProvider)
+                      .chooseOn(source, field, choice),
+                  reread: () =>
+                      ref.invalidate(linkedVisibilityProvider(source)),
+                ),
               )
           else
             const LoadingView(),
