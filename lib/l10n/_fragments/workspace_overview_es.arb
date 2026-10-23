@@ -12,5 +12,10 @@
   "overviewAllIndicators": "Todos los indicadores",
   "overviewActiveMemberships": "Membresías activas",
   "overviewThisMonth": "Este mes",
-  "overviewUnavailable": "No disponible"
+  "overviewUnavailable": "No disponible",
+  "overviewOverdueTitle": "Cobros vencidos",
+  "overviewOverdueBasis": "{count} facturas vencidas; {unknown} sin vencimiento probado y {held} en suspenso, aparte",
+  "overviewOverdueDefinition": "Lo que los miembros aún deben de facturas emitidas pasado su vencimiento probado, tras abonos, pagos parciales y pérdidas, según las reglas de recordatorio. Una factura sin vencimiento probado, o en suspenso, se cuenta aparte y no entra en el importe.",
+  "overviewMembershipsDefinition": "Las membresías del espacio activas hoy, todos los roles incluidos: membresías, no personas distintas.",
+  "overviewCurrentState": "Cifra de hoy: no se guarda historial para un periodo pasado."
 }

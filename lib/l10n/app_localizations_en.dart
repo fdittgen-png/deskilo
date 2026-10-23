@@ -3164,6 +3164,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get carnetsTitle => 'Carnets';
 
   @override
+  String get cashHubInOut => 'Money in and out by month';
+
+  @override
+  String get cashHubToPay => 'To pay';
+
+  @override
   String get chBareLetting => 'We only let bare rooms';
 
   @override
@@ -8151,6 +8157,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Whit Monday';
+
+  @override
+  String get hubCashSubtitle =>
+      'Recorded money in and out, and what is still to pay';
+
+  @override
+  String get hubCashTitle => 'Cash';
 
   @override
   String get hubPurchasesSubtitle =>
@@ -13849,6 +13862,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get overviewAllIndicators => 'All indicators';
 
   @override
+  String get overviewCurrentState =>
+      'Today\'s figure: no history of it is kept for a past period.';
+
+  @override
   String get overviewGroupCapacity => 'Capacity';
 
   @override
@@ -13867,7 +13884,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get overviewIndicators => 'Key indicators';
 
   @override
+  String get overviewMembershipsDefinition =>
+      'The memberships of the space that are active today, each role included: memberships, not distinct people.';
+
+  @override
   String get overviewNeedsAttention => 'Needs attention';
+
+  @override
+  String overviewOverdueBasis(String count, String unknown, String held) {
+    return '$count invoices overdue; $unknown without a proven due date and $held on hold, apart';
+  }
+
+  @override
+  String get overviewOverdueDefinition =>
+      'What members still owe on issued invoices past their proven due date, after credit notes, part payments and write-offs, by the reminder rules. An invoice with no proven due date, or on hold, is counted apart and is not in the amount.';
+
+  @override
+  String get overviewOverdueTitle => 'Overdue receivables';
 
   @override
   String get overviewThisMonth => 'This month';
@@ -16160,6 +16193,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get readinessFirstBookingReady => 'Ready for a first booking';
+
+  @override
+  String get readinessGrantMembers => 'Let members book';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Members can now book, see the calendar, write to each other and see their own account.';
 
   @override
   String get readinessLater => 'Needed later';

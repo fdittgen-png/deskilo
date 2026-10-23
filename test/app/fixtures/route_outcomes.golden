@@ -50,6 +50,7 @@ signed-out on  /members -> /auth
 signed-out on  /members/managed -> /auth
 signed-out on  /messages -> /auth
 signed-out on  /money -> /auth
+signed-out on  /money/cash -> /auth
 signed-out on  /money/purchases -> /auth
 signed-out on  /money/repartition -> /auth
 signed-out on  /money/repartition-wizard -> /auth
@@ -158,6 +159,7 @@ signed-out off /members -> /auth
 signed-out off /members/managed -> /auth
 signed-out off /messages -> /auth
 signed-out off /money -> /auth
+signed-out off /money/cash -> /auth
 signed-out off /money/purchases -> /auth
 signed-out off /money/repartition -> /auth
 signed-out off /money/repartition-wizard -> /auth
@@ -266,6 +268,7 @@ no-space on  /members -> /me
 no-space on  /members/managed -> /me
 no-space on  /messages -> /me
 no-space on  /money -> /me
+no-space on  /money/cash -> /me
 no-space on  /money/purchases -> /me
 no-space on  /money/repartition -> /me
 no-space on  /money/repartition-wizard -> /me
@@ -374,6 +377,7 @@ no-space off /members -> /me
 no-space off /members/managed -> /me
 no-space off /messages -> /me
 no-space off /money -> /me
+no-space off /money/cash -> /me
 no-space off /money/purchases -> /me
 no-space off /money/repartition -> /me
 no-space off /money/repartition-wizard -> /me
@@ -482,6 +486,7 @@ member on  /members -> /calendar
 member on  /members/managed -> /calendar
 member on  /messages -> /calendar
 member on  /money -> (open)
+member on  /money/cash -> /calendar
 member on  /money/purchases -> /money
 member on  /money/repartition -> (open)
 member on  /money/repartition-wizard -> /calendar
@@ -590,6 +595,7 @@ member off /members -> /messages
 member off /members/managed -> /messages
 member off /messages -> (open)
 member off /money -> /messages
+member off /money/cash -> /messages
 member off /money/purchases -> /messages
 member off /money/repartition -> (open)
 member off /money/repartition-wizard -> /messages
@@ -698,6 +704,7 @@ admin on  /members -> (open)
 admin on  /members/managed -> (open)
 admin on  /messages -> /calendar
 admin on  /money -> (open)
+admin on  /money/cash -> (open)
 admin on  /money/purchases -> /money
 admin on  /money/repartition -> (open)
 admin on  /money/repartition-wizard -> /calendar
@@ -806,6 +813,7 @@ admin off /members -> (open)
 admin off /members/managed -> /members
 admin off /messages -> (open)
 admin off /money -> /messages
+admin off /money/cash -> /messages
 admin off /money/purchases -> /messages
 admin off /money/repartition -> (open)
 admin off /money/repartition-wizard -> /messages
@@ -914,6 +922,7 @@ owner on  /members -> (open)
 owner on  /members/managed -> (open)
 owner on  /messages -> /calendar
 owner on  /money -> (open)
+owner on  /money/cash -> (open)
 owner on  /money/purchases -> /money
 owner on  /money/repartition -> (open)
 owner on  /money/repartition-wizard -> /money
@@ -1022,6 +1031,7 @@ owner off /members -> (open)
 owner off /members/managed -> /members
 owner off /messages -> (open)
 owner off /money -> /messages
+owner off /money/cash -> /messages
 owner off /money/purchases -> /messages
 owner off /money/repartition -> (open)
 owner off /money/repartition-wizard -> /messages

@@ -3183,6 +3183,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get carnetsTitle => 'Bonos';
 
   @override
+  String get cashHubInOut => 'Entradas y salidas por mes';
+
+  @override
+  String get cashHubToPay => 'Por pagar';
+
+  @override
   String get chBareLetting => 'Solo alquilamos locales desnudos';
 
   @override
@@ -8208,6 +8214,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Lunes de Pentecostés';
+
+  @override
+  String get hubCashSubtitle =>
+      'Entradas y salidas registradas, y lo que queda por pagar';
+
+  @override
+  String get hubCashTitle => 'Tesorería';
 
   @override
   String get hubPurchasesSubtitle =>
@@ -13941,6 +13954,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get overviewAllIndicators => 'Todos los indicadores';
 
   @override
+  String get overviewCurrentState =>
+      'Cifra de hoy: no se guarda historial para un periodo pasado.';
+
+  @override
   String get overviewGroupCapacity => 'Capacidad';
 
   @override
@@ -13959,7 +13976,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get overviewIndicators => 'Indicadores clave';
 
   @override
+  String get overviewMembershipsDefinition =>
+      'Las membresías del espacio activas hoy, todos los roles incluidos: membresías, no personas distintas.';
+
+  @override
   String get overviewNeedsAttention => 'Pendiente';
+
+  @override
+  String overviewOverdueBasis(String count, String unknown, String held) {
+    return '$count facturas vencidas; $unknown sin vencimiento probado y $held en suspenso, aparte';
+  }
+
+  @override
+  String get overviewOverdueDefinition =>
+      'Lo que los miembros aún deben de facturas emitidas pasado su vencimiento probado, tras abonos, pagos parciales y pérdidas, según las reglas de recordatorio. Una factura sin vencimiento probado, o en suspenso, se cuenta aparte y no entra en el importe.';
+
+  @override
+  String get overviewOverdueTitle => 'Cobros vencidos';
 
   @override
   String get overviewThisMonth => 'Este mes';
@@ -16279,6 +16312,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get readinessFirstBookingReady => 'Listo para una primera reserva';
+
+  @override
+  String get readinessGrantMembers => 'Permitir que los miembros reserven';
+
+  @override
+  String get readinessGrantMembersDone =>
+      'Los miembros ya pueden reservar, ver el calendario, escribirse y ver su propia cuenta.';
 
   @override
   String get readinessLater => 'Necesario más adelante';

@@ -5,6 +5,7 @@
 // it in; a complete space shows nothing.
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/features/workspace/domain/local_setup.dart';
+import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/local_setup_views.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -152,5 +153,52 @@ void main() {
       FakeLocalSetupRepository(),
     );
     expect(find.byKey(const ValueKey('local-readiness')), findsNothing);
+  });
+
+  testWidgets('the legal identity is not asked twice when the readiness card '
+      'already holds it (#2865)', (tester) async {
+    const identity = LocalSlot(
+      kind: LocalSlotKind.legalIdentity,
+      required: true,
+      route: '/legal-identity',
+      filled: false,
+    );
+    await _pump(
+      tester,
+      const LocalReadinessCard(workspaceId: 'ws'),
+      FakeLocalSetupRepository(
+        missing: const [identity],
+        readinessSections: const [
+          ReadinessSection(
+            area: ReadinessArea.legalIdentity,
+            state: ReadinessState.needsConfiguration,
+            required: true,
+            route: '/legal-identity',
+          ),
+        ],
+      ),
+    );
+    expect(find.byKey(const ValueKey('local-readiness')), findsNothing);
+  });
+
+  testWidgets('without the readiness section the card still names it', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      const LocalReadinessCard(workspaceId: 'ws'),
+      FakeLocalSetupRepository(
+        missing: const [
+          LocalSlot(
+            kind: LocalSlotKind.legalIdentity,
+            required: true,
+            route: '/legal-identity',
+            filled: false,
+          ),
+        ],
+      ),
+    );
+    expect(find.byKey(const ValueKey('local-gap-legalIdentity')),
+        findsOneWidget);
   });
 }

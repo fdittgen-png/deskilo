@@ -2139,6 +2139,8 @@
   "carnetValidity": "Validité (mois, vide = n'expire jamais)",
   "carnetsEmpty": "Aucun carnet pour l'instant.",
   "carnetsTitle": "Carnets",
+  "cashHubInOut": "Entrées et sorties par mois",
+  "cashHubToPay": "À payer",
   "chBareLetting": "Nous ne louons que des locaux nus",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -5773,6 +5775,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubCashSubtitle": "Entrées et sorties enregistrées, et ce qui reste à payer",
+  "hubCashTitle": "Trésorerie",
   "hubPurchasesSubtitle": "Ce que l'espace achète et doit : dépenses, factures fournisseurs, fournisseurs, bail, équipements",
   "hubPurchasesTitle": "Achats",
   "hubSalesSubtitle": "Ce que l'espace vend et facture : services, factures, facturation",
@@ -9310,13 +9314,18 @@
   "overagePolicyPayg": "Facturer le dépassement (à l'usage)",
   "overviewActiveMemberships": "Adhésions actives",
   "overviewAllIndicators": "Tous les indicateurs",
+  "overviewCurrentState": "Chiffre du jour : aucun historique n'en est gardé pour une période passée.",
   "overviewGroupCapacity": "Capacité",
   "overviewGroupCash": "Trésorerie",
   "overviewGroupPeople": "Personnes",
   "overviewGroupPurchases": "Achats",
   "overviewGroupSales": "Ventes",
   "overviewIndicators": "Indicateurs clés",
+  "overviewMembershipsDefinition": "Les adhésions de l'espace actives aujourd'hui, tous rôles compris : des adhésions, pas des personnes distinctes.",
   "overviewNeedsAttention": "À traiter",
+  "overviewOverdueBasis": "{count} factures échues ; {unknown} sans échéance prouvée et {held} suspendues, à part",
+  "overviewOverdueDefinition": "Ce que les membres doivent encore sur les factures émises dont l'échéance prouvée est dépassée, après avoirs, paiements partiels et pertes, selon les règles de relance. Une facture sans échéance prouvée, ou suspendue, est comptée à part et n'entre pas dans le montant.",
+  "overviewOverdueTitle": "Créances échues",
   "overviewThisMonth": "Ce mois-ci",
   "overviewTitle": "Vue d'ensemble",
   "overviewUnavailable": "Non disponible",
@@ -11077,6 +11086,8 @@
     "description": "#2332: readinessBlockedInvoicing"
   },
   "readinessFirstBookingReady": "Prêt pour une première réservation",
+  "readinessGrantMembers": "Permettre aux membres de réserver",
+  "readinessGrantMembersDone": "Les membres peuvent maintenant réserver, voir le calendrier, s’écrire et voir leur compte.",
   "readinessLater": "Nécessaire plus tard",
   "readinessNeededFirst": "Nécessaire pour une première réservation",
   "readinessNeededInvoicing": "Nécessaire avant de facturer",

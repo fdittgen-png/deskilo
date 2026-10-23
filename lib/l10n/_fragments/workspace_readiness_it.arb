@@ -66,5 +66,7 @@
   "readinessSetAsideAction": "Più tardi",
   "readinessSetAside": "Rimandato a più tardi",
   "readinessSetAsideUndo": "Annulla",
-  "readinessSetAsideFailed": "Impossibile salvare. Riprovi."
+  "readinessSetAsideFailed": "Impossibile salvare. Riprovi.",
+  "readinessGrantMembers": "Consenti ai membri di prenotare",
+  "readinessGrantMembersDone": "I membri ora possono prenotare, vedere il calendario, scriversi e vedere il proprio conto."
 }

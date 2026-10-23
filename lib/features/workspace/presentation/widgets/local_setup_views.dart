@@ -9,7 +9,10 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/event_labels.dart';
 import '../../domain/local_setup.dart';
+import '../../domain/workspace_feature.dart';
+import '../../domain/workspace_readiness.dart';
 import '../../providers/local_setup_providers.dart';
+import '../../providers/workspace_providers.dart';
 import 'workspace_readiness_card.dart';
 
 /// #1657 — a validation event type, as its label, from its stored word.
@@ -85,9 +88,20 @@ class LocalReadinessCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final gaps =
-        ref.watch(workspaceLocalGapsProvider(workspaceId)).value ??
-        const <LocalSlot>[];
+    // #2865 — with invoicing on, the readiness card above already lists the
+    // legal identity as a required section; it is not asked for twice.
+    final readinessShown = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.memberGettingStarted);
+    final identityAbove = readinessShown &&
+        (ref.watch(workspaceReadinessProvider(workspaceId)).value ??
+                const <ReadinessSection>[])
+            .any((s) => s.area == ReadinessArea.legalIdentity);
+    final gaps = [
+      for (final s in ref.watch(workspaceLocalGapsProvider(workspaceId)).value ??
+          const <LocalSlot>[])
+        if (!(identityAbove && s.kind == LocalSlotKind.legalIdentity)) s,
+    ];
     if (gaps.isEmpty) return const SizedBox.shrink();
     return Card(
       key: const ValueKey('local-readiness'),

@@ -16,7 +16,7 @@ List<(String, String, String)> _rows(
   List<Invoice> invoices, {
   DatevAccounts accounts = const DatevAccounts(),
 }) => [
-  for (final r in buildDatevFile(
+  for (final r in buildDatevFile(DatevRequest(
     invoices: invoices,
     matches: const {},
     accounts: accounts,
@@ -25,7 +25,7 @@ List<(String, String, String)> _rows(
     generatedAt: DateTime(2027, 1, 5),
     consultantNumber: '1001',
     clientNumber: '20002',
-  ).split('\r\n').skip(2).where((l) => l.isNotEmpty).map((l) => l.split(';')))
+  )).split('\r\n').skip(2).where((l) => l.isNotEmpty).map((l) => l.split(';')))
     (r[0], r[6], r[7]),
 ];
 

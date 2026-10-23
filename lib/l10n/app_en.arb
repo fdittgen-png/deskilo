@@ -3839,6 +3839,14 @@
   "@carnetsTitle": {
     "description": "#1279 carnets: carnetsTitle"
   },
+  "cashHubInOut": "Money in and out by month",
+  "@cashHubInOut": {
+    "description": "#2577 the cash page"
+  },
+  "cashHubToPay": "To pay",
+  "@cashHubToPay": {
+    "description": "#2577 the cash page"
+  },
   "chBareLetting": "We only let bare rooms",
   "@chBareLetting": {
     "description": "#2360: chBareLetting"
@@ -9365,6 +9373,14 @@
   "holidayWhitMonday": "Whit Monday",
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "hubCashSubtitle": "Recorded money in and out, and what is still to pay",
+  "@hubCashSubtitle": {
+    "description": "#2577 the cash page"
+  },
+  "hubCashTitle": "Cash",
+  "@hubCashTitle": {
+    "description": "#2577 the cash page"
   },
   "hubPurchasesSubtitle": "What the space buys and owes: expenses, supplier bills, suppliers, the lease, equipment",
   "@hubPurchasesSubtitle": {
@@ -16192,6 +16208,10 @@
   "@overviewAllIndicators": {
     "description": "#2583 the workspace overview"
   },
+  "overviewCurrentState": "Today's figure: no history of it is kept for a past period.",
+  "@overviewCurrentState": {
+    "description": "#2583 the overview's own figures"
+  },
   "overviewGroupCapacity": "Capacity",
   "@overviewGroupCapacity": {
     "description": "#2583 the workspace overview"
@@ -16216,9 +16236,36 @@
   "@overviewIndicators": {
     "description": "#2583 the workspace overview"
   },
+  "overviewMembershipsDefinition": "The memberships of the space that are active today, each role included: memberships, not distinct people.",
+  "@overviewMembershipsDefinition": {
+    "description": "#2583 the overview's own figures"
+  },
   "overviewNeedsAttention": "Needs attention",
   "@overviewNeedsAttention": {
     "description": "#2583 the workspace overview"
+  },
+  "overviewOverdueBasis": "{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart",
+  "@overviewOverdueBasis": {
+    "description": "#2583 the overview's own figures",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "unknown": {
+        "type": "String"
+      },
+      "held": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewOverdueDefinition": "What members still owe on issued invoices past their proven due date, after credit notes, part payments and write-offs, by the reminder rules. An invoice with no proven due date, or on hold, is counted apart and is not in the amount.",
+  "@overviewOverdueDefinition": {
+    "description": "#2583 the overview's own figures"
+  },
+  "overviewOverdueTitle": "Overdue receivables",
+  "@overviewOverdueTitle": {
+    "description": "#2583 the overview's own figures"
   },
   "overviewThisMonth": "This month",
   "@overviewThisMonth": {
@@ -18933,6 +18980,14 @@
   "readinessFirstBookingReady": "Ready for a first booking",
   "@readinessFirstBookingReady": {
     "description": "#1636 workspace_readiness"
+  },
+  "readinessGrantMembers": "Let members book",
+  "@readinessGrantMembers": {
+    "description": "#2865 — one-tap button on the setup card granting the members role the everyday permissions"
+  },
+  "readinessGrantMembersDone": "Members can now book, see the calendar, write to each other and see their own account.",
+  "@readinessGrantMembersDone": {
+    "description": "#2865 — confirmation after the members role got the everyday permissions"
   },
   "readinessLater": "Needed later",
   "@readinessLater": {

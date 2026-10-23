@@ -91,14 +91,14 @@ void main() {
     basis: basis,
   );
 
-  String fec({List<VatTaxPointAmount>? taxPoints}) => buildFecFile(
+  String fec({List<VatTaxPointAmount>? taxPoints}) => buildFecFile(FecRequest(
     invoices: [invoice],
     matches: matches,
     company: _company,
     accounts: const FecAccounts(),
     lineText: (line) => invoiceLineText(const ReportStrings(), line),
     taxPoints: taxPoints,
-  );
+  ));
 
   group('the FEC', () {
     test('books the VAT pending at issue and releases each part on its '
@@ -184,7 +184,7 @@ void main() {
         l.split(';'),
     ];
     String datev(List<Invoice> invoices, List<VatTaxPointAmount>? points) =>
-        buildDatevFile(
+        buildDatevFile(DatevRequest(
           invoices: invoices,
           matches: const {},
           accounts: const DatevAccounts(),
@@ -194,7 +194,7 @@ void main() {
           consultantNumber: '1234567',
           clientNumber: '54321',
           taxPoints: points,
-        );
+        ));
 
     test('a subscription invoiced 25 August for September carries '
         'September in field 116', () {

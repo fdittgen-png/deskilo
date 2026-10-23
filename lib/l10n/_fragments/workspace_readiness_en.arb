@@ -231,5 +231,13 @@
   "readinessSetAsideFailed": "That could not be saved. Try again.",
   "@readinessSetAsideFailed": {
     "description": "#1636 workspace_readiness (0307)"
+  },
+  "readinessGrantMembers": "Let members book",
+  "readinessGrantMembersDone": "Members can now book, see the calendar, write to each other and see their own account.",
+  "@readinessGrantMembers": {
+    "description": "#2865 — one-tap button on the setup card granting the members role the everyday permissions"
+  },
+  "@readinessGrantMembersDone": {
+    "description": "#2865 — confirmation after the members role got the everyday permissions"
   }
 }

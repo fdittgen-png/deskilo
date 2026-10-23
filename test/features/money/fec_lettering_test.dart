@@ -10,14 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support/seeded_export_year.dart';
 
 List<Map<String, String>> _rows(List<LedgerEntry> ledger) {
-  final lines = buildFecFile(
+  final lines = buildFecFile(FecRequest(
     invoices: SeededExportYear.invoices,
     matches: SeededExportYear.matches,
     company: seededCompany,
     accounts: const FecAccounts(),
     lineText: (l) => l.label,
     ledger: ledger,
-  ).split('\r\n');
+  )).split('\r\n');
   final head = lines.first.split('\t');
   return [
     for (final l in lines.skip(1)) Map.fromIterables(head, l.split('\t')),

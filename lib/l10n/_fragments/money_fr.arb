@@ -379,5 +379,9 @@
   "hubPurchasesTitle": "Achats",
   "hubPurchasesSubtitle": "Ce que l'espace achète et doit : dépenses, factures fournisseurs, fournisseurs, bail, équipements",
   "hubSalesTitle": "Ventes",
-  "hubSalesSubtitle": "Ce que l'espace vend et facture : services, factures, facturation"
+  "hubSalesSubtitle": "Ce que l'espace vend et facture : services, factures, facturation",
+  "hubCashTitle": "Trésorerie",
+  "hubCashSubtitle": "Entrées et sorties enregistrées, et ce qui reste à payer",
+  "cashHubInOut": "Entrées et sorties par mois",
+  "cashHubToPay": "À payer"
 }

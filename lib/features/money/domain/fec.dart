@@ -83,49 +83,73 @@ String fecFileName(String legalId, DateTime fiscalYearEnd,
 ///
 /// Amounts use the comma decimal separator and dates the `YYYYMMDD` form,
 /// as the arrêté specifies.
-String buildFecFile({
-  required List<Invoice> invoices,
-  required Map<String, InvoiceMatch> matches,
-  required InvoiceParty company,
-  required FecAccounts accounts,
-  required String Function(InvoiceLine line) lineText,
-  /// Label of the customers account, e.g. 'Clients'.
-  String customersLabel = 'Clients',
-  String revenueLabel = 'Prestations de services',
-  String bankLabel = 'Banques',
-  String vatLabel = 'TVA collectée',
-  // #936 — the purchases side: reimbursed expenses and shared costs,
-  // which no journal carried before.
-  List<LedgerEntry> ledger = const [],
-  Map<String, String> memberNames = const {},
-  List<ExpenseRepartition> repartitions = const [],
-  String expensesLabel = 'Achats et charges',
-  List<VatTaxPointAmount>? taxPoints,
-  String vatPendingLabel = "TVA collectée en attente d'exigibilité",
-  DateTime Function(DateTime instant) dayOf = WorkspaceTime.dateOf,
-}) {
+String buildFecFile(FecRequest request) {
   final writer = FecWriter(
-    invoices: invoices,
-    matches: matches,
-    company: company,
-    accounts: accounts,
-    lineText: lineText,
-    customersLabel: customersLabel,
-    revenueLabel: revenueLabel,
-    bankLabel: bankLabel,
-    vatLabel: vatLabel,
-    ledger: ledger,
-    memberNames: memberNames,
-    repartitions: repartitions,
-    expensesLabel: expensesLabel,
-    taxPoints: taxPoints,
-    vatPendingLabel: vatPendingLabel,
-    dayOf: dayOf,
+    invoices: request.invoices,
+    matches: request.matches,
+    company: request.company,
+    accounts: request.accounts,
+    lineText: request.lineText,
+    customersLabel: request.customersLabel,
+    revenueLabel: request.revenueLabel,
+    bankLabel: request.bankLabel,
+    vatLabel: request.vatLabel,
+    ledger: request.ledger,
+    memberNames: request.memberNames,
+    repartitions: request.repartitions,
+    expensesLabel: request.expensesLabel,
+    taxPoints: request.taxPoints,
+    vatPendingLabel: request.vatPendingLabel,
+    dayOf: request.dayOf,
   )
     ..bookInvoices()
     ..bookExpenses()
     ..bookRepartitions();
   return writer.file(fecColumns);
+}
+
+/// #2492 — what one FEC file is built from.
+class FecRequest {
+  const FecRequest({
+    required this.invoices,
+    required this.matches,
+    required this.company,
+    required this.accounts,
+    required this.lineText,
+    this.customersLabel = 'Clients',
+    this.revenueLabel = 'Prestations de services',
+    this.bankLabel = 'Banques',
+    this.vatLabel = 'TVA collectée',
+    this.ledger = const [],
+    this.memberNames = const {},
+    this.repartitions = const [],
+    this.expensesLabel = 'Achats et charges',
+    this.taxPoints,
+    this.vatPendingLabel = "TVA collectée en attente d'exigibilité",
+    this.dayOf = WorkspaceTime.dateOf,
+  });
+
+  final List<Invoice> invoices;
+  final Map<String, InvoiceMatch> matches;
+  final InvoiceParty company;
+  final FecAccounts accounts;
+  final String Function(InvoiceLine line) lineText;
+
+  /// Label of the customers account, e.g. 'Clients'.
+  final String customersLabel;
+  final String revenueLabel;
+  final String bankLabel;
+  final String vatLabel;
+
+  /// #936 — the purchases side: reimbursed expenses and shared costs,
+  /// which no journal carried before.
+  final List<LedgerEntry> ledger;
+  final Map<String, String> memberNames;
+  final List<ExpenseRepartition> repartitions;
+  final String expensesLabel;
+  final List<VatTaxPointAmount>? taxPoints;
+  final String vatPendingLabel;
+  final DateTime Function(DateTime instant) dayOf;
 }
 
 /// #2365 — [rows] as an FEC file: the columns, then one line per row.

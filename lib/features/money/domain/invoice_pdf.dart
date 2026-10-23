@@ -7,15 +7,12 @@ import 'package:pdf/widgets.dart' as pw;
 
 import 'address_window.dart';
 import 'invoice.dart';
-import 'invoice_pdf_sales_tax.dart';
+import 'invoice_pdf_sheet.dart';
+import 'invoice_pdf_style.dart';
 import 'invoice_report.dart';
-import 'invoice_sales_tax.dart';
 import 'report_block_widgets.dart';
 import 'report_flow_page.dart';
-import 'report_page_footer.dart';
-import 'vat_rate.dart';
 
-part 'invoice_pdf_part2.dart';
 
 
 /// Everything [buildInvoicePdf] renders from. One object instead of a long
@@ -245,7 +242,7 @@ pw.Widget Function(pw.Context)? watermarkForeground(String watermark) {
   return (context) => pw.FullPage(
         ignoreMargins: true,
         child: pw.Opacity(
-          opacity: _watermarkOpacity,
+          opacity: pdfWatermarkOpacity,
           child: pw.Center(
             child: pw.Transform.rotate(
               angle: math.pi / 4,
@@ -253,7 +250,7 @@ pw.Widget Function(pw.Context)? watermarkForeground(String watermark) {
                 watermark,
                 style: pw.TextStyle(
                   fontSize: markSize,
-                  color: _watermark,
+                  color: pdfWatermark,
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
@@ -292,22 +289,6 @@ String invoiceWatermark(
 /// wondering where a file came from deserves an answer.
 const String _producer = 'DesKilo';
 
-/// DesKilo brand accent — matches the launcher icon red.
-const PdfColor _accent = PdfColor.fromInt(0xFFD32F2F);
-const PdfColor _ink = PdfColors.blueGrey900;
-const PdfColor _muted = PdfColors.blueGrey600;
-const PdfColor _hairline = PdfColors.blueGrey200;
-
-/// Light grey of the erroneous watermark. Painted at half opacity OVER
-/// the content: as a background it disappeared behind the billed-to card
-/// and the period box, which swallowed half the word. Over white it lands
-/// at the same light grey; over a figure it only greys the stroke, so
-/// every amount stays readable.
-const PdfColor _watermark = PdfColors.grey400;
-
-const double _watermarkOpacity = 0.5;
-const PdfColor _zebra = PdfColor.fromInt(0xFFF6F7F9);
-
 /// The archive PDF of one invoice — professional layout (field
 /// request): letterhead with the workspace identity, a boxed billed-to
 /// block, a proper positions table with charges/payments subtotals and
@@ -334,7 +315,7 @@ Future<Uint8List> buildInvoicePdf(InvoicePdfRequest request) async {
     base: request.baseFont,
     bold: request.boldFont,
   );
-  _InvoiceSheet(
+  InvoiceSheet(
     request,
     theme,
     invoice: request.invoice,
@@ -350,7 +331,7 @@ Future<Uint8List> buildInvoicePdf(InvoicePdfRequest request) async {
   // went. They are documentation, so they carry no report bands and are
   // never a proforma or a copy of anything.
   for (final annex in request.annexes) {
-    _InvoiceSheet(
+    InvoiceSheet(
       request,
       theme,
       invoice: annex.invoice,
