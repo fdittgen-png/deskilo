@@ -210,6 +210,7 @@ void main() {
       'biReportDesigner': true,
       'purchaseAnalytics': true,
       'workspaceOverview': true,
+      'personalShell': true,
       'guestParticipation': true,
     });
 

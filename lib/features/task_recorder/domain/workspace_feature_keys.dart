@@ -154,4 +154,5 @@ const Set<String> workspaceFeatureKeys = {
   'workspaceOverview',
   'setupGuide',
   'dataReport',
+  'personalShell',
 };

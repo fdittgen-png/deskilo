@@ -3,20 +3,21 @@
 // Whether Me is the five-destination personal shell: ONE evaluation point.
 //
 // The `personalShell` flag is a platform-tier WorkspaceFeature, and the
-// person's layer is an installation's decision, never a space's: it is read
-// from the feature set the installation serves — the registry's own defaults
-// when no space is selected, which is all a personal-only home has. In a
-// combined deployment that set is the selected space's, so the shell, its
-// routes and the layer's theme read this provider and nothing else; the day
-// the personal home's own registry feeds it, this line moves and they do not.
+// person's layer is an installation's decision, never a selected space's: it
+// is read from the registry the installation serves, exactly as the server
+// choice reads its features before any space exists — never from the
+// workspace the person happens to be in. Entering or leaving a space
+// therefore never flips the shell, and never rebuilds the route table the
+// router composes from it (app/routes/me_routes.dart). The day the personal
+// home publishes its own platform values, this line reads them and nothing
+// downstream changes.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../workspace/domain/workspace_feature.dart';
-import '../../workspace/providers/workspace_providers.dart';
 
 part 'personal_shell_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-bool personalShellEnabled(Ref ref) => ref
-    .watch(enabledFeaturesSyncProvider)
-    .contains(WorkspaceFeature.personalShell);
+bool personalShellEnabled(Ref ref) =>
+    effectiveFeatures(resolveEnabledFeatures(platformFeaturesOnByDefault))
+        .contains(WorkspaceFeature.personalShell);

@@ -399,7 +399,6 @@ enum WorkspaceFeature {
   /// of standard, EV and accessible slots, booked per day (both default OFF).
   meetingRooms,
   parking,
-
   /// #2504 WebMCP tools (under mcpAccess); #2573 purchase documents (under
   /// moneyTab); #2569 premises lease (under scheduledExpenses); #2576 asset
   /// register (under purchases). Platform, OFF.

@@ -49,4 +49,4 @@ final class PersonalShellEnabledProvider
 }
 
 String _$personalShellEnabledHash() =>
-    r'4f55522d1de56898fe6994c199f08c1a20e8b50a';
+    r'a1102901e076f847f9f64939fb22c79f03313389';

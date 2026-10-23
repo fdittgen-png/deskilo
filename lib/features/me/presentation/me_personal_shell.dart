@@ -25,46 +25,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../directory/providers/messenger_providers.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
-import '../providers/personal_shell_providers.dart';
 import 'me_account_tab.dart';
-import 'me_home_tab.dart';
 import 'me_shell.dart';
 import 'task_wizard_entry.dart';
-
-/// What the shell route builds around its branches: the personal shell when
-/// the flag is on, the bare branch navigators (holding the four-tab shell)
-/// when it is off.
-class MeShellSwitch extends ConsumerWidget {
-  const MeShellSwitch({
-    super.key,
-    required this.navigationShell,
-    required this.path,
-  });
-
-  final StatefulNavigationShell navigationShell;
-  final String path;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) =>
-      ref.watch(personalShellEnabledProvider)
-          ? MePersonalShell(navigationShell: navigationShell, path: path)
-          : navigationShell;
-}
-
-/// What `/me` shows: the Overview page inside the personal shell, or the
-/// four-tab shell opened on [tab] when the flag is off.
-class MeHomeRoot extends ConsumerWidget {
-  const MeHomeRoot({super.key, this.tab});
-
-  /// The legacy `tab` query value.
-  final String? tab;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) =>
-      ref.watch(personalShellEnabledProvider)
-          ? const MeHomeTab()
-          : MeShell(tab: MeTab.fromQuery(tab));
-}
 
 /// The Confidentiality-and-account utility at `/me/account`: the account
 /// tab as a page of its own, with a header that leads back to the branch.
