@@ -10,6 +10,7 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
     this.missing = const [],
     this.readinessSections = const [],
     this.status = const SetupStatus(),
+    this.statuses = const {},
   });
   final Map<String, List<LocalSlot>> needs;
   List<LocalSlot> missing;
@@ -20,8 +21,12 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
   /// #2869 — what [setupStatus] answers.
   SetupStatus status;
 
+  /// #2872 — each demo space's own status; [status] for any other.
+  final Map<String, SetupStatus> statuses;
+
   @override
-  Future<SetupStatus> setupStatus(String workspaceId) async => status;
+  Future<SetupStatus> setupStatus(String workspaceId) async =>
+      statuses[workspaceId] ?? status;
 
   @override
   Future<List<LocalSlot>> templateNeeds(String templateId) async =>
