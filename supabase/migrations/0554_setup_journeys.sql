@@ -147,4 +147,4 @@ $fn$;
 revoke execute on function public.save_setup_journey(uuid, jsonb, jsonb, int, uuid) from public, anon;
 grant execute on function public.save_setup_journey(uuid, jsonb, jsonb, int, uuid) to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(554);
