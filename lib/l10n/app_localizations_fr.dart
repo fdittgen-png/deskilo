@@ -19710,6 +19710,28 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le code QR n’a pas pu être partagé. Réessayez.';
 
   @override
+  String setupKioskCurrent(String name) {
+    return '$name fait tourner la borne.';
+  }
+
+  @override
+  String get setupKioskMake => 'En faire la borne';
+
+  @override
+  String get setupKioskNoCandidate =>
+      'Invitez d’abord le compte de la tablette : il rejoint comme un membre, puis devient la borne ici.';
+
+  @override
+  String get setupKioskNone => 'Aucun compte borne pour l’instant.';
+
+  @override
+  String get setupKioskPick => 'Compte de la tablette';
+
+  @override
+  String get setupKioskSaveFailed =>
+      'La borne n’a pas pu être configurée. Réessayez.';
+
+  @override
   String get setupLaunchAnswers => 'Vos réponses';
 
   @override
@@ -19875,6 +19897,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLevelsTitle => 'Ce que fait votre espace';
 
   @override
+  String get setupLookMore => 'Motif, couleurs des salles et logo';
+
+  @override
   String setupMilestoneName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookable': 'Prendre des réservations',
@@ -19885,6 +19910,33 @@ class AppLocalizationsFr extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupNewMembersEditQuestions => 'Rédiger les questions';
+
+  @override
+  String get setupNewMembersNoQuestions =>
+      'Aucune question : on rejoint avec son nom et son adresse e-mail.';
+
+  @override
+  String get setupNewMembersPreviewJoin =>
+      'En demandant à rejoindre, la personne répond à :';
+
+  @override
+  String get setupNewMembersPreviewNoQuestions =>
+      'Une personne qui demande à rejoindre donne son nom et son adresse e-mail, rien de plus.';
+
+  @override
+  String setupNewMembersPreviewStart(int pct, String policy) {
+    return 'Un nouveau membre commence avec un abonnement à $pct % ($policy).';
+  }
+
+  @override
+  String get setupNewMembersQuestions => 'Questions posées à l’adhésion';
+
+  @override
+  String get setupNewMembersSaveFailed =>
+      'Les réglages des nouveaux membres n’ont pas pu être enregistrés. Réessayez.';
 
   @override
   String get setupOnlineOpenConfig => 'Réglages du paiement en ligne';
@@ -20036,6 +20088,18 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get setupPublicPageMore =>
+      'Adresse, image et formules dans l’éditeur de la page';
+
+  @override
+  String get setupPublicPageNotPublished =>
+      'Non publiée : personne en dehors de l’espace ne voit cette page.';
+
+  @override
+  String get setupPurchaseSidePreview =>
+      'Les membres ne voient rien de cela : c’est l’affaire de ceux qui gèrent l’argent.';
+
+  @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'members_owe_money':
@@ -20113,6 +20177,33 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupRightsPreviewTitle => 'Ce qu’un membre peut faire';
+
+  @override
+  String get setupServicesAdd => 'Ajouter ce service';
+
+  @override
+  String setupServicesAdded(String name) {
+    return '$name ajouté.';
+  }
+
+  @override
+  String get setupServicesInvalid => 'Donnez au service un nom et un prix.';
+
+  @override
+  String get setupServicesMore =>
+      'Taux de TVA, lieu de livraison et stock dans Services';
+
+  @override
+  String get setupServicesPreviewEmpty =>
+      'Aucun service pour l’instant : les membres n’ont rien à ajouter à leur facture.';
+
+  @override
+  String get setupServicesPreviewNote =>
+      'Les membres choisissent dans cette liste quand ils ajoutent une consommation à leur facture.';
+
+  @override
+  String get setupServicesSaveFailed =>
+      'Le service n’a pas pu être ajouté. Réessayez.';
 
   @override
   String setupStateName(String key) {

@@ -85,6 +85,19 @@ abstract interface class PublicDiscoveryRepository {
 /// information. Every other public field is only what the owner typed.
 const publicInheritedFields = ['host_type', 'address'];
 
+/// The text fields of a public page the owner writes, beside its host type,
+/// in the order the page editor shows them.
+const publicPageFields = [
+  'description',
+  'address',
+  'email',
+  'phone',
+  'website',
+  'image_url',
+  'plan_url',
+  'plans',
+];
+
 /// The inherited fields that follow the workspace information in [page],
 /// a `publication.page.read` answer. A page without the marker (an older
 /// server) follows nothing: what it stored is what it shows.

@@ -22,7 +22,9 @@ import '../widgets/setup_basics_step.dart';
 import '../widgets/setup_grow_pages.dart';
 import '../widgets/setup_hours_step.dart';
 import '../widgets/setup_invite_step.dart';
+import '../widgets/setup_look_step.dart';
 import '../widgets/setup_member_rights_step.dart';
+import '../widgets/setup_new_members_step.dart';
 import '../widgets/setup_run_pages.dart';
 
 class SetupStepScreen extends ConsumerWidget {
@@ -67,6 +69,8 @@ class SetupStepScreen extends ConsumerWidget {
     },
     'member_rights' => SetupMemberRightsStep(workspace: workspace),
     'invite' => SetupInviteStep(workspace: workspace),
+    'new_members' => SetupNewMembersStep(workspace: workspace),
+    'look' => SetupLookStep(workspace: workspace),
     _ =>
       runPages?.pageFor(stepId, workspace) ??
           growPages?.pageFor(stepId, workspace) ??
