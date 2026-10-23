@@ -1251,6 +1251,10 @@ window.SETUP_L10N={
    "setupGuide": [
     "Setup guide",
     "One task list from creating the space to opening it: what is done, what comes next and why, at the completeness you choose for each part of the space."
+   ],
+   "dataReport": [
+    "Data report (PDF)",
+    "The space's data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals."
    ]
   },
   "process": {
@@ -2726,6 +2730,10 @@ window.SETUP_L10N={
    "setupGuide": [
     "Guide de mise en place",
     "Une seule liste de tâches, de la création de l'espace à son ouverture : ce qui est fait, ce qui vient ensuite et pourquoi, au niveau que vous choisissez pour chaque partie de l'espace."
+   ],
+   "dataReport": [
+    "Rapport de données (PDF)",
+    "Les données de l’espace dans un PDF lisible : membres, réservations par mois, registre des factures, paiements et soldes, achats et fournisseurs, et le plan avec ses prix. Les mêmes lignes que le classeur Excel, avec les totaux."
    ]
   },
   "process": {
@@ -4201,6 +4209,10 @@ window.SETUP_L10N={
    "setupGuide": [
     "Einrichtungsassistent",
     "Eine Aufgabenliste von der Gründung des Bereichs bis zur Eröffnung: was erledigt ist, was als Nächstes kommt und warum, in dem Umfang, den Sie für jeden Teil wählen."
+   ],
+   "dataReport": [
+    "Datenbericht (PDF)",
+    "Die Daten des Spaces als lesbares PDF: Mitglieder, Buchungen nach Monat, Rechnungsregister, Zahlungen und Salden, Einkäufe und Lieferanten sowie der Plan mit seinen Preisen. Dieselben Zeilen wie die Excel-Arbeitsmappe, mit Summen."
    ]
   },
   "process": {
@@ -5676,6 +5688,10 @@ window.SETUP_L10N={
    "setupGuide": [
     "Guía de configuración",
     "Una sola lista de tareas, desde crear el espacio hasta abrirlo: qué está hecho, qué sigue y por qué, con el nivel que elija para cada parte del espacio."
+   ],
+   "dataReport": [
+    "Informe de datos (PDF)",
+    "Los datos del espacio en un PDF legible: miembros, reservas por mes, registro de facturas, pagos y saldos, compras y proveedores, y el plano con sus precios. Las mismas filas que el libro de Excel, con totales."
    ]
   },
   "process": {
@@ -7151,6 +7167,10 @@ window.SETUP_L10N={
    "setupGuide": [
     "Guida alla configurazione",
     "Un'unica lista di attività, dalla creazione dello spazio alla sua apertura: cosa è fatto, cosa viene dopo e perché, al livello che sceglie per ogni parte dello spazio."
+   ],
+   "dataReport": [
+    "Rapporto dati (PDF)",
+    "I dati dello spazio in un PDF leggibile: membri, prenotazioni per mese, registro delle fatture, pagamenti e saldi, acquisti e fornitori, e la pianta con i suoi prezzi. Le stesse righe della cartella Excel, con i totali."
    ]
   },
   "process": {

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:deskilo_document_pdf/report_flow_page.dart';
 import 'package:meta/meta.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import '../../money/domain/report_flow_page.dart';
 import 'badge_pdf.dart' show badgeCardHeight, badgeCardWidth;
 
 /// One printable space card: the QR payload plus its labels.

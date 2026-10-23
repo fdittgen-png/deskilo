@@ -246,6 +246,7 @@ window.SETUP_PROCESSES=[
      "dataAccessLog",
      "memberDataExport",
      "dataExport",
+     "dataReport",
      "recordingPrivacy"
     ]
    }

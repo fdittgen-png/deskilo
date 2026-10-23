@@ -898,6 +898,12 @@
       ]
     },
     {
+      "key": "dataReport",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "decisionSurface",
       "maturity": "beta",
       "lifecycle": "active",
