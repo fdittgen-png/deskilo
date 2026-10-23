@@ -6270,6 +6270,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Scaricare tutti i dati dello spazio in una cartella Excel.';
 
   @override
+  String get featureDataReportDesc =>
+      'I dati dello spazio in un PDF leggibile: membri, prenotazioni per mese, registro delle fatture, pagamenti e saldi, acquisti e fornitori, e la pianta con i suoi prezzi. Le stesse righe della cartella Excel, con i totali.';
+
+  @override
+  String get featureDataReportTitle => 'Rapporto dati (PDF)';
+
+  @override
   String get featureDecisionSurfaceDesc =>
       'Un solo posto che risponde a «c’è qualcosa che mi aspetta?», ordinato per quanto costa il ritardo: prima il denaro che se ne va, poi qualcuno che aspetta una risposta. Una riga appare solo se una persona deve decidere o agire; un numero su cui nessuno può agire resta sullo schermo che lo possiede.';
 

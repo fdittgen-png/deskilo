@@ -6273,6 +6273,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Descargar todos los datos del espacio en un libro de Excel.';
 
   @override
+  String get featureDataReportDesc =>
+      'Los datos del espacio en un PDF legible: miembros, reservas por mes, registro de facturas, pagos y saldos, compras y proveedores, y el plano con sus precios. Las mismas filas que el libro de Excel, con totales.';
+
+  @override
+  String get featureDataReportTitle => 'Informe de datos (PDF)';
+
+  @override
   String get featureDecisionSurfaceDesc =>
       'Un único lugar que responde «¿hay algo que me espere?», ordenado por lo que cuesta la demora: primero el dinero que se va, luego alguien que espera una respuesta. Una línea aparece solo si alguien debe decidir o actuar; una cifra sobre la que nadie puede actuar se queda en la pantalla que la tiene.';
 

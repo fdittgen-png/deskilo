@@ -6279,6 +6279,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen.';
 
   @override
+  String get featureDataReportDesc =>
+      'Die Daten des Spaces als lesbares PDF: Mitglieder, Buchungen nach Monat, Rechnungsregister, Zahlungen und Salden, Einkäufe und Lieferanten sowie der Plan mit seinen Preisen. Dieselben Zeilen wie die Excel-Arbeitsmappe, mit Summen.';
+
+  @override
+  String get featureDataReportTitle => 'Datenbericht (PDF)';
+
+  @override
   String get featureDecisionSurfaceDesc =>
       'Ein Ort, der beantwortet: „Wartet etwas auf mich?“ — sortiert danach, was die Verzögerung kostet: zuerst Geld, das abfließt, dann jemand, der auf eine Antwort wartet. Eine Zeile erscheint nur, wenn jemand entscheiden oder handeln muss; eine Zahl, mit der niemand etwas anfangen kann, bleibt auf ihrem eigenen Bildschirm.';
 

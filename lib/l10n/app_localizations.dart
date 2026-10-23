@@ -10337,6 +10337,18 @@ abstract class AppLocalizations {
   /// **'Download all workspace data as an Excel workbook.'**
   String get featureDataExportDesc;
 
+  /// #2862 data report feature description
+  ///
+  /// In en, this message translates to:
+  /// **'The space\'s data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals.'**
+  String get featureDataReportDesc;
+
+  /// #2862 data report feature name
+  ///
+  /// In en, this message translates to:
+  /// **'Data report (PDF)'**
+  String get featureDataReportTitle;
+
   /// #1247: featureDecisionSurfaceDesc
   ///
   /// In en, this message translates to:

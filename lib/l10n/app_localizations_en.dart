@@ -6229,6 +6229,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Download all workspace data as an Excel workbook.';
 
   @override
+  String get featureDataReportDesc =>
+      'The space\'s data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals.';
+
+  @override
+  String get featureDataReportTitle => 'Data report (PDF)';
+
+  @override
   String get featureDecisionSurfaceDesc =>
       'One place that answers \"does anything need me?\", ranked by what the delay costs — money that leaves first, then somebody waiting on an answer. A line appears only when a person must decide or act; a number nobody can act on stays on the screen that owns it.';
 

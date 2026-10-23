@@ -231,6 +231,7 @@ begin
       "purchaseAnalytics": false,
       "workspaceOverview": false,
       "setupGuide": true,
+      "dataReport": true,
       "priceNegotiations": false,
       "publicHolidays": true,
       "publicListings": false,

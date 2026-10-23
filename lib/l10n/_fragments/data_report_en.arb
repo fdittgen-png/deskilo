@@ -1,0 +1,10 @@
+{
+  "featureDataReportTitle": "Data report (PDF)",
+  "@featureDataReportTitle": {
+    "description": "#2862 data report feature name"
+  },
+  "featureDataReportDesc": "The space's data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals.",
+  "@featureDataReportDesc": {
+    "description": "#2862 data report feature description"
+  }
+}

@@ -7286,6 +7286,14 @@
   "@featureDataExportDesc": {
     "description": "Description under the data-export feature toggle (#395)."
   },
+  "featureDataReportDesc": "The space's data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals.",
+  "@featureDataReportDesc": {
+    "description": "#2862 data report feature description"
+  },
+  "featureDataReportTitle": "Data report (PDF)",
+  "@featureDataReportTitle": {
+    "description": "#2862 data report feature name"
+  },
   "featureDecisionSurfaceDesc": "One place that answers \"does anything need me?\", ranked by what the delay costs — money that leaves first, then somebody waiting on an answer. A line appears only when a person must decide or act; a number nobody can act on stays on the screen that owns it.",
   "@featureDecisionSurfaceDesc": {
     "description": "#1247: featureDecisionSurfaceDesc"
