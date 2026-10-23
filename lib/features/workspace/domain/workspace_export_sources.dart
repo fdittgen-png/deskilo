@@ -47,7 +47,7 @@ class ExportSource {
 const List<ExportSource> workspaceExportSources = [
   ExportSource(
     'workspaces',
-    sheets: ['Workspace'],
+    sheets: ['Overview', 'Features'],
     columns: {
       'id',
       'name',

@@ -15,6 +15,9 @@ class ExportLabels {
     required this.sheet,
     required this.column,
     required this.about,
+    this.value,
+    this.process,
+    this.feature,
   });
 
   /// A sheet's name by its key; the key itself when there is none.
@@ -25,7 +28,32 @@ class ExportLabels {
 
   /// The About sheet's own words.
   final ExportAboutLabels about;
+
+  /// A status or type value by its stored word; the word itself when there
+  /// is none. Only the columns in [_exportValueColumns] are read through it.
+  final String Function(String key)? value;
+
+  /// A process's and a feature's name by their keys (the Features sheet).
+  final String Function(String key)? process;
+  final String Function(String key)? feature;
 }
+
+/// #2861 — the columns that hold a stored word (a status, a kind) rather
+/// than a name or a free text: the reader sees them in their language.
+const _exportValueColumns = {
+  'status',
+  'kind',
+  'category',
+  'state',
+  'decision',
+  'action',
+  'resource_kind',
+  'parking_kind',
+  'area_kind',
+  'orientation',
+  'overage_policy',
+  'co_owner',
+};
 
 /// The About sheet's words.
 class ExportAboutLabels {
@@ -92,6 +120,23 @@ List<XlsxSheet> localizeExportSheets(
     return candidate;
   }
 
+  // The lookup a column's stored words are read through, if any.
+  String Function(String)? lookupFor(Object? column) => switch (column) {
+    'field' => labels.column,
+    'process' => labels.process,
+    'feature' => labels.feature,
+    final String c when _exportValueColumns.contains(c) => labels.value,
+    _ => null,
+  };
+
+  List<Object?> values(List<Object?> header, List<Object?> row) => [
+    for (final (i, cell) in row.indexed)
+      switch (i < header.length ? lookupFor(header[i]) : null) {
+        final lookup? when cell is String => _word(lookup, cell),
+        _ => cell,
+      },
+  ];
+
   return [
     for (final s in sheets)
       XlsxSheet(
@@ -102,7 +147,7 @@ List<XlsxSheet> localizeExportSheets(
               for (final h in s.rows.first)
                 if (h is String) _word(labels.column, h) else h,
             ],
-          ...s.rows.skip(1),
+          for (final row in s.rows.skip(1)) values(s.rows.first, row),
         ],
       ),
   ];
