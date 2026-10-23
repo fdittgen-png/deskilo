@@ -11702,6 +11702,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Anfrage ist abgelaufen. Bitten Sie den Assistenten, sie erneut zu senden.';
 
   @override
+  String mcpConfirmLevel(String process, String level) {
+    return '$process: $level';
+  }
+
+  @override
   String mcpConfirmNewShare(String pct) {
     return 'Neuer Abonnementanteil: $pct %';
   }
@@ -11725,6 +11730,22 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get mcpConfirmStale =>
       'Diese Anfrage passt nicht mehr zu den aktuellen Daten oder Ihrem Zugriff. Es wurde nichts ausgeführt.';
+
+  @override
+  String get mcpConfirmStepDone => 'Er wird als erledigt markiert.';
+
+  @override
+  String get mcpConfirmStepLater => 'Er wird für später zurückgestellt.';
+
+  @override
+  String mcpConfirmSwitchOff(String features) {
+    return 'Schaltet aus: $features. Ihre Daten bleiben erhalten.';
+  }
+
+  @override
+  String mcpConfirmSwitchOn(String features) {
+    return 'Schaltet ein: $features';
+  }
 
   @override
   String get mcpConfirmTitle => 'Anfrage eines Assistenten bestätigen';
@@ -12214,6 +12235,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mcpGroupOwn => 'Eigene Buchungen und Konto';
 
   @override
+  String get mcpGroupSetup => 'Einrichtung des Raums';
+
+  @override
   String get mcpGroupValidations => 'Freigaben';
 
   @override
@@ -12335,6 +12359,23 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mcpOpSetFavorite => 'Plätze als Favoriten markieren';
+
+  @override
+  String get mcpOpSetupLevels => 'Die Einrichtungsstufen sehen';
+
+  @override
+  String get mcpOpSetupLevelsApply => 'Die Einrichtungsstufen ändern';
+
+  @override
+  String get mcpOpSetupLevelsPreview =>
+      'Eine Änderung der Stufen vorab ansehen';
+
+  @override
+  String get mcpOpSetupStatus => 'Sehen, wie weit die Einrichtung ist';
+
+  @override
+  String get mcpOpSetupStepMark =>
+      'Einen Einrichtungsschritt als erledigt oder für später markieren';
 
   @override
   String get mcpOpSubscription => 'Abonnementanteil eines Mitglieds ändern';
@@ -20065,6 +20106,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLevelsQuestions => 'Über Ihren Raum';
 
   @override
+  String get setupLevelsSeeDemo => 'In der Demo ansehen';
+
+  @override
   String setupLevelsSwitchOff(String features) {
     return 'Schaltet aus: $features';
   }
@@ -20331,6 +20375,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
+      'association':
+          'Ein Verein, eine Genossenschaft oder ein Club betreibt den Raum',
+      'approve_bookings':
+          'Buchungen warten auf eine Freigabe; Mitglieder buchen nicht direkt',
       'members_owe_money':
           'Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)',
       'issue_invoices': 'Sie stellen Rechnungen',
@@ -20370,6 +20418,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'tracks_purchases': 'Sie verfolgen, was der Raum einkauft',
       'vat_registered': 'der Raum umsatzsteuerpflichtig ist',
       'issues_invoices': 'Sie Rechnungen stellen',
+      'association': 'ein Verein mit seinem Vorstand gemeinsam entscheidet',
+      'approve_bookings': 'Buchungen auf eine Freigabe warten',
       'other': '$key',
     });
     return '$_temp0';

@@ -131,11 +131,13 @@ void main() {
         mcpOperationGroup('get_validation'),
         McpOperationGroups.validations,
       );
+      expect(mcpOperationGroup('apply_setup_levels'), McpOperationGroups.setup);
       expect(mcpOperationGroups, [
         McpOperationGroups.own,
         McpOperationGroups.financial,
         McpOperationGroups.membership,
         McpOperationGroups.validations,
+        McpOperationGroups.setup,
       ]);
     });
     test('#2391 the group comes from the contract: a new permission gets '

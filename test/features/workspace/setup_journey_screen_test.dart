@@ -7,6 +7,10 @@
 // space's country asks, from the tax reference data, with "ask your
 // accountant" where nobody confirmed it.
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/features/workspace/domain/setup_level_demo.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_levels_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +22,32 @@ import '../../helpers/pump_app.dart';
 Future<void> _pump(
   WidgetTester tester,
   FakeLocalSetupRepository local,
-  FakeWorkspaceRepository workspace,
-) async {
+  FakeWorkspaceRepository workspace, {
+  List<Uri>? opened,
+  bool inDemo = false,
+}) async {
   tester.view.physicalSize = const Size(900, 4000);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   await pumpApp(
     tester,
-    const SetupLevelsScreen(),
-    overrides: standardTestOverrides(workspace: workspace, localSetup: local),
+    inDemo
+        ? DemoEnvironment(
+            persona: DemoPersona.owner,
+            onReset: () {},
+            onViewAs: (_) {},
+            onLeave: () {},
+            child: const SetupLevelsScreen(),
+          )
+        : const SetupLevelsScreen(),
+    overrides: [
+      ...standardTestOverrides(workspace: workspace, localSetup: local),
+      if (opened != null)
+        linkLauncherProvider.overrideWithValue((uri) async {
+          opened.add(uri);
+          return true;
+        }),
+    ],
   );
   await tester.pumpAndSettle();
 }
@@ -162,5 +183,42 @@ void main() {
       findsWidgets,
     );
     expect(find.byKey(const ValueKey('setup-obligations-none')), findsNothing);
+  });
+
+  testWidgets('each level can be seen in the demo, at the screen that shows '
+      'it; not from inside the demo', (tester) async {
+    final opened = <Uri>[];
+    await _pump(
+      tester,
+      FakeLocalSetupRepository(),
+      FakeWorkspaceRepository.withWorkspace(),
+      opened: opened,
+    );
+    await _tap(tester, 'setup-preset-complet');
+    for (final p in SetupProcess.values) {
+      final level = setupPresets[SetupPreset.complet]![p]!;
+      final route = setupLevelDemoRoute(p, level);
+      expect(
+        find.byKey(ValueKey('setup-level-demo-${p.name}')),
+        route == null ? findsNothing : findsOneWidget,
+        reason: p.name,
+      );
+    }
+    await _tap(tester, 'setup-level-demo-bookings');
+    final query = Uri.parse(opened.single.fragment).queryParameters;
+    expect(query['space'], 'pezenas');
+    expect(query['to'], '/nfc-config');
+
+    await _pump(
+      tester,
+      FakeLocalSetupRepository(),
+      FakeWorkspaceRepository.withWorkspace(),
+      opened: opened,
+      inDemo: true,
+    );
+    expect(
+      find.byKey(const ValueKey('setup-level-demo-bookings')),
+      findsNothing,
+    );
   });
 }

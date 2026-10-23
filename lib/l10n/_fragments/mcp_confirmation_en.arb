@@ -91,5 +91,43 @@
         "type": "String"
       }
     }
+  },
+  "mcpConfirmLevel": "{process}: {level}",
+  "@mcpConfirmLevel": {
+    "description": "#2873 mcp_confirmation",
+    "placeholders": {
+      "process": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmSwitchOn": "Switches on: {features}",
+  "@mcpConfirmSwitchOn": {
+    "description": "#2873 mcp_confirmation",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmSwitchOff": "Switches off: {features}. Their data is kept.",
+  "@mcpConfirmSwitchOff": {
+    "description": "#2873 mcp_confirmation",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmStepDone": "It will be marked as done.",
+  "@mcpConfirmStepDone": {
+    "description": "#2873 mcp_confirmation"
+  },
+  "mcpConfirmStepLater": "It will be set aside for later.",
+  "@mcpConfirmStepLater": {
+    "description": "#2873 mcp_confirmation"
   }
 }

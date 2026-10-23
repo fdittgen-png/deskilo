@@ -15,5 +15,10 @@
   "mcpConfirmRefuse": "Votre réponse : refuser",
   "mcpConfirmPeriod": "Période : {period}",
   "mcpConfirmWorkspace": "Espace : {workspace}",
-  "mcpConfirmClient": "Demandé par : {client}"
+  "mcpConfirmClient": "Demandé par : {client}",
+  "mcpConfirmLevel": "{process} : {level}",
+  "mcpConfirmSwitchOn": "Active : {features}",
+  "mcpConfirmSwitchOff": "Désactive : {features}. Leurs données sont conservées.",
+  "mcpConfirmStepDone": "Elle sera marquée comme faite.",
+  "mcpConfirmStepLater": "Elle sera mise de côté pour plus tard."
 }

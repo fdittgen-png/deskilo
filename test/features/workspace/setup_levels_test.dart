@@ -97,20 +97,12 @@ void main() {
   });
 
   test('every answer the owner can give yields a vector without a gap', () {
-    for (var bits = 0; bits < 1 << 10; bits++) {
-      bool bit(int i) => bits & (1 << i) != 0;
-      final answers = SetupAnswers(
-        membersOweMoney: bit(0),
-        issueInvoices: bit(1),
-        payOnline: bit(2),
-        vatRegistered: bit(3),
-        keepBooks: bit(4),
-        tracksPurchases: bit(5),
-        severalRoomsOrSites: bit(6),
-        doorTablet: bit(7),
-        publicPage: bit(8),
-        organised: bit(9),
-      );
+    // Twelve questions: 4096 answers.
+    expect(setupQuestions, hasLength(12));
+    for (var bits = 0; bits < 1 << setupQuestions.length; bits++) {
+      final answers = SetupAnswers.fromJson({
+        for (final (i, q) in setupQuestions.indexed) q: bits & (1 << i) != 0,
+      });
       final recommended = recommendSetupLevels(answers);
       expect(recommended.keys.toSet(), SetupProcess.values.toSet());
       final vector = {

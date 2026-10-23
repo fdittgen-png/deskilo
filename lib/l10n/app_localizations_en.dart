@@ -11604,6 +11604,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'This request expired. Ask the assistant to send it again.';
 
   @override
+  String mcpConfirmLevel(String process, String level) {
+    return '$process: $level';
+  }
+
+  @override
   String mcpConfirmNewShare(String pct) {
     return 'New subscription share: $pct %';
   }
@@ -11627,6 +11632,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpConfirmStale =>
       'This request no longer matches the current data or your access. Nothing was done.';
+
+  @override
+  String get mcpConfirmStepDone => 'It will be marked as done.';
+
+  @override
+  String get mcpConfirmStepLater => 'It will be set aside for later.';
+
+  @override
+  String mcpConfirmSwitchOff(String features) {
+    return 'Switches off: $features. Their data is kept.';
+  }
+
+  @override
+  String mcpConfirmSwitchOn(String features) {
+    return 'Switches on: $features';
+  }
 
   @override
   String get mcpConfirmTitle => 'Confirm an assistant request';
@@ -12107,6 +12128,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpGroupOwn => 'Own bookings and account';
 
   @override
+  String get mcpGroupSetup => 'Setting up the space';
+
+  @override
   String get mcpGroupValidations => 'Validations';
 
   @override
@@ -12227,6 +12251,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpSetFavorite => 'Mark places as favourites';
+
+  @override
+  String get mcpOpSetupLevels => 'See the setup levels';
+
+  @override
+  String get mcpOpSetupLevelsApply => 'Change the setup levels';
+
+  @override
+  String get mcpOpSetupLevelsPreview => 'Preview a change of levels';
+
+  @override
+  String get mcpOpSetupStatus => 'See how far the setup is';
+
+  @override
+  String get mcpOpSetupStepMark => 'Mark a setup step done or for later';
 
   @override
   String get mcpOpSubscription => 'Change a member\'s subscription share';
@@ -19863,6 +19902,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupLevelsQuestions => 'About your space';
 
   @override
+  String get setupLevelsSeeDemo => 'See it in the demo';
+
+  @override
   String setupLevelsSwitchOff(String features) {
     return 'Switches off: $features';
   }
@@ -20128,6 +20170,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
+      'association':
+          'The space is run by an association, a cooperative or a club',
+      'approve_bookings':
+          'Bookings wait for an approval; members do not book directly',
       'members_owe_money': 'Members owe the space money (rent, passes, extras)',
       'issue_invoices': 'You issue invoices',
       'pay_online': 'Members pay online',
@@ -20166,6 +20212,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'tracks_purchases': 'you track what the space buys',
       'vat_registered': 'the space is registered for VAT',
       'issues_invoices': 'you issue invoices',
+      'association': 'an association decides together, with its board',
+      'approve_bookings': 'bookings wait for an approval',
       'other': '$key',
     });
     return '$_temp0';

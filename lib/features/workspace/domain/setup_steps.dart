@@ -32,6 +32,7 @@ class SetupStep {
     this.dependsOn = const [],
     this.actor = SetupActor.owner,
     this.estimateMinutes = 5,
+    this.holdsSecret = false,
   });
 
   /// Stable id, shared by the app, the server, the MCP and the help.
@@ -56,6 +57,12 @@ class SetupStep {
   final SetupActor actor;
   final int estimateMinutes;
 
+  /// Whether the step takes a credential (a payment provider's or the
+  /// e-invoicing platform's keys). Such a step is entered in the app by
+  /// the person themselves: an assistant never asks for it, and the server
+  /// refuses to act on it for one.
+  final bool holdsSecret;
+
   Map<String, Object?> toJson() => {
     'id': id,
     'group': group.name,
@@ -67,6 +74,7 @@ class SetupStep {
     'depends_on': dependsOn,
     'actor': actor.name,
     'estimate_minutes': estimateMinutes,
+    'secret': holdsSecret,
   };
 }
 
@@ -153,6 +161,7 @@ const List<SetupStep> setupSteps = [
     feature: WorkspaceFeature.onlinePayments,
     dependsOn: ['payment_methods'],
     actor: SetupActor.operator,
+    holdsSecret: true,
   ),
   SetupStep(
     'approvals',
@@ -272,6 +281,7 @@ const List<SetupStep> setupSteps = [
     feature: WorkspaceFeature.einvoiceCustomerDelivery,
     dependsOn: ['legal_identity', 'numbering'],
     estimateMinutes: 15,
+    holdsSecret: true,
   ),
   SetupStep(
     'accounting',
