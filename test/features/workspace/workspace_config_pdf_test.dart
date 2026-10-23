@@ -8,6 +8,7 @@ import 'dart:typed_data';
 import 'package:deskilo/features/money/domain/configuration_report_bands.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
+import 'package:deskilo/features/money/domain/report_layout/pdf_geometry.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
@@ -96,6 +97,7 @@ Future<Uint8List> _build({
     (process: 'Money', features: ['Money tab']),
   ],
   List<String> closureLabels = const ['Jul 14, 2026 — Bastille Day'],
+  String kind = 'workspace_configuration',
 }) async {
   final data = workspaceConfigurationReportData(WorkspaceConfigDocument(strings: _strings,
       workspaceName: 'Test Space',
@@ -121,7 +123,8 @@ Future<Uint8List> _build({
       ],
       levelPrices: const {},
     hasCustomInvitationTemplate: false));
-  final report = renderReportBands(bands: configurationReportBands(_strings.title), data: data)!;
+  final report = renderReportBands(bands: configurationReportBands(_strings.title), data: data)!
+      .numberedFor(kind);
   final rows = report.body.whereType<ReportTableRow>().expand((row) => row.cells);
   for (final name in members.map((m) => m.name)) {
     expect(rows, contains(name));
@@ -163,5 +166,18 @@ void main() {
     );
     expect(bytes, isNotEmpty);
     expect(String.fromCharCodes(bytes.sublist(0, 5)), '%PDF-');
+  });
+
+  test('#2862 — the configuration numbers page 1 too; a letter does not',
+      () async {
+    // The page number is the only ink in the bottom-right corner: the
+    // footer band's own text sits at the left.
+    int corner(Uint8List bytes) => textPositions(bytes)
+        .where((i) => i.page == 1 && i.yMm > 270 && i.xMm > 150)
+        .length;
+    final report = await _build();
+    final letter = await _build(kind: 'statement');
+    expect(corner(report), greaterThan(corner(letter)));
+    expect(corner(letter), 0);
   });
 }
