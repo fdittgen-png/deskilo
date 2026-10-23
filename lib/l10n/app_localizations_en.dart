@@ -15001,6 +15001,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalFollowsWorkspace => 'From workspace information';
 
   @override
+  String get portalGroupsHeading => 'Groups';
+
+  @override
   String get portalImage => 'Identity image URL';
 
   @override
@@ -15054,6 +15057,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get portalPublished => 'Visible in the public directory';
+
+  @override
+  String get portalReachableEmpty =>
+      'No one is reachable yet. Search by name to find people.';
+
+  @override
+  String get portalReachableHeading => 'People you can write to';
 
   @override
   String get portalRegisterDirectory => 'Link a server to the global directory';

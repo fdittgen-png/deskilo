@@ -933,6 +933,92 @@ final class AccountContactsFamily extends $Family
   String toString() => r'accountContactsProvider';
 }
 
+/// Who I can write to, by shared workspace.
+
+@ProviderFor(reachablePeople)
+final reachablePeopleProvider = ReachablePeopleFamily._();
+
+/// Who I can write to, by shared workspace.
+
+final class ReachablePeopleProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ReachablePerson>>,
+          List<ReachablePerson>,
+          FutureOr<List<ReachablePerson>>
+        >
+    with
+        $FutureModifier<List<ReachablePerson>>,
+        $FutureProvider<List<ReachablePerson>> {
+  /// Who I can write to, by shared workspace.
+  ReachablePeopleProvider._({
+    required ReachablePeopleFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'reachablePeopleProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$reachablePeopleHash();
+
+  @override
+  String toString() {
+    return r'reachablePeopleProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ReachablePerson>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ReachablePerson>> create(Ref ref) {
+    final argument = this.argument as String;
+    return reachablePeople(ref, source: argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ReachablePeopleProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$reachablePeopleHash() => r'9df94db63163adfb87dc44f7c4fda5c3d08c21ca';
+
+/// Who I can write to, by shared workspace.
+
+final class ReachablePeopleFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<ReachablePerson>>, String> {
+  ReachablePeopleFamily._()
+    : super(
+        retry: null,
+        name: r'reachablePeopleProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Who I can write to, by shared workspace.
+
+  ReachablePeopleProvider call({String source = ''}) =>
+      ReachablePeopleProvider._(argument: source, from: this);
+
+  @override
+  String toString() => r'reachablePeopleProvider';
+}
+
 @ProviderFor(accountConversations)
 final accountConversationsProvider = AccountConversationsFamily._();
 

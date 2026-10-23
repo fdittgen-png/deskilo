@@ -44,6 +44,11 @@ class SupabaseAccountContactRepository implements AccountContactRepository {
         'p_before': before,
       });
   @override
+  Future<List<ReachablePerson>> reachablePeople() async =>
+      (await _rpc<List<Object?>>('my_reachable_people'))
+          .map(ReachablePerson.fromRow)
+          .toList();
+  @override
   Future<List<Map<String, dynamic>>> conversations({
     DateTime? beforeAt,
     String? beforeId,
