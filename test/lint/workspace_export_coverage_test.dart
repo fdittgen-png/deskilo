@@ -102,40 +102,13 @@ const Map<String, String> _notExported = {
   'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   'mcp_usage': 'the audit of MCP calls and the count the limits read, operational state only (#1630)',
   'bi_views': 'saved Web-BI views (#1923 C) are questions a reader asked of this installation\'s analytics, kept under its rights; a private one travels in its author\'s access export, and none is portable configuration',
-  'book_accounts': 'an issuer\'s chart of accounts is reviewed on this installation by someone who manages billing, never copied with the data (#1869)',
-  'book_mappings': 'which account each posting role books to is a reviewed finance decision of this installation, never copied with the data (#1869)',
-  'book_profiles': 'who keeps the official books of each issuer is a finance decision taken on this installation, never copied with the data (#1869)',
   'workspace_recovery_evidence': 'the record that an export was taken; a copy of it would claim a backup the copy never had (#1636)',
   'readiness_acknowledgements': 'a person\'s own "later" on a setup section, per installation; a copy must re-ask (#1636)',
-  'guest_participations': 'a person\'s visit to a space, bound to their local account on this installation; a copy would admit somebody the target never admitted (#1835)',
-  // --- authority a copy must not carry by itself (#1287) ------------
-  'workspace_role_members':
-      'a grant names a member, and members do not travel — a role given '
-          'to somebody in the development twin means nothing in a space '
-          'where that person does not exist. It IS the subject\'s own '
-          'data, so export_my_data carries it (0247)',
-  'workspace_roles':
-      'configuration: the roles a workspace invented for itself. They '
-          'travel with a template and a deployment as their own entity '
-          '(0251, #1505) — the definitions only, which is what makes it '
-          'safe, because a role that arrives holds nobody',
-
   // --- the workspace's own questions (#1288) ------------------------
-  'workspace_field_definitions':
-      'configuration: a question the workspace asks. It travels with a '
-          'template as its own entity, with the conflict rules a type '
-          'change needs (0250, #1288 S5)',
-  'workspace_field_labels': 'the question in each language; it travels '
-      'with the definition above',
+  'workspace_field_labels': 'the question in each language; the definition '
+      'itself is exported whole (0540)',
   'workspace_field_options': 'the choices of a choice question; as above',
   'workspace_field_option_labels': 'the choices in each language; as above',
-  'workspace_field_values':
-      'an answer is the member\'s personal data, not the operator\'s copy '
-          'of their space — export_my_data carries it (0248), and a '
-          'template must never carry answers',
-  'invoice_dunning_holds':
-      'why an invoice is not being reminded (#1913); an operational state '
-          'of the dunning flow, not a record the operator re-imports',
   'privacy_notices':
       'the published privacy notices (#1914); public text every member '
           'reads in the app, and the installation\'s own rows belong to no '
@@ -148,10 +121,6 @@ const Map<String, String> _notExported = {
       'the append-only delivery evidence of each reminder (#1922); as above',
   'workspace_field_value_options':
       'which choices one member made; personal in the same way',
-  'rights_requests':
-      'a person\'s requests to exercise their data-protection rights '
-          '(#1915); they belong to the requester\'s own export, not to the '
-          'operator\'s spreadsheet of the space',
   'workspace_field_retention_holds':
       'a documented legal basis for keeping one question\'s answers after '
           'erasure (#1912); it governs personal data, so it stays with the '
@@ -170,52 +139,15 @@ const Map<String, String> _notExported = {
       'who looked at what, written by the server. It is evidence about '
           'the operator, and an export they control must not be its only '
           'copy',
-  'tax_exemption_certificates':
-      '#2362 — a customer\'s exemption certificate, kept as the seller\'s tax '
-          'evidence: the customer\'s own subject-access export carries it '
-          '(export_my_data), the issued invoice cites it, and the file it '
-          'points to stays in the documents bucket; the workbook has no tab '
-          'for it',
-  'setting_values':
-      '#2484 — the workspace\'s configured values of the settings registry: '
-          'configuration, not the workspace\'s data. The export of data does not '
-          'carry it; the configuration transfer will (S2 of #2483), which is why '
-          'the proof setting\'s old copy in the dunning rules is gone.',
   'platform_access_log':
       "the platform owner's audit of their own access — not the "
           "workspace's data at all",
 
   // --- derived: recomputed from what IS exported --------------------
-  'invoice_matches':
-      'the reconciliation between an invoice and its payments, derived '
-          'from invoices and ledger_entries, both exported',
   'invoice_match_payments':
-      'the junction under invoice_matches, derived the same way',
-  'expense_repartitions':
-      'how one cost was split — derived from the expense and the '
-          'members, and meaningless without the schedule it belongs to',
-  'expense_occurrences':
-      'one instance of a scheduled cost, regenerated from '
-          'expense_schedules',
-  'usage_records':
-      'consumption already summed onto the invoices that are exported; '
-          'the raw rows are an accounting intermediate',
+      'the junction under invoice_matches, which is exported whole (0540)',
 
   // --- configuration: the configuration export owns these -----------
-  'accessories': 'workspace configuration — export_workspace_configuration',
-  'seat_accessories': 'configuration: which seat carries which accessory',
-  'charging_stations':
-      'configuration: the chargers of the EV parking slots (#2631); the plan '
-          'transfer carries them with the editor slice, not yet',
-  'closure_days': 'configuration: the calendar of closed days',
-  'fee_bands': 'configuration: the pricing bands',
-  'packages': 'configuration: the subscription catalogue',
-  'plans': 'configuration: the floor plan, exported as Levels/Desks/Seats',
-  'plan_images': 'configuration: plan backgrounds, storage paths',
-  'sites': 'configuration: the sites and their addresses',
-  'validation_policies': 'configuration: which events need a decision',
-  'vat_rates': 'configuration: the rate catalogue',
-  'number_sequences': 'configuration: invoice numbering state',
   'workspace_documents': 'configuration: the document library',
 
   // --- operational state, not a record of the space -----------------
@@ -236,19 +168,6 @@ const Map<String, String> _notExported = {
   'managed_identities':
       'a profile the workspace holds until its person claims it; the '
           'member rows are exported',
-  'invoice_reminders': 'dunning state, regenerated from the invoices',
-  'price_negotiations': 'a per-member agreed price; part of membership',
-  'quota_extensions': 'a granted exception, part of membership',
-  'credit_products':
-      'configuration: the carnet catalogue (#1279). It travels with a '
-          'template and a deployment as its own entity (0262, #1271) — '
-          'the offer only, never a sale',
-  'member_credits':
-      '#1279 — a carnet sale; its charge is in ledger_entries, exported, and '
-          'the member\'s own copy is the subject-access export',
-  'member_credit_uses':
-      '#1279 — which reservation drew on which carnet; both reservations '
-          'and the sale\'s charge are exported',
   'workspace_creation_requests':
       '#1303 — the claim a creation request made, keyed by the creator; it '
           'belongs to the act of creating, and the workspace it made is the '
@@ -259,28 +178,6 @@ const Map<String, String> _notExported = {
   'reservation_requests':
       'a request that became a reservation or was refused — the '
           'reservations themselves are exported',
-  'expense_schedules':
-      'the recurring-cost configuration; its occurrences are derived',
-  'vat_declarations':
-      'a filed declaration is a document, produced by the VAT report '
-          'rather than carried as rows',
-  'einvoice_inbox':
-      '#2358 — supplier invoices received as XML; the document is the '
-          'supplier\'s, kept as received, and the expense it matched is '
-          'exported itself',
-  'purchase_documents':
-      '#2573 — a purchase is filed by the expense or the supplier bill it '
-          'documents; the expense is exported itself and a fresh space does not '
-          'import documents whose evidence it does not hold',
-  'purchase_lines':
-      '#2573 — the lines of a purchase document, exported with it or not at all',
-  'purchase_obligations':
-      '#2574 — the settlement index over an approved purchase (who is owed what); '
-          'the credit it indexes is a ledger entry and is exported itself',
-  'outgoing_payments':
-      '#2574 — a payment a person reported as made; its effect on the member '
-          'account is a ledger row, exported itself, and a bank record is not '
-          'this server\'s to carry',
   'purchase_settlement_allocations':
       '#2574 — the append-only link from a claim to a payment; it names rows '
           'of this server',
@@ -294,56 +191,22 @@ const Map<String, String> _notExported = {
   'purchase_requests':
       '#2573 — replay ledger of the purchase writes (request ids and their '
           'committed answers); technical, never a workbook row',
-  'premises_leases':
-      '#2569 — the lease the space holds as tenant: one contract of this '
-          'server\'s lessor, with a deposit and a termination; a fresh space does '
-          'not import it',
   'purchase_commitment_matches':
       '#2575 — the append-only link from a lease\'s expected rent to the bill '
           'lines that replaced it; it names rows of this server',
-  'room_rentals':
-      '#2568 — a room this server\'s space rents from its lessor, with the '
-          'cost to the space; a fresh space imports no rental it did not sign',
   'room_rental_audience':
       '#2568 — who may book a rented room; it names members and plans of this '
           'server',
   'reservation_charges':
       '#2575 — the quote behind a ledger charge for a rented room; it names '
           'reservations and ledger rows of this server',
-  'room_rental_fees':
-      '#2568 — the fees of a rented room; it names members and plans of this '
-          'server',
   'bi_cost_allocation_rules':
       '#2582 — how this server\'s space spreads its shared costs over its '
           'resources, by revision; a fresh space imports no rule it did not '
           'write',
-  'asset_valuation_batches':
-      '#2576 — what an accountant sent for one period: evidence about assets '
-          'of this server, with the hash of the file; a fresh space imports '
-          'no valuation it did not receive',
-  'asset_valuation_rows':
-      '#2576 — the figures of one asset in one batch; they name assets of '
-          'this server',
-  'book_periods':
-      '#2365 — the periods of this server\'s books that were closed, and by '
-          'whom; a fresh space starts with every period open',
   'book_exports':
       '#2365 — the log of the files this server handed out, with their '
           'sha256; it describes exports of this server only',
-  'workspace_assets':
-      '#2576 — the equipment register: candidates that point at purchase lines '
-          'of this server with a reviewer\'s decision; a fresh space imports '
-          'no equipment it did not buy',
-  'lease_settlements':
-      '#2569 — the final year-end settlement of one lease\'s service charges; '
-          'it names the scheduled expense it generated on this server',
-  'lease_terms':
-      '#2569 — the history of the amounts of one lease; it names the '
-          'scheduled expense it generated on this server',
-  'suppliers':
-      '#2567 — the payees of the purchase side, master data the purchase '
-          'documents point at; the documents carry their own raw snapshot, '
-          'and a fresh space cannot import supplier numbers it did not issue',
   'supplier_bank_revisions':
       '#2567 — sensitive payee bank details and their change history; '
           'never part of a workbook that is shared on',
@@ -444,6 +307,25 @@ void main() {
             'this test with UPDATE_EXPORT_COVERAGE=1:\n${gone.join('\n')}');
   });
 
+  test('the tables written whole are the ones the server answers (#2860)',
+      () {
+    final sql = sqlFiles('supabase/migrations')
+        .lastWhere((f) => f
+            .readAsStringSync()
+            .contains('function public.export_workspace_records('))
+        .readAsStringSync();
+    final list = RegExp(r"v_tables text\[\] := array\[(.*?)\];", dotAll: true)
+        .firstMatch(sql)!
+        .group(1)!;
+    final server = RegExp(r"'([a-z_]+)'").allMatches(list).map((m) => m[1]!)
+        .toSet();
+    final declared = {
+      for (final s in workspaceExportSources)
+        if (s.everyColumn) s.table,
+    };
+    expect(declared, server);
+  });
+
   test('the column replay sees what the export needs (#2859)', () {
     final schema = replaySchema();
     for (final source in workspaceExportSources) {
@@ -475,7 +357,7 @@ Map<String, List<String>> _openItems() {
     for (final source in workspaceExportSources)
       if (schema[source.table] case final table?)
         'columns.${source.table}': sorted(table.columns
-            .difference(source.columns)
+            .difference(source.everyColumn ? table.columns : source.columns)
             .difference(systemColumns)
             // The export is of one workspace: its id is the whole file's.
             .difference(const {'workspace_id'})
@@ -502,6 +384,11 @@ Map<String, List<String>> _openItems() {
 
 /// Columns of an exported table left out on purpose, and why.
 const Map<String, Set<String>> _notExportedColumns = {
+  'einvoice_inbox': {
+    // The received document itself: it travels as a file of its own, not
+    // as one cell of a sheet (0540).
+    'source_xml',
+  },
   'profiles': {
     // The hash of a person's badge PIN (#662): a credential, never in a
     // workbook that is shared on.

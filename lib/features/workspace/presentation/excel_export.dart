@@ -117,6 +117,10 @@ Future<void> exportWorkspaceExcel(
           },
           invoices: invoices,
         )),
+        // #2860 — the tables the app holds no model of, one sheet each.
+        ...exportedTableSheets(await ref
+            .read(workspaceFilesRepositoryProvider)
+            .fetchRecords(workspace.id)),
       ];
 
       // #1310 — the space's own stored files travel with its rows. A
