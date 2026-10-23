@@ -25248,6 +25248,12 @@ abstract class AppLocalizations {
   /// **'From workspace information'**
   String get portalFollowsWorkspace;
 
+  /// No description provided for @portalGroupsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Groups'**
+  String get portalGroupsHeading;
+
   /// No description provided for @portalImage.
   ///
   /// In en, this message translates to:
@@ -25355,6 +25361,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Visible in the public directory'**
   String get portalPublished;
+
+  /// No description provided for @portalReachableEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No one is reachable yet. Search by name to find people.'**
+  String get portalReachableEmpty;
+
+  /// No description provided for @portalReachableHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'People you can write to'**
+  String get portalReachableHeading;
 
   /// No description provided for @portalRegisterDirectory.
   ///

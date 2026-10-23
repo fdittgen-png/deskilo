@@ -56,5 +56,8 @@
   "portalUseWorkspaceInfo": "Use workspace information",
   "portalResetAll": "Reset all public data to workspace information",
   "portalResetAllBody": "The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.",
-  "portalResetAllConfirm": "Reset"
+  "portalResetAllConfirm": "Reset",
+  "portalReachableHeading": "People you can write to",
+  "portalReachableEmpty": "No one is reachable yet. Search by name to find people.",
+  "portalGroupsHeading": "Groups"
 }

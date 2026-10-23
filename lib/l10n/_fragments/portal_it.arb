@@ -56,5 +56,8 @@
   "portalUseWorkspaceInfo": "Usa le informazioni dello spazio",
   "portalResetAll": "Ripristina tutti i dati pubblici dalle informazioni dello spazio",
   "portalResetAllBody": "I valori pubblici di ogni campo che ha un’informazione nello spazio vengono sostituiti da essa. I campi senza corrispondenza nello spazio mantengono ciò che ha scritto.",
-  "portalResetAllConfirm": "Ripristina"
+  "portalResetAllConfirm": "Ripristina",
+  "portalReachableHeading": "Persone a cui può scrivere",
+  "portalReachableEmpty": "Nessuno è ancora raggiungibile. Cerchi un nome per trovare persone.",
+  "portalGroupsHeading": "Gruppi"
 }
