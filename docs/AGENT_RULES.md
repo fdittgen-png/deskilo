@@ -10,7 +10,7 @@ These rules are version-controlled so a fresh clone sees them. They mirror the s
 2. **Never develop without a GitHub issue.** Work larger than one PR is split into finite checkpoints that are already stated in the issue (or its approved breakdown); do not run a recursive decomposition pass. See [Ready, Done and closure](#ready-done-and-closure).
 3. **Clean codegen before push.** After touching any freezed class or `@riverpod` annotation: `dart run build_runner build --delete-conflicting-outputs` from clean; commit the generated files; zero drift on push.
 4. **Locale key parity.** The key-parity test fails CI if any locale is missing keys vs. `app_en.arb`.
-5. **The setup questionnaire never lags the app.** Any change to a configurable parameter updates `web/setup.html` — field, XML export, XML import — in the SAME PR. Gated by `test/lint/setup_html_test.dart`; see the section below.
+5. **The setup questionnaire never lags the app.** Any change to a configurable parameter updates `web/setup.html` — the field + its `<configuration>` mapping — in the SAME PR. Gated by `test/lint/setup_html_test.dart`; see the section below.
 
 ## Coding rules
 
@@ -270,7 +270,9 @@ A parameter change therefore lands as one commit touching all of:
 
 1. the domain class (`BookingPolicies`, the feature registry, …) and its settings screen,
 2. the five guides + regenerated `assets/help/*.md`,
-3. `web/setup.html` — the **field**, the **XML export** and the **XML import**
+3. `web/setup.html` — the **field** (its `DEFAULTS` entry and `PARAM_META` row) and its
+   **`<configuration>` mapping**; the page's own round trip needs nothing more, it writes
+   and reads the whole answers object as one typed `<answers>` tree (#2925)
    (a new feature also goes into `workspaceProcesses`; `dart run tool/build_setup_l10n.dart`
    then regenerates `web/setup_catalogue.js` — never edited by hand: the process grouping
    the page shows (#1330) and, since #2923, the registries it reads: the features with
@@ -307,10 +309,14 @@ The WebMCP tools (`web/setup_webmcp.js`, #2500) read the page's own parameter de
 The app's own WebMCP tools (`lib/core/webmcp/webmcp_tools.g.dart`, #2504) are generated from `contracts/mcp/operations.json`, like every other MCP rendering; they run through the app's own commands with the in-app confirmation (ADR 0042).
 
 **Backward compatibility is part of the contract.** A questionnaire someone exported last
-month must still load: keep reading retired keys on import (`grid_within_hours` →
-`walkup_only`, `admin-checkout` → `admin-check-out`) even though nothing writes them any
-more, and merge stored answers ONTO the defaults so a file written before a field existed
-comes back with that field at its default instead of crashing `render()`.
+month must still load. Every "a questionnaire saved before #N reads as…" rule lives in ONE
+place, `migrate()`, in the order the rules were made (`gridHours`/`grid-within-hours` →
+`walkup_only`, the permissions #2331 added, `payment` → `cash`, an unknown VAT period →
+quarterly); it runs on stored answers and on every loaded file, before they are merged ONTO
+the defaults, so a file written before a field existed comes back with that field at its
+default instead of crashing `render()`. Files from before #2925 (per-section `<setup>`
+blocks) are read by the frozen `parseLegacySetup()` — never extended — and pinned by
+`tool/setup/fixtures/`.
 
 **Publishing is a separate step.** Merging updates the repo copy; the live page only moves
 when the web workflow runs with `deploy=true` (or a production release train). A merged

@@ -24,6 +24,12 @@ const catalogueSource = fs.readFileSync(new URL('../../web/setup_catalogue.js', 
 const webmcpSource = fs.readFileSync(new URL('../../web/webmcp.js', import.meta.url), 'utf8');
 const setupWebmcpSource = fs.readFileSync(new URL('../../web/setup_webmcp.js', import.meta.url), 'utf8');
 const src = /<script>([\s\S]*?)<\/script>/.exec(html)[1];
+// #2925 — files a page before the <answers> tree wrote, with the state each
+// loads to (read here: load() replaces URL with a stub).
+const FIXTURES = new URL('./fixtures/', import.meta.url);
+const fixtures = Object.fromEntries(fs.readdirSync(FIXTURES).map((f) => [f, fs.readFileSync(new URL(f, FIXTURES), 'utf8')]));
+const fixture = (name) => fixtures[name];
+const fixtureNames = Object.keys(fixtures).filter((f) => f.endsWith('.xml')).map((f) => f.slice(0, -4)).sort();
 const LOCALES = ['en', 'fr', 'de', 'es', 'it'];
 
 let created = [];
@@ -105,7 +111,7 @@ const answers = (features) => ({
 // One page load: fresh globals, the resource, the script. `locale` is the
 // ?lang= parameter (null for none); the browser says `browser`; `remembered`
 // is the language this page stored on an earlier visit.
-function load(locale, stored, { browser = 'fr-FR', remembered = null, modelContext = null, search = '' } = {}) {
+function load(locale, stored, { browser = 'fr-FR', remembered = null, modelContext = null, search = '', patch = (s) => s } = {}) {
   created = [];
   const byId = {};
   for (const id of ['form','bar','rail','nav','saved','allmode','expertview','expertwrap','stepno','lang']) byId[id]=mk('div');
@@ -130,11 +136,11 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null, modelConte
   // The repository's own three files, evaluated the way the browser would.
   eval(catalogueSource);
   eval(l10nSource);
-  eval(src + `
+  eval(patch(src) + `
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
 globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
 globalThis.__applicable=()=>applicable().map(st=>st.id); globalThis.__go=go; globalThis.__setExpert=setExpert; globalThis.__cur=()=>cur;
-globalThis.__setMode=setMode;
+globalThis.__setMode=setMode; globalThis.__migrate=migrate;
 `);
   // The shared module and the questionnaire's tools, as the page loads them
   // after its own script (#2501).
@@ -208,11 +214,13 @@ if (process.argv.includes('--recommend-all')) {
   process.exit(0);
 }
 
-// A small XML reader for the page's own export: elements, attributes,
+// A small XML reader for the page's own export: elements, attributes, text,
 // `a > b` and descendant selectors — what parseBack asks of DOMParser.
 function miniXml(text) {
-  const unescape = (v) => v.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-  const node = (tagName, attrs, parent) => ({ tagName, attrs, parent, children: [],
+  const unescape = (v) => v.replace(/&#(\d+);/g, (m, n) => String.fromCharCode(Number(n))).replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+  const node = (tagName, attrs, parent) => ({ tagName, attrs, parent, children: [], text: '',
+    get textContent() { return this.text + this.children.map((c) => c.textContent).join(''); },
+    getElementsByTagName(tag) { return this.querySelectorAll(tag); },
     getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; }, hasAttribute(k) { return k in this.attrs; },
     querySelectorAll(sel) {
       const steps = sel.split('>').map((x) => x.trim());
@@ -222,7 +230,10 @@ function miniXml(text) {
     querySelector(sel) { return this.querySelectorAll(sel)[0] ?? null; } });
   const doc = node('#document', {}, null);
   let cur = doc;
+  let at = 0;
   for (const m of text.matchAll(/<(\/?)([\w-]+)((?:\s+[\w-]+="[^"]*")*)\s*(\/?)>/g)) {
+    cur.text += unescape(text.slice(at, m.index).replace(/<\?[^>]*\?>/g, ''));
+    at = m.index + m[0].length;
     if (m[1]) { cur = cur.parent; continue; }
     const attrs = {}; for (const a of m[3].matchAll(/([\w-]+)="([^"]*)"/g)) attrs[a[1]] = unescape(a[2]);
     const e = node(m[2], attrs, cur); cur.children.push(e);
@@ -558,6 +569,65 @@ const fakeContext = () => {
   const out = Q.normalize(given);
   same([given.numbering.reset, out.numbering.reset], ['monthly', 'yearly'], 'normalize copies, never mutates');
   console.log('normalize: the tools and the screen read the same answers');
+}
+// #2925 — the page's own round trip is its answers, written once as a typed
+// tree and read back by readTree(): every answer set exports, loads and
+// exports again to the same bytes.
+{
+  // load() puts the stub DOMParser back; the reader goes in after it.
+  const reads = () => { globalThis.DOMParser = class { parseFromString(t) { return miniXml(t); } }; };
+  const sets = { ...EXPORT_MODES, harness: EXPORT_MODES.answered };
+  for (const [mode, build] of Object.entries(sets)) {
+    const page = load('en', build(globalThis.__FEATURES));
+    for (const q of EXPORT_ANSWERS[mode] || []) globalThis.__answer(q, true);
+    const first = page.exportXml();
+    globalThis.window.__setup.reset();
+    reads();
+    globalThis.__parseBack(first);
+    if (page.exportXml() !== first) fail(`answers: ${mode}: export -> load -> export differs`);
+  }
+  // A new scalar answer is a DEFAULTS entry and a PARAM_META row, and
+  // travels with no export or import line of its own.
+  const patch = (s) => s.replace('const DEFAULTS={\n', "const DEFAULTS={\n synthetic:'',\n")
+    .replace('const PARAM_META=[\n', "const PARAM_META=[\n ['synthetic','identityName','text'],\n");
+  const page = load('en', { name: 'Synthetic Space', synthetic: 'kept' }, { patch });
+  const P = globalThis.window.__setup;
+  if (!('synthetic' in P.DEFAULTS)) fail('answers: the synthetic parameter was not patched in');
+  const first = page.exportXml();
+  P.reset();
+  reads();
+  if (P.S.synthetic !== '') fail('answers: reset kept the synthetic answer');
+  globalThis.__parseBack(first);
+  if (P.S.synthetic !== 'kept') fail(`answers: the synthetic answer came back as ${JSON.stringify(P.S.synthetic)}`);
+  if (page.exportXml() !== first) fail('answers: the synthetic answer does not round-trip');
+  // Each rule of migrate(), on answers as a page before it stored them.
+  const m = globalThis.__migrate({ policies: { gridHours: true }, perms: { admin: ['manageMembers'] }, vatExigibility: 'payment', vatPeriod: 'biennial' });
+  if (m.policies.outsideHours !== 'walkup_only' || 'gridHours' in m.policies) fail('migrate: gridHours');
+  if (!m.perms.admin.includes('viewAnalytics') || m.permsV !== 2) fail('migrate: the permissions added by #2331');
+  if (m.vatExigibility !== 'cash' || m.vatPeriod !== 'quarter') fail('migrate: the tax point or the period');
+  // Files written before #2925: every legacy shape loads, through the
+  // frozen parseLegacySetup and migrate(), to the state the page's own
+  // parseBack reached before (pinned as JSON from that page). A key the
+  // pin lacks is a later default and may be added.
+  const within = (got, want, at) => {
+    if (want && typeof want === 'object') {
+      if (!got || typeof got !== 'object' || Array.isArray(want) !== Array.isArray(got)) return [at];
+      if (Array.isArray(want) && want.length !== got.length) return [at + '.length'];
+      return Object.keys(want).flatMap((k) => within(got[k], want[k], at + '.' + k));
+    }
+    return got === want ? [] : [`${at}: ${JSON.stringify(got)} != ${JSON.stringify(want)}`];
+  };
+  const shapes = fixtureNames;
+  for (const name of shapes) {
+    load('en', null);
+    globalThis.window.__setup.reset();
+    reads();
+    globalThis.__parseBack(fixture(name + '.xml'));
+    const off = within(globalThis.window.__setup.S, JSON.parse(fixture(name + '.json')), name);
+    if (off.length) fail(`answers: ${name} loads differently:\n  ${off.slice(0, 8).join('\n  ')}`);
+  }
+  if (shapes.length < 5) fail(`answers: ${shapes.length} legacy fixtures`);
+  console.log(`answers: round-trip; ${shapes.length} legacy files load as before`);
 }
 console.log('steps:', globalThis.__STEPS.length, '| features:', globalThis.__FEATURES.length);
 console.log('locales:', LOCALES.join(','));
