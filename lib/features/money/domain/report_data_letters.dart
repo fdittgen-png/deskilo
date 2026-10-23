@@ -13,6 +13,7 @@ import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../workspace/domain/workspace.dart';
+import 'fee_band.dart';
 import 'invoice.dart';
 import 'invoice_legal.dart';
 import 'invoice_line_text.dart';
@@ -126,9 +127,7 @@ Map<String, Object?> agreementReportData(
 }) {
   final workspace = facts.workspace;
   final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
-  final band = facts.bands
-      .where((b) => b.fromPct < subscriptionPct && subscriptionPct <= b.toPct)
-      .firstOrNull;
+  final band = feeBandFor(facts.bands, subscriptionPct);
   final lines = <Map<String, Object?>>[
     if (band != null) ...[
       {

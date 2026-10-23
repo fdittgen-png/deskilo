@@ -22159,6 +22159,133 @@
     "description": "#872 one wizard idiom: settlementSummaryHint"
   },
   "settlementVatNote": "The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.",
+  "setupApprovalsApply": "Use this rule",
+  "@setupApprovalsApply": {
+    "description": "#2871 setup run steps: setupApprovalsApply"
+  },
+  "setupApprovalsApplyFailed": "The approval rule could not be saved. Try again.",
+  "@setupApprovalsApplyFailed": {
+    "description": "#2871 setup run steps: setupApprovalsApplyFailed"
+  },
+  "setupApprovalsFlowOutcome": "It applies",
+  "@setupApprovalsFlowOutcome": {
+    "description": "#2871 setup run steps: setupApprovalsFlowOutcome"
+  },
+  "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.",
+  "@setupApprovalsFlowOutcomeBody": {
+    "description": "#2871 setup run steps: setupApprovalsFlowOutcomeBody",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsFlowRequest": "A member asks",
+  "@setupApprovalsFlowRequest": {
+    "description": "#2871 setup run steps: setupApprovalsFlowRequest"
+  },
+  "setupApprovalsFlowRequestBody": "A refund, a booking deletion, an expense…",
+  "@setupApprovalsFlowRequestBody": {
+    "description": "#2871 setup run steps: setupApprovalsFlowRequestBody"
+  },
+  "setupApprovalsFlowValidators": "{required} of {people} approve",
+  "@setupApprovalsFlowValidators": {
+    "description": "#2871 setup run steps: setupApprovalsFlowValidators",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsFlowWho": "{owners, plural, =1{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} =1{1 administrator} other{{admins} administrators}}",
+  "@setupApprovalsFlowWho": {
+    "description": "#2871 setup run steps: setupApprovalsFlowWho",
+    "placeholders": {
+      "owners": {
+        "type": "int"
+      },
+      "admins": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsOpenRules": "Rules for each kind of request",
+  "@setupApprovalsOpenRules": {
+    "description": "#2871 setup run steps: setupApprovalsOpenRules"
+  },
+  "setupApprovalsPeople": "{count, plural, =1{1 person can approve.} other{{count} people can approve.}}",
+  "@setupApprovalsPeople": {
+    "description": "#2871 setup run steps: setupApprovalsPeople",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsPresetBody": "One rule for every request without a rule of its own: refunds, booking deletions, expenses, membership changes.",
+  "@setupApprovalsPresetBody": {
+    "description": "#2871 setup run steps: setupApprovalsPresetBody"
+  },
+  "setupApprovalsPresetTitle": "The owner or an administrator approves",
+  "@setupApprovalsPresetTitle": {
+    "description": "#2871 setup run steps: setupApprovalsPresetTitle"
+  },
+  "setupApprovalsPreviewRequest": "Your request",
+  "@setupApprovalsPreviewRequest": {
+    "description": "#2871 setup run steps: setupApprovalsPreviewRequest"
+  },
+  "setupApprovalsPreviewWaiting": "{required, plural, =1{Waiting for 1 approval} other{Waiting for {required} approvals}}",
+  "@setupApprovalsPreviewWaiting": {
+    "description": "#2871 setup run steps: setupApprovalsPreviewWaiting",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsTooMany": "{required} approvals can never be gathered: {people, plural, =1{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.",
+  "@setupApprovalsTooMany": {
+    "description": "#2871 setup run steps: setupApprovalsTooMany",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  },
+  "setupBasicsPreviewDate": "Today's date",
+  "@setupBasicsPreviewDate": {
+    "description": "#2870 setup steps: setupBasicsPreviewDate"
+  },
+  "setupBasicsPreviewMoney": "An amount",
+  "@setupBasicsPreviewMoney": {
+    "description": "#2870 setup steps: setupBasicsPreviewMoney"
+  },
+  "setupBasicsPreviewTime": "The time now",
+  "@setupBasicsPreviewTime": {
+    "description": "#2870 setup steps: setupBasicsPreviewTime"
+  },
+  "setupBasicsPreviewTimeIn": "{time} ({offset})",
+  "@setupBasicsPreviewTimeIn": {
+    "description": "#2870 setup steps: setupBasicsPreviewTimeIn",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "offset": {
+        "type": "String"
+      }
+    }
+  },
+  "setupBasicsSaveFailed": "The basics could not be saved. Try again.",
+  "@setupBasicsSaveFailed": {
+    "description": "#2870 setup steps: setupBasicsSaveFailed"
+  },
   "setupGuideAllDone": "Your space has everything you chose.",
   "@setupGuideAllDone": {
     "description": "#2869 setup guide: setupGuideAllDone"
@@ -22279,6 +22406,38 @@
       }
     }
   },
+  "setupHoursClosed": "Closed",
+  "@setupHoursClosed": {
+    "description": "#2870 setup steps: setupHoursClosed"
+  },
+  "setupHoursNextClosures": "Next closures and holidays",
+  "@setupHoursNextClosures": {
+    "description": "#2870 setup steps: setupHoursNextClosures"
+  },
+  "setupHoursNoClosures": "No closures or holidays planned.",
+  "@setupHoursNoClosures": {
+    "description": "#2870 setup steps: setupHoursNoClosures"
+  },
+  "setupHoursOpenAvailability": "Booking unit and rules in Availability",
+  "@setupHoursOpenAvailability": {
+    "description": "#2870 setup steps: setupHoursOpenAvailability"
+  },
+  "setupHoursRange": "{from}–{to}",
+  "@setupHoursRange": {
+    "description": "#2870 setup steps: setupHoursRange",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "setupHoursWeekTitle": "When members can book",
+  "@setupHoursWeekTitle": {
+    "description": "#2870 setup steps: setupHoursWeekTitle"
+  },
   "setupInvitePreviewNote": "Each invitation you send carries its own single-use code in place of the space's ID.",
   "@setupInvitePreviewNote": {
     "description": "#2870 setup steps: setupInvitePreviewNote"
@@ -22388,11 +22547,161 @@
       }
     }
   },
+  "setupOnlineOpenConfig": "Online payment settings",
+  "@setupOnlineOpenConfig": {
+    "description": "#2871 setup run steps: setupOnlineOpenConfig"
+  },
+  "setupOnlineOperatorNotice": "Your operator connects the payment provider and enters its secret key. It is never asked of you, and nobody sees it again once it is saved.",
+  "@setupOnlineOperatorNotice": {
+    "description": "#2871 setup run steps: setupOnlineOperatorNotice"
+  },
+  "setupOnlinePreviewOff": "No provider is connected yet: members pay by the instructions alone.",
+  "@setupOnlinePreviewOff": {
+    "description": "#2871 setup run steps: setupOnlinePreviewOff"
+  },
+  "setupOnlinePreviewOn": "A provider is connected: members can pay their statement online.",
+  "@setupOnlinePreviewOn": {
+    "description": "#2871 setup run steps: setupOnlinePreviewOn"
+  },
+  "setupPaymentsPreviewEmpty": "Members see no payment instructions until you fill one in.",
+  "@setupPaymentsPreviewEmpty": {
+    "description": "#2871 setup run steps: setupPaymentsPreviewEmpty"
+  },
+  "setupPaymentsPreviewNote": "On an unpaid statement, under what the member owes:",
+  "@setupPaymentsPreviewNote": {
+    "description": "#2871 setup run steps: setupPaymentsPreviewNote"
+  },
+  "setupPaymentsSaveFailed": "The payment instructions could not be saved. Try again.",
+  "@setupPaymentsSaveFailed": {
+    "description": "#2871 setup run steps: setupPaymentsSaveFailed"
+  },
+  "setupPlacesCounts": "{rooms, plural, =1{1 room} other{{rooms} rooms}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}",
+  "@setupPlacesCounts": {
+    "description": "#2870 setup steps: setupPlacesCounts",
+    "placeholders": {
+      "rooms": {
+        "type": "int"
+      },
+      "desks": {
+        "type": "int"
+      },
+      "seats": {
+        "type": "int"
+      }
+    }
+  },
+  "setupPlacesEmpty": "No places yet. Draw the rooms, desks and seats in the editor, or start from a template.",
+  "@setupPlacesEmpty": {
+    "description": "#2870 setup steps: setupPlacesEmpty"
+  },
+  "setupPlacesFromTemplate": "Start from a template",
+  "@setupPlacesFromTemplate": {
+    "description": "#2870 setup steps: setupPlacesFromTemplate"
+  },
+  "setupPlacesOpenEditor": "Open the editor",
+  "@setupPlacesOpenEditor": {
+    "description": "#2870 setup steps: setupPlacesOpenEditor"
+  },
+  "setupPlacesPlanLabel": "Plan of {level}",
+  "@setupPlacesPlanLabel": {
+    "description": "#2870 setup steps: setupPlacesPlanLabel",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "setupPlacesPreviewNone": "Nothing to book yet.",
+  "@setupPlacesPreviewNone": {
+    "description": "#2870 setup steps: setupPlacesPreviewNone"
+  },
+  "setupPlacesPreviewTitle": "What a member can book",
+  "@setupPlacesPreviewTitle": {
+    "description": "#2870 setup steps: setupPlacesPreviewTitle"
+  },
+  "setupPlacesWholeSpace": "Booked as a whole",
+  "@setupPlacesWholeSpace": {
+    "description": "#2870 setup steps: setupPlacesWholeSpace"
+  },
   "setupPresetName": "{key, select, essentiel{Essential} standard{Standard} complet{Complete} other{{key}}}",
   "@setupPresetName": {
     "description": "#2868 setup levels: setupPresetName",
     "placeholders": {
       "key": {
+        "type": "String"
+      }
+    }
+  },
+  "setupPricingBand": "{from}–{to} %: {fee} a month, {extra} per extra half-day",
+  "@setupPricingBand": {
+    "description": "#2871 setup run steps: setupPricingBand",
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      },
+      "fee": {
+        "type": "String"
+      },
+      "extra": {
+        "type": "String"
+      }
+    }
+  },
+  "setupPricingLevel": "Membership at {pct} %",
+  "@setupPricingLevel": {
+    "description": "#2871 setup run steps: setupPricingLevel",
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "setupPricingLevelsBody": "The levels members can choose. Each one is priced by the fee band it falls into.",
+  "@setupPricingLevelsBody": {
+    "description": "#2871 setup run steps: setupPricingLevelsBody"
+  },
+  "setupPricingNoBands": "No price yet: set the monthly fees in Billing.",
+  "@setupPricingNoBands": {
+    "description": "#2871 setup run steps: setupPricingNoBands"
+  },
+  "setupPricingNoLevels": "No level is offered: members cannot choose a membership.",
+  "@setupPricingNoLevels": {
+    "description": "#2871 setup run steps: setupPricingNoLevels"
+  },
+  "setupPricingNoPrice": "No price for this level yet.",
+  "@setupPricingNoPrice": {
+    "description": "#2871 setup run steps: setupPricingNoPrice"
+  },
+  "setupPricingOffer": "Offer these levels",
+  "@setupPricingOffer": {
+    "description": "#2871 setup run steps: setupPricingOffer"
+  },
+  "setupPricingOpenBilling": "Fees, packages and carnets in Billing",
+  "@setupPricingOpenBilling": {
+    "description": "#2871 setup run steps: setupPricingOpenBilling"
+  },
+  "setupPricingPreviewTitle": "What a member pays",
+  "@setupPricingPreviewTitle": {
+    "description": "#2871 setup run steps: setupPricingPreviewTitle"
+  },
+  "setupPricingSaveFailed": "The levels could not be saved. Try again.",
+  "@setupPricingSaveFailed": {
+    "description": "#2871 setup run steps: setupPricingSaveFailed"
+  },
+  "setupPricingTerms": "{monthly} a month\nAn extra half-day {half} · an extra day {day}",
+  "@setupPricingTerms": {
+    "description": "#2871 setup run steps: setupPricingTerms",
+    "placeholders": {
+      "monthly": {
+        "type": "String"
+      },
+      "half": {
+        "type": "String"
+      },
+      "day": {
         "type": "String"
       }
     }
@@ -22481,6 +22790,10 @@
         "type": "String"
       }
     }
+  },
+  "setupStepLoadFailed": "This step could not be loaded. Try again later.",
+  "@setupStepLoadFailed": {
+    "description": "#2870 setup steps: setupStepLoadFailed"
   },
   "setupStepOpenScreen": "Open it",
   "@setupStepOpenScreen": {
