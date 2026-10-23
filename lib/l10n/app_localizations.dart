@@ -34847,6 +34847,216 @@ abstract class AppLocalizations {
   /// **'Maintain VAT groups, rates and declarations.'**
   String get subprocessTaxDesc;
 
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Edited by you'**
+  String get supplierFieldEdited;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Not returned by the registry'**
+  String get supplierFieldNotReturned;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Retrieved from {provider}'**
+  String supplierFieldRetrieved(String provider);
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Validated by {provider}'**
+  String supplierFieldValidated(String provider);
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Continue manually'**
+  String get supplierLookupContinueManually;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get supplierLookupCountry;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the supplier\'s country.'**
+  String get supplierLookupCountryMissing;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier with this identifier already exists: {supplier}. Nothing was created.'**
+  String supplierLookupDuplicate(String supplier);
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Enter manually'**
+  String get supplierLookupEnterManually;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Find company details'**
+  String get supplierLookupFind;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number'**
+  String get supplierLookupIdentifier;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'With or without the country prefix; spaces, dots and dashes are ignored.'**
+  String get supplierLookupIdentifierHelp;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'This does not look like a VAT number: letters and digits only.'**
+  String get supplierLookupIdentifierMalformed;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the VAT number to look up.'**
+  String get supplierLookupIdentifierMissing;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the supplier\'s VAT number. The registry answers with what it holds; you review everything before saving.'**
+  String get supplierLookupIntro;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry rejected the format of this number. Check it, or continue manually.'**
+  String get supplierLookupInvalidInput;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry\'s answer could not be read. Retry, or continue manually.'**
+  String get supplierLookupMalformed;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Or enter the details yourself below.'**
+  String get supplierLookupManualHint;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry does not know this VAT number. Check the number and the country, or continue manually.'**
+  String get supplierLookupNotFound;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT number is valid, but the registry returned no name or address. Complete the fields yourself.'**
+  String get supplierLookupNothingReturned;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Open existing supplier'**
+  String get supplierLookupOpenExisting;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'VIES'**
+  String get supplierLookupProviderVies;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The lookup was refused: you may not manage suppliers here, or VAT verification is switched off.'**
+  String get supplierLookupRefused;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get supplierLookupRetry;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Review every field below; you can change anything before saving.'**
+  String get supplierLookupReviewHint;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Asking the registry…'**
+  String get supplierLookupSearching;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Source: {provider}, {time}'**
+  String supplierLookupSource(String provider, String time);
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Could not verify the VAT number'**
+  String get supplierLookupStatusCouldNotVerify;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Details retrieved; VAT number not validated'**
+  String get supplierLookupStatusRetrievedNotValidated;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Registry unavailable'**
+  String get supplierLookupStatusUnavailable;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'VAT number validated'**
+  String get supplierLookupStatusValidated;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry is busy. Wait a moment and retry, or continue manually.'**
+  String get supplierLookupThrottled;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry did not answer in time. Retry, or continue manually.'**
+  String get supplierLookupTimeout;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The registry is unavailable right now. Retry later, or continue manually.'**
+  String get supplierLookupUnavailable;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'No registry answers for {country} yet. You can enter the details yourself.'**
+  String supplierLookupUnsupported(String country);
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:

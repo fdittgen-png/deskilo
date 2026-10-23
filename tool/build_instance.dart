@@ -29,6 +29,9 @@ const Map<String, bool> functionVerifyJwt = {
   'send-e-invoice': true,
   'send-push': true,
   'stripe-webhook': false,
+  // #2863 — a billing manager's own session; the database answers who
+  // may ask before the registry is reached.
+  'supplier-lookup': true,
   'vies-check': true,
 };
 

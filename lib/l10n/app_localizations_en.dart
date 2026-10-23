@@ -20821,6 +20821,136 @@ class AppLocalizationsEn extends AppLocalizations {
       'Maintain VAT groups, rates and declarations.';
 
   @override
+  String get supplierFieldEdited => 'Edited by you';
+
+  @override
+  String get supplierFieldNotReturned => 'Not returned by the registry';
+
+  @override
+  String supplierFieldRetrieved(String provider) {
+    return 'Retrieved from $provider';
+  }
+
+  @override
+  String supplierFieldValidated(String provider) {
+    return 'Validated by $provider';
+  }
+
+  @override
+  String get supplierLookupContinueManually => 'Continue manually';
+
+  @override
+  String get supplierLookupCountry => 'Country';
+
+  @override
+  String get supplierLookupCountryMissing => 'Choose the supplier\'s country.';
+
+  @override
+  String supplierLookupDuplicate(String supplier) {
+    return 'A supplier with this identifier already exists: $supplier. Nothing was created.';
+  }
+
+  @override
+  String get supplierLookupEnterManually => 'Enter manually';
+
+  @override
+  String get supplierLookupFind => 'Find company details';
+
+  @override
+  String get supplierLookupIdentifier => 'VAT number';
+
+  @override
+  String get supplierLookupIdentifierHelp =>
+      'With or without the country prefix; spaces, dots and dashes are ignored.';
+
+  @override
+  String get supplierLookupIdentifierMalformed =>
+      'This does not look like a VAT number: letters and digits only.';
+
+  @override
+  String get supplierLookupIdentifierMissing =>
+      'Enter the VAT number to look up.';
+
+  @override
+  String get supplierLookupIntro =>
+      'Enter the supplier\'s VAT number. The registry answers with what it holds; you review everything before saving.';
+
+  @override
+  String get supplierLookupInvalidInput =>
+      'The registry rejected the format of this number. Check it, or continue manually.';
+
+  @override
+  String get supplierLookupMalformed =>
+      'The registry\'s answer could not be read. Retry, or continue manually.';
+
+  @override
+  String get supplierLookupManualHint => 'Or enter the details yourself below.';
+
+  @override
+  String get supplierLookupNotFound =>
+      'The registry does not know this VAT number. Check the number and the country, or continue manually.';
+
+  @override
+  String get supplierLookupNothingReturned =>
+      'The VAT number is valid, but the registry returned no name or address. Complete the fields yourself.';
+
+  @override
+  String get supplierLookupOpenExisting => 'Open existing supplier';
+
+  @override
+  String get supplierLookupProviderVies => 'VIES';
+
+  @override
+  String get supplierLookupRefused =>
+      'The lookup was refused: you may not manage suppliers here, or VAT verification is switched off.';
+
+  @override
+  String get supplierLookupRetry => 'Retry';
+
+  @override
+  String get supplierLookupReviewHint =>
+      'Review every field below; you can change anything before saving.';
+
+  @override
+  String get supplierLookupSearching => 'Asking the registry…';
+
+  @override
+  String supplierLookupSource(String provider, String time) {
+    return 'Source: $provider, $time';
+  }
+
+  @override
+  String get supplierLookupStatusCouldNotVerify =>
+      'Could not verify the VAT number';
+
+  @override
+  String get supplierLookupStatusRetrievedNotValidated =>
+      'Details retrieved; VAT number not validated';
+
+  @override
+  String get supplierLookupStatusUnavailable => 'Registry unavailable';
+
+  @override
+  String get supplierLookupStatusValidated => 'VAT number validated';
+
+  @override
+  String get supplierLookupThrottled =>
+      'The registry is busy. Wait a moment and retry, or continue manually.';
+
+  @override
+  String get supplierLookupTimeout =>
+      'The registry did not answer in time. Retry, or continue manually.';
+
+  @override
+  String get supplierLookupUnavailable =>
+      'The registry is unavailable right now. Retry later, or continue manually.';
+
+  @override
+  String supplierLookupUnsupported(String country) {
+    return 'No registry answers for $country yet. You can enter the details yourself.';
+  }
+
+  @override
   String get suppliersAdd => 'Add supplier';
 
   @override
