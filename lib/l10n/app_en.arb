@@ -5169,6 +5169,13 @@
   "@directoryWhatsapp": {
     "description": "Tooltip of the wa.me contact button on a directory row (#223 opt-in); also the swipe-right background label and the contact button in the member detail sheet (#232)"
   },
+  "discoveryBookmark": "Bookmark",
+  "discoveryNoSaved": "No places saved on this device yet.",
+  "discoveryRemoveBookmark": "Remove bookmark",
+  "discoverySaved": "Saved on this device",
+  "discoverySavedFilter": "Saved",
+  "discoveryTitle": "Discover workspaces",
+  "discoveryView": "View",
   "documentsAdd": "Add a document",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -8604,6 +8611,82 @@
       }
     }
   },
+  "fileDeliveryCancelled": "Cancelled — nothing was saved.",
+  "@fileDeliveryCancelled": {
+    "description": "Notice when the person closed the Export… choice or the share sheet: nothing saved"
+  },
+  "fileDownloadAgain": "Download again",
+  "@fileDownloadAgain": {
+    "description": "Snackbar action on a browser download request: re-issue the download from a user gesture"
+  },
+  "fileDownloadRequested": "Download requested: {fileName}. Your browser decides where it goes.",
+  "@fileDownloadRequested": {
+    "description": "Notice after a browser download request: the page cannot confirm where the file landed",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileExportKeep": "Keep in Deskilo",
+  "@fileExportKeep": {
+    "description": "iPhone Export… row: keep a private copy inside the app"
+  },
+  "fileExportKeepHint": "A private copy inside the app. It does not appear in Files.",
+  "@fileExportKeepHint": {
+    "description": "iPhone Export… row subtitle: the copy is app-private, not in Files"
+  },
+  "fileExportShare": "Share…",
+  "@fileExportShare": {
+    "description": "iPhone Export… row: hand the file to the system share sheet"
+  },
+  "fileExportShareHint": "The system sheet: Save to Files when it is offered, Mail, AirDrop or another app.",
+  "@fileExportShareHint": {
+    "description": "iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)"
+  },
+  "fileExportTitle": "Export…",
+  "@fileExportTitle": {
+    "description": "iPhone Export… sheet title: the choice between a private copy in the app and the system share sheet"
+  },
+  "fileHandedToShareSheet": "{fileName} was handed to the share sheet. Where it went is up to the app you chose.",
+  "@fileHandedToShareSheet": {
+    "description": "Notice after the system share sheet took the file: not a delivery receipt",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileKeptInApp": "Kept inside Deskilo: {fileName}. It is not in Downloads or Files — Share… sends it elsewhere.",
+  "@fileKeptInApp": {
+    "description": "Notice after a save that only the app can see (Android fallback, iPhone Keep in Deskilo)",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailedBecause": "Could not save the file: {reason}.",
+  "@fileSaveFailedBecause": {
+    "description": "Error notice with the reason a file could not be saved",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailureNoStorage": "no folder on this device would take it",
+  "@fileSaveFailureNoStorage": {
+    "description": "Reason phrase for fileSaveFailedBecause: no writable folder on the device"
+  },
+  "fileSaveFailureShare": "the share sheet could not be opened",
+  "@fileSaveFailureShare": {
+    "description": "Reason phrase for fileSaveFailedBecause: the system share sheet could not open"
+  },
+  "fileSaveFailureWrite": "the device refused the write",
+  "@fileSaveFailureWrite": {
+    "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
   "financesAllSpaces": "All spaces",
   "financesAutomatic": "automatic",
   "@financesAutomatic": {
@@ -8704,6 +8787,15 @@
   "financesReminders": "Reminders",
   "@financesReminders": {
     "description": "Me › Finances"
+  },
+  "financesSourceUnavailable": "The documents of {host} could not be read right now; what is shown comes from your other spaces.",
+  "@financesSourceUnavailable": {
+    "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   },
   "financesStateClosed": "Closed",
   "@financesStateClosed": {
@@ -17548,6 +17640,18 @@
   },
   "portalCustomised": "Customised",
   "portalDescription": "Description",
+  "portalDirectoryCount": "{name} ({count})",
+  "@portalDirectoryCount": {
+    "description": "A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
   "portalDirectoryUnavailable": "Some directories could not be reached. Results are incomplete.",
   "portalDisconnect": "Disconnect",
@@ -17590,6 +17694,7 @@
   "portalPublished": "Visible in the public directory",
   "portalReachableEmpty": "No one is reachable yet. Search by name to find people.",
   "portalReachableHeading": "People you can write to",
+  "portalRecipientHint": "Type a name: suggestions appear from the first letter",
   "portalRegisterDirectory": "Link a server to the global directory",
   "portalRequestProfile": "Request a workspace profile",
   "portalRequestSent": "Request sent. The workspace will review your profile.",
@@ -17600,6 +17705,7 @@
   "portalSearch": "Search workspaces",
   "portalSendCode": "Send sign-in code",
   "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
+  "portalSuggestionGroup": "Group",
   "portalThisServer": "This server",
   "portalUseCode": "Use an email code",
   "portalUseWorkspaceInfo": "Use workspace information",
@@ -17612,6 +17718,15 @@
     "description": "Subtitle: where that choice is made."
   },
   "portalWebsite": "Website",
+  "portalWriteTo": "Write to {name}",
+  "@portalWriteTo": {
+    "description": "Screen-reader label of a person or group suggested while typing in the new-discussion search (#2472)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "preferencesSaveFailed": "Could not save your preferences. Please try again.",
   "preferencesScopeHint": "Language, appearance and regional formats. Off: edit my defaults.",
   "preferencesUseDefaults": "Use my defaults",
@@ -23155,6 +23270,44 @@
   "@setupLevelsTitle": {
     "description": "#2868 setup levels: setupLevelsTitle"
   },
+  "setupLimitsPerMember": "An allowance set on a member's own page goes before the number of places here.",
+  "@setupLimitsPerMember": {
+    "description": "#2871 setup run steps: setupLimitsPerMember"
+  },
+  "setupLimitsPreviewAhead": "{days, plural, =1{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}",
+  "@setupLimitsPreviewAhead": {
+    "description": "#2871 setup run steps: setupLimitsPreviewAhead",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "setupLimitsPreviewAtOnce": "{count, plural, =1{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}",
+  "@setupLimitsPreviewAtOnce": {
+    "description": "#2871 setup run steps: setupLimitsPreviewAtOnce",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupLimitsPreviewLength": "A booking lasts at least {shortest} and at most {longest}.",
+  "@setupLimitsPreviewLength": {
+    "description": "#2871 setup run steps: setupLimitsPreviewLength",
+    "placeholders": {
+      "shortest": {
+        "type": "String"
+      },
+      "longest": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLimitsSaveFailed": "The booking limits could not be saved. Try again.",
+  "@setupLimitsSaveFailed": {
+    "description": "#2871 setup run steps: setupLimitsSaveFailed"
+  },
   "setupLockConfirmTitle": "Before you save",
   "@setupLockConfirmTitle": {
     "description": "#2875 setup guide locks: setupLockConfirmTitle"
@@ -23241,6 +23394,83 @@
   "setupNewMembersSaveFailed": "The new-member defaults could not be saved. Try again.",
   "@setupNewMembersSaveFailed": {
     "description": "#2871 setup run steps: setupNewMembersSaveFailed"
+  },
+  "setupNotificationsAudience": "{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}",
+  "@setupNotificationsAudience": {
+    "description": "#2871 setup run steps: setupNotificationsAudience",
+    "placeholders": {
+      "audience": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsChannels": "{channels, select, app{in the app} app_push{in the app and as a phone notification} device{as a reminder on their own phone, even without phone notifications} other{{channels}}}",
+  "@setupNotificationsChannels": {
+    "description": "#2871 setup run steps: setupNotificationsChannels",
+    "placeholders": {
+      "channels": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsEvent": "{event, select, pending_request{A request waits for a decision} reservation_cancelled{A booking was removed by someone else} check_in{A booking is about to start: time to check in} member_note{A message or an announcement} member_mention{Someone names them in a conversation} invoice_reminder{A payment reminder} other{{event}}}",
+  "@setupNotificationsEvent": {
+    "description": "#2871 setup run steps: setupNotificationsEvent",
+    "placeholders": {
+      "event": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsLeadFixed": "The check-in reminder appears {lead} before a booking starts.",
+  "@setupNotificationsLeadFixed": {
+    "description": "#2871 setup run steps: setupNotificationsLeadFixed",
+    "placeholders": {
+      "lead": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsLineHow": "{audience}: {channels}",
+  "@setupNotificationsLineHow": {
+    "description": "#2871 setup run steps: setupNotificationsLineHow",
+    "placeholders": {
+      "audience": {
+        "type": "String"
+      },
+      "channels": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsPreviewPlace": "Desk 4",
+  "@setupNotificationsPreviewPlace": {
+    "description": "#2871 setup run steps: setupNotificationsPreviewPlace"
+  },
+  "setupNotificationsPreviewWhen": "{lead} before the booking starts, the member's phone shows:",
+  "@setupNotificationsPreviewWhen": {
+    "description": "#2871 setup run steps: setupNotificationsPreviewWhen",
+    "placeholders": {
+      "lead": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsPushOff": "Phone notifications are off: everything but the check-in reminder stays in the app.",
+  "@setupNotificationsPushOff": {
+    "description": "#2871 setup run steps: setupNotificationsPushOff"
+  },
+  "setupNotificationsPushOn": "Phone notifications are on. A phone receives them once the operator has connected push for this server; until then, everything stays in the app.",
+  "@setupNotificationsPushOn": {
+    "description": "#2871 setup run steps: setupNotificationsPushOn"
+  },
+  "setupNotificationsSaveFailed": "The reminder time could not be saved. Try again.",
+  "@setupNotificationsSaveFailed": {
+    "description": "#2871 setup run steps: setupNotificationsSaveFailed"
+  },
+  "setupNotificationsWho": "Who is told what",
+  "@setupNotificationsWho": {
+    "description": "#2871 setup run steps: setupNotificationsWho"
   },
   "setupObligationNone": "The reviewed tax data holds nothing for this country yet — ask your accountant what applies.",
   "@setupObligationNone": {
@@ -23560,7 +23790,7 @@
   "@setupStepElsewhere": {
     "description": "#2870 setup steps: setupStepElsewhere"
   },
-  "setupStepHint": "{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space's code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space's colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space's data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}",
+  "setupStepHint": "{key, select, basics{What the space is called and where it is: dates, money and holidays follow from it.} hours{When members can book: days, hours and closures.} places{Draw the rooms, desks and seats members book.} member_rights{Let members book, see the calendar and their own account.} invite{Share the space's code or send invitations.} pricing{What a place, a membership or a day costs.} services{Coffee, printing, lockers: what members can add.} payment_methods{Your bank details and payment instructions.} online_payments{Card payments through a provider your operator connects.} approvals{Who validates requests, and how many people must agree.} new_members{What a new member starts with.} notifications{Who is told what, and how: in the app, on the phone, as a reminder.} limits{How far ahead, how long and how many places at once members book.} kiosk{A tablet at the door and member badges.} purchases{What the space buys, and from whom.} lease{The rent and charges the space pays.} assets{What the space owns and how it loses value.} look{The space's colours and its own words.} public_page{What people outside the space can see.} legal_identity{The details every invoice must carry.} vat{The rates you charge and your VAT returns.} numbering{How invoice numbers are built.} documents{Your letterhead on invoices and letters.} einvoicing{Sending invoices through the e-invoicing platform.} accounting{The chart of accounts and the exports for your accountant.} reminders{When and how unpaid invoices are reminded.} first_booking{Book a place the way a member would.} recovery{Export the space's data once.} assistant{Let an AI assistant help, always with your confirmation.} other{{key}}}",
   "@setupStepHint": {
     "description": "#2869 setup guide: setupStepHint",
     "placeholders": {
@@ -23581,7 +23811,7 @@
   "@setupStepPreviewTitle": {
     "description": "#2870 setup steps: setupStepPreviewTitle"
   },
-  "setupStepTitle": "{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}",
+  "setupStepTitle": "{key, select, basics{Name, country and time zone} hours{Opening hours} places{Places on the plan} member_rights{What members may do} invite{Invite members} pricing{Prices and plans} services{Services} payment_methods{How members pay} online_payments{Online payments} approvals{Approvals} new_members{New members} notifications{Notifications} limits{Booking limits} kiosk{Kiosk and badges} purchases{Suppliers and purchases} lease{Your lease} assets{Equipment} look{Colours and wording} public_page{Public page} legal_identity{Legal identity} vat{VAT} numbering{Invoice numbering} documents{Invoice look} einvoicing{E-invoicing} accounting{Accounting} reminders{Payment reminders} first_booking{A first booking} recovery{A copy of your data} assistant{Assistant} other{{key}}}",
   "@setupStepTitle": {
     "description": "#2869 setup guide: setupStepTitle",
     "placeholders": {
@@ -23972,6 +24202,174 @@
   "subprocessStructureDesc": "Manage sites and the availability of plan objects.",
   "subprocessTax": "VAT management",
   "subprocessTaxDesc": "Maintain VAT groups, rates and declarations.",
+  "supplierFieldEdited": "Edited by you",
+  "@supplierFieldEdited": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldNotReturned": "Not returned by the registry",
+  "@supplierFieldNotReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldRetrieved": "Retrieved from {provider}",
+  "@supplierFieldRetrieved": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierFieldValidated": "Validated by {provider}",
+  "@supplierFieldValidated": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupContinueManually": "Continue manually",
+  "@supplierLookupContinueManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountry": "Country",
+  "@supplierLookupCountry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountryMissing": "Choose the supplier's country.",
+  "@supplierLookupCountryMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupDuplicate": "A supplier with this identifier already exists: {supplier}. Nothing was created.",
+  "@supplierLookupDuplicate": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupEnterManually": "Enter manually",
+  "@supplierLookupEnterManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupFind": "Find company details",
+  "@supplierLookupFind": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifier": "VAT number",
+  "@supplierLookupIdentifier": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierHelp": "With or without the country prefix; spaces, dots and dashes are ignored.",
+  "@supplierLookupIdentifierHelp": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMalformed": "This does not look like a VAT number: letters and digits only.",
+  "@supplierLookupIdentifierMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMissing": "Enter the VAT number to look up.",
+  "@supplierLookupIdentifierMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIntro": "Enter the supplier's VAT number. The registry answers with what it holds; you review everything before saving.",
+  "@supplierLookupIntro": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupInvalidInput": "The registry rejected the format of this number. Check it, or continue manually.",
+  "@supplierLookupInvalidInput": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupMalformed": "The registry's answer could not be read. Retry, or continue manually.",
+  "@supplierLookupMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupManualHint": "Or enter the details yourself below.",
+  "@supplierLookupManualHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNotFound": "The registry does not know this VAT number. Check the number and the country, or continue manually.",
+  "@supplierLookupNotFound": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNothingReturned": "The VAT number is valid, but the registry returned no name or address. Complete the fields yourself.",
+  "@supplierLookupNothingReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupOpenExisting": "Open existing supplier",
+  "@supplierLookupOpenExisting": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupProviderVies": "VIES",
+  "@supplierLookupProviderVies": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRefused": "The lookup was refused: you may not manage suppliers here, or VAT verification is switched off.",
+  "@supplierLookupRefused": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRetry": "Retry",
+  "@supplierLookupRetry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupReviewHint": "Review every field below; you can change anything before saving.",
+  "@supplierLookupReviewHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSearching": "Asking the registry…",
+  "@supplierLookupSearching": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSource": "Source: {provider}, {time}",
+  "@supplierLookupSource": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupStatusCouldNotVerify": "Could not verify the VAT number",
+  "@supplierLookupStatusCouldNotVerify": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusRetrievedNotValidated": "Details retrieved; VAT number not validated",
+  "@supplierLookupStatusRetrievedNotValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusUnavailable": "Registry unavailable",
+  "@supplierLookupStatusUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusValidated": "VAT number validated",
+  "@supplierLookupStatusValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupThrottled": "The registry is busy. Wait a moment and retry, or continue manually.",
+  "@supplierLookupThrottled": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupTimeout": "The registry did not answer in time. Retry, or continue manually.",
+  "@supplierLookupTimeout": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnavailable": "The registry is unavailable right now. Retry later, or continue manually.",
+  "@supplierLookupUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnsupported": "No registry answers for {country} yet. You can enter the details yourself.",
+  "@supplierLookupUnsupported": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersAdd": "Add supplier",
   "@suppliersAdd": {
     "description": "#2567 suppliers"

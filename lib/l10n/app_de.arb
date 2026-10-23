@@ -3092,6 +3092,13 @@
   "directoryReservedToday": "Heute reserviert",
   "directoryTitle": "Mitglieder",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
+  "discoveryBookmark": "Merken",
+  "discoveryNoSaved": "Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.",
+  "discoveryRemoveBookmark": "Lesezeichen entfernen",
+  "discoverySaved": "Auf diesem Gerät gespeichert",
+  "discoverySavedFilter": "Gespeichert",
+  "discoveryTitle": "Arbeitsräume entdecken",
+  "discoveryView": "Ansehen",
   "documentsAdd": "Dokument hinzufügen",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -5327,6 +5334,82 @@
       }
     }
   },
+  "fileDeliveryCancelled": "Abgebrochen – nichts wurde gespeichert.",
+  "@fileDeliveryCancelled": {
+    "description": "Notice when the person closed the Export… choice or the share sheet: nothing saved"
+  },
+  "fileDownloadAgain": "Erneut herunterladen",
+  "@fileDownloadAgain": {
+    "description": "Snackbar action on a browser download request: re-issue the download from a user gesture"
+  },
+  "fileDownloadRequested": "Download angefordert: {fileName}. Wohin die Datei geht, entscheidet Ihr Browser.",
+  "@fileDownloadRequested": {
+    "description": "Notice after a browser download request: the page cannot confirm where the file landed",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileExportKeep": "In Deskilo behalten",
+  "@fileExportKeep": {
+    "description": "iPhone Export… row: keep a private copy inside the app"
+  },
+  "fileExportKeepHint": "Eine private Kopie in der App. Sie erscheint nicht in Dateien.",
+  "@fileExportKeepHint": {
+    "description": "iPhone Export… row subtitle: the copy is app-private, not in Files"
+  },
+  "fileExportShare": "Teilen…",
+  "@fileExportShare": {
+    "description": "iPhone Export… row: hand the file to the system share sheet"
+  },
+  "fileExportShareHint": "Das Systemblatt: In Dateien sichern, wenn es angeboten wird, Mail, AirDrop oder eine andere App.",
+  "@fileExportShareHint": {
+    "description": "iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)"
+  },
+  "fileExportTitle": "Exportieren…",
+  "@fileExportTitle": {
+    "description": "iPhone Export… sheet title: the choice between a private copy in the app and the system share sheet"
+  },
+  "fileHandedToShareSheet": "{fileName} wurde an das Teilen-Blatt übergeben. Wohin die Datei ging, hängt von der gewählten App ab.",
+  "@fileHandedToShareSheet": {
+    "description": "Notice after the system share sheet took the file: not a delivery receipt",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileKeptInApp": "In Deskilo behalten: {fileName}. Die Datei liegt weder in Downloads noch in Dateien – Teilen… schickt sie weiter.",
+  "@fileKeptInApp": {
+    "description": "Notice after a save that only the app can see (Android fallback, iPhone Keep in Deskilo)",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailedBecause": "Datei konnte nicht gespeichert werden: {reason}.",
+  "@fileSaveFailedBecause": {
+    "description": "Error notice with the reason a file could not be saved",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSaveFailureNoStorage": "kein Ordner auf diesem Gerät hat sie angenommen",
+  "@fileSaveFailureNoStorage": {
+    "description": "Reason phrase for fileSaveFailedBecause: no writable folder on the device"
+  },
+  "fileSaveFailureShare": "das Teilen-Blatt ließ sich nicht öffnen",
+  "@fileSaveFailureShare": {
+    "description": "Reason phrase for fileSaveFailedBecause: the system share sheet could not open"
+  },
+  "fileSaveFailureWrite": "das Gerät hat das Schreiben verweigert",
+  "@fileSaveFailureWrite": {
+    "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
   "financesAllSpaces": "Alle Spaces",
   "financesAutomatic": "automatisch",
   "@financesAutomatic": {
@@ -5427,6 +5510,15 @@
   "financesReminders": "Erinnerungen",
   "@financesReminders": {
     "description": "Me › Finances"
+  },
+  "financesSourceUnavailable": "Die Dokumente von {host} konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.",
+  "@financesSourceUnavailable": {
+    "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   },
   "financesStateClosed": "Abgeschlossen",
   "@financesStateClosed": {
@@ -9999,6 +10091,7 @@
   "portalCopyEmail": "E-Mail kopieren",
   "portalCustomised": "Angepasst",
   "portalDescription": "Beschreibung",
+  "portalDirectoryCount": "{name} ({count})",
   "portalDirectoryIncompatible": "Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.",
   "portalDirectoryUnavailable": "Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.",
   "portalDisconnect": "Trennen",
@@ -10032,6 +10125,7 @@
   "portalPublished": "Im öffentlichen Verzeichnis sichtbar",
   "portalReachableEmpty": "Noch ist niemand erreichbar. Suchen Sie nach einem Namen, um Personen zu finden.",
   "portalReachableHeading": "Personen, denen Sie schreiben können",
+  "portalRecipientHint": "Geben Sie einen Namen ein: Vorschläge erscheinen ab dem ersten Buchstaben",
   "portalRegisterDirectory": "Server mit dem globalen Verzeichnis verbinden",
   "portalRequestProfile": "Workspace-Profil beantragen",
   "portalRequestSent": "Anfrage gesendet. Der Workspace prüft Ihr Profil.",
@@ -10042,12 +10136,14 @@
   "portalSearch": "Workspaces suchen",
   "portalSendCode": "Anmeldecode senden",
   "portalSourceUnavailable": "Ein Server ist nicht erreichbar. Diese Übersicht ist unvollständig. Zum Wiederholen antippen.",
+  "portalSuggestionGroup": "Gruppe",
   "portalThisServer": "Dieser Server",
   "portalUseCode": "E-Mail-Code verwenden",
   "portalUseWorkspaceInfo": "Arbeitsbereichsangaben verwenden",
   "portalVisibilityLink": "Wer mich finden und mir schreiben darf",
   "portalVisibilityLinkBody": "Festgelegt unter Ich › Wer mich sieht.",
   "portalWebsite": "Website",
+  "portalWriteTo": "{name} schreiben",
   "preferencesSaveFailed": "Ihre Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
   "preferencesScopeHint": "Sprache, Darstellung und regionale Formate. Aus: meine Standardwerte bearbeiten.",
   "preferencesUseDefaults": "Meine Standardwerte verwenden",
@@ -14059,6 +14155,11 @@
   "setupLevelsSwitchOff": "Schaltet aus: {features}",
   "setupLevelsSwitchOn": "Schaltet ein: {features}",
   "setupLevelsTitle": "Was Ihr Raum tut",
+  "setupLimitsPerMember": "Ein Kontingent auf der Seite eines Mitglieds geht der Zahl der Plätze hier vor.",
+  "setupLimitsPreviewAhead": "{days, plural, =1{Sie können bis zu einen Tag im Voraus buchen.} other{Sie können bis zu {days} Tage im Voraus buchen.}}",
+  "setupLimitsPreviewAtOnce": "{count, plural, =1{Sie können einen Platz gleichzeitig belegen.} other{Sie können bis zu {count} Plätze gleichzeitig belegen.}}",
+  "setupLimitsPreviewLength": "Eine Buchung dauert mindestens {shortest} und höchstens {longest}.",
+  "setupLimitsSaveFailed": "Die Buchungsgrenzen konnten nicht gespeichert werden. Bitte erneut versuchen.",
   "setupLockConfirmTitle": "Vor dem Speichern",
   "setupLockMoneyLocaleConfirm": "{country} und {currency} stehen endgültig fest, sobald dieser Space ein Dokument ausstellt oder Geld erfasst: Danach lässt sich keines von beiden mehr ändern. Prüfen Sie sie im Zweifel mit Ihrer Steuerberatung.",
   "setupLockMoneyLocaleFixed": "Festgelegt: Dieser Space hat bereits ein Dokument ausgestellt oder Geld erfasst, daher lassen sich Land und Währung nicht mehr ändern.",
@@ -14073,6 +14174,17 @@
   "setupNewMembersPreviewStart": "Ein neues Mitglied beginnt mit einem Abonnement zu {pct} % ({policy}).",
   "setupNewMembersQuestions": "Fragen beim Beitritt",
   "setupNewMembersSaveFailed": "Die Vorgaben für neue Mitglieder konnten nicht gespeichert werden. Versuchen Sie es erneut.",
+  "setupNotificationsAudience": "{audience, select, deciders{Wer darüber entscheidet} members{Mitglieder} other{{audience}}}",
+  "setupNotificationsChannels": "{channels, select, app{in der App} app_push{in der App und als Benachrichtigung auf dem Telefon} device{als Erinnerung auf dem eigenen Telefon, auch ohne Benachrichtigungen} other{{channels}}}",
+  "setupNotificationsEvent": "{event, select, pending_request{Eine Anfrage wartet auf eine Entscheidung} reservation_cancelled{Eine Buchung wurde von jemand anderem entfernt} check_in{Eine Buchung beginnt gleich: Zeit zum Einchecken} member_note{Eine Nachricht oder eine Ankündigung} member_mention{Jemand erwähnt das Mitglied in einem Gespräch} invoice_reminder{Eine Zahlungserinnerung} other{{event}}}",
+  "setupNotificationsLeadFixed": "Die Check-in-Erinnerung erscheint {lead} vor Beginn einer Buchung.",
+  "setupNotificationsLineHow": "{audience}: {channels}",
+  "setupNotificationsPreviewPlace": "Schreibtisch 4",
+  "setupNotificationsPreviewWhen": "{lead} vor Beginn der Buchung zeigt das Telefon des Mitglieds:",
+  "setupNotificationsPushOff": "Benachrichtigungen auf dem Telefon sind ausgeschaltet: Alles außer der Check-in-Erinnerung bleibt in der App.",
+  "setupNotificationsPushOn": "Benachrichtigungen auf dem Telefon sind eingeschaltet. Ein Telefon erhält sie, sobald der Betreiber Push für diesen Server eingerichtet hat; bis dahin bleibt alles in der App.",
+  "setupNotificationsSaveFailed": "Die Erinnerungszeit konnte nicht gespeichert werden. Bitte erneut versuchen.",
+  "setupNotificationsWho": "Wer wovon erfährt",
   "setupObligationNone": "Die geprüften Steuerdaten enthalten für dieses Land noch nichts — fragen Sie Ihre Steuerberatung, was gilt.",
   "setupObligationSource": "Quelle: {source}",
   "setupObligationThreshold": "{effect, select, immediate{Die Kleinunternehmerregelung endet mit dem Umsatz, der den Nettoumsatz des Jahres über {limit} bringt.} other{Die Kleinunternehmerregelung endet mit dem Jahr, dessen Nettoumsatz {limit} übersteigt.}}",
@@ -14129,11 +14241,11 @@
   "setupServicesSaveFailed": "Der Service konnte nicht hinzugefügt werden. Versuchen Sie es erneut.",
   "setupStateName": "{key, select, ready{Erledigt} needsConfiguration{Zu tun} blocked{Wartet auf einen anderen Schritt} needsOperator{Ihr Betreiber ist dran} notApplicable{Nicht genutzt} deferred{Zurückgestellt} unknown{Unbekannt} other{{key}}}",
   "setupStepElsewhere": "Dieser Schritt wird auf einem eigenen Bildschirm erledigt.",
-  "setupStepHint": "{key, select, basics{Wie der Bereich heißt und wo er liegt: Datum, Währung und Feiertage ergeben sich daraus.} hours{Wann Mitglieder buchen können: Tage, Uhrzeiten und Schließtage.} places{Zeichnen Sie die Räume, Tische und Plätze, die Mitglieder buchen.} member_rights{Mitglieder buchen lassen, den Kalender und ihr eigenes Konto sehen lassen.} invite{Den Code des Bereichs teilen oder Einladungen senden.} pricing{Was ein Platz, eine Mitgliedschaft oder ein Tag kostet.} services{Kaffee, Drucken, Schließfächer: was Mitglieder dazunehmen können.} payment_methods{Ihre Bankverbindung und Zahlungshinweise.} online_payments{Kartenzahlung über einen Anbieter, den Ihr Betreiber anbindet.} approvals{Wer Anträge freigibt und wie viele zustimmen müssen.} new_members{Womit ein neues Mitglied beginnt.} kiosk{Ein Tablet am Eingang und Mitgliedsausweise.} purchases{Was der Bereich kauft und bei wem.} lease{Miete und Nebenkosten, die der Bereich zahlt.} assets{Was dem Bereich gehört und wie es an Wert verliert.} look{Die Farben des Bereichs und seine eigenen Wörter.} public_page{Was Menschen außerhalb des Bereichs sehen können.} legal_identity{Die Angaben, die jede Rechnung tragen muss.} vat{Die Sätze, die Sie berechnen, und Ihre Voranmeldungen.} numbering{Wie Rechnungsnummern aufgebaut sind.} documents{Ihr Briefkopf auf Rechnungen und Briefen.} einvoicing{Rechnungen über die E-Rechnungsplattform senden.} accounting{Der Kontenrahmen und die Exporte für Ihren Steuerberater.} reminders{Wann und wie an offene Rechnungen erinnert wird.} first_booking{Einen Platz buchen, wie es ein Mitglied tun würde.} recovery{Die Daten des Bereichs einmal exportieren.} assistant{Einen KI-Assistenten helfen lassen, immer mit Ihrer Bestätigung.} other{{key}}}",
+  "setupStepHint": "{key, select, basics{Wie der Bereich heißt und wo er liegt: Datum, Währung und Feiertage ergeben sich daraus.} hours{Wann Mitglieder buchen können: Tage, Uhrzeiten und Schließtage.} places{Zeichnen Sie die Räume, Tische und Plätze, die Mitglieder buchen.} member_rights{Mitglieder buchen lassen, den Kalender und ihr eigenes Konto sehen lassen.} invite{Den Code des Bereichs teilen oder Einladungen senden.} pricing{Was ein Platz, eine Mitgliedschaft oder ein Tag kostet.} services{Kaffee, Drucken, Schließfächer: was Mitglieder dazunehmen können.} payment_methods{Ihre Bankverbindung und Zahlungshinweise.} online_payments{Kartenzahlung über einen Anbieter, den Ihr Betreiber anbindet.} approvals{Wer Anträge freigibt und wie viele zustimmen müssen.} new_members{Womit ein neues Mitglied beginnt.} notifications{Wer wovon erfährt, und wie: in der App, auf dem Telefon, als Erinnerung.} limits{Wie weit im Voraus, wie lange und wie viele Plätze gleichzeitig Mitglieder buchen.} kiosk{Ein Tablet am Eingang und Mitgliedsausweise.} purchases{Was der Bereich kauft und bei wem.} lease{Miete und Nebenkosten, die der Bereich zahlt.} assets{Was dem Bereich gehört und wie es an Wert verliert.} look{Die Farben des Bereichs und seine eigenen Wörter.} public_page{Was Menschen außerhalb des Bereichs sehen können.} legal_identity{Die Angaben, die jede Rechnung tragen muss.} vat{Die Sätze, die Sie berechnen, und Ihre Voranmeldungen.} numbering{Wie Rechnungsnummern aufgebaut sind.} documents{Ihr Briefkopf auf Rechnungen und Briefen.} einvoicing{Rechnungen über die E-Rechnungsplattform senden.} accounting{Der Kontenrahmen und die Exporte für Ihren Steuerberater.} reminders{Wann und wie an offene Rechnungen erinnert wird.} first_booking{Einen Platz buchen, wie es ein Mitglied tun würde.} recovery{Die Daten des Bereichs einmal exportieren.} assistant{Einen KI-Assistenten helfen lassen, immer mit Ihrer Bestätigung.} other{{key}}}",
   "setupStepLoadFailed": "Dieser Schritt konnte nicht geladen werden. Versuchen Sie es später erneut.",
   "setupStepOpenScreen": "Öffnen",
   "setupStepPreviewTitle": "Was Ihre Mitglieder sehen",
-  "setupStepTitle": "{key, select, basics{Name, Land und Zeitzone} hours{Öffnungszeiten} places{Plätze auf dem Plan} member_rights{Was Mitglieder dürfen} invite{Mitglieder einladen} pricing{Preise und Tarife} services{Leistungen} payment_methods{Wie Mitglieder zahlen} online_payments{Online-Zahlung} approvals{Freigaben} new_members{Neue Mitglieder} kiosk{Kiosk und Ausweise} purchases{Lieferanten und Einkäufe} lease{Ihr Mietvertrag} assets{Ausstattung} look{Farben und Begriffe} public_page{Öffentliche Seite} legal_identity{Rechtliche Angaben} vat{Umsatzsteuer} numbering{Rechnungsnummern} documents{Rechnungsbild} einvoicing{E-Rechnung} accounting{Buchhaltung} reminders{Zahlungserinnerungen} first_booking{Eine erste Buchung} recovery{Eine Kopie Ihrer Daten} assistant{Assistent} other{{key}}}",
+  "setupStepTitle": "{key, select, basics{Name, Land und Zeitzone} hours{Öffnungszeiten} places{Plätze auf dem Plan} member_rights{Was Mitglieder dürfen} invite{Mitglieder einladen} pricing{Preise und Tarife} services{Leistungen} payment_methods{Wie Mitglieder zahlen} online_payments{Online-Zahlung} approvals{Freigaben} new_members{Neue Mitglieder} notifications{Benachrichtigungen} limits{Buchungsgrenzen} kiosk{Kiosk und Ausweise} purchases{Lieferanten und Einkäufe} lease{Ihr Mietvertrag} assets{Ausstattung} look{Farben und Begriffe} public_page{Öffentliche Seite} legal_identity{Rechtliche Angaben} vat{Umsatzsteuer} numbering{Rechnungsnummern} documents{Rechnungsbild} einvoicing{E-Rechnung} accounting{Buchhaltung} reminders{Zahlungserinnerungen} first_booking{Eine erste Buchung} recovery{Eine Kopie Ihrer Daten} assistant{Assistent} other{{key}}}",
   "shellBarHiddenAnnounce": "Navigationsleiste ausgeblendet",
   "shellBarHideHint": "Lange drücken für die Vollbildansicht",
   "shellBarShowHint": "Lange drücken, um die Navigationsleiste einzublenden",
@@ -14424,6 +14536,174 @@
   "subprocessStructureDesc": "Standorte und die Verfügbarkeit von Planobjekten verwalten.",
   "subprocessTax": "Umsatzsteuerverwaltung",
   "subprocessTaxDesc": "Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.",
+  "supplierFieldEdited": "Von Ihnen geändert",
+  "@supplierFieldEdited": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldNotReturned": "Vom Register nicht geliefert",
+  "@supplierFieldNotReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierFieldRetrieved": "Aus {provider} abgerufen",
+  "@supplierFieldRetrieved": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierFieldValidated": "Bestätigt durch {provider}",
+  "@supplierFieldValidated": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupContinueManually": "Manuell fortfahren",
+  "@supplierLookupContinueManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountry": "Land",
+  "@supplierLookupCountry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupCountryMissing": "Wählen Sie das Land des Lieferanten.",
+  "@supplierLookupCountryMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupDuplicate": "Ein Lieferant trägt diese Nummer bereits: {supplier}. Es wurde nichts angelegt.",
+  "@supplierLookupDuplicate": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupEnterManually": "Manuell eingeben",
+  "@supplierLookupEnterManually": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupFind": "Firmendaten suchen",
+  "@supplierLookupFind": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifier": "USt-IdNr.",
+  "@supplierLookupIdentifier": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierHelp": "Mit oder ohne Länderpräfix; Leerzeichen, Punkte und Bindestriche werden ignoriert.",
+  "@supplierLookupIdentifierHelp": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMalformed": "Das sieht nicht wie eine USt-IdNr. aus: nur Buchstaben und Ziffern.",
+  "@supplierLookupIdentifierMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIdentifierMissing": "Geben Sie die zu suchende USt-IdNr. ein.",
+  "@supplierLookupIdentifierMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupIntro": "Geben Sie die USt-IdNr. des Lieferanten ein. Das Register antwortet mit dem, was es hat; Sie prüfen alles vor dem Speichern.",
+  "@supplierLookupIntro": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupInvalidInput": "Das Register hat das Format dieser Nummer abgelehnt. Prüfen Sie sie oder fahren Sie manuell fort.",
+  "@supplierLookupInvalidInput": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupMalformed": "Die Antwort des Registers konnte nicht gelesen werden. Versuchen Sie es erneut oder fahren Sie manuell fort.",
+  "@supplierLookupMalformed": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupManualHint": "Oder tragen Sie die Angaben unten selbst ein.",
+  "@supplierLookupManualHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNotFound": "Das Register kennt diese USt-IdNr. nicht. Prüfen Sie Nummer und Land oder fahren Sie manuell fort.",
+  "@supplierLookupNotFound": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupNothingReturned": "Die USt-IdNr. ist gültig, aber das Register hat weder Namen noch Adresse geliefert. Ergänzen Sie die Felder selbst.",
+  "@supplierLookupNothingReturned": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupOpenExisting": "Vorhandenen Lieferanten öffnen",
+  "@supplierLookupOpenExisting": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupProviderVies": "VIES",
+  "@supplierLookupProviderVies": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRefused": "Die Suche wurde abgelehnt: Sie verwalten hier keine Lieferanten, oder die USt-Prüfung ist ausgeschaltet.",
+  "@supplierLookupRefused": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupRetry": "Erneut versuchen",
+  "@supplierLookupRetry": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupReviewHint": "Prüfen Sie jedes Feld unten; Sie können alles vor dem Speichern ändern.",
+  "@supplierLookupReviewHint": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSearching": "Register wird abgefragt…",
+  "@supplierLookupSearching": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupSource": "Quelle: {provider}, {time}",
+  "@supplierLookupSource": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "supplierLookupStatusCouldNotVerify": "USt-IdNr. konnte nicht geprüft werden",
+  "@supplierLookupStatusCouldNotVerify": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusRetrievedNotValidated": "Daten abgerufen; USt-IdNr. nicht bestätigt",
+  "@supplierLookupStatusRetrievedNotValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusUnavailable": "Register nicht erreichbar",
+  "@supplierLookupStatusUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupStatusValidated": "USt-IdNr. bestätigt",
+  "@supplierLookupStatusValidated": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupThrottled": "Das Register ist überlastet. Warten Sie kurz und versuchen Sie es erneut, oder fahren Sie manuell fort.",
+  "@supplierLookupThrottled": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupTimeout": "Das Register hat nicht rechtzeitig geantwortet. Versuchen Sie es erneut oder fahren Sie manuell fort.",
+  "@supplierLookupTimeout": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnavailable": "Das Register ist derzeit nicht erreichbar. Versuchen Sie es später erneut oder fahren Sie manuell fort.",
+  "@supplierLookupUnavailable": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierLookupUnsupported": "Für {country} antwortet noch kein Register. Sie können die Angaben selbst eintragen.",
+  "@supplierLookupUnsupported": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersAdd": "Lieferant hinzufügen",
   "@suppliersAdd": {
     "description": "#2567 suppliers"

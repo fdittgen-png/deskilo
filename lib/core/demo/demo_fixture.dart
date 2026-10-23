@@ -50,6 +50,7 @@ import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
 import 'seed/demo_people_seed.dart';
+import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_resource_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_second_space_seed.dart';
@@ -228,7 +229,10 @@ class DemoFixture {
       deployments: deployments,
       directory: directory,
       guests: demoGuestVisits(today),
-      messenger: demoMessenger(today, actingMember: () => actor.memberId),
+      messenger: withDemoGroup(
+        demoMessenger(today, actingMember: () => actor.memberId),
+        today,
+      ),
       biViews: demoBiViews(),
       files: FakeWorkspaceFiles(),
       imports: InMemoryWorkspaceImport(),

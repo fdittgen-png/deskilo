@@ -25,3 +25,9 @@ FileSaver fileSaver(Ref ref) => impl.saveToDownloads;
 /// #1872 — the same local save, answering with what it achieved.
 @Riverpod(keepAlive: true)
 TypedFileSaver typedFileSaver(Ref ref) => impl.saveToDownloadsTyped;
+
+/// Where "download" leads on this device: straight to the local saver, or
+/// (an iPhone, whose sandbox is not Files) to the Export… choice between a
+/// private copy and the system sheet. Overridden by tests to drive either.
+@Riverpod(keepAlive: true)
+FileDeliveryMode fileDeliveryMode(Ref ref) => impl.localSaveMode;

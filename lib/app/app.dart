@@ -21,6 +21,7 @@ import '../l10n/app_localizations.dart';
 import 'boot_splash.dart';
 import 'router.dart';
 import 'shell/layer_chrome.dart';
+import 'switcher_cover_host.dart';
 import 'theme.dart';
 
 /// The composition root: the real app, or the demonstration space
@@ -111,6 +112,10 @@ class DeskiloApp extends ConsumerWidget {
           child: RecordingIndicator(
             router: router,
             child: RecordingBanner(
+            // #2559 C1 -- tells the native app-switcher cover which frame
+            // is on screen; renders LayerChrome untouched.
+            child: SwitcherCoverHost(
+            router: router,
             child: LayerChrome(
               router: router,
               animations: animations,
@@ -127,6 +132,7 @@ class DeskiloApp extends ConsumerWidget {
                   ),
                 ),
               ))),
+            ),
             ),
           ),
           ),

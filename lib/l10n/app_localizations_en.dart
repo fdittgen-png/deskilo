@@ -4419,6 +4419,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get directoryWhatsapp => 'Chat on WhatsApp';
 
   @override
+  String get discoveryBookmark => 'Bookmark';
+
+  @override
+  String get discoveryNoSaved => 'No places saved on this device yet.';
+
+  @override
+  String get discoveryRemoveBookmark => 'Remove bookmark';
+
+  @override
+  String get discoverySaved => 'Saved on this device';
+
+  @override
+  String get discoverySavedFilter => 'Saved';
+
+  @override
+  String get discoveryTitle => 'Discover workspaces';
+
+  @override
+  String get discoveryView => 'View';
+
+  @override
   String get documentsAdd => 'Add a document';
 
   @override
@@ -7502,6 +7523,59 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fileDeliveryCancelled => 'Cancelled — nothing was saved.';
+
+  @override
+  String get fileDownloadAgain => 'Download again';
+
+  @override
+  String fileDownloadRequested(String fileName) {
+    return 'Download requested: $fileName. Your browser decides where it goes.';
+  }
+
+  @override
+  String get fileExportKeep => 'Keep in Deskilo';
+
+  @override
+  String get fileExportKeepHint =>
+      'A private copy inside the app. It does not appear in Files.';
+
+  @override
+  String get fileExportShare => 'Share…';
+
+  @override
+  String get fileExportShareHint =>
+      'The system sheet: Save to Files when it is offered, Mail, AirDrop or another app.';
+
+  @override
+  String get fileExportTitle => 'Export…';
+
+  @override
+  String fileHandedToShareSheet(String fileName) {
+    return '$fileName was handed to the share sheet. Where it went is up to the app you chose.';
+  }
+
+  @override
+  String fileKeptInApp(String fileName) {
+    return 'Kept inside Deskilo: $fileName. It is not in Downloads or Files — Share… sends it elsewhere.';
+  }
+
+  @override
+  String fileSaveFailedBecause(String reason) {
+    return 'Could not save the file: $reason.';
+  }
+
+  @override
+  String get fileSaveFailureNoStorage =>
+      'no folder on this device would take it';
+
+  @override
+  String get fileSaveFailureShare => 'the share sheet could not be opened';
+
+  @override
+  String get fileSaveFailureWrite => 'the device refused the write';
+
+  @override
   String get financesAllSpaces => 'All spaces';
 
   @override
@@ -7577,6 +7651,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesReminders => 'Reminders';
+
+  @override
+  String financesSourceUnavailable(String host) {
+    return 'The documents of $host could not be read right now; what is shown comes from your other spaces.';
+  }
 
   @override
   String get financesStateClosed => 'Closed';
@@ -15031,6 +15110,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalDescription => 'Description';
 
   @override
+  String portalDirectoryCount(String name, int count) {
+    return '$name ($count)';
+  }
+
+  @override
   String get portalDirectoryIncompatible =>
       'Some workspaces need a newer version of the app and are not shown.';
 
@@ -15135,6 +15219,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalReachableHeading => 'People you can write to';
 
   @override
+  String get portalRecipientHint =>
+      'Type a name: suggestions appear from the first letter';
+
+  @override
   String get portalRegisterDirectory => 'Link a server to the global directory';
 
   @override
@@ -15168,6 +15256,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'A server is unavailable. This overview is incomplete. Tap to retry.';
 
   @override
+  String get portalSuggestionGroup => 'Group';
+
+  @override
   String get portalThisServer => 'This server';
 
   @override
@@ -15184,6 +15275,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get portalWebsite => 'Website';
+
+  @override
+  String portalWriteTo(String name) {
+    return 'Write to $name';
+  }
 
   @override
   String get preferencesSaveFailed =>
@@ -19918,6 +20014,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupLevelsTitle => 'What your space does';
 
   @override
+  String get setupLimitsPerMember =>
+      'An allowance set on a member\'s own page goes before the number of places here.';
+
+  @override
+  String setupLimitsPreviewAhead(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'You can book up to $days days ahead.',
+      one: 'You can book up to one day ahead.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewAtOnce(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'You can hold up to $count places at a time.',
+      one: 'You can hold one place at a time.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewLength(String shortest, String longest) {
+    return 'A booking lasts at least $shortest and at most $longest.';
+  }
+
+  @override
+  String get setupLimitsSaveFailed =>
+      'The booking limits could not be saved. Try again.';
+
+  @override
   String get setupLockConfirmTitle => 'Before you save';
 
   @override
@@ -19980,6 +20111,75 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'The new-member defaults could not be saved. Try again.';
+
+  @override
+  String setupNotificationsAudience(String audience) {
+    String _temp0 = intl.Intl.selectLogic(audience, {
+      'deciders': 'Whoever decides it',
+      'members': 'Members',
+      'other': '$audience',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsChannels(String channels) {
+    String _temp0 = intl.Intl.selectLogic(channels, {
+      'app': 'in the app',
+      'app_push': 'in the app and as a phone notification',
+      'device':
+          'as a reminder on their own phone, even without phone notifications',
+      'other': '$channels',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsEvent(String event) {
+    String _temp0 = intl.Intl.selectLogic(event, {
+      'pending_request': 'A request waits for a decision',
+      'reservation_cancelled': 'A booking was removed by someone else',
+      'check_in': 'A booking is about to start: time to check in',
+      'member_note': 'A message or an announcement',
+      'member_mention': 'Someone names them in a conversation',
+      'invoice_reminder': 'A payment reminder',
+      'other': '$event',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsLeadFixed(String lead) {
+    return 'The check-in reminder appears $lead before a booking starts.';
+  }
+
+  @override
+  String setupNotificationsLineHow(String audience, String channels) {
+    return '$audience: $channels';
+  }
+
+  @override
+  String get setupNotificationsPreviewPlace => 'Desk 4';
+
+  @override
+  String setupNotificationsPreviewWhen(String lead) {
+    return '$lead before the booking starts, the member\'s phone shows:';
+  }
+
+  @override
+  String get setupNotificationsPushOff =>
+      'Phone notifications are off: everything but the check-in reminder stays in the app.';
+
+  @override
+  String get setupNotificationsPushOn =>
+      'Phone notifications are on. A phone receives them once the operator has connected push for this server; until then, everything stays in the app.';
+
+  @override
+  String get setupNotificationsSaveFailed =>
+      'The reminder time could not be saved. Try again.';
+
+  @override
+  String get setupNotificationsWho => 'Who is told what';
 
   @override
   String get setupObligationNone =>
@@ -20311,6 +20511,10 @@ class AppLocalizationsEn extends AppLocalizations {
           'Card payments through a provider your operator connects.',
       'approvals': 'Who validates requests, and how many people must agree.',
       'new_members': 'What a new member starts with.',
+      'notifications':
+          'Who is told what, and how: in the app, on the phone, as a reminder.',
+      'limits':
+          'How far ahead, how long and how many places at once members book.',
       'kiosk': 'A tablet at the door and member badges.',
       'purchases': 'What the space buys, and from whom.',
       'lease': 'The rent and charges the space pays.',
@@ -20357,6 +20561,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'online_payments': 'Online payments',
       'approvals': 'Approvals',
       'new_members': 'New members',
+      'notifications': 'Notifications',
+      'limits': 'Booking limits',
       'kiosk': 'Kiosk and badges',
       'purchases': 'Suppliers and purchases',
       'lease': 'Your lease',
@@ -20819,6 +21025,136 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get subprocessTaxDesc =>
       'Maintain VAT groups, rates and declarations.';
+
+  @override
+  String get supplierFieldEdited => 'Edited by you';
+
+  @override
+  String get supplierFieldNotReturned => 'Not returned by the registry';
+
+  @override
+  String supplierFieldRetrieved(String provider) {
+    return 'Retrieved from $provider';
+  }
+
+  @override
+  String supplierFieldValidated(String provider) {
+    return 'Validated by $provider';
+  }
+
+  @override
+  String get supplierLookupContinueManually => 'Continue manually';
+
+  @override
+  String get supplierLookupCountry => 'Country';
+
+  @override
+  String get supplierLookupCountryMissing => 'Choose the supplier\'s country.';
+
+  @override
+  String supplierLookupDuplicate(String supplier) {
+    return 'A supplier with this identifier already exists: $supplier. Nothing was created.';
+  }
+
+  @override
+  String get supplierLookupEnterManually => 'Enter manually';
+
+  @override
+  String get supplierLookupFind => 'Find company details';
+
+  @override
+  String get supplierLookupIdentifier => 'VAT number';
+
+  @override
+  String get supplierLookupIdentifierHelp =>
+      'With or without the country prefix; spaces, dots and dashes are ignored.';
+
+  @override
+  String get supplierLookupIdentifierMalformed =>
+      'This does not look like a VAT number: letters and digits only.';
+
+  @override
+  String get supplierLookupIdentifierMissing =>
+      'Enter the VAT number to look up.';
+
+  @override
+  String get supplierLookupIntro =>
+      'Enter the supplier\'s VAT number. The registry answers with what it holds; you review everything before saving.';
+
+  @override
+  String get supplierLookupInvalidInput =>
+      'The registry rejected the format of this number. Check it, or continue manually.';
+
+  @override
+  String get supplierLookupMalformed =>
+      'The registry\'s answer could not be read. Retry, or continue manually.';
+
+  @override
+  String get supplierLookupManualHint => 'Or enter the details yourself below.';
+
+  @override
+  String get supplierLookupNotFound =>
+      'The registry does not know this VAT number. Check the number and the country, or continue manually.';
+
+  @override
+  String get supplierLookupNothingReturned =>
+      'The VAT number is valid, but the registry returned no name or address. Complete the fields yourself.';
+
+  @override
+  String get supplierLookupOpenExisting => 'Open existing supplier';
+
+  @override
+  String get supplierLookupProviderVies => 'VIES';
+
+  @override
+  String get supplierLookupRefused =>
+      'The lookup was refused: you may not manage suppliers here, or VAT verification is switched off.';
+
+  @override
+  String get supplierLookupRetry => 'Retry';
+
+  @override
+  String get supplierLookupReviewHint =>
+      'Review every field below; you can change anything before saving.';
+
+  @override
+  String get supplierLookupSearching => 'Asking the registry…';
+
+  @override
+  String supplierLookupSource(String provider, String time) {
+    return 'Source: $provider, $time';
+  }
+
+  @override
+  String get supplierLookupStatusCouldNotVerify =>
+      'Could not verify the VAT number';
+
+  @override
+  String get supplierLookupStatusRetrievedNotValidated =>
+      'Details retrieved; VAT number not validated';
+
+  @override
+  String get supplierLookupStatusUnavailable => 'Registry unavailable';
+
+  @override
+  String get supplierLookupStatusValidated => 'VAT number validated';
+
+  @override
+  String get supplierLookupThrottled =>
+      'The registry is busy. Wait a moment and retry, or continue manually.';
+
+  @override
+  String get supplierLookupTimeout =>
+      'The registry did not answer in time. Retry, or continue manually.';
+
+  @override
+  String get supplierLookupUnavailable =>
+      'The registry is unavailable right now. Retry later, or continue manually.';
+
+  @override
+  String supplierLookupUnsupported(String country) {
+    return 'No registry answers for $country yet. You can enter the details yourself.';
+  }
 
   @override
   String get suppliersAdd => 'Add supplier';

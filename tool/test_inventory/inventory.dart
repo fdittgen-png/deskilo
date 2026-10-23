@@ -349,6 +349,9 @@ String _execution(String path, String source, RunnerFamily family, String root) 
     final d = Directory('$root/$dir');
     if (!d.existsSync()) continue;
     for (final f in d.listSync(recursive: true).whereType<File>()) {
+      // Bytecode a script run leaves behind (scripts/__pycache__) is not
+      // text and sets no variable: reading it as UTF-8 throws.
+      if (f.path.contains('__pycache__')) continue;
       final text = f.readAsStringSync();
       if (text.contains(path) || vars.any(text.contains)) {
         owners.add(_relative(f.path, root));

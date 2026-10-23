@@ -4449,6 +4449,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get directoryWhatsapp => 'Auf WhatsApp schreiben';
 
   @override
+  String get discoveryBookmark => 'Merken';
+
+  @override
+  String get discoveryNoSaved =>
+      'Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.';
+
+  @override
+  String get discoveryRemoveBookmark => 'Lesezeichen entfernen';
+
+  @override
+  String get discoverySaved => 'Auf diesem Gerät gespeichert';
+
+  @override
+  String get discoverySavedFilter => 'Gespeichert';
+
+  @override
+  String get discoveryTitle => 'Arbeitsräume entdecken';
+
+  @override
+  String get discoveryView => 'Ansehen';
+
+  @override
   String get documentsAdd => 'Dokument hinzufügen';
 
   @override
@@ -7559,6 +7581,59 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get fileDeliveryCancelled => 'Abgebrochen – nichts wurde gespeichert.';
+
+  @override
+  String get fileDownloadAgain => 'Erneut herunterladen';
+
+  @override
+  String fileDownloadRequested(String fileName) {
+    return 'Download angefordert: $fileName. Wohin die Datei geht, entscheidet Ihr Browser.';
+  }
+
+  @override
+  String get fileExportKeep => 'In Deskilo behalten';
+
+  @override
+  String get fileExportKeepHint =>
+      'Eine private Kopie in der App. Sie erscheint nicht in Dateien.';
+
+  @override
+  String get fileExportShare => 'Teilen…';
+
+  @override
+  String get fileExportShareHint =>
+      'Das Systemblatt: In Dateien sichern, wenn es angeboten wird, Mail, AirDrop oder eine andere App.';
+
+  @override
+  String get fileExportTitle => 'Exportieren…';
+
+  @override
+  String fileHandedToShareSheet(String fileName) {
+    return '$fileName wurde an das Teilen-Blatt übergeben. Wohin die Datei ging, hängt von der gewählten App ab.';
+  }
+
+  @override
+  String fileKeptInApp(String fileName) {
+    return 'In Deskilo behalten: $fileName. Die Datei liegt weder in Downloads noch in Dateien – Teilen… schickt sie weiter.';
+  }
+
+  @override
+  String fileSaveFailedBecause(String reason) {
+    return 'Datei konnte nicht gespeichert werden: $reason.';
+  }
+
+  @override
+  String get fileSaveFailureNoStorage =>
+      'kein Ordner auf diesem Gerät hat sie angenommen';
+
+  @override
+  String get fileSaveFailureShare => 'das Teilen-Blatt ließ sich nicht öffnen';
+
+  @override
+  String get fileSaveFailureWrite => 'das Gerät hat das Schreiben verweigert';
+
+  @override
   String get financesAllSpaces => 'Alle Spaces';
 
   @override
@@ -7635,6 +7710,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get financesReminders => 'Erinnerungen';
+
+  @override
+  String financesSourceUnavailable(String host) {
+    return 'Die Dokumente von $host konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.';
+  }
 
   @override
   String get financesStateClosed => 'Abgeschlossen';
@@ -15168,6 +15248,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalDescription => 'Beschreibung';
 
   @override
+  String portalDirectoryCount(String name, int count) {
+    return '$name ($count)';
+  }
+
+  @override
   String get portalDirectoryIncompatible =>
       'Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.';
 
@@ -15273,6 +15358,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalReachableHeading => 'Personen, denen Sie schreiben können';
 
   @override
+  String get portalRecipientHint =>
+      'Geben Sie einen Namen ein: Vorschläge erscheinen ab dem ersten Buchstaben';
+
+  @override
   String get portalRegisterDirectory =>
       'Server mit dem globalen Verzeichnis verbinden';
 
@@ -15308,6 +15397,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Server ist nicht erreichbar. Diese Übersicht ist unvollständig. Zum Wiederholen antippen.';
 
   @override
+  String get portalSuggestionGroup => 'Gruppe';
+
+  @override
   String get portalThisServer => 'Dieser Server';
 
   @override
@@ -15325,6 +15417,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get portalWebsite => 'Website';
+
+  @override
+  String portalWriteTo(String name) {
+    return '$name schreiben';
+  }
 
   @override
   String get preferencesSaveFailed =>
@@ -20122,6 +20219,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLevelsTitle => 'Was Ihr Raum tut';
 
   @override
+  String get setupLimitsPerMember =>
+      'Ein Kontingent auf der Seite eines Mitglieds geht der Zahl der Plätze hier vor.';
+
+  @override
+  String setupLimitsPreviewAhead(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Sie können bis zu $days Tage im Voraus buchen.',
+      one: 'Sie können bis zu einen Tag im Voraus buchen.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewAtOnce(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Sie können bis zu $count Plätze gleichzeitig belegen.',
+      one: 'Sie können einen Platz gleichzeitig belegen.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String setupLimitsPreviewLength(String shortest, String longest) {
+    return 'Eine Buchung dauert mindestens $shortest und höchstens $longest.';
+  }
+
+  @override
+  String get setupLimitsSaveFailed =>
+      'Die Buchungsgrenzen konnten nicht gespeichert werden. Bitte erneut versuchen.';
+
+  @override
   String get setupLockConfirmTitle => 'Vor dem Speichern';
 
   @override
@@ -20184,6 +20316,74 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupNewMembersSaveFailed =>
       'Die Vorgaben für neue Mitglieder konnten nicht gespeichert werden. Versuchen Sie es erneut.';
+
+  @override
+  String setupNotificationsAudience(String audience) {
+    String _temp0 = intl.Intl.selectLogic(audience, {
+      'deciders': 'Wer darüber entscheidet',
+      'members': 'Mitglieder',
+      'other': '$audience',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsChannels(String channels) {
+    String _temp0 = intl.Intl.selectLogic(channels, {
+      'app': 'in der App',
+      'app_push': 'in der App und als Benachrichtigung auf dem Telefon',
+      'device': 'als Erinnerung auf dem eigenen Telefon, auch ohne Benachrichtigungen',
+      'other': '$channels',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsEvent(String event) {
+    String _temp0 = intl.Intl.selectLogic(event, {
+      'pending_request': 'Eine Anfrage wartet auf eine Entscheidung',
+      'reservation_cancelled': 'Eine Buchung wurde von jemand anderem entfernt',
+      'check_in': 'Eine Buchung beginnt gleich: Zeit zum Einchecken',
+      'member_note': 'Eine Nachricht oder eine Ankündigung',
+      'member_mention': 'Jemand erwähnt das Mitglied in einem Gespräch',
+      'invoice_reminder': 'Eine Zahlungserinnerung',
+      'other': '$event',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String setupNotificationsLeadFixed(String lead) {
+    return 'Die Check-in-Erinnerung erscheint $lead vor Beginn einer Buchung.';
+  }
+
+  @override
+  String setupNotificationsLineHow(String audience, String channels) {
+    return '$audience: $channels';
+  }
+
+  @override
+  String get setupNotificationsPreviewPlace => 'Schreibtisch 4';
+
+  @override
+  String setupNotificationsPreviewWhen(String lead) {
+    return '$lead vor Beginn der Buchung zeigt das Telefon des Mitglieds:';
+  }
+
+  @override
+  String get setupNotificationsPushOff =>
+      'Benachrichtigungen auf dem Telefon sind ausgeschaltet: Alles außer der Check-in-Erinnerung bleibt in der App.';
+
+  @override
+  String get setupNotificationsPushOn =>
+      'Benachrichtigungen auf dem Telefon sind eingeschaltet. Ein Telefon erhält sie, sobald der Betreiber Push für diesen Server eingerichtet hat; bis dahin bleibt alles in der App.';
+
+  @override
+  String get setupNotificationsSaveFailed =>
+      'Die Erinnerungszeit konnte nicht gespeichert werden. Bitte erneut versuchen.';
+
+  @override
+  String get setupNotificationsWho => 'Wer wovon erfährt';
 
   @override
   String get setupObligationNone =>
@@ -20522,6 +20722,8 @@ class AppLocalizationsDe extends AppLocalizations {
           'Kartenzahlung über einen Anbieter, den Ihr Betreiber anbindet.',
       'approvals': 'Wer Anträge freigibt und wie viele zustimmen müssen.',
       'new_members': 'Womit ein neues Mitglied beginnt.',
+      'notifications': 'Wer wovon erfährt, und wie: in der App, auf dem Telefon, als Erinnerung.',
+      'limits': 'Wie weit im Voraus, wie lange und wie viele Plätze gleichzeitig Mitglieder buchen.',
       'kiosk': 'Ein Tablet am Eingang und Mitgliedsausweise.',
       'purchases': 'Was der Bereich kauft und bei wem.',
       'lease': 'Miete und Nebenkosten, die der Bereich zahlt.',
@@ -20568,6 +20770,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'online_payments': 'Online-Zahlung',
       'approvals': 'Freigaben',
       'new_members': 'Neue Mitglieder',
+      'notifications': 'Benachrichtigungen',
+      'limits': 'Buchungsgrenzen',
       'kiosk': 'Kiosk und Ausweise',
       'purchases': 'Lieferanten und Einkäufe',
       'lease': 'Ihr Mietvertrag',
@@ -21034,6 +21238,138 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get subprocessTaxDesc =>
       'Umsatzsteuergruppen, Steuersätze und Meldungen verwalten.';
+
+  @override
+  String get supplierFieldEdited => 'Von Ihnen geändert';
+
+  @override
+  String get supplierFieldNotReturned => 'Vom Register nicht geliefert';
+
+  @override
+  String supplierFieldRetrieved(String provider) {
+    return 'Aus $provider abgerufen';
+  }
+
+  @override
+  String supplierFieldValidated(String provider) {
+    return 'Bestätigt durch $provider';
+  }
+
+  @override
+  String get supplierLookupContinueManually => 'Manuell fortfahren';
+
+  @override
+  String get supplierLookupCountry => 'Land';
+
+  @override
+  String get supplierLookupCountryMissing =>
+      'Wählen Sie das Land des Lieferanten.';
+
+  @override
+  String supplierLookupDuplicate(String supplier) {
+    return 'Ein Lieferant trägt diese Nummer bereits: $supplier. Es wurde nichts angelegt.';
+  }
+
+  @override
+  String get supplierLookupEnterManually => 'Manuell eingeben';
+
+  @override
+  String get supplierLookupFind => 'Firmendaten suchen';
+
+  @override
+  String get supplierLookupIdentifier => 'USt-IdNr.';
+
+  @override
+  String get supplierLookupIdentifierHelp =>
+      'Mit oder ohne Länderpräfix; Leerzeichen, Punkte und Bindestriche werden ignoriert.';
+
+  @override
+  String get supplierLookupIdentifierMalformed =>
+      'Das sieht nicht wie eine USt-IdNr. aus: nur Buchstaben und Ziffern.';
+
+  @override
+  String get supplierLookupIdentifierMissing =>
+      'Geben Sie die zu suchende USt-IdNr. ein.';
+
+  @override
+  String get supplierLookupIntro =>
+      'Geben Sie die USt-IdNr. des Lieferanten ein. Das Register antwortet mit dem, was es hat; Sie prüfen alles vor dem Speichern.';
+
+  @override
+  String get supplierLookupInvalidInput =>
+      'Das Register hat das Format dieser Nummer abgelehnt. Prüfen Sie sie oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupMalformed =>
+      'Die Antwort des Registers konnte nicht gelesen werden. Versuchen Sie es erneut oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupManualHint =>
+      'Oder tragen Sie die Angaben unten selbst ein.';
+
+  @override
+  String get supplierLookupNotFound =>
+      'Das Register kennt diese USt-IdNr. nicht. Prüfen Sie Nummer und Land oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupNothingReturned =>
+      'Die USt-IdNr. ist gültig, aber das Register hat weder Namen noch Adresse geliefert. Ergänzen Sie die Felder selbst.';
+
+  @override
+  String get supplierLookupOpenExisting => 'Vorhandenen Lieferanten öffnen';
+
+  @override
+  String get supplierLookupProviderVies => 'VIES';
+
+  @override
+  String get supplierLookupRefused =>
+      'Die Suche wurde abgelehnt: Sie verwalten hier keine Lieferanten, oder die USt-Prüfung ist ausgeschaltet.';
+
+  @override
+  String get supplierLookupRetry => 'Erneut versuchen';
+
+  @override
+  String get supplierLookupReviewHint =>
+      'Prüfen Sie jedes Feld unten; Sie können alles vor dem Speichern ändern.';
+
+  @override
+  String get supplierLookupSearching => 'Register wird abgefragt…';
+
+  @override
+  String supplierLookupSource(String provider, String time) {
+    return 'Quelle: $provider, $time';
+  }
+
+  @override
+  String get supplierLookupStatusCouldNotVerify =>
+      'USt-IdNr. konnte nicht geprüft werden';
+
+  @override
+  String get supplierLookupStatusRetrievedNotValidated =>
+      'Daten abgerufen; USt-IdNr. nicht bestätigt';
+
+  @override
+  String get supplierLookupStatusUnavailable => 'Register nicht erreichbar';
+
+  @override
+  String get supplierLookupStatusValidated => 'USt-IdNr. bestätigt';
+
+  @override
+  String get supplierLookupThrottled =>
+      'Das Register ist überlastet. Warten Sie kurz und versuchen Sie es erneut, oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupTimeout =>
+      'Das Register hat nicht rechtzeitig geantwortet. Versuchen Sie es erneut oder fahren Sie manuell fort.';
+
+  @override
+  String get supplierLookupUnavailable =>
+      'Das Register ist derzeit nicht erreichbar. Versuchen Sie es später erneut oder fahren Sie manuell fort.';
+
+  @override
+  String supplierLookupUnsupported(String country) {
+    return 'Für $country antwortet noch kein Register. Sie können die Angaben selbst eintragen.';
+  }
 
   @override
   String get suppliersAdd => 'Lieferant hinzufügen';

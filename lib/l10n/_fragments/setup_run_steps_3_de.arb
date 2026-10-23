@@ -1,0 +1,18 @@
+{
+  "setupNotificationsWho": "Wer wovon erfährt",
+  "setupNotificationsEvent": "{event, select, pending_request{Eine Anfrage wartet auf eine Entscheidung} reservation_cancelled{Eine Buchung wurde von jemand anderem entfernt} check_in{Eine Buchung beginnt gleich: Zeit zum Einchecken} member_note{Eine Nachricht oder eine Ankündigung} member_mention{Jemand erwähnt das Mitglied in einem Gespräch} invoice_reminder{Eine Zahlungserinnerung} other{{event}}}",
+  "setupNotificationsAudience": "{audience, select, deciders{Wer darüber entscheidet} members{Mitglieder} other{{audience}}}",
+  "setupNotificationsLineHow": "{audience}: {channels}",
+  "setupNotificationsChannels": "{channels, select, app{in der App} app_push{in der App und als Benachrichtigung auf dem Telefon} device{als Erinnerung auf dem eigenen Telefon, auch ohne Benachrichtigungen} other{{channels}}}",
+  "setupNotificationsPushOn": "Benachrichtigungen auf dem Telefon sind eingeschaltet. Ein Telefon erhält sie, sobald der Betreiber Push für diesen Server eingerichtet hat; bis dahin bleibt alles in der App.",
+  "setupNotificationsPushOff": "Benachrichtigungen auf dem Telefon sind ausgeschaltet: Alles außer der Check-in-Erinnerung bleibt in der App.",
+  "setupNotificationsLeadFixed": "Die Check-in-Erinnerung erscheint {lead} vor Beginn einer Buchung.",
+  "setupNotificationsSaveFailed": "Die Erinnerungszeit konnte nicht gespeichert werden. Bitte erneut versuchen.",
+  "setupNotificationsPreviewWhen": "{lead} vor Beginn der Buchung zeigt das Telefon des Mitglieds:",
+  "setupNotificationsPreviewPlace": "Schreibtisch 4",
+  "setupLimitsSaveFailed": "Die Buchungsgrenzen konnten nicht gespeichert werden. Bitte erneut versuchen.",
+  "setupLimitsPerMember": "Ein Kontingent auf der Seite eines Mitglieds geht der Zahl der Plätze hier vor.",
+  "setupLimitsPreviewAhead": "{days, plural, =1{Sie können bis zu einen Tag im Voraus buchen.} other{Sie können bis zu {days} Tage im Voraus buchen.}}",
+  "setupLimitsPreviewLength": "Eine Buchung dauert mindestens {shortest} und höchstens {longest}.",
+  "setupLimitsPreviewAtOnce": "{count, plural, =1{Sie können einen Platz gleichzeitig belegen.} other{Sie können bis zu {count} Plätze gleichzeitig belegen.}}"
+}
