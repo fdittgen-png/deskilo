@@ -14,6 +14,7 @@ import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/presentation/screens/pending_approval_screen.dart';
+import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -59,8 +60,21 @@ Future<Boundary> _createSpace(RecipeProbe probe) {
   );
 }
 
-/// A new owner takes the suggested set-up, creates the space, and books
-/// the first seat through the Get started card's hub. The plan the
+/// What a new owner passes through. #2869 — the setup guide opens over
+/// Reserve, so Reserve is seen again when its back arrow returns there.
+const _ownerStops = ['/me', '/onboarding', '/reserve', '/setup'];
+
+Future<void> _pastTheGuide(RecipeProbe probe) async {
+  await probe.arrive(
+    'setup_guide',
+    () => probe.shows(find.byType(SetupGuideScreen)),
+  );
+  await probe.choose(find.byType(BackButton));
+}
+
+/// A new owner takes the suggested set-up, creates the space, meets its
+/// setup guide over Reserve (#2869), goes back to Reserve and books the
+/// first seat through the Get started card's hub. The plan the
 /// template sets up server-side is seeded under the id the creation will
 /// answer with. [dismiss] swaps the booking for "Not now" — the control
 /// that a dismissed card is not a completed task.
@@ -71,7 +85,8 @@ Future<RecipeRun> ownerFirstBooking(
 }) async {
   final meter = BackendMeter();
   final run = RecipeRun('owner_first_booking', meter)
-    ..stops.addAll(['/me', '/onboarding', '/reserve']);
+    ..stops.addAll(_ownerStops)
+    ..allowedReturns.add('/reserve');
   sizeView(tester, const Size(800, 1400));
   final ws = (workspace ?? MeteredWorkspace.new)(meter)
     ..openWeekdays[kCreatedSpace] = const [1, 2, 3, 4, 5, 6, 7];
@@ -95,6 +110,7 @@ Future<RecipeRun> ownerFirstBooking(
     await probe.choose(find.byKey(const ValueKey('onboarding-use-suggested')));
     await probe.arrive('confirm', () => probe.shows(_create));
     await _createSpace(probe);
+    await _pastTheGuide(probe);
     await probe.arrive(
       'first_usable',
       () => probe.shows(_canvas) && probe.shows(_card),
@@ -246,7 +262,8 @@ Future<RecipeRun> wizardKeyboardBackEdit(
 }) async {
   final meter = BackendMeter();
   final run = RecipeRun('wizard_keyboard_back_edit', meter)
-    ..stops.addAll(['/me', '/onboarding', '/reserve']);
+    ..stops.addAll(_ownerStops)
+    ..allowedReturns.add('/reserve');
   const size = Size(400, 800);
   sizeView(tester, size);
   if (!motion) {
@@ -305,6 +322,7 @@ Future<RecipeRun> wizardKeyboardBackEdit(
           probe.shows(find.textContaining('CHF')),
     );
     await _createSpace(probe);
+    await _pastTheGuide(probe);
     await probe.arrive(
       'first_usable',
       () => probe.shows(find.byType(ShellBottomBar)),

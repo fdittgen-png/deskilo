@@ -32,10 +32,13 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/attention.dart';
 import '../../domain/workspace_feature.dart';
+import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_readiness.dart';
 import '../../providers/attention_providers.dart';
+import '../../providers/workspace_providers.dart';
 import '../feature_names.dart';
 import '../widgets/local_setup_views.dart' show eventTypeWord;
+import '../widgets/setup_resume_banner.dart';
 import '../widgets/workspace_readiness_card.dart' show readinessAreaLabel;
 
 class AttentionScreen extends ConsumerWidget {
@@ -50,12 +53,13 @@ class AttentionScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final items = ref.watch(attentionProvider);
+    // #2869 — an unfinished setup is the first thing a configurer attends to.
+    final setup = setupResumeBannerFor(
+        ref, ref.watch(currentWorkspaceProvider).value?.id,
+        configures: ref.watch(myPermissionsProvider)
+            .contains(WorkspacePermission.manageConfiguration));
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.featureDecisionSurfaceTitle),
-      ),
-      body: items.when(
+    final body = items.when(
         loading: () => const LoadingView(),
         // A refusal already reached the trace; a screen-sized sentence
         // here would be a second voice saying the same thing.
@@ -80,7 +84,17 @@ class AttentionScreen extends ConsumerWidget {
                   item: list[index],
                 ),
               ),
+      );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.featureDecisionSurfaceTitle),
       ),
+      body: setup == null
+          ? body
+          : Column(children: [
+              Padding(padding: AppSpacing.gutterAll, child: setup),
+              Expanded(child: body),
+            ]),
     );
   }
 }

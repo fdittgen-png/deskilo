@@ -19,10 +19,10 @@
 // cost TODAY, so the redesign has a number to beat instead of an
 // impression to argue with.
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
+import 'package:deskilo/features/workspace/presentation/screens/setup_guide_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -253,7 +253,8 @@ void main() {
     expect(repo.workspaces, hasLength(1));
     expect(repo.createRequests.single.templateId, isNotNull,
         reason: 'usable means a room to book, not an empty space');
-    expect(find.byType(ShellBottomBar), findsOneWidget);
+    // #2869 — a new space opens on its setup guide, over Reserve.
+    expect(find.byType(SetupGuideScreen), findsOneWidget);
     expect(taps.count, lessThanOrEqualTo(onboardingBudget),
         reason: 'reaching a usable workspace took ${taps.count} taps, budget '
             '$onboardingBudget (#1247).');
