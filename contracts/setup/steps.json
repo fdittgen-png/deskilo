@@ -164,7 +164,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 3
+    "estimate_minutes": 3,
+    "secret": false
   },
   {
     "id": "limits",
@@ -176,7 +177,8 @@
     "required": false,
     "depends_on": [],
     "actor": "owner",
-    "estimate_minutes": 3
+    "estimate_minutes": 3,
+    "secret": false
   },
   {
     "id": "kiosk",
