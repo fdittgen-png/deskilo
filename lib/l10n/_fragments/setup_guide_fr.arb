@@ -19,5 +19,6 @@
   "setupGuideProgress": "{ready} sur {required} faits",
   "setupGuideEstimate": "environ {minutes} min",
   "setupGuideWaitsFor": "Attend : {steps}",
-  "setupGuideBanner": "{milestone} : {ready} sur {required} faits · Ensuite : {step}"
+  "setupGuideBanner": "{milestone} : {ready} sur {required} faits · Ensuite : {step}",
+  "setupGuideMarkDone": "Marquer comme fait"
 }

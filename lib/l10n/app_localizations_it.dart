@@ -19238,6 +19238,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupGuideLater => 'Per una tappa successiva';
 
   @override
+  String get setupGuideMarkDone => 'Segnare come fatto';
+
+  @override
   String get setupGuideNext => 'Prossimo passo';
 
   @override

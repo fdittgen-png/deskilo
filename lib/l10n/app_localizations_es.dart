@@ -19223,6 +19223,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupGuideLater => 'Para un hito posterior';
 
   @override
+  String get setupGuideMarkDone => 'Marcar como hecho';
+
+  @override
   String get setupGuideNext => 'A continuación';
 
   @override

@@ -134,5 +134,9 @@
         "type": "String"
       }
     }
+  },
+  "setupGuideMarkDone": "Mark as done",
+  "@setupGuideMarkDone": {
+    "description": "#2869 — marks a setup step the server cannot verify as done."
   }
 }

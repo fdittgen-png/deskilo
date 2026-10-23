@@ -13746,6 +13746,7 @@
   "setupGuideDone": "Fait",
   "setupGuideEstimate": "environ {minutes} min",
   "setupGuideLater": "Pour une étape suivante",
+  "setupGuideMarkDone": "Marquer comme fait",
   "setupGuideNext": "Ensuite",
   "setupGuideOptional": "Plus pour votre espace",
   "setupGuideProgress": "{ready} sur {required} faits",

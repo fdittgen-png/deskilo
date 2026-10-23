@@ -13746,6 +13746,7 @@
   "setupGuideDone": "Erledigt",
   "setupGuideEstimate": "etwa {minutes} Min.",
   "setupGuideLater": "Für ein späteres Ziel",
+  "setupGuideMarkDone": "Als erledigt markieren",
   "setupGuideNext": "Als Nächstes",
   "setupGuideOptional": "Mehr für Ihren Bereich",
   "setupGuideProgress": "{ready} von {required} erledigt",

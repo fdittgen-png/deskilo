@@ -32411,6 +32411,12 @@ abstract class AppLocalizations {
   /// **'For a later milestone'**
   String get setupGuideLater;
 
+  /// #2869 — marks a setup step the server cannot verify as done.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as done'**
+  String get setupGuideMarkDone;
+
   /// #2869 setup guide: setupGuideNext
   ///
   /// In en, this message translates to:

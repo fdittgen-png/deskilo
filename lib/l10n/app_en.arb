@@ -22102,6 +22102,10 @@
   "@setupGuideLater": {
     "description": "#2869 setup guide: setupGuideLater"
   },
+  "setupGuideMarkDone": "Mark as done",
+  "@setupGuideMarkDone": {
+    "description": "#2869 — marks a setup step the server cannot verify as done."
+  },
   "setupGuideNext": "Next",
   "@setupGuideNext": {
     "description": "#2869 setup guide: setupGuideNext"

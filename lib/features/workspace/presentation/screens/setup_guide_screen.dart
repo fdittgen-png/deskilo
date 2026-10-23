@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -46,6 +47,22 @@ class _SetupGuideBody extends ConsumerWidget {
     final status = ref.watch(workspaceSetupStatusProvider(workspaceId));
     Future<void> reload() async =>
         ref.invalidate(workspaceSetupStatusProvider(workspaceId));
+    // #2869 (0545) — Later, Mark as done and Undo, by the server's rules.
+    Future<void> act(SetupStepStatus step, {bool undo = false}) async {
+      final repository = ref.read(localSetupRepositoryProvider);
+      await runGuarded(
+        context,
+        domain: 'workspace',
+        message: 'setup step ${undo ? 'undo' : 'acknowledge'} failed',
+        errorText: l10n.readinessSetAsideFailed,
+        action: () => undo
+            ? repository.clearStepAcknowledgement(workspaceId, step.step)
+            : repository.acknowledgeStep(workspaceId, step.step),
+      );
+      await reload();
+    }
+
+    final actions = (reload: reload, act: act);
     return switch (status) {
       AsyncData(:final value) => RefreshIndicator(
         onRefresh: reload,
@@ -55,7 +72,7 @@ class _SetupGuideBody extends ConsumerWidget {
           children: [
             _Milestones(status: value),
             const SizedBox(height: AppSpacing.md),
-            ..._sections(context, value, reload),
+            ..._sections(context, value, actions),
           ],
         ),
       ),
@@ -79,7 +96,7 @@ class _SetupGuideBody extends ConsumerWidget {
   List<Widget> _sections(
     BuildContext context,
     SetupStatus status,
-    Future<void> Function() reload,
+    _Actions actions,
   ) {
     final l10n = context.l10n;
     final next = status.nextStep;
@@ -93,7 +110,7 @@ class _SetupGuideBody extends ConsumerWidget {
           ('deferred', l10n.setupGuideDeferred, status.deferred),
           ('done', l10n.setupGuideDone, status.done),
         ])
-          _Folded(id: id, title: title, steps: steps, reload: reload),
+          _Folded(id: id, title: title, steps: steps, actions: actions),
       ];
     }
     final toDo = [
@@ -101,19 +118,19 @@ class _SetupGuideBody extends ConsumerWidget {
         if (s != next) s,
     ];
     return [
-      _NextCard(step: next, reload: reload),
+      _NextCard(step: next, actions: actions),
       if (toDo.isNotEmpty) ...[
         const SizedBox(height: AppSpacing.md),
         _Header(text: l10n.setupGuideToDo),
         for (final s in toDo)
-          _StepTile(step: s, status: status, reload: reload),
+          _StepTile(step: s, status: status, actions: actions),
       ],
       _Folded(
         id: 'waiting',
         title: l10n.setupGuideWaiting,
         steps: status.waiting,
         status: status,
-        reload: reload,
+        actions: actions,
       ),
       _Folded(
         id: 'later',
@@ -122,7 +139,7 @@ class _SetupGuideBody extends ConsumerWidget {
           for (final s in status.later)
             if (s != next) s,
         ],
-        reload: reload,
+        actions: actions,
       ),
       _Folded(
         id: 'optional',
@@ -131,23 +148,30 @@ class _SetupGuideBody extends ConsumerWidget {
           for (final s in status.optional)
             if (s != next) s,
         ],
-        reload: reload,
+        actions: actions,
       ),
       _Folded(
         id: 'deferred',
         title: l10n.setupGuideDeferred,
         steps: status.deferred,
-        reload: reload,
+        actions: actions,
       ),
       _Folded(
         id: 'done',
         title: l10n.setupGuideDone,
         steps: status.done,
-        reload: reload,
+        actions: actions,
       ),
     ];
   }
 }
+
+/// What a step's controls do: read the status again, and acknowledge a
+/// step (or take the acknowledgement back).
+typedef _Actions = ({
+  Future<void> Function() reload,
+  Future<void> Function(SetupStepStatus step, {bool undo}) act,
+});
 
 /// Opens [step]'s screen and reads the status again on the way back.
 Future<void> _open(
@@ -199,9 +223,9 @@ class _Milestones extends StatelessWidget {
 }
 
 class _NextCard extends StatelessWidget {
-  const _NextCard({required this.step, required this.reload});
+  const _NextCard({required this.step, required this.actions});
   final SetupStepStatus step;
-  final Future<void> Function() reload;
+  final _Actions actions;
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +257,7 @@ class _NextCard extends StatelessWidget {
                 const Spacer(),
                 FilledButton(
                   key: ValueKey('setup-guide-next-${step.step}'),
-                  onPressed: () => _open(context, step, reload),
+                  onPressed: () => _open(context, step, actions.reload),
                   child: Text(l10n.setupGuideResume),
                 ),
               ],
@@ -265,14 +289,14 @@ class _Folded extends StatelessWidget {
     required this.id,
     required this.title,
     required this.steps,
-    required this.reload,
+    required this.actions,
     this.status,
   });
 
   final String id;
   final String title;
   final List<SetupStepStatus> steps;
-  final Future<void> Function() reload;
+  final _Actions actions;
   final SetupStatus? status;
 
   @override
@@ -284,16 +308,16 @@ class _Folded extends StatelessWidget {
       title: Text('$title (${steps.length})'),
       children: [
         for (final s in steps)
-          _StepTile(step: s, status: status, reload: reload),
+          _StepTile(step: s, status: status, actions: actions),
       ],
     );
   }
 }
 
 class _StepTile extends StatelessWidget {
-  const _StepTile({required this.step, required this.reload, this.status});
+  const _StepTile({required this.step, required this.actions, this.status});
   final SetupStepStatus step;
-  final Future<void> Function() reload;
+  final _Actions actions;
   final SetupStatus? status;
 
   @override
@@ -317,10 +341,43 @@ class _StepTile extends StatelessWidget {
             l10n.setupStepHint(step.step),
         ].join(' · '),
       ),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () => _open(context, step, reload),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ?_stepAction(l10n, step, actions),
+          const Icon(Icons.chevron_right),
+        ],
+      ),
+      onTap: () => _open(context, step, actions.reload),
     );
   }
+}
+
+/// The one acknowledgement a step offers, if any (0545): a step the
+/// server cannot verify is marked done, an optional one set aside for
+/// later, and either taken back. A required step the server verifies has
+/// none — it has to be set up.
+Widget? _stepAction(
+  AppLocalizations l10n,
+  SetupStepStatus step,
+  _Actions actions,
+) {
+  final open = step.state == SetupStepState.needsConfiguration;
+  final (key, label, undo) = switch (step) {
+    _ when step.state == SetupStepState.deferred ||
+            (step.manual && step.state == SetupStepState.ready) =>
+      ('undo', l10n.readinessSetAsideUndo, true),
+    _ when step.manual && open => ('done', l10n.setupGuideMarkDone, false),
+    _ when !step.required && open =>
+      ('later', l10n.readinessSetAsideAction, false),
+    _ => (null, '', false),
+  };
+  if (key == null) return null;
+  return TextButton(
+    key: ValueKey('setup-step-$key-${step.step}'),
+    onPressed: () => actions.act(step, undo: undo),
+    child: Text(label),
+  );
 }
 
 String _stateWord(AppLocalizations l10n, SetupStepState state) =>

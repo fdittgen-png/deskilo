@@ -19277,6 +19277,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupGuideLater => 'Pour une étape suivante';
 
   @override
+  String get setupGuideMarkDone => 'Marquer comme fait';
+
+  @override
   String get setupGuideNext => 'Ensuite';
 
   @override
