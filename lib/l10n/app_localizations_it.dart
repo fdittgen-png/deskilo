@@ -3903,6 +3903,68 @@ class AppLocalizationsIt extends AppLocalizations {
       'La qualità del cliente non è stata salvata.';
 
   @override
+  String get dataReportArchived => 'Archiviato';
+
+  @override
+  String dataReportColumn(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'month': 'Mese',
+      'bookings': 'Prenotazioni',
+      'held': 'Mantenute',
+      'attended': 'Presenze',
+      'cancelled': 'Annullate',
+      'hours': 'Ore',
+      'paid': 'Pagato',
+      'open': 'Da pagare',
+      'charges': 'Addebitato',
+      'credits': 'Saldato',
+      'balance': 'Saldo',
+      'seats': 'Posti',
+      'reference': 'Riferimento',
+      'role': 'Ruolo',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get dataReportContents => 'Indice';
+
+  @override
+  String get dataReportFailed =>
+      'Non è stato possibile creare il rapporto dati. Riprovi tra un momento.';
+
+  @override
+  String get dataReportNo => 'No';
+
+  @override
+  String get dataReportNone => 'Nulla di registrato';
+
+  @override
+  String dataReportPart(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'members': 'Membri',
+      'bookings': 'Prenotazioni per mese',
+      'invoices': 'Registro delle fatture',
+      'payments': 'Pagamenti e saldi',
+      'purchases': 'Acquisti e fornitori',
+      'plan': 'Pianta e prezzi',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get dataReportSubtitle =>
+      'Membri, prenotazioni, fatture, pagamenti, acquisti e la pianta con i suoi prezzi, con i totali, da leggere o stampare.';
+
+  @override
+  String get dataReportTitle => 'Rapporto dati dello spazio';
+
+  @override
+  String get dataReportYes => 'Sì';
+
+  @override
   String get datevAccountsIntro =>
       'I numeri di consulente e di cliente glieli dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.';
 

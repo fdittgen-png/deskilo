@@ -2648,6 +2648,16 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "dataReportArchived": "Archiviert",
+  "dataReportColumn": "{key, select, month{Monat} bookings{Buchungen} held{Bestehend} attended{Anwesend} cancelled{Storniert} hours{Stunden} paid{Bezahlt} open{Offen} charges{Belastet} credits{Beglichen} balance{Saldo} seats{Plätze} reference{Referenz} role{Rolle} other{{key}}}",
+  "dataReportContents": "Inhalt",
+  "dataReportFailed": "Der Datenbericht konnte nicht erstellt werden. Versuchen Sie es gleich noch einmal.",
+  "dataReportNo": "Nein",
+  "dataReportNone": "Nichts erfasst",
+  "dataReportPart": "{key, select, members{Mitglieder} bookings{Buchungen nach Monat} invoices{Rechnungsregister} payments{Zahlungen und Salden} purchases{Einkäufe und Lieferanten} plan{Plan und Preise} other{{key}}}",
+  "dataReportSubtitle": "Mitglieder, Buchungen, Rechnungen, Zahlungen, Einkäufe und der Plan mit seinen Preisen, mit Summen, zum Lesen oder Drucken.",
+  "dataReportTitle": "Datenbericht des Spaces",
+  "dataReportYes": "Ja",
   "datevAccountsIntro": "Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"

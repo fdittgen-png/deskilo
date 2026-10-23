@@ -2648,6 +2648,16 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "dataReportArchived": "Archivado",
+  "dataReportColumn": "{key, select, month{Mes} bookings{Reservas} held{Mantenidas} attended{Asistencias} cancelled{Canceladas} hours{Horas} paid{Pagado} open{Pendiente} charges{Cargado} credits{Abonado} balance{Saldo} seats{Plazas} reference{Referencia} role{Función} other{{key}}}",
+  "dataReportContents": "Índice",
+  "dataReportFailed": "No se pudo crear el informe de datos. Inténtelo de nuevo en un momento.",
+  "dataReportNo": "No",
+  "dataReportNone": "Nada registrado",
+  "dataReportPart": "{key, select, members{Miembros} bookings{Reservas por mes} invoices{Registro de facturas} payments{Pagos y saldos} purchases{Compras y proveedores} plan{Plano y precios} other{{key}}}",
+  "dataReportSubtitle": "Miembros, reservas, facturas, pagos, compras y el plano con sus precios, con totales, para leer o imprimir.",
+  "dataReportTitle": "Informe de datos del espacio",
+  "dataReportYes": "Sí",
   "datevAccountsIntro": "Su asesor le da los números de asesor y de cliente. DATEV rechaza un archivo cuyos números no coincidan — que es lo que evita que acabe en los libros de otra empresa.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"

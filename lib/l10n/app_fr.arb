@@ -2648,6 +2648,16 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "dataReportArchived": "Archivé",
+  "dataReportColumn": "{key, select, month{Mois} bookings{Réservations} held{Maintenues} attended{Présences} cancelled{Annulées} hours{Heures} paid{Payé} open{Restant dû} charges{Facturé} credits{Réglé} balance{Solde} seats{Places} reference{Référence} role{Rôle} other{{key}}}",
+  "dataReportContents": "Sommaire",
+  "dataReportFailed": "Le rapport de données n’a pas pu être établi. Réessayez dans un instant.",
+  "dataReportNo": "Non",
+  "dataReportNone": "Rien d’enregistré",
+  "dataReportPart": "{key, select, members{Membres} bookings{Réservations par mois} invoices{Registre des factures} payments{Paiements et soldes} purchases{Achats et fournisseurs} plan{Plan et prix} other{{key}}}",
+  "dataReportSubtitle": "Membres, réservations, factures, paiements, achats et le plan avec ses prix, avec les totaux, à lire ou à imprimer.",
+  "dataReportTitle": "Rapport de données de l’espace",
+  "dataReportYes": "Oui",
   "datevAccountsIntro": "Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"

@@ -1,4 +1,14 @@
 {
   "featureDataReportTitle": "Rapport de données (PDF)",
-  "featureDataReportDesc": "Les données de l’espace dans un PDF lisible : membres, réservations par mois, registre des factures, paiements et soldes, achats et fournisseurs, et le plan avec ses prix. Les mêmes lignes que le classeur Excel, avec les totaux."
+  "featureDataReportDesc": "Les données de l’espace dans un PDF lisible : membres, réservations par mois, registre des factures, paiements et soldes, achats et fournisseurs, et le plan avec ses prix. Les mêmes lignes que le classeur Excel, avec les totaux.",
+  "dataReportTitle": "Rapport de données de l’espace",
+  "dataReportSubtitle": "Membres, réservations, factures, paiements, achats et le plan avec ses prix, avec les totaux, à lire ou à imprimer.",
+  "dataReportContents": "Sommaire",
+  "dataReportNone": "Rien d’enregistré",
+  "dataReportYes": "Oui",
+  "dataReportNo": "Non",
+  "dataReportArchived": "Archivé",
+  "dataReportPart": "{key, select, members{Membres} bookings{Réservations par mois} invoices{Registre des factures} payments{Paiements et soldes} purchases{Achats et fournisseurs} plan{Plan et prix} other{{key}}}",
+  "dataReportColumn": "{key, select, month{Mois} bookings{Réservations} held{Maintenues} attended{Présences} cancelled{Annulées} hours{Heures} paid{Payé} open{Restant dû} charges{Facturé} credits{Réglé} balance{Solde} seats{Places} reference{Référence} role{Rôle} other{{key}}}",
+  "dataReportFailed": "Le rapport de données n’a pas pu être établi. Réessayez dans un instant."
 }

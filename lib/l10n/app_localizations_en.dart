@@ -3886,6 +3886,68 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer capacity was not saved.';
 
   @override
+  String get dataReportArchived => 'Archived';
+
+  @override
+  String dataReportColumn(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'month': 'Month',
+      'bookings': 'Bookings',
+      'held': 'Held',
+      'attended': 'Attended',
+      'cancelled': 'Cancelled',
+      'hours': 'Hours',
+      'paid': 'Paid',
+      'open': 'Open',
+      'charges': 'Charged',
+      'credits': 'Settled',
+      'balance': 'Balance',
+      'seats': 'Places',
+      'reference': 'Reference',
+      'role': 'Role',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get dataReportContents => 'Contents';
+
+  @override
+  String get dataReportFailed =>
+      'The data report could not be made. Try again in a moment.';
+
+  @override
+  String get dataReportNo => 'No';
+
+  @override
+  String get dataReportNone => 'Nothing recorded';
+
+  @override
+  String dataReportPart(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'members': 'Members',
+      'bookings': 'Bookings by month',
+      'invoices': 'Invoice register',
+      'payments': 'Payments and balances',
+      'purchases': 'Purchases and suppliers',
+      'plan': 'Plan and prices',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get dataReportSubtitle =>
+      'Members, bookings, invoices, payments, purchases and the plan with its prices, with totals, to read or print.';
+
+  @override
+  String get dataReportTitle => 'Workspace data report';
+
+  @override
+  String get dataReportYes => 'Yes';
+
+  @override
   String get datevAccountsIntro =>
       'Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.';
 
