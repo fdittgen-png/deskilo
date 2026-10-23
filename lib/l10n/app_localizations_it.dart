@@ -19541,6 +19541,85 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile condividere il codice QR. Riprovi.';
 
   @override
+  String get setupLaunchAnswers => 'Le Sue risposte';
+
+  @override
+  String get setupLaunchBlockers =>
+      'Non è ancora possibile aprire. Questi passaggi lo impediscono:';
+
+  @override
+  String get setupLaunchCannot =>
+      'Aprire sarà possibile quando ogni traguardo sarà raggiunto.';
+
+  @override
+  String get setupLaunchChange => 'Modificare';
+
+  @override
+  String get setupLaunchCopied => 'Copiato';
+
+  @override
+  String get setupLaunchCopyOperator => 'Copi per il Suo operatore';
+
+  @override
+  String get setupLaunchFix => 'Correggere';
+
+  @override
+  String get setupLaunchGoLive => 'Aprire';
+
+  @override
+  String get setupLaunchGoLiveBody =>
+      'La Sua configurazione viene copiata nello spazio reale di questa coppia, dove i membri la vedono subito. Prenotazioni, fatture e pagamenti fatti lì sono reali e non si possono annullare. Nella schermata successiva sceglie cosa copiare.';
+
+  @override
+  String get setupLaunchGoLiveConfirm => 'Continui verso la distribuzione';
+
+  @override
+  String get setupLaunchGoLiveTitle => 'Aprire lo spazio?';
+
+  @override
+  String setupLaunchGroup(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'open': 'Aprire',
+      'run': 'Gestire',
+      'grow': 'Crescere',
+      'launch': 'Avviare',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get setupLaunchIsLive => 'Questo è lo spazio reale: è aperto.';
+
+  @override
+  String get setupLaunchLink => 'Verifichi le Sue risposte e apra';
+
+  @override
+  String get setupLaunchMilestones => 'Traguardi';
+
+  @override
+  String get setupLaunchOperator => 'Solo il Suo operatore può farlo:';
+
+  @override
+  String get setupLaunchPublicOff => 'Nulla del Suo spazio è ancora pubblico.';
+
+  @override
+  String get setupLaunchPublicOn =>
+      'La Sua pagina pubblica è visibile a tutti.';
+
+  @override
+  String get setupLaunchReached => 'Raggiunto';
+
+  @override
+  String get setupLaunchReport => 'Copi il rapporto di preparazione';
+
+  @override
+  String get setupLaunchReportTitle => 'Rapporto di preparazione';
+
+  @override
+  String get setupLaunchTitle => 'Verifichi e apra';
+
+  @override
   String setupLevelName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookings_simple': 'Posti condivisi',

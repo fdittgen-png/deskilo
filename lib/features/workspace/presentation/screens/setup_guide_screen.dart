@@ -99,6 +99,19 @@ class _SetupGuideBody extends ConsumerWidget {
                 },
               ),
             ),
+            // #2876 — check the answers and go live.
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton.icon(
+                key: const ValueKey('setup-guide-launch'),
+                icon: const Icon(Icons.fact_check_outlined),
+                label: Text(l10n.setupLaunchLink),
+                onPressed: () async {
+                  await context.push('/setup/launch');
+                  await reload();
+                },
+              ),
+            ),
             const SizedBox(height: AppSpacing.md),
             ..._sections(context, value, actions),
             const SizedBox(height: AppSpacing.md),
