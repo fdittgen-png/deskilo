@@ -19265,6 +19265,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile leggere lo stato della configurazione. Riprovi tra poco.';
 
   @override
+  String setupGuideUntil(int minutes, String milestone) {
+    return 'Circa $minutes min a: $milestone';
+  }
+
+  @override
   String get setupGuideWaiting => 'In attesa';
 
   @override

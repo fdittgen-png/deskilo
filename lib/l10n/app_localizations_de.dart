@@ -19283,6 +19283,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Einrichtungsstand konnte nicht gelesen werden. Bitte gleich erneut versuchen.';
 
   @override
+  String setupGuideUntil(int minutes, String milestone) {
+    return 'Etwa $minutes Min. bis: $milestone';
+  }
+
+  @override
   String get setupGuideWaiting => 'Wartet';
 
   @override

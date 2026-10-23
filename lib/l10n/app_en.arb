@@ -22142,6 +22142,18 @@
   "@setupGuideUnavailable": {
     "description": "#2869 setup guide: setupGuideUnavailable"
   },
+  "setupGuideUntil": "About {minutes} min until: {milestone}",
+  "@setupGuideUntil": {
+    "description": "#2869 — the time the next milestone still needs, summed from its open steps' estimates.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
   "setupGuideWaiting": "Waiting",
   "@setupGuideWaiting": {
     "description": "#2869 setup guide: setupGuideWaiting"

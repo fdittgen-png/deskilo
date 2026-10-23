@@ -13754,6 +13754,7 @@
   "setupGuideTitle": "Einrichtungsassistent",
   "setupGuideToDo": "Was noch fehlt",
   "setupGuideUnavailable": "Der Einrichtungsstand konnte nicht gelesen werden. Bitte gleich erneut versuchen.",
+  "setupGuideUntil": "Etwa {minutes} Min. bis: {milestone}",
   "setupGuideWaiting": "Wartet",
   "setupGuideWaitsFor": "Wartet auf: {steps}",
   "setupMilestoneName": "{key, select, bookable{Buchungen annehmen} money{Bereit für Zahlungen} invoice{Bereit zur Rechnungsstellung} live{Live} other{{key}}}",

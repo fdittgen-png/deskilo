@@ -32459,6 +32459,12 @@ abstract class AppLocalizations {
   /// **'The setup status could not be read. Try again in a moment.'**
   String get setupGuideUnavailable;
 
+  /// #2869 — the time the next milestone still needs, summed from its open steps' estimates.
+  ///
+  /// In en, this message translates to:
+  /// **'About {minutes} min until: {milestone}'**
+  String setupGuideUntil(int minutes, String milestone);
+
   /// #2869 setup guide: setupGuideWaiting
   ///
   /// In en, this message translates to:

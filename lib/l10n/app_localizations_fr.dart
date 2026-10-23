@@ -19304,6 +19304,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'état de la mise en place n\'a pas pu être lu. Réessayez dans un instant.';
 
   @override
+  String setupGuideUntil(int minutes, String milestone) {
+    return 'Environ $minutes min avant : $milestone';
+  }
+
+  @override
   String get setupGuideWaiting => 'En attente';
 
   @override

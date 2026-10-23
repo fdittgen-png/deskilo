@@ -101,4 +101,13 @@ void main() {
     expect(find.byKey(const ValueKey('setup-step-later-places')), findsNothing);
     expect(find.byKey(const ValueKey('setup-step-done-places')), findsNothing);
   });
+
+  testWidgets('the guide says how long the next milestone still takes', (
+    tester,
+  ) async {
+    await _pump(tester);
+    // Only the required open step counts: places, at its default 5 min.
+    expect(find.byKey(const ValueKey('setup-guide-until')), findsOneWidget);
+    expect(find.textContaining('About 5 min until'), findsOneWidget);
+  });
 }

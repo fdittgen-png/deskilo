@@ -20,5 +20,6 @@
   "setupGuideEstimate": "etwa {minutes} Min.",
   "setupGuideWaitsFor": "Wartet auf: {steps}",
   "setupGuideBanner": "{milestone}: {ready} von {required} erledigt · Als Nächstes: {step}",
-  "setupGuideMarkDone": "Als erledigt markieren"
+  "setupGuideMarkDone": "Als erledigt markieren",
+  "setupGuideUntil": "Etwa {minutes} Min. bis: {milestone}"
 }

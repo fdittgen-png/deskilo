@@ -138,5 +138,17 @@
   "setupGuideMarkDone": "Mark as done",
   "@setupGuideMarkDone": {
     "description": "#2869 — marks a setup step the server cannot verify as done."
+  },
+  "setupGuideUntil": "About {minutes} min until: {milestone}",
+  "@setupGuideUntil": {
+    "description": "#2869 — the time the next milestone still needs, summed from its open steps' estimates.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
   }
 }

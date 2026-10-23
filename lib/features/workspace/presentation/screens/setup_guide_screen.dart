@@ -17,6 +17,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/setup_step_actions.dart';
 import '../../domain/setup_status.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -48,16 +49,14 @@ class _SetupGuideBody extends ConsumerWidget {
     Future<void> reload() async =>
         ref.invalidate(workspaceSetupStatusProvider(workspaceId));
     // #2869 (0545) — Later, Mark as done and Undo, by the server's rules.
-    Future<void> act(SetupStepStatus step, {bool undo = false}) async {
-      final repository = ref.read(localSetupRepositoryProvider);
+    Future<void> act(SetupStepStatus step) async {
+      final actions = ref.read(setupStepActionsProvider);
       await runGuarded(
         context,
         domain: 'workspace',
-        message: 'setup step ${undo ? 'undo' : 'acknowledge'} failed',
+        message: 'setup step action failed',
         errorText: l10n.readinessSetAsideFailed,
-        action: () => undo
-            ? repository.clearStepAcknowledgement(workspaceId, step.step)
-            : repository.acknowledgeStep(workspaceId, step.step),
+        action: () => actions.run(workspaceId, step),
       );
       await reload();
     }
@@ -71,6 +70,17 @@ class _SetupGuideBody extends ConsumerWidget {
           padding: const EdgeInsets.all(AppSpacing.md),
           children: [
             _Milestones(status: value),
+            if (value.nextMilestone case final next?
+                when value.minutesToNextMilestone > 0) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                l10n.setupGuideUntil(
+                  value.minutesToNextMilestone,
+                  l10n.setupMilestoneName(next.milestone),
+                ),
+                key: const ValueKey('setup-guide-until'),
+              ),
+            ],
             const SizedBox(height: AppSpacing.md),
             ..._sections(context, value, actions),
           ],
@@ -170,7 +180,7 @@ class _SetupGuideBody extends ConsumerWidget {
 /// step (or take the acknowledgement back).
 typedef _Actions = ({
   Future<void> Function() reload,
-  Future<void> Function(SetupStepStatus step, {bool undo}) act,
+  Future<void> Function(SetupStepStatus step) act,
 });
 
 /// Opens [step]'s screen and reads the status again on the way back.
@@ -353,30 +363,22 @@ class _StepTile extends StatelessWidget {
   }
 }
 
-/// The one acknowledgement a step offers, if any (0545): a step the
-/// server cannot verify is marked done, an optional one set aside for
-/// later, and either taken back. A required step the server verifies has
-/// none — it has to be set up.
+/// The button for what a step offers, if anything (0545).
 Widget? _stepAction(
   AppLocalizations l10n,
   SetupStepStatus step,
   _Actions actions,
 ) {
-  final open = step.state == SetupStepState.needsConfiguration;
-  final (key, label, undo) = switch (step) {
-    _ when step.state == SetupStepState.deferred ||
-            (step.manual && step.state == SetupStepState.ready) =>
-      ('undo', l10n.readinessSetAsideUndo, true),
-    _ when step.manual && open => ('done', l10n.setupGuideMarkDone, false),
-    _ when !step.required && open =>
-      ('later', l10n.readinessSetAsideAction, false),
-    _ => (null, '', false),
-  };
-  if (key == null) return null;
+  final offer = SetupStepActions.offerFor(step);
+  if (offer == null) return null;
   return TextButton(
-    key: ValueKey('setup-step-$key-${step.step}'),
-    onPressed: () => actions.act(step, undo: undo),
-    child: Text(label),
+    key: ValueKey('setup-step-${offer.name}-${step.step}'),
+    onPressed: () => actions.act(step),
+    child: Text(switch (offer) {
+      SetupStepOffer.later => l10n.readinessSetAsideAction,
+      SetupStepOffer.done => l10n.setupGuideMarkDone,
+      SetupStepOffer.undo => l10n.readinessSetAsideUndo,
+    }),
   );
 }
 

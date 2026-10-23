@@ -13754,6 +13754,7 @@
   "setupGuideTitle": "Guida alla configurazione",
   "setupGuideToDo": "Cosa manca ancora",
   "setupGuideUnavailable": "Non è stato possibile leggere lo stato della configurazione. Riprovi tra poco.",
+  "setupGuideUntil": "Circa {minutes} min a: {milestone}",
   "setupGuideWaiting": "In attesa",
   "setupGuideWaitsFor": "Attende: {steps}",
   "setupMilestoneName": "{key, select, bookable{Accettare prenotazioni} money{Pronto per i pagamenti} invoice{Pronto a fatturare} live{Operativo} other{{key}}}",
