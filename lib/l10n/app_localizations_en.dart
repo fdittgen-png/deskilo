@@ -19256,6 +19256,134 @@ class AppLocalizationsEn extends AppLocalizations {
       'The basics could not be saved. Try again.';
 
   @override
+  String get setupGrowDocumentsApply => 'Use this look';
+
+  @override
+  String get setupGrowDocumentsBuiltIn =>
+      'Your invoices are printed with the built-in design, under your name and legal details.';
+
+  @override
+  String get setupGrowDocumentsChoose => 'Or start from one of these looks:';
+
+  @override
+  String get setupGrowDocumentsLayout =>
+      'Your invoice has a positioned layout: the printed page follows it, while this sample shows its content.';
+
+  @override
+  String get setupGrowDocumentsOpenDesigner => 'Open the document designer';
+
+  @override
+  String get setupGrowDocumentsOwn =>
+      'Your invoices are printed with your own design.';
+
+  @override
+  String get setupGrowDocumentsReplaces =>
+      'Choosing a look replaces your own invoice design.';
+
+  @override
+  String get setupGrowDocumentsSaved => 'The invoice look is saved.';
+
+  @override
+  String get setupGrowLegalAskForm =>
+      'The legal form and the share capital, as they must be printed.';
+
+  @override
+  String get setupGrowLegalAskIntro =>
+      'Your accountant knows these answers. Ask before you fill them in:';
+
+  @override
+  String get setupGrowLegalAskNumber =>
+      'Which number your invoices must carry: the VAT number or the company registration number.';
+
+  @override
+  String get setupGrowLegalAskRegime =>
+      'Which VAT regime applies to the space.';
+
+  @override
+  String get setupGrowLegalAskRegister =>
+      'The register the business is entered in, with its number.';
+
+  @override
+  String get setupGrowLegalAskTitle => 'Ask your accountant';
+
+  @override
+  String get setupGrowLegalLock =>
+      'Once the first invoice is issued, the country and the currency can no longer change, and every issued invoice keeps the identity it was issued with.';
+
+  @override
+  String get setupGrowLegalOpenFull =>
+      'Payment clauses, e-invoicing address and every other legal detail';
+
+  @override
+  String get setupGrowLegalPreviewNote =>
+      'The top of every invoice, as it is printed:';
+
+  @override
+  String get setupGrowNumberingLock =>
+      'An issued invoice keeps its number for good, and the series continues without gaps.';
+
+  @override
+  String get setupGrowNumberingNothingTaken =>
+      'A preview only: a number is taken when an invoice is issued, never before.';
+
+  @override
+  String get setupGrowNumberingPreviewNote =>
+      'Your next invoice will carry the number';
+
+  @override
+  String get setupGrowSampleBadge =>
+      'SAMPLE: not a real invoice, and no number is taken';
+
+  @override
+  String get setupGrowSampleLine => 'Membership';
+
+  @override
+  String get setupGrowSampleMember => 'A member';
+
+  @override
+  String get setupGrowSampleNumber => 'SAMPLE';
+
+  @override
+  String get setupGrowSaveFailed => 'This could not be saved. Try again.';
+
+  @override
+  String get setupGrowVatInForce => 'The rates in force';
+
+  @override
+  String get setupGrowVatNoCatalogue =>
+      'The app does not know this country\'s rates. Enter yours in the VAT rates.';
+
+  @override
+  String get setupGrowVatOpen => 'Edit the VAT rates';
+
+  @override
+  String setupGrowVatPreviewNoVat(String gross) {
+    return 'No VAT is charged: a line of $gross is invoiced as it is.';
+  }
+
+  @override
+  String setupGrowVatPreviewNote(String gross) {
+    return 'A sample line of $gross, VAT included, split the way an invoice splits it:';
+  }
+
+  @override
+  String setupGrowVatPreviewRate(String rate) {
+    return 'VAT $rate %';
+  }
+
+  @override
+  String setupGrowVatRate(String rate) {
+    return '$rate %';
+  }
+
+  @override
+  String get setupGrowVatUsualNote =>
+      'A starting point, not tax advice: your accountant confirms which rate applies to what you sell.';
+
+  @override
+  String get setupGrowVatUsualTitle => 'Your country\'s usual rates';
+
+  @override
   String get setupGuideAllDone => 'Your space has everything you chose.';
 
   @override
@@ -19363,6 +19491,28 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupInviteShareFailed =>
       'The QR code could not be shared. Try again.';
+
+  @override
+  String setupKioskCurrent(String name) {
+    return '$name runs the kiosk.';
+  }
+
+  @override
+  String get setupKioskMake => 'Make it the kiosk';
+
+  @override
+  String get setupKioskNoCandidate =>
+      'Invite the tablet’s account first: it joins like a member, then becomes the kiosk here.';
+
+  @override
+  String get setupKioskNone => 'No kiosk account yet.';
+
+  @override
+  String get setupKioskPick => 'Account for the tablet';
+
+  @override
+  String get setupKioskSaveFailed =>
+      'The kiosk could not be set up. Try again.';
 
   @override
   String get setupLaunchAnswers => 'Your answers';
@@ -19528,6 +19678,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupLevelsTitle => 'What your space does';
 
   @override
+  String get setupLookMore => 'Pattern, room colours and logo';
+
+  @override
   String setupMilestoneName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookable': 'Take bookings',
@@ -19538,6 +19691,33 @@ class AppLocalizationsEn extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupNewMembersEditQuestions => 'Write the questions';
+
+  @override
+  String get setupNewMembersNoQuestions =>
+      'No question: people join with their name and e-mail address.';
+
+  @override
+  String get setupNewMembersPreviewJoin =>
+      'When they ask to join, they answer:';
+
+  @override
+  String get setupNewMembersPreviewNoQuestions =>
+      'Someone asking to join gives their name and e-mail address, nothing more.';
+
+  @override
+  String setupNewMembersPreviewStart(int pct, String policy) {
+    return 'A new member starts on a $pct % subscription ($policy).';
+  }
+
+  @override
+  String get setupNewMembersQuestions => 'Questions asked when someone joins';
+
+  @override
+  String get setupNewMembersSaveFailed =>
+      'The new-member defaults could not be saved. Try again.';
 
   @override
   String get setupOnlineOpenConfig => 'Online payment settings';
@@ -19685,6 +19865,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get setupPublicPageMore =>
+      'Address, image and plans in the page editor';
+
+  @override
+  String get setupPublicPageNotPublished =>
+      'Not published: nobody outside the space sees this page.';
+
+  @override
+  String get setupPurchaseSidePreview =>
+      'Members do not see this: it stays with the people who manage the money.';
+
+  @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'members_owe_money': 'Members owe the space money (rent, passes, extras)',
@@ -19760,6 +19952,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupRightsPreviewTitle => 'What a member can do';
+
+  @override
+  String get setupServicesAdd => 'Add this service';
+
+  @override
+  String setupServicesAdded(String name) {
+    return '$name added.';
+  }
+
+  @override
+  String get setupServicesInvalid => 'Give the service a name and a price.';
+
+  @override
+  String get setupServicesMore =>
+      'VAT rate, place of supply and stock in Services';
+
+  @override
+  String get setupServicesPreviewEmpty =>
+      'No service yet: members have nothing to add to their bill.';
+
+  @override
+  String get setupServicesPreviewNote =>
+      'Members pick from this list when they add a consumption to their bill.';
+
+  @override
+  String get setupServicesSaveFailed =>
+      'The service could not be added. Try again.';
 
   @override
   String setupStateName(String key) {

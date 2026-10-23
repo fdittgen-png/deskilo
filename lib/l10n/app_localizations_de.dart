@@ -19449,6 +19449,136 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Grunddaten konnten nicht gespeichert werden. Versuchen Sie es erneut.';
 
   @override
+  String get setupGrowDocumentsApply => 'Diesen Stil verwenden';
+
+  @override
+  String get setupGrowDocumentsBuiltIn =>
+      'Ihre Rechnungen werden mit dem eingebauten Design gedruckt, mit Ihrem Namen und Ihren rechtlichen Angaben.';
+
+  @override
+  String get setupGrowDocumentsChoose =>
+      'Oder beginnen Sie mit einem dieser Stile:';
+
+  @override
+  String get setupGrowDocumentsLayout =>
+      'Ihre Rechnung hat ein positioniertes Layout: Die gedruckte Seite folgt ihm, dieses Beispiel zeigt den Inhalt.';
+
+  @override
+  String get setupGrowDocumentsOpenDesigner => 'Dokument-Designer öffnen';
+
+  @override
+  String get setupGrowDocumentsOwn =>
+      'Ihre Rechnungen werden mit Ihrem eigenen Design gedruckt.';
+
+  @override
+  String get setupGrowDocumentsReplaces =>
+      'Ein Stil ersetzt Ihr eigenes Rechnungsdesign.';
+
+  @override
+  String get setupGrowDocumentsSaved => 'Der Rechnungsstil ist gespeichert.';
+
+  @override
+  String get setupGrowLegalAskForm =>
+      'Die Rechtsform und das Stammkapital, so wie sie gedruckt werden müssen.';
+
+  @override
+  String get setupGrowLegalAskIntro =>
+      'Ihre Steuerberatung kennt diese Antworten. Fragen Sie, bevor Sie ausfüllen:';
+
+  @override
+  String get setupGrowLegalAskNumber =>
+      'Welche Nummer Ihre Rechnungen tragen müssen: die USt-IdNr. oder die Registernummer des Unternehmens.';
+
+  @override
+  String get setupGrowLegalAskRegime =>
+      'Welche Umsatzsteuerregelung für den Space gilt.';
+
+  @override
+  String get setupGrowLegalAskRegister =>
+      'Das Register, in das das Unternehmen eingetragen ist, mit seiner Nummer.';
+
+  @override
+  String get setupGrowLegalAskTitle => 'Fragen Sie Ihre Steuerberatung';
+
+  @override
+  String get setupGrowLegalLock =>
+      'Sobald die erste Rechnung ausgestellt ist, lassen sich Land und Währung nicht mehr ändern, und jede ausgestellte Rechnung behält die Angaben, mit denen sie ausgestellt wurde.';
+
+  @override
+  String get setupGrowLegalOpenFull =>
+      'Zahlungsbedingungen, E-Rechnungsadresse und alle weiteren rechtlichen Angaben';
+
+  @override
+  String get setupGrowLegalPreviewNote =>
+      'Der Kopf jeder Rechnung, so wie er gedruckt wird:';
+
+  @override
+  String get setupGrowNumberingLock =>
+      'Eine ausgestellte Rechnung behält ihre Nummer für immer, und die Reihe läuft lückenlos weiter.';
+
+  @override
+  String get setupGrowNumberingNothingTaken =>
+      'Nur eine Vorschau: Eine Nummer wird erst beim Ausstellen einer Rechnung vergeben, nie vorher.';
+
+  @override
+  String get setupGrowNumberingPreviewNote =>
+      'Ihre nächste Rechnung trägt die Nummer';
+
+  @override
+  String get setupGrowSampleBadge =>
+      'BEISPIEL: keine echte Rechnung, und es wird keine Nummer vergeben';
+
+  @override
+  String get setupGrowSampleLine => 'Mitgliedschaft';
+
+  @override
+  String get setupGrowSampleMember => 'Ein Mitglied';
+
+  @override
+  String get setupGrowSampleNumber => 'BEISPIEL';
+
+  @override
+  String get setupGrowSaveFailed =>
+      'Das konnte nicht gespeichert werden. Versuchen Sie es erneut.';
+
+  @override
+  String get setupGrowVatInForce => 'Die geltenden Sätze';
+
+  @override
+  String get setupGrowVatNoCatalogue =>
+      'Die App kennt die Sätze dieses Landes nicht. Tragen Sie Ihre unter den Umsatzsteuersätzen ein.';
+
+  @override
+  String get setupGrowVatOpen => 'Umsatzsteuersätze bearbeiten';
+
+  @override
+  String setupGrowVatPreviewNoVat(String gross) {
+    return 'Es wird keine Umsatzsteuer berechnet: eine Position über $gross wird so berechnet, wie sie ist.';
+  }
+
+  @override
+  String setupGrowVatPreviewNote(String gross) {
+    return 'Eine Beispielposition über $gross inklusive Umsatzsteuer, aufgeteilt wie auf einer Rechnung:';
+  }
+
+  @override
+  String setupGrowVatPreviewRate(String rate) {
+    return 'USt. $rate %';
+  }
+
+  @override
+  String setupGrowVatRate(String rate) {
+    return '$rate %';
+  }
+
+  @override
+  String get setupGrowVatUsualNote =>
+      'Ein Ausgangspunkt, keine Steuerberatung: Ihre Steuerberatung bestätigt, welcher Satz für Ihre Leistungen gilt.';
+
+  @override
+  String get setupGrowVatUsualTitle => 'Die üblichen Sätze Ihres Landes';
+
+  @override
   String get setupGuideAllDone =>
       'Ihr Bereich hat alles, was Sie gewählt haben.';
 
@@ -19558,6 +19688,28 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupInviteShareFailed =>
       'Der QR-Code konnte nicht geteilt werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String setupKioskCurrent(String name) {
+    return '$name betreibt den Kiosk.';
+  }
+
+  @override
+  String get setupKioskMake => 'Zum Kiosk machen';
+
+  @override
+  String get setupKioskNoCandidate =>
+      'Laden Sie zuerst das Konto des Tablets ein: Es tritt wie ein Mitglied bei und wird dann hier zum Kiosk.';
+
+  @override
+  String get setupKioskNone => 'Noch kein Kiosk-Konto.';
+
+  @override
+  String get setupKioskPick => 'Konto für das Tablet';
+
+  @override
+  String get setupKioskSaveFailed =>
+      'Der Kiosk konnte nicht eingerichtet werden. Versuchen Sie es erneut.';
 
   @override
   String get setupLaunchAnswers => 'Ihre Antworten';
@@ -19726,6 +19878,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLevelsTitle => 'Was Ihr Raum tut';
 
   @override
+  String get setupLookMore => 'Muster, Raumfarben und Logo';
+
+  @override
   String setupMilestoneName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookable': 'Buchungen annehmen',
@@ -19736,6 +19891,33 @@ class AppLocalizationsDe extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupNewMembersEditQuestions => 'Fragen verfassen';
+
+  @override
+  String get setupNewMembersNoQuestions =>
+      'Keine Fragen: Man tritt mit Name und E-Mail-Adresse bei.';
+
+  @override
+  String get setupNewMembersPreviewJoin =>
+      'Bei der Beitrittsanfrage beantwortet die Person:';
+
+  @override
+  String get setupNewMembersPreviewNoQuestions =>
+      'Wer beitreten möchte, gibt Name und E-Mail-Adresse an, sonst nichts.';
+
+  @override
+  String setupNewMembersPreviewStart(int pct, String policy) {
+    return 'Ein neues Mitglied beginnt mit einem Abonnement zu $pct % ($policy).';
+  }
+
+  @override
+  String get setupNewMembersQuestions => 'Fragen beim Beitritt';
+
+  @override
+  String get setupNewMembersSaveFailed =>
+      'Die Vorgaben für neue Mitglieder konnten nicht gespeichert werden. Versuchen Sie es erneut.';
 
   @override
   String get setupOnlineOpenConfig => 'Einstellungen für Online-Zahlungen';
@@ -19885,6 +20067,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get setupPublicPageMore => 'Adresse, Bild und Tarife im Seiteneditor';
+
+  @override
+  String get setupPublicPageNotPublished =>
+      'Nicht veröffentlicht: Niemand außerhalb des Bereichs sieht diese Seite.';
+
+  @override
+  String get setupPurchaseSidePreview =>
+      'Mitglieder sehen davon nichts: Es bleibt bei denen, die das Geld verwalten.';
+
+  @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'members_owe_money':
@@ -19962,6 +20155,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupRightsPreviewTitle => 'Was ein Mitglied tun kann';
+
+  @override
+  String get setupServicesAdd => 'Diesen Service hinzufügen';
+
+  @override
+  String setupServicesAdded(String name) {
+    return '$name hinzugefügt.';
+  }
+
+  @override
+  String get setupServicesInvalid =>
+      'Geben Sie dem Service einen Namen und einen Preis.';
+
+  @override
+  String get setupServicesMore =>
+      'MwSt-Satz, Leistungsort und Bestand unter Services';
+
+  @override
+  String get setupServicesPreviewEmpty =>
+      'Noch kein Service: Mitglieder können ihrer Rechnung nichts hinzufügen.';
+
+  @override
+  String get setupServicesPreviewNote =>
+      'Aus dieser Liste wählen Mitglieder, wenn sie ihrer Rechnung einen Verbrauch hinzufügen.';
+
+  @override
+  String get setupServicesSaveFailed =>
+      'Der Service konnte nicht hinzugefügt werden. Versuchen Sie es erneut.';
 
   @override
   String setupStateName(String key) {

@@ -22286,6 +22286,162 @@
   "@setupBasicsSaveFailed": {
     "description": "#2870 setup steps: setupBasicsSaveFailed"
   },
+  "setupGrowDocumentsApply": "Use this look",
+  "@setupGrowDocumentsApply": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsApply"
+  },
+  "setupGrowDocumentsBuiltIn": "Your invoices are printed with the built-in design, under your name and legal details.",
+  "@setupGrowDocumentsBuiltIn": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsBuiltIn"
+  },
+  "setupGrowDocumentsChoose": "Or start from one of these looks:",
+  "@setupGrowDocumentsChoose": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsChoose"
+  },
+  "setupGrowDocumentsLayout": "Your invoice has a positioned layout: the printed page follows it, while this sample shows its content.",
+  "@setupGrowDocumentsLayout": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsLayout"
+  },
+  "setupGrowDocumentsOpenDesigner": "Open the document designer",
+  "@setupGrowDocumentsOpenDesigner": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsOpenDesigner"
+  },
+  "setupGrowDocumentsOwn": "Your invoices are printed with your own design.",
+  "@setupGrowDocumentsOwn": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsOwn"
+  },
+  "setupGrowDocumentsReplaces": "Choosing a look replaces your own invoice design.",
+  "@setupGrowDocumentsReplaces": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsReplaces"
+  },
+  "setupGrowDocumentsSaved": "The invoice look is saved.",
+  "@setupGrowDocumentsSaved": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsSaved"
+  },
+  "setupGrowLegalAskForm": "The legal form and the share capital, as they must be printed.",
+  "@setupGrowLegalAskForm": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskForm"
+  },
+  "setupGrowLegalAskIntro": "Your accountant knows these answers. Ask before you fill them in:",
+  "@setupGrowLegalAskIntro": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskIntro"
+  },
+  "setupGrowLegalAskNumber": "Which number your invoices must carry: the VAT number or the company registration number.",
+  "@setupGrowLegalAskNumber": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskNumber"
+  },
+  "setupGrowLegalAskRegime": "Which VAT regime applies to the space.",
+  "@setupGrowLegalAskRegime": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskRegime"
+  },
+  "setupGrowLegalAskRegister": "The register the business is entered in, with its number.",
+  "@setupGrowLegalAskRegister": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskRegister"
+  },
+  "setupGrowLegalAskTitle": "Ask your accountant",
+  "@setupGrowLegalAskTitle": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskTitle"
+  },
+  "setupGrowLegalLock": "Once the first invoice is issued, the country and the currency can no longer change, and every issued invoice keeps the identity it was issued with.",
+  "@setupGrowLegalLock": {
+    "description": "#2875 setup grow steps: setupGrowLegalLock"
+  },
+  "setupGrowLegalOpenFull": "Payment clauses, e-invoicing address and every other legal detail",
+  "@setupGrowLegalOpenFull": {
+    "description": "#2875 setup grow steps: setupGrowLegalOpenFull"
+  },
+  "setupGrowLegalPreviewNote": "The top of every invoice, as it is printed:",
+  "@setupGrowLegalPreviewNote": {
+    "description": "#2875 setup grow steps: setupGrowLegalPreviewNote"
+  },
+  "setupGrowNumberingLock": "An issued invoice keeps its number for good, and the series continues without gaps.",
+  "@setupGrowNumberingLock": {
+    "description": "#2875 setup grow steps: setupGrowNumberingLock"
+  },
+  "setupGrowNumberingNothingTaken": "A preview only: a number is taken when an invoice is issued, never before.",
+  "@setupGrowNumberingNothingTaken": {
+    "description": "#2875 setup grow steps: setupGrowNumberingNothingTaken"
+  },
+  "setupGrowNumberingPreviewNote": "Your next invoice will carry the number",
+  "@setupGrowNumberingPreviewNote": {
+    "description": "#2875 setup grow steps: setupGrowNumberingPreviewNote"
+  },
+  "setupGrowSampleBadge": "SAMPLE: not a real invoice, and no number is taken",
+  "@setupGrowSampleBadge": {
+    "description": "#2875 setup grow steps: setupGrowSampleBadge"
+  },
+  "setupGrowSampleLine": "Membership",
+  "@setupGrowSampleLine": {
+    "description": "#2875 setup grow steps: setupGrowSampleLine"
+  },
+  "setupGrowSampleMember": "A member",
+  "@setupGrowSampleMember": {
+    "description": "#2875 setup grow steps: setupGrowSampleMember"
+  },
+  "setupGrowSampleNumber": "SAMPLE",
+  "@setupGrowSampleNumber": {
+    "description": "#2875 setup grow steps: setupGrowSampleNumber"
+  },
+  "setupGrowSaveFailed": "This could not be saved. Try again.",
+  "@setupGrowSaveFailed": {
+    "description": "#2875 setup grow steps: setupGrowSaveFailed"
+  },
+  "setupGrowVatInForce": "The rates in force",
+  "@setupGrowVatInForce": {
+    "description": "#2875 setup grow steps: setupGrowVatInForce"
+  },
+  "setupGrowVatNoCatalogue": "The app does not know this country's rates. Enter yours in the VAT rates.",
+  "@setupGrowVatNoCatalogue": {
+    "description": "#2875 setup grow steps: setupGrowVatNoCatalogue"
+  },
+  "setupGrowVatOpen": "Edit the VAT rates",
+  "@setupGrowVatOpen": {
+    "description": "#2875 setup grow steps: setupGrowVatOpen"
+  },
+  "setupGrowVatPreviewNoVat": "No VAT is charged: a line of {gross} is invoiced as it is.",
+  "@setupGrowVatPreviewNoVat": {
+    "description": "#2875 setup grow steps: setupGrowVatPreviewNoVat",
+    "placeholders": {
+      "gross": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowVatPreviewNote": "A sample line of {gross}, VAT included, split the way an invoice splits it:",
+  "@setupGrowVatPreviewNote": {
+    "description": "#2875 setup grow steps: setupGrowVatPreviewNote",
+    "placeholders": {
+      "gross": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowVatPreviewRate": "VAT {rate} %",
+  "@setupGrowVatPreviewRate": {
+    "description": "#2875 setup grow steps: setupGrowVatPreviewRate",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowVatRate": "{rate} %",
+  "@setupGrowVatRate": {
+    "description": "#2875 setup grow steps: setupGrowVatRate",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowVatUsualNote": "A starting point, not tax advice: your accountant confirms which rate applies to what you sell.",
+  "@setupGrowVatUsualNote": {
+    "description": "#2875 setup grow steps: setupGrowVatUsualNote"
+  },
+  "setupGrowVatUsualTitle": "Your country's usual rates",
+  "@setupGrowVatUsualTitle": {
+    "description": "#2875 setup grow steps: setupGrowVatUsualTitle"
+  },
   "setupGuideAllDone": "Your space has everything you chose.",
   "@setupGuideAllDone": {
     "description": "#2869 setup guide: setupGuideAllDone"
@@ -22449,6 +22605,35 @@
   "setupInviteShareFailed": "The QR code could not be shared. Try again.",
   "@setupInviteShareFailed": {
     "description": "#2870 setup steps: setupInviteShareFailed"
+  },
+  "setupKioskCurrent": "{name} runs the kiosk.",
+  "@setupKioskCurrent": {
+    "description": "#2871 setup run steps: setupKioskCurrent",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "setupKioskMake": "Make it the kiosk",
+  "@setupKioskMake": {
+    "description": "#2871 setup run steps: setupKioskMake"
+  },
+  "setupKioskNoCandidate": "Invite the tablet’s account first: it joins like a member, then becomes the kiosk here.",
+  "@setupKioskNoCandidate": {
+    "description": "#2871 setup run steps: setupKioskNoCandidate"
+  },
+  "setupKioskNone": "No kiosk account yet.",
+  "@setupKioskNone": {
+    "description": "#2871 setup run steps: setupKioskNone"
+  },
+  "setupKioskPick": "Account for the tablet",
+  "@setupKioskPick": {
+    "description": "#2871 setup run steps: setupKioskPick"
+  },
+  "setupKioskSaveFailed": "The kiosk could not be set up. Try again.",
+  "@setupKioskSaveFailed": {
+    "description": "#2871 setup run steps: setupKioskSaveFailed"
   },
   "setupLaunchAnswers": "Your answers",
   "@setupLaunchAnswers": {
@@ -22631,6 +22816,10 @@
   "@setupLevelsTitle": {
     "description": "#2868 setup levels: setupLevelsTitle"
   },
+  "setupLookMore": "Pattern, room colours and logo",
+  "@setupLookMore": {
+    "description": "#2871 setup run steps: setupLookMore"
+  },
   "setupMilestoneName": "{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}",
   "@setupMilestoneName": {
     "description": "#2869 setup guide: setupMilestoneName",
@@ -22639,6 +22828,42 @@
         "type": "String"
       }
     }
+  },
+  "setupNewMembersEditQuestions": "Write the questions",
+  "@setupNewMembersEditQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersEditQuestions"
+  },
+  "setupNewMembersNoQuestions": "No question: people join with their name and e-mail address.",
+  "@setupNewMembersNoQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersNoQuestions"
+  },
+  "setupNewMembersPreviewJoin": "When they ask to join, they answer:",
+  "@setupNewMembersPreviewJoin": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewJoin"
+  },
+  "setupNewMembersPreviewNoQuestions": "Someone asking to join gives their name and e-mail address, nothing more.",
+  "@setupNewMembersPreviewNoQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewNoQuestions"
+  },
+  "setupNewMembersPreviewStart": "A new member starts on a {pct} % subscription ({policy}).",
+  "@setupNewMembersPreviewStart": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewStart",
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      },
+      "policy": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNewMembersQuestions": "Questions asked when someone joins",
+  "@setupNewMembersQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersQuestions"
+  },
+  "setupNewMembersSaveFailed": "The new-member defaults could not be saved. Try again.",
+  "@setupNewMembersSaveFailed": {
+    "description": "#2871 setup run steps: setupNewMembersSaveFailed"
   },
   "setupOnlineOpenConfig": "Online payment settings",
   "@setupOnlineOpenConfig": {
@@ -22808,6 +23033,18 @@
       }
     }
   },
+  "setupPublicPageMore": "Address, image and plans in the page editor",
+  "@setupPublicPageMore": {
+    "description": "#2871 setup run steps: setupPublicPageMore"
+  },
+  "setupPublicPageNotPublished": "Not published: nobody outside the space sees this page.",
+  "@setupPublicPageNotPublished": {
+    "description": "#2871 setup run steps: setupPublicPageNotPublished"
+  },
+  "setupPurchaseSidePreview": "Members do not see this: it stays with the people who manage the money.",
+  "@setupPurchaseSidePreview": {
+    "description": "#2871 setup run steps: setupPurchaseSidePreview"
+  },
   "setupQuestion": "{key, select, members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}",
   "@setupQuestion": {
     "description": "#2868 setup levels: setupQuestion",
@@ -22861,6 +23098,39 @@
   "setupRightsPreviewTitle": "What a member can do",
   "@setupRightsPreviewTitle": {
     "description": "#2870 setup steps: setupRightsPreviewTitle"
+  },
+  "setupServicesAdd": "Add this service",
+  "@setupServicesAdd": {
+    "description": "#2871 setup run steps: setupServicesAdd"
+  },
+  "setupServicesAdded": "{name} added.",
+  "@setupServicesAdded": {
+    "description": "#2871 setup run steps: setupServicesAdded",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "setupServicesInvalid": "Give the service a name and a price.",
+  "@setupServicesInvalid": {
+    "description": "#2871 setup run steps: setupServicesInvalid"
+  },
+  "setupServicesMore": "VAT rate, place of supply and stock in Services",
+  "@setupServicesMore": {
+    "description": "#2871 setup run steps: setupServicesMore"
+  },
+  "setupServicesPreviewEmpty": "No service yet: members have nothing to add to their bill.",
+  "@setupServicesPreviewEmpty": {
+    "description": "#2871 setup run steps: setupServicesPreviewEmpty"
+  },
+  "setupServicesPreviewNote": "Members pick from this list when they add a consumption to their bill.",
+  "@setupServicesPreviewNote": {
+    "description": "#2871 setup run steps: setupServicesPreviewNote"
+  },
+  "setupServicesSaveFailed": "The service could not be added. Try again.",
+  "@setupServicesSaveFailed": {
+    "description": "#2871 setup run steps: setupServicesSaveFailed"
   },
   "setupStateName": "{key, select, ready{Done} needsConfiguration{To do} blocked{Waits for another step} needsOperator{Your operator acts} notApplicable{Not used} deferred{Set aside} unknown{Unknown} other{{key}}}",
   "@setupStateName": {

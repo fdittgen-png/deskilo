@@ -1,0 +1,158 @@
+{
+  "setupGrowSaveFailed": "This could not be saved. Try again.",
+  "@setupGrowSaveFailed": {
+    "description": "#2875 setup grow steps: setupGrowSaveFailed"
+  },
+  "setupGrowLegalAskTitle": "Ask your accountant",
+  "@setupGrowLegalAskTitle": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskTitle"
+  },
+  "setupGrowLegalAskIntro": "Your accountant knows these answers. Ask before you fill them in:",
+  "@setupGrowLegalAskIntro": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskIntro"
+  },
+  "setupGrowLegalAskRegime": "Which VAT regime applies to the space.",
+  "@setupGrowLegalAskRegime": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskRegime"
+  },
+  "setupGrowLegalAskNumber": "Which number your invoices must carry: the VAT number or the company registration number.",
+  "@setupGrowLegalAskNumber": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskNumber"
+  },
+  "setupGrowLegalAskForm": "The legal form and the share capital, as they must be printed.",
+  "@setupGrowLegalAskForm": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskForm"
+  },
+  "setupGrowLegalAskRegister": "The register the business is entered in, with its number.",
+  "@setupGrowLegalAskRegister": {
+    "description": "#2875 setup grow steps: setupGrowLegalAskRegister"
+  },
+  "setupGrowLegalLock": "Once the first invoice is issued, the country and the currency can no longer change, and every issued invoice keeps the identity it was issued with.",
+  "@setupGrowLegalLock": {
+    "description": "#2875 setup grow steps: setupGrowLegalLock"
+  },
+  "setupGrowLegalOpenFull": "Payment clauses, e-invoicing address and every other legal detail",
+  "@setupGrowLegalOpenFull": {
+    "description": "#2875 setup grow steps: setupGrowLegalOpenFull"
+  },
+  "setupGrowLegalPreviewNote": "The top of every invoice, as it is printed:",
+  "@setupGrowLegalPreviewNote": {
+    "description": "#2875 setup grow steps: setupGrowLegalPreviewNote"
+  },
+  "setupGrowVatInForce": "The rates in force",
+  "@setupGrowVatInForce": {
+    "description": "#2875 setup grow steps: setupGrowVatInForce"
+  },
+  "setupGrowVatRate": "{rate} %",
+  "@setupGrowVatRate": {
+    "description": "#2875 setup grow steps: setupGrowVatRate",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowVatUsualTitle": "Your country's usual rates",
+  "@setupGrowVatUsualTitle": {
+    "description": "#2875 setup grow steps: setupGrowVatUsualTitle"
+  },
+  "setupGrowVatUsualNote": "A starting point, not tax advice: your accountant confirms which rate applies to what you sell.",
+  "@setupGrowVatUsualNote": {
+    "description": "#2875 setup grow steps: setupGrowVatUsualNote"
+  },
+  "setupGrowVatNoCatalogue": "The app does not know this country's rates. Enter yours in the VAT rates.",
+  "@setupGrowVatNoCatalogue": {
+    "description": "#2875 setup grow steps: setupGrowVatNoCatalogue"
+  },
+  "setupGrowVatOpen": "Edit the VAT rates",
+  "@setupGrowVatOpen": {
+    "description": "#2875 setup grow steps: setupGrowVatOpen"
+  },
+  "setupGrowVatPreviewNote": "A sample line of {gross}, VAT included, split the way an invoice splits it:",
+  "@setupGrowVatPreviewNote": {
+    "description": "#2875 setup grow steps: setupGrowVatPreviewNote",
+    "placeholders": {
+      "gross": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowVatPreviewNoVat": "No VAT is charged: a line of {gross} is invoiced as it is.",
+  "@setupGrowVatPreviewNoVat": {
+    "description": "#2875 setup grow steps: setupGrowVatPreviewNoVat",
+    "placeholders": {
+      "gross": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowVatPreviewRate": "VAT {rate} %",
+  "@setupGrowVatPreviewRate": {
+    "description": "#2875 setup grow steps: setupGrowVatPreviewRate",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "setupGrowNumberingLock": "An issued invoice keeps its number for good, and the series continues without gaps.",
+  "@setupGrowNumberingLock": {
+    "description": "#2875 setup grow steps: setupGrowNumberingLock"
+  },
+  "setupGrowNumberingPreviewNote": "Your next invoice will carry the number",
+  "@setupGrowNumberingPreviewNote": {
+    "description": "#2875 setup grow steps: setupGrowNumberingPreviewNote"
+  },
+  "setupGrowNumberingNothingTaken": "A preview only: a number is taken when an invoice is issued, never before.",
+  "@setupGrowNumberingNothingTaken": {
+    "description": "#2875 setup grow steps: setupGrowNumberingNothingTaken"
+  },
+  "setupGrowDocumentsOwn": "Your invoices are printed with your own design.",
+  "@setupGrowDocumentsOwn": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsOwn"
+  },
+  "setupGrowDocumentsBuiltIn": "Your invoices are printed with the built-in design, under your name and legal details.",
+  "@setupGrowDocumentsBuiltIn": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsBuiltIn"
+  },
+  "setupGrowDocumentsLayout": "Your invoice has a positioned layout: the printed page follows it, while this sample shows its content.",
+  "@setupGrowDocumentsLayout": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsLayout"
+  },
+  "setupGrowDocumentsChoose": "Or start from one of these looks:",
+  "@setupGrowDocumentsChoose": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsChoose"
+  },
+  "setupGrowDocumentsReplaces": "Choosing a look replaces your own invoice design.",
+  "@setupGrowDocumentsReplaces": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsReplaces"
+  },
+  "setupGrowDocumentsApply": "Use this look",
+  "@setupGrowDocumentsApply": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsApply"
+  },
+  "setupGrowDocumentsSaved": "The invoice look is saved.",
+  "@setupGrowDocumentsSaved": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsSaved"
+  },
+  "setupGrowDocumentsOpenDesigner": "Open the document designer",
+  "@setupGrowDocumentsOpenDesigner": {
+    "description": "#2875 setup grow steps: setupGrowDocumentsOpenDesigner"
+  },
+  "setupGrowSampleBadge": "SAMPLE: not a real invoice, and no number is taken",
+  "@setupGrowSampleBadge": {
+    "description": "#2875 setup grow steps: setupGrowSampleBadge"
+  },
+  "setupGrowSampleNumber": "SAMPLE",
+  "@setupGrowSampleNumber": {
+    "description": "#2875 setup grow steps: setupGrowSampleNumber"
+  },
+  "setupGrowSampleMember": "A member",
+  "@setupGrowSampleMember": {
+    "description": "#2875 setup grow steps: setupGrowSampleMember"
+  },
+  "setupGrowSampleLine": "Membership",
+  "@setupGrowSampleLine": {
+    "description": "#2875 setup grow steps: setupGrowSampleLine"
+  }
+}

@@ -19,9 +19,12 @@ import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/setup_basics_step.dart';
+import '../widgets/setup_grow_pages.dart';
 import '../widgets/setup_hours_step.dart';
 import '../widgets/setup_invite_step.dart';
+import '../widgets/setup_look_step.dart';
 import '../widgets/setup_member_rights_step.dart';
+import '../widgets/setup_new_members_step.dart';
 import '../widgets/setup_run_pages.dart';
 
 class SetupStepScreen extends ConsumerWidget {
@@ -30,6 +33,7 @@ class SetupStepScreen extends ConsumerWidget {
     required this.stepId,
     this.placesStep,
     this.runPages,
+    this.growPages,
   });
 
   /// The catalogue id of the step (`setup_steps.dart`).
@@ -43,6 +47,9 @@ class SetupStepScreen extends ConsumerWidget {
   /// The Run steps' pages, handed in by the router for the same reason;
   /// without them those steps open their own screens.
   final SetupRunPages? runPages;
+
+  /// The Grow steps' pages, handed in by the router for the same reason.
+  final SetupGrowPages? growPages;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +69,12 @@ class SetupStepScreen extends ConsumerWidget {
     },
     'member_rights' => SetupMemberRightsStep(workspace: workspace),
     'invite' => SetupInviteStep(workspace: workspace),
-    _ => runPages?.pageFor(stepId, workspace) ?? _Elsewhere(stepId: stepId),
+    'new_members' => SetupNewMembersStep(workspace: workspace),
+    'look' => SetupLookStep(workspace: workspace),
+    _ =>
+      runPages?.pageFor(stepId, workspace) ??
+          growPages?.pageFor(stepId, workspace) ??
+          _Elsewhere(stepId: stepId),
   };
 }
 

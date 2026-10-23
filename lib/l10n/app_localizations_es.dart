@@ -19417,6 +19417,136 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se han podido guardar los datos básicos. Inténtelo de nuevo.';
 
   @override
+  String get setupGrowDocumentsApply => 'Usar este estilo';
+
+  @override
+  String get setupGrowDocumentsBuiltIn =>
+      'Sus facturas se imprimen con el diseño integrado, con su nombre y sus datos legales.';
+
+  @override
+  String get setupGrowDocumentsChoose => 'O empiece con uno de estos estilos:';
+
+  @override
+  String get setupGrowDocumentsLayout =>
+      'Su factura tiene un diseño posicionado: la página impresa lo sigue, este ejemplo muestra su contenido.';
+
+  @override
+  String get setupGrowDocumentsOpenDesigner => 'Abrir el editor de documentos';
+
+  @override
+  String get setupGrowDocumentsOwn =>
+      'Sus facturas se imprimen con su propio diseño.';
+
+  @override
+  String get setupGrowDocumentsReplaces =>
+      'Elegir un estilo sustituye su propio diseño de factura.';
+
+  @override
+  String get setupGrowDocumentsSaved =>
+      'El estilo de las facturas se ha guardado.';
+
+  @override
+  String get setupGrowLegalAskForm =>
+      'La forma jurídica y el capital social, tal como deben imprimirse.';
+
+  @override
+  String get setupGrowLegalAskIntro =>
+      'Su asesor conoce estas respuestas. Pregúntele antes de rellenarlas:';
+
+  @override
+  String get setupGrowLegalAskNumber =>
+      'Qué número deben llevar sus facturas: el número de IVA o el número de registro de la empresa.';
+
+  @override
+  String get setupGrowLegalAskRegime =>
+      'Qué régimen de IVA se aplica al espacio.';
+
+  @override
+  String get setupGrowLegalAskRegister =>
+      'El registro en el que está inscrita la empresa, con su número.';
+
+  @override
+  String get setupGrowLegalAskTitle => 'Pregunte a su asesor contable';
+
+  @override
+  String get setupGrowLegalLock =>
+      'En cuanto se emite la primera factura, el país y la moneda ya no pueden cambiar, y cada factura emitida conserva la identidad con la que se emitió.';
+
+  @override
+  String get setupGrowLegalOpenFull =>
+      'Cláusulas de pago, dirección de facturación electrónica y todos los demás datos legales';
+
+  @override
+  String get setupGrowLegalPreviewNote =>
+      'La parte superior de cada factura, tal como se imprime:';
+
+  @override
+  String get setupGrowNumberingLock =>
+      'Una factura emitida conserva su número para siempre, y la serie continúa sin huecos.';
+
+  @override
+  String get setupGrowNumberingNothingTaken =>
+      'Solo una vista previa: un número se toma al emitir una factura, nunca antes.';
+
+  @override
+  String get setupGrowNumberingPreviewNote =>
+      'Su próxima factura llevará el número';
+
+  @override
+  String get setupGrowSampleBadge =>
+      'EJEMPLO: no es una factura real y no se toma ningún número';
+
+  @override
+  String get setupGrowSampleLine => 'Membresía';
+
+  @override
+  String get setupGrowSampleMember => 'Un miembro';
+
+  @override
+  String get setupGrowSampleNumber => 'EJEMPLO';
+
+  @override
+  String get setupGrowSaveFailed =>
+      'No se ha podido guardar. Inténtelo de nuevo.';
+
+  @override
+  String get setupGrowVatInForce => 'Los tipos vigentes';
+
+  @override
+  String get setupGrowVatNoCatalogue =>
+      'La aplicación no conoce los tipos de este país. Introduzca los suyos en los tipos de IVA.';
+
+  @override
+  String get setupGrowVatOpen => 'Editar los tipos de IVA';
+
+  @override
+  String setupGrowVatPreviewNoVat(String gross) {
+    return 'No se cobra IVA: una línea de $gross se factura tal cual.';
+  }
+
+  @override
+  String setupGrowVatPreviewNote(String gross) {
+    return 'Una línea de ejemplo de $gross, IVA incluido, desglosada como en una factura:';
+  }
+
+  @override
+  String setupGrowVatPreviewRate(String rate) {
+    return 'IVA $rate %';
+  }
+
+  @override
+  String setupGrowVatRate(String rate) {
+    return '$rate %';
+  }
+
+  @override
+  String get setupGrowVatUsualNote =>
+      'Un punto de partida, no un consejo fiscal: su asesor confirma qué tipo se aplica a lo que usted vende.';
+
+  @override
+  String get setupGrowVatUsualTitle => 'Los tipos habituales de su país';
+
+  @override
   String get setupGuideAllDone => 'Su espacio tiene todo lo que eligió.';
 
   @override
@@ -19524,6 +19654,28 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupInviteShareFailed =>
       'No se pudo compartir el código QR. Inténtelo de nuevo.';
+
+  @override
+  String setupKioskCurrent(String name) {
+    return '$name es el quiosco.';
+  }
+
+  @override
+  String get setupKioskMake => 'Convertirla en quiosco';
+
+  @override
+  String get setupKioskNoCandidate =>
+      'Invite primero la cuenta de la tableta: se une como un miembro y aquí se convierte en el quiosco.';
+
+  @override
+  String get setupKioskNone => 'Todavía no hay ninguna cuenta de quiosco.';
+
+  @override
+  String get setupKioskPick => 'Cuenta de la tableta';
+
+  @override
+  String get setupKioskSaveFailed =>
+      'No se ha podido configurar el quiosco. Inténtelo de nuevo.';
 
   @override
   String get setupLaunchAnswers => 'Sus respuestas';
@@ -19689,6 +19841,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupLevelsTitle => 'Lo que hace su espacio';
 
   @override
+  String get setupLookMore => 'Motivo, colores de las salas y logotipo';
+
+  @override
   String setupMilestoneName(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'bookable': 'Aceptar reservas',
@@ -19699,6 +19854,33 @@ class AppLocalizationsEs extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get setupNewMembersEditQuestions => 'Redactar las preguntas';
+
+  @override
+  String get setupNewMembersNoQuestions =>
+      'Ninguna pregunta: se une con su nombre y su dirección de correo.';
+
+  @override
+  String get setupNewMembersPreviewJoin =>
+      'Al pedir unirse, la persona responde a:';
+
+  @override
+  String get setupNewMembersPreviewNoQuestions =>
+      'Quien pide unirse indica su nombre y su dirección de correo, nada más.';
+
+  @override
+  String setupNewMembersPreviewStart(int pct, String policy) {
+    return 'Un nuevo miembro empieza con una suscripción al $pct % ($policy).';
+  }
+
+  @override
+  String get setupNewMembersQuestions => 'Preguntas al unirse';
+
+  @override
+  String get setupNewMembersSaveFailed =>
+      'No se han podido guardar los valores de los nuevos miembros. Inténtelo de nuevo.';
 
   @override
   String get setupOnlineOpenConfig => 'Ajustes de pago en línea';
@@ -19847,6 +20029,18 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get setupPublicPageMore =>
+      'Dirección, imagen y planes en el editor de la página';
+
+  @override
+  String get setupPublicPageNotPublished =>
+      'No publicada: nadie fuera del espacio ve esta página.';
+
+  @override
+  String get setupPurchaseSidePreview =>
+      'Los miembros no ven nada de esto: queda en manos de quienes gestionan el dinero.';
+
+  @override
   String setupQuestion(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
       'members_owe_money':
@@ -19924,6 +20118,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupRightsPreviewTitle => 'Lo que puede hacer un miembro';
+
+  @override
+  String get setupServicesAdd => 'Añadir este servicio';
+
+  @override
+  String setupServicesAdded(String name) {
+    return '$name añadido.';
+  }
+
+  @override
+  String get setupServicesInvalid =>
+      'Indique un nombre y un precio para el servicio.';
+
+  @override
+  String get setupServicesMore =>
+      'Tipo de IVA, lugar de prestación y existencias en Servicios';
+
+  @override
+  String get setupServicesPreviewEmpty =>
+      'Todavía no hay servicios: los miembros no tienen nada que añadir a su factura.';
+
+  @override
+  String get setupServicesPreviewNote =>
+      'Los miembros eligen en esta lista cuando añaden un consumo a su factura.';
+
+  @override
+  String get setupServicesSaveFailed =>
+      'No se ha podido añadir el servicio. Inténtelo de nuevo.';
 
   @override
   String setupStateName(String key) {

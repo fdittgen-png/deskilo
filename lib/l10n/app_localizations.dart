@@ -32622,6 +32622,210 @@ abstract class AppLocalizations {
   /// **'The basics could not be saved. Try again.'**
   String get setupBasicsSaveFailed;
 
+  /// #2875 setup grow steps: setupGrowDocumentsApply
+  ///
+  /// In en, this message translates to:
+  /// **'Use this look'**
+  String get setupGrowDocumentsApply;
+
+  /// #2875 setup grow steps: setupGrowDocumentsBuiltIn
+  ///
+  /// In en, this message translates to:
+  /// **'Your invoices are printed with the built-in design, under your name and legal details.'**
+  String get setupGrowDocumentsBuiltIn;
+
+  /// #2875 setup grow steps: setupGrowDocumentsChoose
+  ///
+  /// In en, this message translates to:
+  /// **'Or start from one of these looks:'**
+  String get setupGrowDocumentsChoose;
+
+  /// #2875 setup grow steps: setupGrowDocumentsLayout
+  ///
+  /// In en, this message translates to:
+  /// **'Your invoice has a positioned layout: the printed page follows it, while this sample shows its content.'**
+  String get setupGrowDocumentsLayout;
+
+  /// #2875 setup grow steps: setupGrowDocumentsOpenDesigner
+  ///
+  /// In en, this message translates to:
+  /// **'Open the document designer'**
+  String get setupGrowDocumentsOpenDesigner;
+
+  /// #2875 setup grow steps: setupGrowDocumentsOwn
+  ///
+  /// In en, this message translates to:
+  /// **'Your invoices are printed with your own design.'**
+  String get setupGrowDocumentsOwn;
+
+  /// #2875 setup grow steps: setupGrowDocumentsReplaces
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing a look replaces your own invoice design.'**
+  String get setupGrowDocumentsReplaces;
+
+  /// #2875 setup grow steps: setupGrowDocumentsSaved
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice look is saved.'**
+  String get setupGrowDocumentsSaved;
+
+  /// #2875 setup grow steps: setupGrowLegalAskForm
+  ///
+  /// In en, this message translates to:
+  /// **'The legal form and the share capital, as they must be printed.'**
+  String get setupGrowLegalAskForm;
+
+  /// #2875 setup grow steps: setupGrowLegalAskIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Your accountant knows these answers. Ask before you fill them in:'**
+  String get setupGrowLegalAskIntro;
+
+  /// #2875 setup grow steps: setupGrowLegalAskNumber
+  ///
+  /// In en, this message translates to:
+  /// **'Which number your invoices must carry: the VAT number or the company registration number.'**
+  String get setupGrowLegalAskNumber;
+
+  /// #2875 setup grow steps: setupGrowLegalAskRegime
+  ///
+  /// In en, this message translates to:
+  /// **'Which VAT regime applies to the space.'**
+  String get setupGrowLegalAskRegime;
+
+  /// #2875 setup grow steps: setupGrowLegalAskRegister
+  ///
+  /// In en, this message translates to:
+  /// **'The register the business is entered in, with its number.'**
+  String get setupGrowLegalAskRegister;
+
+  /// #2875 setup grow steps: setupGrowLegalAskTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Ask your accountant'**
+  String get setupGrowLegalAskTitle;
+
+  /// #2875 setup grow steps: setupGrowLegalLock
+  ///
+  /// In en, this message translates to:
+  /// **'Once the first invoice is issued, the country and the currency can no longer change, and every issued invoice keeps the identity it was issued with.'**
+  String get setupGrowLegalLock;
+
+  /// #2875 setup grow steps: setupGrowLegalOpenFull
+  ///
+  /// In en, this message translates to:
+  /// **'Payment clauses, e-invoicing address and every other legal detail'**
+  String get setupGrowLegalOpenFull;
+
+  /// #2875 setup grow steps: setupGrowLegalPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'The top of every invoice, as it is printed:'**
+  String get setupGrowLegalPreviewNote;
+
+  /// #2875 setup grow steps: setupGrowNumberingLock
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice keeps its number for good, and the series continues without gaps.'**
+  String get setupGrowNumberingLock;
+
+  /// #2875 setup grow steps: setupGrowNumberingNothingTaken
+  ///
+  /// In en, this message translates to:
+  /// **'A preview only: a number is taken when an invoice is issued, never before.'**
+  String get setupGrowNumberingNothingTaken;
+
+  /// #2875 setup grow steps: setupGrowNumberingPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'Your next invoice will carry the number'**
+  String get setupGrowNumberingPreviewNote;
+
+  /// #2875 setup grow steps: setupGrowSampleBadge
+  ///
+  /// In en, this message translates to:
+  /// **'SAMPLE: not a real invoice, and no number is taken'**
+  String get setupGrowSampleBadge;
+
+  /// #2875 setup grow steps: setupGrowSampleLine
+  ///
+  /// In en, this message translates to:
+  /// **'Membership'**
+  String get setupGrowSampleLine;
+
+  /// #2875 setup grow steps: setupGrowSampleMember
+  ///
+  /// In en, this message translates to:
+  /// **'A member'**
+  String get setupGrowSampleMember;
+
+  /// #2875 setup grow steps: setupGrowSampleNumber
+  ///
+  /// In en, this message translates to:
+  /// **'SAMPLE'**
+  String get setupGrowSampleNumber;
+
+  /// #2875 setup grow steps: setupGrowSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'This could not be saved. Try again.'**
+  String get setupGrowSaveFailed;
+
+  /// #2875 setup grow steps: setupGrowVatInForce
+  ///
+  /// In en, this message translates to:
+  /// **'The rates in force'**
+  String get setupGrowVatInForce;
+
+  /// #2875 setup grow steps: setupGrowVatNoCatalogue
+  ///
+  /// In en, this message translates to:
+  /// **'The app does not know this country\'s rates. Enter yours in the VAT rates.'**
+  String get setupGrowVatNoCatalogue;
+
+  /// #2875 setup grow steps: setupGrowVatOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the VAT rates'**
+  String get setupGrowVatOpen;
+
+  /// #2875 setup grow steps: setupGrowVatPreviewNoVat
+  ///
+  /// In en, this message translates to:
+  /// **'No VAT is charged: a line of {gross} is invoiced as it is.'**
+  String setupGrowVatPreviewNoVat(String gross);
+
+  /// #2875 setup grow steps: setupGrowVatPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'A sample line of {gross}, VAT included, split the way an invoice splits it:'**
+  String setupGrowVatPreviewNote(String gross);
+
+  /// #2875 setup grow steps: setupGrowVatPreviewRate
+  ///
+  /// In en, this message translates to:
+  /// **'VAT {rate} %'**
+  String setupGrowVatPreviewRate(String rate);
+
+  /// #2875 setup grow steps: setupGrowVatRate
+  ///
+  /// In en, this message translates to:
+  /// **'{rate} %'**
+  String setupGrowVatRate(String rate);
+
+  /// #2875 setup grow steps: setupGrowVatUsualNote
+  ///
+  /// In en, this message translates to:
+  /// **'A starting point, not tax advice: your accountant confirms which rate applies to what you sell.'**
+  String get setupGrowVatUsualNote;
+
+  /// #2875 setup grow steps: setupGrowVatUsualTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Your country\'s usual rates'**
+  String get setupGrowVatUsualTitle;
+
   /// #2869 setup guide: setupGuideAllDone
   ///
   /// In en, this message translates to:
@@ -32800,6 +33004,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The QR code could not be shared. Try again.'**
   String get setupInviteShareFailed;
+
+  /// #2871 setup run steps: setupKioskCurrent
+  ///
+  /// In en, this message translates to:
+  /// **'{name} runs the kiosk.'**
+  String setupKioskCurrent(String name);
+
+  /// #2871 setup run steps: setupKioskMake
+  ///
+  /// In en, this message translates to:
+  /// **'Make it the kiosk'**
+  String get setupKioskMake;
+
+  /// #2871 setup run steps: setupKioskNoCandidate
+  ///
+  /// In en, this message translates to:
+  /// **'Invite the tablet’s account first: it joins like a member, then becomes the kiosk here.'**
+  String get setupKioskNoCandidate;
+
+  /// #2871 setup run steps: setupKioskNone
+  ///
+  /// In en, this message translates to:
+  /// **'No kiosk account yet.'**
+  String get setupKioskNone;
+
+  /// #2871 setup run steps: setupKioskPick
+  ///
+  /// In en, this message translates to:
+  /// **'Account for the tablet'**
+  String get setupKioskPick;
+
+  /// #2871 setup run steps: setupKioskSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The kiosk could not be set up. Try again.'**
+  String get setupKioskSaveFailed;
 
   /// #2876 setup launch: setupLaunchAnswers
   ///
@@ -33023,11 +33263,59 @@ abstract class AppLocalizations {
   /// **'What your space does'**
   String get setupLevelsTitle;
 
+  /// #2871 setup run steps: setupLookMore
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern, room colours and logo'**
+  String get setupLookMore;
+
   /// #2869 setup guide: setupMilestoneName
   ///
   /// In en, this message translates to:
   /// **'{key, select, bookable{Take bookings} money{Ready for money} invoice{Ready to invoice} live{Live} other{{key}}}'**
   String setupMilestoneName(String key);
+
+  /// #2871 setup run steps: setupNewMembersEditQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'Write the questions'**
+  String get setupNewMembersEditQuestions;
+
+  /// #2871 setup run steps: setupNewMembersNoQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'No question: people join with their name and e-mail address.'**
+  String get setupNewMembersNoQuestions;
+
+  /// #2871 setup run steps: setupNewMembersPreviewJoin
+  ///
+  /// In en, this message translates to:
+  /// **'When they ask to join, they answer:'**
+  String get setupNewMembersPreviewJoin;
+
+  /// #2871 setup run steps: setupNewMembersPreviewNoQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'Someone asking to join gives their name and e-mail address, nothing more.'**
+  String get setupNewMembersPreviewNoQuestions;
+
+  /// #2871 setup run steps: setupNewMembersPreviewStart
+  ///
+  /// In en, this message translates to:
+  /// **'A new member starts on a {pct} % subscription ({policy}).'**
+  String setupNewMembersPreviewStart(int pct, String policy);
+
+  /// #2871 setup run steps: setupNewMembersQuestions
+  ///
+  /// In en, this message translates to:
+  /// **'Questions asked when someone joins'**
+  String get setupNewMembersQuestions;
+
+  /// #2871 setup run steps: setupNewMembersSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The new-member defaults could not be saved. Try again.'**
+  String get setupNewMembersSaveFailed;
 
   /// #2871 setup run steps: setupOnlineOpenConfig
   ///
@@ -33197,6 +33485,24 @@ abstract class AppLocalizations {
   /// **'{key, select, bookings{Bookings} community{Community} money{Money} payments{Payments} tax{Tax} purchases{Purchases} presentation{Presentation} operations{Operations} assistant{Assistant} other{{key}}}'**
   String setupProcessName(String key);
 
+  /// #2871 setup run steps: setupPublicPageMore
+  ///
+  /// In en, this message translates to:
+  /// **'Address, image and plans in the page editor'**
+  String get setupPublicPageMore;
+
+  /// #2871 setup run steps: setupPublicPageNotPublished
+  ///
+  /// In en, this message translates to:
+  /// **'Not published: nobody outside the space sees this page.'**
+  String get setupPublicPageNotPublished;
+
+  /// #2871 setup run steps: setupPurchaseSidePreview
+  ///
+  /// In en, this message translates to:
+  /// **'Members do not see this: it stays with the people who manage the money.'**
+  String get setupPurchaseSidePreview;
+
   /// #2868 setup levels: setupQuestion
   ///
   /// In en, this message translates to:
@@ -33262,6 +33568,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What a member can do'**
   String get setupRightsPreviewTitle;
+
+  /// #2871 setup run steps: setupServicesAdd
+  ///
+  /// In en, this message translates to:
+  /// **'Add this service'**
+  String get setupServicesAdd;
+
+  /// #2871 setup run steps: setupServicesAdded
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added.'**
+  String setupServicesAdded(String name);
+
+  /// #2871 setup run steps: setupServicesInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'Give the service a name and a price.'**
+  String get setupServicesInvalid;
+
+  /// #2871 setup run steps: setupServicesMore
+  ///
+  /// In en, this message translates to:
+  /// **'VAT rate, place of supply and stock in Services'**
+  String get setupServicesMore;
+
+  /// #2871 setup run steps: setupServicesPreviewEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No service yet: members have nothing to add to their bill.'**
+  String get setupServicesPreviewEmpty;
+
+  /// #2871 setup run steps: setupServicesPreviewNote
+  ///
+  /// In en, this message translates to:
+  /// **'Members pick from this list when they add a consumption to their bill.'**
+  String get setupServicesPreviewNote;
+
+  /// #2871 setup run steps: setupServicesSaveFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The service could not be added. Try again.'**
+  String get setupServicesSaveFailed;
 
   /// #2869 setup guide: setupStateName
   ///
