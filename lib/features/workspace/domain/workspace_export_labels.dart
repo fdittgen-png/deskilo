@@ -99,9 +99,15 @@ String _word(String Function(String) lookup, String key) {
   return word.isEmpty || word == key ? _humanize(key) : word;
 }
 
-/// [sheets] with their names and header rows in [labels]' words; the rows
+/// Whether [header] names an identifier (`id`, `member_id`): a reader
+/// looks for the names and amounts first, so these go last.
+bool _isIdColumn(Object? header) =>
+    header is String && (header == 'id' || header.endsWith('_id'));
+
+/// [sheets] with their names and header rows in [labels]' words, their
+/// id columns last and a totals row's label translated; the cells
 /// themselves are unchanged. Names stay unique after Excel's 31-character
-/// cut.
+/// cut. The CSV copy keeps the builders' order.
 List<XlsxSheet> localizeExportSheets(
   List<XlsxSheet> sheets,
   ExportLabels labels,
@@ -138,7 +144,7 @@ List<XlsxSheet> localizeExportSheets(
   ];
 
   return [
-    for (final s in sheets)
+    for (final s in sheets.map(_idsLast))
       XlsxSheet(
         name: unique(_word(labels.sheet, exportKeyOf(s.name))),
         rows: [
@@ -149,8 +155,33 @@ List<XlsxSheet> localizeExportSheets(
             ],
           for (final row in s.rows.skip(1)) values(s.rows.first, row),
         ],
+        totals: s.totals == null ? null : _word(labels.column, s.totals!),
       ),
   ];
+}
+
+/// [sheet] with its id columns moved after the others, in their order.
+XlsxSheet _idsLast(XlsxSheet sheet) {
+  if (sheet.rows.isEmpty) return sheet;
+  final header = sheet.rows.first;
+  final order = [
+    for (final (i, h) in header.indexed)
+      if (!_isIdColumn(h)) i,
+    for (final (i, h) in header.indexed)
+      if (_isIdColumn(h)) i,
+  ];
+  return XlsxSheet(
+    name: sheet.name,
+    totals: sheet.totals,
+    rows: [
+      for (final row in sheet.rows)
+        [
+          for (final i in order) if (i < row.length) row[i] else null,
+          // A row longer than its header keeps its extra cells.
+          ...row.skip(header.length),
+        ],
+    ],
+  );
 }
 
 /// The first sheet: what this export is, then one line per sheet with its

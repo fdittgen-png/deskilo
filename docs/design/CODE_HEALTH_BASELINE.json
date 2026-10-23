@@ -1,8 +1,8 @@
 {
-  "recordedSha": "467502f0e0a5f6b0dd9c1bb05237b341fa2f71dd",
-  "recordedDate": "2026-10-22",
+  "recordedSha": "9d95e38a6bd964474e511aca11a73c70837066f7",
+  "recordedDate": "2026-10-23",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1815,"functions":10145,"cyclomatic>=9":1080,"cyclomatic>=25":105,"cognitive>=15":438,"cognitive>=30":96,"length>=150":74,"parameters>=5":489,"parameters>=7":152,"partOfFiles":42},
+  "totals": {"files":1815,"functions":10149,"cyclomatic>=9":1081,"cyclomatic>=25":105,"cognitive>=15":438,"cognitive>=30":97,"length>=150":74,"parameters>=5":489,"parameters>=7":152,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -949,7 +949,7 @@
     {"p":"lib/core/files/file_saver_io.dart","loc":124,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":14,"cyc":13,"len":40,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/files/file_saver_web.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":29,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/files/file_types.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":13,"cyc":14,"len":25,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/files/xlsx.dart","loc":209,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":11,"cyc":10,"len":30,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/files/xlsx.dart","loc":256,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":12,"cyc":10,"len":33,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/format/cents.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":4,"len":10,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/help/guide_site.dart","loc":17,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":5,"len":11,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/help/help_anchors.dart","loc":248,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":2,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2317,7 +2317,7 @@
     {"p":"lib/features/workspace/domain/workspace_document.dart","loc":49,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":4,"len":11,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_excel.dart","loc":417,"part":false,"setState":0,"repositoryReads":0,"fn":19,"cog":24,"cyc":18,"len":77,"params":13,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/workspace/domain/workspace_export_bundle.dart","loc":140,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":15,"cyc":10,"len":34,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/domain/workspace_export_labels.dart","loc":151,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":29,"cyc":18,"len":53,"params":7,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/workspace/domain/workspace_export_labels.dart","loc":175,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":31,"cyc":19,"len":55,"params":7,"nest":4,"over":{"cog":1,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/workspace/domain/workspace_export_sources.dart","loc":301,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_feature.dart","loc":249,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":9,"cyc":7,"len":23,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/workspace_field.dart","loc":116,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":8,"cyc":6,"len":14,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2804,6 +2804,7 @@
     {"id":"lib/features/workspace/domain/template_field_registry.dart#_f(String id,String entity,TemplateFieldType type,{TemplatePortability p,TemplateAbsent absent,String? key,List<String> values,int? min,int? max,List<String> dependsOn,List<String> bindings,String? reason})","cog":0,"cyc":1,"len":9,"params":12},
     {"id":"lib/features/workspace/domain/template_field_registry.dart#_row(String table,String entity,String key,Map<String, TemplateFieldType> columns,{Map<String, TemplatePortability> portability,Map<String, String> reasons,Map<String, String> refs,Map<String, List<String>> values})","cog":5,"cyc":6,"len":13,"params":8},
     {"id":"lib/features/workspace/domain/workspace_excel.dart#buildWorkspaceExcelExport({required Workspace workspace,required Set<String> enabledFeatures,required List<Level> levels,required Map<String, FloorPlan> plansByLevel,required List<Member> members,required Map<String, Profile> profilesByUserId,required List<Reservation> reservations,required List<LedgerEntry> ledger,required List<WorkspaceEvent> pendingEvents,required List<PaymentIntent> paymentIntents,required List<ServiceItem> services,required List<Invoice> invoices,required Map<String, DateTime> transmissionsByInvoice})","cog":0,"cyc":1,"len":43,"params":13},
+    {"id":"lib/features/workspace/domain/workspace_export_labels.dart#localizeExportSheets(List<XlsxSheet> sheets,ExportLabels labels)","cog":31,"cyc":19,"len":55,"params":2},
     {"id":"lib/features/workspace/domain/workspace_export_labels.dart#exportAboutSheet({required ExportAboutLabels labels,required String workspaceName,required DateTime generatedAt,required String timeZone,required String currency,required int? schemaVersion,required List<XlsxSheet> sheets})","cog":3,"cyc":3,"len":27,"params":7},
     {"id":"lib/features/workspace/domain/workspace_process.dart#validateProcessRegistry(List<WorkspaceProcess> processes,{Map<WorkspaceFeature, String> internal})","cog":34,"cyc":18,"len":42,"params":2},
     {"id":"lib/features/workspace/domain/workspace_xml_part2.dart#buildWorkspaceXml({required Workspace workspace,required List<({Level level, FloorPlan plan})> levels,List<Accessory> accessories,Map<String, Set<String>> seatAccessories,Map<String, Object?>? configuration,Map<String, String> siteNames,Map<String, String> vatRateLabels})","cog":7,"cyc":4,"len":53,"params":7},
