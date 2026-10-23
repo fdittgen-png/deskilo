@@ -24,8 +24,19 @@ abstract class NotificationService {
   /// Replaces all scheduled check-in reminders with [reminders].
   Future<void> rescheduleCheckInReminders(List<ReminderRequest> reminders);
 
-  /// Shows an immediate notification (#72 push pings).
-  Future<void> showNow({required String title, required String body});
+  /// Shows an immediate notification (#72 push pings). #2559 C2 — the
+  /// optional [payload] is the opaque reference a tap resolves; it is never
+  /// displayed.
+  Future<void> showNow({
+    required String title,
+    required String body,
+    String? payload,
+  });
+
+  /// #2559 C2 — asks the system to allow notifications. Called only after
+  /// the person deliberately asked for them; never at start. Null when the
+  /// platform cannot say.
+  Future<bool?> requestPermission();
 
   /// Whether the SYSTEM currently lets this app post notifications
   /// (#436 diagnostics) — null when the platform cannot say.

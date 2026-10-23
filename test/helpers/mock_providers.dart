@@ -73,8 +73,10 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/auth/providers/oauth_consent_providers.dart';
 import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
+import 'package:deskilo/features/directory/domain/discovery_view.dart';
 import 'package:deskilo/features/directory/domain/saved_place.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
+import 'package:deskilo/features/directory/providers/discovery_view_providers.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
@@ -255,6 +257,7 @@ List<Override> standardTestOverrides({
   NotificationFilterStore? notificationFilters,
   HelpHintStore? helpHints,
   SavedPlacesStore? savedPlaces,
+  DiscoveryViewStore? discoveryView,
   ShellFlagStore? shellBarHidden,
   ShellFlagStore? shellSwipeCoach,
   NavigationStyleStore? navigationStyle,
@@ -430,6 +433,8 @@ List<Override> standardTestOverrides({
     // installation row through `Supabase.instance`.
     savedPlacesStoreProvider
         .overrideWithValue(savedPlaces ?? InMemorySavedPlacesStore()),
+    discoveryViewStoreProvider
+        .overrideWithValue(discoveryView ?? InMemoryDiscoveryViewStore()),
     personalContextProvider.overrideWith((ref) async {
       final subject = await ref.watch(authStateProvider.future);
       if (subject == null) return null;

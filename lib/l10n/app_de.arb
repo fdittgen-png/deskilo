@@ -3093,10 +3093,19 @@
   "directoryTitle": "Mitglieder",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
   "discoveryBookmark": "Merken",
+  "discoveryLoadedCount": "Geladene Orte: {loaded} · angezeigt: {shown} · antwortende Verzeichnisse: {answered} von {sources}",
+  "discoveryMapContinue": "Weiter zur Karte",
+  "discoveryMapDisclosureBody": "Die Karte wird von {tiles} gezeichnet, Adressen ohne Koordinaten platziert {geocoder}. Der Kartenanbieter erhält Verbindungsdaten und den angezeigten Bereich: die IP-Adresse Ihres Geräts und den Teil der Karte, den Sie ansehen. Ohne Ihr Weiter wird ihm nichts gesendet.",
+  "discoveryMapDisclosureTitle": "Bevor die Karte öffnet",
+  "discoveryMapRemembered": "Ihre Wahl wird auf diesem Gerät für diesen Kartenanbieter gespeichert.",
+  "discoveryMapStay": "Bei der Liste bleiben",
+  "discoveryMoreDirectoriesFailed": "Weitere Verzeichnisse konnten nicht geladen werden.",
   "discoveryNoSaved": "Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.",
   "discoveryRemoveBookmark": "Lesezeichen entfernen",
   "discoverySaved": "Auf diesem Gerät gespeichert",
   "discoverySavedFilter": "Gespeichert",
+  "discoveryShowMoreFrom": "Mehr von {source} anzeigen",
+  "discoverySourceFailed": "{source} hat nicht geantwortet. Die bereits angezeigten Orte bleiben.",
   "discoveryTitle": "Arbeitsräume entdecken",
   "discoveryView": "Ansehen",
   "documentsAdd": "Dokument hinzufügen",
@@ -11009,10 +11018,14 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "pushAllowAction": "Erlauben",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "pushCancelledTitle": "Reservierung entfernt",
+  "pushMentionBody": "Sie wurden in einer Unterhaltung erwähnt.",
+  "pushMessageBody": "Sie haben eine neue Nachricht.",
   "pushPendingBody": "Jemand wartet auf Ihre Bestätigung.",
   "pushPendingTitle": "DesKilo",
+  "pushReminderBody": "Eine Zahlungserinnerung wartet auf Sie.",
   "pushStatusNoTransport": "Diese Version hat keine Push-Benachrichtigungen",
   "@pushStatusNoTransport": {
     "description": "#716 - F-Droid build without a push transport"
@@ -11023,7 +11036,10 @@
   },
   "pushStatusNotConfigured": "Push-Benachrichtigungen sind noch nicht eingerichtet",
   "pushStatusNotConfiguredHint": "Der Inhaber schließt die Firebase-Einrichtung ab (push-setup-Anleitung).",
+  "pushStatusPermissionNeeded": "Benachrichtigungen sind auf diesem Gerät nicht erlaubt",
+  "pushStatusPermissionNeededHint": "Tippen Sie auf Erlauben, um sie zu erhalten. In der App bleibt in jedem Fall alles verfügbar.",
   "pushStatusRegistered": "Push-Benachrichtigungen sind aktiv",
+  "pushUpdateBody": "Es gibt etwas Neues für Sie.",
   "qrBillAcceptancePoint": "Annahmestelle",
   "@qrBillAcceptancePoint": {
     "description": "#2360: qrBillAcceptancePoint"

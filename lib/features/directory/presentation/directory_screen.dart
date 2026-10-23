@@ -10,14 +10,17 @@ import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
-import '../providers/directory_providers.dart';
+import '../providers/discovery_listing_providers.dart';
+import '../providers/discovery_view_providers.dart';
 import '../providers/saved_places_providers.dart';
 import 'directory_carousel.dart';
 import 'directory_link_dialog.dart';
 import 'directory_map.dart';
 import 'directory_pages.dart';
-import 'directory_row.dart';
+import 'discovery_list_view.dart';
+import 'map_disclosure_dialog.dart';
 import 'public_workspace_view.dart';
 
 class DirectoryScreen extends ConsumerStatefulWidget {
@@ -32,10 +35,6 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
   final _search = TextEditingController();
   String _query = '';
 
-  /// The list is the first face; the map is a disclosure behind the
-  /// toggle, never what a visitor lands on.
-  bool _map = false;
-  int _sources = 0, _page = 0;
   PublicWorkspace? _selected;
   @override
   void dispose() {
@@ -43,20 +42,33 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     super.dispose();
   }
 
-  PublicDirectoryProvider get _provider => publicDirectoryProvider(
-        _query,
-        sourcePage: _sources,
-        workspacePage: _page,
-      );
+  DiscoveryListingProvider get _provider => discoveryListingProvider(_query);
 
   void _select(PublicWorkspace w) => setState(() => _selected = w);
 
-  Widget _row(PublicWorkspace w) => DirectoryRow(
-        workspace: w,
-        selected: _selected?.id == w.id && _selected?.source == w.source,
-        onView: () => _open(w),
-        onLocate: () => setState(() { _selected = w; _map = true; }),
-      );
+  /// The list is the first face; the map is a disclosure behind the
+  /// toggle. Before it first loads from a provider, the person is told who
+  /// that provider is and what it receives, and nothing loads unless they
+  /// choose the map.
+  Future<void> _openMap() async {
+    final view = ref.read(discoveryViewProvider.notifier);
+    final services = ref.read(mapServicesProvider);
+    final current = await ref.read(discoveryViewProvider.future);
+    if (!mounted) return;
+    if (current.accepts(services.identity)) return view.show(map: true);
+    final remembered = ref.read(savedPlacesNamespaceProvider).value != null;
+    final accepted = await MapDisclosureDialog.ask(
+      context,
+      services: services,
+      remembered: remembered,
+    );
+    if (accepted && mounted) await view.acceptMap();
+  }
+
+  void _locate(PublicWorkspace w) {
+    _select(w);
+    unawaited(_openMap());
+  }
 
   void _open(PublicWorkspace w) {
     _select(w);
@@ -81,138 +93,30 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
             key: const ValueKey('directory-portal-search'),
             tooltip: l.portalSearch,
             icon: const Icon(Icons.search),
-            onPressed: () => setState(() {
-              _query = _search.text;
-              _page = 0;
-              _selected = null;
-            }),
+            onPressed: () => _submit(_search.text),
           ),
         ),
-        onSubmitted: (value) => setState(() {
-          _query = value;
-          _page = 0;
-          _selected = null;
-        }),
+        onSubmitted: _submit,
       ),
     );
   }
 
-  Widget _listView(DirectoryPage result) {
-    final l = context.l10n;
-    // Saved places exist only for someone signed in at the personal home;
-    // the filter narrows the loaded page to them.
-    final canSave = ref.watch(savedPlacesNamespaceProvider).value != null;
-    final savedOnly = canSave && ref.watch(discoverSavedOnlyProvider);
-    final saved = ref.watch(savedPlacesProvider).value ?? const [];
-    final shown = savedOnly
-        ? [
-            for (final w in result.workspaces)
-              if (saved.any((p) => p.matches(w))) w,
-          ]
-        : result.workspaces;
-    return ListView(
-      padding: AppSpacing.mdAll,
-      children: [
-        if (result.unavailable.isNotEmpty)
-          TextButton(
-            key: const ValueKey('directory-portal-directory-unavailable'),
-            onPressed: () => ref.invalidate(_provider),
-            child: Text(
-              '${l.portalDirectoryUnavailable}\n${result.unavailable.join('\n')}',
-            ),
-          ),
-        // #1847 — a card this version cannot interpret is not
-        // shown; its installation is named, the rest still is.
-        if (result.incompatible.isNotEmpty)
-          Text(
-            key: const ValueKey('directory-incompatible'),
-            '${l.portalDirectoryIncompatible}\n${result.incompatible.join('\n')}',
-          ),
-        if (canSave)
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: FilterChip(
-              key: const ValueKey('directory-saved-filter'),
-              label: Text(l.discoverySavedFilter),
-              selected: savedOnly,
-              onSelected: (_) =>
-                  ref.read(discoverSavedOnlyProvider.notifier).toggle(),
-            ),
-          ),
-        if (shown.isEmpty)
-          Text(savedOnly ? l.discoveryNoSaved : l.portalNoWorkspaces),
-        for (final w in shown) _row(w),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              key: const ValueKey('directory-chevron-left'),
-              tooltip: MaterialLocalizations.of(context)
-                  .previousPageTooltip,
-              onPressed: _page == 0
-                  ? null
-                  : () => setState(() {
-                      _page--;
-                      _selected = null;
-                    }),
-              icon: const Icon(Icons.chevron_left),
-            ),
-            IconButton(
-              key: const ValueKey('directory-chevron-right'),
-              tooltip: MaterialLocalizations.of(context)
-                  .nextPageTooltip,
-              onPressed: !result.moreWorkspaces
-                  ? null
-                  : () => setState(() {
-                      _page++;
-                      _selected = null;
-                    }),
-              icon: const Icon(Icons.chevron_right),
-            ),
-          ],
-        ),
-        Wrap(
-          children: [
-            if (_sources > 0)
-              TextButton(
-                key: const ValueKey('directory-text-button'),
-                onPressed: () => setState(() {
-                  _sources--;
-                  _page = 0;
-                  _selected = null;
-                }),
-                child: Text(
-                  MaterialLocalizations.of(context)
-                      .previousPageTooltip,
-                ),
-              ),
-            if (result.moreSources)
-              TextButton(
-                key: const ValueKey('directory-portal-more-directories'),
-                onPressed: () => setState(() {
-                  _sources++;
-                  _page = 0;
-                  _selected = null;
-                }),
-                child: Text(
-                  l.portalMoreDirectories,
-                ),
-              ),
-          ],
-        ),
-      ],
-        );
-  }
+  /// A new search is a new listing: every source starts again at its
+  /// first page, and the old listing's late answers are dropped.
+  void _submit(String value) => setState(() {
+    _query = value;
+    _selected = null;
+  });
 
   /// The map first: it takes the whole screen, the search floats over it
   /// and the workspaces are cards to swipe through under it. The pin and
   /// the card in front are the same selection.
-  Widget _mapView(DirectoryPage result) {
+  Widget _mapView(DiscoveryResults result) {
     final l = context.l10n;
     return Stack(children: [
       Positioned.fill(
         child: DirectoryMap(
-          key: ValueKey('$_query:$_sources:$_page'),
+          key: ValueKey(_query),
           workspaces: result.workspaces,
           selected: _selected == null
               ? null
@@ -256,26 +160,6 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                   ),
                 ),
               ),
-            if (_page > 0 || result.moreWorkspaces)
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                IconButton.filledTonal(
-                  key: const ValueKey('directory-map-previous'),
-                  tooltip: MaterialLocalizations.of(context).previousPageTooltip,
-                  onPressed: _page == 0
-                      ? null
-                      : () => setState(() { _page--; _selected = null; }),
-                  icon: const Icon(Icons.chevron_left),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                IconButton.filledTonal(
-                  key: const ValueKey('directory-map-next'),
-                  tooltip: MaterialLocalizations.of(context).nextPageTooltip,
-                  onPressed: !result.moreWorkspaces
-                      ? null
-                      : () => setState(() { _page++; _selected = null; }),
-                  icon: const Icon(Icons.chevron_right),
-                ),
-              ]),
             if (result.workspaces.isEmpty)
               Padding(
                 padding: AppSpacing.mdAll,
@@ -305,6 +189,11 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final rows = ref.watch(_provider);
+    final services = ref.watch(mapServicesProvider);
+    final map = ref.watch(discoveryViewProvider).value?.opensMap(
+          services.identity,
+        ) ??
+        false;
     final searchField = _searchField();
     return Scaffold(
       appBar: AppBar(
@@ -315,9 +204,11 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         actions: [
           IconButton(
             key: const ValueKey('directory-portal-list'),
-            tooltip: _map ? (l.portalList) : (l.portalMap),
-            icon: Icon(_map ? Icons.list : Icons.map_outlined),
-            onPressed: () => setState(() => _map = !_map),
+            tooltip: map ? (l.portalList) : (l.portalMap),
+            icon: Icon(map ? Icons.list : Icons.map_outlined),
+            onPressed: map
+                ? () => ref.read(discoveryViewProvider.notifier).show(map: false)
+                : _openMap,
           ),
           if (ref.watch(authStateProvider).value != null)
             IconButton(
@@ -339,15 +230,19 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
       body: Stack(children: [
         Column(
         children: [
-          if (!_map) searchField,
+          if (!map) searchField,
           Expanded(
             child: switch (rows) {
               AsyncData(value: final result) => LayoutBuilder(
-                builder: (context, constraints) => _map
+                builder: (context, constraints) => map
                     ? _mapView(result)
-                    : Column(children: [
-                  Expanded(child: _listView(result)),
-                ]),
+                    : DiscoveryListView(
+                        query: _query,
+                        results: result,
+                        selected: _selected,
+                        onView: _open,
+                        onLocate: _locate,
+                      ),
               ),
               AsyncError() => Center(
                 child: TextButton(
@@ -363,7 +258,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
           ),
         ],
       ),
-        if (_map)
+        if (map)
           Positioned(
             top: 0,
             left: 0,

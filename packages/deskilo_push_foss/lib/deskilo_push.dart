@@ -29,9 +29,10 @@ class _NoPush implements PushConnector {
     required void Function(String url) onNewEndpoint,
     required void Function() onUnregistered,
     required void Function(Uint8List content) onMessage,
+    void Function(Map<String, String> data, String? messageId)? onOpened,
   }) async =>
       false;
 
   @override
-  Future<void> register() async {}
+  Future<bool> register({bool ask = false}) async => false;
 }

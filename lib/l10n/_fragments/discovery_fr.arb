@@ -5,5 +5,14 @@
   "discoveryRemoveBookmark": "Retirer l’enregistrement",
   "discoveryView": "Voir",
   "discoverySavedFilter": "Enregistrés",
-  "discoveryNoSaved": "Aucun espace enregistré sur cet appareil pour l’instant."
+  "discoveryNoSaved": "Aucun espace enregistré sur cet appareil pour l’instant.",
+  "discoveryLoadedCount": "Lieux chargés : {loaded} · affichés : {shown} · annuaires ayant répondu : {answered} sur {sources}",
+  "discoveryShowMoreFrom": "Afficher plus de {source}",
+  "discoverySourceFailed": "{source} n’a pas répondu. Les lieux déjà affichés restent.",
+  "discoveryMoreDirectoriesFailed": "Les autres annuaires n’ont pas pu être chargés.",
+  "discoveryMapDisclosureTitle": "Avant d’ouvrir la carte",
+  "discoveryMapDisclosureBody": "La carte est dessinée par {tiles}, et les adresses sans coordonnées sont placées par {geocoder}. Le fournisseur de la carte reçoit des informations de connexion et la zone affichée : l’adresse IP de votre appareil et la partie de la carte que vous regardez. Rien ne lui est envoyé si vous ne continuez pas.",
+  "discoveryMapRemembered": "Votre choix est conservé sur cet appareil pour ce fournisseur de carte.",
+  "discoveryMapContinue": "Continuer vers la carte",
+  "discoveryMapStay": "Rester sur la liste"
 }

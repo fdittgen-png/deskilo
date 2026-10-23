@@ -4422,6 +4422,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoveryBookmark => 'Bookmark';
 
   @override
+  String discoveryLoadedCount(
+    int loaded,
+    int shown,
+    int answered,
+    int sources,
+  ) {
+    return 'Places loaded: $loaded · shown: $shown · directories answering: $answered of $sources';
+  }
+
+  @override
+  String get discoveryMapContinue => 'Continue to the map';
+
+  @override
+  String discoveryMapDisclosureBody(String tiles, String geocoder) {
+    return 'The map is drawn by $tiles, and addresses without coordinates are placed by $geocoder. The map provider receives connection and viewed-area information: your device\'s IP address and the part of the map you look at. Nothing is sent to them unless you continue.';
+  }
+
+  @override
+  String get discoveryMapDisclosureTitle => 'Before the map opens';
+
+  @override
+  String get discoveryMapRemembered =>
+      'Your choice is kept on this device for this map provider.';
+
+  @override
+  String get discoveryMapStay => 'Stay with the list';
+
+  @override
+  String get discoveryMoreDirectoriesFailed =>
+      'More directories could not be loaded.';
+
+  @override
   String get discoveryNoSaved => 'No places saved on this device yet.';
 
   @override
@@ -4432,6 +4464,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get discoverySavedFilter => 'Saved';
+
+  @override
+  String discoveryShowMoreFrom(String source) {
+    return 'Show more from $source';
+  }
+
+  @override
+  String discoverySourceFailed(String source) {
+    return '$source did not answer. The places already shown stay.';
+  }
 
   @override
   String get discoveryTitle => 'Discover workspaces';
@@ -16237,16 +16279,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesTotal => 'Total';
 
   @override
+  String get pushAllowAction => 'Allow';
+
+  @override
   String get pushCancelledBody => 'A reservation was removed by an admin.';
 
   @override
   String get pushCancelledTitle => 'Reservation removed';
 
   @override
+  String get pushMentionBody => 'You were mentioned in a conversation.';
+
+  @override
+  String get pushMessageBody => 'You have a new message.';
+
+  @override
   String get pushPendingBody => 'Someone needs your confirmation.';
 
   @override
   String get pushPendingTitle => 'DesKilo';
+
+  @override
+  String get pushReminderBody => 'A payment reminder is waiting for you.';
 
   @override
   String get pushStatusNoTransport => 'This build has no push notifications';
@@ -16263,7 +16317,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace owner completes the Firebase setup (push-setup guide).';
 
   @override
+  String get pushStatusPermissionNeeded =>
+      'Notifications are not allowed on this device';
+
+  @override
+  String get pushStatusPermissionNeededHint =>
+      'Tap Allow to receive them. Everything stays available in the app either way.';
+
+  @override
   String get pushStatusRegistered => 'Push notifications are active';
+
+  @override
+  String get pushUpdateBody => 'You have an update.';
 
   @override
   String get qrBillAcceptancePoint => 'Acceptance point';
