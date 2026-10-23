@@ -5852,6 +5852,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'workspace_code': 'Workspace code',
       'x': 'X',
       'y': 'Y',
+      'field': 'Field',
+      'value': 'Value',
+      'process': 'Process',
+      'feature': 'Feature',
+      'on': 'On',
       'other': '$key',
     });
     return '$_temp0';
@@ -5932,6 +5937,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'einvoice_inbox': 'Received e-invoices',
       'guest_participations': 'Guest visits',
       'rights_requests': 'Privacy requests',
+      'overview': 'Overview',
+      'features': 'Features',
       'other': '$key',
     });
     return '$_temp0';
@@ -5940,6 +5947,64 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get exportUncertifiedSoftware =>
       'Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.';
+
+  @override
+  String exportValueName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'reserved': 'Booked',
+      'checkedIn': 'Checked in',
+      'completed': 'Completed',
+      'cancelled': 'Cancelled',
+      'released': 'Released',
+      'active': 'Active',
+      'paused': 'Paused',
+      'pending': 'Pending',
+      'exited': 'Left',
+      'applied': 'Applied',
+      'confirmed': 'Confirmed',
+      'rejected': 'Declined',
+      'expired': 'Expired',
+      'created': 'Created',
+      'modified': 'Changed',
+      'submitted': 'Submitted',
+      'approved': 'Approved',
+      'accepted': 'Accepted',
+      'declined': 'Declined',
+      'charge': 'Charge',
+      'credit': 'Credit',
+      'subscription': 'Subscription',
+      'overage': 'Over quota',
+      'expense': 'Expense',
+      'payment': 'Payment',
+      'adjustment': 'Adjustment',
+      'service': 'Service',
+      'package': 'Package',
+      'refund': 'Refund',
+      'reimbursement': 'Reimbursement',
+      'seat': 'Seat',
+      'room': 'Room',
+      'parking': 'Parking',
+      'standard': 'Standard',
+      'ev': 'Electric',
+      'accessible': 'Accessible',
+      'workspace': 'Workspace',
+      'n': 'North',
+      'e': 'East',
+      's': 'South',
+      'w': 'West',
+      'blocked': 'Not allowed',
+      'payg': 'Pay as you go',
+      'none': 'No',
+      'passive': 'Successor',
+      'founder': 'Founder',
+      'invited': 'Invited',
+      'full': 'Invoice',
+      'usage': 'Usage',
+      'settlement': 'Settlement',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get featureAccessorySupplements => 'Accessory supplements';

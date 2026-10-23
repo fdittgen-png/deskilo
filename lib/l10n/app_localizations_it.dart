@@ -5890,6 +5890,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'workspace_code': 'Codice dello spazio',
       'x': 'X',
       'y': 'Y',
+      'field': 'Campo',
+      'value': 'Valore',
+      'process': 'Processo',
+      'feature': 'Funzione',
+      'on': 'Attiva',
       'other': '$key',
     });
     return '$_temp0';
@@ -5970,6 +5975,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'einvoice_inbox': 'Fatture elettroniche ricevute',
       'guest_participations': 'Visite di ospiti',
       'rights_requests': 'Richieste privacy',
+      'overview': 'Panoramica',
+      'features': 'Funzioni',
       'other': '$key',
     });
     return '$_temp0';
@@ -5978,6 +5985,64 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get exportUncertifiedSoftware =>
       'Prodotto secondo la specifica pubblicata, ma DesKilo non è software certificato in questo paese — verifichi con il suo commercialista se le è richiesto.';
+
+  @override
+  String exportValueName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'reserved': 'Prenotato',
+      'checkedIn': 'Arrivato',
+      'completed': 'Completato',
+      'cancelled': 'Annullato',
+      'released': 'Liberato',
+      'active': 'Attivo',
+      'paused': 'In pausa',
+      'pending': 'In attesa',
+      'exited': 'Uscito',
+      'applied': 'Applicato',
+      'confirmed': 'Confermato',
+      'rejected': 'Rifiutato',
+      'expired': 'Scaduto',
+      'created': 'Creato',
+      'modified': 'Modificato',
+      'submitted': 'Inviato',
+      'approved': 'Approvato',
+      'accepted': 'Accettato',
+      'declined': 'Rifiutato',
+      'charge': 'Addebito',
+      'credit': 'Accredito',
+      'subscription': 'Abbonamento',
+      'overage': 'Fuori quota',
+      'expense': 'Spesa',
+      'payment': 'Pagamento',
+      'adjustment': 'Rettifica',
+      'service': 'Servizio',
+      'package': 'Pacchetto',
+      'refund': 'Rimborso',
+      'reimbursement': 'Rimborso spese',
+      'seat': 'Posto',
+      'room': 'Sala',
+      'parking': 'Parcheggio',
+      'standard': 'Standard',
+      'ev': 'Elettrico',
+      'accessible': 'Accessibile',
+      'workspace': 'Area di lavoro',
+      'n': 'Nord',
+      'e': 'Est',
+      's': 'Sud',
+      'w': 'Ovest',
+      'blocked': 'Non consentito',
+      'payg': 'A consumo',
+      'none': 'No',
+      'passive': 'Successore',
+      'founder': 'Fondatore',
+      'invited': 'Invitato',
+      'full': 'Fattura',
+      'usage': 'Consumo',
+      'settlement': 'Liquidazione',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get featureAccessorySupplements => 'Supplementi accessori';

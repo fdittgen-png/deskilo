@@ -15,6 +15,7 @@ import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
 import 'member.dart';
 import 'workspace.dart';
+import 'workspace_overview_sheets.dart';
 
 /// The data export's workbook (#395): one tab per dataset, one row per
 /// record, every stored detail a client may read.
@@ -128,7 +129,7 @@ class _ExcelExport {
       cents / Currencies.minorPerMajor(workspace.currencyCode));
 
   List<XlsxSheet> sheets() => [
-        _workspace(),
+        ...workspaceOverviewSheets(workspace, enabledFeatures),
         _levels(),
         _desks(),
         _seats(),
@@ -140,22 +141,6 @@ class _ExcelExport {
         _servicecatalog(),
         _invoices(),
       ];
-
-  XlsxSheet _workspace() =>
-      XlsxSheet(name: 'Workspace', rows: [
-    [
-      'id', 'name', 'country', 'currency', 'timezone', 'workspace_code',
-      'vat_regime', 'vat_id', 'legal_id', 'street', 'postal_code',
-      'city', 'enabled_features',
-    ],
-    [
-      workspace.id, workspace.name, workspace.countryCode,
-      workspace.currencyCode, workspace.timezone, workspace.inviteCode,
-      workspace.vatRegime, workspace.vatId, workspace.legalId,
-      workspace.street, workspace.postalCode, workspace.city,
-      (enabledFeatures.toList()..sort()).join(', '),
-    ],
-  ]);
 
   XlsxSheet _levels() =>
       XlsxSheet(name: 'Levels', rows: [
