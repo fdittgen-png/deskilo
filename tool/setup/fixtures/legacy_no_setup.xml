@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deskilo-workspace version="3">
+  <settings name="Defaults Space" country="FR" currency="EUR" timezone="Europe/Paris" environment="dev">
+    <feature key="carnets" enabled="false"/>
+    <feature key="publicHolidays" enabled="false"/>
+    <feature key="holidayImport" enabled="false"/>
+    <feature key="capacityKpi" enabled="false"/>
+    <feature key="accountingBook" enabled="false"/>
+    <feature key="workspaceVocabulary" enabled="false"/>
+    <feature key="workspaceBranding" enabled="false"/>
+    <feature key="publicListings" enabled="false"/>
+    <feature key="customRoles" enabled="false"/>
+    <feature key="customFields" enabled="false"/>
+    <feature key="decisionSurface" enabled="false"/>
+    <feature key="recordingPrivacy" enabled="false"/>
+    <feature key="memberAccountMenu" enabled="false"/>
+    <feature key="mcpAccess" enabled="false"/>
+    <feature key="calendarFileExport" enabled="true"/>
+    <feature key="memberGettingStarted" enabled="true"/>
+    <feature key="placeFeedback" enabled="true"/>
+    <feature key="taskRecorder" enabled="false"/>
+    <feature key="guestParticipation" enabled="false"/>
+    <feature key="spaceInquiries" enabled="true"/>
+    <feature key="messageForwarding" enabled="true"/>
+    <feature key="captureProtection" enabled="true"/>
+    <feature key="messageMentions" enabled="true"/>
+    <feature key="calendarTab" enabled="true"/>
+    <feature key="eventsTab" enabled="true"/>
+    <feature key="moneyTab" enabled="true"/>
+    <feature key="services" enabled="true"/>
+    <feature key="accessorySupplements" enabled="false"/>
+    <feature key="onlinePayments" enabled="false"/>
+    <feature key="invoicing" enabled="true"/>
+    <feature key="adminInvoicing" enabled="false"/>
+    <feature key="pdfExport" enabled="true"/>
+    <feature key="seriesBooking" enabled="true"/>
+    <feature key="bookForOthers" enabled="true"/>
+    <feature key="pushNotifications" enabled="true"/>
+    <feature key="adminSeatBlocking" enabled="false"/>
+    <feature key="levelBooking" enabled="false"/>
+    <feature key="adminLevelAssign" enabled="false"/>
+    <feature key="kioskMode" enabled="false"/>
+    <feature key="nfcBadges" enabled="false"/>
+    <feature key="membersDirectory" enabled="true"/>
+    <feature key="whatsappIntegration" enabled="false"/>
+    <feature key="spaceQrCodes" enabled="true"/>
+    <feature key="coOwner" enabled="false"/>
+    <feature key="autoCheckInOut" enabled="false"/>
+    <feature key="dataExport" enabled="true"/>
+    <feature key="workingHours" enabled="true"/>
+    <feature key="invoicePdfTemplate" enabled="false"/>
+    <feature key="memberNotifications" enabled="true"/>
+    <feature key="documents" enabled="true"/>
+    <feature key="dunning" enabled="false"/>
+    <feature key="memberReports" enabled="false"/>
+    <feature key="deletionRequests" enabled="true"/>
+    <feature key="roleManagement" enabled="true"/>
+    <feature key="roleAssignment" enabled="true"/>
+    <feature key="vatManagement" enabled="false"/>
+    <feature key="vatDeclarations" enabled="false"/>
+    <feature key="einvoiceCustomerDelivery" enabled="false"/>
+    <feature key="planObjectDelete" enabled="true"/>
+    <feature key="notificationGrouping" enabled="true"/>
+    <feature key="bookingPolicies" enabled="true"/>
+    <feature key="nfcSeatTags" enabled="false"/>
+    <feature key="qrBadges" enabled="false"/>
+    <feature key="badgeSignIn" enabled="false"/>
+    <feature key="formHelpHints" enabled="true"/>
+    <feature key="kioskMemberPhotos" enabled="false"/>
+    <feature key="planMemberPhotos" enabled="false"/>
+    <feature key="regionalFormats" enabled="true"/>
+    <feature key="calendarHub" enabled="true"/>
+    <feature key="dataAccessLog" enabled="false"/>
+    <feature key="memberDataExport" enabled="true"/>
+    <feature key="financeFaces" enabled="true"/>
+    <feature key="paymentReminders" enabled="false"/>
+    <feature key="supplyExpenses" enabled="false"/>
+    <feature key="validationScopes" enabled="false"/>
+    <feature key="validationChain" enabled="false"/>
+    <feature key="richMessageRefs" enabled="true"/>
+    <feature key="calendarValidations" enabled="false"/>
+    <feature key="usageRecords" enabled="false"/>
+    <feature key="reportDesignExchange" enabled="false"/>
+    <feature key="reportLayouts" enabled="false"/>
+    <feature key="personalInfo" enabled="true"/>
+    <feature key="memberPaymentTerms" enabled="false"/>
+    <feature key="letterStandard" enabled="false"/>
+    <feature key="multiSite" enabled="false"/>
+    <feature key="vatGroups" enabled="false"/>
+    <feature key="vatRateHistory" enabled="false"/>
+    <feature key="vatCounterparty" enabled="false"/>
+    <feature key="supplyClassification" enabled="false"/>
+    <feature key="viesVerification" enabled="false"/>
+    <feature key="recapitulativeStatement" enabled="false"/>
+    <feature key="inputVat" enabled="false"/>
+    <feature key="configurableSettings" enabled="false"/>
+    <feature key="salesTax" enabled="false"/>
+    <feature key="meetingRooms" enabled="false"/>
+    <feature key="parking" enabled="false"/>
+    <feature key="webMcp" enabled="false"/>
+    <feature key="purchases" enabled="false"/>
+    <feature key="premisesLease" enabled="false"/>
+    <feature key="assetRegister" enabled="false"/>
+    <feature key="externalRooms" enabled="false"/>
+    <feature key="accountingPeriods" enabled="false"/>
+    <feature key="biReportDesigner" enabled="false"/>
+    <feature key="purchaseAnalytics" enabled="false"/>
+    <feature key="workspaceOverview" enabled="false"/>
+    <feature key="setupGuide" enabled="true"/>
+    <feature key="dataReport" enabled="true"/>
+    <feature key="environmentPairs" enabled="false"/>
+    <feature key="deployments" enabled="false"/>
+    <feature key="siteDocuments" enabled="false"/>
+    <feature key="workspaceStatus" enabled="false"/>
+    <feature key="expenseRepartitionWizard" enabled="false"/>
+    <feature key="numberSequences" enabled="false"/>
+    <feature key="managedProfileAccess" enabled="false"/>
+    <feature key="managedProfiles" enabled="false"/>
+    <feature key="seatDayTimeline" enabled="true"/>
+    <feature key="reportTexts" enabled="false"/>
+    <feature key="usageReport" enabled="false"/>
+    <feature key="vatReport" enabled="false"/>
+    <feature key="invoiceAddressWindow" enabled="false"/>
+    <feature key="scheduledExpenses" enabled="false"/>
+    <feature key="priceNegotiations" enabled="false"/>
+    <feature key="memberEnvironments" enabled="false"/>
+    <feature key="workspaceLibrary" enabled="false"/>
+    <feature key="singleRoomLevelNames" enabled="true"/>
+    <feature key="memberOrigin" enabled="false"/>
+    <feature key="uiAnimations" enabled="true"/>
+    <feature key="uniqueMonograms" enabled="true"/>
+    <feature key="messageGestures" enabled="true"/>
+    <feature key="subscriptionInvoices" enabled="false"/>
+    <feature key="usageInvoices" enabled="false"/>
+    <feature key="invoiceSettlement" enabled="false"/>
+    <feature key="settlementFold" enabled="false"/>
+    <feature key="expenseRepartition" enabled="false"/>
+    <feature key="invoicingWizard" enabled="false"/>
+    <feature key="memberPage" enabled="true"/>
+    <feature key="reportDesigner" enabled="false"/>
+    <feature key="messagesHub" enabled="true"/>
+    <feature key="calendarViews" enabled="true"/>
+    <feature key="bookingGate" enabled="true"/>
+    <feature key="invoiceJourney" enabled="false"/>
+    <feature key="configurationTransfer" enabled="true"/>
+    <feature key="navigationStyle" enabled="true"/>
+    <feature key="instanceWizard" enabled="false"/>
+    <feature key="demoMode" enabled="false"/>
+  </settings>
+  <accessories>
+  </accessories>
+  <floor-plan>
+    <level name="Level 1" sort-order="0">
+      <office name="Office 1" color="4288585374" bookable-as-whole="false" x="1" y="1" w="14" h="10">
+        <desk name="Desk 1" x="2" y="2" w="12" h="8">
+          <seat name="Seat 1" x="2" y="2" orientation="s" chair=""/>
+          <seat name="Seat 2" x="8" y="2" orientation="s" chair=""/>
+          <seat name="Seat 3" x="2" y="6" orientation="n" chair=""/>
+          <seat name="Seat 4" x="8" y="6" orientation="n" chair=""/>
+        </desk>
+      </office>
+    </level>
+  </floor-plan>
+  <configuration>
+    <field name="tables" type="object">
+      <field name="closure_days" type="array">
+      </field>
+      <field name="fee_bands" type="array">
+      </field>
+      <field name="packages" type="array">
+      </field>
+      <field name="services" type="array">
+      </field>
+      <field name="validation_policies" type="array">
+        <field type="object">
+          <field name="admins_may_validate" type="boolean">true</field>
+          <field name="auto_validate_admin" type="boolean">false</field>
+          <field name="auto_validate_owner" type="boolean">false</field>
+          <field name="event_type" type="null"/>
+          <field name="owner_may_self_validate" type="boolean">false</field>
+          <field name="owner_required" type="boolean">false</field>
+          <field name="required_count" type="number">1</field>
+          <field name="sequential" type="boolean">false</field>
+          <field name="validator_scope" type="string" value="admins"/>
+        </field>
+      </field>
+    </field>
+    <field name="workspace" type="object">
+      <field name="address" type="string" value=""/>
+      <field name="booking_rules" type="object">
+        <field name="admin_check_out" type="boolean">false</field>
+        <field name="advance_horizon_days" type="number">90</field>
+        <field name="allow_past_bookings" type="boolean">false</field>
+        <field name="full_day_hours" type="number">8</field>
+        <field name="granularity" type="string" value="half_day"/>
+        <field name="half_boundary_minutes" type="number">720</field>
+        <field name="half_day_hours" type="number">4</field>
+        <field name="legend_profile" type="string" value="full"/>
+        <field name="max_duration_minutes" type="number">1440</field>
+        <field name="min_duration_minutes" type="number">30</field>
+        <field name="open_weekdays" type="array">
+          <field type="number">1</field>
+          <field type="number">2</field>
+          <field type="number">3</field>
+          <field type="number">4</field>
+          <field type="number">5</field>
+        </field>
+        <field name="outside_hours_mode" type="string" value="charged"/>
+        <field name="simultaneous_reservations" type="number">1</field>
+        <field name="work_end_minutes" type="number">1020</field>
+        <field name="work_start_minutes" type="number">480</field>
+      </field>
+      <field name="city" type="string" value=""/>
+      <field name="default_locale" type="string" value=""/>
+      <field name="desk_opacity" type="number">100</field>
+      <field name="invitation_templates" type="object">
+      </field>
+      <field name="invoice_legal" type="object">
+        <field name="customer_capacity" type="string" value=""/>
+        <field name="escompte" type="string" value=""/>
+        <field name="insurance" type="string" value=""/>
+        <field name="late_penalty" type="string" value=""/>
+        <field name="legal_form" type="string" value=""/>
+        <field name="payment_terms" type="string" value=""/>
+        <field name="recovery_indemnity" type="string" value=""/>
+        <field name="registration" type="string" value=""/>
+        <field name="seller_kind" type="string" value="association"/>
+        <field name="special_mentions" type="string" value=""/>
+        <field name="vat_tax_point" type="string" value="standard"/>
+      </field>
+      <field name="legal_id" type="string" value=""/>
+      <field name="postal_code" type="string" value=""/>
+      <field name="role_permissions" type="object">
+        <field name="admin" type="array">
+          <field type="string" value="manageMembers"/>
+          <field type="string" value="viewFinances"/>
+          <field type="string" value="manageDocuments"/>
+          <field type="string" value="manageServices"/>
+          <field type="string" value="approveExpenses"/>
+          <field type="string" value="viewNegotiations"/>
+          <field type="string" value="manageNegotiations"/>
+          <field type="string" value="paymentTermsEdit"/>
+          <field type="string" value="manageSites"/>
+          <field type="string" value="manageReservations"/>
+          <field type="string" value="operateKiosk"/>
+          <field type="string" value="exportData"/>
+          <field type="string" value="viewPersonalData"/>
+          <field type="string" value="deployToDev"/>
+          <field type="string" value="accessProd"/>
+          <field type="string" value="viewAnalytics"/>
+          <field type="string" value="useMessages"/>
+          <field type="string" value="makeReservations"/>
+          <field type="string" value="viewCalendar"/>
+          <field type="string" value="viewDirectory"/>
+          <field type="string" value="viewMyMoney"/>
+          <field type="string" value="viewDocuments"/>
+        </field>
+        <field name="co_owner" type="array">
+          <field type="string" value="manageRoles"/>
+          <field type="string" value="manageMembers"/>
+          <field type="string" value="manageValidation"/>
+          <field type="string" value="workspaceSettings"/>
+          <field type="string" value="issueInvoices"/>
+          <field type="string" value="viewFinances"/>
+          <field type="string" value="manageDocuments"/>
+          <field type="string" value="manageServices"/>
+          <field type="string" value="approveExpenses"/>
+          <field type="string" value="viewNegotiations"/>
+          <field type="string" value="manageNegotiations"/>
+          <field type="string" value="paymentTermsEdit"/>
+          <field type="string" value="manageSites"/>
+          <field type="string" value="manageBilling"/>
+          <field type="string" value="manageReservations"/>
+          <field type="string" value="operateKiosk"/>
+          <field type="string" value="exportData"/>
+          <field type="string" value="designDocuments"/>
+          <field type="string" value="viewPersonalData"/>
+          <field type="string" value="manageIntegrations"/>
+          <field type="string" value="manageConfiguration"/>
+          <field type="string" value="deployToProd"/>
+          <field type="string" value="deployToDev"/>
+          <field type="string" value="accessProd"/>
+          <field type="string" value="viewAnalytics"/>
+          <field type="string" value="useMessages"/>
+          <field type="string" value="makeReservations"/>
+          <field type="string" value="viewCalendar"/>
+          <field type="string" value="viewDirectory"/>
+          <field type="string" value="viewMyMoney"/>
+          <field type="string" value="viewDocuments"/>
+          <field type="string" value="managePurchases"/>
+          <field type="string" value="recordOutgoingPayments"/>
+          <field type="string" value="manageLease"/>
+        </field>
+        <field name="member" type="array">
+          <field type="string" value="useMessages"/>
+          <field type="string" value="makeReservations"/>
+          <field type="string" value="viewCalendar"/>
+          <field type="string" value="viewDirectory"/>
+          <field type="string" value="viewMyMoney"/>
+          <field type="string" value="viewDocuments"/>
+        </field>
+      </field>
+      <field name="street" type="string" value=""/>
+      <field name="subscription_levels" type="object">
+        <field name="allow_custom" type="boolean">false</field>
+        <field name="enabled_presets" type="array">
+          <field type="number">25</field>
+          <field type="number">50</field>
+          <field type="number">75</field>
+          <field type="number">100</field>
+        </field>
+        <field name="extra_levels" type="array">
+        </field>
+      </field>
+      <field name="tax_exemption_reason" type="string" value=""/>
+      <field name="vat_id" type="string" value=""/>
+      <field name="vat_regime" type="string" value="not_subject"/>
+      <field name="whatsapp_group" type="string" value=""/>
+    </field>
+  </configuration>
+</deskilo-workspace>

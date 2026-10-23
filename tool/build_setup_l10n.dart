@@ -27,10 +27,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/core/vat/tax_reference.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/setup_obligations.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 
 /// The locales the page offers — the app's own, English first.
@@ -44,19 +48,52 @@ const setupL10nOutput = 'web/setup_l10n.js';
 /// subprocess's title and description) ride in [setupL10nOutput], so the
 /// page never keeps a sixth copy of the process taxonomy either. The XML
 /// the page exports stays feature-keyed; this file changes what it
-/// SHOWS, never what it writes.
+/// SHOWS, never what it writes. #2923 — the same file carries the
+/// registries the page used to copy by hand ([setupRegistryData]).
 const setupCatalogueOutput = 'web/setup_catalogue.js';
 
 /// Where the page-only strings live, one JSON object per locale.
 String setupStringsPath(String locale) => 'web/setup_l10n/setup_$locale.json';
 
-const _setupHtml = 'web/setup.html';
 const _featureNames = 'lib/features/workspace/presentation/feature_names.dart';
 const _featureCopy = 'lib/features/workspace/presentation/feature_copy.dart';
 
-/// Validation domains whose ARB key is not `eventType` + the camel-cased
-/// wire name. The app calls the `service` event a service CHARGE.
-const _domainKeyOverrides = {'service': 'eventTypeServiceCharge'};
+/// #2923 — the validation domains the questionnaire offers a card for, in
+/// its order, each with the switch its card needs (null: always offered).
+/// Typed, so a renamed event type or feature fails to compile here instead
+/// of drifting on the page. `adjustment` keeps its card although the
+/// app's settings screen dropped it (#816): the page asks what it asked.
+const setupValidationDomains = <(EventType, WorkspaceFeature?)>[
+  (EventType.payment, WorkspaceFeature.moneyTab),
+  (EventType.expense, WorkspaceFeature.moneyTab),
+  (EventType.serviceCharge, WorkspaceFeature.services),
+  (EventType.quota, null),
+  (EventType.reservationDelete, WorkspaceFeature.deletionRequests),
+  (EventType.roleChange, null),
+  (EventType.memberJoin, null),
+  (EventType.reservation, null),
+  (EventType.spaceReservation, WorkspaceFeature.levelBooking),
+  (EventType.invoicePayment, WorkspaceFeature.invoicing),
+  (EventType.adjustment, WorkspaceFeature.moneyTab),
+  (EventType.invoiceWriteoff, WorkspaceFeature.invoicing),
+  (EventType.priceNegotiation, null),
+  (EventType.expenseSchedule, WorkspaceFeature.scheduledExpenses),
+  (EventType.paymentTermsChange, WorkspaceFeature.memberPaymentTerms),
+  (EventType.invoiceIssue, null),
+  (EventType.invoiceVoid, null),
+  (EventType.refund, null),
+  (EventType.memberStatusChange, null),
+  (EventType.subscriptionChange, null),
+  (EventType.matrixChange, null),
+  (EventType.leaseChange, WorkspaceFeature.premisesLease),
+  (EventType.commitmentVariance, WorkspaceFeature.purchases),
+];
+
+/// The key a questionnaire stores a domain's answers under: the event
+/// type's wire name, except `service` — what the page has always called
+/// the service-charge domain, so a saved questionnaire keeps loading.
+String setupDomainKey(EventType type) =>
+    type == EventType.serviceCharge ? 'service' : type.dbName;
 
 /// `WorkspaceFeature.x => l10n.someKey` in [source], as `x -> someKey`.
 ///
@@ -80,16 +117,6 @@ String _camel(String snake) => snake
     .split('_')
     .map((p) => p.isEmpty ? p : p[0].toUpperCase() + p.substring(1))
     .join();
-
-/// The single-quoted keys inside `const NAME=[ ... ];` in setup.html.
-List<String> _pageList(String html, String name, RegExp item) {
-  final start = html.indexOf('const $name=[');
-  if (start < 0) throw StateError('$_setupHtml has no const $name=[');
-  final end = html.indexOf('];', start);
-  return [
-    for (final m in item.allMatches(html.substring(start, end))) m.group(1)!,
-  ];
-}
 
 /// #2868 — the arms of an ICU `{key, select, a{…} b{…} other{…}}`
 /// message, by name; the `other` arm only when [keepOther] (for the keyed
@@ -183,12 +210,8 @@ String _arbString(Map<String, dynamic> arb, String key, String locale) {
 
 /// The whole resource, as the file's exact text.
 String buildSetupL10n() {
-  final html = File(_setupHtml).readAsStringSync();
   final names = _getterMap(File(_featureNames).readAsStringSync());
   final descriptions = _getterMap(File(_featureCopy).readAsStringSync());
-  final permissions = _pageList(html, 'PERMS', RegExp(r"'([A-Za-z]+)'"));
-  final domains = _pageList(html, 'DOMAINS', RegExp(r"'([a-z_]+)'"));
-  final countries = _pageList(html, 'COUNTRIES', RegExp(r"\['([A-Z]{2})'"));
 
   final out = <String, dynamic>{};
   for (final locale in setupLocales) {
@@ -219,23 +242,24 @@ String buildSetupL10n() {
             ],
       },
       'perm': {
-        for (final p in permissions)
-          p: _arbString(
+        for (final p in WorkspacePermission.values)
+          p.wireName: _arbString(
             arb,
-            'perm${p[0].toUpperCase()}${p.substring(1)}',
+            'perm${p.wireName[0].toUpperCase()}${p.wireName.substring(1)}',
             locale,
           ),
       },
       'domain': {
-        for (final d in domains)
-          d: _arbString(
+        for (final (type, _) in setupValidationDomains)
+          setupDomainKey(type): _arbString(
             arb,
-            _domainKeyOverrides[d] ?? 'eventType${_camel(d)}',
+            'eventType${_camel(type.dbName)}',
             locale,
           ),
       },
       'country': {
-        for (final c in countries) c: _arbString(arb, 'countryName$c', locale),
+        for (final c in CountryCatalog.countries)
+          c.code: _arbString(arb, 'countryName${c.code}', locale),
       },
       'journey': _journeyWords(arb, locale),
     };
@@ -252,6 +276,8 @@ String buildSetupL10n() {
 /// The process catalogue, as the file's exact text: process → subprocess
 /// → feature keys, in registry order. Read from `workspaceProcesses`, the
 /// one registry the Features screen, the resolver and the search use.
+/// #2923 — and the registry data the page used to hand-copy
+/// ([setupRegistryData]).
 String buildSetupCatalogue() {
   final processes = [
     for (final p in workspaceProcesses)
@@ -269,9 +295,11 @@ String buildSetupCatalogue() {
   const encoder = JsonEncoder.withIndent(' ');
   return '// SPDX-License-Identifier: AGPL-3.0-or-later\n'
       '// GENERATED by tool/build_setup_l10n.dart from workspaceProcesses '
-      '(#1330), setup_levels.dart and the bundled tax reference (#2868).\n'
-      '// Do not edit: change lib/features/workspace/domain/workspace_process.dart '
-      'or setup_levels.dart and run `dart run tool/build_setup_l10n.dart`.\n'
+      '(#1330), setup_levels.dart, the bundled tax reference (#2868) and the '
+      'app\'s registries (#2923).\n'
+      '// Do not edit: change the Dart sources and run '
+      '`dart run tool/build_setup_l10n.dart`.\n'
+      'window.SETUP_REGISTRY=${encoder.convert(setupRegistryData())};\n'
       'window.SETUP_PROCESSES=${encoder.convert(processes)};\n'
       'window.SETUP_LEVELS=${encoder.convert(setupLevelsData())};\n'
       'window.SETUP_OBLIGATIONS=${encoder.convert(setupObligationsData())};\n';
@@ -328,20 +356,78 @@ Map<String, Object?> setupLevelsData() => {
 /// The copy of the tax reference data the app ships (the instance bundle).
 const _taxReferenceBundle = 'assets/instance/tax_reference.json';
 
+TaxReferenceSet _bundledTaxReference() => TaxReferenceSet.parse(
+  jsonDecode(File(_taxReferenceBundle).readAsStringSync()),
+);
+
+/// #2923 — what the page needs of the app's registries, each read from its
+/// Dart owner so the page keeps no copy that could drift:
+///
+///  * `features` — every [WorkspaceFeature], in enum order, with the default
+///    a NEW workspace gets ([defaultFeatureFlagsForNewWorkspace], tier-aware);
+///  * `requires` / `availableIn` — [featureManifest]'s tree and countries;
+///  * `permissions` — [WorkspacePermission] in the roles screen's order;
+///  * `defaultMatrix` — the co-owner holds every permission, the admin and
+///    the member what [everydayMatrix] gives them;
+///  * `domains`, `domainGates`, `domainEventTypes` — [setupValidationDomains];
+///  * `invoicingCountries` — the catalogue countries the bundled reference
+///    lets the app issue for (the same `issuesFor` `legalProfileOf` asks);
+///  * `countries` — [CountryCatalog]: code, currency, time zone, scheme.
+Map<String, Object?> setupRegistryData() {
+  final defaults = defaultFeatureFlagsForNewWorkspace();
+  final permissions = [for (final p in WorkspacePermission.values) p.wireName];
+  final everyday = everydayMatrix();
+  final reference = _bundledTaxReference();
+  return {
+    'features': [
+      for (final f in WorkspaceFeature.values) [f.name, defaults[f.name] == true],
+    ],
+    'requires': {
+      for (final f in WorkspaceFeature.values)
+        if (featureManifest[f]!.requires case final parent?) f.name: parent.name,
+    },
+    'availableIn': {
+      for (final f in WorkspaceFeature.values)
+        if (featureManifest[f]!.availableIn case final countries?)
+          f.name: countries.toList(),
+    },
+    'permissions': permissions,
+    'defaultMatrix': {
+      'co_owner': permissions,
+      'admin': everyday['admin'],
+      'member': everyday['member'],
+    },
+    'domains': [for (final (type, _) in setupValidationDomains) setupDomainKey(type)],
+    'domainGates': {
+      for (final (type, gate) in setupValidationDomains)
+        if (gate != null) setupDomainKey(type): gate.name,
+    },
+    'domainEventTypes': {
+      for (final (type, _) in setupValidationDomains)
+        if (setupDomainKey(type) != type.dbName) setupDomainKey(type): type.dbName,
+    },
+    'invoicingCountries': [
+      for (final c in CountryCatalog.countries)
+        if (reference.issuesFor(c.code)) c.code,
+    ]..sort(),
+    'countries': [
+      for (final c in CountryCatalog.countries)
+        [c.code, c.currencyCode, c.defaultTimezone, c.scheme.name],
+    ],
+  };
+}
+
 /// #2868 — what the law of each country the page offers asks, from the
 /// bundled reference rows: the page works offline, so it carries them.
 /// A country without rows is left out; the page then says to ask an
 /// accountant.
 Map<String, Object?> setupObligationsData() {
-  final reference = TaxReferenceSet.parse(
-    jsonDecode(File(_taxReferenceBundle).readAsStringSync()),
-  );
-  final html = File(_setupHtml).readAsStringSync();
+  final reference = _bundledTaxReference();
   return {
-    for (final c in _pageList(html, 'COUNTRIES', RegExp(r"\['([A-Z]{2})'")))
-      if (setupObligations(c, reference: reference) case final rows
+    for (final c in CountryCatalog.countries)
+      if (setupObligations(c.code, reference: reference) case final rows
           when rows.isNotEmpty)
-        c: [for (final o in rows) o.toJson()],
+        c.code: [for (final o in rows) o.toJson()],
   };
 }
 
