@@ -2,7 +2,8 @@
 //
 // The demo's setup status (ADR 0047 §9), by the server's own rules
 // (`workspace_setup_status`, 0539, with the acknowledgements of 0545) over
-// the shared step catalogue: a step applies when its feature is on, is
+// the shared step catalogue: a step applies when its feature is effective
+// (`feature_effective`: on, with every feature it requires on), is
 // ready when the space holds what its evidence names (a manual step when
 // the owner marked it done), waits for a step it depends on, and an
 // optional step the owner set aside reads deferred. A milestone is reached
@@ -11,6 +12,7 @@
 // (`data/demo_setup_repository.dart`).
 import '../../../features/workspace/domain/setup_status.dart';
 import '../../../features/workspace/domain/setup_steps.dart';
+import '../../../features/workspace/domain/workspace_feature.dart';
 
 /// The status of a demo space whose features are [flags], whose [ready]
 /// steps hold their evidence, and whose [acknowledged] steps the owner set
@@ -20,8 +22,9 @@ SetupStatus demoSetupStatus(
   required Set<String> ready,
   Set<String> acknowledged = const {},
 }) {
+  final effective = effectiveFeatures(resolveEnabledFeatures(flags));
   bool applies(SetupStep s) =>
-      s.feature == null || flags[s.feature!.dbKey] == true;
+      s.feature == null || effective.contains(s.feature);
   bool done(SetupStep s) => s.evidence == 'manual'
       ? acknowledged.contains(s.id)
       : ready.contains(s.id);

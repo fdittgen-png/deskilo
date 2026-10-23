@@ -19776,6 +19776,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupGuideNext => 'Prossimo passo';
 
   @override
+  String setupGuideNoInvoicing(String money) {
+    String _temp0 = intl.Intl.selectLogic(money, {
+      'statements': 'La fatturazione non è scelta: i membri ricevono estratti di quanto devono e pagano in base a essi. Non servono IVA, numerazione né fatturazione elettronica, quindi la guida non li chiede.',
+      'other': 'La fatturazione non è scelta: non servono IVA, numerazione né fatturazione elettronica, quindi la guida non li chiede.',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get setupGuideNotInSetup => 'Non nella sua configurazione';
 
   @override
@@ -20048,6 +20057,28 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupLevelsTitle => 'Che cosa fa il suo spazio';
+
+  @override
+  String get setupLockConfirmTitle => 'Prima di salvare';
+
+  @override
+  String setupLockMoneyLocaleConfirm(String country, String currency) {
+    return '$country e $currency saranno fissati per sempre non appena questo spazio emetterà un documento o registrerà denaro: dopo, nessuno dei due potrà più cambiare. In caso di dubbio, li verifichi con il Suo commercialista.';
+  }
+
+  @override
+  String get setupLockMoneyLocaleFixed =>
+      'Fissato: questo spazio ha già emesso un documento o registrato denaro, quindi il paese e la valuta non possono più cambiare.';
+
+  @override
+  String setupLockNumberingConfirm(String number) {
+    return 'La prossima fattura avrà il numero $number. Non appena una fattura prende un numero da questa serie, quel numero resta per sempre, la serie non torna mai indietro, e una data nel numero si può togliere solo insieme a un nuovo prefisso o suffisso.';
+  }
+
+  @override
+  String setupLockRegimeConfirm(String regime) {
+    return 'Ogni fattura conserva per sempre il regime IVA con cui è emessa: «$regime» si applica dalla prossima fattura, e le fatture già emesse non cambiano.';
+  }
 
   @override
   String get setupLookMore => 'Motivo, colori delle sale e logo';

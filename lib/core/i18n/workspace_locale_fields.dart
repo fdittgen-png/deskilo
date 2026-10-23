@@ -26,12 +26,19 @@ class WorkspaceLocaleFields extends ConsumerWidget {
     required this.timezone,
     required this.enabled,
     required this.onTimezonePicked,
+    this.currencyLocked = false,
   });
 
   final TextEditingController currency;
   final TextEditingController timezone;
   final bool enabled;
   final ValueChanged<String> onTimezonePicked;
+
+  /// The currency is fixed (the space has recorded money); the caller says
+  /// why.
+  final bool currencyLocked;
+
+  bool get _currencyOpen => enabled && !currencyLocked;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +69,7 @@ class WorkspaceLocaleFields extends ConsumerWidget {
               ),
             ),
         ],
-        onChanged: !enabled
+        onChanged: !_currencyOpen
             ? null
             : (code) {
                 if (code != null) currency.text = code;

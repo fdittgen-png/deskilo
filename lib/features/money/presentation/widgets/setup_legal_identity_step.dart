@@ -8,7 +8,9 @@
 // Beside the form, the top of the sample invoice as it prints, redrawn as
 // the owner types; above it, what to ask an accountant first. What the
 // owner typed and has not saved is kept as the step's draft on the server
-// (#2869), through the frame the guide hands in.
+// (#2869), through the frame the guide hands in. Every invoice keeps the
+// VAT regime it is issued with, so a new regime is confirmed before it is
+// saved.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,8 +21,10 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/lock_confirm.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_legal.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_facts.dart';
@@ -120,11 +124,24 @@ class _SetupLegalIdentityStepState
     super.dispose();
   }
 
+  /// A regime other than [storedRegime] first says what every invoice
+  /// keeps; true when the save may go ahead.
+  Future<bool> _confirmRegime(String storedRegime) async {
+    final regime = _regime.value;
+    if (regime == vatRegimeFromWire(storedRegime)) return true;
+    final l10n = context.l10n;
+    return confirmBeforeLock(
+      context,
+      l10n.setupLockRegimeConfirm(_regimeLabel(l10n, regime)),
+    );
+  }
+
   Future<void> _save() async {
     final l10n = context.l10n;
     final stored = _stored;
     final template = ref.read(invoicePdfTemplateProvider).value;
     if (stored == null || template == null) return;
+    if (!await _confirmRegime(stored.vatRegime) || !mounted) return;
     _busy.value = true;
     final ok = await runGuarded(
       context,
@@ -192,18 +209,15 @@ class _SetupLegalIdentityStepState
                     isExpanded: true,
                     initialValue: regime,
                     items: [
-                      for (final (value, label) in [
-                        (
-                          VatRegime.notSubject,
-                          l10n.legalIdentityRegimeNotSubject,
-                        ),
-                        (VatRegime.exempt, l10n.legalIdentityRegimeExempt),
-                        (
-                          VatRegime.vatRegistered,
-                          l10n.legalIdentityRegimeVatRegistered,
-                        ),
+                      for (final value in const [
+                        VatRegime.notSubject,
+                        VatRegime.exempt,
+                        VatRegime.vatRegistered,
                       ])
-                        DropdownMenuItem(value: value, child: Text(label)),
+                        DropdownMenuItem(
+                          value: value,
+                          child: Text(_regimeLabel(l10n, value)),
+                        ),
                     ],
                     onChanged: (value) => _regime.value = value ?? regime,
                     decoration: InputDecoration(
@@ -294,6 +308,13 @@ class _SetupLegalIdentityStepState
     );
   }
 }
+
+String _regimeLabel(AppLocalizations l10n, VatRegime regime) =>
+    switch (regime) {
+      VatRegime.notSubject => l10n.legalIdentityRegimeNotSubject,
+      VatRegime.exempt => l10n.legalIdentityRegimeExempt,
+      VatRegime.vatRegistered => l10n.legalIdentityRegimeVatRegistered,
+    };
 
 /// What to ask an accountant before filling the step in.
 class _AskYourAccountant extends StatelessWidget {

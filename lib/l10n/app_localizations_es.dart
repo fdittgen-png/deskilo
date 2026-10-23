@@ -19761,6 +19761,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupGuideNext => 'A continuación';
 
   @override
+  String setupGuideNoInvoicing(String money) {
+    String _temp0 = intl.Intl.selectLogic(money, {
+      'statements': 'La facturación no está elegida: los miembros reciben extractos de lo que deben y pagan según ellos. No se necesita IVA, numeración ni facturación electrónica, así que la guía no los pide.',
+      'other': 'La facturación no está elegida: no se necesita IVA, numeración ni facturación electrónica, así que la guía no los pide.',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get setupGuideNotInSetup => 'No está en su configuración';
 
   @override
@@ -20032,6 +20041,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupLevelsTitle => 'Lo que hace su espacio';
+
+  @override
+  String get setupLockConfirmTitle => 'Antes de guardar';
+
+  @override
+  String setupLockMoneyLocaleConfirm(String country, String currency) {
+    return '$country y $currency quedarán fijados para siempre en cuanto este espacio emita un documento o registre dinero: después, ninguno de los dos podrá cambiar. Si tiene dudas, compruébelos con su asesor contable.';
+  }
+
+  @override
+  String get setupLockMoneyLocaleFixed =>
+      'Fijado: este espacio ya ha emitido un documento o registrado dinero, así que el país y la moneda ya no pueden cambiar.';
+
+  @override
+  String setupLockNumberingConfirm(String number) {
+    return 'La próxima factura llevará el número $number. En cuanto una factura toma un número de esta serie, ese número se conserva para siempre, la serie nunca retrocede, y una fecha en el número solo puede quitarse junto con un nuevo prefijo o sufijo.';
+  }
+
+  @override
+  String setupLockRegimeConfirm(String regime) {
+    return 'Cada factura conserva para siempre el régimen de IVA con el que se emite: «$regime» se aplica a partir de la próxima factura, y las facturas ya emitidas no cambian.';
+  }
 
   @override
   String get setupLookMore => 'Motivo, colores de las salas y logotipo';
