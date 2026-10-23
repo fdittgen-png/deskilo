@@ -1,0 +1,116 @@
+{
+  "setupServicesAdd": "Add this service",
+  "@setupServicesAdd": {
+    "description": "#2871 setup run steps: setupServicesAdd"
+  },
+  "setupServicesInvalid": "Give the service a name and a price.",
+  "@setupServicesInvalid": {
+    "description": "#2871 setup run steps: setupServicesInvalid"
+  },
+  "setupServicesSaveFailed": "The service could not be added. Try again.",
+  "@setupServicesSaveFailed": {
+    "description": "#2871 setup run steps: setupServicesSaveFailed"
+  },
+  "setupServicesAdded": "{name} added.",
+  "@setupServicesAdded": {
+    "description": "#2871 setup run steps: setupServicesAdded",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "setupServicesPreviewEmpty": "No service yet: members have nothing to add to their bill.",
+  "@setupServicesPreviewEmpty": {
+    "description": "#2871 setup run steps: setupServicesPreviewEmpty"
+  },
+  "setupServicesPreviewNote": "Members pick from this list when they add a consumption to their bill.",
+  "@setupServicesPreviewNote": {
+    "description": "#2871 setup run steps: setupServicesPreviewNote"
+  },
+  "setupServicesMore": "VAT rate, place of supply and stock in Services",
+  "@setupServicesMore": {
+    "description": "#2871 setup run steps: setupServicesMore"
+  },
+  "setupPurchaseSidePreview": "Members do not see this: it stays with the people who manage the money.",
+  "@setupPurchaseSidePreview": {
+    "description": "#2871 setup run steps: setupPurchaseSidePreview"
+  },
+  "setupPublicPageNotPublished": "Not published: nobody outside the space sees this page.",
+  "@setupPublicPageNotPublished": {
+    "description": "#2871 setup run steps: setupPublicPageNotPublished"
+  },
+  "setupPublicPageMore": "Address, image and plans in the page editor",
+  "@setupPublicPageMore": {
+    "description": "#2871 setup run steps: setupPublicPageMore"
+  },
+  "setupNewMembersSaveFailed": "The new-member defaults could not be saved. Try again.",
+  "@setupNewMembersSaveFailed": {
+    "description": "#2871 setup run steps: setupNewMembersSaveFailed"
+  },
+  "setupNewMembersQuestions": "Questions asked when someone joins",
+  "@setupNewMembersQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersQuestions"
+  },
+  "setupNewMembersNoQuestions": "No question: people join with their name and e-mail address.",
+  "@setupNewMembersNoQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersNoQuestions"
+  },
+  "setupNewMembersEditQuestions": "Write the questions",
+  "@setupNewMembersEditQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersEditQuestions"
+  },
+  "setupNewMembersPreviewNoQuestions": "Someone asking to join gives their name and e-mail address, nothing more.",
+  "@setupNewMembersPreviewNoQuestions": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewNoQuestions"
+  },
+  "setupNewMembersPreviewJoin": "When they ask to join, they answer:",
+  "@setupNewMembersPreviewJoin": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewJoin"
+  },
+  "setupNewMembersPreviewStart": "A new member starts on a {pct} % subscription ({policy}).",
+  "@setupNewMembersPreviewStart": {
+    "description": "#2871 setup run steps: setupNewMembersPreviewStart",
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      },
+      "policy": {
+        "type": "String"
+      }
+    }
+  },
+  "setupKioskNone": "No kiosk account yet.",
+  "@setupKioskNone": {
+    "description": "#2871 setup run steps: setupKioskNone"
+  },
+  "setupKioskCurrent": "{name} runs the kiosk.",
+  "@setupKioskCurrent": {
+    "description": "#2871 setup run steps: setupKioskCurrent",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "setupKioskNoCandidate": "Invite the tablet’s account first: it joins like a member, then becomes the kiosk here.",
+  "@setupKioskNoCandidate": {
+    "description": "#2871 setup run steps: setupKioskNoCandidate"
+  },
+  "setupKioskPick": "Account for the tablet",
+  "@setupKioskPick": {
+    "description": "#2871 setup run steps: setupKioskPick"
+  },
+  "setupKioskMake": "Make it the kiosk",
+  "@setupKioskMake": {
+    "description": "#2871 setup run steps: setupKioskMake"
+  },
+  "setupKioskSaveFailed": "The kiosk could not be set up. Try again.",
+  "@setupKioskSaveFailed": {
+    "description": "#2871 setup run steps: setupKioskSaveFailed"
+  },
+  "setupLookMore": "Pattern, room colours and logo",
+  "@setupLookMore": {
+    "description": "#2871 setup run steps: setupLookMore"
+  }
+}
