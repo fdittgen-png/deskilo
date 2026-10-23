@@ -5901,6 +5901,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'workspace_code': 'Bereichscode',
       'x': 'X',
       'y': 'Y',
+      'field': 'Feld',
+      'value': 'Wert',
+      'process': 'Prozess',
+      'feature': 'Funktion',
+      'on': 'Aktiv',
       'other': '$key',
     });
     return '$_temp0';
@@ -5981,6 +5986,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'einvoice_inbox': 'Empfangene E-Rechnungen',
       'guest_participations': 'Gästebesuche',
       'rights_requests': 'Datenschutzanfragen',
+      'overview': 'Überblick',
+      'features': 'Funktionen',
       'other': '$key',
     });
     return '$_temp0';
@@ -5989,6 +5996,64 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get exportUncertifiedSoftware =>
       'Nach der veröffentlichten Spezifikation erstellt, aber DesKilo ist in diesem Land keine zertifizierte Software — klären Sie mit Ihrer Steuerberatung, ob das für Sie Pflicht ist.';
+
+  @override
+  String exportValueName(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'reserved': 'Gebucht',
+      'checkedIn': 'Eingecheckt',
+      'completed': 'Abgeschlossen',
+      'cancelled': 'Storniert',
+      'released': 'Freigegeben',
+      'active': 'Aktiv',
+      'paused': 'Pausiert',
+      'pending': 'Ausstehend',
+      'exited': 'Ausgetreten',
+      'applied': 'Angewendet',
+      'confirmed': 'Bestätigt',
+      'rejected': 'Abgelehnt',
+      'expired': 'Abgelaufen',
+      'created': 'Erstellt',
+      'modified': 'Geändert',
+      'submitted': 'Eingereicht',
+      'approved': 'Genehmigt',
+      'accepted': 'Angenommen',
+      'declined': 'Abgelehnt',
+      'charge': 'Belastung',
+      'credit': 'Gutschrift',
+      'subscription': 'Abonnement',
+      'overage': 'Überschreitung',
+      'expense': 'Auslage',
+      'payment': 'Zahlung',
+      'adjustment': 'Korrektur',
+      'service': 'Leistung',
+      'package': 'Paket',
+      'refund': 'Erstattung',
+      'reimbursement': 'Auslagenerstattung',
+      'seat': 'Platz',
+      'room': 'Raum',
+      'parking': 'Parken',
+      'standard': 'Standard',
+      'ev': 'Elektro',
+      'accessible': 'Barrierefrei',
+      'workspace': 'Arbeitsbereich',
+      'n': 'Nord',
+      'e': 'Ost',
+      's': 'Süd',
+      'w': 'West',
+      'blocked': 'Nicht erlaubt',
+      'payg': 'Nach Verbrauch',
+      'none': 'Nein',
+      'passive': 'Nachfolger',
+      'founder': 'Gründer',
+      'invited': 'Eingeladen',
+      'full': 'Rechnung',
+      'usage': 'Nutzung',
+      'settlement': 'Sammelabrechnung',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get featureAccessorySupplements => 'Zubehör-Aufpreise';

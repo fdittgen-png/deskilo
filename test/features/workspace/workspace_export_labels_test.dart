@@ -31,6 +31,7 @@ List<XlsxSheet> _in(String language) => localizeExportSheets(
 );
 
 void main() {
+  _valuesTest();
   test('the headers and sheet names are in the reader\'s language', () {
     final en = _in('en');
     final fr = _in('fr');
@@ -89,6 +90,28 @@ void main() {
     expect(
       about.rows.any((r) => r.length == 2 && r[0] == 'Check-ins' && r[1] == 1),
       isTrue,
+    );
+  });
+}
+
+void _valuesTest() {
+  test('a stored word reads in the reader\'s language, only in its column, '
+      'and the CSV keeps the word', () {
+    const sheet = XlsxSheet(
+      name: 'Reservations',
+      rows: [
+        ['id', 'status', 'series_pattern'],
+        ['checkedIn', 'checkedIn', 'checkedIn'],
+      ],
+    );
+    final fr = localizeExportSheets(
+      [sheet],
+      workspaceExportLabels(lookupAppLocalizations(const Locale('fr'))),
+    ).single;
+    expect(fr.rows[1], ['checkedIn', 'Arrivé', 'checkedIn']);
+    expect(
+      exportSheetCsv(sheet).split('\r\n')[1],
+      'checkedIn,checkedIn,checkedIn',
     );
   });
 }
