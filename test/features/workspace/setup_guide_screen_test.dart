@@ -59,6 +59,7 @@ Future<List<String>> _pump(
   SetupStatus status, {
   Widget? home,
   Set<WorkspaceFeature>? features,
+  Map<String, SetupEstimate> observed = const {},
 }) async {
   final pushed = <String>[];
   GoRoute target(String path) => GoRoute(
@@ -80,7 +81,8 @@ Future<List<String>> _pump(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(
-          localSetup: FakeLocalSetupRepository(status: status),
+          localSetup: FakeLocalSetupRepository(status: status)
+            ..timingRanges = observed,
         ),
         if (features != null)
           enabledFeaturesSyncProvider.overrideWithValue(features),
@@ -110,6 +112,28 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(pushed, ['/editor']);
+  });
+
+  testWidgets('a step the instance has timed often enough says the observed '
+      'range, and the milestone line follows it', (tester) async {
+    await _pump(tester, _status(), observed: {'places': (low: 4, high: 7)});
+    expect(find.text('about 4–7 min'), findsOneWidget);
+    expect(find.text('about 10–20 min'), findsNothing);
+    expect(
+      find.text('About 4–7 min until: Take bookings'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('without observations the range is the catalogue rule', (
+    tester,
+  ) async {
+    await _pump(tester, _status());
+    expect(find.text('about 10–20 min'), findsOneWidget);
+    expect(
+      find.text('About 10–20 min until: Take bookings'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('what can wait is folded, by group', (tester) async {

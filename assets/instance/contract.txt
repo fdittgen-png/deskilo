@@ -1316,6 +1316,12 @@ constraint setup_step_drafts.setup_step_drafts_version_check CHECK ((version > 0
 constraint setup_step_drafts.setup_step_drafts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint setup_step_drafts.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint setup_step_drafts.system_company_present CHECK ((company_id IS NOT NULL))
+constraint setup_step_timings.setup_step_timings_duration_seconds_check CHECK ((duration_seconds >= 0))
+constraint setup_step_timings.setup_step_timings_key UNIQUE (workspace_id, step, opened_at)
+constraint setup_step_timings.setup_step_timings_pkey PRIMARY KEY (id)
+constraint setup_step_timings.setup_step_timings_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint setup_step_timings.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint setup_step_timings.system_company_present CHECK ((company_id IS NOT NULL))
 constraint sites.sites_city_check CHECK ((char_length(city) <= 120))
 constraint sites.sites_country_code_check CHECK ((char_length(country_code) <= 2))
 constraint sites.sites_legal_id_check CHECK ((char_length(legal_id) <= 40))
@@ -2320,6 +2326,7 @@ routine public.record_payment(p_workspace_id uuid, p_member_id uuid, p_amount_ce
 routine public.record_rights_request(p_workspace_id uuid, p_member_id uuid, p_kind text, p_details text, p_received_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:55e23d40bfd3
 routine public.record_screen_capture(p_kind text, p_context_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:af9f0254e495
 routine public.record_service_charge(p_workspace_id uuid, p_subject_member_id uuid, p_service_id uuid, p_quantity integer, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:9cecdcbb548f
+routine public.record_setup_step_timing(p_workspace_id uuid, p_step text, p_opened_at timestamp with time zone, p_seconds integer) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:99c5898c9c6f
 routine public.record_supplier_payment_v1(p_workspace_id uuid, p_obligation_id uuid, p_amount_cents bigint, p_revision integer, p_request_id uuid, p_paid_on date, p_method text, p_reference text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ee6af111ea44
 routine public.record_vies_check(p_member_id uuid, p_vat_id text, p_status text, p_consultation text, p_detail text) -> jsonb | function | definer | volatile | exec:service_role | body:5dedd386e324
 routine public.record_workspace_application_decision() -> trigger | function | definer | volatile | exec:service_role | body:9c3fe56cd597
@@ -2547,6 +2554,8 @@ routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable 
 routine public.setup_step_drafts_step_known() -> trigger | function | invoker | volatile | exec:service_role | body:37c49c4ff5dc
 routine public.setup_step_holds_secret(p_step text) -> boolean | function | invoker | immutable | exec:service_role | body:a73e8cca762c
 routine public.setup_step_markable(p_workspace_id uuid, p_step text) -> jsonb | function | definer | stable | exec:service_role | body:5667dc2ba638
+routine public.setup_step_timing_ranges() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5d70c452c717
+routine public.setup_step_timings_no_person() -> trigger | function | invoker | volatile | exec:service_role | body:b4dd7340afb2
 routine public.shared_workspaces_of_group(p_group uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:1335fc9c3a85
 routine public.shared_workspaces_with(p_user uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:ab5de07c3a62
 routine public.shares_workspace_with(other uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:e85ad0fc6fb5
@@ -2935,6 +2944,8 @@ trigger setting_definitions.zz_system_columns_stamp CREATE TRIGGER zz_system_col
 trigger setting_values.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_values FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setup_step_drafts.setup_step_drafts_step_known CREATE TRIGGER setup_step_drafts_step_known BEFORE INSERT OR UPDATE OF step ON public.setup_step_drafts FOR EACH ROW EXECUTE FUNCTION setup_step_drafts_step_known()
 trigger setup_step_drafts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setup_step_drafts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger setup_step_timings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setup_step_timings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger setup_step_timings.zzz_setup_step_timings_no_person CREATE TRIGGER zzz_setup_step_timings_no_person BEFORE INSERT OR UPDATE ON public.setup_step_timings FOR EACH ROW EXECUTE FUNCTION setup_step_timings_no_person()
 trigger sites.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.sites FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger space_inquiries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.space_inquiries FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger space_inquiry_messages.inquiry_messages_refs_guard CREATE TRIGGER inquiry_messages_refs_guard BEFORE INSERT OR UPDATE OF body ON public.space_inquiry_messages FOR EACH ROW EXECUTE FUNCTION inquiry_messages_refs_guard()
