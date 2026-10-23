@@ -26,6 +26,7 @@ none: it is read as reassurance.
 | A link, followed: the demo opens in the space the link named, as its persona, on its screen, through the real router and its guards (#2872) | `test/core/demo/demo_link_apply_test.dart` |
 | The workspace data report rendered from the Pézenas space: every section present, the registers across the sheet, every page numbered, and each total equal to the workbook's column for the same rows (#2862) | `test/features/workspace/workspace_data_report_test.dart` |
 | The second space (Leipzig): German, basic (a new space's features, no VAT, no accounting), coherent, answered from its own repositories; Ada (its co-owner) and Bruno are members of both, so Me lists two spaces and the bills of both | `test/core/demo/demo_second_space_test.dart` |
+| A new discussion is not empty: the directory lists the active cast of both spaces, the persona left out and Ada and Bruno under both, the cast's group follows, and one letter suggests from it (#2472) | `test/core/demo/demo_reachable_test.dart` |
 | The cast is a whole person on screen — a name, an e-mail, a number that could reach nobody — so a guide image can be shot here instead of in a real space (#1514) | `test/core/demo/demo_identity_test.dart` |
 | Reset to baseline, and the fence against an in-flight write | `test/core/demo/demo_session_test.dart` |
 | Personas resolve through the real permission model, and a persona is who ACTS: bookings, decisions and requests follow it, while membership edits survive it (#1565) | `test/core/demo/demo_persona_test.dart` |

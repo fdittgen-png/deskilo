@@ -144,6 +144,7 @@ import 'seed/demo_asset_seed.dart';
 import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_purchase_seed.dart';
+import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_setup_seed.dart';
@@ -340,7 +341,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider
           .overrideWithValue(fixture.guests),
-      accountContactRepositoryProvider.overrideWith((ref,source)=>FakeAccountContactRepository()),
+      _demoContacts(fixture), // #2472
       // #1824 — the messenger of every server, one in-memory one each.
       // #2327 — this server's is the fixture's, seeded; any other is empty.
       // #2405 — this server named by its origin is this server too, as
@@ -448,6 +449,16 @@ List<Override> demoOverrides(DemoFixture fixture) {
 
 /// #1625 — Demo's fictional installation id (never a real server's).
 const _kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
+
+/// #2472 — this server's directory is both spaces' cast, read at each
+/// call so a persona switch is followed; any other server's is empty.
+Override _demoContacts(DemoFixture fixture) =>
+    accountContactRepositoryProvider.overrideWith(
+      (ref, source) => FakeAccountContactRepository()
+        ..reachableOf = source.isEmpty || source == kDemoServerOrigin
+            ? () => demoReachablePeople(fixture.actor.memberId)
+            : null,
+    );
 
 /// The visitor's personal context: the demonstration's persona at its one
 /// fictional installation. The real provider reads the installation row of
