@@ -130,6 +130,11 @@ class FakeAccountContactRepository implements AccountContactRepository {
   final people = <Map<String, dynamic>>[];
   // What my_reachable_people answers.
   final reachable = <ReachablePerson>[];
+  // When set, my_reachable_people fails (a server that cannot answer).
+  bool failReachable = false;
+  // When set, answers in place of [reachable], at the time of the call
+  // (the demo's persona can change between two calls).
+  List<ReachablePerson> Function()? reachableOf;
   final threads = <Map<String, dynamic>>[];
   final notes = <String, List<Map<String, dynamic>>>{};
   final sent = <({String recipient, String body})>[];
@@ -159,7 +164,10 @@ class FakeAccountContactRepository implements AccountContactRepository {
   }) async =>
       people.where((p) => (p['name'] as String).contains(query)).toList();
   @override
-  Future<List<ReachablePerson>> reachablePeople() async => reachable;
+  Future<List<ReachablePerson>> reachablePeople() async {
+    if (failReachable) throw StateError('directory unavailable');
+    return reachableOf?.call() ?? reachable;
+  }
   @override
   Future<List<Map<String, dynamic>>> conversations({
     DateTime? beforeAt,
