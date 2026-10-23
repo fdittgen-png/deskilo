@@ -15136,6 +15136,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalFollowsWorkspace => 'Aus den Arbeitsbereichsangaben';
 
   @override
+  String get portalGroupsHeading => 'Gruppen';
+
+  @override
   String get portalImage => 'URL des Workspace-Bildes';
 
   @override
@@ -15190,6 +15193,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get portalPublished => 'Im öffentlichen Verzeichnis sichtbar';
+
+  @override
+  String get portalReachableEmpty =>
+      'Noch ist niemand erreichbar. Suchen Sie nach einem Namen, um Personen zu finden.';
+
+  @override
+  String get portalReachableHeading => 'Personen, denen Sie schreiben können';
 
   @override
   String get portalRegisterDirectory =>
@@ -18442,6 +18452,32 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get salesTaxWorksheetEmpty =>
       'In diesem Zeitraum wurde keine Rechnung mit Sales Tax ausgestellt.';
+
+  @override
+  String get sampleDataClear => 'Beispieldaten löschen';
+
+  @override
+  String sampleDataCounts(int members, int bookings, int payments) {
+    return 'Dieser Bereich enthält Beispieldaten: $members Mitglieder, $bookings Buchungen, $payments Zahlungen.';
+  }
+
+  @override
+  String get sampleDataExplain =>
+      'Füllen Sie diesen Testbereich mit einigen Beispielmitgliedern, ihren Buchungen der letzten und der kommenden zwei Wochen und einigen Zahlungen, gebildet aus Ihren eigenen Plätzen und Preisen. Es wird nichts an jemanden gesendet, und Sie können alles wieder löschen.';
+
+  @override
+  String get sampleDataFill => 'Mit Beispieldaten füllen';
+
+  @override
+  String get sampleDataFillFailed =>
+      'Die Beispieldaten konnten nicht angelegt werden.';
+
+  @override
+  String get sampleDataNotCleared =>
+      'Nicht gelöscht: Die Beispieldaten sind noch in diesem Bereich.';
+
+  @override
+  String get sampleDataTitle => 'Beispieldaten';
 
   @override
   String get scanCameraWebUnavailable =>
