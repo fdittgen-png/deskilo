@@ -152,6 +152,7 @@ import 'in_memory_default_level_store.dart';
 import 'in_memory_fakes.dart';
 import 'memory_recorder_log_backend.dart';
 import 'test_clock.dart';
+import 'test_workspace_context.dart';
 
 export 'package:deskilo/core/demo/data/auth_repository.dart';
 export 'package:deskilo/core/demo/data/guest_participation_repository.dart';
@@ -442,6 +443,8 @@ List<Override> standardTestOverrides({
         personalEpoch: 1,
       );
     }),
+    // #2561 L4 -- the selected workspace's context, over the fake.
+    testWorkspaceContext(workspaceRepo, installationId: kTestInstallationId),
     // #586: the default booking period persists on-device.
     defaultPeriodStoreProvider
         .overrideWithValue(defaultPeriod ?? InMemoryDefaultPeriodStore()),

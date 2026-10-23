@@ -199,7 +199,7 @@ class _HolidayImportSheetState extends ConsumerState<_HolidayImportSheet> {
       setState(() => _busy = false);
       return;
     }
-    ref.invalidate(closureDaysProvider);
+    ref.invalidate(workspaceContextProvider); // #2561 L4: the calendar is the context's
     AppSnack.success(
       context,
       l10n.publicHolidaysCreated(created),

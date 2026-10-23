@@ -30,6 +30,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../helpers/fixed_business_inputs.dart';
 import '../../helpers/installation_auth_storage.dart' show MemorySecrets;
 import '../../helpers/native_federation_flow.dart' show session, user;
 import '../../helpers/real_async.dart' show untilReal;
@@ -156,6 +157,7 @@ void main() {
     }
     container = ProviderContainer(
       overrides: [
+        ...fixedBusinessInputs(), // #2561 L4
         sessionStateProvider.overrideWith((ref) => Stream.value('p-user')),
         authStateProvider.overrideWith((ref) => Stream.value('p-user')),
         bootedBackendUrlProvider.overrideWithValue(root.origin),

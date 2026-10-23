@@ -250,11 +250,17 @@ void _installWorkspaceAmbients(WidgetRef ref) {
   // Day-based booking windows anchor to the WORKSPACE clock — install
   // the active workspace's zone (re-installs on profile switch). A
   // device hours away must still book the workspace's midnights.
-  WorkspaceTime.install(ref.watch(currentWorkspaceProvider).value?.timezone);
+  // #2561 L4 — the legacy adapter is fed from the calendar the selected
+  // workspace's context captured: while W-B is being captured, W-A's zone
+  // and hours are not left standing for it.
+  final calendar = ref.watch(readyWorkspaceContextProvider)?.calendar;
+  WorkspaceTime.install(calendar?.timezone);
 
   // The working day (#446) is ambient for the same reason as the
   // clock: the HalfDayWindows builders travel as function references.
-  WorkHours.install(ref.watch(workHoursProvider).value);
+  // Its provider stays watched: the booking gate reads it synchronously.
+  ref.watch(workHoursProvider);
+  WorkHours.install(calendar?.workHours);
 
   // #1277 — and the workspace's own words, ambient for the same
   // reason: the legend, the shell destinations and the booking sheet

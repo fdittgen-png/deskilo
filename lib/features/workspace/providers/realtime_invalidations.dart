@@ -19,13 +19,13 @@ final workspaceInvalidations = [
     scope: InvalidationScope.account,
   ),
   // Flags, granularity, rules and the availability config all derive from
-  // the workspace row.
+  // the workspace row. #2561 L4: the open days and the working day are the
+  // calendar the context captured, so the context re-captures.
   InvalidationContribution(
     const ['workspaces'],
     [
-      openWeekdaysProvider,
+      workspaceContextProvider,
       bookingGranularityProvider,
-      workHoursProvider,
       // #1277 — a renamed word is a workspaces-row change like any other.
       lexiconProvider,
     ],
@@ -35,7 +35,7 @@ final workspaceInvalidations = [
     [myWorkspacesProvider],
     scope: InvalidationScope.account,
   ),
-  InvalidationContribution(const ['closure_days'], [closureDaysProvider]),
+  InvalidationContribution(const ['closure_days'], [workspaceContextProvider]),
   // #458: the default-workspace choice rides the profile row.
   InvalidationContribution(
     const ['profiles'],

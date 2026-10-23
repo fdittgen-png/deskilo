@@ -10,19 +10,25 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:deskilo/app/active_tax_reference.dart';
 import 'package:deskilo/core/backend/auth_secret_store.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
+import 'package:deskilo/core/backend/operation_context.dart';
 import 'package:deskilo/core/cache/cache_store.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
+import 'package:deskilo/core/instance/tax_reference_bundle_asset.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
 import 'package:deskilo/core/realtime/realtime_wiring.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/settings/settings.dart';
+import 'package:deskilo/core/time/workspace_calendar.dart';
+import 'package:deskilo/core/vat/tax_reference.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
@@ -52,6 +58,14 @@ class _Host {
   final paths = <String>[];
   Completer<void>? gate;
   bool down = false;
+
+  // #2561 L4 -- this installation's own calendar and tax reference.
+  List<int> openWeekdays = const [1, 2, 3, 4, 5];
+  int workStart = 8 * 60;
+  String closureDay = '2026-12-25';
+  bool issuesInFr = true;
+  bool taxDown = false;
+  Completer<void>? calendarGate;
 
   late final SupabaseClient client = SupabaseClient(
     origin,
@@ -93,11 +107,60 @@ class _Host {
               ]
             : rows;
         return _json(request, body, extra: {'content-range': '0-0/1'});
+      case '/rest/v1/workspaces':
+        await calendarGate?.future;
+        return _json(request, {
+          'booking_rules': {
+            'open_weekdays': openWeekdays,
+            'work_start_minutes': workStart,
+          },
+        });
+      case '/rest/v1/closure_days':
+        return _json(request, [
+          {
+            'id': 'closure-$installationId',
+            'workspace_id': 'ws-1',
+            'day': closureDay,
+            'reason': 'closed at $installationId',
+          },
+        ]);
+      case '/rest/v1/rpc/tax_reference_history':
+        if (taxDown) return http.Response('{}', 503, request: request);
+        return _json(request, [
+          {
+            'id': 'gate-$installationId',
+            'domain': 'issuing_gate',
+            'country': 'FR',
+            'key': 'gate',
+            'valid_from': '1900-01-01',
+            'valid_to': null,
+            'value': {
+              'supported': issuesInFr,
+              'requires_tax_number': false,
+              'national_channel_required': false,
+            },
+            'source': installationId,
+            'confirmed': true,
+          },
+        ]);
       default:
         return _json(request, null);
     }
   }
+
+  /// What reached this host other than a context capturing its calendar and
+  /// tax reference (#2561 L4).
+  List<String> get operations => [
+        for (final p in paths)
+          if (!_captures.any(p.endsWith)) p,
+      ];
 }
+
+const _captures = [
+  '/rest/v1/workspaces',
+  '/rest/v1/closure_days',
+  '/rest/v1/rpc/tax_reference_history',
+];
 
 Workspace _ws(String id, String timezone) => Workspace(
       id: id,
@@ -142,6 +205,12 @@ class _Resolver implements WorkspaceHostResolver {
 class _Rig {
   _Rig() {
     resolver = _Resolver(a);
+    // #2561 L4 -- W-B's own calendar and tax reference differ from W-A's.
+    b
+      ..openWeekdays = const [1, 2, 3, 4, 5, 6]
+      ..workStart = 7 * 60
+      ..closureDay = '2026-12-26'
+      ..issuesInFr = false;
   }
 
   final p = _Host('https://p.example', 'inst-p', 'unused');
@@ -151,6 +220,9 @@ class _Rig {
   late final _Resolver resolver;
   final cache = InMemoryCacheStore();
   Workspace current = _ws('ws-1', 'Europe/Paris');
+
+  /// The copy bundled with the app (#2561 L4): null = none can be read.
+  TaxReferenceSet? bundled;
 
   late final ProviderContainer container = ProviderContainer(overrides: [
     sessionStateProvider.overrideWith((ref) => Stream.value('p-1')),
@@ -171,6 +243,8 @@ class _Rig {
     realtimeWorkspaceClientProvider.overrideWith(
       (ref) => ref.watch(selectedWorkspaceClientProvider),
     ),
+    taxReferenceBundleLoaderProvider.overrideWithValue(() async =>
+        bundled ?? (throw StateError('no bundled copy in this test'))),
   ]);
 
   /// Select [workspace] hosted on [host].
@@ -379,7 +453,7 @@ void main() {
     // Workspace operations written through the migrated factory reach W-B.
     await outcome(tester, rig.container.read(placeFeedbackRepositoryProvider).favorites('ws-1'), 'favourites');
     expect(rig.b.paths, isNotEmpty);
-    expect(rig.a.paths, isEmpty);
+    expect(rig.a.operations, isEmpty);
     expect(rig.p.paths, isEmpty);
     await finish(tester);
   });
@@ -390,7 +464,7 @@ void main() {
     await settle(tester, rig.container.read(workspaceContextProvider.future));
     await outcome(tester, rig.container.read(personalPreferencesRepositoryProvider).read(), 'prefs');
     expect(rig.p.paths, isNotEmpty);
-    expect(rig.a.paths, isEmpty);
+    expect(rig.a.operations, isEmpty);
     expect(rig.b.paths, isEmpty);
     await finish(tester);
   });
@@ -472,5 +546,174 @@ void main() {
     await operate();
     expect(rig.b.paths.length, greaterThan(seenByB));
     await finish(tester);
+  });
+
+  // #2561 L4 -- the calendar and the tax reference are captured into the
+  // context from the selected workspace's own host; W-A's never stand for
+  // W-B's, early, late or through a consumer.
+  group('calendar and tax reference in the context', () {
+    late TaxReferenceSet installed;
+    setUp(() => installed = ActiveTaxReference.current);
+    tearDown(() => ActiveTaxReference.install(installed));
+
+    testWidgets('each workspace\'s context carries its own host\'s calendar and tax reference, '
+        'and the consumers follow a switch', timeout: _limit, (tester) async {
+      final subs = [
+        rig.container.listen(workspaceContextProvider, (_, _) {}),
+        rig.container.listen(readyWorkspaceContextProvider, (_, _) {}),
+        rig.container.listen(activeTaxReferenceProvider, (_, _) {}),
+      ];
+      addTearDown(() => [for (final s in subs) s.close()]);
+
+      // What the consumer-facing providers answer, as one line.
+      Future<String> consumers() async {
+        final days = await settle(tester, rig.container.read(openWeekdaysProvider.future));
+        final hours = await settle(tester, rig.container.read(workHoursProvider.future));
+        final closures = await settle(tester, rig.container.read(closureDaysProvider.future));
+        return '$days ${hours.startMinutes} '
+            '${[for (final c in closures) '${c.id}|${c.day.month}-${c.day.day}|${c.reason}']}';
+      }
+
+      final contextA = await settle(tester, rig.container.read(workspaceContextProvider.future));
+      expect(contextA!.calendar.timezone, 'Europe/Paris');
+      expect(contextA.calendar.openWeekdays, [1, 2, 3, 4, 5]);
+      expect(contextA.calendar.workHours.startMinutes, 8 * 60);
+      expect(contextA.taxReference.set.issuesFor('FR'), isTrue);
+      expect(contextA.taxReference.set.rows.single.source, 'inst-a');
+      expect(await consumers(), '[1, 2, 3, 4, 5] 480 [closure-inst-a|12-25|closed at inst-a]');
+      await tester.pump();
+      expect(rig.container.read(readyWorkspaceContextProvider), contextA);
+      expect(ActiveTaxReference.current.issuesFor('FR'), isTrue,
+          reason: 'the legacy adapter is fed from the captured context');
+
+      // W-B, same local workspace id, another zone, calendar and dataset.
+      rig.select(_ws('ws-1', 'America/New_York'), rig.b);
+      final contextB = await settle(tester, rig.container.read(workspaceContextProvider.future));
+      expect(contextB!.target.installationId, 'inst-b');
+      expect(contextB.calendar.timezone, 'America/New_York');
+      expect(contextB.calendar.openWeekdays, [1, 2, 3, 4, 5, 6]);
+      expect(contextB.calendar.workHours.startMinutes, 7 * 60);
+      expect(contextB.calendar.closures.single.reason, 'closed at inst-b');
+      expect(contextB.taxReference.set.issuesFor('FR'), isFalse);
+      expect(contextB.taxReference.set.rows.single.source, 'inst-b');
+      expect(contextB.calendar, isNot(contextA.calendar));
+      expect(contextB.taxReference, isNot(contextA.taxReference));
+      expect(await consumers(), '[1, 2, 3, 4, 5, 6] 420 [closure-inst-b|12-26|closed at inst-b]');
+      await tester.pump();
+      expect(rig.container.read(readyWorkspaceContextProvider), contextB);
+      expect(ActiveTaxReference.current.issuesFor('FR'), isFalse);
+
+      // Read from each host's own client; the personal home serves neither.
+      for (final path in _captures) {
+        expect(rig.a.paths.where((p) => p.endsWith(path)), isNotEmpty, reason: path);
+        expect(rig.b.paths.where((p) => p.endsWith(path)), isNotEmpty, reason: path);
+        expect(rig.p.paths.where((p) => p.endsWith(path)), isEmpty, reason: path);
+      }
+      await finish(tester);
+    });
+
+    testWidgets('a late W-A calendar answer never becomes W-B\'s, and nothing shows W-A\'s '
+        'while W-B is captured', timeout: _limit, (tester) async {
+      final contexts = <WorkspaceContext?>[];
+      final ready = <WorkspaceContext?>[];
+      final subs = [
+        rig.container.listen(workspaceContextProvider, (_, next) => contexts.add(next.value)),
+        rig.container.listen(readyWorkspaceContextProvider, (_, next) => ready.add(next)),
+      ];
+      addTearDown(() => [for (final s in subs) s.close()]);
+      final contextA = await settle(tester, rig.container.read(workspaceContextProvider.future));
+
+      // W-A re-captures (an edit) and its answer is held back...
+      rig.a.calendarGate = Completer<void>();
+      rig.a.openWeekdays = const [7];
+      rig.container.invalidate(workspaceContextProvider);
+      await tester.pump(const Duration(milliseconds: 50));
+
+      // ...the member moves to W-B, which answers, then W-A's answer lands.
+      rig.select(_ws('ws-1', 'America/New_York'), rig.b);
+      final contextB = await settle(tester, rig.container.read(workspaceContextProvider.future));
+      rig.a.calendarGate!.complete();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      final now = await settle(tester, rig.container.read(workspaceContextProvider.future));
+      expect(now, contextB);
+      expect(now!.calendar.openWeekdays, [1, 2, 3, 4, 5, 6]);
+      expect(await settle(tester, rig.container.read(openWeekdaysProvider.future)), [1, 2, 3, 4, 5, 6]);
+      expect([for (final c in contexts) c?.calendar.openWeekdays], isNot(contains([7])),
+          reason: 'the held-back W-A capture never became a context');
+      // Every context the synchronous readers saw is A's before the switch
+      // or B's after it: never A's under B.
+      final firstB = ready.indexWhere((c) => c?.target.installationId == 'inst-b');
+      expect(firstB, isNot(-1));
+      expect(ready.skip(firstB).where((c) => c?.target.installationId == 'inst-a'), isEmpty);
+      expect(ready.where((c) => c != null && c != contextA && c != contextB), isEmpty);
+      await finish(tester);
+    });
+
+    testWidgets('an unknown zone is a typed configuration failure, never the device clock', timeout: _limit, (tester) async {
+      final subs = [
+        rig.container.listen(workspaceContextProvider, (_, _) {}),
+        rig.container.listen(readyWorkspaceContextProvider, (_, _) {}),
+      ];
+      addTearDown(() => [for (final s in subs) s.close()]);
+      rig.select(_ws('ws-1', 'Mars/Olympus_Mons'), rig.a);
+      final refused = await outcome(tester, rig.container.read(workspaceContextProvider.future));
+      expect(refused.error, isA<WorkspaceCalendarUnavailable>());
+      final days = rig.container.listen(openWeekdaysProvider, (_, _) {});
+      addTearDown(days.close);
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(days.read().hasValue, isFalse, reason: 'no invented open days either');
+      expect(rig.container.read(readyWorkspaceContextProvider), isNull);
+
+      // Recovery: a valid zone captures again.
+      rig.select(_ws('ws-1', 'Europe/Paris'), rig.a);
+      final context = await settle(tester, rig.container.read(workspaceContextProvider.future));
+      expect(context!.calendar.timezone, 'Europe/Paris');
+      await finish(tester);
+    });
+
+    testWidgets('a host without its tax reference: the bundled copy, else a typed failure, '
+        'never another workspace\'s rows', timeout: _limit, (tester) async {
+      final sub = rig.container.listen(workspaceContextProvider, (_, _) {});
+      addTearDown(sub.close);
+      rig.b.taxDown = true;
+      rig.select(_ws('ws-1', 'America/New_York'), rig.b);
+      final refused = await outcome(tester, rig.container.read(workspaceContextProvider.future));
+      expect(refused.error, isA<TaxReferenceUnavailable>());
+
+      rig.bundled = TaxReferenceSet([
+        TaxReferenceRow.fromJson({
+          'domain': 'eu_member',
+          'country': 'FR',
+          'key': 'member',
+          'valid_from': '1900-01-01',
+          'value': <String, Object?>{},
+          'source': 'bundle',
+          'confirmed': true,
+        }),
+      ], origin: TaxReferenceOrigin.bundle);
+      rig.container.invalidate(workspaceContextProvider);
+      final context = await settle(tester, rig.container.read(workspaceContextProvider.future));
+      expect(context!.target.installationId, 'inst-b');
+      expect(context.taxReference.origin, TaxReferenceOrigin.bundle);
+      expect(context.taxReference.set.rows.map((r) => r.source), ['bundle']);
+      expect(rig.a.paths.where((p) => p.endsWith('tax_reference_history')), isEmpty);
+      await finish(tester);
+    });
+
+    testWidgets('an edit re-captures the same target\'s calendar under the same epochs', timeout: _limit, (tester) async {
+      final sub = rig.container.listen(workspaceContextProvider, (_, _) {});
+      addTearDown(sub.close);
+      final before = await settle(tester, rig.container.read(workspaceContextProvider.future));
+      rig.a.workStart = 9 * 60;
+      rig.container.invalidate(workspaceContextProvider);
+      final after = await settle(tester, rig.container.read(workspaceContextProvider.future));
+      expect(after!.calendar.workHours.startMinutes, 9 * 60);
+      expect(after.target, before!.target);
+      expect([after.personalEpoch, after.workspaceEpoch], [before.personalEpoch, before.workspaceEpoch]);
+      expect(after.sameOperationAs(before), isFalse,
+          reason: 'a result computed on the old calendar is not this one\'s');
+      await finish(tester);
+    });
   });
 }

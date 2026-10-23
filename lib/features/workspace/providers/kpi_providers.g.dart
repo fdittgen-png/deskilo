@@ -548,12 +548,20 @@ final class CostSummaryFamily extends $Family
 
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
+///
+/// #2561 L4 -- the clock is the calendar of the workspace's captured
+/// context; a month of a workspace that is not the captured one is refused,
+/// never measured on another workspace's (or the device's) midnights.
 
 @ProviderFor(seatCapacityMonth)
 final seatCapacityMonthProvider = SeatCapacityMonthFamily._();
 
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
+///
+/// #2561 L4 -- the clock is the calendar of the workspace's captured
+/// context; a month of a workspace that is not the captured one is refused,
+/// never measured on another workspace's (or the device's) midnights.
 
 final class SeatCapacityMonthProvider
     extends
@@ -565,6 +573,10 @@ final class SeatCapacityMonthProvider
     with $FutureModifier<SeatCapacityKpi>, $FutureProvider<SeatCapacityKpi> {
   /// Seat utilisation of one calendar month, on the workspace clock: the
   /// month starts at local midnight of its first day, whatever DST does.
+  ///
+  /// #2561 L4 -- the clock is the calendar of the workspace's captured
+  /// context; a month of a workspace that is not the captured one is refused,
+  /// never measured on another workspace's (or the device's) midnights.
   SeatCapacityMonthProvider._({
     required SeatCapacityMonthFamily super.from,
     required (String, int, int) super.argument,
@@ -609,10 +621,14 @@ final class SeatCapacityMonthProvider
   }
 }
 
-String _$seatCapacityMonthHash() => r'2887b1f11bdfbadea2f7083ad17c3f2b63b79d35';
+String _$seatCapacityMonthHash() => r'c9568b3dce8bd076c5807ca90e06915b675e3ef3';
 
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
+///
+/// #2561 L4 -- the clock is the calendar of the workspace's captured
+/// context; a month of a workspace that is not the captured one is refused,
+/// never measured on another workspace's (or the device's) midnights.
 
 final class SeatCapacityMonthFamily extends $Family
     with
@@ -631,6 +647,10 @@ final class SeatCapacityMonthFamily extends $Family
 
   /// Seat utilisation of one calendar month, on the workspace clock: the
   /// month starts at local midnight of its first day, whatever DST does.
+  ///
+  /// #2561 L4 -- the clock is the calendar of the workspace's captured
+  /// context; a month of a workspace that is not the captured one is refused,
+  /// never measured on another workspace's (or the device's) midnights.
 
   SeatCapacityMonthProvider call(String workspaceId, int year, int month) =>
       SeatCapacityMonthProvider._(

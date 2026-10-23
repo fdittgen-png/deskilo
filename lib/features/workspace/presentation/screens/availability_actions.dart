@@ -58,7 +58,7 @@ class AvailabilityActions {
       _showGenericError(l10n);
       return;
     }
-    ref.invalidate(openWeekdaysProvider);
+    ref.invalidate(workspaceContextProvider); // #2561 L4: the calendar is the context's
   }
 
   Future<void> setGranularity(BookingGranularity? granularity) async {
@@ -109,7 +109,7 @@ class AvailabilityActions {
       _showGenericError(l10n);
       return;
     }
-    ref.invalidate(workHoursProvider);
+    ref.invalidate(workspaceContextProvider); // #2561 L4: the calendar is the context's
   }
 
   Future<void> setPolicy(String key, {required bool enabled}) async {
@@ -261,7 +261,7 @@ class AvailabilityActions {
       _showGenericError(l10n);
       return;
     }
-    ref.invalidate(closureDaysProvider);
+    ref.invalidate(workspaceContextProvider); // #2561 L4: the calendar is the context's
   }
 
   Future<void> removeClosure(ClosureDay closure) async {
@@ -280,7 +280,7 @@ class AvailabilityActions {
       _showGenericError(l10n);
       return;
     }
-    ref.invalidate(closureDaysProvider);
+    ref.invalidate(workspaceContextProvider); // #2561 L4: the calendar is the context's
   }
 
   /// Opens the public-holidays generator. The screen already holds the

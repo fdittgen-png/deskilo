@@ -2,7 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
-import '../../../core/cache/cached_fetch.dart';
+import '../../../core/instance/data/installation_tax_reference.dart';
 import '../../../core/vat/tax_reference.dart';
 
 /// #2477 — the tax reference store through its definer functions (0427).
@@ -18,25 +18,13 @@ class SupabaseTaxReferenceRepository
   final SupabaseClient _client;
   final CacheStore _cache;
 
-  static const _prefix = 'tax_reference:v1:';
-  static const _ttl = Duration(hours: 12);
+  static const _prefix = taxReferenceCachePrefix;
 
+  /// #2561 L4 -- the same read a workspace context makes of its host.
   @override
-  Future<TaxReferenceSet> load({TaxDomain? domain, String? country}) {
-    final c = country?.trim().toUpperCase();
-    return cachedFetch<TaxReferenceSet>(
-      cache: _cache,
-      key: '$_prefix${domain?.wire ?? '*'}:${c ?? '*'}',
-      ttl: _ttl,
-      // The network answers first; the cache only stands in for an outage.
-      mode: CacheReadMode.networkFirst,
-      fetchRaw: () => _client.rpc<Object?>(
-        'tax_reference_history',
-        params: {'p_domain': domain?.wire, 'p_country': c, 'p_key': null},
-      ),
-      parse: TaxReferenceSet.parse,
-    );
-  }
+  Future<TaxReferenceSet> load({TaxDomain? domain, String? country}) =>
+      readInstallationTaxReference(_client, _cache,
+          domain: domain, country: country);
 
   @override
   Future<TaxReferenceRow> setVersion(TaxVersionDraft draft) async {
