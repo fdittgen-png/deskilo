@@ -51,7 +51,7 @@ final class SetupStepTimingRecorderProvider
 }
 
 String _$setupStepTimingRecorderHash() =>
-    r'eab97ce6e50ee49288fd7c8d05b66db3b3f17ce1';
+    r'23863fe4172066ad7674115205af82243440b116';
 
 /// Records the sessions on setup step pages and reports the ones that
 /// finished their step. One per app: a page reports to it on opening and
