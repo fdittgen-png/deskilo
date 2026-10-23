@@ -17,6 +17,7 @@
 //   (#488) — the logo, a stamp, a signature scan; unresolved names
 //   render as nothing. `![name|size|align]` (#822) sizes it S/M/L and
 //   aligns it left/center/right; a bare `![name]` stays medium, left.
+//   XL (#2898) is a picture the page is about — a level's plan.
 //   `:::` … `|||` … `:::` → side-by-side columns (#482): the fenced
 //   region is split at `|||` into equal-width columns, each parsed with
 //   the same markup. An empty first column pushes the second to the
@@ -117,7 +118,11 @@ class ReportImage extends ReportBlock {
 enum ReportImageSize {
   small('s', 40),
   medium('m', 64),
-  large('l', 96);
+  large('l', 96),
+
+  /// #2898 — a picture the page is about, at the height the data report
+  /// prints a level's plan; a wide one is held to the page width.
+  extraLarge('xl', 300);
 
   const ReportImageSize(this.code, this.height);
   final String code;

@@ -46,7 +46,7 @@ Future<Uint8List?> tryLayoutPdf({
     final document = renderLayoutDocument(layoutXml, data);
     final images = <String, Uint8List>{};
     if (image != null) {
-      for (final name in layoutImageNames(document)) {
+      for (final name in layoutDocumentImageNames(document)) {
         final bytes = await image(name);
         if (bytes != null) images[name] = bytes;
       }

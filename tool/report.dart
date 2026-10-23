@@ -2,8 +2,8 @@
 //
 // #875 — THE LOCAL REPORT RUNNER.
 //
-//   dart run tool/report.dart render  layout.xml [--data d.json] [--out out.pdf]
-//   dart run tool/report.dart check   layout.xml [--data d.json] [--out out.pdf]
+//   dart run tool/report.dart render  layout.xml [--data d.json] [--out out.pdf] [--images dir]
+//   dart run tool/report.dart check   layout.xml [--data d.json] [--out out.pdf] [--images dir]
 //   dart run tool/report.dart sample  [--kind invoice] [--out d.json]
 //   dart run tool/report.dart describe
 //
@@ -53,10 +53,11 @@ int _usage() {
   stdout.writeln('''
 usage: dart run tool/report.dart <command> [options]
 
-  render   <layout.xml> [--data d.json] [--out out.pdf] [--fonts dir]
-  check    <layout.xml> [--data d.json] [--out out.pdf] [--fonts dir]
+  render   <layout.xml> [--data d.json] [--out out.pdf] [--fonts dir] [--images dir]
+  check    <layout.xml> [--data d.json] [--out out.pdf] [--fonts dir] [--images dir]
            renders, then measures every zone in mm against the spec;
-           exit 0 = CONFORMS, 1 = issues, 2 = the layout could not be read
+           exit 0 = CONFORMS, 1 = issues, 2 = the layout could not be read;
+           --images: every .png/.jpg in dir, by its name without the extension
   sample   [--kind invoice] [--out d.json]     the data a design renders against
   describe                                     units, elements, attributes, placeholders
   default  --kind invoice|proforma|statement|agreement|payments|usage|r1…   the letter standard's default layout (#874)
@@ -86,6 +87,7 @@ Future<int> _render(_Args args, {required bool check}) async {
     pageLabel: 'Page',
     baseFont: font('Roboto-Regular.ttf'),
     boldFont: font('Roboto-Bold.ttf'),
+    images: _images(args.option('images')),
   );
   final out = args.option('out') ??
       '${path.replaceAll(RegExp(r'\.xml$'), '')}.pdf';
@@ -94,6 +96,17 @@ Future<int> _render(_Args args, {required bool check}) async {
   if (!check) return 0;
   return _check(bytes, document);
 }
+
+/// #2898 — the pictures a design names (`<image name>`, `![name]`): every
+/// PNG or JPEG in [dir], by its file name without the extension. A level's
+/// plan in the configuration sample is `plan-ground.png`.
+Map<String, Uint8List> _images(String? dir) => {
+      if (dir != null)
+        for (final file in Directory(dir).listSync().whereType<File>())
+          if (RegExp(r'\.(png|jpe?g)$', caseSensitive: false).hasMatch(file.path))
+            file.uri.pathSegments.last.replaceFirst(RegExp(r'\.[^.]+$'), ''):
+                file.readAsBytesSync(),
+    };
 
 /// Measures the produced sheet against the spec — the same numbers the
 /// CI gate uses — and prints a table a designer can read with a ruler.
@@ -245,8 +258,26 @@ Map<String, Object?> _sampleData(String kind) {
     ...InvoicePdfTemplate.placeholderDefaults,
     ...demo,
     if (kind == 'proforma') 'proforma': true,
+    if (kind == 'workspace_configuration')
+      'configuration_rows': _configurationRows,
   };
 }
+
+/// #2898 — the configuration sample: a level whose heading names its plan
+/// picture, `plan-ground` (render with `--images` to see it), then its
+/// rooms, desks and seats.
+const _configurationRows = <Map<String, Object?>>[
+  {'heading': true, 'label': 'Plan', 'value': '', 'detail': ''},
+  {
+    'heading': true,
+    'label': 'Rez-de-chaussée',
+    'value': '',
+    'detail': '',
+    'image': 'plan-ground',
+  },
+  {'strong': true, 'label': 'Open space', 'value': '', 'detail': ''},
+  {'label': 'Bureau fenêtre', 'value': 'Places', 'detail': 'A1, A2'},
+];
 
 // ─── describe ────────────────────────────────────────────────────────
 
@@ -283,6 +314,8 @@ PLACEHOLDERS
   ${InvoicePdfTemplate.placeholders.join(', ')}
   text.<key>   the owner's texts (#880): the file's <texts> element, or "text" in --data
   lines        each row: label, kind, pct, month, qty, unit_price, net, vat_rate, amount, negative (#1002)
+  configuration_rows  each row: label, value, detail, heading, strong, image — a level heading's
+               plan picture (#2898), printed by `![{{ row.image }}|xl|center]`; see sample --kind workspace_configuration
 ''');
   return 0;
 }
