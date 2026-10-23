@@ -21,5 +21,6 @@
   "setupGuideWaitsFor": "Attend : {steps}",
   "setupGuideBanner": "{milestone} : {ready} sur {required} faits · Ensuite : {step}",
   "setupGuideMarkDone": "Marquer comme fait",
-  "setupGuideUntil": "Environ {minutes} min avant : {milestone}"
+  "setupGuideUntil": "Environ {minutes} min avant : {milestone}",
+  "setupGuideTryDemo": "L’essayer dans la démo"
 }

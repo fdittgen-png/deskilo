@@ -13753,6 +13753,7 @@
   "setupGuideResume": "Riprenda",
   "setupGuideTitle": "Guida alla configurazione",
   "setupGuideToDo": "Cosa manca ancora",
+  "setupGuideTryDemo": "Provarlo nella demo",
   "setupGuideUnavailable": "Non è stato possibile leggere lo stato della configurazione. Riprovi tra poco.",
   "setupGuideUntil": "Circa {minutes} min a: {milestone}",
   "setupGuideWaiting": "In attesa",

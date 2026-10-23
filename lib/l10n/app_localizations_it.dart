@@ -19261,6 +19261,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupGuideToDo => 'Cosa manca ancora';
 
   @override
+  String get setupGuideTryDemo => 'Provarlo nella demo';
+
+  @override
   String get setupGuideUnavailable =>
       'Non è stato possibile leggere lo stato della configurazione. Riprovi tra poco.';
 

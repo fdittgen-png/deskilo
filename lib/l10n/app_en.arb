@@ -22138,6 +22138,10 @@
   "@setupGuideToDo": {
     "description": "#2869 setup guide: setupGuideToDo"
   },
+  "setupGuideTryDemo": "Try it in the demo",
+  "@setupGuideTryDemo": {
+    "description": "#2872 — opens the public demo at the screen where this step is done, in a space where it is already set up."
+  },
   "setupGuideUnavailable": "The setup status could not be read. Try again in a moment.",
   "@setupGuideUnavailable": {
     "description": "#2869 setup guide: setupGuideUnavailable"

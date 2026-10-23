@@ -11,7 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/demo/demo_link.dart';
+import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -232,15 +235,18 @@ class _Milestones extends StatelessWidget {
   }
 }
 
-class _NextCard extends StatelessWidget {
+class _NextCard extends ConsumerWidget {
   const _NextCard({required this.step, required this.actions});
   final SetupStepStatus step;
   final _Actions actions;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
+    // #2872 — see the step done in a space where it is set up; not from
+    // inside the demo itself.
+    final inDemo = DemoEnvironment.maybeOf(context) != null;
     return Card(
       key: const ValueKey('setup-guide-next'),
       color: theme.colorScheme.primaryContainer,
@@ -265,6 +271,13 @@ class _NextCard extends StatelessWidget {
                   style: theme.textTheme.bodySmall,
                 ),
                 const Spacer(),
+                if (!inDemo)
+                  TextButton(
+                    key: ValueKey('setup-guide-demo-${step.step}'),
+                    onPressed: () =>
+                        ref.read(linkLauncherProvider)(demoLinkUri(to: step.route)),
+                    child: Text(l10n.setupGuideTryDemo),
+                  ),
                 FilledButton(
                   key: ValueKey('setup-guide-next-${step.step}'),
                   onPressed: () => _open(context, step, actions.reload),

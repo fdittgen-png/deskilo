@@ -32453,6 +32453,12 @@ abstract class AppLocalizations {
   /// **'What it still needs'**
   String get setupGuideToDo;
 
+  /// #2872 — opens the public demo at the screen where this step is done, in a space where it is already set up.
+  ///
+  /// In en, this message translates to:
+  /// **'Try it in the demo'**
+  String get setupGuideTryDemo;
+
   /// #2869 setup guide: setupGuideUnavailable
   ///
   /// In en, this message translates to:

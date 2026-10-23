@@ -13753,6 +13753,7 @@
   "setupGuideResume": "Reprendre",
   "setupGuideTitle": "Guide de mise en place",
   "setupGuideToDo": "Ce qu'il reste à faire",
+  "setupGuideTryDemo": "L’essayer dans la démo",
   "setupGuideUnavailable": "L'état de la mise en place n'a pas pu être lu. Réessayez dans un instant.",
   "setupGuideUntil": "Environ {minutes} min avant : {milestone}",
   "setupGuideWaiting": "En attente",

@@ -19300,6 +19300,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupGuideToDo => 'Ce qu\'il reste à faire';
 
   @override
+  String get setupGuideTryDemo => 'L’essayer dans la démo';
+
+  @override
   String get setupGuideUnavailable =>
       'L\'état de la mise en place n\'a pas pu être lu. Réessayez dans un instant.';
 

@@ -13753,6 +13753,7 @@
   "setupGuideResume": "Fortsetzen",
   "setupGuideTitle": "Einrichtungsassistent",
   "setupGuideToDo": "Was noch fehlt",
+  "setupGuideTryDemo": "In der Demo ausprobieren",
   "setupGuideUnavailable": "Der Einrichtungsstand konnte nicht gelesen werden. Bitte gleich erneut versuchen.",
   "setupGuideUntil": "Etwa {minutes} Min. bis: {milestone}",
   "setupGuideWaiting": "Wartet",

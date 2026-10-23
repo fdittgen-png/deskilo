@@ -9,6 +9,7 @@
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../instance/instance_builder.dart';
 import 'demo_persona.dart';
 import 'seed/demo_second_space_seed.dart';
 
@@ -29,7 +30,39 @@ const demoLinkRoutes = {
   '/editor',
   '/billing',
   '/reports',
+  // #2872 — every screen a setup step opens, for its "Try it in the demo".
+  '/availability',
+  '/roles',
+  '/workspace-code',
+  '/services',
+  '/payment-methods',
+  '/payment-config',
+  '/validation',
+  '/nfc-config',
+  '/money/purchases',
+  '/settings/colours',
+  '/settings/public-page',
+  '/legal-identity',
+  '/vat',
+  '/settings/number-sequences',
+  '/einvoice-config',
+  '/settings/payment-terms',
+  '/settings/assistant-setup',
 };
+
+/// #2872 — the public demo opened at [to], as [persona], in [space]
+/// (`pezenas`, where everything is set up, or `leipzig`, half way): what a
+/// setup step's "Try it in the demo" opens. A [to] the demo does not allow
+/// is left out, so the demo starts where it always does.
+Uri demoLinkUri({
+  String space = 'pezenas',
+  DemoPersona persona = DemoPersona.owner,
+  String? to,
+}) => Uri.parse(
+  '${InstanceAuthConfig.siteUrl}#/auth?demo=1&space=$space'
+  '&persona=${persona.name}'
+  '${to != null && demoLinkRoutes.contains(to) ? '&to=$to' : ''}',
+);
 
 /// Where a link asks the demo to start.
 class DemoLink {
