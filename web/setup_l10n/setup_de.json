@@ -668,5 +668,6 @@
  "webmcpArgFormat": "Das Exportformat; es gibt nur xml.",
  "webmcpArgKeys": "Zurückzusetzende Parameterschlüssel; weglassen, um alles zurückzusetzen.",
  "featuresUnavailableIn": "{desc} — in {country} nicht verfügbar; verfügbar in: {list}.",
- "featuresAvailabilityEu": "den EU-Mitgliedstaaten"
+ "featuresAvailabilityEu": "den EU-Mitgliedstaaten",
+ "setupDemoHtml": "Lieber erst ansehen? <a href=\"./#/auth?demo=1&amp;space=leipzig&amp;persona=owner&amp;to=/setup\">Den Einrichtungsleitfaden in der Demo öffnen</a>: ein halb eingerichteter Raum, nur auf diesem Gerät, nichts wird gesendet."
 }
