@@ -629,6 +629,35 @@ Deno.test("#2393 resources and the prompt follow the caller's own operations", a
   }
 });
 
+Deno.test("#2873 the setup prompt follows the setup operations, and a credential never reaches the database", async () => {
+  const saved = operationsOf[ALICE];
+  try {
+    operationsOf[ALICE] = ["get_setup_status", "preview_setup_levels", "apply_setup_levels"];
+    const prompts = await rpc(ALICE, "prompts/list");
+    assertEquals(prompts.json.result.prompts.map((p: { name: string }) => p.name), ["set_up_my_space"]);
+    const prompt = await rpc(ALICE, "prompts/get", { name: "set_up_my_space", arguments: { workspace_id: AVAILABILITY.workspace_id } });
+    const text = prompt.json.result.messages[0].content.text as string;
+    for (const step of ["deskilo_get_setup_status", "deskilo_preview_setup_levels", "deskilo_apply_setup_levels", "requires_confirmation"]) {
+      assert(text.includes(step), step);
+    }
+    assert(text.includes("Never ask me for passwords"), "the prompt forbids asking for credentials");
+    assert((await rpc(BOB, "prompts/get", { name: "set_up_my_space" })).json.error,
+      "without the setup operations there is no setup prompt");
+    const before = calls.filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1").length;
+    const r = await rpc(ALICE, "tools/call", {
+      name: "deskilo_apply_setup_levels",
+      arguments: { request_id: "6b1d3f0e-0000-4000-8000-000000000071", workspace_id: AVAILABILITY.workspace_id,
+                   presentation: "public", api_key: "sk_live_x" },
+    });
+    assertEquals(r.json.result.isError, true);
+    assertEquals(r.json.result.structuredContent.error.fields.api_key, "forbidden");
+    assertEquals(calls.filter((c) => c.path === "/rest/v1/rpc/mcp_execute_v1").length, before, "refused before the database");
+    assert(summarize({ status: "denied", error: { code: "secret_in_app_only" } }).includes("DesKilo app"));
+  } finally {
+    operationsOf[ALICE] = saved;
+  }
+});
+
 Deno.test("#2393 the SDK is the version the conformance tests ran against, in every import", async () => {
   const source = await Deno.readTextFile(new URL("./index.ts", import.meta.url));
   const versions = [...source.matchAll(/npm:@modelcontextprotocol\/sdk@([0-9.]+)\//g)].map((m) => m[1]);

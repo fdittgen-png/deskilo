@@ -98,5 +98,25 @@
   "mcpOpRespond": "Answer a validation request",
   "@mcpOpRespond": {
     "description": "#2394 generated from contracts/mcp/operations.json (respond_to_validation)"
+  },
+  "mcpOpSetupStatus": "See how far the setup is",
+  "@mcpOpSetupStatus": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_setup_status)"
+  },
+  "mcpOpSetupLevels": "See the setup levels",
+  "@mcpOpSetupLevels": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_setup_levels)"
+  },
+  "mcpOpSetupLevelsPreview": "Preview a change of levels",
+  "@mcpOpSetupLevelsPreview": {
+    "description": "#2394 generated from contracts/mcp/operations.json (preview_setup_levels)"
+  },
+  "mcpOpSetupLevelsApply": "Change the setup levels",
+  "@mcpOpSetupLevelsApply": {
+    "description": "#2394 generated from contracts/mcp/operations.json (apply_setup_levels)"
+  },
+  "mcpOpSetupStepMark": "Mark a setup step done or for later",
+  "@mcpOpSetupStepMark": {
+    "description": "#2394 generated from contracts/mcp/operations.json (mark_setup_step)"
   }
 }

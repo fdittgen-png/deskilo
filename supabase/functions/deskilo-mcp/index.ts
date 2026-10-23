@@ -219,6 +219,7 @@ export const INSTRUCTIONS = [
   "For every write, generate a new random UUID as request_id. Reuse the same request_id with the same arguments only to retry that same intent: it never acts twice.",
   "Read the status of every answer: completed = done; pending_validation = submitted, NOT done yet, a validator decides; requires_confirmation = nothing happened yet, the person must confirm in the DesKilo app, then call the same tool again with the same request_id and arguments; anything else = not done, and the first text says why and what to do next.",
   "When a tool is missing or refused, deskilo_get_capabilities says what this assistant may do in that workspace.",
+  "Never ask the person for passwords, API keys, tokens or other credentials (payment providers, e-invoicing): they enter those in the DesKilo app themselves, and DesKilo refuses them from an assistant.",
 ].join("\n");
 
 /** The text of a workspace list: names and ids, so the person can be asked which one. */
@@ -268,6 +269,8 @@ export const REFUSAL_TEXT: Record<string, string> = {
     "This request_id was already used for a different action. Generate a new request_id for a new intent.",
   confirmation_stale:
     "The confirmation no longer matches (it expired, was declined, or the item changed). Nothing was done. Call the tool again with a NEW request_id to ask for a new confirmation.",
+  secret_in_app_only:
+    "Credentials (passwords, API keys, tokens, payment or e-invoicing keys) are never taken from an assistant. Nothing was done. The person enters them in the DesKilo app on the screen the setup status names for that step (its route).",
 };
 
 function appLink(confirmationId: unknown): string | null {
@@ -345,11 +348,12 @@ async function placeResult(raw: Record<string, unknown>, wantsImage: boolean, st
 const RESOURCES = [
   { path: "capabilities", operation: "get_capabilities", name: "What the assistant may do here", mimeType: "application/json" },
   { path: "booking-periods", operation: "get_capabilities", name: "Booking periods and opening hours", mimeType: "application/json" },
+  { path: "setup-status", operation: "get_setup_status", name: "Where the space's setup stands", mimeType: "application/json" },
 ] as const;
-const RESOURCE_URI = /^deskilo:\/\/workspace\/([0-9a-f-]{36})\/(capabilities|booking-periods)$/i;
+const RESOURCE_URI = /^deskilo:\/\/workspace\/([0-9a-f-]{36})\/(capabilities|booking-periods|setup-status)$/i;
 const PLACE_URI = /^deskilo:\/\/workspace\/([0-9a-f-]{36})\/place\/(seat|desk|office|level)\/([0-9a-f-]{36})\/image$/i;
 
-/** #2393 — one prompt that chains the tools the instructions describe. */
+/** #2393 — the prompts that chain the tools the instructions describe. */
 export const PROMPTS = {
   book_usual_seat: {
     name: "book_usual_seat",
@@ -360,7 +364,35 @@ export const PROMPTS = {
       { name: "when", description: "The day and period in words, e.g. \"tomorrow morning\".", required: false },
     ],
   },
+  set_up_my_space: {
+    name: "set_up_my_space",
+    title: "Set up my space",
+    description: "Walk the person who configures a workspace through its setup: where it stands, the level each process should have, and every change confirmed in the DesKilo app.",
+    arguments: [
+      { name: "workspace_id", description: "The workspace (from deskilo_list_workspaces); asked when missing.", required: false },
+    ],
+  },
 } as const;
+
+/** The operations each prompt chains: it is offered only when the caller may call them all. */
+const PROMPT_NEEDS: Record<keyof typeof PROMPTS, readonly string[]> = {
+  book_usual_seat: ["get_capabilities", "list_my_favorites", "create_reservation"],
+  set_up_my_space: ["get_setup_status", "preview_setup_levels", "apply_setup_levels"],
+};
+
+/** The setup guide in the order an owner meets it, worded for an assistant. */
+function setupPromptText(args: Record<string, string | undefined>): string {
+  const where = args.workspace_id ? `workspace ${args.workspace_id}` : "the workspace I name (deskilo_list_workspaces if unsure)";
+  return [
+    `Help me set up ${where}, one step at a time. Ask before every change and keep each answer short.`,
+    "1. deskilo_get_setup_status: tell me which milestone comes next (bookable, money, invoice, live), how many of its required steps are ready, and next_step in plain words.",
+    "2. Ask me about the space, one question at a time: do members owe money, do I issue invoices, am I VAT-registered, do I keep books, do I track purchases, are there several rooms or sites, a tablet at the door, a public page, online payments. Then propose a level for each process, or a quick start (essentiel, standard, complet; deskilo_list_setup_levels lists them), and say why.",
+    "3. deskilo_preview_setup_levels with that choice: tell me what it switches on and off, and any gap to fix first.",
+    "4. When I agree, deskilo_apply_setup_levels with the same choice and a new request_id. It answers requires_confirmation: I confirm in the DesKilo app, then you call it again with the same request_id and arguments.",
+    "5. Read the status again. A step whose assistant is mark_done or set_aside, once I say it is done or can wait: deskilo_mark_setup_step, confirmed the same way. Any other open step: tell me which screen of the app to open (its route) and what it needs.",
+    "Never ask me for passwords, API keys, tokens or other credentials (payment providers, e-invoicing): I enter them in the DesKilo app myself.",
+  ].join("\n");
+}
 
 function promptText(args: Record<string, string | undefined>): string {
   const when = args.when?.trim() || "tomorrow morning";
@@ -453,6 +485,10 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
     if (workspaceResource) {
       const [, workspace, path] = workspaceResource;
       const data = projectData("get_capabilities", await facadeRead("get_capabilities", workspace, {})) as Record<string, unknown>;
+      if (path === "setup-status") {
+        const status = projectData("get_setup_status", await facadeRead("get_setup_status", workspace, {}));
+        return { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(status) }] };
+      }
       const body = path === "booking-periods"
         ? { time_zone: data.time_zone, opening_hours: data.opening_hours, booking_periods: data.booking_periods }
         : data;
@@ -475,21 +511,25 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
   server.setRequestHandler(ListPromptsRequestSchema, async () => {
     const { operations } = await mine();
     return {
-      prompts: ["get_capabilities", "list_my_favorites", "create_reservation"].every((o) => operations.has(o))
-        ? [PROMPTS.book_usual_seat]
-        : [],
+      prompts: (Object.keys(PROMPTS) as (keyof typeof PROMPTS)[])
+        .filter((name) => PROMPT_NEEDS[name].every((o) => operations.has(o)))
+        .map((name) => PROMPTS[name]),
     };
   });
 
   server.setRequestHandler(GetPromptRequestSchema, async (request: { params: { name: string; arguments?: Record<string, string> } }) => {
-    if (request.params.name !== PROMPTS.book_usual_seat.name) throw new Error("Unknown prompt.");
+    const name = request.params.name as keyof typeof PROMPTS;
+    if (!Object.hasOwn(PROMPTS, name)) throw new Error("Unknown prompt.");
     const { operations } = await mine();
-    if (!["get_capabilities", "list_my_favorites", "create_reservation"].every((o) => operations.has(o))) {
-      throw new Error("This assistant may not book here: deskilo_get_capabilities says why.");
+    if (!PROMPT_NEEDS[name].every((o) => operations.has(o))) {
+      throw new Error(name === "set_up_my_space"
+        ? "This assistant may not set up this space: deskilo_get_capabilities says why."
+        : "This assistant may not book here: deskilo_get_capabilities says why.");
     }
+    const args = request.params.arguments ?? {};
     return {
-      description: PROMPTS.book_usual_seat.description,
-      messages: [{ role: "user", content: { type: "text", text: promptText(request.params.arguments ?? {}) } }],
+      description: PROMPTS[name].description,
+      messages: [{ role: "user", content: { type: "text", text: name === "set_up_my_space" ? setupPromptText(args) : promptText(args) } }],
     };
   });
 

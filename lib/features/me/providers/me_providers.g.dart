@@ -8,21 +8,21 @@ part of 'me_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// #1823 — the account layer's calls, this server's and the linked ones'.
+/// #1823 — the account layer's calls on this server.
 /// #2561 C1 — the own-profile reads and writes go to the PERSONAL client (P),
 /// never to the process-wide client or to a workspace host.
 
 @ProviderFor(meRepository)
 final meRepositoryProvider = MeRepositoryProvider._();
 
-/// #1823 — the account layer's calls, this server's and the linked ones'.
+/// #1823 — the account layer's calls on this server.
 /// #2561 C1 — the own-profile reads and writes go to the PERSONAL client (P),
 /// never to the process-wide client or to a workspace host.
 
 final class MeRepositoryProvider
     extends $FunctionalProvider<MeRepository, MeRepository, MeRepository>
     with $Provider<MeRepository> {
-  /// #1823 — the account layer's calls, this server's and the linked ones'.
+  /// #1823 — the account layer's calls on this server.
   /// #2561 C1 — the own-profile reads and writes go to the PERSONAL client (P),
   /// never to the process-wide client or to a workspace host.
   MeRepositoryProvider._()
@@ -58,7 +58,63 @@ final class MeRepositoryProvider
   }
 }
 
-String _$meRepositoryHash() => r'40180374d4181d8ccc4ae12f299790dc927e6fc4';
+String _$meRepositoryHash() => r'11082a2caa0013b3781489e7139fc7c3b0e4f3f3';
+
+/// The account layer's calls on the linked servers, each with that server's
+/// own session. The readers below ask it nothing while no server is linked.
+
+@ProviderFor(linkedMeRepository)
+final linkedMeRepositoryProvider = LinkedMeRepositoryProvider._();
+
+/// The account layer's calls on the linked servers, each with that server's
+/// own session. The readers below ask it nothing while no server is linked.
+
+final class LinkedMeRepositoryProvider
+    extends
+        $FunctionalProvider<
+          LinkedMeRepository,
+          LinkedMeRepository,
+          LinkedMeRepository
+        >
+    with $Provider<LinkedMeRepository> {
+  /// The account layer's calls on the linked servers, each with that server's
+  /// own session. The readers below ask it nothing while no server is linked.
+  LinkedMeRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'linkedMeRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$linkedMeRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<LinkedMeRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  LinkedMeRepository create(Ref ref) {
+    return linkedMeRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(LinkedMeRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<LinkedMeRepository>(value),
+    );
+  }
+}
+
+String _$linkedMeRepositoryHash() =>
+    r'1494cb6edbcdba4a9bd6d17927295731cae8175c';
 
 @ProviderFor(meActions)
 final meActionsProvider = MeActionsProvider._();
@@ -99,7 +155,7 @@ final class MeActionsProvider
   }
 }
 
-String _$meActionsHash() => r'f3c840a50074fd3a5776af5f373d40075d6f9a14';
+String _$meActionsHash() => r'bf35ed75a5451b3242e41831b11644d5b28925ef';
 
 /// Who sees what of me, as the server holds it.
 
@@ -229,12 +285,14 @@ final class VisibilityPreviewFamily extends $Family
   String toString() => r'visibilityPreviewProvider';
 }
 
-/// #2211 — who sees what of me on the linked server [source].
+/// #2211 — who sees what of me on the linked server [source]; the
+/// defaults while no server is linked.
 
 @ProviderFor(linkedVisibility)
 final linkedVisibilityProvider = LinkedVisibilityFamily._();
 
-/// #2211 — who sees what of me on the linked server [source].
+/// #2211 — who sees what of me on the linked server [source]; the
+/// defaults while no server is linked.
 
 final class LinkedVisibilityProvider
     extends
@@ -244,7 +302,8 @@ final class LinkedVisibilityProvider
           FutureOr<MyVisibility>
         >
     with $FutureModifier<MyVisibility>, $FutureProvider<MyVisibility> {
-  /// #2211 — who sees what of me on the linked server [source].
+  /// #2211 — who sees what of me on the linked server [source]; the
+  /// defaults while no server is linked.
   LinkedVisibilityProvider._({
     required LinkedVisibilityFamily super.from,
     required String super.argument,
@@ -289,9 +348,10 @@ final class LinkedVisibilityProvider
   }
 }
 
-String _$linkedVisibilityHash() => r'630733fcf5962e0702559f0018bf46f398faeee4';
+String _$linkedVisibilityHash() => r'00357cd2f03b6f364db1f53cdab4236bc52d3acb';
 
-/// #2211 — who sees what of me on the linked server [source].
+/// #2211 — who sees what of me on the linked server [source]; the
+/// defaults while no server is linked.
 
 final class LinkedVisibilityFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<MyVisibility>, String> {
@@ -304,7 +364,8 @@ final class LinkedVisibilityFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// #2211 — who sees what of me on the linked server [source].
+  /// #2211 — who sees what of me on the linked server [source]; the
+  /// defaults while no server is linked.
 
   LinkedVisibilityProvider call(String source) =>
       LinkedVisibilityProvider._(argument: source, from: this);
@@ -313,14 +374,16 @@ final class LinkedVisibilityFamily extends $Family
   String toString() => r'linkedVisibilityProvider';
 }
 
-/// My spaces on every linked server. A server that does not answer is
-/// reported as such — the list is then incomplete, never silently short.
+/// My spaces on every linked server, all servers asked at once. A server
+/// that does not answer is reported as such — the list is then incomplete,
+/// never silently short — and does not hold up the others.
 
 @ProviderFor(linkedServerSpaces)
 final linkedServerSpacesProvider = LinkedServerSpacesProvider._();
 
-/// My spaces on every linked server. A server that does not answer is
-/// reported as such — the list is then incomplete, never silently short.
+/// My spaces on every linked server, all servers asked at once. A server
+/// that does not answer is reported as such — the list is then incomplete,
+/// never silently short — and does not hold up the others.
 
 final class LinkedServerSpacesProvider
     extends
@@ -332,8 +395,9 @@ final class LinkedServerSpacesProvider
     with
         $FutureModifier<List<LinkedServerSpaces>>,
         $FutureProvider<List<LinkedServerSpaces>> {
-  /// My spaces on every linked server. A server that does not answer is
-  /// reported as such — the list is then incomplete, never silently short.
+  /// My spaces on every linked server, all servers asked at once. A server
+  /// that does not answer is reported as such — the list is then incomplete,
+  /// never silently short — and does not hold up the others.
   LinkedServerSpacesProvider._()
     : super(
         from: null,
@@ -361,4 +425,4 @@ final class LinkedServerSpacesProvider
 }
 
 String _$linkedServerSpacesHash() =>
-    r'9f686504b7db9d9c17eae99ffea74ad2c9f61cba';
+    r'4ec38ca91b77629106c484bc9ab10624e4d24ed9';

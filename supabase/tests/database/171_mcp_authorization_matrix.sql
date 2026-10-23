@@ -276,8 +276,12 @@ select is(pg_temp.says('ad', 'request_invoice_issue', jsonb_build_object('member
   'period', current_setting('t.month'))), 'requires_confirmation', 'a native-confirmation request stops for the app');
 select is(pg_temp.says('ad', 'get_availability', jsonb_build_object('starts_at', current_setting('t.am_s'),
   'ends_at', current_setting('t.pm_e'))), 'completed', 'the workspace read under the workspace ceiling');
-select is(pg_temp.refused(pg_temp.call('ad', 'get_capabilities')), '{"request_refund": "not_exposed"}'::jsonb,
-  'the administrator is refused only what the workspace does not expose');
+-- #2873: setting the space up needs manageConfiguration, which an
+-- administrator does not hold by default: those five are forbidden, not
+-- hidden.
+select is(pg_temp.refused(pg_temp.call('ad', 'get_capabilities')),
+  '{"request_refund": "not_exposed", "mark_setup_step": "forbidden", "get_setup_status": "forbidden", "list_setup_levels": "forbidden", "apply_setup_levels": "forbidden", "preview_setup_levels": "forbidden"}'::jsonb,
+  'the administrator is refused only what the workspace does not expose, and setting the space up');
 
 -- ── 5. the outsider and the native token, every operation ───────────
 select is(pg_temp.says('ou', 'get_capabilities'), 'not_a_member', 'the outsider: not_a_member');

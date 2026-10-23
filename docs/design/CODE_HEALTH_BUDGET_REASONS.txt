@@ -13,7 +13,6 @@ fileLength lib/core/demo/data/workspace_repository.dart // #1373 the in-memory t
 fileLength lib/core/help/help_anchors.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/core/instance/instance_doctor.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/core/instance/mcp_readiness_checks.dart // #2386 within the former 600-line budget; split when next changed
-fileLength lib/core/mcp/mcp_operations.dart // #2394: +2, it re-exports the generated enum and envelope. #2386: the budget fell 600→500. #2391: get_member_statement and each operation's group are generated here.
 fileLength lib/core/ui/canvas_controls.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/core/vat/tax_value.dart // #2539: +28, the sealed TaxValue family must live in one library (a new `part of` is refused by part_of_test); the rate_component value joins it and its helper class is its own file
 fileLength lib/features/auth/data/supabase_auth_repository.dart // #2386 within the former 600-line budget; split when next changed

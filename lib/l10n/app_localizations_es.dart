@@ -11682,6 +11682,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta solicitud ha caducado. Pida al asistente que la envíe de nuevo.';
 
   @override
+  String mcpConfirmLevel(String process, String level) {
+    return '$process: $level';
+  }
+
+  @override
   String mcpConfirmNewShare(String pct) {
     return 'Nueva parte de suscripción: $pct %';
   }
@@ -11705,6 +11710,22 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get mcpConfirmStale =>
       'Esta solicitud ya no coincide con los datos actuales o con su acceso. No se ha hecho nada.';
+
+  @override
+  String get mcpConfirmStepDone => 'Se marcará como hecho.';
+
+  @override
+  String get mcpConfirmStepLater => 'Se dejará para más tarde.';
+
+  @override
+  String mcpConfirmSwitchOff(String features) {
+    return 'Desactiva: $features. Sus datos se conservan.';
+  }
+
+  @override
+  String mcpConfirmSwitchOn(String features) {
+    return 'Activa: $features';
+  }
 
   @override
   String get mcpConfirmTitle => 'Confirmar una solicitud del asistente';
@@ -12191,6 +12212,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpGroupOwn => 'Reservas y cuenta propias';
 
   @override
+  String get mcpGroupSetup => 'Configuración del espacio';
+
+  @override
   String get mcpGroupValidations => 'Validaciones';
 
   @override
@@ -12312,6 +12336,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpOpSetFavorite => 'Marcar lugares como favoritos';
+
+  @override
+  String get mcpOpSetupLevels => 'Ver los niveles de configuración';
+
+  @override
+  String get mcpOpSetupLevelsApply => 'Cambiar los niveles de configuración';
+
+  @override
+  String get mcpOpSetupLevelsPreview => 'Previsualizar un cambio de niveles';
+
+  @override
+  String get mcpOpSetupStatus => 'Ver en qué punto está la configuración';
+
+  @override
+  String get mcpOpSetupStepMark => 'Marcar un paso como hecho o para más tarde';
 
   @override
   String get mcpOpSubscription =>

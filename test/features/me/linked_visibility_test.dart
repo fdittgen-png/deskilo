@@ -46,9 +46,11 @@ void main() {
     tester,
   ) async {
     final me = FakeMeRepository();
+    final linked = FakeLinkedMeRepository();
     final router = await pumpMeApp(
       tester,
       me: me,
+      linkedMe: linked,
       connectedSources: [_linked(_other)],
     );
     await goTo(tester, router, '/me?tab=me');
@@ -75,7 +77,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('visibility-widen-confirm')));
     await tester.pumpAndSettle();
     expect(
-      me.linkedVisibility[_other]!.of(VisibilityField.contactChannels).audience,
+      linked.linkedVisibility[_other]!.of(VisibilityField.contactChannels).audience,
       VisibilityAudience.mySpaces,
     );
     // Home is untouched.
@@ -96,16 +98,16 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('visibility-widen-confirm')));
     await tester.pumpAndSettle();
     expect(
-      me.linkedVisibility[_other]!.of(VisibilityField.identity).audience,
+      linked.linkedVisibility[_other]!.of(VisibilityField.identity).audience,
       VisibilityAudience.signedIn,
     );
   });
 
   testWidgets('a server that does not answer says so', (tester) async {
-    final me = FakeMeRepository()..unavailable.add(_other);
+    final linked = FakeLinkedMeRepository()..unavailable.add(_other);
     final router = await pumpMeApp(
       tester,
-      me: me,
+      linkedMe: linked,
       connectedSources: [_linked(_other)],
     );
     await goTo(tester, router, '/me?tab=me');

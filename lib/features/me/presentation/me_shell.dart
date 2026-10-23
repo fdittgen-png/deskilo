@@ -16,30 +16,46 @@ import 'package:go_router/go_router.dart';
 import '../../../app/shell/shell_drawer.dart';
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/settings/messaging_windows.dart';
+import '../../../core/navigation/navigation_style.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../directory/presentation/directory_screen.dart';
 import '../../directory/providers/messenger_providers.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
-import '../../task_recorder/presentation/route_classification.dart'
-    show taskWizardRoute;
 import '../../workspace/application/pending_invitation.dart';
-import '../../workspace/domain/workspace_feature.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import 'me_account_tab.dart';
 import 'me_home_tab.dart';
 import 'me_messages_tab.dart';
+import 'task_wizard_entry.dart';
 
 /// The four tabs, in bar order; the wire name is the `tab` query value.
+/// Each is one destination of the bar, the drawer and the sidebar alike.
 enum MeTab {
-  home('home'),
-  discover('discover'),
-  messages('messages'),
-  me('me');
+  home('home', 'me-tab-home', Icons.home_outlined, Icons.home),
+  discover('discover', 'me-tab-discover', Icons.travel_explore_outlined,
+      Icons.travel_explore),
+  messages('messages', 'me-tab-messages', Icons.forum_outlined, Icons.forum),
+  me('me', 'me-tab-me', Icons.person_outline, null);
 
-  const MeTab(this.wire);
+  const MeTab(this.wire, this.destinationKey, this.icon, this.selectedIcon);
 
   final String wire;
+
+  /// The key of this tab's destination in the bar, the drawer and the
+  /// sidebar alike, written out so the task recorder names each tab.
+  final String destinationKey;
+  final IconData icon;
+
+  /// The bar's icon while the tab is open; null for Me, which shows the
+  /// person's own avatar instead.
+  final IconData? selectedIcon;
+
+  String label(AppLocalizations l10n) => switch (this) {
+    home => l10n.meTabHome,
+    discover => l10n.meTabDiscover,
+    messages => l10n.meTabMessages,
+    me => l10n.uxProfileAccount,
+  };
 
   static MeTab fromQuery(String? wire) =>
       values.where((t) => t.wire == wire).firstOrNull ?? MeTab.home;
@@ -56,21 +72,11 @@ class MeShell extends ConsumerStatefulWidget {
 
 class _MeShellState extends ConsumerState<MeShell> {
   late MeTab _tab = widget.tab;
-  Timer? _badgeRefresh;
 
   @override
   void initState() {
     super.initState();
     unawaited(_offerKeptInvitation());
-    _badgeRefresh = Timer.periodic(ref.read(messagingWindowsProvider).inboxPoll, (_) {
-      if (mounted && !_visited.contains(MeTab.messages)) ref.invalidate(unifiedInboxProvider);
-    });
-  }
-
-  @override
-  void dispose() {
-    _badgeRefresh?.cancel();
-    super.dispose();
   }
 
   Future<void> _offerKeptInvitation() async {
@@ -125,25 +131,29 @@ class _MeShellState extends ConsumerState<MeShell> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    // Messages keeps its own polling once opened; before then only its
+    // badge refreshes.
+    if (!_visited.contains(MeTab.messages)) ref.watch(inboxBadgeRefreshProvider);
     final inbox = ref.watch(unifiedInboxProvider);
     final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
-    Widget messageIcon(IconData icon) => unread > 0
-        ? Badge.count(count: unread, maxCount: 99, child: Icon(icon)) : Icon(icon);
+    Widget icon(MeTab tab, IconData data) => tab == MeTab.messages && unread > 0
+        ? Badge.count(count: unread, maxCount: 99, child: Icon(data)) : Icon(data);
     final menu = ref.watch(webShellProvider);
-    final wideNavigation = menu && MediaQuery.sizeOf(context).width >= 900 &&
-        MediaQuery.textScalerOf(context).scale(100) <= 150;
-    final labels = [
-      l10n.meTabHome,
-      l10n.meTabDiscover,
-      l10n.meTabMessages,
-      l10n.uxProfileAccount,
-    ];
-    final icons = [
-      Icons.home_outlined,
-      Icons.travel_explore_outlined,
-      Icons.forum_outlined,
-      Icons.person_outline,
-    ];
+    final wideNavigation = menu &&
+        MediaQuery.sizeOf(context).width >= kWideNavigationMinWidth &&
+        MediaQuery.textScalerOf(context).scale(100) <= kWideNavigationMaxTextScale;
+    Widget destination(MeTab tab, {required bool permanent}) => ListTile(
+          key: ValueKey(tab.destinationKey),
+          leading: icon(tab, tab.icon),
+          title: Text(tab.label(l10n)),
+          selected: _tab == tab,
+          selectedTileColor: Theme.of(context).colorScheme.secondaryContainer,
+          selectedColor: Theme.of(context).colorScheme.onSecondaryContainer,
+          onTap: () {
+            if (!permanent) Navigator.of(context).pop();
+            _show(tab);
+          },
+        );
     Widget navigation({bool permanent = false}) => SafeArea(
                 child: ListView(
                   children: [
@@ -154,35 +164,12 @@ class _MeShellState extends ConsumerState<MeShell> {
                       ),
                     ),
                     const Divider(),
-                    for (final tab in MeTab.values) ...[
-                      // The task wizard sits between Messages and the profile.
-                      if (tab == MeTab.me &&
-                          ref
-                              .watch(enabledFeaturesSyncProvider)
-                              .contains(WorkspaceFeature.taskRecorder))
-                        ListTile(
-                          key: const ValueKey('me-drawer-task-wizard'),
-                          leading: const Icon(Icons.assistant_navigation),
-                          title: Text(l10n.taskWizardTitle),
-                          onTap: () {
-                            if (!permanent) Navigator.of(context).pop();
-                            unawaited(context.push(taskWizardRoute));
-                          },
-                        ),
-                      // Me is the profile button at the top right already.
-                      ListTile(
-                          key: ValueKey('me-tab-${tab.wire}'),
-                          leading: tab == MeTab.messages ? messageIcon(icons[tab.index]) : Icon(icons[tab.index]),
-                          title: Text(labels[tab.index]),
-                          selected: _tab == tab,
-                          selectedTileColor: Theme.of(context).colorScheme.secondaryContainer,
-                          selectedColor: Theme.of(context).colorScheme.onSecondaryContainer,
-                          onTap: () {
-                            if (!permanent) Navigator.of(context).pop();
-                            _show(tab);
-                          },
-                        ),
-                    ],
+                    for (final tab in MeTab.values.takeWhile((t) => t != MeTab.me))
+                      destination(tab, permanent: permanent),
+                    // The task wizard sits between Messages and the profile.
+                    TaskWizardEntry(
+                        entryKey: 'me-drawer-task-wizard', closesDrawer: !permanent),
+                    destination(MeTab.me, permanent: permanent),
                   ],
                 ),
               );
@@ -197,7 +184,7 @@ class _MeShellState extends ConsumerState<MeShell> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             Text(
-              labels[_tab.index],
+              _tab.label(l10n),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
@@ -240,30 +227,16 @@ class _MeShellState extends ConsumerState<MeShell> {
               selectedIndex: _tab.index,
               onDestinationSelected: (i) => _show(MeTab.values[i]),
               destinations: [
-                NavigationDestination(
-                  key: const ValueKey('me-tab-home'),
-                  icon: const Icon(Icons.home_outlined),
-                  selectedIcon: const Icon(Icons.home),
-                  label: l10n.meTabHome,
-                ),
-                NavigationDestination(
-                  key: const ValueKey('me-tab-discover'),
-                  icon: const Icon(Icons.travel_explore_outlined),
-                  selectedIcon: const Icon(Icons.travel_explore),
-                  label: l10n.meTabDiscover,
-                ),
-                NavigationDestination(
-                  key: const ValueKey('me-tab-messages'),
-                  icon: messageIcon(Icons.forum_outlined),
-                  selectedIcon: messageIcon(Icons.forum),
-                  label: l10n.meTabMessages,
-                ),
-                NavigationDestination(
-                  key: const ValueKey('me-tab-me'),
-                  icon: const Icon(Icons.person_outline),
-                  selectedIcon: const PersonalAvatar(),
-                  label: l10n.uxProfileAccount,
-                ),
+                for (final tab in MeTab.values)
+                  NavigationDestination(
+                    key: ValueKey(tab.destinationKey),
+                    icon: icon(tab, tab.icon),
+                    selectedIcon: switch (tab.selectedIcon) {
+                      final selected? => icon(tab, selected),
+                      null => const PersonalAvatar(),
+                    },
+                    label: tab.label(l10n),
+                  ),
               ],
             ),
     );

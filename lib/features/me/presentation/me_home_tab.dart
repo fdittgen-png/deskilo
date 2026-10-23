@@ -21,10 +21,39 @@ import '../../visits/presentation/my_visits_section.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/space_pairs.dart';
 import '../providers/me_providers.dart';
-import '../providers/space_prefs_provider.dart';
 import 'linked_spaces_section.dart';
 import 'me_spaces_list.dart';
+
+/// One of the two ways to a new space under the list: join, or create.
+class _HomeAction extends StatelessWidget {
+  const _HomeAction({
+    required this.actionKey,
+    required this.icon,
+    required this.label,
+    required this.route,
+  });
+
+  final String actionKey;
+  final IconData icon;
+  final String label;
+  final String route;
+
+  @override
+  Widget build(BuildContext context) => Expanded(
+    child: OutlinedButton.icon(
+      key: ValueKey(actionKey),
+      style: OutlinedButton.styleFrom(
+        minimumSize: const Size.fromHeight(48),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
+      ),
+      icon: Icon(icon),
+      label: Text(label, overflow: TextOverflow.ellipsis),
+      onPressed: () => context.push(route),
+    ),
+  );
+}
 
 class MeHomeTab extends ConsumerWidget {
   const MeHomeTab({super.key});
@@ -37,7 +66,7 @@ class MeHomeTab extends ConsumerWidget {
         ref.watch(myMembershipsProvider).value ?? const <Member>[];
     final last = ref.watch(activeWorkspaceIdProvider).value;
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
-    final rows = {for (final s in spaces) spaceRowKeyOf(s)}.length;
+    final rows = pairSides(spaces).length;
     final nothing = spaces.isEmpty && linked.every((s) => s.spaces.isEmpty);
     return Scaffold(
       body: Align(
@@ -93,40 +122,18 @@ class MeHomeTab extends ConsumerWidget {
               const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      key: const ValueKey('me-home-join'),
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(48),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: AppRadius.lgAll,
-                        ),
-                      ),
-                      icon: const Icon(Icons.qr_code_2_outlined),
-                      label: Text(
-                        l10n.meJoinSpace,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      onPressed: () => context.push('/onboarding?join=1'),
-                    ),
+                  _HomeAction(
+                    actionKey: 'me-home-join',
+                    icon: Icons.qr_code_2_outlined,
+                    label: l10n.meJoinSpace,
+                    route: '/onboarding?join=1',
                   ),
                   const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      key: const ValueKey('me-home-create'),
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(48),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: AppRadius.lgAll,
-                        ),
-                      ),
-                      icon: const Icon(Icons.add_business_outlined),
-                      label: Text(
-                        l10n.meCreateSpace,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      onPressed: () => context.push('/onboarding'),
-                    ),
+                  _HomeAction(
+                    actionKey: 'me-home-create',
+                    icon: Icons.add_business_outlined,
+                    label: l10n.meCreateSpace,
+                    route: '/onboarding',
                   ),
                 ],
               ),

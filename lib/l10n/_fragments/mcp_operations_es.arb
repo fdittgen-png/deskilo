@@ -23,5 +23,10 @@
   "mcpOpSubscription": "Cambiar la parte de suscripción de un miembro",
   "mcpOpPendingValidations": "Ver solicitudes de validación pendientes",
   "mcpOpGetValidation": "Leer una solicitud de validación",
-  "mcpOpRespond": "Responder a una solicitud de validación"
+  "mcpOpRespond": "Responder a una solicitud de validación",
+  "mcpOpSetupStatus": "Ver en qué punto está la configuración",
+  "mcpOpSetupLevels": "Ver los niveles de configuración",
+  "mcpOpSetupLevelsPreview": "Previsualizar un cambio de niveles",
+  "mcpOpSetupLevelsApply": "Cambiar los niveles de configuración",
+  "mcpOpSetupStepMark": "Marcar un paso como hecho o para más tarde"
 }

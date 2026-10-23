@@ -23,5 +23,10 @@
   "mcpOpSubscription": "Modificare la quota di abbonamento di un membro",
   "mcpOpPendingValidations": "Vedere le richieste di convalida in sospeso",
   "mcpOpGetValidation": "Leggere una richiesta di convalida",
-  "mcpOpRespond": "Rispondere a una richiesta di validazione"
+  "mcpOpRespond": "Rispondere a una richiesta di validazione",
+  "mcpOpSetupStatus": "Vedere a che punto è la configurazione",
+  "mcpOpSetupLevels": "Vedere i livelli di configurazione",
+  "mcpOpSetupLevelsPreview": "Visualizzare in anteprima un cambio di livelli",
+  "mcpOpSetupLevelsApply": "Cambiare i livelli di configurazione",
+  "mcpOpSetupStepMark": "Segnare un passo come fatto o per dopo"
 }

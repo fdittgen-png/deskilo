@@ -32,6 +32,11 @@ enum McpOperationId {
   listPendingValidations('list_pending_validations'),
   getValidation('get_validation'),
   respondToValidation('respond_to_validation'),
+  getSetupStatus('get_setup_status'),
+  listSetupLevels('list_setup_levels'),
+  previewSetupLevels('preview_setup_levels'),
+  applySetupLevels('apply_setup_levels'),
+  markSetupStep('mark_setup_step'),
   ;
 
   const McpOperationId(this.id);
