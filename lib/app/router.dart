@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -41,17 +40,12 @@ part 'router.g.dart';
 
 @Riverpod(keepAlive: true)
 GoRouter router(Ref ref) {
-  final refresh = ValueNotifier(0);
   late final GoRouter router;
   // #1650 — a refresh re-asks the redirect about where the person IS
   // (entry_resumption.dart says why the reported location is not that).
-  void reask() {
-    reportCurrentLocation(router);
-    refresh.value++;
-  }
+  void reask() => reaskRedirect(router);
 
   ref
-    ..onDispose(refresh.dispose)
     ..listen(authStateProvider, (_, _) => reask())
     ..listen(myWorkspacesProvider, (_, _) => reask())
     // Feature flags follow the ACTIVE workspace (#146): switching
@@ -79,7 +73,6 @@ GoRouter router(Ref ref) {
     // The Reserve hub is the app's home (the centre button's form): it
     // is what opens on start, after sign-in and after onboarding.
     initialLocation: '/reserve',
-    refreshListenable: refresh,
     // #2142 — tells a live task recording that a window opened or
     // closed; does nothing while none is live.
     observers: [RecorderWindowObserver()],

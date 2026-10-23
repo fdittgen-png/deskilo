@@ -1,8 +1,8 @@
 {
-  "recordedSha": "a2de9a969bc6a69ae43286ae684fa00533cbdfb3",
+  "recordedSha": "adce6fb5fd8bd1a9cd3b4860e2778574f4923407",
   "recordedDate": "2026-10-23",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1886,"functions":10472,"cyclomatic>=9":1104,"cyclomatic>=25":105,"cognitive>=15":447,"cognitive>=30":95,"length>=150":74,"parameters>=5":491,"parameters>=7":151,"partOfFiles":42},
+  "totals": {"files":1886,"functions":10478,"cyclomatic>=9":1104,"cyclomatic>=25":105,"cognitive>=15":447,"cognitive>=30":95,"length>=150":74,"parameters>=5":491,"parameters>=7":151,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -724,7 +724,7 @@
     {"p":"lib/app/bootstrap.dart","loc":123,"part":false,"setState":1,"repositoryReads":0,"fn":9,"cog":7,"cyc":6,"len":38,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/entry_intent.dart","loc":106,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":19,"cyc":19,"len":39,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/entry_intents.dart","loc":157,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":17,"cyc":26,"len":58,"params":1,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
-    {"p":"lib/app/entry_resumption.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":16,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/app/entry_resumption.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":19,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/oauth_consent_route.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":4,"len":9,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/page_routes.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/realtime_invalidations.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":10,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -733,7 +733,7 @@
     {"p":"lib/app/route_env.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":2,"cyc":2,"len":6,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/route_policy.dart","loc":230,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":40,"cyc":48,"len":141,"params":3,"nest":3,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/app/route_redirect.dart","loc":103,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":8,"cyc":14,"len":51,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/app/router.dart","loc":85,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":75,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/app/router.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":69,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/routes/auth_routes.dart","loc":21,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":18,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/routes/directory_routes.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":3,"len":28,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/routes/editor_routes.dart","loc":27,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":23,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2539,7 +2539,7 @@
     {"p":"lib/features/workspace/presentation/widgets/setup_new_members_step.dart","loc":204,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":5,"cyc":6,"len":63,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_payment_methods_step.dart","loc":111,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":8,"cyc":5,"len":54,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_resume_banner.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":34,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/setup_return_bar.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":3,"len":39,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/setup_return_bar.dart","loc":88,"part":false,"setState":1,"repositoryReads":0,"fn":9,"cog":4,"cyc":4,"len":40,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_run_pages.dart","loc":154,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":13,"cyc":13,"len":32,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_step_layout.dart","loc":67,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":2,"len":29,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/setup_week_strip.dart","loc":142,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":6,"cyc":5,"len":58,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
