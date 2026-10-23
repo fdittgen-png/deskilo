@@ -324,6 +324,7 @@ const Set<String> demoOverriddenProviders = {
   'workspaceListRepositoryProvider', // #2564
   'floorPlanRepositoryProvider',
   'reservationRepositoryProvider',
+  'myReservationsRepositoryProvider', // #2553
   'placeFeedbackRepositoryProvider', // #2185
   'eventRepositoryProvider',
   'calendarRepositoryProvider',

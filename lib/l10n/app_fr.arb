@@ -9050,6 +9050,30 @@
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
+  "myReservationsChangePeriod": "Changer de période",
+  "myReservationsCheckedInAt": "Arrivée à {time}",
+  "myReservationsCheckedOutAt": "Départ à {time}",
+  "myReservationsEmpty": "Aucune réservation sur cette période.",
+  "myReservationsFailed": "Vos réservations n'ont pas pu être lues. Réessayez dans un instant.",
+  "myReservationsForbidden": "Ce serveur a refusé de lister vos réservations.",
+  "myReservationsInvalid": "Ce serveur a refusé la période demandée.",
+  "myReservationsKindDesk": "Bureau",
+  "myReservationsKindLevel": "Étage",
+  "myReservationsKindOffice": "Salle",
+  "myReservationsKindSeat": "Place",
+  "myReservationsLoadMore": "Afficher plus",
+  "myReservationsLoadingMore": "Chargement…",
+  "myReservationsMalformed": "Ce serveur a répondu sous une forme que cette application ne comprend pas.",
+  "myReservationsMisconfigured": "Ce serveur n'a pas encore de réglages pour les lectures personnelles.",
+  "myReservationsNoWorkspace": "Choisissez un espace pour voir vos réservations sur son serveur.",
+  "myReservationsPeriodLimit": "Au plus {days} jours à la fois.",
+  "myReservationsStatusCancelled": "Annulée",
+  "myReservationsStatusCheckedIn": "Arrivée enregistrée",
+  "myReservationsStatusCompleted": "Terminée",
+  "myReservationsStatusReleased": "Libérée",
+  "myReservationsStatusReserved": "Réservée",
+  "myReservationsUnnamedPlace": "(place sans nom)",
+  "myReservationsUnsupported": "Ce serveur ne liste pas encore les réservations pour l'espace personnel.",
   "myVisitsHelp": "Les visites que vous avez demandées ou auxquelles vous avez été admis, en tant qu'invité. Une visite n'est pas une adhésion.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
@@ -13264,6 +13288,7 @@
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupPersonal": "Espace personnel",
   "settingGroupPresence": "Présence",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -13380,6 +13405,11 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalReadConcurrency": "Nombre de serveurs que l'espace personnel interroge en même temps lorsqu'il rassemble vos propres données. Une borne sur les lectures parallèles de l'appareil, pas sur un serveur.",
+  "settingHintPersonalReadTimeoutSeconds": "Secondes pendant lesquelles l'espace personnel attend la réponse d'un serveur avant de l'afficher comme indisponible et de passer aux autres.",
+  "settingHintPersonalReservationMaxWindowDays": "Fixé par la plateforme : la plus longue période qu'une lecture de vos réservations peut demander. Il borne la requête.",
+  "settingHintPersonalReservationPageSize": "Nombre de vos réservations qu'un serveur renvoie par page ; la page suivante vient avec Afficher plus.",
+  "settingHintPersonalReservationWindowDays": "Jours que l'espace personnel affiche par défaut lorsqu'il liste vos réservations. Vous pouvez choisir une autre période, jusqu'au plafond.",
   "settingHintPresenceOnlineWindowMinutes": "Minutes après son dernier signe de vie pendant lesquelles une personne compte encore comme en ligne. À garder au-dessus du battement de 2 minutes.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
@@ -13516,6 +13546,11 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalReadConcurrency": "Serveurs lus en parallèle",
+  "settingLabelPersonalReadTimeoutSeconds": "Attente par serveur",
+  "settingLabelPersonalReservationMaxWindowDays": "Plafond de la période des réservations",
+  "settingLabelPersonalReservationPageSize": "Réservations par page",
+  "settingLabelPersonalReservationWindowDays": "Période des réservations",
   "settingLabelPresenceOnlineWindowMinutes": "Fenêtre en ligne",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."

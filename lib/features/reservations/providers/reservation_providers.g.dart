@@ -722,3 +722,249 @@ final class PeriodReservationsFamily extends $Family
   @override
   String toString() => r'periodReservationsProvider';
 }
+
+/// The read, bound to the workspace context at each call and to that
+/// context's host client. Demo overrides it with the fixture's spaces.
+
+@ProviderFor(myReservationsRepository)
+final myReservationsRepositoryProvider = MyReservationsRepositoryProvider._();
+
+/// The read, bound to the workspace context at each call and to that
+/// context's host client. Demo overrides it with the fixture's spaces.
+
+final class MyReservationsRepositoryProvider
+    extends
+        $FunctionalProvider<
+          MyReservationsRepository,
+          MyReservationsRepository,
+          MyReservationsRepository
+        >
+    with $Provider<MyReservationsRepository> {
+  /// The read, bound to the workspace context at each call and to that
+  /// context's host client. Demo overrides it with the fixture's spaces.
+  MyReservationsRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myReservationsRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myReservationsRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<MyReservationsRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  MyReservationsRepository create(Ref ref) {
+    return myReservationsRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MyReservationsRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MyReservationsRepository>(value),
+    );
+  }
+}
+
+String _$myReservationsRepositoryHash() =>
+    r'ce331956aa62011f4bcf76dd1202a5c4a9256272';
+
+/// The window a person starts with and the longest one they may ask for:
+/// the host's own settings as the context captured them, never a literal.
+/// A registry without the rows fails typed.
+
+@ProviderFor(MyReservationsWindowController)
+final myReservationsWindowControllerProvider =
+    MyReservationsWindowControllerProvider._();
+
+/// The window a person starts with and the longest one they may ask for:
+/// the host's own settings as the context captured them, never a literal.
+/// A registry without the rows fails typed.
+final class MyReservationsWindowControllerProvider
+    extends
+        $AsyncNotifierProvider<
+          MyReservationsWindowController,
+          MyReservationsWindow
+        > {
+  /// The window a person starts with and the longest one they may ask for:
+  /// the host's own settings as the context captured them, never a literal.
+  /// A registry without the rows fails typed.
+  MyReservationsWindowControllerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: myReservationsRetry,
+        name: r'myReservationsWindowControllerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myReservationsWindowControllerHash();
+
+  @$internal
+  @override
+  MyReservationsWindowController create() => MyReservationsWindowController();
+}
+
+String _$myReservationsWindowControllerHash() =>
+    r'498fe9adc2668a929eebc5587ab767a65bed574c';
+
+/// The window a person starts with and the longest one they may ask for:
+/// the host's own settings as the context captured them, never a literal.
+/// A registry without the rows fails typed.
+
+abstract class _$MyReservationsWindowController
+    extends $AsyncNotifier<MyReservationsWindow> {
+  FutureOr<MyReservationsWindow> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref
+            as $Ref<AsyncValue<MyReservationsWindow>, MyReservationsWindow>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<MyReservationsWindow>,
+                MyReservationsWindow
+              >,
+              AsyncValue<MyReservationsWindow>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
+/// The feed of one [MyReservationsQuery]: the first page on build, the next
+/// ones appended by [loadMore]. A changed window is another query, so
+/// another feed; a page that arrives for a disposed feed is dropped.
+
+@ProviderFor(MyReservationsFeedController)
+final myReservationsFeedControllerProvider =
+    MyReservationsFeedControllerFamily._();
+
+/// The feed of one [MyReservationsQuery]: the first page on build, the next
+/// ones appended by [loadMore]. A changed window is another query, so
+/// another feed; a page that arrives for a disposed feed is dropped.
+final class MyReservationsFeedControllerProvider
+    extends
+        $AsyncNotifierProvider<
+          MyReservationsFeedController,
+          MyReservationsFeed
+        > {
+  /// The feed of one [MyReservationsQuery]: the first page on build, the next
+  /// ones appended by [loadMore]. A changed window is another query, so
+  /// another feed; a page that arrives for a disposed feed is dropped.
+  MyReservationsFeedControllerProvider._({
+    required MyReservationsFeedControllerFamily super.from,
+    required MyReservationsQuery super.argument,
+  }) : super(
+         retry: myReservationsRetry,
+         name: r'myReservationsFeedControllerProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$myReservationsFeedControllerHash();
+
+  @override
+  String toString() {
+    return r'myReservationsFeedControllerProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  MyReservationsFeedController create() => MyReservationsFeedController();
+
+  @override
+  bool operator ==(Object other) {
+    return other is MyReservationsFeedControllerProvider &&
+        other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$myReservationsFeedControllerHash() =>
+    r'7b2018c21ebc71fe6ced618c15c88c3c4898fb5f';
+
+/// The feed of one [MyReservationsQuery]: the first page on build, the next
+/// ones appended by [loadMore]. A changed window is another query, so
+/// another feed; a page that arrives for a disposed feed is dropped.
+
+final class MyReservationsFeedControllerFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          MyReservationsFeedController,
+          AsyncValue<MyReservationsFeed>,
+          MyReservationsFeed,
+          FutureOr<MyReservationsFeed>,
+          MyReservationsQuery
+        > {
+  MyReservationsFeedControllerFamily._()
+    : super(
+        retry: myReservationsRetry,
+        name: r'myReservationsFeedControllerProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The feed of one [MyReservationsQuery]: the first page on build, the next
+  /// ones appended by [loadMore]. A changed window is another query, so
+  /// another feed; a page that arrives for a disposed feed is dropped.
+
+  MyReservationsFeedControllerProvider call(MyReservationsQuery query) =>
+      MyReservationsFeedControllerProvider._(argument: query, from: this);
+
+  @override
+  String toString() => r'myReservationsFeedControllerProvider';
+}
+
+/// The feed of one [MyReservationsQuery]: the first page on build, the next
+/// ones appended by [loadMore]. A changed window is another query, so
+/// another feed; a page that arrives for a disposed feed is dropped.
+
+abstract class _$MyReservationsFeedController
+    extends $AsyncNotifier<MyReservationsFeed> {
+  late final _$args = ref.$arg as MyReservationsQuery;
+  MyReservationsQuery get query => _$args;
+
+  FutureOr<MyReservationsFeed> build(MyReservationsQuery query);
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<MyReservationsFeed>, MyReservationsFeed>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<MyReservationsFeed>, MyReservationsFeed>,
+              AsyncValue<MyReservationsFeed>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, () => build(_$args));
+  }
+}

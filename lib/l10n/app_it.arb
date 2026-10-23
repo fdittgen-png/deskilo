@@ -9050,6 +9050,30 @@
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
+  "myReservationsChangePeriod": "Altro periodo",
+  "myReservationsCheckedInAt": "Check-in alle {time}",
+  "myReservationsCheckedOutAt": "Check-out alle {time}",
+  "myReservationsEmpty": "Nessuna prenotazione in questo periodo.",
+  "myReservationsFailed": "Non è stato possibile leggere le Sue prenotazioni. Riprovi tra un istante.",
+  "myReservationsForbidden": "Questo server ha rifiutato di elencare le Sue prenotazioni.",
+  "myReservationsInvalid": "Questo server ha rifiutato il periodo richiesto.",
+  "myReservationsKindDesk": "Scrivania",
+  "myReservationsKindLevel": "Piano",
+  "myReservationsKindOffice": "Sala",
+  "myReservationsKindSeat": "Posto",
+  "myReservationsLoadMore": "Mostra altro",
+  "myReservationsLoadingMore": "Caricamento…",
+  "myReservationsMalformed": "Questo server ha risposto in una forma che questa app non comprende.",
+  "myReservationsMisconfigured": "Questo server non ha ancora impostazioni per le letture personali.",
+  "myReservationsNoWorkspace": "Scelga uno spazio per vedere le Sue prenotazioni sul suo server.",
+  "myReservationsPeriodLimit": "Al massimo {days} giorni alla volta.",
+  "myReservationsStatusCancelled": "Annullata",
+  "myReservationsStatusCheckedIn": "Check-in effettuato",
+  "myReservationsStatusCompleted": "Completata",
+  "myReservationsStatusReleased": "Rilasciata",
+  "myReservationsStatusReserved": "Prenotata",
+  "myReservationsUnnamedPlace": "(posto senza nome)",
+  "myReservationsUnsupported": "Questo server non elenca ancora le prenotazioni per lo spazio personale.",
   "myVisitsHelp": "Le visite che ha chiesto o a cui è stato ammesso come ospite. Una visita non è un'iscrizione.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
@@ -13264,6 +13288,7 @@
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupPersonal": "Spazio personale",
   "settingGroupPresence": "Presenza",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -13380,6 +13405,11 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalReadConcurrency": "Quanti server lo spazio personale interroga insieme quando raccoglie i Suoi dati. Un limite alle letture parallele del dispositivo, non a un server.",
+  "settingHintPersonalReadTimeoutSeconds": "Secondi che lo spazio personale attende la risposta di un server prima di mostrarlo come non disponibile e passare agli altri.",
+  "settingHintPersonalReservationMaxWindowDays": "Fissato dalla piattaforma: il periodo più lungo che una lettura delle Sue prenotazioni può chiedere. Limita l'interrogazione.",
+  "settingHintPersonalReservationPageSize": "Quante delle Sue prenotazioni un server restituisce per pagina; la pagina successiva arriva con Mostra altro.",
+  "settingHintPersonalReservationWindowDays": "Giorni che lo spazio personale mostra per impostazione predefinita quando elenca le Sue prenotazioni. Può scegliere un altro periodo, fino al tetto.",
   "settingHintPresenceOnlineWindowMinutes": "Minuti dopo l'ultimo segno di vita in cui una persona conta ancora come online. Tenerlo sopra il battito di 2 minuti.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
@@ -13516,6 +13546,11 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalReadConcurrency": "Server letti insieme",
+  "settingLabelPersonalReadTimeoutSeconds": "Attesa per server",
+  "settingLabelPersonalReservationMaxWindowDays": "Tetto del periodo delle prenotazioni",
+  "settingLabelPersonalReservationPageSize": "Prenotazioni per pagina",
+  "settingLabelPersonalReservationWindowDays": "Periodo delle prenotazioni",
   "settingLabelPresenceOnlineWindowMinutes": "Finestra online",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."

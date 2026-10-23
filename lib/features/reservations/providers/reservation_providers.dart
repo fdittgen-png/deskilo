@@ -14,13 +14,16 @@ import '../../../core/roles/audience_roles.dart';
 import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/booking_recovery.dart';
 import '../application/save_calendar_file.dart';
+import '../data/context_my_reservations_repository.dart';
 import '../data/context_reservation_repository.dart';
 import '../data/supabase_series_previewer.dart';
 import '../domain/booking_intent.dart';
+import '../domain/my_reservations.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 import '../domain/series_preview.dart';
@@ -291,4 +294,129 @@ Future<List<Reservation>> periodReservations(
   final to = DateTime(last.year, last.month + 1);
   final rows = await repository.fetchWindow(workspace.id, from: from, to: to);
   return [...rows]..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+}
+
+// #2553 C1 -- a person's own reservations on the selected workspace's host:
+// the adapter over the context's verified client, the window the host's
+// captured settings allow and the feed that pages through one window.
+
+/// The read, bound to the workspace context at each call and to that
+/// context's host client. Demo overrides it with the fixture's spaces.
+@Riverpod(keepAlive: true)
+MyReservationsRepository myReservationsRepository(Ref ref) =>
+    ContextMyReservationsRepository(
+      context: () => ref.read(workspaceContextProvider.future),
+      clientFor: (id) => ref.read(workspaceClientProvider(id)),
+    );
+
+/// The window a person starts with and the longest one they may ask for:
+/// the host's own settings as the context captured them, never a literal.
+/// A registry without the rows fails typed.
+@Riverpod(retry: myReservationsRetry)
+class MyReservationsWindowController extends _$MyReservationsWindowController {
+  @override
+  Future<MyReservationsWindow> build() async {
+    final now = ref.watch(clockProvider).now();
+    final limits = await ref.watch(myReservationsRepositoryProvider).limits();
+    return MyReservationsWindow.fromToday(
+      now,
+      defaultDays: limits.windowDays,
+      maxDays: limits.maxDays,
+    );
+  }
+
+  /// The person's choice of days, inclusive; cut to the ceiling.
+  void cover(DateTime firstDay, DateTime lastDay) {
+    final current = state.value;
+    if (current == null) return;
+    state = AsyncData(current.covering(firstDay, lastDay));
+  }
+}
+
+/// What one feed holds: the pages read so far, where the next one starts,
+/// whether a further page is being read and why the last one did not come.
+class MyReservationsFeed {
+  const MyReservationsFeed({
+    required this.source,
+    required this.items,
+    required this.next,
+    required this.hasMore,
+    this.loadingMore = false,
+    this.loadMoreFailure,
+  });
+
+  final String source;
+  final List<MyReservationItem> items;
+  final MyReservationsCursor? next;
+  final bool hasMore;
+  final bool loadingMore;
+
+  /// The failure of the last "show more", kept beside the pages it follows
+  /// so they stay on screen; null once a page came.
+  final Object? loadMoreFailure;
+
+  MyReservationsFeed _with({
+    List<MyReservationItem>? items,
+    MyReservationsCursor? next,
+    bool? hasMore,
+    required bool loadingMore,
+    Object? loadMoreFailure,
+  }) =>
+      MyReservationsFeed(
+        source: source,
+        items: items ?? this.items,
+        next: next ?? this.next,
+        hasMore: hasMore ?? this.hasMore,
+        loadingMore: loadingMore,
+        loadMoreFailure: loadMoreFailure,
+      );
+}
+
+/// The feed of one [MyReservationsQuery]: the first page on build, the next
+/// ones appended by [loadMore]. A changed window is another query, so
+/// another feed; a page that arrives for a disposed feed is dropped.
+@Riverpod(retry: myReservationsRetry)
+class MyReservationsFeedController extends _$MyReservationsFeedController {
+  @override
+  Future<MyReservationsFeed> build(MyReservationsQuery query) async {
+    final page = await ref.watch(myReservationsRepositoryProvider).page(query);
+    return MyReservationsFeed(
+      source: page.source,
+      items: page.items,
+      next: page.next,
+      hasMore: page.hasMore,
+    );
+  }
+
+  Future<void> loadMore() async {
+    final current = state.value;
+    final cursor = current?.next;
+    if (current == null || cursor == null || !current.hasMore || current.loadingMore) {
+      return;
+    }
+    state = AsyncData(current._with(loadingMore: true));
+    try {
+      final page = await ref
+          .read(myReservationsRepositoryProvider)
+          .page(query.continuedAfter(cursor));
+      if (!ref.mounted) return;
+      state = AsyncData(current._with(
+        items: List.unmodifiable([...current.items, ...page.items]),
+        next: page.next,
+        hasMore: page.hasMore,
+        loadingMore: false,
+      ));
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn(
+        'reservations',
+        'the next page of my reservations did not come',
+        error: e,
+        stackTrace: st,
+      );
+      if (!ref.mounted) return;
+      // The pages already read stay on screen; the failure is shown beside
+      // them with the way to ask for the next page again.
+      state = AsyncData(current._with(loadingMore: false, loadMoreFailure: e));
+    }
+  }
 }

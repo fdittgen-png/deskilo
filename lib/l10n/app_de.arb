@@ -9050,6 +9050,30 @@
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
+  "myReservationsChangePeriod": "Zeitraum ändern",
+  "myReservationsCheckedInAt": "Eingecheckt um {time}",
+  "myReservationsCheckedOutAt": "Ausgecheckt um {time}",
+  "myReservationsEmpty": "Keine Reservierungen in diesem Zeitraum.",
+  "myReservationsFailed": "Ihre Reservierungen konnten nicht gelesen werden. Versuchen Sie es gleich noch einmal.",
+  "myReservationsForbidden": "Dieser Server hat es abgelehnt, Ihre Reservierungen aufzulisten.",
+  "myReservationsInvalid": "Dieser Server hat den angefragten Zeitraum abgelehnt.",
+  "myReservationsKindDesk": "Tisch",
+  "myReservationsKindLevel": "Etage",
+  "myReservationsKindOffice": "Raum",
+  "myReservationsKindSeat": "Platz",
+  "myReservationsLoadMore": "Mehr anzeigen",
+  "myReservationsLoadingMore": "Wird geladen…",
+  "myReservationsMalformed": "Dieser Server hat in einer Form geantwortet, die diese App nicht versteht.",
+  "myReservationsMisconfigured": "Dieser Server hat noch keine Einstellungen für persönliche Lesezugriffe.",
+  "myReservationsNoWorkspace": "Wählen Sie einen Space, um Ihre Reservierungen auf seinem Server zu sehen.",
+  "myReservationsPeriodLimit": "Höchstens {days} Tage auf einmal.",
+  "myReservationsStatusCancelled": "Storniert",
+  "myReservationsStatusCheckedIn": "Eingecheckt",
+  "myReservationsStatusCompleted": "Abgeschlossen",
+  "myReservationsStatusReleased": "Freigegeben",
+  "myReservationsStatusReserved": "Reserviert",
+  "myReservationsUnnamedPlace": "(Platz ohne Namen)",
+  "myReservationsUnsupported": "Dieser Server listet Reservierungen für den persönlichen Bereich noch nicht auf.",
   "myVisitsHelp": "Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
@@ -13264,6 +13288,7 @@
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupPersonal": "Persönlicher Bereich",
   "settingGroupPresence": "Anwesenheit",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -13380,6 +13405,11 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalReadConcurrency": "Wie viele Server der persönliche Bereich gleichzeitig abfragt, wenn er Ihre eigenen Daten zusammenträgt. Eine Grenze für die parallelen Lesezugriffe des Geräts, nicht für einen Server.",
+  "settingHintPersonalReadTimeoutSeconds": "Sekunden, die der persönliche Bereich auf die Antwort eines Servers wartet, bevor er ihn als nicht erreichbar anzeigt und mit den anderen fortfährt.",
+  "settingHintPersonalReservationMaxWindowDays": "Von der Plattform festgelegt: der längste Zeitraum, den ein Lesezugriff auf Ihre Reservierungen anfragen darf. Er begrenzt die Abfrage.",
+  "settingHintPersonalReservationPageSize": "Wie viele Ihrer Reservierungen ein Server je Seite zurückgibt; die nächste Seite kommt mit Mehr anzeigen.",
+  "settingHintPersonalReservationWindowDays": "Tage, die der persönliche Bereich standardmäßig anzeigt, wenn er Ihre Reservierungen auflistet. Sie können einen anderen Zeitraum wählen, bis zur Obergrenze.",
   "settingHintPresenceOnlineWindowMinutes": "Minuten nach dem letzten Lebenszeichen, in denen eine Person noch als online gilt. Über dem 2-Minuten-Herzschlag halten.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
@@ -13516,6 +13546,11 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalReadConcurrency": "Gleichzeitig gelesene Server",
+  "settingLabelPersonalReadTimeoutSeconds": "Wartezeit je Server",
+  "settingLabelPersonalReservationMaxWindowDays": "Obergrenze des Reservierungszeitraums",
+  "settingLabelPersonalReservationPageSize": "Reservierungen je Seite",
+  "settingLabelPersonalReservationWindowDays": "Zeitraum der Reservierungen",
   "settingLabelPresenceOnlineWindowMinutes": "Online-Fenster",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."

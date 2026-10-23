@@ -9050,6 +9050,30 @@
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
+  "myReservationsChangePeriod": "Cambiar el periodo",
+  "myReservationsCheckedInAt": "Llegada registrada a las {time}",
+  "myReservationsCheckedOutAt": "Salida registrada a las {time}",
+  "myReservationsEmpty": "No hay reservas en este periodo.",
+  "myReservationsFailed": "No se han podido leer sus reservas. Inténtelo de nuevo en un momento.",
+  "myReservationsForbidden": "Este servidor ha rechazado listar sus reservas.",
+  "myReservationsInvalid": "Este servidor ha rechazado el periodo solicitado.",
+  "myReservationsKindDesk": "Mesa",
+  "myReservationsKindLevel": "Planta",
+  "myReservationsKindOffice": "Sala",
+  "myReservationsKindSeat": "Sitio",
+  "myReservationsLoadMore": "Mostrar más",
+  "myReservationsLoadingMore": "Cargando…",
+  "myReservationsMalformed": "Este servidor ha respondido en una forma que esta aplicación no entiende.",
+  "myReservationsMisconfigured": "Este servidor aún no tiene ajustes para las lecturas personales.",
+  "myReservationsNoWorkspace": "Elija un espacio para ver sus reservas en su servidor.",
+  "myReservationsPeriodLimit": "Como máximo {days} días a la vez.",
+  "myReservationsStatusCancelled": "Cancelada",
+  "myReservationsStatusCheckedIn": "Llegada registrada",
+  "myReservationsStatusCompleted": "Completada",
+  "myReservationsStatusReleased": "Liberada",
+  "myReservationsStatusReserved": "Reservada",
+  "myReservationsUnnamedPlace": "(sitio sin nombre)",
+  "myReservationsUnsupported": "Este servidor aún no lista las reservas para el espacio personal.",
   "myVisitsHelp": "Visitas que pidió o a las que fue admitido como invitado. Una visita no es una membresía.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
@@ -13264,6 +13288,7 @@
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupPersonal": "Espacio personal",
   "settingGroupPresence": "Presencia",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -13380,6 +13405,11 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalReadConcurrency": "Cuántos servidores consulta a la vez el espacio personal cuando reúne sus propios datos. Un límite de las lecturas paralelas del dispositivo, no de ningún servidor.",
+  "settingHintPersonalReadTimeoutSeconds": "Segundos que el espacio personal espera la respuesta de un servidor antes de mostrarlo como no disponible y continuar con los demás.",
+  "settingHintPersonalReservationMaxWindowDays": "Fijado por la plataforma: el periodo más largo que una lectura de sus reservas puede pedir. Acota la consulta.",
+  "settingHintPersonalReservationPageSize": "Cuántas de sus reservas devuelve un servidor por página; la siguiente página llega con Mostrar más.",
+  "settingHintPersonalReservationWindowDays": "Días que el espacio personal muestra por defecto cuando lista sus reservas. Puede elegir otro periodo, hasta el tope.",
   "settingHintPresenceOnlineWindowMinutes": "Minutos tras su última señal de vida durante los que una persona sigue contando como en línea. Manténgalo por encima del latido de 2 minutos.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
@@ -13516,6 +13546,11 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalReadConcurrency": "Servidores leídos a la vez",
+  "settingLabelPersonalReadTimeoutSeconds": "Espera por servidor",
+  "settingLabelPersonalReservationMaxWindowDays": "Tope del periodo de las reservas",
+  "settingLabelPersonalReservationPageSize": "Reservas por página",
+  "settingLabelPersonalReservationWindowDays": "Periodo de las reservas",
   "settingLabelPresenceOnlineWindowMinutes": "Ventana en línea",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."

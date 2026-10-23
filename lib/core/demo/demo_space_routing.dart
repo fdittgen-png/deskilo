@@ -28,14 +28,37 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money_repository.dart';
+import 'data/my_reservations_repository.dart';
 import 'data/plan_resource_repository.dart';
 import 'data/series_previewer.dart';
 import 'demo_fixture.dart';
 import 'seed/demo_second_space_seed.dart';
 
+/// Demo's one fictional installation: nothing is verified against a
+/// server, and every client borrows the fakes (#1625).
+const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
+
 /// Whether the scope is looking at the Leipzig space.
 bool _leipzig(Ref ref) =>
     ref.watch(currentWorkspaceProvider).value?.id == demoSecondSpaceId;
+
+/// #2553 — the two spaces as the own-reservations read sees them: one
+/// installation, read the way a workspace host answers. A space's name is
+/// looked up when a page is built, and a space the session no longer lists
+/// is named by its id rather than refused.
+DemoMyReservationsRepository _myReservations(DemoFixture fixture) =>
+    DemoMyReservationsRepository(
+      installationId: kDemoInstallationId,
+      spaces: [
+        (floorPlan: fixture.floorPlan, reservations: fixture.reservations),
+        (
+          floorPlan: fixture.secondSpace.floorPlan,
+          reservations: fixture.secondSpace.reservations,
+        ),
+      ],
+      workspaceName: (id) =>
+          fixture.workspaces.workspaces.where((w) => w.id == id).firstOrNull?.name ?? id,
+    );
 
 /// The per-space overrides of a Demo scope over [fixture].
 List<Override> demoSpaceOverrides(DemoFixture fixture) {
@@ -71,6 +94,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     reservationRepositoryProvider.overrideWith(
       (ref) => pick(ref, home.reservations, second.reservations),
     ),
+    // #2553 — the visitor's own bookings of both spaces, one installation.
+    myReservationsRepositoryProvider.overrideWithValue(_myReservations(fixture)),
     // #2575
     seriesPreviewerProvider.overrideWith(
       (ref) => FakeSeriesPreviewer(

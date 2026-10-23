@@ -13634,6 +13634,91 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myInvoicesTitle => 'Meine Rechnungen';
 
   @override
+  String get myReservationsChangePeriod => 'Zeitraum ändern';
+
+  @override
+  String myReservationsCheckedInAt(String time) {
+    return 'Eingecheckt um $time';
+  }
+
+  @override
+  String myReservationsCheckedOutAt(String time) {
+    return 'Ausgecheckt um $time';
+  }
+
+  @override
+  String get myReservationsEmpty => 'Keine Reservierungen in diesem Zeitraum.';
+
+  @override
+  String get myReservationsFailed =>
+      'Ihre Reservierungen konnten nicht gelesen werden. Versuchen Sie es gleich noch einmal.';
+
+  @override
+  String get myReservationsForbidden =>
+      'Dieser Server hat es abgelehnt, Ihre Reservierungen aufzulisten.';
+
+  @override
+  String get myReservationsInvalid =>
+      'Dieser Server hat den angefragten Zeitraum abgelehnt.';
+
+  @override
+  String get myReservationsKindDesk => 'Tisch';
+
+  @override
+  String get myReservationsKindLevel => 'Etage';
+
+  @override
+  String get myReservationsKindOffice => 'Raum';
+
+  @override
+  String get myReservationsKindSeat => 'Platz';
+
+  @override
+  String get myReservationsLoadMore => 'Mehr anzeigen';
+
+  @override
+  String get myReservationsLoadingMore => 'Wird geladen…';
+
+  @override
+  String get myReservationsMalformed =>
+      'Dieser Server hat in einer Form geantwortet, die diese App nicht versteht.';
+
+  @override
+  String get myReservationsMisconfigured =>
+      'Dieser Server hat noch keine Einstellungen für persönliche Lesezugriffe.';
+
+  @override
+  String get myReservationsNoWorkspace =>
+      'Wählen Sie einen Space, um Ihre Reservierungen auf seinem Server zu sehen.';
+
+  @override
+  String myReservationsPeriodLimit(int days) {
+    return 'Höchstens $days Tage auf einmal.';
+  }
+
+  @override
+  String get myReservationsStatusCancelled => 'Storniert';
+
+  @override
+  String get myReservationsStatusCheckedIn => 'Eingecheckt';
+
+  @override
+  String get myReservationsStatusCompleted => 'Abgeschlossen';
+
+  @override
+  String get myReservationsStatusReleased => 'Freigegeben';
+
+  @override
+  String get myReservationsStatusReserved => 'Reserviert';
+
+  @override
+  String get myReservationsUnnamedPlace => '(Platz ohne Namen)';
+
+  @override
+  String get myReservationsUnsupported =>
+      'Dieser Server listet Reservierungen für den persönlichen Bereich noch nicht auf.';
+
+  @override
   String get myVisitsHelp =>
       'Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.';
 
@@ -18900,6 +18985,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingGroupMessaging => 'Nachrichten';
 
   @override
+  String get settingGroupPersonal => 'Persönlicher Bereich';
+
+  @override
   String get settingGroupPresence => 'Anwesenheit';
 
   @override
@@ -19009,6 +19097,26 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingHintMessagingThreadPollSeconds =>
       'Sekunden zwischen zwei Aktualisierungen einer geöffneten Unterhaltung. Niedrigere Werte belasten den Server stärker.';
+
+  @override
+  String get settingHintPersonalReadConcurrency =>
+      'Wie viele Server der persönliche Bereich gleichzeitig abfragt, wenn er Ihre eigenen Daten zusammenträgt. Eine Grenze für die parallelen Lesezugriffe des Geräts, nicht für einen Server.';
+
+  @override
+  String get settingHintPersonalReadTimeoutSeconds =>
+      'Sekunden, die der persönliche Bereich auf die Antwort eines Servers wartet, bevor er ihn als nicht erreichbar anzeigt und mit den anderen fortfährt.';
+
+  @override
+  String get settingHintPersonalReservationMaxWindowDays =>
+      'Von der Plattform festgelegt: der längste Zeitraum, den ein Lesezugriff auf Ihre Reservierungen anfragen darf. Er begrenzt die Abfrage.';
+
+  @override
+  String get settingHintPersonalReservationPageSize =>
+      'Wie viele Ihrer Reservierungen ein Server je Seite zurückgibt; die nächste Seite kommt mit Mehr anzeigen.';
+
+  @override
+  String get settingHintPersonalReservationWindowDays =>
+      'Tage, die der persönliche Bereich standardmäßig anzeigt, wenn er Ihre Reservierungen auflistet. Sie können einen anderen Zeitraum wählen, bis zur Obergrenze.';
 
   @override
   String get settingHintPresenceOnlineWindowMinutes =>
@@ -19135,6 +19243,25 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelMessagingThreadPollSeconds =>
       'Aktualisierung der Unterhaltung';
+
+  @override
+  String get settingLabelPersonalReadConcurrency =>
+      'Gleichzeitig gelesene Server';
+
+  @override
+  String get settingLabelPersonalReadTimeoutSeconds => 'Wartezeit je Server';
+
+  @override
+  String get settingLabelPersonalReservationMaxWindowDays =>
+      'Obergrenze des Reservierungszeitraums';
+
+  @override
+  String get settingLabelPersonalReservationPageSize =>
+      'Reservierungen je Seite';
+
+  @override
+  String get settingLabelPersonalReservationWindowDays =>
+      'Zeitraum der Reservierungen';
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Online-Fenster';

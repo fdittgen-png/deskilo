@@ -1,0 +1,158 @@
+{
+  "@@locale": "en",
+  "myReservationsEmpty": "No reservations in this period.",
+  "@myReservationsEmpty": {
+    "description": "#2553 My reservations: the window was read and holds nothing."
+  },
+  "myReservationsChangePeriod": "Change period",
+  "@myReservationsChangePeriod": {
+    "description": "#2553 My reservations: opens the period picker."
+  },
+  "myReservationsPeriodLimit": "At most {days} days at a time.",
+  "@myReservationsPeriodLimit": {
+    "description": "#2553 My reservations: the ceiling of one read, under the period.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "myReservationsLoadMore": "Show more",
+  "@myReservationsLoadMore": {
+    "description": "#2553 My reservations: asks the next page."
+  },
+  "myReservationsLoadingMore": "Loading…",
+  "@myReservationsLoadingMore": {
+    "description": "#2553 My reservations: the next page is being read."
+  },
+  "myReservationsFailed": "Your reservations could not be read. Try again in a moment.",
+  "@myReservationsFailed": {
+    "description": "#2553 My reservations: a read failed for no typed reason."
+  },
+  "myReservationsForbidden": "This server refused to list your reservations.",
+  "@myReservationsForbidden": {
+    "description": "#2553 My reservations: the host refused the caller (42501)."
+  },
+  "myReservationsUnsupported": "This server does not list reservations for the personal space yet.",
+  "@myReservationsUnsupported": {
+    "description": "#2553 My reservations: an older host without the read."
+  },
+  "myReservationsInvalid": "This server refused the period asked for.",
+  "@myReservationsInvalid": {
+    "description": "#2553 My reservations: the host refused the window or cursor (22023)."
+  },
+  "myReservationsMisconfigured": "This server has no settings for personal reads yet.",
+  "@myReservationsMisconfigured": {
+    "description": "#2553 My reservations: the registry lacks the personal rows."
+  },
+  "myReservationsMalformed": "This server answered in a form this app does not understand.",
+  "@myReservationsMalformed": {
+    "description": "#2553 My reservations: a malformed or incompatible answer."
+  },
+  "myReservationsNoWorkspace": "Choose a space to see your reservations on its server.",
+  "@myReservationsNoWorkspace": {
+    "description": "#2553 My reservations: no workspace context to read on."
+  },
+  "myReservationsUnnamedPlace": "(unnamed place)",
+  "@myReservationsUnnamedPlace": {
+    "description": "#2553 My reservations: a booked place without a name."
+  },
+  "myReservationsStatusReserved": "Reserved",
+  "@myReservationsStatusReserved": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsStatusCheckedIn": "Checked in",
+  "@myReservationsStatusCheckedIn": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsStatusCompleted": "Completed",
+  "@myReservationsStatusCompleted": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsStatusCancelled": "Cancelled",
+  "@myReservationsStatusCancelled": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsStatusReleased": "Released",
+  "@myReservationsStatusReleased": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsKindSeat": "Seat",
+  "@myReservationsKindSeat": {
+    "description": "#2553 My reservations: the kind of place booked."
+  },
+  "myReservationsKindDesk": "Desk",
+  "@myReservationsKindDesk": {
+    "description": "#2553 My reservations: the kind of place booked."
+  },
+  "myReservationsKindOffice": "Office",
+  "@myReservationsKindOffice": {
+    "description": "#2553 My reservations: the kind of place booked."
+  },
+  "myReservationsKindLevel": "Level",
+  "@myReservationsKindLevel": {
+    "description": "#2553 My reservations: the kind of place booked."
+  },
+  "myReservationsCheckedInAt": "Checked in at {time}",
+  "@myReservationsCheckedInAt": {
+    "description": "#2553 My reservations: the check-in mark of a booking.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "myReservationsCheckedOutAt": "Checked out at {time}",
+  "@myReservationsCheckedOutAt": {
+    "description": "#2553 My reservations: the check-out mark of a booking.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "settingGroupPersonal": "Personal space",
+  "@settingGroupPersonal": {
+    "description": "#2553 settings: Settings group title."
+  },
+  "settingLabelPersonalReadConcurrency": "Servers read at once",
+  "@settingLabelPersonalReadConcurrency": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingHintPersonalReadConcurrency": "How many servers the personal space asks at once when it gathers your own records. A bound on the device's parallel reads, not on any server.",
+  "@settingHintPersonalReadConcurrency": {
+    "description": "#2553 settings: Setting hint."
+  },
+  "settingLabelPersonalReadTimeoutSeconds": "Wait per server",
+  "@settingLabelPersonalReadTimeoutSeconds": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingHintPersonalReadTimeoutSeconds": "Seconds the personal space waits for one server's answer before it shows that server as unavailable and goes on with the others.",
+  "@settingHintPersonalReadTimeoutSeconds": {
+    "description": "#2553 settings: Setting hint."
+  },
+  "settingLabelPersonalReservationPageSize": "Reservations per page",
+  "@settingLabelPersonalReservationPageSize": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingHintPersonalReservationPageSize": "How many of your reservations one server returns per page; the next page comes with Show more.",
+  "@settingHintPersonalReservationPageSize": {
+    "description": "#2553 settings: Setting hint."
+  },
+  "settingLabelPersonalReservationWindowDays": "Reservations period",
+  "@settingLabelPersonalReservationWindowDays": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingHintPersonalReservationWindowDays": "Days the personal space shows by default when it lists your reservations. You may choose another period, up to the ceiling.",
+  "@settingHintPersonalReservationWindowDays": {
+    "description": "#2553 settings: Setting hint."
+  },
+  "settingLabelPersonalReservationMaxWindowDays": "Reservations period ceiling",
+  "@settingLabelPersonalReservationMaxWindowDays": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingHintPersonalReservationMaxWindowDays": "Fixed by the platform: the longest period one read of your reservations may ask for. It bounds the query.",
+  "@settingHintPersonalReservationMaxWindowDays": {
+    "description": "#2553 settings: Setting hint."
+  }
+}

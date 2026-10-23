@@ -18,6 +18,10 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The reusable body of the personal data hub's reservations view: built
+  // with its producer; the hub wrapper mounts it at /me/data?view=reservations.
+  'lib/features/reservations/presentation/widgets/my_reservations_body.dart::MyReservationsBody':
+      '#2553 C2 / #2557 — the data hub mounts the body under its view switch',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':
