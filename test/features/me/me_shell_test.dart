@@ -9,6 +9,7 @@ import 'package:deskilo/features/directory/presentation/directory_screen.dart';
 import 'package:deskilo/features/me/presentation/me_messages_tab.dart';
 import 'package:deskilo/features/me/presentation/me_shell.dart';
 import 'package:deskilo/features/profile/presentation/widgets/personal_avatar.dart';
+import 'package:deskilo/features/profile/presentation/widgets/settings_section_header.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +27,31 @@ void main() {
     final shortcuts = tester.widgetList<TextButton>(find.byWidgetPredicate((w) =>
       w is TextButton && w.key is ValueKey<String> &&
       (w.key! as ValueKey<String>).value.startsWith('me-section-')));
-    expect(shortcuts.map((w) => (w.key! as ValueKey<String>).value),
-        ['me-section-0', 'me-section-2', 'me-section-3', 'me-section-1']);
+    // Every section header has its jump button, in display order.
+    expect(shortcuts.map((w) => (w.key! as ValueKey<String>).value), [
+      'me-section-0', 'me-section-2', 'me-section-3',
+      'me-section-4', 'me-section-5', 'me-section-1',
+    ]);
     expect(tester.getTopLeft(find.byKey(const ValueKey('me-visibility-card'))).dy,
         greaterThan(tester.getBottomLeft(find.byKey(const ValueKey('me-help'))).dy));
     await tester.tap(find.byKey(const ValueKey('me-section-1')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('visibility-about-edit')).hitTestable(), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('every section header of the Me tab is a jump target', (tester) async {
+    final router = await pumpMeApp(tester, workspace: twoSpaces(), size: const Size(390, 844));
+    await goTo(tester, router, '/me?tab=me');
+    final shortcuts = find.byWidgetPredicate((w) => w is TextButton &&
+        w.key is ValueKey<String> && (w.key! as ValueKey<String>).value.startsWith('me-section-'));
+    expect(find.descendant(of: find.byKey(const ValueKey('me-account-list')),
+        matching: find.byType(SettingsSectionHeader)), findsNWidgets(tester.widgetList(shortcuts).length));
+    expect(find.byKey(const ValueKey('me-servers')).hitTestable(), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('me-section-5')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1)); // the jump's scroll
+    expect(find.byKey(const ValueKey('me-servers')).hitTestable(), findsOneWidget);
   });
 
   testWidgets('Messages badges refresh before opening the tab, hide zero and cap at 99+', (tester) async {

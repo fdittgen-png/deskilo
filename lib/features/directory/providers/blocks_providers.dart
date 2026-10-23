@@ -4,7 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/messenger.dart';
 import 'messenger_providers.dart';
 
-/// The accounts I blocked on the server [source] ('' is this one).
+/// The source that names this server to the per-server providers below.
+const thisServerSource = '';
+
+/// The accounts I blocked on the server [source] ([thisServerSource] for
+/// this one).
 final myBlocksProvider = FutureProvider.autoDispose
     .family<List<BlockedAccount>, String>(
   (ref, source) =>

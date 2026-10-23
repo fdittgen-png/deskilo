@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/settings/messaging_windows.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/messenger_actions.dart';
@@ -67,6 +70,20 @@ Future<UnifiedInbox> unifiedInbox(Ref ref) async {
           }),
   ]);
   return mergeInboxes(bySource, unavailable: unavailable);
+}
+
+/// While watched, re-reads [unifiedInboxProvider] every inbox poll, so an
+/// unread badge stays current before the inbox itself is open (the open
+/// inbox polls on its own). Answers the period it refreshes at.
+@riverpod
+Duration inboxBadgeRefresh(Ref ref) {
+  final poll = ref.read(messagingWindowsProvider).inboxPoll;
+  final timer = Timer.periodic(
+    poll,
+    (_) => ref.invalidate(unifiedInboxProvider),
+  );
+  ref.onDispose(timer.cancel);
+  return poll;
 }
 
 /// The display name of each connected server, by origin — the subtitle

@@ -3,6 +3,7 @@
 // #1823 — the account layer's decisions, apart from the widgets that ask
 // for them (ADR 0024). Each says what the request IS before anything is
 // written; the server remains the authority for all of it.
+import '../domain/linked_me_repository.dart';
 import '../domain/me_repository.dart';
 import '../domain/visibility.dart';
 
@@ -41,9 +42,10 @@ class MeRefused implements Exception {
 }
 
 class MeActions {
-  const MeActions(this._repository);
+  const MeActions(this._repository, this._linked);
 
   final MeRepository _repository;
+  final LinkedMeRepository _linked;
 
   /// Leave [workspaceId]. My data stays with the space; erasing it is the
   /// separate action under Privacy.
@@ -66,8 +68,12 @@ class MeActions {
   Future<void> publishProfile({required bool publish}) =>
       _repository.setPublicProfile(publish: publish);
 
-  /// Give [field] the audience [choice].
+  /// Give [field] the audience [choice]: one this field may have, and with
+  /// a space when the audience is chosen spaces.
   Future<void> choose(VisibilityField field, FieldAudience choice) {
+    if (!field.allowedAudiences.contains(choice.audience)) {
+      throw const MeRefused(MeRefusal.audienceNotAllowed);
+    }
     if (choice.incomplete) throw const MeRefused(MeRefusal.noSpaceChosen);
     return _repository.setVisibility(
       field,
@@ -88,6 +94,6 @@ class MeActions {
         choice.audience == VisibilityAudience.chosenSpaces) {
       throw const MeRefused(MeRefusal.audienceNotAllowed);
     }
-    return _repository.setVisibilityOn(source, field, choice);
+    return _linked.setVisibility(source, field, choice);
   }
 }

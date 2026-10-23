@@ -350,6 +350,7 @@ const Set<String> demoOverriddenProviders = {
   'publicDiscoveryRepositoryProvider', 'publicationRepositoryProvider',
   'directoryParticipantRepositoryProvider', 'accountContactRepositoryProvider',
   'meRepositoryProvider', // #1823
+  'linkedMeRepositoryProvider',
   'guestParticipationRepositoryProvider', // #1835
   'messengerRepositoryProvider',
   'deploymentRepositoryProvider',
