@@ -6,6 +6,7 @@
 // PDF's): they get referenced by formulas and importers, so they must
 // not rename themselves with the phone's language.
 
+import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -123,7 +124,7 @@ void main() {
 
     // Money in MAJOR units so a column sums without scale-guessing.
     expect(row('Payments', 1)['state'], 'confirmed');
-    expect(row('Payments', 1)['amount'], 42.5);
+    expect((row('Payments', 1)['amount']! as XlsxAmount).value, 42.5);
     expect(row('Payments', 2)['state'], 'online (captured)');
     expect(row('Payments', 2)['provider'], 'paypal');
 
@@ -171,7 +172,7 @@ void main() {
         .singleWhere((s) => s.name == 'Ledger')
         .rows
         .skip(1)
-        .map((r) => r[5]! as double)
+        .map((r) => (r[5]! as XlsxAmount).value)
         .fold(0.0, (a, b) => a + b);
     expect(signed, 157.5);
   });

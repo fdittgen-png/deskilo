@@ -6,6 +6,7 @@ import '../../../core/backend/schema_version.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/time/workspace_time.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -21,8 +22,10 @@ import '../domain/member.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_excel.dart';
 import '../domain/workspace_export_bundle.dart';
+import '../domain/workspace_export_labels.dart';
 import '../providers/workspace_files_providers.dart';
 import '../providers/workspace_providers.dart';
+import 'workspace_export_words.dart';
 
 /// Gathers everything the workbook needs and hands the bytes to the
 /// local-save seam (#395). Orchestration only — the tab layout lives in
@@ -118,9 +121,12 @@ Future<void> exportWorkspaceExcel(
           invoices: invoices,
         )),
         // #2860 — the tables the app holds no model of, one sheet each.
-        ...exportedTableSheets(await ref
-            .read(workspaceFilesRepositoryProvider)
-            .fetchRecords(workspace.id)),
+        ...exportedTableSheets(
+          await ref
+              .read(workspaceFilesRepositoryProvider)
+              .fetchRecords(workspace.id),
+          currencyCode: workspace.currencyCode,
+        ),
       ];
 
       // #1310 — the space's own stored files travel with its rows. A
@@ -144,12 +150,27 @@ Future<void> exportWorkspaceExcel(
 
       final now = ref.read(clockProvider).now();
       final stamp = now.toIso8601String().substring(0, 10);
+      // #2861 — the reader's workbook: an About sheet first, then every
+      // sheet in their words; the ZIP's data/ keeps the stable keys.
+      final localized = localizeExportSheets(sheets, workspaceExportLabels(l10n));
       final zip = buildWorkspaceExportZip(
         workspaceId: workspace.id,
         schemaVersion: schemaVersion,
         createdAt: now,
-        sheets: sheets,
+        sheets: [
+          exportAboutSheet(
+            labels: workspaceExportLabels(l10n).about,
+            workspaceName: workspace.name,
+            generatedAt: WorkspaceTime.wall(now),
+            timeZone: workspace.timezone,
+            currency: workspace.currencyCode,
+            schemaVersion: schemaVersion,
+            sheets: localized,
+          ),
+          ...localized,
+        ],
         files: files,
+        dataSheets: sheets,
       );
       final path = await ref.read(fileSaverProvider)(
         bytes: zip,
