@@ -19474,6 +19474,33 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupDraftSaving => 'Guardando el borrador…';
 
   @override
+  String get setupGrowBooksAccrual => 'Los ingresos cuentan al facturarse.';
+
+  @override
+  String get setupGrowBooksCash => 'Los ingresos cuentan al cobrarse.';
+
+  @override
+  String setupGrowBooksCurrency(String currency) {
+    return 'Los importes se llevan en $currency.';
+  }
+
+  @override
+  String setupGrowBooksExternal(String system) {
+    return '$system lleva los libros oficiales; lo que muestra DesKilo es derivado y así lo indica.';
+  }
+
+  @override
+  String get setupGrowBooksLocal =>
+      'DesKilo lleva los libros: las facturas y los pagos se contabilizan en el plan de cuentas.';
+
+  @override
+  String get setupGrowBooksPre =>
+      'DesKilo lleva los saldos de los miembros y las facturas; no se contabiliza nada.';
+
+  @override
+  String get setupGrowBooksPreviewNote => 'Lo que mostrarán los libros:';
+
+  @override
   String get setupGrowDocumentsApply => 'Usar este estilo';
 
   @override
@@ -19501,6 +19528,59 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupGrowDocumentsSaved =>
       'El estilo de las facturas se ha guardado.';
+
+  @override
+  String get setupGrowEinvoicingChannel =>
+      'Aquí cada factura debe pasar por un canal nacional que la aplicación todavía no habla, por eso el servidor se niega a emitir facturas.';
+
+  @override
+  String setupGrowEinvoicingIncomplete(String provider) {
+    return '$provider está guardado, pero todavía no puede enviar: aún faltan algunos de sus campos.';
+  }
+
+  @override
+  String get setupGrowEinvoicingLawTitle => 'Lo que la ley exige en su país';
+
+  @override
+  String get setupGrowEinvoicingNoMandate =>
+      'Los datos fiscales de referencia no registran ninguna obligación de facturación electrónica para este país. Pregunte a su asesor si se aplica alguna: el operador la registra en los datos fiscales de referencia.';
+
+  @override
+  String get setupGrowEinvoicingNoSandbox =>
+      'Todavía no hay ningún entorno de pruebas guardado, y esta plataforma no tiene una dirección de pruebas común: pídale la suya.';
+
+  @override
+  String get setupGrowEinvoicingNone =>
+      'Todavía no hay ninguna plataforma de facturación electrónica configurada.';
+
+  @override
+  String get setupGrowEinvoicingOpen =>
+      'Configurar la plataforma de facturación electrónica';
+
+  @override
+  String setupGrowEinvoicingReady(String provider) {
+    return 'Las facturas se envían a través de $provider.';
+  }
+
+  @override
+  String get setupGrowEinvoicingSandboxIntro =>
+      'Todavía no hay ningún entorno de pruebas guardado. Ensaye con la dirección de pruebas de la plataforma antes de la real:';
+
+  @override
+  String setupGrowEinvoicingTestReady(String environments) {
+    return 'Listo para envíos de prueba: $environments.';
+  }
+
+  @override
+  String get setupGrowEinvoicingTestSend =>
+      'La guía no envía nada. Un envío de prueba parte de una factura emitida: elija Enviar factura electrónica y luego un entorno de pruebas. Esa opción aparece cuando el modo desarrollador está activado y hay un entorno de pruebas guardado.';
+
+  @override
+  String get setupGrowEinvoicingTestTitle => 'Entorno de pruebas';
+
+  @override
+  String get setupGrowEinvoicingUnconfirmed =>
+      'Aún no confirmado frente a la ley que cita: el operador confirma estas fechas en los datos fiscales de referencia, y su asesor le indica cuáles se aplican al espacio.';
 
   @override
   String get setupGrowLegalAskForm =>
@@ -19548,6 +19628,41 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupGrowNumberingPreviewNote =>
       'Su próxima factura llevará el número';
+
+  @override
+  String get setupGrowRemindersAuto =>
+      'La aplicación envía cada recordatorio por sí misma una vez al día, por el importe aún adeudado.';
+
+  @override
+  String setupGrowRemindersFirst(String days) {
+    return 'Recordatorio 1: $days días después de la factura, una vez vencido su plazo de pago.';
+  }
+
+  @override
+  String get setupGrowRemindersManual =>
+      'Usted envía cada recordatorio; la aplicación indica cuándo corresponde uno.';
+
+  @override
+  String setupGrowRemindersNext(String level, String days) {
+    return 'Recordatorio $level: $days días después del anterior.';
+  }
+
+  @override
+  String get setupGrowRemindersNoTerms =>
+      'Todavía no hay condiciones de pago redactadas: la carta no cita ninguna.';
+
+  @override
+  String get setupGrowRemindersPreviewNote =>
+      'El primer recordatorio que recibe un miembro, con la carta adjunta:';
+
+  @override
+  String get setupGrowRemindersTerms =>
+      'Condiciones de pago y cláusulas de demora';
+
+  @override
+  String setupGrowRemindersTermsPrinted(String terms) {
+    return 'La carta recuerda sus condiciones de pago: $terms';
+  }
 
   @override
   String get setupGrowSampleBadge =>

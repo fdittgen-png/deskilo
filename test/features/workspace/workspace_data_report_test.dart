@@ -6,8 +6,10 @@
 // the sum of the workbook's column for the same rows. The rules behind the
 // totals (a cancelled invoice counts nowhere, a credit note reduces what
 // was bought) are pinned on a small fixture beside it.
+import 'dart:convert' show latin1;
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
@@ -17,12 +19,18 @@ import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/report_layout/pdf_geometry.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
+import 'package:deskilo/features/plan/domain/floor_plan.dart';
+import 'package:deskilo/features/plan/domain/grid_geometry.dart';
+import 'package:deskilo/features/plan/domain/level.dart';
+import 'package:deskilo/features/plan/domain/office.dart';
+import 'package:deskilo/features/plan/presentation/plan_png.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_data_report.dart';
 import 'package:deskilo/features/workspace/domain/workspace_data_report_builder.dart';
 import 'package:deskilo/features/workspace/domain/workspace_data_report_pdf.dart';
 import 'package:deskilo/features/workspace/domain/workspace_excel.dart';
+import 'package:flutter/material.dart' show ColorScheme;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -94,6 +102,14 @@ int _landscapePages(Uint8List pdf) =>
     RegExp(r'/MediaBox\[0 0 841\.\d+ 595\.')
         .allMatches(String.fromCharCodes(pdf))
         .length;
+
+/// The bytes of every image the PDF embeds, in order.
+List<String> _imageStreams(Uint8List pdf) => [
+  for (final m in RegExp(r'/Subtype\s*/Image.*?stream\r?\n(.*?)endstream',
+          dotAll: true)
+      .allMatches(latin1.decode(pdf)))
+    m.group(1)!,
+];
 
 int _pages(Uint8List pdf) =>
     RegExp(r'/MediaBox').allMatches(String.fromCharCodes(pdf)).length;
@@ -459,6 +475,93 @@ void main() {
 
     test('a credit note reduces purchases; a refused bill counts nowhere', () {
       expect(report.table('purchases').total('total'), 70000);
+    });
+  });
+
+  // #2898 — the level's background photo prints under its plan; a photo
+  // that cannot be read leaves the picture the report printed before.
+  group('the plan over the level photo', () {
+    const ws = Workspace(
+      id: 'ws-1',
+      name: 'Test Space',
+      countryCode: 'FR',
+      currencyCode: 'EUR',
+      timezone: 'Europe/Paris',
+      inviteCode: 'GOODCODE22',
+    );
+    const level = Level(
+      id: 'level-1',
+      workspaceId: 'ws-1',
+      name: 'Ground floor',
+      sortOrder: 0,
+      backgroundPath: 'ws-1/level-1',
+    );
+    const plan = FloorPlan(
+      levelId: 'level-1',
+      offices: [
+        Office(
+          id: 'o',
+          workspaceId: 'ws-1',
+          levelId: 'level-1',
+          name: 'Room',
+          color: 0,
+          bookableAsWhole: false,
+          rect: GridRect(x: 50, y: 50, w: 20, h: 20),
+        ),
+      ],
+      desks: [],
+      seats: [],
+    );
+    const colors = ColorScheme.light();
+    const details = WorkspaceExportDetails(
+      workspace: ws,
+      levels: [level],
+      plansByLevel: {'level-1': plan},
+      memberName: {},
+      ledger: [],
+      events: [],
+      decisions: {},
+      invoices: [],
+    );
+    final report = buildWorkspaceDataReport(details);
+
+    Future<Uint8List> pdf(Map<String, Uint8List> planImages) =>
+        buildWorkspaceDataReportPdf(
+          WorkspaceDataReportPdfRequest(
+            report: report,
+            strings: _strings,
+            generatedAt: DateTime(2026, 10, 14),
+            baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+            boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+            planImages: planImages,
+          ),
+        );
+    Future<Uint8List> printed(Future<ui.Image?> Function(String) photo) async =>
+        pdf(await reportPlanPngs(details.plansByLevel,
+            colors: colors,
+            photoLevels: {
+              for (final l in details.levels)
+                if (l.hasBackground) l.id,
+            },
+            background: photo));
+
+    test('the photo under the plan; unreadable, the plan as before', () async {
+      final recorder = ui.PictureRecorder();
+      ui.Canvas(recorder).drawRect(const ui.Rect.fromLTWH(0, 0, 64, 64),
+          ui.Paint()..color = const ui.Color(0xFF2060D0));
+      final photo = await recorder.endRecording().toImage(64, 64);
+      final before = _imageStreams(await pdf({
+        'level-1': (await buildPlanPng(plan, colors: colors))!,
+      }));
+      expect(before, isNotEmpty, reason: 'the level prints its plan');
+
+      final withPhoto = _imageStreams(await printed((_) async => photo));
+      expect(withPhoto, hasLength(before.length));
+      expect(withPhoto.first, isNot(before.first));
+
+      final unreadable = _imageStreams(
+          await printed((_) async => throw Exception('Invalid image data')));
+      expect(unreadable, before);
     });
   });
 }

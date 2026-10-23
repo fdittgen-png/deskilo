@@ -409,10 +409,15 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
         final report = buildWorkspaceDataReport(details,
             purchases: buying.purchases, suppliers: buying.suppliers);
         final colors = DeskiloTheme.light().colorScheme;
-        final images = {
-          for (final entry in details.plansByLevel.entries)
-            entry.key: ?await buildPlanPng(entry.value, colors: colors),
-        };
+        // #2898 — each level's photo under its plan, read as the editor
+        // reads it; one that fails prints the plan without it.
+        final images = await reportPlanPngs(details.plansByLevel,
+            colors: colors,
+            photoLevels: {
+              for (final level in details.levels)
+                if (level.hasBackground) level.id,
+            },
+            background: (id) => ref.read(levelBackgroundProvider(id).future));
         final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
         final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
         final pdf = await buildWorkspaceDataReportPdf(

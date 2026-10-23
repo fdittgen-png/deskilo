@@ -19506,6 +19506,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupDraftSaving => 'Entwurf wird gespeichert…';
 
   @override
+  String get setupGrowBooksAccrual =>
+      'Erträge zählen bei der Rechnungsstellung.';
+
+  @override
+  String get setupGrowBooksCash => 'Erträge zählen bei Zahlungseingang.';
+
+  @override
+  String setupGrowBooksCurrency(String currency) {
+    return 'Beträge werden in $currency geführt.';
+  }
+
+  @override
+  String setupGrowBooksExternal(String system) {
+    return '$system führt die offiziellen Bücher; was DesKilo zeigt, ist abgeleitet und als solches gekennzeichnet.';
+  }
+
+  @override
+  String get setupGrowBooksLocal =>
+      'DesKilo führt die Bücher: Rechnungen und Zahlungen werden auf den Kontenplan gebucht.';
+
+  @override
+  String get setupGrowBooksPre =>
+      'DesKilo führt die Salden der Mitglieder und die Rechnungen; nichts wird gebucht.';
+
+  @override
+  String get setupGrowBooksPreviewNote => 'Was die Bücher zeigen werden:';
+
+  @override
   String get setupGrowDocumentsApply => 'Diesen Stil verwenden';
 
   @override
@@ -19533,6 +19561,59 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupGrowDocumentsSaved => 'Der Rechnungsstil ist gespeichert.';
+
+  @override
+  String get setupGrowEinvoicingChannel =>
+      'Hier muss jede Rechnung über einen nationalen Kanal laufen, den die App noch nicht spricht, deshalb lehnt der Server das Ausstellen von Rechnungen ab.';
+
+  @override
+  String setupGrowEinvoicingIncomplete(String provider) {
+    return '$provider ist gespeichert, kann aber noch nicht senden: Einige Felder fehlen noch.';
+  }
+
+  @override
+  String get setupGrowEinvoicingLawTitle =>
+      'Was das Gesetz in Ihrem Land verlangt';
+
+  @override
+  String get setupGrowEinvoicingNoMandate =>
+      'Die Steuer-Referenzdaten verzeichnen für dieses Land keine E-Rechnungspflicht. Fragen Sie Ihre Steuerberatung, ob eine gilt: Der Betreiber trägt sie in die Steuer-Referenzdaten ein.';
+
+  @override
+  String get setupGrowEinvoicingNoSandbox =>
+      'Es ist noch keine Testumgebung gespeichert, und diese Plattform hat keine gemeinsame Testadresse: Fragen Sie sie nach Ihrer.';
+
+  @override
+  String get setupGrowEinvoicingNone =>
+      'Es ist noch keine E-Rechnungsplattform eingerichtet.';
+
+  @override
+  String get setupGrowEinvoicingOpen => 'E-Rechnungsplattform einrichten';
+
+  @override
+  String setupGrowEinvoicingReady(String provider) {
+    return 'Rechnungen werden über $provider versendet.';
+  }
+
+  @override
+  String get setupGrowEinvoicingSandboxIntro =>
+      'Es ist noch keine Testumgebung gespeichert. Proben Sie mit der Testadresse der Plattform, bevor Sie die echte nutzen:';
+
+  @override
+  String setupGrowEinvoicingTestReady(String environments) {
+    return 'Bereit für Testversand: $environments.';
+  }
+
+  @override
+  String get setupGrowEinvoicingTestSend =>
+      'Der Leitfaden sendet nichts. Ein Testversand beginnt bei einer ausgestellten Rechnung: Wählen Sie E-Rechnung senden und dann eine Testumgebung. Diese Auswahl erscheint, sobald der Entwicklermodus an und eine Testumgebung gespeichert ist.';
+
+  @override
+  String get setupGrowEinvoicingTestTitle => 'Testumgebung';
+
+  @override
+  String get setupGrowEinvoicingUnconfirmed =>
+      'Noch nicht anhand des zitierten Gesetzes bestätigt: Der Betreiber bestätigt diese Daten in den Steuer-Referenzdaten, und Ihre Steuerberatung sagt Ihnen, welche für den Space gelten.';
 
   @override
   String get setupGrowLegalAskForm =>
@@ -19580,6 +19661,41 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupGrowNumberingPreviewNote =>
       'Ihre nächste Rechnung trägt die Nummer';
+
+  @override
+  String get setupGrowRemindersAuto =>
+      'Die App sendet jede Erinnerung einmal täglich von selbst, über den noch offenen Betrag.';
+
+  @override
+  String setupGrowRemindersFirst(String days) {
+    return 'Erinnerung 1: $days Tage nach der Rechnung, sobald ihre Zahlungsfrist abgelaufen ist.';
+  }
+
+  @override
+  String get setupGrowRemindersManual =>
+      'Sie senden jede Erinnerung selbst; die App zeigt, wann eine fällig ist.';
+
+  @override
+  String setupGrowRemindersNext(String level, String days) {
+    return 'Erinnerung $level: $days Tage nach der vorherigen.';
+  }
+
+  @override
+  String get setupGrowRemindersNoTerms =>
+      'Es sind noch keine Zahlungsbedingungen erfasst: Das Schreiben nennt keine.';
+
+  @override
+  String get setupGrowRemindersPreviewNote =>
+      'Die erste Erinnerung, die ein Mitglied erhält, mit dem Schreiben im Anhang:';
+
+  @override
+  String get setupGrowRemindersTerms =>
+      'Zahlungsbedingungen und Verzugsklauseln';
+
+  @override
+  String setupGrowRemindersTermsPrinted(String terms) {
+    return 'Das Schreiben nennt Ihre Zahlungsbedingungen: $terms';
+  }
 
   @override
   String get setupGrowSampleBadge =>

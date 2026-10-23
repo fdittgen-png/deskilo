@@ -78,7 +78,7 @@ String _channelGapText(AppLocalizations l10n, ChannelGap gap) =>
     };
 
 /// #2358 — one dated duty of the national mandate.
-String _mandateText(
+String mandateText(
   AppLocalizations l10n,
   EInvoiceMandate mandate,
   DateTime today,
@@ -288,7 +288,7 @@ class _EInvoiceBody extends StatelessWidget {
                   text: [
                     l10n.eInvoiceMandateTitle,
                     for (final m in mandates)
-                      '• ${_mandateText(
+                      '• ${mandateText(
                         l10n,
                         m,
                         today,
