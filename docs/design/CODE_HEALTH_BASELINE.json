@@ -1,8 +1,8 @@
 {
-  "recordedSha": "b859434cec4207c7cafadd64e3c4fcb6ea6c51c7",
-  "recordedDate": "2026-10-23",
+  "recordedSha": "25f56c84e5c38c9fb3b19bd120cf2a4626cda1e5",
+  "recordedDate": "2026-10-22",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":1814,"functions":10145,"cyclomatic>=9":1079,"cyclomatic>=25":105,"cognitive>=15":438,"cognitive>=30":96,"length>=150":74,"parameters>=5":490,"parameters>=7":152,"partOfFiles":42},
+  "totals": {"files":1814,"functions":10147,"cyclomatic>=9":1079,"cyclomatic>=25":105,"cognitive>=15":438,"cognitive>=30":96,"length>=150":74,"parameters>=5":490,"parameters>=7":152,"partOfFiles":42},
   "budgets": {
     "partOfFiles": 42,
     "fileLength": {
@@ -2353,7 +2353,7 @@
     {"p":"lib/features/workspace/presentation/member_labels.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":6,"len":12,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/member_subscription_action.dart","loc":106,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":14,"cyc":10,"len":106,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/member_vat_treatment.dart","loc":160,"part":false,"setState":1,"repositoryReads":1,"fn":3,"cog":15,"cyc":10,"len":104,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/onboarding_handoff.dart","loc":75,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":43,"cyc":31,"len":71,"params":5,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/onboarding_handoff.dart","loc":88,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":43,"cyc":31,"len":71,"params":5,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/process_names.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":33,"len":66,"params":2,"nest":1,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/process_search.dart","loc":83,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":17,"cyc":9,"len":59,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/qr_png.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":22,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2809,7 +2809,7 @@
     {"id":"lib/features/workspace/presentation/excel_export.dart#exportWorkspaceExcel(BuildContext context,WidgetRef ref,Workspace workspace)","cog":34,"cyc":16,"len":178,"params":3},
     {"id":"lib/features/workspace/presentation/feature_copy.dart#featureDescription(AppLocalizations l10n,WorkspaceFeature feature)","cog":1,"cyc":125,"len":242,"params":2},
     {"id":"lib/features/workspace/presentation/feature_names.dart#featureName(AppLocalizations l10n,WorkspaceFeature feature)","cog":1,"cyc":125,"len":250,"params":2},
-    {"id":"lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction({required BuildContext context,required WidgetRef ref,required Future<String?> Function() action,WizardNavigationController? navigation,String home})","cog":43,"cyc":31,"len":71,"params":5},
+    {"id":"lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction({required BuildContext context,required WidgetRef ref,required Future<String?> Function() action,WizardNavigationController? navigation,String? over})","cog":43,"cyc":31,"len":71,"params":5},
     {"id":"lib/features/workspace/presentation/process_names.dart#processCopy(AppLocalizations l10n,String key)","cog":1,"cyc":33,"len":66,"params":2},
     {"id":"lib/features/workspace/presentation/screens/bi_screen.dart#BiScreen.build(BuildContext context,WidgetRef ref)","cog":39,"cyc":32,"len":147,"params":2},
     {"id":"lib/features/workspace/presentation/screens/documents_screen.dart#DocumentsScreen._addDialog(BuildContext context,WidgetRef ref)","cog":12,"cyc":12,"len":177,"params":2},

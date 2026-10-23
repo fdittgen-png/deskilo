@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1654: finish in the context that issued the request; a completion is not
 // permission to replace a newer account, workspace, installation or task.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,9 +19,9 @@ import '../providers/workspace_providers.dart';
 Future<bool> runOnboardingAction({required BuildContext context,
     required WidgetRef ref, required Future<String?> Function() action,
     WizardNavigationController? navigation,
-    // #2869 — where the new space opens when no task was asked for: the
-    // creator lands on the setup guide, someone joining on Reserve.
-    String home = kDefaultHome}) async {
+    // #2869 — a screen opened over the hub when no task was asked for:
+    // the creator meets the setup guide, someone joining only the hub.
+    String? over}) async {
   var current = true;
   var accepted = false;
   final subscriptions = [
@@ -73,15 +75,34 @@ Future<bool> runOnboardingAction({required BuildContext context,
         }
         navigation?.completed = true;
         ref.invalidate(myWorkspacesProvider);
-        await ref.read(myWorkspacesProvider.future);
+        await _settle(ref);
         if (!context.mounted || !current) return;
         // An explicit destination wins; otherwise enter the existing hub.
         // Popping can race router refreshes and can leave a direct visit here.
-        context.go(explicitTask ? intent.destination! : home);
+        _enter(context, explicitTask ? intent.destination! : null, over: over);
       });
     // A superseded completion must not put failure feedback on the new context.
     return !current || (succeeded && accepted);
   } finally {
     for (final subscription in subscriptions) { subscription.close(); }
   }
+}
+
+/// #2869 — the new space's list, my membership in it and its features, so
+/// the destination's guard reads my rights there instead of the gap while
+/// they load (the setup guide asks for manageConfiguration).
+Future<void> _settle(WidgetRef ref) async {
+  await ref.read(myWorkspacesProvider.future);
+  await ref.read(myMemberProvider.future);
+  await ref.read(enabledFeaturesProvider.future);
+}
+
+/// Goes to [destination], else to the hub with [over] opened on top of it,
+/// so its back arrow returns to the hub.
+void _enter(BuildContext context, String? destination, {String? over}) {
+  final router = GoRouter.of(context)..go(destination ?? kDefaultHome);
+  if (destination != null || over == null) return;
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    unawaited(router.push<void>(over));
+  });
 }
