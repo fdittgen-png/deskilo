@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/demo/demo_link.dart';
+import '../../../../core/demo/presentation/demo_setup_card.dart';
 import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
@@ -74,6 +75,8 @@ class _SetupGuideBody extends ConsumerWidget {
           key: const ValueKey('setup-guide-list'),
           padding: const EdgeInsets.all(AppSpacing.md),
           children: [
+            // Inside the demo: what it is, and the other space.
+            const DemoSetupCard(),
             _Milestones(status: value),
             if (value.nextMilestone case final next?
                 when value.minutesToNextMilestone > 0) ...[

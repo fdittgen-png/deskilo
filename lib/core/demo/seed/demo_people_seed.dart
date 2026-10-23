@@ -32,6 +32,13 @@ void seedDemoIdentity(FakeWorkspaceRepository workspaces) {
     countryCode: 'FR',
     timezone: 'Europe/Paris',
     address: demoSpaceAddress,
+    street: '4 place du Marché',
+    postalCode: '34120',
+    city: 'Pézenas',
+    legalId: '81234567800017',
+    // Members pay by transfer to the space's account (the registry's
+    // documentation example, which belongs to nobody).
+    paymentInstructions: const {'iban': 'FR14 2004 1010 0505 0001 3M02 606'},
     // VAT-registered, so the rates, the VAT on bills and the
     // declarations (demo_commerce_seed.dart) all apply.
     vatRegime: 'vat_registered',

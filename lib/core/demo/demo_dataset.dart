@@ -30,6 +30,7 @@ import 'data/workspace_repository.dart';
 import 'demo_clock.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_people_seed.dart';
+import 'seed/demo_setup_seed.dart';
 
 /// The cast. Ids are stable so a story can be told about them in tests
 /// and in the guides.
@@ -394,6 +395,7 @@ void seedDemoMoney(FakeMoneyRepository money, DateTime now) {
         totalCents: demoMonthlyCents(9000, lastMonth.year, now),
       ),
     ]);
+  seedDemoInvoiceSettings(money);
 }
 
 Invoice _demoInvoice({

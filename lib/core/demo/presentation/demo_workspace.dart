@@ -68,13 +68,20 @@ class _DemoWorkspaceState extends ConsumerState<DemoWorkspace> {
   }
 
   /// #2872 — the space and the screen the visitor's link named, once.
-  void _applyLink(ProviderContainer container) {
-    if (!mounted || !identical(container, _container)) return;
+  Future<void> _applyLink(ProviderContainer container) async {
+    bool current() => mounted && identical(container, _container);
+    if (!current()) return;
     final link = ref.read(pendingDemoLinkProvider.notifier).take();
     if (link == null) return;
     if (link.workspaceId case final id?) {
-      container.read(activeWorkspaceIdProvider.notifier).activate(id);
+      // A switch as the space switcher makes it, once the session has
+      // resolved its first space: the session's default moves with it, so
+      // a later re-resolution (the sign-in settling) does not fall back.
+      await container.read(activeWorkspaceIdProvider.future);
+      if (!current()) return;
+      await container.read(activeWorkspaceIdProvider.notifier).select(id);
     }
+    if (!current()) return;
     if (link.to case final to?) container.read(routerProvider).go(to);
   }
 
@@ -214,7 +221,7 @@ class DemoControls extends StatelessWidget {
                     key: resetKey,
                     icon: const Icon(Icons.restart_alt),
                     label: Text(l10n.demoSessionReset),
-                    onPressed: () => _reset(context, env.onReset, l10n),
+                    onPressed: () => resetWithNotice(context, env),
                   ),
                   TextButton.icon(
                     key: leaveKey,
@@ -232,10 +239,11 @@ class DemoControls extends StatelessWidget {
     );
   }
 
-  void _reset(BuildContext context, VoidCallback onReset,
-      AppLocalizations l10n) {
+  /// Puts the demo back as it started, and says so.
+  static void resetWithNotice(BuildContext context, DemoEnvironment env) {
+    final l10n = context.l10n;
     final messenger = ScaffoldMessenger.maybeOf(context);
-    onReset();
+    env.onReset();
     messenger?.showSnackBar(
       SnackBar(
         content: Text(

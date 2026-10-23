@@ -55,5 +55,51 @@
   "demoEntryStart": "Empezar",
   "@demoEntryStart": {
     "description": "#1379 demo entry: demoEntryStart"
+  },
+  "demoSetupCardTitle": "Cómo funciona la demo",
+  "@demoSetupCardTitle": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardTitle"
+  },
+  "demoSetupCardBody": "Nada de lo que haga aquí sale de este dispositivo, y puede reiniciar la demo a su estado inicial en cualquier momento.",
+  "@demoSetupCardBody": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardBody"
+  },
+  "demoSetupCardWhere": "Está en {space}, visto como: {persona}",
+  "@demoSetupCardWhere": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardWhere",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "persona": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardComplete": "Este espacio ha completado cada paso de su configuración.",
+  "@demoSetupCardComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardComplete"
+  },
+  "demoSetupCardHalfDone": "Este espacio está a mitad de su configuración.",
+  "@demoSetupCardHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardHalfDone"
+  },
+  "demoSetupCardOpenHalfDone": "Ver un espacio a mitad de camino: {space}",
+  "@demoSetupCardOpenHalfDone": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenHalfDone",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "demoSetupCardOpenComplete": "Ver un espacio totalmente configurado: {space}",
+  "@demoSetupCardOpenComplete": {
+    "description": "#2872 the setup guide in the demo: demoSetupCardOpenComplete",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
   }
 }
