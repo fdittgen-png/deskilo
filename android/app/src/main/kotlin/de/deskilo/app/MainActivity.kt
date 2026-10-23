@@ -89,8 +89,16 @@ class MainActivity : FlutterActivity() {
                     values.clear()
                     values.put(MediaStore.Downloads.IS_PENDING, 0)
                     resolver.update(uri, values, null, null)
+                    // MediaStore keeps a name of its own when the requested
+                    // one is taken ("x (1).pdf"): the app reports the entry
+                    // it wrote, never the name it asked for.
+                    val savedName = resolver.query(
+                        uri, arrayOf(MediaStore.Downloads.DISPLAY_NAME),
+                        null, null, null,
+                    )?.use { if (it.moveToFirst()) it.getString(0) else null }
+                        ?: fileName
                     result.success(
-                        "${Environment.DIRECTORY_DOWNLOADS}/$fileName",
+                        "${Environment.DIRECTORY_DOWNLOADS}/$savedName",
                     )
                 } else {
                     @Suppress("DEPRECATION")

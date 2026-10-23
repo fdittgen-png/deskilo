@@ -7573,6 +7573,60 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get fileDeliveryCancelled => 'Annulé — rien n\'a été enregistré.';
+
+  @override
+  String get fileDownloadAgain => 'Télécharger à nouveau';
+
+  @override
+  String fileDownloadRequested(String fileName) {
+    return 'Téléchargement demandé : $fileName. Votre navigateur décide où il va.';
+  }
+
+  @override
+  String get fileExportKeep => 'Garder dans Deskilo';
+
+  @override
+  String get fileExportKeepHint =>
+      'Une copie privée dans l\'application. Elle n\'apparaît pas dans Fichiers.';
+
+  @override
+  String get fileExportShare => 'Partager…';
+
+  @override
+  String get fileExportShareHint =>
+      'La feuille système : Enregistrer dans Fichiers quand elle le propose, Mail, AirDrop ou une autre application.';
+
+  @override
+  String get fileExportTitle => 'Exporter…';
+
+  @override
+  String fileHandedToShareSheet(String fileName) {
+    return '$fileName a été remis à la feuille de partage. Sa destination dépend de l\'application que vous avez choisie.';
+  }
+
+  @override
+  String fileKeptInApp(String fileName) {
+    return 'Gardé dans Deskilo : $fileName. Il n\'est ni dans Téléchargements ni dans Fichiers — Partager… l\'envoie ailleurs.';
+  }
+
+  @override
+  String fileSaveFailedBecause(String reason) {
+    return 'Impossible d\'enregistrer le fichier : $reason.';
+  }
+
+  @override
+  String get fileSaveFailureNoStorage =>
+      'aucun dossier de cet appareil ne l\'a accepté';
+
+  @override
+  String get fileSaveFailureShare =>
+      'la feuille de partage n\'a pas pu s\'ouvrir';
+
+  @override
+  String get fileSaveFailureWrite => 'l\'appareil a refusé l\'écriture';
+
+  @override
   String get financesAllSpaces => 'Tous les espaces';
 
   @override
@@ -7649,6 +7703,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get financesReminders => 'Rappels';
+
+  @override
+  String financesSourceUnavailable(String host) {
+    return 'Les documents de $host n\'ont pas pu être lus pour l\'instant ; ce qui est affiché vient de vos autres espaces.';
+  }
 
   @override
   String get financesStateClosed => 'Clôturée';

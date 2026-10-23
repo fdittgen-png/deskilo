@@ -7555,6 +7555,59 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get fileDeliveryCancelled => 'Cancelado: no se guardó nada.';
+
+  @override
+  String get fileDownloadAgain => 'Descargar de nuevo';
+
+  @override
+  String fileDownloadRequested(String fileName) {
+    return 'Descarga solicitada: $fileName. Su navegador decide dónde va.';
+  }
+
+  @override
+  String get fileExportKeep => 'Guardar en Deskilo';
+
+  @override
+  String get fileExportKeepHint =>
+      'Una copia privada dentro de la aplicación. No aparece en Archivos.';
+
+  @override
+  String get fileExportShare => 'Compartir…';
+
+  @override
+  String get fileExportShareHint =>
+      'La hoja del sistema: Guardar en Archivos cuando se ofrezca, Mail, AirDrop u otra aplicación.';
+
+  @override
+  String get fileExportTitle => 'Exportar…';
+
+  @override
+  String fileHandedToShareSheet(String fileName) {
+    return '$fileName se entregó a la hoja de compartir. Adónde fue depende de la aplicación que usted eligió.';
+  }
+
+  @override
+  String fileKeptInApp(String fileName) {
+    return 'Guardado dentro de Deskilo: $fileName. No está en Descargas ni en Archivos; Compartir… lo envía a otro lugar.';
+  }
+
+  @override
+  String fileSaveFailedBecause(String reason) {
+    return 'No se pudo guardar el archivo: $reason.';
+  }
+
+  @override
+  String get fileSaveFailureNoStorage =>
+      'ninguna carpeta de este dispositivo lo aceptó';
+
+  @override
+  String get fileSaveFailureShare => 'no se pudo abrir la hoja de compartir';
+
+  @override
+  String get fileSaveFailureWrite => 'el dispositivo rechazó la escritura';
+
+  @override
   String get financesAllSpaces => 'Todos los espacios';
 
   @override
@@ -7631,6 +7684,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get financesReminders => 'Recordatorios';
+
+  @override
+  String financesSourceUnavailable(String host) {
+    return 'No se pudieron leer los documentos de $host por ahora; lo que se muestra procede de sus otros espacios.';
+  }
 
   @override
   String get financesStateClosed => 'Cerrada';

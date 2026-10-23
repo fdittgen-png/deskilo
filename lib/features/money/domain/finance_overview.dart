@@ -110,10 +110,47 @@ class FinanceReminder {
 }
 
 class FinanceOverview {
-  const FinanceOverview({this.invoices = const [], this.reminders = const []});
+  const FinanceOverview({
+    this.invoices = const [],
+    this.reminders = const [],
+    this.unavailableSources = const [],
+  });
 
   final List<FinanceInvoice> invoices;
   final List<FinanceReminder> reminders;
+
+  /// The hosts whose documents could not be read this time, by origin: what
+  /// is shown is complete only for the others. A host that answered an empty
+  /// list is not here — zero is only ever a successful result.
+  final List<String> unavailableSources;
+
+  /// These documents and [other]'s together, each document once: the same
+  /// id read from two hosts is one document, and the first reading stays.
+  FinanceOverview merge(FinanceOverview other) {
+    final ids = {for (final i in invoices) i.id};
+    final reminderIds = {for (final r in reminders) r.id};
+    return FinanceOverview(
+      invoices: [
+        ...invoices,
+        for (final i in other.invoices)
+          if (!ids.contains(i.id)) i,
+      ],
+      reminders: [
+        ...reminders,
+        for (final r in other.reminders)
+          if (!reminderIds.contains(r.id)) r,
+      ],
+      unavailableSources: [...unavailableSources, ...other.unavailableSources],
+    );
+  }
+
+  /// The same documents, with [source] recorded as a host that did not
+  /// answer.
+  FinanceOverview withUnavailable(String source) => FinanceOverview(
+        invoices: invoices,
+        reminders: reminders,
+        unavailableSources: [...unavailableSources, source],
+      );
 
   /// The workspaces my documents come from, as (id, name), by name.
   List<(String, String)> get workspaces {
@@ -138,6 +175,7 @@ class FinanceOverview {
     return FinanceOverview(
       invoices: mine,
       reminders: [for (final r in reminders) if (ids.contains(r.invoiceId)) r],
+      unavailableSources: unavailableSources,
     );
   }
 

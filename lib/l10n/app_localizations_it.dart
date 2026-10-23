@@ -7554,6 +7554,60 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get fileDeliveryCancelled => 'Annullato: nulla è stato salvato.';
+
+  @override
+  String get fileDownloadAgain => 'Scarica di nuovo';
+
+  @override
+  String fileDownloadRequested(String fileName) {
+    return 'Download richiesto: $fileName. Dove finisce lo decide il Suo browser.';
+  }
+
+  @override
+  String get fileExportKeep => 'Conserva in Deskilo';
+
+  @override
+  String get fileExportKeepHint =>
+      'Una copia privata nell\'app. Non compare in File.';
+
+  @override
+  String get fileExportShare => 'Condividi…';
+
+  @override
+  String get fileExportShareHint =>
+      'Il foglio di sistema: Salva su File quando è proposto, Mail, AirDrop o un\'altra app.';
+
+  @override
+  String get fileExportTitle => 'Esporta…';
+
+  @override
+  String fileHandedToShareSheet(String fileName) {
+    return '$fileName è stato consegnato al foglio di condivisione. Dove sia finito dipende dall\'app che Lei ha scelto.';
+  }
+
+  @override
+  String fileKeptInApp(String fileName) {
+    return 'Conservato in Deskilo: $fileName. Non è in Download né in File: Condividi… lo invia altrove.';
+  }
+
+  @override
+  String fileSaveFailedBecause(String reason) {
+    return 'Impossibile salvare il file: $reason.';
+  }
+
+  @override
+  String get fileSaveFailureNoStorage =>
+      'nessuna cartella di questo dispositivo lo ha accettato';
+
+  @override
+  String get fileSaveFailureShare =>
+      'il foglio di condivisione non si è aperto';
+
+  @override
+  String get fileSaveFailureWrite => 'il dispositivo ha rifiutato la scrittura';
+
+  @override
   String get financesAllSpaces => 'Tutti gli spazi';
 
   @override
@@ -7629,6 +7683,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get financesReminders => 'Solleciti';
+
+  @override
+  String financesSourceUnavailable(String host) {
+    return 'I documenti di $host non sono stati letti per ora; quanto mostrato proviene dai Suoi altri spazi.';
+  }
 
   @override
   String get financesStateClosed => 'Chiusa';

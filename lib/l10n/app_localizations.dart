@@ -12437,6 +12437,90 @@ abstract class AppLocalizations {
   /// **'At least {min}.'**
   String fieldProblemTooSmall(String min);
 
+  /// Notice when the person closed the Export… choice or the share sheet: nothing saved
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled — nothing was saved.'**
+  String get fileDeliveryCancelled;
+
+  /// Snackbar action on a browser download request: re-issue the download from a user gesture
+  ///
+  /// In en, this message translates to:
+  /// **'Download again'**
+  String get fileDownloadAgain;
+
+  /// Notice after a browser download request: the page cannot confirm where the file landed
+  ///
+  /// In en, this message translates to:
+  /// **'Download requested: {fileName}. Your browser decides where it goes.'**
+  String fileDownloadRequested(String fileName);
+
+  /// iPhone Export… row: keep a private copy inside the app
+  ///
+  /// In en, this message translates to:
+  /// **'Keep in Deskilo'**
+  String get fileExportKeep;
+
+  /// iPhone Export… row subtitle: the copy is app-private, not in Files
+  ///
+  /// In en, this message translates to:
+  /// **'A private copy inside the app. It does not appear in Files.'**
+  String get fileExportKeepHint;
+
+  /// iPhone Export… row: hand the file to the system share sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Share…'**
+  String get fileExportShare;
+
+  /// iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)
+  ///
+  /// In en, this message translates to:
+  /// **'The system sheet: Save to Files when it is offered, Mail, AirDrop or another app.'**
+  String get fileExportShareHint;
+
+  /// iPhone Export… sheet title: the choice between a private copy in the app and the system share sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Export…'**
+  String get fileExportTitle;
+
+  /// Notice after the system share sheet took the file: not a delivery receipt
+  ///
+  /// In en, this message translates to:
+  /// **'{fileName} was handed to the share sheet. Where it went is up to the app you chose.'**
+  String fileHandedToShareSheet(String fileName);
+
+  /// Notice after a save that only the app can see (Android fallback, iPhone Keep in Deskilo)
+  ///
+  /// In en, this message translates to:
+  /// **'Kept inside Deskilo: {fileName}. It is not in Downloads or Files — Share… sends it elsewhere.'**
+  String fileKeptInApp(String fileName);
+
+  /// Error notice with the reason a file could not be saved
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the file: {reason}.'**
+  String fileSaveFailedBecause(String reason);
+
+  /// Reason phrase for fileSaveFailedBecause: no writable folder on the device
+  ///
+  /// In en, this message translates to:
+  /// **'no folder on this device would take it'**
+  String get fileSaveFailureNoStorage;
+
+  /// Reason phrase for fileSaveFailedBecause: the system share sheet could not open
+  ///
+  /// In en, this message translates to:
+  /// **'the share sheet could not be opened'**
+  String get fileSaveFailureShare;
+
+  /// Reason phrase for fileSaveFailedBecause: the write was refused
+  ///
+  /// In en, this message translates to:
+  /// **'the device refused the write'**
+  String get fileSaveFailureWrite;
+
   /// No description provided for @financesAllSpaces.
   ///
   /// In en, this message translates to:
@@ -12562,6 +12646,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminders'**
   String get financesReminders;
+
+  /// Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete
+  ///
+  /// In en, this message translates to:
+  /// **'The documents of {host} could not be read right now; what is shown comes from your other spaces.'**
+  String financesSourceUnavailable(String host);
 
   /// Me › Finances
   ///
