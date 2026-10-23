@@ -6,7 +6,9 @@
 // before anything is saved, and Save writes the identity through the legal
 // identity command while every legal mention the step does not show stays
 // as stored. The regime decides which number is asked for. What to ask an
-// accountant and what locks after the first invoice are said on the page.
+// accountant and what locks after the first invoice are said on the page,
+// and a new regime is confirmed before it is saved: every invoice keeps the
+// regime it is issued with. Cancel saves nothing.
 // One column on a phone.
 import 'package:deskilo/app/routes/setup_grow_pages.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_step_screen.dart';
@@ -110,6 +112,11 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('setup-legal-save')));
     await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('lock-confirm-body')),
+      findsNothing,
+      reason: 'the stored regime asks nothing',
+    );
     final saved = repo.workspaces.first;
     expect(saved.invoiceLegal['legal_form'], 'GmbH, Stammkapital 25.000 €');
     expect(saved.invoiceLegal['registration'], 'Amtsgericht Berlin HRB 4711');
@@ -122,7 +129,9 @@ void main() {
   });
 
   testWidgets('outside the scope of VAT asks for the registration number, '
-      'and Save stores the regime', (tester) async {
+      'and Save names what each invoice keeps before it stores the regime', (
+    tester,
+  ) async {
     final repo = _repo();
     await _pump(tester, repo);
     await tester.tap(find.byKey(const ValueKey('setup-legal-regime')));
@@ -134,6 +143,24 @@ void main() {
     expect(repo.workspaces.first.vatRegime, 'vat_registered');
 
     await tester.tap(find.byKey(const ValueKey('setup-legal-save')));
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<Text>(find.byKey(const ValueKey('lock-confirm-body'))).data,
+      'Every invoice keeps the VAT regime it is issued with, for good: '
+      '“Outside the scope of VAT” applies from the next invoice on, and '
+      'invoices already issued do not change.',
+    );
+    await tester.tap(find.byKey(const ValueKey('lock-confirm-cancel')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.byKey(const ValueKey('lock-confirm-body')), findsNothing);
+    expect(repo.workspaces.first.vatRegime, 'vat_registered',
+        reason: 'cancel saves nothing');
+
+    await tester.tap(find.byKey(const ValueKey('setup-legal-save')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.tap(find.byKey(const ValueKey('lock-confirm-save')));
     await tester.pumpAndSettle();
     expect(repo.workspaces.first.vatRegime, 'not_subject');
   });

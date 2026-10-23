@@ -33221,6 +33221,12 @@ abstract class AppLocalizations {
   /// **'Next'**
   String get setupGuideNext;
 
+  /// #2875 setup guide locks: setupGuideNoInvoicing
+  ///
+  /// In en, this message translates to:
+  /// **'{money, select, statements{Invoicing is not chosen: members get statements of what they owe and pay against them. No VAT, numbering or e-invoicing is needed, so the guide does not ask for them.} other{Invoicing is not chosen: no VAT, numbering or e-invoicing is needed, so the guide does not ask for them.}}'**
+  String setupGuideNoInvoicing(String money);
+
   /// #2869 setup guide: the state of a step outside the chosen levels
   ///
   /// In en, this message translates to:
@@ -33616,6 +33622,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What your space does'**
   String get setupLevelsTitle;
+
+  /// #2875 setup guide locks: setupLockConfirmTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Before you save'**
+  String get setupLockConfirmTitle;
+
+  /// #2875 setup guide locks: setupLockMoneyLocaleConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'{country} and {currency} become fixed for good once this space issues a document or records money: after that, neither can change. Check them with your accountant if you are unsure.'**
+  String setupLockMoneyLocaleConfirm(String country, String currency);
+
+  /// #2875 setup guide locks: setupLockMoneyLocaleFixed
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed: this space has already issued a document or recorded money, so the country and the currency can no longer change.'**
+  String get setupLockMoneyLocaleFixed;
+
+  /// #2875 setup guide locks: setupLockNumberingConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'The next invoice will be numbered {number}. Once an invoice takes a number from this series, that number is kept for good, the series never goes back, and a date in the number can only be removed together with a new prefix or suffix.'**
+  String setupLockNumberingConfirm(String number);
+
+  /// #2875 setup guide locks: setupLockRegimeConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Every invoice keeps the VAT regime it is issued with, for good: “{regime}” applies from the next invoice on, and invoices already issued do not change.'**
+  String setupLockRegimeConfirm(String regime);
 
   /// #2871 setup run steps: setupLookMore
   ///
