@@ -201,4 +201,4 @@ $fn$;
 revoke execute on function public.discard_setup_step_draft(uuid, text, int) from public, anon;
 grant execute on function public.discard_setup_step_draft(uuid, text, int) to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(552);
