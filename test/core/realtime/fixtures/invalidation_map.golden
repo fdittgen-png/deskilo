@@ -1,5 +1,5 @@
 accessories bustsPlanCache=true floorPlanProvider
-closure_days bustsPlanCache=false closureDaysProvider
+closure_days bustsPlanCache=false workspaceContextProvider
 conversation_participants bustsPlanCache=false conversationParticipantsProvider, conversationsProvider
 conversations bustsPlanCache=false conversationParticipantsProvider, conversationsProvider
 desks bustsPlanCache=true floorPlanProvider, levelsProvider
@@ -24,4 +24,4 @@ seat_accessories bustsPlanCache=true floorPlanProvider
 seats bustsPlanCache=true floorPlanProvider, levelsProvider
 services bustsPlanCache=false allServicesProvider, servicesProvider
 validation_policies bustsPlanCache=false validationPoliciesProvider
-workspaces bustsPlanCache=false bookingGranularityProvider, dunningRulesProvider, invoicePdfTemplateProvider, lexiconProvider, myWorkspacesProvider, openWeekdaysProvider, workHoursProvider
+workspaces bustsPlanCache=false bookingGranularityProvider, dunningRulesProvider, invoicePdfTemplateProvider, lexiconProvider, myWorkspacesProvider, workspaceContextProvider

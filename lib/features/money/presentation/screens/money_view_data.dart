@@ -130,6 +130,10 @@ class MoneyViewData {
   bool get suppliersOn =>
       _on(WorkspaceFeature.supplyExpenses) && (member?.isAdmin ?? false);
 
+  /// #2863 — the supplier form may ask a company registry: the same
+  /// verification VIES gives a member's VAT number.
+  bool get supplierLookupOn => _on(WorkspaceFeature.viesVerification);
+
   /// #2573 — the purchase documents: a member's own receipts, and the
   /// supplier bills of those who manage them.
   bool get purchasesOn => _on(WorkspaceFeature.purchases);

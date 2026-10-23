@@ -14,21 +14,32 @@ import '../../providers/supplier_providers.dart';
 import 'supplier_dialogs.dart';
 
 /// #2567 — opens the suppliers of [workspaceId]. The caller decides when to
-/// offer it; the server decides who may write.
-Future<void> showSuppliersSheet(BuildContext context, String workspaceId) =>
-    showAppSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => SuppliersView(workspaceId: workspaceId),
-    );
+/// offer it; the server decides who may write. [lookupOn] offers Find
+/// company details in the form (the `viesVerification` flag).
+Future<void> showSuppliersSheet(
+  BuildContext context,
+  String workspaceId, {
+  bool lookupOn = false,
+}) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) => SuppliersView(workspaceId: workspaceId, lookupOn: lookupOn),
+);
 
 /// The supplier list with what waits for review, add, edit, archive and the
 /// bank-detail door.
 @visibleForTesting
 class SuppliersView extends ConsumerWidget {
-  const SuppliersView({required this.workspaceId, super.key});
+  const SuppliersView({
+    required this.workspaceId,
+    this.lookupOn = false,
+    super.key,
+  });
 
   final String workspaceId;
+
+  /// Whether the form may ask a company registry (#2863).
+  final bool lookupOn;
 
   void _refresh(WidgetRef ref) {
     ref
@@ -41,8 +52,18 @@ class SuppliersView extends ConsumerWidget {
     WidgetRef ref,
     Supplier? supplier,
   ) async {
-    final draft = await showSupplierDialog(context, supplier);
-    if (draft == null || !context.mounted) return;
+    final result = await showSupplierDialog(
+      context,
+      supplier,
+      lookupWorkspaceId: lookupOn ? workspaceId : null,
+      existing: ref.read(suppliersProvider(workspaceId)).value ?? const [],
+    );
+    if (result == null || !context.mounted) return;
+    // The lookup met a supplier already there: edit that one, create none.
+    if (result is SupplierDialogOpenExisting) {
+      return _edit(context, ref, result.supplier);
+    }
+    final draft = (result as SupplierDialogSave).draft;
     final l10n = context.l10n;
     String? saved;
     final ok = await runGuarded(

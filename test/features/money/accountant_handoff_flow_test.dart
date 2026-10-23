@@ -47,13 +47,13 @@ _openPreflight(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(money: money),
-        fileSaverProvider.overrideWithValue(({
+        typedFileSaverProvider.overrideWithValue(({
           required bytes,
           required fileName,
         }) async {
           if (failSave) throw Exception('disk full');
           saved.add((name: fileName, bytes: bytes));
-          return 'Download/$fileName';
+          return SavedFile('Download/$fileName');
         }),
       ],
       child: const DeskiloApp(),

@@ -8,6 +8,7 @@ import '../../../core/public_network/public_network_codec.dart';
 import '../../../core/public_network/public_network_operations.dart';
 import '../../../core/public_network/public_network_spec.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 
 /// #1847 — the PUBLIC discovery interface. Every request is anonymous: a
@@ -62,102 +63,105 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
   ) => query.timeout(Duration(seconds: op.timeoutSeconds ?? 12));
 
   @override
-  Future<DirectoryPage> search(
-    String query, {
-    int sourcePage = 0,
-    int workspacePage = 0,
-  }) async {
-    final sourceSize = _sources.pageSize!;
+  Future<DirectorySourcesPage> sources({int page = 0}) async {
+    final size = _sources.pageSize!;
     final home = _anonymous(origin, publishableKey);
-    final PostgrestList sourceRows;
+    final PostgrestList rows;
     try {
-      sourceRows = await _read(
+      rows = await _read(
         _ordered(
           home.from(_sources.relation!).select(_sources.selectClause),
           _sources,
-        ).range(
-          sourcePage * sourceSize,
-          sourcePage * sourceSize + sourceSize - 1,
-        ),
+        ).range(page * size, page * size + size - 1),
         _sources,
       );
     } finally {
       await home.dispose();
     }
+    // The directory and this device's own server lead the first page; a
+    // later page lists only what the directory names.
     final endpoints = <String, String>{
-      origin: publishableKey,
-      if (local case final own?) own.url: own.key,
+      if (page == 0) origin: publishableKey,
+      if (page == 0)
+        if (local case final own?) own.url: own.key,
     };
-    final failures = <String>[];
-    final incompatible = <String>{};
-    for (final row in sourceRows) {
+    final refused = <String>[];
+    for (final row in rows) {
       try {
         final source = decodePublicRecord(_sources.output!, row);
-        endpoints[source['origin']! as String] =
-            source['publishable_key']! as String;
+        endpoints.putIfAbsent(
+          source['origin']! as String,
+          () => source['publishable_key']! as String,
+        );
       } on PublicContractRefusal {
-        failures.add('${row['origin']}');
+        refused.add('${row['origin']}');
       }
     }
+    final valid = <DirectorySource>[];
+    for (final MapEntry(:key, :value) in endpoints.entries) {
+      if (validateBackendEndpoint(key, value) == null) {
+        valid.add(DirectorySource(key, value));
+      } else {
+        refused.add(key);
+      }
+    }
+    return DirectorySourcesPage(
+      valid,
+      refused: refused,
+      more: rows.length == size,
+    );
+  }
+
+  @override
+  Future<SourceCardsPage> workspaces(
+    DirectorySource source,
+    String query, {
+    int page = 0,
+  }) async {
+    if (validateBackendEndpoint(source.origin, source.key) != null) {
+      throw StateError('invalid public endpoint');
+    }
     final size = _search.pageSize!;
-    var more = false;
-    final results = await Future.wait(
-      endpoints.entries.map((entry) async {
-        if (validateBackendEndpoint(entry.key, entry.value) != null) {
-          failures.add(entry.key);
-          return <PublicWorkspace>[];
-        }
-        final client = _anonymous(entry.key, entry.value);
+    final client = _anonymous(source.origin, source.key);
+    try {
+      var request = client.from(_search.relation!).select(_search.selectClause);
+      if (query.trim().isNotEmpty) {
+        request = request.ilike(
+          'search_text',
+          '%${query.trim().replaceAll('%', '\\%').replaceAll('_', '\\_')}%',
+        );
+      }
+      final rows = await _read(
+        _ordered(request, _search).range(page * size, page * size + size - 1),
+        _search,
+      );
+      final cards = <PublicWorkspace>[];
+      var incompatible = false;
+      for (final row in rows) {
         try {
-          var request = client
-              .from(_search.relation!)
-              .select(_search.selectClause);
-          if (query.trim().isNotEmpty) {
-            request = request.ilike(
-              'search_text',
-              '%${query.trim().replaceAll('%', '\\%').replaceAll('_', '\\_')}%',
-            );
-          }
-          final rows = await _read(
-            _ordered(
-              request,
-              _search,
-            ).range(workspacePage * size, workspacePage * size + size - 1),
-            _search,
-          );
-          if (rows.length == size) more = true;
-          final cards = <PublicWorkspace>[];
-          for (final row in rows) {
-            try {
-              cards.add(_card(row, entry.key, entry.value));
-            } on PublicContractRefusal {
-              incompatible.add(entry.key);
-            }
-          }
-          return cards;
-        } on Object catch (e, st) {
-          // Never include remote request headers or response bodies in
-          // diagnostics.
-          TraceLogger.instance.warn(
-            'directory',
-            'public directory unavailable',
-            error: e.runtimeType,
-            stackTrace: st,
-          );
-          failures.add(entry.key);
-          return <PublicWorkspace>[];
-        } finally {
-          await client.dispose();
+          cards.add(_card(row, source.origin, source.key));
+        } on PublicContractRefusal {
+          incompatible = true;
         }
-      }),
-    );
-    return DirectoryPage(
-      results.expand((r) => r).toList(),
-      unavailable: failures,
-      incompatible: incompatible.toList(),
-      moreSources: sourceRows.length == sourceSize,
-      moreWorkspaces: more,
-    );
+      }
+      return SourceCardsPage(
+        cards,
+        incompatible: incompatible,
+        more: rows.length == size,
+      );
+    } on Object catch (e, st) {
+      // Never include remote request headers or response bodies in
+      // diagnostics.
+      TraceLogger.instance.warn(
+        'directory',
+        'public directory unavailable',
+        error: e.runtimeType,
+        stackTrace: st,
+      );
+      rethrow;
+    } finally {
+      await client.dispose();
+    }
   }
 
   @override

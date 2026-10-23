@@ -30,6 +30,23 @@ abstract final class SeatFootprint {
   static const int depth = 4;
 }
 
+/// The cells a seat anchored at [x]/[y] covers: 6×4 for n/s (sitting edge
+/// horizontal), 4×6 for e/w.
+GridRect seatFootprintAt({
+  required int x,
+  required int y,
+  required SeatOrientation orientation,
+}) {
+  final horizontal =
+      orientation == SeatOrientation.n || orientation == SeatOrientation.s;
+  return GridRect(
+    x: x,
+    y: y,
+    w: horizontal ? SeatFootprint.length : SeatFootprint.depth,
+    h: horizontal ? SeatFootprint.depth : SeatFootprint.length,
+  );
+}
+
 /// THE bookable unit (spec §3). `x`/`y` is the footprint's top-left cell;
 /// the footprint size follows from [orientation].
 @freezed
@@ -65,16 +82,8 @@ sealed class Seat with _$Seat implements SystemStamped {
   }) = _Seat;
 
   /// 6×4 for n/s (sitting edge horizontal), 4×6 for e/w.
-  GridRect get footprint {
-    final horizontal = orientation == SeatOrientation.n ||
-        orientation == SeatOrientation.s;
-    return GridRect(
-      x: x,
-      y: y,
-      w: horizontal ? SeatFootprint.length : SeatFootprint.depth,
-      h: horizontal ? SeatFootprint.depth : SeatFootprint.length,
-    );
-  }
+  GridRect get footprint =>
+      seatFootprintAt(x: x, y: y, orientation: orientation);
 
   /// Blocked for maintenance at [at]? Open-ended bounds supported (spec §10).
   bool isBlockedAt(DateTime at) {

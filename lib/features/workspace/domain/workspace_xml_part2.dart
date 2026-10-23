@@ -272,11 +272,11 @@ void _seatElement(
 // the import UI is #165)
 // ---------------------------------------------------------------------------
 
-/// Parses and validates a schema-v1 OR schema-v2 document (#180). Throws
-/// [WorkspaceXmlException] on anything suspicious — never returns a
-/// half-valid structure. A v1 document (no `<accessories>`, no seat
-/// `<accessory>` refs) parses to an empty catalog; version 3+ →
-/// [WorkspaceXmlError.unsupportedVersion].
+/// Parses and validates a document whose version is one of
+/// [WorkspaceXmlSchema.supportedVersions] (any other →
+/// [WorkspaceXmlError.unsupportedVersion]). Throws [WorkspaceXmlException]
+/// on anything suspicious — never a half-valid structure. A v1 document
+/// (no `<accessories>`, no seat `<accessory>` refs) has an empty catalog.
 WorkspaceXmlData parseWorkspaceXml(String input) {
   final XmlElement root;
   try {

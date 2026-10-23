@@ -5,6 +5,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/notifications/notification_taps.dart';
 import 'package:deskilo/core/push/push_connector.dart';
 import 'package:deskilo/core/push/push_endpoint_repository.dart';
 import 'package:deskilo/core/push/push_service.dart';
@@ -13,28 +14,42 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_notification_service.dart';
 
 class FakePushConnector implements PushConnector {
-  FakePushConnector({this.available = true});
+  FakePushConnector({this.available = true, this.allowed = true});
 
   final bool available;
+
+  /// Whether the system allows notifications; [register] with `ask`
+  /// flips it to [allowOnAsk] (the person's answer to the prompt).
+  bool allowed;
+  bool allowOnAsk = true;
   bool registered = false;
+  final asks = <bool>[];
   void Function(String url)? newEndpoint;
   void Function()? unregistered;
   void Function(Uint8List content)? message;
+  void Function(Map<String, String> data, String? messageId)? opened;
 
   @override
   Future<bool> initialize({
     required void Function(String url) onNewEndpoint,
     required void Function() onUnregistered,
     required void Function(Uint8List content) onMessage,
+    void Function(Map<String, String> data, String? messageId)? onOpened,
   }) async {
     newEndpoint = onNewEndpoint;
     unregistered = onUnregistered;
     message = onMessage;
+    opened = onOpened;
     return available;
   }
 
   @override
-  Future<void> register() async => registered = true;
+  Future<bool> register({bool ask = false}) async {
+    asks.add(ask);
+    if (ask) allowed = allowOnAsk;
+    if (allowed) registered = true;
+    return allowed;
+  }
 }
 
 class FakePushEndpointRepository implements PushEndpointRepository {
@@ -58,8 +73,10 @@ class FakePushEndpointRepository implements PushEndpointRepository {
 (PushService, FakePushConnector, FakePushEndpointRepository,
     FakeNotificationService) harness({
   bool available = true,
+  bool allowed = true,
+  NotificationTaps? taps,
 }) {
-  final connector = FakePushConnector(available: available);
+  final connector = FakePushConnector(available: available, allowed: allowed);
   final repository = FakePushEndpointRepository();
   final notifications = FakeNotificationService();
   final service = PushService(
@@ -67,10 +84,16 @@ class FakePushEndpointRepository implements PushEndpointRepository {
     repository: repository,
     notifications: notifications,
     myMemberIds: () async => ['member-1', 'member-9'],
-    pendingTitle: 'DesKilo',
-    pendingBody: 'Someone needs your confirmation.',
-    cancelledTitle: 'Reservation removed',
-    cancelledBody: 'A reservation was removed by an admin.',
+    texts: PushTexts(
+      title: 'DesKilo',
+      bodyOf: (kind) => switch (kind) {
+        'pending_request' => 'Someone needs your confirmation.',
+        'reservation_cancelled' => 'A reservation was removed by an admin.',
+        'member_note' => 'You have a new message.',
+        _ => 'You have an update.',
+      },
+    ),
+    taps: taps,
   );
   return (service, connector, repository, notifications);
 }
@@ -140,7 +163,8 @@ void main() {
     );
 
     final shown = notifications.shown.single;
-    expect(shown.title, 'Reservation removed');
+    // #2559 C2 — the title is the app's name for every kind.
+    expect(shown.title, 'DesKilo');
     expect(shown.body, 'A reservation was removed by an admin.');
   });
 
@@ -169,5 +193,88 @@ void main() {
     connector.unregistered!();
     await Future<void>.delayed(Duration.zero);
     expect(full.status.value, PushStatus.notConfigured);
+  });
+
+  group('#2559 C2', () {
+    const reference = {
+      'v': '1',
+      'kind': 'member_note',
+      'src': 'w',
+      'inst': 'inst-a',
+      'ws': 'ws-1',
+      'ref_kind': 'note',
+      'ref_id': 'note-1',
+    };
+
+    test('a foreground push shows generic text; its tap payload is the '
+        'validated reference and nothing else of the payload', () async {
+      final (service, _, _, notifications) = harness();
+      await service.onMessage(Uint8List.fromList(utf8.encode(jsonEncode({
+        ...reference,
+        // A payload that carried private values (an older or a hostile
+        // sender): none of them is shown or kept.
+        'title': 'Alice Sentinel',
+        'body': 'SENTINEL-MESSAGE-BODY',
+        'amount': 'SENTINEL-AMOUNT-4242',
+        'token': 'SENTINEL-TOKEN',
+      }))));
+
+      final shown = notifications.shown.single;
+      expect(shown, (title: 'DesKilo', body: 'You have a new message.'));
+      final payload = notifications.payloads.single!;
+      expect(jsonDecode(payload), reference);
+      for (final sentinel in ['Alice', 'SENTINEL']) {
+        expect('${shown.title} ${shown.body} $payload',
+            isNot(contains(sentinel)));
+      }
+    });
+
+    test('an incomplete reference rings without a tap payload', () async {
+      final (service, _, _, notifications) = harness();
+      await service.onMessage(Uint8List.fromList(
+          utf8.encode(jsonEncode({...reference}..remove('inst')))));
+      expect(notifications.shown, hasLength(1));
+      expect(notifications.payloads.single, isNull);
+    });
+
+    test('a start never prompts: not allowed is a status, nothing is '
+        'registered', () async {
+      final (service, connector, _, notifications) = harness(allowed: false);
+      await service.start();
+      expect(connector.asks, [false]);
+      expect(connector.registered, isFalse);
+      expect(notifications.permissionRequests, 0);
+      expect(service.status.value, PushStatus.permissionNeeded);
+    });
+
+    test('the deliberate Allow prompts and registers; a denial changes '
+        'nothing else and can be retried', () async {
+      final (service, connector, _, notifications) = harness(allowed: false);
+      await service.start();
+
+      connector.allowOnAsk = false;
+      expect(await service.allow(), isFalse);
+      expect(service.status.value, PushStatus.permissionNeeded);
+      expect(connector.registered, isFalse);
+
+      connector.allowOnAsk = true;
+      expect(await service.allow(), isTrue);
+      expect(connector.asks, [false, true, true]);
+      expect(connector.registered, isTrue);
+      expect(notifications.permissionRequests, 2);
+    });
+
+    test('a tapped push goes to the tap inbox once, data only', () async {
+      final taps = NotificationTaps();
+      final (service, connector, _, _) = harness(taps: taps);
+      await service.start();
+      final received = <NotificationTap>[];
+      taps.listen(received.add);
+
+      connector.opened!(reference, 'msg-1');
+      connector.opened!(reference, 'msg-1'); // the same delivery again
+      expect(received, hasLength(1));
+      expect(received.single.data, reference);
+    });
   });
 }

@@ -17,7 +17,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../providers/directory_providers.dart';
+import '../providers/discovery_listing_providers.dart';
 import 'connection_outcome_text.dart';
 
 class ConnectionDialog extends ConsumerStatefulWidget {
@@ -83,7 +83,7 @@ class _ConnectionState extends ConsumerState<ConnectionDialog> {
       ref
         ..invalidate(connectedSourcesProvider)
         ..invalidate(connectionHealthProvider(endpoint.url))
-        ..invalidate(publicDirectoryProvider);
+        ..invalidate(discoveryListingProvider);
       Navigator.of(context).pop(true);
     }
   }

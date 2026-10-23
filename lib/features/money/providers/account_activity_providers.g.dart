@@ -57,6 +57,70 @@ final class AccountActivityRepositoryProvider
 String _$accountActivityRepositoryHash() =>
     r'b31cc15fa8bb9d76bcac09221b1c00b027d8ab03';
 
+/// My own documents at the SELECTED workspace, read on that workspace's own
+/// installation: `my_finance_overview` runs there under the person's session
+/// on that host, so a connected installation's invoices never travel through
+/// the personal home's client and are never answered by it.
+
+@ProviderFor(selectedWorkspaceAccountActivityRepository)
+final selectedWorkspaceAccountActivityRepositoryProvider =
+    SelectedWorkspaceAccountActivityRepositoryProvider._();
+
+/// My own documents at the SELECTED workspace, read on that workspace's own
+/// installation: `my_finance_overview` runs there under the person's session
+/// on that host, so a connected installation's invoices never travel through
+/// the personal home's client and are never answered by it.
+
+final class SelectedWorkspaceAccountActivityRepositoryProvider
+    extends
+        $FunctionalProvider<
+          AccountActivityRepository,
+          AccountActivityRepository,
+          AccountActivityRepository
+        >
+    with $Provider<AccountActivityRepository> {
+  /// My own documents at the SELECTED workspace, read on that workspace's own
+  /// installation: `my_finance_overview` runs there under the person's session
+  /// on that host, so a connected installation's invoices never travel through
+  /// the personal home's client and are never answered by it.
+  SelectedWorkspaceAccountActivityRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedWorkspaceAccountActivityRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$selectedWorkspaceAccountActivityRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<AccountActivityRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AccountActivityRepository create(Ref ref) {
+    return selectedWorkspaceAccountActivityRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AccountActivityRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AccountActivityRepository>(value),
+    );
+  }
+}
+
+String _$selectedWorkspaceAccountActivityRepositoryHash() =>
+    r'21e6f34f39515eb7dfb97cb425f217b6f1a3d607';
+
 @ProviderFor(accountActivity)
 final accountActivityProvider = AccountActivityFamily._();
 

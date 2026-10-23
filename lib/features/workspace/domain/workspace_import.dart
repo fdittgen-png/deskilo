@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:meta/meta.dart';
-import '../../plan/domain/desk.dart';
 import '../../plan/domain/floor_plan_rules.dart';
-import '../../plan/domain/office.dart';
-import '../../plan/domain/seat.dart';
+import '../../plan/domain/grid_geometry.dart';
 import 'workspace_xml.dart';
 
 /// The exact message the `import_floor_plan` RPC (migration 0023) raises
@@ -62,7 +60,7 @@ abstract final class WorkspaceImportPlanKeys {
 /// Owner-only import boundary (#165). Separate from [WorkspaceRepository]
 /// so the shared test fake keeps compiling untouched; Supabase impl in
 /// data/, fakes in the import tests.
-abstract class WorkspaceImportRepository {
+abstract interface class WorkspaceImportRepository {
   /// Transactionally replaces the workspace's floor plan with the parsed
   /// file's levels and upserts its accessory catalog via the
   /// `import_floor_plan_v3` RPC (migration 0177, v2's shape plus the
@@ -206,83 +204,59 @@ List<Map<String, Object?>> workspaceXmlAccessoriesToJson(
 /// and out-of-parent geometry are rejected client-side with one localized
 /// message; [detail] names the offending item for the trace log only.
 ///
-/// The parsed structure carries no ids, so short synthetic ones are minted
-/// purely to satisfy the rule functions' `ignoreId`/sibling checks.
+/// The parsed structure carries no ids, so the rules run on geometry
+/// alone: each item against the rects already placed in its scope.
 ({PlacementProblem problem, String detail})? validateWorkspaceXmlPlan(
   WorkspaceXmlData data,
 ) {
-  for (final (levelIndex, level) in data.levels.indexed) {
-    final placedOffices = <Office>[];
-    final placedLevelDesks = <Desk>[];
-    for (final (officeIndex, office) in level.offices.indexed) {
-      final officeProblem = validateOfficePlacement(office.rect, placedOffices);
+  for (final level in data.levels) {
+    final placedOffices = <GridRect>[];
+    // Desks are checked against ALL desks placed on the level so far —
+    // the same sibling scope the editor uses (floor_plan_rules.dart).
+    final placedLevelDesks = <GridRect>[];
+    for (final office in level.offices) {
+      final officeProblem = validateOfficeRect(office.rect, placedOffices);
       if (officeProblem != null) {
         return (
           problem: officeProblem,
           detail: 'office "${office.name}" on level "${level.name}"',
         );
       }
-      final officeModel = Office(
-        id: 'l$levelIndex-o$officeIndex',
-        workspaceId: '',
-        levelId: 'l$levelIndex',
-        name: office.name,
-        color: office.color,
-        bookableAsWhole: office.bookableAsWhole,
-        rect: office.rect,
-      );
-      placedOffices.add(officeModel);
-      for (final (deskIndex, desk) in office.desks.indexed) {
-        // Desks are checked against ALL desks placed on the level so far —
-        // the same sibling scope the editor uses (floor_plan_rules.dart).
+      placedOffices.add(office.rect);
+      for (final desk in office.desks) {
         final deskProblem =
-            validateDeskPlacement(desk.rect, officeModel, placedLevelDesks);
+            validateDeskRect(desk.rect, office.rect, placedLevelDesks);
         if (deskProblem != null) {
           return (
             problem: deskProblem,
             detail: 'desk "${desk.name}" in office "${office.name}"',
           );
         }
-        final deskModel = Desk(
-          id: '${officeModel.id}-d$deskIndex',
-          workspaceId: '',
-          officeId: officeModel.id,
-          name: desk.name,
-          rect: desk.rect,
-        );
-        placedLevelDesks.add(deskModel);
-        final placedSeats = <Seat>[];
-        for (final (seatIndex, seat) in desk.seats.indexed) {
-          final seatModel = Seat(
-            id: '${deskModel.id}-s$seatIndex',
-            workspaceId: '',
-            deskId: deskModel.id,
-            name: seat.name,
-            x: seat.x,
-            y: seat.y,
-            orientation: seat.orientation,
-            chair: seat.chair,
-            amenities: seat.amenities,
-            blockedFrom: seat.blockedFrom,
-            blockedTo: seat.blockedTo,
-            nfcUid: seat.nfcUid.isEmpty ? null : seat.nfcUid,
-            resourceKind: seat.resourceKind,
-            capacity: seat.capacity,
-            parkingKind: seat.parkingKind,
-            slotMinutes: seat.slotMinutes,
-          );
-          final seatProblem =
-              validateSeatPlacement(seatModel, deskModel, placedSeats);
-          if (seatProblem != null) {
-            return (
-              problem: seatProblem,
-              detail: 'seat "${seat.name}" on desk "${desk.name}"',
-            );
-          }
-          placedSeats.add(seatModel);
-        }
+        placedLevelDesks.add(desk.rect);
+        final seatProblem = _validateXmlSeats(desk);
+        if (seatProblem != null) return seatProblem;
       }
     }
+  }
+  return null;
+}
+
+/// The seat rule over one desk's seats, each against the footprints of the
+/// seats placed before it on the same desk.
+({PlacementProblem problem, String detail})? _validateXmlSeats(
+  WorkspaceXmlDesk desk,
+) {
+  final placedSeats = <GridRect>[];
+  for (final seat in desk.seats) {
+    final footprint = seat.footprint;
+    final seatProblem = validateSeatRect(footprint, desk.rect, placedSeats);
+    if (seatProblem != null) {
+      return (
+        problem: seatProblem,
+        detail: 'seat "${seat.name}" on desk "${desk.name}"',
+      );
+    }
+    placedSeats.add(footprint);
   }
   return null;
 }

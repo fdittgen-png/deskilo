@@ -38,7 +38,10 @@
 // InstanceAuthConfig, whether confirmation mail is even being sent, how
 // many accounts are stuck unconfirmed, and whether ANYBODY has confirmed
 // in the last seven days. It exits 1 when something needs a human, so a
-// schedule can act on it. It writes nothing.
+// schedule can act on it. It writes nothing. Since #2561 it also prints
+// the installation's roles (personal home, workspace host or combined)
+// beside the rows it holds, and alarms on a personal home that holds
+// workspaces.
 import 'dart:io';
 
 import 'package:deskilo/core/instance/instance_builder.dart';

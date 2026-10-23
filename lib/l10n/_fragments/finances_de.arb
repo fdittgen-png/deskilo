@@ -107,5 +107,14 @@
         "type": "int"
       }
     }
+  },
+  "financesSourceUnavailable": "Die Dokumente von {host} konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.",
+  "@financesSourceUnavailable": {
+    "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   }
 }

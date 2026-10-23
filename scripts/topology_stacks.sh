@@ -135,6 +135,11 @@ TOML
   say "prepared P and W-B under $DIR"
 }
 
+set_roles() { # db roles stack-name
+  psql "$1" -qtAX -v ON_ERROR_STOP=1 -c "select public.operator_set_installation_roles('$2')" >/dev/null \
+    || fail "$3: installation roles $2"
+}
+
 mkuser() { # api service email -> user id
   curl -sf -X POST "$1/auth/v1/admin/users" -H "apikey: $2" -H "Authorization: Bearer $2" \
     -H 'Content-Type: application/json' \
@@ -227,6 +232,14 @@ seed() {
   [ "${API[wa]}" != "${API[p]}" ] && [ "${API[wa]}" != "${API[wb]}" ] && [ "${API[p]}" != "${API[wb]}" ] \
     || fail "two roles share one API address: ${API[wa]} ${API[p]} ${API[wb]}"
 
+  # #2561 L1 -- what each stack IS. P becomes a personal home through the
+  # operator function itself (its success path on an installation that holds
+  # nothing); the two hosts state the combined default explicitly. The Dart
+  # consumer reads the roles back from each database and each descriptor.
+  set_roles "${DB[p]}" '{personal_home}' P
+  set_roles "${DB[wa]}" '{personal_home,workspace_host}' W-A
+  set_roles "${DB[wb]}" '{personal_home,workspace_host}' W-B
+
   p_user=$(mkuser "${API[p]}" "${SERVICE[p]}" "topology-p-$run@deskilo.test") || fail "P: user"
   a_user=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "topology-a-$run@deskilo.test") || fail "W-A: user"
   a_stranger=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "topology-a-stranger-$run@deskilo.test") || fail "W-A: stranger"
@@ -250,8 +263,10 @@ seed() {
   "windowFrom": "$from",
   "windowTo": "$to",
   "p":  {"url": "${API[p]}",  "anon": "${ANON[p]}",  "service": "${SERVICE[p]}",
+         "roles": ["personal_home"],
          "user": {"id": "$p_user", "email": "topology-p-$run@deskilo.test"}},
   "wa": {"url": "${API[wa]}", "anon": "${ANON[wa]}", "service": "${SERVICE[wa]}",
+         "roles": ["personal_home", "workspace_host"],
          "user": {"id": "$a_user", "email": "topology-a-$run@deskilo.test"},
          "stranger": {"id": "$a_stranger", "email": "topology-a-stranger-$run@deskilo.test"},
          "reservationId": "0000000e-0a0a-4000-8000-0000000e0a0a", "timezone": "Europe/Paris",
@@ -259,6 +274,7 @@ seed() {
                      "member": {"id": "$pv_member", "email": "preview-member-$run@deskilo.test"},
                      "owner": {"id": "$pv_owner", "email": "preview-owner-$run@deskilo.test"}}},
   "wb": {"url": "${API[wb]}", "anon": "${ANON[wb]}", "service": "${SERVICE[wb]}",
+         "roles": ["personal_home", "workspace_host"],
          "user": {"id": "$b_user", "email": "topology-b-$run@deskilo.test"},
          "reservationId": "0000000e-0b0a-4000-8000-0000000e0b0a", "timezone": "America/New_York"}
 }
@@ -272,7 +288,7 @@ cleanup() {
   out=$(supabase status -o env 2>/dev/null) || out=
   db=$(val DB_URL <<<"$out")
   if [ -n "$db" ]; then
-    psql "$db" -qX -c "delete from public.workspaces where id in ('$WS', '$PWS')" >/dev/null 2>&1 || true
+    psql "$db" -qX -c "delete from public.workspaces where id in ('$WS', '$PWS') or name like 'SEP-06 control %'" >/dev/null 2>&1 || true
   fi
   for name in p wb; do
     [ -d "$DIR/$name" ] && supabase stop --workdir "$DIR/$name" --no-backup >/dev/null 2>&1 || true

@@ -27,6 +27,7 @@ import '../../../core/ui/setup_step_layout.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
+import '../providers/discovery_listing_providers.dart';
 
 /// The fields this step edits, in the order the page shows them.
 const _edited = ['description', 'email', 'phone', 'website'];
@@ -150,7 +151,7 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
     _document = saved ?? _document;
     _following = following;
     _storedPublished = _published.value;
-    ref.invalidate(publicDirectoryProvider);
+    ref.invalidate(discoveryListingProvider);
     AppSnack.success(context, l10n.billingSaved);
     await _kept.applied();
   }

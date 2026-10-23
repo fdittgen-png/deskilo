@@ -7,6 +7,10 @@ import 'package:deskilo/core/cache/target_cache_store.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/core/settings/settings_capture.dart';
+import 'package:deskilo/core/time/work_hours.dart';
+import 'package:deskilo/core/time/workspace_calendar.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/core/vat/tax_reference_snapshot.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 WorkspaceContext _context({
@@ -30,7 +34,13 @@ WorkspaceContext _context({
       SettingsIdentity(installation: installation, workspaceId: workspace, principal: localUser),
       SettingsSet.defaults(const []),
     ),
-    timezone: 'Europe/Paris',
+    calendar: WorkspaceCalendar(
+      timezone: 'Europe/Paris',
+      openWeekdays: const [1, 2, 3, 4, 5],
+      workHours: WorkHours.defaults,
+      closures: const [],
+    ),
+    taxReference: TaxReferenceSnapshot(ActiveTaxReference.current),
   );
 }
 
@@ -42,6 +52,25 @@ void main() {
     expect(a.target.networkId, 'inst-a:ws-1');
     expect(a.cacheNamespace, isNot(b.cacheNamespace));
     expect(a.sameOperationAs(b), isFalse);
+  });
+
+  test('a stored network id names the target; a row without one falls back '
+      'to installation:workspace', () {
+    final born = WorkspaceTarget.stored(
+      networkId: 'inst-born:ws-1',
+      installationId: 'inst-a',
+      workspaceId: 'ws-1',
+    );
+    expect(born.networkId, 'inst-born:ws-1');
+    expect(born.installationId, 'inst-a');
+    expect(
+      WorkspaceTarget.stored(
+        networkId: '',
+        installationId: 'inst-a',
+        workspaceId: 'ws-1',
+      ),
+      WorkspaceTarget.local(installationId: 'inst-a', workspaceId: 'ws-1'),
+    );
   });
 
   test('another local account on the same target has its own namespace', () {

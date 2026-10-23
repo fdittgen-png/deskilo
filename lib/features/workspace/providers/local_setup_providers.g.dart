@@ -312,12 +312,70 @@ final class WorkspaceLocalSlotsFamily extends $Family
   String toString() => r'workspaceLocalSlotsProvider';
 }
 
-/// #2869 — the setup guide's status: every step and the four milestones.
+/// 9999 — per step, the range the instance observed over enough sessions.
+/// Empty when it observed none, and when the server cannot answer (one
+/// without the function, offline): the guide then widens the catalogue's
+/// figure, and a time that is only an estimate never keeps the guide shut.
+
+@ProviderFor(setupStepTimingRanges)
+final setupStepTimingRangesProvider = SetupStepTimingRangesProvider._();
+
+/// 9999 — per step, the range the instance observed over enough sessions.
+/// Empty when it observed none, and when the server cannot answer (one
+/// without the function, offline): the guide then widens the catalogue's
+/// figure, and a time that is only an estimate never keeps the guide shut.
+
+final class SetupStepTimingRangesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, SetupEstimate>>,
+          Map<String, SetupEstimate>,
+          FutureOr<Map<String, SetupEstimate>>
+        >
+    with
+        $FutureModifier<Map<String, SetupEstimate>>,
+        $FutureProvider<Map<String, SetupEstimate>> {
+  /// 9999 — per step, the range the instance observed over enough sessions.
+  /// Empty when it observed none, and when the server cannot answer (one
+  /// without the function, offline): the guide then widens the catalogue's
+  /// figure, and a time that is only an estimate never keeps the guide shut.
+  SetupStepTimingRangesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'setupStepTimingRangesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$setupStepTimingRangesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, SetupEstimate>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, SetupEstimate>> create(Ref ref) {
+    return setupStepTimingRanges(ref);
+  }
+}
+
+String _$setupStepTimingRangesHash() =>
+    r'1dfa2003c0b4ac6998410d832c8aa7a9ba7ad5a1';
+
+/// #2869 — the setup guide's status: every step and the four milestones,
+/// each step carrying the range the instance observed for it (9999).
 
 @ProviderFor(workspaceSetupStatus)
 final workspaceSetupStatusProvider = WorkspaceSetupStatusFamily._();
 
-/// #2869 — the setup guide's status: every step and the four milestones.
+/// #2869 — the setup guide's status: every step and the four milestones,
+/// each step carrying the range the instance observed for it (9999).
 
 final class WorkspaceSetupStatusProvider
     extends
@@ -327,7 +385,8 @@ final class WorkspaceSetupStatusProvider
           FutureOr<SetupStatus>
         >
     with $FutureModifier<SetupStatus>, $FutureProvider<SetupStatus> {
-  /// #2869 — the setup guide's status: every step and the four milestones.
+  /// #2869 — the setup guide's status: every step and the four milestones,
+  /// each step carrying the range the instance observed for it (9999).
   WorkspaceSetupStatusProvider._({
     required WorkspaceSetupStatusFamily super.from,
     required String super.argument,
@@ -373,9 +432,10 @@ final class WorkspaceSetupStatusProvider
 }
 
 String _$workspaceSetupStatusHash() =>
-    r'dee7cd39d0f2c4e8d1b12728cb62a47cbb177a72';
+    r'b83e24f8cbdbdf129688253e461d78808a7ce28a';
 
-/// #2869 — the setup guide's status: every step and the four milestones.
+/// #2869 — the setup guide's status: every step and the four milestones,
+/// each step carrying the range the instance observed for it (9999).
 
 final class WorkspaceSetupStatusFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<SetupStatus>, String> {
@@ -388,7 +448,8 @@ final class WorkspaceSetupStatusFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// #2869 — the setup guide's status: every step and the four milestones.
+  /// #2869 — the setup guide's status: every step and the four milestones,
+  /// each step carrying the range the instance observed for it (9999).
 
   WorkspaceSetupStatusProvider call(String workspaceId) =>
       WorkspaceSetupStatusProvider._(argument: workspaceId, from: this);

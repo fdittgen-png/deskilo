@@ -112,12 +112,12 @@ void main() {
       ProviderScope(
         overrides: [
           ...standardTestOverrides(money: money, workspace: workspace),
-          fileSaverProvider.overrideWithValue(({
+          typedFileSaverProvider.overrideWithValue(({
             required bytes,
             required fileName,
           }) async {
             saved.add((name: fileName, bytes: bytes));
-            return fileName;
+            return SavedFile(fileName);
           }),
         ],
         child: const DeskiloApp(),

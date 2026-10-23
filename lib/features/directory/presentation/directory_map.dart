@@ -12,6 +12,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../domain/directory_location.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_location_providers.dart';
+import '../providers/discovery_view_providers.dart';
 
 /// Sparkilo's selected pill/list relationship, representing workspaces instead
 /// of fuel stations. No location permission or background tracking is needed.
@@ -202,10 +203,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
       children: [
         TileLayer(
           tileProvider: widget.tileProvider,
-          urlTemplate: const String.fromEnvironment(
-            'MAP_TILE_URL',
-            defaultValue: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          ),
+          urlTemplate: ref.watch(mapServicesProvider).tiles,
           userAgentPackageName: 'org.deskilo.app',
         ),
         MarkerClusterLayerWidget(

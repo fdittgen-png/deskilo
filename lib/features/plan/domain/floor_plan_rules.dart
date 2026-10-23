@@ -18,12 +18,9 @@ PlacementProblem? validateOfficePlacement(
   GridRect rect,
   Iterable<Office> siblings, {
   String? ignoreId,
-}) {
-  final collision = siblings.any(
-    (o) => o.id != ignoreId && o.rect.overlaps(rect),
-  );
-  return collision ? PlacementProblem.overlapsSibling : null;
-}
+}) =>
+    validateOfficeRect(
+        rect, siblings.where((o) => o.id != ignoreId).map((o) => o.rect));
 
 /// A desk must sit fully inside its office and not over a sibling desk of
 /// the same level.
@@ -32,13 +29,9 @@ PlacementProblem? validateDeskPlacement(
   Office office,
   Iterable<Desk> siblings, {
   String? ignoreId,
-}) {
-  if (!office.rect.containsRect(rect)) return PlacementProblem.outsideParent;
-  final collision = siblings.any(
-    (d) => d.id != ignoreId && d.rect.overlaps(rect),
-  );
-  return collision ? PlacementProblem.overlapsSibling : null;
-}
+}) =>
+    validateDeskRect(rect, office.rect,
+        siblings.where((d) => d.id != ignoreId).map((d) => d.rect));
 
 /// A seat footprint must sit fully ON its desk (the 6×4 slot is the space
 /// on the desk reservable by one worker) and not overlap another seat of
@@ -47,15 +40,39 @@ PlacementProblem? validateSeatPlacement(
   Seat seat,
   Desk desk,
   Iterable<Seat> siblings,
-) {
-  if (!desk.rect.containsRect(seat.footprint)) {
-    return PlacementProblem.outsideParent;
-  }
-  final collision = siblings.any(
-    (s) => s.id != seat.id && s.footprint.overlaps(seat.footprint),
-  );
-  return collision ? PlacementProblem.overlapsSibling : null;
-}
+) =>
+    validateSeatRect(seat.footprint, desk.rect,
+        siblings.where((s) => s.id != seat.id).map((s) => s.footprint));
+
+/// The office rule on geometry alone: [rect] overlaps none of [siblings]
+/// (the other offices of the level, the moved one already left out).
+PlacementProblem? validateOfficeRect(
+  GridRect rect,
+  Iterable<GridRect> siblings,
+) =>
+    siblings.any((s) => s.overlaps(rect))
+        ? PlacementProblem.overlapsSibling
+        : null;
+
+/// The desk rule on geometry alone: [rect] lies inside [office] and
+/// overlaps none of [siblings] (the level's other desks).
+PlacementProblem? validateDeskRect(
+  GridRect rect,
+  GridRect office,
+  Iterable<GridRect> siblings,
+) =>
+    office.containsRect(rect)
+        ? validateOfficeRect(rect, siblings)
+        : PlacementProblem.outsideParent;
+
+/// The seat rule on geometry alone: [footprint] lies on [desk] and
+/// overlaps none of [siblings] (the desk's other seat footprints).
+PlacementProblem? validateSeatRect(
+  GridRect footprint,
+  GridRect desk,
+  Iterable<GridRect> siblings,
+) =>
+    validateDeskRect(footprint, desk, siblings);
 
 /// Convenience for the editor: validates a seat against a whole plan.
 PlacementProblem? validateSeatInPlan(FloorPlan plan, Seat seat) {

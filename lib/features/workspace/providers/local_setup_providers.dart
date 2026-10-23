@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../data/supabase_local_setup_repository.dart';
 import '../domain/local_setup.dart';
 import '../domain/setup_journey.dart';
@@ -39,10 +40,34 @@ Future<List<LocalSlot>> workspaceLocalSlots(Ref ref, String workspaceId) async =
     if (s.kind != LocalSlotKind.unknown) s,
 ];
 
-/// #2869 — the setup guide's status: every step and the four milestones.
+/// 9999 — per step, the range the instance observed over enough sessions.
+/// Empty when it observed none, and when the server cannot answer (one
+/// without the function, offline): the guide then widens the catalogue's
+/// figure, and a time that is only an estimate never keeps the guide shut.
 @riverpod
-Future<SetupStatus> workspaceSetupStatus(Ref ref, String workspaceId) =>
-    ref.watch(localSetupRepositoryProvider).setupStatus(workspaceId);
+Future<Map<String, SetupEstimate>> setupStepTimingRanges(Ref ref) async {
+  try {
+    return await ref.watch(localSetupRepositoryProvider).stepTimingRanges();
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn(
+      'workspace',
+      'setup step timings not read',
+      error: e,
+      stackTrace: st,
+    );
+    return const {};
+  }
+}
+
+/// #2869 — the setup guide's status: every step and the four milestones,
+/// each step carrying the range the instance observed for it (9999).
+@riverpod
+Future<SetupStatus> workspaceSetupStatus(Ref ref, String workspaceId) async {
+  final repository = ref.watch(localSetupRepositoryProvider);
+  final ranges = ref.watch(setupStepTimingRangesProvider.future);
+  final status = await repository.setupStatus(workspaceId);
+  return status.withObserved(await ranges);
+}
 
 /// #1636 — every setup section of the space, in the server's order.
 @riverpod

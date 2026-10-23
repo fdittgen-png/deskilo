@@ -63,12 +63,12 @@ Future<List<({String name, Uint8List bytes})>> _open(
           workspace: workspace,
         ),
         salesTaxRepositoryProvider.overrideWithValue(sales),
-        fileSaverProvider.overrideWithValue(({
+        typedFileSaverProvider.overrideWithValue(({
           required bytes,
           required fileName,
         }) async {
           saved.add((name: fileName, bytes: bytes));
-          return fileName;
+          return SavedFile(fileName);
         }),
       ],
       child: const DeskiloApp(),

@@ -11,7 +11,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -195,14 +194,18 @@ class _List extends ConsumerWidget {
     final format = ref.watch(appFormatProvider);
     final items = feed.items;
     final failed = feed.loadMoreFailure;
+    // #2561 L4 — the day a booking falls on is the selected workspace's
+    // calendar day; before a context is captured, the device's.
+    final calendar = ref.watch(myReservationsCalendarProvider);
+    DateTime day(DateTime t) =>
+        calendar?.dateOf(t) ?? DateUtils.dateOnly(t.toLocal());
     return ListView(
       key: const ValueKey('my-reservations-list'),
       padding: AppSpacing.gutterAll,
       children: [
         for (final (i, r) in items.indexed) ...[
           if (i == 0 ||
-              WorkspaceTime.dateOf(items[i - 1].startsAt) !=
-                  WorkspaceTime.dateOf(r.startsAt))
+              day(items[i - 1].startsAt) != day(r.startsAt))
             Padding(
               padding: const EdgeInsets.only(
                 top: AppSpacing.md,

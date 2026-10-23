@@ -7,6 +7,7 @@ import '../domain/setup_journey.dart';
 import '../domain/setup_levels.dart';
 import '../domain/setup_status.dart';
 import '../domain/setup_step_draft.dart';
+import '../domain/setup_step_timing.dart';
 import '../domain/workspace_readiness.dart';
 
 /// #1656 — template_local_needs and workspace_local_readiness (0280).
@@ -156,6 +157,24 @@ class SupabaseLocalSetupRepository implements LocalSetupRepository {
       Error.throwWithStackTrace(SetupJourneyConflict(e.message), st);
     }
   }
+
+  @override
+  Future<void> recordStepTiming(SetupStepObservation observation) =>
+      _client.rpc<Object?>(
+        'record_setup_step_timing',
+        params: {
+          'p_workspace_id': observation.workspaceId,
+          'p_step': observation.step,
+          'p_opened_at': observation.openedAt.toUtc().toIso8601String(),
+          'p_seconds': observation.duration.inSeconds,
+        },
+      );
+
+  @override
+  Future<Map<String, SetupEstimate>> stepTimingRanges() async =>
+      setupTimingRangesFromJson(
+        await _client.rpc<Object?>('setup_step_timing_ranges'),
+      );
 
   /// A draft write; the server's "changed by someone else" as its type.
   Future<Object?> _drafts(String fn, Map<String, Object?> params) async {

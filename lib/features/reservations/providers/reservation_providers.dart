@@ -14,6 +14,7 @@ import '../../../core/roles/audience_roles.dart';
 import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
+import '../../../core/time/workspace_calendar.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -420,3 +421,9 @@ class MyReservationsFeedController extends _$MyReservationsFeedController {
     }
   }
 }
+
+/// #2561 L4 — the calendar the day headers of My reservations follow: the
+/// selected workspace's captured one, or null before it is captured.
+@riverpod
+WorkspaceCalendar? myReservationsCalendar(Ref ref) =>
+    ref.watch(readyWorkspaceContextProvider)?.calendar;

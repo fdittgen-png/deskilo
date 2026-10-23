@@ -968,3 +968,59 @@ abstract class _$MyReservationsFeedController
     return element.handleCreate(ref, () => build(_$args));
   }
 }
+
+/// #2561 L4 — the calendar the day headers of My reservations follow: the
+/// selected workspace's captured one, or null before it is captured.
+
+@ProviderFor(myReservationsCalendar)
+final myReservationsCalendarProvider = MyReservationsCalendarProvider._();
+
+/// #2561 L4 — the calendar the day headers of My reservations follow: the
+/// selected workspace's captured one, or null before it is captured.
+
+final class MyReservationsCalendarProvider
+    extends
+        $FunctionalProvider<
+          WorkspaceCalendar?,
+          WorkspaceCalendar?,
+          WorkspaceCalendar?
+        >
+    with $Provider<WorkspaceCalendar?> {
+  /// #2561 L4 — the calendar the day headers of My reservations follow: the
+  /// selected workspace's captured one, or null before it is captured.
+  MyReservationsCalendarProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myReservationsCalendarProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myReservationsCalendarHash();
+
+  @$internal
+  @override
+  $ProviderElement<WorkspaceCalendar?> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  WorkspaceCalendar? create(Ref ref) {
+    return myReservationsCalendar(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WorkspaceCalendar? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WorkspaceCalendar?>(value),
+    );
+  }
+}
+
+String _$myReservationsCalendarHash() =>
+    r'e3870d3be1a9343d4ae1c710cce60353293bb6cd';

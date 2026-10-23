@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
 import '../../plan/domain/accessory.dart';
@@ -10,8 +9,10 @@ import '../../plan/domain/seat.dart';
 import 'workspace.dart';
 import 'workspace_branding.dart';
 import 'workspace_xml_configuration.dart';
+import 'workspace_xml_model.dart';
 
-part 'workspace_xml_part1.dart';
+export 'workspace_xml_model.dart';
+
 part 'workspace_xml_part2.dart';
 
 
@@ -73,14 +74,13 @@ part 'workspace_xml_part2.dart';
 ///   so a v2 document is a valid v3 document.
 /// Secrets never travel: the invite code, the e-invoice and payment
 /// provider credentials. Neither does anything transactional.
-@visibleForTesting
 abstract final class WorkspaceXmlSchema {
   /// The version the app EXPORTS.
   static const int version = 4;
 
   /// The versions the parser ACCEPTS: v1 (pre-accessories, #164), v2
-  /// (#180) and v3 (#916). Anything else was exported by a newer app →
-  /// unsupported.
+  /// (#180), v3 (#916) and v4 (#2860). Anything else was exported by a
+  /// newer app → unsupported.
   static const Set<int> supportedVersions = {1, 2, 3, 4};
 
   static const String rootElement = 'deskilo-workspace';
@@ -212,7 +212,7 @@ int _optionalInt(XmlElement element, String name) =>
         : _requireInt(element, name, min: 0);
 
 bool _optionalBool(XmlElement element, String name) =>
-    !(element.getAttribute(name) == null) && _requireBool(element, name);
+    element.getAttribute(name) != null && _requireBool(element, name);
 
 GridRect _parseRect(XmlElement element) => GridRect(
       x: _requireInt(element, WorkspaceXmlSchema.xAttr, min: 0),
@@ -269,44 +269,4 @@ DateTime? _optionalUtc(XmlElement element, String name) {
         '<${element.name.local}> $name="$raw" is not an ISO-8601 timestamp');
   }
   return value.toUtc();
-}
-
-bool _listEquals<T>(List<T> a, List<T> b) {
-  if (a.length != b.length) return false;
-  for (var i = 0; i < a.length; i++) {
-    if (a[i] != b[i]) return false;
-  }
-  return true;
-}
-
-bool _mapEquals<V>(Map<String, V> a, Map<String, V> b) {
-  if (a.length != b.length) return false;
-  for (final entry in a.entries) {
-    if (!b.containsKey(entry.key) || b[entry.key] != entry.value) {
-      return false;
-    }
-  }
-  return true;
-}
-
-int _mapHash<V>(Map<String, V> map) => Object.hashAllUnordered(
-    map.entries.map((e) => Object.hash(e.key, e.value)));
-
-/// Structural equality of two configuration trees (maps, lists, scalars).
-bool _deepEquals(Object? a, Object? b) {
-  if (a is Map && b is Map) {
-    if (a.length != b.length) return false;
-    for (final key in a.keys) {
-      if (!b.containsKey(key) || !_deepEquals(a[key], b[key])) return false;
-    }
-    return true;
-  }
-  if (a is List && b is List) {
-    if (a.length != b.length) return false;
-    for (var i = 0; i < a.length; i++) {
-      if (!_deepEquals(a[i], b[i])) return false;
-    }
-    return true;
-  }
-  return a == b;
 }

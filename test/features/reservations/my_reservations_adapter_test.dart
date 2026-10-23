@@ -12,6 +12,10 @@ import 'dart:convert';
 import 'package:deskilo/core/backend/operation_context.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/core/settings/settings_capture.dart';
+import 'package:deskilo/core/time/work_hours.dart';
+import 'package:deskilo/core/time/workspace_calendar.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/core/vat/tax_reference_snapshot.dart';
 import 'package:deskilo/features/reservations/data/context_my_reservations_repository.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -51,7 +55,13 @@ WorkspaceContext _context({List<SettingDefinition>? rows}) => WorkspaceContext(
         const SettingsIdentity(installation: 'https://w-a.test', workspaceId: 'ws-1', principal: 'local-1'),
         SettingsSet.defaults(rows ?? _rows()),
       ),
-      timezone: 'Europe/Paris',
+      calendar: WorkspaceCalendar(
+        timezone: 'Europe/Paris',
+        openWeekdays: const [1, 2, 3, 4, 5],
+        workHours: WorkHours.defaults,
+        closures: const [],
+      ),
+      taxReference: TaxReferenceSnapshot(ActiveTaxReference.current),
     );
 
 Map<String, Object?> _item(String id, {String status = 'reserved'}) => {

@@ -1,0 +1,117 @@
+{
+  "setupNotificationsWho": "Who is told what",
+  "@setupNotificationsWho": {
+    "description": "#2871 setup run steps: setupNotificationsWho"
+  },
+  "setupNotificationsEvent": "{event, select, pending_request{A request waits for a decision} reservation_cancelled{A booking was removed by someone else} check_in{A booking is about to start: time to check in} member_note{A message or an announcement} member_mention{Someone names them in a conversation} invoice_reminder{A payment reminder} other{{event}}}",
+  "@setupNotificationsEvent": {
+    "description": "#2871 setup run steps: setupNotificationsEvent",
+    "placeholders": {
+      "event": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsAudience": "{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}",
+  "@setupNotificationsAudience": {
+    "description": "#2871 setup run steps: setupNotificationsAudience",
+    "placeholders": {
+      "audience": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsLineHow": "{audience}: {channels}",
+  "@setupNotificationsLineHow": {
+    "description": "#2871 setup run steps: setupNotificationsLineHow",
+    "placeholders": {
+      "audience": {
+        "type": "String"
+      },
+      "channels": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsChannels": "{channels, select, app{in the app} app_push{in the app and as a phone notification} device{as a reminder on their own phone, even without phone notifications} other{{channels}}}",
+  "@setupNotificationsChannels": {
+    "description": "#2871 setup run steps: setupNotificationsChannels",
+    "placeholders": {
+      "channels": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsPushOn": "Phone notifications are on. A phone receives them once the operator has connected push for this server; until then, everything stays in the app.",
+  "@setupNotificationsPushOn": {
+    "description": "#2871 setup run steps: setupNotificationsPushOn"
+  },
+  "setupNotificationsPushOff": "Phone notifications are off: everything but the check-in reminder stays in the app.",
+  "@setupNotificationsPushOff": {
+    "description": "#2871 setup run steps: setupNotificationsPushOff"
+  },
+  "setupNotificationsLeadFixed": "The check-in reminder appears {lead} before a booking starts.",
+  "@setupNotificationsLeadFixed": {
+    "description": "#2871 setup run steps: setupNotificationsLeadFixed",
+    "placeholders": {
+      "lead": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsSaveFailed": "The reminder time could not be saved. Try again.",
+  "@setupNotificationsSaveFailed": {
+    "description": "#2871 setup run steps: setupNotificationsSaveFailed"
+  },
+  "setupNotificationsPreviewWhen": "{lead} before the booking starts, the member's phone shows:",
+  "@setupNotificationsPreviewWhen": {
+    "description": "#2871 setup run steps: setupNotificationsPreviewWhen",
+    "placeholders": {
+      "lead": {
+        "type": "String"
+      }
+    }
+  },
+  "setupNotificationsPreviewPlace": "Desk 4",
+  "@setupNotificationsPreviewPlace": {
+    "description": "#2871 setup run steps: setupNotificationsPreviewPlace"
+  },
+  "setupLimitsSaveFailed": "The booking limits could not be saved. Try again.",
+  "@setupLimitsSaveFailed": {
+    "description": "#2871 setup run steps: setupLimitsSaveFailed"
+  },
+  "setupLimitsPerMember": "An allowance set on a member's own page goes before the number of places here.",
+  "@setupLimitsPerMember": {
+    "description": "#2871 setup run steps: setupLimitsPerMember"
+  },
+  "setupLimitsPreviewAhead": "{days, plural, =1{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}",
+  "@setupLimitsPreviewAhead": {
+    "description": "#2871 setup run steps: setupLimitsPreviewAhead",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "setupLimitsPreviewLength": "A booking lasts at least {shortest} and at most {longest}.",
+  "@setupLimitsPreviewLength": {
+    "description": "#2871 setup run steps: setupLimitsPreviewLength",
+    "placeholders": {
+      "shortest": {
+        "type": "String"
+      },
+      "longest": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLimitsPreviewAtOnce": "{count, plural, =1{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}",
+  "@setupLimitsPreviewAtOnce": {
+    "description": "#2871 setup run steps: setupLimitsPreviewAtOnce",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

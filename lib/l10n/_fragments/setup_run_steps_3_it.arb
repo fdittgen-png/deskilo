@@ -1,0 +1,18 @@
+{
+  "setupNotificationsWho": "Chi viene avvisato di cosa",
+  "setupNotificationsEvent": "{event, select, pending_request{Una richiesta attende una decisione} reservation_cancelled{Qualcun altro ha rimosso una prenotazione} check_in{Una prenotazione sta per iniziare: è ora del check-in} member_note{Un messaggio o un annuncio} member_mention{Qualcuno lo cita in una conversazione} invoice_reminder{Un sollecito di pagamento} other{{event}}}",
+  "setupNotificationsAudience": "{audience, select, deciders{Chi la decide} members{I membri} other{{audience}}}",
+  "setupNotificationsLineHow": "{audience}: {channels}",
+  "setupNotificationsChannels": "{channels, select, app{nell’app} app_push{nell’app e come notifica sul telefono} device{come promemoria sul proprio telefono, anche senza notifiche} other{{channels}}}",
+  "setupNotificationsPushOn": "Le notifiche sul telefono sono attive. Un telefono le riceve quando l’operatore ha collegato il push per questo server; fino ad allora, tutto resta nell’app.",
+  "setupNotificationsPushOff": "Le notifiche sul telefono sono disattivate: tutto, tranne il promemoria di check-in, resta nell’app.",
+  "setupNotificationsLeadFixed": "Il promemoria di check-in appare {lead} prima dell’inizio di una prenotazione.",
+  "setupNotificationsSaveFailed": "Non è stato possibile salvare l’anticipo del promemoria. Riprova.",
+  "setupNotificationsPreviewWhen": "{lead} prima dell’inizio della prenotazione, il telefono del membro mostra:",
+  "setupNotificationsPreviewPlace": "Scrivania 4",
+  "setupLimitsSaveFailed": "Non è stato possibile salvare i limiti di prenotazione. Riprova.",
+  "setupLimitsPerMember": "Un’autorizzazione impostata sulla pagina di un membro prevale sul numero di posti indicato qui.",
+  "setupLimitsPreviewAhead": "{days, plural, =1{Può prenotare fino a un giorno prima.} other{Può prenotare fino a {days} giorni prima.}}",
+  "setupLimitsPreviewLength": "Una prenotazione dura almeno {shortest} e al massimo {longest}.",
+  "setupLimitsPreviewAtOnce": "{count, plural, =1{Può occupare un posto alla volta.} other{Può occupare fino a {count} posti alla volta.}}"
+}
