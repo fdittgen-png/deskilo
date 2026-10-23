@@ -407,11 +407,10 @@ enum WorkspaceFeature {
   purchases,
   premisesLease,
   assetRegister,
-  externalRooms, // #2568 rooms the space rents (under levelBooking), OFF.
-
-  /// #2365 book periods (under accountingBook); #2579 editable reports;
-  /// #2582 purchase figures (under purchases); #2583 the overview; #2869
-  /// the setup guide (core, ON). The rest platform, OFF.
+  /// #2568 rooms the space rents (under levelBooking). Platform, OFF.
+  externalRooms,
+  /// #2365 book periods; #2579 editable reports; #2582 purchase figures;
+  /// #2583 the overview (all platform, OFF); #2869 setup guide (core, ON).
   accountingPeriods,
   biReportDesigner,
   purchaseAnalytics,
