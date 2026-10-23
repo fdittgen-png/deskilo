@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2472) — who I can write to, by workspace, before I type a letter.
+-- #2472 — who I can write to, by workspace, before I type a letter.
 --
 -- The people of every workspace I am an active member of, whose reachability
 -- allows me: the SAME rule as search_available_accounts (0315) — a blocked
@@ -43,4 +43,4 @@ $fn$;
 revoke execute on function public.my_reachable_people() from public, anon;
 grant execute on function public.my_reachable_people() to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(548);
