@@ -11,8 +11,23 @@ import io.flutter.plugin.common.MethodChannel
 import java.io.File
 
 class MainActivity : FlutterActivity() {
+    // #2559 C1 — the app-switcher privacy cover (SwitcherCover.kt). It sees
+    // the pause before Flutter does, so the cover is in the last frame.
+    private val switcherCover = SwitcherCover(this)
+
+    override fun onPause() {
+        switcherCover.onPause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        switcherCover.onResume()
+        super.onResume()
+    }
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        switcherCover.attach(flutterEngine.dartExecutor.binaryMessenger)
         // Kiosk pinning: while kiosk mode is confirmed the app pins
         // itself (screen pinning / lock task) so the pad cannot leave
         // it — home, recents and notifications are blocked by the
