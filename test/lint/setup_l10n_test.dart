@@ -29,7 +29,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo/features/workspace/presentation/feature_copy.dart';
 import 'package:deskilo/features/workspace/presentation/feature_names.dart';
@@ -39,6 +42,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_setup_l10n.dart';
+import '../../tool/setup/page_sources.dart';
 
 const _html = 'web/setup.html';
 const _prefix = 'window.SETUP_L10N=';
@@ -133,10 +137,13 @@ List<String> frenchLiterals(String html) {
 
 void main() {
   late String html;
+  // #2926 — the page with the scripts it is split into.
+  late String page;
   late Map<String, dynamic> resource;
 
   setUpAll(() {
     html = File(_html).readAsStringSync();
+    page = setupPageSource();
     resource = _decode(File(setupL10nOutput).readAsStringSync());
   });
 
@@ -288,9 +295,9 @@ void main() {
       // The WebMCP tools (#2501) speak through the same resource.
       final tools = File('web/setup_webmcp.js').readAsStringSync();
       final asked = {
-        for (final m in RegExp(r"\bT\('(\w+)'").allMatches('$html\n$tools'))
+        for (final m in RegExp(r"\bT\('(\w+)'").allMatches('$page\n$tools'))
           m.group(1)!,
-        for (final m in RegExp(r'data-th?="(\w+)"').allMatches(html))
+        for (final m in RegExp(r'data-th?="(\w+)"').allMatches(page))
           m.group(1)!,
       };
       expect(
@@ -302,8 +309,8 @@ void main() {
       );
       final orphans = [
         for (final key in en.keys)
-          if (!html.contains("'$key'") &&
-              !html.contains('"$key"') &&
+          if (!page.contains("'$key'") &&
+              !page.contains('"$key"') &&
               !tools.contains("'$key'"))
             key,
       ];
@@ -341,22 +348,77 @@ void main() {
         expect(wrong, isEmpty);
       });
     }
+  });
 
-    test('FEATURES rows carry no label — the name comes from the ARB', () {
-      final start = html.indexOf('const FEATURES=[');
-      final block = html.substring(start, html.indexOf('\n];', start));
-      final rows = block.split('\n').skip(1).toList();
-      final labelled = rows
-          .where((r) => !RegExp(r"^ \['[A-Za-z]+',[01]\],$").hasMatch(r))
-          .toList();
+  // #2923 — the page keeps no copy of the app's registries: the switches,
+  // their defaults and tree, the permissions and their default matrix, the
+  // validation domains and the countries arrive in SETUP_REGISTRY. The file
+  // is drift-gated above; this pins what it MEANS against the app's own
+  // functions, so a generator that read the wrong source fails here.
+  group('registry', () {
+    late Map<String, dynamic> registry;
+    setUpAll(() {
+      const prefix = 'window.SETUP_REGISTRY=';
+      final js = File(setupCatalogueOutput).readAsStringSync();
+      final start = js.indexOf(prefix) + prefix.length;
+      registry =
+          jsonDecode(js.substring(start, js.indexOf('\n};\n', start) + 2))
+              as Map<String, dynamic>;
+    });
+
+    test('every WorkspaceFeature, with the default a new workspace gets', () {
+      final defaults = defaultFeatureFlagsForNewWorkspace();
+      expect(registry['features'], [
+        for (final f in WorkspaceFeature.values) [f.name, defaults[f.name]],
+      ]);
+    });
+
+    test('requires and availableIn are featureManifest\'s', () {
+      expect(registry['requires'], {
+        for (final e in featureManifest.entries)
+          if (e.value.requires != null) e.key.name: e.value.requires!.name,
+      });
       expect(
-        labelled,
-        isEmpty,
-        reason:
-            'a FEATURES row is [key, defaultOn]; a label written '
-            'here is a setup-only copy that drifts from the app',
+        (registry['availableIn'] as Map).map(
+          (k, v) => MapEntry(k, (v as List).toSet()),
+        ),
+        {
+          for (final e in featureManifest.entries)
+            if (e.value.availableIn != null)
+              e.key.name: e.value.availableIn!.toSet(),
+        },
       );
-      expect(rows, hasLength(WorkspaceFeature.values.length));
+    });
+
+    test('every permission in the roles screen order, and the default '
+        'matrix the app starts a workspace from', () {
+      final all = [for (final p in WorkspacePermission.values) p.wireName];
+      expect(registry['permissions'], all);
+      final everyday = everydayMatrix();
+      final matrix = registry['defaultMatrix'] as Map<String, dynamic>;
+      expect(matrix.keys, ['co_owner', 'admin', 'member']);
+      expect(matrix['co_owner'], all);
+      expect(matrix['admin'], everyday['admin']);
+      expect(matrix['member'], everyday['member']);
+    });
+
+    test('every validation domain is an event type the server stores', () {
+      final wire = {for (final t in EventType.values) t.dbName};
+      final types = registry['domainEventTypes'] as Map<String, dynamic>;
+      for (final d in (registry['domains'] as List).cast<String>()) {
+        expect(wire, contains(types[d] ?? d), reason: d);
+      }
+      final features = {for (final f in WorkspaceFeature.values) f.name};
+      for (final gate in (registry['domainGates'] as Map).values) {
+        expect(features, contains(gate));
+      }
+    });
+
+    test('the countries are the CountryCatalog', () {
+      expect(registry['countries'], [
+        for (final c in CountryCatalog.countries)
+          [c.code, c.currencyCode, c.defaultTimezone, c.scheme.name],
+      ]);
     });
   });
 
@@ -381,7 +443,7 @@ void main() {
 
     test('carries no French literal outside the l10n resource', () {
       expect(
-        frenchLiterals(html),
+        frenchLiterals(page),
         isEmpty,
         reason:
             'user-facing text belongs in web/setup_l10n/setup_*.json '
@@ -390,11 +452,11 @@ void main() {
     });
 
     test('the exempt block stays small', () {
-      final start = html.indexOf('l10n-exempt-begin');
-      final end = html.indexOf('l10n-exempt-end');
-      expect('l10n-exempt-begin'.allMatches(html), hasLength(1));
+      final start = page.indexOf('l10n-exempt-begin');
+      final end = page.indexOf('l10n-exempt-end');
+      expect('l10n-exempt-begin'.allMatches(page), hasLength(1));
       expect(
-        html.substring(start, end).split('\n').length,
+        page.substring(start, end).split('\n').length,
         lessThanOrEqualTo(26),
         reason:
             'the exemption is for language names, statutory VAT '

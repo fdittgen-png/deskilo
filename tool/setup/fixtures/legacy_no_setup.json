@@ -1,0 +1,505 @@
+{
+ "accessories": [],
+ "address": "",
+ "autoValidate": {
+  "admin": false,
+  "owner": false
+ },
+ "boundary": "12:00",
+ "brandColor": "",
+ "city": "",
+ "closures": [],
+ "country": "FR",
+ "currency": "EUR",
+ "customerCapacity": "",
+ "dayEnd": "17:00",
+ "dayStart": "08:00",
+ "deskOpacity": "100",
+ "domains": {
+  "adjustment": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "commitment_variance": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "expense": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "expense_schedule": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "invoice_issue": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "invoice_payment": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "invoice_void": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "invoice_writeoff": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "lease_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "matrix_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "member_join": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "member_status_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "payment": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "payment_terms_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "price_negotiation": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "quota": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "refund": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "reservation": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "reservation_delete": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "role_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "service": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "space_reservation": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  },
+  "subscription_change": {
+   "on": false,
+   "ownerSignOff": false,
+   "required": 1
+  }
+ },
+ "einvoice": {
+  "customerField": "",
+  "customerHeader": "",
+  "customerToken": "",
+  "customerUrl": "",
+  "devToken": "",
+  "devUrl": "",
+  "field": "",
+  "header": "",
+  "token": "",
+  "uatToken": "",
+  "uatUrl": "",
+  "url": ""
+ },
+ "environment": "dev",
+ "exemption": "",
+ "features": {
+  "accessorySupplements": false,
+  "accountingBook": false,
+  "accountingPeriods": false,
+  "adminInvoicing": false,
+  "adminLevelAssign": false,
+  "adminSeatBlocking": false,
+  "assetRegister": false,
+  "autoCheckInOut": false,
+  "badgeSignIn": false,
+  "biReportDesigner": false,
+  "bookForOthers": true,
+  "bookingGate": true,
+  "bookingPolicies": true,
+  "calendarFileExport": true,
+  "calendarHub": true,
+  "calendarTab": true,
+  "calendarValidations": false,
+  "calendarViews": true,
+  "capacityKpi": false,
+  "captureProtection": true,
+  "carnets": false,
+  "coOwner": false,
+  "configurableSettings": false,
+  "configurationTransfer": true,
+  "customFields": false,
+  "customRoles": false,
+  "dataAccessLog": false,
+  "dataExport": true,
+  "dataReport": true,
+  "decisionSurface": false,
+  "deletionRequests": true,
+  "demoMode": false,
+  "deployments": false,
+  "documents": true,
+  "dunning": false,
+  "einvoiceCustomerDelivery": false,
+  "environmentPairs": false,
+  "eventsTab": true,
+  "expenseRepartition": false,
+  "expenseRepartitionWizard": false,
+  "externalRooms": false,
+  "financeFaces": true,
+  "formHelpHints": true,
+  "guestParticipation": false,
+  "holidayImport": false,
+  "inputVat": false,
+  "instanceWizard": false,
+  "invoiceAddressWindow": false,
+  "invoiceJourney": false,
+  "invoicePdfTemplate": false,
+  "invoiceSettlement": false,
+  "invoicing": true,
+  "invoicingWizard": false,
+  "kioskMemberPhotos": false,
+  "kioskMode": false,
+  "letterStandard": false,
+  "levelBooking": false,
+  "managedProfileAccess": false,
+  "managedProfiles": false,
+  "mcpAccess": false,
+  "meetingRooms": false,
+  "memberAccountMenu": false,
+  "memberDataExport": true,
+  "memberEnvironments": false,
+  "memberGettingStarted": true,
+  "memberNotifications": true,
+  "memberOrigin": false,
+  "memberPage": true,
+  "memberPaymentTerms": false,
+  "memberReports": false,
+  "membersDirectory": true,
+  "messageForwarding": true,
+  "messageGestures": true,
+  "messageMentions": true,
+  "messagesHub": true,
+  "moneyTab": true,
+  "multiSite": false,
+  "navigationStyle": true,
+  "nfcBadges": false,
+  "nfcSeatTags": false,
+  "notificationGrouping": true,
+  "numberSequences": false,
+  "onlinePayments": false,
+  "parking": false,
+  "paymentReminders": false,
+  "pdfExport": true,
+  "personalInfo": true,
+  "placeFeedback": true,
+  "planMemberPhotos": false,
+  "planObjectDelete": true,
+  "premisesLease": false,
+  "priceNegotiations": false,
+  "publicHolidays": false,
+  "publicListings": false,
+  "purchaseAnalytics": false,
+  "purchases": false,
+  "pushNotifications": true,
+  "qrBadges": false,
+  "recapitulativeStatement": false,
+  "recordingPrivacy": false,
+  "regionalFormats": true,
+  "reportDesignExchange": false,
+  "reportDesigner": false,
+  "reportLayouts": false,
+  "reportTexts": false,
+  "richMessageRefs": true,
+  "roleAssignment": true,
+  "roleManagement": true,
+  "salesTax": false,
+  "scheduledExpenses": false,
+  "seatDayTimeline": true,
+  "seriesBooking": true,
+  "services": true,
+  "settlementFold": false,
+  "setupGuide": true,
+  "singleRoomLevelNames": true,
+  "siteDocuments": false,
+  "spaceInquiries": true,
+  "spaceQrCodes": true,
+  "subscriptionInvoices": false,
+  "supplyClassification": false,
+  "supplyExpenses": false,
+  "taskRecorder": false,
+  "uiAnimations": true,
+  "uniqueMonograms": true,
+  "usageInvoices": false,
+  "usageRecords": false,
+  "usageReport": false,
+  "validationChain": false,
+  "validationScopes": false,
+  "vatCounterparty": false,
+  "vatDeclarations": false,
+  "vatGroups": false,
+  "vatManagement": false,
+  "vatRateHistory": false,
+  "vatReport": false,
+  "viesVerification": false,
+  "webMcp": false,
+  "whatsappIntegration": false,
+  "workingHours": true,
+  "workspaceBranding": false,
+  "workspaceLibrary": false,
+  "workspaceOverview": false,
+  "workspaceStatus": false,
+  "workspaceVocabulary": false
+ },
+ "freeLevel": false,
+ "fullDayHours": "8",
+ "granularity": "half_day",
+ "halfDayHours": "4",
+ "horizonDays": "90",
+ "invites": {
+  "de": "",
+  "en": "",
+  "es": "",
+  "fr": "",
+  "it": ""
+ },
+ "journey": {
+  "answers": {},
+  "used": false
+ },
+ "landTax": {
+  "bare": false,
+  "date": "",
+  "facilities": false,
+  "option": false,
+  "qst": "",
+  "quick": false,
+  "ref": ""
+ },
+ "language": "",
+ "levels": [
+  {
+   "bookable": false,
+   "name": "Level 1",
+   "offices": [
+    {
+     "bookable": false,
+     "desks": [
+      {
+       "name": "Desk 1",
+       "prefix": "Seat",
+       "seats": 4
+      }
+     ],
+     "name": "Office 1",
+     "price": ""
+    }
+   ],
+   "site": ""
+  }
+ ],
+ "maxDuration": "1440",
+ "memberNumbering": {
+  "digits": "4",
+  "prefix": "M-"
+ },
+ "members": [],
+ "mentions": {
+  "escompte": "",
+  "insurance": "",
+  "legalForm": "",
+  "penalty": "",
+  "recovery": "",
+  "register": "",
+  "special": "",
+  "terms": ""
+ },
+ "minDuration": "30",
+ "name": "Defaults Space",
+ "numbering": {
+  "datePart": "year",
+  "digits": "4",
+  "prefix": "INV-",
+  "reset": "yearly"
+ },
+ "org": "association",
+ "packages": [],
+ "pay": {
+  "account_number": "",
+  "bank_code": "",
+  "bank_name": "",
+  "bic": "",
+  "iban": "",
+  "lydia": "",
+  "paypal_me": "",
+  "qr_iban": "",
+  "reference": "",
+  "wero": "",
+  "wise": ""
+ },
+ "perms": {
+  "admin": [
+   "manageMembers",
+   "manageDocuments",
+   "manageServices",
+   "approveExpenses",
+   "viewFinances",
+   "viewNegotiations",
+   "manageNegotiations",
+   "paymentTermsEdit",
+   "manageSites",
+   "manageReservations",
+   "operateKiosk",
+   "exportData",
+   "viewPersonalData",
+   "deployToDev",
+   "accessProd",
+   "viewAnalytics",
+   "useMessages",
+   "makeReservations",
+   "viewCalendar",
+   "viewDirectory",
+   "viewMyMoney",
+   "viewDocuments"
+  ],
+  "co_owner": [
+   "manageRoles",
+   "manageMembers",
+   "manageValidation",
+   "workspaceSettings",
+   "issueInvoices",
+   "viewFinances",
+   "manageDocuments",
+   "manageServices",
+   "approveExpenses",
+   "viewNegotiations",
+   "manageNegotiations",
+   "paymentTermsEdit",
+   "manageSites",
+   "manageBilling",
+   "manageReservations",
+   "operateKiosk",
+   "exportData",
+   "designDocuments",
+   "viewPersonalData",
+   "manageIntegrations",
+   "manageConfiguration",
+   "deployToProd",
+   "deployToDev",
+   "accessProd",
+   "viewAnalytics",
+   "useMessages",
+   "makeReservations",
+   "viewCalendar",
+   "viewDirectory",
+   "viewMyMoney",
+   "viewDocuments",
+   "managePurchases",
+   "recordOutgoingPayments",
+   "manageLease"
+  ],
+  "member": [
+   "useMessages",
+   "makeReservations",
+   "viewCalendar",
+   "viewDirectory",
+   "viewMyMoney",
+   "viewDocuments"
+  ]
+ },
+ "permsV": 2,
+ "policies": {
+  "adminCheckout": false,
+  "allowPast": false,
+  "legendProfile": "full",
+  "outsideHours": "charged",
+  "simultaneous": "1"
+ },
+ "postal": "",
+ "regNumber": "",
+ "reminders": {
+  "automatic": false,
+  "betweenDays": 14,
+  "firstDays": 14,
+  "levels": 2
+ },
+ "services": [],
+ "sites": [],
+ "street": "",
+ "subLevels": [
+  "25",
+  "50",
+  "75",
+  "100"
+ ],
+ "tiers": [
+  {
+   "fee": "",
+   "from": 0,
+   "over": "",
+   "to": 100
+  }
+ ],
+ "timezone": "Europe/Paris",
+ "validation": {
+  "ownerSignOff": false,
+  "required": 1
+ },
+ "vatExigibility": "standard",
+ "vatId": "",
+ "vatPeriod": "quarter",
+ "vatRates": [],
+ "vatRegime": "not_subject",
+ "weekdays": [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5"
+ ],
+ "whatsapp": ""
+}
