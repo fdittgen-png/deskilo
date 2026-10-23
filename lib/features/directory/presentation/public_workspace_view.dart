@@ -17,6 +17,7 @@ import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
+import '../providers/discovery_listing_providers.dart';
 import 'connect_with_identity_sheet.dart';
 import 'messenger/inquiry_sheet.dart';
 import 'saved_place_button.dart';
@@ -61,7 +62,7 @@ class PublicWorkspaceView extends ConsumerWidget {
     if (connected) {
       ref
         ..invalidate(connectedSourcesProvider)
-        ..invalidate(publicDirectoryProvider);
+        ..invalidate(discoveryListingProvider);
     }
     return connected ? _Connection.now : _Connection.none;
   }

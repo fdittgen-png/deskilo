@@ -5170,10 +5170,59 @@
     "description": "Tooltip of the wa.me contact button on a directory row (#223 opt-in); also the swipe-right background label and the contact button in the member detail sheet (#232)"
   },
   "discoveryBookmark": "Bookmark",
+  "discoveryLoadedCount": "Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}",
+  "@discoveryLoadedCount": {
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      },
+      "shown": {
+        "type": "int"
+      },
+      "answered": {
+        "type": "int"
+      },
+      "sources": {
+        "type": "int"
+      }
+    }
+  },
+  "discoveryMapContinue": "Continue to the map",
+  "discoveryMapDisclosureBody": "The map is drawn by {tiles}, and addresses without coordinates are placed by {geocoder}. The map provider receives connection and viewed-area information: your device's IP address and the part of the map you look at. Nothing is sent to them unless you continue.",
+  "@discoveryMapDisclosureBody": {
+    "placeholders": {
+      "tiles": {
+        "type": "String"
+      },
+      "geocoder": {
+        "type": "String"
+      }
+    }
+  },
+  "discoveryMapDisclosureTitle": "Before the map opens",
+  "discoveryMapRemembered": "Your choice is kept on this device for this map provider.",
+  "discoveryMapStay": "Stay with the list",
+  "discoveryMoreDirectoriesFailed": "More directories could not be loaded.",
   "discoveryNoSaved": "No places saved on this device yet.",
   "discoveryRemoveBookmark": "Remove bookmark",
   "discoverySaved": "Saved on this device",
   "discoverySavedFilter": "Saved",
+  "discoveryShowMoreFrom": "Show more from {source}",
+  "@discoveryShowMoreFrom": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "discoverySourceFailed": "{source} did not answer. The places already shown stay.",
+  "@discoverySourceFailed": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
   "discoveryTitle": "Discover workspaces",
   "discoveryView": "View",
   "documentsAdd": "Add a document",

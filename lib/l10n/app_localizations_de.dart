@@ -4452,6 +4452,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get discoveryBookmark => 'Merken';
 
   @override
+  String discoveryLoadedCount(
+    int loaded,
+    int shown,
+    int answered,
+    int sources,
+  ) {
+    return 'Geladene Orte: $loaded · angezeigt: $shown · antwortende Verzeichnisse: $answered von $sources';
+  }
+
+  @override
+  String get discoveryMapContinue => 'Weiter zur Karte';
+
+  @override
+  String discoveryMapDisclosureBody(String tiles, String geocoder) {
+    return 'Die Karte wird von $tiles gezeichnet, Adressen ohne Koordinaten platziert $geocoder. Der Kartenanbieter erhält Verbindungsdaten und den angezeigten Bereich: die IP-Adresse Ihres Geräts und den Teil der Karte, den Sie ansehen. Ohne Ihr Weiter wird ihm nichts gesendet.';
+  }
+
+  @override
+  String get discoveryMapDisclosureTitle => 'Bevor die Karte öffnet';
+
+  @override
+  String get discoveryMapRemembered =>
+      'Ihre Wahl wird auf diesem Gerät für diesen Kartenanbieter gespeichert.';
+
+  @override
+  String get discoveryMapStay => 'Bei der Liste bleiben';
+
+  @override
+  String get discoveryMoreDirectoriesFailed =>
+      'Weitere Verzeichnisse konnten nicht geladen werden.';
+
+  @override
   String get discoveryNoSaved =>
       'Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.';
 
@@ -4463,6 +4495,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get discoverySavedFilter => 'Gespeichert';
+
+  @override
+  String discoveryShowMoreFrom(String source) {
+    return 'Mehr von $source anzeigen';
+  }
+
+  @override
+  String discoverySourceFailed(String source) {
+    return '$source hat nicht geantwortet. Die bereits angezeigten Orte bleiben.';
+  }
 
   @override
   String get discoveryTitle => 'Arbeitsräume entdecken';

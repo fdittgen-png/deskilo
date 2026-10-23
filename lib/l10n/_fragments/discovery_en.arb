@@ -5,5 +5,54 @@
   "discoveryRemoveBookmark": "Remove bookmark",
   "discoveryView": "View",
   "discoverySavedFilter": "Saved",
-  "discoveryNoSaved": "No places saved on this device yet."
+  "discoveryNoSaved": "No places saved on this device yet.",
+  "discoveryLoadedCount": "Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}",
+  "@discoveryLoadedCount": {
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      },
+      "shown": {
+        "type": "int"
+      },
+      "answered": {
+        "type": "int"
+      },
+      "sources": {
+        "type": "int"
+      }
+    }
+  },
+  "discoveryShowMoreFrom": "Show more from {source}",
+  "@discoveryShowMoreFrom": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "discoverySourceFailed": "{source} did not answer. The places already shown stay.",
+  "@discoverySourceFailed": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "discoveryMoreDirectoriesFailed": "More directories could not be loaded.",
+  "discoveryMapDisclosureTitle": "Before the map opens",
+  "discoveryMapDisclosureBody": "The map is drawn by {tiles}, and addresses without coordinates are placed by {geocoder}. The map provider receives connection and viewed-area information: your device's IP address and the part of the map you look at. Nothing is sent to them unless you continue.",
+  "@discoveryMapDisclosureBody": {
+    "placeholders": {
+      "tiles": {
+        "type": "String"
+      },
+      "geocoder": {
+        "type": "String"
+      }
+    }
+  },
+  "discoveryMapRemembered": "Your choice is kept on this device for this map provider.",
+  "discoveryMapContinue": "Continue to the map",
+  "discoveryMapStay": "Stay with the list"
 }
