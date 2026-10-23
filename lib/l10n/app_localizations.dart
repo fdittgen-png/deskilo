@@ -6895,6 +6895,48 @@ abstract class AppLocalizations {
   /// **'View as'**
   String get demoSessionViewAs;
 
+  /// #2872 the setup guide in the demo: demoSetupCardBody
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing you do here leaves this device, and you can reset the demo to how it started at any time.'**
+  String get demoSetupCardBody;
+
+  /// #2872 the setup guide in the demo: demoSetupCardComplete
+  ///
+  /// In en, this message translates to:
+  /// **'This space has done every step of its setup.'**
+  String get demoSetupCardComplete;
+
+  /// #2872 the setup guide in the demo: demoSetupCardHalfDone
+  ///
+  /// In en, this message translates to:
+  /// **'This space is half way through its setup.'**
+  String get demoSetupCardHalfDone;
+
+  /// #2872 the setup guide in the demo: demoSetupCardOpenComplete
+  ///
+  /// In en, this message translates to:
+  /// **'See a space fully set up: {space}'**
+  String demoSetupCardOpenComplete(String space);
+
+  /// #2872 the setup guide in the demo: demoSetupCardOpenHalfDone
+  ///
+  /// In en, this message translates to:
+  /// **'See a space half way: {space}'**
+  String demoSetupCardOpenHalfDone(String space);
+
+  /// #2872 the setup guide in the demo: demoSetupCardTitle
+  ///
+  /// In en, this message translates to:
+  /// **'How the demo works'**
+  String get demoSetupCardTitle;
+
+  /// #2872 the setup guide in the demo: demoSetupCardWhere
+  ///
+  /// In en, this message translates to:
+  /// **'You are in {space}, viewing it as: {persona}'**
+  String demoSetupCardWhere(String space, String persona);
+
   /// #988/#990 deployments: deployEntityAccessories
   ///
   /// In en, this message translates to:
