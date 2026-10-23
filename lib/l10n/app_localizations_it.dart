@@ -11688,6 +11688,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa richiesta è scaduta. Chieda all\'assistente di inviarla di nuovo.';
 
   @override
+  String mcpConfirmLevel(String process, String level) {
+    return '$process: $level';
+  }
+
+  @override
   String mcpConfirmNewShare(String pct) {
     return 'Nuova quota di abbonamento: $pct %';
   }
@@ -11712,6 +11717,22 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get mcpConfirmStale =>
       'Questa richiesta non corrisponde più ai dati attuali o al suo accesso. Non è stato fatto nulla.';
+
+  @override
+  String get mcpConfirmStepDone => 'Verrà segnato come fatto.';
+
+  @override
+  String get mcpConfirmStepLater => 'Verrà messo da parte per dopo.';
+
+  @override
+  String mcpConfirmSwitchOff(String features) {
+    return 'Disattiva: $features. I loro dati vengono conservati.';
+  }
+
+  @override
+  String mcpConfirmSwitchOn(String features) {
+    return 'Attiva: $features';
+  }
 
   @override
   String get mcpConfirmTitle => 'Conferma una richiesta dell\'assistente';
@@ -12201,6 +12222,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpGroupOwn => 'Prenotazioni e conto personali';
 
   @override
+  String get mcpGroupSetup => 'Configurazione dello spazio';
+
+  @override
   String get mcpGroupValidations => 'Convalide';
 
   @override
@@ -12322,6 +12346,22 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mcpOpSetFavorite => 'Segnare posti come preferiti';
+
+  @override
+  String get mcpOpSetupLevels => 'Vedere i livelli di configurazione';
+
+  @override
+  String get mcpOpSetupLevelsApply => 'Cambiare i livelli di configurazione';
+
+  @override
+  String get mcpOpSetupLevelsPreview =>
+      'Visualizzare in anteprima un cambio di livelli';
+
+  @override
+  String get mcpOpSetupStatus => 'Vedere a che punto è la configurazione';
+
+  @override
+  String get mcpOpSetupStepMark => 'Segnare un passo come fatto o per dopo';
 
   @override
   String get mcpOpSubscription =>

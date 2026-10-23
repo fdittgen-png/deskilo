@@ -10,6 +10,8 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_confirmation.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
@@ -186,7 +188,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       ].where((s) => s.isNotEmpty).join(' · '),
       'member' => '${target['name'] ?? ''}',
       'event' => '${target['type'] ?? ''}',
-      _ => '',
+      _ => _setupSubject(l10n, target),
     };
     final change = switch (McpOperationId.of(c.operation)) {
       McpOperationId.requestMemberStatusChange =>
@@ -199,7 +201,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
             : l10n.mcpConfirmRefuse,
       McpOperationId.requestInvoiceIssue =>
         l10n.mcpConfirmPeriod('${args['period']}'),
-      _ => '',
+      _ => _setupChange(l10n, c.operation, target),
     };
     ListTile row(Key key, IconData icon, String title, String subtitle) =>
         ListTile(
@@ -237,4 +239,54 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       ),
     ];
   }
+}
+
+/// What a setup request is about: the levels it sets, or the step.
+String _setupSubject(AppLocalizations l10n, Map<String, Object?> target) =>
+    switch (target['kind']) {
+      'setup_levels' => _levelChanges(l10n, target['changes']),
+      'setup_step' => l10n.setupStepTitle('${target['step']}'),
+      _ => '',
+    };
+
+/// What a setup request changes: the features, or the step's new state.
+String _setupChange(
+  AppLocalizations l10n,
+  String operation,
+  Map<String, Object?> target,
+) => switch (McpOperationId.of(operation)) {
+  McpOperationId.applySetupLevels => _featureChanges(l10n, target),
+  McpOperationId.markSetupStep =>
+    target['marked'] == 'done'
+        ? l10n.mcpConfirmStepDone
+        : l10n.mcpConfirmStepLater,
+  _ => '',
+};
+
+/// Each process whose level a change of levels sets, in words.
+String _levelChanges(AppLocalizations l10n, Object? changes) => [
+  if (changes is List)
+    for (final c in changes.whereType<Map<Object?, Object?>>())
+      l10n.mcpConfirmLevel(
+        l10n.setupProcessName('${c['process']}'),
+        l10n.setupLevelName('${c['process']}_${c['to']}'),
+      ),
+].join(' · ');
+
+/// Every feature a change of levels switches on and off, by name:
+/// the person confirms exactly what changes.
+String _featureChanges(AppLocalizations l10n, Map<String, Object?> target) {
+  String names(Object? keys) => [
+    if (keys is List)
+      for (final key in keys)
+        if (WorkspaceFeature.values.where((f) => f.dbKey == key).firstOrNull
+            case final feature?)
+          featureName(l10n, feature),
+  ].join(', ');
+  final on = names(target['switch_on']);
+  final off = names(target['switch_off']);
+  return [
+    if (on.isNotEmpty) l10n.mcpConfirmSwitchOn(on),
+    if (off.isNotEmpty) l10n.mcpConfirmSwitchOff(off),
+  ].join('\n');
 }

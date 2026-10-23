@@ -23,5 +23,10 @@
   "mcpOpSubscription": "Abonnementanteil eines Mitglieds ändern",
   "mcpOpPendingValidations": "Offene Freigabeanfragen sehen",
   "mcpOpGetValidation": "Eine Freigabeanfrage lesen",
-  "mcpOpRespond": "Auf eine Freigabeanfrage antworten"
+  "mcpOpRespond": "Auf eine Freigabeanfrage antworten",
+  "mcpOpSetupStatus": "Sehen, wie weit die Einrichtung ist",
+  "mcpOpSetupLevels": "Die Einrichtungsstufen sehen",
+  "mcpOpSetupLevelsPreview": "Eine Änderung der Stufen vorab ansehen",
+  "mcpOpSetupLevelsApply": "Die Einrichtungsstufen ändern",
+  "mcpOpSetupStepMark": "Einen Einrichtungsschritt als erledigt oder für später markieren"
 }

@@ -211,5 +211,9 @@
   "mcpApiReferenceHint": "What an assistant can call, and how it is authorised",
   "@mcpApiReferenceHint": {
     "description": "#1801 mcp_settings"
+  },
+  "mcpGroupSetup": "Setting up the space",
+  "@mcpGroupSetup": {
+    "description": "#2873 mcp_settings"
   }
 }

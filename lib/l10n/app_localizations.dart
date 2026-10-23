@@ -19360,6 +19360,12 @@ abstract class AppLocalizations {
   /// **'This request expired. Ask the assistant to send it again.'**
   String get mcpConfirmExpired;
 
+  /// #2873 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'{process}: {level}'**
+  String mcpConfirmLevel(String process, String level);
+
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -19395,6 +19401,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This request no longer matches the current data or your access. Nothing was done.'**
   String get mcpConfirmStale;
+
+  /// #2873 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'It will be marked as done.'**
+  String get mcpConfirmStepDone;
+
+  /// #2873 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'It will be set aside for later.'**
+  String get mcpConfirmStepLater;
+
+  /// #2873 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Switches off: {features}. Their data is kept.'**
+  String mcpConfirmSwitchOff(String features);
+
+  /// #2873 mcp_confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Switches on: {features}'**
+  String mcpConfirmSwitchOn(String features);
 
   /// #1619 mcp_confirmation
   ///
@@ -20170,6 +20200,12 @@ abstract class AppLocalizations {
   /// **'Own bookings and account'**
   String get mcpGroupOwn;
 
+  /// #2873 mcp_settings
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up the space'**
+  String get mcpGroupSetup;
+
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:
@@ -20385,6 +20421,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mark places as favourites'**
   String get mcpOpSetFavorite;
+
+  /// #2394 generated from contracts/mcp/operations.json (list_setup_levels)
+  ///
+  /// In en, this message translates to:
+  /// **'See the setup levels'**
+  String get mcpOpSetupLevels;
+
+  /// #2394 generated from contracts/mcp/operations.json (apply_setup_levels)
+  ///
+  /// In en, this message translates to:
+  /// **'Change the setup levels'**
+  String get mcpOpSetupLevelsApply;
+
+  /// #2394 generated from contracts/mcp/operations.json (preview_setup_levels)
+  ///
+  /// In en, this message translates to:
+  /// **'Preview a change of levels'**
+  String get mcpOpSetupLevelsPreview;
+
+  /// #2394 generated from contracts/mcp/operations.json (get_setup_status)
+  ///
+  /// In en, this message translates to:
+  /// **'See how far the setup is'**
+  String get mcpOpSetupStatus;
+
+  /// #2394 generated from contracts/mcp/operations.json (mark_setup_step)
+  ///
+  /// In en, this message translates to:
+  /// **'Mark a setup step done or for later'**
+  String get mcpOpSetupStepMark;
 
   /// #2394 generated from contracts/mcp/operations.json (request_subscription_change)
   ///

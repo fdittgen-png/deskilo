@@ -59,5 +59,15 @@ String mcpOperationLabel(AppLocalizations l10n, String op) =>
         l10n.mcpOpGetValidation,
       McpOperationId.respondToValidation =>
         l10n.mcpOpRespond,
+      McpOperationId.getSetupStatus =>
+        l10n.mcpOpSetupStatus,
+      McpOperationId.listSetupLevels =>
+        l10n.mcpOpSetupLevels,
+      McpOperationId.previewSetupLevels =>
+        l10n.mcpOpSetupLevelsPreview,
+      McpOperationId.applySetupLevels =>
+        l10n.mcpOpSetupLevelsApply,
+      McpOperationId.markSetupStep =>
+        l10n.mcpOpSetupStepMark,
       null => op,
     };

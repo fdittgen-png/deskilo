@@ -13427,6 +13427,18 @@
   "@mcpConfirmExpired": {
     "description": "#1619 mcp_confirmation"
   },
+  "mcpConfirmLevel": "{process}: {level}",
+  "@mcpConfirmLevel": {
+    "description": "#2873 mcp_confirmation",
+    "placeholders": {
+      "process": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
   "mcpConfirmNewShare": "New subscription share: {pct} %",
   "@mcpConfirmNewShare": {
     "description": "#1619 mcp_confirmation",
@@ -13465,6 +13477,32 @@
   "mcpConfirmStale": "This request no longer matches the current data or your access. Nothing was done.",
   "@mcpConfirmStale": {
     "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmStepDone": "It will be marked as done.",
+  "@mcpConfirmStepDone": {
+    "description": "#2873 mcp_confirmation"
+  },
+  "mcpConfirmStepLater": "It will be set aside for later.",
+  "@mcpConfirmStepLater": {
+    "description": "#2873 mcp_confirmation"
+  },
+  "mcpConfirmSwitchOff": "Switches off: {features}. Their data is kept.",
+  "@mcpConfirmSwitchOff": {
+    "description": "#2873 mcp_confirmation",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmSwitchOn": "Switches on: {features}",
+  "@mcpConfirmSwitchOn": {
+    "description": "#2873 mcp_confirmation",
+    "placeholders": {
+      "features": {
+        "type": "String"
+      }
+    }
   },
   "mcpConfirmTitle": "Confirm an assistant request",
   "@mcpConfirmTitle": {
@@ -14048,6 +14086,10 @@
   "@mcpGroupOwn": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
+  "mcpGroupSetup": "Setting up the space",
+  "@mcpGroupSetup": {
+    "description": "#2873 mcp_settings"
+  },
   "mcpGroupValidations": "Validations",
   "@mcpGroupValidations": {
     "description": "#1626 #1627 #1628 mcp_settings"
@@ -14191,6 +14233,26 @@
   "mcpOpSetFavorite": "Mark places as favourites",
   "@mcpOpSetFavorite": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_favorite)"
+  },
+  "mcpOpSetupLevels": "See the setup levels",
+  "@mcpOpSetupLevels": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_setup_levels)"
+  },
+  "mcpOpSetupLevelsApply": "Change the setup levels",
+  "@mcpOpSetupLevelsApply": {
+    "description": "#2394 generated from contracts/mcp/operations.json (apply_setup_levels)"
+  },
+  "mcpOpSetupLevelsPreview": "Preview a change of levels",
+  "@mcpOpSetupLevelsPreview": {
+    "description": "#2394 generated from contracts/mcp/operations.json (preview_setup_levels)"
+  },
+  "mcpOpSetupStatus": "See how far the setup is",
+  "@mcpOpSetupStatus": {
+    "description": "#2394 generated from contracts/mcp/operations.json (get_setup_status)"
+  },
+  "mcpOpSetupStepMark": "Mark a setup step done or for later",
+  "@mcpOpSetupStepMark": {
+    "description": "#2394 generated from contracts/mcp/operations.json (mark_setup_step)"
   },
   "mcpOpSubscription": "Change a member's subscription share",
   "@mcpOpSubscription": {

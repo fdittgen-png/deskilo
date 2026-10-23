@@ -2,7 +2,7 @@
  "contract": "deskilo.mcp.coverage",
  "version": 1,
  "_comment": "#1632 — every implemented MCP tool mapped to the executable tests that prove it; checked by tool/mcp_coverage.dart and test/tool/mcp_coverage_test.dart. A change to contracts/mcp/operations.json changes contract_sha256: review this map, then record the new fingerprint.",
- "contract_sha256": "ef971a47dfd8c7d5cac926c98c8dca4ef5800d4ee50dd3609a9bda2db116980a",
+ "contract_sha256": "38d30bbf6929cf663b8caededf09b383378be083d0a657cb9af25e020cf4b4ca",
  "catalogue_tests": [
   "test/tool/mcp_contract_test.dart",
   "test/features/mcp/mcp_native_contract_parity_test.dart",
@@ -297,6 +297,52 @@
     "supabase/tests/database/78_mcp_validation_decisions.sql",
     "supabase/tests/database/82_mcp_workflow_matrices.sql",
     "supabase/tests/database/97_mcp_conformance_journey.sql"
+   ]
+  },
+  "get_setup_status": {
+   "positive": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ]
+  },
+  "list_setup_levels": {
+   "positive": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ]
+  },
+  "preview_setup_levels": {
+   "positive": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ]
+  },
+  "apply_setup_levels": {
+   "positive": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ],
+   "state": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ]
+  },
+  "mark_setup_step": {
+   "positive": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
+   ],
+   "state": [
+    "supabase/tests/database/258_mcp_setup_operations.sql"
    ]
   }
  }
