@@ -346,4 +346,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     surface: FeatureSurface.settings,
     tier: FeatureTier.core,
   ),
+  // The workspace's data as a readable PDF: the workbook's rows on paper.
+  // A read-only convenience beside the export it reads, so on by default.
+  WorkspaceFeature.dataReport: FeatureManifestEntry(
+    feature: WorkspaceFeature.dataReport,
+    surface: FeatureSurface.settings,
+    tier: FeatureTier.core,
+    requires: WorkspaceFeature.dataExport,
+  ),
 };

@@ -2648,6 +2648,16 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "dataReportArchived": "Archivé",
+  "dataReportColumn": "{key, select, month{Mois} bookings{Réservations} held{Maintenues} attended{Présences} cancelled{Annulées} hours{Heures} paid{Payé} open{Restant dû} charges{Facturé} credits{Réglé} balance{Solde} seats{Places} reference{Référence} role{Rôle} other{{key}}}",
+  "dataReportContents": "Sommaire",
+  "dataReportFailed": "Le rapport de données n’a pas pu être établi. Réessayez dans un instant.",
+  "dataReportNo": "Non",
+  "dataReportNone": "Rien d’enregistré",
+  "dataReportPart": "{key, select, members{Membres} bookings{Réservations par mois} invoices{Registre des factures} payments{Paiements et soldes} purchases{Achats et fournisseurs} plan{Plan et prix} other{{key}}}",
+  "dataReportSubtitle": "Membres, réservations, factures, paiements, achats et le plan avec ses prix, avec les totaux, à lire ou à imprimer.",
+  "dataReportTitle": "Rapport de données de l’espace",
+  "dataReportYes": "Oui",
   "datevAccountsIntro": "Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
@@ -4488,6 +4498,8 @@
   },
   "featureDataExport": "Export des données (Excel)",
   "featureDataExportDesc": "Télécharger toutes les données de l’espace dans un classeur Excel.",
+  "featureDataReportDesc": "Les données de l’espace dans un PDF lisible : membres, réservations par mois, registre des factures, paiements et soldes, achats et fournisseurs, et le plan avec ses prix. Les mêmes lignes que le classeur Excel, avec les totaux.",
+  "featureDataReportTitle": "Rapport de données (PDF)",
   "featureDecisionSurfaceDesc": "Un seul endroit qui répond à « est-ce que quelque chose m'attend ? », classé par ce que coûte le retard — l'argent qui part d'abord, puis quelqu'un qui attend une réponse. Une ligne n'apparaît que si une personne doit décider ou agir ; un chiffre sur lequel personne ne peut agir reste sur l'écran qui le porte.",
   "@featureDecisionSurfaceDesc": {
     "description": "#1247: featureDecisionSurfaceDesc"
@@ -13754,6 +13766,7 @@
   "setupGuideEstimate": "environ {minutes} min",
   "setupGuideLater": "Pour une étape suivante",
   "setupGuideLevelsLink": "Choisir ce que fait votre espace",
+  "setupGuideMarkDone": "Marquer comme fait",
   "setupGuideNext": "Ensuite",
   "setupGuideOptional": "Plus pour votre espace",
   "setupGuideProgress": "{ready} sur {required} faits",
@@ -13761,6 +13774,7 @@
   "setupGuideTitle": "Guide de mise en place",
   "setupGuideToDo": "Ce qu'il reste à faire",
   "setupGuideUnavailable": "L'état de la mise en place n'a pas pu être lu. Réessayez dans un instant.",
+  "setupGuideUntil": "Environ {minutes} min avant : {milestone}",
   "setupGuideWaiting": "En attente",
   "setupGuideWaitsFor": "Attend : {steps}",
   "setupLevelName": "{key, select, bookings_simple{Places partagées} bookings_resources{Salles et ressources} bookings_measured{Usage mesuré} community_basic{Simple} community_organised{Organisée} money_none{Pas d’argent} money_statements{Relevés} money_invoices{Factures} payments_off{Par virement} payments_online{En ligne} tax_none{Pas de TVA} tax_vat{TVA} tax_books{Comptabilité} purchases_none{Aucun} purchases_expenses{Dépenses} purchases_full{Achats complets} presentation_basic{Simple} presentation_branded{Vos couleurs} presentation_public{Page publique} operations_basic{Simple} operations_insight{Indicateurs} operations_advanced{Avancé} assistant_off{Désactivé} assistant_on{Activé} other{{key}}}",

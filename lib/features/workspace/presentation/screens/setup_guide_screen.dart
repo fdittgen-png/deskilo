@@ -13,9 +13,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../application/setup_step_actions.dart';
 import '../../domain/setup_status.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -47,6 +49,20 @@ class _SetupGuideBody extends ConsumerWidget {
     final status = ref.watch(workspaceSetupStatusProvider(workspaceId));
     Future<void> reload() async =>
         ref.invalidate(workspaceSetupStatusProvider(workspaceId));
+    // #2869 (0545) — Later, Mark as done and Undo, by the server's rules.
+    Future<void> act(SetupStepStatus step) async {
+      final actions = ref.read(setupStepActionsProvider);
+      await runGuarded(
+        context,
+        domain: 'workspace',
+        message: 'setup step action failed',
+        errorText: l10n.readinessSetAsideFailed,
+        action: () => actions.run(workspaceId, step),
+      );
+      await reload();
+    }
+
+    final actions = (reload: reload, act: act);
     return switch (status) {
       AsyncData(:final value) => RefreshIndicator(
         onRefresh: reload,
@@ -55,6 +71,17 @@ class _SetupGuideBody extends ConsumerWidget {
           padding: const EdgeInsets.all(AppSpacing.md),
           children: [
             _Milestones(status: value),
+            if (value.nextMilestone case final next?
+                when value.minutesToNextMilestone > 0) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                l10n.setupGuideUntil(
+                  value.minutesToNextMilestone,
+                  l10n.setupMilestoneName(next.milestone),
+                ),
+                key: const ValueKey('setup-guide-until'),
+              ),
+            ],
             // #2868 — what the space does decides which steps there are.
             Align(
               alignment: AlignmentDirectional.centerStart,
@@ -69,7 +96,7 @@ class _SetupGuideBody extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: AppSpacing.md),
-            ..._sections(context, value, reload),
+            ..._sections(context, value, actions),
             const SizedBox(height: AppSpacing.md),
             SampleDataCard(workspaceId: workspaceId),
           ],
@@ -95,7 +122,7 @@ class _SetupGuideBody extends ConsumerWidget {
   List<Widget> _sections(
     BuildContext context,
     SetupStatus status,
-    Future<void> Function() reload,
+    _Actions actions,
   ) {
     final l10n = context.l10n;
     final next = status.nextStep;
@@ -109,7 +136,7 @@ class _SetupGuideBody extends ConsumerWidget {
           ('deferred', l10n.setupGuideDeferred, status.deferred),
           ('done', l10n.setupGuideDone, status.done),
         ])
-          _Folded(id: id, title: title, steps: steps, reload: reload),
+          _Folded(id: id, title: title, steps: steps, actions: actions),
       ];
     }
     final toDo = [
@@ -117,19 +144,19 @@ class _SetupGuideBody extends ConsumerWidget {
         if (s != next) s,
     ];
     return [
-      _NextCard(step: next, reload: reload),
+      _NextCard(step: next, actions: actions),
       if (toDo.isNotEmpty) ...[
         const SizedBox(height: AppSpacing.md),
         _Header(text: l10n.setupGuideToDo),
         for (final s in toDo)
-          _StepTile(step: s, status: status, reload: reload),
+          _StepTile(step: s, status: status, actions: actions),
       ],
       _Folded(
         id: 'waiting',
         title: l10n.setupGuideWaiting,
         steps: status.waiting,
         status: status,
-        reload: reload,
+        actions: actions,
       ),
       _Folded(
         id: 'later',
@@ -138,7 +165,7 @@ class _SetupGuideBody extends ConsumerWidget {
           for (final s in status.later)
             if (s != next) s,
         ],
-        reload: reload,
+        actions: actions,
       ),
       _Folded(
         id: 'optional',
@@ -147,23 +174,30 @@ class _SetupGuideBody extends ConsumerWidget {
           for (final s in status.optional)
             if (s != next) s,
         ],
-        reload: reload,
+        actions: actions,
       ),
       _Folded(
         id: 'deferred',
         title: l10n.setupGuideDeferred,
         steps: status.deferred,
-        reload: reload,
+        actions: actions,
       ),
       _Folded(
         id: 'done',
         title: l10n.setupGuideDone,
         steps: status.done,
-        reload: reload,
+        actions: actions,
       ),
     ];
   }
 }
+
+/// What a step's controls do: read the status again, and acknowledge a
+/// step (or take the acknowledgement back).
+typedef _Actions = ({
+  Future<void> Function() reload,
+  Future<void> Function(SetupStepStatus step) act,
+});
 
 /// Opens [step]'s screen and reads the status again on the way back.
 Future<void> _open(
@@ -215,9 +249,9 @@ class _Milestones extends StatelessWidget {
 }
 
 class _NextCard extends StatelessWidget {
-  const _NextCard({required this.step, required this.reload});
+  const _NextCard({required this.step, required this.actions});
   final SetupStepStatus step;
-  final Future<void> Function() reload;
+  final _Actions actions;
 
   @override
   Widget build(BuildContext context) {
@@ -249,7 +283,7 @@ class _NextCard extends StatelessWidget {
                 const Spacer(),
                 FilledButton(
                   key: ValueKey('setup-guide-next-${step.step}'),
-                  onPressed: () => _open(context, step, reload),
+                  onPressed: () => _open(context, step, actions.reload),
                   child: Text(l10n.setupGuideResume),
                 ),
               ],
@@ -281,14 +315,14 @@ class _Folded extends StatelessWidget {
     required this.id,
     required this.title,
     required this.steps,
-    required this.reload,
+    required this.actions,
     this.status,
   });
 
   final String id;
   final String title;
   final List<SetupStepStatus> steps;
-  final Future<void> Function() reload;
+  final _Actions actions;
   final SetupStatus? status;
 
   @override
@@ -300,16 +334,16 @@ class _Folded extends StatelessWidget {
       title: Text('$title (${steps.length})'),
       children: [
         for (final s in steps)
-          _StepTile(step: s, status: status, reload: reload),
+          _StepTile(step: s, status: status, actions: actions),
       ],
     );
   }
 }
 
 class _StepTile extends StatelessWidget {
-  const _StepTile({required this.step, required this.reload, this.status});
+  const _StepTile({required this.step, required this.actions, this.status});
   final SetupStepStatus step;
-  final Future<void> Function() reload;
+  final _Actions actions;
   final SetupStatus? status;
 
   @override
@@ -333,10 +367,35 @@ class _StepTile extends StatelessWidget {
             l10n.setupStepHint(step.step),
         ].join(' · '),
       ),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () => _open(context, step, reload),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ?_stepAction(l10n, step, actions),
+          const Icon(Icons.chevron_right),
+        ],
+      ),
+      onTap: () => _open(context, step, actions.reload),
     );
   }
+}
+
+/// The button for what a step offers, if anything (0545).
+Widget? _stepAction(
+  AppLocalizations l10n,
+  SetupStepStatus step,
+  _Actions actions,
+) {
+  final offer = SetupStepActions.offerFor(step);
+  if (offer == null) return null;
+  return TextButton(
+    key: ValueKey('setup-step-${offer.name}-${step.step}'),
+    onPressed: () => actions.act(step),
+    child: Text(switch (offer) {
+      SetupStepOffer.later => l10n.readinessSetAsideAction,
+      SetupStepOffer.done => l10n.setupGuideMarkDone,
+      SetupStepOffer.undo => l10n.readinessSetAsideUndo,
+    }),
+  );
 }
 
 String _stateWord(AppLocalizations l10n, SetupStepState state) =>

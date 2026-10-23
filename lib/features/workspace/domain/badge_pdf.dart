@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:deskilo_document_pdf/report_flow_page.dart';
 import 'package:meta/meta.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import '../../money/domain/report_flow_page.dart';
 
 /// Credit-card badge dimensions (ISO/IEC 7810 ID-1: 85.60 × 53.98 mm).
 const double badgeCardWidth = 85.6 * PdfPageFormat.mm;

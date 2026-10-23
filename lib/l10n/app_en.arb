@@ -4572,6 +4572,56 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "dataReportArchived": "Archived",
+  "@dataReportArchived": {
+    "description": "#2862 data report: dataReportArchived"
+  },
+  "dataReportColumn": "{key, select, month{Month} bookings{Bookings} held{Held} attended{Attended} cancelled{Cancelled} hours{Hours} paid{Paid} open{Open} charges{Charged} credits{Settled} balance{Balance} seats{Places} reference{Reference} role{Role} other{{key}}}",
+  "@dataReportColumn": {
+    "description": "#2862 data report column header by key; other keys fall back to the export column names",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "dataReportContents": "Contents",
+  "@dataReportContents": {
+    "description": "#2862 data report: dataReportContents"
+  },
+  "dataReportFailed": "The data report could not be made. Try again in a moment.",
+  "@dataReportFailed": {
+    "description": "#2862 data report: the report could not be made"
+  },
+  "dataReportNo": "No",
+  "@dataReportNo": {
+    "description": "#2862 data report: dataReportNo"
+  },
+  "dataReportNone": "Nothing recorded",
+  "@dataReportNone": {
+    "description": "#2862 data report: dataReportNone"
+  },
+  "dataReportPart": "{key, select, members{Members} bookings{Bookings by month} invoices{Invoice register} payments{Payments and balances} purchases{Purchases and suppliers} plan{Plan and prices} other{{key}}}",
+  "@dataReportPart": {
+    "description": "#2862 data report section title by key",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "dataReportSubtitle": "Members, bookings, invoices, payments, purchases and the plan with its prices, with totals, to read or print.",
+  "@dataReportSubtitle": {
+    "description": "#2862 data report: dataReportSubtitle"
+  },
+  "dataReportTitle": "Workspace data report",
+  "@dataReportTitle": {
+    "description": "#2862 data report: dataReportTitle"
+  },
+  "dataReportYes": "Yes",
+  "@dataReportYes": {
+    "description": "#2862 data report: dataReportYes"
+  },
   "datevAccountsIntro": "Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
@@ -7285,6 +7335,14 @@
   "featureDataExportDesc": "Download all workspace data as an Excel workbook.",
   "@featureDataExportDesc": {
     "description": "Description under the data-export feature toggle (#395)."
+  },
+  "featureDataReportDesc": "The space's data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals.",
+  "@featureDataReportDesc": {
+    "description": "#2862 data report feature description"
+  },
+  "featureDataReportTitle": "Data report (PDF)",
+  "@featureDataReportTitle": {
+    "description": "#2862 data report feature name"
   },
   "featureDecisionSurfaceDesc": "One place that answers \"does anything need me?\", ranked by what the delay costs — money that leaves first, then somebody waiting on an answer. A line appears only when a person must decide or act; a number nobody can act on stays on the screen that owns it.",
   "@featureDecisionSurfaceDesc": {
@@ -22145,6 +22203,10 @@
   "@setupGuideLevelsLink": {
     "description": "#2868 setup levels: setupGuideLevelsLink"
   },
+  "setupGuideMarkDone": "Mark as done",
+  "@setupGuideMarkDone": {
+    "description": "#2869 — marks a setup step the server cannot verify as done."
+  },
   "setupGuideNext": "Next",
   "@setupGuideNext": {
     "description": "#2869 setup guide: setupGuideNext"
@@ -22180,6 +22242,18 @@
   "setupGuideUnavailable": "The setup status could not be read. Try again in a moment.",
   "@setupGuideUnavailable": {
     "description": "#2869 setup guide: setupGuideUnavailable"
+  },
+  "setupGuideUntil": "About {minutes} min until: {milestone}",
+  "@setupGuideUntil": {
+    "description": "#2869 — the time the next milestone still needs, summed from its open steps' estimates.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
   },
   "setupGuideWaiting": "Waiting",
   "@setupGuideWaiting": {

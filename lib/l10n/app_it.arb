@@ -2648,6 +2648,16 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "dataReportArchived": "Archiviato",
+  "dataReportColumn": "{key, select, month{Mese} bookings{Prenotazioni} held{Mantenute} attended{Presenze} cancelled{Annullate} hours{Ore} paid{Pagato} open{Da pagare} charges{Addebitato} credits{Saldato} balance{Saldo} seats{Posti} reference{Riferimento} role{Ruolo} other{{key}}}",
+  "dataReportContents": "Indice",
+  "dataReportFailed": "Non è stato possibile creare il rapporto dati. Riprovi tra un momento.",
+  "dataReportNo": "No",
+  "dataReportNone": "Nulla di registrato",
+  "dataReportPart": "{key, select, members{Membri} bookings{Prenotazioni per mese} invoices{Registro delle fatture} payments{Pagamenti e saldi} purchases{Acquisti e fornitori} plan{Pianta e prezzi} other{{key}}}",
+  "dataReportSubtitle": "Membri, prenotazioni, fatture, pagamenti, acquisti e la pianta con i suoi prezzi, con i totali, da leggere o stampare.",
+  "dataReportTitle": "Rapporto dati dello spazio",
+  "dataReportYes": "Sì",
   "datevAccountsIntro": "I numeri di consulente e di cliente glieli dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
@@ -4488,6 +4498,8 @@
   },
   "featureDataExport": "Esportazione dati (Excel)",
   "featureDataExportDesc": "Scaricare tutti i dati dello spazio in una cartella Excel.",
+  "featureDataReportDesc": "I dati dello spazio in un PDF leggibile: membri, prenotazioni per mese, registro delle fatture, pagamenti e saldi, acquisti e fornitori, e la pianta con i suoi prezzi. Le stesse righe della cartella Excel, con i totali.",
+  "featureDataReportTitle": "Rapporto dati (PDF)",
   "featureDecisionSurfaceDesc": "Un solo posto che risponde a «c’è qualcosa che mi aspetta?», ordinato per quanto costa il ritardo: prima il denaro che se ne va, poi qualcuno che aspetta una risposta. Una riga appare solo se una persona deve decidere o agire; un numero su cui nessuno può agire resta sullo schermo che lo possiede.",
   "@featureDecisionSurfaceDesc": {
     "description": "#1247: featureDecisionSurfaceDesc"
@@ -13754,6 +13766,7 @@
   "setupGuideEstimate": "circa {minutes} min",
   "setupGuideLater": "Per una tappa successiva",
   "setupGuideLevelsLink": "Scegliere che cosa fa il suo spazio",
+  "setupGuideMarkDone": "Segnare come fatto",
   "setupGuideNext": "Prossimo passo",
   "setupGuideOptional": "Altro per il suo spazio",
   "setupGuideProgress": "{ready} su {required} fatti",
@@ -13761,6 +13774,7 @@
   "setupGuideTitle": "Guida alla configurazione",
   "setupGuideToDo": "Cosa manca ancora",
   "setupGuideUnavailable": "Non è stato possibile leggere lo stato della configurazione. Riprovi tra poco.",
+  "setupGuideUntil": "Circa {minutes} min a: {milestone}",
   "setupGuideWaiting": "In attesa",
   "setupGuideWaitsFor": "Attende: {steps}",
   "setupLevelName": "{key, select, bookings_simple{Posti condivisi} bookings_resources{Sale e risorse} bookings_measured{Uso misurato} community_basic{Semplice} community_organised{Organizzata} money_none{Nessun denaro} money_statements{Estratti} money_invoices{Fatture} payments_off{Con bonifico} payments_online{Online} tax_none{Nessuna IVA} tax_vat{IVA} tax_books{Contabilità} purchases_none{Nessuno} purchases_expenses{Spese} purchases_full{Acquisti completi} presentation_basic{Semplice} presentation_branded{I suoi colori} presentation_public{Pagina pubblica} operations_basic{Semplice} operations_insight{Indicatori} operations_advanced{Avanzata} assistant_off{Spento} assistant_on{Acceso} other{{key}}}",

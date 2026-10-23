@@ -13,7 +13,6 @@ import '../../../core/ui/app_snack.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../events/providers/event_providers.dart';
 import '../../money/providers/money_providers.dart';
-import '../../plan/domain/floor_plan.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
@@ -46,7 +45,7 @@ Future<void> exportWorkspaceExcel(
         l10n.workspaceGenericError,
     action: () async {
       final levels = await ref.read(levelsProvider.future);
-      final plans = <String, FloorPlan>{
+      final plans = {
         for (final level in levels)
           level.id: await ref.read(floorPlanProvider(level.id).future),
       };

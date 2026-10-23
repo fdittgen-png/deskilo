@@ -153,4 +153,5 @@ const Set<String> workspaceFeatureKeys = {
   'purchaseAnalytics',
   'workspaceOverview',
   'setupGuide',
+  'dataReport',
 };

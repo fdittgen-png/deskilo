@@ -3915,6 +3915,68 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Kundeneigenschaft wurde nicht gespeichert.';
 
   @override
+  String get dataReportArchived => 'Archiviert';
+
+  @override
+  String dataReportColumn(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'month': 'Monat',
+      'bookings': 'Buchungen',
+      'held': 'Bestehend',
+      'attended': 'Anwesend',
+      'cancelled': 'Storniert',
+      'hours': 'Stunden',
+      'paid': 'Bezahlt',
+      'open': 'Offen',
+      'charges': 'Belastet',
+      'credits': 'Beglichen',
+      'balance': 'Saldo',
+      'seats': 'Plätze',
+      'reference': 'Referenz',
+      'role': 'Rolle',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get dataReportContents => 'Inhalt';
+
+  @override
+  String get dataReportFailed =>
+      'Der Datenbericht konnte nicht erstellt werden. Versuchen Sie es gleich noch einmal.';
+
+  @override
+  String get dataReportNo => 'Nein';
+
+  @override
+  String get dataReportNone => 'Nichts erfasst';
+
+  @override
+  String dataReportPart(String key) {
+    String _temp0 = intl.Intl.selectLogic(key, {
+      'members': 'Mitglieder',
+      'bookings': 'Buchungen nach Monat',
+      'invoices': 'Rechnungsregister',
+      'payments': 'Zahlungen und Salden',
+      'purchases': 'Einkäufe und Lieferanten',
+      'plan': 'Plan und Preise',
+      'other': '$key',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get dataReportSubtitle =>
+      'Mitglieder, Buchungen, Rechnungen, Zahlungen, Einkäufe und der Plan mit seinen Preisen, mit Summen, zum Lesen oder Drucken.';
+
+  @override
+  String get dataReportTitle => 'Datenbericht des Spaces';
+
+  @override
+  String get dataReportYes => 'Ja';
+
+  @override
   String get datevAccountsIntro =>
       'Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.';
 
@@ -6277,6 +6339,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get featureDataExportDesc =>
       'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen.';
+
+  @override
+  String get featureDataReportDesc =>
+      'Die Daten des Spaces als lesbares PDF: Mitglieder, Buchungen nach Monat, Rechnungsregister, Zahlungen und Salden, Einkäufe und Lieferanten sowie der Plan mit seinen Preisen. Dieselben Zeilen wie die Excel-Arbeitsmappe, mit Summen.';
+
+  @override
+  String get featureDataReportTitle => 'Datenbericht (PDF)';
 
   @override
   String get featureDecisionSurfaceDesc =>
@@ -19285,6 +19354,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupGuideLevelsLink => 'Wählen, was Ihr Raum tut';
 
   @override
+  String get setupGuideMarkDone => 'Als erledigt markieren';
+
+  @override
   String get setupGuideNext => 'Als Nächstes';
 
   @override
@@ -19307,6 +19379,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupGuideUnavailable =>
       'Der Einrichtungsstand konnte nicht gelesen werden. Bitte gleich erneut versuchen.';
+
+  @override
+  String setupGuideUntil(int minutes, String milestone) {
+    return 'Etwa $minutes Min. bis: $milestone';
+  }
 
   @override
   String get setupGuideWaiting => 'Wartet';

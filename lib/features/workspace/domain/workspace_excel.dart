@@ -262,8 +262,7 @@ class _ExcelExport {
       'recorded_at', 'description', 'provider', 'order_id',
     ],
     for (final entry in ledger)
-      if (entry.kind == LedgerKind.credit &&
-          entry.category == LedgerCategory.payment)
+      if (isExportedPayment(entry))
         [
           'confirmed', memberName[entry.memberId],
           major(entry.amountCents), workspace.currencyCode, entry.period,
@@ -377,6 +376,9 @@ class WorkspaceExportDetails {
     required this.events,
     required this.decisions,
     required this.invoices,
+    this.members = const [],
+    this.reservations = const [],
+    this.invoiceMatches = const {},
   });
 
   final Workspace workspace;
@@ -394,7 +396,21 @@ class WorkspaceExportDetails {
   /// sweep, when).
   final Map<String, List<ExportedDecision>> decisions;
   final List<Invoice> invoices;
+
+  /// The rows the data report reads beside the detail sheets' (#2862).
+  final List<Member> members;
+  final List<Reservation> reservations;
+  final Map<String, InvoiceMatch> invoiceMatches;
 }
+
+/// A confirmed member payment: a row of the Payments sheet.
+bool isExportedPayment(LedgerEntry e) =>
+    e.kind == LedgerKind.credit && e.category == LedgerCategory.payment;
+
+/// What a ledger row does to the member's balance (the Ledger sheet's
+/// `signed_amount`): a charge adds, a credit settles.
+int exportedSignedCents(LedgerEntry e) =>
+    e.kind == LedgerKind.charge ? e.amountCents : -e.amountCents;
 
 /// The detail sheets, in workbook order.
 List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
@@ -430,7 +446,7 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
         [
           e.id, name(e.memberId), e.kind.name, e.category.name,
           major(e.amountCents),
-          major(e.kind == LedgerKind.charge ? e.amountCents : -e.amountCents),
+          major(exportedSignedCents(e)),
           d.workspace.currencyCode, e.period, _day(e.occurredOn), _at(e.createdAt),
           e.description,
         ],
