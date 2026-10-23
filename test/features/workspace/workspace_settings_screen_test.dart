@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/real_async.dart';
 import '../../helpers/screens/workspace_settings_screen.dart' show pumpWorkspaceSettings;
 import '../../helpers/section_jump.dart';
 import '../../helpers/settings_sections.dart';
@@ -131,7 +132,14 @@ void main() {
           saved = true;
           return '/local/$fileName';
         });
-    await tester.tap(find.byKey(const Key('workspaceSettingsExportPdf')));
+    // #2898 — the level plans are drawn off-screen: real time.
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const Key('workspaceSettingsExportPdf')));
+      await untilReal(() async {
+        await tester.pump();
+        return saved;
+      }, what: 'the configuration PDF');
+    });
     await tester.pumpAndSettle();
     expect(saved, isTrue);
   });
@@ -447,14 +455,21 @@ void main() {
       reports: true,
       saver: ({required bytes, required fileName}) async {
         saved.add(fileName);
-        expect(bytes, isNotEmpty);
+        // #2898 — no library image here: the picture is the level's plan.
+        expect(latin1.decode(bytes), matches(RegExp(r'/Subtype\s*/Image')));
         return '/local/$fileName';
       },
     );
 
     final button = find.byKey(const Key('workspaceSettingsExportPdf'));
     expect(button, findsOneWidget);
-    await tester.tap(button);
+    await tester.runAsync(() async {
+      await tester.tap(button);
+      await untilReal(() async {
+        await tester.pump();
+        return saved.isNotEmpty;
+      }, what: 'the configuration PDF');
+    });
     await tester.pumpAndSettle();
 
     // Saved to a local path and confirmed — no share sheet.

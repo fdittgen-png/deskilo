@@ -3539,6 +3539,7 @@ const List<String> uiKeyPatterns = [
   'place-star-{}-{}',
   'place-zero-{}',
   'plan-seat-semantics-{}',
+  'plan-{}',
   'platform-workspace-{}',
   'platform-{}',
   'policy-editor-sheet-admin-{}',

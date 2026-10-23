@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:typed_data';
+
 import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/level.dart';
 
@@ -119,6 +121,7 @@ class WorkspaceConfigDocument {
     this.sites = const [],
     this.readinessTitle = '',
     this.readiness = const [],
+    this.planImages = const {},
   });
 
   final WorkspaceConfigPdfStrings strings;
@@ -154,7 +157,22 @@ class WorkspaceConfigDocument {
   /// its evidence; empty when the setup guide is off.
   final String readinessTitle;
   final List<ConfigReadinessLine> readiness;
+
+  /// #2898 — the ids of the levels whose plan prints as a picture, under
+  /// `plan-<level id>`; a level with nothing to draw is not here.
+  final Set<String> planImages;
 }
+
+/// #2898 — the name a level's plan picture goes by in the configuration
+/// PDF's markup (`![name]`), apart from the workspace's image library.
+String _planImageName(String levelId) => 'plan-$levelId';
+
+/// #2898 — the level plans drawn for the report, keyed by level id, as
+/// the images the configuration PDF's markup names.
+Map<String, Uint8List> configPlanImages(Map<String, Uint8List> byLevel) => {
+  for (final MapEntry(:key, :value) in byLevel.entries)
+    _planImageName(key): value,
+};
 
 /// A milestone of the readiness report, its standing and its evidence.
 typedef ConfigReadinessLine = ({String label, String value, String detail});
@@ -275,7 +293,12 @@ List<Map<String, Object?>> _levelRows(
 ) {
   final strings = doc.strings;
   return [
-    _heading(entry.level.name),
+    {
+      ..._heading(entry.level.name),
+      // #2898 — the plan prints under its level's heading.
+      if (doc.planImages.contains(entry.level.id))
+        'image': _planImageName(entry.level.id),
+    },
     if (doc.levelPrices.containsKey(entry.level.id))
       _row(strings.levelBookable(doc.levelPrices[entry.level.id]!)),
     if (entry.plan.offices.isEmpty) _row(strings.emptyLevel),
