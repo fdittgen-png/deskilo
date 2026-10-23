@@ -128,6 +128,8 @@ class FakeAccountContactRepository implements AccountContactRepository {
   final visible = <String, bool>{};
   final employed = <String, bool>{};
   final people = <Map<String, dynamic>>[];
+  // What my_reachable_people answers.
+  final reachable = <ReachablePerson>[];
   final threads = <Map<String, dynamic>>[];
   final notes = <String, List<Map<String, dynamic>>>{};
   final sent = <({String recipient, String body})>[];
@@ -156,6 +158,8 @@ class FakeAccountContactRepository implements AccountContactRepository {
     String? before,
   }) async =>
       people.where((p) => (p['name'] as String).contains(query)).toList();
+  @override
+  Future<List<ReachablePerson>> reachablePeople() async => reachable;
   @override
   Future<List<Map<String, dynamic>>> conversations({
     DateTime? beforeAt,

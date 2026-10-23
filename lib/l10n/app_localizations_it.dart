@@ -15119,6 +15119,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalFollowsWorkspace => 'Dalle informazioni dello spazio';
 
   @override
+  String get portalGroupsHeading => 'Gruppi';
+
+  @override
   String get portalImage => 'URL dell’immagine dello spazio';
 
   @override
@@ -15171,6 +15174,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalPublished => 'Visibile nella directory pubblica';
+
+  @override
+  String get portalReachableEmpty =>
+      'Nessuno è ancora raggiungibile. Cerchi un nome per trovare persone.';
+
+  @override
+  String get portalReachableHeading => 'Persone a cui può scrivere';
 
   @override
   String get portalRegisterDirectory =>

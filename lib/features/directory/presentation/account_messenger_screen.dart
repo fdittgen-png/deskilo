@@ -12,6 +12,7 @@ import '../providers/directory_providers.dart';
 import 'account_messenger_sections.dart';
 import 'account_thread.dart';
 import 'directory_pages.dart';
+import 'reachable_directory.dart';
 
 /// Person-to-person messages, on this server and every connected one.
 ///
@@ -34,6 +35,9 @@ class AccountMessengerScreen extends ConsumerStatefulWidget {
 
 class _MessengerState extends ConsumerState<AccountMessengerScreen> {
   String _query = '';
+  // The directory narrows as I type; the search below still runs
+  // on submit and also finds people I share no workspace with.
+  String _typed = '';
   String? _account;
   final _search = TextEditingController();
   @override
@@ -50,6 +54,7 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
     if (account != _account) {
       _account = account;
       _query = '';
+      _typed = '';
       _search.clear();
     }
     if (widget.recipient != null) {
@@ -125,8 +130,10 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
                 onPressed: () => submit(_search.text),
               ),
             ),
+            onChanged: (value) => setState(() => _typed = value.trim()),
             onSubmitted: submit,
           ),
+          ReachableSection(servers: servers, query: _typed, onOpen: open),
           if (_query.isNotEmpty)
             for (final server in servers.entries)
               ContactResults(
