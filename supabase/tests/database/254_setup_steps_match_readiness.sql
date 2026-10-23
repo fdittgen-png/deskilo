@@ -7,6 +7,18 @@
 begin;
 select plan(3);
 
+-- A fresh space of its own, so there is always something to compare, beside
+-- every workspace the database already holds.
+insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
+values ('00000000-0000-4000-8000-0000002867a1','00000000-0000-0000-0000-000000000000',
+ 'authenticated','authenticated','a1@steps-match.test','',now(),now(),now());
+insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,booking_rules)
+values ('00000000-0000-4000-8000-0000002867b1','Steps match','FR','EUR','Europe/Paris',
+        '00000000-0000-4000-8000-0000002867a1','dev','{"open_weekdays":[1,2,3,4,5]}');
+insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) values
+ ('00000000-0000-4000-8000-0000002867c1','00000000-0000-4000-8000-0000002867b1',
+  '00000000-0000-4000-8000-0000002867a1',true,true,'active');
+
 create temp table _cmp(workspace text, step text, step_state text, section_state text);
 
 do $cmp$
