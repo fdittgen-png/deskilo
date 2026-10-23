@@ -246,7 +246,7 @@ const VAT_RATES={
  NO:[['Alminnelig 25 %',25],['Næringsmidler 15 %',15],['Redusert 12 %',12]],
  CA:[['GST 5 % (AB/NT/NU/YT)',5],['HST 13 % (ON)',13],['HST 14 % (NS)',14],['HST 15 % (NB/NL/PE)',15],['GST+QST 14,975 % (QC)',14.975],['GST+PST 12 % (BC/MB)',12],['GST+PST 11 % (SK)',11]],
 };
-const seedVatRates=()=>{S.vatRates=(VAT_RATES[S.country]||[]).map(([label,percent])=>({label,percent}));save()};
+const seedVatRates=()=>set('vatRates',(VAT_RATES[S.country]||[]).map(([label,percent])=>({label,percent})));
 const XML_LEVEL_FALLBACK='Étage',XML_SEAT_FALLBACK='Place';
 // l10n-exempt-end
 const VAT_NOTES={US:'vatNoteUS',CA:'vatNoteCA',CH:'vatNoteCH'};
@@ -261,7 +261,8 @@ const NUMRESET=[['never','numResetNever'],['yearly','numResetYearly'],['monthly'
 // #1320 — a number never restarts more often than it prints its date,
 // or it would print a number already handed out (the server refuses these pairs).
 const RESETS_FOR={none:['never'],year:['never','yearly'],year_month:['never','yearly','monthly']};
-function numResets(){const ok=RESETS_FOR[S.numbering.datePart]||['never'];if(!ok.includes(S.numbering.reset)){S.numbering.reset=ok[ok.length-1];save()}return NUMRESET.filter(([v])=>ok.includes(v))}
+const resetsFor=s=>RESETS_FOR[s.numbering.datePart]||['never'];
+function numResets(){const ok=resetsFor(S);return NUMRESET.filter(([v])=>ok.includes(v))}
 function numResetHint(){return S.numbering.datePart==='year_month'?'':T('numResetHint')}
 // #2355 — the VAT tax point: the country's legal rule, the invoice date
 // (France's option for the debits) or cash. The app keeps only what the
@@ -322,7 +323,7 @@ const DEFAULTS={
 // owner's list); a plain object is filled in key by key.
 function restore(stored){
  const out=JSON.parse(JSON.stringify(DEFAULTS));
- if(!stored||typeof stored!=='object')return out;
+ if(!stored||typeof stored!=='object')return normalize(out);
  for(const[k,v]of Object.entries(stored)){
   if(v===undefined||v===null)continue;
   const d=out[k];
@@ -330,19 +331,56 @@ function restore(stored){
   else out[k]=Object.assign(d,v);
  }
  if(!stored.permsV)upgradePerms(out.perms);
- return out;
+ // #600 -> #634: a questionnaire saved while the retired "minute bookings
+ // within working hours" switch existed reads as the mode that replaced
+ // it, exactly as the server maps the legacy booking_rules key.
+ if(out.policies.gridHours!==undefined){
+  if(out.policies.gridHours&&!stored.policies?.outsideHours)out.policies.outsideHours='walkup_only';
+  delete out.policies.gridHours;
+ }
+ return normalize(out);
 }
-let S=restore(JSON.parse(localStorage.getItem(LS)||'null'));
-S.vatExigibility=taxPointOf(S.vatExigibility);
-// #600 -> #634: a questionnaire saved while the retired "minute bookings
-// within working hours" switch existed reads as the mode that replaced
-// it, exactly as the server maps the legacy booking_rules key.
-if(S.policies.gridHours!==undefined){
- if(S.policies.gridHours&&!JSON.parse(localStorage.getItem(LS)||'{}').policies?.outsideHours)S.policies.outsideHours='walkup_only';
- delete S.policies.gridHours;
+// #2924 — the answers are written in ONE place. `set` and `setMany` copy
+// what they change (the previous answers are never mutated) and save; the
+// save runs normalize(), so the screen, the findings, the export and the
+// WebMCP tools always read the same, repaired answers. Drawing a step
+// never writes.
+function save(){S=normalize(S);localStorage.setItem(LS,JSON.stringify(S));document.getElementById('saved').textContent=T('setupSaved')+' '+new Date().toLocaleTimeString(LANG)}
+function setMany(changes){const fresh=new Set(),draft={...S};fresh.add(draft);
+ for(const[path,val]of changes){const p=path.split('.');let o=draft;
+  for(let i=0;i<p.length-1;i++){let c=o[p[i]];if(!fresh.has(c)){c=Array.isArray(c)?c.slice():{...c};o[p[i]]=c;fresh.add(c)}o=c}
+  o[p[p.length-1]]=val}
+ S=draft;save()}
+function set(path,val){setMany([[path,val]])}
+// One answer changed in a copy of `s`: the pure write normalize() uses.
+function put(s,path,val){const[k,...rest]=path.split('.');const c=Array.isArray(s)?s.slice():{...s};c[k]=rest.length?put(s[k],rest.join('.'),val):val;return c}
+// #2924 — every repair the page applies to stored answers, as one pure
+// function of them: run by save() before anything is stored and by
+// restore() on every load, so no step has to repair the answers while it
+// draws them (which used to need a save() at the end of render()).
+function normalize(s){
+ let n={...s};
+ // #2355 / #2357 — the tax point and the declaration period as the page
+ // reads them ('payment' was cash; an unknown period is quarterly).
+ if(n.vatExigibility!==taxPointOf(n.vatExigibility))n=put(n,'vatExigibility',taxPointOf(n.vatExigibility));
+ if(n.vatPeriod!==vatPeriodOf(n.vatPeriod))n=put(n,'vatPeriod',vatPeriodOf(n.vatPeriod));
+ // #1320 — a number never restarts more often than it prints its date.
+ const resets=resetsFor(n);if(!resets.includes(n.numbering.reset))n=put(n,'numbering.reset',resets[resets.length-1]);
+ // A select offers only its options: an answer outside them reads as the
+ // first one, as the select shows it.
+ for(const[path,,kind,opt]of PARAM_META){if(kind!=='enum')continue;const allowed=opt(n);
+  if(allowed.length&&!allowed.includes(String(get(path,n))))n=put(n,path,allowed[0])}
+ // The roles step offers no card whose switch is off, and no automatic
+ // decision on deletion requests without them.
+ for(const dk of DOMAINS){const g=DOMAIN_GATE[dk];if(g&&!on(g,n)&&n.domains[dk]&&n.domains[dk].on!==false)n=put(n,`domains.${dk}.on`,false)}
+ if(!on('deletionRequests',n)&&(n.autoValidate.admin!==false||n.autoValidate.owner!==false))n=put(n,'autoValidate',{admin:false,owner:false});
+ // A member's level is one the space offers, and "packages" only while
+ // there is a package.
+ const levels=n.freeLevel?null:n.subLevels.length?n.subLevels:['100'],pk=n.packages.some(p=>p.name.trim());
+ n.members.forEach((m,i)=>{if(levels&&!levels.includes(String(m.pct||'100')))n=put(n,`members.${i}.pct`,levels[0]);
+  if((m.overage||'blocked')==='packages'&&!pk)n=put(n,`members.${i}.overage`,'blocked')});
+ return n;
 }
-function save(){localStorage.setItem(LS,JSON.stringify(S));document.getElementById('saved').textContent=T('setupSaved')+' '+new Date().toLocaleTimeString(LANG)}
-function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.shift()];o[p[0]]=val;save()}
 
 // ------------------------------------------------------------------ dependencies (#723)
 // The feature tree as the app declares it (REQUIRES): a child is only
@@ -350,17 +388,18 @@ function set(path,val){const p=path.split('.');let o=S;while(p.length>1)o=o[p.sh
 // children off — exactly what effectiveFeatures does. #2454 — AVAILABLE_IN:
 // the countries a switch is available in ('@eu' = the EU member states).
 const EU=new Set(['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GR','HR','HU','IE','IT','LT','LU','LV','MT','NL','PL','PT','RO','SE','SI','SK']);
-const availableHere=k=>{const a=AVAILABLE_IN[k];return !a||a.includes(S.country)||(a.includes('@eu')&&EU.has(S.country))};
-const on=k=>{let f=k;while(f){if(!S.features[f]||!availableHere(f))return false;f=REQUIRES[f]}return true};
+// Both read the current answers, or the ones given (normalize's).
+const availableHere=(k,s=S)=>{const a=AVAILABLE_IN[k];return !a||a.includes(s.country)||(a.includes('@eu')&&EU.has(s.country))};
+const on=(k,s=S)=>{let f=k;while(f){if(!s.features[f]||!availableHere(f,s))return false;f=REQUIRES[f]}return true};
 const FEATURE_KEYS=new Set(FEATURES.map(([k])=>k));
 // The nearest prerequisite that is off — why a ticked feature is not on.
 const waitsFor=k=>{let f=REQUIRES[k];while(f&&S.features[f])f=REQUIRES[f];return f};
-// #800 — ticking a feature switches on everything it needs.
-const enableWith=k=>{S.features[k]=true;let f=REQUIRES[k];while(f){S.features[f]=true;f=REQUIRES[f]}};
+// #800 — ticking a feature switches on everything it needs: the writes.
+const enableWith=k=>{const out=[[`features.${k}`,true]];let f=REQUIRES[k];while(f){out.push([`features.${f}`,true]);f=REQUIRES[f]}return out};
 // The two answers whose change ripples: the UI inputs and the WebMCP tools
 // both go through these.
-const onCountry=v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c){S.currency=c[1];S.timezone=c[2];save()}};
-const applyFeature=(k,v)=>{if(v)enableWith(k);else S.features[k]=false;save()};
+const onCountry=v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c)setMany([['currency',c[1]],['timezone',c[2]]])};
+const applyFeature=(k,v)=>setMany(v?enableWith(k):[[`features.${k}`,false]]);
 const alsoEnabled=k=>{const r=[];let f=REQUIRES[k];while(f){if(!S.features[f])r.push(featureTitle(f));f=REQUIRES[f]}return r};
 const country=()=>COUNTRIES.find(c=>c[0]===S.country)||COUNTRIES[0];
 const scheme=()=>country()[3];
@@ -374,7 +413,8 @@ const registered=()=>S.vatRegime==='registered';
 // every switch in FEATURES (those need no row: key, default, REQUIRES and
 // words all come from FEATURES, REQUIRES and the catalogue). A row says how
 // the answer is worded and checked: [path, label key, kind, options]. Kinds:
-// text, bool, enum (options = () => allowed values), int / num (options =
+// text, bool, enum (options = answers => allowed values, the current
+// answers when none are given), int / num (options =
 // {min,max}), time, date, color, days, dates. `needs` names the switch that
 // makes the question appear in the UI; `secret` hides the value from
 // get_answers. A new scalar answer is a row here (or a reasoned entry in
@@ -386,7 +426,7 @@ const PARAM_META=[
  ['address','identityAddress','text'],['brandColor','identityBrandColor','color'],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
- ['granularity','availGranularity','enum',()=>(on('workingHours')?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
+ ['granularity','availGranularity','enum',(s=S)=>(on('workingHours',s)?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
  ['dayStart','availDayStart','time'],['boundary','availBoundary','time'],['dayEnd','availDayEnd','time'],['closures','availClosures','dates'],
  ['halfDayHours','availHalfDayHours','num',{min:0}],['fullDayHours','availFullDayHours','num',{min:0}],
  ['deskOpacity','planDeskOpacity','int',{min:20,max:100}],
@@ -406,7 +446,7 @@ const PARAM_META=[
  ['org','legalOrg','enum',()=>['association','company']],['customerCapacity','legalCustomerCapacity','enum',()=>['','business','consumer']],
  ['vatRegime','legalVatRegime','enum',()=>['not_subject','exempt','registered']],['vatExigibility','legalVatExigibility','enum',()=>VATEXIGIBILITY.map(x=>x[0])],
  ['numbering.prefix','fieldPrefix','text'],['numbering.datePart','colDate','enum',()=>NUMDATE.map(x=>x[0])],['numbering.digits','fieldDigits','int',{min:1}],
- ['numbering.reset','numReset','enum',()=>RESETS_FOR[S.numbering.datePart]||['never']],
+ ['numbering.reset','numReset','enum',(s=S)=>resetsFor(s)],
  ['memberNumbering.prefix','fieldPrefix','text'],['memberNumbering.digits','fieldDigits','int',{min:1}],
  ['regNumber','legalRegNumber','text'],['vatId','legalVatId','text'],['exemption','legalExemption','text'],['street','fieldStreet','text'],['postal','fieldPostal','text'],['city','fieldCity','text'],
  ['mentions.legalForm','mentionLegalForm','text'],['mentions.terms','mentionTerms','text'],['mentions.penalty','mentionPenalty','text'],['mentions.recovery','mentionRecovery','text'],['mentions.escompte','mentionEscompte','text'],['mentions.insurance','mentionInsurance','text'],['mentions.special','mentionSpecial','text'],
@@ -425,6 +465,9 @@ const PARAM_EXCLUDED={
  'mentions.register':'no question of its own in the UI (the registration number is regNumber)','landTax.facilities':'no question of its own in the UI yet','pay.paypal_me':'unlabelled in the UI','pay.bank_name':'unlabelled in the UI',
  'pay.account_number':'unlabelled in the UI','pay.bank_code':'unlabelled in the UI','pay.bic':'unlabelled in the UI',
 };
+// The answers: stored ones merged onto the defaults and normalized — here,
+// once everything normalize() reads is defined.
+let S=restore(JSON.parse(localStorage.getItem(LS)||'null'));
 const HELP={
  identity:['helpAppIdentity','user.space.overview'],
  region:['helpAppRegion','user.workspace.settings.currency-timezone'],
@@ -536,7 +579,7 @@ function reqState(path){
 
 // ------------------------------------------------------------------ UI helpers
 const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='onclick'||k==='oninput'||k==='onchange')e[k]=v;else if(k==='html')e.innerHTML=v;else e.setAttribute(k,v)}for(const k of kids){if(k!=null)e.append(k)}return e};
-function get(path){const p=path.split('.');let o=S;for(const k of p)o=o[k];return o}
+function get(path,s=S){const p=path.split('.');let o=s;for(const k of p)o=o[k];return o}
 function input(label,path,hint,type='text',ph='',hk){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';
  const rq=reqState(path);
  const badge=rq?h('span',{class:'req'+(rq.met?' met':'')},(rq.met?'✓ ':'')+T('setupRequired')):null;
@@ -553,13 +596,16 @@ function input(label,path,hint,type='text',ph='',hk){const i=h('input',{type,pla
  if(rq&&rq.fix)d.append(dep(T('reqByEarlierChoice'),rq.fix.step));
  paint();
  return d}
-function selectEl(label,path,opts,hint,onch,hk){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);if(s.value!==String(get(path))&&opts.length){s.value=opts[0][0];set(path,opts[0][0])}s.onchange=()=>{set(path,s.value);if(onch)onch(s.value);render()};const d=h('div',{},h('label',{},label,helpIcon(hk),destBadge(path)),s);if(hint)d.append(h('p',{class:'hint'},hint));return d}
+function selectEl(label,path,opts,hint,onch,hk){const s=h('select');for(const[v,t]of opts)s.append(h('option',{value:v},t));s.value=get(path);s.onchange=()=>{set(path,s.value);if(onch)onch(s.value);render()};const d=h('div',{},h('label',{},label,helpIcon(hk),destBadge(path)),s);if(hint)d.append(h('p',{class:'hint'},hint));return d}
 function chip(text,on,cb){const c=h('button',{class:'chip'+(on?' on':''),type:'button'},text);c.onclick=()=>{cb(!on);render()};return c}
 function checkbox(label,desc,checked,onch,cls='',hk){const c=h('input',{type:'checkbox'});c.checked=!!checked;c.onchange=()=>{onch(c.checked);render()};return h('label',{class:'check '+cls},c,h('span',{},label,hk?helpIcon(hk):null,desc?h('div',{class:'d'},desc):null))}
 function section(title,...kids){const s=h('section',{},h('h2',{},title),h('div',{class:'body'},...kids));s.querySelector('h2').onclick=()=>s.classList.toggle('closed');return s}
-function tableRows(cols,rows,make,add,addLabel){const t=h('table',{},h('tr',{},...cols.map(c=>h('th',{},c)),h('th')));rows.forEach((r,i)=>{const tr=h('tr',{},...make(r,i).map(c=>h('td',{},c)),h('td',{},h('button',{class:'del',type:'button',onclick:()=>{rows.splice(i,1);save();render()}},'✕')));t.append(tr)});const w=h('div',{},t,h('button',{class:'add',type:'button',onclick:()=>{rows.push(add());save();render()}},addLabel));return w}
+// The list stored at `path`, one table row per entry: make(row, rowPath)
+// draws its cells; ✕ and + write the list back.
+function tableRows(cols,path,make,add,addLabel){const t=h('table',{},h('tr',{},...cols.map(c=>h('th',{},c)),h('th')));get(path).forEach((r,i)=>{const tr=h('tr',{},...make(r,`${path}.${i}`).map(c=>h('td',{},c)),h('td',{},h('button',{class:'del',type:'button',onclick:()=>{set(path,get(path).filter((_,j)=>j!==i));render()}},'✕')));t.append(tr)});const w=h('div',{},t,h('button',{class:'add',type:'button',onclick:()=>{set(path,[...get(path),add()]);render()}},addLabel));return w}
 function cell(path,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=get(path)??'';i.oninput=()=>set(path,i.value);return i}
-function bind(obj,key,type='text',ph=''){const i=h('input',{type,placeholder:ph});i.value=obj[key]??'';i.oninput=()=>{obj[key]=i.value;save()};return i}
+// A select over [value, label] pairs that writes `path`.
+function pick(path,opts,value){const s=h('select');for(const[v,l]of opts)s.append(h('option',{value:v},l));s.value=value;s.onchange=()=>set(path,s.value);return s}
 function yesNo(){const s=h('select');s.append(h('option',{value:'no'},T('optNo')),h('option',{value:'yes'},T('optYes')));return s}
 const num=v=>{const n=parseFloat(v);return isNaN(n)?null:n};
 const mins=t=>{const m=/^(\d{1,2}):(\d{2})$/.exec(t||'');return m?parseInt(m[1])*60+parseInt(m[2]):null};
@@ -581,10 +627,14 @@ function recommendLevels(answers){const out={};for(const[p,rules]of Object.entri
 function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]))break;reached=l.id}out[pr.key]=reached}return out}
 // A level ticks its switches and every lower level's, and unticks the
 // higher ones' — setupFeatureDelta. The expert view keeps every switch.
-// Every caller draws the page again, and drawing saves.
-function applyLevel(p,id){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)return;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in S.features)S.features[k]=i<=r}));S.journey.used=true}
-function answerQuestion(q,v){S.journey.answers[q]=v;const rec=recommendLevels(S.journey.answers);for(const[p,r]of Object.entries(rec))applyLevel(p,r.level)}
-function applyPreset(name){for(const[p,id]of Object.entries(LEVELS.presets[name]||{}))applyLevel(p,id)}
+// applyLevels sets the switches of each [process, level] pair in a copy of
+// them and writes it once, with `also`.
+function applyLevels(pairs,also=[]){const f={...S.features};let used=false;
+ for(const[p,id]of pairs){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)continue;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in f)f[k]=i<=r}));used=true}
+ setMany([...also,['features',f],...(used?[['journey.used',true]]:[])])}
+function applyLevel(p,id){applyLevels([[p,id]])}
+function answerQuestion(q,v){const rec=recommendLevels({...S.journey.answers,[q]:v});applyLevels(Object.entries(rec).map(([p,r])=>[p,r.level]),[[`journey.answers.${q}`,v]])}
+function applyPreset(name){applyLevels(Object.entries(LEVELS.presets[name]||{}))}
 const presetOf=now=>Object.keys(LEVELS.presets).find(n=>LEVELS.processes.every(pr=>LEVELS.presets[n][pr.key]===now[pr.key]))||'';
 // What a vector lacks: each chosen level (and those below it) whose needs
 // another process does not meet — setupVectorGaps.
@@ -667,7 +717,7 @@ const STEPS=[
   return f}},
 
 {id:'availability',get title(){return T('availabilityTitle')},get why(){return T('availabilityWhy')},
- build(){const wd=h('div',{class:'chips'},...WD.map(v=>chip(weekdayName(v),S.weekdays.includes(v),o=>{S.weekdays=o?[...S.weekdays,v]:S.weekdays.filter(x=>x!==v);save()})));
+ build(){const wd=h('div',{class:'chips'},...WD.map(v=>chip(weekdayName(v),S.weekdays.includes(v),o=>set('weekdays',o?[...S.weekdays,v]:S.weekdays.filter(x=>x!==v)))));
   const gran=opts(on('workingHours')?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day'));
   const halfUsed=['half_day','hours','flexible'].includes(S.granularity);
   const k=[lbl(T('availOpenDays'),'availability','weekdays'),wd,help('availability'),
@@ -676,10 +726,10 @@ const STEPS=[
    h('div',{class:'row'},input(T('availDayStart'),'dayStart','','time','','hours'),halfUsed?input(T('availBoundary'),'boundary',T('availBoundaryHint'),'time','','hours'):null,input(T('availDayEnd'),'dayEnd','','time','','hours')),
    ...(S.granularity==='hours'?[lbl(T('availHourEquivalents'),'availability'),h('p',{class:'hint'},T('availHourEquivalentsHint')),
      h('div',{class:'row'},input(T('availHalfDayHours'),'halfDayHours','','number','4','availability'),input(T('availFullDayHours'),'fullDayHours','','number','8','availability'))]:[]),
-   lbl(T('availClosures'),'availability','closures'),tableRows([T('colDate')],S.closures,(r,i)=>[cell(`closures.${i}`,'date')],()=>'','+ '+T('availAddClosure'))];
+   lbl(T('availClosures'),'availability','closures'),tableRows([T('colDate')],'closures',(r,rp)=>[cell(rp,'date')],()=>'','+ '+T('availAddClosure'))];
   if(on('bookingPolicies')){k.push(lbl(T('availPolicies'),'booking','policies'),help('booking'),
-   checkbox(T('availAllowPast'),T('availAllowPastDesc'),S.policies.allowPast,v=>{S.policies.allowPast=v;save()},'','booking'),
-   checkbox(T('availAdminCheckout'),T('availAdminCheckoutDesc'),S.policies.adminCheckout,v=>{S.policies.adminCheckout=v;save()},'','booking'),
+   checkbox(T('availAllowPast'),T('availAllowPastDesc'),S.policies.allowPast,v=>set('policies.allowPast',v),'','booking'),
+   checkbox(T('availAdminCheckout'),T('availAdminCheckoutDesc'),S.policies.adminCheckout,v=>set('policies.adminCheckout',v),'','booking'),
    selectEl(T('availOutsideHours'),'policies.outsideHours',outsideOpts(),T('availOutsideHoursHint'),null,'booking'),
    // #1281 — the legend and the plan's colours follow one choice.
    selectEl(T('availLegendProfile'),'policies.legendProfile',[['full',T('availLegendFull')],['simple',T('availLegendSimple')]],T('availLegendProfileHint'),null,'booking'),
@@ -705,21 +755,23 @@ const STEPS=[
  build(){const body=[help('plan'),input(T('planDeskOpacity'),'deskOpacity',T('planDeskOpacityHint'),'number','100','plan')];
   if(on('nfcSeatTags'))body.push(h('p',{class:'hint'},T('planNfcHint')),help('tags'));
   const whole=on('levelBooking');
-  S.levels.forEach((lv,li)=>{const offices=[];
-   lv.offices.forEach((of,oi)=>{const desks=tableRows([T('planDeskName'),T('planSeats'),T('planSeatPrefix')],of.desks,(d)=>[bind(d,'name'),bind(d,'seats','number'),bind(d,'prefix')],()=>({name:T('defaultDesk',{n:of.desks.length+1}),seats:4,prefix:T('defaultSeatPrefix')}),'+ '+T('planAddDesk'));
-    offices.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planOfficeName'),'plan'),bind(of,'name')),
-     whole?h('div',{},lbl(T('planOfficeWhole'),'whole','levels'),(()=>{const s=yesNo();s.value=of.bookable?'yes':'no';s.onchange=()=>{of.bookable=s.value==='yes';save();render()};return s})()):null,
-     whole&&of.bookable?h('div',{},lbl(T('planOfficePrice',{currency:S.currency}),'whole'),bind(of,'price','number')):h('div')),desks,
-     h('button',{class:'del',type:'button',onclick:()=>{lv.offices.splice(oi,1);save();render()}},'✕ '+T('planRemoveOffice'))))});
-   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planLevelName'),'plan','levels'),bind(lv,'name')),on('multiSite')&&S.sites.length?h('div',{},lbl(T('planSite'),'plan'),(()=>{const sel=h('select');sel.append(h('option',{value:''},T('planDefaultSite')));S.sites.forEach(st=>sel.append(h('option',{value:st.name},st.name)));sel.value=lv.site||'';sel.onchange=()=>{lv.site=sel.value;save()};return sel})()):h('div'),
-    whole?h('div',{},lbl(T('planLevelWhole'),'whole','levels'),(()=>{const s=yesNo();s.value=lv.bookable?'yes':'no';s.onchange=()=>{lv.bookable=s.value==='yes';save()};return s})()):null),
-    ...offices,h('button',{class:'add',type:'button',onclick:()=>{lv.offices.push(newOffice(lv.offices.length+1));save();render()}},'+ '+T('planAddOffice')),
-    h('button',{class:'del',type:'button',onclick:()=>{S.levels.splice(li,1);save();render()}},'✕ '+T('planRemoveLevel'))))});
+  const yesNoAt=(path,value,redraw)=>{const s=yesNo();s.value=value?'yes':'no';s.onchange=()=>{set(path,s.value==='yes');if(redraw)render()};return s};
+  S.levels.forEach((lv,li)=>{const offices=[],lp=`levels.${li}`;
+   lv.offices.forEach((of,oi)=>{const op=`${lp}.offices.${oi}`;const desks=tableRows([T('planDeskName'),T('planSeats'),T('planSeatPrefix')],`${op}.desks`,(d,dp)=>[cell(`${dp}.name`),cell(`${dp}.seats`,'number'),cell(`${dp}.prefix`)],()=>({name:T('defaultDesk',{n:get(`${op}.desks`).length+1}),seats:4,prefix:T('defaultSeatPrefix')}),'+ '+T('planAddDesk'));
+    offices.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planOfficeName'),'plan'),cell(`${op}.name`)),
+     whole?h('div',{},lbl(T('planOfficeWhole'),'whole','levels'),yesNoAt(`${op}.bookable`,of.bookable,true)):null,
+     whole&&of.bookable?h('div',{},lbl(T('planOfficePrice',{currency:S.currency}),'whole'),cell(`${op}.price`,'number')):h('div')),desks,
+     h('button',{class:'del',type:'button',onclick:()=>{set(`${lp}.offices`,get(`${lp}.offices`).filter((_,j)=>j!==oi));render()}},'✕ '+T('planRemoveOffice'))))});
+   body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planLevelName'),'plan','levels'),cell(`${lp}.name`)),on('multiSite')&&S.sites.length?h('div',{},lbl(T('planSite'),'plan'),pick(`${lp}.site`,[['',T('planDefaultSite')],...S.sites.map(st=>[st.name,st.name])],lv.site||'')):h('div'),
+    whole?h('div',{},lbl(T('planLevelWhole'),'whole','levels'),yesNoAt(`${lp}.bookable`,lv.bookable,false)):null),
+    ...offices,h('button',{class:'add',type:'button',onclick:()=>{const list=get(`${lp}.offices`);set(`${lp}.offices`,[...list,newOffice(list.length+1)]);render()}},'+ '+T('planAddOffice')),
+    h('button',{class:'del',type:'button',onclick:()=>{set('levels',S.levels.filter((_,j)=>j!==li));render()}},'✕ '+T('planRemoveLevel'))))});
   if(on('multiSite')){body.push(lbl(T('planSites'),'plan','sites'),h('p',{class:'hint'},T('planSitesHint')));
-   S.sites.forEach((st,si)=>{body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planSiteName'),'plan'),bind(st,'name')),h('div',{},lbl(T('fieldStreet'),'plan'),bind(st,'street')),h('div',{},lbl(T('fieldPostal'),'plan'),bind(st,'postal')),h('div',{},lbl(T('fieldCity'),'plan'),bind(st,'city')),h('div',{},lbl(T('planSiteLegalId'),'plan'),bind(st,'legalId'))),
-    h('button',{class:'del',type:'button',onclick:()=>{S.sites.splice(si,1);S.levels.forEach(l=>{if(l.site===st.name)l.site=''});save();render()}},'✕ '+T('planRemoveSite'))))});
-   body.push(h('button',{class:'add',type:'button',onclick:()=>{S.sites.push({name:T('defaultSite',{n:S.sites.length+2}),street:'',postal:'',city:'',legalId:''});save();render()}},'+ '+T('planAddSite')));}
-  body.push(h('button',{class:'add',type:'button',onclick:()=>{S.levels.push({name:T('defaultLevel',{n:S.levels.length+1}),offices:[newOffice(1)]});save();render()}},'+ '+T('planAddLevel')));
+   S.sites.forEach((st,si)=>{const sp=`sites.${si}`;body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planSiteName'),'plan'),cell(`${sp}.name`)),h('div',{},lbl(T('fieldStreet'),'plan'),cell(`${sp}.street`)),h('div',{},lbl(T('fieldPostal'),'plan'),cell(`${sp}.postal`)),h('div',{},lbl(T('fieldCity'),'plan'),cell(`${sp}.city`)),h('div',{},lbl(T('planSiteLegalId'),'plan'),cell(`${sp}.legalId`))),
+    // The levels on the removed site move to the default one.
+    h('button',{class:'del',type:'button',onclick:()=>{const name=get(`${sp}.name`);setMany([['sites',S.sites.filter((_,j)=>j!==si)],...S.levels.flatMap((l,i)=>l.site===name?[[`levels.${i}.site`,'']]:[])]);render()}},'✕ '+T('planRemoveSite'))))});
+   body.push(h('button',{class:'add',type:'button',onclick:()=>{set('sites',[...S.sites,{name:T('defaultSite',{n:S.sites.length+2}),street:'',postal:'',city:'',legalId:''}]);render()}},'+ '+T('planAddSite')));}
+  body.push(h('button',{class:'add',type:'button',onclick:()=>{set('levels',[...S.levels,{name:T('defaultLevel',{n:S.levels.length+1}),offices:[newOffice(1)]}]);render()}},'+ '+T('planAddLevel')));
   if(!whole)body.push(needs('levelBooking'),h('p',{class:'hint'},T('planNoWholeHint')),help('whole'));
   return body},
  check(){const seats=S.levels.reduce((n,lv)=>n+lv.offices.reduce((m,of)=>m+of.desks.reduce((k,d)=>k+(parseInt(d.seats)||0),0),0),0);
@@ -729,11 +781,11 @@ const STEPS=[
 
 {id:'billing',get title(){return T('billingTitle')},get why(){return T('billingWhy')},applies(){return on('moneyTab')},
  build(){return[help('billing'),lbl(T('billingTiers'),'billing','tiers'),h('p',{class:'hint'},T('billingTiersHint')),
-  tableRows([T('billingFrom'),T('billingTo'),T('billingFee',{currency:S.currency}),T('billingOverage',{currency:S.currency})],S.tiers,(t)=>[bind(t,'from','number'),bind(t,'to','number'),bind(t,'fee','number'),bind(t,'over','number')],()=>({from:'',to:'',fee:'',over:''}),'+ '+T('billingAddTier')),
-  lbl(T('billingLevels'),'billing','subLevels'),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>{S.subLevels=o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v);save()}))),
-  checkbox(T('billingFreeLevel'),'',S.freeLevel,v=>{S.freeLevel=v;save()},'','billing'),
+  tableRows([T('billingFrom'),T('billingTo'),T('billingFee',{currency:S.currency}),T('billingOverage',{currency:S.currency})],'tiers',(t,tp)=>[cell(`${tp}.from`,'number'),cell(`${tp}.to`,'number'),cell(`${tp}.fee`,'number'),cell(`${tp}.over`,'number')],()=>({from:'',to:'',fee:'',over:''}),'+ '+T('billingAddTier')),
+  lbl(T('billingLevels'),'billing','subLevels'),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>set('subLevels',o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v))))),
+  checkbox(T('billingFreeLevel'),'',S.freeLevel,v=>set('freeLevel',v),'','billing'),
   lbl(T('billingPackages'),'packages','packages'),h('p',{class:'hint'},T('billingPackagesHint')),help('packages'),
-  tableRows([T('colName'),T('colDays'),T('colPrice',{currency:S.currency})],S.packages,(p)=>[bind(p,'name'),bind(p,'days','number'),bind(p,'price','number')],()=>({name:'',days:'',price:''}),'+ '+T('billingAddPackage'))]},
+  tableRows([T('colName'),T('colDays'),T('colPrice',{currency:S.currency})],'packages',(p,pp)=>[cell(`${pp}.name`),cell(`${pp}.days`,'number'),cell(`${pp}.price`,'number')],()=>({name:'',days:'',price:''}),'+ '+T('billingAddPackage'))]},
  check(){const f=[];
   // Same shape: a palier with a bracket and no fee is dropped by the
   // filter below, so the owner sees a row on screen that never reaches
@@ -756,7 +808,7 @@ const STEPS=[
   !registered()?input(T('legalExemption'),'exemption',T('legalExemptionHint'),'text','','vat'):null];
   if(registered()){if(on('vatManagement')){const history=on('vatRateHistory')?[T('colValidFrom')]:[];k.push(lbl(T('legalVatRates'),'vat','vatRates'),h('p',{class:'hint'},T('legalVatRatesHint')),help('vat'),
     ...(VAT_NOTES[S.country]?[h('p',{class:'hint'},T(VAT_NOTES[S.country]))]:[]),
-    tableRows(on('vatGroups')?[T('colLabel'),T('colRate'),T('colGroup'),...history]:[T('colLabel'),T('colRate'),...history],S.vatRates,(r)=>on('vatGroups')?[bind(r,'label'),bind(r,'percent','number'),(()=>{const sel=h('select');opts(VAT_GROUPS).forEach(([v,l])=>sel.append(h('option',{value:v},l)));sel.value=r.group||'standard';sel.onchange=()=>{r.group=sel.value;save()};return sel})(),...(on('vatRateHistory')?[bind(r,'validFrom','date')]:[])]:[bind(r,'label'),bind(r,'percent','number'),...(on('vatRateHistory')?[bind(r,'validFrom','date')]:[])],()=>({label:'',percent:'',group:'standard',validFrom:''}),'+ '+T('legalAddRate')),
+    tableRows(on('vatGroups')?[T('colLabel'),T('colRate'),T('colGroup'),...history]:[T('colLabel'),T('colRate'),...history],'vatRates',(r,rp)=>[cell(`${rp}.label`),cell(`${rp}.percent`,'number'),...(on('vatGroups')?[pick(`${rp}.group`,opts(VAT_GROUPS),r.group||'standard')]:[]),...(on('vatRateHistory')?[cell(`${rp}.validFrom`,'date')]:[])],()=>({label:'',percent:'',group:'standard',validFrom:''}),'+ '+T('legalAddRate')),
     VAT_RATES[S.country]?(()=>{const b=h('button',{class:'chip',type:'button'},T('legalSuggestRates',{country:countryName(country()[0]),rates:VAT_RATES[S.country].map(r=>r[1]).join(', ')}));b.onclick=()=>{seedVatRates();render()};return b})():null)}
    else k.push(needs('vatManagement'),h('p',{class:'hint'},T('legalNoVatManagementHint')));
    k.push(selectEl(T('legalVatExigibility'),'vatExigibility',opts(VATEXIGIBILITY),T('legalVatExigibilityHint'),null,'vat'));
@@ -765,16 +817,16 @@ const STEPS=[
    k.push(lbl(T('legalMemberNumbering'),'legal','memberNumbering'),h('p',{class:'hint'},T('legalMemberNumberingHint')),
     h('div',{class:'row'},input(T('fieldPrefix'),'memberNumbering.prefix','','text','M-'),input(T('fieldDigits'),'memberNumbering.digits','','number','4')));
    if(on('vatDeclarations'))k.push(selectEl(T('legalVatPeriod'),'vatPeriod',opts(VATPERIOD),T('legalVatPeriodHint'),null,'vat'));else k.push(needs('vatDeclarations'));
-   if(S.country==='CA'&&registered())k.push(lbl(T('legalCaTax'),'vat'),h('p',{class:'hint'},T('legalCaTaxHint')),input(T('legalQstNumber'),'landTax.qst','1234567890 TQ0001','text','','vat'),checkbox(T('legalQuickMethod'),T('legalQuickMethodDesc'),S.landTax.quick,v=>{S.landTax.quick=v;save()},'','vat'));
-   if(S.country==='CH')k.push(lbl(T('legalLetting'),'vat'),h('p',{class:'hint'},T('legalLettingHint')),checkbox(T('legalBareLetting'),T('legalBareLettingDesc'),S.landTax.bare,v=>{S.landTax.bare=v;save()},'','vat'),S.landTax.bare?checkbox(T('legalChOption'),'',S.landTax.option,v=>{S.landTax.option=v;save()},'','vat'):null,S.landTax.bare&&S.landTax.option?input(T('legalOptionDate'),'landTax.date','','date','','vat'):null);
-   if(S.country==='GB')k.push(lbl(T('legalLandTax'),'vat'),h('p',{class:'hint'},T('legalLandTaxHint')),checkbox(T('legalOptionToTax'),'',S.landTax.option,v=>{S.landTax.option=v;save()},'','vat'),S.landTax.option?h('div',{class:'row'},input(T('legalOptionDate'),'landTax.date','','date','','vat'),input(T('legalOptionRef'),'landTax.ref','','text','','vat')):null,checkbox(T('legalFacilitiesPackage'),T('legalFacilitiesPackageDesc'),S.landTax.facilities,v=>{S.landTax.facilities=v;save()},'','vat'))}
+   if(S.country==='CA'&&registered())k.push(lbl(T('legalCaTax'),'vat'),h('p',{class:'hint'},T('legalCaTaxHint')),input(T('legalQstNumber'),'landTax.qst','1234567890 TQ0001','text','','vat'),checkbox(T('legalQuickMethod'),T('legalQuickMethodDesc'),S.landTax.quick,v=>set('landTax.quick',v),'','vat'));
+   if(S.country==='CH')k.push(lbl(T('legalLetting'),'vat'),h('p',{class:'hint'},T('legalLettingHint')),checkbox(T('legalBareLetting'),T('legalBareLettingDesc'),S.landTax.bare,v=>set('landTax.bare',v),'','vat'),S.landTax.bare?checkbox(T('legalChOption'),'',S.landTax.option,v=>set('landTax.option',v),'','vat'):null,S.landTax.bare&&S.landTax.option?input(T('legalOptionDate'),'landTax.date','','date','','vat'):null);
+   if(S.country==='GB')k.push(lbl(T('legalLandTax'),'vat'),h('p',{class:'hint'},T('legalLandTaxHint')),checkbox(T('legalOptionToTax'),'',S.landTax.option,v=>set('landTax.option',v),'','vat'),S.landTax.option?h('div',{class:'row'},input(T('legalOptionDate'),'landTax.date','','date','','vat'),input(T('legalOptionRef'),'landTax.ref','','text','','vat')):null,checkbox(T('legalFacilitiesPackage'),T('legalFacilitiesPackageDesc'),S.landTax.facilities,v=>set('landTax.facilities',v),'','vat'))}
   k.push(lbl(T('legalBillingAddress'),'legal'),h('div',{class:'row'},input(T('fieldStreet'),'street','','text','','legal'),input(T('fieldPostal'),'postal','','text','','legal'),input(T('fieldCity'),'city','','text','','legal')),
    lbl(T('legalMentions'),'legal','mentions'),help('legal'),
    input(T('mentionLegalForm'),'mentions.legalForm',T('mentionLegalFormHint')),input(T('mentionTerms'),'mentions.terms',T('mentionTermsHint')),
    h('div',{class:'row'},input(T('mentionPenalty'),'mentions.penalty',''),input(T('mentionRecovery'),'mentions.recovery','')),
    h('div',{class:'row'},input(T('mentionEscompte'),'mentions.escompte',''),input(T('mentionInsurance'),'mentions.insurance','')),input(T('mentionSpecial'),'mentions.special',''));
   if(on('dunning')){k.push(lbl(T('legalDunning'),'dunning','reminders'),help('dunning'),h('p',{class:'hint'},T('legalDunningHint')),h('div',{class:'row'},input(T('dunningLevels'),'reminders.levels','','number'),input(T('dunningFirstDays'),'reminders.firstDays','','number'),input(T('dunningBetweenDays'),'reminders.betweenDays','','number')));
-   if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox(T('dunningAutomatic'),T('dunningAutomaticDesc'),S.reminders.automatic===true,v=>{S.reminders.automatic=v;save()},'','reminders_auto'));else k.push(needs('paymentReminders'))}
+   if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox(T('dunningAutomatic'),T('dunningAutomaticDesc'),S.reminders.automatic===true,v=>set('reminders.automatic',v),'','reminders_auto'));else k.push(needs('paymentReminders'))}
   else k.push(needs('dunning'));
   if(isEU()){k.push(lbl(T('einvoicePlatform'),'einvoice','einvoice'),help('einvoice'),h('p',{class:'hint'},T('einvoiceHint')),
     input(T('einvoiceUrl'),'einvoice.url','','text','https://…'),h('div',{class:'row'},input(T('einvoiceToken'),'einvoice.token',''),input(T('einvoiceHeader'),'einvoice.header',T('einvoiceHeaderHint'),'text','Authorization')),input(T('einvoiceField'),'einvoice.field',T('einvoiceFieldHint'),'text','file'),
@@ -798,8 +850,8 @@ const STEPS=[
 
 {id:'services',get title(){return T('servicesTitle')},get why(){return T('servicesWhy')},applies(){return on('services')||on('accessorySupplements')},
  build(){const k=[help('services')];const vatCol=registered()&&on('vatManagement');const supplyCol=vatCol&&on('supplyClassification');
-  if(on('services'))k.push(lbl(T('servicesServices'),'services','services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[]),...(supplyCol?[h('span',{},T('servicesSupplyCol'),helpIcon('supplyClass'))]:[])],S.services,(s)=>[bind(s,'name'),bind(s,'price','number'),...(vatCol?[bind(s,'vat','number')]:[]),...(supplyCol?[(()=>{const sel=h('select');[['property',T('servicesSupplyProperty')],['general',T('servicesSupplyGeneral')]].forEach(([v,l])=>sel.append(h('option',{value:v},l)));sel.value=s.supply==='general'?'general':'property';sel.onchange=()=>{s.supply=sel.value;save()};return sel})()]:[])],()=>({name:'',price:'',vat:'',supply:'property'}),'+ '+T('servicesAdd')));else k.push(needs('services'));
-  if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services','accessories'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],S.accessories,(a)=>[bind(a,'name'),bind(a,'supp','number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
+  if(on('services'))k.push(lbl(T('servicesServices'),'services','services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[]),...(supplyCol?[h('span',{},T('servicesSupplyCol'),helpIcon('supplyClass'))]:[])],'services',(s,sp)=>[cell(`${sp}.name`),cell(`${sp}.price`,'number'),...(vatCol?[cell(`${sp}.vat`,'number')]:[]),...(supplyCol?[pick(`${sp}.supply`,[['property',T('servicesSupplyProperty')],['general',T('servicesSupplyGeneral')]],s.supply==='general'?'general':'property')]:[])],()=>({name:'',price:'',vat:'',supply:'property'}),'+ '+T('servicesAdd')));else k.push(needs('services'));
+  if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services','accessories'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],'accessories',(a,ap)=>[cell(`${ap}.name`),cell(`${ap}.supp`,'number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},
  check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.err(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}
@@ -823,22 +875,21 @@ const STEPS=[
 {id:'roles',get title(){return T('rolesTitle')},get why(){return T('rolesWhy')},
  build(){const k=[];
   if(on('roleManagement')){k.push(help('roles'));for(const[role,label]of[['co_owner','roleCoOwner'],['admin','roleAdmin'],['member','roleEveryMember']]){if(role==='co_owner'&&!on('coOwner'))continue;
-    k.push(h('div',{class:'card'},lbl(T(label),'roles','perms'),...PERMS.filter(p=>p!=='issueInvoices'||on('invoicing')).filter(p=>p!=='manageServices'||on('services')).filter(p=>(p!=='manageDocuments'&&p!=='viewDocuments')||on('documents')).filter(p=>!['deployToProd','deployToDev','accessProd'].includes(p)||on('environmentPairs')).filter(p=>(p!=='viewNegotiations'&&p!=='manageNegotiations')||on('priceNegotiations')).map(p=>checkbox(permName(p),'',S.perms[role].includes(p),v=>{S.perms[role]=v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p);save()},'',p.endsWith('Negotiations')?'negotiations':'roles'))))}}
+    k.push(h('div',{class:'card'},lbl(T(label),'roles','perms'),...PERMS.filter(p=>p!=='issueInvoices'||on('invoicing')).filter(p=>p!=='manageServices'||on('services')).filter(p=>(p!=='manageDocuments'&&p!=='viewDocuments')||on('documents')).filter(p=>!['deployToProd','deployToDev','accessProd'].includes(p)||on('environmentPairs')).filter(p=>(p!=='viewNegotiations'&&p!=='manageNegotiations')||on('priceNegotiations')).map(p=>checkbox(permName(p),'',S.perms[role].includes(p),v=>set(`perms.${role}`,v?[...S.perms[role],p]:S.perms[role].filter(x=>x!==p)),'',p.endsWith('Negotiations')?'negotiations':'roles'))))}}
   else k.push(needs('roleManagement'),h('p',{class:'hint'},T('rolesDefaultMatrixHint')),help('roles'));
   if(on('adminInvoicing'))k.push(dep(T('rolesAdminInvoicingDep',{feature:quoted(featureTitle('adminInvoicing'))}),'features'));
   k.push(lbl(T('rolesDefaultRule'),'validation','validation'),help('validation'),h('p',{class:'hint'},T('rolesDefaultRuleHint')),
-   h('div',{class:'row'},input(T('rolesRequired'),'validation.required','','number'),checkbox(T('rolesOwnerAlways'),'',S.validation.ownerSignOff,v=>{S.validation.ownerSignOff=v;save()},'','validation')),
+   h('div',{class:'row'},input(T('rolesRequired'),'validation.required','','number'),checkbox(T('rolesOwnerAlways'),'',S.validation.ownerSignOff,v=>set('validation.ownerSignOff',v),'','validation')),
    lbl(T('rolesDomains'),'validation','domains'),h('p',{class:'hint'},T('rolesDomainsHint')));
-  const gate=DOMAIN_GATE;
-  for(const dk of DOMAINS){const g=gate[dk];if(g&&!on(g)){S.domains[dk].on=false;continue}const d=S.domains[dk];
-   const head=checkbox(domainName(dk),'',d.on,v=>{d.on=v;save()},'','validation');if(!d.on){k.push(head);continue}
-   const req=h('input',{type:'number'});req.value=d.required;req.oninput=()=>{d.required=req.value;save()};
-   const row=[h('div',{},lbl(T('rolesRequired'),'validation'),req),h('div',{},h('label',{},' '),checkbox(T('rolesOwnerSignOff'),'',d.ownerSignOff,v=>{d.ownerSignOff=v;save()},'','validation'))];
-   if(on('validationScopes')){const sc=h('select');for(const[v,l]of[['admins',T('scopeAdmins')],['members',T('scopeMembers')]])sc.append(h('option',{value:v},l));sc.value=d.validators||'admins';sc.onchange=()=>{d.validators=sc.value;save()};row.unshift(h('div',{},lbl(T('rolesWhoValidates'),'scopes'),sc,help('scopes'),h('p',{class:'hint'},T('rolesWhoValidatesHint'))))}
+  // A card whose switch is off is not offered (normalize() keeps it off).
+  for(const dk of DOMAINS){const g=DOMAIN_GATE[dk];if(g&&!on(g))continue;const d=S.domains[dk],dp=`domains.${dk}`;
+   const head=checkbox(domainName(dk),'',d.on,v=>set(`${dp}.on`,v),'','validation');if(!d.on){k.push(head);continue}
+   const row=[h('div',{},lbl(T('rolesRequired'),'validation'),cell(`${dp}.required`,'number')),h('div',{},h('label',{},' '),checkbox(T('rolesOwnerSignOff'),'',d.ownerSignOff,v=>set(`${dp}.ownerSignOff`,v),'','validation'))];
+   if(on('validationScopes'))row.unshift(h('div',{},lbl(T('rolesWhoValidates'),'scopes'),pick(`${dp}.validators`,[['admins',T('scopeAdmins')],['members',T('scopeMembers')]],d.validators||'admins'),help('scopes'),h('p',{class:'hint'},T('rolesWhoValidatesHint'))));
    k.push(h('div',{class:'card'},head,h('div',{class:'row'},...row)))}
   if(on('deletionRequests'))k.push(lbl(T('rolesAutoDelete'),'validation','autoValidate'),h('p',{class:'hint'},T('rolesAutoDeleteHint')),
-   checkbox(T('rolesAutoOwner'),'',S.autoValidate.owner,v=>{S.autoValidate.owner=v;save()},'','validation'),checkbox(T('rolesAutoAdmin'),'',S.autoValidate.admin,v=>{S.autoValidate.admin=v;save()},'','validation'));
-  else{S.autoValidate={admin:false,owner:false};k.push(needs('deletionRequests'))}
+   checkbox(T('rolesAutoOwner'),'',S.autoValidate.owner,v=>set('autoValidate.owner',v),'','validation'),checkbox(T('rolesAutoAdmin'),'',S.autoValidate.admin,v=>set('autoValidate.admin',v),'','validation'));
+  else k.push(needs('deletionRequests'));
   return k},
  check(){const f=[];if((parseInt(S.validation.required)||0)<1)f.push(F.err(T('rolesErrDefault'),'roles'));
   for(const dk of DOMAINS){const d=S.domains[dk];if(d.on&&(parseInt(d.required)||0)<1)f.push(F.err(T('rolesErrDomain',{domain:quoted(domainName(dk))}),'roles'))}
@@ -850,12 +901,14 @@ const STEPS=[
   const cols=[T('colName'),T('colEmail'),T('colRole'),T('colSubscription'),T('colOverage'),...(whole?[T('colWholeSpaces')]:[]),...(sim?[T('colSimultaneous')]:[]),T('colLimit')];
   const hint=[T('membersHint',{packages:pk?T('membersHintPackages'):''}),whole?T('membersHintWhole'):null,sim?T('membersHintSimultaneous'):null].filter(Boolean).join(' ');
   const k=[help('members'),h('p',{class:'hint'},hint,destBadge('members')),
-   tableRows(cols,S.members,(m)=>[bind(m,'name'),bind(m,'email','email'),
-    (()=>{const s=h('select');s.append(h('option',{value:'member'},T('roleMember')),h('option',{value:'admin'},T('roleAdmin')));s.value=m.role||'member';s.onchange=()=>{m.role=s.value;save()};return s})(),
-    (()=>{const s=h('select');(S.freeLevel?['25','50','75','80','100']:S.subLevels.length?S.subLevels:['100']).forEach(v=>s.append(h('option',{value:v},v+' %')));if(S.freeLevel){s.remove();return bind(m,'pct','number')}s.value=m.pct||'100';if(![...s.options].some(o=>o.value===s.value)){s.value=s.options[0].value;m.pct=s.value}s.onchange=()=>{m.pct=s.value;save()};return s})(),
-    (()=>{const s=h('select');s.append(h('option',{value:'blocked'},T('overageBlocked')),h('option',{value:'payg'},T('overagePayg')));if(pk)s.append(h('option',{value:'packages'},T('overagePackages')));s.value=m.overage||'blocked';if(s.value==='packages'&&!pk){s.value='blocked';m.overage='blocked'}s.onchange=()=>{m.overage=s.value;save()};return s})(),
-    ...(whole?[(()=>{const c=h('input',{type:'checkbox'});c.title=T('membersWholeTitle');c.checked=!!m.wholeSpaces;c.onchange=()=>{m.wholeSpaces=c.checked;save()};return c})()]:[]),
-    ...(sim?[bind(m,'simultaneous','number')]:[]),bind(m,'limit','number')],
+   // The level and the overage policy are kept among what is offered by
+   // normalize(); the selects only show them.
+   tableRows(cols,'members',(m,mp)=>[cell(`${mp}.name`),cell(`${mp}.email`,'email'),
+    pick(`${mp}.role`,[['member',T('roleMember')],['admin',T('roleAdmin')]],m.role||'member'),
+    S.freeLevel?cell(`${mp}.pct`,'number'):pick(`${mp}.pct`,(S.subLevels.length?S.subLevels:['100']).map(v=>[v,v+' %']),m.pct||'100'),
+    pick(`${mp}.overage`,[['blocked',T('overageBlocked')],['payg',T('overagePayg')],...(pk?[['packages',T('overagePackages')]]:[])],m.overage||'blocked'),
+    ...(whole?[(()=>{const c=h('input',{type:'checkbox'});c.title=T('membersWholeTitle');c.checked=!!m.wholeSpaces;c.onchange=()=>set(`${mp}.wholeSpaces`,c.checked);return c})()]:[]),
+    ...(sim?[cell(`${mp}.simultaneous`,'number')]:[]),cell(`${mp}.limit`,'number')],
     ()=>({name:'',email:'',role:'member',pct:S.subLevels[0]||'100',overage:'blocked',wholeSpaces:false,simultaneous:'',limit:''}),'+ '+T('membersAdd')),
    !pk&&on('moneyTab')?dep(T('membersPackagesHidden'),'billing'):null,
    lbl(T('membersInvites'),'invites','invites'),help('invites'),h('p',{class:'hint'},T('membersInvitesHint')),
@@ -883,7 +936,7 @@ const STEPS=[
    services:()=>n(S.services)?T('cfgServices',{n:n(S.services),list:S.services.filter(x=>x.name.trim()).map(x=>x.name+' '+money(x.price)).join(', ')}):T('cfgServicesNone'),
    accessorySupplements:()=>n(S.accessories)?T('cfgAccessories',{n:n(S.accessories),list:S.accessories.filter(x=>x.name.trim()).map(x=>T('cfgPerHalfDayItem',{name:x.name,price:money(x.supp)})).join(', ')}):T('cfgAccessoriesNone'),
    onlinePayments:()=>T('cfgOnlinePayments'),
-   invoicing:()=>[T(({not_subject:'cfgRegimeNotSubject',exempt:'cfgRegimeExempt',registered:'cfgRegimeRegistered'})[S.vatRegime]),registered()?T(({standard:'cfgExigStandard',invoice:'cfgExigInvoice',cash:'cfgExigPayment'})[taxPointOf(S.vatExigibility)]):null,S.regNumber?T('cfgRegNumber',{n:S.regNumber}):null,S.street||S.city?[S.street,S.postal,S.city].filter(Boolean).join(' '):null,isEU()?T(S.einvoice.url?'cfgEinvoiceConfigured':'cfgEinvoiceTodo'):T('cfgNonEu')].filter(Boolean).join(' · '),
+   invoicing:()=>[T(({not_subject:'cfgRegimeNotSubject',exempt:'cfgRegimeExempt',registered:'cfgRegimeRegistered'})[S.vatRegime]),registered()?T(({standard:'cfgExigStandard',invoice:'cfgExigInvoice',cash:'cfgExigPayment'})[S.vatExigibility]):null,S.regNumber?T('cfgRegNumber',{n:S.regNumber}):null,S.street||S.city?[S.street,S.postal,S.city].filter(Boolean).join(' '):null,isEU()?T(S.einvoice.url?'cfgEinvoiceConfigured':'cfgEinvoiceTodo'):T('cfgNonEu')].filter(Boolean).join(' · '),
    adminInvoicing:()=>T('cfgAdminInvoicing'),
    pdfExport:()=>T('cfgPdfExport'),
    seriesBooking:()=>T('cfgSeriesBooking'),
@@ -937,7 +990,7 @@ const STEPS=[
   const k=[help('features'),h('p',{class:'hint'},T('summaryCountHint',{active:active.length,inactive:inactive.length}))];
   for(const[key]of active){let conf='';try{conf=cfg[key]?cfg[key]():''}catch(e){conf=''}
    const kids=children(key);
-   const c=h('input',{type:'checkbox'});c.checked=true;c.onchange=()=>{S.features[key]=false;save();render()};
+   const c=h('input',{type:'checkbox'});c.checked=true;c.onchange=()=>{applyFeature(key,false);render()};
    k.push(h('div',{class:'card'},h('label',{class:'check',style:'margin:0'},c,h('span',{},h('b',{},featureTitle(key)),h('div',{class:'d'},featureDesc(key)),conf?h('div',{class:'d',style:'margin-top:4px;color:var(--ink)'},T('summaryConfigured',{conf})):null,
      kids.length?h('div',{class:'d',style:'margin-top:4px'},T('summaryUncheckAlso',{list:kids.map(c=>featureTitle(c)).join(', ')})):null,
      help(FEATURE_HELP[key])))))}
@@ -946,7 +999,7 @@ const STEPS=[
     // Ticking a child MUST bring its chain, or the row says "on" while
     // `on()` reads it as off — a contradiction the page used to allow.
     return checkbox(featureTitle(key),also.length?T('featuresAlsoEnables',{desc:d,list:quotedList(also)}):d,false,
-     v=>{if(v)enableWith(key);else S.features[key]=false;save()})})));
+     v=>applyFeature(key,v))})));
   return k},
  check(){const active=FEATURES.filter(([k])=>on(k)).length;return[F.ok(T('summaryOk',{active,inactive:FEATURES.length-active}))]}},
 {id:'review',get title(){return T('reviewTitle')},get why(){return T('reviewWhy')},
@@ -955,7 +1008,7 @@ const STEPS=[
   // #1330 — what the answers mean in business terms: each process, the
   // subprocesses in use, and a ticked switch that waits for a prerequisite.
   k.push(h('div',{class:'card'},lbl(T('reviewProcesses')),...PROCESSES.map(p=>{
-   const feats=p.subprocesses.flatMap(sp=>sp.features).filter(k=>FEATURE_KEYS.has(k));const n=feats.filter(on).length;
+   const feats=p.subprocesses.flatMap(sp=>sp.features).filter(k=>FEATURE_KEYS.has(k));const n=feats.filter(k=>on(k)).length;
    const subs=p.subprocesses.filter(sp=>sp.features.some(k=>FEATURE_KEYS.has(k)&&on(k))).map(sp=>subprocessTitle(sp.key));
    const waiting=feats.filter(k=>S.features[k]&&!on(k)).map(k=>T('reviewWaitingFor',{feature:featureTitle(k),parent:featureTitle(waitsFor(k))}));
    return h('div',{class:'finding '+(n?'ok':'off')},h('span',{class:'lvl'},n?'✓':'–'),h('span',{},processTitle(p.key)+' — '+(n?T('reviewProcessCount',{n,total:feats.length,list:subs.join(T('listSep'))}):T('reviewProcessOff')),...waiting.map(w=>h('div',{class:'d'},w))))})));
@@ -1046,7 +1099,6 @@ function render(){
   if(!next&&b)last.disabled=true;
   nav.append(h('button',{class:'btn ghost',type:'button',title:T('setupPrevious'),onclick:()=>prev&&go(prev.id)},'‹ '+(prev?prev.title:T('navStart'))),last);
   nav.firstChild.disabled=!prev}
- save();
 }
 // The export is GATED, not warned about.
 //
@@ -1128,10 +1180,10 @@ function configurationTree(){
   subscription_levels:{enabled_presets:levels.filter(x=>SUB_PRESETS.includes(x)),extra_levels:levels.filter(x=>!SUB_PRESETS.includes(x)),allow_custom:!!S.freeLevel},
   invoice_legal:{legal_form:S.mentions.legalForm||'',registration:S.mentions.register||'',payment_terms:S.mentions.terms||'',late_penalty:S.mentions.penalty||'',
    recovery_indemnity:S.mentions.recovery||'',escompte:S.mentions.escompte||'',insurance:S.mentions.insurance||'',special_mentions:S.mentions.special||'',
-   seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_tax_point:taxPointOf(S.vatExigibility),
-   ...(({invoice:{vat_exigibility:'invoice'},cash:{vat_exigibility:'payment'}})[taxPointOf(S.vatExigibility)]||{}),
+   seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_tax_point:S.vatExigibility,
+   ...(({invoice:{vat_exigibility:'invoice'},cash:{vat_exigibility:'payment'}})[S.vatExigibility]||{}),
    // #2357 — how often the return is filed: a stored parameter now.
-   ...(on('vatDeclarations')&&registered()?{vat_declaration_period:vatPeriodOf(S.vatPeriod)}:{}),
+   ...(on('vatDeclarations')&&registered()?{vat_declaration_period:S.vatPeriod}:{}),
    ...(registered()&&S.country==='CA'&&S.landTax.quick?{quick_method:true}:{}),
    ...(registered()&&S.country==='CH'?{letting_kind:S.landTax.bare?'bare':'',option_to_tax:!!(S.landTax.bare&&S.landTax.option),option_to_tax_date:S.landTax.bare&&S.landTax.option?S.landTax.date:''}:{}),
    ...(registered()&&S.country==='GB'?{option_to_tax:!!S.landTax.option,option_to_tax_date:S.landTax.option?S.landTax.date:'',option_to_tax_reference:S.landTax.option?S.landTax.ref.trim():'',facilities_package:!!S.landTax.facilities}:{})},
@@ -1235,7 +1287,7 @@ function buildXml(){
  push('    <services>');
  if(on('services'))S.services.filter(s=>s.name.trim()).forEach(s=>push(`      <service name="${esc(s.name)}" price-cents="${Math.round((parseFloat(s.price)||0)*100)}"${s.vat!==''&&s.vat!=null?` vat-percent="${s.vat}"`:''}${s.supply==='general'?' supply="general"':''}/>`));
  push('    </services>');
- push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" vat-tax-point="${taxPointOf(S.vatExigibility)}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
+ push(`    <legal organization="${S.org}" vat-regime="${S.vatRegime}" vat-tax-point="${S.vatExigibility}" registration="${esc(S.regNumber)}" vat-id="${esc(S.vatId)}" exemption-reason="${esc(S.exemption)}" street="${esc(S.street)}" postal-code="${esc(S.postal)}" city="${esc(S.city)}">`);
  if(on('vatManagement')&&registered())S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).forEach((r,i)=>push(`      <vat-rate label="${esc(r.label)}" percent="${r.percent}" default="${i===0}"${on('vatGroups')&&r.group?` group="${r.group}"`:``}${on('vatRateHistory')&&r.validFrom?` valid-from="${r.validFrom}"`:``}/>`));
  for(const[k,v]of Object.entries(S.mentions))if(String(v).trim())push(`      <mention key="${k}" value="${esc(v.trim())}"/>`);
  if(on('dunning'))push(`      <reminders levels="${S.reminders.levels}" first-days="${S.reminders.firstDays}" between-days="${S.reminders.betweenDays}" automatic="${on('paymentReminders')&&S.reminders.automatic===true}"/>`);
@@ -1285,7 +1337,7 @@ function parseBack(text){
  S.accessories=[...root.querySelectorAll('accessories > accessory')].map(a=>({name:a.getAttribute('name'),supp:String((parseInt(a.getAttribute('supplement-cents'))||0)/100)}));
  const lvls=[...root.querySelectorAll('floor-plan > level')];
  if(lvls.length)S.levels=lvls.map(l=>({name:l.getAttribute('name'),site:l.getAttribute('site')||'',bookable:l.getAttribute('bookable-as-whole')==='true',offices:[...l.querySelectorAll('office')].map(o=>({name:o.getAttribute('name'),bookable:o.getAttribute('bookable-as-whole')==='true',price:o.hasAttribute('price-cents')?String((parseInt(o.getAttribute('price-cents'))||0)/100):'',desks:[...o.querySelectorAll('desk')].map(d=>{const seats=[...d.querySelectorAll('seat')];const first=seats[0]?.getAttribute('name')||XML_SEAT_FALLBACK+' 1';return{name:d.getAttribute('name'),seats:seats.length,prefix:first.replace(/\s*\d+$/,'')||XML_SEAT_FALLBACK}})}))}));
- const su=root.querySelector('setup');if(!su)return;
+ const su=root.querySelector('setup');if(!su){S=normalize(S);return}
  const av=su.querySelector('availability');if(av){S.granularity=av.getAttribute('granularity')||S.granularity;S.dayStart=av.getAttribute('day-start')||S.dayStart;S.boundary=av.getAttribute('half-boundary')||S.boundary;S.dayEnd=av.getAttribute('day-end')||S.dayEnd;S.weekdays=(av.getAttribute('open-weekdays')||'1,2,3,4,5').split(',');S.closures=[...av.querySelectorAll('closure')].map(c=>c.getAttribute('day'));S.policies={allowPast:av.getAttribute('allow-past-bookings')==='true',adminCheckout:(av.getAttribute('admin-check-out')??av.getAttribute('admin-checkout'))==='true',outsideHours:av.getAttribute('outside-hours-mode')||(av.getAttribute('grid-within-hours')==='true'?'walkup_only':'charged'),simultaneous:av.getAttribute('simultaneous-reservations')||'1',legendProfile:av.getAttribute('legend-profile')||'full'};
   S.horizonDays=av.getAttribute('advance-horizon-days')||S.horizonDays;
   S.minDuration=av.getAttribute('min-duration-minutes')||S.minDuration;
@@ -1314,6 +1366,7 @@ S.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name')|
  // the file already carries.
  const pf=su.querySelector('profile');S.journey=pf?{used:true,answers:Object.fromEntries([...pf.querySelectorAll('answer')].map(a=>[a.getAttribute('question'),a.getAttribute('value')==='true']))}:{used:false,answers:{}};
  S.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct'),overage:m.getAttribute('overage-policy')||'blocked',wholeSpaces:m.getAttribute('may-reserve-whole-spaces')==='true',simultaneous:m.getAttribute('simultaneous-reservations')||'',limit:m.getAttribute('reservation-limit')||''}));
+ S=normalize(S);
 }
 // The surface the WebMCP tools (setup_webmcp.js) use: the page's own state
 // and handlers, never a copy. `hooks` run after a language change.
@@ -1321,9 +1374,9 @@ window.__setup={
  get S(){return S},get LANG(){return LANG},get FEATURES(){return FEATURES},get REQUIRES(){return REQUIRES},
  get DEFAULTS(){return DEFAULTS},get PROCESSES(){return PROCESSES},get PARAM_META(){return PARAM_META},get PARAM_EXCLUDED(){return PARAM_EXCLUDED},
  get WD(){return WD},get COUNTRIES(){return COUNTRIES},
- T,setLang,featureTitle,featureDesc,processTitle,subprocessTitle,weekdayName,on,mins,num,save,set,get,onCountry,applyFeature,enableWith,alsoEnabled,
+ T,setLang,featureTitle,featureDesc,processTitle,subprocessTitle,weekdayName,on,mins,num,save,set,setMany,get,normalize,onCountry,applyFeature,enableWith,alsoEnabled,
  get VAT_RATES(){return VAT_RATES},seedVatRates,buildXml,findings,restore,hooks:[],
- reset(){S=restore(null);S.vatExigibility=taxPointOf(S.vatExigibility);save();render()},
+ reset(){S=restore(null);save();render()},
  rerender(){render()},
 };
 applyChrome();

@@ -297,6 +297,11 @@ and commit after touching either source. `test/lint/setup_l10n_test.dart` gates 
 parity and French literals left in the page; the step harness renders every locale and
 requires byte-identical XML for the same answers.
 
+**One write path, pure steps (#2924).** Every answer is written through `set()`/`setMany()`,
+and every repair the page applies to stored answers (a select's fallback, the numbering
+reset clamp, a card whose switch is off) lives in the pure `normalize()`, run on every save
+and every load. A step's `build()` only reads; `render()` never saves.
+
 The WebMCP tools (`web/setup_webmcp.js`, #2500) read the page's own parameter definitions: adding a parameter needs no tool change, only its `PARAM_META` row in `web/setup.html` (or a reasoned `PARAM_EXCLUDED` entry) — the step harness fails otherwise.
 
 The app's own WebMCP tools (`lib/core/webmcp/webmcp_tools.g.dart`, #2504) are generated from `contracts/mcp/operations.json`, like every other MCP rendering; they run through the app's own commands with the in-app confirmation (ADR 0042).

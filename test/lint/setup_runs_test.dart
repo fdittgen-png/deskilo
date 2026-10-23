@@ -43,6 +43,9 @@ void main() {
     expect(out, contains('steps: 13'));
     // #2868 — and the questions step round-trips through its own file.
     expect(out, contains('profile: round-trips'));
+    // #2924 — the WebMCP tools and the drawn screen read the same,
+    // normalized answers, repaired on load before any step is drawn.
+    expect(out, contains('normalize: the tools and the screen read the same'));
     expect(out, contains('features: ${WorkspaceFeature.values.length}'));
     // #1330 — and grouped every switch under a process of the registry.
     expect(out, contains('processes: ${workspaceProcesses.length}'));

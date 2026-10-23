@@ -134,6 +134,7 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null, modelConte
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
 globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
 globalThis.__applicable=()=>applicable().map(st=>st.id); globalThis.__go=go; globalThis.__setExpert=setExpert; globalThis.__cur=()=>cur;
+globalThis.__setMode=setMode;
 `);
   // The shared module and the questionnaire's tools, as the page loads them
   // after its own script (#2501).
@@ -528,6 +529,35 @@ const fakeContext = () => {
   if (!steps().includes('features')) fail('expert: the features step is hidden with setupGuide off');
   if (off.byId.expertwrap.style.display !== 'none') fail('expert: the expert switch shows with setupGuide off');
   console.log('expert: the switches are the expert view; links open it');
+}
+// #2924 — one pure normalize() repairs the answers on every save and every
+// load; drawing a step never writes. So the WebMCP tools, which compute
+// their blocking findings without drawing anything, see what the screen
+// shows once drawn, and a stored answer is repaired before any step runs.
+{
+  const same = (a, b, what) => { if (JSON.stringify(a) !== JSON.stringify(b)) fail(`normalize: ${what}: got ${JSON.stringify(a)}, want ${JSON.stringify(b)}`); };
+  const c = fakeContext();
+  load('en', { name: 'Normal Space', domains: { payment: { on: true, required: '0', ownerSignOff: false } } }, { modelContext: c });
+  const P = globalThis.window.__setup;
+  const domainErr = globalThis.window.SETUP_L10N.en.s.rolesErrDomain.split('{')[0];
+  const errs = () => P.findings().filter((x) => x.lvl === 'err').map((x) => x.t);
+  if (!errs().some((t) => t.startsWith(domainErr))) fail('normalize: the fixture lacks its blocking domain finding');
+  const r = await c.call('set_answers', { answers: { 'features.moneyTab': false } });
+  if (!r.ok) fail('normalize: set_answers refused: ' + JSON.stringify(r.error));
+  const tools = r.data.blocking_findings;
+  globalThis.__setMode(true); // every step drawn, as the screen shows them
+  same(tools, errs(), 'blocking_findings after set_answers vs the drawn screen');
+  if (tools.some((t) => t.startsWith(domainErr))) fail('normalize: a card whose switch is off still blocks');
+  // A reset that cannot follow the number's date, repaired on load.
+  load('en', { name: 'Numbered Space', numbering: { prefix: 'F-', datePart: 'none', digits: '4', reset: 'monthly' } });
+  const Q = globalThis.window.__setup;
+  if (globalThis.__cur() === 'legal') fail('normalize: the legal step was drawn');
+  same(Q.S.numbering.reset, 'never', 'numbering.reset after load');
+  // Pure: the answers handed in are not touched.
+  const given = { ...Q.S, numbering: { ...Q.S.numbering, datePart: 'year', reset: 'monthly' } };
+  const out = Q.normalize(given);
+  same([given.numbering.reset, out.numbering.reset], ['monthly', 'yearly'], 'normalize copies, never mutates');
+  console.log('normalize: the tools and the screen read the same answers');
 }
 console.log('steps:', globalThis.__STEPS.length, '| features:', globalThis.__FEATURES.length);
 console.log('locales:', LOCALES.join(','));

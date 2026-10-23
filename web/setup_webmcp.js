@@ -171,9 +171,11 @@
   function blockers() {
     return P.findings().filter(function (x) { return x.lvl === 'err'; }).map(function (x) { return x.t; });
   }
+  // #2924 — the snapshot, repaired the way every save repairs answers.
   function restoreState(snap) {
+    var next = P.normalize(JSON.parse(snap));
     Object.keys(P.S).forEach(function (k) { delete P.S[k]; });
-    Object.assign(P.S, JSON.parse(snap));
+    Object.assign(P.S, next);
     P.save();
   }
   function ordered(answers) {
