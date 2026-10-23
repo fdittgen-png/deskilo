@@ -7,6 +7,10 @@
 // workspace's colour or its development strip — that is decided above
 // the navigator, by route (app/shell/layer_chrome.dart), so every page
 // pushed from here wears it too.
+//
+// This is the shell the `personalShell` flag keeps when it is OFF; on, the
+// five-destination personal shell (me_personal_shell.dart) takes the same
+// MeTab table and the router owns the selected destination.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -28,21 +32,31 @@ import 'me_home_tab.dart';
 import 'me_messages_tab.dart';
 import 'task_wizard_entry.dart';
 
-/// The four tabs, in bar order; the wire name is the `tab` query value.
-/// Each is one destination of the bar, the drawer and the sidebar alike.
+/// The one table of Me's destinations: the wire name is the legacy `tab`
+/// query value, [path] the personal shell's address. [legacy] is the
+/// four-tab shell's bar order (the flag off); [destinations] the five
+/// branches of the personal shell (the flag on); [me] is a tab in the first
+/// and the account utility in the second. Each is one destination of the
+/// bar, the drawer, the rail and the sidebar alike.
 enum MeTab {
-  home('home', 'me-tab-home', Icons.home_outlined, Icons.home),
+  home('home', 'me-tab-home', Icons.home_outlined, Icons.home, '/me'),
+  spaces('spaces', 'me-tab-spaces', Icons.workspaces_outline,
+      Icons.workspaces, '/me/spaces'),
   discover('discover', 'me-tab-discover', Icons.travel_explore_outlined,
-      Icons.travel_explore),
-  messages('messages', 'me-tab-messages', Icons.forum_outlined, Icons.forum),
-  me('me', 'me-tab-me', Icons.person_outline, null);
+      Icons.travel_explore, '/me/discover'),
+  messages('messages', 'me-tab-messages', Icons.forum_outlined, Icons.forum,
+      '/me/messages'),
+  data('data', 'me-tab-data', Icons.folder_shared_outlined,
+      Icons.folder_shared, '/me/data'),
+  me('me', 'me-tab-me', Icons.person_outline, null, '/me/account');
 
-  const MeTab(this.wire, this.destinationKey, this.icon, this.selectedIcon);
+  const MeTab(
+      this.wire, this.destinationKey, this.icon, this.selectedIcon, this.path);
 
   final String wire;
 
-  /// The key of this tab's destination in the bar, the drawer and the
-  /// sidebar alike, written out so the task recorder names each tab.
+  /// The key of this tab's destination in the bar, the drawer, the rail and
+  /// the sidebar alike, written out so the task recorder names each tab.
   final String destinationKey;
   final IconData icon;
 
@@ -50,15 +64,85 @@ enum MeTab {
   /// person's own avatar instead.
   final IconData? selectedIcon;
 
+  /// Where the personal shell opens this destination.
+  final String path;
+
+  /// The four-tab shell, in bar order.
+  static const List<MeTab> legacy = [home, discover, messages, me];
+
+  /// The five destinations of the personal shell, in branch order.
+  static const List<MeTab> destinations = [home, spaces, discover, messages, data];
+
+  /// The four-tab shell's wording.
   String label(AppLocalizations l10n) => switch (this) {
     home => l10n.meTabHome,
+    spaces => l10n.meMySpaces,
     discover => l10n.meTabDiscover,
     messages => l10n.meTabMessages,
+    data => l10n.meTabData,
     me => l10n.uxProfileAccount,
   };
 
+  /// The personal shell's wording: Overview leads, and the account is the
+  /// Confidentiality-and-account utility.
+  String destinationLabel(AppLocalizations l10n) => switch (this) {
+    home => l10n.meTabOverview,
+    me => l10n.meUtilityAccount,
+    _ => label(l10n),
+  };
+
+  /// The personal shell's wording on a phone's bottom bar.
+  String compactLabel(AppLocalizations l10n) => switch (this) {
+    home => l10n.meTabOverviewShort,
+    spaces => l10n.meTabSpacesShort,
+    data => l10n.meTabDataShort,
+    _ => destinationLabel(l10n),
+  };
+
+  /// The legacy tab a `tab` query names; Home for anything else.
   static MeTab fromQuery(String? wire) =>
-      values.where((t) => t.wire == wire).firstOrNull ?? MeTab.home;
+      legacy.where((t) => t.wire == wire).firstOrNull ?? MeTab.home;
+
+  /// The destination whose branch holds [path]: a page nested under a
+  /// destination belongs to it (`/me/account` to Overview, `/me/messages/x`
+  /// to Messages).
+  static MeTab destinationOf(String path) {
+    MeTab best = home;
+    for (final tab in destinations) {
+      final under = path == tab.path || path.startsWith('${tab.path}/');
+      if (under && tab.path.length >= best.path.length) best = tab;
+    }
+    return best;
+  }
+}
+
+/// #1652 — an invitation kept on this device is offered once per server
+/// when Me opens on its home; [stillOnHome] is asked again after each wait,
+/// since the person may have moved on meanwhile.
+Future<void> offerKeptInvitation(
+  WidgetRef ref,
+  BuildContext context, {
+  required bool Function() stillOnHome,
+}) async {
+  final invitations = ref.read(pendingInvitationsProvider);
+  final arrived = ref.read(arrivedInvitationsProvider);
+  try {
+    final active = await ref.read(activeBackendProvider.future);
+    if (!context.mounted || arrived.wasOfferedOn(active.url)) return;
+    final text = await invitations.offeredOn(active);
+    if (!context.mounted || text == null || !stillOnHome()) return;
+    arrived
+      ..markOfferedOn(active.url)
+      ..hold(text);
+    context.go('/onboarding?join=1');
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn(
+      'workspace',
+      'kept invitation unreadable',
+      error: e,
+      stackTrace: st,
+    );
+  }
 }
 
 class MeShell extends ConsumerStatefulWidget {
@@ -76,30 +160,10 @@ class _MeShellState extends ConsumerState<MeShell> {
   @override
   void initState() {
     super.initState();
-    unawaited(_offerKeptInvitation());
-  }
-
-  Future<void> _offerKeptInvitation() async {
-    if (widget.tab != MeTab.home) return;
-    final invitations = ref.read(pendingInvitationsProvider);
-    final arrived = ref.read(arrivedInvitationsProvider);
-    try {
-      final active = await ref.read(activeBackendProvider.future);
-      if (!mounted || arrived.wasOfferedOn(active.url)) return;
-      final text = await invitations.offeredOn(active);
-      if (!mounted || text == null || _tab != MeTab.home) return;
-      if (GoRouter.of(context).state.uri.path != '/me') return;
-      arrived
-        ..markOfferedOn(active.url)
-        ..hold(text);
-      context.go('/onboarding?join=1');
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn(
-        'workspace',
-        'kept invitation unreadable',
-        error: e,
-        stackTrace: st,
-      );
+    if (widget.tab == MeTab.home) {
+      unawaited(offerKeptInvitation(ref, context,
+          stillOnHome: () => mounted && _tab == MeTab.home &&
+              GoRouter.of(context).state.uri.path == '/me'));
     }
   }
 
@@ -126,6 +190,8 @@ class _MeShellState extends ConsumerState<MeShell> {
     MeTab.discover => const DirectoryScreen(embedded: true),
     MeTab.messages => const MeMessagesTab(),
     MeTab.me => const MeAccountTab(),
+    // Branches of the personal shell only; never a tab of this one.
+    MeTab.spaces || MeTab.data => const SizedBox.shrink(),
   };
 
   @override
@@ -142,6 +208,7 @@ class _MeShellState extends ConsumerState<MeShell> {
     final wideNavigation = menu &&
         MediaQuery.sizeOf(context).width >= kWideNavigationMinWidth &&
         MediaQuery.textScalerOf(context).scale(100) <= kWideNavigationMaxTextScale;
+    final selected = MeTab.legacy.indexOf(_tab);
     Widget destination(MeTab tab, {required bool permanent}) => ListTile(
           key: ValueKey(tab.destinationKey),
           leading: icon(tab, tab.icon),
@@ -164,7 +231,7 @@ class _MeShellState extends ConsumerState<MeShell> {
                       ),
                     ),
                     const Divider(),
-                    for (final tab in MeTab.values.takeWhile((t) => t != MeTab.me))
+                    for (final tab in MeTab.legacy.takeWhile((t) => t != MeTab.me))
                       destination(tab, permanent: permanent),
                     // The task wizard sits between Messages and the profile.
                     TaskWizardEntry(
@@ -209,9 +276,9 @@ class _MeShellState extends ConsumerState<MeShell> {
           const VerticalDivider(width: 1),
         ],
         Expanded(child: IndexedStack(
-        index: _tab.index,
+        index: selected,
         children: [
-          for (final tab in MeTab.values)
+          for (final tab in MeTab.legacy)
             TickerMode(
               enabled: _tab == tab,
               child: _visited.contains(tab)
@@ -224,10 +291,10 @@ class _MeShellState extends ConsumerState<MeShell> {
       bottomNavigationBar: menu
           ? null
           : NavigationBar(
-              selectedIndex: _tab.index,
-              onDestinationSelected: (i) => _show(MeTab.values[i]),
+              selectedIndex: selected,
+              onDestinationSelected: (i) => _show(MeTab.legacy[i]),
               destinations: [
-                for (final tab in MeTab.values)
+                for (final tab in MeTab.legacy)
                   NavigationDestination(
                     key: ValueKey(tab.destinationKey),
                     icon: icon(tab, tab.icon),

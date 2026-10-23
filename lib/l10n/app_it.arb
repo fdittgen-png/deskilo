@@ -4892,6 +4892,8 @@
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
   },
+  "featurePersonalShellDesc": "Io in cinque destinazioni: Panoramica, I miei spazi, Scopri, Messaggi e I miei dati, con una barra laterale in una finestra ampia, una barra verticale in una media e una barra in basso sul telefono. Disattivata, Io mantiene le sue quattro schede.",
+  "featurePersonalShellTitle": "Interfaccia personale (cinque destinazioni)",
   "featurePlaceFeedbackDesc": "I membri segnano postazioni, tavoli, uffici e piani come preferiti e li valutano da 0 a 5 stelle. Un preferito è personale; una valutazione mostra la media e quante ce ne sono, mai chi. Un assistente può elencare i preferiti, prenotarne uno e registrare una valutazione. Disattivato nasconde cuori e stelle e rifiuta le scritture; nient'altro ne dipende.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"
@@ -8513,7 +8515,11 @@
   "meAccountInMe": "Il mio account è in Io",
   "meAccountInMeBody": "Foto, lingua, tema e accessi sono suoi in ogni spazio.",
   "meAddressSaveFailed": "Impossibile salvare il suo indirizzo. Riprovi.",
+  "meContextPersonal": "Personale",
   "meCreateSpace": "Crea uno spazio",
+  "meDataViewReservations": "Prenotazioni",
+  "meDataVisitsEmptyBody": "Le Sue prenotazioni restano nel calendario di ogni spazio; le Sue visite come ospite compaiono qui.",
+  "meDataVisitsEmptyTitle": "Ancora nessuna visita",
   "meFinanceGlanceOwed": "Da pagare: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -8573,10 +8579,17 @@
   "meSpacePending": "In attesa di approvazione",
   "meSpacesNoMatch": "Nessuno spazio corrisponde.",
   "meSpacesSearch": "Cerca nei miei spazi",
+  "meTabData": "I miei dati",
+  "meTabDataShort": "Dati",
   "meTabDiscover": "Scopri",
   "meTabHome": "Home",
   "meTabMe": "Io",
   "meTabMessages": "Messaggi",
+  "meTabOverview": "Panoramica",
+  "meTabOverviewShort": "Panoramica",
+  "meTabSpacesShort": "Spazi",
+  "meUtilityAccount": "Riservatezza e account",
+  "meUtilityHelp": "Aiuto e assistente",
   "meWhereSpacesLive": "Dove si trovano i miei spazi",
   "memberAccountTitle": "Il mio account",
   "@memberAccountTitle": {

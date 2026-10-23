@@ -20,6 +20,7 @@ import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import '../schema_gate.dart';
+import 'me_adapters.dart';
 
 /// Routes of the profile feature.
 List<RouteBase> profileRoutes(RouteEnv env) {
@@ -30,6 +31,8 @@ List<RouteBase> profileRoutes(RouteEnv env) {
     ),
     GoRoute(
       path: '/profiles',
+      // #2552 — under the personal shell the memberships are /me/spaces.
+      redirect: (context, state) => personalShellAdapter(env, state),
       builder: (context, state) => const ProfilesScreen(),
     ),
     // #780 — which Supabase instance this device talks to. Outside the

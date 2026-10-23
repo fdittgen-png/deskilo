@@ -6907,6 +6907,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Mitglieder tragen Name, Postanschrift, Telefon, E-Mail und Kennungen in den Einstellungen ein; Rechnungen und Briefe drucken sie im genormten Anschriftenblock.';
 
   @override
+  String get featurePersonalShellDesc =>
+      'Ich als fünf Ziele: Überblick, Meine Spaces, Entdecken, Nachrichten und Meine Daten, mit einer Seitenleiste in einem breiten Fenster, einer schmalen Leiste in einem mittleren und einer Leiste unten auf dem Telefon. Ausgeschaltet behält Ich seine vier Tabs.';
+
+  @override
+  String get featurePersonalShellTitle => 'Persönliche Oberfläche (fünf Ziele)';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran.';
 
@@ -12634,7 +12641,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ihre Adresse konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.';
 
   @override
+  String get meContextPersonal => 'Persönlich';
+
+  @override
   String get meCreateSpace => 'Space gründen';
+
+  @override
+  String get meDataViewReservations => 'Buchungen';
+
+  @override
+  String get meDataVisitsEmptyBody =>
+      'Ihre Buchungen bleiben im Kalender jedes Spaces; Ihre Besuche als Gast erscheinen hier.';
+
+  @override
+  String get meDataVisitsEmptyTitle => 'Noch keine Besuche';
 
   @override
   String meFinanceGlanceOwed(String amount) {
@@ -12801,6 +12821,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meSpacesSearch => 'Meine Spaces durchsuchen';
 
   @override
+  String get meTabData => 'Meine Daten';
+
+  @override
+  String get meTabDataShort => 'Daten';
+
+  @override
   String get meTabDiscover => 'Entdecken';
 
   @override
@@ -12811,6 +12837,21 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meTabMessages => 'Nachrichten';
+
+  @override
+  String get meTabOverview => 'Überblick';
+
+  @override
+  String get meTabOverviewShort => 'Überblick';
+
+  @override
+  String get meTabSpacesShort => 'Spaces';
+
+  @override
+  String get meUtilityAccount => 'Vertraulichkeit und Konto';
+
+  @override
+  String get meUtilityHelp => 'Hilfe und Assistent';
 
   @override
   String get meWhereSpacesLive => 'Wo meine Spaces liegen';

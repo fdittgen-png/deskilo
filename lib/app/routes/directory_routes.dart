@@ -12,6 +12,7 @@ import '../../features/directory/presentation/directory_screen.dart'
 import '../../features/directory/presentation/public_page_editor.dart';
 import '../route_access.dart';
 import '../route_env.dart';
+import 'me_adapters.dart';
 
 /// Routes of the directory feature.
 List<RouteBase> directoryRoutes(RouteEnv env) {
@@ -22,10 +23,14 @@ List<RouteBase> directoryRoutes(RouteEnv env) {
     ),
     GoRoute(
       path: '/connections',
+      // #2552 — under the personal shell this lives at /me/account/connections.
+      redirect: (context, state) => personalShellAdapter(env, state),
       builder: (context, state) => const ConnectionsScreen(),
     ),
     GoRoute(
       path: '/account-messages',
+      // #2552 — under the personal shell: /me/messages/new or /me/messages/:ref.
+      redirect: (context, state) => personalShellAdapter(env, state),
       builder: (context, state) => AccountMessengerScreen(
         source: state.uri.queryParameters['source'] ?? '',
         recipient: state.uri.queryParameters['recipient'],

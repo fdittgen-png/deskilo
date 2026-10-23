@@ -1,0 +1,15 @@
+{
+  "featurePersonalShellTitle": "Interfaccia personale (cinque destinazioni)",
+  "featurePersonalShellDesc": "Io in cinque destinazioni: Panoramica, I miei spazi, Scopri, Messaggi e I miei dati, con una barra laterale in una finestra ampia, una barra verticale in una media e una barra in basso sul telefono. Disattivata, Io mantiene le sue quattro schede.",
+  "meTabOverview": "Panoramica",
+  "meTabOverviewShort": "Panoramica",
+  "meTabSpacesShort": "Spazi",
+  "meTabData": "I miei dati",
+  "meTabDataShort": "Dati",
+  "meContextPersonal": "Personale",
+  "meUtilityAccount": "Riservatezza e account",
+  "meUtilityHelp": "Aiuto e assistente",
+  "meDataViewReservations": "Prenotazioni",
+  "meDataVisitsEmptyTitle": "Ancora nessuna visita",
+  "meDataVisitsEmptyBody": "Le Sue prenotazioni restano nel calendario di ogni spazio; le Sue visite come ospite compaiono qui."
+}

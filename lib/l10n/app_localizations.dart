@@ -11339,6 +11339,18 @@ abstract class AppLocalizations {
   /// **'Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.'**
   String get featurePersonalInfoDesc;
 
+  /// #2552 Features screen: what the personal shell changes and what off means.
+  ///
+  /// In en, this message translates to:
+  /// **'Me as five destinations: Overview, My spaces, Discover, Messages and My data, with a sidebar on a wide window, a rail on a medium one and a bar on a phone. Off, Me keeps its four tabs.'**
+  String get featurePersonalShellDesc;
+
+  /// #2552 Features screen: the five-destination Me shell, a platform flag.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal shell (five destinations)'**
+  String get featurePersonalShellTitle;
+
   /// #2185 place feedback
   ///
   /// In en, this message translates to:
@@ -20920,11 +20932,35 @@ abstract class AppLocalizations {
   /// **'Could not save your address. Please try again.'**
   String get meAddressSaveFailed;
 
+  /// #2552 the scope badge in the personal shell's header: this is the person's own layer, never a space.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get meContextPersonal;
+
   /// Button on the Me home: create a new space.
   ///
   /// In en, this message translates to:
   /// **'Create a space'**
   String get meCreateSpace;
+
+  /// #2552 My data view: the person's own reservations and visits.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations'**
+  String get meDataViewReservations;
+
+  /// #2552 My data › Reservations: where the bookings are, and what this view lists.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings stay in each space\'s calendar; your visits as a guest appear here.'**
+  String get meDataVisitsEmptyBody;
+
+  /// #2552 My data › Reservations with no guest visit to show.
+  ///
+  /// In en, this message translates to:
+  /// **'No visits yet'**
+  String get meDataVisitsEmptyTitle;
 
   /// No description provided for @meFinanceGlanceOwed.
   ///
@@ -21196,6 +21232,18 @@ abstract class AppLocalizations {
   /// **'Search my spaces'**
   String get meSpacesSearch;
 
+  /// #2552 fifth destination of the personal shell: the person's own records.
+  ///
+  /// In en, this message translates to:
+  /// **'My data'**
+  String get meTabData;
+
+  /// #2552 the My data destination on a phone's bottom bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get meTabDataShort;
+
   /// Me layer bottom tab: find published spaces.
   ///
   /// In en, this message translates to:
@@ -21219,6 +21267,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Messages'**
   String get meTabMessages;
+
+  /// #2552 first destination of the personal shell: the person's overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get meTabOverview;
+
+  /// #2552 the Overview destination on a phone's bottom bar (FR: Accueil).
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get meTabOverviewShort;
+
+  /// #2552 the My spaces destination on a phone's bottom bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Spaces'**
+  String get meTabSpacesShort;
+
+  /// #2552 utility of the personal shell: who sees what of me, and my account.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidentiality and account'**
+  String get meUtilityAccount;
+
+  /// #2552 utility of the personal shell: the guide and the task assistant.
+  ///
+  /// In en, this message translates to:
+  /// **'Help and assistant'**
+  String get meUtilityHelp;
 
   /// Row in Me opening the connected servers.
   ///

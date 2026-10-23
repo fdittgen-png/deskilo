@@ -6897,6 +6897,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'I membri inseriscono nome, indirizzo postale, telefono, e-mail e identificativi nelle Impostazioni; fatture e lettere li stampano nel blocco indirizzo standard.';
 
   @override
+  String get featurePersonalShellDesc =>
+      'Io in cinque destinazioni: Panoramica, I miei spazi, Scopri, Messaggi e I miei dati, con una barra laterale in una finestra ampia, una barra verticale in una media e una barra in basso sul telefono. Disattivata, Io mantiene le sue quattro schede.';
+
+  @override
+  String get featurePersonalShellTitle =>
+      'Interfaccia personale (cinque destinazioni)';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'I membri segnano postazioni, tavoli, uffici e piani come preferiti e li valutano da 0 a 5 stelle. Un preferito è personale; una valutazione mostra la media e quante ce ne sono, mai chi. Un assistente può elencare i preferiti, prenotarne uno e registrare una valutazione. Disattivato nasconde cuori e stelle e rifiuta le scritture; nient\'altro ne dipende.';
 
@@ -12623,7 +12631,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile salvare il suo indirizzo. Riprovi.';
 
   @override
+  String get meContextPersonal => 'Personale';
+
+  @override
   String get meCreateSpace => 'Crea uno spazio';
+
+  @override
+  String get meDataViewReservations => 'Prenotazioni';
+
+  @override
+  String get meDataVisitsEmptyBody =>
+      'Le Sue prenotazioni restano nel calendario di ogni spazio; le Sue visite come ospite compaiono qui.';
+
+  @override
+  String get meDataVisitsEmptyTitle => 'Ancora nessuna visita';
 
   @override
   String meFinanceGlanceOwed(String amount) {
@@ -12789,6 +12810,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meSpacesSearch => 'Cerca nei miei spazi';
 
   @override
+  String get meTabData => 'I miei dati';
+
+  @override
+  String get meTabDataShort => 'Dati';
+
+  @override
   String get meTabDiscover => 'Scopri';
 
   @override
@@ -12799,6 +12826,21 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meTabMessages => 'Messaggi';
+
+  @override
+  String get meTabOverview => 'Panoramica';
+
+  @override
+  String get meTabOverviewShort => 'Panoramica';
+
+  @override
+  String get meTabSpacesShort => 'Spazi';
+
+  @override
+  String get meUtilityAccount => 'Riservatezza e account';
+
+  @override
+  String get meUtilityHelp => 'Aiuto e assistente';
 
   @override
   String get meWhereSpacesLive => 'Dove si trovano i miei spazi';

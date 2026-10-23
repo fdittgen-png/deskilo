@@ -416,7 +416,8 @@ enum WorkspaceFeature {
   purchaseAnalytics,
   workspaceOverview,
   setupGuide,
-  dataReport;
+  dataReport,
+  personalShell;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

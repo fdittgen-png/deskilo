@@ -51,6 +51,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.purchaseAnalytics,
   // #2583 — the overview is asked for, never assumed.
   WorkspaceFeature.workspaceOverview,
+  // #2552 — the person's layer is the installation's decision, never assumed.
+  WorkspaceFeature.personalShell,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.

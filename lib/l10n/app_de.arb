@@ -4892,6 +4892,8 @@
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
   },
+  "featurePersonalShellDesc": "Ich als fünf Ziele: Überblick, Meine Spaces, Entdecken, Nachrichten und Meine Daten, mit einer Seitenleiste in einem breiten Fenster, einer schmalen Leiste in einem mittleren und einer Leiste unten auf dem Telefon. Ausgeschaltet behält Ich seine vier Tabs.",
+  "featurePersonalShellTitle": "Persönliche Oberfläche (fünf Ziele)",
   "featurePlaceFeedbackDesc": "Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"
@@ -8513,7 +8515,11 @@
   "meAccountInMe": "Mein Konto ist unter Ich",
   "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören Ihnen – in jedem Space.",
   "meAddressSaveFailed": "Ihre Adresse konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "meContextPersonal": "Persönlich",
   "meCreateSpace": "Space gründen",
+  "meDataViewReservations": "Buchungen",
+  "meDataVisitsEmptyBody": "Ihre Buchungen bleiben im Kalender jedes Spaces; Ihre Besuche als Gast erscheinen hier.",
+  "meDataVisitsEmptyTitle": "Noch keine Besuche",
   "meFinanceGlanceOwed": "Zu zahlen: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -8573,10 +8579,17 @@
   "meSpacePending": "Wartet auf Freigabe",
   "meSpacesNoMatch": "Kein Space passt.",
   "meSpacesSearch": "Meine Spaces durchsuchen",
+  "meTabData": "Meine Daten",
+  "meTabDataShort": "Daten",
   "meTabDiscover": "Entdecken",
   "meTabHome": "Start",
   "meTabMe": "Ich",
   "meTabMessages": "Nachrichten",
+  "meTabOverview": "Überblick",
+  "meTabOverviewShort": "Überblick",
+  "meTabSpacesShort": "Spaces",
+  "meUtilityAccount": "Vertraulichkeit und Konto",
+  "meUtilityHelp": "Hilfe und Assistent",
   "meWhereSpacesLive": "Wo meine Spaces liegen",
   "memberAccountTitle": "Mein Konto",
   "@memberAccountTitle": {

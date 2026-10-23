@@ -69,7 +69,8 @@ void main() {
     // #2579 — biReportDesigner: authoring reports is asked for.
     // #2582 — purchaseAnalytics: the purchase figures are asked for.
     // #2583 — workspaceOverview: the overview is asked for.
-    expect(onCount, featureManifest.length - 47);
+    // #2552 — personalShell: the person's layer is the installation's decision.
+    expect(onCount, featureManifest.length - 48);
   });
 
   testWidgets(

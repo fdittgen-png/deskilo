@@ -244,6 +244,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       // #1598 — beside navigationStyle, for the same reason: it decides
       // what the navigation offers a member, not what anyone may do.
       WorkspaceFeature.memberAccountMenu,
+      // The personal layer's navigation: how Me is laid out, not a right.
+      WorkspaceFeature.personalShell,
       WorkspaceFeature.demoMode,
     ]),
   ]),

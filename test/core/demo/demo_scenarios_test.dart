@@ -896,6 +896,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'formats',
   ),
   WorkspaceFeature.navigationStyle: _toggle('tabs or a menu'),
+  WorkspaceFeature.personalShell: _toggle('Me as five destinations'),
   WorkspaceFeature.memberAccountMenu: _toggle(
     'a member sees "Account" '
     'instead of Settings',

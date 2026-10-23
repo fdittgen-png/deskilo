@@ -27,6 +27,7 @@ import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../route_access.dart';
 import '../route_env.dart';
+import 'me_adapters.dart';
 
 /// Routes of the money feature.
 List<RouteBase> moneyRoutes(RouteEnv env) => [
@@ -235,6 +236,8 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
     // Account history and applicant chat survive a refused membership.
     GoRoute(
       path: '/account-activity',
+      // #2552 — under the personal shell this is /me/data?view=finances.
+      redirect: (context, state) => personalShellAdapter(env, state),
       builder: (context, state) =>
           MyFinancesScreen(workspaceId: state.uri.queryParameters['workspace']),
     ),

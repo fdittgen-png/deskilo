@@ -10,8 +10,11 @@
 // accounts, Privacy, a public space page) wears the Me layer too, and
 // nobody has to remember to theme it.
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/theme/personal_theme.dart';
+import '../../features/me/providers/personal_shell_providers.dart';
 import '../route_classes.dart';
 import '../theme.dart';
 import 'development_banner.dart';
@@ -88,15 +91,32 @@ class _LayerChromeState extends State<LayerChrome> {
     // and the strip, never the element tree the navigator lives in.
     final ambient = Theme.of(context);
     final dark = ambient.brightness == Brightness.dark;
-    return Theme(
-      data: !_me
-          ? ambient
-          : dark
-              ? DeskiloTheme.dark(
-                  animations: widget.animations, brand: DeskiloTheme.meLayerSeed)
-              : DeskiloTheme.light(
-                  animations: widget.animations, brand: DeskiloTheme.meLayerSeed),
+    // The Consumer is always there, whatever the layer: the tree above the
+    // navigator keeps one shape.
+    return Consumer(
+      builder: (context, ref, child) => Theme(
+        data: !_me
+            ? ambient
+            : _meLayerTheme(
+                dark: dark,
+                personal: ref.watch(personalShellEnabledProvider),
+              ),
+        child: child!,
+      ),
       child: DevelopmentBanner(hidden: _me, child: widget.child),
     );
+  }
+
+  /// The Me layer's theme: the product's ink-blue, or — under the personal
+  /// shell — the personal tokens over the product's finish of the same
+  /// brightness (core/theme/personal_theme.dart).
+  ThemeData _meLayerTheme({required bool dark, required bool personal}) {
+    final brand = personal
+        ? PersonalTheme.light.primary
+        : DeskiloTheme.meLayerSeed;
+    final base = dark
+        ? DeskiloTheme.dark(animations: widget.animations, brand: brand)
+        : DeskiloTheme.light(animations: widget.animations, brand: brand);
+    return personal ? personalThemeFrom(base) : base;
   }
 }

@@ -6852,6 +6852,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.';
 
   @override
+  String get featurePersonalShellDesc =>
+      'Me as five destinations: Overview, My spaces, Discover, Messages and My data, with a sidebar on a wide window, a rail on a medium one and a bar on a phone. Off, Me keeps its four tabs.';
+
+  @override
+  String get featurePersonalShellTitle => 'Personal shell (five destinations)';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'Members mark seats, desks, offices and levels as favourites and rate them from 0 to 5 stars. A favourite is the member\'s own; a rating shows its average and how many gave one, never who. An assistant can list the favourites, book one, and record a rating. Off hides the hearts and stars and refuses the writes; nothing else follows it.';
 
@@ -12523,7 +12530,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save your address. Please try again.';
 
   @override
+  String get meContextPersonal => 'Personal';
+
+  @override
   String get meCreateSpace => 'Create a space';
+
+  @override
+  String get meDataViewReservations => 'Reservations';
+
+  @override
+  String get meDataVisitsEmptyBody =>
+      'Your bookings stay in each space\'s calendar; your visits as a guest appear here.';
+
+  @override
+  String get meDataVisitsEmptyTitle => 'No visits yet';
 
   @override
   String meFinanceGlanceOwed(String amount) {
@@ -12688,6 +12708,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meSpacesSearch => 'Search my spaces';
 
   @override
+  String get meTabData => 'My data';
+
+  @override
+  String get meTabDataShort => 'Data';
+
+  @override
   String get meTabDiscover => 'Discover';
 
   @override
@@ -12698,6 +12724,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meTabMessages => 'Messages';
+
+  @override
+  String get meTabOverview => 'Overview';
+
+  @override
+  String get meTabOverviewShort => 'Overview';
+
+  @override
+  String get meTabSpacesShort => 'Spaces';
+
+  @override
+  String get meUtilityAccount => 'Confidentiality and account';
+
+  @override
+  String get meUtilityHelp => 'Help and assistant';
 
   @override
   String get meWhereSpacesLive => 'Where my spaces live';

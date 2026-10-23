@@ -281,6 +281,7 @@ window.SETUP_PROCESSES=[
      "regionalFormats",
      "navigationStyle",
      "memberAccountMenu",
+     "personalShell",
      "demoMode"
     ]
    }
