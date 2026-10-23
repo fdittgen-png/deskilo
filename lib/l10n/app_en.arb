@@ -22192,6 +22192,10 @@
   "@setupGuideLevelsLink": {
     "description": "#2868 setup levels: setupGuideLevelsLink"
   },
+  "setupGuideMarkDone": "Mark as done",
+  "@setupGuideMarkDone": {
+    "description": "#2869 — marks a setup step the server cannot verify as done."
+  },
   "setupGuideNext": "Next",
   "@setupGuideNext": {
     "description": "#2869 setup guide: setupGuideNext"
@@ -22227,6 +22231,18 @@
   "setupGuideUnavailable": "The setup status could not be read. Try again in a moment.",
   "@setupGuideUnavailable": {
     "description": "#2869 setup guide: setupGuideUnavailable"
+  },
+  "setupGuideUntil": "About {minutes} min until: {milestone}",
+  "@setupGuideUntil": {
+    "description": "#2869 — the time the next milestone still needs, summed from its open steps' estimates.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
   },
   "setupGuideWaiting": "Waiting",
   "@setupGuideWaiting": {

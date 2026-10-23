@@ -32519,6 +32519,12 @@ abstract class AppLocalizations {
   /// **'Choose what your space does'**
   String get setupGuideLevelsLink;
 
+  /// #2869 — marks a setup step the server cannot verify as done.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as done'**
+  String get setupGuideMarkDone;
+
   /// #2869 setup guide: setupGuideNext
   ///
   /// In en, this message translates to:
@@ -32560,6 +32566,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The setup status could not be read. Try again in a moment.'**
   String get setupGuideUnavailable;
+
+  /// #2869 — the time the next milestone still needs, summed from its open steps' estimates.
+  ///
+  /// In en, this message translates to:
+  /// **'About {minutes} min until: {milestone}'**
+  String setupGuideUntil(int minutes, String milestone);
 
   /// #2869 setup guide: setupGuideWaiting
   ///
