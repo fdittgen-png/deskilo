@@ -20,15 +20,18 @@ import 'route_classes.dart';
 /// go?" asked again and again from a screen the person has already
 /// left — harmless while every answer was /reserve, and a way back to
 /// /reserve once the answer depends on a continuation that is spent on
-/// arrival. So before a refresh the router reports where the person IS,
-/// the way the Router itself does after a frame.
-void reportCurrentLocation(GoRouter router) {
+/// arrival. So a refresh re-asks about where the person IS: the stack the
+/// navigator shows, which the Router itself would report after a frame.
+///
+/// #2911 — and it is asked from the live stack, never from its report:
+/// the report is the stack encoded, and decoding it gives every pushed
+/// page a new completer, so an awaited `push` never answered once a
+/// refresh had run. Restored from the live list, a refresh that leaves
+/// the person where they are keeps the stack as it is, answers included.
+void reaskRedirect(GoRouter router) {
   final config = router.routerDelegate.currentConfiguration;
-  if (config.isEmpty) return;
-  final current = router.routeInformationParser.restoreRouteInformation(config);
-  if (current != null) {
-    router.routeInformationProvider.routerReportsNewRouteInformation(current);
-  }
+  if (config.isEmpty) return router.refresh();
+  router.restore(config);
 }
 
 /// A signed-out person's request is kept as the place to come back to —

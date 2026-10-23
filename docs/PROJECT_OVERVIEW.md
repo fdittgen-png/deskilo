@@ -318,7 +318,7 @@ Each feature keeps the same internal shape:
 1. The entry point (settings tile, tab, button) checks `enabledFeaturesSync.contains(feature)`.
 2. The route guards with a `featureEnabled(...)` redirect in `app/router.dart` — so deep links and bookmarks bounce too.
 
-The router's `refreshListenable` watches `enabledFeaturesProvider`, so toggling a feature (or switching workspaces) re-evaluates every redirect immediately. **The master Features screen is deliberately *not* feature-gated** — it must always be reachable to switch a module back on.
+The router listens to `enabledFeaturesProvider` and re-asks its redirect from the live page stack (`reaskRedirect`, which keeps pushed pages and their awaited answers), so toggling a feature (or switching workspaces) re-evaluates every redirect immediately. **The master Features screen is deliberately *not* feature-gated** — it must always be reachable to switch a module back on.
 
 `/services`, `/payment-config`, `/nfc-config` and `/accessories` are the reference implementations. Every new gated surface needs a widget test for **both** the hidden entry point and the bounced deep link.
 
