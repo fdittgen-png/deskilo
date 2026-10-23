@@ -26,6 +26,7 @@ class PushStatusTile extends ConsumerWidget {
         leading: const Icon(Icons.notifications_off_outlined),
         title: Text(l10n.notificationsSystemOff),
         subtitle: Text(l10n.notificationsSystemOffHint),
+        trailing: const _AllowButton(),
       );
     }
     final service = ref.watch(pushBootstrapProvider).value;
@@ -36,6 +37,13 @@ class PushStatusTile extends ConsumerWidget {
         PushStatus.registered => ListTile(
             leading: const Icon(Icons.notifications_active_outlined),
             title: Text(l10n.pushStatusRegistered),
+          ),
+        // #2559 C2 — never asked, or denied: the deliberate action.
+        PushStatus.permissionNeeded => ListTile(
+            leading: const Icon(Icons.notifications_off_outlined),
+            title: Text(l10n.pushStatusPermissionNeeded),
+            subtitle: Text(l10n.pushStatusPermissionNeededHint),
+            trailing: const _AllowButton(),
           ),
         // #716 — an F-Droid build has NO transport to configure; telling
         // its owner to finish the Firebase setup would send them on an
@@ -53,4 +61,28 @@ class PushStatusTile extends ConsumerWidget {
       },
     );
   }
+}
+
+/// #2559 C2 — the person deliberately asks for notifications: the system
+/// prompt appears now (never at start), and an allowed device registers
+/// for push. A denial changes nothing else; the action can be repeated.
+Future<void> allowNotifications(WidgetRef ref) async {
+  final service = await ref.read(pushBootstrapProvider.future);
+  if (service != null) {
+    await service.allow();
+  } else {
+    await ref.read(notificationServiceProvider).requestPermission();
+  }
+  ref.invalidate(systemNotificationsEnabledProvider);
+}
+
+class _AllowButton extends ConsumerWidget {
+  const _AllowButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => TextButton(
+        key: const ValueKey('push-allow'),
+        onPressed: () => allowNotifications(ref),
+        child: Text(context.l10n.pushAllowAction),
+      );
 }

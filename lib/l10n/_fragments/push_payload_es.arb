@@ -1,0 +1,10 @@
+{
+  "@@locale": "es",
+  "pushMessageBody": "Tiene un mensaje nuevo.",
+  "pushMentionBody": "Le han mencionado en una conversación.",
+  "pushReminderBody": "Tiene un recordatorio de pago.",
+  "pushUpdateBody": "Tiene una novedad.",
+  "pushAllowAction": "Permitir",
+  "pushStatusPermissionNeeded": "Las notificaciones no están permitidas en este dispositivo",
+  "pushStatusPermissionNeededHint": "Toque Permitir para recibirlas. En cualquier caso, todo sigue disponible en la aplicación."
+}

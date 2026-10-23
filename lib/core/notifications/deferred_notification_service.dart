@@ -43,8 +43,17 @@ class DeferredNotificationService implements NotificationService {
   }
 
   @override
-  Future<void> showNow({required String title, required String body}) =>
-      _inner?.showNow(title: title, body: body) ?? Future.value();
+  Future<void> showNow({
+    required String title,
+    required String body,
+    String? payload,
+  }) =>
+      _inner?.showNow(title: title, body: body, payload: payload) ??
+      Future.value();
+
+  @override
+  Future<bool?> requestPermission() =>
+      _inner?.requestPermission() ?? Future.value(false);
 
   @override
   Future<bool?> notificationsEnabled() =>

@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "pushMessageBody": "Ha un nuovo messaggio.",
+  "pushMentionBody": "È stato menzionato in una conversazione.",
+  "pushReminderBody": "La attende un promemoria di pagamento.",
+  "pushUpdateBody": "Ha una novità.",
+  "pushAllowAction": "Consenti",
+  "pushStatusPermissionNeeded": "Le notifiche non sono consentite su questo dispositivo",
+  "pushStatusPermissionNeededHint": "Tocchi Consenti per riceverle. In ogni caso tutto resta disponibile nell'app."
+}

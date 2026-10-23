@@ -8,6 +8,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../l10n/context_l10n.dart';
 import '../notifications/notification_providers.dart';
+import '../notifications/notification_taps.dart';
 import '../trace/trace_logger.dart';
 import 'push_endpoint_repository.dart';
 import 'push_opt_out.dart';
@@ -43,6 +44,7 @@ Future<PushService?> pushBootstrap(Ref ref) async {
   final connector = ref.watch(pushConnectorProvider);
   final endpoints = ref.watch(pushEndpointRepositoryProvider);
   final notifications = ref.watch(notificationServiceProvider);
+  final taps = ref.watch(notificationTapsProvider);
   // #1914 — turned off on this device: nothing registers, whatever the
   // workspace allows.
   final optedOut = ref.watch(pushOptedOutProvider.future);
@@ -74,14 +76,26 @@ Future<PushService?> pushBootstrap(Ref ref) async {
       final memberships = await ref.read(myMembershipsProvider.future);
       return [for (final m in memberships) m.id];
     },
-    pendingTitle: l10n.pushPendingTitle,
-    pendingBody:
-        l10n.pushPendingBody,
-    cancelledTitle: l10n.pushCancelledTitle,
-    cancelledBody: l10n.pushCancelledBody,
+    texts: _pushTexts(l10n),
+    taps: taps,
   );
   await service.start();
   // Exposed so Settings can show the pipeline state (#424) — a silent
   // no-distributor setup was undiagnosable in the field.
   return service;
 }
+
+/// #2559 C2 — the visible text of every push: the app's name and a generic
+/// line per kind (the same lines send-push uses), never a name, an amount
+/// or a message's words. An unknown kind reads as a generic update.
+PushTexts _pushTexts(AppLocalizations l10n) => PushTexts(
+      title: l10n.pushPendingTitle,
+      bodyOf: (kind) => switch (kind) {
+        'pending_request' => l10n.pushPendingBody,
+        'reservation_cancelled' => l10n.pushCancelledBody,
+        'member_note' => l10n.pushMessageBody,
+        'member_mention' => l10n.pushMentionBody,
+        'invoice_reminder' => l10n.pushReminderBody,
+        _ => l10n.pushUpdateBody,
+      },
+    );
