@@ -53,8 +53,10 @@ String _query(GoRouterState state, String key) =>
 List<RouteBase> _legacyMe() => [
       GoRoute(
         path: MeTab.home.path,
-        builder: (context, state) =>
-            MeShell(tab: MeTab.fromQuery(state.uri.queryParameters['tab'])),
+        builder: (context, state) => MeShell(
+          tab: MeTab.fromQuery(state.uri.queryParameters['tab']),
+          link: state.uri.queryParameters[ConversationLink.parameter],
+        ),
       ),
       GoRoute(path: MeTab.spaces.path, redirect: (context, state) => '/me'),
       GoRoute(
@@ -67,7 +69,11 @@ List<RouteBase> _legacyMe() => [
       ),
       GoRoute(
         path: MeTab.messages.path,
-        redirect: (context, state) => '/me?tab=messages',
+        // #2556 — a link to one conversation is followed here too.
+        redirect: (context, state) => withQuery('/me', {
+          'tab': MeTab.messages.wire,
+          ...pickQuery(state.uri, const [ConversationLink.parameter]),
+        }),
       ),
       GoRoute(
         path: '${MeTab.messages.path}/new',

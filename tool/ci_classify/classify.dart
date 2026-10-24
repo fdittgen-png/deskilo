@@ -24,7 +24,11 @@
 // context, session, identity, settings and cache cores and the providers
 // and adapters of the P profile and W reservation paths.
 
-const String classifierVersion = '4';
+// v5 -- #2472 C2: the topology consumer also runs the new discussion's
+// directory at P (test/topology/personal_directory_test.dart), so its
+// providers select the database job like its adapter already did.
+
+const String classifierVersion = '5';
 
 /// Where a pull request's change came from, as the classifier sees it.
 class ChangeSet {
@@ -60,8 +64,7 @@ class Verdict {
       '$discipline|${required ? 'required' : 'not_applicable'}|$reason|v$classifierVersion';
 }
 
-/// Sources the topology consumer (test/topology/three_stacks_test.dart)
-/// runs through real stacks. A path under them selects the database job
+/// Sources the topology consumers (test/topology) run through real stacks. A path under them selects the database job
 /// even where its directory is otherwise listed as independent.
 bool _topologyDependency(String path) {
   const prefixes = [
@@ -75,6 +78,7 @@ bool _topologyDependency(String path) {
     'lib/features/reservations/providers/',
     'lib/features/workspace/providers/',
     'lib/features/auth/providers/',
+    'lib/features/directory/providers/',
     'test/topology/',
   ];
   return prefixes.any(path.startsWith);

@@ -22,6 +22,14 @@ Map<String, String> _tap(String installation, String workspace,
       'ref_id': 'ev-1',
     };
 
+/// #2556 — a message of the workspace conversation conv-1.
+Map<String, String> _message(String installation, String workspace) => {
+      ..._tap(installation, workspace, kind: 'member_note'),
+      'ref_kind': 'note',
+      'ref_id': 'n-1',
+      'conv': 'conv-1',
+    };
+
 class _Harness {
   _Harness({
     this.signedIn = true,
@@ -94,5 +102,35 @@ void main() {
     await h.opener.open(const {'kind': 'member_note'});
     expect(h.selected, isEmpty);
     expect(h.went, [kMeHome]);
+  });
+
+  group('#2556 a message of a conversation', () {
+    test('opens the conversation in the messenger, which authorizes it; no '
+        'workspace is selected for it', () async {
+      final h = _Harness();
+      await h.opener.open(_message('inst-home', 'ws-a'));
+      expect(h.selected, isEmpty);
+      expect(h.went, [conversationLocation('', 'conv-1')]);
+      expect(
+        Uri.parse(h.went.single).queryParameters['conversation'],
+        '|space|conv-1',
+      );
+      expect(Uri.parse(h.went.single).path, '/me/messages');
+    });
+
+    test('on a connected installation, the link names that source', () async {
+      final h = _Harness(connected: {'inst-c': 'https://c.example'});
+      await h.opener.open(_message('inst-c', 'ws-c'));
+      expect(
+        Uri.parse(h.went.single).queryParameters['conversation'],
+        'https://c.example|space|conv-1',
+      );
+    });
+
+    test('another account\'s workspace still lands neutrally', () async {
+      final h = _Harness(mine: {'ws-b'});
+      await h.opener.open(_message('inst-home', 'ws-a'));
+      expect(h.went, [kMeHome]);
+    });
   });
 }

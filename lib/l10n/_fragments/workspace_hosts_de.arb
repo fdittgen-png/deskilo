@@ -10,5 +10,6 @@
   "createHostUnavailable": "Die Server, die Ihr persönliches Zuhause anbietet, konnten nicht gelesen werden.",
   "createOnHostBanner": "Dieser Space wird auf {host} angelegt.",
   "createHostLost": "Der für diesen Space gewählte Server ist nicht mehr vorgemerkt. Es wurde nichts angelegt.",
-  "createHostChooseAgain": "Server wählen"
+  "createHostChooseAgain": "Server wählen",
+  "createHostNone": "Für Ihr persönliches Zuhause nimmt noch kein Server neue Spaces an. Es wurde nichts angelegt."
 }

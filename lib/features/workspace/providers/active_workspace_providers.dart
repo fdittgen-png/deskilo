@@ -43,13 +43,17 @@ class ActiveWorkspaceId extends _$ActiveWorkspaceId {
     // #2564 -- entering the SAME space again is no change of selection, so a
     // refusal the connection ended with (the typed ConnectionFailure) would
     // outlive the new connection: a fresh entry reads the space again.
-    if (ref.exists(currentWorkspaceProvider) &&
-        ref.read(currentWorkspaceProvider).hasError) {
-      ref.invalidate(currentWorkspaceProvider);
+    // Through the container: both depend on this selection, which a ref
+    // may not reach back to (#2556: the messenger gives a connected
+    // selection back while the space it feeds is shown).
+    final container = ref.container;
+    if (container.exists(currentWorkspaceProvider) &&
+        container.read(currentWorkspaceProvider).hasError) {
+      container.invalidate(currentWorkspaceProvider);
     }
-    if (ref.exists(workspaceContextProvider) &&
-        ref.read(workspaceContextProvider).hasError) {
-      ref.invalidate(workspaceContextProvider);
+    if (container.exists(workspaceContextProvider) &&
+        container.read(workspaceContextProvider).hasError) {
+      container.invalidate(workspaceContextProvider);
     }
   }
 

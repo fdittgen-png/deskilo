@@ -186,7 +186,7 @@ class _SpacesSection extends ConsumerWidget {
     final local = ref.watch(myWorkspacesProvider).value ?? const <Workspace>[];
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
     final failed = answer.hasError && !answer.isLoading;
-    final refs = failed ? null : answer.value;
+    final refs = failed ? null : refsOfCurrentAccount(answer);
     final nothing = refs != null && _noSpace(refs, local, linked);
     final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
     // Favourites first, then the spaces I entered most recently here.
@@ -251,7 +251,7 @@ class _DiscoverJoinEntry extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final refs = ref.watch(personalWorkspaceRefsProvider).value;
+    final refs = refsOfCurrentAccount(ref.watch(personalWorkspaceRefsProvider));
     final local = ref.watch(myWorkspacesProvider).value ?? const <Workspace>[];
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
     if (refs == null || _noSpace(refs, local, linked)) return const SizedBox.shrink();

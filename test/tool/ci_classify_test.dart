@@ -51,6 +51,12 @@ void main() {
       'lib/features/reservations/providers/reservation_providers.dart',
       'lib/features/workspace/providers/workspace_providers.dart',
       'lib/features/auth/providers/auth_providers.dart',
+      // #2472 C2 -- the directory at P.
+      'test/topology/personal_directory_test.dart',
+      'lib/features/directory/providers/personal_directory_providers.dart',
+      'lib/features/directory/providers/messenger_providers.dart',
+      'lib/features/directory/data/supabase_personal_message_directory_repository.dart',
+      'lib/features/directory/domain/personal_message_directory.dart',
     ]) {
       expect(_by(classify(_pr([path])))['database']!.required, isTrue,
           reason: path);

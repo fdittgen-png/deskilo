@@ -34,6 +34,7 @@ class NotificationReference {
     required this.workspaceId,
     required this.objectKind,
     required this.objectId,
+    this.conversationId,
   });
 
   /// The notification kind (`pending_request`, `member_note`, …).
@@ -43,9 +44,14 @@ class NotificationReference {
   final NotificationObjectKind objectKind;
   final String objectId;
 
+  /// #2556 — the workspace conversation a message belongs to, when the
+  /// notification names one (`conv`): the tap opens that conversation in
+  /// the messenger, once its own source lists it for the person.
+  final String? conversationId;
+
   /// The reference of [data], or null when it is not a complete, valid
   /// version-1 workspace reference. Every other key is ignored: nothing
-  /// beyond these five values is ever read from a notification.
+  /// beyond these values is ever read from a notification.
   static NotificationReference? parse(Map<String, Object?> data) {
     if (data['v'] != _referenceVersion) return null;
     if (data['src'] != 'w') return null;
@@ -68,12 +74,20 @@ class NotificationReference {
     for (final id in [installation, workspace, objectId]) {
       if (!_opaqueId.hasMatch(id)) return null;
     }
+    // A conversation only qualifies a message; a malformed one is dropped,
+    // never the reference (the workspace's own screen still opens).
+    final conversation = data['conv'];
     return NotificationReference(
       kind: kind,
       installationId: installation,
       workspaceId: workspace,
       objectKind: objectKind,
       objectId: objectId,
+      conversationId: objectKind == NotificationObjectKind.note &&
+              conversation is String &&
+              _opaqueId.hasMatch(conversation)
+          ? conversation
+          : null,
     );
   }
 
@@ -86,6 +100,7 @@ class NotificationReference {
         'ws': workspaceId,
         'ref_kind': objectKind.name,
         'ref_id': objectId,
+        'conv': ?conversationId,
       };
 
   /// Two hosts may reuse local ids: the key that tells two notifications
@@ -100,11 +115,12 @@ class NotificationReference {
       other.installationId == installationId &&
       other.workspaceId == workspaceId &&
       other.objectKind == objectKind &&
-      other.objectId == objectId;
+      other.objectId == objectId &&
+      other.conversationId == conversationId;
 
   @override
-  int get hashCode =>
-      Object.hash(kind, installationId, workspaceId, objectKind, objectId);
+  int get hashCode => Object.hash(
+      kind, installationId, workspaceId, objectKind, objectId, conversationId);
 
   /// Never the ids themselves: a trace keeps the kind only.
   @override

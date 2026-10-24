@@ -29,6 +29,7 @@ import '../../domain/member_note_refs.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
+import 'composer_frame.dart';
 import 'conversation_bubble.dart';
 import 'conversation_header.dart';
 import 'group_info_sheet.dart';
@@ -109,6 +110,7 @@ class ConversationThread extends ConsumerStatefulWidget {
     this.asPage = false,
     this.inPane = false,
     this.onBack,
+    this.composerFrame,
   });
 
   final String conversationId;
@@ -124,6 +126,9 @@ class ConversationThread extends ConsumerStatefulWidget {
   /// In the Me messenger's pane rather than a route: Back is [onBack].
   final bool inPane;
   final VoidCallback? onBack;
+
+  /// The messenger's draft and delivery rules around the composer (#2556).
+  final ComposerFrame? composerFrame;
 
   @override
   ConsumerState<ConversationThread> createState() => _ConversationThreadState();
@@ -328,6 +333,21 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
   }) {
     final conversationId = widget.conversationId;
     final hub = _hub;
+    final frame = widget.composerFrame;
+    Widget note(String? seed, ValueChanged<String>? onChanged,
+            Future<bool> Function(String body) onSend) =>
+        MemberNoteComposer(
+          key: const ValueKey('conversation-thread-member-note-composer'),
+          autofocus: false,
+          seedBody: seed,
+          onChanged: onChanged,
+          compact: hub,
+          mentionCandidates: mentionNames,
+          mentionTokens: ref.watch(messageMentionsOnProvider),
+          quoted: _quoted,
+          onCancelQuote: () => setState(() => _quoted = null),
+          onSend: onSend,
+        );
     return postingClosed
         ? Padding(
             padding: AppSpacing.lgAll,
@@ -345,34 +365,24 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         AppSpacing.lg,
         AppSpacing.lg,
       ),
-      child: MemberNoteComposer(
-        key: const ValueKey('conversation-thread-member-note-composer'),
-        autofocus: false,
-        seedBody: hub
-            ? (ref.read(conversationDraftsProvider)[conversationId] ??
-                widget.seedBody)
-            : widget.seedBody,
-        onChanged: hub
-            ? (text) => ref
-                .read(conversationDraftsProvider.notifier)
-                .set(conversationId, text)
-            : null,
-        compact: hub,
-        mentionCandidates: mentionNames,
-        mentionTokens: ref.watch(messageMentionsOnProvider),
-        quoted: _quoted,
-        onCancelQuote: () => setState(() => _quoted = null),
-        onSend: (body) => _send(context, ref, body),
-      ),
+      child: frame != null
+          ? frame((body) => _send(context, ref, body), note)
+          : note(
+              (hub ? ref.read(conversationDraftsProvider)[conversationId] : null) ??
+                  widget.seedBody,
+              hub ? (t) => ref.read(conversationDraftsProvider.notifier).set(conversationId, t) : null,
+              (body) => _send(context, ref, body)),
     );
+  }
+
+  void _marksFollow(Object? _, AsyncValue<Object?> next) {
+    if (!next.isLoading) ref.invalidate(messageMarksProvider(_marksKey));
   }
 
   @override
   Widget build(BuildContext context) {
     // A message arriving brings the reactions with it.
-    ref.listen(conversationMessagesProvider(widget.conversationId), (_, _) {
-      ref.invalidate(messageMarksProvider(_marksKey));
-    });
+    ref.listen(conversationMessagesProvider(widget.conversationId), _marksFollow);
     final conversationId = widget.conversationId;
     final l10n = context.l10n;
     final theme = Theme.of(context);
@@ -562,8 +572,8 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
           .read(workspaceRepositoryProvider)
           .sendConversationMessage(conversationId, body),
     );
-    if (!ok) return false;
-    if (mounted) setState(() => _quoted = null);
+    if (!ok || !mounted) return ok; // a late answer: nothing to refresh
+    setState(() => _quoted = null);
     ref.read(conversationDraftsProvider.notifier).set(conversationId, '');
     // The thread shows it land, so no snack — but the LIST behind still
     // holds the old preview and order.

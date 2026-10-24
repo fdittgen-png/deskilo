@@ -3937,6 +3937,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der für diesen Space gewählte Server ist nicht mehr vorgemerkt. Es wurde nichts angelegt.';
 
   @override
+  String get createHostNone =>
+      'Für Ihr persönliches Zuhause nimmt noch kein Server neue Spaces an. Es wurde nichts angelegt.';
+
+  @override
   String get createHostNotAccepting => 'Nimmt keine neuen Spaces an';
 
   @override

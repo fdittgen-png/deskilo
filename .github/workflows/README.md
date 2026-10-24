@@ -118,7 +118,11 @@ it answers again. `TOPOLOGY_DRY_RUN=1` prints the commands instead
 (`test/tool/topology_faults_cli_test.dart`). Because they stop gateways
 the other topology files use, `test/topology/topology_faults_test.dart`
 runs in a `flutter test` call of its own after them, and `down` lifts any
-fault left behind before the stacks stop.
+fault left behind before the stacks stop. The new discussion's directory
+at P (#2472 C2, `test/topology/personal_directory_test.dart`) blocks W-B
+as well and lapses its membership facts at P (`topology_stacks.sh facts
+fresh|lapse wa|wb|w`), so it shares that call with `--concurrency=1`.
+Every case names the #2561 acceptance it proves (SEP-01 to SEP-06).
 
 The generated code is gated in the required job and in the F-Droid audit
 through one call, `scripts/generated_drift.sh` (#1446 C5a): build_runner

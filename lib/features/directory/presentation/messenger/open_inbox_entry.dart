@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/backend/context_client_providers.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../workspace/presentation/widgets/conversation_thread.dart';
@@ -30,14 +31,21 @@ Future<void> openInboxEntry(
     // the workspace. The workspace is selected for the time the thread is
     // open and the previous one restored after.
     final previous = await ref.read(activeWorkspaceIdProvider.future);
-    if (entry.workspaceId != current) {
+    // A workspace of a connected installation comes back on it (#2556).
+    final host = ref.read(selectedWorkspaceHostProvider);
+    final previousHost =
+        host != null && host.workspaceId == previous ? host.source : null;
+    if (entry.workspaceId != current || previousHost != null) {
       await ref.read(activeWorkspaceIdProvider.notifier).select(entry.workspaceId!);
       await ref.read(currentWorkspaceProvider.future);
     }
     if (!context.mounted) return;
     await showConversationThread(context, ref, conversationId: entry.contextId);
-    if (previous != null && previous != entry.workspaceId) {
-      await ref.read(activeWorkspaceIdProvider.notifier).select(previous);
+    final active = ref.read(activeWorkspaceIdProvider.notifier);
+    if (previousHost != null) {
+      active.activateConnected(previous!, previousHost);
+    } else if (previous != null && previous != entry.workspaceId) {
+      await active.select(previous);
     }
   } else {
     final l10n = context.l10n;

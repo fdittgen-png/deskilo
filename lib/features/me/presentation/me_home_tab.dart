@@ -73,7 +73,8 @@ class MeHomeTab extends ConsumerWidget {
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
     final rows = pairSides(spaces).length;
     // #2563 — a workspace my account names elsewhere is not "nothing".
-    final elsewhere = ref.watch(personalWorkspaceRefsProvider).value;
+    final elsewhere =
+        refsOfCurrentAccount(ref.watch(personalWorkspaceRefsProvider));
     final nothing = spaces.isEmpty &&
         linked.every((s) => s.spaces.isEmpty) &&
         (elsewhere?.beyondLocalSpaces.isEmpty ?? true);

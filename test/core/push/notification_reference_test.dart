@@ -54,6 +54,27 @@ void main() {
       });
     }
 
+    test('#2556 a message names its conversation; a malformed one, or one '
+        'on a record that is not a message, is dropped, never the '
+        'reference', () {
+      final note = {..._data, 'kind': 'member_note', 'ref_kind': 'note'};
+      final named = NotificationReference.parse({...note, 'conv': 'conv-1'})!;
+      expect(named.conversationId, 'conv-1');
+      expect(named.toData(), {...note, 'conv': 'conv-1'});
+      expect(named, isNot(NotificationReference.parse(note)));
+      for (final bad in ['', 'https://evil.example/c', 'c 1', 42]) {
+        final dropped = NotificationReference.parse({...note, 'conv': bad});
+        expect(dropped?.conversationId, isNull, reason: '$bad');
+        expect(dropped?.toData(), note, reason: '$bad');
+      }
+      expect(
+        NotificationReference.parse({..._data, 'conv': 'conv-1'})
+            ?.conversationId,
+        isNull,
+        reason: 'an event names no conversation',
+      );
+    });
+
     test('extra keys are ignored, never read', () {
       final reference = NotificationReference.parse(
           {..._data, 'body': 'SENTINEL-MESSAGE-BODY', 'token': 'secret'})!;
