@@ -83,6 +83,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
         now: home.seededAt,
       );
   final homeKpi = kpi(home.money);
+  final myReservations = _myReservations(fixture);
   final secondKpi = kpi(second.money);
   return [
     workspaceRepositoryProvider.overrideWith(
@@ -102,7 +103,11 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       (ref) => pick(ref, home.reservations, second.reservations),
     ),
     // #2553 — the visitor's own bookings of both spaces, one installation.
-    myReservationsRepositoryProvider.overrideWithValue(_myReservations(fixture)),
+    myReservationsRepositoryProvider.overrideWithValue(myReservations),
+    // #2553 C3 — View, Check in and Cancel on the fixture's own spaces.
+    myReservationActionsProvider.overrideWithValue(
+      DemoMyReservationActions(myReservations),
+    ),
     // #2553 C2 — read for every space the persona's personal home names.
     myReservationsSourcesFromMe,
     // #2575

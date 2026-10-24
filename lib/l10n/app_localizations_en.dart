@@ -13989,7 +13989,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myInvoicesTitle => 'My invoices';
 
   @override
+  String get myReservationsActionFailed =>
+      'This could not be done. Try again in a moment.';
+
+  @override
+  String get myReservationsCancel => 'Cancel reservation';
+
+  @override
+  String get myReservationsCancelBody =>
+      'The server of its space cancels it. The place is free again for others.';
+
+  @override
+  String get myReservationsCancelDone => 'Reservation cancelled.';
+
+  @override
+  String get myReservationsCancelTitle => 'Cancel this reservation?';
+
+  @override
   String get myReservationsChangePeriod => 'Change period';
+
+  @override
+  String get myReservationsCheckIn => 'Check in';
+
+  @override
+  String get myReservationsCheckInDone => 'Checked in.';
 
   @override
   String myReservationsCheckedInAt(String time) {
@@ -14013,12 +14036,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'This server refused to list your reservations.';
 
   @override
+  String get myReservationsGone =>
+      'This reservation is no longer listed for you at that time.';
+
+  @override
   String get myReservationsHostUnavailable =>
       'This server cannot be reached from this device: it is not connected here, or it is not the one it claims to be.';
 
   @override
   String get myReservationsInvalid =>
       'This server refused the period asked for.';
+
+  @override
+  String get myReservationsKeep => 'Keep it';
 
   @override
   String get myReservationsKindDesk => 'Desk';
@@ -14056,6 +14086,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get myReservationsSourceAll => 'All servers';
+
+  @override
   String myReservationsSourceProblem(String source, String problem) {
     return '$source: $problem';
   }
@@ -14084,7 +14117,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myReservationsStatusReserved => 'Reserved';
 
   @override
+  String get myReservationsTabCancelled => 'Cancelled';
+
+  @override
+  String get myReservationsTabPast => 'Past';
+
+  @override
+  String get myReservationsTabUpcoming => 'Upcoming';
+
+  @override
   String get myReservationsTimedOut => 'This server did not answer in time.';
+
+  @override
+  String myReservationsTimesIn(String zone) {
+    return 'Times in $zone';
+  }
 
   @override
   String get myReservationsUnnamedPlace => '(unnamed place)';
@@ -14092,6 +14139,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get myReservationsUnsupported =>
       'This server does not list reservations for the personal space yet.';
+
+  @override
+  String get myReservationsView => 'View';
 
   @override
   String get mySpacesAll => 'All my spaces';

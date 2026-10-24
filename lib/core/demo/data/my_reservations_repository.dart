@@ -130,3 +130,56 @@ class DemoMyReservationsRepository implements MyReservationsRepository {
         checkedOutAt: r.checkedOutAt,
       );
 }
+
+/// #2553 C3 -- the Demo's row actions: the booking is changed in the space
+/// of the one fixture installation that holds it, and View reads it again
+/// through the same read a host answers. A source naming another
+/// installation is a host this device cannot reach.
+class DemoMyReservationActions implements MyReservationActions {
+  const DemoMyReservationActions(this.pages);
+
+  final DemoMyReservationsRepository pages;
+
+  void _ownHost(MyReservationsSource source) {
+    if (source.installationId != pages.installationId) {
+      throw MyReservationsRefused(
+        MyReservationsFailure.hostUnavailable,
+        detail: '${source.installationId} is not the demo installation',
+      );
+    }
+  }
+
+  FakeReservationRepository _spaceOf(MyReservationItem item) {
+    for (final space in pages.spaces) {
+      if (space.reservations.reservations.any((r) => r.id == item.id)) {
+        return space.reservations;
+      }
+    }
+    throw MyReservationsRefused(MyReservationsFailure.gone, detail: item.id);
+  }
+
+  @override
+  Future<MyReservationItem> view(
+    MyReservationsSource source,
+    MyReservationItem item,
+  ) async {
+    _ownHost(source);
+    final page = await pages.page(source, myReservationLookup(item));
+    for (final found in page.items) {
+      if (found.id == item.id) return found;
+    }
+    throw MyReservationsRefused(MyReservationsFailure.gone, detail: item.id);
+  }
+
+  @override
+  Future<void> cancel(MyReservationsSource source, MyReservationItem item) async {
+    _ownHost(source);
+    await _spaceOf(item).cancel(item.id);
+  }
+
+  @override
+  Future<void> checkIn(MyReservationsSource source, MyReservationItem item) async {
+    _ownHost(source);
+    await _spaceOf(item).checkIn(item.id);
+  }
+}

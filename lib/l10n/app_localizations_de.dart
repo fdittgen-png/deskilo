@@ -14116,7 +14116,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myInvoicesTitle => 'Meine Rechnungen';
 
   @override
+  String get myReservationsActionFailed =>
+      'Das hat nicht geklappt. Versuchen Sie es gleich noch einmal.';
+
+  @override
+  String get myReservationsCancel => 'Reservierung stornieren';
+
+  @override
+  String get myReservationsCancelBody =>
+      'Der Server seines Bereichs storniert sie. Der Platz ist dann für andere wieder frei.';
+
+  @override
+  String get myReservationsCancelDone => 'Reservierung storniert.';
+
+  @override
+  String get myReservationsCancelTitle => 'Diese Reservierung stornieren?';
+
+  @override
   String get myReservationsChangePeriod => 'Zeitraum ändern';
+
+  @override
+  String get myReservationsCheckIn => 'Einchecken';
+
+  @override
+  String get myReservationsCheckInDone => 'Eingecheckt.';
 
   @override
   String myReservationsCheckedInAt(String time) {
@@ -14140,12 +14163,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Server hat es abgelehnt, Ihre Reservierungen aufzulisten.';
 
   @override
+  String get myReservationsGone =>
+      'Diese Reservierung ist zu dieser Zeit nicht mehr für Sie eingetragen.';
+
+  @override
   String get myReservationsHostUnavailable =>
       'Dieser Server ist von diesem Gerät aus nicht erreichbar: Er ist hier nicht verbunden, oder er ist nicht der, der er zu sein vorgibt.';
 
   @override
   String get myReservationsInvalid =>
       'Dieser Server hat den angefragten Zeitraum abgelehnt.';
+
+  @override
+  String get myReservationsKeep => 'Behalten';
 
   @override
   String get myReservationsKindDesk => 'Tisch';
@@ -14183,6 +14213,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get myReservationsSourceAll => 'Alle Server';
+
+  @override
   String myReservationsSourceProblem(String source, String problem) {
     return '$source: $problem';
   }
@@ -14211,8 +14244,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myReservationsStatusReserved => 'Reserviert';
 
   @override
+  String get myReservationsTabCancelled => 'Storniert';
+
+  @override
+  String get myReservationsTabPast => 'Vergangen';
+
+  @override
+  String get myReservationsTabUpcoming => 'Anstehend';
+
+  @override
   String get myReservationsTimedOut =>
       'Dieser Server hat nicht rechtzeitig geantwortet.';
+
+  @override
+  String myReservationsTimesIn(String zone) {
+    return 'Uhrzeiten in $zone';
+  }
 
   @override
   String get myReservationsUnnamedPlace => '(Platz ohne Namen)';
@@ -14220,6 +14267,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get myReservationsUnsupported =>
       'Dieser Server listet Reservierungen für den persönlichen Bereich noch nicht auf.';
+
+  @override
+  String get myReservationsView => 'Ansehen';
 
   @override
   String get mySpacesAll => 'Alle meine Spaces';

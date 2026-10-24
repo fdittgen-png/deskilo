@@ -58,6 +58,40 @@ Future<ResolvedWorkspaceHost> resolveMyReservationsHost(
   return resolverFor(origin).resolve(source.workspaceIds.first);
 }
 
+/// The verified host of [source] through [hostOf]: a host that cannot be
+/// reached, is unverified or answers as another installation is the typed
+/// [MyReservationsFailure.hostUnavailable], never another host's client.
+/// The caller releases the lease.
+Future<ResolvedWorkspaceHost> verifiedMyReservationsHost(
+  Future<ResolvedWorkspaceHost> Function(MyReservationsSource source) hostOf,
+  MyReservationsSource source,
+) async {
+  final ResolvedWorkspaceHost host;
+  try {
+    host = await hostOf(source);
+  } on UnverifiedInstallation catch (e, st) {
+    // trace-exempt: rethrown typed; the slot says its host is unavailable.
+    Error.throwWithStackTrace(
+      MyReservationsRefused(MyReservationsFailure.hostUnavailable, detail: '$e'),
+      st,
+    );
+  } on ConnectionFailure catch (e, st) {
+    // trace-exempt: rethrown typed; the slot says its host is unavailable.
+    Error.throwWithStackTrace(
+      MyReservationsRefused(MyReservationsFailure.hostUnavailable, detail: '$e'),
+      st,
+    );
+  }
+  if (host.installationId != source.installationId) {
+    host.lease?.release();
+    throw MyReservationsRefused(
+      MyReservationsFailure.hostUnavailable,
+      detail: 'asked ${source.installationId}, answered ${host.installationId}',
+    );
+  }
+  return host;
+}
+
 class HostMyReservationsRepository implements MyReservationsRepository {
   const HostMyReservationsRepository({
     required this.platformSettings,
@@ -101,32 +135,8 @@ class HostMyReservationsRepository implements MyReservationsRepository {
     }
   }
 
-  Future<ResolvedWorkspaceHost> _host(MyReservationsSource source) async {
-    final ResolvedWorkspaceHost host;
-    try {
-      host = await hostOf(source);
-    } on UnverifiedInstallation catch (e, st) {
-      // trace-exempt: rethrown typed; the slot says its host is unavailable.
-      Error.throwWithStackTrace(
-        MyReservationsRefused(MyReservationsFailure.hostUnavailable, detail: '$e'),
-        st,
-      );
-    } on ConnectionFailure catch (e, st) {
-      // trace-exempt: rethrown typed; the slot says its host is unavailable.
-      Error.throwWithStackTrace(
-        MyReservationsRefused(MyReservationsFailure.hostUnavailable, detail: '$e'),
-        st,
-      );
-    }
-    if (host.installationId != source.installationId) {
-      host.lease?.release();
-      throw MyReservationsRefused(
-        MyReservationsFailure.hostUnavailable,
-        detail: 'asked ${source.installationId}, answered ${host.installationId}',
-      );
-    }
-    return host;
-  }
+  Future<ResolvedWorkspaceHost> _host(MyReservationsSource source) =>
+      verifiedMyReservationsHost(hostOf, source);
 
   @override
   Future<MyReservationsPage> page(
