@@ -16493,9 +16493,37 @@
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
+  "myReservationsActionFailed": "This could not be done. Try again in a moment.",
+  "@myReservationsActionFailed": {
+    "description": "#2553 C3 My reservations: an action on a booking failed for no reason the server named."
+  },
+  "myReservationsCancel": "Cancel reservation",
+  "@myReservationsCancel": {
+    "description": "#2553 C3 My reservations: cancels the booking on its own server."
+  },
+  "myReservationsCancelBody": "The server of its space cancels it. The place is free again for others.",
+  "@myReservationsCancelBody": {
+    "description": "#2553 C3 My reservations: what cancelling does: the server of the booking's own space is asked."
+  },
+  "myReservationsCancelDone": "Reservation cancelled.",
+  "@myReservationsCancelDone": {
+    "description": "#2553 C3 My reservations: the booking was cancelled on its server."
+  },
+  "myReservationsCancelTitle": "Cancel this reservation?",
+  "@myReservationsCancelTitle": {
+    "description": "#2553 C3 My reservations: the question before a booking is cancelled."
+  },
   "myReservationsChangePeriod": "Change period",
   "@myReservationsChangePeriod": {
     "description": "#2553 My reservations: opens the period picker."
+  },
+  "myReservationsCheckIn": "Check in",
+  "@myReservationsCheckIn": {
+    "description": "#2553 C3 My reservations: checks in to the booking on its own server."
+  },
+  "myReservationsCheckInDone": "Checked in.",
+  "@myReservationsCheckInDone": {
+    "description": "#2553 C3 My reservations: the check-in was recorded on the booking's server."
   },
   "myReservationsCheckedInAt": "Checked in at {time}",
   "@myReservationsCheckedInAt": {
@@ -16527,6 +16555,10 @@
   "@myReservationsForbidden": {
     "description": "#2553 My reservations: the host refused the caller (42501)."
   },
+  "myReservationsGone": "This reservation is no longer listed for you at that time.",
+  "@myReservationsGone": {
+    "description": "#2553 C3 My reservations: the booking's server no longer lists it for the person where it was."
+  },
   "myReservationsHostUnavailable": "This server cannot be reached from this device: it is not connected here, or it is not the one it claims to be.",
   "@myReservationsHostUnavailable": {
     "description": "#2553 C2 My reservations: one workspace host cannot be reached with its own verified connection on this device."
@@ -16534,6 +16566,10 @@
   "myReservationsInvalid": "This server refused the period asked for.",
   "@myReservationsInvalid": {
     "description": "#2553 My reservations: the host refused the window or cursor (22023)."
+  },
+  "myReservationsKeep": "Keep it",
+  "@myReservationsKeep": {
+    "description": "#2553 C3 My reservations: closes the cancel question and keeps the booking."
   },
   "myReservationsKindDesk": "Desk",
   "@myReservationsKindDesk": {
@@ -16580,6 +16616,10 @@
       }
     }
   },
+  "myReservationsSourceAll": "All servers",
+  "@myReservationsSourceAll": {
+    "description": "#2553 C3 My reservations: the source filter that shows every workspace server."
+  },
   "myReservationsSourceProblem": "{source}: {problem}",
   "@myReservationsSourceProblem": {
     "description": "#2553 C2 My reservations: one host's read failed; source is the names of its spaces, problem the sentence saying why.",
@@ -16625,9 +16665,30 @@
   "@myReservationsStatusReserved": {
     "description": "#2553 My reservations: booking status."
   },
+  "myReservationsTabCancelled": "Cancelled",
+  "@myReservationsTabCancelled": {
+    "description": "#2553 C3 My reservations: the tab of cancelled bookings."
+  },
+  "myReservationsTabPast": "Past",
+  "@myReservationsTabPast": {
+    "description": "#2553 C3 My reservations: the tab of ended, completed or released bookings, newest first."
+  },
+  "myReservationsTabUpcoming": "Upcoming",
+  "@myReservationsTabUpcoming": {
+    "description": "#2553 C3 My reservations: the tab of bookings reserved or checked in that have not ended."
+  },
   "myReservationsTimedOut": "This server did not answer in time.",
   "@myReservationsTimedOut": {
     "description": "#2553 C2 My reservations: one workspace host did not answer within the personal read timeout."
+  },
+  "myReservationsTimesIn": "Times in {zone}",
+  "@myReservationsTimesIn": {
+    "description": "#2553 C3 My reservations: the times of a card are its workspace's wall clock, which differs from the device's; zone is the IANA zone name.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
   },
   "myReservationsUnnamedPlace": "(unnamed place)",
   "@myReservationsUnnamedPlace": {
@@ -16636,6 +16697,10 @@
   "myReservationsUnsupported": "This server does not list reservations for the personal space yet.",
   "@myReservationsUnsupported": {
     "description": "#2553 My reservations: an older host without the read."
+  },
+  "myReservationsView": "View",
+  "@myReservationsView": {
+    "description": "#2553 C3 My reservations: reads one booking again from its own server and shows it."
   },
   "mySpacesAll": "All my spaces",
   "@mySpacesAll": {

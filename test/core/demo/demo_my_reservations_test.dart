@@ -121,4 +121,35 @@ void main() {
           reason: 'every booked space names its own zone');
     }
   });
+
+  test('#2553 C3: View, Cancel and Check in act on the fixture space that holds the booking; '
+      'another host cannot be reached', () async {
+    final fixture = DemoFixture.build();
+    final container = ProviderContainer(overrides: demoOverrides(fixture));
+    addTearDown(container.dispose);
+    final actions = container.read(myReservationActionsProvider);
+    final booked = fixture.reservations.reservations.firstWhere(
+      (r) => r.memberId == fixture.activeMemberId && r.status == ReservationStatus.reserved,
+    );
+    final page = await container
+        .read(myReservationsRepositoryProvider)
+        .page(_demo, MyReservationsQuery(from: booked.startsAt, to: booked.endsAt));
+    final open = page.items.firstWhere((i) => i.id == booked.id);
+
+    await actions.cancel(_demo, open);
+    final cancelled = await actions.view(_demo, open);
+    expect(cancelled.status, ReservationStatus.cancelled);
+    final row = [
+      ...fixture.reservations.reservations,
+      ...fixture.secondSpace.reservations.reservations,
+    ].firstWhere((r) => r.id == open.id);
+    expect(row.status, ReservationStatus.cancelled, reason: 'the fixture space holds the change');
+
+    const elsewhere = MyReservationsSource(installationId: 'inst-other', workspaceIds: []);
+    await expectLater(
+      actions.checkIn(elsewhere, open),
+      throwsA(isA<MyReservationsRefused>()
+          .having((e) => e.failure, 'failure', MyReservationsFailure.hostUnavailable)),
+    );
+  });
 }

@@ -5,6 +5,10 @@
 // next waiting one directly, so the bound holds between the two. Closing
 // refuses the waiting reads, so nothing is left queued behind a view that
 // is gone.
+//
+// C3: paused (the app is hidden), no read starts; the ones asked meanwhile
+// wait in order and start on resume, at most [limit] at once. The reads in
+// flight finish on their own.
 import 'dart:async';
 import 'dart:collection';
 
@@ -22,6 +26,7 @@ class BoundedReads {
   final int limit;
   int _running = 0;
   bool _closed = false;
+  bool _paused = false;
   final Queue<Completer<void>> _waiting = Queue();
 
   /// Reads in flight now.
@@ -30,7 +35,7 @@ class BoundedReads {
   /// Runs [read] once a place is free.
   Future<T> run<T>(Future<T> Function() read) async {
     if (_closed) throw const BoundedReadsClosed();
-    if (_running < limit) {
+    if (!_paused && _running < limit) {
       _running++;
     } else {
       final turn = Completer<void>();
@@ -42,13 +47,29 @@ class BoundedReads {
     try {
       return await read();
     } finally {
-      if (_waiting.isNotEmpty && !_closed) {
+      if (_waiting.isNotEmpty && !_closed && !_paused) {
         _waiting.removeFirst().complete();
       } else {
         _running--;
       }
     }
   }
+
+  /// Reads asked now wait until [resume]; the ones in flight go on.
+  void pause() => _paused = true;
+
+  /// Starts the reads that waited, at most [limit] at once.
+  void resume() {
+    if (!_paused) return;
+    _paused = false;
+    while (!_closed && _waiting.isNotEmpty && _running < limit) {
+      _running++;
+      _waiting.removeFirst().complete();
+    }
+  }
+
+  /// Reads waiting for a place or for [resume].
+  int get waiting => _waiting.length;
 
   /// Refuses every waiting read; the ones in flight finish on their own.
   void close() {

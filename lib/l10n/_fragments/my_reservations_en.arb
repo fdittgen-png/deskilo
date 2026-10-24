@@ -187,5 +187,70 @@
         "type": "String"
       }
     }
+  },
+  "myReservationsTabUpcoming": "Upcoming",
+  "@myReservationsTabUpcoming": {
+    "description": "#2553 C3 My reservations: the tab of bookings reserved or checked in that have not ended."
+  },
+  "myReservationsTabPast": "Past",
+  "@myReservationsTabPast": {
+    "description": "#2553 C3 My reservations: the tab of ended, completed or released bookings, newest first."
+  },
+  "myReservationsTabCancelled": "Cancelled",
+  "@myReservationsTabCancelled": {
+    "description": "#2553 C3 My reservations: the tab of cancelled bookings."
+  },
+  "myReservationsSourceAll": "All servers",
+  "@myReservationsSourceAll": {
+    "description": "#2553 C3 My reservations: the source filter that shows every workspace server."
+  },
+  "myReservationsView": "View",
+  "@myReservationsView": {
+    "description": "#2553 C3 My reservations: reads one booking again from its own server and shows it."
+  },
+  "myReservationsCheckIn": "Check in",
+  "@myReservationsCheckIn": {
+    "description": "#2553 C3 My reservations: checks in to the booking on its own server."
+  },
+  "myReservationsCancel": "Cancel reservation",
+  "@myReservationsCancel": {
+    "description": "#2553 C3 My reservations: cancels the booking on its own server."
+  },
+  "myReservationsKeep": "Keep it",
+  "@myReservationsKeep": {
+    "description": "#2553 C3 My reservations: closes the cancel question and keeps the booking."
+  },
+  "myReservationsCancelTitle": "Cancel this reservation?",
+  "@myReservationsCancelTitle": {
+    "description": "#2553 C3 My reservations: the question before a booking is cancelled."
+  },
+  "myReservationsCancelBody": "The server of its space cancels it. The place is free again for others.",
+  "@myReservationsCancelBody": {
+    "description": "#2553 C3 My reservations: what cancelling does: the server of the booking's own space is asked."
+  },
+  "myReservationsCancelDone": "Reservation cancelled.",
+  "@myReservationsCancelDone": {
+    "description": "#2553 C3 My reservations: the booking was cancelled on its server."
+  },
+  "myReservationsCheckInDone": "Checked in.",
+  "@myReservationsCheckInDone": {
+    "description": "#2553 C3 My reservations: the check-in was recorded on the booking's server."
+  },
+  "myReservationsActionFailed": "This could not be done. Try again in a moment.",
+  "@myReservationsActionFailed": {
+    "description": "#2553 C3 My reservations: an action on a booking failed for no reason the server named."
+  },
+  "myReservationsGone": "This reservation is no longer listed for you at that time.",
+  "@myReservationsGone": {
+    "description": "#2553 C3 My reservations: the booking's server no longer lists it for the person where it was."
+  },
+  "myReservationsTimesIn": "Times in {zone}",
+  "@myReservationsTimesIn": {
+    "description": "#2553 C3 My reservations: the times of a card are its workspace's wall clock, which differs from the device's; zone is the IANA zone name.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
   }
 }
