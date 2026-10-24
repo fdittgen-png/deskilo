@@ -22,12 +22,20 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
   }
 
   /// Puts [key] in or out of Favorites (the heart).
-  Future<void> toggleFavorite(String key) {
+  Future<void> toggleFavorite(String key) =>
+      setFavorite(key, on: !_now.favorites.contains(key));
+
+  /// Puts [key] in Favorites when [on], out of them otherwise; nothing is
+  /// written when it is there already.
+  Future<void> setFavorite(String key, {required bool on}) {
+    if (_now.favorites.contains(key) == on) return Future.value();
     final favorites = {..._now.favorites};
     final groupOf = {..._now.groupOf};
-    if (!favorites.remove(key)) {
+    if (on) {
       favorites.add(key);
       groupOf.remove(key);
+    } else {
+      favorites.remove(key);
     }
     return _set(_now.copyWith(favorites: favorites, groupOf: groupOf));
   }

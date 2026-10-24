@@ -309,7 +309,8 @@ void main() {
       final second = _key('my-space-$_home:$_two');
       await _tap(tester, _key('my-spaces-layout-list'));
       await _tap(tester, _key('my-space-favorite-space:ws-2'));
-      expect(store.prefs.favorites, {'space:ws-2'});
+      // Kept on the account (#2554); the device copy is gone once read.
+      expect(store.prefs.favorites, isEmpty);
       expect(store.prefs.ratings, isEmpty);
       expect(
         tester.getTopLeft(second).dy,
@@ -319,7 +320,11 @@ void main() {
       await _tap(tester, _key('my-space-review-space:ws-1'));
       await _tap(tester, _key('my-space-review-space:ws-1-4'));
       expect(store.prefs.ratings, {'space:ws-1': 4});
-      expect(store.prefs.favorites, {'space:ws-2'});
+      expect(store.prefs.favorites, isEmpty);
+      expect(
+        tester.getTopLeft(second).dy,
+        lessThan(tester.getTopLeft(first).dy),
+      );
       expect(find.text('My review: 4 of 5'), findsOneWidget);
     });
 

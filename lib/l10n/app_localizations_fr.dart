@@ -6285,6 +6285,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get favoriteKeptOnDeviceRefused =>
+      'Gardé sur cet appareil uniquement : votre compte ne peut pas enregistrer cet espace.';
+
+  @override
+  String get favoriteKeptOnDeviceUnreachable =>
+      'Gardé sur cet appareil uniquement : votre compte n’a pas pu être joint. Réessayez plus tard.';
+
+  @override
   String get featureAccessorySupplements => 'Suppléments d\'accessoires';
 
   @override
@@ -14490,9 +14498,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String mySpacesReviewed(int stars) {
     return 'Mon avis : $stars sur 5';
   }
-
-  @override
-  String get mySpacesSavedOnAccount => 'Enregistré sur votre compte';
 
   @override
   String get mySpacesTestSpace => 'Espace de test';

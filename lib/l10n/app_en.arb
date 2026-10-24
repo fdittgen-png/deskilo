@@ -7281,6 +7281,8 @@
       }
     }
   },
+  "favoriteKeptOnDeviceRefused": "Kept on this device only: your account cannot save this space.",
+  "favoriteKeptOnDeviceUnreachable": "Kept on this device only: your account could not be reached. Try again later.",
   "featureAccessorySupplements": "Accessory supplements",
   "@featureAccessorySupplements": {
     "description": "Feature switch: bill priced seat accessories on monthly statements (#170)"
@@ -16890,10 +16892,6 @@
         "type": "int"
       }
     }
-  },
-  "mySpacesSavedOnAccount": "Saved on your account",
-  "@mySpacesSavedOnAccount": {
-    "description": "#2554 My spaces: the space is a favourite saved on the personal account"
   },
   "mySpacesTestSpace": "Test space",
   "@mySpacesTestSpace": {

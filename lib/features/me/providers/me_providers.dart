@@ -10,6 +10,7 @@ import '../../../core/backend/context_clients.dart'
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../application/account_favorite.dart';
 import '../application/me_actions.dart';
 import '../application/my_reservation_sources.dart';
 import '../application/workspace_exports.dart';
@@ -26,6 +27,7 @@ import '../domain/visibility.dart';
 import '../domain/workspace_access_repository.dart';
 import '../domain/workspace_export.dart';
 import 'me_read_retry.dart';
+import 'space_prefs_provider.dart';
 
 part 'me_providers.g.dart';
 
@@ -183,4 +185,15 @@ Future<List<WorkspaceExportSource>> myWorkspaceExportSources(Ref ref) async {
 WorkspaceExportCommand workspaceExportCommand(Ref ref) =>
     WorkspaceExportCommand(
       repository: ref.watch(workspaceExportRepositoryProvider),
+    );
+
+/// #2554 — the heart of My spaces: kept on the account by reference, this
+/// device's copy shown at once and kept when the home refuses or is out of
+/// reach. The card that shows the heart watches it.
+@riverpod
+AccountFavoriteCommand accountFavoriteCommand(Ref ref) =>
+    AccountFavoriteCommand(
+      repository: ref.watch(meRepositoryProvider),
+      keepOnDevice: ref.read(spacePrefsProvider.notifier).setFavorite,
+      reloadAccount: () => ref.refresh(personalWorkspaceRefsProvider.future),
     );

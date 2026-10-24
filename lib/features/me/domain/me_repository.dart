@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'account_favorite.dart';
 import 'personal_export.dart';
 import 'personal_workspace_refs.dart';
 import 'public_person.dart';
@@ -13,6 +14,12 @@ abstract interface class MeRepository {
   /// `my_personal_workspace_refs_v1()` (#2563): the workspaces my account
   /// names by qualified reference, with no workspace needed here.
   Future<PersonalWorkspaceRefs> myWorkspaceRefs();
+
+  /// `set_workspace_favorite_ref_v1(ref, on)` (#2554): sets or clears my
+  /// favourite by qualified reference on my personal home and answers
+  /// whether it is one now. A refusal throws [AccountFavoriteRefused] and
+  /// writes nothing; anything else is the transport's failure.
+  Future<bool> setAccountFavorite(String networkId, {required bool on});
 
   /// `export_my_personal_data_v1()` (#2563, #2557 C2): the personal part of
   /// my data on my personal home, with no workspace. A typed refusal is

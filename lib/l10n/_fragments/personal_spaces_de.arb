@@ -20,6 +20,5 @@
   "mySpacesLayoutGrid": "Als Raster anzeigen",
   "mySpacesLayoutList": "Als Liste anzeigen",
   "mySpacesReview": "Meine Bewertung",
-  "mySpacesReviewed": "Meine Bewertung: {stars} von 5",
-  "mySpacesSavedOnAccount": "In Ihrem Konto gespeichert"
+  "mySpacesReviewed": "Meine Bewertung: {stars} von 5"
 }
