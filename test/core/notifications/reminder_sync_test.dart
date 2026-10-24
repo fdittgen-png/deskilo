@@ -19,10 +19,13 @@ class _ThrowingService implements NotificationService {
   }
 
   @override
-  Future<void> showNow({required String title, required String body}) async {}
+  Future<void> showNow(
+      {required String title, required String body, String? payload}) async {}
 
   @override
   Future<bool?> notificationsEnabled() async => true;
+  @override
+  Future<bool?> requestPermission() async => true;
 
   @override
   Future<void> syncPendingNotifications(List<PendingNotice> n) async {}
@@ -62,10 +65,13 @@ class _RecordingService implements NotificationService {
   }
 
   @override
-  Future<void> showNow({required String title, required String body}) async {}
+  Future<void> showNow(
+      {required String title, required String body, String? payload}) async {}
 
   @override
   Future<bool?> notificationsEnabled() async => true;
+  @override
+  Future<bool?> requestPermission() async => true;
 
   @override
   Future<void> syncPendingNotifications(List<PendingNotice> n) async {}

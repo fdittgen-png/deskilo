@@ -116,7 +116,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
         country: workspace.countryCode,
         year: _year,
       );
-      ref.invalidate(closureDaysProvider);
+      ref.invalidate(workspaceContextProvider); // #2561 L4: the calendar is the context's
       if (!mounted) return;
       AppSnack.success(
         context,

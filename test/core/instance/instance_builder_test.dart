@@ -253,6 +253,16 @@ void main() {
             },
           ];
         }
+        // #2561 -- a fresh install is combined and hosts nothing yet.
+        if (sql == installationRolesSql) {
+          return [
+            {
+              'roles': ['personal_home', 'workspace_host'],
+              'workspaces': 0,
+              'members': 0,
+            },
+          ];
+        }
         return [
           {'created_7d': 0, 'confirmed_7d': 0, 'stuck': 0, 'oldest_stuck_hours': 0},
         ];

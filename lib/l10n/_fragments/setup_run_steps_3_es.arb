@@ -1,0 +1,18 @@
+{
+  "setupNotificationsWho": "Quién se entera de qué",
+  "setupNotificationsEvent": "{event, select, pending_request{Una solicitud espera una decisión} reservation_cancelled{Otra persona eliminó una reserva} check_in{Una reserva está a punto de empezar: hora de registrarse} member_note{Un mensaje o un anuncio} member_mention{Alguien lo menciona en una conversación} invoice_reminder{Un recordatorio de pago} other{{event}}}",
+  "setupNotificationsAudience": "{audience, select, deciders{Quien la decide} members{Los miembros} other{{audience}}}",
+  "setupNotificationsLineHow": "{audience}: {channels}",
+  "setupNotificationsChannels": "{channels, select, app{en la aplicación} app_push{en la aplicación y como notificación en el teléfono} device{como recordatorio en su propio teléfono, incluso sin notificaciones} other{{channels}}}",
+  "setupNotificationsPushOn": "Las notificaciones en el teléfono están activadas. Un teléfono las recibe cuando el operador ha conectado el push para este servidor; hasta entonces, todo queda en la aplicación.",
+  "setupNotificationsPushOff": "Las notificaciones en el teléfono están desactivadas: todo, salvo el recordatorio de registro, queda en la aplicación.",
+  "setupNotificationsLeadFixed": "El recordatorio de registro aparece {lead} antes de que empiece una reserva.",
+  "setupNotificationsSaveFailed": "No se pudo guardar la antelación del recordatorio. Inténtelo de nuevo.",
+  "setupNotificationsPreviewWhen": "{lead} antes de que empiece la reserva, el teléfono del miembro muestra:",
+  "setupNotificationsPreviewPlace": "Escritorio 4",
+  "setupLimitsSaveFailed": "No se pudieron guardar los límites de reserva. Inténtelo de nuevo.",
+  "setupLimitsPerMember": "Una asignación fijada en la página de un miembro prevalece sobre el número de puestos indicado aquí.",
+  "setupLimitsPreviewAhead": "{days, plural, =1{Puede reservar con hasta un día de antelación.} other{Puede reservar con hasta {days} días de antelación.}}",
+  "setupLimitsPreviewLength": "Una reserva dura al menos {shortest} y como máximo {longest}.",
+  "setupLimitsPreviewAtOnce": "{count, plural, =1{Puede ocupar un puesto a la vez.} other{Puede ocupar hasta {count} puestos a la vez.}}"
+}

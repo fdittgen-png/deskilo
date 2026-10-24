@@ -109,6 +109,17 @@ stops them), while the job's replayed stack is W-A. They exist only for
 code over real signed requests with database readback; ordinary
 disciplines never attach to them. The row is `Physical topology`.
 
+The fault cases (#2561 L2: SEP-R3, R4, R11) act on those stacks
+physically: `scripts/topology_stacks.sh fault stall|block|restore
+p|wa|wb|w|all` pauses (accepted, never answered) or stops (refused) a
+stack's API gateway container after checking it is this job's (CLI
+project label, published port, not auto-removed), and restore waits until
+it answers again. `TOPOLOGY_DRY_RUN=1` prints the commands instead
+(`test/tool/topology_faults_cli_test.dart`). Because they stop gateways
+the other topology files use, `test/topology/topology_faults_test.dart`
+runs in a `flutter test` call of its own after them, and `down` lifts any
+fault left behind before the stacks stop.
+
 The generated code is gated in the required job and in the F-Droid audit
 through one call, `scripts/generated_drift.sh` (#1446 C5a): build_runner
 runs, and any `.g.dart` or `.freezed.dart` that differs from the commit

@@ -18,10 +18,20 @@
 # consumer reads, and stops what it prepared.
 #
 #   prepare   project directories for P and W-B (distinct ids, ports, secrets)
-#   seed      users, the equal-id workspace at W-A and W-B, one reservation each,
+#   seed      users (two at P), the equal-id workspace at W-A and W-B, one reservation each,
 #             and at W-A the invoice-preview fixture (#2585: a member, a
 #             stranger of another workspace, seeded money)
-#   down      stop P and W-B, remove the W-A fixture rows
+#   down      restore any fault, stop P and W-B, remove the W-A fixture rows
+#   fault <stall|block|restore> <p|wa|wb|w|all>
+#             #2561 L2 -- a physical fault on a stack's API gateway (its
+#             Kong container, the one door to its Auth, REST and Storage):
+#             stall  docker pause: connections are accepted, nothing answers
+#                    until restore (a hung host, SEP-R4/R11)
+#             block  docker stop: every connection is refused at once (the
+#                    host is unreachable, SEP-R3)
+#             restore unpause or start it again, and wait until it answers
+#             w is W-A and W-B; all is the three. TOPOLOGY_DRY_RUN=1 prints
+#             the checks and docker commands instead of running them.
 #
 # Every operation names its target explicitly and refuses anything that is
 # not a disposable local stack of this job. The descriptor holds the local
@@ -34,6 +44,10 @@ FILE=$DIR/topology.json
 PASSWORD='Topology-2026-fixture'
 # Equal local workspace id on W-A and W-B: the collision the harness exists for.
 WS=00000000-0000-4000-8000-0000000e0001
+# Port bases of the two prepared stacks: db shadow = base, API = base + 1,
+# db = base + 2. The fault mode finds their gateways by the same numbers.
+P_BASE=54420
+WB_BASE=54520
 
 fail() { echo "::error::topology: $*"; exit 1; }
 say() { printf '  %s\n' "$*"; }
@@ -77,7 +91,7 @@ PY
 prepare() {
   rm -rf "$DIR"
   mkdir -p "$DIR"
-  for spec in p:54420 wb:54520; do
+  for spec in p:$P_BASE wb:$WB_BASE; do
     name=${spec%%:*}; base=${spec##*:}
     mkdir -p "$DIR/$name/supabase"
     ln -s "$ROOT/supabase/migrations" "$DIR/$name/supabase/migrations"
@@ -133,6 +147,11 @@ TOML
     new_signing_key "$DIR/$name/supabase/signing_keys.json" || fail "$name: no signing key could be generated"
   done
   say "prepared P and W-B under $DIR"
+}
+
+set_roles() { # db roles stack-name
+  psql "$1" -qtAX -v ON_ERROR_STOP=1 -c "select public.operator_set_installation_roles('$2')" >/dev/null \
+    || fail "$3: installation roles $2"
 }
 
 mkuser() { # api service email -> user id
@@ -227,7 +246,17 @@ seed() {
   [ "${API[wa]}" != "${API[p]}" ] && [ "${API[wa]}" != "${API[wb]}" ] && [ "${API[p]}" != "${API[wb]}" ] \
     || fail "two roles share one API address: ${API[wa]} ${API[p]} ${API[wb]}"
 
+  # #2561 L1 -- what each stack IS. P becomes a personal home through the
+  # operator function itself (its success path on an installation that holds
+  # nothing); the two hosts state the combined default explicitly. The Dart
+  # consumer reads the roles back from each database and each descriptor.
+  set_roles "${DB[p]}" '{personal_home}' P
+  set_roles "${DB[wa]}" '{personal_home,workspace_host}' W-A
+  set_roles "${DB[wb]}" '{personal_home,workspace_host}' W-B
+
   p_user=$(mkuser "${API[p]}" "${SERVICE[p]}" "topology-p-$run@deskilo.test") || fail "P: user"
+  # #2561 L2 -- the account the person switches to at P (SEP-R11).
+  p2_user=$(mkuser "${API[p]}" "${SERVICE[p]}" "topology-p2-$run@deskilo.test") || fail "P: second user"
   a_user=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "topology-a-$run@deskilo.test") || fail "W-A: user"
   a_stranger=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "topology-a-stranger-$run@deskilo.test") || fail "W-A: stranger"
   b_user=$(mkuser "${API[wb]}" "${SERVICE[wb]}" "topology-b-$run@deskilo.test") || fail "W-B: user"
@@ -250,8 +279,11 @@ seed() {
   "windowFrom": "$from",
   "windowTo": "$to",
   "p":  {"url": "${API[p]}",  "anon": "${ANON[p]}",  "service": "${SERVICE[p]}",
-         "user": {"id": "$p_user", "email": "topology-p-$run@deskilo.test"}},
+         "roles": ["personal_home"],
+         "user": {"id": "$p_user", "email": "topology-p-$run@deskilo.test"},
+         "user2": {"id": "$p2_user", "email": "topology-p2-$run@deskilo.test"}},
   "wa": {"url": "${API[wa]}", "anon": "${ANON[wa]}", "service": "${SERVICE[wa]}",
+         "roles": ["personal_home", "workspace_host"],
          "user": {"id": "$a_user", "email": "topology-a-$run@deskilo.test"},
          "stranger": {"id": "$a_stranger", "email": "topology-a-stranger-$run@deskilo.test"},
          "reservationId": "0000000e-0a0a-4000-8000-0000000e0a0a", "timezone": "Europe/Paris",
@@ -259,6 +291,7 @@ seed() {
                      "member": {"id": "$pv_member", "email": "preview-member-$run@deskilo.test"},
                      "owner": {"id": "$pv_owner", "email": "preview-owner-$run@deskilo.test"}}},
   "wb": {"url": "${API[wb]}", "anon": "${ANON[wb]}", "service": "${SERVICE[wb]}",
+         "roles": ["personal_home", "workspace_host"],
          "user": {"id": "$b_user", "email": "topology-b-$run@deskilo.test"},
          "reservationId": "0000000e-0b0a-4000-8000-0000000e0b0a", "timezone": "America/New_York"}
 }
@@ -266,13 +299,112 @@ JSON
   say "seeded: P ${API[p]}, W-A ${API[wa]}, W-B ${API[wb]} (descriptor $FILE)"
 }
 
+# #2561 L2 -- the gateway container, project id and API port of each role.
+# P and W-B are the ids and ports prepare writes; W-A is the job's own stack.
+wa_project() { sed -n 's/^project_id = "\(.*\)"$/\1/p' "$ROOT/supabase/config.toml" | head -1; }
+wa_port() { awk '/^\[api\]/{a=1;next} /^\[/{a=0} a&&/^port =/{print $3; exit}' "$ROOT/supabase/config.toml"; }
+role_project() {
+  case "$1" in
+    p) echo deskilo_topology_p ;;
+    wb) echo deskilo_topology_wb ;;
+    wa) wa_project ;;
+  esac
+}
+role_port() {
+  case "$1" in
+    p) echo $((P_BASE + 1)) ;;
+    wb) echo $((WB_BASE + 1)) ;;
+    wa) wa_port ;;
+  esac
+}
+roles_of() {
+  case "$1" in
+    p|wa|wb) echo "$1" ;;
+    w) echo wa wb ;;
+    all) echo p wa wb ;;
+    *) return 1 ;;
+  esac
+}
+
+dry() { [ "${TOPOLOGY_DRY_RUN:-}" = 1 ]; }
+# run a docker command, or print it on a dry run
+dock() { if dry; then echo "+ docker $*"; else docker "$@" >/dev/null; fi; }
+
+# The container is the gateway of THIS job's stack for that role, or it is
+# refused before anything is paused or stopped: its CLI project label names
+# the project, it publishes the role's API port on the loopback, and the
+# CLI did not create it to be removed when it stops.
+gateway_of_this_job() { # container project port
+  if dry; then echo "+ verify $1 project=$2 port=$3"; return 0; fi
+  local label published auto
+  label=$(docker inspect -f '{{index .Config.Labels "com.supabase.cli.project"}}' "$1" 2>/dev/null) \
+    || fail "refusing $1: no such container"
+  [ "$label" = "$2" ] || fail "refusing $1: it belongs to project '$label', not $2"
+  published=$(docker inspect -f '{{range $p, $b := .HostConfig.PortBindings}}{{range $b}} {{.HostPort}}{{end}}{{end}}' "$1")
+  case " $published " in *" $3 "*) ;; *) fail "refusing $1: it publishes$published, not $3" ;; esac
+  auto=$(docker inspect -f '{{.HostConfig.AutoRemove}}' "$1")
+  [ "$auto" = false ] || fail "refusing $1: a stop would remove it"
+}
+
+# Waits until the gateway answers anything at all on its port (60 s).
+answers() { # port
+  if dry; then echo "+ wait http://127.0.0.1:$1"; return 0; fi
+  local code
+  for _ in $(seq 1 60); do
+    code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 2 "http://127.0.0.1:$1/rest/v1/" || true)
+    [ -n "$code" ] && [ "$code" != 000 ] && return 0
+    sleep 1
+  done
+  return 1
+}
+
+fault() { # mode target
+  local mode=${1:-} target=${2:-} roles role c state
+  case "$mode" in stall|block|restore) ;; *)
+    echo "usage: topology_stacks.sh fault stall|block|restore p|wa|wb|w|all" >&2; exit 2 ;;
+  esac
+  roles=$(roles_of "$target") || {
+    echo "usage: topology_stacks.sh fault stall|block|restore p|wa|wb|w|all" >&2; exit 2; }
+  for role in $roles; do
+    c=supabase_kong_$(role_project "$role")
+    gateway_of_this_job "$c" "$(role_project "$role")" "$(role_port "$role")"
+    case "$mode" in
+      stall) dock pause "$c" || fail "$role: pause $c" ;;
+      block) dock stop -t 2 "$c" || fail "$role: stop $c" ;;
+      restore)
+        if dry; then
+          dock unpause "$c"; dock start "$c"
+        else
+          state=$(docker inspect -f '{{.State.Status}}' "$c")
+          case "$state" in
+            paused) docker unpause "$c" >/dev/null || fail "$role: unpause $c" ;;
+            exited|created) docker start "$c" >/dev/null || fail "$role: start $c" ;;
+          esac
+        fi
+        answers "$(role_port "$role")" || fail "$role: $c does not answer after restore" ;;
+    esac
+    say "$mode $role ($c)"
+  done
+}
+
 cleanup() {
+  # #2561 L2 -- a fault a failed test left behind is lifted first: a
+  # paused gateway would hold the stop, and W-A is the job's own stack.
+  if command -v docker >/dev/null 2>&1; then
+    for role in p wa wb; do
+      c=supabase_kong_$(role_project "$role")
+      case "$(docker inspect -f '{{.State.Status}}' "$c" 2>/dev/null)" in
+        paused) docker unpause "$c" >/dev/null 2>&1 || true ;;
+        exited) [ "$role" = wa ] && docker start "$c" >/dev/null 2>&1 || true ;;
+      esac
+    done
+  fi
   # The shared W-A stack is disposable with the job; its fixture rows go
   # anyway so a later step of this job never meets them.
   out=$(supabase status -o env 2>/dev/null) || out=
   db=$(val DB_URL <<<"$out")
   if [ -n "$db" ]; then
-    psql "$db" -qX -c "delete from public.workspaces where id in ('$WS', '$PWS')" >/dev/null 2>&1 || true
+    psql "$db" -qX -c "delete from public.workspaces where id in ('$WS', '$PWS') or name like 'SEP-06 control %'" >/dev/null 2>&1 || true
   fi
   for name in p wb; do
     [ -d "$DIR/$name" ] && supabase stop --workdir "$DIR/$name" --no-backup >/dev/null 2>&1 || true
@@ -284,5 +416,6 @@ case "${1:-}" in
   prepare) prepare ;;
   seed) seed ;;
   down) cleanup ;;
-  *) echo "usage: topology_stacks.sh prepare|seed|down" >&2; exit 2 ;;
+  fault) shift; fault "$@" ;;
+  *) echo "usage: topology_stacks.sh prepare|seed|down|fault" >&2; exit 2 ;;
 esac

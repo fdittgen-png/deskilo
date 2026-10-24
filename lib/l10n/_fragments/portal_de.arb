@@ -59,5 +59,9 @@
   "portalResetAllConfirm": "Zurücksetzen",
   "portalReachableHeading": "Personen, denen Sie schreiben können",
   "portalReachableEmpty": "Noch ist niemand erreichbar. Suchen Sie nach einem Namen, um Personen zu finden.",
-  "portalGroupsHeading": "Gruppen"
+  "portalGroupsHeading": "Gruppen",
+  "portalRecipientHint": "Geben Sie einen Namen ein: Vorschläge erscheinen ab dem ersten Buchstaben",
+  "portalDirectoryCount": "{name} ({count})",
+  "portalSuggestionGroup": "Gruppe",
+  "portalWriteTo": "{name} schreiben"
 }

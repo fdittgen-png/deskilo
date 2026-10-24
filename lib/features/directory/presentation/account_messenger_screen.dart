@@ -12,6 +12,7 @@ import '../providers/directory_providers.dart';
 import 'account_messenger_sections.dart';
 import 'account_thread.dart';
 import 'directory_pages.dart';
+import 'messenger/recipient_typeahead.dart';
 import 'reachable_directory.dart';
 
 /// Person-to-person messages, on this server and every connected one.
@@ -34,10 +35,9 @@ class AccountMessengerScreen extends ConsumerStatefulWidget {
 }
 
 class _MessengerState extends ConsumerState<AccountMessengerScreen> {
+  // Typing suggests from the directory (RecipientTypeahead); the search
+  // below runs on submit and also finds people I share no workspace with.
   String _query = '';
-  // The directory narrows as I type; the search below still runs
-  // on submit and also finds people I share no workspace with.
-  String _typed = '';
   String? _account;
   final _search = TextEditingController();
   @override
@@ -54,7 +54,6 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
     if (account != _account) {
       _account = account;
       _query = '';
-      _typed = '';
       _search.clear();
     }
     if (widget.recipient != null) {
@@ -87,7 +86,7 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
         conversation: conversation,
       ),
     );
-    void submit(String value) => setState(() => _query = value.trim());
+    void submit(String value) => setState(() => _query = value);
     return Scaffold(
       appBar: AppBar(
         title: Text(l.portalMessenger),
@@ -118,22 +117,14 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
           for (final server in servers.entries)
             if (server.key.isNotEmpty)
               _AvailabilitySwitch(source: server.key, host: server.value),
-          TextField(
-            key: const ValueKey('account-messenger-portal-find-people-2'),
+          RecipientTypeahead(
             controller: _search,
-            decoration: InputDecoration(
-              labelText: l.portalFindPeople,
-              suffixIcon: IconButton(
-                key: const ValueKey('account-messenger-portal-find-people'),
-                tooltip: l.portalFindPeople,
-                icon: const Icon(Icons.search),
-                onPressed: () => submit(_search.text),
-              ),
-            ),
-            onChanged: (value) => setState(() => _typed = value.trim()),
-            onSubmitted: submit,
+            servers: servers,
+            self: account,
+            onOpen: open,
+            onSearch: submit,
           ),
-          ReachableSection(servers: servers, query: _typed, onOpen: open),
+          ReachableSection(servers: servers, self: account, onOpen: open),
           if (_query.isNotEmpty)
             for (final server in servers.entries)
               ContactResults(

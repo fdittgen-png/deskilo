@@ -11,8 +11,23 @@ import io.flutter.plugin.common.MethodChannel
 import java.io.File
 
 class MainActivity : FlutterActivity() {
+    // #2559 C1 — the app-switcher privacy cover (SwitcherCover.kt). It sees
+    // the pause before Flutter does, so the cover is in the last frame.
+    private val switcherCover = SwitcherCover(this)
+
+    override fun onPause() {
+        switcherCover.onPause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        switcherCover.onResume()
+        super.onResume()
+    }
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        switcherCover.attach(flutterEngine.dartExecutor.binaryMessenger)
         // Kiosk pinning: while kiosk mode is confirmed the app pins
         // itself (screen pinning / lock task) so the pad cannot leave
         // it — home, recents and notifications are blocked by the
@@ -89,8 +104,16 @@ class MainActivity : FlutterActivity() {
                     values.clear()
                     values.put(MediaStore.Downloads.IS_PENDING, 0)
                     resolver.update(uri, values, null, null)
+                    // MediaStore keeps a name of its own when the requested
+                    // one is taken ("x (1).pdf"): the app reports the entry
+                    // it wrote, never the name it asked for.
+                    val savedName = resolver.query(
+                        uri, arrayOf(MediaStore.Downloads.DISPLAY_NAME),
+                        null, null, null,
+                    )?.use { if (it.moveToFirst()) it.getString(0) else null }
+                        ?: fileName
                     result.success(
-                        "${Environment.DIRECTORY_DOWNLOADS}/$fileName",
+                        "${Environment.DIRECTORY_DOWNLOADS}/$savedName",
                     )
                 } else {
                     @Suppress("DEPRECATION")

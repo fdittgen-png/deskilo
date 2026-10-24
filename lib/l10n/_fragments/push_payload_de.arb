@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "pushMessageBody": "Sie haben eine neue Nachricht.",
+  "pushMentionBody": "Sie wurden in einer Unterhaltung erwähnt.",
+  "pushReminderBody": "Eine Zahlungserinnerung wartet auf Sie.",
+  "pushUpdateBody": "Es gibt etwas Neues für Sie.",
+  "pushAllowAction": "Erlauben",
+  "pushStatusPermissionNeeded": "Benachrichtigungen sind auf diesem Gerät nicht erlaubt",
+  "pushStatusPermissionNeededHint": "Tippen Sie auf Erlauben, um sie zu erhalten. In der App bleibt in jedem Fall alles verfügbar."
+}

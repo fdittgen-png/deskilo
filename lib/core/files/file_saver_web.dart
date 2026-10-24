@@ -36,6 +36,10 @@ Future<String?> saveToDownloads({
   return fileName;
 }
 
+/// A browser has no sandbox to keep a private copy in: the download request
+/// is the delivery, and the notice says so.
+const localSaveMode = FileDeliveryMode.direct;
+
 /// #1872 — the browser's answer is a request, never a confirmed file.
 Future<SaveOutcome> saveToDownloadsTyped({
   required Uint8List bytes,

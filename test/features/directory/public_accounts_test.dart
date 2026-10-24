@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/public_network/public_network_negotiator.dart';
 import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
 import 'package:deskilo/features/directory/domain/directory_location.dart';
+import 'package:deskilo/features/directory/domain/discovery_paging.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/account_messenger_screen.dart';
@@ -267,15 +268,16 @@ void main() {
         workspace,
       ]);
     await showPortal(tester, const DirectoryScreen(), directory: repository);
-    // The map is the first face; these walk the list.
-    await tester.tap(find.byTooltip('List'));
-    await tester.pumpAndSettle();
+    // The list is the first face; these walk it.
     final locate = find.byKey(const ValueKey('directory-locate-https://host.example/unlocated'));
     await tester.scrollUntilVisible(locate, 400, scrollable: find.descendant(
       of: find.byType(ListView), matching: find.byType(Scrollable)).first);
     await tester.pumpAndSettle();
     await tester.tap(locate);
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('directory-map-continue')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
     expect(find.byType(DirectoryMap), findsOneWidget);
     expect(tester.getTopLeft(find.byType(DirectoryMap)).dy, greaterThanOrEqualTo(0));
     expect(find.textContaining('Location unavailable'), findsOneWidget);
@@ -338,7 +340,9 @@ void main() {
       await tester.enterText(find.byType(TextField), 'Quiet');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Quiet office'));
+      await tester.tap(
+        find.byKey(const ValueKey('directory-view-https://host.example/space')),
+      );
       await tester.pumpAndSettle();
       expect(find.text('Alice'), findsOneWidget);
       expect(find.text('Owner'), findsOneWidget);
@@ -364,7 +368,9 @@ void main() {
       final repo = FakeDirectoryRepository()..cards.add(card);
       await showPortal(tester, const DirectoryScreen(), directory: repo);
       repo.cards.clear();
-      await tester.tap(find.text('Closed office'));
+      await tester.tap(
+        find.byKey(const ValueKey('directory-view-https://host.example/gone')),
+      );
       await tester.pumpAndSettle();
       expect(
         find.byKey(const ValueKey('public-workspace-withdrawn')),
@@ -395,8 +401,10 @@ void main() {
         find.byKey(const ValueKey('directory-incompatible')),
         findsOneWidget,
       );
-      expect(find.textContaining('https://newer.example'), findsOneWidget);
-      await tester.tap(find.text('Open office'));
+      expect(find.textContaining('https://host.example'), findsOneWidget);
+      await tester.tap(
+        find.byKey(const ValueKey('directory-view-https://host.example/open')),
+      );
       await tester.pumpAndSettle();
       expect(
         find.byKey(const ValueKey('public-workspace-withdrawn')),
@@ -423,7 +431,9 @@ void main() {
           PublicRefusalReason.versionUnsupported,
         );
       await showPortal(tester, const DirectoryScreen(), directory: repo);
-      await tester.tap(find.text('Newer office'));
+      await tester.tap(
+        find.byKey(const ValueKey('directory-view-https://demo.invalid/newer')),
+      );
       await tester.pumpAndSettle();
       final request = find.text('Request a workspace profile');
       await tester.ensureVisible(request);
@@ -489,15 +499,12 @@ void main() {
 
 class _IncompatibleDirectory extends FakeDirectoryRepository {
   @override
-  Future<DirectoryPage> search(
+  Future<SourceCardsPage> workspaces(
+    DirectorySource source,
     String query, {
-    int sourcePage = 0,
-    int workspacePage = 0,
+    int page = 0,
   }) async {
-    final page = await super.search(query, workspacePage: workspacePage);
-    return DirectoryPage(
-      page.workspaces,
-      incompatible: const ['https://newer.example'],
-    );
+    final cards = await super.workspaces(source, query, page: page);
+    return SourceCardsPage(cards.cards, incompatible: true, more: false);
   }
 }

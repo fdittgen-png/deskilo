@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Me › Finances, the pieces around the lists: the space filter, the
-// development heading.
+// development heading, the hosts that did not answer.
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
+import '../../../../core/ui/inline_banner.dart';
+import '../../providers/finance_overview_provider.dart';
 import 'dev_label.dart';
 
 /// "All spaces" or one of them: the documents of several workspaces arrive
@@ -82,6 +85,38 @@ class FinancesDevSection extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// One banner per host whose documents could not be read: a host that did
+/// not answer is named, never folded into an empty list, and what is shown
+/// below is complete for the others. Its action reads every host again.
+class FinancesSourceBanners extends ConsumerWidget {
+  const FinancesSourceBanners({super.key, required this.sources});
+
+  /// The hosts that did not answer, by origin.
+  final List<String> sources;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (final source in sources)
+          InlineBanner(
+            key: ValueKey<String>(
+              'finances-source-unavailable-${Uri.tryParse(source)?.host ?? source}',
+            ),
+            icon: Icons.cloud_off_outlined,
+            text: l10n.financesSourceUnavailable(
+              Uri.tryParse(source)?.host ?? source,
+            ),
+            actionLabel: l10n.commonRetry,
+            onAction: () => ref.invalidate(financeOverviewProvider),
+          ),
+      ],
     );
   }
 }

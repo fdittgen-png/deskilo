@@ -7,6 +7,7 @@
 // be turned off on this device, which a restart does not undo.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/push/push_opt_out.dart';
+import 'package:deskilo/core/push/push_providers.dart';
 import 'package:deskilo/features/profile/domain/privacy_notice.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
+import '../../helpers/fake_notification_service.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/open_my_account.dart';
@@ -70,6 +72,8 @@ Future<FakeProfileRepository> _pump(
   String? accepted,
   PrivacyNotices notices = const PrivacyNotices(installation: _operatorNotice),
   _MemoryOptOut? optOut,
+  FakeNotificationService? notifications,
+  bool noPushPipeline = false,
 }) async {
   final profile = FakeProfileRepository(
     profiles: [
@@ -90,8 +94,10 @@ Future<FakeProfileRepository> _pump(
         ...standardTestOverrides(
           profile: profile,
           floorPlan: FakeFloorPlanRepository()..seedSmallPlan(),
+          notifications: notifications,
         ),
         pushOptOutStoreProvider.overrideWithValue(optOut ?? _MemoryOptOut()),
+        if (noPushPipeline) pushBootstrapProvider.overrideWith((ref) async => null),
       ],
       child: const DeskiloApp(),
     ),
@@ -168,6 +174,26 @@ void main() {
     await tester.pumpAndSettle();
     expect(optOut.value, isTrue);
     expect(tester.widget<SwitchListTile>(toggle).value, isFalse);
+  });
+
+  testWidgets('#2559 C2 — opening the app never asks for notification '
+      'permission; turning push on is the deliberate ask', (tester) async {
+    final optOut = _MemoryOptOut()..value = true;
+    final notifications = FakeNotificationService();
+    await _pump(tester,
+        accepted: '2026-10-05',
+        optOut: optOut,
+        notifications: notifications,
+        noPushPipeline: true);
+    await openMyPrivacy(tester);
+    expect(notifications.permissionRequests, 0);
+
+    final toggle = find.byKey(const ValueKey('privacy-push-on-device'));
+    await tester.ensureVisible(toggle);
+    await tester.tap(toggle);
+    await tester.pumpAndSettle();
+    expect(optOut.value, isFalse);
+    expect(notifications.permissionRequests, 1);
   });
 
   test('the gate asks for the shipped version only while the server has '

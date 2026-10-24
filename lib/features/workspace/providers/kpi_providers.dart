@@ -3,7 +3,7 @@
 // #1918 — the KPI repository, overridable in tests.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/time/workspace_time.dart';
+import '../../../core/time/workspace_calendar.dart';
 import '../data/bi_query_coordinator.dart';
 import '../data/fan_out_batch_reader.dart';
 import '../data/supabase_kpi_repository.dart';
@@ -81,16 +81,28 @@ Future<CostSummaryKpi> costSummary(
 
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
+///
+/// #2561 L4 -- the clock is the calendar of the workspace's captured
+/// context; a month of a workspace that is not the captured one is refused,
+/// never measured on another workspace's (or the device's) midnights.
 @Riverpod(retry: kpiRetry)
 Future<SeatCapacityKpi> seatCapacityMonth(
   Ref ref,
   String workspaceId,
   int year,
   int month,
-) => ref
-    .watch(kpiRepositoryProvider)
-    .seatCapacity(
-      workspaceId,
-      from: WorkspaceTime.at(year, month, 1),
-      to: WorkspaceTime.at(year, month + 1, 1),
+) async {
+  final repository = ref.watch(kpiRepositoryProvider);
+  final context = await ref.watch(workspaceContextProvider.future);
+  if (context == null || context.target.workspaceId != workspaceId) {
+    throw WorkspaceCalendarUnavailable(
+      'no captured calendar for workspace $workspaceId',
     );
+  }
+  final calendar = context.calendar;
+  return repository.seatCapacity(
+    workspaceId,
+    from: calendar.at(year, month, 1),
+    to: calendar.at(year, month + 1, 1),
+  );
+}

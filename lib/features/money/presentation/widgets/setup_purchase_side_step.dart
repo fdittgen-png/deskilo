@@ -19,6 +19,7 @@ import '../../domain/purchase.dart';
 import '../../providers/asset_providers.dart';
 import '../../providers/premises_lease_providers.dart';
 import '../../providers/supplier_providers.dart';
+import '../screens/money_view_data.dart';
 import 'equipment_sheet.dart';
 import 'premises_lease_sheet.dart';
 import 'suppliers_sheet.dart';
@@ -63,7 +64,7 @@ class SetupPurchaseSideStep extends ConsumerWidget {
           ),
   };
 
-  Widget _open(BuildContext context) {
+  Widget _open(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     return switch (stepId) {
       'lease' => OutlinedButton.icon(
@@ -81,7 +82,11 @@ class SetupPurchaseSideStep extends ConsumerWidget {
       'assets' => EquipmentButton(workspaceId: workspaceId, held: held),
       _ => OutlinedButton.icon(
         key: const ValueKey('setup-purchases-open'),
-        onPressed: () => showSuppliersSheet(context, workspaceId),
+        onPressed: () => showSuppliersSheet(
+          context,
+          workspaceId,
+          lookupOn: MoneyViewData.gates(ref).supplierLookupOn,
+        ),
         icon: const Icon(Icons.storefront_outlined),
         label: Text(l10n.suppliersTitle),
       ),
@@ -115,7 +120,7 @@ class SetupPurchaseSideStep extends ConsumerWidget {
             const SizedBox(height: AppSpacing.sm),
             Align(
               alignment: AlignmentDirectional.centerStart,
-              child: _open(context),
+              child: _open(context, ref),
             ),
           ],
         ),

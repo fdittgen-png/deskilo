@@ -10,6 +10,7 @@ import '../data/supabase_account_contact_repository.dart';
 import '../data/supabase_directory_participant_repository.dart';
 import '../data/supabase_public_discovery_repository.dart';
 import '../data/supabase_publication_repository.dart';
+import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 
 part 'directory_providers.g.dart';
@@ -62,16 +63,6 @@ DirectoryParticipantRepository directoryParticipantRepository(Ref ref) =>
           ? null
           : ref.watch(connectedInstallationsProvider),
     );
-@riverpod
-Future<DirectoryPage> publicDirectory(
-  Ref ref,
-  String query, {
-  int sourcePage = 0,
-  int workspacePage = 0,
-}) => ref
-    .watch(publicDiscoveryRepositoryProvider)
-    .search(query, sourcePage: sourcePage, workspacePage: workspacePage);
-
 /// #1847 — the card as its installation publishes it now; null once it is
 /// withdrawn. Keyed by the card's identity on its own installation.
 @riverpod

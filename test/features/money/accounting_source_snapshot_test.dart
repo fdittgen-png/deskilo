@@ -10,6 +10,7 @@
 import 'package:deskilo/core/data/read_provenance.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
+import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/datev_profile.dart';
@@ -59,6 +60,13 @@ Map<String, Object?> _answer() => {
       'to': '2026-12-31',
       'principal': _me,
       'cutoff': '100:110:',
+      // #2564: the revisions the books were read with, from the same statement.
+      'revisions': <String, Object?>{
+        'settings': 's-1',
+        'tax_reference': 't-1',
+        'book_profile': 'b-1',
+        'calendar': 'c-1',
+      },
       'invoices': [
         {'id': 'i-a', 'number': 'A', 'total_cents': 12000},
         {'id': 'i-c', 'number': 'C', 'total_cents': 7000},
@@ -203,6 +211,53 @@ void main() {
     final b = _answer();
     (((b['purchases']! as List)[0]! as Map)['lines']! as List).removeLast();
     _refused(b, AccountingSourceFailure.inconsistent);
+  });
+
+  test('#2564: the four revisions are read beside the cutoff; an answer '
+      'without them, or with one unnamed, stops', () {
+    final s = _parse(_answer());
+    expect(s.revisions,
+        (settings: 's-1', taxReference: 't-1', bookProfile: 'b-1', calendar: 'c-1'));
+    // An older producer names no revisions: the export cannot say which
+    // settings, tax reference, profile and calendar it was made with.
+    _refused(_answer()..remove('revisions'), AccountingSourceFailure.inconsistent);
+    _refused(_answer()..['revisions'] = 'abc', AccountingSourceFailure.inconsistent);
+    final a = _answer();
+    (a['revisions']! as Map).remove('calendar');
+    _refused(a, AccountingSourceFailure.inconsistent);
+    final b = _answer();
+    (b['revisions']! as Map)['settings'] = '';
+    _refused(b, AccountingSourceFailure.inconsistent);
+    final c = _answer();
+    (c['revisions']! as Map)['tax_reference'] = 7;
+    _refused(c, AccountingSourceFailure.inconsistent);
+  });
+
+  test('#2564: the export carries the revisions of its one source and the '
+      'audit trail states them; without them its header is as before', () async {
+    final source = _Source(_answer());
+    final loaded = <Invoice>[
+      SeededExportYear.invoices.first.copyWith(id: 'i-a', number: 'A', totalCents: 12000),
+      SeededExportYear.invoices.first.copyWith(id: 'i-c', number: 'C', totalCents: 7000),
+    ];
+    final books = (await exportYearBooks(source, _ws, 2026, loaded, loaded: loaded))!;
+    expect(books.revisions.bookProfile, 'b-1');
+    String trail({AccountingSourceRevisions? source}) => buildAuditTrailCsv(
+          events: const [],
+          generatedAt: DateTime.utc(2026, 5),
+          workspaceName: 'W',
+          source: source,
+        );
+    expect(
+      trail(source: books.revisions),
+      contains('# made with: settings s-1; tax reference t-1; '
+          'book profile b-1; calendar c-1\n'),
+    );
+    expect(trail(), isNot(contains('made with')));
+    expect(
+      trail(source: books.revisions).split('\n').length,
+      trail().split('\n').length + 1,
+    );
   });
 
   test('an over-budget scope is a named refusal with no rows', () {

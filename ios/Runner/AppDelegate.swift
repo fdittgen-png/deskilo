@@ -15,6 +15,12 @@ import UIKit
     if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "DeskiloCapture") {
       CaptureGuard.shared.attach(messenger: registrar.messenger())
     }
+    // #2559 C1 — the app-switcher cover (SceneDelegate.swift), told of
+    // every scene transition by the engine beside its own handling.
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "DeskiloSwitcherCover") {
+      SwitcherCover.shared.attach(messenger: registrar.messenger())
+      registrar.addSceneDelegate(SwitcherCover.shared)
+    }
   }
 }
 

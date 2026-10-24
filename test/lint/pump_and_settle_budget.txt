@@ -21,7 +21,7 @@
 18 test/features/directory/account_groups_test.dart
 19 test/features/directory/connect_with_identity_sheet_test.dart
 12 test/features/directory/message_forwarding_test.dart
-24 test/features/directory/public_accounts_test.dart
+23 test/features/directory/public_accounts_test.dart
 41 test/features/directory/unified_inbox_test.dart
 23 test/features/editor/editor_levels_test.dart
 22 test/features/editor/editor_ux_test.dart

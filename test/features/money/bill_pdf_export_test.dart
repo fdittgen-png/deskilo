@@ -20,6 +20,7 @@ Future<void> pumpMoney(
       overrides: [
         ...standardTestOverrides(),
         fileSaverProvider.overrideWithValue(saver),
+        typedFileSaverProvider.overrideWithValue(typedSaverOf(saver)),
       ],
       child: const DeskiloApp(),
     ),

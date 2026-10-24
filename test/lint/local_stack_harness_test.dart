@@ -121,6 +121,44 @@ void main() {
         contains('Physical topology|database|step|conditional|'));
   });
 
+  test('#2561 L2 the fault cases run alone, after the other topology files, '
+      'and the stop lifts any fault first', () {
+    final consumer = _database().firstWhere((s) => s['id'] == 'topology');
+    final calls = _run(consumer)
+        .split('\n')
+        .where((l) => l.trimLeft().startsWith('flutter test '))
+        .toList();
+    expect(calls, hasLength(2), reason: 'one call for the faults alone');
+    expect(calls.first, isNot(contains('topology_faults_test.dart')));
+    expect(calls.last, contains('test/topology/topology_faults_test.dart'));
+    expect(calls.last, isNot(contains('three_stacks_test.dart')));
+    expect(_run(consumer),
+        contains("grep -q 'All tests passed!' report-topology-faults.log"),
+        reason: 'a skipped fault file is not evidence');
+    final script = File('scripts/topology_stacks.sh').readAsStringSync();
+    final cleanup = script.substring(script.indexOf('\ncleanup() {'));
+    expect(cleanup.indexOf('docker unpause'),
+        allOf(isNonNegative, lessThan(cleanup.indexOf('supabase stop'))),
+        reason: 'a paused gateway is lifted before the stacks stop');
+  });
+
+  test('#2561 L2 the Physical topology row reads the same in the manifest '
+      'and the workflow, with no apostrophe to end its single-quoted printf',
+      () {
+    final manifest = File('.github/quality-manifest.psv')
+        .readAsLinesSync()
+        .firstWhere((l) => l.startsWith('Physical topology|'))
+        .split('|')
+        .skip(5)
+        .join('|');
+    final workflow = RegExp(r"printf 'Physical topology\|%s\|([^\n]*?)\\n'")
+        .firstMatch(File('.github/workflows/quality.yml').readAsStringSync())!
+        .group(1)!;
+    expect(workflow, manifest);
+    expect(manifest, isNot(contains("'")));
+    expect(manifest, contains('SEP-R3, R4 and R11'));
+  });
+
   test('shared-database fixtures run before the seed that persists, and '
       'the own-database drills after it', () {
     final ids = _database().map((s) => '${s['id']}').toList();
