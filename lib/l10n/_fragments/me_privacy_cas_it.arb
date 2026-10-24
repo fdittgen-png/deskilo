@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "visibilityConflictTitle": "Questa impostazione è stata modificata nel frattempo",
+  "visibilityUnconfirmedTitle": "Non è stato possibile confermare la Sua modifica",
+  "visibilityConflictSaved": "Salvato ora: {audience}",
+  "visibilityConflictYours": "La Sua modifica: {audience}",
+  "visibilityConflictUnread": "Al momento non è possibile leggere l’impostazione salvata. La Sua modifica non è stata salvata.",
+  "visibilityConflictKeep": "Mantenere l’impostazione salvata",
+  "visibilityConflictReview": "Rivedere la mia modifica"
+}

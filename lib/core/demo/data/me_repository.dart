@@ -14,6 +14,7 @@ import 'package:deskilo/features/me/domain/personal_export.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
 import 'package:deskilo/features/me/domain/public_person.dart';
 import 'package:deskilo/features/me/domain/visibility.dart';
+import 'package:deskilo/features/me/domain/visibility_write.dart';
 import 'package:deskilo/features/me/domain/workspace_access_repository.dart';
 
 /// One account's public facts, before any audience is applied.
@@ -41,7 +42,9 @@ const _fakeHomeInstallationId = '00000000-0000-4000-8000-0000000000e1';
 
 /// #2563 — also the [WorkspaceAccessRepository]: one in-memory account.
 /// #2558 — the personal home names chosen spaces by network reference
-/// (`<home>:<local id>`) and its writer takes local ids, as the server's do.
+/// (`<home>:<local id>`); C2 — its writer is the checked one: it compares
+/// the saved field with the expected one and adds only spaces the account
+/// is related to now, as `set_visibility_if_unchanged_network_v1` does.
 class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
   FakeMeRepository({
     String Function()? currentUser,
@@ -66,8 +69,19 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
   /// Spaces left through [leaveSpace], in call order.
   final List<String> left = [];
 
-  /// When set, [leaveSpace] and [setVisibility] throw it.
+  /// When set, [leaveSpace] and [setVisibilityIfUnchanged] throw it.
   Exception? failure;
+
+  /// #2558 C2 — when set, [setVisibilityIfUnchanged] saves and then loses
+  /// its reply: it throws [VisibilityReplyLost] with this cause.
+  Exception? replyLost;
+
+  /// #2558 C2 — runs after a checked write is saved, before its reply:
+  /// another device's change, or the account switching meanwhile.
+  void Function()? onWrite;
+
+  /// How many checked writes reached the home.
+  int visibilityWrites = 0;
 
   /// #2558 — when set, [myVisibility] throws it: the personal home cannot
   /// read the saved settings. Clearing it lets a retry succeed.
@@ -102,7 +116,11 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
   Future<PersonalWorkspaceRefs> myWorkspaceRefs() async {
     refsReads++;
     if (refsFailure != null) throw refsFailure!;
-    return workspaceRefs ??
+    return _refs();
+  }
+
+  PersonalWorkspaceRefs _refs() =>
+      workspaceRefs ??
         PersonalWorkspaceRefs(
           homeInstallationId: homeInstallationId,
           refs: [
@@ -117,7 +135,6 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
               ),
           ],
         );
-  }
 
   /// #2557 C2 — what [exportMyPersonalData] answers, decoded as the home's
   /// answer would be; when [exportFailure] is set it throws. How many times
@@ -166,25 +183,50 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
   }
 
   @override
-  Future<void> setVisibility(
+  Future<MyVisibility> setVisibilityIfUnchanged(
     VisibilityField field,
-    FieldAudience audience,
-  ) async {
+    FieldAudience audience, {
+    required FieldAudience expected,
+  }) async {
     if (failure != null) throw failure!;
-    if (audience.incomplete) throw ArgumentError('choose at least one space');
     // 0392 — the server's cap, mirrored.
     if (!field.allowedAudiences.contains(audience.audience)) {
       throw ArgumentError('this field never goes beyond your spaces');
     }
-    // `set_visibility` takes local ids; the reader answers references.
-    if (audience.workspaces.any((id) => id.contains(':'))) {
-      throw ArgumentError('set_visibility takes local ids');
+    if (audience.incomplete) throw ArgumentError('choose at least one space');
+    if (!audience.workspaces.every(FieldAudience.isNetworkRef)) {
+      throw ArgumentError('malformed workspace reference');
+    }
+    final saved = _me.visibility.of(field);
+    if (saved != expected) throw const VisibilityConflict();
+    // A space kept from the saved choice is not re-verified; an added one
+    // needs a relationship read here or verified now.
+    final related = {
+      for (final ref in _refs().refs)
+        if ((ref.freshness == RefFreshness.local ||
+                ref.freshness == RefFreshness.verified) &&
+            (ref.status == RefStatus.active || ref.status == RefStatus.paused))
+          ref.networkId,
+    };
+    final kept = saved.audience == VisibilityAudience.chosenSpaces
+        ? saved.workspaces
+        : const <String>{};
+    if (audience.workspaces
+        .any((ref) => !kept.contains(ref) && !related.contains(ref))) {
+      throw ArgumentError('choose spaces you belong to');
     }
     _me.visibility = _me.visibility.withField(
       field,
-      FieldAudience(
-          audience.audience, {for (final id in audience.workspaces) refOf(id)}),
+      audience.audience == VisibilityAudience.chosenSpaces
+          ? audience
+          : FieldAudience(audience.audience),
     );
+    visibilityWrites++;
+    onWrite?.call();
+    if (replyLost != null) throw VisibilityReplyLost(replyLost!);
+    return _me.visibility
+        .withAbout(_me.profession, _me.bio)
+        .withHome(homeInstallationId);
   }
 
   /// The local ids [refs] name on this home; another home's are no space here.

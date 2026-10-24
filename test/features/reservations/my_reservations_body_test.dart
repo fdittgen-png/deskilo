@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2553 C1 — the My reservations body: the window the host's limits say
-// (default span, ceiling), the person's bookings grouped by day in one
+// #2553 — the My reservations body: the window the personal home's limits
+// say (default span, ceiling), the person's bookings grouped by day in one
 // column, the next page on Show more, an empty window and each refusal in
 // words with the way to try again, and the period changed from the picker —
-// cut to the ceiling, never refused by the host.
+// cut to the ceiling, never refused by the host. C2: every host my account
+// names is read with its own state; one host failing never hides another,
+// and Try again asks that host alone.
+import 'dart:async';
+
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -36,9 +40,12 @@ MyReservationItem _item(String id, DateTime start, {String workspace = 'One'}) =
       checkedOutAt: null,
     );
 
-/// A host answering from a queue: the first page, then the continuation.
-/// Its limits are a 7-day default and a 60-day ceiling — not the
-/// registry's numbers, so a test proves they are read, not assumed.
+const _a = MyReservationsSource(installationId: 'inst-a', workspaceIds: ['ws-One'], hostedHere: true, labels: ['One']);
+
+/// Hosts answering from a queue: the first page, then the continuation,
+/// per installation. Its limits are a 7-day default and a 60-day ceiling,
+/// two hosts at a time and a 5-second wait — not the registry's numbers,
+/// so a test proves they are read, not assumed.
 class _FakeRepository implements MyReservationsRepository {
   _FakeRepository({this.first, this.continuation, this.failure, this.limitsFailure});
 
@@ -46,29 +53,48 @@ class _FakeRepository implements MyReservationsRepository {
   MyReservationsPage? continuation;
   Exception? failure;
   Exception? limitsFailure;
+
+  /// Per-host answers that take precedence over the ones above.
+  final Map<String, MyReservationsPage> firstOf = {};
+  final Map<String, Exception> failureOf = {};
+  final Map<String, Completer<MyReservationsPage>> pendingOf = {};
   final List<MyReservationsQuery> asked = [];
+  final List<String> askedHosts = [];
 
   @override
   Future<MyReservationsLimits> limits() async {
     final refused = limitsFailure;
     if (refused != null) throw refused;
-    return const MyReservationsLimits(windowDays: 7, maxDays: 60);
+    return const MyReservationsLimits(
+      windowDays: 7,
+      maxDays: 60,
+      concurrency: 2,
+      timeout: Duration(seconds: 5),
+    );
   }
 
   @override
-  Future<MyReservationsPage> page(MyReservationsQuery query) async {
+  Future<MyReservationsPage> page(MyReservationsSource source, MyReservationsQuery query) async {
     asked.add(query);
+    askedHosts.add(source.installationId);
+    final pending = pendingOf[source.installationId];
+    if (pending != null) return pending.future;
+    final hostFailure = failureOf[source.installationId];
+    if (hostFailure != null) throw hostFailure;
     final refused = failure;
     if (refused != null) throw refused;
+    final own = firstOf[source.installationId];
+    if (own != null && query.after == null) return own;
     return query.after == null ? first! : continuation!;
   }
 }
 
-MyReservationsPage _pageOf(List<MyReservationItem> items, {MyReservationsCursor? next}) =>
-    MyReservationsPage(source: 'inst-a', items: items, next: next, hasMore: next != null);
+MyReservationsPage _pageOf(List<MyReservationItem> items, {MyReservationsCursor? next, String source = 'inst-a'}) =>
+    MyReservationsPage(source: source, items: items, next: next, hasMore: next != null);
 
-List<Override> _overrides(_FakeRepository repository) => [
+List<Override> _overrides(_FakeRepository repository, {List<MyReservationsSource> sources = const [_a]}) => [
       myReservationsRepositoryProvider.overrideWithValue(repository),
+      myReservationsSourcesProvider.overrideWith((ref) async => sources),
       clockProvider.overrideWithValue(FixedClock(kTestNow)),
     ];
 
@@ -93,7 +119,7 @@ void main() {
     final asked = repository.asked.single;
     expect(asked.from, DateTime(kTestNow.year, kTestNow.month, kTestNow.day));
     expect(asked.to.difference(asked.from), const Duration(days: 7),
-        reason: 'the default span is the host\'s setting, as the context captured it');
+        reason: 'the default span is the personal home\'s setting');
     expect(find.text(_l10n.myReservationsPeriodLimit(60)), findsOneWidget);
     for (final id in ['r-1', 'r-2', 'r-3']) {
       expect(find.byKey(ValueKey('my-reservation-$id')), findsOneWidget);
@@ -127,7 +153,10 @@ void main() {
     );
     await pumpApp(tester, const Scaffold(body: MyReservationsBody()), overrides: _overrides(repository));
     await tester.pumpAndSettle();
-    expect(find.text(_l10n.myReservationsForbidden), findsOneWidget);
+    expect(
+      find.text(_l10n.myReservationsSourceProblem('One', _l10n.myReservationsForbidden)),
+      findsOneWidget,
+    );
     expect(find.byKey(const ValueKey('my-reservations-empty')), findsNothing,
         reason: 'a refusal is never shown as an empty window');
     expect(repository.asked, hasLength(1), reason: 'a refusal is final: no retry of its own');
@@ -135,7 +164,7 @@ void main() {
     repository
       ..failure = null
       ..first = _pageOf([_item('r-1', day1)]);
-    await tester.tap(find.byKey(const ValueKey('my-reservations-retry')));
+    await tester.tap(find.byKey(const ValueKey('my-reservations-source-retry-inst-a')));
     await tester.pumpAndSettle();
     expect(repository.asked, hasLength(2));
     expect(find.byKey(const ValueKey('my-reservation-r-1')), findsOneWidget);
@@ -149,6 +178,7 @@ void main() {
     expect(sentences, hasLength(MyReservationsFailure.values.length - 1),
         reason: 'malformed and incompatible share one sentence; the rest differ');
     expect(problemWords(_l10n, StateError('x')), _l10n.myReservationsFailed);
+    expect(problemWords(_l10n, TimeoutException('slow')), _l10n.myReservationsTimedOut);
   });
 
   testWidgets('a host whose registry lacks the personal rows is said so, and no read is made',
@@ -206,7 +236,7 @@ void main() {
     final asked = repository.asked.last;
     expect(asked.from, first);
     expect(asked.to, DateTime(first.year, first.month, first.day + 60),
-        reason: 'the ceiling of 60 days, from the host, cuts the chosen period');
+        reason: 'the ceiling of 60 days, from the settings, cuts the chosen period');
     expect(repository.asked, hasLength(2), reason: 'a new window is a new read');
   });
 }

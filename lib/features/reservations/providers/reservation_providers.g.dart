@@ -723,14 +723,16 @@ final class PeriodReservationsFamily extends $Family
   String toString() => r'periodReservationsProvider';
 }
 
-/// The read, bound to the workspace context at each call and to that
-/// context's host client. Demo overrides it with the fixture's spaces.
+/// The read, one host per call through that host's own verified client;
+/// the limits from the personal home's platform settings. Demo overrides
+/// it with the fixture's spaces.
 
 @ProviderFor(myReservationsRepository)
 final myReservationsRepositoryProvider = MyReservationsRepositoryProvider._();
 
-/// The read, bound to the workspace context at each call and to that
-/// context's host client. Demo overrides it with the fixture's spaces.
+/// The read, one host per call through that host's own verified client;
+/// the limits from the personal home's platform settings. Demo overrides
+/// it with the fixture's spaces.
 
 final class MyReservationsRepositoryProvider
     extends
@@ -740,15 +742,16 @@ final class MyReservationsRepositoryProvider
           MyReservationsRepository
         >
     with $Provider<MyReservationsRepository> {
-  /// The read, bound to the workspace context at each call and to that
-  /// context's host client. Demo overrides it with the fixture's spaces.
+  /// The read, one host per call through that host's own verified client;
+  /// the limits from the personal home's platform settings. Demo overrides
+  /// it with the fixture's spaces.
   MyReservationsRepositoryProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'myReservationsRepositoryProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -777,28 +780,125 @@ final class MyReservationsRepositoryProvider
 }
 
 String _$myReservationsRepositoryHash() =>
-    r'ce331956aa62011f4bcf76dd1202a5c4a9256272';
+    r'2cbd2a9f260bacd19a840cc9dc15d878858b380e';
 
-/// The window a person starts with and the longest one they may ask for:
-/// the host's own settings as the context captured them, never a literal.
-/// A registry without the rows fails typed.
+/// The hosts My reservations reads. By default the selected workspace's
+/// host alone; the composition root replaces it with every workspace my
+/// personal account names (`myReservationsSourcesFromMe`).
+
+@ProviderFor(myReservationsSources)
+final myReservationsSourcesProvider = MyReservationsSourcesProvider._();
+
+/// The hosts My reservations reads. By default the selected workspace's
+/// host alone; the composition root replaces it with every workspace my
+/// personal account names (`myReservationsSourcesFromMe`).
+
+final class MyReservationsSourcesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<MyReservationsSource>>,
+          List<MyReservationsSource>,
+          FutureOr<List<MyReservationsSource>>
+        >
+    with
+        $FutureModifier<List<MyReservationsSource>>,
+        $FutureProvider<List<MyReservationsSource>> {
+  /// The hosts My reservations reads. By default the selected workspace's
+  /// host alone; the composition root replaces it with every workspace my
+  /// personal account names (`myReservationsSourcesFromMe`).
+  MyReservationsSourcesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'myReservationsSourcesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myReservationsSourcesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<MyReservationsSource>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<MyReservationsSource>> create(Ref ref) {
+    return myReservationsSources(ref);
+  }
+}
+
+String _$myReservationsSourcesHash() =>
+    r'6aa8996e81cc28fc0b88bdcca58365028ab9610d';
+
+/// The personal home's limits for these reads; a registry without the
+/// rows fails typed.
+
+@ProviderFor(myReservationsLimits)
+final myReservationsLimitsProvider = MyReservationsLimitsProvider._();
+
+/// The personal home's limits for these reads; a registry without the
+/// rows fails typed.
+
+final class MyReservationsLimitsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<MyReservationsLimits>,
+          MyReservationsLimits,
+          FutureOr<MyReservationsLimits>
+        >
+    with
+        $FutureModifier<MyReservationsLimits>,
+        $FutureProvider<MyReservationsLimits> {
+  /// The personal home's limits for these reads; a registry without the
+  /// rows fails typed.
+  MyReservationsLimitsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: myReservationsRetry,
+        name: r'myReservationsLimitsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myReservationsLimitsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<MyReservationsLimits> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<MyReservationsLimits> create(Ref ref) {
+    return myReservationsLimits(ref);
+  }
+}
+
+String _$myReservationsLimitsHash() =>
+    r'1ee2e14c2cad4a16c1f0ad91e0593a698ee74626';
+
+/// The window a person starts with and the longest one they may ask for.
 
 @ProviderFor(MyReservationsWindowController)
 final myReservationsWindowControllerProvider =
     MyReservationsWindowControllerProvider._();
 
-/// The window a person starts with and the longest one they may ask for:
-/// the host's own settings as the context captured them, never a literal.
-/// A registry without the rows fails typed.
+/// The window a person starts with and the longest one they may ask for.
 final class MyReservationsWindowControllerProvider
     extends
         $AsyncNotifierProvider<
           MyReservationsWindowController,
           MyReservationsWindow
         > {
-  /// The window a person starts with and the longest one they may ask for:
-  /// the host's own settings as the context captured them, never a literal.
-  /// A registry without the rows fails typed.
+  /// The window a person starts with and the longest one they may ask for.
   MyReservationsWindowControllerProvider._()
     : super(
         from: null,
@@ -819,11 +919,9 @@ final class MyReservationsWindowControllerProvider
 }
 
 String _$myReservationsWindowControllerHash() =>
-    r'498fe9adc2668a929eebc5587ab767a65bed574c';
+    r'6edf14379682ce53d947b19bf0d9b891de15ea3c';
 
-/// The window a person starts with and the longest one they may ask for:
-/// the host's own settings as the context captured them, never a literal.
-/// A registry without the rows fails typed.
+/// The window a person starts with and the longest one they may ask for.
 
 abstract class _$MyReservationsWindowController
     extends $AsyncNotifier<MyReservationsWindow> {
@@ -849,54 +947,53 @@ abstract class _$MyReservationsWindowController
   }
 }
 
-/// The feed of one [MyReservationsQuery]: the first page on build, the next
-/// ones appended by [loadMore]. A changed window is another query, so
-/// another feed; a page that arrives for a disposed feed is dropped.
+/// The composition of one [MyReservationsQuery] (a window): every source's
+/// first page read through the bounded reads, each slot emitted as soon as
+/// its host answers; [loadMore] and [retry] per host.
 
-@ProviderFor(MyReservationsFeedController)
-final myReservationsFeedControllerProvider =
-    MyReservationsFeedControllerFamily._();
+@ProviderFor(MyReservationsComposer)
+final myReservationsComposerProvider = MyReservationsComposerFamily._();
 
-/// The feed of one [MyReservationsQuery]: the first page on build, the next
-/// ones appended by [loadMore]. A changed window is another query, so
-/// another feed; a page that arrives for a disposed feed is dropped.
-final class MyReservationsFeedControllerProvider
+/// The composition of one [MyReservationsQuery] (a window): every source's
+/// first page read through the bounded reads, each slot emitted as soon as
+/// its host answers; [loadMore] and [retry] per host.
+final class MyReservationsComposerProvider
     extends
         $AsyncNotifierProvider<
-          MyReservationsFeedController,
-          MyReservationsFeed
+          MyReservationsComposer,
+          MyReservationsComposition
         > {
-  /// The feed of one [MyReservationsQuery]: the first page on build, the next
-  /// ones appended by [loadMore]. A changed window is another query, so
-  /// another feed; a page that arrives for a disposed feed is dropped.
-  MyReservationsFeedControllerProvider._({
-    required MyReservationsFeedControllerFamily super.from,
+  /// The composition of one [MyReservationsQuery] (a window): every source's
+  /// first page read through the bounded reads, each slot emitted as soon as
+  /// its host answers; [loadMore] and [retry] per host.
+  MyReservationsComposerProvider._({
+    required MyReservationsComposerFamily super.from,
     required MyReservationsQuery super.argument,
   }) : super(
          retry: myReservationsRetry,
-         name: r'myReservationsFeedControllerProvider',
+         name: r'myReservationsComposerProvider',
          isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
 
   @override
-  String debugGetCreateSourceHash() => _$myReservationsFeedControllerHash();
+  String debugGetCreateSourceHash() => _$myReservationsComposerHash();
 
   @override
   String toString() {
-    return r'myReservationsFeedControllerProvider'
+    return r'myReservationsComposerProvider'
         ''
         '($argument)';
   }
 
   @$internal
   @override
-  MyReservationsFeedController create() => MyReservationsFeedController();
+  MyReservationsComposer create() => MyReservationsComposer();
 
   @override
   bool operator ==(Object other) {
-    return other is MyReservationsFeedControllerProvider &&
+    return other is MyReservationsComposerProvider &&
         other.argument == argument;
   }
 
@@ -906,121 +1003,72 @@ final class MyReservationsFeedControllerProvider
   }
 }
 
-String _$myReservationsFeedControllerHash() =>
-    r'7b2018c21ebc71fe6ced618c15c88c3c4898fb5f';
+String _$myReservationsComposerHash() =>
+    r'5f7b462030dcdfb06c01b10365c08e4b8872b951';
 
-/// The feed of one [MyReservationsQuery]: the first page on build, the next
-/// ones appended by [loadMore]. A changed window is another query, so
-/// another feed; a page that arrives for a disposed feed is dropped.
+/// The composition of one [MyReservationsQuery] (a window): every source's
+/// first page read through the bounded reads, each slot emitted as soon as
+/// its host answers; [loadMore] and [retry] per host.
 
-final class MyReservationsFeedControllerFamily extends $Family
+final class MyReservationsComposerFamily extends $Family
     with
         $ClassFamilyOverride<
-          MyReservationsFeedController,
-          AsyncValue<MyReservationsFeed>,
-          MyReservationsFeed,
-          FutureOr<MyReservationsFeed>,
+          MyReservationsComposer,
+          AsyncValue<MyReservationsComposition>,
+          MyReservationsComposition,
+          FutureOr<MyReservationsComposition>,
           MyReservationsQuery
         > {
-  MyReservationsFeedControllerFamily._()
+  MyReservationsComposerFamily._()
     : super(
         retry: myReservationsRetry,
-        name: r'myReservationsFeedControllerProvider',
+        name: r'myReservationsComposerProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
 
-  /// The feed of one [MyReservationsQuery]: the first page on build, the next
-  /// ones appended by [loadMore]. A changed window is another query, so
-  /// another feed; a page that arrives for a disposed feed is dropped.
+  /// The composition of one [MyReservationsQuery] (a window): every source's
+  /// first page read through the bounded reads, each slot emitted as soon as
+  /// its host answers; [loadMore] and [retry] per host.
 
-  MyReservationsFeedControllerProvider call(MyReservationsQuery query) =>
-      MyReservationsFeedControllerProvider._(argument: query, from: this);
+  MyReservationsComposerProvider call(MyReservationsQuery query) =>
+      MyReservationsComposerProvider._(argument: query, from: this);
 
   @override
-  String toString() => r'myReservationsFeedControllerProvider';
+  String toString() => r'myReservationsComposerProvider';
 }
 
-/// The feed of one [MyReservationsQuery]: the first page on build, the next
-/// ones appended by [loadMore]. A changed window is another query, so
-/// another feed; a page that arrives for a disposed feed is dropped.
+/// The composition of one [MyReservationsQuery] (a window): every source's
+/// first page read through the bounded reads, each slot emitted as soon as
+/// its host answers; [loadMore] and [retry] per host.
 
-abstract class _$MyReservationsFeedController
-    extends $AsyncNotifier<MyReservationsFeed> {
+abstract class _$MyReservationsComposer
+    extends $AsyncNotifier<MyReservationsComposition> {
   late final _$args = ref.$arg as MyReservationsQuery;
   MyReservationsQuery get query => _$args;
 
-  FutureOr<MyReservationsFeed> build(MyReservationsQuery query);
+  FutureOr<MyReservationsComposition> build(MyReservationsQuery query);
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
     final ref =
-        this.ref as $Ref<AsyncValue<MyReservationsFeed>, MyReservationsFeed>;
+        this.ref
+            as $Ref<
+              AsyncValue<MyReservationsComposition>,
+              MyReservationsComposition
+            >;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<MyReservationsFeed>, MyReservationsFeed>,
-              AsyncValue<MyReservationsFeed>,
+              AnyNotifier<
+                AsyncValue<MyReservationsComposition>,
+                MyReservationsComposition
+              >,
+              AsyncValue<MyReservationsComposition>,
               Object?,
               Object?
             >;
     return element.handleCreate(ref, () => build(_$args));
   }
 }
-
-/// #2561 L4 — the calendar the day headers of My reservations follow: the
-/// selected workspace's captured one, or null before it is captured.
-
-@ProviderFor(myReservationsCalendar)
-final myReservationsCalendarProvider = MyReservationsCalendarProvider._();
-
-/// #2561 L4 — the calendar the day headers of My reservations follow: the
-/// selected workspace's captured one, or null before it is captured.
-
-final class MyReservationsCalendarProvider
-    extends
-        $FunctionalProvider<
-          WorkspaceCalendar?,
-          WorkspaceCalendar?,
-          WorkspaceCalendar?
-        >
-    with $Provider<WorkspaceCalendar?> {
-  /// #2561 L4 — the calendar the day headers of My reservations follow: the
-  /// selected workspace's captured one, or null before it is captured.
-  MyReservationsCalendarProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'myReservationsCalendarProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$myReservationsCalendarHash();
-
-  @$internal
-  @override
-  $ProviderElement<WorkspaceCalendar?> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
-
-  @override
-  WorkspaceCalendar? create(Ref ref) {
-    return myReservationsCalendar(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(WorkspaceCalendar? value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<WorkspaceCalendar?>(value),
-    );
-  }
-}
-
-String _$myReservationsCalendarHash() =>
-    r'e3870d3be1a9343d4ae1c710cce60353293bb6cd';

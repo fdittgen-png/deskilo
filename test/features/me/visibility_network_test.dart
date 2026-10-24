@@ -4,10 +4,9 @@
 // (`my_visibility_network_v1`, `my_personal_workspace_refs_v1`): chosen
 // spaces are network references, named, told apart when two share a name,
 // and a space on another installation says its verification is
-// unavailable. Today's writer takes local ids of this home only, so a
-// field that names a space elsewhere is read-only and explained, and the
-// command refuses it before any call. Widening lists the spaces added and
-// removed.
+// unavailable unless its membership fact is in force (#2558 C2: the
+// checked writer takes network references). Widening lists the spaces
+// added and removed.
 import 'package:deskilo/features/me/application/me_actions.dart';
 import 'package:deskilo/features/me/domain/audience_space.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
@@ -38,11 +37,16 @@ PersonalWorkspaceRef _here(FakeMeRepository me, String id, String label) =>
       label: label,
     );
 
-PersonalWorkspaceRef _elsewhere(String id, {String? label}) =>
+PersonalWorkspaceRef _elsewhere(
+  String id, {
+  String? label,
+  RefFreshness fresh = RefFreshness.unavailable,
+}) =>
     PersonalWorkspaceRef(
       networkId: '$_away:$id',
       hostedHere: false,
-      freshness: RefFreshness.unavailable,
+      freshness: fresh,
+      status: fresh == RefFreshness.unavailable ? null : RefStatus.active,
       label: label,
     );
 
@@ -97,24 +101,23 @@ void main() {
         '$home:ws-1',
         '$_away:ws-1',
       }, reason: 'the same local id on two installations is two spaces');
-      expect(v.localIdOf('$home:ws-1'), 'ws-1');
+      // #2558 C2 — the checked writer's `p_expected`: the references
+      // sorted, none for an audience other than chosen spaces.
+      expect(v.of(VisibilityField.contactChannels).expectedJson, {
+        'audience': 'chosen_spaces',
+        'workspace_refs': ['$_away:ws-1', '$home:ws-1']..sort(),
+      });
       expect(
-        v.localIdOf('$_away:ws-1'),
-        isNull,
-        reason: 'another installation is never read as a local id',
+        const FieldAudience(VisibilityAudience.nobody, {'x:y'}).expectedJson,
+        {'audience': 'nobody', 'workspace_refs': <String>[]},
       );
-      expect(v.localIdOf('ws-1'), isNull, reason: 'unqualified');
-      expect(
-        MyVisibility.defaults.localIdOf('$home:ws-1'),
-        isNull,
-        reason: 'no home answered',
-      );
-      expect(v.namesSpaceElsewhere(VisibilityField.contactChannels), isTrue);
-      expect(v.namesSpaceElsewhere(VisibilityField.reachability), isFalse);
+      expect(FieldAudience.isNetworkRef('$home:ws-1'), isTrue);
+      expect(FieldAudience.isNetworkRef('ws-1'), isFalse, reason: 'unqualified');
     });
 
-    test('a space is offered only where this home reads an active or '
-        'paused membership; names shared by two spaces are flagged', () {
+    test('a space is offered while the home knows an active or paused '
+        'relationship now: its own row or a fact in force; names shared by '
+        'two spaces are flagged', () {
       final spaces = [
         AudienceSpace.fromRef(_here(me, 'ws-1', 'Atelier')),
         AudienceSpace.fromRef(_elsewhere('ws-9', label: 'atelier ')),
@@ -128,12 +131,17 @@ void main() {
             label: 'Gone',
           ),
         ),
+        AudienceSpace.fromRef(_elsewhere('ws-7', fresh: RefFreshness.verified)),
+        AudienceSpace.fromRef(_elsewhere('ws-6', fresh: RefFreshness.stale)),
       ];
       expect(
         [for (final s in spaces) s.selectable],
-        [true, false, false, false],
+        [true, false, false, false, true, false],
       );
-      expect([for (final s in spaces) s.verified], [true, false, false, true]);
+      expect(
+        [for (final s in spaces) s.verified],
+        [true, false, false, true, true, false],
+      );
       expect(ambiguousNames(spaces), {me.refOf('ws-1'), '$_away:ws-9'});
     });
 
@@ -151,61 +159,66 @@ void main() {
       expect(widened.removed, isEmpty);
     });
 
-    test('the command writes local ids of this home and refuses a space '
-        'elsewhere before any call', () async {
+    test('the command sends network references to the checked writer: a '
+        'verified space elsewhere is added, an unverified one and an '
+        'unqualified id are refused, a saved one is kept on a narrowing', () async {
       final actions = MeActions(me, FakeLinkedMeRepository(), me);
-      final saved = await me.myVisibility();
-      await actions.choose(
+      me.workspaceRefs = PersonalWorkspaceRefs(
+        homeInstallationId: me.homeInstallationId,
+        refs: [
+          _here(me, 'ws-1', 'Atelier'),
+          _elsewhere('ws-1', fresh: RefFreshness.verified),
+          _elsewhere('ws-2', fresh: RefFreshness.stale),
+        ],
+      );
+      final both = FieldAudience(VisibilityAudience.chosenSpaces, {
+        me.refOf('ws-1'),
+        '$_away:ws-1',
+      });
+      final saved = await actions.choose(
         VisibilityField.contactChannels,
-        FieldAudience(VisibilityAudience.chosenSpaces, {me.refOf('ws-1')}),
-        saved: saved,
+        both,
+        saved: await me.myVisibility(),
       );
-      expect(
-        (await me.myVisibility()).of(VisibilityField.contactChannels),
-        FieldAudience(VisibilityAudience.chosenSpaces, {me.refOf('ws-1')}),
-      );
+      expect(saved!.of(VisibilityField.contactChannels), both,
+          reason: 'the same local id on two installations is two spaces');
 
-      // Adding a space on another installation: refused, nothing written.
       final current = await me.myVisibility();
-      expect(
-        () => actions.choose(
-          VisibilityField.contactChannels,
-          FieldAudience(VisibilityAudience.chosenSpaces, {
-            me.refOf('ws-1'),
-            '$_away:ws-1',
-          }),
+      await expectLater(
+        actions.choose(
+          VisibilityField.presence,
+          const FieldAudience(VisibilityAudience.chosenSpaces, {'ws-1'}),
           saved: current,
         ),
-        throwsA(
-          isA<MeRefused>().having(
-            (e) => e.reason,
-            'reason',
-            MeRefusal.spaceElsewhere,
-          ),
-        ),
+        throwsA(isA<MeRefused>().having(
+            (e) => e.reason, 'reason', MeRefusal.unqualifiedSpace)),
       );
-      // A field that already names one: even narrowing is refused, since
-      // today's writer would drop the saved reference.
+      await expectLater(
+        actions.choose(
+          VisibilityField.presence,
+          const FieldAudience(VisibilityAudience.chosenSpaces, {'$_away:ws-2'}),
+          saved: current,
+        ),
+        throwsA(isA<ArgumentError>()),
+        reason: 'a lapsed fact adds nothing',
+      );
+      expect(me.visibilityWrites, 1);
+
+      // A saved space whose fact lapsed stays on a narrowing.
       me.accounts['user-1']!.visibility = current.withField(
         VisibilityField.presence,
-        const FieldAudience(VisibilityAudience.chosenSpaces, {'$_away:ws-1'}),
+        FieldAudience(VisibilityAudience.chosenSpaces,
+            {'$_away:ws-2', me.refOf('ws-1')}),
       );
-      final withAway = await me.myVisibility();
-      expect(
-        () => actions.choose(
-          VisibilityField.presence,
-          const FieldAudience(VisibilityAudience.nobody),
-          saved: withAway,
-        ),
-        throwsA(isA<MeRefused>()),
+      final withStale = await me.myVisibility();
+      await actions.choose(
+        VisibilityField.presence,
+        const FieldAudience(VisibilityAudience.chosenSpaces, {'$_away:ws-2'}),
+        saved: withStale,
       );
       expect(
         (await me.myVisibility()).of(VisibilityField.presence).workspaces,
-        {'$_away:ws-1'},
-      );
-      expect(
-        (await me.myVisibility()).of(VisibilityField.contactChannels),
-        FieldAudience(VisibilityAudience.chosenSpaces, {me.refOf('ws-1')}),
+        {'$_away:ws-2'},
       );
     });
   });
@@ -305,7 +318,7 @@ void main() {
       );
     });
 
-    testWidgets('a field naming a space elsewhere is read-only and says why', (
+    testWidgets('a field naming a space elsewhere can be changed now', (
       tester,
     ) async {
       me.accounts['user-1']!.visibility = MyVisibility.defaults.withField(
@@ -313,16 +326,18 @@ void main() {
         const FieldAudience(VisibilityAudience.chosenSpaces, {'$_away:ws-1'}),
       );
       await _account(tester, me);
-      final row = _key('visibility-field-contact_channels');
-      expect(
-        find.descendant(
-          of: row,
-          matching: find.textContaining('cannot be changed here yet'),
-        ),
-        findsOneWidget,
+      await tapIn(
+        tester,
+        'me-account-list',
+        _key('visibility-field-contact_channels'),
       );
-      expect(tester.widget<ListTile>(row).onTap, isNull);
-      expect(_key('visibility-save'), findsNothing);
+      await _tap(tester, _key('visibility-audience-nobody'));
+      await _tap(tester, _key('visibility-save'));
+      expect(
+        me.accounts['user-1']!.visibility.of(VisibilityField.contactChannels),
+        const FieldAudience(VisibilityAudience.nobody),
+        reason: 'narrowing needs no confirmation and no verification',
+      );
     });
 
     testWidgets('a refused save says so and keeps the saved value', (

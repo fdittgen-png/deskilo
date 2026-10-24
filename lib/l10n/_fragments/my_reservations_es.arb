@@ -34,5 +34,10 @@
   "settingLabelPersonalReservationWindowDays": "Periodo de las reservas",
   "settingHintPersonalReservationWindowDays": "Días que el espacio personal muestra por defecto cuando lista sus reservas. Puede elegir otro periodo, hasta el tope.",
   "settingLabelPersonalReservationMaxWindowDays": "Tope del periodo de las reservas",
-  "settingHintPersonalReservationMaxWindowDays": "Fijado por la plataforma: el periodo más largo que una lectura de sus reservas puede pedir. Acota la consulta."
+  "settingHintPersonalReservationMaxWindowDays": "Fijado por la plataforma: el periodo más largo que una lectura de sus reservas puede pedir. Acota la consulta.",
+  "myReservationsHostUnavailable": "No se puede acceder a este servidor desde este dispositivo: no está conectado aquí, o no es el que dice ser.",
+  "myReservationsTimedOut": "Este servidor no ha respondido a tiempo.",
+  "myReservationsSourceUnnamed": "Un servidor de espacio",
+  "myReservationsSourceReading": "Leyendo {source}…",
+  "myReservationsSourceProblem": "{source}: {problem}"
 }

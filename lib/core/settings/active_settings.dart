@@ -9,3 +9,10 @@ import 'settings.dart';
 /// overrides (`activeSettingsFromWorkspace`); readers then use the
 /// registry defaults.
 final activeSettingsProvider = Provider<SettingsSet?>((ref) => null);
+
+/// #2553 C2 -- the personal home's platform settings (the registry's
+/// platform scope with no workspace) for the signed-in person, for code
+/// that reads them without importing the workspace feature. Null until the
+/// composition root puts `platformSettingsFromWorkspace` in its scope's
+/// overrides, and null signed out: no literal stands in for them.
+final platformSettingsProvider = FutureProvider<SettingsSet?>((ref) async => null);

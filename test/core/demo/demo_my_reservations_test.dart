@@ -7,12 +7,16 @@
 import 'package:deskilo/core/demo/data/my_reservations_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_space_routing.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+const _demo = MyReservationsSource(installationId: kDemoInstallationId, workspaceIds: [], hostedHere: true);
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +43,7 @@ void main() {
     addTearDown(container.dispose);
 
     final query = wide(fixture);
-    final page = await container.read(myReservationsRepositoryProvider).page(query);
+    final page = await container.read(myReservationsRepositoryProvider).page(_demo, query);
     // Both spaces' own rows, merged the way one host orders them.
     final expected = own([
       ...fixture.reservations.reservations.where((r) => r.memberId == fixture.activeMemberId),
@@ -73,7 +77,7 @@ void main() {
       final ids = <String>[];
       var query = wide(fixture, direction: direction);
       while (true) {
-        final page = await repository.page(query);
+        final page = await repository.page(const MyReservationsSource(installationId: 'demo', workspaceIds: []), query);
         expect(page.items.length, lessThanOrEqualTo(2));
         expect(page.source, 'demo');
         ids.addAll(page.items.map((i) => i.id));
@@ -88,5 +92,33 @@ void main() {
     expect(forward.toSet().length, forward.length, reason: 'no duplicate');
     final backward = await walk(MyReservationsDirection.descending);
     expect(backward, all.reversed.toList());
+  });
+
+  test('#2553 C2: the persona\'s personal home names the one fixture host, read with its zones',
+      () async {
+    final fixture = DemoFixture.build();
+    final container = ProviderContainer(overrides: demoOverrides(fixture));
+    addTearDown(container.dispose);
+
+    // Signed in as the persona first, as the app is when the view opens.
+    final auth = container.listen(authStateProvider, (_, _) {});
+    addTearDown(auth.close);
+    final listened = container.listen(myReservationsSourcesProvider, (_, _) {});
+    addTearDown(listened.close);
+    await pumpEventQueue();
+    expect(container.read(authStateProvider).value, isNotNull);
+    final sources = await container.read(myReservationsSourcesProvider.future);
+    expect(sources.map((s) => s.installationId), [kDemoInstallationId],
+        reason: 'both spaces live on the one fictional installation');
+    expect(sources.single.workspaceIds, containsAll([fixture.workspaces.workspaces.first.id, demoSecondSpaceId]));
+
+    final page = await container
+        .read(myReservationsRepositoryProvider)
+        .page(sources.single, wide(fixture));
+    expect(page.items, isNotEmpty);
+    for (final item in page.items) {
+      expect(page.zones[item.workspaceId], isNotNull,
+          reason: 'every booked space names its own zone');
+    }
   });
 }

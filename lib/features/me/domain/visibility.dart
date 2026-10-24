@@ -115,6 +115,23 @@ class FieldAudience {
         workspaces.any((id) => !before.workspaces.contains(id));
   }
 
+  /// #2558 C2 — this choice as the checked writer compares it
+  /// (`p_expected`): exactly the audience and the chosen spaces' network
+  /// references, sorted; an audience other than chosen spaces names none.
+  Map<String, Object> get expectedJson => {
+    'audience': audience.wire,
+    'workspace_refs': audience == VisibilityAudience.chosenSpaces
+        ? (workspaces.toList()..sort())
+        : const <String>[],
+  };
+
+  /// Whether [ref] is qualified (`<installation id>:<local id>`): the only
+  /// way the personal home names a space. A bare local id is never sent as
+  /// one; the server checks the exact shape.
+  static bool isNetworkRef(String ref) => _networkRef.hasMatch(ref);
+
+  static final RegExp _networkRef = RegExp(r'^[^:\s]+:[^:\s]+$');
+
   /// A choice the server would refuse: chosen spaces, and none chosen.
   bool get incomplete =>
       audience == VisibilityAudience.chosenSpaces && workspaces.isEmpty;
@@ -183,25 +200,8 @@ class MyVisibility {
 
   /// #2558 — the installation id of the personal home that answered
   /// (`home.installation_id` of my_visibility_network_v1); empty from a
-  /// reader that names none. Only a chosen space of THIS installation can
-  /// be written through today's `set_visibility`.
+  /// reader that names none.
   final String home;
-
-  /// The local workspace id [ref] names when it is a space of [home]; null
-  /// for a space on another installation, an unqualified id, or when no
-  /// home answered. A qualified reference is never read as a local id of
-  /// another installation.
-  String? localIdOf(String ref) {
-    final at = ref.indexOf(':');
-    if (home.isEmpty || at <= 0 || ref.substring(0, at) != home) return null;
-    final local = ref.substring(at + 1);
-    return local.isEmpty ? null : local;
-  }
-
-  /// Whether [field]'s saved choice names a space this home cannot write
-  /// for: such a field is read-only here until the network writer exists.
-  bool namesSpaceElsewhere(VisibilityField field) =>
-      of(field).workspaces.any((ref) => localIdOf(ref) == null);
 
   FieldAudience of(VisibilityField field) =>
       fields[field] ?? FieldAudience(field.defaultAudience);

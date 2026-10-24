@@ -13961,6 +13961,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este servidor ha rechazado listar sus reservas.';
 
   @override
+  String get myReservationsHostUnavailable =>
+      'No se puede acceder a este servidor desde este dispositivo: no está conectado aquí, o no es el que dice ser.';
+
+  @override
   String get myReservationsInvalid =>
       'Este servidor ha rechazado el periodo solicitado.';
 
@@ -14000,6 +14004,19 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String myReservationsSourceProblem(String source, String problem) {
+    return '$source: $problem';
+  }
+
+  @override
+  String myReservationsSourceReading(String source) {
+    return 'Leyendo $source…';
+  }
+
+  @override
+  String get myReservationsSourceUnnamed => 'Un servidor de espacio';
+
+  @override
   String get myReservationsStatusCancelled => 'Cancelada';
 
   @override
@@ -14013,6 +14030,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get myReservationsStatusReserved => 'Reservada';
+
+  @override
+  String get myReservationsTimedOut =>
+      'Este servidor no ha respondido a tiempo.';
 
   @override
   String get myReservationsUnnamedPlace => '(sitio sin nombre)';
@@ -25483,6 +25504,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get visibilityChosenSpaces => 'Miembros de espacios elegidos';
 
   @override
+  String get visibilityConflictKeep => 'Conservar el ajuste guardado';
+
+  @override
+  String get visibilityConflictReview => 'Revisar mi cambio';
+
+  @override
+  String visibilityConflictSaved(String audience) {
+    return 'Guardado ahora: $audience';
+  }
+
+  @override
+  String get visibilityConflictTitle =>
+      'Este ajuste ha cambiado mientras tanto';
+
+  @override
+  String get visibilityConflictUnread =>
+      'No se puede leer el ajuste guardado en este momento. Su cambio no se ha guardado.';
+
+  @override
+  String visibilityConflictYours(String audience) {
+    return 'Su cambio: $audience';
+  }
+
+  @override
   String get visibilityContact => 'WhatsApp y correo';
 
   @override
@@ -25491,10 +25536,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get visibilityElsewhereTitle => 'En mis otros servidores';
-
-  @override
-  String get visibilityFieldElsewhere =>
-      'Este ajuste nombra un espacio en otro servidor, por lo que aún no puede cambiarlo aquí.';
 
   @override
   String visibilityHomeHeader(String name) {
@@ -25604,6 +25645,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get visibilityUnavailable =>
       'No se puede leer ahora quién ve qué de usted. No se ha cambiado nada.';
+
+  @override
+  String get visibilityUnconfirmedTitle =>
+      'No se ha podido confirmar su cambio';
 
   @override
   String get visibilityWidenAction => 'Ampliar';

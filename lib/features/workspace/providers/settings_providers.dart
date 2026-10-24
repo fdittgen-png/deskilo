@@ -118,6 +118,17 @@ final activeSettingsFromWorkspace = activeSettingsProvider.overrideWith(
   (ref) => ref.watch(currentSettingsProvider).asData?.value,
 );
 
+/// #2553 C2 -- hands the personal home's platform settings to core
+/// (`platformSettingsProvider`) for the signed-in person; the composition
+/// root puts it in its scope's overrides.
+final platformSettingsFromWorkspace = platformSettingsProvider.overrideWith(
+  (ref) {
+    final reader = ref.watch(platformSettingsReaderProvider);
+    final principal = ref.watch(authStateProvider.future);
+    return principal.then((who) async => (await reader.read(who))?.settings);
+  },
+);
+
 /// #2561 L3 -- the personal home's platform settings: the registry's
 /// platform scope read with a null workspace, which [settingsRepository]
 /// serves on the PERSONAL client, so a personal home that hosts no workspace

@@ -23182,6 +23182,12 @@ abstract class AppLocalizations {
   /// **'This server refused to list your reservations.'**
   String get myReservationsForbidden;
 
+  /// #2553 C2 My reservations: one workspace host cannot be reached with its own verified connection on this device.
+  ///
+  /// In en, this message translates to:
+  /// **'This server cannot be reached from this device: it is not connected here, or it is not the one it claims to be.'**
+  String get myReservationsHostUnavailable;
+
   /// #2553 My reservations: the host refused the window or cursor (22023).
   ///
   /// In en, this message translates to:
@@ -23248,6 +23254,24 @@ abstract class AppLocalizations {
   /// **'At most {days} days at a time.'**
   String myReservationsPeriodLimit(int days);
 
+  /// #2553 C2 My reservations: one host's read failed; source is the names of its spaces, problem the sentence saying why.
+  ///
+  /// In en, this message translates to:
+  /// **'{source}: {problem}'**
+  String myReservationsSourceProblem(String source, String problem);
+
+  /// #2553 C2 My reservations: one host's bookings are still being read; source is the names of its spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading {source}…'**
+  String myReservationsSourceReading(String source);
+
+  /// #2553 C2 My reservations: a workspace host whose spaces have no name the person may read.
+  ///
+  /// In en, this message translates to:
+  /// **'A workspace server'**
+  String get myReservationsSourceUnnamed;
+
   /// #2553 My reservations: booking status.
   ///
   /// In en, this message translates to:
@@ -23277,6 +23301,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reserved'**
   String get myReservationsStatusReserved;
+
+  /// #2553 C2 My reservations: one workspace host did not answer within the personal read timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'This server did not answer in time.'**
+  String get myReservationsTimedOut;
 
   /// #2553 My reservations: a booked place without a name.
   ///
@@ -42383,6 +42413,42 @@ abstract class AppLocalizations {
   /// **'Members of chosen spaces'**
   String get visibilityChosenSpaces;
 
+  /// #2558 C2 privacy conflict: close, keeping what is saved
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the saved setting'**
+  String get visibilityConflictKeep;
+
+  /// #2558 C2 privacy conflict: reopen the draft against the value saved now
+  ///
+  /// In en, this message translates to:
+  /// **'Review my change'**
+  String get visibilityConflictReview;
+
+  /// #2558 C2 privacy conflict: the audience the personal home holds now
+  ///
+  /// In en, this message translates to:
+  /// **'Saved now: {audience}'**
+  String visibilityConflictSaved(String audience);
+
+  /// #2558 C2 privacy: the saved field changed (another device) before this change was saved; nothing was written
+  ///
+  /// In en, this message translates to:
+  /// **'This setting changed meanwhile'**
+  String get visibilityConflictTitle;
+
+  /// #2558 C2 privacy conflict: the current saved value could not be read back
+  ///
+  /// In en, this message translates to:
+  /// **'The saved setting cannot be read right now. Your change was not saved.'**
+  String get visibilityConflictUnread;
+
+  /// #2558 C2 privacy conflict: the audience the person chose, kept as a draft
+  ///
+  /// In en, this message translates to:
+  /// **'Your change: {audience}'**
+  String visibilityConflictYours(String audience);
+
   /// Visibility field: contact channels.
   ///
   /// In en, this message translates to:
@@ -42400,12 +42466,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On my other servers'**
   String get visibilityElsewhereTitle;
-
-  /// #2558 a field whose chosen spaces include one on another installation; read-only until the network writer
-  ///
-  /// In en, this message translates to:
-  /// **'It names a space on another server, so it cannot be changed here yet.'**
-  String get visibilityFieldElsewhere;
 
   /// #2558 privacy card: names the personal home whose settings these are; name is its server address
   ///
@@ -42586,6 +42646,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Who sees what of you cannot be read right now. Nothing was changed.'**
   String get visibilityUnavailable;
+
+  /// #2558 C2 privacy: the reply was lost and the saved field read back is not the intended one
+  ///
+  /// In en, this message translates to:
+  /// **'Your change could not be confirmed'**
+  String get visibilityUnconfirmedTitle;
 
   /// No description provided for @visibilityWidenAction.
   ///
