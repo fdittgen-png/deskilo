@@ -10405,9 +10405,23 @@
   "@privacyEraseOwner": {
     "description": "#719 - privacy & data"
   },
-  "privacyErased": "Vos données ont été effacées.",
-  "@privacyErased": {
-    "description": "#719 - privacy & data"
+  "privacyEraseTarget": "Ceci efface vos données dans {space} uniquement. Vos autres espaces et les autres installations gardent leurs propres données.",
+  "@privacyEraseTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyErasedIn": "Vos données dans {space} sont effacées. Ce que l'espace doit conserver reste conservé pendant sa durée de conservation ; les autres installations ne sont pas concernées.",
+  "@privacyErasedIn": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
   },
   "privacyExport": "Exporter mes données",
   "@privacyExport": {
@@ -12903,9 +12917,41 @@
   "@rightsKindRestriction": {
     "description": "#1915 rights requests: rightsKindRestriction"
   },
-  "rightsRequestAsk": "Que demandez-vous à l'espace ?",
-  "@rightsRequestAsk": {
-    "description": "#1915 rights requests: rightsRequestAsk"
+  "rightsOutcomeFailed": "Non effectué : {stores}",
+  "@rightsOutcomeFailed": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeKept": "Conservé : {stores}",
+  "@rightsOutcomeKept": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomePending": "Encore en attente ailleurs : {stores}",
+  "@rightsOutcomePending": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestAskSpace": "Que demandez-vous à {space} ?",
+  "@rightsRequestAskSpace": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
   },
   "rightsRequestDetails": "Précisions (facultatif)",
   "@rightsRequestDetails": {
@@ -12923,14 +12969,30 @@
   "@rightsRequestSend": {
     "description": "#1915 rights requests: rightsRequestSend"
   },
-  "rightsRequestSent": "Demande envoyée — l'espace répond d'ici le {date}.",
-  "@rightsRequestSent": {
-    "description": "#1915 rights requests: rightsRequestSent",
+  "rightsRequestSentTo": "Demande envoyée à {space} — réponse au plus tard le {date}.",
+  "@rightsRequestSentTo": {
+    "description": "#2558 account rights: exact target and retention honesty",
     "placeholders": {
+      "space": {
+        "type": "String"
+      },
       "date": {
         "type": "String"
       }
     }
+  },
+  "rightsRequestTarget": "Pour {space}",
+  "@rightsRequestTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestTargetUnknown": "Pour un espace qui n'est plus dans votre liste",
+  "@rightsRequestTargetUnknown": {
+    "description": "#2558 account rights: exact target and retention honesty"
   },
   "rightsRequestsEmpty": "Aucune demande pour le moment.",
   "@rightsRequestsEmpty": {

@@ -16233,7 +16233,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Un propietario transfiere primero el espacio (Miembros y planes → Copropiedad).';
 
   @override
-  String get privacyErased => 'Sus datos han sido borrados.';
+  String privacyEraseTarget(String space) {
+    return 'Esto borra sus datos solo en $space. Sus otros espacios y las demás instalaciones conservan sus propios datos.';
+  }
+
+  @override
+  String privacyErasedIn(String space) {
+    return 'Sus datos en $space se han borrado. Lo que el espacio debe conservar se mantiene durante su plazo de conservación; las demás instalaciones no se ven afectadas.';
+  }
 
   @override
   String get privacyExport => 'Exportar mis datos';
@@ -19044,7 +19051,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rightsKindRestriction => 'Limitar el uso de mis datos';
 
   @override
-  String get rightsRequestAsk => '¿Qué pide al espacio?';
+  String rightsOutcomeFailed(String stores) {
+    return 'No realizado: $stores';
+  }
+
+  @override
+  String rightsOutcomeKept(String stores) {
+    return 'Conservado: $stores';
+  }
+
+  @override
+  String rightsOutcomePending(String stores) {
+    return 'Aún pendiente en otro lugar: $stores';
+  }
+
+  @override
+  String rightsRequestAskSpace(String space) {
+    return '¿Qué pide a $space?';
+  }
 
   @override
   String get rightsRequestDetails => 'Detalles (opcional)';
@@ -19060,9 +19084,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rightsRequestSend => 'Enviar la solicitud';
 
   @override
-  String rightsRequestSent(String date) {
-    return 'Solicitud enviada — el espacio responde antes del $date.';
+  String rightsRequestSentTo(String space, String date) {
+    return 'Solicitud enviada a $space — responde antes del $date.';
   }
+
+  @override
+  String rightsRequestTarget(String space) {
+    return 'Para $space';
+  }
+
+  @override
+  String get rightsRequestTargetUnknown =>
+      'Para un espacio que ya no está en su lista';
 
   @override
   String get rightsRequestsEmpty => 'Aún no hay solicitudes.';

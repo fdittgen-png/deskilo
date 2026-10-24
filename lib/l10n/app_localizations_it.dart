@@ -16256,7 +16256,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un proprietario prima cede lo spazio (Membri e piani → Comproprietà).';
 
   @override
-  String get privacyErased => 'I suoi dati sono stati cancellati.';
+  String privacyEraseTarget(String space) {
+    return 'Questo cancella i Suoi dati solo in $space. I Suoi altri spazi e le altre installazioni conservano i propri dati.';
+  }
+
+  @override
+  String privacyErasedIn(String space) {
+    return 'I Suoi dati in $space sono cancellati. Ciò che lo spazio deve conservare resta per il suo periodo di conservazione; le altre installazioni non sono interessate.';
+  }
 
   @override
   String get privacyExport => 'Esporta i miei dati';
@@ -19063,7 +19070,24 @@ class AppLocalizationsIt extends AppLocalizations {
   String get rightsKindRestriction => 'Limitare l\'uso dei miei dati';
 
   @override
-  String get rightsRequestAsk => 'Cosa chiede allo spazio?';
+  String rightsOutcomeFailed(String stores) {
+    return 'Non eseguito: $stores';
+  }
+
+  @override
+  String rightsOutcomeKept(String stores) {
+    return 'Conservato: $stores';
+  }
+
+  @override
+  String rightsOutcomePending(String stores) {
+    return 'Ancora in sospeso altrove: $stores';
+  }
+
+  @override
+  String rightsRequestAskSpace(String space) {
+    return 'Cosa chiede a $space?';
+  }
 
   @override
   String get rightsRequestDetails => 'Dettagli (facoltativo)';
@@ -19079,9 +19103,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get rightsRequestSend => 'Invia la richiesta';
 
   @override
-  String rightsRequestSent(String date) {
-    return 'Richiesta inviata — lo spazio risponde entro il $date.';
+  String rightsRequestSentTo(String space, String date) {
+    return 'Richiesta inviata a $space — risposta entro il $date.';
   }
+
+  @override
+  String rightsRequestTarget(String space) {
+    return 'Per $space';
+  }
+
+  @override
+  String get rightsRequestTargetUnknown =>
+      'Per uno spazio che non è più nel Suo elenco';
 
   @override
   String get rightsRequestsEmpty => 'Nessuna richiesta per ora.';

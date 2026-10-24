@@ -124,6 +124,12 @@ class PrivacyScreen extends ConsumerWidget {
         // #1915 — rights requests: filed, dated, answered or refused.
         RightsRequestsTile(
           workspaceId: ref.watch(currentWorkspaceProvider).value?.id,
+          spaceNames: {
+            for (final w in [...?ref.watch(myWorkspacesProvider).value])
+              w.id: w.name,
+            if (ref.watch(currentWorkspaceProvider).value case final w?)
+              w.id: w.name,
+          },
         ),
         // #1914 — this space's own notice, and acknowledging it.
         const SpaceNoticeTile(),
@@ -196,6 +202,13 @@ class PrivacyScreen extends ConsumerWidget {
         title: Text(l10n.privacyErase),
         content: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.min, children: [
+          // #2558 — the one space this erases, by name: not the account,
+          // not the person's other spaces or installations.
+          Text(
+            l10n.privacyEraseTarget(workspace.name),
+            key: const ValueKey('privacy-erase-target'),
+          ),
+          const SizedBox(height: AppSpacing.md),
           if (preview != null) ...[
             ErasurePreviewView(preview: preview),
             const SizedBox(height: AppSpacing.md),
@@ -237,7 +250,7 @@ class PrivacyScreen extends ConsumerWidget {
           ref.read(calendarRepositoryProvider).eraseMyMembership(workspace.id),
     );
     if (!ok || !context.mounted) return;
-    AppSnack.success(context, l10n.privacyErased);
+    AppSnack.success(context, l10n.privacyErasedIn(workspace.name));
     await signOutAndForget(ref);
     if (context.mounted) context.go('/auth');
   }
