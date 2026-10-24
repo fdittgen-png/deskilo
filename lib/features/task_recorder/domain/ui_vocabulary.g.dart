@@ -1461,6 +1461,7 @@ const Set<String> uiKeys = {
   'library-save',
   'link-deskilo',
   'link-identity',
+  'linked-space-continue-identity',
   'linked-space-open',
   'linked-visibility-sheet',
   'linked-visibility-unavailable',
