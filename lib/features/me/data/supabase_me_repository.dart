@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/me_repository.dart';
+import '../domain/personal_workspace_refs.dart';
 import '../domain/public_person.dart';
 import '../domain/visibility.dart';
 import 'visibility_rpc.dart';
@@ -16,10 +17,9 @@ class SupabaseMeRepository implements MeRepository {
       raw is Map ? Map<String, dynamic>.from(raw) : <String, dynamic>{};
 
   @override
-  Future<void> leaveSpace(String workspaceId) => _client.rpc<void>(
-        'leave_workspace',
-        params: {'p_workspace_id': workspaceId},
-      );
+  Future<PersonalWorkspaceRefs> myWorkspaceRefs() async =>
+      PersonalWorkspaceRefs.fromJson(
+          await _client.rpc<Object?>('my_personal_workspace_refs_v1'));
 
   @override
   Future<MyVisibility> myVisibility() => readMyVisibility(_client);

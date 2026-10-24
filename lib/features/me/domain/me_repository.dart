@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'personal_workspace_refs.dart';
 import 'public_person.dart';
 import 'visibility.dart';
 
 /// #1823 — the account layer's own calls on this server. Every one is about
-/// the signed-in person; none reads or writes inside a workspace beyond
-/// leaving it. The linked servers' calls are `LinkedMeRepository`'s.
+/// the signed-in person; none reads or writes inside a workspace (#2563:
+/// leaving one is `WorkspaceAccessRepository`'s, on that workspace's host).
+/// The linked servers' calls are `LinkedMeRepository`'s.
 abstract interface class MeRepository {
-  /// `leave_workspace` (0001): my membership becomes `exited`. My data
-  /// stays; erasing it is the separate, stronger action in Privacy.
-  Future<void> leaveSpace(String workspaceId);
+  /// `my_personal_workspace_refs_v1()` (#2563): the workspaces my account
+  /// names by qualified reference, with no workspace needed here.
+  Future<PersonalWorkspaceRefs> myWorkspaceRefs();
 
   /// `my_visibility()`.
   Future<MyVisibility> myVisibility();

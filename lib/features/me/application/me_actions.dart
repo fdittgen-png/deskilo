@@ -6,6 +6,7 @@
 import '../domain/linked_me_repository.dart';
 import '../domain/me_repository.dart';
 import '../domain/visibility.dart';
+import '../domain/workspace_access_repository.dart';
 
 /// Why a request was refused before it reached the server.
 enum MeRefusal {
@@ -42,16 +43,19 @@ class MeRefused implements Exception {
 }
 
 class MeActions {
-  const MeActions(this._repository, this._linked);
+  const MeActions(this._repository, this._linked, this._access);
 
   final MeRepository _repository;
   final LinkedMeRepository _linked;
+
+  /// #2563 — what acts inside a workspace, on that workspace's host.
+  final WorkspaceAccessRepository _access;
 
   /// Leave [workspaceId]. My data stays with the space; erasing it is the
   /// separate action under Privacy.
   Future<void> leave(String workspaceId, {required bool isOwner}) {
     if (isOwner) throw const MeRefused(MeRefusal.ownerMustHandOver);
-    return _repository.leaveSpace(workspaceId);
+    return _access.leaveSpace(workspaceId);
   }
 
   /// My profession and bio, trimmed; who reads them is [VisibilityField.about].

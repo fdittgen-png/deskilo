@@ -339,7 +339,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
-      meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), // #1823
+      meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823, #2563
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider
           .overrideWithValue(fixture.guests),
