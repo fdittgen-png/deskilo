@@ -3687,6 +3687,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get conversationArchived => 'Conversation archivée.';
 
   @override
+  String get conversationChoose => 'Choisissez une conversation';
+
+  @override
+  String get conversationDraftSessionOnly =>
+      'Brouillon non envoyé, conservé dans l’application jusqu’à votre déconnexion ou sa fermeture.';
+
+  @override
   String get conversationEmpty => 'Pas encore de messages — dites bonjour !';
 
   @override

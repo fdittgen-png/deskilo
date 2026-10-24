@@ -13,10 +13,13 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/presentation/widgets/member_note_composer.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/conversation_target.dart';
 import '../../domain/message_marks.dart';
 import '../../domain/messenger.dart';
+import '../../providers/conversation_pane_providers.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/message_marks_providers.dart';
 import '../../providers/messenger_providers.dart';
@@ -24,7 +27,8 @@ import 'account_group_reach_sheet.dart';
 import 'account_group_sheet.dart';
 import 'block_person.dart';
 import 'context_bubble.dart';
-import 'environment_pill.dart';
+import 'context_thread_parts.dart';
+import 'foreground_poll.dart';
 import 'message_actions_sheet.dart';
 import 'refusal_text.dart';
 
@@ -46,6 +50,8 @@ class ContextThreadScreen extends ConsumerStatefulWidget {
     this.subtitle = '',
     this.source = '',
     this.peer,
+    this.onBack,
+    this.onClose,
   });
 
   final MessageContextKind kind;
@@ -60,6 +66,14 @@ class ContextThreadScreen extends ConsumerStatefulWidget {
   /// The other person of an account conversation — who a reply goes to.
   final String? peer;
 
+  /// Shown as the header's Back when the thread is the focused page of the
+  /// messenger rather than a route of its own.
+  final VoidCallback? onBack;
+
+  /// Leaves the thread when it ends (blocked, group left) and is not a
+  /// route to pop: the messenger's pane closes it instead.
+  final VoidCallback? onClose;
+
   @override
   ConsumerState<ContextThreadScreen> createState() => _ContextThreadState();
 }
@@ -70,7 +84,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   final List<ContextMessage> _earlier = [];
   bool _busy = false;
   bool _loadingEarlier = false;
-  Timer? _refresh;
+  late final ForegroundPoll _poll;
   String? _previousWorkspace;
   bool _switchedWorkspace = false;
   bool _autoChosen = false;
@@ -81,23 +95,50 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   late final ActiveWorkspaceId _activeNotifier =
       ref.read(activeWorkspaceIdProvider.notifier);
 
+  late final _draft = ThreadDraft(
+    ref.read(authStateProvider).value,
+    ref.read(conversationDraftsProvider.notifier),
+    () => conversationDraftKey(source: widget.source, kind: widget.kind,
+        contextId: _contextId, peer: widget.peer),
+  );
+
   @override
   void initState() {
     super.initState();
     _activeNotifier;
+    _body
+      ..text = _draft.restored
+      ..addListener(() => _draft.keep(_body.text));
+    // Polls and marks read only while shown, in the foreground.
+    _poll = ForegroundPoll(
+      period: ref.read(messagingWindowsProvider).threadPoll,
+      onTick: _tick,
+      onResume: () {
+        _tick();
+        unawaited(_markRead());
+      },
+    );
     unawaited(Future.microtask(_markRead));
-    _refresh = Timer.periodic(ref.read(messagingWindowsProvider).threadPoll, (_) {
-      if (mounted && _contextId.isNotEmpty && _earlier.isEmpty) {
-        ref
-          ..invalidate(_provider)
-          ..invalidate(messageMarksProvider(_marksKey));
-      }
-    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // A hidden tab turns tickers off, not timers: the poll is told.
+    _poll.setShown(shown: TickerMode.valuesOf(context).enabled);
+  }
+
+  void _tick() {
+    if (mounted && _contextId.isNotEmpty && _earlier.isEmpty) {
+      ref
+        ..invalidate(_provider)
+        ..invalidate(messageMarksProvider(_marksKey));
+    }
   }
 
   @override
   void dispose() {
-    _refresh?.cancel();
+    _poll.dispose();
     _body.dispose();
     // The workspace chosen for references is only lent to this thread.
     final previous = _previousWorkspace;
@@ -122,7 +163,8 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       contextMessagesProvider(widget.kind, _contextId, source: widget.source);
 
   Future<void> _markRead() async {
-    if (_contextId.isEmpty || !mounted) return;
+    // Only a thread the person actually sees is read.
+    if (_contextId.isEmpty || !mounted || !_poll.active) return;
     try {
       await ref
           .read(messengerActionsProvider(source: widget.source))
@@ -144,6 +186,9 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     if (_busy || text.isEmpty) return;
     final l10n = context.l10n;
     setState(() => _busy = true);
+    // Fixed before the send: a delivery clears the draft it was typed in,
+    // under the account that typed it, even after the thread closed.
+    final delivered = _draft.clearOnDelivery();
     String? landed;
     final ok = await runMessenger(
       context,
@@ -161,6 +206,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
             );
       },
     );
+    if (ok) delivered();
     if (!mounted) return;
     setState(() {
       _busy = false;
@@ -219,30 +265,24 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     if (peer == null) return;
     final done = await confirmAndBlock(context, ref,
         source: widget.source, peer: peer, name: widget.title);
-    if (done && mounted) Navigator.of(context).pop();
+    if (done && mounted) _leave();
+  }
+
+  /// The thread ended: its pane closes, or its route pops.
+  void _leave() {
+    final close = widget.onClose;
+    if (close != null) {
+      close();
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   Future<void> _delete(ContextMessage message) async {
     final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (dialog) => AlertDialog(
-        content: Text(
-          l10n.messengerDeleteConfirm,
-        ),
-        actions: [
-          TextButton(
-            key: const ValueKey('context-thread-text-button'),
-            onPressed: () => Navigator.of(dialog).pop(false),
-            child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel),
-          ),
-          FilledButton(
-            key: const ValueKey('context-delete-confirm'),
-            onPressed: () => Navigator.of(dialog).pop(true),
-            child: Text(l10n.messengerDelete),
-          ),
-        ],
-      ),
+      builder: (_) => const MessageDeleteDialog(),
     );
     if (confirmed != true || !mounted) return;
     final ok = await runGuarded(
@@ -369,18 +409,9 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     return Scaffold(
       key: const ValueKey('context-thread'),
       appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(widget.title, overflow: TextOverflow.ellipsis),
-            if (widget.subtitle.isNotEmpty)
-              Text(
-                widget.subtitle,
-                style: Theme.of(context).textTheme.bodySmall,
-                overflow: TextOverflow.ellipsis,
-              ),
-          ],
-        ),
+        automaticallyImplyLeading: widget.onClose == null,
+        leading: widget.onBack == null ? null : ThreadBack(widget.onBack!),
+        title: ThreadTitle(widget.title, widget.subtitle),
         actions: [
           if (_isGroup && _contextId.isNotEmpty)
             IconButton(
@@ -389,7 +420,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
               icon: const Icon(Icons.groups_outlined),
               onPressed: () async {
                 final left = await showAccountGroupSheet(context, _contextId);
-                if (left == true && context.mounted) Navigator.of(context).pop();
+                if (left == true && context.mounted) _leave();
               },
             ),
           if (widget.kind == MessageContextKind.account && widget.peer != null)
@@ -428,6 +459,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
                 _ => const LoadingView(),
               },
             ),
+            if (_draft.restored.isNotEmpty) const DraftSessionNote(),
             _composer(l10n),
           ],
         ),
@@ -533,40 +565,10 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (workspaces.length > 1)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.md, AppSpacing.xs, AppSpacing.md, 0),
-              child: Row(
-                children: [
-                  Icon(Icons.link, size: 16,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant),
-                  const SizedBox(width: AppSpacing.xs),
-                  Text(
-                    l10n.threadRefsIn,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Flexible(
-                    child: DropdownButton<String>(
-                      key: const ValueKey('thread-ref-workspace'),
-                      value: workspaces.any((w) => w.id == active) ? active : null,
-                      isDense: true,
-                      isExpanded: true,
-                      underline: const SizedBox.shrink(),
-                      items: [
-                        for (final w in workspaces)
-                          DropdownMenuItem(
-                            value: w.id,
-                            child: EnvironmentLabel(w.name, isProd: w.environment == 'prod'),
-                          ),
-                      ],
-                      onChanged: (id) {
-                        if (id != null) unawaited(_chooseWorkspace(id));
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            ThreadRefsWorkspacePicker(
+              workspaces: workspaces,
+              active: active,
+              onChoose: (id) => unawaited(_chooseWorkspace(id)),
             ),
           MemberNoteComposer(
             key: const ValueKey('context-composer'),
@@ -582,6 +584,8 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
             ],
             mentionTokens: ref.watch(messageMentionsOnProvider),
             referencesHint: l10n.threadNoRefs,
+            seedBody: _draft.restored,
+            onChanged: _draft.keep,
             onSend: (body) async {
               _body.text = body;
               await _send();

@@ -3658,6 +3658,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conversationArchived => 'Conversation archived.';
 
   @override
+  String get conversationChoose => 'Choose a conversation';
+
+  @override
+  String get conversationDraftSessionOnly =>
+      'Unsent draft, kept in this app until you sign out or close it.';
+
+  @override
   String get conversationEmpty => 'No messages yet — say hello!';
 
   @override

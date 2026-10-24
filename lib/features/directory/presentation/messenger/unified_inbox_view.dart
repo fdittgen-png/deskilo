@@ -22,6 +22,7 @@ import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
 import '../directory_pages.dart';
 import 'context_labels.dart';
+import 'foreground_poll.dart';
 import 'open_inbox_entry.dart';
 
 /// #1824 — Me › Messages: every conversation I take part in, on every
@@ -30,7 +31,14 @@ import 'open_inbox_entry.dart';
 ///
 /// A body, not a screen: the Me shell owns the app bar around it.
 class UnifiedInboxView extends ConsumerStatefulWidget {
-  const UnifiedInboxView({super.key});
+  const UnifiedInboxView({super.key, this.onOpen, this.selected});
+
+  /// Opens a row in the messenger's own pane; without it a row opens its
+  /// thread as a page of its own.
+  final ValueChanged<InboxEntry>? onOpen;
+
+  /// The [InboxEntry.key] of the conversation the pane shows.
+  final String? selected;
 
   @override
   ConsumerState<UnifiedInboxView> createState() => _UnifiedInboxState();
@@ -41,20 +49,38 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
   bool _archived = false;
   bool _searching = false;
   String _query = '';
-  Timer? _refresh;
+
+  /// The inbox is read again only while it is on screen and the app in the
+  /// foreground; shown again, one read catches up.
+  late final ForegroundPoll _poll = ForegroundPoll(
+    period: ref.read(messagingWindowsProvider).inboxPoll,
+    onTick: _reread,
+    onResume: _reread,
+  );
+
+  void _reread() {
+    if (mounted) ref.invalidate(messengerInboxProvider);
+  }
 
   @override
-  void initState() {
-    super.initState();
-    _refresh = Timer.periodic(ref.read(messagingWindowsProvider).inboxPoll, (_) {
-      if (mounted) ref.invalidate(messengerInboxProvider);
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _poll.setShown(shown: TickerMode.valuesOf(context).enabled);
   }
 
   @override
   void dispose() {
-    _refresh?.cancel();
+    _poll.dispose();
     super.dispose();
+  }
+
+  void _open(BuildContext context, InboxEntry entry) {
+    final open = widget.onOpen;
+    if (open != null) {
+      open(entry);
+    } else {
+      unawaited(openInboxEntry(context, ref, entry));
+    }
   }
 
   @override
@@ -197,7 +223,6 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     AppLocalizations l10n,
   ) {
     final format = ref.watch(appFormatProvider);
-    final words = l10n;
     final marks = ref.watch(inboxMarksProvider);
     // A workspace conversation's pin / archive are the server's (0386); every
     // other kind keeps this device's marks.
@@ -256,6 +281,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
             if (i > 0) const Divider(height: 1),
             ListTile(
               key: ValueKey('inbox-entry-${entry.contextId}'),
+              selected: entry.key == widget.selected,
               leading: CircleAvatar(
                 backgroundColor:
                     Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -270,7 +296,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     : null,
               ),
               subtitle: Text(
-                '${contextSubtitle(l10n, entry, servers)}\n${notePreview(entry.lastBody, max: 120, referenceFallback: words.uxLinkedReference)}',
+                '${contextSubtitle(l10n, entry, servers)}\n${notePreview(entry.lastBody, max: 120, referenceFallback: l10n.uxLinkedReference)}',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -302,7 +328,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     ),
                 ],
               ),
-              onTap: () => openInboxEntry(context, ref, entry),
+              onTap: () => _open(context, entry),
               onLongPress: () => _marksMenu(context, entry),
             ),
           ],
