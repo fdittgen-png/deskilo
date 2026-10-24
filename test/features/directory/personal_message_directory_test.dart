@@ -100,13 +100,16 @@ void main() {
     expect(page.status, RelationshipStatus.ready);
   });
 
-  test('workspaces and groups decode, a remote workspace unnamed', () async {
+  test('workspaces and groups decode, a remote workspace named by my fact '
+      'or unnamed', () async {
     final home = _Home()
       ..answer = _envelope('workspaces', [
         {'network_id': _a, 'installation_id': 'x', 'workspace_id': 'y', 'permitted_name': null},
+        {'network_id': _b, 'installation_id': 'x', 'workspace_id': 'y', 'permitted_name': 'Studio Sud'},
+        {'network_id': '$_b-2', 'installation_id': 'x', 'workspace_id': 'y', 'permitted_name': ' '},
       ], status: 'partial');
     final workspaces = await _adapter(home).workspaces();
-    expect(workspaces.items.single.name, isNull);
+    expect(workspaces.items.map((w) => w.name), [null, 'Studio Sud', null]);
     expect(workspaces.status, RelationshipStatus.partial);
     expect(home.received.single['p_workspace_network_id'], isNull);
 

@@ -115,7 +115,7 @@ List<Recipient> recipientsOf(
 
 /// #2472 (P) — everyone the personal home's directory loaded, once per
 /// person with every workspace they share with me ([unnamed] labels a
-/// workspace of another installation). A person who hides their name is
+/// workspace of another installation my own fact does not name). A person who hides their name is
 /// not suggested: nothing typed can match a name I may not read.
 List<Recipient> personalRecipients(
   PersonalDirectory directory, {

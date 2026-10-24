@@ -37,15 +37,20 @@ enum RelationshipStatus {
   }
 }
 
-/// One workspace I hold a relationship with. [name] only for a workspace
-/// the personal home hosts itself; another installation's is unnamed.
+/// One workspace I hold a relationship with. [name] is the workspace's own
+/// for one the personal home hosts; another installation's is the name my
+/// own live fact asserted while its source is enrolled, else null (the
+/// screen then shows a neutral label).
 class DirectoryWorkspace {
   const DirectoryWorkspace({required this.networkId, this.name});
 
-  factory DirectoryWorkspace.decode(JsonReader r) => DirectoryWorkspace(
-    networkId: r.string('network_id'),
-    name: r.stringOrNull('permitted_name'),
-  );
+  factory DirectoryWorkspace.decode(JsonReader r) {
+    final name = r.stringOrNull('permitted_name');
+    return DirectoryWorkspace(
+      networkId: r.string('network_id'),
+      name: name == null || name.trim().isEmpty ? null : name,
+    );
+  }
 
   final String networkId;
   final String? name;
