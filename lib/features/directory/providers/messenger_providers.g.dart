@@ -244,7 +244,7 @@ final class MessengerInboxProvider
   MessengerInbox create() => MessengerInbox();
 }
 
-String _$messengerInboxHash() => r'0cfd42c4257bed87675ba980b5b8447a2c5eded2';
+String _$messengerInboxHash() => r'29be75bee748c508e7098b0a3972c157370e1c8c';
 
 /// #2556 C1 — Me › Messages, composed from its sources: my personal
 /// conversations and groups where my account lives (the personal home,
