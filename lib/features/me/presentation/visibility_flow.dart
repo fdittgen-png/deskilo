@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/app_snack.dart';
 import '../domain/visibility.dart';
 import '../domain/visibility_write.dart';
 import 'visibility_labels.dart';
@@ -16,6 +17,9 @@ import 'visibility_labels.dart';
 /// when it widens, then [save] it guarded with the value it was read as —
 /// [save] also rereads what its write changed. #2558 — with [spaceName],
 /// the widening question also lists the chosen spaces added and removed.
+///
+/// #2558 — a home without the checked writer ([VisibilityUnsupported])
+/// is named as such, not as a failed save; nothing is sent again.
 ///
 /// #2558 C2 — a [VisibilityConflict] from [save] keeps the draft: the
 /// person sees the value saved now beside their change and either keeps
@@ -43,6 +47,7 @@ Future<void> chooseAudience(
     }
     if (!context.mounted) return;
     VisibilityConflict? conflict;
+    var unsupported = false;
     await runGuarded(
       context,
       domain: 'me',
@@ -55,9 +60,19 @@ Future<void> chooseAudience(
           // trace-exempt: not a failure; the person reviews it below.
           debugPrint('visibility conflict: $e\n$st');
           conflict = e;
+        } on VisibilityUnsupported catch (e, st) {
+          // trace-exempt: named below; nothing was written or retried.
+          debugPrint('visibility writer unsupported: $e\n$st');
+          unsupported = true;
         }
       },
     );
+    if (unsupported) {
+      if (context.mounted) {
+        AppSnack.error(context, context.l10n.visibilityUnsupported);
+      }
+      return;
+    }
     final found = conflict;
     if (found == null || !context.mounted) return;
     final saved = found.current;

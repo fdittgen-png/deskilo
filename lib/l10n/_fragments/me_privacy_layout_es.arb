@@ -1,0 +1,13 @@
+{
+  "@@locale": "es",
+  "visibilitySavedPreview": "Vista previa guardada",
+  "visibilitySavedPreviewHint": "Muestra lo que está guardado. Un cambio aparece aquí una vez guardado.",
+  "visibilityUnsupported": "Su hogar personal aún no puede guardar este ajuste: quienes lo gestionan deben actualizarlo. No se ha cambiado nada.",
+  "visibilityLegacyTitle": "Cuentas personales anteriores",
+  "visibilityLegacyIntro": "Sus cuentas independientes en otros servidores conservan sus propios ajustes. Cambiar su hogar personal no las cambia.",
+  "visibilityLegacyUnsaved": "Aún no guardado: {audience}",
+  "visibilityLegacyDiscard": "Descartar el cambio",
+  "visibilityLegacyKeepEditing": "Seguir editando",
+  "visibilityLegacyDirtyTitle": "Su cambio no está guardado",
+  "visibilityLegacyDirtyBody": "Su cambio en «{field}» en {server} aún no está guardado. Pertenece a esa cuenta y no pasa a otra."
+}

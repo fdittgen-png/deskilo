@@ -35,3 +35,14 @@ class VisibilityReplyLost implements Exception {
   @override
   String toString() => 'VisibilityReplyLost($cause)';
 }
+
+/// #2558 — the personal home has no checked network writer
+/// (`set_visibility_if_unchanged_network_v1` is unknown there: PGRST202 or
+/// 42883), an incomplete deployment. Nothing was written, and no weaker
+/// writer is tried in its place.
+class VisibilityUnsupported implements Exception {
+  const VisibilityUnsupported();
+
+  @override
+  String toString() => 'VisibilityUnsupported()';
+}
