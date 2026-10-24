@@ -1,0 +1,14 @@
+{
+  "@@locale": "fr",
+  "createHostTitle": "Où cet espace doit-il vivre ?",
+  "createHostHere": "Ce serveur",
+  "createHostHereDetail": "Le serveur auquel vous êtes connecté",
+  "createHostAvailable": "Accepte de nouveaux espaces",
+  "createHostNotAccepting": "N'accepte pas de nouveaux espaces",
+  "createHostUnverified": "Votre identité ne peut pas y être vérifiée",
+  "createHostRevoked": "N'est plus proposé par votre domicile personnel",
+  "createHostUnavailable": "Les serveurs proposés par votre domicile personnel n'ont pas pu être lus.",
+  "createOnHostBanner": "Cet espace sera créé sur {host}.",
+  "createHostLost": "Le serveur choisi pour cet espace n'est plus retenu. Rien n'a été créé.",
+  "createHostChooseAgain": "Choisir un serveur"
+}

@@ -3895,6 +3895,45 @@ class AppLocalizationsFr extends AppLocalizations {
   String get courtesyNone => 'Aucune';
 
   @override
+  String get createHostAvailable => 'Accepte de nouveaux espaces';
+
+  @override
+  String get createHostChooseAgain => 'Choisir un serveur';
+
+  @override
+  String get createHostHere => 'Ce serveur';
+
+  @override
+  String get createHostHereDetail => 'Le serveur auquel vous êtes connecté';
+
+  @override
+  String get createHostLost =>
+      'Le serveur choisi pour cet espace n\'est plus retenu. Rien n\'a été créé.';
+
+  @override
+  String get createHostNotAccepting => 'N\'accepte pas de nouveaux espaces';
+
+  @override
+  String get createHostRevoked =>
+      'N\'est plus proposé par votre domicile personnel';
+
+  @override
+  String get createHostTitle => 'Où cet espace doit-il vivre ?';
+
+  @override
+  String get createHostUnavailable =>
+      'Les serveurs proposés par votre domicile personnel n\'ont pas pu être lus.';
+
+  @override
+  String get createHostUnverified =>
+      'Votre identité ne peut pas y être vérifiée';
+
+  @override
+  String createOnHostBanner(String host) {
+    return 'Cet espace sera créé sur $host.';
+  }
+
+  @override
   String get customerCapacityBusiness => 'Professionnel';
 
   @override
@@ -13056,6 +13095,109 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meNoSpaceTitle => 'Vous n\'êtes encore dans aucun espace';
+
+  @override
+  String meOverviewAttentionApplication(String name) {
+    return 'Votre demande pour rejoindre $name est en attente.';
+  }
+
+  @override
+  String get meOverviewAttentionApplicationsUnavailable =>
+      'Vos demandes n\'ont pas pu être lues.';
+
+  @override
+  String meOverviewAttentionConversation(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count messages non lus',
+      one: '1 message non lu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String meOverviewAttentionDocument(String amount, String number) {
+    return '$amount à payer · $number';
+  }
+
+  @override
+  String get meOverviewAttentionDocumentsPartial =>
+      'Certains documents n\'ont pas pu être lus.';
+
+  @override
+  String get meOverviewAttentionDocumentsUnavailable =>
+      'Vos documents n\'ont pas pu être lus.';
+
+  @override
+  String get meOverviewAttentionMessagesPartial =>
+      'Certaines conversations n\'ont pas pu être lues.';
+
+  @override
+  String get meOverviewAttentionMessagesUnavailable =>
+      'Vos conversations n\'ont pas pu être lues.';
+
+  @override
+  String meOverviewAttentionMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count de plus',
+      one: '1 de plus',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get meOverviewAttentionNone => 'Rien ne vous attend.';
+
+  @override
+  String get meOverviewAttentionOpenConversation => 'Ouvrir';
+
+  @override
+  String get meOverviewAttentionOverdue => 'En retard';
+
+  @override
+  String get meOverviewAttentionTitle => 'À traiter';
+
+  @override
+  String get meOverviewAttentionViewDocument => 'Voir le document';
+
+  @override
+  String meOverviewNextHostFailed(String name) {
+    return 'Les réservations de $name n\'ont pas pu être lues.';
+  }
+
+  @override
+  String meOverviewNextNone(String from, String to) {
+    return 'Aucune réservation du $from au $to.';
+  }
+
+  @override
+  String get meOverviewNextNotYet =>
+      'Aucune réservation à venir parmi celles lues jusqu\'ici.';
+
+  @override
+  String get meOverviewNextTitle => 'Prochain engagement';
+
+  @override
+  String get meOverviewNextUnavailable =>
+      'Vos réservations n\'ont pas pu être lues.';
+
+  @override
+  String meOverviewNextZone(String zone) {
+    return 'Heures en $zone';
+  }
+
+  @override
+  String get meOverviewSubtitle =>
+      'Votre prochaine réservation, ce qui vous attend et vos espaces.';
+
+  @override
+  String get meOverviewTitle => 'Votre journée, au même endroit';
+
+  @override
+  String get meOverviewView => 'Voir';
 
   @override
   String get meRefDefault => 'Par défaut';

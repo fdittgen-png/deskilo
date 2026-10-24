@@ -96,4 +96,4 @@ final class CreationDraftsProvider
   }
 }
 
-String _$creationDraftsHash() => r'f051e9a894359866e209dd57cdaa83a68c62f2c0';
+String _$creationDraftsHash() => r'c30597b04bae1814166ba71dfa84b0362b7b0ea5';

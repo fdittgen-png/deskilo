@@ -3883,6 +3883,44 @@ class AppLocalizationsIt extends AppLocalizations {
   String get courtesyNone => 'Nessuna';
 
   @override
+  String get createHostAvailable => 'Accetta nuovi spazi';
+
+  @override
+  String get createHostChooseAgain => 'Scelga un server';
+
+  @override
+  String get createHostHere => 'Questo server';
+
+  @override
+  String get createHostHereDetail => 'Il server a cui ha effettuato l\'accesso';
+
+  @override
+  String get createHostLost =>
+      'Il server scelto per questo spazio non è più riservato. Non è stato creato nulla.';
+
+  @override
+  String get createHostNotAccepting => 'Non accetta nuovi spazi';
+
+  @override
+  String get createHostRevoked => 'La Sua casa personale non lo offre più';
+
+  @override
+  String get createHostTitle => 'Dove deve trovarsi lo spazio?';
+
+  @override
+  String get createHostUnavailable =>
+      'Non è stato possibile leggere i server offerti dalla Sua casa personale.';
+
+  @override
+  String get createHostUnverified =>
+      'La Sua identità non può essere verificata lì';
+
+  @override
+  String createOnHostBanner(String host) {
+    return 'Questo spazio verrà creato su $host.';
+  }
+
+  @override
   String get customerCapacityBusiness => 'Professionista';
 
   @override
@@ -13029,6 +13067,109 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meNoSpaceTitle => 'Non è ancora in nessuno spazio';
+
+  @override
+  String meOverviewAttentionApplication(String name) {
+    return 'La Sua richiesta di entrare in $name è in attesa.';
+  }
+
+  @override
+  String get meOverviewAttentionApplicationsUnavailable =>
+      'Non è stato possibile leggere le Sue richieste.';
+
+  @override
+  String meOverviewAttentionConversation(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count messaggi non letti',
+      one: '1 messaggio non letto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String meOverviewAttentionDocument(String amount, String number) {
+    return '$amount da pagare · $number';
+  }
+
+  @override
+  String get meOverviewAttentionDocumentsPartial =>
+      'Non è stato possibile leggere alcuni documenti.';
+
+  @override
+  String get meOverviewAttentionDocumentsUnavailable =>
+      'Non è stato possibile leggere i Suoi documenti.';
+
+  @override
+  String get meOverviewAttentionMessagesPartial =>
+      'Non è stato possibile leggere alcune conversazioni.';
+
+  @override
+  String get meOverviewAttentionMessagesUnavailable =>
+      'Non è stato possibile leggere le Sue conversazioni.';
+
+  @override
+  String meOverviewAttentionMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count altri',
+      one: '1 altro',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get meOverviewAttentionNone => 'Nulla richiede la Sua attenzione.';
+
+  @override
+  String get meOverviewAttentionOpenConversation => 'Apri';
+
+  @override
+  String get meOverviewAttentionOverdue => 'Scaduto';
+
+  @override
+  String get meOverviewAttentionTitle => 'Da gestire';
+
+  @override
+  String get meOverviewAttentionViewDocument => 'Vedi il documento';
+
+  @override
+  String meOverviewNextHostFailed(String name) {
+    return 'Non è stato possibile leggere le prenotazioni di $name.';
+  }
+
+  @override
+  String meOverviewNextNone(String from, String to) {
+    return 'Nessuna prenotazione dal $from al $to.';
+  }
+
+  @override
+  String get meOverviewNextNotYet =>
+      'Nessuna prenotazione imminente tra quelle lette finora.';
+
+  @override
+  String get meOverviewNextTitle => 'Prossimo impegno';
+
+  @override
+  String get meOverviewNextUnavailable =>
+      'Non è stato possibile leggere le Sue prenotazioni.';
+
+  @override
+  String meOverviewNextZone(String zone) {
+    return 'Orari in $zone';
+  }
+
+  @override
+  String get meOverviewSubtitle =>
+      'La Sua prossima prenotazione, ciò che La attende e i Suoi spazi.';
+
+  @override
+  String get meOverviewTitle => 'La Sua giornata, in un solo posto';
+
+  @override
+  String get meOverviewView => 'Vedi';
 
   @override
   String get meRefDefault => 'Predefinito';

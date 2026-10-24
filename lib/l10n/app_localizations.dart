@@ -6667,6 +6667,72 @@ abstract class AppLocalizations {
   /// **'None'**
   String get courtesyNone;
 
+  /// #2562 C2c Create: an enrolled server that accepts new spaces
+  ///
+  /// In en, this message translates to:
+  /// **'Accepts new spaces'**
+  String get createHostAvailable;
+
+  /// #2562 C2c Create: action back to choosing a server
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a server'**
+  String get createHostChooseAgain;
+
+  /// #2562 C2c Create: choose the server the app is signed in to
+  ///
+  /// In en, this message translates to:
+  /// **'This server'**
+  String get createHostHere;
+
+  /// #2562 C2c Create: detail of 'This server'
+  ///
+  /// In en, this message translates to:
+  /// **'The server you are signed in to'**
+  String get createHostHereDetail;
+
+  /// #2562 C2c Create: the onboarding was reached without a chosen server held
+  ///
+  /// In en, this message translates to:
+  /// **'The server chosen for this space is no longer held. Nothing was created.'**
+  String get createHostLost;
+
+  /// #2562 C2c Create: an enrolled server closed to new spaces (state and refusal)
+  ///
+  /// In en, this message translates to:
+  /// **'Not accepting new spaces'**
+  String get createHostNotAccepting;
+
+  /// #2562 C2c Create: refusal, the chosen server's enrolment was revoked
+  ///
+  /// In en, this message translates to:
+  /// **'No longer offered by your personal home'**
+  String get createHostRevoked;
+
+  /// #2562 C2c Create: title of the sheet choosing the server a new space is created on
+  ///
+  /// In en, this message translates to:
+  /// **'Where should the space live?'**
+  String get createHostTitle;
+
+  /// #2562 C2c Create: the list of servers could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'The servers your personal home offers could not be read.'**
+  String get createHostUnavailable;
+
+  /// #2562 C2c Create: an enrolled server where the person cannot be verified (state and refusal)
+  ///
+  /// In en, this message translates to:
+  /// **'Your identity cannot be verified there'**
+  String get createHostUnverified;
+
+  /// #2562 C2c Create: onboarding banner naming the chosen server
+  ///
+  /// In en, this message translates to:
+  /// **'This space will be created on {host}.'**
+  String createOnHostBanner(String host);
+
   /// #1916 invoice clauses: customerCapacityBusiness
   ///
   /// In en, this message translates to:
@@ -21561,6 +21627,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are not in a space yet'**
   String get meNoSpaceTitle;
+
+  /// #2554 Overview: my request to join a space is undecided
+  ///
+  /// In en, this message translates to:
+  /// **'Your request to join {name} is pending.'**
+  String meOverviewAttentionApplication(String name);
+
+  /// #2554 Overview: my requests could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your requests could not be read.'**
+  String get meOverviewAttentionApplicationsUnavailable;
+
+  /// #2554 Overview: unread messages in one conversation
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 unread message} other{{count} unread messages}}'**
+  String meOverviewAttentionConversation(int count);
+
+  /// #2554 Overview: an unpaid document, its remaining amount and number
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to pay · {number}'**
+  String meOverviewAttentionDocument(String amount, String number);
+
+  /// #2554 Overview: some hosts' documents could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Some documents could not be read.'**
+  String get meOverviewAttentionDocumentsPartial;
+
+  /// #2554 Overview: my documents could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your documents could not be read.'**
+  String get meOverviewAttentionDocumentsUnavailable;
+
+  /// #2554 Overview: some servers' conversations could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Some conversations could not be read.'**
+  String get meOverviewAttentionMessagesPartial;
+
+  /// #2554 Overview: my conversations could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your conversations could not be read.'**
+  String get meOverviewAttentionMessagesUnavailable;
+
+  /// #2554 Overview: how many more items wait beyond the ones shown
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 more} other{{count} more}}'**
+  String meOverviewAttentionMore(int count);
+
+  /// #2554 Overview: every source answered and nothing waits
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing needs your attention.'**
+  String get meOverviewAttentionNone;
+
+  /// #2554 Overview: open the conversation
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get meOverviewAttentionOpenConversation;
+
+  /// #2554 Overview: the document is past its due day
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get meOverviewAttentionOverdue;
+
+  /// #2554 Overview: the needs-attention section
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get meOverviewAttentionTitle;
+
+  /// #2554 Overview: open the document in My data
+  ///
+  /// In en, this message translates to:
+  /// **'View document'**
+  String get meOverviewAttentionViewDocument;
+
+  /// #2554 Overview: one host's bookings could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'The bookings of {name} could not be read.'**
+  String meOverviewNextHostFailed(String name);
+
+  /// #2554 Overview: every host answered and nothing is booked in the searched period
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing booked from {from} to {to}.'**
+  String meOverviewNextNone(String from, String to);
+
+  /// #2554 Overview: no upcoming booking among those read so far; more are in My reservations
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming booking among those read so far.'**
+  String get meOverviewNextNotYet;
+
+  /// #2554 Overview: the next commitment section
+  ///
+  /// In en, this message translates to:
+  /// **'Next commitment'**
+  String get meOverviewNextTitle;
+
+  /// #2554 Overview: the bookings could not be read at all
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings could not be read.'**
+  String get meOverviewNextUnavailable;
+
+  /// #2554 Overview: the time zone of the booking's workspace, when it differs from the device's
+  ///
+  /// In en, this message translates to:
+  /// **'Times in {zone}'**
+  String meOverviewNextZone(String zone);
+
+  /// #2554 Overview: the supporting line under the heading
+  ///
+  /// In en, this message translates to:
+  /// **'Your next booking, what needs you, and your spaces.'**
+  String get meOverviewSubtitle;
+
+  /// #2554 Overview: the page heading
+  ///
+  /// In en, this message translates to:
+  /// **'Your day, in one place'**
+  String get meOverviewTitle;
+
+  /// #2554 Overview: open the next commitment in My reservations
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get meOverviewView;
 
   /// #2563 Me home: badge on the default workspace
   ///

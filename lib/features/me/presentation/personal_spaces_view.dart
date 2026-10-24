@@ -28,12 +28,14 @@ import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace.dart';
+import '../../workspace/providers/workspace_host_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/personal_spaces_view.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../domain/space_pairs.dart';
 import '../providers/me_providers.dart';
 import '../providers/space_prefs_provider.dart';
+import 'create_host_sheet.dart';
 import 'me_shell.dart';
 import 'personal_refs_section.dart';
 
@@ -177,7 +179,7 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
               if (i < children.length) return children[i];
               final e = i - children.length;
               if (e < entries.length) {
-                return _SpaceCard(entry: entries[e], l10n: l10n);
+                return PersonalSpaceCard(entry: entries[e], l10n: l10n);
               }
               return footer[e - entries.length];
             },
@@ -190,8 +192,8 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
 
 /// One space: its name, host and verification, and the one action its
 /// state allows. The card is not a button: its action is.
-class _SpaceCard extends ConsumerWidget {
-  const _SpaceCard({required this.entry, required this.l10n});
+class PersonalSpaceCard extends ConsumerWidget {
+  const PersonalSpaceCard({super.key, required this.entry, required this.l10n});
 
   final PersonalSpaceEntry entry;
   final AppLocalizations l10n;
@@ -300,14 +302,16 @@ class _SpaceCard extends ConsumerWidget {
 }
 
 /// Join and Discover lead while there is no space; Create follows.
-class _Actions extends StatelessWidget {
+class _Actions extends ConsumerWidget {
   const _Actions({required this.empty});
 
   final bool empty;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    // #2562 C2c -- read ahead, so Create knows whether there is a choice.
+    ref.watch(workspaceHostsProvider);
     const target = Size(0, PersonalShellMetrics.minTarget);
     final join = empty
         ? FilledButton.icon(
@@ -342,7 +346,7 @@ class _Actions extends StatelessWidget {
           style: TextButton.styleFrom(minimumSize: target),
           icon: const Icon(Icons.add_business_outlined),
           label: Text(l10n.meCreateSpace),
-          onPressed: () => context.push('/onboarding'),
+          onPressed: () => unawaited(CreateHostSheet.start(context, ref)),
         ),
       ],
     );

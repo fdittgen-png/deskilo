@@ -50,7 +50,7 @@ enum MeDataView {
 }
 
 /// The address of My data on [view], narrowed to [workspaceId] when given.
-String _meDataRoute({
+String meDataRoute({
   MeDataView view = MeDataView.finances,
   String? workspaceId,
 }) =>
@@ -111,7 +111,7 @@ class MeDataTab extends ConsumerWidget {
                 ],
                 selected: {view},
                 onSelectionChanged: (chosen) => context.go(
-                    _meDataRoute(view: chosen.single, workspaceId: workspaceId)),
+                    meDataRoute(view: chosen.single, workspaceId: workspaceId)),
               );
             },
           ),

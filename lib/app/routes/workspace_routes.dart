@@ -3,6 +3,7 @@
 // #2493 — feature route list: workspace entry (pending, onboarding, scan to join) and the workspace's own screens: conversation, library, documents, roles, settings, reports, BI, members, deployment.
 // A route is one GoRoute and its RouteAccess here; router.dart only composes
 // the lists.
+import 'package:flutter/foundation.dart' show ValueKey;
 import 'package:go_router/go_router.dart';
 
 import '../../core/ui/wizard_navigation.dart';
@@ -40,6 +41,7 @@ import '../../features/workspace/presentation/screens/workspace_library_screen.d
 import '../../features/workspace/presentation/screens/workspace_overview_screen.dart';
 import '../../features/workspace/presentation/screens/workspace_settings_screen.dart';
 import '../../features/workspace/presentation/widgets/conversation_thread.dart';
+import '../../features/workspace/presentation/widgets/onboarding_host_gate.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../route_access.dart';
 import '../route_env.dart';
@@ -66,10 +68,20 @@ List<RouteBase> _entryRoutes(RouteEnv env) {
       onExit: (_, _) => env.ref.read(authStateProvider).value == null
           ? true
           : onboardingNavigation.requestExit(),
-      builder: (context, state) => OnboardingScreen(
-        navigation: onboardingNavigation,
-        joinFirst: state.uri.queryParameters['join'] == '1',
-      ),
+      // #2562 C2c -- create on the enrolled host chosen (`host`), guarded;
+      // another host is another screen state, never the same one.
+      builder: (context, state) {
+        final host = state.uri.queryParameters['host'] ?? '';
+        return OnboardingHostGate(
+          key: ValueKey('onboarding:$host'),
+          host: host.isEmpty ? null : host,
+          builder: (hostLabel) => OnboardingScreen(
+            navigation: onboardingNavigation,
+            joinFirst: state.uri.queryParameters['join'] == '1',
+            hostLabel: hostLabel,
+          ),
+        );
+      },
     ),
     // Deep links from WhatsApp-mirrored messages (0106): the message
     // itself, a referenced reservation, a referenced space. All ride

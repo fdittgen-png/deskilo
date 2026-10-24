@@ -42,6 +42,7 @@ import '../domain/workspace_repository.dart';
 import '../domain/workspace_template.dart';
 import 'active_workspace_providers.dart';
 import 'operation_context_providers.dart';
+import 'workspace_host_providers.dart';
 import 'workspace_roles_providers.dart';
 
 export 'active_workspace_providers.dart';
@@ -179,9 +180,12 @@ Future<Workspace?> currentWorkspace(Ref ref) async {
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.
+/// #2562 C2c -- on the chosen host's pinned client, read per call.
 @riverpod
-WorkspaceStart workspaceStart(Ref ref) =>
-    WorkspaceStart(ref.watch(workspaceListRepositoryProvider));
+WorkspaceStart workspaceStart(Ref ref) => switch (ref.watch(creationHostProvider)) {
+      final host? => WorkspaceStart.on(() => SupabaseWorkspaceRepository(host.pin.client)),
+      null => WorkspaceStart(ref.watch(workspaceListRepositoryProvider)),
+    };
 
 /// All memberships of the active workspace (owner management + event
 /// decider computation, #107).
