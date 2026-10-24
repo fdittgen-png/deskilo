@@ -54,4 +54,4 @@ final class SpaceAttentionCountsProvider
 }
 
 String _$spaceAttentionCountsHash() =>
-    r'4f98a76b17e7ab25169cdd0d25a4c333c28c9e3b';
+    r'ad88656bb240fbcb4d045ae7bd0cc30ad57a9735';
