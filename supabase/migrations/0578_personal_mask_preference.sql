@@ -75,4 +75,4 @@ revoke execute on function public.set_personal_preferences(jsonb,uuid,uuid) from
 grant execute on function public.set_personal_preferences(jsonb,uuid,uuid) to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(578);
