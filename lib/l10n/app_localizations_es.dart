@@ -8685,6 +8685,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inboxRetry => 'Reintentar';
 
   @override
+  String get inboxShowOlder => 'Mostrar conversaciones anteriores';
+
+  @override
+  String inboxSourceFailed(String source) {
+    return 'No se pudo leer $source. Se muestra el resto de la bandeja de entrada.';
+  }
+
+  @override
+  String get inboxSourcePersonal => 'Sus mensajes personales';
+
+  @override
+  String inboxSourceUnavailable(String source) {
+    return '$source no está disponible con su sesión actual. Sus conversaciones faltan en esta lista.';
+  }
+
+  @override
+  String get inboxSourceWorkspaces => 'Los mensajes de sus espacios';
+
+  @override
   String get instanceAccessTitle => 'Acceso a los asistentes';
 
   @override
@@ -19494,6 +19513,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuántos grupos puede crear una persona por hora. Solo se puede reducir.';
 
   @override
+  String get settingHintMessagingInboxPageSize =>
+      'Cuántas conversaciones devuelven por página de la bandeja de entrada el hogar personal y cada servidor de espacios; las anteriores llegan con Mostrar conversaciones anteriores.';
+
+  @override
   String get settingHintMessagingInboxPollSeconds =>
       'Segundos entre dos actualizaciones de la bandeja de entrada y su contador de no leídos. Valores más bajos cargan más el servidor.';
 
@@ -19663,6 +19686,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelMessagingGroupCreationPerHour =>
       'Grupos creados por hora';
+
+  @override
+  String get settingLabelMessagingInboxPageSize =>
+      'Tamaño de página de la bandeja de entrada';
 
   @override
   String get settingLabelMessagingInboxPollSeconds =>

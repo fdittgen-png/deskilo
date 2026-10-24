@@ -15,6 +15,8 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member_note_refs.dart';
+import '../../domain/inbox_composition.dart';
+import '../../domain/inbox_sources.dart';
 import '../../domain/messenger.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
@@ -45,7 +47,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
   void initState() {
     super.initState();
     _refresh = Timer.periodic(ref.read(messagingWindowsProvider).inboxPoll, (_) {
-      if (mounted) ref.invalidate(unifiedInboxProvider);
+      if (mounted) ref.invalidate(messengerInboxProvider);
     });
   }
 
@@ -58,7 +60,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final inbox = ref.watch(unifiedInboxProvider);
+    final inbox = ref.watch(messengerInboxProvider);
     final servers = ref.watch(serverLabelsProvider).value ?? const {};
     final unread = inbox.value?.unread ?? 0;
     return Material(
@@ -162,6 +164,11 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
             ),
           Expanded(
             child: switch (inbox) {
+              // #2556 — nothing read yet from any source: still loading,
+              // never an empty inbox.
+              AsyncData(value: ComposedInbox(:final entries, :final reading))
+                  when entries.isEmpty && reading =>
+                const LoadingView(),
               AsyncData(value: final value) => _list(
                 context,
                 value,
@@ -171,7 +178,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
               AsyncError() => Center(
                 child: TextButton(
                   key: const ValueKey('unified-inbox-retry'),
-                  onPressed: () => ref.invalidate(unifiedInboxProvider),
+                  onPressed: () => ref.invalidate(messengerInboxProvider),
                   child: Text(l10n.commonRetry),
                 ),
               ),
@@ -217,7 +224,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
         return pa.compareTo(pb);
       });
     return RefreshIndicator(
-      onRefresh: () async => ref.invalidate(unifiedInboxProvider),
+      onRefresh: () async => ref.invalidate(messengerInboxProvider),
       child: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
@@ -226,15 +233,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
         key: const ValueKey('unified-inbox-list'),
         padding: AppSpacing.gutterAll,
         children: [
-          if (inbox.unavailable.isNotEmpty)
-            ListTile(
-              key: const ValueKey('unified-inbox-unavailable'),
-              leading: const Icon(Icons.cloud_off_outlined),
-              title: Text(
-                l10n.messengerInboxUnavailable(inbox.unavailable.join(', ')),
-              ),
-              onTap: () => ref.invalidate(unifiedInboxProvider),
-            ),
+          ..._sourceStates(inbox, l10n),
           if (shown.isEmpty)
             Padding(
               padding: AppSpacing.lgAll,
@@ -310,11 +309,87 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                 ],
               ),
             ),
+          ..._showOlder(inbox, l10n),
         ],
       ),
         ),
       ),
     );
+  }
+
+  /// #2556 — the next page of every source that has more.
+  List<Widget> _showOlder(UnifiedInbox inbox, AppLocalizations l10n) => [
+        if (inbox case ComposedInbox(hasMore: true, :final loadingMore))
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            child: Center(
+              child: TextButton(
+                key: const ValueKey('inbox-show-older'),
+                onPressed: loadingMore
+                    ? null
+                    : () => ref.read(messengerInboxProvider.notifier).more(),
+                child: Text(l10n.inboxShowOlder),
+              ),
+            ),
+          ),
+      ];
+
+  /// #2556 — one line per source that did not answer, by the name the
+  /// person knows it by: failed (Try again reads it alone again) or
+  /// unavailable with this sign-in. A source that answered says nothing.
+  List<Widget> _sourceStates(UnifiedInbox inbox, AppLocalizations l10n) {
+    String nameOf(InboxSlot slot) => slot.label.isNotEmpty
+        ? slot.label
+        : slot.role == InboxSourceRole.personalHome
+            ? l10n.inboxSourcePersonal
+            : l10n.inboxSourceWorkspaces;
+    final failed = <String, List<InboxSlot>>{};
+    final unavailable = <String, List<InboxSlot>>{};
+    final sources = inbox is ComposedInbox ? inbox.sources : const <InboxSlot>[];
+    for (final slot in sources) {
+      final into = switch (slot.state) {
+        InboxSlotState.failed => failed,
+        InboxSlotState.unavailable => unavailable,
+        _ => null,
+      };
+      (into?[nameOf(slot)] ??= [])?.add(slot);
+    }
+    void retry(List<InboxSlot> slots) {
+      final notifier = ref.read(messengerInboxProvider.notifier);
+      for (final slot in slots) {
+        notifier.retry(slot.key);
+      }
+    }
+    return [
+      // A plain merge (no sources) names the servers that did not answer.
+      if (inbox.unavailable.isNotEmpty)
+        ListTile(
+          key: const ValueKey('unified-inbox-unavailable'),
+          leading: const Icon(Icons.cloud_off_outlined),
+          title: Text(
+            l10n.messengerInboxUnavailable(inbox.unavailable.join(', ')),
+          ),
+          onTap: () => ref.invalidate(messengerInboxProvider),
+        ),
+      for (final MapEntry(key: name, value: slots) in failed.entries)
+        ListTile(
+          key: ValueKey('inbox-source-failed-$name'),
+          leading: const Icon(Icons.error_outline),
+          title: Text(l10n.inboxSourceFailed(name)),
+          trailing: TextButton(
+            key: ValueKey('inbox-source-retry-$name'),
+            onPressed: () => retry(slots),
+            child: Text(l10n.commonRetry),
+          ),
+        ),
+      for (final MapEntry(key: name, value: slots) in unavailable.entries)
+        ListTile(
+          key: ValueKey('inbox-source-unavailable-$name'),
+          leading: const Icon(Icons.cloud_off_outlined),
+          title: Text(l10n.inboxSourceUnavailable(name)),
+          onTap: () => retry(slots),
+        ),
+    ];
   }
 
   /// Long-press: pin and archive (kept on this device).
@@ -387,7 +462,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
           _ => actions.markConversationUnread(id),
         },
       );
-      ref.invalidate(unifiedInboxProvider);
+      ref.invalidate(messengerInboxProvider);
       return;
     }
     if (choice == 'pin') ref.read(inboxMarksProvider.notifier).togglePin(entry.key);

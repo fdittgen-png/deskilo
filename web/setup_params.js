@@ -47,6 +47,8 @@ const ID_SKEW=[['0','optSeconds',{n:0}],['5','optSeconds',{n:5}],['10','optSecon
 // #2472 (P) — the directory of a new discussion (platform settings
 // personal.message_directory_*): entries per page 1..100, longest search 1..200.
 const DIR_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}]];
+// #2556 — the inbox's page per source (messaging.inbox_page_size, 1..100).
+const INBOX_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}]];
 const DIR_QUERY=[['60','optCharacters',{n:60}],['120','optCharacters',{n:120}],['200','optCharacters',{n:200}]];
 const NUMDATE=[['none','numDateNone'],['year','numDateYear'],['year_month','numDateYearMonth']];
 const NUMRESET=[['never','numResetNever'],['yearly','numResetYearly'],['monthly','numResetMonthly']];
@@ -92,6 +94,7 @@ const PARAM_META=[
  ['enrolment.accepting','enrolAccepting','bool'],['enrolment.lifetime','enrolLifetime','enum',()=>ID_LIFETIME.map(x=>x[0])],
  ['enrolment.reconcile','enrolReconcile','enum',()=>ID_RECONCILE.map(x=>x[0])],['enrolment.skew','enrolSkew','enum',()=>ID_SKEW.map(x=>x[0])],
  ['directory.pageSize','dirPageSize','enum',()=>DIR_PAGE.map(x=>x[0])],['directory.queryLength','dirQueryLength','enum',()=>DIR_QUERY.map(x=>x[0])],
+ ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
  ['granularity','availGranularity','enum',(s=S)=>(on('workingHours',s)?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
@@ -141,7 +144,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',inbox:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it

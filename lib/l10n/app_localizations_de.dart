@@ -8698,6 +8698,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get inboxRetry => 'Erneut versuchen';
 
   @override
+  String get inboxShowOlder => 'Ältere Unterhaltungen anzeigen';
+
+  @override
+  String inboxSourceFailed(String source) {
+    return '$source konnte nicht gelesen werden. Der Rest des Posteingangs wird angezeigt.';
+  }
+
+  @override
+  String get inboxSourcePersonal => 'Ihre persönlichen Nachrichten';
+
+  @override
+  String inboxSourceUnavailable(String source) {
+    return '$source ist mit Ihrer aktuellen Anmeldung nicht erreichbar. Deren Unterhaltungen fehlen in dieser Liste.';
+  }
+
+  @override
+  String get inboxSourceWorkspaces => 'Die Nachrichten Ihrer Spaces';
+
+  @override
   String get instanceAccessTitle => 'Assistenten-Zugang';
 
   @override
@@ -19536,6 +19555,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie viele Gruppen eine Person pro Stunde erstellen darf. Kann nur verringert werden.';
 
   @override
+  String get settingHintMessagingInboxPageSize =>
+      'Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server pro Seite des Posteingangs liefern; ältere kommen mit Ältere Unterhaltungen anzeigen.';
+
+  @override
   String get settingHintMessagingInboxPollSeconds =>
       'Sekunden zwischen zwei Aktualisierungen des Posteingangs und seines Ungelesen-Zählers. Niedrigere Werte belasten den Server stärker.';
 
@@ -19699,6 +19722,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelMessagingGroupCreationPerHour => 'Gruppen pro Stunde';
+
+  @override
+  String get settingLabelMessagingInboxPageSize =>
+      'Seitengröße des Posteingangs';
 
   @override
   String get settingLabelMessagingInboxPollSeconds =>

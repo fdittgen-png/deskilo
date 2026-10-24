@@ -8,13 +8,13 @@ import '../domain/group_details.dart';
 import '../domain/message_marks.dart';
 import '../domain/messenger.dart';
 import '../domain/messenger_repository.dart';
+import 'supabase_inbox_pages.dart';
 
-/// #1824 — the messenger RPCs on one server, reached through that
-/// server's own session ([ConnectedInstallations.use]); '' is this one.
-class SupabaseMessengerRepository implements MessengerRepository {
+/// #1824 — the messenger RPCs on one server, through its own session ([ConnectedInstallations.use]); '' is this one.
+class SupabaseMessengerRepository with SupabaseInboxPages implements MessengerRepository {
   const SupabaseMessengerRepository(this.connections, this.source);
-  final ConnectedInstallations connections;
-  final String source;
+  @override final ConnectedInstallations connections;
+  @override final String source;
 
   Future<T> _use<T>(Future<T> Function(SupabaseClient) action) =>
       connections.use(source, action);

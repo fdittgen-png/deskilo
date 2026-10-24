@@ -5999,6 +5999,11 @@
   "inboxNoArchived": "Aucune conversation archivée.",
   "inboxNoUnread": "Rien de non lu — vous êtes à jour.",
   "inboxRetry": "Réessayer",
+  "inboxShowOlder": "Afficher les conversations plus anciennes",
+  "inboxSourceFailed": "{source} n’a pas pu être lu. Le reste de la boîte de réception est affiché.",
+  "inboxSourcePersonal": "Vos messages personnels",
+  "inboxSourceUnavailable": "{source} n’est pas joignable avec votre connexion actuelle. Ses conversations manquent dans cette liste.",
+  "inboxSourceWorkspaces": "Les messages de vos espaces",
   "instanceAccessTitle": "Accès aux assistants",
   "instanceAccessUntil": "Jusqu'au {date}",
   "instanceAccountIntro": "Créez un compte gratuit sur supabase.com, puis un jeton d'accès personnel (Account → Access Tokens) et collez-le ici. L'assistant s'en sert pour créer et configurer le projet ; il n'est jamais enregistré.",
@@ -13582,6 +13587,7 @@
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPageSize": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient par page de la boîte de réception ; les plus anciennes viennent avec Afficher les conversations plus anciennes.",
   "settingHintMessagingInboxPollSeconds": "Secondes entre deux actualisations de la boîte de réception et de son badge de non-lus. Des valeurs plus basses chargent davantage le serveur.",
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
@@ -13728,6 +13734,7 @@
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingLabelMessagingInboxPageSize": "Taille de page de la boîte de réception",
   "settingLabelMessagingInboxPollSeconds": "Actualisation de la boîte de réception",
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."

@@ -5999,6 +5999,11 @@
   "inboxNoArchived": "Keine archivierten Unterhaltungen.",
   "inboxNoUnread": "Nichts Ungelesenes — Sie sind auf dem Laufenden.",
   "inboxRetry": "Erneut versuchen",
+  "inboxShowOlder": "Ältere Unterhaltungen anzeigen",
+  "inboxSourceFailed": "{source} konnte nicht gelesen werden. Der Rest des Posteingangs wird angezeigt.",
+  "inboxSourcePersonal": "Ihre persönlichen Nachrichten",
+  "inboxSourceUnavailable": "{source} ist mit Ihrer aktuellen Anmeldung nicht erreichbar. Deren Unterhaltungen fehlen in dieser Liste.",
+  "inboxSourceWorkspaces": "Die Nachrichten Ihrer Spaces",
   "instanceAccessTitle": "Assistenten-Zugang",
   "instanceAccessUntil": "Bis {date}",
   "instanceAccountIntro": "Legen Sie ein kostenloses Konto auf supabase.com an, erstellen Sie dann ein persönliches Zugriffstoken (Account → Access Tokens) und fügen Sie es hier ein. Der Assistent nutzt es, um das Projekt anzulegen und einzurichten; es wird nie gespeichert.",
@@ -13582,6 +13587,7 @@
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPageSize": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server pro Seite des Posteingangs liefern; ältere kommen mit Ältere Unterhaltungen anzeigen.",
   "settingHintMessagingInboxPollSeconds": "Sekunden zwischen zwei Aktualisierungen des Posteingangs und seines Ungelesen-Zählers. Niedrigere Werte belasten den Server stärker.",
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
@@ -13728,6 +13734,7 @@
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingLabelMessagingInboxPageSize": "Seitengröße des Posteingangs",
   "settingLabelMessagingInboxPollSeconds": "Aktualisierung des Posteingangs",
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."

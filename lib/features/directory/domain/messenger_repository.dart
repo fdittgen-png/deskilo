@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'account_group.dart';
 import 'group_details.dart';
+import 'inbox_sources.dart';
 import 'message_marks.dart';
 import 'messenger.dart';
 
@@ -13,6 +14,13 @@ import 'messenger.dart';
 abstract interface class MessengerRepository {
   /// `my_inbox`: every conversation I take part in on this server.
   Future<List<Map<String, dynamic>>> inbox();
+
+  /// #2556 — one page of this server's inbox in [role], newest first:
+  /// `my_account_inbox_v1` at a personal home, `my_workspace_inbox_v1` at a
+  /// workspace host. Throws [InboxSourceRefused] when the server has no such
+  /// reader, does not play the role, refuses the cursor or answers
+  /// something that is not a page of [role].
+  Future<InboxSourcePage> inboxPage(InboxSourceRole role, {InboxCursor? before});
 
   // ── message requests (0388) ─────────────────────────────────────────
   /// The first messages waiting for my answer.

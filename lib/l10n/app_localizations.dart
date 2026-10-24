@@ -14339,6 +14339,36 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get inboxRetry;
 
+  /// #2556 inbox sources: Loads the next page of every inbox source that has more.
+  ///
+  /// In en, this message translates to:
+  /// **'Show older conversations'**
+  String get inboxShowOlder;
+
+  /// #2556 inbox sources: One source of the inbox failed to answer; a Try again button follows.
+  ///
+  /// In en, this message translates to:
+  /// **'{source} could not be read. The rest of the inbox is shown.'**
+  String inboxSourceFailed(String source);
+
+  /// #2556 inbox sources: Names the personal home's part of the inbox (person-to-person conversations and groups) in a status line.
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal messages'**
+  String get inboxSourcePersonal;
+
+  /// #2556 inbox sources: The server of one inbox source refuses this session or does not play that role.
+  ///
+  /// In en, this message translates to:
+  /// **'{source} cannot be reached with your current sign-in. Its conversations are missing from this list.'**
+  String inboxSourceUnavailable(String source);
+
+  /// #2556 inbox sources: Names this server's workspace part of the inbox (workspace conversations and inquiries) in a status line.
+  ///
+  /// In en, this message translates to:
+  /// **'Your workspaces\' messages'**
+  String get inboxSourceWorkspaces;
+
   /// #2145 assistant onboarding: instanceAccessTitle
   ///
   /// In en, this message translates to:
@@ -32808,6 +32838,12 @@ abstract class AppLocalizations {
   /// **'How many groups one person may create per hour. Can only be lowered.'**
   String get settingHintMessagingGroupCreationPerHour;
 
+  /// #2556 inbox sources: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many conversations the personal home and each workspace server return per page of the inbox; older ones come with Show older conversations.'**
+  String get settingHintMessagingInboxPageSize;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -33071,6 +33107,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Groups created per hour'**
   String get settingLabelMessagingGroupCreationPerHour;
+
+  /// #2556 inbox sources: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox page size'**
+  String get settingLabelMessagingInboxPageSize;
 
   /// #2487 settings: Setting label.
   ///

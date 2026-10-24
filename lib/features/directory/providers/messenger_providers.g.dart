@@ -183,77 +183,115 @@ final class MessengerActionsFamily extends $Family
   String toString() => r'messengerActionsProvider';
 }
 
-/// Every conversation I take part in, on this server and on every
-/// server I connected, as ONE list (`mergeInboxes`).
+/// #2556 C1 — Me › Messages, composed from its sources: my personal
+/// conversations and groups where my account lives (the personal home,
+/// `my_account_inbox_v1`) and my workspace conversations and inquiries on
+/// each workspace host (`my_workspace_inbox_v1`), on this server and on
+/// every server I connected. Each source is a slot with its own state
+/// (reading, loaded, failed, unavailable): one that fails or cannot be
+/// reached never hides the others, and the inbox shows each source as soon
+/// as it answers — the personal part never waits for a workspace host.
 ///
-/// A server that does not answer is named, not fatal: its rows are
-/// missing and the list says so, while the others still show.
+/// A server without the readers (older than this build) is read the legacy
+/// way (`my_inbox`); the same conversation answered twice is shown once.
+/// A completion of an earlier read never lands in a newer one.
 
-@ProviderFor(unifiedInbox)
-final unifiedInboxProvider = UnifiedInboxProvider._();
+@ProviderFor(MessengerInbox)
+final messengerInboxProvider = MessengerInboxProvider._();
 
-/// Every conversation I take part in, on this server and on every
-/// server I connected, as ONE list (`mergeInboxes`).
+/// #2556 C1 — Me › Messages, composed from its sources: my personal
+/// conversations and groups where my account lives (the personal home,
+/// `my_account_inbox_v1`) and my workspace conversations and inquiries on
+/// each workspace host (`my_workspace_inbox_v1`), on this server and on
+/// every server I connected. Each source is a slot with its own state
+/// (reading, loaded, failed, unavailable): one that fails or cannot be
+/// reached never hides the others, and the inbox shows each source as soon
+/// as it answers — the personal part never waits for a workspace host.
 ///
-/// A server that does not answer is named, not fatal: its rows are
-/// missing and the list says so, while the others still show.
-
-final class UnifiedInboxProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<UnifiedInbox>,
-          UnifiedInbox,
-          FutureOr<UnifiedInbox>
-        >
-    with $FutureModifier<UnifiedInbox>, $FutureProvider<UnifiedInbox> {
-  /// Every conversation I take part in, on this server and on every
-  /// server I connected, as ONE list (`mergeInboxes`).
+/// A server without the readers (older than this build) is read the legacy
+/// way (`my_inbox`); the same conversation answered twice is shown once.
+/// A completion of an earlier read never lands in a newer one.
+final class MessengerInboxProvider
+    extends $AsyncNotifierProvider<MessengerInbox, UnifiedInbox> {
+  /// #2556 C1 — Me › Messages, composed from its sources: my personal
+  /// conversations and groups where my account lives (the personal home,
+  /// `my_account_inbox_v1`) and my workspace conversations and inquiries on
+  /// each workspace host (`my_workspace_inbox_v1`), on this server and on
+  /// every server I connected. Each source is a slot with its own state
+  /// (reading, loaded, failed, unavailable): one that fails or cannot be
+  /// reached never hides the others, and the inbox shows each source as soon
+  /// as it answers — the personal part never waits for a workspace host.
   ///
-  /// A server that does not answer is named, not fatal: its rows are
-  /// missing and the list says so, while the others still show.
-  UnifiedInboxProvider._()
+  /// A server without the readers (older than this build) is read the legacy
+  /// way (`my_inbox`); the same conversation answered twice is shown once.
+  /// A completion of an earlier read never lands in a newer one.
+  MessengerInboxProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'unifiedInboxProvider',
+        name: r'messengerInboxProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$unifiedInboxHash();
+  String debugGetCreateSourceHash() => _$messengerInboxHash();
 
   @$internal
   @override
-  $FutureProviderElement<UnifiedInbox> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
+  MessengerInbox create() => MessengerInbox();
+}
 
+String _$messengerInboxHash() => r'0cfd42c4257bed87675ba980b5b8447a2c5eded2';
+
+/// #2556 C1 — Me › Messages, composed from its sources: my personal
+/// conversations and groups where my account lives (the personal home,
+/// `my_account_inbox_v1`) and my workspace conversations and inquiries on
+/// each workspace host (`my_workspace_inbox_v1`), on this server and on
+/// every server I connected. Each source is a slot with its own state
+/// (reading, loaded, failed, unavailable): one that fails or cannot be
+/// reached never hides the others, and the inbox shows each source as soon
+/// as it answers — the personal part never waits for a workspace host.
+///
+/// A server without the readers (older than this build) is read the legacy
+/// way (`my_inbox`); the same conversation answered twice is shown once.
+/// A completion of an earlier read never lands in a newer one.
+
+abstract class _$MessengerInbox extends $AsyncNotifier<UnifiedInbox> {
+  FutureOr<UnifiedInbox> build();
+  @$mustCallSuper
   @override
-  FutureOr<UnifiedInbox> create(Ref ref) {
-    return unifiedInbox(ref);
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<UnifiedInbox>, UnifiedInbox>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<UnifiedInbox>, UnifiedInbox>,
+              AsyncValue<UnifiedInbox>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
   }
 }
 
-String _$unifiedInboxHash() => r'045a4b4a92065d8b94b7931ed200dd3ce48b6587';
-
-/// While watched, re-reads [unifiedInboxProvider] every inbox poll, so an
+/// While watched, re-reads [messengerInboxProvider] every inbox poll, so an
 /// unread badge stays current before the inbox itself is open (the open
 /// inbox polls on its own). Answers the period it refreshes at.
 
 @ProviderFor(inboxBadgeRefresh)
 final inboxBadgeRefreshProvider = InboxBadgeRefreshProvider._();
 
-/// While watched, re-reads [unifiedInboxProvider] every inbox poll, so an
+/// While watched, re-reads [messengerInboxProvider] every inbox poll, so an
 /// unread badge stays current before the inbox itself is open (the open
 /// inbox polls on its own). Answers the period it refreshes at.
 
 final class InboxBadgeRefreshProvider
     extends $FunctionalProvider<Duration, Duration, Duration>
     with $Provider<Duration> {
-  /// While watched, re-reads [unifiedInboxProvider] every inbox poll, so an
+  /// While watched, re-reads [messengerInboxProvider] every inbox poll, so an
   /// unread badge stays current before the inbox itself is open (the open
   /// inbox polls on its own). Answers the period it refreshes at.
   InboxBadgeRefreshProvider._()
@@ -289,7 +327,7 @@ final class InboxBadgeRefreshProvider
   }
 }
 
-String _$inboxBadgeRefreshHash() => r'2a1d788f6630d4e8d3844a1f0222fee53e07e41f';
+String _$inboxBadgeRefreshHash() => r'71249e148964ff7bba7de4eba9ab9f391279d1b3';
 
 /// The display name of each connected server, by origin — the subtitle
 /// a row carries only when it is not this server.

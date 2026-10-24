@@ -5999,6 +5999,11 @@
   "inboxNoArchived": "Ninguna conversación archivada.",
   "inboxNoUnread": "Nada sin leer — está al día.",
   "inboxRetry": "Reintentar",
+  "inboxShowOlder": "Mostrar conversaciones anteriores",
+  "inboxSourceFailed": "No se pudo leer {source}. Se muestra el resto de la bandeja de entrada.",
+  "inboxSourcePersonal": "Sus mensajes personales",
+  "inboxSourceUnavailable": "{source} no está disponible con su sesión actual. Sus conversaciones faltan en esta lista.",
+  "inboxSourceWorkspaces": "Los mensajes de sus espacios",
   "instanceAccessTitle": "Acceso a los asistentes",
   "instanceAccessUntil": "Hasta el {date}",
   "instanceAccountIntro": "Cree una cuenta gratuita en supabase.com, luego un token de acceso personal (Account → Access Tokens) y péguelo aquí. El asistente lo usa para crear y configurar el proyecto; nunca se guarda.",
@@ -13582,6 +13587,7 @@
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPageSize": "Cuántas conversaciones devuelven por página de la bandeja de entrada el hogar personal y cada servidor de espacios; las anteriores llegan con Mostrar conversaciones anteriores.",
   "settingHintMessagingInboxPollSeconds": "Segundos entre dos actualizaciones de la bandeja de entrada y su contador de no leídos. Valores más bajos cargan más el servidor.",
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
@@ -13728,6 +13734,7 @@
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingLabelMessagingInboxPageSize": "Tamaño de página de la bandeja de entrada",
   "settingLabelMessagingInboxPollSeconds": "Actualización de la bandeja de entrada",
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."

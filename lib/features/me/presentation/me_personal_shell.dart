@@ -160,7 +160,7 @@ class _MePersonalShellState extends ConsumerState<MePersonalShell>
     if (!_visited.contains(MeTab.destinations.indexOf(MeTab.messages))) {
       ref.watch(inboxBadgeRefreshProvider);
     }
-    final inbox = ref.watch(unifiedInboxProvider);
+    final inbox = ref.watch(messengerInboxProvider);
     final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
     // The WINDOW decides the layout — not the reading column a frame may
     // lay the page in, and not the keyboard, which never changes the

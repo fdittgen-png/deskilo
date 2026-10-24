@@ -6,14 +6,14 @@ import '../../../features/directory/domain/group_details.dart';
 import '../../../features/directory/domain/message_marks.dart';
 import '../../../features/directory/domain/messenger.dart';
 import '../../../features/directory/domain/messenger_repository.dart';
+import 'demo_inbox_pages.dart';
 
-/// #1824 — the messenger on one in-memory server.
-///
-/// It keeps the rules the server keeps, because the widget tests read
-/// their outcome from here: a forward copies the message into the target
-/// with its origin, leaves a notice in the source and a `forwarded`
-/// event on it; a locked message refuses; a capture leaves a notice.
-class FakeMessengerRepository implements MessengerRepository {
+/// #1824 — the messenger on one in-memory server. It keeps the rules the
+/// server keeps, because the widget tests read their outcome from here: a
+/// forward copies the message into the target with its origin, leaves a
+/// notice in the source and a `forwarded` event on it; a locked message
+/// refuses; a capture leaves a notice. #2556: [DemoInboxPages] pages it.
+class FakeMessengerRepository with DemoInboxPages implements MessengerRepository {
   FakeMessengerRepository({DateTime? now, this.me = 'Me'})
     : now = now ?? DateTime.utc(2026, 7, 15, 9);
   final DateTime now;

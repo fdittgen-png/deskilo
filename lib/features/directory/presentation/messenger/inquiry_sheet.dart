@@ -84,7 +84,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
     if (!mounted) return;
     setState(() => _busy = false);
     if (ok) {
-      ref.invalidate(unifiedInboxProvider);
+      ref.invalidate(messengerInboxProvider);
       Navigator.of(context).pop(inquiry);
     }
   }

@@ -46,7 +46,7 @@ class _GroupSheet extends ConsumerWidget {
       ..invalidate(accountGroupInfoProvider(groupId))
       ..invalidate(accountGroupMembersProvider(groupId))
       ..invalidate(groupSharedWorkspacesProvider(groupId))
-      ..invalidate(unifiedInboxProvider);
+      ..invalidate(messengerInboxProvider);
   }
 
   Future<String?> _ask(BuildContext context, String title, String initial,

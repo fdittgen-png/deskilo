@@ -703,5 +703,7 @@
  "dirPageSize": "Nuova conversazione: voci per pagina",
  "dirPageSizeHint": "Quanti spazi, persone o gruppi la casa personale elenca alla volta quando un membro avvia una conversazione; i successivi arrivano con Mostra altro. Si imposta nelle impostazioni dell'app.",
  "dirQueryLength": "Nuova conversazione: ricerca più lunga",
- "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app."
+ "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app.",
+ "inboxPageSize": "Posta in arrivo: conversazioni per pagina",
+ "inboxPageSizeHint": "Quante conversazioni restituiscono alla volta la casa personale e ogni server di spazi nella posta in arrivo di un membro; le precedenti arrivano con Mostra conversazioni precedenti. Si imposta nelle impostazioni dell’app."
 }
