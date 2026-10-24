@@ -8895,6 +8895,46 @@ class AppLocalizationsDe extends AppLocalizations {
   String get instanceEndpointTitle => 'Assistenten-Endpunkt';
 
   @override
+  String get instanceEnrolAccepting => 'Nimmt neue Spaces an';
+
+  @override
+  String instanceEnrolDone(String home) {
+    return 'Registriert bei $home.';
+  }
+
+  @override
+  String get instanceEnrolHomeLabel =>
+      'Persönliches Zuhause für die Registrierung';
+
+  @override
+  String get instanceEnrolIntro =>
+      'Optional. Wenn diese Installation Spaces für Personen hostet, deren Konten auf einem von Ihnen betriebenen persönlichen Zuhause liegen, registrieren Sie sie dort: Das Zuhause erkennt sie dann als Workspace-Server an. Überspringen Sie diesen Schritt bei einer kombinierten Installation.';
+
+  @override
+  String get instanceEnrolNoHome =>
+      'Kein anderes Projekt dieses Kontos kann das persönliche Zuhause sein.';
+
+  @override
+  String instanceEnrolNotHome(String home) {
+    return '$home ist kein persönliches Zuhause.';
+  }
+
+  @override
+  String get instanceEnrolNotHost =>
+      'Diese Installation hostet keine Spaces und kann daher nicht registriert werden.';
+
+  @override
+  String get instanceEnrolRun => 'Bei diesem persönlichen Zuhause registrieren';
+
+  @override
+  String get instanceEnrolSame =>
+      'Eine Installation registriert sich nicht selbst.';
+
+  @override
+  String get instanceEnrolUnreadable =>
+      'Dieses Projekt antwortet noch nicht als Deskilo-Installation. Installieren Sie zuerst das Schema.';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -9181,6 +9221,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get instanceStepDone => 'Fertig';
+
+  @override
+  String get instanceStepEnrol => 'Persönliches Zuhause';
 
   @override
   String instanceStepFailed(String item, String message) {
@@ -19330,6 +19373,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.';
 
   @override
+  String get settingHintIdentityClockSkewSeconds =>
+      'Sekunden Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, die noch akzeptiert werden, 0 bis 30.';
+
+  @override
+  String get settingHintIdentityStatusAssertionLifetimeSeconds =>
+      'Sekunden, die sich ein Workspace-Server auf einen vom persönlichen Zuhause signierten Identitätsstatus verlassen darf. Höchstens 900: Ein gesperrtes Konto wird innerhalb dieser Zeit plus Uhrabweichung für neue Anfragen abgewiesen.';
+
+  @override
+  String get settingHintIdentityStatusReconcileSeconds =>
+      'Sekunden zwischen zwei Aktualisierungen der Identitätsstatus, die ein Workspace-Server hält. Unter der Gültigkeit halten.';
+
+  @override
   String get settingHintKpiCapacityRangeDays =>
       'Von der Plattform festgelegt: der längste Zeitraum, den eine Kapazitätskennzahl abdecken darf. Er begrenzt die Abfrage.';
 
@@ -19477,6 +19532,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
+
+  @override
+  String get settingLabelIdentityClockSkewSeconds => 'Erlaubte Uhrabweichung';
+
+  @override
+  String get settingLabelIdentityStatusAssertionLifetimeSeconds =>
+      'Gültigkeit des Identitätsstatus';
+
+  @override
+  String get settingLabelIdentityStatusReconcileSeconds =>
+      'Aktualisierung des Identitätsstatus';
 
   @override
   String get settingLabelKpiCapacityRangeDays =>

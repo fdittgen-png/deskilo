@@ -90,6 +90,8 @@ public.directory_people.personal_native_session
 public.einvoice_credentials.mcp_delegated_deny
 public.einvoice_inbox.einvoice_inbox_select
 public.einvoice_inbox.mcp_delegated_deny
+public.enrolled_installations.mcp_delegated_deny
+public.enrolled_installations.personal_native_session
 public.event_decisions.event_decisions_select
 public.event_decisions.mcp_delegated_deny
 public.event_decisions.personal_native_session

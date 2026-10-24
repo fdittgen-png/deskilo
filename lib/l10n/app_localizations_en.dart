@@ -8819,6 +8819,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instanceEndpointTitle => 'Assistant endpoint';
 
   @override
+  String get instanceEnrolAccepting => 'Accepts new spaces';
+
+  @override
+  String instanceEnrolDone(String home) {
+    return 'Enrolled at $home.';
+  }
+
+  @override
+  String get instanceEnrolHomeLabel => 'Personal home to enrol at';
+
+  @override
+  String get instanceEnrolIntro =>
+      'Optional. If this installation hosts spaces for people whose accounts live on a personal home you operate, enrol it there: the home then recognises it as a workspace server. Skip this step for a combined installation.';
+
+  @override
+  String get instanceEnrolNoHome =>
+      'No other project of this account can be the personal home.';
+
+  @override
+  String instanceEnrolNotHome(String home) {
+    return '$home is not a personal home.';
+  }
+
+  @override
+  String get instanceEnrolNotHost =>
+      'This installation does not host spaces, so it cannot be enrolled.';
+
+  @override
+  String get instanceEnrolRun => 'Enrol at this personal home';
+
+  @override
+  String get instanceEnrolSame => 'An installation cannot enrol itself.';
+
+  @override
+  String get instanceEnrolUnreadable =>
+      'This project does not answer as a Deskilo installation yet. Install the schema first.';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -9102,6 +9140,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get instanceStepDone => 'Done';
+
+  @override
+  String get instanceStepEnrol => 'Personal home';
 
   @override
   String instanceStepFailed(String item, String message) {
@@ -19142,6 +19183,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.';
 
   @override
+  String get settingHintIdentityClockSkewSeconds =>
+      'Seconds of clock difference between the personal home and a workspace server that are still accepted, 0 to 30.';
+
+  @override
+  String get settingHintIdentityStatusAssertionLifetimeSeconds =>
+      'Seconds a workspace server may rely on one identity status signed by the personal home. At most 900: a suspended account is refused new requests within this time plus the clock skew.';
+
+  @override
+  String get settingHintIdentityStatusReconcileSeconds =>
+      'Seconds between two refreshes of the identity statuses a workspace server holds. Keep it below the status lifetime.';
+
+  @override
   String get settingHintKpiCapacityRangeDays =>
       'Fixed by the platform: the longest period one capacity figure may cover. It bounds the query.';
 
@@ -19288,6 +19341,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Days before a first reminder';
+
+  @override
+  String get settingLabelIdentityClockSkewSeconds => 'Allowed clock difference';
+
+  @override
+  String get settingLabelIdentityStatusAssertionLifetimeSeconds =>
+      'Identity status lifetime';
+
+  @override
+  String get settingLabelIdentityStatusReconcileSeconds =>
+      'Identity status refresh';
 
   @override
   String get settingLabelKpiCapacityRangeDays => 'Capacity figure range';

@@ -217,6 +217,9 @@ const DEFAULTS={
  // #2561 L3 — the server's role and, for a workspace host only, the
  // explicit personal home of its people (typed in the instance wizard).
  network:{roles:'combined',homeUrl:'',homeKey:''},language:'',address:'',whatsapp:'',brandColor:'',
+ // #2562 C2a — enrolment at the personal home and the identity freshness
+ // (typed in the instance wizard and the settings editor).
+ enrolment:{accepting:true,lifetime:'900',reconcile:'300',skew:'30'},
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',

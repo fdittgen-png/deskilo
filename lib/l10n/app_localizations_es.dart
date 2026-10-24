@@ -8879,6 +8879,44 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instanceEndpointTitle => 'Punto de acceso de los asistentes';
 
   @override
+  String get instanceEnrolAccepting => 'Acepta espacios nuevos';
+
+  @override
+  String instanceEnrolDone(String home) {
+    return 'Inscrita en $home.';
+  }
+
+  @override
+  String get instanceEnrolHomeLabel => 'Hogar personal donde inscribirla';
+
+  @override
+  String get instanceEnrolIntro =>
+      'Opcional. Si esta instalación aloja espacios para personas cuyas cuentas están en un hogar personal que usted opera, inscríbala allí: el hogar la reconoce entonces como servidor de espacios. Omita este paso en una instalación combinada.';
+
+  @override
+  String get instanceEnrolNoHome =>
+      'Ningún otro proyecto de esta cuenta puede ser el hogar personal.';
+
+  @override
+  String instanceEnrolNotHome(String home) {
+    return '$home no es un hogar personal.';
+  }
+
+  @override
+  String get instanceEnrolNotHost =>
+      'Esta instalación no aloja espacios, así que no puede inscribirse.';
+
+  @override
+  String get instanceEnrolRun => 'Inscribir en este hogar personal';
+
+  @override
+  String get instanceEnrolSame => 'Una instalación no se inscribe a sí misma.';
+
+  @override
+  String get instanceEnrolUnreadable =>
+      'Este proyecto aún no responde como una instalación Deskilo. Instale primero el esquema.';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -9164,6 +9202,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get instanceStepDone => 'Listo';
+
+  @override
+  String get instanceStepEnrol => 'Hogar personal';
 
   @override
   String instanceStepFailed(String item, String message) {
@@ -19290,6 +19331,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.';
 
   @override
+  String get settingHintIdentityClockSkewSeconds =>
+      'Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.';
+
+  @override
+  String get settingHintIdentityStatusAssertionLifetimeSeconds =>
+      'Segundos durante los que un servidor de espacios puede fiarse de un estado de identidad firmado por el hogar personal. 900 como máximo: a una cuenta suspendida se le rechazan las nuevas solicitudes en ese plazo más el desfase de reloj.';
+
+  @override
+  String get settingHintIdentityStatusReconcileSeconds =>
+      'Segundos entre dos actualizaciones de los estados de identidad que guarda un servidor de espacios. Manténgala por debajo de la validez.';
+
+  @override
   String get settingHintKpiCapacityRangeDays =>
       'Fijado por la plataforma: el periodo más largo que puede abarcar un indicador de capacidad. Acota la consulta.';
 
@@ -19440,6 +19493,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Días antes de un primer recordatorio';
+
+  @override
+  String get settingLabelIdentityClockSkewSeconds =>
+      'Desfase de reloj permitido';
+
+  @override
+  String get settingLabelIdentityStatusAssertionLifetimeSeconds =>
+      'Validez del estado de identidad';
+
+  @override
+  String get settingLabelIdentityStatusReconcileSeconds =>
+      'Actualización del estado de identidad';
 
   @override
   String get settingLabelKpiCapacityRangeDays =>

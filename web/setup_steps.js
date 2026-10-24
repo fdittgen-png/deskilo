@@ -78,8 +78,12 @@ const STEPS=[
   input(T('identityBrandColor'),'brandColor',T('identityBrandColorHint'),'text','#C2410C','identity'),
   selectEl(T('networkRoles'),'network.roles',opts(NETWORK_ROLES),T('networkRolesHint'),null,'identity'),
   ...(S.network.roles==='workspace_host'?[input(T('networkHomeUrl'),'network.homeUrl',T('networkHomeUrlHint'),'url','https://','identity'),input(T('networkHomeKey'),'network.homeKey',T('networkHomeKeyHint'),'text','sb_publishable_','identity')]:[]),
+  // #2562 C2a — for a workspace server enrolled at a personal home.
+  ...(S.network.roles==='workspace_host'?[checkbox(T('enrolAccepting'),T('enrolAcceptingHint'),S.enrolment.accepting,v=>set('enrolment.accepting',v),'','identity'),selectEl(T('enrolLifetime'),'enrolment.lifetime',opts(ID_LIFETIME),T('enrolLifetimeHint'),null,'identity'),selectEl(T('enrolReconcile'),'enrolment.reconcile',opts(ID_RECONCILE),T('enrolReconcileHint'),null,'identity'),selectEl(T('enrolSkew'),'enrolment.skew',opts(ID_SKEW),T('enrolSkewHint'),null,'identity')]:[]),
  ]},
  check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
+  // #2562 C2a — a refresh slower than the lifetime lets statuses lapse.
+  if(S.network.roles==='workspace_host'&&Number(S.enrolment.reconcile)>Number(S.enrolment.lifetime))f.push(F.err(T('enrolErrReconcile'),'identity'));
   // #2331 — the server refuses to issue for any other seller country.
   // #2561 L3 — a personal home is an HTTPS origin and a publishable key.
   if(S.network.roles==='workspace_host'&&((S.network.homeUrl.trim()&&!/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)+(:\d{1,5})?\/?$/i.test(S.network.homeUrl.trim()))||(S.network.homeKey.trim()&&!/^(sb_publishable_\S{6,}|eyJ\S+\.\S+\.\S*)$/.test(S.network.homeKey.trim()))))f.push(F.err(T('networkErrHome'),'identity'));

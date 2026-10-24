@@ -691,7 +691,18 @@ window.SETUP_L10N={
    "networkHomeKey": "Personal home publishable key",
    "networkHomeKeyHint": "Its publishable key (sb_publishable_…), never a secret one. The instance wizard checks both before recording them.",
    "networkErrHome": "The personal home needs an https:// address without a path and a publishable key.",
-   "reqNetworkHome": "Required because this server hosts spaces only: its members need a personal home."
+   "reqNetworkHome": "Required because this server hosts spaces only: its members need a personal home.",
+   "optSeconds": "{n} seconds",
+   "optOneMinute": "1 minute",
+   "enrolAccepting": "Accepts new spaces once enrolled at a personal home",
+   "enrolAcceptingHint": "Only for a workspace server whose members keep their accounts on a personal home: the home's operator enrols it there (instance wizard or command line) and may offer it for new spaces. Untick to host only the spaces it already has.",
+   "enrolLifetime": "Identity status lifetime",
+   "enrolLifetimeHint": "How long a workspace server relies on a person's status signed by the personal home. A suspended account is refused new requests within this time, at most 15 minutes. Set in the app's settings.",
+   "enrolReconcile": "Identity status refresh",
+   "enrolReconcileHint": "How often a workspace server refreshes the statuses it holds, even when nobody uses the app. Set in the app's settings.",
+   "enrolSkew": "Allowed clock difference",
+   "enrolSkewHint": "Clock difference between the personal home and a workspace server still accepted, 30 seconds at most. Set in the app's settings.",
+   "enrolErrReconcile": "The identity status refresh must not be slower than its lifetime, or statuses lapse between two refreshes."
   },
   "feature": {
    "calendarTab": [
@@ -2298,7 +2309,18 @@ window.SETUP_L10N={
    "networkHomeKey": "Clé publiable du domicile personnel",
    "networkHomeKeyHint": "Sa clé publiable (sb_publishable_…), jamais une clé secrète. L’assistant d’instance vérifie les deux avant de les enregistrer.",
    "networkErrHome": "Le domicile personnel demande une adresse https:// sans chemin et une clé publiable.",
-   "reqNetworkHome": "Obligatoire, car ce serveur n’héberge que des espaces : ses membres ont besoin d’un domicile personnel."
+   "reqNetworkHome": "Obligatoire, car ce serveur n’héberge que des espaces : ses membres ont besoin d’un domicile personnel.",
+   "optSeconds": "{n} secondes",
+   "optOneMinute": "1 minute",
+   "enrolAccepting": "Accepte de nouveaux espaces une fois inscrit sur un domicile personnel",
+   "enrolAcceptingHint": "Seulement pour un serveur d'espaces dont les membres gardent leur compte sur un domicile personnel : l'exploitant du domicile l'y inscrit (assistant d'instance ou ligne de commande) et peut le proposer pour de nouveaux espaces. Décochez pour n'héberger que les espaces qu'il a déjà.",
+   "enrolLifetime": "Durée de validité du statut d'identité",
+   "enrolLifetimeHint": "Combien de temps un serveur d'espaces se fie au statut d'une personne signé par le domicile personnel. Un compte suspendu voit ses nouvelles requêtes refusées dans ce délai, 15 minutes au plus. Se règle dans les paramètres de l'app.",
+   "enrolReconcile": "Actualisation du statut d'identité",
+   "enrolReconcileHint": "À quelle fréquence un serveur d'espaces actualise les statuts qu'il détient, même quand personne n'utilise l'app. Se règle dans les paramètres de l'app.",
+   "enrolSkew": "Écart d'horloge toléré",
+   "enrolSkewHint": "Écart d'horloge entre le domicile personnel et un serveur d'espaces encore accepté, 30 secondes au plus. Se règle dans les paramètres de l'app.",
+   "enrolErrReconcile": "L'actualisation du statut d'identité ne doit pas être plus lente que sa durée de validité, sinon les statuts expirent entre deux actualisations."
   },
   "feature": {
    "calendarTab": [
@@ -3905,7 +3927,18 @@ window.SETUP_L10N={
    "networkHomeKey": "Öffentlicher Schlüssel des persönlichen Zuhauses",
    "networkHomeKeyHint": "Sein öffentlicher Schlüssel (sb_publishable_…), nie ein geheimer. Der Instanz-Assistent prüft beides, bevor er es speichert.",
    "networkErrHome": "Das persönliche Zuhause braucht eine https://-Adresse ohne Pfad und einen öffentlichen Schlüssel.",
-   "reqNetworkHome": "Erforderlich, weil dieser Server nur Spaces hostet: Seine Mitglieder brauchen ein persönliches Zuhause."
+   "reqNetworkHome": "Erforderlich, weil dieser Server nur Spaces hostet: Seine Mitglieder brauchen ein persönliches Zuhause.",
+   "optSeconds": "{n} Sekunden",
+   "optOneMinute": "1 Minute",
+   "enrolAccepting": "Nimmt neue Spaces an, sobald bei einem persönlichen Zuhause registriert",
+   "enrolAcceptingHint": "Nur für einen Workspace-Server, dessen Mitglieder ihre Konten auf einem persönlichen Zuhause führen: Der Betreiber des Zuhauses registriert ihn dort (Instanz-Assistent oder Kommandozeile) und kann ihn für neue Spaces anbieten. Abwählen, um nur die vorhandenen Spaces zu hosten.",
+   "enrolLifetime": "Gültigkeit des Identitätsstatus",
+   "enrolLifetimeHint": "Wie lange sich ein Workspace-Server auf den vom persönlichen Zuhause signierten Status einer Person verlässt. Ein gesperrtes Konto wird innerhalb dieser Zeit für neue Anfragen abgewiesen, höchstens 15 Minuten. Wird in den Einstellungen der App festgelegt.",
+   "enrolReconcile": "Aktualisierung des Identitätsstatus",
+   "enrolReconcileHint": "Wie oft ein Workspace-Server die gehaltenen Status aktualisiert, auch wenn niemand die App nutzt. Wird in den Einstellungen der App festgelegt.",
+   "enrolSkew": "Erlaubte Uhrabweichung",
+   "enrolSkewHint": "Noch akzeptierte Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, höchstens 30 Sekunden. Wird in den Einstellungen der App festgelegt.",
+   "enrolErrReconcile": "Die Aktualisierung des Identitätsstatus darf nicht langsamer sein als seine Gültigkeit, sonst verfallen Status zwischen zwei Aktualisierungen."
   },
   "feature": {
    "calendarTab": [
@@ -5512,7 +5545,18 @@ window.SETUP_L10N={
    "networkHomeKey": "Clave publicable del hogar personal",
    "networkHomeKeyHint": "Su clave publicable (sb_publishable_…), nunca una secreta. El asistente de instancia comprueba ambas antes de guardarlas.",
    "networkErrHome": "El hogar personal necesita una dirección https:// sin ruta y una clave publicable.",
-   "reqNetworkHome": "Obligatorio porque este servidor solo aloja espacios: sus miembros necesitan un hogar personal."
+   "reqNetworkHome": "Obligatorio porque este servidor solo aloja espacios: sus miembros necesitan un hogar personal.",
+   "optSeconds": "{n} segundos",
+   "optOneMinute": "1 minuto",
+   "enrolAccepting": "Acepta espacios nuevos una vez inscrito en un hogar personal",
+   "enrolAcceptingHint": "Solo para un servidor de espacios cuyos miembros tienen su cuenta en un hogar personal: el operador del hogar lo inscribe allí (asistente de instancia o línea de comandos) y puede ofrecerlo para espacios nuevos. Desmárquelo para alojar solo los espacios que ya tiene.",
+   "enrolLifetime": "Validez del estado de identidad",
+   "enrolLifetimeHint": "Cuánto tiempo un servidor de espacios se fía del estado de una persona firmado por el hogar personal. A una cuenta suspendida se le rechazan las nuevas solicitudes en ese plazo, 15 minutos como máximo. Se ajusta en la configuración de la app.",
+   "enrolReconcile": "Actualización del estado de identidad",
+   "enrolReconcileHint": "Con qué frecuencia un servidor de espacios actualiza los estados que guarda, aunque nadie use la app. Se ajusta en la configuración de la app.",
+   "enrolSkew": "Desfase de reloj permitido",
+   "enrolSkewHint": "Desfase de reloj entre el hogar personal y un servidor de espacios que aún se acepta, 30 segundos como máximo. Se ajusta en la configuración de la app.",
+   "enrolErrReconcile": "La actualización del estado de identidad no debe ser más lenta que su validez, o los estados caducan entre dos actualizaciones."
   },
   "feature": {
    "calendarTab": [
@@ -7119,7 +7163,18 @@ window.SETUP_L10N={
    "networkHomeKey": "Chiave pubblicabile della casa personale",
    "networkHomeKeyHint": "La sua chiave pubblicabile (sb_publishable_…), mai una segreta. La procedura guidata dell’istanza verifica entrambe prima di registrarle.",
    "networkErrHome": "La casa personale richiede un indirizzo https:// senza percorso e una chiave pubblicabile.",
-   "reqNetworkHome": "Obbligatorio perché questo server ospita solo spazi: i suoi membri hanno bisogno di una casa personale."
+   "reqNetworkHome": "Obbligatorio perché questo server ospita solo spazi: i suoi membri hanno bisogno di una casa personale.",
+   "optSeconds": "{n} secondi",
+   "optOneMinute": "1 minuto",
+   "enrolAccepting": "Accetta nuovi spazi una volta iscritto presso una casa personale",
+   "enrolAcceptingHint": "Solo per un server di spazi i cui membri tengono l'account su una casa personale: il gestore della casa lo iscrive lì (procedura guidata dell'istanza o riga di comando) e può proporlo per nuovi spazi. Tolga la spunta per ospitare solo gli spazi che ha già.",
+   "enrolLifetime": "Validità dello stato di identità",
+   "enrolLifetimeHint": "Per quanto tempo un server di spazi si affida allo stato di una persona firmato dalla casa personale. A un account sospeso vengono rifiutate le nuove richieste entro questo tempo, al massimo 15 minuti. Si imposta nelle impostazioni dell'app.",
+   "enrolReconcile": "Aggiornamento dello stato di identità",
+   "enrolReconcileHint": "Ogni quanto un server di spazi aggiorna gli stati che conserva, anche quando nessuno usa l'app. Si imposta nelle impostazioni dell'app.",
+   "enrolSkew": "Scarto d'orologio ammesso",
+   "enrolSkewHint": "Scarto d'orologio tra la casa personale e un server di spazi ancora accettato, al massimo 30 secondi. Si imposta nelle impostazioni dell'app.",
+   "enrolErrReconcile": "L'aggiornamento dello stato di identità non deve essere più lento della sua validità, altrimenti gli stati scadono tra due aggiornamenti."
   },
   "feature": {
    "calendarTab": [

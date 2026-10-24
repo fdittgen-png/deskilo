@@ -6084,6 +6084,16 @@
     "description": "#977 instance wizard: instanceDoneIntro"
   },
   "instanceEndpointTitle": "Endpoint degli assistenti",
+  "instanceEnrolAccepting": "Accetta nuovi spazi",
+  "instanceEnrolDone": "Iscritta presso {home}.",
+  "instanceEnrolHomeLabel": "Casa personale presso cui iscriverla",
+  "instanceEnrolIntro": "Facoltativo. Se questa installazione ospita spazi per persone i cui account si trovano su una casa personale che Lei gestisce, la iscriva lì: la casa la riconosce allora come server di spazi. Salti questo passaggio per un'installazione combinata.",
+  "instanceEnrolNoHome": "Nessun altro progetto di questo account può essere la casa personale.",
+  "instanceEnrolNotHome": "{home} non è una casa personale.",
+  "instanceEnrolNotHost": "Questa installazione non ospita spazi, quindi non può essere iscritta.",
+  "instanceEnrolRun": "Iscrivere presso questa casa personale",
+  "instanceEnrolSame": "Un'installazione non si iscrive da sola.",
+  "instanceEnrolUnreadable": "Questo progetto non risponde ancora come un'installazione Deskilo. Installi prima lo schema.",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Assistente desktop o da riga di comando",
@@ -6218,6 +6228,7 @@
   "@instanceStepDone": {
     "description": "#977 instance wizard: instanceStepDone"
   },
+  "instanceStepEnrol": "Casa personale",
   "instanceStepFailed": "Fermato a {item}: {message}",
   "@instanceStepFailed": {
     "description": "#977 instance wizard: instanceStepFailed",
@@ -13506,6 +13517,9 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintIdentityClockSkewSeconds": "Secondi di scarto d'orologio tra la casa personale e un server di spazi ancora accettati, da 0 a 30.",
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Secondi per cui un server di spazi può affidarsi a uno stato di identità firmato dalla casa personale. Al massimo 900: a un account sospeso vengono rifiutate le nuove richieste entro questo tempo più lo scarto d'orologio.",
+  "settingHintIdentityStatusReconcileSeconds": "Secondi tra due aggiornamenti degli stati di identità che un server di spazi conserva. Lo mantenga sotto la validità.",
   "settingHintKpiCapacityRangeDays": "Fissato dalla piattaforma: il periodo più lungo che un indicatore di capacità può coprire. Delimita la richiesta.",
   "@settingHintKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -13647,6 +13661,9 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelIdentityClockSkewSeconds": "Scarto d'orologio ammesso",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Validità dello stato di identità",
+  "settingLabelIdentityStatusReconcileSeconds": "Aggiornamento dello stato di identità",
   "settingLabelKpiCapacityRangeDays": "Periodo dell’indicatore di capacità",
   "@settingLabelKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting label."

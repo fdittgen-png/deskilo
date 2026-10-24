@@ -22,6 +22,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/instance_done_step.dart';
+import '../widgets/instance_enrol_step.dart';
 import '../widgets/instance_network_field.dart';
 import '../widgets/instance_owner_claim_field.dart';
 import '../widgets/instance_readiness_card.dart';
@@ -46,7 +47,7 @@ class NewInstanceScreen extends ConsumerStatefulWidget {
   ConsumerState<NewInstanceScreen> createState() => _NewInstanceScreenState();
 }
 
-enum _Step { account, project, schema, functions, signIn, done }
+enum _Step { account, project, schema, functions, signIn, enrol, done }
 
 class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   static const String supabaseUrl = 'https://supabase.com';
@@ -267,6 +268,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         _Step.schema => _schemaInstalled && !_busy,
         _Step.functions => _functionsDeployed && !_busy,
         _Step.signIn => _signInConfigured && !_busy,
+        _Step.enrol => !_busy, // #2562 C2a — optional
         _Step.done => false,
       };
 
@@ -279,6 +281,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       (name: 'schema', label: l10n.instanceStepSchema),
       (name: 'functions', label: l10n.instanceStepFunctions),
       (name: 'signin', label: l10n.instanceStepSignIn),
+      (name: 'enrol', label: l10n.instanceStepEnrol),
       (name: 'done', label: l10n.instanceStepDone),
     ];
     return WizardScaffold(
@@ -321,10 +324,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
               child: Card(
                 key: const ValueKey('instance-error'),
                 color: Theme.of(context).colorScheme.errorContainer,
-                child: Padding(
-                  padding: AppSpacing.mdAll,
-                  child: Text(error),
-                ),
+                child: Padding(padding: AppSpacing.mdAll, child: Text(error)),
               ),
             ),
           if (_busy)
@@ -377,6 +377,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
               startIcon: Icons.tune,
             ),
           ],
+        _Step.enrol => [InstanceEnrolStep(api: _api!, projectRef: _project!.ref, homes: _existing)],
         _Step.done => _doneStep(l10n),
       };
 

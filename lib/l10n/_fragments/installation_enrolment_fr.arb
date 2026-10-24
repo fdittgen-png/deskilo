@@ -1,0 +1,20 @@
+{
+  "@@locale": "fr",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Durée de validité du statut d'identité",
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Secondes pendant lesquelles un serveur d'espaces peut se fier à un statut d'identité signé par le domicile personnel. 900 au plus : un compte suspendu voit ses nouvelles requêtes refusées dans ce délai, plus l'écart d'horloge.",
+  "settingLabelIdentityStatusReconcileSeconds": "Actualisation du statut d'identité",
+  "settingHintIdentityStatusReconcileSeconds": "Secondes entre deux actualisations des statuts d'identité que détient un serveur d'espaces. Gardez-la sous la durée de validité.",
+  "settingLabelIdentityClockSkewSeconds": "Écart d'horloge toléré",
+  "settingHintIdentityClockSkewSeconds": "Secondes d'écart d'horloge entre le domicile personnel et un serveur d'espaces encore acceptées, de 0 à 30.",
+  "instanceStepEnrol": "Domicile personnel",
+  "instanceEnrolIntro": "Facultatif. Si cette installation héberge des espaces pour des personnes dont les comptes vivent sur un domicile personnel que vous exploitez, inscrivez-la là-bas : le domicile la reconnaît alors comme serveur d'espaces. Passez cette étape pour une installation combinée.",
+  "instanceEnrolHomeLabel": "Domicile personnel où inscrire",
+  "instanceEnrolAccepting": "Accepte de nouveaux espaces",
+  "instanceEnrolRun": "Inscrire sur ce domicile personnel",
+  "instanceEnrolDone": "Inscrite sur {home}.",
+  "instanceEnrolNoHome": "Aucun autre projet de ce compte ne peut être le domicile personnel.",
+  "instanceEnrolNotHost": "Cette installation n'héberge pas d'espaces : elle ne peut pas être inscrite.",
+  "instanceEnrolNotHome": "{home} n'est pas un domicile personnel.",
+  "instanceEnrolSame": "Une installation ne s'inscrit pas elle-même.",
+  "instanceEnrolUnreadable": "Ce projet ne répond pas encore comme une installation Deskilo. Installez d'abord le schéma."
+}
