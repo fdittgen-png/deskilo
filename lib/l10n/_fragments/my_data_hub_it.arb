@@ -1,0 +1,12 @@
+{
+  "@@locale": "it",
+  "meDataPersonalTitle": "Il Suo account personale",
+  "meDataPersonalScope": "Ciò che il Suo spazio personale conserva su di Lei: il Suo profilo, le Sue preferenze, le Sue conversazioni e gli spazi che Lei nomina. Le prenotazioni e le fatture di ogni spazio restano in quello spazio e non fanno parte di questo file.",
+  "meDataPersonalSummary": "Conversazioni: {conversations} · Messaggi: {messages} · Spazi nominati: {workspaces}",
+  "meDataPersonalExport": "Esporta i dati personali",
+  "meDataPersonalUnsupported": "Il Suo spazio personale non offre ancora questa esportazione. Non è stato esportato nulla.",
+  "meDataPersonalForbidden": "Questa sessione non può leggere i Suoi dati personali. Acceda di nuovo all’app.",
+  "meDataPersonalMalformed": "Il Suo spazio personale ha risposto in una forma che questa app non sa leggere. Non è stato esportato nulla.",
+  "meDataPersonalFailed": "Il Suo spazio personale non ha risposto. Non è stato esportato nulla.",
+  "meDataGuestVisits": "Visite come ospite: {count}"
+}

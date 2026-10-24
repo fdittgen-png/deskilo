@@ -26,6 +26,7 @@ import '../../features/me/presentation/public_person_screen.dart';
 import '../../features/me/providers/personal_shell_providers.dart';
 import '../../features/money/presentation/screens/my_finances_screen.dart';
 import '../../features/profile/presentation/screens/profiles_screen.dart';
+import '../../features/reservations/presentation/widgets/my_reservations_body.dart';
 import '../route_env.dart';
 import 'me_adapters.dart';
 
@@ -170,6 +171,7 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
                 workspaceId: state.uri.queryParameters['workspace'],
                 finances: MyFinancesScreen(
                     workspaceId: state.uri.queryParameters['workspace']),
+                reservations: const MyReservationsBody(),
               ),
             ),
           ],

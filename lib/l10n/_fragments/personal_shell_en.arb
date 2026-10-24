@@ -42,13 +42,5 @@
   "meDataViewReservations": "Reservations",
   "@meDataViewReservations": {
     "description": "#2552 My data view: the person's own reservations and visits."
-  },
-  "meDataVisitsEmptyTitle": "No visits yet",
-  "@meDataVisitsEmptyTitle": {
-    "description": "#2552 My data › Reservations with no guest visit to show."
-  },
-  "meDataVisitsEmptyBody": "Your bookings stay in each space's calendar; your visits as a guest appear here.",
-  "@meDataVisitsEmptyBody": {
-    "description": "#2552 My data › Reservations: where the bookings are, and what this view lists."
   }
 }

@@ -9,7 +9,5 @@
   "meContextPersonal": "Personal",
   "meUtilityAccount": "Confidencialidad y cuenta",
   "meUtilityHelp": "Ayuda y asistente",
-  "meDataViewReservations": "Reservas",
-  "meDataVisitsEmptyTitle": "Todavía no hay visitas",
-  "meDataVisitsEmptyBody": "Sus reservas permanecen en el calendario de cada espacio; sus visitas como invitado aparecen aquí."
+  "meDataViewReservations": "Reservas"
 }

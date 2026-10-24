@@ -3,20 +3,25 @@
 // Me › My data: the person's own records, one view at a time — finances,
 // reservations and visits, personal information. The view is the route's
 // (`/me/data?view=`), so a link, Back and a reload all land on the same one.
-// This is the hub the per-source own-data work fills in; today it hosts the
-// existing own-finances screen, the guest visits and the account's own rows.
+// #2557 C2 — each view reads its own source and keeps its own state: the
+// finances per workspace host (the own-finances screen), the reservations
+// on the selected workspace's host (#2553's body) with the guest visits
+// beside them, and the personal information with the personal part of my
+// data read on my personal home (`export_my_personal_data_v1`). A source
+// that fails says so with Try again in its own view; the others stay.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/ui/empty_state.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
 import '../../visits/presentation/my_visits_section.dart';
 import '../../visits/providers/visits_providers.dart';
 import 'me_shell.dart';
+import 'personal_data_card.dart';
 
 /// The `view` query of My data; finances when absent or unknown.
 enum MeDataView {
@@ -63,6 +68,7 @@ class MeDataTab extends ConsumerWidget {
     super.key,
     required this.view,
     required this.finances,
+    required this.reservations,
     this.workspaceId,
   });
 
@@ -71,6 +77,10 @@ class MeDataTab extends ConsumerWidget {
   /// The finances view: the person's own finances screen, handed in by the
   /// route so the hub owes the money feature nothing.
   final Widget finances;
+
+  /// The reservations body (#2553): the person's own bookings on the
+  /// selected workspace's host, handed in by the route likewise.
+  final Widget reservations;
 
   /// Narrows the finances to one space, as a space's own screens link.
   final String? workspaceId;
@@ -109,10 +119,11 @@ class MeDataTab extends ConsumerWidget {
         Expanded(
           child: switch (view) {
             MeDataView.finances => finances,
-            MeDataView.reservations => const _ReservationsView(),
+            MeDataView.reservations => _ReservationsView(body: reservations),
             MeDataView.profile => ListView(
                 key: const ValueKey('me-data-profile'),
                 children: [
+                  const PersonalDataCard(),
                   ...accountSettingsTiles(context, ref,
                       only: AccountTileGroup.profile),
                   ...accountSettingsTiles(context, ref,
@@ -126,27 +137,40 @@ class MeDataTab extends ConsumerWidget {
   }
 }
 
-/// The person's own visits as a guest; their bookings stay in each space's
-/// calendar until the own-reservation read exists, and the view says so.
+/// The person's own reservations on the selected workspace's host, in the
+/// body that pages and names its own refusals; the visits as a guest, when
+/// there are any, open below it.
 class _ReservationsView extends ConsumerWidget {
-  const _ReservationsView();
+  const _ReservationsView({required this.body});
+
+  final Widget body;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final visits = ref.watch(myGuestVisitsProvider).value ?? const [];
-    return ListView(
+    return Column(
       key: const ValueKey('me-data-reservations'),
-      padding: AppSpacing.gutterAll,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (visits.isEmpty)
-          EmptyState(
-            key: const ValueKey('me-data-visits-empty'),
-            icon: Icons.event_note_outlined,
-            title: l10n.meDataVisitsEmptyTitle,
-            subtitle: l10n.meDataVisitsEmptyBody,
+        Expanded(child: body),
+        if (visits.isNotEmpty)
+          ListTile(
+            key: const ValueKey('me-data-guest-visits'),
+            leading: const Icon(Icons.badge_outlined),
+            title: Text(l10n.meDataGuestVisits(visits.length)),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => showAppSheet<void>(
+              context: context,
+              isScrollControlled: true,
+              builder: (_) => const SafeArea(
+                child: SingleChildScrollView(
+                  padding: AppSpacing.gutterAll,
+                  child: MyVisitsSection(),
+                ),
+              ),
+            ),
           ),
-        const MyVisitsSection(),
       ],
     );
   }

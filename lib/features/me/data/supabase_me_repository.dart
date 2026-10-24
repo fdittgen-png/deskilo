@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/me_repository.dart';
+import '../domain/personal_export.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../domain/public_person.dart';
 import '../domain/visibility.dart';
@@ -20,6 +22,21 @@ class SupabaseMeRepository implements MeRepository {
   Future<PersonalWorkspaceRefs> myWorkspaceRefs() async =>
       PersonalWorkspaceRefs.fromJson(
           await _client.rpc<Object?>('my_personal_workspace_refs_v1'));
+
+  @override
+  Future<PersonalExport> exportMyPersonalData() async {
+    final Object? raw;
+    try {
+      raw = await _client.rpc<Object?>('export_my_personal_data_v1');
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the hub names the refusal.
+      final failure = personalExportRefusalOf(e);
+      if (failure == null) rethrow;
+      Error.throwWithStackTrace(
+          PersonalExportRefused(failure, detail: e.message), st);
+    }
+    return PersonalExport.decode(raw);
+  }
 
   @override
   Future<MyVisibility> myVisibility() => readMyVisibility(_client);
@@ -69,3 +86,19 @@ class SupabaseMeRepository implements MeRepository {
       AccountView.fromJson(_object(await _client
           .rpc<dynamic>('visible_account', params: {'p_user_id': userId})));
 }
+
+/// The SQLSTATEs the personal export raises on purpose: no such reader on
+/// this home, or a session it refuses (0564's native guard raises P0001
+/// with its own words). Anything else is not a refusal.
+@visibleForTesting
+PersonalExportFailure? personalExportRefusalOf(PostgrestException e) =>
+    switch (e.code) {
+      'PGRST202' || '42883' => PersonalExportFailure.unsupported,
+      '42501' => PersonalExportFailure.forbidden,
+      'P0001'
+          when e.message.contains('identity_session_refused') ||
+              e.message.contains('not authenticated') ||
+              e.message.contains('managed in the Deskilo app') =>
+        PersonalExportFailure.forbidden,
+      _ => null,
+    };
