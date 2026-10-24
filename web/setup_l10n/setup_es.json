@@ -697,5 +697,11 @@
  "enrolReconcileHint": "Con qué frecuencia un servidor de espacios actualiza los estados que guarda, aunque nadie use la app. Se ajusta en la configuración de la app.",
  "enrolSkew": "Desfase de reloj permitido",
  "enrolSkewHint": "Desfase de reloj entre el hogar personal y un servidor de espacios que aún se acepta, 30 segundos como máximo. Se ajusta en la configuración de la app.",
- "enrolErrReconcile": "La actualización del estado de identidad no debe ser más lenta que su validez, o los estados caducan entre dos actualizaciones."
+ "enrolErrReconcile": "La actualización del estado de identidad no debe ser más lenta que su validez, o los estados caducan entre dos actualizaciones.",
+ "optEntries": "{n} entradas",
+ "optCharacters": "{n} caracteres",
+ "dirPageSize": "Nueva conversación: entradas por página",
+ "dirPageSizeHint": "Cuántos espacios, personas o grupos muestra a la vez el hogar personal cuando un miembro empieza una conversación; los siguientes llegan con Mostrar más. Se configura en los ajustes de la app.",
+ "dirQueryLength": "Nueva conversación: búsqueda más larga",
+ "dirQueryLengthHint": "El texto más largo que busca el directorio de la nueva conversación; una búsqueda más larga se rechaza, nunca se recorta. Se configura en los ajustes de la app."
 }

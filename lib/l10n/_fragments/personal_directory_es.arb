@@ -1,0 +1,11 @@
+{
+  "portalPersonHidden": "Persona",
+  "portalDirectoryShowMore": "Mostrar más",
+  "portalDirectoryPartial": "Algunos de sus espacios no se pueden verificar en este momento; sus personas no aparecen.",
+  "portalDirectoryUnverified": "Este espacio no se puede verificar en este momento.",
+  "settingLabelPersonalMessageDirectoryPageSize": "Entradas del directorio por página",
+  "settingHintPersonalMessageDirectoryPageSize": "Cuántos espacios, personas o grupos muestra la nueva conversación a la vez; los siguientes llegan con Mostrar más.",
+  "settingLabelPersonalMessageDirectoryQueryLength": "Búsqueda más larga en el directorio",
+  "settingHintPersonalMessageDirectoryQueryLength": "El texto más largo que busca el directorio de la nueva conversación. Una búsqueda más larga se rechaza, nunca se recorta.",
+  "settingUnitCharacters": "caracteres"
+}

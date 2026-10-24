@@ -31,6 +31,7 @@ import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
+import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/core/demo/data/place_feedback_repository.dart';
 import 'package:deskilo/core/demo/data/plan_resource_repository.dart';
@@ -74,10 +75,12 @@ import 'package:deskilo/features/auth/providers/oauth_consent_providers.dart';
 import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
 import 'package:deskilo/features/directory/domain/discovery_view.dart';
+import 'package:deskilo/features/directory/domain/personal_message_directory.dart';
 import 'package:deskilo/features/directory/domain/saved_place.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/features/directory/providers/discovery_view_providers.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
+import 'package:deskilo/features/directory/providers/personal_directory_providers.dart';
 import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
@@ -199,6 +202,9 @@ List<Override> standardTestOverrides({
   List<ConnectedInstallation> connectedSources = const [],
   IdentityConnector? identityConnector,
   FakeAccountContactRepository? contacts,
+  // #2472 (P) — the personal home's directory; by default a home without
+  // the reader, so a test of the per-server directory keeps it.
+  PersonalMessageDirectoryRepository? personalDirectory,
   // #1824 — the messenger per server: '' is this one.
   FakeMessengerRepository? messenger,
   Map<String, FakeMessengerRepository> messengers = const {},
@@ -342,6 +348,10 @@ List<Override> standardTestOverrides({
       guestParticipationRepositoryProvider
           .overrideWithValue(guestVisits ?? FakeGuestParticipationRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),
+      personalMessageDirectoryRepositoryProvider.overrideWith((ref) =>
+          personalDirectory ??
+          (FakePersonalMessageDirectoryRepository(reachable: () => const [])
+            ..refusal = const DirectoryRefused(DirectoryFailure.unsupported))),
       messengerRepositoryProvider.overrideWith(
           (ref, source) => messengers[source] ?? homeMessenger),
       captureProtectionProvider

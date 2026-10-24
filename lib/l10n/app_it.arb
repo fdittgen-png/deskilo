@@ -10191,7 +10191,10 @@
   "portalDescription": "Descrizione",
   "portalDirectoryCount": "{name} ({count})",
   "portalDirectoryIncompatible": "Alcuni spazi richiedono una versione più recente dell’app e non vengono mostrati.",
+  "portalDirectoryPartial": "Alcuni dei Suoi spazi non possono essere verificati in questo momento; le loro persone non sono elencate.",
+  "portalDirectoryShowMore": "Mostra altro",
   "portalDirectoryUnavailable": "Alcune directory non sono raggiungibili. I risultati sono incompleti.",
+  "portalDirectoryUnverified": "Questo spazio non può essere verificato in questo momento.",
   "portalDisconnect": "Disconnetti",
   "portalDiscover": "Trova uno spazio di lavoro",
   "portalEmail": "Email pubblica",
@@ -10215,6 +10218,7 @@
   "portalOpenMe": "Io: il mio account e i miei spazi",
   "portalOwner": "Proprietario",
   "portalPerson": "Privato",
+  "portalPersonHidden": "Persona",
   "portalPhone": "Telefono pubblico",
   "portalPlans": "Piani e prezzi",
   "portalPreview": "Vista esterna",
@@ -13585,6 +13589,8 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalMessageDirectoryPageSize": "Quanti spazi, persone o gruppi la nuova conversazione elenca alla volta; i successivi arrivano con Mostra altro.",
+  "settingHintPersonalMessageDirectoryQueryLength": "Il testo più lungo che la rubrica della nuova conversazione cerca. Una ricerca più lunga viene rifiutata, mai troncata.",
   "settingHintPersonalReadConcurrency": "Quanti server lo spazio personale interroga insieme quando raccoglie i Suoi dati. Un limite alle letture parallele del dispositivo, non a un server.",
   "settingHintPersonalReadTimeoutSeconds": "Secondi che lo spazio personale attende la risposta di un server prima di mostrarlo come non disponibile e passare agli altri.",
   "settingHintPersonalReservationMaxWindowDays": "Fissato dalla piattaforma: il periodo più lungo che una lettura delle Sue prenotazioni può chiedere. Limita l'interrogazione.",
@@ -13729,6 +13735,8 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalMessageDirectoryPageSize": "Voci della rubrica per pagina",
+  "settingLabelPersonalMessageDirectoryQueryLength": "Ricerca più lunga nella rubrica",
   "settingLabelPersonalReadConcurrency": "Server letti insieme",
   "settingLabelPersonalReadTimeoutSeconds": "Attesa per server",
   "settingLabelPersonalReservationMaxWindowDays": "Tetto del periodo delle prenotazioni",
@@ -13861,6 +13869,7 @@
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitCharacters": "caratteri",
   "settingUnitCurrencyUnits": "unità monetarie",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"

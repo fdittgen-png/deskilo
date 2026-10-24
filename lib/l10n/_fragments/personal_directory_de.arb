@@ -1,0 +1,11 @@
+{
+  "portalPersonHidden": "Person",
+  "portalDirectoryShowMore": "Mehr anzeigen",
+  "portalDirectoryPartial": "Einige Ihrer Spaces können gerade nicht bestätigt werden; ihre Personen werden nicht angezeigt.",
+  "portalDirectoryUnverified": "Dieser Space kann gerade nicht bestätigt werden.",
+  "settingLabelPersonalMessageDirectoryPageSize": "Verzeichniseinträge pro Seite",
+  "settingHintPersonalMessageDirectoryPageSize": "Wie viele Spaces, Personen oder Gruppen die neue Unterhaltung auf einmal anzeigt; die nächsten kommen mit Mehr anzeigen.",
+  "settingLabelPersonalMessageDirectoryQueryLength": "Längste Verzeichnissuche",
+  "settingHintPersonalMessageDirectoryQueryLength": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht. Eine längere Suche wird abgelehnt, nie gekürzt.",
+  "settingUnitCharacters": "Zeichen"
+}

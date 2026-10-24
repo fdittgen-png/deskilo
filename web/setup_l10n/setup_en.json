@@ -697,5 +697,11 @@
  "enrolReconcileHint": "How often a workspace server refreshes the statuses it holds, even when nobody uses the app. Set in the app's settings.",
  "enrolSkew": "Allowed clock difference",
  "enrolSkewHint": "Clock difference between the personal home and a workspace server still accepted, 30 seconds at most. Set in the app's settings.",
- "enrolErrReconcile": "The identity status refresh must not be slower than its lifetime, or statuses lapse between two refreshes."
+ "enrolErrReconcile": "The identity status refresh must not be slower than its lifetime, or statuses lapse between two refreshes.",
+ "optEntries": "{n} entries",
+ "optCharacters": "{n} characters",
+ "dirPageSize": "New discussion: entries per page",
+ "dirPageSizeHint": "How many workspaces, people or groups the personal home lists at a time when a member starts a discussion; the next ones come with Show more. Set in the app's settings.",
+ "dirQueryLength": "New discussion: longest search",
+ "dirQueryLengthHint": "The longest text the new-discussion directory searches for; a longer search is refused, never cut. Set in the app's settings."
 }

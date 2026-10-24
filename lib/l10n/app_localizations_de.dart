@@ -15624,8 +15624,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.';
 
   @override
+  String get portalDirectoryPartial =>
+      'Einige Ihrer Spaces können gerade nicht bestätigt werden; ihre Personen werden nicht angezeigt.';
+
+  @override
+  String get portalDirectoryShowMore => 'Mehr anzeigen';
+
+  @override
   String get portalDirectoryUnavailable =>
       'Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.';
+
+  @override
+  String get portalDirectoryUnverified =>
+      'Dieser Space kann gerade nicht bestätigt werden.';
 
   @override
   String get portalDisconnect => 'Trennen';
@@ -15698,6 +15709,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get portalPerson => 'Privater Anbieter';
+
+  @override
+  String get portalPersonHidden => 'Person';
 
   @override
   String get portalPhone => 'Öffentliche Telefonnummer';
@@ -19513,6 +19527,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sekunden zwischen zwei Aktualisierungen einer geöffneten Unterhaltung. Niedrigere Werte belasten den Server stärker.';
 
   @override
+  String get settingHintPersonalMessageDirectoryPageSize =>
+      'Wie viele Spaces, Personen oder Gruppen die neue Unterhaltung auf einmal anzeigt; die nächsten kommen mit Mehr anzeigen.';
+
+  @override
+  String get settingHintPersonalMessageDirectoryQueryLength =>
+      'Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht. Eine längere Suche wird abgelehnt, nie gekürzt.';
+
+  @override
   String get settingHintPersonalReadConcurrency =>
       'Wie viele Server der persönliche Bereich gleichzeitig abfragt, wenn er Ihre eigenen Daten zusammenträgt. Eine Grenze für die parallelen Lesezugriffe des Geräts, nicht für einen Server.';
 
@@ -19670,6 +19692,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Aktualisierung der Unterhaltung';
 
   @override
+  String get settingLabelPersonalMessageDirectoryPageSize =>
+      'Verzeichniseinträge pro Seite';
+
+  @override
+  String get settingLabelPersonalMessageDirectoryQueryLength =>
+      'Längste Verzeichnissuche';
+
+  @override
   String get settingLabelPersonalReadConcurrency =>
       'Gleichzeitig gelesene Server';
 
@@ -19775,6 +19805,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitAttempts => 'Versuche';
+
+  @override
+  String get settingUnitCharacters => 'Zeichen';
 
   @override
   String get settingUnitCurrencyUnits => 'Währungseinheiten';

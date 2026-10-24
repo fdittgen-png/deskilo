@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
+import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
@@ -343,7 +344,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider
           .overrideWithValue(fixture.guests),
-      _demoContacts(fixture), // #2472
+      ..._demoContacts(fixture), // #2472
       // #1824 — the messenger of every server, one in-memory one each.
       // #2327 — this server's is the fixture's, seeded; any other is empty.
       // #2405 — this server named by its origin is this server too, as
@@ -467,13 +468,15 @@ FakeMeRepository _demoMe(DemoFixture fixture) => FakeMeRepository(
 
 /// #2472 — this server's directory is both spaces' cast, read at each
 /// call so a persona switch is followed; any other server's is empty.
-Override _demoContacts(DemoFixture fixture) =>
-    accountContactRepositoryProvider.overrideWith(
-      (ref, source) => FakeAccountContactRepository()
-        ..reachableOf = source.isEmpty || source == kDemoServerOrigin
-            ? () => demoReachablePeople(fixture.actor.memberId)
-            : null,
-    );
+List<Override> _demoContacts(DemoFixture fixture) => [
+  accountContactRepositoryProvider.overrideWith(
+    (ref, source) => FakeAccountContactRepository()
+      ..reachableOf = source.isEmpty || source == kDemoServerOrigin
+          ? () => demoReachablePeople(fixture.actor.memberId)
+          : null,
+  ),
+  demoPersonalDirectory(() => demoReachablePeople(fixture.actor.memberId), demoDirectoryGroups), // (P)
+];
 
 /// The visitor's personal context: the demonstration's persona at its one
 /// fictional installation. The real provider reads the installation row of

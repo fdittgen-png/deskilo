@@ -1,0 +1,38 @@
+{
+  "portalPersonHidden": "Person",
+  "@portalPersonHidden": {
+    "description": "#2472 personal directory: Name of a person in the new-discussion directory who does not show their name to you."
+  },
+  "portalDirectoryShowMore": "Show more",
+  "@portalDirectoryShowMore": {
+    "description": "#2472 personal directory: Loads the next page of people of one workspace in the new-discussion directory."
+  },
+  "portalDirectoryPartial": "Some of your workspaces cannot be verified right now; their people are not listed.",
+  "@portalDirectoryPartial": {
+    "description": "#2472 personal directory: Shown above the new-discussion directory when the personal home holds lapsed membership facts."
+  },
+  "portalDirectoryUnverified": "This workspace cannot be verified right now.",
+  "@portalDirectoryUnverified": {
+    "description": "#2472 personal directory: Shown inside one workspace section whose membership fact lapsed."
+  },
+  "settingLabelPersonalMessageDirectoryPageSize": "Directory entries per page",
+  "@settingLabelPersonalMessageDirectoryPageSize": {
+    "description": "#2472 personal directory: Setting label."
+  },
+  "settingHintPersonalMessageDirectoryPageSize": "How many workspaces, people or groups the new discussion lists at a time; the next ones come with Show more.",
+  "@settingHintPersonalMessageDirectoryPageSize": {
+    "description": "#2472 personal directory: Setting hint."
+  },
+  "settingLabelPersonalMessageDirectoryQueryLength": "Longest directory search",
+  "@settingLabelPersonalMessageDirectoryQueryLength": {
+    "description": "#2472 personal directory: Setting label."
+  },
+  "settingHintPersonalMessageDirectoryQueryLength": "The longest text the new-discussion directory searches for. A longer search is refused, never cut.",
+  "@settingHintPersonalMessageDirectoryQueryLength": {
+    "description": "#2472 personal directory: Setting hint."
+  },
+  "settingUnitCharacters": "characters",
+  "@settingUnitCharacters": {
+    "description": "#2472 personal directory: Unit of a setting counted in characters."
+  }
+}

@@ -10191,7 +10191,10 @@
   "portalDescription": "Descripción",
   "portalDirectoryCount": "{name} ({count})",
   "portalDirectoryIncompatible": "Algunos espacios requieren una versión más reciente de la aplicación y no se muestran.",
+  "portalDirectoryPartial": "Algunos de sus espacios no se pueden verificar en este momento; sus personas no aparecen.",
+  "portalDirectoryShowMore": "Mostrar más",
   "portalDirectoryUnavailable": "Algunos directorios no están disponibles. Los resultados están incompletos.",
+  "portalDirectoryUnverified": "Este espacio no se puede verificar en este momento.",
   "portalDisconnect": "Desconectar",
   "portalDiscover": "Buscar un espacio de trabajo",
   "portalEmail": "Correo público",
@@ -10215,6 +10218,7 @@
   "portalOpenMe": "Yo: mi cuenta y mis espacios",
   "portalOwner": "Propietario",
   "portalPerson": "Anfitrión particular",
+  "portalPersonHidden": "Persona",
   "portalPhone": "Teléfono público",
   "portalPlans": "Planes y precios",
   "portalPreview": "Vista externa",
@@ -13585,6 +13589,8 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalMessageDirectoryPageSize": "Cuántos espacios, personas o grupos muestra la nueva conversación a la vez; los siguientes llegan con Mostrar más.",
+  "settingHintPersonalMessageDirectoryQueryLength": "El texto más largo que busca el directorio de la nueva conversación. Una búsqueda más larga se rechaza, nunca se recorta.",
   "settingHintPersonalReadConcurrency": "Cuántos servidores consulta a la vez el espacio personal cuando reúne sus propios datos. Un límite de las lecturas paralelas del dispositivo, no de ningún servidor.",
   "settingHintPersonalReadTimeoutSeconds": "Segundos que el espacio personal espera la respuesta de un servidor antes de mostrarlo como no disponible y continuar con los demás.",
   "settingHintPersonalReservationMaxWindowDays": "Fijado por la plataforma: el periodo más largo que una lectura de sus reservas puede pedir. Acota la consulta.",
@@ -13729,6 +13735,8 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalMessageDirectoryPageSize": "Entradas del directorio por página",
+  "settingLabelPersonalMessageDirectoryQueryLength": "Búsqueda más larga en el directorio",
   "settingLabelPersonalReadConcurrency": "Servidores leídos a la vez",
   "settingLabelPersonalReadTimeoutSeconds": "Espera por servidor",
   "settingLabelPersonalReservationMaxWindowDays": "Tope del periodo de las reservas",
@@ -13861,6 +13869,7 @@
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitCharacters": "caracteres",
   "settingUnitCurrencyUnits": "unidades monetarias",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"
