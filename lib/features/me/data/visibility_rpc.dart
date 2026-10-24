@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/visibility.dart';
@@ -20,7 +21,8 @@ Future<MyVisibility> readMyNetworkVisibility(SupabaseClient client) async =>
 /// #2558 C2 — `set_visibility_if_unchanged_network_v1` on the personal
 /// home's [client]: the chosen spaces by network reference, the field as it
 /// was read as `p_expected`. `visibility_conflict` (SQLSTATE PT409) is a
-/// [VisibilityConflict]; every other refusal stays the server's answer, and
+/// [VisibilityConflict], a home without this writer [VisibilityUnsupported];
+/// every other refusal stays the server's answer, and
 /// nothing falls back to a weaker writer. No answer at all (a timeout, a
 /// dropped connection) is [VisibilityReplyLost].
 Future<MyVisibility> writeVisibilityIfUnchanged(
@@ -44,8 +46,9 @@ Future<MyVisibility> writeVisibilityIfUnchanged(
     );
   } on PostgrestException catch (e, st) {
     // trace-exempt: rethrown typed; the editor reviews the conflict.
-    if (!_isVisibilityConflict(e)) rethrow;
-    Error.throwWithStackTrace(const VisibilityConflict(), st);
+    final typed = visibilityWriteRefusal(e);
+    if (typed == null) rethrow;
+    Error.throwWithStackTrace(typed, st);
   } on Exception catch (e, st) {
     // trace-exempt: no answer came back; the command reads the outcome.
     Error.throwWithStackTrace(VisibilityReplyLost(e), st);
@@ -54,9 +57,18 @@ Future<MyVisibility> writeVisibilityIfUnchanged(
   return _visibility(reply);
 }
 
-/// Whether [e] is the checked writer's `visibility_conflict`.
-bool _isVisibilityConflict(PostgrestException e) =>
-    e.code == 'PT409' || e.message == 'visibility_conflict';
+/// The typed answer [e] stands for, or null when it is the server's own
+/// refusal, kept as it is: the checked writer's `visibility_conflict`
+/// ([VisibilityConflict]), or a home without the checked writer
+/// ([VisibilityUnsupported], PGRST202 / 42883).
+@visibleForTesting
+Exception? visibilityWriteRefusal(PostgrestException e) => switch (e.code) {
+      'PT409' => const VisibilityConflict(),
+      'PGRST202' || '42883' => const VisibilityUnsupported(),
+      _ => e.message == 'visibility_conflict'
+          ? const VisibilityConflict()
+          : null,
+    };
 
 /// `set_visibility(field, audience, workspaces)` on [client]. The spaces
 /// travel only with "chosen spaces"; every other audience sends none.

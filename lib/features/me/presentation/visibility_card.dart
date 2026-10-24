@@ -119,10 +119,7 @@ class VisibilityCard extends ConsumerWidget {
           child: Text(text, style: Theme.of(context).textTheme.labelLarge),
         );
 
-    return Card(
-      key: const ValueKey('me-visibility-card'),
-      margin: AppSpacing.gutterAll,
-      child: Column(
+    final editor = Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ListTile(
@@ -182,15 +179,41 @@ class VisibilityCard extends ConsumerWidget {
                     row(visibility, field),
               ],
             ),
-          if (read.hasValue && !read.hasError) ...[
-            const Divider(),
-            const VisibilityPreview(),
-          ],
         ],
+      );
+    final previewed = read.hasValue && !read.hasError;
+    return Card(
+      key: const ValueKey('me-visibility-card'),
+      margin: AppSpacing.gutterAll,
+      // #2558 — wide: the editor and the saved preview side by side, 60:40;
+      // otherwise the preview follows the editor.
+      child: LayoutBuilder(
+        builder: (context, box) => previewed && box.maxWidth >= _wideCard
+            ? Row(
+                key: const ValueKey('visibility-wide'),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(flex: 6, child: editor),
+                  const Expanded(flex: 4, child: VisibilityPreview()),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  editor,
+                  if (previewed) ...[
+                    const Divider(),
+                    const VisibilityPreview(),
+                  ],
+                ],
+              ),
       ),
     );
   }
 }
+
+/// The card width from which the saved preview sits beside the editor.
+const double _wideCard = 900;
 
 /// Picks one audience; "chosen spaces" also picks the spaces.
 /// #2558 — the spaces come from the personal home's list; a saved space

@@ -2,6 +2,8 @@
 //
 // #1823 — "how others see me", live: the server's own answer for the
 // audience picked (`preview_my_account`), re-asked after every change.
+// #2558 — labelled "Saved preview": it reads what the personal home saved,
+// so a change shows here only once the home confirmed it.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,6 +36,17 @@ class _VisibilityPreviewState extends ConsumerState<VisibilityPreview> {
         children: [
           Text(l10n.visibilityPreviewTitle,
               style: Theme.of(context).textTheme.titleSmall),
+          // #2558 — what is saved, never a change still being made: the
+          // preview is re-read after a confirmed save only.
+          Text(
+            l10n.visibilitySavedPreview,
+            key: const ValueKey('visibility-preview-saved'),
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+          Text(
+            l10n.visibilitySavedPreviewHint,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
           const SizedBox(height: AppSpacing.sm),
           Wrap(
             spacing: AppSpacing.sm,

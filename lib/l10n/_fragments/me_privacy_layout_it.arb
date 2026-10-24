@@ -1,0 +1,13 @@
+{
+  "@@locale": "it",
+  "visibilitySavedPreview": "Anteprima salvata",
+  "visibilitySavedPreviewHint": "Mostra ciò che è salvato. Una modifica compare qui una volta salvata.",
+  "visibilityUnsupported": "La Sua casa personale non può ancora salvare questa impostazione: chi la gestisce deve aggiornarla. Non è stato modificato nulla.",
+  "visibilityLegacyTitle": "Account personali precedenti",
+  "visibilityLegacyIntro": "I Suoi account separati su altri server mantengono le proprie impostazioni. Modificare la Sua casa personale non li modifica.",
+  "visibilityLegacyUnsaved": "Non ancora salvato: {audience}",
+  "visibilityLegacyDiscard": "Scartare la modifica",
+  "visibilityLegacyKeepEditing": "Continuare a modificare",
+  "visibilityLegacyDirtyTitle": "La Sua modifica non è salvata",
+  "visibilityLegacyDirtyBody": "La Sua modifica a «{field}» su {server} non è ancora salvata. Appartiene a quell’account e non passa a un altro."
+}

@@ -1,0 +1,13 @@
+{
+  "@@locale": "de",
+  "visibilitySavedPreview": "Gespeicherte Vorschau",
+  "visibilitySavedPreviewHint": "Zeigt, was gespeichert ist. Eine Änderung erscheint hier, sobald sie gespeichert ist.",
+  "visibilityUnsupported": "Ihr persönliches Zuhause kann diese Einstellung noch nicht speichern: Die Betreiber müssen es aktualisieren. Es wurde nichts geändert.",
+  "visibilityLegacyTitle": "Frühere persönliche Konten",
+  "visibilityLegacyIntro": "Ihre eigenständigen Konten auf anderen Servern behalten ihre eigenen Einstellungen. Änderungen an Ihrem persönlichen Zuhause ändern sie nicht.",
+  "visibilityLegacyUnsaved": "Noch nicht gespeichert: {audience}",
+  "visibilityLegacyDiscard": "Änderung verwerfen",
+  "visibilityLegacyKeepEditing": "Weiter bearbeiten",
+  "visibilityLegacyDirtyTitle": "Ihre Änderung ist nicht gespeichert",
+  "visibilityLegacyDirtyBody": "Ihre Änderung an „{field}“ auf {server} ist noch nicht gespeichert. Sie gehört zu diesem Konto und wandert nicht zu einem anderen."
+}

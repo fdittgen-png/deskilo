@@ -25965,6 +25965,33 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jeder Teil Ihres Kontos wählt sein eigenes Publikum. Nichts ist öffentlich, solange Sie es nicht wählen.';
 
   @override
+  String visibilityLegacyDirtyBody(String field, String server) {
+    return 'Ihre Änderung an „$field“ auf $server ist noch nicht gespeichert. Sie gehört zu diesem Konto und wandert nicht zu einem anderen.';
+  }
+
+  @override
+  String get visibilityLegacyDirtyTitle =>
+      'Ihre Änderung ist nicht gespeichert';
+
+  @override
+  String get visibilityLegacyDiscard => 'Änderung verwerfen';
+
+  @override
+  String get visibilityLegacyIntro =>
+      'Ihre eigenständigen Konten auf anderen Servern behalten ihre eigenen Einstellungen. Änderungen an Ihrem persönlichen Zuhause ändern sie nicht.';
+
+  @override
+  String get visibilityLegacyKeepEditing => 'Weiter bearbeiten';
+
+  @override
+  String get visibilityLegacyTitle => 'Frühere persönliche Konten';
+
+  @override
+  String visibilityLegacyUnsaved(String audience) {
+    return 'Noch nicht gespeichert: $audience';
+  }
+
+  @override
   String get visibilityMoreSharing => 'Weitere Freigabeeinstellungen';
 
   @override
@@ -26029,6 +26056,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Konnte nicht speichern, wer das sieht. Bitte versuchen Sie es erneut.';
 
   @override
+  String get visibilitySavedPreview => 'Gespeicherte Vorschau';
+
+  @override
+  String get visibilitySavedPreviewHint =>
+      'Zeigt, was gespeichert ist. Eine Änderung erscheint hier, sobald sie gespeichert ist.';
+
+  @override
   String get visibilitySignedIn => 'Alle Angemeldeten';
 
   @override
@@ -26065,6 +26099,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get visibilityUnconfirmedTitle =>
       'Ihre Änderung konnte nicht bestätigt werden';
+
+  @override
+  String get visibilityUnsupported =>
+      'Ihr persönliches Zuhause kann diese Einstellung noch nicht speichern: Die Betreiber müssen es aktualisieren. Es wurde nichts geändert.';
 
   @override
   String get visibilityWidenAction => 'Erweitern';
