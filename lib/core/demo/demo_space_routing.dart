@@ -16,6 +16,8 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/calendar/providers/calendar_providers.dart';
 import '../../features/events/providers/event_providers.dart';
+import '../../features/me/providers/me_providers.dart'
+    show myReservationsSourcesFromMe;
 import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
@@ -58,6 +60,11 @@ DemoMyReservationsRepository _myReservations(DemoFixture fixture) =>
       ],
       workspaceName: (id) =>
           fixture.workspaces.workspaces.where((w) => w.id == id).firstOrNull?.name ?? id,
+      // #2553 C2 — each space's own zone, as its workspace row holds it.
+      workspaceZone: (id) => [
+        ...fixture.workspaces.workspaces,
+        ...fixture.secondSpace.workspaces.workspaces,
+      ].where((w) => w.id == id).firstOrNull?.timezone,
     );
 
 /// The per-space overrides of a Demo scope over [fixture].
@@ -96,6 +103,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ),
     // #2553 — the visitor's own bookings of both spaces, one installation.
     myReservationsRepositoryProvider.overrideWithValue(_myReservations(fixture)),
+    // #2553 C2 — read for every space the persona's personal home names.
+    myReservationsSourcesFromMe,
     // #2575
     seriesPreviewerProvider.overrideWith(
       (ref) => FakeSeriesPreviewer(

@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2553 C1 -- My reservations: a person's own bookings on the selected
-// workspace's host, in the window they chose, grouped by day, one more
-// page at a time. The body of the personal data hub's reservations view;
+// #2553 -- My reservations: a person's own bookings on every workspace
+// host their account names (C2), in the window they chose, merged by
+// start, grouped by each workspace's own day, one more page at a time;
+// a host that fails is said beside the others with its own Try again. The body of the personal data hub's reservations view;
 // the hub mounts it. It changes nothing: viewing, cancelling and checking
 // in keep their own captured workspace context.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +20,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/my_reservations.dart';
+import '../../domain/my_reservations_composition.dart';
 import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
 
@@ -55,7 +59,10 @@ String problemWords(AppLocalizations l10n, Object error) => switch (error) {
           MyReservationsFailure.incompatible =>
             l10n.myReservationsMalformed,
           MyReservationsFailure.noContext => l10n.myReservationsNoWorkspace,
+          MyReservationsFailure.hostUnavailable =>
+            l10n.myReservationsHostUnavailable,
         },
+      TimeoutException() => l10n.myReservationsTimedOut,
       _ => knownRefusalText(l10n, error) ?? l10n.myReservationsFailed,
     };
 
@@ -68,22 +75,22 @@ class _Feed extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final query = MyReservationsQuery(from: window.from, to: window.to);
-    final feed = ref.watch(myReservationsFeedControllerProvider(query));
-    final loaded = feed.value;
+    final composed = ref.watch(myReservationsComposerProvider(query));
+    final loaded = composed.value;
     final Widget body;
     if (loaded != null) {
-      body = loaded.items.isEmpty && !loaded.hasMore
+      body = loaded.empty
           ? EmptyState(
               key: const ValueKey('my-reservations-empty'),
               icon: Icons.event_busy_outlined,
               title: l10n.myReservationsEmpty,
             )
-          : _List(query: query, feed: loaded);
-    } else if (feed.hasError) {
+          : _List(query: query, composition: loaded);
+    } else if (composed.hasError) {
       body = _Problem(
-        text: problemWords(l10n, feed.error!),
+        text: problemWords(l10n, composed.error!),
         onRetry: () =>
-            ref.invalidate(myReservationsFeedControllerProvider(query)),
+            ref.invalidate(myReservationsComposerProvider(query)),
       );
     } else {
       body = const LoadingView();
@@ -180,61 +187,61 @@ class _Problem extends StatelessWidget {
   }
 }
 
-/// The pages read so far, grouped by the workspace-clock day, and the next
-/// page's button while the host says there is more.
+/// The bookings of every host that answered, merged by start and grouped
+/// by each workspace's own calendar day; beside them, each host that is
+/// still read, failed or cannot be reached, with its own Try again; and
+/// the next page's button while a host says there is more.
 class _List extends ConsumerWidget {
-  const _List({required this.query, required this.feed});
+  const _List({required this.query, required this.composition});
 
   final MyReservationsQuery query;
-  final MyReservationsFeed feed;
+  final MyReservationsComposition composition;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final format = ref.watch(appFormatProvider);
-    final items = feed.items;
-    final failed = feed.loadMoreFailure;
-    // #2561 L4 — the day a booking falls on is the selected workspace's
-    // calendar day; before a context is captured, the device's.
-    final calendar = ref.watch(myReservationsCalendarProvider);
-    DateTime day(DateTime t) =>
-        calendar?.dateOf(t) ?? DateUtils.dateOnly(t.toLocal());
+    final entries = composition.visible;
+    final composer = ref.read(myReservationsComposerProvider(query).notifier);
     return ListView(
       key: const ValueKey('my-reservations-list'),
       padding: AppSpacing.gutterAll,
       children: [
-        for (final (i, r) in items.indexed) ...[
-          if (i == 0 ||
-              day(items[i - 1].startsAt) != day(r.startsAt))
+        for (final slot in composition.slots)
+          if (slot.state != MyReservationsSlotState.read)
+            _SlotNotice(slot: slot, onRetry: () => composer.retry(slot.installationId)),
+        for (final (i, e) in entries.indexed) ...[
+          if (i == 0 || entries[i - 1].day != e.day)
             Padding(
               padding: const EdgeInsets.only(
                 top: AppSpacing.md,
                 bottom: AppSpacing.xs,
               ),
               child: Text(
-                format.date(r.startsAt),
+                format.date(e.day),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
-          _ReservationCard(item: r),
+          _ReservationCard(item: e.item),
         ],
-        if (failed != null) ...[
-          const SizedBox(height: AppSpacing.sm),
-          InlineBanner(icon: Icons.error_outline, text: problemWords(l10n, failed)),
-        ],
-        if (feed.hasMore)
+        for (final slot in composition.slots)
+          if (slot.state == MyReservationsSlotState.read && slot.failure != null) ...[
+            const SizedBox(height: AppSpacing.sm),
+            InlineBanner(
+              key: ValueKey('my-reservations-more-failed-${slot.installationId}'),
+              icon: Icons.error_outline,
+              text: problemWords(l10n, slot.failure!),
+            ),
+          ],
+        if (composition.hasMore)
           Padding(
             padding: const EdgeInsets.only(top: AppSpacing.md),
             child: Center(
               child: FilledButton.tonal(
                 key: const ValueKey('my-reservations-load-more'),
-                onPressed: feed.loadingMore
-                    ? null
-                    : () => ref
-                        .read(myReservationsFeedControllerProvider(query).notifier)
-                        .loadMore(),
+                onPressed: composition.loadingMore ? null : composer.loadMore,
                 child: Text(
-                  feed.loadingMore
+                  composition.loadingMore
                       ? l10n.myReservationsLoadingMore
                       : l10n.myReservationsLoadMore,
                 ),
@@ -242,6 +249,51 @@ class _List extends ConsumerWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// One host that has not answered yet, or did not: its name, why, and the
+/// way to ask it again. The other hosts' bookings stay beside it.
+class _SlotNotice extends StatelessWidget {
+  const _SlotNotice({required this.slot, required this.onRetry});
+
+  final MyReservationsSlot slot;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final labels = slot.source.labels;
+    final name = labels.isEmpty ? l10n.myReservationsSourceUnnamed : labels.join(', ');
+    final failure = slot.failure;
+    if (slot.state == MyReservationsSlotState.reading || failure == null) {
+      return Padding(
+        key: ValueKey('my-reservations-source-reading-${slot.installationId}'),
+        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+        child: Text(
+          l10n.myReservationsSourceReading(name),
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      );
+    }
+    return Padding(
+      key: ValueKey('my-reservations-source-failed-${slot.installationId}'),
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InlineBanner(
+            icon: Icons.cloud_off_outlined,
+            text: l10n.myReservationsSourceProblem(name, problemWords(l10n, failure)),
+          ),
+          TextButton(
+            key: ValueKey('my-reservations-source-retry-${slot.installationId}'),
+            onPressed: onRetry,
+            child: Text(l10n.commonRetry),
+          ),
+        ],
+      ),
     );
   }
 }

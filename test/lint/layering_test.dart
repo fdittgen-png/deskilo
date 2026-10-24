@@ -89,6 +89,10 @@ const Set<String> _knownPairs = {
   // #2313 — each of my spaces on Me › Home shows what waits there: the
   // space I am in counts the decisions waiting for me, as the app icon does.
   'me -> events',
+  // #2553 C2 — My reservations reads every host my personal account names:
+  // the account's references (me) feed the reservations read through its
+  // sources seam, installed at the composition root.
+  'me -> reservations',
   // #1835 — a visit is read for the signed-in account only, so the visits
   // providers ask who that is (auth), as every account read does.
   'visits -> auth',

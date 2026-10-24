@@ -1,22 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2553 C1 — the strict adapter of `my_reservations_page_v1`, over a fake
+// #2553 — the strict adapter of `my_reservations_page_v1`, over a fake
 // PostgREST: the question leaves as the host expects it (UTC instants, the
 // direction, both cursor fields), the answer is typed with the host
 // attached as its source, an unknown field is ignored, and every refusal
 // the host raises on purpose arrives as its own typed failure. A malformed
-// or incompatible answer is a failure too, never an empty page. The pure
+// or incompatible answer is a failure too, never an empty page. C2: the
+// source's own verified host is asked, a host that is another installation
+// or cannot be reached is refused, the workspaces' zones come from the same
+// host, and the limits are the personal home's platform settings. The pure
 // window rule beside it: the default span, the ceiling, the inclusive days.
 import 'dart:convert';
 
-import 'package:deskilo/core/backend/operation_context.dart';
+import 'package:deskilo/core/backend/backend_settings.dart';
+import 'package:deskilo/core/backend/connected_target.dart';
+import 'package:deskilo/core/backend/connection_outcome.dart';
+import 'package:deskilo/core/backend/context_clients.dart';
 import 'package:deskilo/core/settings/settings.dart';
-import 'package:deskilo/core/settings/settings_capture.dart';
-import 'package:deskilo/core/time/work_hours.dart';
-import 'package:deskilo/core/time/workspace_calendar.dart';
-import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/core/vat/tax_reference_snapshot.dart';
-import 'package:deskilo/features/reservations/data/context_my_reservations_repository.dart';
+import 'package:deskilo/features/reservations/data/host_my_reservations_repository.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,9 +27,24 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 const _installation = 'inst-w-a';
 
-/// The host's registry as the context captured it: a 10-day default and a
-/// 90-day ceiling, numbers no literal would guess.
+/// The personal home's platform registry: a 10-day default, a 90-day
+/// ceiling, three hosts at once and 7 seconds, numbers no literal would
+/// guess.
 List<SettingDefinition> _rows({int windowDays = 10, int maxDays = 90}) => [
+      SettingDefinition(
+        key: 'personal.read_concurrency',
+        type: SettingType.integer,
+        defaultValue: 3,
+        group: 'personal',
+        scopes: const {SettingScope.platform},
+      ),
+      SettingDefinition(
+        key: 'personal.read_timeout_seconds',
+        type: SettingType.integer,
+        defaultValue: 7,
+        group: 'personal',
+        scopes: const {SettingScope.platform},
+      ),
       SettingDefinition(
         key: 'personal.reservation_window_days',
         type: SettingType.integer,
@@ -45,24 +61,7 @@ List<SettingDefinition> _rows({int windowDays = 10, int maxDays = 90}) => [
       ),
     ];
 
-WorkspaceContext _context({List<SettingDefinition>? rows}) => WorkspaceContext(
-      identity: const CanonicalIdentity(issuer: 'https://p.test', subject: 'sub-1'),
-      target: WorkspaceTarget.local(installationId: _installation, workspaceId: 'ws-1'),
-      workspaceLocalUserId: 'local-1',
-      personalEpoch: 1,
-      workspaceEpoch: 1,
-      settings: SettingsCapture(
-        const SettingsIdentity(installation: 'https://w-a.test', workspaceId: 'ws-1', principal: 'local-1'),
-        SettingsSet.defaults(rows ?? _rows()),
-      ),
-      calendar: WorkspaceCalendar(
-        timezone: 'Europe/Paris',
-        openWeekdays: const [1, 2, 3, 4, 5],
-        workHours: WorkHours.defaults,
-        closures: const [],
-      ),
-      taxReference: TaxReferenceSnapshot(ActiveTaxReference.current),
-    );
+const _source = MyReservationsSource(installationId: _installation, workspaceIds: ['ws-1']);
 
 Map<String, Object?> _item(String id, {String status = 'reserved'}) => {
       'id': id,
@@ -91,13 +90,28 @@ Map<String, Object?> _page({
       'next': next,
     };
 
-/// A host answering the one RPC with what the test queued.
+/// A host answering the one RPC with what the test queued, and its
+/// workspace rows' zones.
 class _Host {
   final List<Map<String, dynamic>> received = [];
+  final List<Uri> zoneReads = [];
   Object? answer = _page();
   ({int status, String code, String message})? refusal;
+  List<Map<String, Object?>> zones = [
+    {'id': 'ws-1', 'timezone': 'Europe/Paris'},
+  ];
+  bool zonesFail = false;
 
   Future<http.Response> handle(http.Request request) async {
+    if (request.url.path == '/rest/v1/workspaces') {
+      zoneReads.add(request.url);
+      return http.Response(
+        zonesFail ? jsonEncode({'code': '57014', 'message': 'timeout'}) : jsonEncode(zones),
+        zonesFail ? 500 : 200,
+        request: request,
+        headers: {'content-type': 'application/json'},
+      );
+    }
     expect(request.url.path, '/rest/v1/rpc/my_reservations_page_v1');
     received.add(jsonDecode(request.body) as Map<String, dynamic>);
     final r = refusal;
@@ -118,10 +132,11 @@ class _Host {
   }
 }
 
-ContextMyReservationsRepository _adapter(
+HostMyReservationsRepository _adapter(
   _Host host, {
-  bool withContext = true,
+  bool signedIn = true,
   List<SettingDefinition>? rows,
+  Future<ResolvedWorkspaceHost> Function()? resolve,
 }) {
   final client = SupabaseClient(
     'http://127.0.0.1:54321',
@@ -129,11 +144,16 @@ ContextMyReservationsRepository _adapter(
     httpClient: MockClient(host.handle),
     authOptions: const AuthClientOptions(autoRefreshToken: false),
   );
-  return ContextMyReservationsRepository(
-    context: () async => withContext ? _context(rows: rows) : null,
-    clientFor: (id) {
-      expect(id, _installation, reason: 'the context\'s host, no other');
-      return client;
+  return HostMyReservationsRepository(
+    platformSettings: () async => signedIn ? SettingsSet.defaults(rows ?? _rows()) : null,
+    hostOf: (source) {
+      expect(source, _source, reason: 'the source asked, no other');
+      return resolve?.call() ??
+          Future.value(ResolvedWorkspaceHost(
+            installationId: _installation,
+            client: client,
+            localUserId: 'local-1',
+          ));
     },
   );
 }
@@ -147,7 +167,7 @@ void main() {
   group('the question', () {
     test('leaves as the host expects it: UTC instants, direction, no cursor', () async {
       final host = _Host();
-      await _adapter(host).page(_query);
+      await _adapter(host).page(_source, _query);
       expect(host.received.single, {
         'p_from': '2031-03-01T00:00:00.000Z',
         'p_to': '2031-04-01T00:00:00.000Z',
@@ -162,6 +182,7 @@ void main() {
       final host = _Host();
       final next = MyReservationsCursor(afterStart: DateTime.utc(2031, 3, 2, 8), afterId: 'r-1');
       await _adapter(host).page(
+        _source,
         MyReservationsQuery(
           from: _query.from,
           to: _query.to,
@@ -189,11 +210,40 @@ void main() {
       expect(a, isNot(a.continuedAfter(MyReservationsCursor(afterStart: _query.from, afterId: 'x'))));
     });
 
-    test('no workspace context: a typed refusal, and the host is never asked', () async {
+    test('a host that is another installation is refused, and not asked', () async {
       final host = _Host();
+      final other = SupabaseClient(
+        'http://127.0.0.1:54322',
+        'sb_publishable_test',
+        httpClient: MockClient(host.handle),
+        authOptions: const AuthClientOptions(autoRefreshToken: false),
+      );
       await expectLater(
-        _adapter(host, withContext: false).page(_query),
-        throwsA(isA<MyReservationsRefused>().having((e) => e.failure, 'failure', MyReservationsFailure.noContext)),
+        _adapter(host, resolve: () async => ResolvedWorkspaceHost(
+          installationId: 'inst-other',
+          client: other,
+          localUserId: 'local-9',
+        )).page(_source, _query),
+        throwsA(isA<MyReservationsRefused>()
+            .having((e) => e.failure, 'failure', MyReservationsFailure.hostUnavailable)),
+      );
+      expect(host.received, isEmpty);
+    });
+
+    test('an unverified or unconnected host is the same typed refusal', () async {
+      final host = _Host();
+      final refused = throwsA(isA<MyReservationsRefused>()
+          .having((e) => e.failure, 'failure', MyReservationsFailure.hostUnavailable));
+      await expectLater(
+        _adapter(host, resolve: () async => throw const UnverifiedInstallation(_installation))
+            .page(_source, _query),
+        refused,
+      );
+      await expectLater(
+        _adapter(host, resolve: () async =>
+                throw ConnectionFailure(_installation, ConnectionFailureReason.notConnected))
+            .page(_source, _query),
+        refused,
       );
       expect(host.received, isEmpty);
     });
@@ -210,8 +260,10 @@ void main() {
           hasMore: true,
           next: {'after_start': '2031-03-02T08:00:00+00:00', 'after_id': 'r-2', 'extra': true},
         );
-      final page = await _adapter(host).page(_query);
+      final page = await _adapter(host).page(_source, _query);
       expect(page.source, _installation);
+      expect(page.zones, {'ws-1': 'Europe/Paris'}, reason: 'the zone of the workspace, from the same host');
+      expect(host.zoneReads.single.queryParameters['id'], 'in.("ws-1")');
       expect(page.hasMore, isTrue);
       expect(page.next, MyReservationsCursor(afterStart: DateTime.utc(2031, 3, 2, 8), afterId: 'r-2'));
       final first = page.items.first;
@@ -226,9 +278,17 @@ void main() {
       expect(second.placeLabel, '');
     });
 
+    test('a zone read that fails leaves the bookings, without zones', () async {
+      final host = _Host()..zonesFail = true;
+      final page = await _adapter(host).page(_source, _query);
+      expect(page.items.single.id, 'r-1');
+      expect(page.zones, isEmpty);
+    });
+
     test('an empty page is empty, not a failure', () async {
       final host = _Host()..answer = _page(items: const []);
-      final page = await _adapter(host).page(_query);
+      final page = await _adapter(host).page(_source, _query);
+      expect(host.zoneReads, isEmpty, reason: 'no workspace named, no zone asked');
       expect(page.items, isEmpty);
       expect(page.hasMore, isFalse);
       expect(page.next, isNull);
@@ -237,7 +297,7 @@ void main() {
     Future<void> expectFailure(Object? answer, MyReservationsFailure failure) async {
       final host = _Host()..answer = answer;
       await expectLater(
-        _adapter(host).page(_query),
+        _adapter(host).page(_source, _query),
         throwsA(isA<MyReservationsRefused>().having((e) => e.failure, 'failure', failure)),
       );
     }
@@ -265,7 +325,7 @@ void main() {
     ) async {
       final host = _Host()..refusal = refusal;
       await expectLater(
-        _adapter(host).page(_query),
+        _adapter(host).page(_source, _query),
         throwsA(isA<MyReservationsRefused>()
             .having((e) => e.failure, 'failure', failure)
             .having((e) => e.detail, 'detail', refusal.message)),
@@ -290,15 +350,16 @@ void main() {
 
     test('any other database error passes through untyped', () async {
       final host = _Host()..refusal = (status: 500, code: '57014', message: 'canceling statement');
-      await expectLater(_adapter(host).page(_query), throwsA(isA<PostgrestException>()));
+      await expectLater(_adapter(host).page(_source, _query), throwsA(isA<PostgrestException>()));
     });
   });
 
   group('the limits', () {
-    test('are the host\'s captured settings, asked of no server', () async {
+    test('are the personal home\'s platform settings, asked of no workspace host', () async {
       final host = _Host();
       final limits = await _adapter(host).limits();
       expect((limits.windowDays, limits.maxDays), (10, 90));
+      expect((limits.concurrency, limits.timeout), (3, const Duration(seconds: 7)));
       expect(host.received, isEmpty);
     });
 
@@ -311,9 +372,9 @@ void main() {
       );
     });
 
-    test('no workspace context is the same typed refusal as for a page', () async {
+    test('signed out is a typed refusal, never a default', () async {
       await expectLater(
-        _adapter(_Host(), withContext: false).limits(),
+        _adapter(_Host(), signedIn: false).limits(),
         throwsA(isA<MyReservationsRefused>()
             .having((e) => e.failure, 'failure', MyReservationsFailure.noContext)),
       );
@@ -348,4 +409,81 @@ void main() {
       expect(cut.maxDays, 60);
     });
   });
+
+  group('the host of a source', () {
+    final client = SupabaseClient('http://127.0.0.1:54321', 'sb_publishable_test',
+        authOptions: const AuthClientOptions(autoRefreshToken: false));
+    const far = MyReservationsSource(installationId: 'inst-w-b', workspaceIds: ['ws-9']);
+    const connectedFar = ConnectedInstallation(
+      endpoint: BackendEndpoint('https://w-b.test', 'sb_publishable_b'),
+      account: 'local-b',
+      installationId: 'inst-w-b',
+    );
+
+    test('my home\'s workspace is resolved on the signed-in installation, the pool not read',
+        () async {
+      final origins = <String?>[];
+      var poolRead = false;
+      final host = await resolveMyReservationsHost(
+        const MyReservationsSource(installationId: _installation, workspaceIds: ['ws-1'], hostedHere: true),
+        connected: () async {
+          poolRead = true;
+          return const [];
+        },
+        resolverFor: (origin) {
+          origins.add(origin);
+          return _Resolver(_installation, client);
+        },
+      );
+      expect(origins, [null]);
+      expect(poolRead, isFalse);
+      expect(host.installationId, _installation);
+    });
+
+    test('another installation\'s workspace is resolved through its connected origin', () async {
+      final origins = <String?>[];
+      final asked = <String>[];
+      await resolveMyReservationsHost(
+        far,
+        connected: () async => const [connectedFar],
+        resolverFor: (origin) {
+          origins.add(origin);
+          return _Resolver('inst-w-b', client, asked: asked);
+        },
+      );
+      expect(origins, ['https://w-b.test']);
+      expect(asked, ['ws-9']);
+    });
+
+    test('an installation not connected here is refused typed, no resolver asked', () async {
+      var resolved = false;
+      await expectLater(
+        resolveMyReservationsHost(
+          far,
+          connected: () async => const [],
+          resolverFor: (_) {
+            resolved = true;
+            return _Resolver('inst-w-b', client);
+          },
+        ),
+        throwsA(isA<MyReservationsRefused>()
+            .having((e) => e.failure, 'failure', MyReservationsFailure.hostUnavailable)),
+      );
+      expect(resolved, isFalse);
+    });
+  });
+}
+
+class _Resolver implements WorkspaceHostResolver {
+  _Resolver(this.installationId, this.client, {this.asked});
+
+  final String installationId;
+  final SupabaseClient client;
+  final List<String>? asked;
+
+  @override
+  Future<ResolvedWorkspaceHost> resolve(String workspaceId) async {
+    asked?.add(workspaceId);
+    return ResolvedWorkspaceHost(installationId: installationId, client: client, localUserId: 'local');
+  }
 }

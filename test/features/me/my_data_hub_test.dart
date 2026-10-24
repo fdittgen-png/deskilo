@@ -76,10 +76,18 @@ class _Reservations implements MyReservationsRepository {
 
   @override
   Future<MyReservationsLimits> limits() async =>
-      const MyReservationsLimits(windowDays: 7, maxDays: 60);
+      const MyReservationsLimits(
+        windowDays: 7,
+        maxDays: 60,
+        concurrency: 4,
+        timeout: Duration(seconds: 12),
+      );
 
   @override
-  Future<MyReservationsPage> page(MyReservationsQuery query) async {
+  Future<MyReservationsPage> page(
+    MyReservationsSource source,
+    MyReservationsQuery query,
+  ) async {
     final refused = failure;
     if (refused != null) throw refused;
     final start = DateTime(kTestNow.year, kTestNow.month, kTestNow.day, 9);
@@ -125,6 +133,15 @@ Future<GoRouter> _pump(
     myReservationsRepositoryProvider.overrideWithValue(
       reservations ?? _Reservations(),
     ),
+    // #2553 C2: the hosts My reservations reads.
+    myReservationsSourcesProvider.overrideWith((ref) async => const [
+          MyReservationsSource(
+            installationId: 'inst-a',
+            workspaceIds: ['ws-1'],
+            hostedHere: true,
+            labels: ['One'],
+          ),
+        ]),
     myGuestVisitsProvider.overrideWith((ref) async => visits),
   ],
 );
@@ -302,12 +319,13 @@ void main() {
       final reservations = _Reservations(failure: Exception('host down'));
       final router = await _pump(tester, reservations: reservations);
       await goTo(tester, router, '/me/data?view=reservations');
-      expect(_key('my-reservations-retry'), findsOneWidget);
-      expect(_key('me-data-guest-visits'), findsNothing);
+      const retry = 'my-reservations-source-retry-inst-a';
+      expect(_key(retry), findsOneWidget);
       reservations.failure = null;
-      await tester.tap(_key('my-reservations-retry'));
+      await tester.tap(_key(retry));
       await tester.pumpAndSettle();
-      expect(_key('my-reservations-retry'), findsNothing);
+      expect(_key(retry), findsNothing);
+      expect(find.text('A1'), findsWidgets);
       await goTo(tester, router, '/me/data?view=profile');
       expect(_key('me-data-personal-loaded'), findsOneWidget);
     });

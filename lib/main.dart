@@ -21,6 +21,8 @@ import 'core/trace/trace_hooks.dart';
 import 'core/trace/trace_logger.dart';
 import 'core/trace/trace_provider_observer.dart';
 import 'features/auth/providers/auth_providers.dart';
+import 'features/me/providers/me_providers.dart'
+    show myReservationsSourcesFromMe;
 import 'features/money/providers/expense_schedule_providers.dart'
     show eventSourceOpenersFromMoney;
 import 'features/profile/providers/profile_providers.dart';
@@ -118,8 +120,10 @@ Future<void> main() async {
         captureReaderNameFromProfile, // #2495
         enabledFeatureKeysFromWorkspace, // #2495
         activeSettingsFromWorkspace, // #2486
+        platformSettingsFromWorkspace, // #2553
         audienceRolesFromWorkspace, // #2575
         audienceMembersFromReservations, // #2575
+        myReservationsSourcesFromMe, // #2553
         eventSourceOpenersFromMoney, // #2573
         ...realtimeWiringFromApp, // #2495
       ],

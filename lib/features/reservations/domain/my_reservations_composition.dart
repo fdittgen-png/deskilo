@@ -1,0 +1,248 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #2553 C2 -- My reservations composed across every host my account names.
+// Each host is a slot with its own state (reading, read, failed); one that
+// fails or cannot be reached never hides the others. The pages of all
+// slots merge by start time, and an item is shown only up to the horizon:
+// the last row of every slot that still has more, so a later page of a
+// slower host can never land above what is already on screen. Pure Dart.
+import 'package:meta/meta.dart';
+import 'package:timezone/timezone.dart' as tz;
+
+import '../../../core/i18n/time_zones.dart';
+import 'my_reservations.dart';
+
+/// Where one host's read stands.
+enum MyReservationsSlotState { reading, read, failed }
+
+/// One host's part of the composition: its pages so far, where the next one
+/// starts, and why the last read did not come.
+@immutable
+class MyReservationsSlot {
+  const MyReservationsSlot._({
+    required this.source,
+    required this.state,
+    this.items = const [],
+    this.next,
+    this.hasMore = false,
+    this.zones = const {},
+    this.loadingMore = false,
+    this.failure,
+  });
+
+  /// The first page of [source] is being read.
+  const MyReservationsSlot.reading(MyReservationsSource source)
+      : this._(source: source, state: MyReservationsSlotState.reading);
+
+  /// The first page of [source] did not come: [failure] says why.
+  const MyReservationsSlot.failed(MyReservationsSource source, Object failure)
+      : this._(
+          source: source,
+          state: MyReservationsSlotState.failed,
+          failure: failure,
+        );
+
+  /// The first page of [source].
+  factory MyReservationsSlot.firstPage(
+    MyReservationsSource source,
+    MyReservationsPage page,
+  ) =>
+      MyReservationsSlot._(
+        source: source,
+        state: MyReservationsSlotState.read,
+        items: page.items,
+        next: page.next,
+        hasMore: page.hasMore,
+        zones: page.zones,
+      );
+
+  final MyReservationsSource source;
+  final MyReservationsSlotState state;
+  final List<MyReservationItem> items;
+  final MyReservationsCursor? next;
+  final bool hasMore;
+  final Map<String, String> zones;
+  final bool loadingMore;
+
+  /// For a failed slot, why its first page did not come; for a read one,
+  /// why its last further page did not (its pages stay).
+  final Object? failure;
+
+  String get installationId => source.installationId;
+
+  /// The next page is being read.
+  MyReservationsSlot get readingMore => MyReservationsSlot._(
+        source: source,
+        state: state,
+        items: items,
+        next: next,
+        hasMore: hasMore,
+        zones: zones,
+        loadingMore: true,
+      );
+
+  /// [page] appended after the pages so far.
+  MyReservationsSlot appended(MyReservationsPage page) => MyReservationsSlot._(
+        source: source,
+        state: MyReservationsSlotState.read,
+        items: List.unmodifiable([...items, ...page.items]),
+        next: page.next,
+        hasMore: page.hasMore,
+        zones: Map.unmodifiable({...zones, ...page.zones}),
+      );
+
+  /// The further page did not come; the pages so far stay.
+  MyReservationsSlot moreFailed(Object error) => MyReservationsSlot._(
+        source: source,
+        state: state,
+        items: items,
+        next: next,
+        hasMore: hasMore,
+        zones: zones,
+        failure: error,
+      );
+}
+
+/// One booking in the composed list, with the host it came from and the
+/// zone of its workspace.
+@immutable
+class MyReservationEntry {
+  const MyReservationEntry({required this.item, required this.source, this.zone});
+
+  final MyReservationItem item;
+
+  /// The installation the booking was read from.
+  final String source;
+
+  /// The IANA zone of the booking's workspace; null when its host named
+  /// none.
+  final String? zone;
+
+  /// The calendar day the booking starts on in its workspace's own zone;
+  /// on the device's calendar only when the host named no known zone.
+  DateTime get day {
+    final name = zone;
+    if (name != null && TimeZones.isKnown(name)) {
+      final local = tz.TZDateTime.from(item.startsAt, tz.getLocation(name));
+      return DateTime(local.year, local.month, local.day);
+    }
+    final local = item.startsAt.toLocal();
+    return DateTime(local.year, local.month, local.day);
+  }
+}
+
+/// (start, host, id): the order of the composed list, total and stable.
+int _order(MyReservationEntry a, MyReservationEntry b) {
+  final byStart = a.item.startsAt.compareTo(b.item.startsAt);
+  if (byStart != 0) return byStart;
+  final bySource = a.source.compareTo(b.source);
+  return bySource != 0 ? bySource : a.item.id.compareTo(b.item.id);
+}
+
+/// Every host's slot, in the order the sources were named.
+@immutable
+class MyReservationsComposition {
+  MyReservationsComposition(this.slots);
+
+  final List<MyReservationsSlot> slots;
+
+  /// [slot] in place of the one of the same host.
+  MyReservationsComposition replacing(MyReservationsSlot slot) =>
+      MyReservationsComposition(List.unmodifiable(
+        slots.map((s) => s.installationId == slot.installationId ? slot : s),
+      ));
+
+  /// [source]'s answer placed in its slot: its first [page] (or the
+  /// [failure] of it) when [first], else a further page appended (or its
+  /// failure beside the pages so far). A host no slot names is ignored.
+  MyReservationsComposition answered(
+    MyReservationsSource source, {
+    required bool first,
+    MyReservationsPage? page,
+    Object? failure,
+  }) {
+    final slot = slotOf(source.installationId);
+    if (slot == null) return this;
+    final error = failure ?? StateError('no page and no failure');
+    return replacing(switch ((first, page)) {
+      (true, final MyReservationsPage p) => MyReservationsSlot.firstPage(source, p),
+      (true, null) => MyReservationsSlot.failed(source, error),
+      (false, final MyReservationsPage p) => slot.appended(p),
+      (false, null) => slot.moreFailed(error),
+    });
+  }
+
+  /// Every read host that has a further page, marked as reading it, and
+  /// where each one continues.
+  (MyReservationsComposition, List<(MyReservationsSource, MyReservationsCursor)>)
+      askingMore() {
+    var next = this;
+    final asks = <(MyReservationsSource, MyReservationsCursor)>[];
+    for (final slot in slots) {
+      final cursor = slot.next;
+      if (slot.state != MyReservationsSlotState.read ||
+          !slot.hasMore ||
+          slot.loadingMore ||
+          cursor == null) {
+        continue;
+      }
+      next = next.replacing(slot.readingMore);
+      asks.add((slot.source, cursor));
+    }
+    return (next, asks);
+  }
+
+  MyReservationsSlot? slotOf(String installationId) {
+    for (final s in slots) {
+      if (s.installationId == installationId) return s;
+    }
+    return null;
+  }
+
+  /// The merged bookings that can be shown now: every read slot's items up
+  /// to the horizon, the smallest last row of a slot that has more.
+  late final List<MyReservationEntry> visible = _visible();
+
+  List<MyReservationEntry> _visible() {
+    final all = <MyReservationEntry>[];
+    MyReservationEntry? horizon;
+    for (final s in slots) {
+      if (s.state != MyReservationsSlotState.read) continue;
+      for (final item in s.items) {
+        all.add(MyReservationEntry(
+          item: item,
+          source: s.installationId,
+          zone: s.zones[item.workspaceId],
+        ));
+      }
+      if (s.hasMore && s.items.isNotEmpty) {
+        final last = MyReservationEntry(item: s.items.last, source: s.installationId);
+        if (horizon == null || _order(last, horizon) < 0) horizon = last;
+      }
+    }
+    all.sort(_order);
+    final h = horizon;
+    if (h == null) return List.unmodifiable(all);
+    return List.unmodifiable(all.where((e) => _order(e, h) <= 0));
+  }
+
+  /// A host still has a further page.
+  bool get hasMore => slots.any((s) => s.state == MyReservationsSlotState.read && s.hasMore);
+
+  bool get loadingMore => slots.any((s) => s.loadingMore);
+
+  /// A host's first page is still being read.
+  bool get reading => slots.any((s) => s.state == MyReservationsSlotState.reading);
+
+  /// The hosts whose first page did not come.
+  List<MyReservationsSlot> get failed => [
+        for (final s in slots)
+          if (s.state == MyReservationsSlotState.failed) s,
+      ];
+
+  /// Every host answered, all of its pages are read and none holds a
+  /// booking of the period: only then is the period empty.
+  bool get empty =>
+      slots.every((s) => s.state == MyReservationsSlotState.read && !s.hasMore) &&
+      visible.isEmpty;
+}

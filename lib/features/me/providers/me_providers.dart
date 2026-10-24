@@ -6,7 +6,9 @@ import '../../../core/backend/connected_installations.dart';
 import '../../../core/backend/context_client_providers.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../reservations/providers/reservation_providers.dart';
 import '../application/me_actions.dart';
+import '../application/my_reservation_sources.dart';
 import '../data/host_workspace_access_repository.dart';
 import '../data/supabase_linked_me_repository.dart';
 import '../data/supabase_me_repository.dart';
@@ -117,6 +119,15 @@ Future<PersonalWorkspaceRefs> personalWorkspaceRefs(Ref ref) {
 /// No retry for [personalWorkspaceRefsProvider] (#2339): the section says
 /// it is unavailable at once rather than after ten attempts.
 Duration? personalRefsRetry(int retryCount, Object error) => null;
+
+/// #2553 C2 -- My reservations reads every host my personal account names,
+/// not only the selected workspace's. The composition root puts it in its
+/// scope's overrides (reservations sits below me in the feature graph).
+final Override myReservationsSourcesFromMe =
+    myReservationsSourcesProvider.overrideWith((ref) async {
+  final refs = await ref.watch(personalWorkspaceRefsProvider.future);
+  return myReservationSourcesOf(refs);
+});
 
 /// #2557 C2 — the personal part of my data, read on my personal home while
 /// My data's personal view shows it; dropped when it closes, so each visit
