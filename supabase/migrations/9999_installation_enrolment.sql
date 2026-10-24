@@ -93,7 +93,7 @@ begin
   return new;
 end;
 $fn$;
-revoke execute on function public.protect_enrolled_installation() from public, anon, authenticated;
+revoke execute on function public.protect_enrolled_installation() from public, anon, authenticated, service_role;
 drop trigger if exists protect_enrolled_installation on public.enrolled_installations;
 create trigger protect_enrolled_installation
   before update or delete on public.enrolled_installations

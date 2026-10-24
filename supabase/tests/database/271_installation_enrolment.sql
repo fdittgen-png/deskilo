@@ -116,7 +116,7 @@ select throws_ok($$update public.enrolled_installations
   '55000', null, 'and keeps its installation id');
 select is(public.operator_revoke_installation('00000000-0000-4000-8000-00000025620a')->>'status',
   'revoked', 'the operator revokes an enrolment');
-select is((select concat_ws(' ', enabled, accepting_new_workspaces, revoked_at is not null)
+select is((select concat_ws(' ', enabled::text, accepting_new_workspaces::text, (revoked_at is not null)::text)
              from public.enrolled_installations
             where installation_id = '00000000-0000-4000-8000-00000025620a'),
   'false false true', 'which is no longer in force nor accepting');
