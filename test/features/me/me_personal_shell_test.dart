@@ -241,7 +241,7 @@ void main() {
     expect(_key('finances-tabs'), findsOneWidget);
     await _tap(tester, _key('me-data-view-reservations'));
     expect(router.state.uri.toString(), '/me/data?view=reservations');
-    expect(_key('me-data-visits-empty'), findsOneWidget);
+    expect(_key('me-data-reservations'), findsOneWidget);
     await _tap(tester, _key('me-data-view-profile'));
     expect(router.state.uri.toString(), '/me/data?view=profile');
     expect(_key('settings-photo'), findsOneWidget);

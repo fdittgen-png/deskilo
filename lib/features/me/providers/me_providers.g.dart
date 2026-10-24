@@ -541,3 +541,53 @@ final class PersonalWorkspaceRefsProvider
 
 String _$personalWorkspaceRefsHash() =>
     r'69d0d76da6cc0132448ac6e3a8eb92ace24203d2';
+
+/// #2557 C2 — the personal part of my data, read on my personal home while
+/// My data's personal view shows it; dropped when it closes, so each visit
+/// reads what the home holds now. Signed out there is nothing to read.
+
+@ProviderFor(personalExport)
+final personalExportProvider = PersonalExportProvider._();
+
+/// #2557 C2 — the personal part of my data, read on my personal home while
+/// My data's personal view shows it; dropped when it closes, so each visit
+/// reads what the home holds now. Signed out there is nothing to read.
+
+final class PersonalExportProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PersonalExport>,
+          PersonalExport,
+          FutureOr<PersonalExport>
+        >
+    with $FutureModifier<PersonalExport>, $FutureProvider<PersonalExport> {
+  /// #2557 C2 — the personal part of my data, read on my personal home while
+  /// My data's personal view shows it; dropped when it closes, so each visit
+  /// reads what the home holds now. Signed out there is nothing to read.
+  PersonalExportProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: personalRefsRetry,
+        name: r'personalExportProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$personalExportHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<PersonalExport> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PersonalExport> create(Ref ref) {
+    return personalExport(ref);
+  }
+}
+
+String _$personalExportHash() => r'5e379fb0090555f0a509acc53ce6c676301d30ec';

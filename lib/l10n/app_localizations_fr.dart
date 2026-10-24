@@ -12879,14 +12879,47 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meCreateSpace => 'Créer un espace';
 
   @override
+  String meDataGuestVisits(int count) {
+    return 'Visites en tant qu’invité : $count';
+  }
+
+  @override
+  String get meDataPersonalExport => 'Exporter les données personnelles';
+
+  @override
+  String get meDataPersonalFailed =>
+      'Votre espace personnel n’a pas répondu. Rien n’a été exporté.';
+
+  @override
+  String get meDataPersonalForbidden =>
+      'Cette session ne peut pas lire vos données personnelles. Reconnectez-vous à l’application.';
+
+  @override
+  String get meDataPersonalMalformed =>
+      'Votre espace personnel a répondu sous une forme que l’application ne sait pas lire. Rien n’a été exporté.';
+
+  @override
+  String get meDataPersonalScope =>
+      'Ce que votre espace personnel détient sur vous : votre profil, vos préférences, vos conversations et les espaces que vous nommez. Les réservations et factures de chaque espace restent dans cet espace et ne font pas partie de ce fichier.';
+
+  @override
+  String meDataPersonalSummary(
+    int conversations,
+    int messages,
+    int workspaces,
+  ) {
+    return 'Conversations : $conversations · Messages : $messages · Espaces nommés : $workspaces';
+  }
+
+  @override
+  String get meDataPersonalTitle => 'Votre compte personnel';
+
+  @override
+  String get meDataPersonalUnsupported =>
+      'Votre espace personnel ne propose pas encore cet export. Rien n’a été exporté.';
+
+  @override
   String get meDataViewReservations => 'Réservations';
-
-  @override
-  String get meDataVisitsEmptyBody =>
-      'Vos réservations restent dans le calendrier de chaque espace ; vos visites en tant qu’invité apparaissent ici.';
-
-  @override
-  String get meDataVisitsEmptyTitle => 'Aucune visite pour l’instant';
 
   @override
   String meFinanceGlanceOwed(String amount) {

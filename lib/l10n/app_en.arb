@@ -14838,17 +14838,61 @@
   "@meCreateSpace": {
     "description": "Button on the Me home: create a new space."
   },
+  "meDataGuestVisits": "Visits as a guest: {count}",
+  "@meDataGuestVisits": {
+    "description": "#2557 My data › Reservations: opens the person's visits as a guest.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "meDataPersonalExport": "Export personal data",
+  "@meDataPersonalExport": {
+    "description": "#2557 My data: export the personal-data file."
+  },
+  "meDataPersonalFailed": "Your personal home did not answer. Nothing was exported.",
+  "@meDataPersonalFailed": {
+    "description": "#2557 My data: the personal home did not answer."
+  },
+  "meDataPersonalForbidden": "This session may not read your personal data. Sign in to the app again.",
+  "@meDataPersonalForbidden": {
+    "description": "#2557 My data: the session may not read the personal export."
+  },
+  "meDataPersonalMalformed": "Your personal home answered in a form this app cannot read. Nothing was exported.",
+  "@meDataPersonalMalformed": {
+    "description": "#2557 My data: the personal export answer could not be read."
+  },
+  "meDataPersonalScope": "What your personal home holds about you: your profile, preferences, conversations and the workspaces you name. Each workspace's bookings and invoices stay with that workspace and are not part of this file.",
+  "@meDataPersonalScope": {
+    "description": "#2557 My data: what the personal export covers and what it leaves to each workspace."
+  },
+  "meDataPersonalSummary": "Conversations: {conversations} · Messages: {messages} · Workspaces named: {workspaces}",
+  "@meDataPersonalSummary": {
+    "description": "#2557 My data: counts the personal home answered.",
+    "placeholders": {
+      "conversations": {
+        "type": "int"
+      },
+      "messages": {
+        "type": "int"
+      },
+      "workspaces": {
+        "type": "int"
+      }
+    }
+  },
+  "meDataPersonalTitle": "Your personal account",
+  "@meDataPersonalTitle": {
+    "description": "#2557 My data › Personal information: the personal-account source card."
+  },
+  "meDataPersonalUnsupported": "Your personal home does not offer this export yet. Nothing was exported.",
+  "@meDataPersonalUnsupported": {
+    "description": "#2557 My data: the personal home has no personal export."
+  },
   "meDataViewReservations": "Reservations",
   "@meDataViewReservations": {
     "description": "#2552 My data view: the person's own reservations and visits."
-  },
-  "meDataVisitsEmptyBody": "Your bookings stay in each space's calendar; your visits as a guest appear here.",
-  "@meDataVisitsEmptyBody": {
-    "description": "#2552 My data › Reservations: where the bookings are, and what this view lists."
-  },
-  "meDataVisitsEmptyTitle": "No visits yet",
-  "@meDataVisitsEmptyTitle": {
-    "description": "#2552 My data › Reservations with no guest visit to show."
   },
   "meFinanceGlanceOwed": "To pay: {amount}",
   "@meFinanceGlanceOwed": {

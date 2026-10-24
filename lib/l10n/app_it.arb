@@ -8643,9 +8643,16 @@
   "meAddressSaveFailed": "Impossibile salvare il suo indirizzo. Riprovi.",
   "meContextPersonal": "Personale",
   "meCreateSpace": "Crea uno spazio",
+  "meDataGuestVisits": "Visite come ospite: {count}",
+  "meDataPersonalExport": "Esporta i dati personali",
+  "meDataPersonalFailed": "Il Suo spazio personale non ha risposto. Non è stato esportato nulla.",
+  "meDataPersonalForbidden": "Questa sessione non può leggere i Suoi dati personali. Acceda di nuovo all’app.",
+  "meDataPersonalMalformed": "Il Suo spazio personale ha risposto in una forma che questa app non sa leggere. Non è stato esportato nulla.",
+  "meDataPersonalScope": "Ciò che il Suo spazio personale conserva su di Lei: il Suo profilo, le Sue preferenze, le Sue conversazioni e gli spazi che Lei nomina. Le prenotazioni e le fatture di ogni spazio restano in quello spazio e non fanno parte di questo file.",
+  "meDataPersonalSummary": "Conversazioni: {conversations} · Messaggi: {messages} · Spazi nominati: {workspaces}",
+  "meDataPersonalTitle": "Il Suo account personale",
+  "meDataPersonalUnsupported": "Il Suo spazio personale non offre ancora questa esportazione. Non è stato esportato nulla.",
   "meDataViewReservations": "Prenotazioni",
-  "meDataVisitsEmptyBody": "Le Sue prenotazioni restano nel calendario di ogni spazio; le Sue visite come ospite compaiono qui.",
-  "meDataVisitsEmptyTitle": "Ancora nessuna visita",
   "meFinanceGlanceOwed": "Da pagare: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
