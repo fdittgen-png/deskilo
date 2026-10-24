@@ -12900,6 +12900,52 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meDataViewReservations => 'Reservas';
 
   @override
+  String get meDataWorkspaceDisabled =>
+      'Este espacio no ofrece la exportación de datos.';
+
+  @override
+  String get meDataWorkspaceExport => 'Exportar';
+
+  @override
+  String get meDataWorkspaceFailed =>
+      'Este espacio no respondió. No se exportó nada.';
+
+  @override
+  String get meDataWorkspaceForbidden =>
+      'Este espacio lo ha rechazado: usted no es miembro activo allí. No se exportó nada.';
+
+  @override
+  String get meDataWorkspaceHostUnavailable =>
+      'El servidor de este espacio no es accesible desde aquí. No se exportó nada.';
+
+  @override
+  String get meDataWorkspaceMalformed =>
+      'Este espacio respondió de una forma que esta aplicación no puede leer. No se exportó nada.';
+
+  @override
+  String get meDataWorkspaceSuperseded =>
+      'La cuenta conectada cambió mientras se leía la exportación. No se ofreció nada.';
+
+  @override
+  String meDataWorkspaceUnnamed(String id) {
+    return 'Espacio $id';
+  }
+
+  @override
+  String get meDataWorkspacesEmpty => 'Su cuenta aún no nombra ningún espacio.';
+
+  @override
+  String get meDataWorkspacesFailed =>
+      'No se pudieron leer los espacios de su cuenta. No se exportó nada.';
+
+  @override
+  String get meDataWorkspacesScope =>
+      'Cada espacio exporta lo que conserva sobre usted — afiliación, reservas, cuenta y facturas — desde su propio servidor, un archivo por espacio. La parte de su cuenta personal es la tarjeta de arriba.';
+
+  @override
+  String get meDataWorkspacesTitle => 'Sus datos en cada espacio';
+
+  @override
   String meFinanceGlanceOwed(String amount) {
     return 'A pagar: $amount';
   }
@@ -14034,6 +14080,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get myBadgeTitle => 'Mi credencial';
+
+  @override
+  String get myFinancesExport => 'Exportar mis documentos';
+
+  @override
+  String myFinancesExportWorkspace(String workspace) {
+    return '$workspace — documentos (CSV)';
+  }
 
   @override
   String get myInvoicesTitle => 'Mis facturas';

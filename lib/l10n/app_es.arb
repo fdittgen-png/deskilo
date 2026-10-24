@@ -8658,6 +8658,18 @@
   "meDataPersonalTitle": "Su cuenta personal",
   "meDataPersonalUnsupported": "Su espacio personal todavía no ofrece esta exportación. No se exportó nada.",
   "meDataViewReservations": "Reservas",
+  "meDataWorkspaceDisabled": "Este espacio no ofrece la exportación de datos.",
+  "meDataWorkspaceExport": "Exportar",
+  "meDataWorkspaceFailed": "Este espacio no respondió. No se exportó nada.",
+  "meDataWorkspaceForbidden": "Este espacio lo ha rechazado: usted no es miembro activo allí. No se exportó nada.",
+  "meDataWorkspaceHostUnavailable": "El servidor de este espacio no es accesible desde aquí. No se exportó nada.",
+  "meDataWorkspaceMalformed": "Este espacio respondió de una forma que esta aplicación no puede leer. No se exportó nada.",
+  "meDataWorkspaceSuperseded": "La cuenta conectada cambió mientras se leía la exportación. No se ofreció nada.",
+  "meDataWorkspaceUnnamed": "Espacio {id}",
+  "meDataWorkspacesEmpty": "Su cuenta aún no nombra ningún espacio.",
+  "meDataWorkspacesFailed": "No se pudieron leer los espacios de su cuenta. No se exportó nada.",
+  "meDataWorkspacesScope": "Cada espacio exporta lo que conserva sobre usted — afiliación, reservas, cuenta y facturas — desde su propio servidor, un archivo por espacio. La parte de su cuenta personal es la tarjeta de arriba.",
+  "meDataWorkspacesTitle": "Sus datos en cada espacio",
   "meFinanceGlanceOwed": "A pagar: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -9227,6 +9239,8 @@
   "moneyUsageUnlimited": "{used} medias jornadas usadas",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mi credencial",
+  "myFinancesExport": "Exportar mis documentos",
+  "myFinancesExportWorkspace": "{workspace} — documentos (CSV)",
   "myInvoicesTitle": "Mis facturas",
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
