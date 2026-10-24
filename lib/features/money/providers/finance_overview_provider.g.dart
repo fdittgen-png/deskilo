@@ -68,7 +68,7 @@ final class FinanceOverviewProvider
   }
 }
 
-String _$financeOverviewHash() => r'507a90cca3fb85f2913c8b6314f5486ed6727c92';
+String _$financeOverviewHash() => r'abb9d90fd9a85c7cc9ab4f32d63103fd43c541c2';
 
 /// A one-shot request to open one invoice in its own space's Money screen
 /// (Me › Finances → the workspace, in the right environment). The screen

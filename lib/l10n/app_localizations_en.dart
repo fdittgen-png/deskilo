@@ -7682,6 +7682,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesAwaitingValidation => 'Payment being validated';
 
   @override
+  String get financesColumnAmount => 'Amount';
+
+  @override
+  String get financesColumnDocument => 'Document and period';
+
+  @override
+  String get financesColumnState => 'Document and payment';
+
+  @override
+  String get financesColumnWorkspace => 'Issued by';
+
+  @override
+  String financesCoverageAnswered(String host) {
+    return 'Read from $host';
+  }
+
+  @override
+  String get financesCoverageHome => 'your home installation';
+
+  @override
+  String get financesCoverageNoDocuments => 'no documents';
+
+  @override
+  String financesCoverageWorkspace(String workspace, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documents',
+      one: '1 document',
+    );
+    return '$workspace: $_temp0';
+  }
+
+  @override
   String get financesDevSection =>
       'Development spaces — test data, not counted above';
 
@@ -7689,6 +7723,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String financesDueOn(String date) {
     return 'Due $date';
   }
+
+  @override
+  String get financesExportDocument => 'Export this document (CSV)';
 
   @override
   String get financesFullHistory => 'Full history, usage and other servers';
@@ -7715,6 +7752,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesNothingPaid => 'No settled invoice yet.';
 
   @override
+  String get financesOpenDocument => 'Open';
+
+  @override
   String get financesOutstanding => 'Outstanding';
 
   @override
@@ -7735,6 +7775,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesPayments => 'Payments';
+
+  @override
+  String get financesPeriodAll => 'All periods';
 
   @override
   String financesRemindedTimes(int count) {
@@ -7764,10 +7807,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesStateRefunded => 'Refunded';
 
   @override
+  String get financesStateUnpaid => 'Unpaid';
+
+  @override
   String get financesTitle => 'Finances';
 
   @override
   String get financesToPay => 'To pay';
+
+  @override
+  String get financesTypeAll => 'All documents';
+
+  @override
+  String get financesTypeCreditNote => 'Credit note';
+
+  @override
+  String get financesTypeInvoice => 'Invoice';
 
   @override
   String get gettingStartedActionChooseDay => 'Choose another day';
@@ -15951,6 +16006,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get privacyExportHint =>
       'Everything you are the subject of, as one JSON file (art. 20).';
+
+  @override
+  String get privacyExportInMyData =>
+      'Each source exports on its own in My data › Personal information.';
 
   @override
   String get privacyExportShareText => 'My DesKilo data export';

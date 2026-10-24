@@ -37,7 +37,13 @@ const _kPrivacyPolicyUrl = 'https://fdittgen-png.github.io/deskilo/privacy.html'
 /// it with me, leave and be forgotten — each is a button that does the
 /// thing, against a server that enforces the rule the button describes.
 class PrivacyScreen extends ConsumerWidget {
-  const PrivacyScreen({super.key});
+  const PrivacyScreen({super.key, this.myDataPath});
+
+  /// #2557 C4 — where the personal shell exports my data, one source at a
+  /// time (My data › Personal information); null while the shell is off.
+  /// The route hands it in, so this screen owes the personal shell nothing.
+  /// When set, the legacy single-workspace share gives way to a link there.
+  final String? myDataPath;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,7 +75,20 @@ class PrivacyScreen extends ConsumerWidget {
           subtitle: Text(l10n.privacyWhoCanSeeHint),
           onTap: () => showAccessSheet(context, ref),
         ),
-        if (exportOn)
+        if (myDataPath case final path?)
+          ListTile(
+            key: const ValueKey('privacy-export-my-data'),
+            leading: const Icon(Icons.download_outlined),
+            title: HelpDotTitle(
+              l10n.privacyExport,
+              l10n.helpHintPrivacyTopic,
+              anchor: HelpAnchor.privacyExport,
+            ),
+            subtitle: Text(l10n.privacyExportInMyData),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go(path),
+          )
+        else if (exportOn)
           ListTile(
             key: const ValueKey('privacy-export'),
             leading: const Icon(Icons.download_outlined),
