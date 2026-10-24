@@ -3713,6 +3713,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get conversationLeft => 'Ausgetreten';
 
   @override
+  String get conversationLinkRefused =>
+      'Diese Unterhaltung ist für Sie nicht verfügbar. Es wurde nichts geöffnet.';
+
+  @override
+  String get conversationLinkUnreachable =>
+      'Diese Unterhaltung konnte nicht geprüft werden, weil ihr Server nicht geantwortet hat. Es wurde nichts geöffnet.';
+
+  @override
   String get conversationLoadEarlier => 'Frühere Nachrichten laden';
 
   @override
@@ -3743,6 +3751,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get conversationSeeProfile => 'Profil ansehen';
+
+  @override
+  String get conversationSendInFlight =>
+      'Ihre vorherige Nachricht wird noch gesendet.';
+
+  @override
+  String get conversationSendReview => 'Erneut lesen';
+
+  @override
+  String get conversationSendUnconfirmed =>
+      'Zustellung nicht bestätigt: Die Nachricht ist vielleicht angekommen, vielleicht nicht. Lesen Sie die Unterhaltung erneut, bevor Sie sie noch einmal senden.';
 
   @override
   String get conversationToday => 'Heute';
@@ -8734,11 +8753,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get inboxMessengerDoor => 'Meine Nachrichten öffnen';
 
   @override
+  String get inboxMoreActions => 'Weitere Aktionen';
+
+  @override
   String get inboxNoArchived => 'Keine archivierten Unterhaltungen.';
 
   @override
   String get inboxNoUnread =>
       'Nichts Ungelesenes — Sie sind auf dem Laufenden.';
+
+  @override
+  String inboxRequestsCount(int count) {
+    return 'Anfragen: $count';
+  }
 
   @override
   String get inboxRetry => 'Erneut versuchen';

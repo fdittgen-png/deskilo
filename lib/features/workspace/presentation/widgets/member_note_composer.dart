@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/composer_send_keys.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
@@ -442,7 +443,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
               ),
             ]),
           ),
-        TextField(
+        ComposerSendKeys(controller: _body, onSend: _send, child: TextField(
           key: const ValueKey('member-note-body'),
           controller: _body,
           autofocus: widget.autofocus,
@@ -465,8 +466,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
                         MemberNoteRules.maxLength - _body.text.length))
                 : '',
           ),
-          onSubmitted: (_) => _send(),
-        ),
+        )),
         if (!widget.referencesAllowed)
           Row(children: [
             if (widget.mentionCandidates.isNotEmpty)

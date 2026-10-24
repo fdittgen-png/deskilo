@@ -7,5 +7,12 @@
   "settingLabelMessagingInboxPageSize": "Tamaño de página de la bandeja de entrada",
   "settingHintMessagingInboxPageSize": "Cuántas conversaciones devuelven por página de la bandeja de entrada el hogar personal y cada servidor de espacios; las anteriores llegan con Mostrar conversaciones anteriores.",
   "conversationChoose": "Elija una conversación",
-  "conversationDraftSessionOnly": "Borrador no enviado, conservado en la aplicación hasta que cierre sesión o la cierre."
+  "conversationDraftSessionOnly": "Borrador no enviado, conservado en la aplicación hasta que cierre sesión o la cierre.",
+  "conversationSendInFlight": "Su mensaje anterior todavía se está enviando.",
+  "conversationSendUnconfirmed": "Entrega no confirmada: puede que el mensaje haya llegado o no. Vuelva a leer la conversación antes de enviarlo de nuevo.",
+  "conversationSendReview": "Volver a leer",
+  "conversationLinkRefused": "Esta conversación no está disponible para usted. No se ha abierto nada.",
+  "conversationLinkUnreachable": "No se pudo comprobar esta conversación porque su servidor no respondió. No se ha abierto nada.",
+  "inboxMoreActions": "Más acciones",
+  "inboxRequestsCount": "Solicitudes: {count}"
 }

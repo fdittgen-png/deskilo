@@ -6325,6 +6325,18 @@ abstract class AppLocalizations {
   /// **'Left'**
   String get conversationLeft;
 
+  /// #2556 deep link: A link to a conversation whose server answered and does not list it for this person; nothing opens.
+  ///
+  /// In en, this message translates to:
+  /// **'This conversation is not available to you. Nothing was opened.'**
+  String get conversationLinkRefused;
+
+  /// #2556 deep link: A link to a conversation whose server could not be asked; nothing opens.
+  ///
+  /// In en, this message translates to:
+  /// **'This conversation could not be checked because its server did not answer. Nothing was opened.'**
+  String get conversationLinkUnreachable;
+
   /// No description provided for @conversationLoadEarlier.
   ///
   /// In en, this message translates to:
@@ -6372,6 +6384,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See profile'**
   String get conversationSeeProfile;
+
+  /// #2556 composer: Above the composer of a conversation opened again while the message sent from it earlier has not answered yet; its text is not shown again and Send waits.
+  ///
+  /// In en, this message translates to:
+  /// **'Your previous message is still being sent.'**
+  String get conversationSendInFlight;
+
+  /// #2556 composer: Button beside the unconfirmed-delivery note: reads the conversation again and ends the unconfirmed state.
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get conversationSendReview;
+
+  /// #2556 composer: Above the composer when a send got no answer in time. The message is never resent automatically; the person reads the conversation again and decides.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery not confirmed: the message may or may not have arrived. Read the conversation again before you send it again.'**
+  String get conversationSendUnconfirmed;
 
   /// No description provided for @conversationToday.
   ///
@@ -14399,6 +14429,12 @@ abstract class AppLocalizations {
   /// **'Open my messenger'**
   String get inboxMessengerDoor;
 
+  /// #2556 inbox header: Tooltip of the secondary menu holding New group and Starred.
+  ///
+  /// In en, this message translates to:
+  /// **'More actions'**
+  String get inboxMoreActions;
+
   /// No description provided for @inboxNoArchived.
   ///
   /// In en, this message translates to:
@@ -14410,6 +14446,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing unread — you are up to date.'**
   String get inboxNoUnread;
+
+  /// #2556 inbox header: The labelled count of message requests waiting; tapping it shows them.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests: {count}'**
+  String inboxRequestsCount(int count);
 
   /// No description provided for @inboxRetry.
   ///

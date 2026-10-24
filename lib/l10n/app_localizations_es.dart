@@ -3703,6 +3703,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get conversationLeft => 'Salió';
 
   @override
+  String get conversationLinkRefused =>
+      'Esta conversación no está disponible para usted. No se ha abierto nada.';
+
+  @override
+  String get conversationLinkUnreachable =>
+      'No se pudo comprobar esta conversación porque su servidor no respondió. No se ha abierto nada.';
+
+  @override
   String get conversationLoadEarlier => 'Cargar mensajes anteriores';
 
   @override
@@ -3733,6 +3741,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get conversationSeeProfile => 'Ver perfil';
+
+  @override
+  String get conversationSendInFlight =>
+      'Su mensaje anterior todavía se está enviando.';
+
+  @override
+  String get conversationSendReview => 'Volver a leer';
+
+  @override
+  String get conversationSendUnconfirmed =>
+      'Entrega no confirmada: puede que el mensaje haya llegado o no. Vuelva a leer la conversación antes de enviarlo de nuevo.';
 
   @override
   String get conversationToday => 'Hoy';
@@ -8720,10 +8739,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inboxMessengerDoor => 'Abrir mi mensajería';
 
   @override
+  String get inboxMoreActions => 'Más acciones';
+
+  @override
   String get inboxNoArchived => 'Ninguna conversación archivada.';
 
   @override
   String get inboxNoUnread => 'Nada sin leer — está al día.';
+
+  @override
+  String inboxRequestsCount(int count) {
+    return 'Solicitudes: $count';
+  }
 
   @override
   String get inboxRetry => 'Reintentar';

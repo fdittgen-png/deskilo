@@ -7,5 +7,12 @@
   "settingLabelMessagingInboxPageSize": "Dimensione pagina della posta in arrivo",
   "settingHintMessagingInboxPageSize": "Quante conversazioni restituiscono per pagina della posta in arrivo la casa personale e ogni server di spazi; le precedenti arrivano con Mostra conversazioni precedenti.",
   "conversationChoose": "Scelga una conversazione",
-  "conversationDraftSessionOnly": "Bozza non inviata, conservata nell’app finché non esce dall’account o la chiude."
+  "conversationDraftSessionOnly": "Bozza non inviata, conservata nell’app finché non esce dall’account o la chiude.",
+  "conversationSendInFlight": "Il Suo messaggio precedente è ancora in invio.",
+  "conversationSendUnconfirmed": "Consegna non confermata: il messaggio potrebbe essere arrivato oppure no. Rilegga la conversazione prima di inviarlo di nuovo.",
+  "conversationSendReview": "Rileggi",
+  "conversationLinkRefused": "Questa conversazione non è disponibile per Lei. Non è stato aperto nulla.",
+  "conversationLinkUnreachable": "Non è stato possibile verificare questa conversazione perché il suo server non ha risposto. Non è stato aperto nulla.",
+  "inboxMoreActions": "Altre azioni",
+  "inboxRequestsCount": "Richieste: {count}"
 }

@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../auth/providers/auth_providers.dart';
+import '../domain/conversation_delivery.dart';
 import '../domain/conversation_target.dart';
 
 part 'conversation_pane_providers.g.dart';
@@ -59,4 +60,38 @@ class ConversationDrafts extends _$ConversationDrafts {
 
   /// Forgets [key]'s draft: what it held went out.
   void clear(String? account, String key) => keep(account, key, '');
+
+  /// Forgets [key]'s draft only while it still holds [sent]: a delivery
+  /// that answers late never takes what was typed since.
+  void clearIfStill(String? account, String key, String sent) {
+    if (draftOf(account, key).trim() == sent) clear(account, key);
+  }
+}
+
+/// The sends still waiting on an answer, per conversation (the draft key),
+/// for this session: a thread opened again while its send is in flight
+/// shows neither the text nor a Send that could repeat it, and one whose
+/// send went unconfirmed says so until the person reads it again.
+///
+/// Every write names the account it was made under: a send that answers
+/// after the account changed marks nothing for the next person.
+@Riverpod(keepAlive: true)
+class ConversationSends extends _$ConversationSends {
+  String? _account;
+
+  @override
+  Map<String, SendPhase> build() {
+    _account = ref.watch(authStateProvider).value;
+    return const {};
+  }
+
+  /// Sets [key]'s phase for [account]; null settles it.
+  void mark(String? account, String key, SendPhase? phase) {
+    if (account == null || account != _account || state[key] == phase) return;
+    state = {
+      for (final e in state.entries)
+        if (e.key != key) e.key: e.value,
+      key: ?phase,
+    };
+  }
 }
