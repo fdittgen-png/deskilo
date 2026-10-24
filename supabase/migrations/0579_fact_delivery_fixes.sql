@@ -427,4 +427,4 @@ revoke execute on function public.membership_snapshot_drain()
   from public, anon, authenticated, service_role;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(579);
