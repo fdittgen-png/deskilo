@@ -1,0 +1,8 @@
+{
+  "@@locale": "it",
+  "financesCoverageReading": "Lettura di {host}…",
+  "financesAmountMasked": "{currency} ••••",
+  "financesAmountHidden": "Importo nascosto",
+  "financesShowAmount": "Mostra l'importo",
+  "financesHideAmount": "Nascondi l'importo"
+}

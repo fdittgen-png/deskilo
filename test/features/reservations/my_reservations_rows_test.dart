@@ -8,10 +8,10 @@
 // on resume each host is read once.
 import 'dart:async';
 
+import 'package:deskilo/core/backend/bounded_reads.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/lifecycle/app_foreground.dart';
 import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/features/reservations/application/bounded_reads.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations_composition.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';

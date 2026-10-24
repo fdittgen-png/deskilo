@@ -9,6 +9,9 @@
 // C3: paused (the app is hidden), no read starts; the ones asked meanwhile
 // wait in order and start on resume, at most [limit] at once. The reads in
 // flight finish on their own.
+//
+// #2557 C5: in core, shared by My reservations and Me › Finances, which
+// read the same hosts under the same personal limits.
 import 'dart:async';
 import 'dart:collection';
 

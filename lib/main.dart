@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/app.dart';
 import 'app/app_initializer.dart';
 import 'app/bootstrap.dart';
+import 'app/finance_hosts_wiring.dart';
 import 'app/realtime_invalidations.dart';
 import 'app/server_choice_app.dart';
 import 'core/data/system_columns.dart';
@@ -124,6 +125,7 @@ Future<void> main() async {
         audienceRolesFromWorkspace, // #2575
         audienceMembersFromReservations, // #2575
         myReservationsSourcesFromMe, // #2553
+        financeHostsFromMe, // #2557
         eventSourceOpenersFromMoney, // #2573
         ...realtimeWiringFromApp, // #2495
       ],

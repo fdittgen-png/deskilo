@@ -1,0 +1,33 @@
+{
+  "@@locale": "en",
+  "financesCoverageReading": "Reading {host}…",
+  "@financesCoverageReading": {
+    "description": "#2557 C5 Me › Finances: coverage, a connected host my account names whose documents are still being read.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesAmountMasked": "{currency} ••••",
+  "@financesAmountMasked": {
+    "description": "#2557 C5 Me › Finances: a compact card's amount, hidden until shown; only the currency code stays visible.",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "financesAmountHidden": "Amount hidden",
+  "@financesAmountHidden": {
+    "description": "#2557 C5 Me › Finances: what a screen reader says for a hidden amount on a compact card."
+  },
+  "financesShowAmount": "Show amount",
+  "@financesShowAmount": {
+    "description": "#2557 C5 Me › Finances: reveals one compact card's amount."
+  },
+  "financesHideAmount": "Hide amount",
+  "@financesHideAmount": {
+    "description": "#2557 C5 Me › Finances: hides one compact card's amount again."
+  }
+}

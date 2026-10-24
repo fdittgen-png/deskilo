@@ -8,7 +8,8 @@
 // accounting table. Document state and payment state are separate facts:
 // an issued invoice can be unpaid, a credit note can be refunded. Export
 // writes that one document's line to a CSV file — never a payment and
-// never a delivery confirmation.
+// never a delivery confirmation. C5: a compact card hides its amount (the
+// currency stays) until its reveal action shows it.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -74,14 +75,19 @@ class FinanceDocumentList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (wide && invoices.isNotEmpty) const _RowsHeader(),
+          // Keyed by the qualified id: two hosts' equal local ids in
+          // different workspaces are two documents (#2557 C5).
           for (final invoice in invoices)
-            _FinanceDocument(
-              invoice: invoice,
-              documents: documents,
-              now: now,
-              isDev: isDev,
-              wide: wide,
-              onOpen: onOpen,
+            KeyedSubtree(
+              key: ValueKey((invoice.workspaceId, invoice.id)),
+              child: _FinanceDocument(
+                invoice: invoice,
+                documents: documents,
+                now: now,
+                isDev: isDev,
+                wide: wide,
+                onOpen: onOpen,
+              ),
             ),
         ],
       );
@@ -287,7 +293,7 @@ class _FinanceDocument extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
-                  amount,
+                  _MaskedAmount(invoice.id, invoice.currency, amount),
                   export,
                 ],
               ),
@@ -325,4 +331,43 @@ class _StateChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       Chip(label: Text(label), visualDensity: VisualDensity.compact);
+}
+
+/// #2557 C5 — a compact card's amount, hidden until asked: a phone is read
+/// where others can see it. The action shows this card's amount alone, and
+/// hides it again.
+class _MaskedAmount extends StatefulWidget {
+  const _MaskedAmount(this.invoiceId, this.currency, this.amount);
+
+  final String invoiceId;
+  final String currency;
+  final Widget amount;
+
+  @override
+  State<_MaskedAmount> createState() => _MaskedAmountState();
+}
+
+class _MaskedAmountState extends State<_MaskedAmount> {
+  bool _shown = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Tooltip(
+      message: _shown ? l10n.financesHideAmount : l10n.financesShowAmount,
+      child: TextButton(
+        key: ValueKey('finances-amount-${widget.invoiceId}'),
+        style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+        onPressed: () => setState(() => _shown = !_shown),
+        child: _shown
+            ? widget.amount
+            : Semantics(
+                label: l10n.financesAmountHidden,
+                child: ExcludeSemantics(
+                  child: Text(l10n.financesAmountMasked(widget.currency)),
+                ),
+              ),
+      ),
+    );
+  }
 }

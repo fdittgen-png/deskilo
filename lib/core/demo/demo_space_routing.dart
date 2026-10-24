@@ -14,6 +14,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../../app/finance_hosts_wiring.dart';
 import '../../features/calendar/providers/calendar_providers.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/me/providers/me_providers.dart'
@@ -110,6 +111,9 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ),
     // #2553 C2 — read for every space the persona's personal home names.
     myReservationsSourcesFromMe,
+    // #2557 C5 — Me › Finances reads the same hosts; the fixture's spaces
+    // are the personal home's own, answered by its own read.
+    financeHostsFromMe,
     // #2575
     seriesPreviewerProvider.overrideWith(
       (ref) => FakeSeriesPreviewer(
