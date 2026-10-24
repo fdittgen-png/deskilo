@@ -759,3 +759,62 @@ final class WorkspaceExportCommandProvider
 
 String _$workspaceExportCommandHash() =>
     r'e07e23330f8abfdff0de5a37226876c330ff9c70';
+
+/// #2554 — the heart of My spaces: kept on the account by reference, this
+/// device's copy shown at once and kept when the home refuses or is out of
+/// reach. The card that shows the heart watches it.
+
+@ProviderFor(accountFavoriteCommand)
+final accountFavoriteCommandProvider = AccountFavoriteCommandProvider._();
+
+/// #2554 — the heart of My spaces: kept on the account by reference, this
+/// device's copy shown at once and kept when the home refuses or is out of
+/// reach. The card that shows the heart watches it.
+
+final class AccountFavoriteCommandProvider
+    extends
+        $FunctionalProvider<
+          AccountFavoriteCommand,
+          AccountFavoriteCommand,
+          AccountFavoriteCommand
+        >
+    with $Provider<AccountFavoriteCommand> {
+  /// #2554 — the heart of My spaces: kept on the account by reference, this
+  /// device's copy shown at once and kept when the home refuses or is out of
+  /// reach. The card that shows the heart watches it.
+  AccountFavoriteCommandProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'accountFavoriteCommandProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$accountFavoriteCommandHash();
+
+  @$internal
+  @override
+  $ProviderElement<AccountFavoriteCommand> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AccountFavoriteCommand create(Ref ref) {
+    return accountFavoriteCommand(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AccountFavoriteCommand value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AccountFavoriteCommand>(value),
+    );
+  }
+}
+
+String _$accountFavoriteCommandHash() =>
+    r'ce977903c42576ae63e7d718edaf163220e127f3';

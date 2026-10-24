@@ -4429,6 +4429,8 @@
     "description": "#669 - accounting export formats"
   },
   "exportValueName": "{key, select, reserved{Gebucht} checkedIn{Eingecheckt} completed{Abgeschlossen} cancelled{Storniert} released{Freigegeben} active{Aktiv} paused{Pausiert} pending{Ausstehend} exited{Ausgetreten} applied{Angewendet} confirmed{Bestätigt} rejected{Abgelehnt} expired{Abgelaufen} created{Erstellt} modified{Geändert} submitted{Eingereicht} approved{Genehmigt} accepted{Angenommen} declined{Abgelehnt} charge{Belastung} credit{Gutschrift} subscription{Abonnement} overage{Überschreitung} expense{Auslage} payment{Zahlung} adjustment{Korrektur} service{Leistung} package{Paket} refund{Erstattung} reimbursement{Auslagenerstattung} seat{Platz} room{Raum} parking{Parken} standard{Standard} ev{Elektro} accessible{Barrierefrei} workspace{Arbeitsbereich} n{Nord} e{Ost} s{Süd} w{West} blocked{Nicht erlaubt} payg{Nach Verbrauch} none{Nein} passive{Nachfolger} founder{Gründer} invited{Eingeladen} full{Rechnung} usage{Nutzung} settlement{Sammelabrechnung} other{{key}}}",
+  "favoriteKeptOnDeviceRefused": "Nur auf diesem Gerät gespeichert: Ihr Konto kann diesen Space nicht speichern.",
+  "favoriteKeptOnDeviceUnreachable": "Nur auf diesem Gerät gespeichert: Ihr Konto war nicht erreichbar. Versuchen Sie es später erneut.",
   "featureAccessorySupplements": "Zubehör-Aufpreise",
   "featureAccessorySupplementsDesc": "Bepreistes Platz-Zubehör pro gebuchtem Halbtag berechnen. Gilt für Buchungen ab der Aktivierung.",
   "featureAccountingBookDesc": "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher.",
@@ -9343,7 +9345,6 @@
   "mySpacesRequestStatus": "Status der Anfrage ansehen",
   "mySpacesReview": "Meine Bewertung",
   "mySpacesReviewed": "Meine Bewertung: {stars} von 5",
-  "mySpacesSavedOnAccount": "In Ihrem Konto gespeichert",
   "mySpacesTestSpace": "Test-Space",
   "mySpacesUnavailable": "Ihre Spaces konnten nicht gelesen werden.",
   "mySpacesVerified": "Mitgliedschaft bestätigt",

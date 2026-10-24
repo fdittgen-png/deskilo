@@ -20,6 +20,5 @@
   "mySpacesLayoutGrid": "Afficher en grille",
   "mySpacesLayoutList": "Afficher en liste",
   "mySpacesReview": "Mon avis",
-  "mySpacesReviewed": "Mon avis : {stars} sur 5",
-  "mySpacesSavedOnAccount": "Enregistré sur votre compte"
+  "mySpacesReviewed": "Mon avis : {stars} sur 5"
 }
