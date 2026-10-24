@@ -280,4 +280,4 @@ grant execute on function public.my_workspace_inbox_v1(timestamptz, text) to aut
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(572);

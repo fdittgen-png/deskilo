@@ -2270,6 +2270,7 @@ routine public.message_source(p_kind text, p_message_id uuid) -> jsonb | functio
 routine public.my_account_conversation_with(p_recipient uuid) -> uuid | function | definer | stable | exec:authenticated,service_role | body:740ada36937d
 routine public.my_account_conversations(p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:26bd6f2f9a50
 routine public.my_account_group_messages(p_group uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a02203ce982f
+routine public.my_account_inbox_v1(p_before_at timestamp with time zone, p_before_key text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1128a072d178
 routine public.my_account_messages(p_conversation uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:96f770e87708
 routine public.my_active_binding() -> uuid | function | definer | stable | exec:service_role | body:ba3c893c0846
 routine public.my_active_member(p_workspace_id uuid) -> members | function | definer | stable | exec:authenticated,service_role | body:67bfd226c319
@@ -2303,6 +2304,7 @@ routine public.my_starred_messages() -> jsonb | function | definer | stable | ex
 routine public.my_visibility() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:68c1b2f749f5
 routine public.my_visibility_network_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bf78a48d40be
 routine public.my_workspace_applications(p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c50a43fa58f7
+routine public.my_workspace_inbox_v1(p_before_at timestamp with time zone, p_before_key text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c3dd6d3ba4e1
 routine public.my_workspace_public_page(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c02f6d89a75f
 routine public.negotiated_item_price(p_member_id uuid, p_kind text, p_item_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:ec49e4e0e2a2
 routine public.next_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | volatile | exec:service_role | body:fd6010808751
