@@ -12,5 +12,14 @@
   "mySpacesNoMatch": "Aucun espace ne correspond à votre recherche.",
   "mySpacesDiscover": "Découvrir des espaces",
   "mySpacesManage": "Gérer les espaces de ce serveur",
-  "mySpacesAll": "Tous mes espaces"
+  "mySpacesAll": "Tous mes espaces",
+  "mySpacesFilterAll": "Tous",
+  "mySpacesFilterActive": "Actifs",
+  "mySpacesFilterRequests": "Demandes et visites",
+  "mySpacesFilterHistory": "Passés",
+  "mySpacesLayoutGrid": "Afficher en grille",
+  "mySpacesLayoutList": "Afficher en liste",
+  "mySpacesReview": "Mon avis",
+  "mySpacesReviewed": "Mon avis : {stars} sur 5",
+  "mySpacesSavedOnAccount": "Enregistré sur votre compte"
 }

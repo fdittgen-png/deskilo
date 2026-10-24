@@ -9,8 +9,12 @@
 //   workspace host my account names (#2553's composition);
 // * Needs attention — my unpaid documents, my undecided requests and my
 //   unread conversations, each record once;
-// * My spaces — the first spaces of My spaces and the way to all of them;
-//   with none, Join and Discover lead and Create follows.
+// * My spaces — the first spaces of My spaces (favourites, then the most
+//   recently entered) and the way to all of them; with none, Join and
+//   Discover lead and Create follows.
+//
+// Below the sections, once I have a space, Discover and Join are a small
+// entry of their own.
 //
 // Wide, the page is 2:1: Next commitment and My spaces on the left, Needs
 // attention on the right. Compact, the order is Next commitment, Needs
@@ -20,6 +24,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/ui/empty_state.dart';
@@ -27,11 +32,14 @@ import '../../visits/presentation/my_visits_section.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/personal_spaces_view.dart';
+import '../domain/my_spaces.dart';
+import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
+import '../providers/space_prefs_provider.dart';
 import 'me_shell.dart';
 import 'personal_overview_attention.dart';
 import 'personal_overview_sections.dart';
-import 'personal_spaces_view.dart';
+import 'personal_space_card.dart';
 
 /// The narrowest the right-hand column may be in the 2:1 layout.
 const double _rightMinWidth = 290;
@@ -101,6 +109,7 @@ class PersonalOverview extends StatelessWidget {
                 _Header(expanded: expanded),
                 const SizedBox(height: _columnGap),
                 ...sections,
+                const _DiscoverJoinEntry(),
                 const SizedBox(height: AppSpacing.xl),
               ];
               return ListView.builder(
@@ -151,6 +160,18 @@ class _Header extends StatelessWidget {
   }
 }
 
+/// A space of this server, of a linked one, or one my account names
+/// elsewhere is not "nothing" (#2563); this server's own spaces come from
+/// its list, as everywhere else on Me.
+bool _noSpace(
+  PersonalWorkspaceRefs refs,
+  List<Workspace> local,
+  List<LinkedServerSpaces> linked,
+) =>
+    refs.beyondLocalSpaces.isEmpty &&
+    local.isEmpty &&
+    linked.every((s) => s.spaces.isEmpty);
+
 /// The first spaces of My spaces, and the way to all of them. With no
 /// space at all, the ways to one lead.
 class _SpacesSection extends ConsumerWidget {
@@ -166,17 +187,17 @@ class _SpacesSection extends ConsumerWidget {
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
     final failed = answer.hasError && !answer.isLoading;
     final refs = failed ? null : answer.value;
-    // A space of this server, of a linked one, or one my account names
-    // elsewhere is not "nothing" (#2563); this server's own spaces come
-    // from its list, as everywhere else on Me.
-    final nothing =
-        refs != null &&
-        refs.beyondLocalSpaces.isEmpty &&
-        local.isEmpty &&
-        linked.every((s) => s.spaces.isEmpty);
+    final nothing = refs != null && _noSpace(refs, local, linked);
+    final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
+    // Favourites first, then the spaces I entered most recently here.
     final preview = refs == null
-        ? const <PersonalSpaceEntry>[]
-        : personalSpaceEntries(refs, local).take(_spacesPreview).toList();
+        ? const <PersonalSpaceRow>[]
+        : personalSpacePreview(
+            refs,
+            local,
+            prefs: prefs,
+            count: _spacesPreview,
+          );
     return OverviewSection(
       sectionKey: 'me-overview-spaces',
       title: l10n.meMySpaces,
@@ -190,51 +211,76 @@ class _SpacesSection extends ConsumerWidget {
           )
         else if (refs == null)
           const SectionLoading(key: ValueKey('me-overview-spaces-loading'))
-        else if (nothing)
+        else if (nothing) ...[
           EmptyState(
             key: const ValueKey('me-home-empty'),
             icon: Icons.meeting_room_outlined,
             title: l10n.meNoSpaceTitle,
             subtitle: l10n.meNoSpaceBody,
-          )
-        else
-          for (final entry in preview)
-            PersonalSpaceCard(entry: entry, l10n: l10n),
+          ),
+          // With no space, the ways to one lead, here.
+          const _SpaceActions(empty: true),
+        ] else
+          for (final row in preview) PersonalSpaceCard(row: row),
         // #1835 — my guest visits: beside my spaces, never among them.
         const MyVisitsSection(),
-        const SizedBox(height: AppSpacing.sm),
-        _SpaceActions(empty: nothing, all: refs != null && !nothing),
+        if (refs != null && !nothing) ...[
+          const SizedBox(height: AppSpacing.sm),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: FilledButton.tonalIcon(
+              key: const ValueKey('me-home-all-spaces'),
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(0, PersonalShellMetrics.minTarget),
+              ),
+              icon: const Icon(Icons.workspaces_outlined),
+              label: Text(l10n.mySpacesAll),
+              onPressed: () => context.go(MeTab.spaces.path),
+            ),
+          ),
+        ],
       ],
     );
   }
 }
 
-/// All my spaces while there is one; with none, Join and Discover first,
-/// Create after.
+/// Discover and Join as a small entry of its own below the sections, once
+/// I have a space (with none, they lead inside My spaces).
+class _DiscoverJoinEntry extends ConsumerWidget {
+  const _DiscoverJoinEntry();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final refs = ref.watch(personalWorkspaceRefsProvider).value;
+    final local = ref.watch(myWorkspacesProvider).value ?? const <Workspace>[];
+    final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
+    if (refs == null || _noSpace(refs, local, linked)) return const SizedBox.shrink();
+    return const Padding(
+      key: ValueKey('me-overview-discover-join'),
+      padding: EdgeInsets.only(top: AppSpacing.lg),
+      child: _SpaceActions(empty: false),
+    );
+  }
+}
+
+/// Join, Discover and Create. With no space they lead, inside My spaces;
+/// otherwise they are a small entry of their own below the sections.
 class _SpaceActions extends StatelessWidget {
-  const _SpaceActions({required this.empty, required this.all});
+  const _SpaceActions({required this.empty});
 
   final bool empty;
-  final bool all;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     const target = Size(0, PersonalShellMetrics.minTarget);
     void join() => context.push('/onboarding?join=1');
+    void discover() => context.go(MeTab.discover.path);
     return Wrap(
       spacing: AppSpacing.sm,
       runSpacing: AppSpacing.sm,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        if (all)
-          FilledButton.tonalIcon(
-            key: const ValueKey('me-home-all-spaces'),
-            style: FilledButton.styleFrom(minimumSize: target),
-            icon: const Icon(Icons.workspaces_outlined),
-            label: Text(l10n.mySpacesAll),
-            onPressed: () => context.go(MeTab.spaces.path),
-          ),
         if (empty)
           FilledButton.icon(
             key: const ValueKey('me-home-join'),
@@ -244,20 +290,30 @@ class _SpaceActions extends StatelessWidget {
             onPressed: join,
           )
         else
-          OutlinedButton.icon(
+          TextButton.icon(
             key: const ValueKey('me-home-join'),
-            style: OutlinedButton.styleFrom(minimumSize: target),
+            style: TextButton.styleFrom(minimumSize: target),
             icon: const Icon(Icons.qr_code_2_outlined),
             label: Text(l10n.meJoinSpace),
             onPressed: join,
           ),
-        OutlinedButton.icon(
-          key: const ValueKey('me-home-discover'),
-          style: OutlinedButton.styleFrom(minimumSize: target),
-          icon: const Icon(Icons.travel_explore_outlined),
-          label: Text(l10n.mySpacesDiscover),
-          onPressed: () => context.go(MeTab.discover.path),
-        ),
+        // A small entry, not a call to action, once I have a space.
+        if (empty)
+          OutlinedButton.icon(
+            key: const ValueKey('me-home-discover'),
+            style: OutlinedButton.styleFrom(minimumSize: target),
+            icon: const Icon(Icons.travel_explore_outlined),
+            label: Text(l10n.mySpacesDiscover),
+            onPressed: discover,
+          )
+        else
+          TextButton.icon(
+            key: const ValueKey('me-home-discover'),
+            style: TextButton.styleFrom(minimumSize: target),
+            icon: const Icon(Icons.travel_explore_outlined),
+            label: Text(l10n.mySpacesDiscover),
+            onPressed: discover,
+          ),
         TextButton.icon(
           key: const ValueKey('me-home-create'),
           style: TextButton.styleFrom(minimumSize: target),

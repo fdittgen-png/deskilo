@@ -23866,6 +23866,30 @@ abstract class AppLocalizations {
   /// **'Discover spaces'**
   String get mySpacesDiscover;
 
+  /// #2554 My spaces: filter showing active memberships
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get mySpacesFilterActive;
+
+  /// #2554 My spaces: filter showing every loaded space
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get mySpacesFilterAll;
+
+  /// #2554 My spaces: filter showing paused or left spaces
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get mySpacesFilterHistory;
+
+  /// #2554 My spaces: filter showing pending requests and guest visits
+  ///
+  /// In en, this message translates to:
+  /// **'Requests and visits'**
+  String get mySpacesFilterRequests;
+
   /// #2554 My spaces: the space lives on another installation
   ///
   /// In en, this message translates to:
@@ -23877,6 +23901,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On this server'**
   String get mySpacesHostHere;
+
+  /// #2554 My spaces: show the spaces as a grid of cards
+  ///
+  /// In en, this message translates to:
+  /// **'Show as a grid'**
+  String get mySpacesLayoutGrid;
+
+  /// #2554 My spaces: show the spaces as a single list
+  ///
+  /// In en, this message translates to:
+  /// **'Show as a list'**
+  String get mySpacesLayoutList;
 
   /// #2554 My spaces: link to the management of this server's spaces
   ///
@@ -23907,6 +23943,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View request status'**
   String get mySpacesRequestStatus;
+
+  /// #2554 My spaces: my own star rating of a space, not yet given
+  ///
+  /// In en, this message translates to:
+  /// **'My review'**
+  String get mySpacesReview;
+
+  /// #2554 My spaces: my own star rating of a space
+  ///
+  /// In en, this message translates to:
+  /// **'My review: {stars} of 5'**
+  String mySpacesReviewed(int stars);
+
+  /// #2554 My spaces: the space is a favourite saved on the personal account
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on your account'**
+  String get mySpacesSavedOnAccount;
 
   /// #2554 My spaces: metadata of a development space
   ///

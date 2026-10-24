@@ -12,5 +12,14 @@
   "mySpacesNoMatch": "Kein Space passt zu Ihrer Suche.",
   "mySpacesDiscover": "Spaces entdecken",
   "mySpacesManage": "Spaces auf diesem Server verwalten",
-  "mySpacesAll": "Alle meine Spaces"
+  "mySpacesAll": "Alle meine Spaces",
+  "mySpacesFilterAll": "Alle",
+  "mySpacesFilterActive": "Aktiv",
+  "mySpacesFilterRequests": "Anfragen und Besuche",
+  "mySpacesFilterHistory": "Vergangen",
+  "mySpacesLayoutGrid": "Als Raster anzeigen",
+  "mySpacesLayoutList": "Als Liste anzeigen",
+  "mySpacesReview": "Meine Bewertung",
+  "mySpacesReviewed": "Meine Bewertung: {stars} von 5",
+  "mySpacesSavedOnAccount": "In Ihrem Konto gespeichert"
 }
