@@ -4514,6 +4514,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoverySavedFilter => 'Saved';
 
   @override
+  String get discoveryShowAllLoaded => 'Show all loaded places';
+
+  @override
   String discoveryShowMoreFrom(String source) {
     return 'Show more from $source';
   }

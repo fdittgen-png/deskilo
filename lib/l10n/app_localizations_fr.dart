@@ -4546,6 +4546,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get discoverySavedFilter => 'Enregistrés';
 
   @override
+  String get discoveryShowAllLoaded => 'Afficher tous les lieux chargés';
+
+  @override
   String discoveryShowMoreFrom(String source) {
     return 'Afficher plus de $source';
   }

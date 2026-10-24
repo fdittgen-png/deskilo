@@ -7729,6 +7729,12 @@ abstract class AppLocalizations {
   /// **'Saved'**
   String get discoverySavedFilter;
 
+  /// No description provided for @discoveryShowAllLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all loaded places'**
+  String get discoveryShowAllLoaded;
+
   /// No description provided for @discoveryShowMoreFrom.
   ///
   /// In en, this message translates to:

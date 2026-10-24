@@ -3118,6 +3118,7 @@
   "discoveryRemoveBookmark": "Quitar de guardados",
   "discoverySaved": "Guardado en este dispositivo",
   "discoverySavedFilter": "Guardados",
+  "discoveryShowAllLoaded": "Mostrar todos los lugares cargados",
   "discoveryShowMoreFrom": "Mostrar más de {source}",
   "discoverySourceFailed": "{source} no respondió. Los lugares ya mostrados se mantienen.",
   "discoveryTitle": "Descubrir espacios",

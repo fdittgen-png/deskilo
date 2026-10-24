@@ -4534,6 +4534,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get discoverySavedFilter => 'Guardados';
 
   @override
+  String get discoveryShowAllLoaded => 'Mostrar todos los lugares cargados';
+
+  @override
   String discoveryShowMoreFrom(String source) {
     return 'Mostrar más de $source';
   }
