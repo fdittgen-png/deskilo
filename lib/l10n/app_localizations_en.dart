@@ -3866,6 +3866,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get courtesyNone => 'None';
 
   @override
+  String get createHostAvailable => 'Accepts new spaces';
+
+  @override
+  String get createHostChooseAgain => 'Choose a server';
+
+  @override
+  String get createHostHere => 'This server';
+
+  @override
+  String get createHostHereDetail => 'The server you are signed in to';
+
+  @override
+  String get createHostLost =>
+      'The server chosen for this space is no longer held. Nothing was created.';
+
+  @override
+  String get createHostNotAccepting => 'Not accepting new spaces';
+
+  @override
+  String get createHostRevoked => 'No longer offered by your personal home';
+
+  @override
+  String get createHostTitle => 'Where should the space live?';
+
+  @override
+  String get createHostUnavailable =>
+      'The servers your personal home offers could not be read.';
+
+  @override
+  String get createHostUnverified => 'Your identity cannot be verified there';
+
+  @override
+  String createOnHostBanner(String host) {
+    return 'This space will be created on $host.';
+  }
+
+  @override
   String get customerCapacityBusiness => 'Business';
 
   @override

@@ -412,18 +412,21 @@ String _$currentWorkspaceHash() => r'0ed433dfe8421732e07f404ca32b4f7a2f76d5d8';
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.
+/// #2562 C2c -- on the chosen host's pinned client, read per call.
 
 @ProviderFor(workspaceStart)
 final workspaceStartProvider = WorkspaceStartProvider._();
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
 /// and the request id that makes a retry the SAME creation.
+/// #2562 C2c -- on the chosen host's pinned client, read per call.
 
 final class WorkspaceStartProvider
     extends $FunctionalProvider<WorkspaceStart, WorkspaceStart, WorkspaceStart>
     with $Provider<WorkspaceStart> {
   /// #1449 — starting a workspace: what a creation needs before it is one,
   /// and the request id that makes a retry the SAME creation.
+  /// #2562 C2c -- on the chosen host's pinned client, read per call.
   WorkspaceStartProvider._()
     : super(
         from: null,
@@ -457,7 +460,7 @@ final class WorkspaceStartProvider
   }
 }
 
-String _$workspaceStartHash() => r'e5be686d2633ccf29612121a4f59fe4e184bc7ba';
+String _$workspaceStartHash() => r'9886d7e4a95779dd2932b8b756241a7dc93f65d9';
 
 /// All memberships of the active workspace (owner management + event
 /// decider computation, #107).

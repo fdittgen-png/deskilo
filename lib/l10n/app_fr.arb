@@ -2624,6 +2624,17 @@
   "@courtesyNone": {
     "description": "#912 courtesy title: courtesyNone"
   },
+  "createHostAvailable": "Accepte de nouveaux espaces",
+  "createHostChooseAgain": "Choisir un serveur",
+  "createHostHere": "Ce serveur",
+  "createHostHereDetail": "Le serveur auquel vous êtes connecté",
+  "createHostLost": "Le serveur choisi pour cet espace n'est plus retenu. Rien n'a été créé.",
+  "createHostNotAccepting": "N'accepte pas de nouveaux espaces",
+  "createHostRevoked": "N'est plus proposé par votre domicile personnel",
+  "createHostTitle": "Où cet espace doit-il vivre ?",
+  "createHostUnavailable": "Les serveurs proposés par votre domicile personnel n'ont pas pu être lus.",
+  "createHostUnverified": "Votre identité ne peut pas y être vérifiée",
+  "createOnHostBanner": "Cet espace sera créé sur {host}.",
   "customerCapacityBusiness": "Professionnel",
   "@customerCapacityBusiness": {
     "description": "#1916 invoice clauses: customerCapacityBusiness"

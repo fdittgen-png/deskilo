@@ -23,6 +23,7 @@ import '../../../core/storage/prefs_stores.dart';
 import '../../../core/time/clock.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/workspace.dart';
+import '../providers/workspace_host_providers.dart';
 
 part 'creation_intent.g.dart';
 
@@ -211,25 +212,34 @@ CreationDraftStore creationDraftStore(Ref ref) =>
 
 /// #1636 — the pending creation, for the account signed in now. The
 /// wizard asks this; it never reads the store or the account itself.
+///
+/// #2562 C2c -- the one draft slot is this server's: while a creation runs
+/// on a chosen host ([_onHost]), nothing is resumed, kept or cleared, so a
+/// draft is never resent to another server than the one it went to.
 class CreationDrafts {
-  const CreationDrafts(this._store, this._userId, this._clock);
+  const CreationDrafts(this._store, this._userId, this._clock,
+      [this._onHost = _never]);
 
   final CreationDraftStore _store;
   final String? Function() _userId;
   final Clock _clock;
+  final bool Function() _onHost;
+  static bool _never() => false;
 
   /// The draft this account left, while fresh; null otherwise.
-  Future<CreationDraft?> pending() async => CreationDraft.decodeFor(
-        await _store.read(),
-        userId: _userId(),
-        now: _clock.now(),
-      );
+  Future<CreationDraft?> pending() async => _onHost()
+      ? null
+      : CreationDraft.decodeFor(
+          await _store.read(),
+          userId: _userId(),
+          now: _clock.now(),
+        );
 
   /// Records [intent] as sent. Without an account there is nobody to
   /// resume it for, so nothing is kept.
   Future<void> sent(CreationIntent intent) async {
     final userId = _userId();
-    if (userId == null) return;
+    if (userId == null || _onHost()) return;
     await _store.write(CreationDraft(
       userId: userId,
       savedAt: _clock.now(),
@@ -238,15 +248,19 @@ class CreationDrafts {
   }
 
   /// The creation was confirmed: nothing is pending any more.
-  Future<void> confirmed() => _store.write(null);
+  Future<void> confirmed() async {
+    if (!_onHost()) await _store.write(null);
+  }
 }
 
 @riverpod
 CreationDrafts creationDrafts(Ref ref) {
   final auth = ref.watch(authRepositoryProvider);
+  final creation = ref.watch(creationHostProvider.notifier);
   return CreationDrafts(
     ref.watch(creationDraftStoreProvider),
     () => auth.currentUserId,
     ref.watch(clockProvider),
+    () => creation.held,
   );
 }

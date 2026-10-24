@@ -1,0 +1,14 @@
+{
+  "@@locale": "de",
+  "createHostTitle": "Wo soll der Space liegen?",
+  "createHostHere": "Dieser Server",
+  "createHostHereDetail": "Der Server, bei dem Sie angemeldet sind",
+  "createHostAvailable": "Nimmt neue Spaces an",
+  "createHostNotAccepting": "Nimmt keine neuen Spaces an",
+  "createHostUnverified": "Ihre Identität kann dort nicht bestätigt werden",
+  "createHostRevoked": "Wird von Ihrem persönlichen Zuhause nicht mehr angeboten",
+  "createHostUnavailable": "Die Server, die Ihr persönliches Zuhause anbietet, konnten nicht gelesen werden.",
+  "createOnHostBanner": "Dieser Space wird auf {host} angelegt.",
+  "createHostLost": "Der für diesen Space gewählte Server ist nicht mehr vorgemerkt. Es wurde nichts angelegt.",
+  "createHostChooseAgain": "Server wählen"
+}

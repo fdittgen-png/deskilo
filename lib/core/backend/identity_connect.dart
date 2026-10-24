@@ -20,6 +20,9 @@ enum SecondaryConnectAction {
 
   /// #2562 C1b -- open a space of a linked server whose sign-in ended.
   enter,
+
+  /// #2562 C2c -- create a space on an enrolled host the person chose.
+  create,
 }
 
 class SecondaryConnectIntent {

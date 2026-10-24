@@ -88,9 +88,19 @@ bool templateUsable(TemplateOutline? outline) => !(outline?.refused ?? false);
 
 /// Becoming an owner, or joining somebody else's space.
 class WorkspaceStart {
-  const WorkspaceStart(this._workspaces);
+  const WorkspaceStart(WorkspaceRepository workspaces)
+      : _fixed = workspaces,
+        _resolve = null;
 
-  final WorkspaceRepository _workspaces;
+  /// #2562 C2c -- a repository resolved at each call, so a host whose
+  /// connection ended refuses the call instead of building nothing.
+  const WorkspaceStart.on(WorkspaceRepository Function() resolve)
+      : _fixed = null,
+        _resolve = resolve;
+
+  final WorkspaceRepository? _fixed;
+  final WorkspaceRepository Function()? _resolve;
+  WorkspaceRepository get _workspaces => _fixed ?? _resolve!();
 
   /// What the chosen template would set up, and whether it may be — read
   /// from the field-level inspection (#1655): the outline inside it is
