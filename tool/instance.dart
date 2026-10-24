@@ -11,6 +11,9 @@
 //   dart run tool/instance.dart auth     --token … --ref <project ref>
 //   dart run tool/instance.dart doctor   --token … --ref <project ref>
 //   dart run tool/instance.dart db-admins --token … --ref <ref> list | grant --email E [--review-only] [--apply] | revoke --email E [--apply]
+//   dart run tool/instance.dart enrol --token … --ref <personal home> list | add --workspace-ref W [--not-accepting] [--apply] | revoke --installation UUID [--apply]
+//   #2562 C2a — the personal home's operator enrols a workspace
+//   installation; see tool/instance/enrol.dart.
 //
 //   dart run tool/instance.dart federation-stage --auth-url <exact Auth URL> --issuer <canonical issuer> --client-id <identity client> [--apply]
 //   Uses DESKILO_TARGET_AUTH_ADMIN_KEY and DESKILO_FEDERATION_CLIENT_SECRET;
@@ -52,6 +55,7 @@ import 'package:deskilo/core/instance/management_api.dart';
 
 import 'build_instance.dart';
 import 'instance/db_admins.dart';
+import 'instance/enrol.dart';
 import 'instance/federation.dart';
 import 'instance/federation_hook.dart';
 import 'instance/mcp_activation.dart';
@@ -71,7 +75,7 @@ Future<int> run(List<String> argv) async {
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {
-    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|doctor|db-admins --token … [--org … --name … --region … --ref … --skip N --through NNNN]');
+    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|doctor|db-admins|enrol --token … [--org … --name … --region … --ref … --skip N --through NNNN]');
     return 2;
   }
   final api = DioSupabaseManagement(token);
@@ -188,6 +192,19 @@ Future<int> run(List<String> argv) async {
             email: args.option('email'),
             reviewOnly: args.flag('review-only'),
             apply: args.flag('apply'));
+      case 'enrol':
+        final ref = args.option('ref');
+        if (ref == null) {
+          stderr.writeln('enrol needs --ref with the personal home\'s project ref');
+          return 2;
+        }
+        return await runEnrol(api,
+            ref: ref,
+            action: args.positional ?? 'list',
+            workspaceRef: args.option('workspace-ref'),
+            installation: args.option('installation'),
+            accepting: !args.flag('not-accepting'),
+            apply: args.flag('apply'));
       default:
         stderr.writeln('unknown command ${args.command}');
         return 2;
@@ -237,7 +254,7 @@ class _Args {
   }
 
   /// Options that take no value.
-  static const _flags = {'apply', 'review-only', 'support-json'};
+  static const _flags = {'apply', 'review-only', 'support-json', 'not-accepting'};
   String? positional;
   bool flag(String name) => _options[name] == 'true';
   late final String command;

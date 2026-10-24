@@ -686,5 +686,16 @@
  "networkHomeKey": "Chiave pubblicabile della casa personale",
  "networkHomeKeyHint": "La sua chiave pubblicabile (sb_publishable_…), mai una segreta. La procedura guidata dell’istanza verifica entrambe prima di registrarle.",
  "networkErrHome": "La casa personale richiede un indirizzo https:// senza percorso e una chiave pubblicabile.",
- "reqNetworkHome": "Obbligatorio perché questo server ospita solo spazi: i suoi membri hanno bisogno di una casa personale."
+ "reqNetworkHome": "Obbligatorio perché questo server ospita solo spazi: i suoi membri hanno bisogno di una casa personale.",
+ "optSeconds": "{n} secondi",
+ "optOneMinute": "1 minuto",
+ "enrolAccepting": "Accetta nuovi spazi una volta iscritto presso una casa personale",
+ "enrolAcceptingHint": "Solo per un server di spazi i cui membri tengono l'account su una casa personale: il gestore della casa lo iscrive lì (procedura guidata dell'istanza o riga di comando) e può proporlo per nuovi spazi. Tolga la spunta per ospitare solo gli spazi che ha già.",
+ "enrolLifetime": "Validità dello stato di identità",
+ "enrolLifetimeHint": "Per quanto tempo un server di spazi si affida allo stato di una persona firmato dalla casa personale. A un account sospeso vengono rifiutate le nuove richieste entro questo tempo, al massimo 15 minuti. Si imposta nelle impostazioni dell'app.",
+ "enrolReconcile": "Aggiornamento dello stato di identità",
+ "enrolReconcileHint": "Ogni quanto un server di spazi aggiorna gli stati che conserva, anche quando nessuno usa l'app. Si imposta nelle impostazioni dell'app.",
+ "enrolSkew": "Scarto d'orologio ammesso",
+ "enrolSkewHint": "Scarto d'orologio tra la casa personale e un server di spazi ancora accettato, al massimo 30 secondi. Si imposta nelle impostazioni dell'app.",
+ "enrolErrReconcile": "L'aggiornamento dello stato di identità non deve essere più lento della sua validità, altrimenti gli stati scadono tra due aggiornamenti."
 }

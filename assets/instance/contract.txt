@@ -301,6 +301,15 @@ constraint einvoice_inbox.einvoice_inbox_workspace_id_document_hash_key UNIQUE (
 constraint einvoice_inbox.einvoice_inbox_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint einvoice_inbox.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint einvoice_inbox.system_company_present CHECK ((company_id IS NOT NULL))
+constraint enrolled_installations.enrolled_installations_capability_versions_check CHECK (('workspace@1'::text = ANY (capability_versions)))
+constraint enrolled_installations.enrolled_installations_enrolled_by_check CHECK ((enrolled_by = 'operator'::text))
+constraint enrolled_installations.enrolled_installations_origin_check CHECK ((origin ~ '^https://[a-z0-9-]+(\.[a-z0-9-]+)+(:[0-9]{1,5})?$'::text))
+constraint enrolled_installations.enrolled_installations_origin_key UNIQUE (origin)
+constraint enrolled_installations.enrolled_installations_pkey PRIMARY KEY (installation_id)
+constraint enrolled_installations.enrolled_installations_publishable_key_check CHECK (is_publishable_backend_key(publishable_key))
+constraint enrolled_installations.enrolled_installations_revoked CHECK ((enabled = (revoked_at IS NULL)))
+constraint enrolled_installations.enrolled_installations_roles_check CHECK (((roles <@ ARRAY['personal_home'::text, 'workspace_host'::text]) AND ('workspace_host'::text = ANY (roles))))
+constraint enrolled_installations.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint event_decisions.event_decisions_decision_check CHECK ((decision = ANY (ARRAY['accept'::text, 'reject'::text])))
 constraint event_decisions.event_decisions_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 constraint event_decisions.event_decisions_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE RESTRICT
@@ -2249,6 +2258,8 @@ routine public.open_payment_intent(p_workspace_id uuid, p_member_id uuid, p_prov
 routine public.operator_activate_mcp_runtime(p_installation_id uuid, p_epoch integer, p_fingerprint text) -> jsonb | function | definer | volatile | exec:service_role | body:8d021c2c8498
 routine public.operator_approve_mcp_client(p_client_id text, p_name text, p_active boolean) -> jsonb | function | definer | volatile | exec:service_role | body:7edcf1c6a5bc
 routine public.operator_disable_mcp_runtime(p_installation_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:bd6a3393d787
+routine public.operator_enrol_installation(p_installation_id uuid, p_origin text, p_publishable_key text, p_roles text[], p_capability_versions text[], p_accepting_new_workspaces boolean) -> jsonb | function | definer | volatile | exec: | body:54d909f38124
+routine public.operator_enrolled_installations() -> TABLE(installation_id uuid, origin text, roles text[], capability_versions text[], accepting_new_workspaces boolean, enabled boolean, enrolled_at timestamp with time zone, revoked_at timestamp with time zone) | function | definer | stable | exec: | body:b2ebe2e1a4de
 routine public.operator_grant_database_admin(p_target uuid, p_can_provision boolean) -> jsonb | function | definer | volatile | exec:service_role | body:3b3a6c1aec00
 routine public.operator_mcp_readiness() -> jsonb | function | definer | stable | exec:service_role | body:d90abc4b4bd8
 routine public.operator_mcp_runtime_status() -> jsonb | function | definer | stable | exec:service_role | body:0a6576898c96
@@ -2256,6 +2267,7 @@ routine public.operator_record_instance_owner_claim(p_email text) -> void | func
 routine public.operator_register_identity_federation_client(p_client_id uuid, p_target_installation_id uuid, p_target_auth_url text) -> void | function | definer | volatile | exec: | body:e7964eef61e4
 routine public.operator_reset_mcp_authority(p_installation_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:22d43b34dfd3
 routine public.operator_revoke_database_admin(p_target uuid) -> jsonb | function | definer | volatile | exec:service_role | body:e0e61a0c3fc6
+routine public.operator_revoke_installation(p_installation_id uuid) -> jsonb | function | definer | volatile | exec: | body:6aca7ad43e58
 routine public.operator_set_identity_federation_client(p_client_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec: | body:484cb66063dc
 routine public.operator_set_installation_roles(p_roles text[], p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:7dbbfd986503
 routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:service_role | body:c659b2933f84
@@ -2302,6 +2314,7 @@ routine public.profile_postal_block(p profiles, p_workspace_country text, p_lang
 routine public.profile_row_readable(p_subject uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:94cb2c4c6d95
 routine public.profiles_default_workspace_ref() -> trigger | function | definer | volatile | exec:service_role | body:8ca04a9d8556
 routine public.propose_price_negotiation(p_member_id uuid, p_fee_cents integer, p_overage_fee_cents integer, p_discount_percent numeric, p_note text, p_valid_from date, p_subscription_pct integer, p_items jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:629fe93a2903
+routine public.protect_enrolled_installation() -> trigger | function | invoker | volatile | exec: | body:1bfa66ade934
 routine public.protect_identity_federation_client() -> trigger | function | invoker | volatile | exec:service_role | body:de8119cc60cd
 routine public.protect_last_owner() -> trigger | function | definer | volatile | exec:service_role | body:ab5c4b3b7f91
 routine public.provision_database_admin(p_target uuid, p_can_provision boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ac8050f2c40a
@@ -2773,6 +2786,8 @@ trigger directory_people.zz_system_columns_stamp CREATE TRIGGER zz_system_column
 trigger einvoice_credentials.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.einvoice_credentials FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger einvoice_inbox.purchase_inbox_match_link CREATE TRIGGER purchase_inbox_match_link AFTER UPDATE OF matched_event_id ON public.einvoice_inbox FOR EACH ROW WHEN (((new.matched_event_id IS NOT NULL) AND (old.matched_event_id IS DISTINCT FROM new.matched_event_id))) EXECUTE FUNCTION purchase_inbox_match_link()
 trigger einvoice_inbox.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.einvoice_inbox FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger enrolled_installations.protect_enrolled_installation CREATE TRIGGER protect_enrolled_installation BEFORE DELETE OR UPDATE ON public.enrolled_installations FOR EACH ROW EXECUTE FUNCTION protect_enrolled_installation()
+trigger enrolled_installations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.enrolled_installations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger event_decisions.record_workspace_application_decision CREATE TRIGGER record_workspace_application_decision AFTER INSERT ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION record_workspace_application_decision()
 trigger event_decisions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.event_decisions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger events.capture_workspace_application CREATE TRIGGER capture_workspace_application AFTER INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION capture_workspace_application()

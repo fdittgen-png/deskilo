@@ -22,6 +22,7 @@ import '../../features/me/presentation/me_home_tab.dart';
 import '../../features/me/presentation/me_messages_tab.dart';
 import '../../features/me/presentation/me_personal_shell.dart';
 import '../../features/me/presentation/me_shell.dart';
+import '../../features/me/presentation/personal_spaces_view.dart';
 import '../../features/me/presentation/public_person_screen.dart';
 import '../../features/me/providers/personal_shell_providers.dart';
 import '../../features/money/presentation/screens/my_finances_screen.dart';
@@ -55,6 +56,10 @@ List<RouteBase> _legacyMe() => [
             MeShell(tab: MeTab.fromQuery(state.uri.queryParameters['tab'])),
       ),
       GoRoute(path: MeTab.spaces.path, redirect: (context, state) => '/me'),
+      GoRoute(
+        path: personalSpacesManagePath,
+        redirect: (context, state) => '/profiles',
+      ),
       GoRoute(
         path: MeTab.discover.path,
         redirect: (context, state) => '/me?tab=discover',
@@ -121,7 +126,16 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
           routes: [
             GoRoute(
               path: MeTab.spaces.path,
-              builder: (context, state) => const ProfilesScreen(),
+              // #2554 — every space my account names, by its host.
+              builder: (context, state) => const PersonalSpacesView(),
+              routes: [
+                // This server's spaces to manage: default, home site,
+                // environments, the platform tools.
+                GoRoute(
+                  path: 'manage',
+                  builder: (context, state) => const ProfilesScreen(),
+                ),
+              ],
             ),
           ],
         ),

@@ -448,6 +448,7 @@ void main() {
         'name': 'app',
         'environment': 'app',
         'network': 'app',
+        'enrolment': 'app',
         'members': 'app',
         'einvoice': 'file',
       });

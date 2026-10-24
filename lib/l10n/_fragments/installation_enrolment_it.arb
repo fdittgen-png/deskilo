@@ -1,0 +1,20 @@
+{
+  "@@locale": "it",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Validità dello stato di identità",
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Secondi per cui un server di spazi può affidarsi a uno stato di identità firmato dalla casa personale. Al massimo 900: a un account sospeso vengono rifiutate le nuove richieste entro questo tempo più lo scarto d'orologio.",
+  "settingLabelIdentityStatusReconcileSeconds": "Aggiornamento dello stato di identità",
+  "settingHintIdentityStatusReconcileSeconds": "Secondi tra due aggiornamenti degli stati di identità che un server di spazi conserva. Lo mantenga sotto la validità.",
+  "settingLabelIdentityClockSkewSeconds": "Scarto d'orologio ammesso",
+  "settingHintIdentityClockSkewSeconds": "Secondi di scarto d'orologio tra la casa personale e un server di spazi ancora accettati, da 0 a 30.",
+  "instanceStepEnrol": "Casa personale",
+  "instanceEnrolIntro": "Facoltativo. Se questa installazione ospita spazi per persone i cui account si trovano su una casa personale che Lei gestisce, la iscriva lì: la casa la riconosce allora come server di spazi. Salti questo passaggio per un'installazione combinata.",
+  "instanceEnrolHomeLabel": "Casa personale presso cui iscriverla",
+  "instanceEnrolAccepting": "Accetta nuovi spazi",
+  "instanceEnrolRun": "Iscrivere presso questa casa personale",
+  "instanceEnrolDone": "Iscritta presso {home}.",
+  "instanceEnrolNoHome": "Nessun altro progetto di questo account può essere la casa personale.",
+  "instanceEnrolNotHost": "Questa installazione non ospita spazi, quindi non può essere iscritta.",
+  "instanceEnrolNotHome": "{home} non è una casa personale.",
+  "instanceEnrolSame": "Un'installazione non si iscrive da sola.",
+  "instanceEnrolUnreadable": "Questo progetto non risponde ancora come un'installazione Deskilo. Installi prima lo schema."
+}

@@ -39,7 +39,7 @@ class SupabaseMeRepository implements MeRepository {
   }
 
   @override
-  Future<MyVisibility> myVisibility() => readMyVisibility(_client);
+  Future<MyVisibility> myVisibility() => readMyNetworkVisibility(_client);
 
   @override
   Future<void> setVisibility(

@@ -68,6 +68,7 @@ const List<RouteCoverage> routeCoverage = [
   // #2552 — the personal shell's branches: the person's own pages, covered
   // as `/me` is; its messenger pages excluded as every messenger is.
   RouteCoverage('/me/spaces', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage('/me/spaces/manage', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage('/me/discover', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/me/messages',

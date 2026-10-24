@@ -686,5 +686,16 @@
  "networkHomeKey": "Clé publiable du domicile personnel",
  "networkHomeKeyHint": "Sa clé publiable (sb_publishable_…), jamais une clé secrète. L’assistant d’instance vérifie les deux avant de les enregistrer.",
  "networkErrHome": "Le domicile personnel demande une adresse https:// sans chemin et une clé publiable.",
- "reqNetworkHome": "Obligatoire, car ce serveur n’héberge que des espaces : ses membres ont besoin d’un domicile personnel."
+ "reqNetworkHome": "Obligatoire, car ce serveur n’héberge que des espaces : ses membres ont besoin d’un domicile personnel.",
+ "optSeconds": "{n} secondes",
+ "optOneMinute": "1 minute",
+ "enrolAccepting": "Accepte de nouveaux espaces une fois inscrit sur un domicile personnel",
+ "enrolAcceptingHint": "Seulement pour un serveur d'espaces dont les membres gardent leur compte sur un domicile personnel : l'exploitant du domicile l'y inscrit (assistant d'instance ou ligne de commande) et peut le proposer pour de nouveaux espaces. Décochez pour n'héberger que les espaces qu'il a déjà.",
+ "enrolLifetime": "Durée de validité du statut d'identité",
+ "enrolLifetimeHint": "Combien de temps un serveur d'espaces se fie au statut d'une personne signé par le domicile personnel. Un compte suspendu voit ses nouvelles requêtes refusées dans ce délai, 15 minutes au plus. Se règle dans les paramètres de l'app.",
+ "enrolReconcile": "Actualisation du statut d'identité",
+ "enrolReconcileHint": "À quelle fréquence un serveur d'espaces actualise les statuts qu'il détient, même quand personne n'utilise l'app. Se règle dans les paramètres de l'app.",
+ "enrolSkew": "Écart d'horloge toléré",
+ "enrolSkewHint": "Écart d'horloge entre le domicile personnel et un serveur d'espaces encore accepté, 30 secondes au plus. Se règle dans les paramètres de l'app.",
+ "enrolErrReconcile": "L'actualisation du statut d'identité ne doit pas être plus lente que sa durée de validité, sinon les statuts expirent entre deux actualisations."
 }

@@ -8819,6 +8819,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instanceEndpointTitle => 'Assistant endpoint';
 
   @override
+  String get instanceEnrolAccepting => 'Accepts new spaces';
+
+  @override
+  String instanceEnrolDone(String home) {
+    return 'Enrolled at $home.';
+  }
+
+  @override
+  String get instanceEnrolHomeLabel => 'Personal home to enrol at';
+
+  @override
+  String get instanceEnrolIntro =>
+      'Optional. If this installation hosts spaces for people whose accounts live on a personal home you operate, enrol it there: the home then recognises it as a workspace server. Skip this step for a combined installation.';
+
+  @override
+  String get instanceEnrolNoHome =>
+      'No other project of this account can be the personal home.';
+
+  @override
+  String instanceEnrolNotHome(String home) {
+    return '$home is not a personal home.';
+  }
+
+  @override
+  String get instanceEnrolNotHost =>
+      'This installation does not host spaces, so it cannot be enrolled.';
+
+  @override
+  String get instanceEnrolRun => 'Enrol at this personal home';
+
+  @override
+  String get instanceEnrolSame => 'An installation cannot enrol itself.';
+
+  @override
+  String get instanceEnrolUnreadable =>
+      'This project does not answer as a Deskilo installation yet. Install the schema first.';
+
+  @override
   String get instanceFamilyChatgpt => 'ChatGPT';
 
   @override
@@ -9102,6 +9140,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get instanceStepDone => 'Done';
+
+  @override
+  String get instanceStepEnrol => 'Personal home';
 
   @override
   String instanceStepFailed(String item, String message) {
@@ -13863,6 +13904,54 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get myReservationsUnsupported =>
       'This server does not list reservations for the personal space yet.';
+
+  @override
+  String get mySpacesAll => 'All my spaces';
+
+  @override
+  String mySpacesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count spaces',
+      one: '1 space',
+      zero: 'No space',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mySpacesDiscover => 'Discover spaces';
+
+  @override
+  String get mySpacesHostElsewhere => 'On another installation';
+
+  @override
+  String get mySpacesHostHere => 'On this server';
+
+  @override
+  String get mySpacesManage => 'Manage spaces on this server';
+
+  @override
+  String get mySpacesNoMatch => 'No space matches your search.';
+
+  @override
+  String get mySpacesOpen => 'Open';
+
+  @override
+  String get mySpacesOpenTest => 'Open test space';
+
+  @override
+  String get mySpacesRequestStatus => 'View request status';
+
+  @override
+  String get mySpacesTestSpace => 'Test space';
+
+  @override
+  String get mySpacesUnavailable => 'Your spaces could not be read.';
+
+  @override
+  String get mySpacesVerified => 'Membership verified';
 
   @override
   String get myVisitsHelp =>
@@ -19175,6 +19264,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.';
 
   @override
+  String get settingHintIdentityClockSkewSeconds =>
+      'Seconds of clock difference between the personal home and a workspace server that are still accepted, 0 to 30.';
+
+  @override
+  String get settingHintIdentityStatusAssertionLifetimeSeconds =>
+      'Seconds a workspace server may rely on one identity status signed by the personal home. At most 900: a suspended account is refused new requests within this time plus the clock skew.';
+
+  @override
+  String get settingHintIdentityStatusReconcileSeconds =>
+      'Seconds between two refreshes of the identity statuses a workspace server holds. Keep it below the status lifetime.';
+
+  @override
   String get settingHintKpiCapacityRangeDays =>
       'Fixed by the platform: the longest period one capacity figure may cover. It bounds the query.';
 
@@ -19321,6 +19422,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Days before a first reminder';
+
+  @override
+  String get settingLabelIdentityClockSkewSeconds => 'Allowed clock difference';
+
+  @override
+  String get settingLabelIdentityStatusAssertionLifetimeSeconds =>
+      'Identity status lifetime';
+
+  @override
+  String get settingLabelIdentityStatusReconcileSeconds =>
+      'Identity status refresh';
 
   @override
   String get settingLabelKpiCapacityRangeDays => 'Capacity figure range';
@@ -25073,6 +25185,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save your profession and bio. Please try again.';
 
   @override
+  String get visibilityAskContact => 'Who can see my contact details?';
+
+  @override
+  String get visibilityAskPublic => 'Is my public profile published?';
+
+  @override
+  String get visibilityAskWrite => 'Who can write to me?';
+
+  @override
   String get visibilityBio => 'A few words about you';
 
   @override
@@ -25100,11 +25221,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilityElsewhereTitle => 'On my other servers';
 
   @override
+  String get visibilityFieldElsewhere =>
+      'It names a space on another server, so it cannot be changed here yet.';
+
+  @override
+  String visibilityHomeHeader(String name) {
+    return 'Personal home: $name';
+  }
+
+  @override
   String get visibilityIdentity => 'Name and photo';
 
   @override
   String get visibilityIntro =>
       'Each part of your account picks its own audience. Nothing is public unless you choose it.';
+
+  @override
+  String get visibilityMoreSharing => 'More sharing settings';
 
   @override
   String get visibilityMySpaces => 'Members of my spaces';
@@ -25168,7 +25301,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilitySignedIn => 'Anyone signed in';
 
   @override
+  String visibilitySpaceAmbiguous(String source) {
+    return 'Same name as another space · $source';
+  }
+
+  @override
+  String get visibilitySpaceHere => 'on this personal home';
+
+  @override
+  String visibilitySpaceOnServer(String installation) {
+    return 'on server $installation';
+  }
+
+  @override
   String get visibilitySpaceUnlisted => 'A space that is no longer listed';
+
+  @override
+  String get visibilitySpaceUnverified => 'Verification unavailable';
 
   @override
   String get visibilitySpacesUnavailable =>
@@ -25185,8 +25334,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilityWidenAction => 'Widen';
 
   @override
+  String visibilityWidenAdded(String spaces) {
+    return 'Added: $spaces';
+  }
+
+  @override
   String visibilityWidenConfirm(String field, String audience) {
     return 'Show your $field to: $audience? They will be able to see it.';
+  }
+
+  @override
+  String visibilityWidenRemoved(String spaces) {
+    return 'Removed: $spaces';
   }
 
   @override

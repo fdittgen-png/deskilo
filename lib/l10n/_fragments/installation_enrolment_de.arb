@@ -1,0 +1,20 @@
+{
+  "@@locale": "de",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Gültigkeit des Identitätsstatus",
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Sekunden, die sich ein Workspace-Server auf einen vom persönlichen Zuhause signierten Identitätsstatus verlassen darf. Höchstens 900: Ein gesperrtes Konto wird innerhalb dieser Zeit plus Uhrabweichung für neue Anfragen abgewiesen.",
+  "settingLabelIdentityStatusReconcileSeconds": "Aktualisierung des Identitätsstatus",
+  "settingHintIdentityStatusReconcileSeconds": "Sekunden zwischen zwei Aktualisierungen der Identitätsstatus, die ein Workspace-Server hält. Unter der Gültigkeit halten.",
+  "settingLabelIdentityClockSkewSeconds": "Erlaubte Uhrabweichung",
+  "settingHintIdentityClockSkewSeconds": "Sekunden Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, die noch akzeptiert werden, 0 bis 30.",
+  "instanceStepEnrol": "Persönliches Zuhause",
+  "instanceEnrolIntro": "Optional. Wenn diese Installation Spaces für Personen hostet, deren Konten auf einem von Ihnen betriebenen persönlichen Zuhause liegen, registrieren Sie sie dort: Das Zuhause erkennt sie dann als Workspace-Server an. Überspringen Sie diesen Schritt bei einer kombinierten Installation.",
+  "instanceEnrolHomeLabel": "Persönliches Zuhause für die Registrierung",
+  "instanceEnrolAccepting": "Nimmt neue Spaces an",
+  "instanceEnrolRun": "Bei diesem persönlichen Zuhause registrieren",
+  "instanceEnrolDone": "Registriert bei {home}.",
+  "instanceEnrolNoHome": "Kein anderes Projekt dieses Kontos kann das persönliche Zuhause sein.",
+  "instanceEnrolNotHost": "Diese Installation hostet keine Spaces und kann daher nicht registriert werden.",
+  "instanceEnrolNotHome": "{home} ist kein persönliches Zuhause.",
+  "instanceEnrolSame": "Eine Installation registriert sich nicht selbst.",
+  "instanceEnrolUnreadable": "Dieses Projekt antwortet noch nicht als Deskilo-Installation. Installieren Sie zuerst das Schema."
+}

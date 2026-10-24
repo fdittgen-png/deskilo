@@ -110,7 +110,8 @@ void main() {
         '/me/messages/new?source=x');
     expect(find.byType(AccountMessengerScreen), findsOneWidget);
     expect(await goTo(tester, router, '/profiles'), '/me/spaces');
-    expect(_key('profiles-add'), findsOneWidget);
+    // #2554 — My spaces by host; this server's management one tap below.
+    expect(_key('my-spaces-list'), findsOneWidget);
     expect(await goTo(tester, router, '/connections'), '/me/account/connections');
     expect(await goTo(tester, router, '/me/messages/thread'), '/me',
         reason: 'the named messenger pages match before :ref and fall back '

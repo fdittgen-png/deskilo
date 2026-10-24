@@ -36,7 +36,7 @@ void main() {
         greaterThan(tester.getBottomLeft(find.byKey(const ValueKey('me-help'))).dy));
     await tester.tap(find.byKey(const ValueKey('me-section-1')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('visibility-about-edit')).hitTestable(), findsOneWidget);
+    expect(find.byKey(const ValueKey('visibility-field-contact_channels')).hitTestable(), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

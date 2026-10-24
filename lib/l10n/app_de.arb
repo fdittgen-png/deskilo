@@ -6084,6 +6084,16 @@
     "description": "#977 instance wizard: instanceDoneIntro"
   },
   "instanceEndpointTitle": "Assistenten-Endpunkt",
+  "instanceEnrolAccepting": "Nimmt neue Spaces an",
+  "instanceEnrolDone": "Registriert bei {home}.",
+  "instanceEnrolHomeLabel": "Persönliches Zuhause für die Registrierung",
+  "instanceEnrolIntro": "Optional. Wenn diese Installation Spaces für Personen hostet, deren Konten auf einem von Ihnen betriebenen persönlichen Zuhause liegen, registrieren Sie sie dort: Das Zuhause erkennt sie dann als Workspace-Server an. Überspringen Sie diesen Schritt bei einer kombinierten Installation.",
+  "instanceEnrolNoHome": "Kein anderes Projekt dieses Kontos kann das persönliche Zuhause sein.",
+  "instanceEnrolNotHome": "{home} ist kein persönliches Zuhause.",
+  "instanceEnrolNotHost": "Diese Installation hostet keine Spaces und kann daher nicht registriert werden.",
+  "instanceEnrolRun": "Bei diesem persönlichen Zuhause registrieren",
+  "instanceEnrolSame": "Eine Installation registriert sich nicht selbst.",
+  "instanceEnrolUnreadable": "Dieses Projekt antwortet noch nicht als Deskilo-Installation. Installieren Sie zuerst das Schema.",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Desktop- oder Kommandozeilen-Assistent",
@@ -6218,6 +6228,7 @@
   "@instanceStepDone": {
     "description": "#977 instance wizard: instanceStepDone"
   },
+  "instanceStepEnrol": "Persönliches Zuhause",
   "instanceStepFailed": "Gestoppt bei {item}: {message}",
   "@instanceStepFailed": {
     "description": "#977 instance wizard: instanceStepFailed",
@@ -9215,6 +9226,19 @@
   "myReservationsStatusReserved": "Reserviert",
   "myReservationsUnnamedPlace": "(Platz ohne Namen)",
   "myReservationsUnsupported": "Dieser Server listet Reservierungen für den persönlichen Bereich noch nicht auf.",
+  "mySpacesAll": "Alle meine Spaces",
+  "mySpacesCount": "{count, plural, =0{Kein Space} =1{1 Space} other{{count} Spaces}}",
+  "mySpacesDiscover": "Spaces entdecken",
+  "mySpacesHostElsewhere": "Auf einer anderen Installation",
+  "mySpacesHostHere": "Auf diesem Server",
+  "mySpacesManage": "Spaces auf diesem Server verwalten",
+  "mySpacesNoMatch": "Kein Space passt zu Ihrer Suche.",
+  "mySpacesOpen": "Öffnen",
+  "mySpacesOpenTest": "Test-Space öffnen",
+  "mySpacesRequestStatus": "Status der Anfrage ansehen",
+  "mySpacesTestSpace": "Test-Space",
+  "mySpacesUnavailable": "Ihre Spaces konnten nicht gelesen werden.",
+  "mySpacesVerified": "Mitgliedschaft bestätigt",
   "myVisitsHelp": "Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
@@ -13513,6 +13537,9 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintIdentityClockSkewSeconds": "Sekunden Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, die noch akzeptiert werden, 0 bis 30.",
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Sekunden, die sich ein Workspace-Server auf einen vom persönlichen Zuhause signierten Identitätsstatus verlassen darf. Höchstens 900: Ein gesperrtes Konto wird innerhalb dieser Zeit plus Uhrabweichung für neue Anfragen abgewiesen.",
+  "settingHintIdentityStatusReconcileSeconds": "Sekunden zwischen zwei Aktualisierungen der Identitätsstatus, die ein Workspace-Server hält. Unter der Gültigkeit halten.",
   "settingHintKpiCapacityRangeDays": "Von der Plattform festgelegt: der längste Zeitraum, den eine Kapazitätskennzahl abdecken darf. Er begrenzt die Abfrage.",
   "@settingHintKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -13654,6 +13681,9 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelIdentityClockSkewSeconds": "Erlaubte Uhrabweichung",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Gültigkeit des Identitätsstatus",
+  "settingLabelIdentityStatusReconcileSeconds": "Aktualisierung des Identitätsstatus",
   "settingLabelKpiCapacityRangeDays": "Zeitraum der Kapazitätskennzahl",
   "@settingLabelKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting label."
@@ -17168,14 +17198,20 @@
   "visibilityAboutEmpty": "Beruf und ein paar Worte hinzufügen",
   "visibilityAboutMe": "Über mich",
   "visibilityAboutSaveFailed": "Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "visibilityAskContact": "Wer kann meine Kontaktdaten sehen?",
+  "visibilityAskPublic": "Ist mein öffentliches Profil veröffentlicht?",
+  "visibilityAskWrite": "Wer kann mir schreiben?",
   "visibilityBio": "Ein paar Worte über Sie",
   "visibilityChosenCount": "{count, plural, =1{Mitglieder von 1 ausgewählten Space} other{Mitglieder von {count} ausgewählten Spaces}}",
   "visibilityChosenSpaces": "Mitglieder ausgewählter Spaces",
   "visibilityContact": "WhatsApp und E-Mail",
   "visibilityElsewhereIntro": "Auf einem verbundenen Server haben Sie das Konto dieses Servers. Wer dort keinen Raum mit Ihnen teilt, sieht, was Sie allen angemeldeten Personen erlauben; Kontaktdaten und Anwesenheit verlassen nie Ihre Räume.",
   "visibilityElsewhereTitle": "Auf meinen anderen Servern",
+  "visibilityFieldElsewhere": "Diese Einstellung nennt einen Space auf einem anderen Server und lässt sich hier noch nicht ändern.",
+  "visibilityHomeHeader": "Persönliches Zuhause: {name}",
   "visibilityIdentity": "Name und Foto",
   "visibilityIntro": "Jeder Teil Ihres Kontos wählt sein eigenes Publikum. Nichts ist öffentlich, solange Sie es nicht wählen.",
+  "visibilityMoreSharing": "Weitere Freigabeeinstellungen",
   "visibilityMySpaces": "Mitglieder meiner Spaces",
   "visibilityNoSpaces": "Sie sind noch in keinem Space. Wählen Sie ein anderes Publikum.",
   "visibilityNobody": "Niemand",
@@ -17208,11 +17244,16 @@
   "visibilityReachability": "Wer ein Gespräch mit mir beginnen darf",
   "visibilitySaveFailed": "Konnte nicht speichern, wer das sieht. Bitte versuchen Sie es erneut.",
   "visibilitySignedIn": "Alle Angemeldeten",
+  "visibilitySpaceAmbiguous": "Gleicher Name wie ein anderer Space · {source}",
+  "visibilitySpaceHere": "in diesem persönlichen Zuhause",
+  "visibilitySpaceOnServer": "auf Server {installation}",
   "visibilitySpaceUnlisted": "Ein Space, der nicht mehr aufgeführt ist",
+  "visibilitySpaceUnverified": "Überprüfung nicht verfügbar",
   "visibilitySpacesUnavailable": "Ihre Spaces lassen sich gerade nicht auflisten.",
   "visibilityTitle": "Wer mich sieht",
   "visibilityUnavailable": "Wer was von Ihnen sieht, lässt sich gerade nicht lesen. Es wurde nichts geändert.",
   "visibilityWidenAction": "Erweitern",
+  "visibilityWidenAdded": "Hinzugefügt: {spaces}",
   "visibilityWidenConfirm": "{field} zeigen für: {audience}? Diese Personen können es sehen.",
   "@visibilityWidenConfirm": {
     "placeholders": {
@@ -17224,6 +17265,7 @@
       }
     }
   },
+  "visibilityWidenRemoved": "Entfernt: {spaces}",
   "visitCancel": "Diesen Besuch absagen",
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"
