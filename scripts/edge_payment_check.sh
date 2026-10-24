@@ -55,14 +55,16 @@ DB_URL="$(env_of DB_URL)"
 # The previous settlement pass stops its stubs and handler on EXIT, but a
 # killed process can hold its port for a moment; binding before it lets
 # go failed the next pass with "Address already in use". Wait for them.
+# The stub ports sit below 32768, outside Linux's ephemeral range: a port
+# in that range can be taken by any outgoing connection on the runner.
 port_free() { python3 -c "import socket,sys; s=socket.socket(); s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1); s.bind(('127.0.0.1', int(sys.argv[1]))); s.close()" "$1" 2>/dev/null; }
-for port in 8000 54996 54997 54998; do
+for port in 8000 18996 18997 18998; do
   for _ in $(seq 1 30); do port_free "$port" && break; sleep 1; done
   port_free "$port" || fail "port $port is still held by an earlier pass"
 done
 
 WORK="$(mktemp -d -t deskilo-pay-XXXXXX)"
-STUB_PORT=54998
+STUB_PORT=18998
 # Deno.serve() without options listens on 8000.
 FN_PORT=8000
 json() { python3 -c "import json,sys; print(json.load(sys.stdin)$1)"; }
@@ -82,7 +84,7 @@ STUB_PID=$!
 SUPABASE_URL="$API_URL" SUPABASE_ANON_KEY="$ANON_KEY" \
 SUPABASE_SERVICE_ROLE_KEY="$SERVICE_KEY" \
 STRIPE_API_BASE="http://127.0.0.1:$STUB_PORT" \
-PAYPAL_API_BASE="http://127.0.0.1:54997" MOLLIE_API_BASE="http://127.0.0.1:54996" \
+PAYPAL_API_BASE="http://127.0.0.1:18997" MOLLIE_API_BASE="http://127.0.0.1:18996" \
   deno run --allow-net --allow-env --allow-read --allow-import \
   supabase/functions/create-payment-order/index.ts > "$WORK/fn.log" 2>&1 &
 FN_PID=$!

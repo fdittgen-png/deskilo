@@ -13,7 +13,7 @@
 # Verification here is the stub's (`sig-ok`): LOCAL protocol evidence,
 # never proof of PayPal's live signatures. Nothing here speaks for Stripe
 # or Mollie.
-PP_PORT=54997
+PP_PORT=18997
 PP="http://127.0.0.1:$PP_PORT"
 : > "$WORK/pp_hits"
 python3 scripts/payment_scenarios/paypal_stub.py "$PP_PORT" "$WORK/pp_hits" "PP$RUN" &
