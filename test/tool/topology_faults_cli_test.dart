@@ -98,6 +98,32 @@ void main() {
     }
   });
 
+  test('#2472 C2 facts names a workspace source at P, and refuses anything '
+      'else before any command', () {
+    ProcessResult facts(List<String> args) => Process.runSync(
+      'bash',
+      ['scripts/topology_stacks.sh', 'facts', ...args],
+      environment: {'TOPOLOGY_DRY_RUN': '1'},
+    );
+    final both = facts(['lapse', 'w']);
+    expect(both.exitCode, 0, reason: '${both.stderr}');
+    expect(_commands(both), ['facts lapse wa at P', 'facts lapse wb at P']);
+    final one = facts(['fresh', 'wb']);
+    expect(_commands(one), ['facts fresh wb at P']);
+    for (final args in [
+      ['lapse', 'p'],
+      ['lapse', 'all'],
+      ['expire', 'wa'],
+      ['fresh'],
+      <String>[],
+    ]) {
+      final r = facts(args);
+      expect(r.exitCode, 2, reason: '$args');
+      expect(_commands(r), isEmpty, reason: '$args');
+      expect('${r.stderr}', contains('usage:'), reason: '$args');
+    }
+  });
+
   test('the ports the fault checks are the ones prepare writes', () {
     final script = File('scripts/topology_stacks.sh').readAsStringSync();
     expect(script, contains(r'for spec in p:$P_BASE wb:$WB_BASE; do'));

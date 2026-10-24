@@ -11,8 +11,18 @@
 // Runs only with DESKILO_TOPOLOGY_FILE pointing at the descriptor the seed
 // wrote, and never against anything but those local stacks. The identities
 // are independently seeded plumbing users, NOT the one-registration proof
-// (#2562); fault, outage and epoch scenarios (SEP-01..06) are #2561's next
-// checkpoint and #2560's evidence, not this file's.
+// (#2562). Each case names the acceptance of #2561 it proves:
+//
+//   SEP-01  zero operational rows at P around a personal sign-in, a
+//           profile edit and a W read; the profile lands at P only.
+//   SEP-02  switching W-A to W-B keeps the P client, subject, epoch and
+//           session; nothing signs in again.
+//   SEP-03  independent services and local accounts; the equal local
+//           workspace id is two targets with their own rows and caches.
+//   SEP-06  roles: P refuses a workspace creation, W-A accepts it.
+//
+// The outage, stall and account-switch cases (SEP-02 in flight, SEP-04,
+// SEP-05) stop gateways and live in topology_faults_test.dart.
 import 'dart:convert';
 import 'dart:io';
 
@@ -260,10 +270,12 @@ void main() {
     }
   }
 
-  test('three services: distinct keys, and a token of one stack is refused '
-      'by another while its own stack admits it', () async {
+  test('SEP-03: three services with distinct keys and independent local '
+      'accounts; a token of one stack is refused by another while its own '
+      'stack admits it', () async {
     expect({p.anon, a.anon, b.anon}, hasLength(3));
     expect({p.url, a.url, b.url}, hasLength(3));
+    expect({p.userId, a.userId, b.userId}, hasLength(3));
     Future<int> reservationsWith(_Stack on, SupabaseClient who) async {
       final token = who.auth.currentSession!.accessToken;
       final r = await http.get(
@@ -298,7 +310,7 @@ void main() {
   });
 
   test(
-    'the own-profile read and write reach P only, and the row is at P',
+    'SEP-01: the own-profile read and write reach P only, and the row is at P',
     () async {
       final sub = container.listen(authStateProvider, (_, _) {});
       addTearDown(sub.close);
@@ -340,8 +352,8 @@ void main() {
     },
   );
 
-  test('a reservation read reaches the selected W stack and returns its own '
-      'row; the equal local workspace id on W-B reads W-B\'s', () async {
+  test('SEP-03: a reservation read reaches the selected W stack and returns '
+      'its own row; the equal local workspace id on W-B reads W-B\'s', () async {
     final sub = container.listen(workspaceContextProvider, (_, _) {});
     addTearDown(sub.close);
     final repo = container.read(reservationRepositoryProvider);
@@ -390,7 +402,8 @@ void main() {
   });
 
   test(
-    'a wrong target is refused before any request, and nothing changed',
+    'SEP-03: a wrong target is refused before any request, and nothing '
+    'changed',
     () async {
       final sub = container.listen(workspaceContextProvider, (_, _) {});
       addTearDown(sub.close);
@@ -422,6 +435,101 @@ void main() {
       expect(ok.map((r) => r.id), [a.reservationId]);
     },
   );
+
+  test('SEP-01: P holds no workspace, member, reservation, invoice or '
+      'workspace conversation before and after a personal sign-in, a '
+      'profile edit and a W read, while the W read returns its row', () async {
+    final wsub = container.listen(workspaceContextProvider, (_, _) {});
+    final asub = container.listen(authStateProvider, (_, _) {});
+    addTearDown(() {
+      wsub.close();
+      asub.close();
+    });
+    Future<void> none(String when) async {
+      for (final table in [
+        'workspaces',
+        'members',
+        'reservations',
+        'invoices',
+        'conversations',
+      ]) {
+        expect(await p.rows(table), 0, reason: 'P holds no $table $when');
+      }
+    }
+
+    await none('before');
+    final signIn = SupabaseClient(
+      p.url,
+      p.anon,
+      httpClient: http.Client(),
+      authOptions: const AuthClientOptions(autoRefreshToken: false),
+    );
+    addTearDown(signIn.dispose);
+    await p.signIn(signIn, p.user, password);
+    await none('after a personal sign-in');
+
+    await container
+        .read(meActionsProvider)
+        .saveAbout('Maker', 'SEP-01 ${d['run']}');
+    await none('after a profile edit');
+
+    final rows = await container
+        .read(reservationRepositoryProvider)
+        .fetchWindow(workspaceId, from: from(), to: to());
+    expect(rows.map((r) => r.id), [a.reservationId], reason: 'the W read ran');
+    await none('after a W read');
+    expect(await a.rows('workspaces'), greaterThan(0), reason: 'rows exist');
+  });
+
+  test('SEP-02: switching W-A to W-B leaves the P client, subject, epoch and '
+      'session unchanged; nothing signs in again and P still answers', () async {
+    final wsub = container.listen(workspaceContextProvider, (_, _) {});
+    final asub = container.listen(authStateProvider, (_, _) {});
+    addTearDown(() {
+      wsub.close();
+      asub.close();
+    });
+    final personalBefore = await container.read(personalContextProvider.future);
+    final clientBefore = container.read(personalClientProvider);
+    final sessionBefore = p.client.auth.currentSession!;
+    final atA = await container.read(workspaceContextProvider.future);
+    expect(atA!.target.installationId, a.installationId);
+    p.wire.paths.clear();
+
+    select(b);
+    final atB = await container.read(workspaceContextProvider.future);
+    expect(atB!.target.installationId, b.installationId);
+    expect(atB.target.workspaceId, atA.target.workspaceId);
+    expect(atB.cacheNamespace, isNot(atA.cacheNamespace), reason: 'SEP-03');
+    expect(atB.sameOperationAs(atA), isFalse);
+
+    // P is the same: one client lifetime, one subject, one epoch, one session.
+    expect(container.read(personalClientProvider), same(clientBefore));
+    expect(clientBefore, same(p.client));
+    expect(
+      await container.read(personalContextProvider.future),
+      personalBefore,
+    );
+    expect(atB.personalEpoch, atA.personalEpoch);
+    expect(atB.identity, atA.identity);
+    expect(p.client.auth.currentUser?.id, p.userId);
+    expect(
+      p.client.auth.currentSession?.accessToken,
+      sessionBefore.accessToken,
+    );
+    expect(
+      p.wire.paths.where((x) => x.contains('/auth/v1/')),
+      isEmpty,
+      reason: 'the switch neither signs in again nor refreshes at P',
+    );
+
+    // And P keeps answering its own consumer after the switch.
+    container.invalidate(myVisibilityProvider);
+    await container.read(myVisibilityProvider.future);
+    expect(p.wire.count('/rpc/my_visibility'), greaterThan(0));
+    expect(a.wire.count('/rpc/my_visibility'), 0);
+    expect(b.wire.count('/rpc/my_visibility'), 0);
+  });
 
   test('SEP-06: the personal home refuses a workspace creation and writes no '
       'row, a workspace host accepts the same request and stamps its birth '

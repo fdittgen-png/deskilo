@@ -8,15 +8,22 @@
 // production ones: the P profile read and write, the W reservation window
 // read through the captured workspace context, and the context providers.
 //
-//   SEP-R3   every W gateway blocked after P signed in: P refreshes, reads
-//            and writes; W answers stale-marked or unavailable, never an
-//            empty success; nobody is signed out.
-//   SEP-R4   W-A stalled: W-B answers while W-A still hangs, one request
-//            reached W-A, and W-A's late answer is W-A's alone.
-//   SEP-R11  the personal account switches, or the host at the same URL
-//            identifies as another installation, while a W-A read hangs:
-//            the personal epoch or the target moves, the late answer reaches
-//            only its own caller and populates nothing of the new context.
+//   SEP-04 (R3)  every W gateway blocked after P signed in: P refreshes,
+//                reads and writes; W answers stale-marked or unavailable,
+//                never an empty success; nobody is signed out.
+//   SEP-04       W-A blocked: W-B reads live and P answers; no barrier
+//                waits for the host that is down.
+//   SEP-02, SEP-04 (R4)  W-A stalled: W-B answers while W-A still hangs,
+//                one request reached W-A, and W-A's late answer is W-A's
+//                alone (the in-flight request stays bound to its source).
+//   SEP-05 (R11) the personal account switches, or the host at the same
+//                URL identifies as another installation, while a W-A read
+//                hangs: the personal epoch or the target moves, the late
+//                answer reaches only its own caller and populates nothing
+//                of the new context.
+//   SEP-05       the app restored after its process ended: its persisted
+//                window answers the account that read it, never another
+//                account on the same target.
 //
 // Runs only with DESKILO_TOPOLOGY_FILE (the seed's descriptor), in its own
 // `flutter test` call after the other topology files, because it pauses and
@@ -306,8 +313,48 @@ void main() {
     }
   }
 
+  /// One process of the app: its own container over [cache], which stands
+  /// for what it persisted. A restart is a new process over the same cache.
+  ProviderContainer process({
+    required SupabaseClient personalClient,
+    required String personalSubject,
+    required _Resolver host,
+    required CacheStore cache,
+  }) {
+    return ProviderContainer(
+      overrides: [
+        sessionStateProvider.overrideWith(
+          (ref) => Stream.value(personalSubject),
+        ),
+        authStateProvider.overrideWith((ref) => Stream.value(personalSubject)),
+        bootedBackendUrlProvider.overrideWithValue(p.url),
+        contextClientsProvider.overrideWithValue(
+          ContextClients(personalClient),
+        ),
+        connectedInstallationsProvider.overrideWithValue(
+          ConnectedInstallations(
+            personalClient,
+            const PlatformAuthSecretStore(),
+          ),
+        ),
+        installationIdReaderProvider.overrideWithValue(
+          (client) async => p.installationId,
+        ),
+        workspaceHostResolverProvider.overrideWithValue(host),
+        settingsSourceProvider.overrideWithValue(_Settings()),
+        currentWorkspaceProvider.overrideWith((ref) async => workspaceOf(a)),
+        cacheStoreProvider.overrideWithValue(cache),
+        realtimeWorkspaceClientProvider.overrideWith(
+          (ref) => ref.watch(selectedWorkspaceClientProvider),
+        ),
+      ],
+    )
+      ..listen(workspaceContextProvider, (_, _) {})
+      ..listen(authStateProvider, (_, _) {});
+  }
+
   test(
-    'SEP-R3: with every W gateway refused, P refreshes, reads and writes '
+    'SEP-04 (R3): with every W gateway refused, P refreshes, reads and writes '
     'its profile; W answers stale-marked or unavailable, never an empty '
     'success, and nobody is signed out',
     timeout: _limit,
@@ -405,7 +452,7 @@ void main() {
   );
 
   test(
-    'SEP-R4: W-A stalled, W-B answers while W-A still hangs; one request '
+    'SEP-02 and SEP-04 (R4): W-A stalled, W-B answers while W-A still hangs; one request '
     'reached W-A; its late answer is its own and never W-B\'s',
     timeout: _limit,
     () async {
@@ -465,7 +512,7 @@ void main() {
   );
 
   test(
-    'SEP-R11: the personal account switches while a W-A read hangs; the '
+    'SEP-05 (R11): the personal account switches while a W-A read hangs; the '
     'personal epoch moves, P serves the new account, and the late W-A '
     'answer populates nothing of the new account',
     timeout: _limit,
@@ -536,7 +583,7 @@ void main() {
   );
 
   test(
-    'SEP-R11: the host at the same URL identifies as another installation '
+    'SEP-05 (R11): the host at the same URL identifies as another installation '
     'while a W-A read hangs; the target and its cache namespace change, '
     'and the late answer populates nothing of the new target',
     timeout: _limit,
@@ -575,6 +622,131 @@ void main() {
       final read = await _outcome(
         repo().fetchWindow(workspaceId, from: from(), to: to()),
       );
+      expect(read.value, isNull, reason: 'got ${_ids(read.value)}');
+      expect(classifyReadFailure(read.error!), ReadFailure.transient);
+      await expectOperationalCountsZeroAtP();
+    },
+  );
+  test(
+    'SEP-04: W-A blocked, W-B reads live and P answers; nothing waits for '
+    'the host that is down',
+    timeout: _limit,
+    () async {
+      await context();
+      final warm = await repo().fetchWindow(
+        workspaceId,
+        from: from(),
+        to: to(),
+      );
+      expect(_ids(warm), [reservationOf(a)]);
+      await _fault('block', 'wa');
+      for (final s in [p, a, b]) {
+        s.wire.paths.clear();
+      }
+
+      final watch = Stopwatch()..start();
+      select(b, bClient);
+      await context();
+      final fromB = await repo()
+          .fetchWindow(workspaceId, from: from(), to: to())
+          .timeout(const Duration(seconds: 30));
+      expect(_ids(fromB), [reservationOf(b)]);
+      expect(
+        b.wire.count('/rest/v1/reservations'),
+        greaterThan(0),
+        reason: 'W-B answered live, not from a cache',
+      );
+      await container.read(authStateProvider.future);
+      container.invalidate(myVisibilityProvider);
+      await container
+          .read(myVisibilityProvider.future)
+          .timeout(const Duration(seconds: 30));
+      watch.stop();
+      expect(p.wire.count('/rpc/my_visibility'), greaterThan(0));
+      expect(
+        a.wire.paths,
+        isEmpty,
+        reason: 'nothing of W-B or P asked the host that is down',
+      );
+      expect(watch.elapsed, lessThan(const Duration(seconds: 30)));
+      await expectOperationalCountsZeroAtP();
+    },
+  );
+
+  test(
+    'SEP-05: the app restored after its process ended serves its persisted '
+    'window to the account that read it, and never to another account on '
+    'the same target',
+    timeout: _limit,
+    () async {
+      final disk = InMemoryCacheStore();
+      final peerClient = await a.signedIn('peer');
+      final personal2 = await p.signedIn('user2');
+      final first = _Resolver(
+        a.installationId,
+        aClient,
+        a.account('user')['id'] as String,
+      );
+      ProviderContainer? live;
+      addTearDown(() => live?.dispose());
+      Future<List<Reservation>> window(ProviderContainer c) => c
+          .read(reservationRepositoryProvider)
+          .fetchWindow(workspaceId, from: from(), to: to());
+
+      // The process that ended: the first account read W-A's window.
+      live = process(
+        personalClient: personal,
+        personalSubject: subject,
+        host: first,
+        cache: disk,
+      );
+      final before = await live
+          .read(workspaceContextProvider.future)
+          .timeout(const Duration(seconds: 30));
+      expect(_ids(await window(live)), [reservationOf(a)]);
+      live.dispose();
+      live = null;
+
+      // Restored as the same account: the same namespace; with W-A down
+      // the persisted window answers, marked not live.
+      live = process(
+        personalClient: personal,
+        personalSubject: subject,
+        host: first,
+        cache: disk,
+      );
+      final again = await live
+          .read(workspaceContextProvider.future)
+          .timeout(const Duration(seconds: 30));
+      expect(again!.cacheNamespace, before!.cacheNamespace);
+      await _fault('block', 'wa');
+      expect(_ids(await window(live)), [reservationOf(a)]);
+      expect(StaleReads.instance.oldestSavedAt(['resv:']), isNotNull);
+      live.dispose();
+      live = null;
+      await _fault('restore', 'wa');
+
+      // Restored as another account: the second P account, whose local
+      // account at W-A is another member of the same workspace. The same
+      // target, a namespace of its own; with W-A down it reads unavailable,
+      // never the first account's persisted rows.
+      live = process(
+        personalClient: personal2,
+        personalSubject: p.account('user2')['id'] as String,
+        host: _Resolver(
+          a.installationId,
+          peerClient,
+          a.account('peer')['id'] as String,
+        ),
+        cache: disk,
+      );
+      final other = await live
+          .read(workspaceContextProvider.future)
+          .timeout(const Duration(seconds: 30));
+      expect(other!.target, before.target);
+      expect(other.cacheNamespace, isNot(before.cacheNamespace));
+      await _fault('block', 'wa');
+      final read = await _outcome(window(live));
       expect(read.value, isNull, reason: 'got ${_ids(read.value)}');
       expect(classifyReadFailure(read.error!), ReadFailure.transient);
       await expectOperationalCountsZeroAtP();
