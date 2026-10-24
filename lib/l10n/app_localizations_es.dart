@@ -25423,6 +25423,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get visibilityChosenSpaces => 'Miembros de espacios elegidos';
 
   @override
+  String get visibilityConflictKeep => 'Conservar el ajuste guardado';
+
+  @override
+  String get visibilityConflictReview => 'Revisar mi cambio';
+
+  @override
+  String visibilityConflictSaved(String audience) {
+    return 'Guardado ahora: $audience';
+  }
+
+  @override
+  String get visibilityConflictTitle =>
+      'Este ajuste ha cambiado mientras tanto';
+
+  @override
+  String get visibilityConflictUnread =>
+      'No se puede leer el ajuste guardado en este momento. Su cambio no se ha guardado.';
+
+  @override
+  String visibilityConflictYours(String audience) {
+    return 'Su cambio: $audience';
+  }
+
+  @override
   String get visibilityContact => 'WhatsApp y correo';
 
   @override
@@ -25431,10 +25455,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get visibilityElsewhereTitle => 'En mis otros servidores';
-
-  @override
-  String get visibilityFieldElsewhere =>
-      'Este ajuste nombra un espacio en otro servidor, por lo que aún no puede cambiarlo aquí.';
 
   @override
   String visibilityHomeHeader(String name) {
@@ -25544,6 +25564,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get visibilityUnavailable =>
       'No se puede leer ahora quién ve qué de usted. No se ha cambiado nada.';
+
+  @override
+  String get visibilityUnconfirmedTitle =>
+      'No se ha podido confirmar su cambio';
 
   @override
   String get visibilityWidenAction => 'Ampliar';

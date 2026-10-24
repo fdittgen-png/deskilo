@@ -29342,6 +29342,42 @@
   "@visibilityChosenSpaces": {
     "description": "Audience: members of chosen spaces."
   },
+  "visibilityConflictKeep": "Keep the saved setting",
+  "@visibilityConflictKeep": {
+    "description": "#2558 C2 privacy conflict: close, keeping what is saved"
+  },
+  "visibilityConflictReview": "Review my change",
+  "@visibilityConflictReview": {
+    "description": "#2558 C2 privacy conflict: reopen the draft against the value saved now"
+  },
+  "visibilityConflictSaved": "Saved now: {audience}",
+  "@visibilityConflictSaved": {
+    "description": "#2558 C2 privacy conflict: the audience the personal home holds now",
+    "placeholders": {
+      "audience": {
+        "type": "String",
+        "example": "People in my spaces"
+      }
+    }
+  },
+  "visibilityConflictTitle": "This setting changed meanwhile",
+  "@visibilityConflictTitle": {
+    "description": "#2558 C2 privacy: the saved field changed (another device) before this change was saved; nothing was written"
+  },
+  "visibilityConflictUnread": "The saved setting cannot be read right now. Your change was not saved.",
+  "@visibilityConflictUnread": {
+    "description": "#2558 C2 privacy conflict: the current saved value could not be read back"
+  },
+  "visibilityConflictYours": "Your change: {audience}",
+  "@visibilityConflictYours": {
+    "description": "#2558 C2 privacy conflict: the audience the person chose, kept as a draft",
+    "placeholders": {
+      "audience": {
+        "type": "String",
+        "example": "Only me"
+      }
+    }
+  },
   "visibilityContact": "WhatsApp and e-mail",
   "@visibilityContact": {
     "description": "Visibility field: contact channels."
@@ -29353,10 +29389,6 @@
   "visibilityElsewhereTitle": "On my other servers",
   "@visibilityElsewhereTitle": {
     "description": "#2211 who sees me on a connected server: visibilityElsewhereTitle"
-  },
-  "visibilityFieldElsewhere": "It names a space on another server, so it cannot be changed here yet.",
-  "@visibilityFieldElsewhere": {
-    "description": "#2558 a field whose chosen spaces include one on another installation; read-only until the network writer"
   },
   "visibilityHomeHeader": "Personal home: {name}",
   "@visibilityHomeHeader": {
@@ -29505,6 +29537,10 @@
   "visibilityUnavailable": "Who sees what of you cannot be read right now. Nothing was changed.",
   "@visibilityUnavailable": {
     "description": "#2558 — the privacy card when the saved settings cannot be read; a retry follows."
+  },
+  "visibilityUnconfirmedTitle": "Your change could not be confirmed",
+  "@visibilityUnconfirmedTitle": {
+    "description": "#2558 C2 privacy: the reply was lost and the saved field read back is not the intended one"
   },
   "visibilityWidenAction": "Widen",
   "visibilityWidenAdded": "Added: {spaces}",

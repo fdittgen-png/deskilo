@@ -47,6 +47,13 @@
 #       request id; refused, still one reservation. Once consent is given
 #       again the replay answers the stored outcome and books nothing new.
 #
+# #2558 — the checked privacy writer (set_visibility_if_unchanged_network_v1):
+#
+#   8   two writes of one field from the same read: one saved, the other
+#       visibility_conflict; a legacy set_visibility first, the same; another
+#       field waits on the account lock and is saved.
+#       guard: the per-account advisory lock every visibility writer takes.
+#
 # The MCP intents that need their human are asked and confirmed in the
 # fixture (scripts/db_race/fixture.sql), before the race.
 #
@@ -323,6 +330,46 @@ expect "$(cut -d'|' -f1 <<<"$r")" completed "7: with consent back, the replay an
 expect "$(cut -d'|' -f3 <<<"$r")" "$(cut -d'|' -f3 <<<"$a")" "7: the same reservation id as case 5" "7: the replay named reservation '$(cut -d'|' -f3 <<<"$r")', case 5 booked '$(cut -d'|' -f3 <<<"$a")'"
 n=$(live "starts_at = '$MCP_S'")
 expect "$n" 1 "7: and books nothing new" "7: $n reservations after the replay"
+
+# ── #2558: two checked privacy writes that read the same value ─────────
+# A and B both read c's field and send it as `expected`. A holds its
+# transaction open; B must wait on the account lock, then see A's committed
+# value and answer visibility_conflict (PT409) without writing. 8b: a legacy
+# set_visibility first, the same. 8c: another field waits but succeeds.
+vis() { # vis <field> <audience> <expected audience> — a notice ANSWER=ok|<sqlstate>
+  printf "do \$v\$ begin
+  perform public.set_visibility_if_unchanged_network_v1('%s', '%s', null,
+    jsonb_build_object('audience', '%s', 'workspace_refs', '[]'::jsonb));
+  raise notice 'ANSWER=ok';
+exception when others then raise notice 'ANSWER=%%', sqlstate;
+end \$v\$;" "$1" "$2" "$3"
+}
+vans() { sed -n 's/.*ANSWER=//p' "$TMP/$1.$2" | head -1; }
+vsaved() { q "select public.account_audience_of('$C', '$1')"; }
+
+echo "8. two checked privacy writes from the same read"
+race 8a "$(claims "$C")
+$(vis presence my_spaces nobody)" "$(claims "$C")
+$(vis presence chosen_spaces nobody)"
+waited 8a
+expect "$(vans 8a a)|$(vans 8a b)" "ok|PT409" "8a: the first wins, the second is visibility_conflict" \
+  "8a: A answered '$(vans 8a a)', B answered '$(vans 8a b)'. B said: $(cat "$TMP/8a.b")"
+expect "$(vsaved presence)" my_spaces "8a: the conflict wrote nothing" "8a: presence is '$(vsaved presence)'"
+
+race 8b "$(claims "$C")
+select public.set_visibility('about', 'my_spaces', null);" "$(claims "$C")
+$(vis about signed_in nobody)"
+waited 8b
+expect "$(vans 8b b)" PT409 "8b: after a legacy write the checked one conflicts" \
+  "8b: B answered '$(vans 8b b)'. B said: $(cat "$TMP/8b.b")"
+expect "$(vsaved about)" my_spaces "8b: the legacy value stays" "8b: about is '$(vsaved about)'"
+
+race 8c "$(claims "$C")
+$(vis identity nobody my_spaces)" "$(claims "$C")
+$(vis reachability nobody my_spaces)"
+waited 8c
+expect "$(vans 8c a)|$(vans 8c b)" "ok|ok" "8c: another field is no conflict" \
+  "8c: A answered '$(vans 8c a)', B answered '$(vans 8c b)'. B said: $(cat "$TMP/8c.b")"
 
 if [ "$FAILED" -gt 0 ]; then
   echo "db race: $FAILED assertion(s) failed"

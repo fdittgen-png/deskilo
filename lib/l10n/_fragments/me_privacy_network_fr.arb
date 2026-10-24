@@ -5,7 +5,6 @@
   "visibilityAskWrite": "Qui peut m’écrire ?",
   "visibilityAskPublic": "Mon profil public est-il publié ?",
   "visibilityMoreSharing": "Plus de réglages de partage",
-  "visibilityFieldElsewhere": "Ce réglage nomme un espace sur un autre serveur : il ne peut pas encore être modifié ici.",
   "visibilitySpaceUnverified": "Vérification indisponible",
   "visibilitySpaceAmbiguous": "Même nom qu’un autre espace · {source}",
   "visibilitySpaceHere": "sur ce domicile personnel",

@@ -152,8 +152,8 @@ class LinkedVisibilitySheet extends ConsumerWidget {
                   context,
                   field: field,
                   current: visibility.of(field),
-                  pick: () => _pick(context, field, visibility.of(field)),
-                  save: (choice) async {
+                  pick: (start) => _pick(context, field, start),
+                  save: (choice, _) async {
                     await ref
                         .read(meActionsProvider)
                         .chooseOn(source, field, choice);
