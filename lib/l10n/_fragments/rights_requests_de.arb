@@ -16,10 +16,6 @@
   "@rightsRequestNew": {
     "description": "#1915 rights requests: rightsRequestNew"
   },
-  "rightsRequestAsk": "Was beantragen Sie beim Bereich?",
-  "@rightsRequestAsk": {
-    "description": "#1915 rights requests: rightsRequestAsk"
-  },
   "rightsRequestDetails": "Einzelheiten (optional)",
   "@rightsRequestDetails": {
     "description": "#1915 rights requests: rightsRequestDetails"
@@ -27,15 +23,6 @@
   "rightsRequestSend": "Antrag senden",
   "@rightsRequestSend": {
     "description": "#1915 rights requests: rightsRequestSend"
-  },
-  "rightsRequestSent": "Antrag gesendet — der Bereich antwortet bis zum {date}.",
-  "@rightsRequestSent": {
-    "description": "#1915 rights requests: rightsRequestSent",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
   },
   "rightsRequestFailed": "Der Antrag konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
   "@rightsRequestFailed": {
@@ -158,5 +145,66 @@
   "erasureStoreBackups": "Sicherungen des Betreibers — laufen nach ihrem Turnus ab",
   "@erasureStoreBackups": {
     "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "rightsRequestTarget": "An {space}",
+  "@rightsRequestTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestTargetUnknown": "An einen Bereich, der nicht mehr in Ihrer Liste steht",
+  "@rightsRequestTargetUnknown": {
+    "description": "#2558 account rights: exact target and retention honesty"
+  },
+  "rightsRequestAskSpace": "Was beantragen Sie bei {space}?",
+  "@rightsRequestAskSpace": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestSentTo": "Antrag an {space} gesendet — Antwort bis {date}.",
+  "@rightsRequestSentTo": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeKept": "Aufbewahrt: {stores}",
+  "@rightsOutcomeKept": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomePending": "Anderswo noch offen: {stores}",
+  "@rightsOutcomePending": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeFailed": "Nicht erledigt: {stores}",
+  "@rightsOutcomeFailed": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
   }
 }

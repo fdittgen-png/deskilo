@@ -83,10 +83,6 @@
   "@privacyEraseConfirmButton": {
     "description": "#719 - privacy & data"
   },
-  "privacyErased": "Sus datos han sido borrados.",
-  "@privacyErased": {
-    "description": "#719 - privacy & data"
-  },
   "privacyPolicy": "Política de privacidad",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"
@@ -194,5 +190,23 @@
   "backendPendingTitle": "Guardado para el próximo inicio",
   "backendPendingBody": "Esta sesión sigue en {active}. {saved} tomará el relevo cuando cierre y vuelva a abrir la app.",
   "backendPendingUndo": "Deshacer",
-  "backendPendingUndone": "Deshecho — el servidor anterior ha vuelto."
+  "backendPendingUndone": "Deshecho — el servidor anterior ha vuelto.",
+  "privacyEraseTarget": "Esto borra sus datos solo en {space}. Sus otros espacios y las demás instalaciones conservan sus propios datos.",
+  "@privacyEraseTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyErasedIn": "Sus datos en {space} se han borrado. Lo que el espacio debe conservar se mantiene durante su plazo de conservación; las demás instalaciones no se ven afectadas.",
+  "@privacyErasedIn": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  }
 }

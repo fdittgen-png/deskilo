@@ -132,6 +132,7 @@ class FakeProfileRepository implements ProfileRepository {
     final now = kTestNow;
     final request = RightsRequest(
       id: clientRequestId,
+      workspaceId: workspaceId,
       kind: kind,
       details: details,
       status: 'received',

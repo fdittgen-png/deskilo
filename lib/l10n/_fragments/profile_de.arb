@@ -83,10 +83,6 @@
   "@privacyEraseConfirmButton": {
     "description": "#719 - privacy & data"
   },
-  "privacyErased": "Ihre Daten wurden gelöscht.",
-  "@privacyErased": {
-    "description": "#719 - privacy & data"
-  },
   "privacyPolicy": "Datenschutzerklärung",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"
@@ -194,5 +190,23 @@
   "backendPendingTitle": "Gespeichert für den nächsten Start",
   "backendPendingBody": "Diese Sitzung läuft noch auf {active}. {saved} übernimmt, wenn Sie die App schließen und wieder öffnen.",
   "backendPendingUndo": "Rückgängig",
-  "backendPendingUndone": "Rückgängig gemacht — der vorherige Server ist zurück."
+  "backendPendingUndone": "Rückgängig gemacht — der vorherige Server ist zurück.",
+  "privacyEraseTarget": "Dies löscht Ihre Daten nur in {space}. Ihre anderen Bereiche und andere Installationen behalten ihre eigenen Daten.",
+  "@privacyEraseTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyErasedIn": "Ihre Daten in {space} sind gelöscht. Was der Bereich aufbewahren muss, bleibt für seine Aufbewahrungsfrist; andere Installationen sind nicht betroffen.",
+  "@privacyErasedIn": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  }
 }

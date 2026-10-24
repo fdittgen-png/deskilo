@@ -16,10 +16,6 @@
   "@rightsRequestNew": {
     "description": "#1915 rights requests: rightsRequestNew"
   },
-  "rightsRequestAsk": "What do you ask the space?",
-  "@rightsRequestAsk": {
-    "description": "#1915 rights requests: rightsRequestAsk"
-  },
   "rightsRequestDetails": "Details (optional)",
   "@rightsRequestDetails": {
     "description": "#1915 rights requests: rightsRequestDetails"
@@ -27,15 +23,6 @@
   "rightsRequestSend": "Send the request",
   "@rightsRequestSend": {
     "description": "#1915 rights requests: rightsRequestSend"
-  },
-  "rightsRequestSent": "Request sent — the space answers by {date}.",
-  "@rightsRequestSent": {
-    "description": "#1915 rights requests: rightsRequestSent",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
   },
   "rightsRequestFailed": "The request could not be sent. Please try again.",
   "@rightsRequestFailed": {
@@ -158,5 +145,66 @@
   "erasureStoreBackups": "The operator's backups — expire on their rotation",
   "@erasureStoreBackups": {
     "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "rightsRequestTarget": "To {space}",
+  "@rightsRequestTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestTargetUnknown": "To a space no longer in your list",
+  "@rightsRequestTargetUnknown": {
+    "description": "#2558 account rights: exact target and retention honesty"
+  },
+  "rightsRequestAskSpace": "What do you ask {space}?",
+  "@rightsRequestAskSpace": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestSentTo": "Request sent to {space} — it answers by {date}.",
+  "@rightsRequestSentTo": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeKept": "Kept: {stores}",
+  "@rightsOutcomeKept": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomePending": "Still open elsewhere: {stores}",
+  "@rightsOutcomePending": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeFailed": "Not done: {stores}",
+  "@rightsOutcomeFailed": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
   }
 }

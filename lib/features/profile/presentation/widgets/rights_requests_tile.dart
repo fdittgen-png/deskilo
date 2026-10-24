@@ -4,6 +4,11 @@
 // asked, when it was received, by when the space answers (a calendar
 // month, or the extended date and its reason) and whether it was
 // answered or refused. Filing works after leaving the space too.
+//
+// #2558 — each request names the space it is addressed to, and an answered
+// one says what the space kept, what is still open elsewhere and what it
+// could not do, as the controller recorded it: "answered" alone would read
+// as "all gone".
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +22,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/rights_requests.dart';
 import '../../domain/rights_request.dart';
 import '../../providers/profile_providers.dart';
+import 'erasure_preview_view.dart';
 
 String _rightsKindLabel(AppLocalizations l10n, String kind) => switch (kind) {
   'access' => l10n.rightsKindAccess,
@@ -47,11 +53,51 @@ String _rightsStatusLabel(
     l10n.rightsStatusReceived(date.format(request.dueOn)),
 };
 
+/// The lines under a request: whom it went to, where it stands, and for an
+/// answered one what was kept (with its period), still open elsewhere, or
+/// not done.
+String _rightsRequestLines(
+  AppLocalizations l10n,
+  RightsRequest request,
+  DateFormat date,
+  Map<String, String> spaceNames,
+) {
+  String stores(List<ErasureStore> list, {bool period = false}) => [
+    for (final s in list)
+      if (period && (s.period?.trim().isNotEmpty ?? false))
+        '${erasureStoreLabel(l10n, s.store)} (${s.period!.trim()})'
+      else
+        erasureStoreLabel(l10n, s.store),
+  ].join('; ');
+  final kept = request.outcomeStores('retained');
+  final pending = request.outcomeStores('pending_external');
+  final failed = request.outcomeStores('failed');
+  final space = spaceNames[request.workspaceId];
+  return [
+    if (space != null)
+      l10n.rightsRequestTarget(space)
+    else
+      l10n.rightsRequestTargetUnknown,
+    _rightsStatusLabel(l10n, request, date),
+    if (kept.isNotEmpty) l10n.rightsOutcomeKept(stores(kept, period: true)),
+    if (pending.isNotEmpty) l10n.rightsOutcomePending(stores(pending)),
+    if (failed.isNotEmpty) l10n.rightsOutcomeFailed(stores(failed)),
+  ].join('\n');
+}
+
 /// The Privacy & data row; [workspaceId] is the space the request goes to.
 class RightsRequestsTile extends ConsumerWidget {
-  const RightsRequestsTile({super.key, required this.workspaceId});
+  const RightsRequestsTile({
+    super.key,
+    required this.workspaceId,
+    this.spaceNames = const {},
+  });
 
   final String? workspaceId;
+
+  /// The name of each space the person can see, by id: a request names the
+  /// space it went to, and a new one is filed only to a named space.
+  final Map<String, String> spaceNames;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,16 +113,23 @@ class RightsRequestsTile extends ConsumerWidget {
       onTap: () => showAppSheet<void>(
         context: context,
         isScrollControlled: true,
-        builder: (_) => _RightsRequestsSheet(workspaceId: workspaceId),
+        builder: (_) => _RightsRequestsSheet(
+          workspaceId: workspaceId,
+          spaceNames: spaceNames,
+        ),
       ),
     );
   }
 }
 
 class _RightsRequestsSheet extends ConsumerWidget {
-  const _RightsRequestsSheet({required this.workspaceId});
+  const _RightsRequestsSheet({
+    required this.workspaceId,
+    required this.spaceNames,
+  });
 
   final String? workspaceId;
+  final Map<String, String> spaceNames;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -86,6 +139,7 @@ class _RightsRequestsSheet extends ConsumerWidget {
       Localizations.maybeLocaleOf(context)?.toString(),
     );
     final requests = ref.watch(myRightsRequestsProvider).value ?? const [];
+    final target = spaceNames[workspaceId];
     return SafeArea(
       child: SingleChildScrollView(
         padding: AppSpacing.lgAll,
@@ -105,15 +159,17 @@ class _RightsRequestsSheet extends ConsumerWidget {
                 key: ValueKey('rights-request-${r.id}'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(_rightsKindLabel(l10n, r.kind)),
-                subtitle: Text(_rightsStatusLabel(l10n, r, date)),
+                subtitle: Text(
+                  _rightsRequestLines(l10n, r, date, spaceNames),
+                ),
               ),
             const SizedBox(height: AppSpacing.md),
-            if (workspaceId != null)
+            if (workspaceId != null && target != null)
               FilledButton.icon(
                 key: const ValueKey('rights-request-new'),
                 icon: const Icon(Icons.add),
                 label: Text(l10n.rightsRequestNew),
-                onPressed: () => _new(context, ref, workspaceId!, date),
+                onPressed: () => _new(context, ref, workspaceId!, target, date),
               ),
           ],
         ),
@@ -125,12 +181,13 @@ class _RightsRequestsSheet extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     String workspaceId,
+    String space,
     DateFormat date,
   ) async {
     final l10n = context.l10n;
     final chosen = await showDialog<({String kind, String details})>(
       context: context,
-      builder: (_) => const _NewRightsRequestDialog(),
+      builder: (_) => _NewRightsRequestDialog(space: space),
     );
     if (chosen == null || !context.mounted) return;
     // One id per submission: a retry after a lost answer is the same
@@ -158,13 +215,16 @@ class _RightsRequestsSheet extends ConsumerWidget {
     if (!context.mounted || sent == null) return;
     AppSnack.success(
       context,
-      l10n.rightsRequestSent(date.format(sent!.answerBy)),
+      l10n.rightsRequestSentTo(space, date.format(sent!.answerBy)),
     );
   }
 }
 
 class _NewRightsRequestDialog extends StatefulWidget {
-  const _NewRightsRequestDialog();
+  const _NewRightsRequestDialog({required this.space});
+
+  /// The space the request goes to, named in the question.
+  final String space;
 
   @override
   State<_NewRightsRequestDialog> createState() =>
@@ -185,7 +245,7 @@ class _NewRightsRequestDialogState extends State<_NewRightsRequestDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return AlertDialog(
-      title: Text(l10n.rightsRequestAsk),
+      title: Text(l10n.rightsRequestAskSpace(widget.space)),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

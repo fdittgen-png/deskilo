@@ -10,7 +10,9 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/rights_request.dart';
 
-String _erasureStoreLabel(AppLocalizations l10n, String store) =>
+/// A store of an erasure preview or a request outcome in the reader's
+/// language; a store the app does not know reads as the controller wrote it.
+String erasureStoreLabel(AppLocalizations l10n, String store) =>
     switch (store) {
       'messages_sent' => l10n.erasureStoreMessages,
       'custom_answers' =>
@@ -64,11 +66,11 @@ class ErasurePreviewView extends StatelessWidget {
           children: [
             Text(title, style: theme.textTheme.titleSmall),
             for (final s in shown)
-              if (seen.add(_erasureStoreLabel(l10n, s.store)))
+              if (seen.add(erasureStoreLabel(l10n, s.store)))
                 Text(
                   count && s.count != null
-                      ? '• ${_erasureStoreLabel(l10n, s.store)} (${s.count})'
-                      : '• ${_erasureStoreLabel(l10n, s.store)}',
+                      ? '• ${erasureStoreLabel(l10n, s.store)} (${s.count})'
+                      : '• ${erasureStoreLabel(l10n, s.store)}',
                   style: theme.textTheme.bodySmall,
                 ),
           ],
