@@ -84,7 +84,7 @@ Future<void> _frames(WidgetTester tester) async {
 
 void main() {
   testWidgets(
-    'the provider is named before the map loads; staying with the list '
+    'DISC-02: the provider is named before the map loads; staying with the list '
     'loads and stores nothing, and the next attempt asks again',
     (tester) async {
       final store = InMemoryDiscoveryViewStore();
@@ -122,7 +122,7 @@ void main() {
   );
 
   testWidgets(
-    'continuing opens the map and keeps the choice for this person on this '
+    'DISC-02: continuing opens the map and keeps the choice for this person on this '
     'device; another account starts from the list',
     (tester) async {
       final store = InMemoryDiscoveryViewStore();
@@ -172,7 +172,7 @@ void main() {
     },
   );
 
-  testWidgets('another map provider is asked about afresh', (tester) async {
+  testWidgets('DISC-02: another map provider is asked about afresh', (tester) async {
     final store = InMemoryDiscoveryViewStore()
       ..byNamespace[_namespace('user-1')] = DiscoveryViewPreference(
         map: true,
@@ -196,7 +196,7 @@ void main() {
     expect(find.textContaining('placed by geo.other.example'), findsOneWidget);
   });
 
-  testWidgets('Locate on a card asks first too', (tester) async {
+  testWidgets('DISC-02: Locate on a card asks first too', (tester) async {
     final geocoder = _CountingGeocoder();
     await _show(
       tester,
@@ -218,7 +218,7 @@ void main() {
     ], reason: 'the geocoder is asked only once the map was chosen');
   });
 
-  testWidgets('signed out, the map can be chosen and nothing is stored', (
+  testWidgets('DISC-02: signed out, the map can be chosen and nothing is stored', (
     tester,
   ) async {
     final store = InMemoryDiscoveryViewStore();

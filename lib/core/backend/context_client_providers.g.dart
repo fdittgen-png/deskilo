@@ -187,6 +187,64 @@ final class WorkspaceClientFamily extends $Family
   String toString() => r'workspaceClientProvider';
 }
 
+/// The raw HTTP client every anonymous public read is built on; each one
+/// is wrapped in an origin-only client by its reader, apart from any
+/// session client.
+
+@ProviderFor(publicTransport)
+final publicTransportProvider = PublicTransportProvider._();
+
+/// The raw HTTP client every anonymous public read is built on; each one
+/// is wrapped in an origin-only client by its reader, apart from any
+/// session client.
+
+final class PublicTransportProvider
+    extends
+        $FunctionalProvider<
+          http.Client Function(),
+          http.Client Function(),
+          http.Client Function()
+        >
+    with $Provider<http.Client Function()> {
+  /// The raw HTTP client every anonymous public read is built on; each one
+  /// is wrapped in an origin-only client by its reader, apart from any
+  /// session client.
+  PublicTransportProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'publicTransportProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$publicTransportHash();
+
+  @$internal
+  @override
+  $ProviderElement<http.Client Function()> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  http.Client Function() create(Ref ref) {
+    return publicTransport(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(http.Client Function() value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<http.Client Function()>(value),
+    );
+  }
+}
+
+String _$publicTransportHash() => r'7397348fb74bd5ede52c0511199a82f384800b7d';
+
 @ProviderFor(installationIdReader)
 final installationIdReaderProvider = InstallationIdReaderProvider._();
 

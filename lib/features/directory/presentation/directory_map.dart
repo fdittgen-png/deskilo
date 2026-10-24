@@ -54,15 +54,15 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
   /// Addresses geocoded per page; the cards beyond stay unpinned.
   static const _maxLookups = 20;
 
-  /// The lookup of an unselected workspace; [failed] counts the ones that
-  /// errored so the map can say that some cards have no pin (#2473).
+  /// The lookup of an unselected workspace; [waiting] collects the ones
+  /// still being looked up, which are not yet counted as unplaced.
   static DirectoryLocation? _lookedUp(
-      PublicWorkspace w, WidgetRef ref, bool allowed, List<Object> failed) {
+      PublicWorkspace w, WidgetRef ref, bool allowed, List<Object> waiting) {
     if (!allowed || w.location != null) return null;
     final address = w.text('address').trim();
     if (address.isEmpty) return null;
     final answer = ref.watch(directoryAddressLocationProvider(address));
-    if (answer.hasError) failed.add(w);
+    if (answer.isLoading) waiting.add(w);
     return answer.value;
   }
 
@@ -204,7 +204,19 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
     ));
   }
 
-  /// #2473 — says that some cards have no pin; nothing when all are placed.
+  /// How many of [all] have no pin: no address, not found, failed or
+  /// beyond the bounded lookups. A place still being looked up is not
+  /// counted yet, nor the selected [own]: unplaced, it has its own status
+  /// line.
+  static int _unplacedOf(List<PublicWorkspace> all, List<_Point> located,
+      List<Object> waiting, PublicWorkspace? own) {
+    final placed = {for (final p in located) p.workspace};
+    return all
+        .where((w) => !placed.contains(w) && !waiting.contains(w) && w != own)
+        .length;
+  }
+
+  /// Says how many cards have no pin; nothing when all are placed.
   static Widget _pinsMissing(BuildContext context, int count) => count == 0
       ? const SizedBox.shrink()
       : Padding(
@@ -229,13 +241,13 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
     // #2473 — every workspace is a pin: a card without coordinates is placed
     // from its public address (one cached lookup per address); a failed one stays a card.
     var lookups = 0;
-    final failed = <Object>[];
+    final waiting = <Object>[];
     final located = [
       for (final w in widget.workspaces)
         if (w.location ??
                 (w == target
                     ? lookup?.value
-                    : _lookedUp(w, ref, lookups++ < _maxLookups, failed))
+                    : _lookedUp(w, ref, lookups++ < _maxLookups, waiting))
             case final point?)
           (workspace: w, location: point),
     ];
@@ -262,7 +274,8 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
                 tooltip: l.commonRetry, icon: const Icon(Icons.refresh)),
           ]),
         ),
-      _pinsMissing(context, failed.length),
+      _pinsMissing(
+          context, _unplacedOf(widget.workspaces, located, waiting, target)),
       Expanded(child: Stack(children: [FlutterMap(
       mapController: _controller,
       options: MapOptions(

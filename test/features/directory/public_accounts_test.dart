@@ -350,8 +350,8 @@ void main() {
     },
   );
   testWidgets(
-    '#1847 a card withdrawn since the search says so and offers nothing to '
-    'act on',
+    'DISC-04: a card withdrawn since the search says so and offers nothing '
+    'to act on',
     (tester) async {
       const card = PublicWorkspace(
         'gone',
