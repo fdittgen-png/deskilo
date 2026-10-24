@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'personal_export.dart';
 import 'personal_workspace_refs.dart';
 import 'public_person.dart';
 import 'visibility.dart';
@@ -11,6 +12,11 @@ abstract interface class MeRepository {
   /// `my_personal_workspace_refs_v1()` (#2563): the workspaces my account
   /// names by qualified reference, with no workspace needed here.
   Future<PersonalWorkspaceRefs> myWorkspaceRefs();
+
+  /// `export_my_personal_data_v1()` (#2563, #2557 C2): the personal part of
+  /// my data on my personal home, with no workspace. A typed refusal is
+  /// [PersonalExportRefused]; anything else is the transport's failure.
+  Future<PersonalExport> exportMyPersonalData();
 
   /// `my_visibility_network_v1()` (#2558): the chosen spaces by network
   /// reference, and the home that holds them.

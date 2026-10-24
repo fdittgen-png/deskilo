@@ -9,7 +9,5 @@
   "meContextPersonal": "Persönlich",
   "meUtilityAccount": "Vertraulichkeit und Konto",
   "meUtilityHelp": "Hilfe und Assistent",
-  "meDataViewReservations": "Buchungen",
-  "meDataVisitsEmptyTitle": "Noch keine Besuche",
-  "meDataVisitsEmptyBody": "Ihre Buchungen bleiben im Kalender jedes Spaces; Ihre Besuche als Gast erscheinen hier."
+  "meDataViewReservations": "Buchungen"
 }

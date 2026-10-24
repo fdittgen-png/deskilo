@@ -15,6 +15,7 @@ import '../data/supabase_me_repository.dart';
 import '../domain/linked_me_repository.dart';
 import '../domain/me_repository.dart';
 import '../domain/my_spaces.dart';
+import '../domain/personal_export.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../domain/visibility.dart';
 import '../domain/workspace_access_repository.dart';
@@ -127,3 +128,15 @@ final Override myReservationsSourcesFromMe =
   final refs = await ref.watch(personalWorkspaceRefsProvider.future);
   return myReservationSourcesOf(refs);
 });
+
+/// #2557 C2 — the personal part of my data, read on my personal home while
+/// My data's personal view shows it; dropped when it closes, so each visit
+/// reads what the home holds now. Signed out there is nothing to read.
+@Riverpod(retry: personalRefsRetry)
+Future<PersonalExport> personalExport(Ref ref) {
+  if (ref.watch(authStateProvider).value == null) {
+    return Future.error(
+        const PersonalExportRefused(PersonalExportFailure.forbidden));
+  }
+  return ref.watch(meRepositoryProvider).exportMyPersonalData();
+}

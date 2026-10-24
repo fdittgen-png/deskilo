@@ -3,6 +3,7 @@
   "meRefsTitle": "Spazi altrove",
   "meRefUnnamed": "Uno spazio su un altro server",
   "meRefUnverified": "Iscrizione non ancora verificata",
+  "meRefStale": "Iscrizione non confermata di recente",
   "meRefNoRelationship": "Nessuna iscrizione su questo server",
   "meRefDefault": "Predefinito",
   "meRefsUnavailable": "Non è stato possibile leggere i Suoi spazi altrove."

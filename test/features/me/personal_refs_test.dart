@@ -91,7 +91,7 @@ void main() {
       );
       expect(
         () => _refs([
-          {..._ref(_away), 'freshness': 'verified'},
+          {..._ref(_away), 'freshness': 'guessed'},
         ]),
         throwsA(isA<JsonShapeException>()),
       );
@@ -103,6 +103,22 @@ void main() {
         () => PersonalWorkspaceRefs.fromJson({'refs': 'none'}),
         throwsA(isA<JsonShapeException>()),
       );
+    });
+
+    test('C2: a verified or stale fact elsewhere keeps its status', () {
+      final refs = _refs([
+        _ref(_away, freshness: 'verified', status: 'paused'),
+        {
+          ..._ref(_away, freshness: 'stale', status: 'active'),
+          'network_id': '$_away:00000000-0000-4000-8000-00002563c002',
+        },
+      ]);
+      expect(refs.refs.map((r) => r.freshness), [
+        RefFreshness.verified,
+        RefFreshness.stale,
+      ]);
+      expect(refs.refs.first.status, RefStatus.paused);
+      expect(refs.beyondLocalSpaces, hasLength(2));
     });
 
     test('beyond the local spaces: elsewhere, or saved without membership', () {
@@ -138,6 +154,28 @@ void main() {
         findsOneWidget,
       );
       expect(find.byIcon(Icons.star), findsOneWidget);
+    });
+
+    testWidgets('C2: a verified space elsewhere shows its status, a lapsed '
+        'one says it is not confirmed', (tester) async {
+      final me = FakeMeRepository()
+        ..workspaceRefs = _refs([
+          _ref(_away, freshness: 'verified', status: 'active'),
+          {
+            ..._ref(_away, freshness: 'stale', status: 'active'),
+            'network_id': '$_away:00000000-0000-4000-8000-00002563c002',
+          },
+        ]);
+      final router = await pumpMeApp(
+        tester,
+        workspace: FakeWorkspaceRepository(workspaces: []),
+        me: me,
+      );
+      await goTo(tester, router, '/me');
+      expect(find.text('Active'), findsOneWidget);
+      expect(find.text('Membership not confirmed recently'), findsOneWidget);
+      expect(find.text('Membership not verified yet'), findsNothing);
+      expect(find.byIcon(Icons.cloud_off_outlined), findsOneWidget);
     });
 
     testWidgets('a space of this server is not listed twice', (tester) async {

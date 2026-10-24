@@ -210,6 +210,12 @@ public.members.members_delete_owner
 public.members.members_select
 public.members.members_select_self
 public.members.members_update_owner
+public.membership_fact_outbox.mcp_delegated_deny
+public.membership_fact_outbox.personal_native_session
+public.membership_fact_state.mcp_delegated_deny
+public.membership_fact_state.personal_native_session
+public.membership_facts.mcp_delegated_deny
+public.membership_facts.personal_native_session
 public.message_events.mcp_delegated_deny
 public.message_events.personal_native_session
 public.message_reactions.mcp_delegated_deny

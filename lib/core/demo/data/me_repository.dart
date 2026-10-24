@@ -10,6 +10,7 @@
 import 'package:deskilo/features/me/domain/linked_me_repository.dart';
 import 'package:deskilo/features/me/domain/me_repository.dart';
 import 'package:deskilo/features/me/domain/my_spaces.dart';
+import 'package:deskilo/features/me/domain/personal_export.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
 import 'package:deskilo/features/me/domain/public_person.dart';
 import 'package:deskilo/features/me/domain/visibility.dart';
@@ -116,6 +117,29 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
               ),
           ],
         );
+  }
+
+  /// #2557 C2 — what [exportMyPersonalData] answers, decoded as the home's
+  /// answer would be; when [exportFailure] is set it throws. How many times
+  /// it was asked is [exportReads].
+  Map<String, Object?> personalExport = {
+    'format': personalExportFormat,
+    'version': personalExportVersion,
+    'exported_at': '2026-01-15T09:00:00Z',
+    'profile': {'id': 'user-1', 'full_name': 'Test User'},
+    'account_conversations': const [],
+    'account_messages': const [],
+    'account_group_messages': const [],
+    'workspace_refs': const [],
+  };
+  Exception? exportFailure;
+  int exportReads = 0;
+
+  @override
+  Future<PersonalExport> exportMyPersonalData() async {
+    exportReads++;
+    if (exportFailure != null) throw exportFailure!;
+    return PersonalExport.decode(personalExport);
   }
 
   @override
