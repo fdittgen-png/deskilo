@@ -3687,6 +3687,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get conversationArchived => 'Unterhaltung archiviert.';
 
   @override
+  String get conversationChoose => 'Wählen Sie eine Unterhaltung';
+
+  @override
+  String get conversationDraftSessionOnly =>
+      'Nicht gesendeter Entwurf, in der App aufbewahrt, bis Sie sich abmelden oder sie schließen.';
+
+  @override
   String get conversationEmpty => 'Noch keine Nachrichten — sagen Sie hallo!';
 
   @override

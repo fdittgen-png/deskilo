@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,10 +34,14 @@ class ReachableSection extends ConsumerWidget {
     required this.servers,
     required this.onOpen,
     this.self,
+    this.onOpenGroup,
   });
 
   /// Server origin to its host label; '' is this server.
   final Map<String, String> servers;
+
+  /// Opens a group somewhere else than its own page (the messenger's pane).
+  final ValueChanged<InboxEntry>? onOpenGroup;
 
   /// My own account on this server, never listed.
   final String? self;
@@ -60,6 +66,7 @@ class ReachableSection extends ConsumerWidget {
             _PersonalDirectorySections(
               directory: value,
               onOpen: (id, name) => onOpen('', id, name),
+              onOpenGroup: onOpenGroup,
             ),
           ],
           AsyncError(:final error) when personalDirectoryUnsupported(error) =>
@@ -72,7 +79,7 @@ class ReachableSection extends ConsumerWidget {
                   self: server.key.isEmpty ? self : null,
                   onOpen: (id, name) => onOpen(server.key, id, name),
                 ),
-              const _ReachableGroups(),
+              _ReachableGroups(onOpenGroup: onOpenGroup),
             ],
           AsyncError() => [
             TextButton(
@@ -95,10 +102,12 @@ class _PersonalDirectorySections extends ConsumerWidget {
   const _PersonalDirectorySections({
     required this.directory,
     required this.onOpen,
+    required this.onOpenGroup,
   });
 
   final PersonalDirectory directory;
   final void Function(String id, String name) onOpen;
+  final ValueChanged<InboxEntry>? onOpenGroup;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -148,7 +157,11 @@ class _PersonalDirectorySections extends ConsumerWidget {
                   leading: RecipientAvatar(name: g.title, group: true),
                   title: Text(g.title),
                   subtitle: g.canWrite ? null : Text(l.groupAnnounceOnly),
-                  onTap: () => openInboxEntry(context, ref, personalGroupEntry(g)),
+                  onTap: () => onOpenGroup != null
+                      ? onOpenGroup!(personalGroupEntry(g))
+                      : unawaited(
+                          openInboxEntry(context, ref, personalGroupEntry(g)),
+                        ),
                 ),
             ],
           ),
@@ -311,7 +324,9 @@ class _ReachableDirectory extends ConsumerWidget {
 /// The groups I am in, as the unified inbox knows them — every one, with
 /// or without a message; tapping opens the group thread.
 class _ReachableGroups extends ConsumerWidget {
-  const _ReachableGroups();
+  const _ReachableGroups({required this.onOpenGroup});
+
+  final ValueChanged<InboxEntry>? onOpenGroup;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -336,7 +351,9 @@ class _ReachableGroups extends ConsumerWidget {
             key: ValueKey('reachable-group-${g.contextId}'),
             leading: RecipientAvatar(name: g.title, group: true),
             title: Text(g.title),
-            onTap: () => openInboxEntry(context, ref, g),
+            onTap: () => onOpenGroup != null
+                ? onOpenGroup!(g)
+                : unawaited(openInboxEntry(context, ref, g)),
           ),
       ],
     );

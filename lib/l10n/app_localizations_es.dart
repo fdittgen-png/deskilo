@@ -3677,6 +3677,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get conversationArchived => 'Conversación archivada.';
 
   @override
+  String get conversationChoose => 'Elija una conversación';
+
+  @override
+  String get conversationDraftSessionOnly =>
+      'Borrador no enviado, conservado en la aplicación hasta que cierre sesión o la cierre.';
+
+  @override
   String get conversationEmpty => 'Aún no hay mensajes — ¡saluda!';
 
   @override

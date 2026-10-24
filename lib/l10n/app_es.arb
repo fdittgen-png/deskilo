@@ -2417,6 +2417,8 @@
   },
   "conversationArchive": "Archivar",
   "conversationArchived": "Conversación archivada.",
+  "conversationChoose": "Elija una conversación",
+  "conversationDraftSessionOnly": "Borrador no enviado, conservado en la aplicación hasta que cierre sesión o la cierre.",
   "conversationEmpty": "Aún no hay mensajes — ¡saluda!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"

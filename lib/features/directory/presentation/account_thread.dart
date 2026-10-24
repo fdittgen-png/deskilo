@@ -29,9 +29,15 @@ class AccountThread extends ConsumerStatefulWidget {
     required this.name,
     required this.account,
     this.conversation,
+    this.onBack,
+    this.onClose,
   });
   final String source, recipient, name, account;
   final String? conversation;
+
+  /// In the messenger's pane: its Back, and how the thread is left
+  /// (ContextThreadScreen.onBack / onClose).
+  final VoidCallback? onBack, onClose;
   @override
   ConsumerState<AccountThread> createState() => _ThreadState();
 }
@@ -88,7 +94,16 @@ class _ThreadState extends ConsumerState<AccountThread> {
     final l = context.l10n;
     if (_loading || _failed) {
       return Scaffold(
-        appBar: AppBar(title: Text(widget.name)),
+        appBar: AppBar(
+          automaticallyImplyLeading: widget.onClose == null,
+          leading: widget.onBack == null
+              ? null
+              : BackButton(
+                  key: const ValueKey('account-thread-back'),
+                  onPressed: widget.onBack,
+                ),
+          title: Text(widget.name),
+        ),
         body: _loading
             ? const LoadingView()
             : Center(
@@ -115,6 +130,8 @@ class _ThreadState extends ConsumerState<AccountThread> {
       subtitle: contextSubtitle(l, entry, servers),
       source: widget.source,
       peer: widget.recipient,
+      onBack: widget.onBack,
+      onClose: widget.onClose,
     );
   }
 }

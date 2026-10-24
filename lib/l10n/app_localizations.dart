@@ -6277,6 +6277,18 @@ abstract class AppLocalizations {
   /// **'Conversation archived.'**
   String get conversationArchived;
 
+  /// #2556 conversation pane: The thread pane beside the inbox before a conversation is opened (wide layout).
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a conversation'**
+  String get conversationChoose;
+
+  /// #2556 conversation pane: Shown above the composer when it reopens with an unsent draft; the draft is kept in memory only, never on the device or in the cloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsent draft, kept in this app until you sign out or close it.'**
+  String get conversationDraftSessionOnly;
+
   /// Empty state of a fresh conversation thread
   ///
   /// In en, this message translates to:

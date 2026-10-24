@@ -2417,6 +2417,8 @@
   },
   "conversationArchive": "Archivieren",
   "conversationArchived": "Unterhaltung archiviert.",
+  "conversationChoose": "Wählen Sie eine Unterhaltung",
+  "conversationDraftSessionOnly": "Nicht gesendeter Entwurf, in der App aufbewahrt, bis Sie sich abmelden oder sie schließen.",
   "conversationEmpty": "Noch keine Nachrichten — sagen Sie hallo!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"

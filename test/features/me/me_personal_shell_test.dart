@@ -11,7 +11,9 @@
 import 'dart:io';
 
 import 'package:deskilo/app/shell/shell_screen.dart';
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/theme/personal_theme.dart';
+import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/account_messenger_screen.dart';
 import 'package:deskilo/features/me/presentation/me_personal_shell.dart';
 import 'package:deskilo/features/me/presentation/me_shell.dart';
@@ -29,12 +31,14 @@ Future<GoRouter> _pumpOn(
   WidgetTester tester, {
   FakeWorkspaceRepository? workspace,
   FakeMessengerRepository? messenger,
+  FakeAccountContactRepository? contacts,
   Size size = _phone,
 }) =>
     pumpMeApp(
       tester,
       workspace: workspace ?? FakeWorkspaceRepository(workspaces: []),
       messenger: messenger,
+      contacts: contacts,
       size: size,
       extraOverrides: [personalShellEnabledProvider.overrideWithValue(true)],
     );
@@ -233,6 +237,57 @@ void main() {
       find.descendant(of: _key('me-tab-messages'), matching: find.text('99+')),
       findsOneWidget,
     );
+  });
+
+  testWidgets('#2556: on a phone an opened conversation is the focused page '
+      '— its own header and Back, no bar — and a person picked for a new '
+      'discussion opens there too', (tester) async {
+    final messenger = FakeMessengerRepository()
+      ..inboxRows.add({
+        'context_kind': 'account',
+        'context_id': 'c-ana',
+        'title': 'Ana',
+        'peer_id': 'ana',
+        'last_at': '2026-07-15T08:00:00Z',
+      });
+    final contacts = FakeAccountContactRepository()
+      ..reachable.add(const ReachablePerson(
+        workspaceId: 'ws-1',
+        workspaceName: 'Pézenas',
+        id: 'bea',
+        name: 'Bea',
+      ));
+    final router =
+        await _pumpOn(tester, messenger: messenger, contacts: contacts);
+    await goTo(tester, router, '/me/messages');
+    expect(_key('me-bar'), findsOneWidget);
+    await _tap(tester, _key('inbox-entry-c-ana'));
+    expect(_key('context-thread'), findsOneWidget);
+    expect(_key('me-bar'), findsNothing);
+    expect(_key('me-scope-badge'), findsNothing, reason: 'one header');
+    await _tap(tester, _key('context-thread-back'));
+    expect(_key('me-bar'), findsOneWidget);
+    expect(_key('unified-inbox'), findsOneWidget);
+
+    await _tap(tester, _key('unified-inbox-people'));
+    expect(router.state.uri.path, '/me/messages/new');
+    final bea = _key('reachable-person--ws-1-bea');
+    await tester.scrollUntilVisible(
+      bea,
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byType(AccountMessengerScreen),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await tester.pumpAndSettle();
+    await _tap(tester, bea);
+    expect(router.state.uri.path, '/me/messages');
+    expect(_key('context-thread'), findsOneWidget);
+    expect(find.text('Bea'), findsOneWidget);
+    expect(_key('me-bar'), findsNothing);
   });
 
   testWidgets('My data switches its view through the route', (tester) async {

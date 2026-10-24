@@ -2417,6 +2417,8 @@
   },
   "conversationArchive": "Archivia",
   "conversationArchived": "Conversazione archiviata.",
+  "conversationChoose": "Scelga una conversazione",
+  "conversationDraftSessionOnly": "Bozza non inviata, conservata nell’app finché non esce dall’account o la chiude.",
   "conversationEmpty": "Ancora nessun messaggio — saluti!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"

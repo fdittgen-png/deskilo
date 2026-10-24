@@ -5,5 +5,7 @@
   "inboxSourceUnavailable": "{source} non è raggiungibile con il Suo accesso attuale. Le sue conversazioni mancano da questo elenco.",
   "inboxShowOlder": "Mostra conversazioni precedenti",
   "settingLabelMessagingInboxPageSize": "Dimensione pagina della posta in arrivo",
-  "settingHintMessagingInboxPageSize": "Quante conversazioni restituiscono per pagina della posta in arrivo la casa personale e ogni server di spazi; le precedenti arrivano con Mostra conversazioni precedenti."
+  "settingHintMessagingInboxPageSize": "Quante conversazioni restituiscono per pagina della posta in arrivo la casa personale e ogni server di spazi; le precedenti arrivano con Mostra conversazioni precedenti.",
+  "conversationChoose": "Scelga una conversazione",
+  "conversationDraftSessionOnly": "Bozza non inviata, conservata nell’app finché non esce dall’account o la chiude."
 }

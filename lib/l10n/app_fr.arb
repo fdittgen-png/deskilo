@@ -2417,6 +2417,8 @@
   },
   "conversationArchive": "Archiver",
   "conversationArchived": "Conversation archivée.",
+  "conversationChoose": "Choisissez une conversation",
+  "conversationDraftSessionOnly": "Brouillon non envoyé, conservé dans l’application jusqu’à votre déconnexion ou sa fermeture.",
   "conversationEmpty": "Pas encore de messages — dites bonjour !",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
