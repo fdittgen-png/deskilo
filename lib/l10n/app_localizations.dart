@@ -21562,6 +21562,144 @@ abstract class AppLocalizations {
   /// **'You are not in a space yet'**
   String get meNoSpaceTitle;
 
+  /// #2554 Overview: my request to join a space is undecided
+  ///
+  /// In en, this message translates to:
+  /// **'Your request to join {name} is pending.'**
+  String meOverviewAttentionApplication(String name);
+
+  /// #2554 Overview: my requests could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your requests could not be read.'**
+  String get meOverviewAttentionApplicationsUnavailable;
+
+  /// #2554 Overview: unread messages in one conversation
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 unread message} other{{count} unread messages}}'**
+  String meOverviewAttentionConversation(int count);
+
+  /// #2554 Overview: an unpaid document, its remaining amount and number
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to pay · {number}'**
+  String meOverviewAttentionDocument(String amount, String number);
+
+  /// #2554 Overview: some hosts' documents could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Some documents could not be read.'**
+  String get meOverviewAttentionDocumentsPartial;
+
+  /// #2554 Overview: my documents could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your documents could not be read.'**
+  String get meOverviewAttentionDocumentsUnavailable;
+
+  /// #2554 Overview: some servers' conversations could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Some conversations could not be read.'**
+  String get meOverviewAttentionMessagesPartial;
+
+  /// #2554 Overview: my conversations could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your conversations could not be read.'**
+  String get meOverviewAttentionMessagesUnavailable;
+
+  /// #2554 Overview: how many more items wait beyond the ones shown
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 more} other{{count} more}}'**
+  String meOverviewAttentionMore(int count);
+
+  /// #2554 Overview: every source answered and nothing waits
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing needs your attention.'**
+  String get meOverviewAttentionNone;
+
+  /// #2554 Overview: open the conversation
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get meOverviewAttentionOpenConversation;
+
+  /// #2554 Overview: the document is past its due day
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get meOverviewAttentionOverdue;
+
+  /// #2554 Overview: the needs-attention section
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get meOverviewAttentionTitle;
+
+  /// #2554 Overview: open the document in My data
+  ///
+  /// In en, this message translates to:
+  /// **'View document'**
+  String get meOverviewAttentionViewDocument;
+
+  /// #2554 Overview: one host's bookings could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'The bookings of {name} could not be read.'**
+  String meOverviewNextHostFailed(String name);
+
+  /// #2554 Overview: every host answered and nothing is booked in the searched period
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing booked from {from} to {to}.'**
+  String meOverviewNextNone(String from, String to);
+
+  /// #2554 Overview: no upcoming booking among those read so far; more are in My reservations
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming booking among those read so far.'**
+  String get meOverviewNextNotYet;
+
+  /// #2554 Overview: the next commitment section
+  ///
+  /// In en, this message translates to:
+  /// **'Next commitment'**
+  String get meOverviewNextTitle;
+
+  /// #2554 Overview: the bookings could not be read at all
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings could not be read.'**
+  String get meOverviewNextUnavailable;
+
+  /// #2554 Overview: the time zone of the booking's workspace, when it differs from the device's
+  ///
+  /// In en, this message translates to:
+  /// **'Times in {zone}'**
+  String meOverviewNextZone(String zone);
+
+  /// #2554 Overview: the supporting line under the heading
+  ///
+  /// In en, this message translates to:
+  /// **'Your next booking, what needs you, and your spaces.'**
+  String get meOverviewSubtitle;
+
+  /// #2554 Overview: the page heading
+  ///
+  /// In en, this message translates to:
+  /// **'Your day, in one place'**
+  String get meOverviewTitle;
+
+  /// #2554 Overview: open the next commitment in My reservations
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get meOverviewView;
+
   /// #2563 Me home: badge on the default workspace
   ///
   /// In en, this message translates to:

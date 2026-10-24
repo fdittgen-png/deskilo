@@ -13017,6 +13017,108 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meNoSpaceTitle => 'Aún no está en ningún espacio';
 
   @override
+  String meOverviewAttentionApplication(String name) {
+    return 'Su solicitud para unirse a $name está pendiente.';
+  }
+
+  @override
+  String get meOverviewAttentionApplicationsUnavailable =>
+      'No se han podido leer sus solicitudes.';
+
+  @override
+  String meOverviewAttentionConversation(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mensajes sin leer',
+      one: '1 mensaje sin leer',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String meOverviewAttentionDocument(String amount, String number) {
+    return '$amount por pagar · $number';
+  }
+
+  @override
+  String get meOverviewAttentionDocumentsPartial =>
+      'No se han podido leer algunos documentos.';
+
+  @override
+  String get meOverviewAttentionDocumentsUnavailable =>
+      'No se han podido leer sus documentos.';
+
+  @override
+  String get meOverviewAttentionMessagesPartial =>
+      'No se han podido leer algunas conversaciones.';
+
+  @override
+  String get meOverviewAttentionMessagesUnavailable =>
+      'No se han podido leer sus conversaciones.';
+
+  @override
+  String meOverviewAttentionMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count más',
+      one: '1 más',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get meOverviewAttentionNone => 'Nada requiere su atención.';
+
+  @override
+  String get meOverviewAttentionOpenConversation => 'Abrir';
+
+  @override
+  String get meOverviewAttentionOverdue => 'Vencido';
+
+  @override
+  String get meOverviewAttentionTitle => 'Requiere su atención';
+
+  @override
+  String get meOverviewAttentionViewDocument => 'Ver el documento';
+
+  @override
+  String meOverviewNextHostFailed(String name) {
+    return 'No se han podido leer las reservas de $name.';
+  }
+
+  @override
+  String meOverviewNextNone(String from, String to) {
+    return 'Ninguna reserva del $from al $to.';
+  }
+
+  @override
+  String get meOverviewNextNotYet =>
+      'Ninguna reserva próxima entre las leídas hasta ahora.';
+
+  @override
+  String get meOverviewNextTitle => 'Próximo compromiso';
+
+  @override
+  String get meOverviewNextUnavailable => 'No se han podido leer sus reservas.';
+
+  @override
+  String meOverviewNextZone(String zone) {
+    return 'Horas en $zone';
+  }
+
+  @override
+  String get meOverviewSubtitle =>
+      'Su próxima reserva, lo que le espera y sus espacios.';
+
+  @override
+  String get meOverviewTitle => 'Su día, en un solo lugar';
+
+  @override
+  String get meOverviewView => 'Ver';
+
+  @override
   String get meRefDefault => 'Predeterminado';
 
   @override
