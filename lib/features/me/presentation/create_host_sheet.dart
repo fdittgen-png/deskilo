@@ -35,11 +35,13 @@ import '../providers/me_providers.dart';
 class CreateHostSheet extends ConsumerStatefulWidget {
   const CreateHostSheet({super.key});
 
-  /// Create: straight to this server's onboarding when no host is
-  /// enrolled, otherwise the choice; back from it, what my home says now.
+  /// Create: straight to this server's onboarding when it hosts spaces and
+  /// no host is enrolled, otherwise the choice; back from it, what my home
+  /// says now. A personal home that hosts no space never opens its own
+  /// onboarding: the choice says there is nowhere to create.
   static Future<void> start(BuildContext context, WidgetRef ref) async {
     final hosts = ref.read(workspaceHostsProvider).value;
-    final route = hosts != null && hosts.hosts.isEmpty
+    final route = hosts != null && hosts.hosts.isEmpty && hosts.hereHosts
         ? '/onboarding'
         : await showAppSheet<String>(
             context: context,
@@ -165,6 +167,12 @@ class _CreateHostSheetState extends ConsumerState<CreateHostSheet> {
               AsyncData(:final value) => [
                   if (value.hereHosts) here,
                   for (final host in value.hosts) _tile(l10n, host),
+                  if (!value.hereHosts && value.hosts.isEmpty)
+                    InlineBanner(
+                      key: const ValueKey('create-host-none'),
+                      icon: Icons.block_outlined,
+                      text: l10n.createHostNone,
+                    ),
                 ],
               AsyncError() => [
                   InlineBanner(

@@ -6739,6 +6739,12 @@ abstract class AppLocalizations {
   /// **'The server chosen for this space is no longer held. Nothing was created.'**
   String get createHostLost;
 
+  /// #2554 Create: a personal home that hosts no space and has no enrolled server offers nothing to create on
+  ///
+  /// In en, this message translates to:
+  /// **'No server accepts new spaces for your personal home yet. Nothing was created.'**
+  String get createHostNone;
+
   /// #2562 C2c Create: an enrolled server closed to new spaces (state and refusal)
   ///
   /// In en, this message translates to:

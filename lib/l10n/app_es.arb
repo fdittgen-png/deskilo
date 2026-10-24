@@ -2636,6 +2636,7 @@
   "createHostHere": "Este servidor",
   "createHostHereDetail": "El servidor en el que ha iniciado sesión",
   "createHostLost": "El servidor elegido para este espacio ya no está reservado. No se ha creado nada.",
+  "createHostNone": "Todavía ningún servidor acepta nuevos espacios para su hogar personal. No se ha creado nada.",
   "createHostNotAccepting": "No acepta nuevos espacios",
   "createHostRevoked": "Su hogar personal ya no lo ofrece",
   "createHostTitle": "¿Dónde debe estar el espacio?",

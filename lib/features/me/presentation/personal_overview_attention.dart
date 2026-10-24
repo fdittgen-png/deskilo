@@ -87,7 +87,7 @@ class NeedsAttentionSection extends ConsumerWidget {
                   overdue: d.overdueAt(now),
                 ),
             ],
-      refs: refs.value,
+      refs: refsOfCurrentAccount(refs),
       inbox: inbox.value,
     );
     bool failed(AsyncValue<Object?> a) => a.hasError && !a.isLoading;

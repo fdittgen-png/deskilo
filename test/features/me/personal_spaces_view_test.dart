@@ -7,9 +7,18 @@
 // refusal (nothing to open on another installation or in history; a failed
 // read is not "no space") and recovery (Try again); zero spaces lead to
 // Join and Discover; managing this server's spaces stays one tap away.
+//
+// SPACE-01: two workspace installations naming the same local workspace
+// under the same name stay two spaces — two keys, two favourites, two
+// places in the order. CACHE-01: after an account switch nothing the
+// previous account read is shown, and its answer arriving late is dropped.
+import 'dart:async';
+
 import 'package:deskilo/app/shell/shell_screen.dart';
+import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/features/me/application/personal_spaces_view.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +33,9 @@ const _home = '0ea54888-a3d7-441f-a025-ee4576cf2fa9';
 const _away = '00000000-0000-4000-8000-0000025630ff';
 const _one = '00000000-0000-4000-8000-00002554c001';
 const _two = '00000000-0000-4000-8000-00002554c002';
+// Two workspace installations, W-A and W-B.
+const _wa = '00000000-0000-4000-8000-00002554a00a';
+const _wb = '00000000-0000-4000-8000-00002554a00b';
 
 Map<String, Object?> _ref(
   String installation,
@@ -75,6 +87,28 @@ Future<GoRouter> _pump(
     );
 
 Finder _key(String key) => find.byKey(ValueKey(key));
+
+/// Answers for the account signed in when each read starts; while
+/// [holding], each read waits until the test lets it go.
+class _AccountRefs extends FakeMeRepository {
+  _AccountRefs(this.auth, this.byUser);
+
+  final FakeAuthRepository auth;
+  final Map<String, PersonalWorkspaceRefs> byUser;
+  bool holding = false;
+  final held = <Completer<void>>[];
+
+  @override
+  Future<PersonalWorkspaceRefs> myWorkspaceRefs() async {
+    final answer = byUser[auth.currentUserId] ?? _refs([]);
+    if (holding) {
+      final gate = Completer<void>();
+      held.add(gate);
+      await gate.future;
+    }
+    return answer;
+  }
+}
 
 void main() {
   group('the entries', () {
@@ -322,6 +356,128 @@ void main() {
       expect(_key('me-home-all-spaces'), findsNothing);
       expect(_key('me-home-discover'), findsNothing);
       expect(_key('me-home-join'), findsOneWidget);
+    });
+  });
+  group('SPACE-01', () {
+    // The same local workspace, the same name, on W-A and on W-B, each
+    // vouched for by its own installation.
+    final refs = _refs([
+      _ref(_wa, _one, freshness: 'verified', status: 'active',
+          label: 'Atelier'),
+      _ref(_wb, _one, freshness: 'verified', status: 'active',
+          label: 'Atelier', favorite: true),
+    ]);
+
+    test('SPACE-01: equal local ids and names on two hosts are two cards, '
+        'each keyed by its own host', () {
+      final rows = personalSpaceRows(refs, const []);
+      expect(rows.map((r) => r.key),
+          ['ref:$_wb:$_one', 'ref:$_wa:$_one'],
+          reason: 'the account favourite (W-B) leads; W-A is not marked by it');
+      expect(rows.map((r) => r.sides.single.host),
+          everyElement(PersonalSpaceHost.elsewhere));
+      expect(rows.map((r) => r.sides.single.local), everyElement(isNull),
+          reason: 'neither is matched to a space of the personal home');
+      expect(rows.map((r) => r.sides.single.action),
+          everyElement(PersonalSpaceAction.none),
+          reason: 'a fact elsewhere never opens W from the personal home');
+    });
+
+    test('SPACE-01: a favourite and an order kept on this device follow one '
+        'host only', () {
+      final unmarked = _refs([
+        _ref(_wa, _one, freshness: 'verified', status: 'active',
+            label: 'Atelier'),
+        _ref(_wb, _one, freshness: 'verified', status: 'active',
+            label: 'Atelier'),
+      ]);
+      const heartOnA = SpacePrefs(favorites: {'ref:$_wa:$_one'});
+      final rows = personalSpaceRows(unmarked, const [], prefs: heartOnA);
+      expect([for (final r in rows) (r.key, r.favoriteIn(heartOnA))], [
+        ('ref:$_wa:$_one', true),
+        ('ref:$_wb:$_one', false),
+      ]);
+
+      const bFirst = SpacePrefs(order: ['ref:$_wb:$_one', 'ref:$_wa:$_one']);
+      expect(personalSpaceRows(unmarked, const [], prefs: bFirst)
+              .map((r) => r.key),
+          ['ref:$_wb:$_one', 'ref:$_wa:$_one']);
+      expect(
+          personalSpaceMoveScope(
+              personalSpaceRows(unmarked, const [], prefs: bFirst),
+              personalSpaceRows(unmarked, const [], prefs: bFirst).last,
+              bFirst),
+          ['ref:$_wb:$_one', 'ref:$_wa:$_one'],
+          reason: 'Move up/down moves between the two, never merges them');
+    });
+
+    testWidgets('SPACE-01: My spaces shows both, each naming its own host',
+        (tester) async {
+      final router = await _pump(tester, me: FakeMeRepository()..workspaceRefs = refs);
+      await goTo(tester, router, '/me/spaces');
+      expect(find.text('2 spaces'), findsOneWidget);
+      for (final w in [_wa, _wb]) {
+        expect(_key('my-space-$w:$_one'), findsOneWidget);
+        expect(tester.widget<Text>(_key('my-space-host-$w:$_one')).data,
+            'On another installation');
+        expect(_key('my-space-open-$w:$_one'), findsNothing);
+      }
+      expect(find.text('Atelier'), findsNWidgets(2));
+    });
+  });
+
+  group('CACHE-01', () {
+    testWidgets('CACHE-01: after an account switch nothing the previous '
+        'account read is shown, and its late answer is dropped',
+        (tester) async {
+      final auth = FakeAuthRepository.signedIn();
+      final me = _AccountRefs(auth, {
+        'user-1': _refs([_ref(_wa, _one, label: 'Alpha')]),
+        'user-2': _refs([_ref(_wb, _two, label: 'Beta')]),
+      });
+      final router = await pumpMeApp(
+        tester,
+        workspace: _stamped(),
+        auth: auth,
+        me: me,
+        extraOverrides: [personalShellEnabledProvider.overrideWithValue(true)],
+      );
+      await goTo(tester, router, '/me/spaces');
+      expect(_key('my-space-$_wa:$_one'), findsOneWidget);
+      final container =
+          ProviderScope.containerOf(tester.element(_key('my-spaces-list')));
+
+      // user-1's read again, still in flight when the account changes.
+      me.holding = true;
+      container.invalidate(personalWorkspaceRefsProvider);
+      await tester.pump();
+      expect(me.held, hasLength(1));
+      expect(_key('my-space-$_wa:$_one'), findsOneWidget,
+          reason: 'a refresh of the same account keeps what it showed');
+      auth.signInAs('user-2');
+      await tester.pump();
+      await tester.pump();
+      expect(me.held, hasLength(2), reason: 'user-2 reads for themselves');
+      expect(_key('my-space-$_wa:$_one'), findsNothing,
+          reason: 'user-1\'s space is not shown to user-2 while it reads');
+      expect(find.text('Alpha'), findsNothing);
+      expect(_key('my-spaces-loading'), findsOneWidget);
+
+      // user-1's answer arrives after the switch: dropped.
+      me.held.first.complete();
+      await tester.pump();
+      await tester.pump();
+      expect(find.text('Alpha'), findsNothing);
+      expect(_key('my-space-$_wa:$_one'), findsNothing);
+
+      me.held.last.complete();
+      await tester.pumpAndSettle();
+      expect(_key('my-space-$_wb:$_two'), findsOneWidget);
+      expect(find.text('Beta'), findsOneWidget);
+      expect(find.text('Alpha'), findsNothing);
+      expect(container.read(personalWorkspaceRefsProvider).value?.refs
+              .map((r) => r.label),
+          ['Beta']);
     });
   });
 }

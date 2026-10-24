@@ -2636,6 +2636,7 @@
   "createHostHere": "Dieser Server",
   "createHostHereDetail": "Der Server, bei dem Sie angemeldet sind",
   "createHostLost": "Der für diesen Space gewählte Server ist nicht mehr vorgemerkt. Es wurde nichts angelegt.",
+  "createHostNone": "Für Ihr persönliches Zuhause nimmt noch kein Server neue Spaces an. Es wurde nichts angelegt.",
   "createHostNotAccepting": "Nimmt keine neuen Spaces an",
   "createHostRevoked": "Wird von Ihrem persönlichen Zuhause nicht mehr angeboten",
   "createHostTitle": "Wo soll der Space liegen?",

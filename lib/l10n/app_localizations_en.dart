@@ -3908,6 +3908,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The server chosen for this space is no longer held. Nothing was created.';
 
   @override
+  String get createHostNone =>
+      'No server accepts new spaces for your personal home yet. Nothing was created.';
+
+  @override
   String get createHostNotAccepting => 'Not accepting new spaces';
 
   @override
