@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "visibilityConflictTitle": "Ce réglage a été modifié entre-temps",
+  "visibilityUnconfirmedTitle": "Votre modification n’a pas pu être confirmée",
+  "visibilityConflictSaved": "Enregistré actuellement : {audience}",
+  "visibilityConflictYours": "Votre modification : {audience}",
+  "visibilityConflictUnread": "Le réglage enregistré ne peut pas être lu pour le moment. Votre modification n’a pas été enregistrée.",
+  "visibilityConflictKeep": "Garder le réglage enregistré",
+  "visibilityConflictReview": "Revoir ma modification"
+}

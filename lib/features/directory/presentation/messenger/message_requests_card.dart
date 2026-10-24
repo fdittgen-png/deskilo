@@ -33,7 +33,7 @@ class MessageRequestsCard extends ConsumerWidget {
       if (!ok) return;
       ref
         ..invalidate(messageRequestsProvider)
-        ..invalidate(unifiedInboxProvider);
+        ..invalidate(messengerInboxProvider);
     }
 
     return Card(

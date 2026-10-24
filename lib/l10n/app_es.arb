@@ -5999,6 +5999,11 @@
   "inboxNoArchived": "Ninguna conversación archivada.",
   "inboxNoUnread": "Nada sin leer — está al día.",
   "inboxRetry": "Reintentar",
+  "inboxShowOlder": "Mostrar conversaciones anteriores",
+  "inboxSourceFailed": "No se pudo leer {source}. Se muestra el resto de la bandeja de entrada.",
+  "inboxSourcePersonal": "Sus mensajes personales",
+  "inboxSourceUnavailable": "{source} no está disponible con su sesión actual. Sus conversaciones faltan en esta lista.",
+  "inboxSourceWorkspaces": "Los mensajes de sus espacios",
   "instanceAccessTitle": "Acceso a los asistentes",
   "instanceAccessUntil": "Hasta el {date}",
   "instanceAccountIntro": "Cree una cuenta gratuita en supabase.com, luego un token de acceso personal (Account → Access Tokens) y péguelo aquí. El asistente lo usa para crear y configurar el proyecto; nunca se guarda.",
@@ -13605,6 +13610,7 @@
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPageSize": "Cuántas conversaciones devuelven por página de la bandeja de entrada el hogar personal y cada servidor de espacios; las anteriores llegan con Mostrar conversaciones anteriores.",
   "settingHintMessagingInboxPollSeconds": "Segundos entre dos actualizaciones de la bandeja de entrada y su contador de no leídos. Valores más bajos cargan más el servidor.",
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
@@ -13751,6 +13757,7 @@
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingLabelMessagingInboxPageSize": "Tamaño de página de la bandeja de entrada",
   "settingLabelMessagingInboxPollSeconds": "Actualización de la bandeja de entrada",
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
@@ -17242,10 +17249,15 @@
   "visibilityBio": "Unas palabras sobre usted",
   "visibilityChosenCount": "{count, plural, =1{Miembros de 1 espacio elegido} other{Miembros de {count} espacios elegidos}}",
   "visibilityChosenSpaces": "Miembros de espacios elegidos",
+  "visibilityConflictKeep": "Conservar el ajuste guardado",
+  "visibilityConflictReview": "Revisar mi cambio",
+  "visibilityConflictSaved": "Guardado ahora: {audience}",
+  "visibilityConflictTitle": "Este ajuste ha cambiado mientras tanto",
+  "visibilityConflictUnread": "No se puede leer el ajuste guardado en este momento. Su cambio no se ha guardado.",
+  "visibilityConflictYours": "Su cambio: {audience}",
   "visibilityContact": "WhatsApp y correo",
   "visibilityElsewhereIntro": "En un servidor conectado tiene la cuenta de ese servidor. Quienes allí no comparten ningún espacio con usted ven lo que permite a cualquier persona con sesión iniciada; sus datos de contacto y su presencia nunca salen de sus espacios.",
   "visibilityElsewhereTitle": "En mis otros servidores",
-  "visibilityFieldElsewhere": "Este ajuste nombra un espacio en otro servidor, por lo que aún no puede cambiarlo aquí.",
   "visibilityHomeHeader": "Hogar personal: {name}",
   "visibilityIdentity": "Nombre y foto",
   "visibilityIntro": "Cada parte de su cuenta elige su propio público. Nada es público si usted no lo elige.",
@@ -17290,6 +17302,7 @@
   "visibilitySpacesUnavailable": "Sus espacios no se pueden listar ahora.",
   "visibilityTitle": "Quién me ve",
   "visibilityUnavailable": "No se puede leer ahora quién ve qué de usted. No se ha cambiado nada.",
+  "visibilityUnconfirmedTitle": "No se ha podido confirmar su cambio",
   "visibilityWidenAction": "Ampliar",
   "visibilityWidenAdded": "Añadidos: {spaces}",
   "visibilityWidenConfirm": "¿Mostrar su {field} a: {audience}? Podrán verlo.",

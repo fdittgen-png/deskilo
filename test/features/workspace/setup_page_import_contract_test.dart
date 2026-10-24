@@ -450,6 +450,7 @@ void main() {
         'network': 'app',
         'enrolment': 'app',
         'directory': 'app',
+        'inbox': 'app',
         'members': 'app',
         'einvoice': 'file',
       });

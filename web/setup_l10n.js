@@ -708,7 +708,9 @@ window.SETUP_L10N={
    "dirPageSize": "New discussion: entries per page",
    "dirPageSizeHint": "How many workspaces, people or groups the personal home lists at a time when a member starts a discussion; the next ones come with Show more. Set in the app's settings.",
    "dirQueryLength": "New discussion: longest search",
-   "dirQueryLengthHint": "The longest text the new-discussion directory searches for; a longer search is refused, never cut. Set in the app's settings."
+   "dirQueryLengthHint": "The longest text the new-discussion directory searches for; a longer search is refused, never cut. Set in the app's settings.",
+   "inboxPageSize": "Inbox: conversations per page",
+   "inboxPageSizeHint": "How many conversations the personal home and each workspace server return at a time in a member's inbox; older ones come with Show older conversations. Set in the app's settings."
   },
   "feature": {
    "calendarTab": [
@@ -2332,7 +2334,9 @@ window.SETUP_L10N={
    "dirPageSize": "Nouvelle discussion : entrées par page",
    "dirPageSizeHint": "Combien d’espaces, de personnes ou de groupes la maison personnelle liste à la fois quand un membre commence une discussion ; les suivants viennent avec Afficher plus. Se règle dans les paramètres de l’app.",
    "dirQueryLength": "Nouvelle discussion : recherche la plus longue",
-   "dirQueryLengthHint": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche ; une recherche plus longue est refusée, jamais tronquée. Se règle dans les paramètres de l’app."
+   "dirQueryLengthHint": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche ; une recherche plus longue est refusée, jamais tronquée. Se règle dans les paramètres de l’app.",
+   "inboxPageSize": "Boîte de réception : conversations par page",
+   "inboxPageSizeHint": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient à la fois dans la boîte de réception d’un membre ; les plus anciennes viennent avec Afficher les conversations plus anciennes. Se règle dans les paramètres de l’application."
   },
   "feature": {
    "calendarTab": [
@@ -3956,7 +3960,9 @@ window.SETUP_L10N={
    "dirPageSize": "Neue Unterhaltung: Einträge pro Seite",
    "dirPageSizeHint": "Wie viele Spaces, Personen oder Gruppen das persönliche Zuhause auf einmal anzeigt, wenn ein Mitglied eine Unterhaltung beginnt; die nächsten kommen mit Mehr anzeigen. Wird in den Einstellungen der App festgelegt.",
    "dirQueryLength": "Neue Unterhaltung: längste Suche",
-   "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt."
+   "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt.",
+   "inboxPageSize": "Posteingang: Unterhaltungen pro Seite",
+   "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt."
   },
   "feature": {
    "calendarTab": [
@@ -5580,7 +5586,9 @@ window.SETUP_L10N={
    "dirPageSize": "Nueva conversación: entradas por página",
    "dirPageSizeHint": "Cuántos espacios, personas o grupos muestra a la vez el hogar personal cuando un miembro empieza una conversación; los siguientes llegan con Mostrar más. Se configura en los ajustes de la app.",
    "dirQueryLength": "Nueva conversación: búsqueda más larga",
-   "dirQueryLengthHint": "El texto más largo que busca el directorio de la nueva conversación; una búsqueda más larga se rechaza, nunca se recorta. Se configura en los ajustes de la app."
+   "dirQueryLengthHint": "El texto más largo que busca el directorio de la nueva conversación; una búsqueda más larga se rechaza, nunca se recorta. Se configura en los ajustes de la app.",
+   "inboxPageSize": "Bandeja de entrada: conversaciones por página",
+   "inboxPageSizeHint": "Cuántas conversaciones devuelven a la vez el hogar personal y cada servidor de espacios en la bandeja de entrada de un miembro; las anteriores llegan con Mostrar conversaciones anteriores. Se configura en los ajustes de la aplicación."
   },
   "feature": {
    "calendarTab": [
@@ -7204,7 +7212,9 @@ window.SETUP_L10N={
    "dirPageSize": "Nuova conversazione: voci per pagina",
    "dirPageSizeHint": "Quanti spazi, persone o gruppi la casa personale elenca alla volta quando un membro avvia una conversazione; i successivi arrivano con Mostra altro. Si imposta nelle impostazioni dell'app.",
    "dirQueryLength": "Nuova conversazione: ricerca più lunga",
-   "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app."
+   "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app.",
+   "inboxPageSize": "Posta in arrivo: conversazioni per pagina",
+   "inboxPageSizeHint": "Quante conversazioni restituiscono alla volta la casa personale e ogni server di spazi nella posta in arrivo di un membro; le precedenti arrivano con Mostra conversazioni precedenti. Si imposta nelle impostazioni dell’app."
   },
   "feature": {
    "calendarTab": [

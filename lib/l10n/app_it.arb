@@ -5999,6 +5999,11 @@
   "inboxNoArchived": "Nessuna conversazione archiviata.",
   "inboxNoUnread": "Niente da leggere — è aggiornato.",
   "inboxRetry": "Riprova",
+  "inboxShowOlder": "Mostra conversazioni precedenti",
+  "inboxSourceFailed": "Impossibile leggere {source}. Il resto della posta in arrivo è mostrato.",
+  "inboxSourcePersonal": "I Suoi messaggi personali",
+  "inboxSourceUnavailable": "{source} non è raggiungibile con il Suo accesso attuale. Le sue conversazioni mancano da questo elenco.",
+  "inboxSourceWorkspaces": "I messaggi dei Suoi spazi",
   "instanceAccessTitle": "Accesso agli assistenti",
   "instanceAccessUntil": "Fino al {date}",
   "instanceAccountIntro": "Crei un account gratuito su supabase.com, poi un token di accesso personale (Account → Access Tokens) e lo incolli qui. L'assistente lo usa per creare e configurare il progetto; non viene mai salvato.",
@@ -13605,6 +13610,7 @@
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPageSize": "Quante conversazioni restituiscono per pagina della posta in arrivo la casa personale e ogni server di spazi; le precedenti arrivano con Mostra conversazioni precedenti.",
   "settingHintMessagingInboxPollSeconds": "Secondi tra due aggiornamenti della posta in arrivo e del suo contatore dei non letti. Valori più bassi caricano di più il server.",
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
@@ -13751,6 +13757,7 @@
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingLabelMessagingInboxPageSize": "Dimensione pagina della posta in arrivo",
   "settingLabelMessagingInboxPollSeconds": "Aggiornamento della posta in arrivo",
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
@@ -17242,10 +17249,15 @@
   "visibilityBio": "Qualche parola su di Lei",
   "visibilityChosenCount": "{count, plural, =1{Membri di 1 spazio scelto} other{Membri di {count} spazi scelti}}",
   "visibilityChosenSpaces": "Membri di spazi scelti",
+  "visibilityConflictKeep": "Mantenere l’impostazione salvata",
+  "visibilityConflictReview": "Rivedere la mia modifica",
+  "visibilityConflictSaved": "Salvato ora: {audience}",
+  "visibilityConflictTitle": "Questa impostazione è stata modificata nel frattempo",
+  "visibilityConflictUnread": "Al momento non è possibile leggere l’impostazione salvata. La Sua modifica non è stata salvata.",
+  "visibilityConflictYours": "La Sua modifica: {audience}",
   "visibilityContact": "WhatsApp ed e-mail",
   "visibilityElsewhereIntro": "Su un server collegato ha l'account di quel server. Chi lì non condivide alcuno spazio con Lei vede ciò che consente a chiunque abbia effettuato l'accesso; contatti e presenza non escono mai dai suoi spazi.",
   "visibilityElsewhereTitle": "Sui miei altri server",
-  "visibilityFieldElsewhere": "Questa impostazione nomina uno spazio su un altro server, quindi non può ancora modificarla qui.",
   "visibilityHomeHeader": "Casa personale: {name}",
   "visibilityIdentity": "Nome e foto",
   "visibilityIntro": "Ogni parte del suo account sceglie il proprio pubblico. Niente è pubblico se non lo sceglie.",
@@ -17290,6 +17302,7 @@
   "visibilitySpacesUnavailable": "Al momento i Suoi spazi non possono essere elencati.",
   "visibilityTitle": "Chi mi vede",
   "visibilityUnavailable": "Al momento non è possibile leggere chi vede cosa di Lei. Non è stato modificato nulla.",
+  "visibilityUnconfirmedTitle": "Non è stato possibile confermare la Sua modifica",
   "visibilityWidenAction": "Amplia",
   "visibilityWidenAdded": "Aggiunti: {spaces}",
   "visibilityWidenConfirm": "Mostrare {field} a: {audience}? Potranno vederlo.",

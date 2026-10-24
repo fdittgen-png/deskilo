@@ -2766,7 +2766,7 @@
     {"id":"lib/features/directory/presentation/messenger/context_bubble.dart#ContextBubble.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":22,"len":151,"params":2},
     {"id":"lib/features/directory/presentation/messenger/context_thread_screen.dart#_ContextThreadState._composer(AppLocalizations l10n)","cog":34,"cyc":30,"len":111,"params":1},
     {"id":"lib/features/directory/presentation/messenger/message_actions_sheet.dart#showMessageActions(BuildContext context,WidgetRef ref,MessageRef message,{bool forwarding,Future<void> Function()? onDelete,VoidCallback? onChanged,VoidCallback? onInfo})","cog":2,"cyc":3,"len":39,"params":7},
-    {"id":"lib/features/directory/presentation/messenger/unified_inbox_view.dart#_UnifiedInboxState._list(BuildContext context,UnifiedInbox inbox,Map<String, String> servers,AppLocalizations l10n)","cog":35,"cyc":25,"len":133,"params":4},
+    {"id":"lib/features/directory/presentation/messenger/unified_inbox_view.dart#_UnifiedInboxState._list(BuildContext context,UnifiedInbox inbox,Map<String, String> servers,AppLocalizations l10n)","cog":34,"cyc":24,"len":126,"params":4},
     {"id":"lib/features/directory/presentation/public_page_editor.dart#_EditorState.build(BuildContext context)","cog":49,"cyc":27,"len":129,"params":1},
     {"id":"lib/features/directory/presentation/public_workspace_view.dart#PublicWorkspaceView.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":28,"len":118,"params":2},
     {"id":"lib/features/editor/presentation/screens/editor_screen.dart#_LevelList.build(BuildContext context,WidgetRef ref)","cog":20,"cyc":10,"len":150,"params":2},

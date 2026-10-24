@@ -18,20 +18,22 @@ class AudienceSpace {
     this.selectable = true,
   });
 
-  /// [ref] as the editor offers it. Only a space of this home whose
-  /// membership the home itself reads as active or paused can be chosen
-  /// (`set_visibility` refuses any other); a space on another installation
-  /// is shown, unverified, and never chosen here.
+  /// [ref] as the editor offers it. A space can be chosen while the home
+  /// knows the relationship NOW and it is active or paused: read from its
+  /// own membership row here, or — #2558 C2 — a space on another
+  /// installation whose membership fact is in force (`verified`). A stale
+  /// or missing fact is shown as "verification unavailable" and never
+  /// added (the checked writer refuses it too).
   factory AudienceSpace.fromRef(PersonalWorkspaceRef ref) {
-    final verified = ref.freshness == RefFreshness.local;
+    final verified = ref.freshness == RefFreshness.local ||
+        ref.freshness == RefFreshness.verified;
     return AudienceSpace(
       id: ref.networkId,
       name: ref.label,
       installationId: ref.installationId,
       hostedHere: ref.hostedHere,
       verified: verified,
-      selectable: ref.hostedHere &&
-          verified &&
+      selectable: verified &&
           (ref.status == RefStatus.active || ref.status == RefStatus.paused),
     );
   }
@@ -48,8 +50,9 @@ class AudienceSpace {
   /// The space lives on the personal home that answered.
   final bool hostedHere;
 
-  /// The home holds the relationship itself; false means "verification
-  /// unavailable" (a space on another installation, #2563 C2).
+  /// The home knows the relationship now (its own row, or a fact in
+  /// force); false means "verification unavailable" (a lapsed or missing
+  /// fact of another installation).
   final bool verified;
 
   /// Whether the person may add it to a chosen audience here.

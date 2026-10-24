@@ -8686,6 +8686,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get inboxRetry => 'Riprova';
 
   @override
+  String get inboxShowOlder => 'Mostra conversazioni precedenti';
+
+  @override
+  String inboxSourceFailed(String source) {
+    return 'Impossibile leggere $source. Il resto della posta in arrivo è mostrato.';
+  }
+
+  @override
+  String get inboxSourcePersonal => 'I Suoi messaggi personali';
+
+  @override
+  String inboxSourceUnavailable(String source) {
+    return '$source non è raggiungibile con il Suo accesso attuale. Le sue conversazioni mancano da questo elenco.';
+  }
+
+  @override
+  String get inboxSourceWorkspaces => 'I messaggi dei Suoi spazi';
+
+  @override
   String get instanceAccessTitle => 'Accesso agli assistenti';
 
   @override
@@ -19615,6 +19634,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quanti gruppi una persona può creare all\'ora. Può solo essere ridotto.';
 
   @override
+  String get settingHintMessagingInboxPageSize =>
+      'Quante conversazioni restituiscono per pagina della posta in arrivo la casa personale e ogni server di spazi; le precedenti arrivano con Mostra conversazioni precedenti.';
+
+  @override
   String get settingHintMessagingInboxPollSeconds =>
       'Secondi tra due aggiornamenti della posta in arrivo e del suo contatore dei non letti. Valori più bassi caricano di più il server.';
 
@@ -19785,6 +19808,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelMessagingGroupCreationPerHour =>
       'Gruppi creati all\'ora';
+
+  @override
+  String get settingLabelMessagingInboxPageSize =>
+      'Dimensione pagina della posta in arrivo';
 
   @override
   String get settingLabelMessagingInboxPollSeconds =>
@@ -25613,6 +25640,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visibilityChosenSpaces => 'Membri di spazi scelti';
 
   @override
+  String get visibilityConflictKeep => 'Mantenere l’impostazione salvata';
+
+  @override
+  String get visibilityConflictReview => 'Rivedere la mia modifica';
+
+  @override
+  String visibilityConflictSaved(String audience) {
+    return 'Salvato ora: $audience';
+  }
+
+  @override
+  String get visibilityConflictTitle =>
+      'Questa impostazione è stata modificata nel frattempo';
+
+  @override
+  String get visibilityConflictUnread =>
+      'Al momento non è possibile leggere l’impostazione salvata. La Sua modifica non è stata salvata.';
+
+  @override
+  String visibilityConflictYours(String audience) {
+    return 'La Sua modifica: $audience';
+  }
+
+  @override
   String get visibilityContact => 'WhatsApp ed e-mail';
 
   @override
@@ -25621,10 +25672,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get visibilityElsewhereTitle => 'Sui miei altri server';
-
-  @override
-  String get visibilityFieldElsewhere =>
-      'Questa impostazione nomina uno spazio su un altro server, quindi non può ancora modificarla qui.';
 
   @override
   String visibilityHomeHeader(String name) {
@@ -25734,6 +25781,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get visibilityUnavailable =>
       'Al momento non è possibile leggere chi vede cosa di Lei. Non è stato modificato nulla.';
+
+  @override
+  String get visibilityUnconfirmedTitle =>
+      'Non è stato possibile confermare la Sua modifica';
 
   @override
   String get visibilityWidenAction => 'Amplia';

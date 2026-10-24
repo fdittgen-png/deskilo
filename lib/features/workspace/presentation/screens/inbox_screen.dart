@@ -135,7 +135,7 @@ class _TopRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final inbox = ref.watch(unifiedInboxProvider);
+    final inbox = ref.watch(messengerInboxProvider);
     final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),

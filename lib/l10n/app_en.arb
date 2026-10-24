@@ -9819,6 +9819,36 @@
   "inboxNoArchived": "No archived conversations.",
   "inboxNoUnread": "Nothing unread — you are up to date.",
   "inboxRetry": "Try again",
+  "inboxShowOlder": "Show older conversations",
+  "@inboxShowOlder": {
+    "description": "#2556 inbox sources: Loads the next page of every inbox source that has more."
+  },
+  "inboxSourceFailed": "{source} could not be read. The rest of the inbox is shown.",
+  "@inboxSourceFailed": {
+    "description": "#2556 inbox sources: One source of the inbox failed to answer; a Try again button follows.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "inboxSourcePersonal": "Your personal messages",
+  "@inboxSourcePersonal": {
+    "description": "#2556 inbox sources: Names the personal home's part of the inbox (person-to-person conversations and groups) in a status line."
+  },
+  "inboxSourceUnavailable": "{source} cannot be reached with your current sign-in. Its conversations are missing from this list.",
+  "@inboxSourceUnavailable": {
+    "description": "#2556 inbox sources: The server of one inbox source refuses this session or does not play that role.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "inboxSourceWorkspaces": "Your workspaces' messages",
+  "@inboxSourceWorkspaces": {
+    "description": "#2556 inbox sources: Names this server's workspace part of the inbox (workspace conversations and inquiries) in a status line."
+  },
   "instanceAccessTitle": "Assistant access",
   "@instanceAccessTitle": {
     "description": "#2145 assistant onboarding: instanceAccessTitle"
@@ -22574,6 +22604,10 @@
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPageSize": "How many conversations the personal home and each workspace server return per page of the inbox; older ones come with Show older conversations.",
+  "@settingHintMessagingInboxPageSize": {
+    "description": "#2556 inbox sources: Setting hint."
+  },
   "settingHintMessagingInboxPollSeconds": "Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.",
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
@@ -22749,6 +22783,10 @@
   "settingLabelMessagingGroupCreationPerHour": "Groups created per hour",
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
+  },
+  "settingLabelMessagingInboxPageSize": "Inbox page size",
+  "@settingLabelMessagingInboxPageSize": {
+    "description": "#2556 inbox sources: Setting label."
   },
   "settingLabelMessagingInboxPollSeconds": "Inbox refresh",
   "@settingLabelMessagingInboxPollSeconds": {
@@ -29544,6 +29582,42 @@
   "@visibilityChosenSpaces": {
     "description": "Audience: members of chosen spaces."
   },
+  "visibilityConflictKeep": "Keep the saved setting",
+  "@visibilityConflictKeep": {
+    "description": "#2558 C2 privacy conflict: close, keeping what is saved"
+  },
+  "visibilityConflictReview": "Review my change",
+  "@visibilityConflictReview": {
+    "description": "#2558 C2 privacy conflict: reopen the draft against the value saved now"
+  },
+  "visibilityConflictSaved": "Saved now: {audience}",
+  "@visibilityConflictSaved": {
+    "description": "#2558 C2 privacy conflict: the audience the personal home holds now",
+    "placeholders": {
+      "audience": {
+        "type": "String",
+        "example": "People in my spaces"
+      }
+    }
+  },
+  "visibilityConflictTitle": "This setting changed meanwhile",
+  "@visibilityConflictTitle": {
+    "description": "#2558 C2 privacy: the saved field changed (another device) before this change was saved; nothing was written"
+  },
+  "visibilityConflictUnread": "The saved setting cannot be read right now. Your change was not saved.",
+  "@visibilityConflictUnread": {
+    "description": "#2558 C2 privacy conflict: the current saved value could not be read back"
+  },
+  "visibilityConflictYours": "Your change: {audience}",
+  "@visibilityConflictYours": {
+    "description": "#2558 C2 privacy conflict: the audience the person chose, kept as a draft",
+    "placeholders": {
+      "audience": {
+        "type": "String",
+        "example": "Only me"
+      }
+    }
+  },
   "visibilityContact": "WhatsApp and e-mail",
   "@visibilityContact": {
     "description": "Visibility field: contact channels."
@@ -29555,10 +29629,6 @@
   "visibilityElsewhereTitle": "On my other servers",
   "@visibilityElsewhereTitle": {
     "description": "#2211 who sees me on a connected server: visibilityElsewhereTitle"
-  },
-  "visibilityFieldElsewhere": "It names a space on another server, so it cannot be changed here yet.",
-  "@visibilityFieldElsewhere": {
-    "description": "#2558 a field whose chosen spaces include one on another installation; read-only until the network writer"
   },
   "visibilityHomeHeader": "Personal home: {name}",
   "@visibilityHomeHeader": {
@@ -29707,6 +29777,10 @@
   "visibilityUnavailable": "Who sees what of you cannot be read right now. Nothing was changed.",
   "@visibilityUnavailable": {
     "description": "#2558 — the privacy card when the saved settings cannot be read; a retry follows."
+  },
+  "visibilityUnconfirmedTitle": "Your change could not be confirmed",
+  "@visibilityUnconfirmedTitle": {
+    "description": "#2558 C2 privacy: the reply was lost and the saved field read back is not the intended one"
   },
   "visibilityWidenAction": "Widen",
   "visibilityWidenAdded": "Added: {spaces}",
