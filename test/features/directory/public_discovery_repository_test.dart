@@ -187,7 +187,8 @@ void main() {
     );
   });
 
-  test('a card with an unknown required term is refused and its source named; '
+  test('DISC-07: a card with an unknown required term is refused and its '
+      'source named; '
       'the source\'s other cards still show', () async {
     cardsByOrigin[remote] = [
       card(
@@ -249,6 +250,52 @@ void main() {
 
     cardsByOrigin[remote] = [];
     expect(await repository().detail(listed), isNull);
+  });
+
+  test('DISC-07: price and availability a server sends without requiring '
+      'them create no field; the card is listed without them', () async {
+    cardsByOrigin[remote] = [
+      card(
+        idB,
+        'Bureau',
+        doc: {
+          'price': '15 EUR',
+          'price_terms': {'amount_minor': 1500, 'currency': 'EUR'},
+          'availability': 'free today',
+          'free_seats': 4,
+          'occupancy': 0.2,
+        },
+      ),
+    ];
+    final page = await repository().workspaces(remoteSource, '');
+    expect(page.incompatible, isFalse);
+    final bureau = page.cards.single;
+    for (final field in [
+      'price',
+      'price_terms',
+      'availability',
+      'free_seats',
+      'occupancy',
+    ]) {
+      expect(bureau.document.containsKey(field), isFalse, reason: field);
+    }
+    expect('${bureau.document}', isNot(contains('1500')));
+  });
+
+  test('DISC-04: a card unpublished after the search reads as withdrawn, '
+      'and nothing is asked in its place', () async {
+    final listed =
+        (await repository().workspaces(remoteSource, '')).cards.single;
+    cardsByOrigin[remote] = [];
+    seen.clear();
+    expect(await repository().detail(listed), isNull);
+    expect(
+      seen.map((r) => '${r.url.origin}${r.url.path}'),
+      ['$remote/rest/v1/public_workspace_cards'],
+      reason: 'one public read on the card\'s own origin; no private table, '
+          'no other source, no second try',
+    );
+    expect(seen.single.headers['apikey'], remoteKey);
   });
 
   test('detail of a preview card (no source) asks nobody', () async {

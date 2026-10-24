@@ -16,10 +16,6 @@
   "@rightsRequestNew": {
     "description": "#1915 rights requests: rightsRequestNew"
   },
-  "rightsRequestAsk": "¿Qué pide al espacio?",
-  "@rightsRequestAsk": {
-    "description": "#1915 rights requests: rightsRequestAsk"
-  },
   "rightsRequestDetails": "Detalles (opcional)",
   "@rightsRequestDetails": {
     "description": "#1915 rights requests: rightsRequestDetails"
@@ -27,15 +23,6 @@
   "rightsRequestSend": "Enviar la solicitud",
   "@rightsRequestSend": {
     "description": "#1915 rights requests: rightsRequestSend"
-  },
-  "rightsRequestSent": "Solicitud enviada — el espacio responde antes del {date}.",
-  "@rightsRequestSent": {
-    "description": "#1915 rights requests: rightsRequestSent",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
   },
   "rightsRequestFailed": "No se pudo enviar la solicitud. Inténtelo de nuevo.",
   "@rightsRequestFailed": {
@@ -158,5 +145,66 @@
   "erasureStoreBackups": "Copias de seguridad del operador — caducan según su rotación",
   "@erasureStoreBackups": {
     "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "rightsRequestTarget": "Para {space}",
+  "@rightsRequestTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestTargetUnknown": "Para un espacio que ya no está en su lista",
+  "@rightsRequestTargetUnknown": {
+    "description": "#2558 account rights: exact target and retention honesty"
+  },
+  "rightsRequestAskSpace": "¿Qué pide a {space}?",
+  "@rightsRequestAskSpace": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestSentTo": "Solicitud enviada a {space} — responde antes del {date}.",
+  "@rightsRequestSentTo": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeKept": "Conservado: {stores}",
+  "@rightsOutcomeKept": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomePending": "Aún pendiente en otro lugar: {stores}",
+  "@rightsOutcomePending": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeFailed": "No realizado: {stores}",
+  "@rightsOutcomeFailed": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
   }
 }

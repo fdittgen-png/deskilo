@@ -27132,11 +27132,17 @@ abstract class AppLocalizations {
   /// **'An owner hands the workspace over first (Members & plans → Co-ownership).'**
   String get privacyEraseOwner;
 
-  /// #719 - privacy & data
+  /// #2558 account rights: exact target and retention honesty
   ///
   /// In en, this message translates to:
-  /// **'Your data has been erased.'**
-  String get privacyErased;
+  /// **'This erases your data in {space} only. Your other spaces and other installations keep their own records.'**
+  String privacyEraseTarget(String space);
+
+  /// #2558 account rights: exact target and retention honesty
+  ///
+  /// In en, this message translates to:
+  /// **'Your data in {space} is erased. What the space must keep stays for its retention period; other installations are not affected.'**
+  String privacyErasedIn(String space);
 
   /// #719 - privacy & data
   ///
@@ -32100,11 +32106,29 @@ abstract class AppLocalizations {
   /// **'Restrict how my data is used'**
   String get rightsKindRestriction;
 
-  /// #1915 rights requests: rightsRequestAsk
+  /// #2558 account rights: exact target and retention honesty
   ///
   /// In en, this message translates to:
-  /// **'What do you ask the space?'**
-  String get rightsRequestAsk;
+  /// **'Not done: {stores}'**
+  String rightsOutcomeFailed(String stores);
+
+  /// #2558 account rights: exact target and retention honesty
+  ///
+  /// In en, this message translates to:
+  /// **'Kept: {stores}'**
+  String rightsOutcomeKept(String stores);
+
+  /// #2558 account rights: exact target and retention honesty
+  ///
+  /// In en, this message translates to:
+  /// **'Still open elsewhere: {stores}'**
+  String rightsOutcomePending(String stores);
+
+  /// #2558 account rights: exact target and retention honesty
+  ///
+  /// In en, this message translates to:
+  /// **'What do you ask {space}?'**
+  String rightsRequestAskSpace(String space);
 
   /// #1915 rights requests: rightsRequestDetails
   ///
@@ -32130,11 +32154,23 @@ abstract class AppLocalizations {
   /// **'Send the request'**
   String get rightsRequestSend;
 
-  /// #1915 rights requests: rightsRequestSent
+  /// #2558 account rights: exact target and retention honesty
   ///
   /// In en, this message translates to:
-  /// **'Request sent — the space answers by {date}.'**
-  String rightsRequestSent(String date);
+  /// **'Request sent to {space} — it answers by {date}.'**
+  String rightsRequestSentTo(String space, String date);
+
+  /// #2558 account rights: exact target and retention honesty
+  ///
+  /// In en, this message translates to:
+  /// **'To {space}'**
+  String rightsRequestTarget(String space);
+
+  /// #2558 account rights: exact target and retention honesty
+  ///
+  /// In en, this message translates to:
+  /// **'To a space no longer in your list'**
+  String get rightsRequestTargetUnknown;
 
   /// #1915 rights requests: rightsRequestsEmpty
   ///

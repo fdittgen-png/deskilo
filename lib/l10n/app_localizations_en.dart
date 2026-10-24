@@ -16149,7 +16149,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'An owner hands the workspace over first (Members & plans → Co-ownership).';
 
   @override
-  String get privacyErased => 'Your data has been erased.';
+  String privacyEraseTarget(String space) {
+    return 'This erases your data in $space only. Your other spaces and other installations keep their own records.';
+  }
+
+  @override
+  String privacyErasedIn(String space) {
+    return 'Your data in $space is erased. What the space must keep stays for its retention period; other installations are not affected.';
+  }
 
   @override
   String get privacyExport => 'Export my data';
@@ -18942,7 +18949,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rightsKindRestriction => 'Restrict how my data is used';
 
   @override
-  String get rightsRequestAsk => 'What do you ask the space?';
+  String rightsOutcomeFailed(String stores) {
+    return 'Not done: $stores';
+  }
+
+  @override
+  String rightsOutcomeKept(String stores) {
+    return 'Kept: $stores';
+  }
+
+  @override
+  String rightsOutcomePending(String stores) {
+    return 'Still open elsewhere: $stores';
+  }
+
+  @override
+  String rightsRequestAskSpace(String space) {
+    return 'What do you ask $space?';
+  }
 
   @override
   String get rightsRequestDetails => 'Details (optional)';
@@ -18958,9 +18982,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rightsRequestSend => 'Send the request';
 
   @override
-  String rightsRequestSent(String date) {
-    return 'Request sent — the space answers by $date.';
+  String rightsRequestSentTo(String space, String date) {
+    return 'Request sent to $space — it answers by $date.';
   }
+
+  @override
+  String rightsRequestTarget(String space) {
+    return 'To $space';
+  }
+
+  @override
+  String get rightsRequestTargetUnknown => 'To a space no longer in your list';
 
   @override
   String get rightsRequestsEmpty => 'No request yet.';

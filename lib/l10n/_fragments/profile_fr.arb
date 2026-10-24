@@ -83,10 +83,6 @@
   "@privacyEraseConfirmButton": {
     "description": "#719 - privacy & data"
   },
-  "privacyErased": "Vos données ont été effacées.",
-  "@privacyErased": {
-    "description": "#719 - privacy & data"
-  },
   "privacyPolicy": "Politique de confidentialité",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"
@@ -194,5 +190,23 @@
   "backendPendingTitle": "Enregistré pour le prochain démarrage",
   "backendPendingBody": "Cette session tourne encore sur {active}. {saved} prendra le relais quand vous fermerez et rouvrirez l'app.",
   "backendPendingUndo": "Annuler",
-  "backendPendingUndone": "Annulé — le serveur précédent est de retour."
+  "backendPendingUndone": "Annulé — le serveur précédent est de retour.",
+  "privacyEraseTarget": "Ceci efface vos données dans {space} uniquement. Vos autres espaces et les autres installations gardent leurs propres données.",
+  "@privacyEraseTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyErasedIn": "Vos données dans {space} sont effacées. Ce que l'espace doit conserver reste conservé pendant sa durée de conservation ; les autres installations ne sont pas concernées.",
+  "@privacyErasedIn": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  }
 }

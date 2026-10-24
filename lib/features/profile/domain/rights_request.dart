@@ -24,6 +24,7 @@ class RightsRequest implements SystemStamped {
   const RightsRequest({
     this.system = SystemColumns.none,
     required this.id,
+    this.workspaceId,
     required this.kind,
     required this.status,
     required this.receivedAt,
@@ -46,6 +47,7 @@ class RightsRequest implements SystemStamped {
     return RightsRequest(
       system: SystemColumns.fromRow(json),
       id: r.string('id'),
+      workspaceId: r.stringOrNull('workspace_id'),
       kind: r.string('kind'),
       status: r.stringOr('status', 'received'),
       receivedAt: r.dateTime('received_at').toLocal(),
@@ -63,6 +65,10 @@ class RightsRequest implements SystemStamped {
   final SystemColumns system;
 
   final String id;
+
+  /// The space whose controller the request is addressed to; null on a
+  /// row that does not name one.
+  final String? workspaceId;
   final String kind;
 
   /// `received`, `extended`, `completed` or `refused`.
@@ -80,6 +86,17 @@ class RightsRequest implements SystemStamped {
 
   /// The date the answer is due now: the extended one when extended.
   DateTime get answerBy => extendedDueOn ?? dueOn;
+
+  /// The stores the controller recorded under [category] of [outcome]
+  /// (`retained`, `pending_external`, `failed`, ...), in its order; an
+  /// entry without a store name is skipped.
+  List<ErasureStore> outcomeStores(String category) => [
+    for (final store in JsonReader(
+      outcome,
+      context: 'rights_request.outcome',
+    ).objects(category, ErasureStore._read))
+      if (store.store.trim().isNotEmpty) store,
+  ];
 }
 
 /// One store in an erasure preview.

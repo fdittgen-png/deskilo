@@ -49,16 +49,20 @@
 #
 # #2558 — the checked privacy writer (set_visibility_if_unchanged_network_v1):
 #
-#   8   two writes of one field from the same read: one saved, the other
-#       visibility_conflict; a legacy set_visibility first, the same; another
-#       field waits on the account lock and is saved.
+#   8   PRIV-CAS. Two writes of one field from the same read: one saved,
+#       the other visibility_conflict and nothing it sent applied (8a; 8d
+#       with chosen spaces, whose conflict names the committed value and
+#       whose re-read retry is saved); a legacy set_visibility first, the
+#       same (8b); another field waits on the account lock and is saved
+#       (8c). B is observed waiting on the ADVISORY lock, not a row lock.
 #       guard: the per-account advisory lock every visibility writer takes.
 #
 # The MCP intents that need their human are asked and confirmed in the
 # fixture (scripts/db_race/fixture.sql), before the race.
 #
 # Red-first: `--drop-guards` removes the 1a and 4 guards before racing,
-# and the run must then FAIL on their counts. It is how the proof was
+# and turns the account visibility lock into a no-op, and the run must then
+# FAIL on the counts of 1a and 4 and on every case 8. It is how the proof was
 # made on this PR, and how it can be repeated; it breaks the database it
 # runs on, so it is for a disposable stack only and the job never uses it.
 #
@@ -114,9 +118,12 @@ say "fixture: workspace $WS, seat $SEAT, invoice $INV, event $EV"
 
 if [ "$DROP_GUARDS" = 1 ]; then
   q "alter table public.reservation_requests drop constraint reservation_requests_pkey;
-     drop index public.event_decisions_one_per_member;" >/dev/null \
+     drop index public.event_decisions_one_per_member;
+     create or replace function public.account_visibility_lock(p_user uuid)
+     returns void language plpgsql volatile security definer set search_path = public
+     as \$fn\$ begin null; end; \$fn\$;" >/dev/null \
     || die "could not drop the guards"
-  echo "::warning::db race: RED-FIRST RUN — reservation_requests_pkey and event_decisions_one_per_member dropped; cases 1a and 4 must fail"
+  echo "::warning::db race: RED-FIRST RUN — reservation_requests_pkey, event_decisions_one_per_member and the account visibility lock dropped; cases 1a, 4 and 8 must fail"
 fi
 
 # The claims a session acts under, inside its transaction.
@@ -127,7 +134,8 @@ claims() { # claims <user> [client]
     "$1" "$client"
 }
 
-# race <case> <sql for A> <sql for B> — sets A_RC, B_RC and WAITED;
+# race <case> <sql for A> <sql for B> — sets A_RC, B_RC, WAITED and
+# WAIT_EVENT (what B waited on: advisory, transactionid, tuple, ...);
 # the sessions' output lands in $TMP/<case>.a and $TMP/<case>.b.
 race() {
   local name=$1 sig="$TMP/$1.sig" app="race-b-$RUN-$1" holder rival i
@@ -147,7 +155,7 @@ SQL
   done
   if [ ! -e "$sig" ]; then
     kill "$holder" 2>/dev/null
-    wait "$holder"; A_RC=$?; B_RC=-1; WAITED=0
+    wait "$holder"; A_RC=$?; B_RC=-1; WAITED=0; WAIT_EVENT=
     bad "$name: session A never made its call: $(cat "$TMP/$name.a")"
     return 1
   fi
@@ -159,10 +167,11 @@ commit;
 SQL
   rival=$!
   # Watch B from a third connection while A is still open.
-  WAITED=0; i=0
+  WAITED=0; WAIT_EVENT=; i=0
   while kill -0 "$rival" 2>/dev/null && [ "$i" -lt $((HOLD * 10)) ]; do
-    if [ "$(q "select count(*) from pg_stat_activity
-                where application_name = '$app' and wait_event_type = 'Lock'")" != 0 ]; then
+    WAIT_EVENT=$(q "select coalesce(string_agg(distinct wait_event, ','), '') from pg_stat_activity
+                where application_name = '$app' and wait_event_type = 'Lock'")
+    if [ -n "$WAIT_EVENT" ]; then
       WAITED=1; break
     fi
     sleep 0.1; i=$((i + 1))
@@ -331,45 +340,85 @@ expect "$(cut -d'|' -f3 <<<"$r")" "$(cut -d'|' -f3 <<<"$a")" "7: the same reserv
 n=$(live "starts_at = '$MCP_S'")
 expect "$n" 1 "7: and books nothing new" "7: $n reservations after the replay"
 
-# ── #2558: two checked privacy writes that read the same value ─────────
+# ── #2558 PRIV-CAS: two checked privacy writes that read the same value ─
 # A and B both read c's field and send it as `expected`. A holds its
-# transaction open; B must wait on the account lock, then see A's committed
-# value and answer visibility_conflict (PT409) without writing. 8b: a legacy
-# set_visibility first, the same. 8c: another field waits but succeeds.
-vis() { # vis <field> <audience> <expected audience> — a notice ANSWER=ok|<sqlstate>
-  printf "do \$v\$ begin
-  perform public.set_visibility_if_unchanged_network_v1('%s', '%s', null,
-    jsonb_build_object('audience', '%s', 'workspace_refs', '[]'::jsonb));
-  raise notice 'ANSWER=ok';
-exception when others then raise notice 'ANSWER=%%', sqlstate;
-end \$v\$;" "$1" "$2" "$3"
+# transaction open; B must wait on the ACCOUNT lock (an advisory lock: a
+# row lock would mean B had already compared against a stale read), then
+# see A's committed value and answer visibility_conflict (PT409) without
+# writing anything it sent. 8b: a legacy set_visibility first, the same.
+# 8c: another field waits but both are saved. 8d: chosen spaces; the
+# conflict names A's committed value, B's spaces are not saved, and B's
+# retry from that value is.
+vis() { # vis <field> <audience> <expected audience> [refs sql] [expected refs json]
+  # A notice ANSWER=ok|<sqlstate>|<detail>.
+  printf "do \$v\$ declare v_detail text; begin
+  perform public.set_visibility_if_unchanged_network_v1('%s', '%s', %s,
+    jsonb_build_object('audience', '%s', 'workspace_refs', '%s'::jsonb));
+  raise notice 'ANSWER=ok|';
+exception when others then
+  get stacked diagnostics v_detail = pg_exception_detail;
+  raise notice 'ANSWER=%%|%%', sqlstate, v_detail;
+end \$v\$;" "$1" "$2" "${4:-null}" "$3" "${5:-[]}"
 }
-vans() { sed -n 's/.*ANSWER=//p' "$TMP/$1.$2" | head -1; }
+vans() { sed -n 's/.*ANSWER=//p' "$TMP/$1.$2" | head -1 | cut -d'|' -f1; }
+vdetail() { sed -n 's/.*ANSWER=//p' "$TMP/$1.$2" | head -1 | cut -d'|' -f2-; }
 vsaved() { q "select public.account_audience_of('$C', '$1')"; }
+vrefs() { q "select count(*) from public.account_field_audience_spaces where user_id = '$C' and field = '$1'"; }
+advisory() { # advisory <case> — B waited on the account's advisory lock
+  if [ "$WAITED" = 1 ] && [ "$WAIT_EVENT" = advisory ]; then
+    say "PRIV-CAS $1: B waited on the account's advisory lock while A held its transaction open"
+  else bad "PRIV-CAS $1: B did not wait on the advisory lock (waited=$WAITED on '${WAIT_EVENT:-nothing}') — the checked writes were not serialized by the account lock. B said: $(cat "$TMP/$1.b")"; fi
+}
+WS_REF=$(q "select network_id from public.workspaces where id = '$WS'")
+[ -n "$WS_REF" ] || die "the race workspace has no network reference"
 
-echo "8. two checked privacy writes from the same read"
+echo "8. PRIV-CAS: two checked privacy writes from the same read"
 race 8a "$(claims "$C")
 $(vis presence my_spaces nobody)" "$(claims "$C")
 $(vis presence nobody nobody)"
-waited 8a
-expect "$(vans 8a a)|$(vans 8a b)" "ok|PT409" "8a: the first wins, the second is visibility_conflict" \
-  "8a: A answered '$(vans 8a a)', B answered '$(vans 8a b)'. B said: $(cat "$TMP/8a.b")"
-expect "$(vsaved presence)" my_spaces "8a: the conflict wrote nothing" "8a: presence is '$(vsaved presence)'"
+advisory 8a
+expect "$(vans 8a a)|$(vans 8a b)" "ok|PT409" "PRIV-CAS 8a: the first wins, the second is visibility_conflict" \
+  "PRIV-CAS 8a: A answered '$(vans 8a a)', B answered '$(vans 8a b)'. B said: $(cat "$TMP/8a.b")"
+expect "$(vsaved presence)" my_spaces "PRIV-CAS 8a: the conflict wrote nothing" "PRIV-CAS 8a: presence is '$(vsaved presence)'"
 
 race 8b "$(claims "$C")
 select public.set_visibility('about', 'my_spaces', null);" "$(claims "$C")
 $(vis about signed_in nobody)"
-waited 8b
-expect "$(vans 8b b)" PT409 "8b: after a legacy write the checked one conflicts" \
-  "8b: B answered '$(vans 8b b)'. B said: $(cat "$TMP/8b.b")"
-expect "$(vsaved about)" my_spaces "8b: the legacy value stays" "8b: about is '$(vsaved about)'"
+advisory 8b
+expect "$(vans 8b b)" PT409 "PRIV-CAS 8b: after a legacy write the checked one conflicts" \
+  "PRIV-CAS 8b: B answered '$(vans 8b b)'. B said: $(cat "$TMP/8b.b")"
+expect "$(vsaved about)" my_spaces "PRIV-CAS 8b: the legacy value stays" "PRIV-CAS 8b: about is '$(vsaved about)'"
 
 race 8c "$(claims "$C")
 $(vis identity nobody my_spaces)" "$(claims "$C")
 $(vis reachability nobody my_spaces)"
-waited 8c
-expect "$(vans 8c a)|$(vans 8c b)" "ok|ok" "8c: another field is no conflict" \
-  "8c: A answered '$(vans 8c a)', B answered '$(vans 8c b)'. B said: $(cat "$TMP/8c.b")"
+advisory 8c
+expect "$(vans 8c a)|$(vans 8c b)" "ok|ok" "PRIV-CAS 8c: another field is no conflict" \
+  "PRIV-CAS 8c: A answered '$(vans 8c a)', B answered '$(vans 8c b)'. B said: $(cat "$TMP/8c.b")"
+expect "$(vsaved identity)|$(vsaved reachability)" "nobody|nobody" "PRIV-CAS 8c: both fields are saved" \
+  "PRIV-CAS 8c: identity is '$(vsaved identity)', reachability '$(vsaved reachability)'"
+
+race 8d "$(claims "$C")
+$(vis contact_channels my_spaces nobody)" "$(claims "$C")
+$(vis contact_channels chosen_spaces nobody "array['$WS_REF']")"
+advisory 8d
+expect "$(vans 8d a)|$(vans 8d b)" "ok|PT409" "PRIV-CAS 8d: chosen spaces from a stale read are visibility_conflict" \
+  "PRIV-CAS 8d: A answered '$(vans 8d a)', B answered '$(vans 8d b)'. B said: $(cat "$TMP/8d.b")"
+expect "$(vdetail 8d b)" '{"audience": "my_spaces", "workspace_refs": []}' \
+  "PRIV-CAS 8d: the conflict names the committed value" "PRIV-CAS 8d: the conflict detail is '$(vdetail 8d b)'"
+expect "$(vsaved contact_channels)|$(vrefs contact_channels)" "my_spaces|0" \
+  "PRIV-CAS 8d: neither B's audience nor its spaces were saved" \
+  "PRIV-CAS 8d: contact_channels is '$(vsaved contact_channels)' with $(vrefs contact_channels) chosen spaces"
+r=$(PGOPTIONS='-c statement_timeout=20s' ${LIMIT[@]+"${LIMIT[@]}"} psql "$DB_URL" -qtAX -v ON_ERROR_STOP=1 2>&1 <<SQL
+begin;
+$(claims "$C")
+$(vis contact_channels chosen_spaces my_spaces "array['$WS_REF']")
+commit;
+SQL
+)
+expect "$(sed -n 's/.*ANSWER=//p' <<<"$r" | head -1 | cut -d'|' -f1)|$(vsaved contact_channels)|$(vrefs contact_channels)" \
+  "ok|chosen_spaces|1" "PRIV-CAS 8d: the retry from the re-read value is saved" \
+  "PRIV-CAS 8d: the retry said '$r'; contact_channels is '$(vsaved contact_channels)' with $(vrefs contact_channels) spaces"
 
 if [ "$FAILED" -gt 0 ]; then
   echo "db race: $FAILED assertion(s) failed"

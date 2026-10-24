@@ -16299,7 +16299,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein Eigentümer übergibt den Bereich zuerst (Mitglieder & Tarife → Miteigentum).';
 
   @override
-  String get privacyErased => 'Ihre Daten wurden gelöscht.';
+  String privacyEraseTarget(String space) {
+    return 'Dies löscht Ihre Daten nur in $space. Ihre anderen Bereiche und andere Installationen behalten ihre eigenen Daten.';
+  }
+
+  @override
+  String privacyErasedIn(String space) {
+    return 'Ihre Daten in $space sind gelöscht. Was der Bereich aufbewahren muss, bleibt für seine Aufbewahrungsfrist; andere Installationen sind nicht betroffen.';
+  }
 
   @override
   String get privacyExport => 'Meine Daten exportieren';
@@ -19126,7 +19133,24 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Verarbeitung meiner Daten einschränken';
 
   @override
-  String get rightsRequestAsk => 'Was beantragen Sie beim Bereich?';
+  String rightsOutcomeFailed(String stores) {
+    return 'Nicht erledigt: $stores';
+  }
+
+  @override
+  String rightsOutcomeKept(String stores) {
+    return 'Aufbewahrt: $stores';
+  }
+
+  @override
+  String rightsOutcomePending(String stores) {
+    return 'Anderswo noch offen: $stores';
+  }
+
+  @override
+  String rightsRequestAskSpace(String space) {
+    return 'Was beantragen Sie bei $space?';
+  }
 
   @override
   String get rightsRequestDetails => 'Einzelheiten (optional)';
@@ -19142,9 +19166,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get rightsRequestSend => 'Antrag senden';
 
   @override
-  String rightsRequestSent(String date) {
-    return 'Antrag gesendet — der Bereich antwortet bis zum $date.';
+  String rightsRequestSentTo(String space, String date) {
+    return 'Antrag an $space gesendet — Antwort bis $date.';
   }
+
+  @override
+  String rightsRequestTarget(String space) {
+    return 'An $space';
+  }
+
+  @override
+  String get rightsRequestTargetUnknown =>
+      'An einen Bereich, der nicht mehr in Ihrer Liste steht';
 
   @override
   String get rightsRequestsEmpty => 'Noch kein Antrag.';

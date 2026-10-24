@@ -155,10 +155,6 @@
   "@privacyEraseConfirmButton": {
     "description": "#719 - privacy & data"
   },
-  "privacyErased": "Your data has been erased.",
-  "@privacyErased": {
-    "description": "#719 - privacy & data"
-  },
   "privacyPolicy": "Privacy policy",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"
@@ -358,5 +354,23 @@
     "description": "#1651 Server screen"
   },
   "backendPendingUndo": "Undo",
-  "backendPendingUndone": "Undone — the previous server is back."
+  "backendPendingUndone": "Undone — the previous server is back.",
+  "privacyEraseTarget": "This erases your data in {space} only. Your other spaces and other installations keep their own records.",
+  "@privacyEraseTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyErasedIn": "Your data in {space} is erased. What the space must keep stays for its retention period; other installations are not affected.",
+  "@privacyErasedIn": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  }
 }

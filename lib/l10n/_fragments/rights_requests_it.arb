@@ -16,10 +16,6 @@
   "@rightsRequestNew": {
     "description": "#1915 rights requests: rightsRequestNew"
   },
-  "rightsRequestAsk": "Cosa chiede allo spazio?",
-  "@rightsRequestAsk": {
-    "description": "#1915 rights requests: rightsRequestAsk"
-  },
   "rightsRequestDetails": "Dettagli (facoltativo)",
   "@rightsRequestDetails": {
     "description": "#1915 rights requests: rightsRequestDetails"
@@ -27,15 +23,6 @@
   "rightsRequestSend": "Invia la richiesta",
   "@rightsRequestSend": {
     "description": "#1915 rights requests: rightsRequestSend"
-  },
-  "rightsRequestSent": "Richiesta inviata — lo spazio risponde entro il {date}.",
-  "@rightsRequestSent": {
-    "description": "#1915 rights requests: rightsRequestSent",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
   },
   "rightsRequestFailed": "Non è stato possibile inviare la richiesta. Riprovi.",
   "@rightsRequestFailed": {
@@ -158,5 +145,66 @@
   "erasureStoreBackups": "Backup del gestore — scadono secondo la loro rotazione",
   "@erasureStoreBackups": {
     "description": "#1915 rights requests: erasureStoreBackups"
+  },
+  "rightsRequestTarget": "Per {space}",
+  "@rightsRequestTarget": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestTargetUnknown": "Per uno spazio che non è più nel Suo elenco",
+  "@rightsRequestTargetUnknown": {
+    "description": "#2558 account rights: exact target and retention honesty"
+  },
+  "rightsRequestAskSpace": "Cosa chiede a {space}?",
+  "@rightsRequestAskSpace": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsRequestSentTo": "Richiesta inviata a {space} — risposta entro il {date}.",
+  "@rightsRequestSentTo": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "space": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeKept": "Conservato: {stores}",
+  "@rightsOutcomeKept": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomePending": "Ancora in sospeso altrove: {stores}",
+  "@rightsOutcomePending": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
+  },
+  "rightsOutcomeFailed": "Non eseguito: {stores}",
+  "@rightsOutcomeFailed": {
+    "description": "#2558 account rights: exact target and retention honesty",
+    "placeholders": {
+      "stores": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -56,7 +56,7 @@ class _PagedSources extends FakeDirectoryRepository {
 void main() {
   group('one source listing', () {
     const source = DirectorySource(_a, 'k');
-    test('a failed page keeps the pages before it and is the page asked '
+    test('DISC-03: a failed page keeps the pages before it and is the page asked '
         'again', () {
       final first = const SourceListing(
         source,
@@ -77,7 +77,7 @@ void main() {
       expect(retried.canAdvance, isFalse, reason: 'a short page is the last');
     });
 
-    test('one source changing leaves every other as it is; new sources '
+    test('DISC-03: one source changing leaves every other as it is; new sources '
         'join after the listed ones', () {
       var results = const DiscoveryResults().withSources(
         const DirectorySourcesPage([
@@ -110,7 +110,7 @@ void main() {
   });
 
   testWidgets(
-    'Show more advances one source; a failed page keeps what was shown and '
+    'DISC-03: Show more advances one source; a failed page keeps what was shown and '
     'its retry asks for that same page',
     (tester) async {
       final directory = FakeDirectoryRepository()
@@ -194,7 +194,7 @@ void main() {
     },
   );
 
-  testWidgets('a source whose first page fails is named with a retry; the '
+  testWidgets('DISC-03: a source whose first page fails is named with a retry; the '
       'others show, and the count says who answered', (tester) async {
     final directory = FakeDirectoryRepository()
       ..cards.addAll([_card(_a, 'a0'), _card(_b, 'b0')])
@@ -221,7 +221,7 @@ void main() {
     expect(directory.reads, ['$_a#0', '$_b#0', '$_b#0']);
   });
 
-  test('more directories append new sources and keep the listed ones; a '
+  test('DISC-03: more directories append new sources and keep the listed ones; a '
       'failed source page is retried without losing them', () async {
     final directory = _PagedSources()
       ..pageSize = 1

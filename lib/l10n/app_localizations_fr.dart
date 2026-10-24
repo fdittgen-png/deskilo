@@ -16312,7 +16312,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un propriétaire transmet d\'abord l\'espace (Membres et forfaits → Copropriété).';
 
   @override
-  String get privacyErased => 'Vos données ont été effacées.';
+  String privacyEraseTarget(String space) {
+    return 'Ceci efface vos données dans $space uniquement. Vos autres espaces et les autres installations gardent leurs propres données.';
+  }
+
+  @override
+  String privacyErasedIn(String space) {
+    return 'Vos données dans $space sont effacées. Ce que l\'espace doit conserver reste conservé pendant sa durée de conservation ; les autres installations ne sont pas concernées.';
+  }
 
   @override
   String get privacyExport => 'Exporter mes données';
@@ -19143,7 +19150,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get rightsKindRestriction => 'Limiter l\'utilisation de mes données';
 
   @override
-  String get rightsRequestAsk => 'Que demandez-vous à l\'espace ?';
+  String rightsOutcomeFailed(String stores) {
+    return 'Non effectué : $stores';
+  }
+
+  @override
+  String rightsOutcomeKept(String stores) {
+    return 'Conservé : $stores';
+  }
+
+  @override
+  String rightsOutcomePending(String stores) {
+    return 'Encore en attente ailleurs : $stores';
+  }
+
+  @override
+  String rightsRequestAskSpace(String space) {
+    return 'Que demandez-vous à $space ?';
+  }
 
   @override
   String get rightsRequestDetails => 'Précisions (facultatif)';
@@ -19159,9 +19183,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get rightsRequestSend => 'Envoyer la demande';
 
   @override
-  String rightsRequestSent(String date) {
-    return 'Demande envoyée — l\'espace répond d\'ici le $date.';
+  String rightsRequestSentTo(String space, String date) {
+    return 'Demande envoyée à $space — réponse au plus tard le $date.';
   }
+
+  @override
+  String rightsRequestTarget(String space) {
+    return 'Pour $space';
+  }
+
+  @override
+  String get rightsRequestTargetUnknown =>
+      'Pour un espace qui n\'est plus dans votre liste';
 
   @override
   String get rightsRequestsEmpty => 'Aucune demande pour le moment.';
