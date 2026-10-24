@@ -205,6 +205,8 @@ void main() {
     );
     await _tap(tester, 'instance-apply-signin');
     await _tap(tester, 'wizard-next');
+    // #2562 C2a: the optional personal-home step; a combined server goes on.
+    await _tap(tester, 'wizard-next');
     await _tap(tester, 'instance-doctor-run');
     expect(chosen, isEmpty);
     await _tap(tester, 'instance-use-here');
