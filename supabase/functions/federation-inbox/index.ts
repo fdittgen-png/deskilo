@@ -35,6 +35,9 @@ export const MAX_BODY_BYTES = 16384;
 
 const STATUS: Record<string, number> = {
   applied: 200,
+  renewed: 200,
+  staged: 200,
+  reconciled: 200,
   duplicate: 200,
   superseded: 200,
   malformed: 400,
@@ -43,12 +46,18 @@ const STATUS: Record<string, number> = {
   unknown_key: 401,
   bad_signature: 401,
   event_conflict: 409,
+  revision_conflict: 409,
+  snapshot_conflict: 409,
   wrong_target: 421,
   future_request: 422,
   future_assertion: 422,
   expired_assertion: 422,
   wrong_issuer: 422,
   unlinked_subject: 422,
+  foreign_workspace: 422,
+  unenrolled_source: 422,
+  unverified: 422,
+  expired_snapshot: 422,
 };
 
 export interface Deps {
