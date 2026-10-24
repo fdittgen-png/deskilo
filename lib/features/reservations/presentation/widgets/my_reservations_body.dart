@@ -322,16 +322,16 @@ class _ReservationCard extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Icon(_kindIcon(item.placeKind)),
+                Icon(myReservationKindIcon(item.placeKind)),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(child: Text(label, style: theme.textTheme.titleMedium)),
-                Text(_statusWords(l10n, item.status), style: theme.textTheme.labelLarge),
+                Text(myReservationStatusWords(l10n, item.status), style: theme.textTheme.labelLarge),
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
             Text('${format.time(item.startsAt)}–${format.time(item.endsAt)}'),
             Text(
-              '${_kindWords(l10n, item.placeKind)} · ${item.workspaceName}',
+              '${myReservationKindWords(l10n, item.placeKind)} · ${item.workspaceName}',
               style: theme.textTheme.bodySmall,
             ),
             if (checkedIn != null)
@@ -351,14 +351,16 @@ class _ReservationCard extends ConsumerWidget {
   }
 }
 
-IconData _kindIcon(MyReservationPlaceKind kind) => switch (kind) {
+/// The icon of what a booking holds (#2554 C2 reuses it on the Overview).
+IconData myReservationKindIcon(MyReservationPlaceKind kind) => switch (kind) {
       MyReservationPlaceKind.seat => Icons.chair_outlined,
       MyReservationPlaceKind.desk => Icons.desk_outlined,
       MyReservationPlaceKind.office => Icons.meeting_room_outlined,
       MyReservationPlaceKind.level => Icons.layers_outlined,
     };
 
-String _kindWords(AppLocalizations l10n, MyReservationPlaceKind kind) =>
+/// What a booking holds, in words.
+String myReservationKindWords(AppLocalizations l10n, MyReservationPlaceKind kind) =>
     switch (kind) {
       MyReservationPlaceKind.seat => l10n.myReservationsKindSeat,
       MyReservationPlaceKind.desk => l10n.myReservationsKindDesk,
@@ -366,7 +368,8 @@ String _kindWords(AppLocalizations l10n, MyReservationPlaceKind kind) =>
       MyReservationPlaceKind.level => l10n.myReservationsKindLevel,
     };
 
-String _statusWords(AppLocalizations l10n, ReservationStatus status) =>
+/// Where a booking stands, in words.
+String myReservationStatusWords(AppLocalizations l10n, ReservationStatus status) =>
     switch (status) {
       ReservationStatus.reserved => l10n.myReservationsStatusReserved,
       ReservationStatus.checkedIn => l10n.myReservationsStatusCheckedIn,

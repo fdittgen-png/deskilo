@@ -177,7 +177,7 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
               if (i < children.length) return children[i];
               final e = i - children.length;
               if (e < entries.length) {
-                return _SpaceCard(entry: entries[e], l10n: l10n);
+                return PersonalSpaceCard(entry: entries[e], l10n: l10n);
               }
               return footer[e - entries.length];
             },
@@ -190,8 +190,8 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
 
 /// One space: its name, host and verification, and the one action its
 /// state allows. The card is not a button: its action is.
-class _SpaceCard extends ConsumerWidget {
-  const _SpaceCard({required this.entry, required this.l10n});
+class PersonalSpaceCard extends ConsumerWidget {
+  const PersonalSpaceCard({super.key, required this.entry, required this.l10n});
 
   final PersonalSpaceEntry entry;
   final AppLocalizations l10n;

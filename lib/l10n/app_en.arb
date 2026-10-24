@@ -15033,6 +15033,139 @@
   "@meNoSpaceTitle": {
     "description": "Empty state title on the Me home when the person has no space."
   },
+  "meOverviewAttentionApplication": "Your request to join {name} is pending.",
+  "@meOverviewAttentionApplication": {
+    "description": "#2554 Overview: my request to join a space is undecided",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meOverviewAttentionApplicationsUnavailable": "Your requests could not be read.",
+  "@meOverviewAttentionApplicationsUnavailable": {
+    "description": "#2554 Overview: my requests could not be read"
+  },
+  "meOverviewAttentionConversation": "{count, plural, =1{1 unread message} other{{count} unread messages}}",
+  "@meOverviewAttentionConversation": {
+    "description": "#2554 Overview: unread messages in one conversation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "meOverviewAttentionDocument": "{amount} to pay · {number}",
+  "@meOverviewAttentionDocument": {
+    "description": "#2554 Overview: an unpaid document, its remaining amount and number",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "meOverviewAttentionDocumentsPartial": "Some documents could not be read.",
+  "@meOverviewAttentionDocumentsPartial": {
+    "description": "#2554 Overview: some hosts' documents could not be read"
+  },
+  "meOverviewAttentionDocumentsUnavailable": "Your documents could not be read.",
+  "@meOverviewAttentionDocumentsUnavailable": {
+    "description": "#2554 Overview: my documents could not be read"
+  },
+  "meOverviewAttentionMessagesPartial": "Some conversations could not be read.",
+  "@meOverviewAttentionMessagesPartial": {
+    "description": "#2554 Overview: some servers' conversations could not be read"
+  },
+  "meOverviewAttentionMessagesUnavailable": "Your conversations could not be read.",
+  "@meOverviewAttentionMessagesUnavailable": {
+    "description": "#2554 Overview: my conversations could not be read"
+  },
+  "meOverviewAttentionMore": "{count, plural, =1{1 more} other{{count} more}}",
+  "@meOverviewAttentionMore": {
+    "description": "#2554 Overview: how many more items wait beyond the ones shown",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "meOverviewAttentionNone": "Nothing needs your attention.",
+  "@meOverviewAttentionNone": {
+    "description": "#2554 Overview: every source answered and nothing waits"
+  },
+  "meOverviewAttentionOpenConversation": "Open",
+  "@meOverviewAttentionOpenConversation": {
+    "description": "#2554 Overview: open the conversation"
+  },
+  "meOverviewAttentionOverdue": "Overdue",
+  "@meOverviewAttentionOverdue": {
+    "description": "#2554 Overview: the document is past its due day"
+  },
+  "meOverviewAttentionTitle": "Needs attention",
+  "@meOverviewAttentionTitle": {
+    "description": "#2554 Overview: the needs-attention section"
+  },
+  "meOverviewAttentionViewDocument": "View document",
+  "@meOverviewAttentionViewDocument": {
+    "description": "#2554 Overview: open the document in My data"
+  },
+  "meOverviewNextHostFailed": "The bookings of {name} could not be read.",
+  "@meOverviewNextHostFailed": {
+    "description": "#2554 Overview: one host's bookings could not be read",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meOverviewNextNone": "Nothing booked from {from} to {to}.",
+  "@meOverviewNextNone": {
+    "description": "#2554 Overview: every host answered and nothing is booked in the searched period",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "meOverviewNextNotYet": "No upcoming booking among those read so far.",
+  "@meOverviewNextNotYet": {
+    "description": "#2554 Overview: no upcoming booking among those read so far; more are in My reservations"
+  },
+  "meOverviewNextTitle": "Next commitment",
+  "@meOverviewNextTitle": {
+    "description": "#2554 Overview: the next commitment section"
+  },
+  "meOverviewNextUnavailable": "Your bookings could not be read.",
+  "@meOverviewNextUnavailable": {
+    "description": "#2554 Overview: the bookings could not be read at all"
+  },
+  "meOverviewNextZone": "Times in {zone}",
+  "@meOverviewNextZone": {
+    "description": "#2554 Overview: the time zone of the booking's workspace, when it differs from the device's",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "meOverviewSubtitle": "Your next booking, what needs you, and your spaces.",
+  "@meOverviewSubtitle": {
+    "description": "#2554 Overview: the supporting line under the heading"
+  },
+  "meOverviewTitle": "Your day, in one place",
+  "@meOverviewTitle": {
+    "description": "#2554 Overview: the page heading"
+  },
+  "meOverviewView": "View",
+  "@meOverviewView": {
+    "description": "#2554 Overview: open the next commitment in My reservations"
+  },
   "meRefDefault": "Default",
   "@meRefDefault": {
     "description": "#2563 Me home: badge on the default workspace"

@@ -6,15 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
-import '../../../core/time/clock.dart';
 import '../../../core/ui/empty_state.dart';
-import '../../money/presentation/my_finances_route.dart';
-import '../../money/providers/finance_overview_provider.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../visits/presentation/my_visits_section.dart';
@@ -25,8 +21,9 @@ import '../domain/space_pairs.dart';
 import '../providers/me_providers.dart';
 import '../providers/personal_shell_providers.dart';
 import 'linked_spaces_section.dart';
-import 'me_shell.dart';
 import 'me_spaces_list.dart';
+import 'personal_overview.dart';
+import 'personal_overview_attention.dart';
 import 'personal_refs_section.dart';
 
 /// One of the two ways to a new space under the list: join, or create.
@@ -63,6 +60,11 @@ class MeHomeTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // #2554 — under the personal shell the Overview is its own page: the
+    // day in one place, three sections each with its own state.
+    if (ref.watch(personalShellEnabledProvider)) {
+      return const PersonalOverview();
+    }
     final l10n = context.l10n;
     final spaces = ref.watch(myWorkspacesProvider).value ?? const <Workspace>[];
     final memberships =
@@ -75,10 +77,6 @@ class MeHomeTab extends ConsumerWidget {
     final nothing = spaces.isEmpty &&
         linked.every((s) => s.spaces.isEmpty) &&
         (elsewhere?.beyondLocalSpaces.isEmpty ?? true);
-    // #2554 — under the personal shell My spaces is a destination of its
-    // own: the Overview leads to it, and with no space Join and Discover
-    // lead while Create follows.
-    final shell = ref.watch(personalShellEnabledProvider);
     return Scaffold(
       body: Align(
         alignment: Alignment.topCenter,
@@ -89,7 +87,7 @@ class MeHomeTab extends ConsumerWidget {
             padding: AppSpacing.gutterAll,
             children: [
               const _MeHeader(),
-              const _FinanceGlance(),
+              const FinanceGlance(),
               const SizedBox(height: AppSpacing.xl),
               Padding(
                 padding: const EdgeInsets.only(left: AppSpacing.xs),
@@ -132,104 +130,31 @@ class MeHomeTab extends ConsumerWidget {
               // #1835 — my guest visits: beside my spaces, never among them.
               const MyVisitsSection(),
               const SizedBox(height: AppSpacing.md),
-              if (shell)
-                _PersonalHomeActions(empty: nothing)
-              else ...[
-                Row(
-                  children: [
-                    _HomeAction(
-                      actionKey: 'me-home-join',
-                      icon: Icons.qr_code_2_outlined,
-                      label: l10n.meJoinSpace,
-                      route: '/onboarding?join=1',
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    _HomeAction(
-                      actionKey: 'me-home-create',
-                      icon: Icons.add_business_outlined,
-                      label: l10n.meCreateSpace,
-                      route: '/onboarding',
-                    ),
-                  ],
-                ),
-                if (spaces.isNotEmpty)
-                  TextButton(
-                    key: const ValueKey('me-home-manage'),
-                    onPressed: () => context.push('/profiles'),
-                    child: Text(l10n.meManageSpaces),
+              Row(
+                children: [
+                  _HomeAction(
+                    actionKey: 'me-home-join',
+                    icon: Icons.qr_code_2_outlined,
+                    label: l10n.meJoinSpace,
+                    route: '/onboarding?join=1',
                   ),
-              ],
+                  const SizedBox(width: AppSpacing.sm),
+                  _HomeAction(
+                    actionKey: 'me-home-create',
+                    icon: Icons.add_business_outlined,
+                    label: l10n.meCreateSpace,
+                    route: '/onboarding',
+                  ),
+                ],
+              ),
+              if (spaces.isNotEmpty)
+                TextButton(
+                  key: const ValueKey('me-home-manage'),
+                  onPressed: () => context.push('/profiles'),
+                  child: Text(l10n.meManageSpaces),
+                ),
               const SizedBox(height: AppSpacing.xl),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// What I owe, across every space, and a way into Me › Finances. Nothing at
-/// all while there is nothing to pay (or the read fails): the home is not a
-/// dashboard of empty states.
-class _FinanceGlance extends ConsumerWidget {
-  const _FinanceGlance();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    // Me is production: a development space's test invoices never count.
-    final data = ref
-        .watch(financeOverviewProvider)
-        .value
-        ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider));
-    if (data == null || data.outstanding.isEmpty) return const SizedBox.shrink();
-    final now = ref.watch(clockProvider).now();
-    final overdue = data.outstanding.where((i) => i.overdueAt(now)).length;
-    final scheme = Theme.of(context).colorScheme;
-    final amount = [
-      for (final e in data.owedByCurrency.entries)
-        moneyFormat(e.key).formatMinor(e.value),
-    ].join(' · ');
-    final tone = overdue > 0 ? scheme.error : scheme.primary;
-    return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.md),
-      child: Material(
-        key: const ValueKey('me-home-finance-glance'),
-        color: tone.withValues(alpha: .10),
-        borderRadius: AppRadius.xlAll,
-        child: InkWell(
-          key: const ValueKey('me-home-tab-finance-glance-owed'),
-          borderRadius: AppRadius.xlAll,
-          onTap: () => context.push(myFinancesRoute()),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg,
-              vertical: AppSpacing.md,
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.account_balance_wallet_outlined, color: tone),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.meFinanceGlanceOwed(amount),
-                        style: Theme.of(context).textTheme.titleSmall?.strong,
-                      ),
-                      if (overdue > 0)
-                        Text(
-                          l10n.financesOverdueCount(overdue),
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(color: scheme.error),
-                        ),
-                    ],
-                  ),
-                ),
-                Icon(Icons.chevron_right, color: scheme.onSurfaceVariant),
-              ],
-            ),
           ),
         ),
       ),
@@ -288,66 +213,6 @@ class _MeHeader extends ConsumerWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// #2554 — the Overview's ways on under the personal shell: All my spaces
-/// while there is one; with none, Join and Discover first, Create after.
-class _PersonalHomeActions extends StatelessWidget {
-  const _PersonalHomeActions({required this.empty});
-
-  final bool empty;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    const target = Size(0, 48);
-    void join() => context.push('/onboarding?join=1');
-    return Wrap(
-      spacing: AppSpacing.sm,
-      runSpacing: AppSpacing.sm,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        if (!empty)
-          FilledButton.tonalIcon(
-            key: const ValueKey('me-home-all-spaces'),
-            style: FilledButton.styleFrom(minimumSize: target),
-            icon: const Icon(Icons.workspaces_outlined),
-            label: Text(l10n.mySpacesAll),
-            onPressed: () => context.go(MeTab.spaces.path),
-          ),
-        if (empty)
-          FilledButton.icon(
-            key: const ValueKey('me-home-join'),
-            style: FilledButton.styleFrom(minimumSize: target),
-            icon: const Icon(Icons.qr_code_2_outlined),
-            label: Text(l10n.meJoinSpace),
-            onPressed: join,
-          )
-        else
-          OutlinedButton.icon(
-            key: const ValueKey('me-home-join'),
-            style: OutlinedButton.styleFrom(minimumSize: target),
-            icon: const Icon(Icons.qr_code_2_outlined),
-            label: Text(l10n.meJoinSpace),
-            onPressed: join,
-          ),
-        OutlinedButton.icon(
-          key: const ValueKey('me-home-discover'),
-          style: OutlinedButton.styleFrom(minimumSize: target),
-          icon: const Icon(Icons.travel_explore_outlined),
-          label: Text(l10n.mySpacesDiscover),
-          onPressed: () => context.go(MeTab.discover.path),
-        ),
-        TextButton.icon(
-          key: const ValueKey('me-home-create'),
-          style: TextButton.styleFrom(minimumSize: target),
-          icon: const Icon(Icons.add_business_outlined),
-          label: Text(l10n.meCreateSpace),
-          onPressed: () => context.push('/onboarding'),
-        ),
-      ],
     );
   }
 }
