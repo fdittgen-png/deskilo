@@ -6,8 +6,8 @@
 // my personal home alone (`my_personal_workspace_refs_v1`), so it works
 // with no workspace selected and on a home that hosts none. A workspace on
 // another installation says plainly that its membership is not verified
-// yet: nothing here claims more than the home knows, and nothing here
-// grants anything.
+// yet, or no longer confirmed (stale): nothing here claims more than the
+// home knows, and nothing here grants anything.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,6 +28,8 @@ class PersonalRefsSection extends ConsumerWidget {
     final parts = [
       if (ref.freshness == RefFreshness.unavailable)
         l10n.meRefUnverified
+      else if (ref.freshness == RefFreshness.stale)
+        l10n.meRefStale
       else if (status == null)
         l10n.meRefNoRelationship
       else
@@ -77,7 +79,8 @@ class PersonalRefsSection extends ConsumerWidget {
               horizontal: AppSpacing.xs,
             ),
             leading: Icon(
-              item.freshness == RefFreshness.unavailable
+              item.freshness == RefFreshness.unavailable ||
+                      item.freshness == RefFreshness.stale
                   ? Icons.cloud_off_outlined
                   : Icons.meeting_room_outlined,
             ),

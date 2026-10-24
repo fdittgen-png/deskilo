@@ -21544,6 +21544,12 @@ abstract class AppLocalizations {
   /// **'No membership on this server'**
   String get meRefNoRelationship;
 
+  /// #2563 Me home: a workspace on another installation whose last verified membership fact lapsed
+  ///
+  /// In en, this message translates to:
+  /// **'Membership not confirmed recently'**
+  String get meRefStale;
+
   /// #2563 Me home: a referenced workspace whose name may not be read here
   ///
   /// In en, this message translates to:

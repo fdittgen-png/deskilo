@@ -8701,6 +8701,7 @@
   "meNoSpaceTitle": "Non è ancora in nessuno spazio",
   "meRefDefault": "Predefinito",
   "meRefNoRelationship": "Nessuna iscrizione su questo server",
+  "meRefStale": "Iscrizione non confermata di recente",
   "meRefUnnamed": "Uno spazio su un altro server",
   "meRefUnverified": "Iscrizione non ancora verificata",
   "meRefsTitle": "Spazi altrove",

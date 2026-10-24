@@ -122,6 +122,12 @@ const Map<String, String> _notExported = {
           'member id, a client-generated uuid and a pointer to the '
           'reservation, and the RESERVATION is exported; the row itself '
           'says only that the app asked twice',
+  'membership_facts':
+      '#2563 C2 — a personal home\'s verified copy of a membership the '
+          'workspace\'s own installation asserted. export_my_data is keyed '
+          'by a workspace this home does not host; the person\'s own facts '
+          'are in export_my_personal_data_v1 (workspace_refs: status and '
+          'freshness), and no other person\'s fact is exported',
 };
 
 

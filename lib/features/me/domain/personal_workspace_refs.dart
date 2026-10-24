@@ -5,9 +5,10 @@
 // `my_personal_workspace_refs_v1()` answers them on my personal home.
 //
 // A reference is not a membership: it carries the relationship status
-// only where the answering installation holds it itself (`local`), and
-// says "verification unavailable" for a workspace on another installation
-// until verified relationship facts exist (#2563 C2). It never carries a
+// where the answering installation holds it itself (`local`) or holds a
+// membership fact signed by the workspace's own installation (`verified`
+// while in force, `stale` once it lapsed, #2563 C2), and says
+// "verification unavailable" without one. It never carries a
 // role or a permission. The decoding is strict (#2585): a malformed
 // reference, status or freshness is a shape error, never an empty list.
 import '../../../core/data/json_reader.dart';
@@ -23,6 +24,14 @@ enum RefFreshness {
   /// Read from its own membership row, now.
   local,
 
+  /// Another installation's workspace: a membership fact it signed, in
+  /// force now.
+  verified,
+
+  /// Another installation's workspace: its last fact lapsed; the status
+  /// is the last one it asserted and authorizes nothing.
+  stale,
+
   /// Another installation's workspace: no verified relationship yet.
   unavailable;
 
@@ -30,11 +39,13 @@ enum RefFreshness {
     final wire = r.string('freshness');
     return switch (wire) {
       'local' => local,
+      'verified' => verified,
+      'stale' => stale,
       'unavailable' => unavailable,
       _ => throw JsonShapeException(
         r.context,
         'freshness',
-        'local|unavailable',
+        'local|verified|stale|unavailable',
         wire,
       ),
     };

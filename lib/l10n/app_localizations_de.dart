@@ -13031,6 +13031,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meRefNoRelationship => 'Keine Mitgliedschaft auf diesem Server';
 
   @override
+  String get meRefStale => 'Mitgliedschaft seit einiger Zeit nicht bestätigt';
+
+  @override
   String get meRefUnnamed => 'Ein Space auf einem anderen Server';
 
   @override

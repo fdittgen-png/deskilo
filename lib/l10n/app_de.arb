@@ -8701,6 +8701,7 @@
   "meNoSpaceTitle": "Sie sind noch in keinem Space",
   "meRefDefault": "Standard",
   "meRefNoRelationship": "Keine Mitgliedschaft auf diesem Server",
+  "meRefStale": "Mitgliedschaft seit einiger Zeit nicht bestätigt",
   "meRefUnnamed": "Ein Space auf einem anderen Server",
   "meRefUnverified": "Mitgliedschaft noch nicht bestätigt",
   "meRefsTitle": "Spaces anderswo",

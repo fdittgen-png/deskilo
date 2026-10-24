@@ -15041,6 +15041,10 @@
   "@meRefNoRelationship": {
     "description": "#2563 Me home: a saved workspace of this server without membership"
   },
+  "meRefStale": "Membership not confirmed recently",
+  "@meRefStale": {
+    "description": "#2563 Me home: a workspace on another installation whose last verified membership fact lapsed"
+  },
   "meRefUnnamed": "A workspace on another server",
   "@meRefUnnamed": {
     "description": "#2563 Me home: a referenced workspace whose name may not be read here"

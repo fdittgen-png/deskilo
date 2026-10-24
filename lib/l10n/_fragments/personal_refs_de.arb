@@ -3,6 +3,7 @@
   "meRefsTitle": "Spaces anderswo",
   "meRefUnnamed": "Ein Space auf einem anderen Server",
   "meRefUnverified": "Mitgliedschaft noch nicht bestätigt",
+  "meRefStale": "Mitgliedschaft seit einiger Zeit nicht bestätigt",
   "meRefNoRelationship": "Keine Mitgliedschaft auf diesem Server",
   "meRefDefault": "Standard",
   "meRefsUnavailable": "Ihre Spaces anderswo konnten nicht gelesen werden."
