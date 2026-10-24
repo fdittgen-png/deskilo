@@ -1,0 +1,81 @@
+{
+  "@@locale": "en",
+  "visibilityHomeHeader": "Personal home: {name}",
+  "@visibilityHomeHeader": {
+    "description": "#2558 privacy card: names the personal home whose settings these are; name is its server address",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "coworkonti.example"
+      }
+    }
+  },
+  "visibilityAskContact": "Who can see my contact details?",
+  "@visibilityAskContact": {
+    "description": "#2558 privacy summary: first question, the contact-details audience"
+  },
+  "visibilityAskWrite": "Who can write to me?",
+  "@visibilityAskWrite": {
+    "description": "#2558 privacy summary: second question, who can start a conversation"
+  },
+  "visibilityAskPublic": "Is my public profile published?",
+  "@visibilityAskPublic": {
+    "description": "#2558 privacy summary: third question, the public profile"
+  },
+  "visibilityMoreSharing": "More sharing settings",
+  "@visibilityMoreSharing": {
+    "description": "#2558 privacy card: expands the remaining fields"
+  },
+  "visibilityFieldElsewhere": "It names a space on another server, so it cannot be changed here yet.",
+  "@visibilityFieldElsewhere": {
+    "description": "#2558 a field whose chosen spaces include one on another installation; read-only until the network writer"
+  },
+  "visibilitySpaceUnverified": "Verification unavailable",
+  "@visibilitySpaceUnverified": {
+    "description": "#2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet"
+  },
+  "visibilitySpaceAmbiguous": "Same name as another space · {source}",
+  "@visibilitySpaceAmbiguous": {
+    "description": "#2558 chosen-spaces picker: two spaces share a name; source says where this one is",
+    "placeholders": {
+      "source": {
+        "type": "String",
+        "example": "on server 1a2b3c4d"
+      }
+    }
+  },
+  "visibilitySpaceHere": "on this personal home",
+  "@visibilitySpaceHere": {
+    "description": "#2558 source of a space: the personal home itself"
+  },
+  "visibilitySpaceOnServer": "on server {installation}",
+  "@visibilitySpaceOnServer": {
+    "description": "#2558 source of a space: another installation, by the start of its id",
+    "placeholders": {
+      "installation": {
+        "type": "String",
+        "example": "1a2b3c4d"
+      }
+    }
+  },
+  "visibilityWidenAdded": "Added: {spaces}",
+  "@visibilityWidenAdded": {
+    "description": "#2558 widening confirmation: chosen spaces added",
+    "placeholders": {
+      "spaces": {
+        "type": "String",
+        "example": "Pézenas, Berlin"
+      }
+    }
+  },
+  "visibilityWidenRemoved": "Removed: {spaces}",
+  "@visibilityWidenRemoved": {
+    "description": "#2558 widening confirmation: chosen spaces removed",
+    "placeholders": {
+      "spaces": {
+        "type": "String",
+        "example": "Lyon"
+      }
+    }
+  }
+}

@@ -17161,14 +17161,20 @@
   "visibilityAboutEmpty": "Beruf und ein paar Worte hinzufügen",
   "visibilityAboutMe": "Über mich",
   "visibilityAboutSaveFailed": "Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "visibilityAskContact": "Wer kann meine Kontaktdaten sehen?",
+  "visibilityAskPublic": "Ist mein öffentliches Profil veröffentlicht?",
+  "visibilityAskWrite": "Wer kann mir schreiben?",
   "visibilityBio": "Ein paar Worte über Sie",
   "visibilityChosenCount": "{count, plural, =1{Mitglieder von 1 ausgewählten Space} other{Mitglieder von {count} ausgewählten Spaces}}",
   "visibilityChosenSpaces": "Mitglieder ausgewählter Spaces",
   "visibilityContact": "WhatsApp und E-Mail",
   "visibilityElsewhereIntro": "Auf einem verbundenen Server haben Sie das Konto dieses Servers. Wer dort keinen Raum mit Ihnen teilt, sieht, was Sie allen angemeldeten Personen erlauben; Kontaktdaten und Anwesenheit verlassen nie Ihre Räume.",
   "visibilityElsewhereTitle": "Auf meinen anderen Servern",
+  "visibilityFieldElsewhere": "Diese Einstellung nennt einen Space auf einem anderen Server und lässt sich hier noch nicht ändern.",
+  "visibilityHomeHeader": "Persönliches Zuhause: {name}",
   "visibilityIdentity": "Name und Foto",
   "visibilityIntro": "Jeder Teil Ihres Kontos wählt sein eigenes Publikum. Nichts ist öffentlich, solange Sie es nicht wählen.",
+  "visibilityMoreSharing": "Weitere Freigabeeinstellungen",
   "visibilityMySpaces": "Mitglieder meiner Spaces",
   "visibilityNoSpaces": "Sie sind noch in keinem Space. Wählen Sie ein anderes Publikum.",
   "visibilityNobody": "Niemand",
@@ -17201,11 +17207,16 @@
   "visibilityReachability": "Wer ein Gespräch mit mir beginnen darf",
   "visibilitySaveFailed": "Konnte nicht speichern, wer das sieht. Bitte versuchen Sie es erneut.",
   "visibilitySignedIn": "Alle Angemeldeten",
+  "visibilitySpaceAmbiguous": "Gleicher Name wie ein anderer Space · {source}",
+  "visibilitySpaceHere": "in diesem persönlichen Zuhause",
+  "visibilitySpaceOnServer": "auf Server {installation}",
   "visibilitySpaceUnlisted": "Ein Space, der nicht mehr aufgeführt ist",
+  "visibilitySpaceUnverified": "Überprüfung nicht verfügbar",
   "visibilitySpacesUnavailable": "Ihre Spaces lassen sich gerade nicht auflisten.",
   "visibilityTitle": "Wer mich sieht",
   "visibilityUnavailable": "Wer was von Ihnen sieht, lässt sich gerade nicht lesen. Es wurde nichts geändert.",
   "visibilityWidenAction": "Erweitern",
+  "visibilityWidenAdded": "Hinzugefügt: {spaces}",
   "visibilityWidenConfirm": "{field} zeigen für: {audience}? Diese Personen können es sehen.",
   "@visibilityWidenConfirm": {
     "placeholders": {
@@ -17217,6 +17228,7 @@
       }
     }
   },
+  "visibilityWidenRemoved": "Entfernt: {spaces}",
   "visitCancel": "Diesen Besuch absagen",
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"

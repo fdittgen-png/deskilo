@@ -17161,14 +17161,20 @@
   "visibilityAboutEmpty": "Añada su profesión y unas palabras",
   "visibilityAboutMe": "Sobre mí",
   "visibilityAboutSaveFailed": "No se pudieron guardar su profesión y biografía. Inténtelo de nuevo.",
+  "visibilityAskContact": "¿Quién puede ver mis datos de contacto?",
+  "visibilityAskPublic": "¿Está publicado mi perfil público?",
+  "visibilityAskWrite": "¿Quién puede escribirme?",
   "visibilityBio": "Unas palabras sobre usted",
   "visibilityChosenCount": "{count, plural, =1{Miembros de 1 espacio elegido} other{Miembros de {count} espacios elegidos}}",
   "visibilityChosenSpaces": "Miembros de espacios elegidos",
   "visibilityContact": "WhatsApp y correo",
   "visibilityElsewhereIntro": "En un servidor conectado tiene la cuenta de ese servidor. Quienes allí no comparten ningún espacio con usted ven lo que permite a cualquier persona con sesión iniciada; sus datos de contacto y su presencia nunca salen de sus espacios.",
   "visibilityElsewhereTitle": "En mis otros servidores",
+  "visibilityFieldElsewhere": "Este ajuste nombra un espacio en otro servidor, por lo que aún no puede cambiarlo aquí.",
+  "visibilityHomeHeader": "Hogar personal: {name}",
   "visibilityIdentity": "Nombre y foto",
   "visibilityIntro": "Cada parte de su cuenta elige su propio público. Nada es público si usted no lo elige.",
+  "visibilityMoreSharing": "Más ajustes para compartir",
   "visibilityMySpaces": "Miembros de mis espacios",
   "visibilityNoSpaces": "Todavía no está en ningún espacio. Elija otro público.",
   "visibilityNobody": "Nadie",
@@ -17201,11 +17207,16 @@
   "visibilityReachability": "Quién puede iniciar una conversación conmigo",
   "visibilitySaveFailed": "No se pudo guardar quién lo ve. Inténtelo de nuevo.",
   "visibilitySignedIn": "Cualquiera con sesión iniciada",
+  "visibilitySpaceAmbiguous": "Mismo nombre que otro espacio · {source}",
+  "visibilitySpaceHere": "en este hogar personal",
+  "visibilitySpaceOnServer": "en el servidor {installation}",
   "visibilitySpaceUnlisted": "Un espacio que ya no aparece en la lista",
+  "visibilitySpaceUnverified": "Verificación no disponible",
   "visibilitySpacesUnavailable": "Sus espacios no se pueden listar ahora.",
   "visibilityTitle": "Quién me ve",
   "visibilityUnavailable": "No se puede leer ahora quién ve qué de usted. No se ha cambiado nada.",
   "visibilityWidenAction": "Ampliar",
+  "visibilityWidenAdded": "Añadidos: {spaces}",
   "visibilityWidenConfirm": "¿Mostrar su {field} a: {audience}? Podrán verlo.",
   "@visibilityWidenConfirm": {
     "placeholders": {
@@ -17217,6 +17228,7 @@
       }
     }
   },
+  "visibilityWidenRemoved": "Quitados: {spaces}",
   "visitCancel": "Cancelar esta visita",
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"

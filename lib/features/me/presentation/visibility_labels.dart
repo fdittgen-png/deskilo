@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../domain/audience_space.dart';
 import '../domain/visibility.dart';
 
 String visibilityFieldLabel(AppLocalizations l10n, VisibilityField field) =>
@@ -52,3 +53,22 @@ String previewAudienceLabel(AppLocalizations l10n, PreviewAudience as) =>
         l10n.visibilityPreviewSignedIn,
       PreviewAudience.nobody => l10n.visibilityPreviewNobody,
     };
+
+/// #2558 — what a chosen space is called: its name where the home may
+/// read one, else what kind of space it is. [space] null is a saved space
+/// the home no longer lists.
+String audienceSpaceLabel(AppLocalizations l10n, AudienceSpace? space) {
+  final name = space?.name?.trim();
+  if (name != null && name.isNotEmpty) return name;
+  if (space != null && !space.hostedHere) return l10n.meRefUnnamed;
+  return l10n.visibilitySpaceUnlisted;
+}
+
+/// #2558 — where a space lives, to tell two spaces of one name apart:
+/// this personal home, or another installation by the start of its id.
+String audienceSpaceSource(AppLocalizations l10n, AudienceSpace space) =>
+    space.hostedHere
+        ? l10n.visibilitySpaceHere
+        : l10n.visibilitySpaceOnServer(space.installationId.length > 8
+            ? space.installationId.substring(0, 8)
+            : space.installationId);

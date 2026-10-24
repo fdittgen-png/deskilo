@@ -17161,14 +17161,20 @@
   "visibilityAboutEmpty": "Aggiunga la sua professione e qualche parola",
   "visibilityAboutMe": "Su di me",
   "visibilityAboutSaveFailed": "Impossibile salvare professione e biografia. Riprovi.",
+  "visibilityAskContact": "Chi può vedere i miei recapiti?",
+  "visibilityAskPublic": "Il mio profilo pubblico è pubblicato?",
+  "visibilityAskWrite": "Chi può scrivermi?",
   "visibilityBio": "Qualche parola su di Lei",
   "visibilityChosenCount": "{count, plural, =1{Membri di 1 spazio scelto} other{Membri di {count} spazi scelti}}",
   "visibilityChosenSpaces": "Membri di spazi scelti",
   "visibilityContact": "WhatsApp ed e-mail",
   "visibilityElsewhereIntro": "Su un server collegato ha l'account di quel server. Chi lì non condivide alcuno spazio con Lei vede ciò che consente a chiunque abbia effettuato l'accesso; contatti e presenza non escono mai dai suoi spazi.",
   "visibilityElsewhereTitle": "Sui miei altri server",
+  "visibilityFieldElsewhere": "Questa impostazione nomina uno spazio su un altro server, quindi non può ancora modificarla qui.",
+  "visibilityHomeHeader": "Casa personale: {name}",
   "visibilityIdentity": "Nome e foto",
   "visibilityIntro": "Ogni parte del suo account sceglie il proprio pubblico. Niente è pubblico se non lo sceglie.",
+  "visibilityMoreSharing": "Altre impostazioni di condivisione",
   "visibilityMySpaces": "Membri dei miei spazi",
   "visibilityNoSpaces": "Non è ancora in nessuno spazio. Scelga un altro pubblico.",
   "visibilityNobody": "Nessuno",
@@ -17201,11 +17207,16 @@
   "visibilityReachability": "Chi può iniziare una conversazione con me",
   "visibilitySaveFailed": "Impossibile salvare chi lo vede. Riprovi.",
   "visibilitySignedIn": "Chiunque abbia effettuato l'accesso",
+  "visibilitySpaceAmbiguous": "Stesso nome di un altro spazio · {source}",
+  "visibilitySpaceHere": "in questa casa personale",
+  "visibilitySpaceOnServer": "sul server {installation}",
   "visibilitySpaceUnlisted": "Uno spazio non più elencato",
+  "visibilitySpaceUnverified": "Verifica non disponibile",
   "visibilitySpacesUnavailable": "Al momento i Suoi spazi non possono essere elencati.",
   "visibilityTitle": "Chi mi vede",
   "visibilityUnavailable": "Al momento non è possibile leggere chi vede cosa di Lei. Non è stato modificato nulla.",
   "visibilityWidenAction": "Amplia",
+  "visibilityWidenAdded": "Aggiunti: {spaces}",
   "visibilityWidenConfirm": "Mostrare {field} a: {audience}? Potranno vederlo.",
   "@visibilityWidenConfirm": {
     "placeholders": {
@@ -17217,6 +17228,7 @@
       }
     }
   },
+  "visibilityWidenRemoved": "Rimossi: {spaces}",
   "visitCancel": "Annulla questa visita",
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"

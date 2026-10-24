@@ -22,7 +22,7 @@ class SupabaseMeRepository implements MeRepository {
           await _client.rpc<Object?>('my_personal_workspace_refs_v1'));
 
   @override
-  Future<MyVisibility> myVisibility() => readMyVisibility(_client);
+  Future<MyVisibility> myVisibility() => readMyNetworkVisibility(_client);
 
   @override
   Future<void> setVisibility(

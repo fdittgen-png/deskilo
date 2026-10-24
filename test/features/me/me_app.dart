@@ -118,3 +118,14 @@ Future<void> tapIn(WidgetTester tester, String list, Finder finder) async {
   await tester.tap(finder);
   await tester.pumpAndSettle();
 }
+
+/// #2558 — opens "More sharing settings" on the privacy card, where name
+/// and photo, profession and bio, presence and About me live; a no-op when
+/// it is already open.
+Future<void> openMoreSharing(WidgetTester tester) async {
+  if (find.byKey(const ValueKey('visibility-about-edit')).evaluate().isNotEmpty ||
+      find.byKey(const ValueKey('visibility-more')).evaluate().isEmpty) {
+    return;
+  }
+  await tapIn(tester, 'me-account-list', find.byKey(const ValueKey('visibility-more')));
+}
