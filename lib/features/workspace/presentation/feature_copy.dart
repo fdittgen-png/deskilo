@@ -278,6 +278,14 @@ String _lateDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
         WorkspaceFeature.workspaceOverview => l10n.featureWorkspaceOverviewDesc,
         WorkspaceFeature.setupGuide => l10n.featureSetupGuideDesc,
         WorkspaceFeature.dataReport => l10n.featureDataReportDesc,
+      _ => _latestDescription(l10n, feature),
+    };
+
+/// The third switch: `_lateDescription` reached the cyclomatic limit with
+/// its last arm, so from the personal shell on a new flag lands here.
+String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
+    switch (feature) {
+      WorkspaceFeature.personalShell => l10n.featurePersonalShellDesc,
       _ => feature.name,
     };
 

@@ -65,6 +65,22 @@ class RouteCoverage {
 /// The manifest, in route_classes.dart's order.
 const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/me', CoverageStatus.planned, owner: '#1881 B'),
+  // #2552 — the personal shell's branches: the person's own pages, covered
+  // as `/me` is; its messenger pages excluded as every messenger is.
+  RouteCoverage('/me/spaces', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage('/me/discover', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage(
+    '/me/messages',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
+  RouteCoverage('/me/data', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage('/me/account', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage(
+    '/me/account/connections',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.provider,
+  ),
   RouteCoverage('/discover', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage('/p/:id', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
@@ -152,6 +168,16 @@ const List<RouteCoverage> routeCoverage = [
   ),
   RouteCoverage(
     '/me/messages/new-group',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
+  RouteCoverage(
+    '/me/messages/new',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.messenger,
+  ),
+  RouteCoverage(
+    '/me/messages/:ref',
     CoverageStatus.excluded,
     category: ProtectedSurface.messenger,
   ),

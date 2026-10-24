@@ -1,0 +1,15 @@
+{
+  "featurePersonalShellTitle": "Interface personnelle (cinq destinations)",
+  "featurePersonalShellDesc": "Moi en cinq destinations : Vue d’ensemble, Mes espaces, Découvrir, Messages et Mes données, avec une barre latérale sur une fenêtre large, un rail sur une fenêtre moyenne et une barre sur un téléphone. Désactivée, Moi garde ses quatre onglets.",
+  "meTabOverview": "Vue d’ensemble",
+  "meTabOverviewShort": "Accueil",
+  "meTabSpacesShort": "Espaces",
+  "meTabData": "Mes données",
+  "meTabDataShort": "Données",
+  "meContextPersonal": "Personnel",
+  "meUtilityAccount": "Confidentialité et compte",
+  "meUtilityHelp": "Aide et assistant",
+  "meDataViewReservations": "Réservations",
+  "meDataVisitsEmptyTitle": "Aucune visite pour l’instant",
+  "meDataVisitsEmptyBody": "Vos réservations restent dans le calendrier de chaque espace ; vos visites en tant qu’invité apparaissent ici."
+}

@@ -287,5 +287,13 @@ String _lateName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.workspaceOverview => l10n.featureWorkspaceOverviewTitle,
       WorkspaceFeature.setupGuide => l10n.featureSetupGuideTitle,
       WorkspaceFeature.dataReport => l10n.featureDataReportTitle,
+      _ => _latestName(l10n, feature),
+    };
+
+/// The third switch: `_lateName` reached the cyclomatic limit with its last
+/// arm, so from the personal shell on a new flag lands here.
+String _latestName(AppLocalizations l10n, WorkspaceFeature feature) =>
+    switch (feature) {
+      WorkspaceFeature.personalShell => l10n.featurePersonalShellTitle,
       _ => feature.name,
     };
