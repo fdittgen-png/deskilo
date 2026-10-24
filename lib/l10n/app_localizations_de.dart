@@ -4566,6 +4566,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get discoverySavedFilter => 'Gespeichert';
 
   @override
+  String get discoveryShowAllLoaded => 'Alle geladenen Orte zeigen';
+
+  @override
   String discoveryShowMoreFrom(String source) {
     return 'Mehr von $source anzeigen';
   }

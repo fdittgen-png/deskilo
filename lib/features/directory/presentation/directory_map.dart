@@ -14,6 +14,13 @@ import '../domain/public_workspace.dart';
 import '../providers/directory_location_providers.dart';
 import '../providers/discovery_view_providers.dart';
 
+typedef _Point = ({PublicWorkspace workspace, DirectoryLocation location});
+
+/// What the camera follows: the selected place, every loaded place, or
+/// where the person moved it. A manual pan or zoom holds until the person
+/// asks for a place or for all of them; later results never undo it.
+enum _Camera { selection, all, manual }
+
 /// Sparkilo's selected pill/list relationship, representing workspaces instead
 /// of fuel stations. No location permission or background tracking is needed.
 class DirectoryMap extends ConsumerStatefulWidget {
@@ -39,6 +46,8 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
   late final AnimationController _glide = AnimationController(
       vsync: this, duration: const Duration(milliseconds: 650));
   String? _view;
+  String? _selectedSeen;
+  _Camera _camera = _Camera.selection;
   bool _ready = false;
   static const _detailZoom = 16.0;
 
@@ -95,8 +104,8 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
       ..forward();
   }
 
-  void _focus(List<({PublicWorkspace workspace, DirectoryLocation location})> points,
-      PublicWorkspace? target, {bool animate = true}) {
+  void _focus(List<_Point> points, PublicWorkspace? target,
+      {bool animate = true}) {
     if (!_ready || points.isEmpty) return;
     final selected = points.where((p) => p.workspace == target).firstOrNull;
     if (selected != null || points.length == 1) {
@@ -120,6 +129,79 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
         _controller.fitCamera(fit);
       }
     }
+  }
+
+  /// Moves the camera after the selection or the loaded places changed,
+  /// only as far as the person left it to follow. A place selected while
+  /// the map is where the person moved it is brought into view at the
+  /// zoom they chose; new or late places move nothing.
+  void _follow(List<_Point> located, PublicWorkspace? target) {
+    final view = '${widget.selected}:${located.map((p) =>
+        '${p.workspace.source}/${p.workspace.id}:${p.location.latitude},${p.location.longitude}').join('|')}';
+    if (_view == view) return;
+    _view = view;
+    final chosen = _selectedSeen != widget.selected && target != null;
+    _selectedSeen = widget.selected;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _view != view) return;
+      if (chosen && _camera == _Camera.manual) return _reveal(located, target);
+      if (chosen) _camera = _Camera.selection;
+      switch (_camera) {
+        case _Camera.selection:
+          _focus(located, target);
+        case _Camera.all:
+          _focus(located, null);
+        case _Camera.manual:
+          break;
+      }
+    });
+  }
+
+  /// Pans to [target] at the current zoom when it is out of view.
+  void _reveal(List<_Point> located, PublicWorkspace target) {
+    final point =
+        located.where((p) => p.workspace == target).firstOrNull?.location;
+    if (!_ready || point == null) return;
+    final at = LatLng(point.latitude, point.longitude);
+    final camera = _controller.camera;
+    if (!camera.visibleBounds.contains(at)) _glideTo(at, camera.zoom);
+  }
+
+  /// A gesture of the person's own: the camera is theirs from now on, and
+  /// a glide still running stops where it is.
+  void _moved(MapCamera _, bool hasGesture) {
+    if (!hasGesture) return;
+    _camera = _Camera.manual;
+    _glide.stop();
+  }
+
+  /// Back to the selection, or every loaded place fitted in view: the two
+  /// explicit ways out of a manual camera.
+  Widget _controls(List<_Point> located, PublicWorkspace? target) {
+    final l = context.l10n;
+    void follow(_Camera camera) {
+      _camera = camera;
+      _focus(located, camera == _Camera.all ? null : target);
+    }
+    final none = located.isEmpty;
+    return Positioned(top: 8, right: 8, child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton.filledTonal(
+          key: const ValueKey('directory-map-recenter'),
+          tooltip: l.directoryLocate,
+          onPressed: none ? null : () => follow(_Camera.selection),
+          icon: const Icon(Icons.center_focus_strong),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        IconButton.filledTonal(
+          key: const ValueKey('directory-map-show-all'),
+          tooltip: l.discoveryShowAllLoaded,
+          onPressed: none ? null : () => follow(_Camera.all),
+          icon: const Icon(Icons.zoom_out_map),
+        ),
+      ],
+    ));
   }
 
   /// #2473 — says that some cards have no pin; nothing when all are placed.
@@ -157,14 +239,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
             case final point?)
           (workspace: w, location: point),
     ];
-    final view = '${widget.selected}:${located.map((p) =>
-        '${p.workspace.source}/${p.workspace.id}:${p.location.latitude},${p.location.longitude}').join('|')}';
-    if (_view != view) {
-      _view = view;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted && _view == view) _focus(located, target);
-      });
-    }
+    _follow(located, target);
     return Column(children: [
       if (needsLookup)
         Padding(
@@ -198,6 +273,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
             ? const LatLng(48.86, 2.35)
             : LatLng(located.first.location.latitude, located.first.location.longitude),
         initialZoom: located.isEmpty ? 4 : _detailZoom,
+        onPositionChanged: _moved,
         onMapReady: () { _ready = true; _focus(located, target, animate: false); },
       ),
       children: [
@@ -242,12 +318,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
         ),
       ],
     ),
-      Positioned(top: 8, right: 8, child: IconButton.filledTonal(
-        key: const ValueKey('directory-map-recenter'),
-        tooltip: l.directoryLocate,
-        onPressed: located.isEmpty ? null : () => _focus(located, target),
-        icon: const Icon(Icons.center_focus_strong),
-      )),
+      _controls(located, target),
     ])),
     ]);
   }
