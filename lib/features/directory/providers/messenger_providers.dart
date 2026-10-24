@@ -50,16 +50,23 @@ class MessengerInbox extends _$MessengerInbox {
   /// Which build a read belongs to: a read of an earlier one never lands.
   int _epoch = 0;
 
+  /// The account the shown rows were read for.
+  String? _account;
+
   @override
   Future<UnifiedInbox> build() async {
     final epoch = ++_epoch;
     // Every watch before the first await (provider_watch_before_await).
-    final signedIn = ref.watch(authStateProvider).value != null;
+    final account = ref.watch(authStateProvider).value;
     final connected = ref.watch(connectedSourcesProvider.future);
-    if (!signedIn) return const UnifiedInbox([]);
+    // Rows shown to one account are never another's placeholder, not even
+    // while the next account's own read is under way or failed.
+    final sameAccount = account == _account;
+    _account = account;
+    if (account == null) return const UnifiedInbox([]);
     final previous = {
-      for (final slot in _sources)
-        slot.key: slot,
+      if (sameAccount)
+        for (final slot in _sources) slot.key: slot,
     };
     final slots = [
       for (final slot in inboxSlotsFor([
