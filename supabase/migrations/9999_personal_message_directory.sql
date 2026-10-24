@@ -125,7 +125,7 @@ begin
     raise exception 'a workspace reference is installation:workspace' using errcode = '22023';
   end if;
   if p_after_key is not null
-     and p_after_key !~ case when p_section = 'workspaces' then c_ref else c_uuid end then
+     and p_after_key !~ (case when p_section = 'workspaces' then c_ref else c_uuid end) then
     raise exception 'the cursor does not belong to this section' using errcode = '22023';
   end if;
   -- Resolved once, before the rows: a missing registry row raises here.
