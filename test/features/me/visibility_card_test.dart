@@ -14,6 +14,7 @@ import 'me_app.dart';
 
 Future<void> _choose(WidgetTester tester, VisibilityField field,
     VisibilityAudience audience, {List<String> spaces = const []}) async {
+  await openMoreSharing(tester);
   await tapIn(tester, 'me-account-list',
       find.byKey(ValueKey('visibility-field-${field.wire}')));
   await tester.tap(find.byKey(ValueKey('visibility-audience-${audience.wire}')));
@@ -60,6 +61,7 @@ void main() {
       'of my spaces my name', (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me?tab=me');
+    await openMoreSharing(tester);
     expect(find.descendant(
         of: find.byKey(const ValueKey('visibility-field-about')),
         matching: find.text('Nobody')), findsOneWidget);
@@ -76,6 +78,7 @@ void main() {
       'the field as it was', (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me?tab=me');
+    await openMoreSharing(tester);
     await tapIn(tester, 'me-account-list',
         find.byKey(const ValueKey('visibility-field-about')));
     await tester.tap(find.byKey(const ValueKey('visibility-audience-signed_in')));
@@ -95,6 +98,7 @@ void main() {
       'their audience', (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me?tab=me');
+    await openMoreSharing(tester);
     await tapIn(tester, 'me-account-list',
         find.byKey(const ValueKey('visibility-about-edit')));
     await tester.enterText(find.byKey(const ValueKey('about-profession')), '  Architect ');
@@ -117,6 +121,7 @@ void main() {
       'reads', (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me?tab=me');
+    await openMoreSharing(tester);
 
     // Before: a stranger reads nothing of user-1.
     current = 'user-9';
@@ -144,8 +149,9 @@ void main() {
       'reachability is chosen apart', (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me?tab=me');
+    await openMoreSharing(tester);
     await _choose(tester, VisibilityField.contactChannels,
-        VisibilityAudience.chosenSpaces, spaces: ['ws-2']);
+        VisibilityAudience.chosenSpaces, spaces: [me.refOf('ws-2')]);
     await _choose(tester, VisibilityField.reachability, VisibilityAudience.nobody);
     expect(find.text('Members of 1 chosen space'), findsOneWidget);
 
@@ -166,6 +172,7 @@ void main() {
       'person; name and photo still may (#2211)', (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me?tab=me');
+    await openMoreSharing(tester);
     for (final field in [VisibilityField.contactChannels, VisibilityField.presence]) {
       await tapIn(tester, 'me-account-list',
           find.byKey(ValueKey('visibility-field-${field.wire}')));
@@ -184,6 +191,7 @@ void main() {
       (tester) async {
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me?tab=me');
+    await openMoreSharing(tester);
     await tapIn(tester, 'me-account-list',
         find.byKey(const ValueKey('visibility-field-presence')));
     await tester.tap(find.byKey(const ValueKey('visibility-audience-chosen_spaces')));

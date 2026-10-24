@@ -302,7 +302,7 @@ void main() {
     await tester.pump();
     await settle(tester, rig.container.read(myVisibilityProvider.future));
     await settle(tester, rig.container.read(meActionsProvider).saveAbout('Maker', 'Hello'));
-    expect(rig.p.paths, contains('POST /rest/v1/rpc/my_visibility'));
+    expect(rig.p.paths, contains('POST /rest/v1/rpc/my_visibility_network_v1'));
     expect(rig.p.paths, contains('POST /rest/v1/rpc/set_my_about'));
     expect(rig.a.paths, isEmpty);
     expect(rig.b.paths, isEmpty);

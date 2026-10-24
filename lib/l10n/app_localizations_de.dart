@@ -25428,6 +25428,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Beruf und Kurzprofil konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.';
 
   @override
+  String get visibilityAskContact => 'Wer kann meine Kontaktdaten sehen?';
+
+  @override
+  String get visibilityAskPublic =>
+      'Ist mein öffentliches Profil veröffentlicht?';
+
+  @override
+  String get visibilityAskWrite => 'Wer kann mir schreiben?';
+
+  @override
   String get visibilityBio => 'Ein paar Worte über Sie';
 
   @override
@@ -25455,11 +25465,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityElsewhereTitle => 'Auf meinen anderen Servern';
 
   @override
+  String get visibilityFieldElsewhere =>
+      'Diese Einstellung nennt einen Space auf einem anderen Server und lässt sich hier noch nicht ändern.';
+
+  @override
+  String visibilityHomeHeader(String name) {
+    return 'Persönliches Zuhause: $name';
+  }
+
+  @override
   String get visibilityIdentity => 'Name und Foto';
 
   @override
   String get visibilityIntro =>
       'Jeder Teil Ihres Kontos wählt sein eigenes Publikum. Nichts ist öffentlich, solange Sie es nicht wählen.';
+
+  @override
+  String get visibilityMoreSharing => 'Weitere Freigabeeinstellungen';
 
   @override
   String get visibilityMySpaces => 'Mitglieder meiner Spaces';
@@ -25526,8 +25548,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilitySignedIn => 'Alle Angemeldeten';
 
   @override
+  String visibilitySpaceAmbiguous(String source) {
+    return 'Gleicher Name wie ein anderer Space · $source';
+  }
+
+  @override
+  String get visibilitySpaceHere => 'in diesem persönlichen Zuhause';
+
+  @override
+  String visibilitySpaceOnServer(String installation) {
+    return 'auf Server $installation';
+  }
+
+  @override
   String get visibilitySpaceUnlisted =>
       'Ein Space, der nicht mehr aufgeführt ist';
+
+  @override
+  String get visibilitySpaceUnverified => 'Überprüfung nicht verfügbar';
 
   @override
   String get visibilitySpacesUnavailable =>
@@ -25544,8 +25582,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityWidenAction => 'Erweitern';
 
   @override
+  String visibilityWidenAdded(String spaces) {
+    return 'Hinzugefügt: $spaces';
+  }
+
+  @override
   String visibilityWidenConfirm(String field, String audience) {
     return '$field zeigen für: $audience? Diese Personen können es sehen.';
+  }
+
+  @override
+  String visibilityWidenRemoved(String spaces) {
+    return 'Entfernt: $spaces';
   }
 
   @override

@@ -42203,6 +42203,24 @@ abstract class AppLocalizations {
   /// **'Could not save your profession and bio. Please try again.'**
   String get visibilityAboutSaveFailed;
 
+  /// #2558 privacy summary: first question, the contact-details audience
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see my contact details?'**
+  String get visibilityAskContact;
+
+  /// #2558 privacy summary: third question, the public profile
+  ///
+  /// In en, this message translates to:
+  /// **'Is my public profile published?'**
+  String get visibilityAskPublic;
+
+  /// #2558 privacy summary: second question, who can start a conversation
+  ///
+  /// In en, this message translates to:
+  /// **'Who can write to me?'**
+  String get visibilityAskWrite;
+
   /// Field label: a short bio.
   ///
   /// In en, this message translates to:
@@ -42239,6 +42257,18 @@ abstract class AppLocalizations {
   /// **'On my other servers'**
   String get visibilityElsewhereTitle;
 
+  /// #2558 a field whose chosen spaces include one on another installation; read-only until the network writer
+  ///
+  /// In en, this message translates to:
+  /// **'It names a space on another server, so it cannot be changed here yet.'**
+  String get visibilityFieldElsewhere;
+
+  /// #2558 privacy card: names the personal home whose settings these are; name is its server address
+  ///
+  /// In en, this message translates to:
+  /// **'Personal home: {name}'**
+  String visibilityHomeHeader(String name);
+
   /// Visibility field: name and photo.
   ///
   /// In en, this message translates to:
@@ -42250,6 +42280,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Each part of your account picks its own audience. Nothing is public unless you choose it.'**
   String get visibilityIntro;
+
+  /// #2558 privacy card: expands the remaining fields
+  ///
+  /// In en, this message translates to:
+  /// **'More sharing settings'**
+  String get visibilityMoreSharing;
 
   /// Audience: members of the person's spaces.
   ///
@@ -42359,11 +42395,35 @@ abstract class AppLocalizations {
   /// **'Anyone signed in'**
   String get visibilitySignedIn;
 
+  /// #2558 chosen-spaces picker: two spaces share a name; source says where this one is
+  ///
+  /// In en, this message translates to:
+  /// **'Same name as another space · {source}'**
+  String visibilitySpaceAmbiguous(String source);
+
+  /// #2558 source of a space: the personal home itself
+  ///
+  /// In en, this message translates to:
+  /// **'on this personal home'**
+  String get visibilitySpaceHere;
+
+  /// #2558 source of a space: another installation, by the start of its id
+  ///
+  /// In en, this message translates to:
+  /// **'on server {installation}'**
+  String visibilitySpaceOnServer(String installation);
+
   /// #2558 — a saved chosen space the list no longer names; it stays chosen until the person unticks it.
   ///
   /// In en, this message translates to:
   /// **'A space that is no longer listed'**
   String get visibilitySpaceUnlisted;
+
+  /// #2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet
+  ///
+  /// In en, this message translates to:
+  /// **'Verification unavailable'**
+  String get visibilitySpaceUnverified;
 
   /// #2558 — the chosen-spaces picker when the list of spaces cannot be read.
   ///
@@ -42389,11 +42449,23 @@ abstract class AppLocalizations {
   /// **'Widen'**
   String get visibilityWidenAction;
 
+  /// #2558 widening confirmation: chosen spaces added
+  ///
+  /// In en, this message translates to:
+  /// **'Added: {spaces}'**
+  String visibilityWidenAdded(String spaces);
+
   /// No description provided for @visibilityWidenConfirm.
   ///
   /// In en, this message translates to:
   /// **'Show your {field} to: {audience}? They will be able to see it.'**
   String visibilityWidenConfirm(String field, String audience);
+
+  /// #2558 widening confirmation: chosen spaces removed
+  ///
+  /// In en, this message translates to:
+  /// **'Removed: {spaces}'**
+  String visibilityWidenRemoved(String spaces);
 
   /// #1835 a visit row: the guest withdraws or cancels
   ///

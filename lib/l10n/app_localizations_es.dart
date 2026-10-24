@@ -25361,6 +25361,15 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudieron guardar su profesión y biografía. Inténtelo de nuevo.';
 
   @override
+  String get visibilityAskContact => '¿Quién puede ver mis datos de contacto?';
+
+  @override
+  String get visibilityAskPublic => '¿Está publicado mi perfil público?';
+
+  @override
+  String get visibilityAskWrite => '¿Quién puede escribirme?';
+
+  @override
   String get visibilityBio => 'Unas palabras sobre usted';
 
   @override
@@ -25388,11 +25397,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get visibilityElsewhereTitle => 'En mis otros servidores';
 
   @override
+  String get visibilityFieldElsewhere =>
+      'Este ajuste nombra un espacio en otro servidor, por lo que aún no puede cambiarlo aquí.';
+
+  @override
+  String visibilityHomeHeader(String name) {
+    return 'Hogar personal: $name';
+  }
+
+  @override
   String get visibilityIdentity => 'Nombre y foto';
 
   @override
   String get visibilityIntro =>
       'Cada parte de su cuenta elige su propio público. Nada es público si usted no lo elige.';
+
+  @override
+  String get visibilityMoreSharing => 'Más ajustes para compartir';
 
   @override
   String get visibilityMySpaces => 'Miembros de mis espacios';
@@ -25458,8 +25479,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get visibilitySignedIn => 'Cualquiera con sesión iniciada';
 
   @override
+  String visibilitySpaceAmbiguous(String source) {
+    return 'Mismo nombre que otro espacio · $source';
+  }
+
+  @override
+  String get visibilitySpaceHere => 'en este hogar personal';
+
+  @override
+  String visibilitySpaceOnServer(String installation) {
+    return 'en el servidor $installation';
+  }
+
+  @override
   String get visibilitySpaceUnlisted =>
       'Un espacio que ya no aparece en la lista';
+
+  @override
+  String get visibilitySpaceUnverified => 'Verificación no disponible';
 
   @override
   String get visibilitySpacesUnavailable =>
@@ -25476,8 +25513,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get visibilityWidenAction => 'Ampliar';
 
   @override
+  String visibilityWidenAdded(String spaces) {
+    return 'Añadidos: $spaces';
+  }
+
+  @override
   String visibilityWidenConfirm(String field, String audience) {
     return '¿Mostrar su $field a: $audience? Podrán verlo.';
+  }
+
+  @override
+  String visibilityWidenRemoved(String spaces) {
+    return 'Quitados: $spaces';
   }
 
   @override

@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "visibilityHomeHeader": "Persönliches Zuhause: {name}",
+  "visibilityAskContact": "Wer kann meine Kontaktdaten sehen?",
+  "visibilityAskWrite": "Wer kann mir schreiben?",
+  "visibilityAskPublic": "Ist mein öffentliches Profil veröffentlicht?",
+  "visibilityMoreSharing": "Weitere Freigabeeinstellungen",
+  "visibilityFieldElsewhere": "Diese Einstellung nennt einen Space auf einem anderen Server und lässt sich hier noch nicht ändern.",
+  "visibilitySpaceUnverified": "Überprüfung nicht verfügbar",
+  "visibilitySpaceAmbiguous": "Gleicher Name wie ein anderer Space · {source}",
+  "visibilitySpaceHere": "in diesem persönlichen Zuhause",
+  "visibilitySpaceOnServer": "auf Server {installation}",
+  "visibilityWidenAdded": "Hinzugefügt: {spaces}",
+  "visibilityWidenRemoved": "Entfernt: {spaces}"
+}

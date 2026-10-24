@@ -12,10 +12,13 @@ abstract interface class MeRepository {
   /// names by qualified reference, with no workspace needed here.
   Future<PersonalWorkspaceRefs> myWorkspaceRefs();
 
-  /// `my_visibility()`.
+  /// `my_visibility_network_v1()` (#2558): the chosen spaces by network
+  /// reference, and the home that holds them.
   Future<MyVisibility> myVisibility();
 
-  /// `set_visibility(field, audience, workspaces)`.
+  /// `set_visibility(field, audience, workspaces)`: today's writer, which
+  /// takes LOCAL workspace ids of this home. `MeActions.choose` maps the
+  /// references of this home to them and refuses any other.
   Future<void> setVisibility(VisibilityField field, FieldAudience audience);
 
   /// `set_my_about(profession, bio)`: the words only [VisibilityField.about]

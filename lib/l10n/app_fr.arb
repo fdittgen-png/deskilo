@@ -17191,14 +17191,20 @@
   "visibilityAboutEmpty": "Ajoutez votre métier et quelques mots",
   "visibilityAboutMe": "À propos de moi",
   "visibilityAboutSaveFailed": "Impossible d'enregistrer votre métier et votre présentation. Veuillez réessayer.",
+  "visibilityAskContact": "Qui peut voir mes coordonnées ?",
+  "visibilityAskPublic": "Mon profil public est-il publié ?",
+  "visibilityAskWrite": "Qui peut m’écrire ?",
   "visibilityBio": "Quelques mots sur vous",
   "visibilityChosenCount": "{count, plural, =1{Membres d'1 espace choisi} other{Membres de {count} espaces choisis}}",
   "visibilityChosenSpaces": "Membres d'espaces choisis",
   "visibilityContact": "WhatsApp et e-mail",
   "visibilityElsewhereIntro": "Sur un serveur connecté, vous avez le compte de ce serveur. Les personnes qui n'y partagent aucun espace avec vous voient ce que vous autorisez à toute personne connectée ; vos coordonnées et votre présence ne sortent jamais de vos espaces.",
   "visibilityElsewhereTitle": "Sur mes autres serveurs",
+  "visibilityFieldElsewhere": "Ce réglage nomme un espace sur un autre serveur : il ne peut pas encore être modifié ici.",
+  "visibilityHomeHeader": "Domicile personnel : {name}",
   "visibilityIdentity": "Nom et photo",
   "visibilityIntro": "Chaque partie de votre compte choisit son public. Rien n'est public sans votre choix.",
+  "visibilityMoreSharing": "Plus de réglages de partage",
   "visibilityMySpaces": "Membres de mes espaces",
   "visibilityNoSpaces": "Vous n'êtes encore dans aucun espace. Choisissez un autre public.",
   "visibilityNobody": "Personne",
@@ -17231,11 +17237,16 @@
   "visibilityReachability": "Qui peut démarrer une conversation avec moi",
   "visibilitySaveFailed": "Impossible d'enregistrer qui le voit. Veuillez réessayer.",
   "visibilitySignedIn": "Toute personne connectée",
+  "visibilitySpaceAmbiguous": "Même nom qu’un autre espace · {source}",
+  "visibilitySpaceHere": "sur ce domicile personnel",
+  "visibilitySpaceOnServer": "sur le serveur {installation}",
   "visibilitySpaceUnlisted": "Un espace qui n'est plus listé",
+  "visibilitySpaceUnverified": "Vérification indisponible",
   "visibilitySpacesUnavailable": "Vos espaces ne peuvent pas être listés pour l'instant.",
   "visibilityTitle": "Qui me voit",
   "visibilityUnavailable": "Impossible de lire pour l'instant qui voit quoi de vous. Rien n'a été modifié.",
   "visibilityWidenAction": "Élargir",
+  "visibilityWidenAdded": "Ajoutés : {spaces}",
   "visibilityWidenConfirm": "Montrer votre {field} à : {audience} ? Ces personnes pourront le voir.",
   "@visibilityWidenConfirm": {
     "placeholders": {
@@ -17247,6 +17258,7 @@
       }
     }
   },
+  "visibilityWidenRemoved": "Retirés : {spaces}",
   "visitCancel": "Annuler cette visite",
   "@visitCancel": {
     "description": "#1835 a visit row: the guest withdraws or cancels"
