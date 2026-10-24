@@ -214,7 +214,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     setState(() {
       _busy = false;
       if (ok) {
-        _body.clear();
+        if (_body.text.trim() == text) _body.clear(); // typed since: kept
         _earlier.clear();
         _contextId = landed ?? _contextId;
       }

@@ -7,7 +7,8 @@
 // account (verified and selected through its own pinned client). Signed
 // out, another account, an unknown or unreachable source, a malformed
 // reference: the neutral landing, which shows nothing of anybody's
-// workspace. The personal context is never reset by a tap.
+// workspace. The personal context is never reset by a tap. A message of a
+// workspace conversation opens that conversation in the messenger (#2556).
 import 'dart:async';
 
 import 'package:meta/meta.dart';
@@ -18,6 +19,9 @@ import '../core/backend/context_client_providers.dart';
 import '../core/notifications/notification_taps.dart';
 import '../core/push/notification_reference.dart';
 import '../core/trace/trace_logger.dart';
+import '../features/directory/domain/conversation_link.dart';
+import '../features/directory/domain/messenger.dart';
+import '../features/me/presentation/me_shell.dart';
 import '../features/workspace/providers/connected_space_providers.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import 'route_classes.dart';
@@ -48,6 +52,12 @@ class NotificationTapOpener {
   Future<TapDestination> open(Map<String, String> data) async {
     final destination = await resolveNotificationTap(data, facts);
     switch (destination) {
+      case OpenInWorkspace(:final reference, :final source)
+          when reference.conversationId != null:
+        // #2556 — a message of a conversation opens it in the messenger,
+        // which selects it only once its own source lists it for the
+        // person (the same authorization as any conversation link).
+        go(conversationLocation(source ?? '', reference.conversationId!));
       case OpenInWorkspace(:final reference, :final location, :final source):
         // A connected workspace was selected by its verification already.
         if (source == null) selectLocal(reference.workspaceId);
@@ -60,6 +70,20 @@ class NotificationTapOpener {
     return destination;
   }
 }
+
+/// The messenger's link to the workspace conversation [conversationId] of
+/// [source] ('' is the installation the app is signed in to).
+@visibleForTesting
+String conversationLocation(String source, String conversationId) => Uri(
+      path: MeTab.messages.path,
+      queryParameters: {
+        ConversationLink.parameter: ConversationLink(
+          source: source,
+          kind: MessageContextKind.space,
+          contextId: conversationId,
+        ).key,
+      },
+    ).toString();
 
 /// The signed-in account's facts, read when a tap arrives.
 Future<TapFacts?> _facts(Ref ref) async {

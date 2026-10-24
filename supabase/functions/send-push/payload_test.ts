@@ -163,6 +163,18 @@ function tables(): Record<string, Row[]> {
         conversation_id: null,
         body: "SENTINEL-MESSAGE-BODY SENTINEL-AMOUNT-4242",
       },
+      {
+        id: "note-2",
+        workspace_id: WORKSPACE,
+        from_member_id: "m-actor",
+        to_member_id: null,
+        conversation_id: "conv-1",
+        body: "SENTINEL-MESSAGE-BODY",
+      },
+    ],
+    conversation_participants: [
+      { conversation_id: "conv-1", member_id: "m-actor", left_at: null },
+      { conversation_id: "conv-1", member_id: "m-it", left_at: null },
     ],
     push_endpoints: [
       { member_id: "m-fr", endpoint: "fcm:device-fr" },
@@ -243,6 +255,24 @@ Deno.test("a direct message rings its recipient with generic text in their langu
     ws: WORKSPACE,
     ref_kind: "note",
     ref_id: "note-1",
+  });
+  assertNoSentinel(sent);
+});
+
+Deno.test("a message of a conversation names the conversation by id, nothing more (#2556)", async () => {
+  const { res, sent } = await run({ note_id: "note-2" });
+  assertEquals(res.sent, 1);
+  const message = only(sent);
+  assertEquals(message.token, "device-it");
+  assertEquals(message.data, {
+    v: "1",
+    kind: "member_note",
+    src: "w",
+    inst: INSTALLATION,
+    ws: WORKSPACE,
+    ref_kind: "note",
+    ref_id: "note-2",
+    conv: "conv-1",
   });
   assertNoSentinel(sent);
 });
