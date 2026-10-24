@@ -19790,6 +19790,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours après l\'émission avant qu\'une première relance soit proposée, et avant l\'échéance d\'une facture sans conditions de paiement.';
 
   @override
+  String get settingHintFederationRetentionHours =>
+      'Heures pendant lesquelles un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la plus longue validité de statut plus deux fois l\'écart d\'horloge.';
+
+  @override
   String get settingHintIdentityClockSkewSeconds =>
       'Secondes d\'écart d\'horloge entre le domicile personnel et un serveur d\'espaces encore acceptées, de 0 à 30.';
 
@@ -19964,6 +19968,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Jours avant une première relance';
+
+  @override
+  String get settingLabelFederationRetentionHours =>
+      'Conservation des échanges entre serveurs';
 
   @override
   String get settingLabelIdentityClockSkewSeconds => 'Écart d\'horloge toléré';

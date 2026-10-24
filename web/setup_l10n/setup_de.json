@@ -705,5 +705,7 @@
  "dirQueryLength": "Neue Unterhaltung: längste Suche",
  "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt.",
  "inboxPageSize": "Posteingang: Unterhaltungen pro Seite",
- "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt."
+ "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt.",
+ "fedRetention": "Aufbewahrung des Server-Austauschs",
+ "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt."
 }

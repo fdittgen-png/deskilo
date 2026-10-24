@@ -54,9 +54,15 @@ String _rangeSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'personal.reservation_max_window_days' => l10n.settingLabelPersonalReservationMaxWindowDays,
       'personal.message_directory_page_size' => l10n.settingLabelPersonalMessageDirectoryPageSize,
       'personal.message_directory_query_length' => l10n.settingLabelPersonalMessageDirectoryQueryLength,
+      _ => _federationSettingLabel(l10n, key),
+    };
+
+/// #2562/#2563 -- the identity freshness and the backchannel retention.
+String _federationSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'identity.status_assertion_lifetime_seconds' => l10n.settingLabelIdentityStatusAssertionLifetimeSeconds,
       'identity.status_reconcile_seconds' => l10n.settingLabelIdentityStatusReconcileSeconds,
       'identity.clock_skew_seconds' => l10n.settingLabelIdentityClockSkewSeconds,
+      'federation.retention_hours' => l10n.settingLabelFederationRetentionHours,
       _ => key,
     };
 
@@ -105,9 +111,15 @@ String? _rangeSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'personal.reservation_max_window_days' => l10n.settingHintPersonalReservationMaxWindowDays,
       'personal.message_directory_page_size' => l10n.settingHintPersonalMessageDirectoryPageSize,
       'personal.message_directory_query_length' => l10n.settingHintPersonalMessageDirectoryQueryLength,
+      _ => _federationSettingHint(l10n, key),
+    };
+
+/// #2562/#2563 -- the identity freshness and the backchannel retention.
+String? _federationSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'identity.status_assertion_lifetime_seconds' => l10n.settingHintIdentityStatusAssertionLifetimeSeconds,
       'identity.status_reconcile_seconds' => l10n.settingHintIdentityStatusReconcileSeconds,
       'identity.clock_skew_seconds' => l10n.settingHintIdentityClockSkewSeconds,
+      'federation.retention_hours' => l10n.settingHintFederationRetentionHours,
       _ => null,
     };
 

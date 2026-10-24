@@ -33168,6 +33168,12 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #2563 C2 retention: settingHintFederationRetentionHours
+  ///
+  /// In en, this message translates to:
+  /// **'Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.'**
+  String get settingHintFederationRetentionHours;
+
   /// #2562 C2a enrolment: settingHintIdentityClockSkewSeconds
   ///
   /// In en, this message translates to:
@@ -33437,6 +33443,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
+
+  /// #2563 C2 retention: settingLabelFederationRetentionHours
+  ///
+  /// In en, this message translates to:
+  /// **'Backchannel retention'**
+  String get settingLabelFederationRetentionHours;
 
   /// #2562 C2a enrolment: settingLabelIdentityClockSkewSeconds
   ///

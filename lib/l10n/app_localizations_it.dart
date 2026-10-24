@@ -19749,6 +19749,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Giorni dopo l\'emissione prima che venga proposto un primo sollecito e prima della scadenza di una fattura senza termine di pagamento.';
 
   @override
+  String get settingHintFederationRetentionHours =>
+      'Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d\'orologio.';
+
+  @override
   String get settingHintIdentityClockSkewSeconds =>
       'Secondi di scarto d\'orologio tra la casa personale e un server di spazi ancora accettati, da 0 a 30.';
 
@@ -19923,6 +19927,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Giorni prima di un primo sollecito';
+
+  @override
+  String get settingLabelFederationRetentionHours =>
+      'Conservazione degli scambi tra server';
 
   @override
   String get settingLabelIdentityClockSkewSeconds =>

@@ -850,6 +850,25 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       note: 'How many conversations one inbox source returns per page: the personal home its personal conversations and groups, a workspace server its workspace conversations and inquiries. A bound on one read, not on what the inbox holds.',
     ),
   ),
+  (
+    since: 'membership_fact_names_retention',
+    row: (
+      key: 'federation.retention_hours',
+      type: 'duration',
+      defaultValue: 24,
+      min: 1,
+      max: 720,
+      unit: 'hours',
+      group: 'security',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: 1,
+      editable: true,
+      choices: null,
+      source: 'federation_retention_purge (#2563)',
+      note: 'Hours a server keeps the receipt of a signed backchannel message, and a personal home the tombstone of an ended membership, before the hourly cleanup removes them. Never shorter than the longest assertion lifetime plus twice the clock skew, so a replayed or late message still finds what refuses it.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";
