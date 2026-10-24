@@ -4799,6 +4799,7 @@ Map<String, _Getter> _part17() => {
   'consumptionRefusedQuantity': (l) => l.consumptionRefusedQuantity,
   'countryNameHU': (l) => l.countryNameHU,
   'courtesyNone': (l) => l.courtesyNone,
+  'createHostNone': (l) => l.createHostNone,
   'datevAccountsTitle': (l) => l.datevAccountsTitle,
   'datevConsultantNumber': (l) => l.datevConsultantNumber,
   'defaultPeriodNone': (l) => l.defaultPeriodNone,
