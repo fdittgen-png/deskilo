@@ -7,6 +7,5 @@
   "meDataPersonalUnsupported": "Votre espace personnel ne propose pas encore cet export. Rien n’a été exporté.",
   "meDataPersonalForbidden": "Cette session ne peut pas lire vos données personnelles. Reconnectez-vous à l’application.",
   "meDataPersonalMalformed": "Votre espace personnel a répondu sous une forme que l’application ne sait pas lire. Rien n’a été exporté.",
-  "meDataPersonalFailed": "Votre espace personnel n’a pas répondu. Rien n’a été exporté.",
-  "meDataGuestVisits": "Visites en tant qu’invité : {count}"
+  "meDataPersonalFailed": "Votre espace personnel n’a pas répondu. Rien n’a été exporté."
 }

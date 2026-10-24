@@ -7,6 +7,5 @@
   "meDataPersonalUnsupported": "Il Suo spazio personale non offre ancora questa esportazione. Non è stato esportato nulla.",
   "meDataPersonalForbidden": "Questa sessione non può leggere i Suoi dati personali. Acceda di nuovo all’app.",
   "meDataPersonalMalformed": "Il Suo spazio personale ha risposto in una forma che questa app non sa leggere. Non è stato esportato nulla.",
-  "meDataPersonalFailed": "Il Suo spazio personale non ha risposto. Non è stato esportato nulla.",
-  "meDataGuestVisits": "Visite come ospite: {count}"
+  "meDataPersonalFailed": "Il Suo spazio personale non ha risposto. Non è stato esportato nulla."
 }

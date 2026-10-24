@@ -9,6 +9,12 @@
 // C3: Upcoming, Past (its own period, newest first) and Cancelled by the
 // bookings' actual status; one source shown alone; each row's View, Check
 // in and Cancel go to the host the row was read from (my_reservation_card).
+//
+// C4: the guest visits, their own kind, in the tab and period they belong
+// to, beside the bookings and without any membership; the #2551 cards and,
+// on a wide window, a table; pull to read again, each host keeping what
+// it showed (stale) through an outage. A composition read for another
+// account is never shown.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -17,6 +23,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/session/session_source.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/refusal_text.dart';
@@ -24,11 +31,15 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../visits/domain/guest_participation.dart';
+import '../../../visits/presentation/my_visits_section.dart';
+import '../../../visits/providers/visits_providers.dart';
+import '../../domain/my_guest_visits.dart';
 import '../../domain/my_reservations.dart';
 import '../../domain/my_reservations_composition.dart';
-import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
 import 'my_reservation_card.dart';
+import 'my_reservations_layout.dart';
 
 /// How far either way the period picker lets a person browse, in years:
 /// a navigation bound of the dialog, not a limit on what the host answers.
@@ -93,22 +104,38 @@ class _Feed extends ConsumerWidget {
       direction: filter.tab.direction,
     );
     final composed = ref.watch(myReservationsComposerProvider(query));
-    final loaded = composed.value;
+    final now = ref.watch(clockProvider).now();
+    // C4 -- a composition is shown only to the account it was read for:
+    // while another account's is rebuilt, nothing of it shows.
+    final principal = ref.watch(sessionStateProvider.select((s) => s.value));
+    final read = composed.value;
+    final loaded = read != null && read.principal == principal ? read : null;
+    // C4 -- the guest visits are the personal home's, not a host's: shown
+    // with every source, never under one host alone.
+    final visits = filter.source == null
+        ? myVisitsShown(
+            ref.watch(myGuestVisitsProvider).value ?? const [],
+            tab: filter.tab,
+            from: window.from,
+            to: window.to,
+            now: now,
+          )
+        : const <GuestParticipation>[];
     final Widget body;
     if (loaded != null) {
       final shown = MyReservationsSelection(
         loaded,
         tab: filter.tab,
         source: filter.source,
-        now: ref.watch(clockProvider).now(),
+        now: now,
       );
-      body = shown.empty
+      body = shown.empty && visits.isEmpty
           ? EmptyState(
               key: const ValueKey('my-reservations-empty'),
               icon: Icons.event_busy_outlined,
               title: l10n.myReservationsEmpty,
             )
-          : _List(query: query, composition: loaded, shown: shown);
+          : _List(query: query, composition: loaded, shown: shown, visits: visits);
     } else if (composed.hasError) {
       body = _Problem(
         text: problemWords(l10n, composed.error!),
@@ -291,27 +318,69 @@ class _Problem extends StatelessWidget {
 /// still read, failed or cannot be reached, with its own Try again; and
 /// the next page's button while a host says there is more.
 class _List extends ConsumerWidget {
-  const _List({required this.query, required this.composition, required this.shown});
+  const _List({
+    required this.query,
+    required this.composition,
+    required this.shown,
+    required this.visits,
+  });
 
   final MyReservationsQuery query;
   final MyReservationsComposition composition;
   final MyReservationsSelection shown;
 
+  /// C4 -- the guest visits of the tab and period, their own kind.
+  final List<GuestParticipation> visits;
+
+  /// C4 -- every host read again, each keeping what it showed until it
+  /// answers; the visits too.
+  Future<void> _refresh(WidgetRef ref) async {
+    ref
+      ..invalidate(myReservationsComposerProvider(query))
+      ..invalidate(myGuestVisitsProvider);
+  }
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) =>
+      LayoutBuilder(builder: (context, constraints) => RefreshIndicator(
+            onRefresh: () => _refresh(ref),
+            child: _rows(context, ref, MyReservationsLayout.of(constraints.maxWidth)),
+          ));
+
+  Widget _rows(BuildContext context, WidgetRef ref, MyReservationsLayout layout) {
     final l10n = context.l10n;
     final format = ref.watch(appFormatProvider);
     final entries = shown.entries;
     final composer = ref.read(myReservationsComposerProvider(query).notifier);
+    final table = layout == MyReservationsLayout.table;
     return ListView(
       key: const ValueKey('my-reservations-list'),
       padding: AppSpacing.gutterAll,
+      physics: const AlwaysScrollableScrollPhysics(),
       children: [
         for (final slot in shown.slots)
           if (slot.state != MyReservationsSlotState.read)
             _SlotNotice(slot: slot, onRetry: () => composer.retry(slot.installationId)),
+        if (visits.isNotEmpty) ...[
+          Semantics(
+            header: true,
+            child: Padding(
+              key: const ValueKey('my-reservations-visits'),
+              padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+              child: Text(l10n.myVisitsTitle, style: Theme.of(context).textTheme.titleSmall),
+            ),
+          ),
+          for (final v in visits)
+            GuestVisitCard(
+              key: ValueKey('my-reservations-visit-${v.id}'),
+              visit: v,
+              shape: myReservationsCardShape(context),
+              padding: layout.cardPadding,
+            ),
+        ],
+        if (table && entries.isNotEmpty) const MyReservationsTableHeader(),
         for (final (i, e) in entries.indexed) ...[
-          if (i == 0 || entries[i - 1].day != e.day)
+          if (!table && (i == 0 || entries[i - 1].day != e.day))
             Padding(
               padding: const EdgeInsets.only(
                 top: AppSpacing.md,
@@ -326,6 +395,7 @@ class _List extends ConsumerWidget {
             key: ValueKey('my-reservation-row-${e.source}-${e.item.id}'),
             entry: e,
             query: query,
+            layout: layout,
           ),
         ],
         for (final slot in shown.slots)
@@ -392,6 +462,13 @@ class _SlotNotice extends StatelessWidget {
             icon: Icons.cloud_off_outlined,
             text: l10n.myReservationsSourceProblem(name, problemWords(l10n, failure)),
           ),
+          // C4 -- an outage: what the host showed before stays below.
+          if (slot.stale)
+            Text(
+              l10n.myReservationsSourceStale,
+              key: ValueKey('my-reservations-source-stale-${slot.installationId}'),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           TextButton(
             key: ValueKey('my-reservations-source-retry-${slot.installationId}'),
             onPressed: onRetry,
@@ -402,30 +479,3 @@ class _SlotNotice extends StatelessWidget {
     );
   }
 }
-
-/// The icon of what a booking holds (#2554 C2 reuses it on the Overview).
-IconData myReservationKindIcon(MyReservationPlaceKind kind) => switch (kind) {
-      MyReservationPlaceKind.seat => Icons.chair_outlined,
-      MyReservationPlaceKind.desk => Icons.desk_outlined,
-      MyReservationPlaceKind.office => Icons.meeting_room_outlined,
-      MyReservationPlaceKind.level => Icons.layers_outlined,
-    };
-
-/// What a booking holds, in words.
-String myReservationKindWords(AppLocalizations l10n, MyReservationPlaceKind kind) =>
-    switch (kind) {
-      MyReservationPlaceKind.seat => l10n.myReservationsKindSeat,
-      MyReservationPlaceKind.desk => l10n.myReservationsKindDesk,
-      MyReservationPlaceKind.office => l10n.myReservationsKindOffice,
-      MyReservationPlaceKind.level => l10n.myReservationsKindLevel,
-    };
-
-/// Where a booking stands, in words.
-String myReservationStatusWords(AppLocalizations l10n, ReservationStatus status) =>
-    switch (status) {
-      ReservationStatus.reserved => l10n.myReservationsStatusReserved,
-      ReservationStatus.checkedIn => l10n.myReservationsStatusCheckedIn,
-      ReservationStatus.completed => l10n.myReservationsStatusCompleted,
-      ReservationStatus.cancelled => l10n.myReservationsStatusCancelled,
-      ReservationStatus.released => l10n.myReservationsStatusReleased,
-    };

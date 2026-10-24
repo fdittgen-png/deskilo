@@ -142,6 +142,9 @@ const Set<String> _knownPairs = {
   // #620: the Reserve hub map resolves occupant photos through the
   // profile providers — the same building block as plan and kiosk.
   'reservations -> profile',
+  // #2553 C4: My reservations shows the guest visits as their own kind,
+  // read through the visits' own producer and card (a lower layer).
+  'reservations -> visits',
   'members -> reservations',
   'members -> workspace',
   'money -> events',
