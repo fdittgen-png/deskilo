@@ -4908,6 +4908,8 @@
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
   },
+  "featurePersonalShellDesc": "Ich als fünf Ziele: Überblick, Meine Spaces, Entdecken, Nachrichten und Meine Daten, mit einer Seitenleiste in einem breiten Fenster, einer schmalen Leiste in einem mittleren und einer Leiste unten auf dem Telefon. Ausgeschaltet behält Ich seine vier Tabs.",
+  "featurePersonalShellTitle": "Persönliche Oberfläche (fünf Ziele)",
   "featurePlaceFeedbackDesc": "Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"
@@ -8614,7 +8616,11 @@
   "meAccountInMe": "Mein Konto ist unter Ich",
   "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören Ihnen – in jedem Space.",
   "meAddressSaveFailed": "Ihre Adresse konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "meContextPersonal": "Persönlich",
   "meCreateSpace": "Space gründen",
+  "meDataViewReservations": "Buchungen",
+  "meDataVisitsEmptyBody": "Ihre Buchungen bleiben im Kalender jedes Spaces; Ihre Besuche als Gast erscheinen hier.",
+  "meDataVisitsEmptyTitle": "Noch keine Besuche",
   "meFinanceGlanceOwed": "Zu zahlen: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -8674,10 +8680,17 @@
   "meSpacePending": "Wartet auf Freigabe",
   "meSpacesNoMatch": "Kein Space passt.",
   "meSpacesSearch": "Meine Spaces durchsuchen",
+  "meTabData": "Meine Daten",
+  "meTabDataShort": "Daten",
   "meTabDiscover": "Entdecken",
   "meTabHome": "Start",
   "meTabMe": "Ich",
   "meTabMessages": "Nachrichten",
+  "meTabOverview": "Überblick",
+  "meTabOverviewShort": "Überblick",
+  "meTabSpacesShort": "Spaces",
+  "meUtilityAccount": "Vertraulichkeit und Konto",
+  "meUtilityHelp": "Hilfe und Assistent",
   "meWhereSpacesLive": "Wo meine Spaces liegen",
   "memberAccountTitle": "Mein Konto",
   "@memberAccountTitle": {
@@ -9151,6 +9164,30 @@
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
+  "myReservationsChangePeriod": "Zeitraum ändern",
+  "myReservationsCheckedInAt": "Eingecheckt um {time}",
+  "myReservationsCheckedOutAt": "Ausgecheckt um {time}",
+  "myReservationsEmpty": "Keine Reservierungen in diesem Zeitraum.",
+  "myReservationsFailed": "Ihre Reservierungen konnten nicht gelesen werden. Versuchen Sie es gleich noch einmal.",
+  "myReservationsForbidden": "Dieser Server hat es abgelehnt, Ihre Reservierungen aufzulisten.",
+  "myReservationsInvalid": "Dieser Server hat den angefragten Zeitraum abgelehnt.",
+  "myReservationsKindDesk": "Tisch",
+  "myReservationsKindLevel": "Etage",
+  "myReservationsKindOffice": "Raum",
+  "myReservationsKindSeat": "Platz",
+  "myReservationsLoadMore": "Mehr anzeigen",
+  "myReservationsLoadingMore": "Wird geladen…",
+  "myReservationsMalformed": "Dieser Server hat in einer Form geantwortet, die diese App nicht versteht.",
+  "myReservationsMisconfigured": "Dieser Server hat noch keine Einstellungen für persönliche Lesezugriffe.",
+  "myReservationsNoWorkspace": "Wählen Sie einen Space, um Ihre Reservierungen auf seinem Server zu sehen.",
+  "myReservationsPeriodLimit": "Höchstens {days} Tage auf einmal.",
+  "myReservationsStatusCancelled": "Storniert",
+  "myReservationsStatusCheckedIn": "Eingecheckt",
+  "myReservationsStatusCompleted": "Abgeschlossen",
+  "myReservationsStatusReleased": "Freigegeben",
+  "myReservationsStatusReserved": "Reserviert",
+  "myReservationsUnnamedPlace": "(Platz ohne Namen)",
+  "myReservationsUnsupported": "Dieser Server listet Reservierungen für den persönlichen Bereich noch nicht auf.",
   "myVisitsHelp": "Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
@@ -13376,6 +13413,7 @@
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupPersonal": "Persönlicher Bereich",
   "settingGroupPresence": "Anwesenheit",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -13492,6 +13530,11 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalReadConcurrency": "Wie viele Server der persönliche Bereich gleichzeitig abfragt, wenn er Ihre eigenen Daten zusammenträgt. Eine Grenze für die parallelen Lesezugriffe des Geräts, nicht für einen Server.",
+  "settingHintPersonalReadTimeoutSeconds": "Sekunden, die der persönliche Bereich auf die Antwort eines Servers wartet, bevor er ihn als nicht erreichbar anzeigt und mit den anderen fortfährt.",
+  "settingHintPersonalReservationMaxWindowDays": "Von der Plattform festgelegt: der längste Zeitraum, den ein Lesezugriff auf Ihre Reservierungen anfragen darf. Er begrenzt die Abfrage.",
+  "settingHintPersonalReservationPageSize": "Wie viele Ihrer Reservierungen ein Server je Seite zurückgibt; die nächste Seite kommt mit Mehr anzeigen.",
+  "settingHintPersonalReservationWindowDays": "Tage, die der persönliche Bereich standardmäßig anzeigt, wenn er Ihre Reservierungen auflistet. Sie können einen anderen Zeitraum wählen, bis zur Obergrenze.",
   "settingHintPresenceOnlineWindowMinutes": "Minuten nach dem letzten Lebenszeichen, in denen eine Person noch als online gilt. Über dem 2-Minuten-Herzschlag halten.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
@@ -13628,6 +13671,11 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalReadConcurrency": "Gleichzeitig gelesene Server",
+  "settingLabelPersonalReadTimeoutSeconds": "Wartezeit je Server",
+  "settingLabelPersonalReservationMaxWindowDays": "Obergrenze des Reservierungszeitraums",
+  "settingLabelPersonalReservationPageSize": "Reservierungen je Seite",
+  "settingLabelPersonalReservationWindowDays": "Zeitraum der Reservierungen",
   "settingLabelPresenceOnlineWindowMinutes": "Online-Fenster",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."

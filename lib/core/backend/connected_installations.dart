@@ -10,22 +10,15 @@ import '../trace/trace_logger.dart';
 import 'auth_secret_store.dart';
 import 'backend_settings.dart';
 import 'connected_pool_clients.dart';
+import 'connected_target.dart';
 import 'connection_outcome.dart';
+import 'federation_authority.dart' show deskiloSubjectOf;
 import 'origin_only_client.dart';
 
 export 'connected_pool_clients.dart' show PinnedClient, PoolRecord, PooledClient;
+export 'connected_target.dart' show ConnectedInstallation;
 export 'connection_outcome.dart';
 export 'origin_only_client.dart';
-
-class ConnectedInstallation {
-  const ConnectedInstallation({
-    required this.endpoint,
-    required this.account,
-    required this.installationId,
-  });
-  final BackendEndpoint endpoint;
-  final String account, installationId;
-}
 
 /// Each connection was separately authorized on its own server. The encrypted
 /// collection belongs to one account AND its home origin, never to the device
@@ -119,14 +112,7 @@ class ConnectedInstallations {
     final records = await _records();
     return [
       for (final entry in records.entries)
-        ConnectedInstallation(
-          endpoint: BackendEndpoint(
-            entry.key,
-            (entry.value as Map)['key'] as String,
-          ),
-          account: (entry.value as Map)['account'] as String,
-          installationId: (entry.value as Map)['installation_id'] as String,
-        ),
+        ConnectedInstallation.fromRecord(entry.key, entry.value as Map),
     ];
   }
 
@@ -213,10 +199,18 @@ class ConnectedInstallations {
   /// server verified). The same checks and the same record as [connect]:
   /// no password, no second registration, and nothing granted. The target
   /// must still be [installationId], the installation the flow was for.
+  ///
+  /// #2562 C1b -- kept under the canonical identity ([issuer], [subject]);
+  /// one installation is one connection (another address claiming it is
+  /// refused). Verified BEFORE anything changes: a refused or expired
+  /// adoption leaves the pool, and an earlier connection's leases, as they
+  /// were. Provider tokens are stripped and never written.
   Future<void> adopt(
     BackendEndpoint endpoint,
     Session session, {
     required String installationId,
+    required String issuer,
+    required String subject,
   }) async {
     _check();
     final source = canonicalBackendUrl(endpoint.url);
@@ -229,24 +223,54 @@ class ConnectedInstallations {
     if (source == origin) {
       throw ConnectionFailure(source, ConnectionFailureReason.currentServer);
     }
-    final epoch = (_epochs[source] ?? 0) + 1;
-    _epochs[source] = epoch;
-    // A replaced connection ends the pinned clients of the old one.
-    unawaited(_clients.discard(source));
-    final client = _client(BackendEndpoint(source, endpoint.key.trim()));
+    // An ended session is never refreshed into a connection.
+    if (session.isExpired) {
+      throw ConnectionFailure(source, ConnectionFailureReason.expired);
+    }
+    final key = endpoint.key.trim();
+    final epoch = _epochs[source] ?? 0;
+    final client = _client(BackendEndpoint(source, key));
     try {
       // The canonical provider's tokens never reach a target data API.
       final native = session.toJson()
         ..remove('provider_token')
         ..remove('provider_refresh_token');
       await client.auth.setInitialSession(jsonEncode(native));
-      await _register(
+      final verified = await inspectConnectedTarget(
         source,
-        endpoint.key.trim(),
         client,
-        epoch,
         installationId: installationId,
+        subject: subject,
       );
+      for (final entry in (await _records()).entries) {
+        final other = entry.value as Map;
+        if (entry.key != source &&
+            other['installation_id'] == verified.installation &&
+            other['quarantined'] != true) {
+          throw ConnectionFailure(
+            source,
+            ConnectionFailureReason.changedIdentity,
+          );
+        }
+      }
+      _check(source);
+      // A newer connect, adopt or disconnect of this target won meanwhile.
+      if (epoch != (_epochs[source] ?? 0)) {
+        throw ConnectionFailure(source, ConnectionFailureReason.cancelled);
+      }
+      final next = epoch + 1;
+      _epochs[source] = next;
+      // A replaced connection ends the pinned clients of the old one.
+      unawaited(_clients.discard(source));
+      await _write(source, {
+        'key': key,
+        'account': verified.account,
+        'installation_id': verified.installation,
+        'issuer': issuer,
+        'subject': subject,
+        'session': verified.session.toJson(),
+      }, epoch: next);
+      _unsaved.remove(source);
     } catch (e, st) {
       // trace-exempt: rethrown as the typed outcome, stack kept; the caller traces.
       Error.throwWithStackTrace(classifyConnectionError(e, source: source), st);
@@ -256,43 +280,20 @@ class ConnectedInstallations {
   }
 
   /// Verifies [client]'s signed-in session against its own server and
-  /// saves the connection. [installationId], when given, is the
-  /// installation the caller expects; another one is refused.
+  /// saves the connection.
   Future<void> _register(
     String source,
     String key,
     SupabaseClient client,
-    int epoch, {
-    String? installationId,
-  }) async {
-    final user = (await client.auth.getUser()).user;
-    final session = client.auth.currentSession;
-    if (user == null || session == null || user.id != session.user.id) {
-      throw ConnectionFailure(source, ConnectionFailureReason.denied);
-    }
-    final identity = await client
-        .from('installation_identity')
-        .select('installation_id')
-        .single();
-    final installation = identity['installation_id'];
-    if (installation is! String || installation.isEmpty) {
-      throw ConnectionFailure(source, ConnectionFailureReason.malformed);
-    }
-    if (installationId != null && installation != installationId) {
-      throw ConnectionFailure(source, ConnectionFailureReason.changedIdentity);
-    }
-    // #1832 — compatibility comes from the target's public descriptor
-    // (#1847), not from reading the account's invoices: connecting reads
-    // no private payload and runs no financial operation.
-    if (!connectableProfile(await describeTarget(client))) {
-      throw ConnectionFailure(source, ConnectionFailureReason.unsupported);
-    }
+    int epoch,
+  ) async {
+    final verified = await inspectConnectedTarget(source, client);
     _check(source);
     await _write(source, {
       'key': key,
-      'account': user.id,
-      'installation_id': installation,
-      'session': session.toJson(),
+      'account': verified.account,
+      'installation_id': verified.installation,
+      'session': verified.session.toJson(),
     }, epoch: epoch);
     _unsaved.remove(source);
   }
@@ -399,8 +400,13 @@ class ConnectedInstallations {
           .from('installation_identity')
           .select('installation_id')
           .single();
+      // #2562 C1b -- a connection adopted under a canonical identity stays
+      // that identity's: an account that no longer carries the subject is
+      // a changed target, like another account or installation.
+      final subject = record['subject'];
       if (user?.id != record['account'] ||
-          identity['installation_id'] != record['installation_id']) {
+          identity['installation_id'] != record['installation_id'] ||
+          (subject != null && deskiloSubjectOf(user!) != subject)) {
         await _quarantine(source, record, epoch);
         throw ConnectionFailure(source, ConnectionFailureReason.changedIdentity);
       }

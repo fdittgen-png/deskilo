@@ -1269,6 +1269,12 @@
       "capabilities": []
     },
     {
+      "key": "personalShell",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "placeFeedback",
       "maturity": "beta",
       "lifecycle": "active",

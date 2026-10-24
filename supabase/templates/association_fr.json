@@ -155,6 +155,7 @@
         "paymentReminders": false,
         "pdfExport": true,
         "personalInfo": true,
+        "personalShell": false,
         "placeFeedback": true,
         "planMemberPhotos": false,
         "planObjectDelete": true,

@@ -49,11 +49,11 @@ begin
   if exists (select 1 from pg_roles where rolname = 'deskilo_identity'
               and (rolcanlogin or rolsuper or rolbypassrls or rolcreaterole
                    or rolcreatedb or rolreplication)) then
-    raise exception '9999: deskilo_identity carries an attribute it must not have';
+    raise exception '0564: deskilo_identity carries an attribute it must not have';
   end if;
   if exists (select 1 from pg_auth_members m
               where m.member = 'deskilo_identity'::regrole) then
-    raise exception '9999: deskilo_identity is a member of another role';
+    raise exception '0564: deskilo_identity is a member of another role';
   end if;
 end
 $role$;
@@ -191,4 +191,4 @@ grant execute on function public.identity_federation_token_hook(jsonb) to supaba
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(564);

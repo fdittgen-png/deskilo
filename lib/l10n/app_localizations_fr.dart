@@ -6978,6 +6978,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les membres saisissent nom, adresse postale, téléphone, e-mail et identifiants légaux dans Réglages ; factures et courriers les impriment dans le bloc adresse normalisé.';
 
   @override
+  String get featurePersonalShellDesc =>
+      'Moi en cinq destinations : Vue d’ensemble, Mes espaces, Découvrir, Messages et Mes données, avec une barre latérale sur une fenêtre large, un rail sur une fenêtre moyenne et une barre sur un téléphone. Désactivée, Moi garde ses quatre onglets.';
+
+  @override
+  String get featurePersonalShellTitle =>
+      'Interface personnelle (cinq destinations)';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'Les membres marquent des places, bureaux, salles et étages en favoris et les notent de 0 à 5 étoiles. Un favori est personnel ; une note montre sa moyenne et le nombre de notes, jamais qui. Un assistant peut lister les favoris, en réserver un et enregistrer une note. Désactivé, les cœurs et les étoiles disparaissent et les écritures sont refusées ; rien d\'autre n\'en dépend.';
 
@@ -12771,7 +12779,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'enregistrer votre adresse. Veuillez réessayer.';
 
   @override
+  String get meContextPersonal => 'Personnel';
+
+  @override
   String get meCreateSpace => 'Créer un espace';
+
+  @override
+  String get meDataViewReservations => 'Réservations';
+
+  @override
+  String get meDataVisitsEmptyBody =>
+      'Vos réservations restent dans le calendrier de chaque espace ; vos visites en tant qu’invité apparaissent ici.';
+
+  @override
+  String get meDataVisitsEmptyTitle => 'Aucune visite pour l’instant';
 
   @override
   String meFinanceGlanceOwed(String amount) {
@@ -12938,6 +12959,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meSpacesSearch => 'Rechercher mes espaces';
 
   @override
+  String get meTabData => 'Mes données';
+
+  @override
+  String get meTabDataShort => 'Données';
+
+  @override
   String get meTabDiscover => 'Découvrir';
 
   @override
@@ -12948,6 +12975,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meTabMessages => 'Messages';
+
+  @override
+  String get meTabOverview => 'Vue d’ensemble';
+
+  @override
+  String get meTabOverviewShort => 'Accueil';
+
+  @override
+  String get meTabSpacesShort => 'Espaces';
+
+  @override
+  String get meUtilityAccount => 'Confidentialité et compte';
+
+  @override
+  String get meUtilityHelp => 'Aide et assistant';
 
   @override
   String get meWhereSpacesLive => 'Où vivent mes espaces';
@@ -13771,6 +13813,91 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get myInvoicesTitle => 'Mes factures';
+
+  @override
+  String get myReservationsChangePeriod => 'Changer de période';
+
+  @override
+  String myReservationsCheckedInAt(String time) {
+    return 'Arrivée à $time';
+  }
+
+  @override
+  String myReservationsCheckedOutAt(String time) {
+    return 'Départ à $time';
+  }
+
+  @override
+  String get myReservationsEmpty => 'Aucune réservation sur cette période.';
+
+  @override
+  String get myReservationsFailed =>
+      'Vos réservations n\'ont pas pu être lues. Réessayez dans un instant.';
+
+  @override
+  String get myReservationsForbidden =>
+      'Ce serveur a refusé de lister vos réservations.';
+
+  @override
+  String get myReservationsInvalid =>
+      'Ce serveur a refusé la période demandée.';
+
+  @override
+  String get myReservationsKindDesk => 'Bureau';
+
+  @override
+  String get myReservationsKindLevel => 'Étage';
+
+  @override
+  String get myReservationsKindOffice => 'Salle';
+
+  @override
+  String get myReservationsKindSeat => 'Place';
+
+  @override
+  String get myReservationsLoadMore => 'Afficher plus';
+
+  @override
+  String get myReservationsLoadingMore => 'Chargement…';
+
+  @override
+  String get myReservationsMalformed =>
+      'Ce serveur a répondu sous une forme que cette application ne comprend pas.';
+
+  @override
+  String get myReservationsMisconfigured =>
+      'Ce serveur n\'a pas encore de réglages pour les lectures personnelles.';
+
+  @override
+  String get myReservationsNoWorkspace =>
+      'Choisissez un espace pour voir vos réservations sur son serveur.';
+
+  @override
+  String myReservationsPeriodLimit(int days) {
+    return 'Au plus $days jours à la fois.';
+  }
+
+  @override
+  String get myReservationsStatusCancelled => 'Annulée';
+
+  @override
+  String get myReservationsStatusCheckedIn => 'Arrivée enregistrée';
+
+  @override
+  String get myReservationsStatusCompleted => 'Terminée';
+
+  @override
+  String get myReservationsStatusReleased => 'Libérée';
+
+  @override
+  String get myReservationsStatusReserved => 'Réservée';
+
+  @override
+  String get myReservationsUnnamedPlace => '(place sans nom)';
+
+  @override
+  String get myReservationsUnsupported =>
+      'Ce serveur ne liste pas encore les réservations pour l\'espace personnel.';
 
   @override
   String get myVisitsHelp =>
@@ -19080,6 +19207,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupMessaging => 'Messagerie';
 
   @override
+  String get settingGroupPersonal => 'Espace personnel';
+
+  @override
   String get settingGroupPresence => 'Présence';
 
   @override
@@ -19189,6 +19319,26 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintMessagingThreadPollSeconds =>
       'Secondes entre deux actualisations d\'une conversation ouverte. Des valeurs plus basses chargent davantage le serveur.';
+
+  @override
+  String get settingHintPersonalReadConcurrency =>
+      'Nombre de serveurs que l\'espace personnel interroge en même temps lorsqu\'il rassemble vos propres données. Une borne sur les lectures parallèles de l\'appareil, pas sur un serveur.';
+
+  @override
+  String get settingHintPersonalReadTimeoutSeconds =>
+      'Secondes pendant lesquelles l\'espace personnel attend la réponse d\'un serveur avant de l\'afficher comme indisponible et de passer aux autres.';
+
+  @override
+  String get settingHintPersonalReservationMaxWindowDays =>
+      'Fixé par la plateforme : la plus longue période qu\'une lecture de vos réservations peut demander. Il borne la requête.';
+
+  @override
+  String get settingHintPersonalReservationPageSize =>
+      'Nombre de vos réservations qu\'un serveur renvoie par page ; la page suivante vient avec Afficher plus.';
+
+  @override
+  String get settingHintPersonalReservationWindowDays =>
+      'Jours que l\'espace personnel affiche par défaut lorsqu\'il liste vos réservations. Vous pouvez choisir une autre période, jusqu\'au plafond.';
 
   @override
   String get settingHintPresenceOnlineWindowMinutes =>
@@ -19321,6 +19471,23 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelMessagingThreadPollSeconds =>
       'Actualisation de la conversation';
+
+  @override
+  String get settingLabelPersonalReadConcurrency => 'Serveurs lus en parallèle';
+
+  @override
+  String get settingLabelPersonalReadTimeoutSeconds => 'Attente par serveur';
+
+  @override
+  String get settingLabelPersonalReservationMaxWindowDays =>
+      'Plafond de la période des réservations';
+
+  @override
+  String get settingLabelPersonalReservationPageSize => 'Réservations par page';
+
+  @override
+  String get settingLabelPersonalReservationWindowDays =>
+      'Période des réservations';
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Fenêtre en ligne';

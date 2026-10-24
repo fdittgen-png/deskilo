@@ -1263,6 +1263,10 @@ window.SETUP_L10N={
    "dataReport": [
     "Data report (PDF)",
     "The space's data as a readable PDF: members, bookings by month, the invoice register, payments and balances, purchases and suppliers, and the plan with its prices. The same rows as the Excel workbook, with totals."
+   ],
+   "personalShell": [
+    "Personal shell (five destinations)",
+    "Me as five destinations: Overview, My spaces, Discover, Messages and My data, with a sidebar on a wide window, a rail on a medium one and a bar on a phone. Off, Me keeps its four tabs."
    ]
   },
   "process": {
@@ -2856,6 +2860,10 @@ window.SETUP_L10N={
    "dataReport": [
     "Rapport de données (PDF)",
     "Les données de l’espace dans un PDF lisible : membres, réservations par mois, registre des factures, paiements et soldes, achats et fournisseurs, et le plan avec ses prix. Les mêmes lignes que le classeur Excel, avec les totaux."
+   ],
+   "personalShell": [
+    "Interface personnelle (cinq destinations)",
+    "Moi en cinq destinations : Vue d’ensemble, Mes espaces, Découvrir, Messages et Mes données, avec une barre latérale sur une fenêtre large, un rail sur une fenêtre moyenne et une barre sur un téléphone. Désactivée, Moi garde ses quatre onglets."
    ]
   },
   "process": {
@@ -4449,6 +4457,10 @@ window.SETUP_L10N={
    "dataReport": [
     "Datenbericht (PDF)",
     "Die Daten des Spaces als lesbares PDF: Mitglieder, Buchungen nach Monat, Rechnungsregister, Zahlungen und Salden, Einkäufe und Lieferanten sowie der Plan mit seinen Preisen. Dieselben Zeilen wie die Excel-Arbeitsmappe, mit Summen."
+   ],
+   "personalShell": [
+    "Persönliche Oberfläche (fünf Ziele)",
+    "Ich als fünf Ziele: Überblick, Meine Spaces, Entdecken, Nachrichten und Meine Daten, mit einer Seitenleiste in einem breiten Fenster, einer schmalen Leiste in einem mittleren und einer Leiste unten auf dem Telefon. Ausgeschaltet behält Ich seine vier Tabs."
    ]
   },
   "process": {
@@ -6042,6 +6054,10 @@ window.SETUP_L10N={
    "dataReport": [
     "Informe de datos (PDF)",
     "Los datos del espacio en un PDF legible: miembros, reservas por mes, registro de facturas, pagos y saldos, compras y proveedores, y el plano con sus precios. Las mismas filas que el libro de Excel, con totales."
+   ],
+   "personalShell": [
+    "Interfaz personal (cinco destinos)",
+    "Yo en cinco destinos: Resumen, Mis espacios, Descubrir, Mensajes y Mis datos, con una barra lateral en una ventana ancha, un riel en una mediana y una barra en el teléfono. Desactivada, Yo conserva sus cuatro pestañas."
    ]
   },
   "process": {
@@ -7635,6 +7651,10 @@ window.SETUP_L10N={
    "dataReport": [
     "Rapporto dati (PDF)",
     "I dati dello spazio in un PDF leggibile: membri, prenotazioni per mese, registro delle fatture, pagamenti e saldi, acquisti e fornitori, e la pianta con i suoi prezzi. Le stesse righe della cartella Excel, con i totali."
+   ],
+   "personalShell": [
+    "Interfaccia personale (cinque destinazioni)",
+    "Io in cinque destinazioni: Panoramica, I miei spazi, Scopri, Messaggi e I miei dati, con una barra laterale in una finestra ampia, una barra verticale in una media e una barra in basso sul telefono. Disattivata, Io mantiene le sue quattro schede."
    ]
   },
   "process": {

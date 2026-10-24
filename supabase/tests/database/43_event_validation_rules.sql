@@ -17,7 +17,7 @@
 -- in turn and shows the forbidden effect then happens, so the refusals
 -- above are known to come from those guards and not from the fixture.
 begin;
-select plan(47);
+select plan(48);
 
 create or replace function pg_temp.act_as(p_user uuid) returns void language plpgsql as $act$
 begin
@@ -191,7 +191,10 @@ select throws_ok($$ select public.respond_to_event(pg_temp.id('e1'), true) $$,
   'a caller from another workspace is refused');
 
 select pg_temp.act_as('00000000-0000-4000-8000-000000014541');
-update public.events set status = 'confirmed', decided_at = now() where id = pg_temp.id('e1');
+select throws_ok(
+  $$ update public.events set status = 'confirmed', decided_at = now() where id = pg_temp.id('e1') $$,
+  '42501', null,
+  'a client cannot write an event status directly: the table grants it no UPDATE (#2942)');
 select throws_ok(
   $$ insert into public.event_decisions (event_id, member_id, decision)
      values (pg_temp.id('e1'), pg_temp.id('peer'), 'accept') $$,

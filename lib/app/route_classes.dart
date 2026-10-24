@@ -68,6 +68,15 @@ const String kMeHome = '/me';
 @visibleForTesting
 const List<RouteRule> routeRules = [
   RouteRule(kMeHome, RouteClass.nativeAccount),
+  // #2552 — the personal shell's branches and the pages inside them: the
+  // account's own, like `/me`. (`/me/messages/new` and `:ref` sit after the
+  // messenger's named pages below, which must match first.)
+  RouteRule('/me/spaces', RouteClass.nativeAccount),
+  RouteRule('/me/discover', RouteClass.nativeAccount),
+  RouteRule('/me/messages', RouteClass.nativeAccount),
+  RouteRule('/me/data', RouteClass.nativeAccount),
+  RouteRule('/me/account', RouteClass.nativeAccount),
+  RouteRule('/me/account/connections', RouteClass.nativeAccount),
   RouteRule('/discover', RouteClass.publicEntry),
   // #2211 — a published public profile, readable signed in or not.
   RouteRule('/p/:id', RouteClass.publicEntry),
@@ -98,6 +107,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/me/messages/inquiries', RouteClass.nativeAccount),
   RouteRule('/me/messages/starred', RouteClass.nativeAccount),
   RouteRule('/me/messages/new-group', RouteClass.nativeAccount),
+  RouteRule('/me/messages/new', RouteClass.nativeAccount),
+  RouteRule('/me/messages/:ref', RouteClass.nativeAccount),
   RouteRule('/templates/compare', RouteClass.nativeAccount),
   RouteRule('/templates/detail', RouteClass.nativeAccount),
   RouteRule('/task-recorder/guide', RouteClass.nativeAccount),

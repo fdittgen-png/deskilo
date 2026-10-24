@@ -17,6 +17,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/setup_obligations.dart';
+import '../../providers/workspace_providers.dart';
 
 class SetupObligationsCard extends ConsumerWidget {
   const SetupObligationsCard({super.key, required this.country});
@@ -31,7 +32,12 @@ class SetupObligationsCard extends ConsumerWidget {
     final dates = DateFormat.yMMMd(
       Localizations.maybeLocaleOf(context)?.toString(),
     );
-    final obligations = setupObligations(country);
+    // #2561 L4 -- the rows of the selected workspace's own installation, as
+    // its context captured them.
+    final obligations = setupObligations(
+      country,
+      reference: ref.watch(readyWorkspaceContextProvider)?.taxReference.set,
+    );
     final small = Theme.of(context).textTheme.bodySmall;
     return Card(
       key: const ValueKey('setup-obligations'),
