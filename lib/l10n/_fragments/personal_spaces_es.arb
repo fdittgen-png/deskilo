@@ -1,0 +1,16 @@
+{
+  "@@locale": "es",
+  "mySpacesCount": "{count, plural, =0{Ningún espacio} =1{1 espacio} other{{count} espacios}}",
+  "mySpacesHostHere": "En este servidor",
+  "mySpacesHostElsewhere": "En otra instalación",
+  "mySpacesVerified": "Membresía verificada",
+  "mySpacesOpen": "Abrir",
+  "mySpacesOpenTest": "Abrir el espacio de prueba",
+  "mySpacesTestSpace": "Espacio de prueba",
+  "mySpacesRequestStatus": "Ver el estado de la solicitud",
+  "mySpacesUnavailable": "No se pudieron leer sus espacios.",
+  "mySpacesNoMatch": "Ningún espacio coincide con su búsqueda.",
+  "mySpacesDiscover": "Descubrir espacios",
+  "mySpacesManage": "Gestionar los espacios de este servidor",
+  "mySpacesAll": "Todos mis espacios"
+}

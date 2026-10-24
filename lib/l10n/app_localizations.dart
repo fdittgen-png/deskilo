@@ -23146,6 +23146,84 @@ abstract class AppLocalizations {
   /// **'This server does not list reservations for the personal space yet.'**
   String get myReservationsUnsupported;
 
+  /// #2554 Overview: link to the full My spaces list
+  ///
+  /// In en, this message translates to:
+  /// **'All my spaces'**
+  String get mySpacesAll;
+
+  /// #2554 My spaces: the number of loaded spaces
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No space} =1{1 space} other{{count} spaces}}'**
+  String mySpacesCount(int count);
+
+  /// #2554 My spaces: link to Discover
+  ///
+  /// In en, this message translates to:
+  /// **'Discover spaces'**
+  String get mySpacesDiscover;
+
+  /// #2554 My spaces: the space lives on another installation
+  ///
+  /// In en, this message translates to:
+  /// **'On another installation'**
+  String get mySpacesHostElsewhere;
+
+  /// #2554 My spaces: the space lives on the personal home's own server
+  ///
+  /// In en, this message translates to:
+  /// **'On this server'**
+  String get mySpacesHostHere;
+
+  /// #2554 My spaces: link to the management of this server's spaces
+  ///
+  /// In en, this message translates to:
+  /// **'Manage spaces on this server'**
+  String get mySpacesManage;
+
+  /// #2554 My spaces: the search matches nothing
+  ///
+  /// In en, this message translates to:
+  /// **'No space matches your search.'**
+  String get mySpacesNoMatch;
+
+  /// #2554 My spaces: main action, enter an active space
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get mySpacesOpen;
+
+  /// #2554 My spaces: main action, enter a development (test) space
+  ///
+  /// In en, this message translates to:
+  /// **'Open test space'**
+  String get mySpacesOpenTest;
+
+  /// #2554 My spaces: main action of a pending request
+  ///
+  /// In en, this message translates to:
+  /// **'View request status'**
+  String get mySpacesRequestStatus;
+
+  /// #2554 My spaces: metadata of a development space
+  ///
+  /// In en, this message translates to:
+  /// **'Test space'**
+  String get mySpacesTestSpace;
+
+  /// #2554 My spaces: the spaces could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your spaces could not be read.'**
+  String get mySpacesUnavailable;
+
+  /// #2554 My spaces: the membership was read from the space's own server
+  ///
+  /// In en, this message translates to:
+  /// **'Membership verified'**
+  String get mySpacesVerified;
+
   /// #1835 Me › Home: under the My visits heading
   ///
   /// In en, this message translates to:
