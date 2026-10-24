@@ -87,11 +87,13 @@ Set<String> policiesCreatedBy(Iterable<String> sql) {
   return live;
 }
 
-const _loopPolicy = 'mcp_delegated_deny';
+/// Policies a migration creates on many tables in a plpgsql loop:
+/// `mcp_delegated_deny` (0273, every RLS table) and
+/// `personal_native_session` (#2562, every personal surface).
+const _loopPolicies = ['mcp_delegated_deny', 'personal_native_session'];
 
-bool _loopDeclared(List<File> files) => files.any((f) =>
-    f.path.endsWith('0273_mcp_token_containment.sql') &&
-    f.readAsStringSync().contains("create policy $_loopPolicy on %I.%I"));
+bool _loopDeclared(List<File> files, String policy) => files.any((f) =>
+    f.readAsStringSync().contains("create policy $policy on %I.%I"));
 
 void main() {
   final files = sqlFiles('supabase/migrations');
@@ -125,10 +127,10 @@ void main() {
     final ghosts = manifest
         .where((p) => p.startsWith('public.'))
         .where((p) => !created.contains(p))
-        // 0273 creates `mcp_delegated_deny` on EVERY RLS table in a
-        // plpgsql loop, which this reader cannot expand; the replay
-        // (the database job) is what proves each one exists.
-        .where((p) => !(p.endsWith('.$_loopPolicy') && _loopDeclared(files)))
+        // A loop policy is created in plpgsql, which this reader cannot
+        // expand; the replay (the database job) proves each one exists.
+        .where((p) => !_loopPolicies.any(
+            (l) => p.endsWith('.$l') && _loopDeclared(files, l)))
         .toList()
       ..sort();
     expect(
