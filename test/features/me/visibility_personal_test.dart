@@ -30,6 +30,7 @@ Future<GoRouter> _account(
     extraOverrides: [personalShellEnabledProvider.overrideWithValue(true)],
   );
   await goTo(tester, router, '/me/account');
+  await openMoreSharing(tester);
   return router;
 }
 
@@ -146,17 +147,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(_key('visibility-unavailable'), findsNothing);
-    await tester.scrollUntilVisible(
-      _key('visibility-field-about'),
-      200,
-      scrollable: find
-          .descendant(
-            of: _key('me-account-list'),
-            matching: find.byType(Scrollable),
-          )
-          .first,
-    );
-    await tester.pumpAndSettle();
+    await openMoreSharing(tester);
     expect(
       find.descendant(
         of: _key('visibility-field-about'),
@@ -168,9 +159,12 @@ void main() {
 
   testWidgets('a saved chosen space the list no longer names stays chosen '
       'until it is unticked', (tester) async {
+    final gone = me.refOf('ws-gone');
+    final here = me.refOf('ws-1');
+    me.spaceLabels['ws-1'] = 'Test Space';
     me.accounts['user-1']!.visibility = MyVisibility.defaults.withField(
       VisibilityField.contactChannels,
-      const FieldAudience(VisibilityAudience.chosenSpaces, {'ws-gone'}),
+      FieldAudience(VisibilityAudience.chosenSpaces, {gone}),
     );
     await _account(
       tester,
@@ -181,13 +175,13 @@ void main() {
     await _open(tester, VisibilityField.contactChannels);
     expect(
       find.descendant(
-        of: _key('visibility-space-ws-gone'),
+        of: _key('visibility-space-$gone'),
         matching: find.text('A space that is no longer listed'),
       ),
       findsOneWidget,
     );
     expect(
-      tester.widget<CheckboxListTile>(_key('visibility-space-ws-gone')).value,
+      tester.widget<CheckboxListTile>(_key('visibility-space-$gone')).value,
       isTrue,
     );
     // Saving unchanged writes nothing and drops nothing.
@@ -196,19 +190,19 @@ void main() {
       me.accounts['user-1']!.visibility
           .of(VisibilityField.contactChannels)
           .workspaces,
-      {'ws-gone'},
+      {gone},
     );
 
     await _open(tester, VisibilityField.contactChannels);
-    await tester.tap(_key('visibility-space-ws-gone'));
-    await tester.tap(_key('visibility-space-ws-1'));
+    await tester.tap(_key('visibility-space-$gone'));
+    await tester.tap(_key('visibility-space-$here'));
     await tester.pumpAndSettle();
     await _save(tester);
     expect(
       me.accounts['user-1']!.visibility
           .of(VisibilityField.contactChannels)
           .workspaces,
-      {'ws-1'},
+      {here},
     );
   });
 

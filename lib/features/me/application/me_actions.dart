@@ -26,6 +26,12 @@ enum MeRefusal {
   /// A profession over 120 characters or a bio over 1000 — the limits
   /// the server's table holds.
   aboutTooLong,
+
+  /// #2558 — the field names, or would name, a chosen space on another
+  /// installation. Today's writer takes local ids of this home only; such
+  /// a field is read-only here until the network writer exists (#2563 C2),
+  /// and its reference is never read as a local id.
+  spaceElsewhere,
 }
 
 /// The longest profession and bio `account_about` stores.
@@ -73,17 +79,35 @@ class MeActions {
       _repository.setPublicProfile(publish: publish);
 
   /// Give [field] the audience [choice]: one this field may have, and with
-  /// a space when the audience is chosen spaces.
-  Future<void> choose(VisibilityField field, FieldAudience choice) {
+  /// a space when the audience is chosen spaces. #2558 — [saved] is what
+  /// the personal home answered: the chosen spaces are its network
+  /// references, and each is written as the local id of THIS home; a
+  /// field that names a space elsewhere, or a choice that would, is
+  /// refused before any call, so no saved reference is dropped silently.
+  Future<void> choose(
+    VisibilityField field,
+    FieldAudience choice, {
+    MyVisibility saved = MyVisibility.defaults,
+  }) {
     if (!field.allowedAudiences.contains(choice.audience)) {
       throw const MeRefused(MeRefusal.audienceNotAllowed);
     }
     if (choice.incomplete) throw const MeRefused(MeRefusal.noSpaceChosen);
+    if (saved.namesSpaceElsewhere(field)) {
+      throw const MeRefused(MeRefusal.spaceElsewhere);
+    }
+    if (choice.audience != VisibilityAudience.chosenSpaces) {
+      return _repository.setVisibility(field, FieldAudience(choice.audience));
+    }
+    final local = <String>{};
+    for (final ref in choice.workspaces) {
+      final id = saved.localIdOf(ref);
+      if (id == null) throw const MeRefused(MeRefusal.spaceElsewhere);
+      local.add(id);
+    }
     return _repository.setVisibility(
       field,
-      choice.audience == VisibilityAudience.chosenSpaces
-          ? choice
-          : FieldAudience(choice.audience),
+      FieldAudience(choice.audience, local),
     );
   }
 

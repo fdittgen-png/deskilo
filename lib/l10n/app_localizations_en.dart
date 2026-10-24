@@ -13876,6 +13876,54 @@ class AppLocalizationsEn extends AppLocalizations {
       'This server does not list reservations for the personal space yet.';
 
   @override
+  String get mySpacesAll => 'All my spaces';
+
+  @override
+  String mySpacesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count spaces',
+      one: '1 space',
+      zero: 'No space',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mySpacesDiscover => 'Discover spaces';
+
+  @override
+  String get mySpacesHostElsewhere => 'On another installation';
+
+  @override
+  String get mySpacesHostHere => 'On this server';
+
+  @override
+  String get mySpacesManage => 'Manage spaces on this server';
+
+  @override
+  String get mySpacesNoMatch => 'No space matches your search.';
+
+  @override
+  String get mySpacesOpen => 'Open';
+
+  @override
+  String get mySpacesOpenTest => 'Open test space';
+
+  @override
+  String get mySpacesRequestStatus => 'View request status';
+
+  @override
+  String get mySpacesTestSpace => 'Test space';
+
+  @override
+  String get mySpacesUnavailable => 'Your spaces could not be read.';
+
+  @override
+  String get mySpacesVerified => 'Membership verified';
+
+  @override
   String get myVisitsHelp =>
       'Visits you asked for or were admitted to, as a guest. A visit is not a membership.';
 
@@ -25107,6 +25155,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save your profession and bio. Please try again.';
 
   @override
+  String get visibilityAskContact => 'Who can see my contact details?';
+
+  @override
+  String get visibilityAskPublic => 'Is my public profile published?';
+
+  @override
+  String get visibilityAskWrite => 'Who can write to me?';
+
+  @override
   String get visibilityBio => 'A few words about you';
 
   @override
@@ -25134,11 +25191,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilityElsewhereTitle => 'On my other servers';
 
   @override
+  String get visibilityFieldElsewhere =>
+      'It names a space on another server, so it cannot be changed here yet.';
+
+  @override
+  String visibilityHomeHeader(String name) {
+    return 'Personal home: $name';
+  }
+
+  @override
   String get visibilityIdentity => 'Name and photo';
 
   @override
   String get visibilityIntro =>
       'Each part of your account picks its own audience. Nothing is public unless you choose it.';
+
+  @override
+  String get visibilityMoreSharing => 'More sharing settings';
 
   @override
   String get visibilityMySpaces => 'Members of my spaces';
@@ -25202,7 +25271,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilitySignedIn => 'Anyone signed in';
 
   @override
+  String visibilitySpaceAmbiguous(String source) {
+    return 'Same name as another space · $source';
+  }
+
+  @override
+  String get visibilitySpaceHere => 'on this personal home';
+
+  @override
+  String visibilitySpaceOnServer(String installation) {
+    return 'on server $installation';
+  }
+
+  @override
   String get visibilitySpaceUnlisted => 'A space that is no longer listed';
+
+  @override
+  String get visibilitySpaceUnverified => 'Verification unavailable';
 
   @override
   String get visibilitySpacesUnavailable =>
@@ -25219,8 +25304,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilityWidenAction => 'Widen';
 
   @override
+  String visibilityWidenAdded(String spaces) {
+    return 'Added: $spaces';
+  }
+
+  @override
   String visibilityWidenConfirm(String field, String audience) {
     return 'Show your $field to: $audience? They will be able to see it.';
+  }
+
+  @override
+  String visibilityWidenRemoved(String spaces) {
+    return 'Removed: $spaces';
   }
 
   @override

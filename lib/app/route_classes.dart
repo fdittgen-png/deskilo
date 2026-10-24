@@ -72,6 +72,7 @@ const List<RouteRule> routeRules = [
   // account's own, like `/me`. (`/me/messages/new` and `:ref` sit after the
   // messenger's named pages below, which must match first.)
   RouteRule('/me/spaces', RouteClass.nativeAccount),
+  RouteRule('/me/spaces/manage', RouteClass.nativeAccount),
   RouteRule('/me/discover', RouteClass.nativeAccount),
   RouteRule('/me/messages', RouteClass.nativeAccount),
   RouteRule('/me/data', RouteClass.nativeAccount),

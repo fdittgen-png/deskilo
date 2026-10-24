@@ -1,0 +1,15 @@
+{
+  "@@locale": "it",
+  "visibilityHomeHeader": "Casa personale: {name}",
+  "visibilityAskContact": "Chi può vedere i miei recapiti?",
+  "visibilityAskWrite": "Chi può scrivermi?",
+  "visibilityAskPublic": "Il mio profilo pubblico è pubblicato?",
+  "visibilityMoreSharing": "Altre impostazioni di condivisione",
+  "visibilityFieldElsewhere": "Questa impostazione nomina uno spazio su un altro server, quindi non può ancora modificarla qui.",
+  "visibilitySpaceUnverified": "Verifica non disponibile",
+  "visibilitySpaceAmbiguous": "Stesso nome di un altro spazio · {source}",
+  "visibilitySpaceHere": "in questa casa personale",
+  "visibilitySpaceOnServer": "sul server {installation}",
+  "visibilityWidenAdded": "Aggiunti: {spaces}",
+  "visibilityWidenRemoved": "Rimossi: {spaces}"
+}

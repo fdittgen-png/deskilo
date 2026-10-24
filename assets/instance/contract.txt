@@ -368,6 +368,14 @@ constraint expense_schedules.expense_schedules_workspace_id_fkey FOREIGN KEY (wo
 constraint expense_schedules.expense_schedules_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint expense_schedules.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint expense_schedules.system_company_present CHECK ((company_id IS NOT NULL))
+constraint federation_inbox_receipts.federation_inbox_receipts_body_digest_check CHECK ((body_digest ~ '^[0-9a-f]{64}$'::text))
+constraint federation_inbox_receipts.federation_inbox_receipts_pkey PRIMARY KEY (source_installation_id, event_id)
+constraint federation_inbox_receipts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint federation_keys.federation_keys_direction_check CHECK ((direction = ANY (ARRAY['outbound'::text, 'inbound'::text])))
+constraint federation_keys.federation_keys_key_id_check CHECK ((key_id ~ '^[A-Za-z0-9._-]{1,64}$'::text))
+constraint federation_keys.federation_keys_pkey PRIMARY KEY (peer_installation_id, direction, purpose, key_id)
+constraint federation_keys.federation_keys_purpose_check CHECK ((purpose = ANY (ARRAY['identity_status'::text, 'membership_fact'::text])))
+constraint federation_keys.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint fee_bands.fee_bands_check CHECK ((from_pct < to_pct))
 constraint fee_bands.fee_bands_fee_cents_check CHECK ((fee_cents >= 0))
 constraint fee_bands.fee_bands_from_pct_check CHECK (((from_pct >= 0) AND (from_pct <= 99)))
@@ -425,6 +433,20 @@ constraint identity_federation_clients.identity_federation_clients_pkey PRIMARY 
 constraint identity_federation_clients.identity_federation_clients_purpose_check CHECK ((purpose = 'identity_federation'::text))
 constraint identity_federation_clients.identity_federation_clients_target_auth_url_check CHECK ((target_auth_url ~ '^(https://[^/@?#[:space:]]+|http://(127[.]0[.]0[.]1|localhost)(:[0-9]+)?)(/[A-Za-z0-9._~-]+)*$'::text))
 constraint identity_federation_clients.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint identity_status_assertions.identity_status_assertions_check CHECK ((valid_until > asserted_at))
+constraint identity_status_assertions.identity_status_assertions_pkey PRIMARY KEY (issuer, subject)
+constraint identity_status_assertions.identity_status_assertions_revision_check CHECK ((revision > 0))
+constraint identity_status_assertions.identity_status_assertions_status_check CHECK ((status = ANY (ARRAY['active'::text, 'suspended'::text, 'erased'::text])))
+constraint identity_status_assertions.identity_status_assertions_subject_check CHECK (((length(subject) >= 1) AND (length(subject) <= 255)))
+constraint identity_status_assertions.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint identity_status_outbox.identity_status_outbox_check CHECK ((valid_until > issued_at))
+constraint identity_status_outbox.identity_status_outbox_pkey PRIMARY KEY (event_id)
+constraint identity_status_outbox.identity_status_outbox_revision_check CHECK ((revision > 0))
+constraint identity_status_outbox.identity_status_outbox_state_check CHECK ((state = ANY (ARRAY['pending'::text, 'sent'::text, 'delivered'::text, 'refused'::text, 'expired'::text])))
+constraint identity_status_outbox.identity_status_outbox_status_check CHECK ((status = ANY (ARRAY['active'::text, 'suspended'::text, 'erased'::text])))
+constraint identity_status_outbox.identity_status_outbox_subject_check CHECK (((length(subject) >= 1) AND (length(subject) <= 255)))
+constraint identity_status_outbox.identity_status_outbox_target_installation_id_fkey FOREIGN KEY (target_installation_id) REFERENCES enrolled_installations(installation_id)
+constraint identity_status_outbox.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint installation_identity.installation_identity_installation_id_key UNIQUE (installation_id)
 constraint installation_identity.installation_identity_personal_home_check CHECK (((personal_home_kind = ANY (ARRAY['unset'::text, 'self'::text, 'endpoint'::text])) AND ((personal_home_kind = 'endpoint'::text) = (personal_home_url IS NOT NULL)) AND ((personal_home_url IS NULL) = (personal_home_key IS NULL)) AND ((personal_home_url IS NULL) OR (personal_home_url ~ '^https://[a-z0-9-]+(\.[a-z0-9-]+)+(:[0-9]{1,5})?$'::text)) AND ((personal_home_key IS NULL) OR is_publishable_backend_key(personal_home_key))))
 constraint installation_identity.installation_identity_pkey PRIMARY KEY (singleton)
@@ -765,6 +787,27 @@ constraint members.members_workspace_id_id_key UNIQUE (workspace_id, id)
 constraint members.members_workspace_id_user_id_key UNIQUE (workspace_id, user_id)
 constraint members.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint members.system_company_present CHECK ((company_id IS NOT NULL))
+constraint membership_fact_outbox.membership_fact_outbox_check CHECK ((valid_until > asserted_at))
+constraint membership_fact_outbox.membership_fact_outbox_pkey PRIMARY KEY (event_id)
+constraint membership_fact_outbox.membership_fact_outbox_revision_check CHECK ((revision > 0))
+constraint membership_fact_outbox.membership_fact_outbox_state_check CHECK ((state = ANY (ARRAY['pending'::text, 'sent'::text, 'delivered'::text, 'refused'::text, 'expired'::text])))
+constraint membership_fact_outbox.membership_fact_outbox_status_check CHECK ((status = ANY (ARRAY['active'::text, 'paused'::text, 'pending'::text, 'exited'::text, 'tombstone'::text])))
+constraint membership_fact_outbox.membership_fact_outbox_subject_check CHECK (((length(subject) >= 1) AND (length(subject) <= 255)))
+constraint membership_fact_outbox.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint membership_fact_state.membership_fact_state_network_id_check CHECK ((network_id ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'::text))
+constraint membership_fact_state.membership_fact_state_pkey PRIMARY KEY (issuer, subject, network_id)
+constraint membership_fact_state.membership_fact_state_revision_check CHECK ((revision > 0))
+constraint membership_fact_state.membership_fact_state_status_check CHECK ((status = ANY (ARRAY['active'::text, 'paused'::text, 'pending'::text, 'exited'::text, 'tombstone'::text])))
+constraint membership_fact_state.membership_fact_state_subject_check CHECK (((length(subject) >= 1) AND (length(subject) <= 255)))
+constraint membership_fact_state.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint membership_facts.membership_facts_deadline CHECK ((valid_until > asserted_at))
+constraint membership_facts.membership_facts_network_id_check CHECK ((network_id ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'::text))
+constraint membership_facts.membership_facts_own_workspace CHECK ((split_part(network_id, ':'::text, 1) = (source_installation_id)::text))
+constraint membership_facts.membership_facts_pkey PRIMARY KEY (user_id, network_id)
+constraint membership_facts.membership_facts_revision_check CHECK ((revision > 0))
+constraint membership_facts.membership_facts_status_check CHECK ((status = ANY (ARRAY['active'::text, 'paused'::text, 'pending'::text, 'exited'::text, 'tombstone'::text])))
+constraint membership_facts.membership_facts_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+constraint membership_facts.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint message_events.message_events_actor_user_id_fkey FOREIGN KEY (actor_user_id) REFERENCES auth.users(id) ON DELETE SET NULL
 constraint message_events.message_events_event_check CHECK ((event = ANY (ARRAY['sent'::text, 'read'::text, 'forwarded'::text, 'deleted'::text, 'captured'::text])))
 constraint message_events.message_events_message_kind_check CHECK ((message_kind = ANY (ARRAY['member_note'::text, 'account_message'::text, 'inquiry_message'::text, 'group_message'::text])))
@@ -1696,7 +1739,7 @@ routine public.accept_privacy_policy(p_version text) -> void | function | define
 routine public.account_audience_of(p_user uuid, p_field text) -> text | function | definer | stable | exec:service_role | body:f3ecc8c826e6
 routine public.account_blocked_between(p_a uuid, p_b uuid) -> boolean | function | definer | stable | exec:service_role | body:b531a1ec4c40
 routine public.account_display_name(p_user uuid) -> text | function | definer | stable | exec:service_role | body:23e2dc88d818
-routine public.account_field_visible_to(p_owner uuid, p_field text, p_viewer uuid) -> boolean | function | definer | stable | exec:service_role | body:608db13e5e4d
+routine public.account_field_visible_to(p_owner uuid, p_field text, p_viewer uuid) -> boolean | function | definer | stable | exec: | body:8ee097edc3f9
 routine public.account_group_admin(p_group uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f584f20fac29
 routine public.account_group_details(p_group uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:13a9ac4000cd
 routine public.account_group_member(p_group uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:7d60853ef1e6
@@ -1895,6 +1938,10 @@ routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | func
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
 routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c6dfdb60371c
+routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
+routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:efd1cb1b800f
+routine public.federation_signing_input(p_method text, p_path text, p_purpose text, p_source uuid, p_target uuid, p_event uuid, p_timestamp bigint, p_digest text, p_key_id text) -> text | function | invoker | immutable | exec: | body:02a8f231c3d2
+routine public.federation_verify(p_method text, p_path text, p_headers jsonb, p_raw bytea) -> jsonb | function | definer | volatile | exec: | body:cfd8c540eeac
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
 routine public.field_answer_problem(p_definition_id uuid, p_answer jsonb) -> text | function | definer | stable | exec:service_role | body:dfc73d4d2ec2
 routine public.field_contexts() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:233e963064a5
@@ -1929,6 +1976,11 @@ routine public.identity_binding_revoked_cascade() -> trigger | function | define
 routine public.identity_binding_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:dfbda10ae4a1
 routine public.identity_bindings_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:faaf73ca1142
 routine public.identity_federation_token_hook(event jsonb) -> jsonb | function | definer | stable | exec: | body:aa69de7aea32
+routine public.identity_status_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:2eec3d7c7e24
+routine public.identity_status_drain() -> jsonb | function | definer | volatile | exec: | body:636ee1164777
+routine public.identity_status_issue(p_user uuid, p_status text) -> integer | function | definer | volatile | exec: | body:a88a61387f1f
+routine public.identity_status_linked_targets(p_user uuid) -> SETOF uuid | function | definer | stable | exec: | body:c186af7603f1
+routine public.identity_status_on_account_change() -> trigger | function | definer | volatile | exec: | body:e2b19e7c50c1
 routine public.import_closure_days(p_workspace_id uuid, p_days jsonb, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e99f11021cb3
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:bc90d83d1544
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f20c38cf0ab5
@@ -2193,6 +2245,15 @@ routine public.members_prod_access_guard() -> trigger | function | definer | vol
 routine public.members_rebalance_credits() -> trigger | function | definer | volatile | exec:service_role | body:d6752f083c11
 routine public.members_vies_guard() -> trigger | function | definer | volatile | exec:service_role | body:9a473e9c6b36
 routine public.members_zero_subscription_guard() -> trigger | function | invoker | volatile | exec:service_role | body:c6c375c30e6f
+routine public.membership_fact_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:8eb6b369de67
+routine public.membership_fact_drain() -> jsonb | function | definer | volatile | exec: | body:57abc7ae45c7
+routine public.membership_fact_enqueue(p_state membership_fact_state) -> integer | function | definer | volatile | exec: | body:c0ceceb780b7
+routine public.membership_fact_home() -> TABLE(home_installation_id uuid, home_origin text, home_key text) | function | definer | stable | exec: | body:4ddaaae4e1e7
+routine public.membership_fact_in_force(p_user uuid, p_ref text, p_statuses text[]) -> boolean | function | definer | stable | exec: | body:4731c1825176
+routine public.membership_fact_on_binding_change() -> trigger | function | definer | volatile | exec: | body:3d37fdd2d63b
+routine public.membership_fact_on_member_change() -> trigger | function | definer | volatile | exec: | body:865c3b9b8a98
+routine public.membership_fact_produce(p_workspace uuid, p_user uuid) -> integer | function | definer | volatile | exec: | body:ff593077a19e
+routine public.membership_fact_reconcile() -> jsonb | function | definer | volatile | exec: | body:da5cf18644bd
 routine public.merge_floor_plan(p_workspace_id uuid, p_tree jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:1d7ab6c6b4f3
 routine public.message_body_workspaces(p_body text) -> uuid[] | function | definer | stable | exec:service_role | body:048f72b54450
 routine public.message_history(p_kind text, p_message_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c152cb52fbea
@@ -2228,7 +2289,7 @@ routine public.my_instance_notices() -> jsonb | function | definer | stable | ex
 routine public.my_mcp_connections() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f9722c099712
 routine public.my_message_requests() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f04fa74b6d8e
 routine public.my_personal_preferences(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:213deec91380
-routine public.my_personal_workspace_refs_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9877daba3c54
+routine public.my_personal_workspace_refs_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:227294c36bbf
 routine public.my_public_profile() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3c381728dd4f
 routine public.my_reachable_people() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7e4e6a455cf0
 routine public.my_reservations_page_v1(p_from timestamp with time zone, p_to timestamp with time zone, p_workspace_id uuid, p_direction text, p_after_start timestamp with time zone, p_after_id uuid) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:a32390072be3
@@ -2266,8 +2327,10 @@ routine public.operator_mcp_runtime_status() -> jsonb | function | definer | sta
 routine public.operator_record_instance_owner_claim(p_email text) -> void | function | definer | volatile | exec:service_role | body:ae45adf23e44
 routine public.operator_register_identity_federation_client(p_client_id uuid, p_target_installation_id uuid, p_target_auth_url text) -> void | function | definer | volatile | exec: | body:e7964eef61e4
 routine public.operator_reset_mcp_authority(p_installation_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:22d43b34dfd3
+routine public.operator_retire_federation_key(p_peer uuid, p_direction text, p_purpose text, p_key_id text) -> jsonb | function | definer | volatile | exec: | body:43ff4f9369a1
 routine public.operator_revoke_database_admin(p_target uuid) -> jsonb | function | definer | volatile | exec:service_role | body:e0e61a0c3fc6
 routine public.operator_revoke_installation(p_installation_id uuid) -> jsonb | function | definer | volatile | exec: | body:6aca7ad43e58
+routine public.operator_set_federation_key(p_peer uuid, p_direction text, p_purpose text, p_key_id text, p_secret text) -> jsonb | function | definer | volatile | exec: | body:397fb2422a8a
 routine public.operator_set_identity_federation_client(p_client_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec: | body:484cb66063dc
 routine public.operator_set_installation_roles(p_roles text[], p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:7dbbfd986503
 routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:service_role | body:c659b2933f84
@@ -2315,8 +2378,10 @@ routine public.profile_row_readable(p_subject uuid) -> boolean | function | defi
 routine public.profiles_default_workspace_ref() -> trigger | function | definer | volatile | exec:service_role | body:8ca04a9d8556
 routine public.propose_price_negotiation(p_member_id uuid, p_fee_cents integer, p_overage_fee_cents integer, p_discount_percent numeric, p_note text, p_valid_from date, p_subscription_pct integer, p_items jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:629fe93a2903
 routine public.protect_enrolled_installation() -> trigger | function | invoker | volatile | exec: | body:1bfa66ade934
+routine public.protect_federation_history() -> trigger | function | invoker | volatile | exec: | body:bc320367fb10
 routine public.protect_identity_federation_client() -> trigger | function | invoker | volatile | exec:service_role | body:de8119cc60cd
 routine public.protect_last_owner() -> trigger | function | definer | volatile | exec:service_role | body:ab5c4b3b7f91
+routine public.protect_membership_fact() -> trigger | function | invoker | volatile | exec: | body:5c839ff452c2
 routine public.provision_database_admin(p_target uuid, p_can_provision boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ac8050f2c40a
 routine public.public_holidays(p_country text, p_year integer) -> TABLE(day date, key text) | function | invoker | immutable | exec:authenticated,service_role | body:1c6cfdb4de71
 routine public.public_identity_authority() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:4e3256312a3b
@@ -2810,6 +2875,10 @@ trigger events.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BE
 trigger expense_occurrences.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.expense_occurrences FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger expense_repartitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.expense_repartitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger expense_schedules.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.expense_schedules FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger federation_inbox_receipts.protect_federation_history CREATE TRIGGER protect_federation_history BEFORE DELETE OR UPDATE ON public.federation_inbox_receipts FOR EACH ROW EXECUTE FUNCTION protect_federation_history()
+trigger federation_inbox_receipts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.federation_inbox_receipts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger federation_keys.protect_federation_history CREATE TRIGGER protect_federation_history BEFORE DELETE OR UPDATE ON public.federation_keys FOR EACH ROW EXECUTE FUNCTION protect_federation_history()
+trigger federation_keys.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.federation_keys FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger fee_bands.fee_bands_contiguous CREATE CONSTRAINT TRIGGER fee_bands_contiguous AFTER INSERT OR DELETE OR UPDATE ON public.fee_bands DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_fee_bands_contiguous()
 trigger fee_bands.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.fee_bands FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger financial_command_receipts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.financial_command_receipts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -2820,10 +2889,15 @@ trigger identity_authority.zz_system_columns_stamp CREATE TRIGGER zz_system_colu
 trigger identity_bindings.identity_binding_revoked_cascade CREATE TRIGGER identity_binding_revoked_cascade AFTER UPDATE OF status ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_binding_revoked_cascade()
 trigger identity_bindings.identity_binding_revoked_invalidate CREATE TRIGGER identity_binding_revoked_invalidate AFTER UPDATE OF status ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_binding_revoked_invalidate()
 trigger identity_bindings.identity_bindings_immutable CREATE TRIGGER identity_bindings_immutable BEFORE UPDATE ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION identity_bindings_immutable()
+trigger identity_bindings.membership_fact_on_binding_change CREATE TRIGGER membership_fact_on_binding_change AFTER INSERT OR UPDATE OF status, local_user_id ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION membership_fact_on_binding_change()
 trigger identity_bindings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.identity_bindings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger identity_federation_clients.guard_oauth_client_purpose CREATE TRIGGER guard_oauth_client_purpose BEFORE INSERT OR UPDATE ON public.identity_federation_clients FOR EACH ROW EXECUTE FUNCTION guard_oauth_client_purpose()
 trigger identity_federation_clients.protect_identity_federation_client CREATE TRIGGER protect_identity_federation_client BEFORE DELETE OR UPDATE ON public.identity_federation_clients FOR EACH ROW EXECUTE FUNCTION protect_identity_federation_client()
 trigger identity_federation_clients.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.identity_federation_clients FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger identity_status_assertions.protect_federation_history CREATE TRIGGER protect_federation_history BEFORE DELETE OR UPDATE ON public.identity_status_assertions FOR EACH ROW EXECUTE FUNCTION protect_federation_history()
+trigger identity_status_assertions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.identity_status_assertions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger identity_status_outbox.protect_federation_history CREATE TRIGGER protect_federation_history BEFORE DELETE OR UPDATE ON public.identity_status_outbox FOR EACH ROW EXECUTE FUNCTION protect_federation_history()
+trigger identity_status_outbox.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.identity_status_outbox FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger installation_identity.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.installation_identity FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger instance_delegates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.instance_delegates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger instance_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.instance_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -2895,8 +2969,14 @@ trigger members.members_protect_last_owner CREATE TRIGGER members_protect_last_o
 trigger members.members_rebalance_credits CREATE TRIGGER members_rebalance_credits AFTER UPDATE OF subscription_pct, overage_policy ON public.members FOR EACH ROW EXECUTE FUNCTION member_rows_rebalance_credits()
 trigger members.members_vies_guard CREATE TRIGGER members_vies_guard BEFORE INSERT OR UPDATE ON public.members FOR EACH ROW EXECUTE FUNCTION members_vies_guard()
 trigger members.members_zero_subscription_guard CREATE TRIGGER members_zero_subscription_guard BEFORE INSERT OR UPDATE OF subscription_pct, overage_policy ON public.members FOR EACH ROW EXECUTE FUNCTION members_zero_subscription_guard()
+trigger members.membership_fact_on_member_change CREATE TRIGGER membership_fact_on_member_change AFTER INSERT OR DELETE OR UPDATE OF status, user_id, workspace_id ON public.members FOR EACH ROW EXECUTE FUNCTION membership_fact_on_member_change()
 trigger members.refresh_public_members CREATE TRIGGER refresh_public_members AFTER INSERT OR DELETE OR UPDATE ON public.members FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger members.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.members FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger membership_fact_outbox.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.membership_fact_outbox FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger membership_fact_state.protect_membership_fact CREATE TRIGGER protect_membership_fact BEFORE DELETE OR UPDATE ON public.membership_fact_state FOR EACH ROW EXECUTE FUNCTION protect_membership_fact()
+trigger membership_fact_state.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.membership_fact_state FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger membership_facts.protect_membership_fact CREATE TRIGGER protect_membership_fact BEFORE UPDATE ON public.membership_facts FOR EACH ROW EXECUTE FUNCTION protect_membership_fact()
+trigger membership_facts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.membership_facts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger message_events.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.message_events FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger message_reactions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.message_reactions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger message_stars.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.message_stars FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

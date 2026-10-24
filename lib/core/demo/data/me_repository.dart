@@ -35,10 +35,20 @@ class FakeAccount {
   MyVisibility visibility = MyVisibility.defaults;
 }
 
+/// The installation id the fake personal home answers with.
+const _fakeHomeInstallationId = '00000000-0000-4000-8000-0000000000e1';
+
 /// #2563 — also the [WorkspaceAccessRepository]: one in-memory account.
+/// #2558 — the personal home names chosen spaces by network reference
+/// (`<home>:<local id>`) and its writer takes local ids, as the server's do.
 class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
-  FakeMeRepository({String Function()? currentUser, Map<String, FakeAccount>? accounts})
-      : _currentUser = currentUser ?? (() => 'user-1'),
+  FakeMeRepository({
+    String Function()? currentUser,
+    Map<String, FakeAccount>? accounts,
+    this.homeInstallationId = _fakeHomeInstallationId,
+    Map<String, String>? spaceLabels,
+  })  : _currentUser = currentUser ?? (() => 'user-1'),
+        spaceLabels = spaceLabels ?? {},
         accounts = accounts ??
             {
               'user-1': FakeAccount(
@@ -68,14 +78,44 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
   FakeAccount get _me => accounts.putIfAbsent(
       _currentUser(), () => FakeAccount(name: _currentUser()));
 
+  /// The installation this personal home is.
+  final String homeInstallationId;
+
+  /// The names of this home's spaces, by local id; a space of my account
+  /// that has none here is listed unnamed.
+  final Map<String, String> spaceLabels;
+
+  /// The network reference of the local space [localId] of this home.
+  String refOf(String localId) => '$homeInstallationId:$localId';
+
   /// What [myWorkspaceRefs] answers; when [refsFailure] is set it throws.
-  PersonalWorkspaceRefs workspaceRefs = PersonalWorkspaceRefs.none;
+  /// Null derives it: every space of my account and of [spaceLabels], hosted
+  /// here, active, read locally.
+  PersonalWorkspaceRefs? workspaceRefs;
   Exception? refsFailure;
+
+  /// How many times [myWorkspaceRefs] was asked.
+  int refsReads = 0;
 
   @override
   Future<PersonalWorkspaceRefs> myWorkspaceRefs() async {
+    refsReads++;
     if (refsFailure != null) throw refsFailure!;
-    return workspaceRefs;
+    return workspaceRefs ??
+        PersonalWorkspaceRefs(
+          homeInstallationId: homeInstallationId,
+          refs: [
+            for (final id in ({..._me.spaces, ...spaceLabels.keys}.toList()
+              ..sort()))
+              PersonalWorkspaceRef(
+                networkId: refOf(id),
+                hostedHere: true,
+                freshness: RefFreshness.local,
+                status: RefStatus.active,
+                label: spaceLabels[id],
+              ),
+          ],
+        );
   }
 
   @override
@@ -88,7 +128,9 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
   Future<MyVisibility> myVisibility() async {
     visibilityReads++;
     if (readFailure != null) throw readFailure!;
-    return _me.visibility.withAbout(_me.profession, _me.bio);
+    return _me.visibility
+        .withAbout(_me.profession, _me.bio)
+        .withHome(homeInstallationId);
   }
 
   @override
@@ -110,11 +152,26 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
     if (!field.allowedAudiences.contains(audience.audience)) {
       throw ArgumentError('this field never goes beyond your spaces');
     }
-    _me.visibility = _me.visibility.withField(field, audience);
+    // `set_visibility` takes local ids; the reader answers references.
+    if (audience.workspaces.any((id) => id.contains(':'))) {
+      throw ArgumentError('set_visibility takes local ids');
+    }
+    _me.visibility = _me.visibility.withField(
+      field,
+      FieldAudience(
+          audience.audience, {for (final id in audience.workspaces) refOf(id)}),
+    );
   }
 
+  /// The local ids [refs] name on this home; another home's are no space here.
+  Set<String> _local(Set<String> refs) => {
+        for (final ref in refs)
+          if (ref.startsWith('$homeInstallationId:'))
+            ref.substring(homeInstallationId.length + 1),
+      };
+
   /// Whether [viewerSpaces] meets [choice].
-  static bool _meets(FieldAudience choice, Set<String> owner,
+  bool _meets(FieldAudience choice, Set<String> owner,
       Set<String>? viewerSpaces, {required bool signedIn}) {
     switch (choice.audience) {
       case VisibilityAudience.nobody:
@@ -127,11 +184,11 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
         return viewerSpaces != null &&
             viewerSpaces
                 .intersection(owner)
-                .any(choice.workspaces.contains);
+                .any(_local(choice.workspaces).contains);
     }
   }
 
-  static AccountView _view(FakeAccount account, Set<String>? viewerSpaces,
+  AccountView _view(FakeAccount account, Set<String>? viewerSpaces,
       {required bool signedIn, bool owner = false}) {
     bool shows(VisibilityField field) => owner || _meets(
         account.visibility.of(field), account.spaces, viewerSpaces,

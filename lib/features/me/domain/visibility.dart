@@ -119,14 +119,36 @@ class FieldAudience {
   bool get incomplete =>
       audience == VisibilityAudience.chosenSpaces && workspaces.isEmpty;
 
+  /// #2558 — the spaces of [after] that [before] did not name, and the
+  /// ones it dropped, each sorted: what a widening confirmation lists.
+  static ({List<String> added, List<String> removed}) spacesDiff(
+    FieldAudience before,
+    FieldAudience after,
+  ) {
+    Set<String> spaces(FieldAudience a) =>
+        a.audience == VisibilityAudience.chosenSpaces ? a.workspaces : const {};
+    final was = spaces(before);
+    final now = spaces(after);
+    return (
+      added: now.difference(was).toList()..sort(),
+      removed: was.difference(now).toList()..sort(),
+    );
+  }
+
   factory FieldAudience.fromJson(Object? raw, VisibilityField field) {
     if (raw is! Map) return FieldAudience(field.defaultAudience);
     // Fail-closed (#2387): a malformed field reads as the default.
     final r = JsonReader.of(raw, context: 'field_audience');
+    // #2558 — the personal home names the chosen spaces by network
+    // reference (`workspace_refs`, my_visibility_network_v1); a legacy or
+    // linked server by local id (`workspaces`, my_visibility).
+    final spaces = r.json.containsKey('workspace_refs')
+        ? r.listOrAbsent('workspace_refs')
+        : r.listOrAbsent('workspaces');
     return FieldAudience(
       VisibilityAudience.fromWire(r.json['audience']) ?? field.defaultAudience,
       {
-        for (final id in r.listOrAbsent('workspaces'))
+        for (final id in spaces)
           if (id is String) id,
       },
     );
@@ -148,11 +170,38 @@ class FieldAudience {
 /// server's defaults filled in for anything it did not name — and my own
 /// profession and bio, which only `set_my_about` writes.
 class MyVisibility {
-  const MyVisibility(this.fields, {this.profession = '', this.bio = ''});
+  const MyVisibility(
+    this.fields, {
+    this.profession = '',
+    this.bio = '',
+    this.home = '',
+  });
 
   final Map<VisibilityField, FieldAudience> fields;
   final String profession;
   final String bio;
+
+  /// #2558 — the installation id of the personal home that answered
+  /// (`home.installation_id` of my_visibility_network_v1); empty from a
+  /// reader that names none. Only a chosen space of THIS installation can
+  /// be written through today's `set_visibility`.
+  final String home;
+
+  /// The local workspace id [ref] names when it is a space of [home]; null
+  /// for a space on another installation, an unqualified id, or when no
+  /// home answered. A qualified reference is never read as a local id of
+  /// another installation.
+  String? localIdOf(String ref) {
+    final at = ref.indexOf(':');
+    if (home.isEmpty || at <= 0 || ref.substring(0, at) != home) return null;
+    final local = ref.substring(at + 1);
+    return local.isEmpty ? null : local;
+  }
+
+  /// Whether [field]'s saved choice names a space this home cannot write
+  /// for: such a field is read-only here until the network writer exists.
+  bool namesSpaceElsewhere(VisibilityField field) =>
+      of(field).workspaces.any((ref) => localIdOf(ref) == null);
 
   FieldAudience of(VisibilityField field) =>
       fields[field] ?? FieldAudience(field.defaultAudience);
@@ -167,6 +216,7 @@ class MyVisibility {
     return MyVisibility(
       profession: about.textOrAbsent('profession') ?? '',
       bio: about.textOrAbsent('bio') ?? '',
+      home: r.objectOrAbsent('home').textOrAbsent('installation_id') ?? '',
       {
         for (final field in VisibilityField.values)
           field: FieldAudience.fromJson(
@@ -187,10 +237,14 @@ class MyVisibility {
       reply.json['reachability'] ?? fields.json['reachability'];
 
   MyVisibility withField(VisibilityField field, FieldAudience audience) =>
-      MyVisibility({...fields, field: audience}, profession: profession, bio: bio);
+      MyVisibility({...fields, field: audience},
+          profession: profession, bio: bio, home: home);
 
   MyVisibility withAbout(String profession, String bio) =>
-      MyVisibility(fields, profession: profession, bio: bio);
+      MyVisibility(fields, profession: profession, bio: bio, home: home);
+
+  MyVisibility withHome(String home) =>
+      MyVisibility(fields, profession: profession, bio: bio, home: home);
 }
 
 /// What one account shows another: `visible_account(user)` and

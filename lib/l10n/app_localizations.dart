@@ -23218,6 +23218,84 @@ abstract class AppLocalizations {
   /// **'This server does not list reservations for the personal space yet.'**
   String get myReservationsUnsupported;
 
+  /// #2554 Overview: link to the full My spaces list
+  ///
+  /// In en, this message translates to:
+  /// **'All my spaces'**
+  String get mySpacesAll;
+
+  /// #2554 My spaces: the number of loaded spaces
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No space} =1{1 space} other{{count} spaces}}'**
+  String mySpacesCount(int count);
+
+  /// #2554 My spaces: link to Discover
+  ///
+  /// In en, this message translates to:
+  /// **'Discover spaces'**
+  String get mySpacesDiscover;
+
+  /// #2554 My spaces: the space lives on another installation
+  ///
+  /// In en, this message translates to:
+  /// **'On another installation'**
+  String get mySpacesHostElsewhere;
+
+  /// #2554 My spaces: the space lives on the personal home's own server
+  ///
+  /// In en, this message translates to:
+  /// **'On this server'**
+  String get mySpacesHostHere;
+
+  /// #2554 My spaces: link to the management of this server's spaces
+  ///
+  /// In en, this message translates to:
+  /// **'Manage spaces on this server'**
+  String get mySpacesManage;
+
+  /// #2554 My spaces: the search matches nothing
+  ///
+  /// In en, this message translates to:
+  /// **'No space matches your search.'**
+  String get mySpacesNoMatch;
+
+  /// #2554 My spaces: main action, enter an active space
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get mySpacesOpen;
+
+  /// #2554 My spaces: main action, enter a development (test) space
+  ///
+  /// In en, this message translates to:
+  /// **'Open test space'**
+  String get mySpacesOpenTest;
+
+  /// #2554 My spaces: main action of a pending request
+  ///
+  /// In en, this message translates to:
+  /// **'View request status'**
+  String get mySpacesRequestStatus;
+
+  /// #2554 My spaces: metadata of a development space
+  ///
+  /// In en, this message translates to:
+  /// **'Test space'**
+  String get mySpacesTestSpace;
+
+  /// #2554 My spaces: the spaces could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your spaces could not be read.'**
+  String get mySpacesUnavailable;
+
+  /// #2554 My spaces: the membership was read from the space's own server
+  ///
+  /// In en, this message translates to:
+  /// **'Membership verified'**
+  String get mySpacesVerified;
+
   /// #1835 Me › Home: under the My visits heading
   ///
   /// In en, this message translates to:
@@ -42131,6 +42209,24 @@ abstract class AppLocalizations {
   /// **'Could not save your profession and bio. Please try again.'**
   String get visibilityAboutSaveFailed;
 
+  /// #2558 privacy summary: first question, the contact-details audience
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see my contact details?'**
+  String get visibilityAskContact;
+
+  /// #2558 privacy summary: third question, the public profile
+  ///
+  /// In en, this message translates to:
+  /// **'Is my public profile published?'**
+  String get visibilityAskPublic;
+
+  /// #2558 privacy summary: second question, who can start a conversation
+  ///
+  /// In en, this message translates to:
+  /// **'Who can write to me?'**
+  String get visibilityAskWrite;
+
   /// Field label: a short bio.
   ///
   /// In en, this message translates to:
@@ -42167,6 +42263,18 @@ abstract class AppLocalizations {
   /// **'On my other servers'**
   String get visibilityElsewhereTitle;
 
+  /// #2558 a field whose chosen spaces include one on another installation; read-only until the network writer
+  ///
+  /// In en, this message translates to:
+  /// **'It names a space on another server, so it cannot be changed here yet.'**
+  String get visibilityFieldElsewhere;
+
+  /// #2558 privacy card: names the personal home whose settings these are; name is its server address
+  ///
+  /// In en, this message translates to:
+  /// **'Personal home: {name}'**
+  String visibilityHomeHeader(String name);
+
   /// Visibility field: name and photo.
   ///
   /// In en, this message translates to:
@@ -42178,6 +42286,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Each part of your account picks its own audience. Nothing is public unless you choose it.'**
   String get visibilityIntro;
+
+  /// #2558 privacy card: expands the remaining fields
+  ///
+  /// In en, this message translates to:
+  /// **'More sharing settings'**
+  String get visibilityMoreSharing;
 
   /// Audience: members of the person's spaces.
   ///
@@ -42287,11 +42401,35 @@ abstract class AppLocalizations {
   /// **'Anyone signed in'**
   String get visibilitySignedIn;
 
+  /// #2558 chosen-spaces picker: two spaces share a name; source says where this one is
+  ///
+  /// In en, this message translates to:
+  /// **'Same name as another space · {source}'**
+  String visibilitySpaceAmbiguous(String source);
+
+  /// #2558 source of a space: the personal home itself
+  ///
+  /// In en, this message translates to:
+  /// **'on this personal home'**
+  String get visibilitySpaceHere;
+
+  /// #2558 source of a space: another installation, by the start of its id
+  ///
+  /// In en, this message translates to:
+  /// **'on server {installation}'**
+  String visibilitySpaceOnServer(String installation);
+
   /// #2558 — a saved chosen space the list no longer names; it stays chosen until the person unticks it.
   ///
   /// In en, this message translates to:
   /// **'A space that is no longer listed'**
   String get visibilitySpaceUnlisted;
+
+  /// #2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet
+  ///
+  /// In en, this message translates to:
+  /// **'Verification unavailable'**
+  String get visibilitySpaceUnverified;
 
   /// #2558 — the chosen-spaces picker when the list of spaces cannot be read.
   ///
@@ -42317,11 +42455,23 @@ abstract class AppLocalizations {
   /// **'Widen'**
   String get visibilityWidenAction;
 
+  /// #2558 widening confirmation: chosen spaces added
+  ///
+  /// In en, this message translates to:
+  /// **'Added: {spaces}'**
+  String visibilityWidenAdded(String spaces);
+
   /// No description provided for @visibilityWidenConfirm.
   ///
   /// In en, this message translates to:
   /// **'Show your {field} to: {audience}? They will be able to see it.'**
   String visibilityWidenConfirm(String field, String audience);
+
+  /// #2558 widening confirmation: chosen spaces removed
+  ///
+  /// In en, this message translates to:
+  /// **'Removed: {spaces}'**
+  String visibilityWidenRemoved(String spaces);
 
   /// #1835 a visit row: the guest withdraws or cancels
   ///

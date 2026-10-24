@@ -339,7 +339,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
-      meRepositoryProvider.overrideWith((ref) => FakeMeRepository()), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823, #2563
+      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823, #2563
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider
           .overrideWithValue(fixture.guests),
@@ -451,6 +451,19 @@ List<Override> demoOverrides(DemoFixture fixture) {
 
 /// #1625 — Demo's fictional installation id (never a real server's).
 const _kDemoInstallationId = kDemoInstallationId;
+
+/// #2558 — the persona's personal home at the fictional installation: its
+/// chosen spaces are named by network reference, the two demo spaces.
+FakeMeRepository _demoMe(DemoFixture fixture) => FakeMeRepository(
+      homeInstallationId: _kDemoInstallationId,
+      spaceLabels: {
+        for (final w in [
+          ...fixture.workspaces.workspaces,
+          ...fixture.secondSpace.workspaces.workspaces,
+        ])
+          w.id: w.name,
+      },
+    );
 
 /// #2472 — this server's directory is both spaces' cast, read at each
 /// call so a persona switch is followed; any other server's is empty.
