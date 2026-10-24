@@ -354,4 +354,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.core,
     requires: WorkspaceFeature.dataExport,
   ),
+  // Me as five route-owned destinations (Overview, My spaces, Discover,
+  // Messages, My data) in the personal layer's own tokens. The person's own
+  // layer is the installation's decision, read from the feature set the
+  // installation serves: a root of its own, asked for, never assumed. Off,
+  // Me keeps its four-tab shell and its `/me?tab=` addresses exactly.
+  WorkspaceFeature.personalShell: FeatureManifestEntry(
+    feature: WorkspaceFeature.personalShell,
+    surface: FeatureSurface.everywhere,
+    tier: FeatureTier.platform,
+    defaultOn: false,
+  ),
 };

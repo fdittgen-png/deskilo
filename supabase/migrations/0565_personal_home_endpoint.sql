@@ -156,4 +156,4 @@ revoke execute on function public.operator_set_personal_home(text, text, text, u
   from public, anon, authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(565);

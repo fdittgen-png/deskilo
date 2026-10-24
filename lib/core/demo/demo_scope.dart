@@ -450,7 +450,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
 }
 
 /// #1625 — Demo's fictional installation id (never a real server's).
-const _kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
+const _kDemoInstallationId = kDemoInstallationId;
 
 /// #2472 — this server's directory is both spaces' cast, read at each
 /// call so a persona switch is followed; any other server's is empty.

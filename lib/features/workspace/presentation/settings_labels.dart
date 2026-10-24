@@ -46,6 +46,11 @@ String _rangeSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'calendar.range_days' => l10n.settingLabelCalendarRangeDays,
       'kpi.capacity_range_days' => l10n.settingLabelKpiCapacityRangeDays,
       'kpi.finance_range_months' => l10n.settingLabelKpiFinanceRangeMonths,
+      'personal.read_concurrency' => l10n.settingLabelPersonalReadConcurrency,
+      'personal.read_timeout_seconds' => l10n.settingLabelPersonalReadTimeoutSeconds,
+      'personal.reservation_page_size' => l10n.settingLabelPersonalReservationPageSize,
+      'personal.reservation_window_days' => l10n.settingLabelPersonalReservationWindowDays,
+      'personal.reservation_max_window_days' => l10n.settingLabelPersonalReservationMaxWindowDays,
       _ => key,
     };
 
@@ -86,6 +91,11 @@ String? _rangeSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'calendar.range_days' => l10n.settingHintCalendarRangeDays,
       'kpi.capacity_range_days' => l10n.settingHintKpiCapacityRangeDays,
       'kpi.finance_range_months' => l10n.settingHintKpiFinanceRangeMonths,
+      'personal.read_concurrency' => l10n.settingHintPersonalReadConcurrency,
+      'personal.read_timeout_seconds' => l10n.settingHintPersonalReadTimeoutSeconds,
+      'personal.reservation_page_size' => l10n.settingHintPersonalReservationPageSize,
+      'personal.reservation_window_days' => l10n.settingHintPersonalReservationWindowDays,
+      'personal.reservation_max_window_days' => l10n.settingHintPersonalReservationMaxWindowDays,
       _ => null,
     };
 
@@ -100,6 +110,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'readiness' => l10n.settingGroupReadiness,
       'vat' => l10n.settingGroupVat,
       'kpi' => l10n.settingGroupKpi,
+      'personal' => l10n.settingGroupPersonal,
       _ => group,
     };
 

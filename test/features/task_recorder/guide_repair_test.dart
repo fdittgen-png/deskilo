@@ -88,6 +88,9 @@ void main() {
 
     await tester.tap(_key('guide-destination-g1-null'));
     await tester.pumpAndSettle();
+    // The menu lists every page; the personal shell's own lie above this one.
+    await tester.scrollUntilVisible(find.text('Me · My profile'), 100,
+        scrollable: find.byType(Scrollable).last);
     await tester.tap(find.text('Me · My profile').last);
     await tester.pumpAndSettle();
     expect(_key('guide-preview-g1'), findsOneWidget);

@@ -9,17 +9,27 @@
 // its source, so the space runs on its own installation and the root
 // client is never its fallback. A refusal says why, keeps the person where
 // they are and changes nothing.
+//
+// #2562 C1b -- when that server's sign-in has ended, the person continues
+// with the identity they already have ("Continue with Deskilo"): that
+// server's own sign-in, its verified binding, the new session adopted into
+// the connection pool, then the space is entered once more. No second
+// registration, and this app's own session is never touched.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/shell/space_entry.dart';
+import '../../../core/backend/backend_settings.dart';
+import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/connection_outcome.dart';
+import '../../../core/backend/secondary_federation.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/server_label.dart';
+import '../../directory/presentation/connect_with_identity_sheet.dart';
 import '../../directory/presentation/connection_outcome_text.dart';
 import '../../workspace/providers/connected_space_providers.dart';
 import '../domain/my_spaces.dart';
@@ -70,6 +80,17 @@ class LinkedSpacesSection extends ConsumerWidget {
       ),
     );
     if (go != true || !context.mounted) return;
+    await _enter(context, ref, server, space, offerSignIn: true);
+  }
+
+  Future<void> _enter(
+    BuildContext context,
+    WidgetRef ref,
+    LinkedServerSpaces server,
+    LinkedSpace space, {
+    required bool offerSignIn,
+  }) async {
+    final l10n = context.l10n;
     final messenger = ScaffoldMessenger.of(context);
     try {
       final entered = await ref
@@ -81,10 +102,44 @@ class LinkedSpacesSection extends ConsumerWidget {
     } on ConnectionFailure catch (failure, st) {
       TraceLogger.instance.warn('me', 'linked space not opened',
           error: failure, stackTrace: st);
+      final signIn = offerSignIn &&
+          connectionRecovery(failure.reason) == ConnectionRecovery.signIn;
       messenger.showSnackBar(
-        SnackBar(content: Text(connectionFailureText(l10n, failure))),
+        SnackBar(
+          content: Text(connectionFailureText(l10n, failure)),
+          action: signIn
+              ? SnackBarAction(
+                  key: const ValueKey('linked-space-continue-identity'),
+                  label: l10n.identityConnectContinue,
+                  onPressed: () => _signInAgain(context, ref, server, space),
+                )
+              : null,
+        ),
       );
     }
+  }
+
+  /// That server's own sign-in with the person's identity; once its session
+  /// is adopted, the space is entered again (once: a second refusal is only
+  /// said, never another browser).
+  Future<void> _signInAgain(
+    BuildContext context,
+    WidgetRef ref,
+    LinkedServerSpaces server,
+    LinkedSpace space,
+  ) async {
+    if (!context.mounted) return;
+    final connected = await ConnectWithIdentitySheet.show(
+      context,
+      SecondaryConnectIntent(
+        target: BackendEndpoint(server.source, server.key),
+        workspaceId: space.id,
+        action: SecondaryConnectAction.enter,
+      ),
+    );
+    if (!connected || !context.mounted) return;
+    ref.invalidate(connectionHealthProvider(server.source));
+    await _enter(context, ref, server, space, offerSignIn: false);
   }
 
   @override

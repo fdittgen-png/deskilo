@@ -11441,6 +11441,18 @@ abstract class AppLocalizations {
   /// **'Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.'**
   String get featurePersonalInfoDesc;
 
+  /// #2552 Features screen: what the personal shell changes and what off means.
+  ///
+  /// In en, this message translates to:
+  /// **'Me as five destinations: Overview, My spaces, Discover, Messages and My data, with a sidebar on a wide window, a rail on a medium one and a bar on a phone. Off, Me keeps its four tabs.'**
+  String get featurePersonalShellDesc;
+
+  /// #2552 Features screen: the five-destination Me shell, a platform flag.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal shell (five destinations)'**
+  String get featurePersonalShellTitle;
+
   /// #2185 place feedback
   ///
   /// In en, this message translates to:
@@ -21190,11 +21202,35 @@ abstract class AppLocalizations {
   /// **'Could not save your address. Please try again.'**
   String get meAddressSaveFailed;
 
+  /// #2552 the scope badge in the personal shell's header: this is the person's own layer, never a space.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get meContextPersonal;
+
   /// Button on the Me home: create a new space.
   ///
   /// In en, this message translates to:
   /// **'Create a space'**
   String get meCreateSpace;
+
+  /// #2552 My data view: the person's own reservations and visits.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations'**
+  String get meDataViewReservations;
+
+  /// #2552 My data › Reservations: where the bookings are, and what this view lists.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings stay in each space\'s calendar; your visits as a guest appear here.'**
+  String get meDataVisitsEmptyBody;
+
+  /// #2552 My data › Reservations with no guest visit to show.
+  ///
+  /// In en, this message translates to:
+  /// **'No visits yet'**
+  String get meDataVisitsEmptyTitle;
 
   /// No description provided for @meFinanceGlanceOwed.
   ///
@@ -21466,6 +21502,18 @@ abstract class AppLocalizations {
   /// **'Search my spaces'**
   String get meSpacesSearch;
 
+  /// #2552 fifth destination of the personal shell: the person's own records.
+  ///
+  /// In en, this message translates to:
+  /// **'My data'**
+  String get meTabData;
+
+  /// #2552 the My data destination on a phone's bottom bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get meTabDataShort;
+
   /// Me layer bottom tab: find published spaces.
   ///
   /// In en, this message translates to:
@@ -21489,6 +21537,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Messages'**
   String get meTabMessages;
+
+  /// #2552 first destination of the personal shell: the person's overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get meTabOverview;
+
+  /// #2552 the Overview destination on a phone's bottom bar (FR: Accueil).
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get meTabOverviewShort;
+
+  /// #2552 the My spaces destination on a phone's bottom bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Spaces'**
+  String get meTabSpacesShort;
+
+  /// #2552 utility of the personal shell: who sees what of me, and my account.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidentiality and account'**
+  String get meUtilityAccount;
+
+  /// #2552 utility of the personal shell: the guide and the task assistant.
+  ///
+  /// In en, this message translates to:
+  /// **'Help and assistant'**
+  String get meUtilityHelp;
 
   /// Row in Me opening the connected servers.
   ///
@@ -22887,6 +22965,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My invoices'**
   String get myInvoicesTitle;
+
+  /// #2553 My reservations: opens the period picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Change period'**
+  String get myReservationsChangePeriod;
+
+  /// #2553 My reservations: the check-in mark of a booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in at {time}'**
+  String myReservationsCheckedInAt(String time);
+
+  /// #2553 My reservations: the check-out mark of a booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked out at {time}'**
+  String myReservationsCheckedOutAt(String time);
+
+  /// #2553 My reservations: the window was read and holds nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No reservations in this period.'**
+  String get myReservationsEmpty;
+
+  /// #2553 My reservations: a read failed for no typed reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reservations could not be read. Try again in a moment.'**
+  String get myReservationsFailed;
+
+  /// #2553 My reservations: the host refused the caller (42501).
+  ///
+  /// In en, this message translates to:
+  /// **'This server refused to list your reservations.'**
+  String get myReservationsForbidden;
+
+  /// #2553 My reservations: the host refused the window or cursor (22023).
+  ///
+  /// In en, this message translates to:
+  /// **'This server refused the period asked for.'**
+  String get myReservationsInvalid;
+
+  /// #2553 My reservations: the kind of place booked.
+  ///
+  /// In en, this message translates to:
+  /// **'Desk'**
+  String get myReservationsKindDesk;
+
+  /// #2553 My reservations: the kind of place booked.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get myReservationsKindLevel;
+
+  /// #2553 My reservations: the kind of place booked.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get myReservationsKindOffice;
+
+  /// #2553 My reservations: the kind of place booked.
+  ///
+  /// In en, this message translates to:
+  /// **'Seat'**
+  String get myReservationsKindSeat;
+
+  /// #2553 My reservations: asks the next page.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get myReservationsLoadMore;
+
+  /// #2553 My reservations: the next page is being read.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading…'**
+  String get myReservationsLoadingMore;
+
+  /// #2553 My reservations: a malformed or incompatible answer.
+  ///
+  /// In en, this message translates to:
+  /// **'This server answered in a form this app does not understand.'**
+  String get myReservationsMalformed;
+
+  /// #2553 My reservations: the registry lacks the personal rows.
+  ///
+  /// In en, this message translates to:
+  /// **'This server has no settings for personal reads yet.'**
+  String get myReservationsMisconfigured;
+
+  /// #2553 My reservations: no workspace context to read on.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a space to see your reservations on its server.'**
+  String get myReservationsNoWorkspace;
+
+  /// #2553 My reservations: the ceiling of one read, under the period.
+  ///
+  /// In en, this message translates to:
+  /// **'At most {days} days at a time.'**
+  String myReservationsPeriodLimit(int days);
+
+  /// #2553 My reservations: booking status.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get myReservationsStatusCancelled;
+
+  /// #2553 My reservations: booking status.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in'**
+  String get myReservationsStatusCheckedIn;
+
+  /// #2553 My reservations: booking status.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get myReservationsStatusCompleted;
+
+  /// #2553 My reservations: booking status.
+  ///
+  /// In en, this message translates to:
+  /// **'Released'**
+  String get myReservationsStatusReleased;
+
+  /// #2553 My reservations: booking status.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved'**
+  String get myReservationsStatusReserved;
+
+  /// #2553 My reservations: a booked place without a name.
+  ///
+  /// In en, this message translates to:
+  /// **'(unnamed place)'**
+  String get myReservationsUnnamedPlace;
+
+  /// #2553 My reservations: an older host without the read.
+  ///
+  /// In en, this message translates to:
+  /// **'This server does not list reservations for the personal space yet.'**
+  String get myReservationsUnsupported;
 
   /// #1835 Me › Home: under the My visits heading
   ///
@@ -32124,6 +32346,12 @@ abstract class AppLocalizations {
   /// **'Messaging'**
   String get settingGroupMessaging;
 
+  /// #2553 settings: Settings group title.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal space'**
+  String get settingGroupPersonal;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -32297,6 +32525,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seconds between two refreshes of an open conversation. Lower values load the server more.'**
   String get settingHintMessagingThreadPollSeconds;
+
+  /// #2553 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many servers the personal space asks at once when it gathers your own records. A bound on the device\'s parallel reads, not on any server.'**
+  String get settingHintPersonalReadConcurrency;
+
+  /// #2553 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds the personal space waits for one server\'s answer before it shows that server as unavailable and goes on with the others.'**
+  String get settingHintPersonalReadTimeoutSeconds;
+
+  /// #2553 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed by the platform: the longest period one read of your reservations may ask for. It bounds the query.'**
+  String get settingHintPersonalReservationMaxWindowDays;
+
+  /// #2553 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many of your reservations one server returns per page; the next page comes with Show more.'**
+  String get settingHintPersonalReservationPageSize;
+
+  /// #2553 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Days the personal space shows by default when it lists your reservations. You may choose another period, up to the ceiling.'**
+  String get settingHintPersonalReservationWindowDays;
 
   /// #2486 settings: Setting hint.
   ///
@@ -32501,6 +32759,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Conversation refresh'**
   String get settingLabelMessagingThreadPollSeconds;
+
+  /// #2553 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Servers read at once'**
+  String get settingLabelPersonalReadConcurrency;
+
+  /// #2553 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait per server'**
+  String get settingLabelPersonalReadTimeoutSeconds;
+
+  /// #2553 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations period ceiling'**
+  String get settingLabelPersonalReservationMaxWindowDays;
+
+  /// #2553 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations per page'**
+  String get settingLabelPersonalReservationPageSize;
+
+  /// #2553 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations period'**
+  String get settingLabelPersonalReservationWindowDays;
 
   /// #2486 settings: Setting label.
   ///

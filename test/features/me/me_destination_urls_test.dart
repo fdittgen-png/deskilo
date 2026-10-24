@@ -49,7 +49,7 @@ void main() {
     },
   );
 
-  for (final tab in MeTab.values) {
+  for (final tab in MeTab.legacy) {
     testWidgets('direct link restores ${tab.wire} after app startup', (
       tester,
     ) async {
@@ -65,7 +65,7 @@ void main() {
       expect(router.state.uri.queryParameters['tab'], tab.wire);
       expect(
         tester.widget<NavigationBar>(find.byType(NavigationBar)).selectedIndex,
-        tab.index,
+        MeTab.legacy.indexOf(tab),
       );
     });
   }
