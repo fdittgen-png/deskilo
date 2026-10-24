@@ -1,0 +1,9 @@
+{
+  "@@locale": "es",
+  "meRefsTitle": "Espacios en otro lugar",
+  "meRefUnnamed": "Un espacio en otro servidor",
+  "meRefUnverified": "Membresía aún no verificada",
+  "meRefNoRelationship": "Sin membresía en este servidor",
+  "meRefDefault": "Predeterminado",
+  "meRefsUnavailable": "No se pudieron leer sus espacios en otro lugar."
+}

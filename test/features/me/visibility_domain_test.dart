@@ -62,7 +62,7 @@ void main() {
 
   test('the command refuses what the server would, before calling it', () async {
     final repo = FakeMeRepository();
-    final actions = MeActions(repo, FakeLinkedMeRepository());
+    final actions = MeActions(repo, FakeLinkedMeRepository(), repo);
     expect(() => actions.choose(VisibilityField.presence,
             const FieldAudience(VisibilityAudience.chosenSpaces)),
         throwsA(isA<MeRefused>()));
@@ -79,7 +79,7 @@ void main() {
   test('the command refuses an audience the field may not have, as the '
       'linked command does', () async {
     final repo = FakeMeRepository();
-    final actions = MeActions(repo, FakeLinkedMeRepository());
+    final actions = MeActions(repo, FakeLinkedMeRepository(), repo);
     await expectLater(
       () => actions.choose(VisibilityField.contactChannels,
           const FieldAudience(VisibilityAudience.signedIn)),

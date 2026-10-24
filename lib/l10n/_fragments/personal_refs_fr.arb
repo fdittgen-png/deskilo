@@ -1,0 +1,9 @@
+{
+  "@@locale": "fr",
+  "meRefsTitle": "Espaces ailleurs",
+  "meRefUnnamed": "Un espace sur un autre serveur",
+  "meRefUnverified": "Adhésion pas encore vérifiée",
+  "meRefNoRelationship": "Aucune adhésion sur ce serveur",
+  "meRefDefault": "Par défaut",
+  "meRefsUnavailable": "Vos espaces ailleurs n'ont pas pu être lus."
+}

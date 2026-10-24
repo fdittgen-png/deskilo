@@ -356,6 +356,7 @@ const Set<String> demoOverriddenProviders = {
   'discoveryViewStoreProvider', // #2555 — list or map, the map provider accepted
   'meRepositoryProvider', // #1823
   'linkedMeRepositoryProvider',
+  'workspaceAccessRepositoryProvider', // #2563
   'guestParticipationRepositoryProvider', // #1835
   'messengerRepositoryProvider',
   'deploymentRepositoryProvider',

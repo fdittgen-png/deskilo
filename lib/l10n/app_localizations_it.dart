@@ -12938,6 +12938,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meNoSpaceTitle => 'Non è ancora in nessuno spazio';
 
   @override
+  String get meRefDefault => 'Predefinito';
+
+  @override
+  String get meRefNoRelationship => 'Nessuna iscrizione su questo server';
+
+  @override
+  String get meRefUnnamed => 'Uno spazio su un altro server';
+
+  @override
+  String get meRefUnverified => 'Iscrizione non ancora verificata';
+
+  @override
+  String get meRefsTitle => 'Spazi altrove';
+
+  @override
+  String get meRefsUnavailable =>
+      'Non è stato possibile leggere i Suoi spazi altrove.';
+
+  @override
   String get meSectionMine => 'Cronologia e dati personali';
 
   @override

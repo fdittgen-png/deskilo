@@ -7,12 +7,15 @@ import '../../../core/backend/context_client_providers.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/me_actions.dart';
+import '../data/host_workspace_access_repository.dart';
 import '../data/supabase_linked_me_repository.dart';
 import '../data/supabase_me_repository.dart';
 import '../domain/linked_me_repository.dart';
 import '../domain/me_repository.dart';
 import '../domain/my_spaces.dart';
+import '../domain/personal_workspace_refs.dart';
 import '../domain/visibility.dart';
+import '../domain/workspace_access_repository.dart';
 import 'me_read_retry.dart';
 
 part 'me_providers.g.dart';
@@ -24,6 +27,12 @@ part 'me_providers.g.dart';
 MeRepository meRepository(Ref ref) =>
     SupabaseMeRepository(ref.watch(personalClientProvider));
 
+/// #2563 C1 — the account's calls inside a workspace (leaving it), on the
+/// verified host of that workspace, never on the personal client.
+@riverpod
+WorkspaceAccessRepository workspaceAccessRepository(Ref ref) =>
+    HostWorkspaceAccessRepository(ref.watch(workspaceHostResolverProvider));
+
 /// The account layer's calls on the linked servers, each with that server's
 /// own session. The readers below ask it nothing while no server is linked.
 @riverpod
@@ -34,6 +43,7 @@ LinkedMeRepository linkedMeRepository(Ref ref) =>
 MeActions meActions(Ref ref) => MeActions(
       ref.watch(meRepositoryProvider),
       ref.watch(linkedMeRepositoryProvider),
+      ref.watch(workspaceAccessRepositoryProvider),
     );
 
 /// Who sees what of me, as the personal home holds it. #2558 — read on the
@@ -91,3 +101,18 @@ Future<List<LinkedServerSpaces>> linkedServerSpaces(Ref ref) async {
 
   return Future.wait(sources.map(read));
 }
+
+/// #2563 C1 — the workspaces my account names by qualified reference, read
+/// on my personal home with no workspace selected; none while signed out.
+/// A refusal or a malformed answer is final: no silent retries.
+@Riverpod(retry: personalRefsRetry)
+Future<PersonalWorkspaceRefs> personalWorkspaceRefs(Ref ref) {
+  if (ref.watch(authStateProvider).value == null) {
+    return Future.value(PersonalWorkspaceRefs.none);
+  }
+  return ref.watch(meRepositoryProvider).myWorkspaceRefs();
+}
+
+/// No retry for [personalWorkspaceRefsProvider] (#2339): the section says
+/// it is unavailable at once rather than after ten attempts.
+Duration? personalRefsRetry(int retryCount, Object error) => null;

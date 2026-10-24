@@ -12833,6 +12833,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meNoSpaceTitle => 'You are not in a space yet';
 
   @override
+  String get meRefDefault => 'Default';
+
+  @override
+  String get meRefNoRelationship => 'No membership on this server';
+
+  @override
+  String get meRefUnnamed => 'A workspace on another server';
+
+  @override
+  String get meRefUnverified => 'Membership not verified yet';
+
+  @override
+  String get meRefsTitle => 'Workspaces elsewhere';
+
+  @override
+  String get meRefsUnavailable =>
+      'Your workspaces elsewhere could not be read.';
+
+  @override
   String get meSectionMine => 'My history and data';
 
   @override

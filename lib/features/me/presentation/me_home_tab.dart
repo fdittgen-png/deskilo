@@ -25,6 +25,7 @@ import '../domain/space_pairs.dart';
 import '../providers/me_providers.dart';
 import 'linked_spaces_section.dart';
 import 'me_spaces_list.dart';
+import 'personal_refs_section.dart';
 
 /// One of the two ways to a new space under the list: join, or create.
 class _HomeAction extends StatelessWidget {
@@ -67,7 +68,11 @@ class MeHomeTab extends ConsumerWidget {
     final last = ref.watch(activeWorkspaceIdProvider).value;
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
     final rows = pairSides(spaces).length;
-    final nothing = spaces.isEmpty && linked.every((s) => s.spaces.isEmpty);
+    // #2563 — a workspace my account names elsewhere is not "nothing".
+    final elsewhere = ref.watch(personalWorkspaceRefsProvider).value;
+    final nothing = spaces.isEmpty &&
+        linked.every((s) => s.spaces.isEmpty) &&
+        (elsewhere?.beyondLocalSpaces.isEmpty ?? true);
     return Scaffold(
       body: Align(
         alignment: Alignment.topCenter,
@@ -117,6 +122,7 @@ class MeHomeTab extends ConsumerWidget {
                   lastUsedId: last,
                 ),
               const LinkedSpacesSection(),
+              const PersonalRefsSection(),
               // #1835 — my guest visits: beside my spaces, never among them.
               const MyVisitsSection(),
               const SizedBox(height: AppSpacing.md),

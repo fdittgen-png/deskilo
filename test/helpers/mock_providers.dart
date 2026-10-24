@@ -270,6 +270,7 @@ List<Override> standardTestOverrides({
 }) {
   // One home messenger per scope, so a rebuilt provider keeps its state.
   final homeMessenger = messenger ?? FakeMessengerRepository();
+  final meFake = me ?? FakeMeRepository();
   final directoryFake = directory ?? FakeDirectoryRepository();
   final workspaceRepo = () {
     final repo = workspace ?? FakeWorkspaceRepository.withWorkspace();
@@ -333,7 +334,9 @@ List<Override> standardTestOverrides({
       publicationRepositoryProvider.overrideWith((ref)=>directoryFake),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directoryFake),
       // #1823 — the account layer, in memory; the account is the session's.
-      meRepositoryProvider.overrideWith((ref) => me ?? FakeMeRepository()),
+      meRepositoryProvider.overrideWith((ref) => meFake),
+      // #2563 — the same fake answers leaving a space, on its host.
+      workspaceAccessRepositoryProvider.overrideWith((ref) => meFake),
       linkedMeRepositoryProvider
           .overrideWith((ref) => linkedMe ?? FakeLinkedMeRepository()),
       guestParticipationRepositoryProvider

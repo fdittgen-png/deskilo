@@ -21424,6 +21424,42 @@ abstract class AppLocalizations {
   /// **'You are not in a space yet'**
   String get meNoSpaceTitle;
 
+  /// #2563 Me home: badge on the default workspace
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get meRefDefault;
+
+  /// #2563 Me home: a saved workspace of this server without membership
+  ///
+  /// In en, this message translates to:
+  /// **'No membership on this server'**
+  String get meRefNoRelationship;
+
+  /// #2563 Me home: a referenced workspace whose name may not be read here
+  ///
+  /// In en, this message translates to:
+  /// **'A workspace on another server'**
+  String get meRefUnnamed;
+
+  /// #2563 Me home: a workspace on another installation, relationship not yet verified
+  ///
+  /// In en, this message translates to:
+  /// **'Membership not verified yet'**
+  String get meRefUnverified;
+
+  /// #2563 Me home: section of workspaces named by reference that this server does not list
+  ///
+  /// In en, this message translates to:
+  /// **'Workspaces elsewhere'**
+  String get meRefsTitle;
+
+  /// #2563 Me home: the references could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Your workspaces elsewhere could not be read.'**
+  String get meRefsUnavailable;
+
   /// Section heading in Me: the person's own history and data.
   ///
   /// In en, this message translates to:

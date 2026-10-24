@@ -14935,6 +14935,30 @@
   "@meNoSpaceTitle": {
     "description": "Empty state title on the Me home when the person has no space."
   },
+  "meRefDefault": "Default",
+  "@meRefDefault": {
+    "description": "#2563 Me home: badge on the default workspace"
+  },
+  "meRefNoRelationship": "No membership on this server",
+  "@meRefNoRelationship": {
+    "description": "#2563 Me home: a saved workspace of this server without membership"
+  },
+  "meRefUnnamed": "A workspace on another server",
+  "@meRefUnnamed": {
+    "description": "#2563 Me home: a referenced workspace whose name may not be read here"
+  },
+  "meRefUnverified": "Membership not verified yet",
+  "@meRefUnverified": {
+    "description": "#2563 Me home: a workspace on another installation, relationship not yet verified"
+  },
+  "meRefsTitle": "Workspaces elsewhere",
+  "@meRefsTitle": {
+    "description": "#2563 Me home: section of workspaces named by reference that this server does not list"
+  },
+  "meRefsUnavailable": "Your workspaces elsewhere could not be read.",
+  "@meRefsUnavailable": {
+    "description": "#2563 Me home: the references could not be read"
+  },
   "meSectionMine": "My history and data",
   "@meSectionMine": {
     "description": "Section heading in Me: the person's own history and data."

@@ -48,11 +48,13 @@ constraint account_field_audience.account_field_audience_pkey PRIMARY KEY (user_
 constraint account_field_audience.account_field_audience_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 constraint account_field_audience.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint account_field_audience_spaces.account_field_audience_spaces_field_check CHECK ((field = ANY (ARRAY['identity'::text, 'about'::text, 'contact_channels'::text, 'presence'::text, 'reachability'::text])))
-constraint account_field_audience_spaces.account_field_audience_spaces_pkey PRIMARY KEY (user_id, field, workspace_id)
+constraint account_field_audience_spaces.account_field_audience_spaces_local_key UNIQUE (user_id, field, workspace_id)
+constraint account_field_audience_spaces.account_field_audience_spaces_pkey PRIMARY KEY (user_id, field, workspace_network_id)
+constraint account_field_audience_spaces.account_field_audience_spaces_ref_shape CHECK ((workspace_network_id ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'::text))
 constraint account_field_audience_spaces.account_field_audience_spaces_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 constraint account_field_audience_spaces.account_field_audience_spaces_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint account_field_audience_spaces.system_columns_order CHECK ((modified_datetime >= created_datetime))
-constraint account_field_audience_spaces.system_company_present CHECK ((company_id IS NOT NULL))
+constraint account_field_audience_spaces.system_company_present CHECK (((workspace_id IS NULL) OR (company_id IS NOT NULL)))
 constraint account_group_members.account_group_members_added_by_fkey FOREIGN KEY (added_by) REFERENCES auth.users(id) ON DELETE SET NULL
 constraint account_group_members.account_group_members_group_id_fkey FOREIGN KEY (group_id) REFERENCES account_groups(id) ON DELETE CASCADE
 constraint account_group_members.account_group_members_pkey PRIMARY KEY (group_id, user_id)
@@ -923,6 +925,7 @@ constraint profiles.profiles_company_check CHECK ((char_length(company) <= 160))
 constraint profiles.profiles_country_code_check CHECK (((country_code = ''::text) OR (country_code ~ '^[A-Z]{2}$'::text)))
 constraint profiles.profiles_courtesy_check CHECK ((courtesy = ANY (ARRAY[''::text, 'mr'::text, 'mrs'::text])))
 constraint profiles.profiles_default_workspace_id_fkey FOREIGN KEY (default_workspace_id) REFERENCES workspaces(id) ON DELETE SET NULL
+constraint profiles.profiles_default_workspace_ref_shape CHECK (((default_workspace_network_id IS NULL) OR (default_workspace_network_id ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'::text)))
 constraint profiles.profiles_display_name_check CHECK ((char_length(display_name) <= 80))
 constraint profiles.profiles_email_check CHECK ((char_length(email) <= 254))
 constraint profiles.profiles_first_name_check CHECK ((char_length(first_name) <= 120))
@@ -1500,8 +1503,10 @@ constraint workspace_documents.workspace_documents_title_check CHECK (((char_len
 constraint workspace_documents.workspace_documents_url_check CHECK (((url ~~ 'https://%'::text) AND (char_length(url) <= 500)))
 constraint workspace_documents.workspace_documents_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_favorites.system_columns_order CHECK ((modified_datetime >= created_datetime))
-constraint workspace_favorites.system_company_present CHECK ((company_id IS NOT NULL))
-constraint workspace_favorites.workspace_favorites_pkey PRIMARY KEY (user_id, workspace_id)
+constraint workspace_favorites.system_company_present CHECK (((workspace_id IS NULL) OR (company_id IS NOT NULL)))
+constraint workspace_favorites.workspace_favorites_local_key UNIQUE (user_id, workspace_id)
+constraint workspace_favorites.workspace_favorites_pkey PRIMARY KEY (user_id, workspace_network_id)
+constraint workspace_favorites.workspace_favorites_ref_shape CHECK ((workspace_network_id ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'::text))
 constraint workspace_favorites.workspace_favorites_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 constraint workspace_favorites.workspace_favorites_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint workspace_field_definitions.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -1871,6 +1876,7 @@ routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | 
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:5cfd64cf3676
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:db0b5a4b3900
+routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3cda55b2168b
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a66f863dc003
 routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:414fe35adf1b
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
@@ -2007,6 +2013,7 @@ routine public.lexicon_allowed_keys() -> TABLE(key text, placeholders text[]) | 
 routine public.link_purchase_source_v1(p_workspace_id uuid, p_purchase_id uuid, p_source_kind text, p_source_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ab220816c28f
 routine public.list_all_workspaces() -> TABLE(id uuid, name text, environment text, pair_id uuid, member_count bigint, owner_count bigint, is_member boolean) | function | definer | stable | exec:authenticated,service_role | body:7f4f5a4f9647
 routine public.list_mcp_eligibility_requests() -> TABLE(request_id uuid, local_user_id uuid, email text, revision integer, requested_at timestamp with time zone) | function | definer | stable | exec:authenticated,service_role | body:bc03809b5ee0
+routine public.local_workspace_of_ref(p_ref text) -> uuid | function | definer | stable | exec:service_role | body:c41164d1e388
 routine public.log_reservation_event() -> trigger | function | definer | volatile | exec:service_role | body:264bceeba808
 routine public.managed_identity_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:91130291dfdf
 routine public.managed_identity_name(p jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:44df5cd43c63
@@ -2212,13 +2219,15 @@ routine public.my_instance_notices() -> jsonb | function | definer | stable | ex
 routine public.my_mcp_connections() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f9722c099712
 routine public.my_message_requests() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f04fa74b6d8e
 routine public.my_personal_preferences(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:213deec91380
+routine public.my_personal_workspace_refs_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9877daba3c54
 routine public.my_public_profile() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3c381728dd4f
 routine public.my_reachable_people() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7e4e6a455cf0
 routine public.my_reservations_page_v1(p_from timestamp with time zone, p_to timestamp with time zone, p_workspace_id uuid, p_direction text, p_after_start timestamp with time zone, p_after_id uuid) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:a32390072be3
 routine public.my_rights_requests() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:12aed4f107e0
 routine public.my_settings(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:388bdc624969
 routine public.my_starred_messages() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6910f2684291
-routine public.my_visibility() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3343b3d86937
+routine public.my_visibility() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:68c1b2f749f5
+routine public.my_visibility_network_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bf78a48d40be
 routine public.my_workspace_applications(p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c50a43fa58f7
 routine public.my_workspace_public_page(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c02f6d89a75f
 routine public.negotiated_item_price(p_member_id uuid, p_kind text, p_item_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:ec49e4e0e2a2
@@ -2259,7 +2268,9 @@ routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | functi
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.personal_account_recognised() -> boolean | function | definer | stable | exec:authenticated,service_role | body:6e6491901997
+routine public.personal_home_descriptor() -> jsonb | function | definer | stable | exec:service_role | body:1ea555640fdb
 routine public.personal_native_session() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:54c14f4d4611
+routine public.personal_workspace_ref_stamp() -> trigger | function | definer | volatile | exec:service_role | body:49355860cffd
 routine public.place_dunning_hold(p_invoice_id uuid, p_reason text, p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d66df323208a
 routine public.place_feedback_member(p_workspace uuid, p_kind text, p_resource uuid) -> members | function | definer | stable | exec:service_role | body:3b78664cfc6e
 routine public.place_feedback_of(p_workspace uuid, p_kind text, p_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:629f7edf1397
@@ -2289,6 +2300,7 @@ routine public.profile_full_name(p profiles) -> text | function | invoker | immu
 routine public.profile_person_name(p profiles) -> text | function | invoker | immutable | exec:authenticated,service_role | body:e98ff75cb6c9
 routine public.profile_postal_block(p profiles, p_workspace_country text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:074745db0a8d
 routine public.profile_row_readable(p_subject uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:94cb2c4c6d95
+routine public.profiles_default_workspace_ref() -> trigger | function | definer | volatile | exec:service_role | body:8ca04a9d8556
 routine public.propose_price_negotiation(p_member_id uuid, p_fee_cents integer, p_overage_fee_cents integer, p_discount_percent numeric, p_note text, p_valid_from date, p_subscription_pct integer, p_items jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:629fe93a2903
 routine public.protect_identity_federation_client() -> trigger | function | invoker | volatile | exec:service_role | body:de8119cc60cd
 routine public.protect_last_owner() -> trigger | function | definer | volatile | exec:service_role | body:ab5c4b3b7f91
@@ -2685,6 +2697,7 @@ routine public.workspace_inquiries(p_workspace uuid) -> jsonb | function | defin
 routine public.workspace_licence_status(p_workspace uuid, p_on date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d59b9968d0d2
 routine public.workspace_local_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:73fd7536d369
 routine public.workspace_mcp_policy_revisions_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:e85c1267373c
+routine public.workspace_network_ref_valid(p_ref text) -> boolean | function | invoker | immutable | exec:service_role | body:fa0b8a5a620d
 routine public.workspace_owners(p_workspace_id uuid) -> TABLE(member_id uuid, name text, email text) | function | definer | volatile | exec:authenticated,service_role | body:0b62eff662e8
 routine public.workspace_public_defaults(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:b4aa23b4e04a
 routine public.workspace_readiness(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0dbd15b4e206
@@ -2716,6 +2729,7 @@ trigger account_contact_settings.refresh_public_contact CREATE TRIGGER refresh_p
 trigger account_contact_settings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_contact_settings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_conversations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_conversations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_field_audience.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_field_audience FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger account_field_audience_spaces.personal_workspace_ref_stamp CREATE TRIGGER personal_workspace_ref_stamp BEFORE INSERT OR UPDATE OF workspace_id, workspace_network_id ON public.account_field_audience_spaces FOR EACH ROW EXECUTE FUNCTION personal_workspace_ref_stamp()
 trigger account_field_audience_spaces.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_field_audience_spaces FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_group_members.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_group_members FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_group_messages.account_group_messages_guard CREATE TRIGGER account_group_messages_guard BEFORE INSERT OR UPDATE OF body ON public.account_group_messages FOR EACH ROW EXECUTE FUNCTION account_group_messages_guard()
@@ -2890,6 +2904,7 @@ trigger premises_leases.zz_system_columns_stamp CREATE TRIGGER zz_system_columns
 trigger price_negotiations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.price_negotiations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger privacy_notice_acknowledgments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.privacy_notice_acknowledgments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger privacy_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.privacy_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger profiles.profiles_default_workspace_ref CREATE TRIGGER profiles_default_workspace_ref BEFORE INSERT OR UPDATE OF default_workspace_id, default_workspace_network_id ON public.profiles FOR EACH ROW EXECUTE FUNCTION profiles_default_workspace_ref()
 trigger profiles.profiles_directory_person CREATE TRIGGER profiles_directory_person BEFORE INSERT OR UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION profile_directory_person()
 trigger profiles.profiles_person_preferences CREATE TRIGGER profiles_person_preferences AFTER INSERT OR UPDATE OF format_locale, clock, time_zone_mode, preferred_locale ON public.profiles FOR EACH ROW EXECUTE FUNCTION sync_person_preferences()
 trigger profiles.public_person_card_on_name CREATE TRIGGER public_person_card_on_name AFTER UPDATE OF display_name ON public.profiles FOR EACH ROW EXECUTE FUNCTION public_person_card_sync()
@@ -2982,6 +2997,7 @@ trigger workspace_applications.zz_system_columns_stamp CREATE TRIGGER zz_system_
 trigger workspace_assets.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_assets FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_creation_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_creation_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_documents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_documents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger workspace_favorites.personal_workspace_ref_stamp CREATE TRIGGER personal_workspace_ref_stamp BEFORE INSERT OR UPDATE OF workspace_id, workspace_network_id ON public.workspace_favorites FOR EACH ROW EXECUTE FUNCTION personal_workspace_ref_stamp()
 trigger workspace_favorites.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_favorites FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_field_definitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_definitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspace_field_labels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_field_labels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

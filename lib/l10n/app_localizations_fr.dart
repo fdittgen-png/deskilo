@@ -12964,6 +12964,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meNoSpaceTitle => 'Vous n\'êtes encore dans aucun espace';
 
   @override
+  String get meRefDefault => 'Par défaut';
+
+  @override
+  String get meRefNoRelationship => 'Aucune adhésion sur ce serveur';
+
+  @override
+  String get meRefUnnamed => 'Un espace sur un autre serveur';
+
+  @override
+  String get meRefUnverified => 'Adhésion pas encore vérifiée';
+
+  @override
+  String get meRefsTitle => 'Espaces ailleurs';
+
+  @override
+  String get meRefsUnavailable =>
+      'Vos espaces ailleurs n\'ont pas pu être lus.';
+
+  @override
   String get meSectionMine => 'Mon historique et mes données';
 
   @override
