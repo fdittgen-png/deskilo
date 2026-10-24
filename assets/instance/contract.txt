@@ -2667,6 +2667,7 @@ routine public.set_workspace_branding(p_workspace_id uuid, p_branding jsonb) -> 
 routine public.set_workspace_code(p_workspace_id uuid, p_code text) -> text | function | definer | volatile | exec:authenticated,service_role | body:f840df34b4ba
 routine public.set_workspace_environment(p_workspace_id uuid, p_environment text) -> void | function | definer | volatile | exec:authenticated,service_role | body:91e4a2526e19
 routine public.set_workspace_favorite(p_workspace uuid, p_on boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:87f5a80238f3
+routine public.set_workspace_favorite_ref_v1(p_ref text, p_on boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6ed984ae109d
 routine public.set_workspace_field(p_workspace_id uuid, p_key text, p_type text, p_labels jsonb, p_required boolean, p_personal_data boolean, p_visibility text, p_contexts text[], p_group_key text, p_sort_order integer, p_validation jsonb, p_active boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:711e9b8b9d4c
 routine public.set_workspace_field_options(p_definition_id uuid, p_options jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:5610a9730c82
 routine public.set_workspace_field_retention(p_workspace_id uuid, p_key text, p_basis text, p_retain_days integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:ef86a58d5d25

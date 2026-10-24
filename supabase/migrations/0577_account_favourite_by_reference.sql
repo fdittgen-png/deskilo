@@ -97,4 +97,4 @@ comment on function public.set_workspace_favorite_ref_v1(text, boolean) is
   'fact in force for; anything else is refused (22023/42501), nothing written.';
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(577);
