@@ -4367,6 +4367,14 @@
   "@conversationLeft": {
     "description": "#687 - messaging centre"
   },
+  "conversationLinkRefused": "This conversation is not available to you. Nothing was opened.",
+  "@conversationLinkRefused": {
+    "description": "#2556 deep link: A link to a conversation whose server answered and does not list it for this person; nothing opens."
+  },
+  "conversationLinkUnreachable": "This conversation could not be checked because its server did not answer. Nothing was opened.",
+  "@conversationLinkUnreachable": {
+    "description": "#2556 deep link: A link to a conversation whose server could not be asked; nothing opens."
+  },
   "conversationLoadEarlier": "Load earlier messages",
   "conversationMarkUnread": "Mark as unread",
   "conversationMemberCount": "{count, plural, =1{1 member} other{{count} members}}",
@@ -4388,6 +4396,18 @@
   "conversationSeeProfile": "See profile",
   "@conversationSeeProfile": {
     "description": "#695 - profile from a conversation"
+  },
+  "conversationSendInFlight": "Your previous message is still being sent.",
+  "@conversationSendInFlight": {
+    "description": "#2556 composer: Above the composer of a conversation opened again while the message sent from it earlier has not answered yet; its text is not shown again and Send waits."
+  },
+  "conversationSendReview": "Read again",
+  "@conversationSendReview": {
+    "description": "#2556 composer: Button beside the unconfirmed-delivery note: reads the conversation again and ends the unconfirmed state."
+  },
+  "conversationSendUnconfirmed": "Delivery not confirmed: the message may or may not have arrived. Read the conversation again before you send it again.",
+  "@conversationSendUnconfirmed": {
+    "description": "#2556 composer: Above the composer when a send got no answer in time. The message is never resent automatically; the person reads the conversation again and decides."
   },
   "conversationToday": "Today",
   "conversationUnarchive": "Restore from archive",
@@ -8815,6 +8835,51 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesColumnAmount": "Amount",
+  "@financesColumnAmount": {
+    "description": "#2557 C4 Me › Finances: the rows header, the amount in its own currency."
+  },
+  "financesColumnDocument": "Document and period",
+  "@financesColumnDocument": {
+    "description": "#2557 C4 Me › Finances: the rows header, document and period."
+  },
+  "financesColumnState": "Document and payment",
+  "@financesColumnState": {
+    "description": "#2557 C4 Me › Finances: the rows header, document and payment state."
+  },
+  "financesColumnWorkspace": "Issued by",
+  "@financesColumnWorkspace": {
+    "description": "#2557 C4 Me › Finances: the rows header, the issuing workspace."
+  },
+  "financesCoverageAnswered": "Read from {host}",
+  "@financesCoverageAnswered": {
+    "description": "#2557 C4 Me › Finances: coverage above the results, a host that answered.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesCoverageHome": "your home installation",
+  "@financesCoverageHome": {
+    "description": "#2557 C4 Me › Finances: the personal home, as a source that answered."
+  },
+  "financesCoverageNoDocuments": "no documents",
+  "@financesCoverageNoDocuments": {
+    "description": "#2557 C4 Me › Finances: coverage, a host that answered with no document of yours."
+  },
+  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 document} other{{count} documents}}",
+  "@financesCoverageWorkspace": {
+    "description": "#2557 C4 Me › Finances: coverage, one workspace a host answered for, with its document count.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "financesDevSection": "Development spaces — test data, not counted above",
   "financesDueOn": "Due {date}",
   "@financesDueOn": {
@@ -8824,6 +8889,10 @@
         "type": "String"
       }
     }
+  },
+  "financesExportDocument": "Export this document (CSV)",
+  "@financesExportDocument": {
+    "description": "#2557 C4 Me › Finances: a row's Export action, this document as a CSV file (not a payment, not a delivery)."
   },
   "financesFullHistory": "Full history, usage and other servers",
   "@financesFullHistory": {
@@ -8850,6 +8919,10 @@
   "financesNothingPaid": "No settled invoice yet.",
   "@financesNothingPaid": {
     "description": "Me › Finances"
+  },
+  "financesOpenDocument": "Open",
+  "@financesOpenDocument": {
+    "description": "#2557 C4 Me › Finances: a row's Open action, in the issuing workspace."
   },
   "financesOutstanding": "Outstanding",
   "@financesOutstanding": {
@@ -8884,6 +8957,10 @@
   "financesPayments": "Payments",
   "@financesPayments": {
     "description": "Me › Finances"
+  },
+  "financesPeriodAll": "All periods",
+  "@financesPeriodAll": {
+    "description": "#2557 C4 Me › Finances: the period filter, every year."
   },
   "financesRemindedTimes": "Reminded ×{count}",
   "@financesRemindedTimes": {
@@ -8928,6 +9005,10 @@
   "@financesStateRefunded": {
     "description": "Me › Finances"
   },
+  "financesStateUnpaid": "Unpaid",
+  "@financesStateUnpaid": {
+    "description": "#2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet."
+  },
   "financesTitle": "Finances",
   "@financesTitle": {
     "description": "Me › Finances"
@@ -8935,6 +9016,18 @@
   "financesToPay": "To pay",
   "@financesToPay": {
     "description": "Me › Finances"
+  },
+  "financesTypeAll": "All documents",
+  "@financesTypeAll": {
+    "description": "#2557 C4 Me › Finances: the type filter, every document."
+  },
+  "financesTypeCreditNote": "Credit note",
+  "@financesTypeCreditNote": {
+    "description": "#2557 C4 Me › Finances: the document state of a credit note (a row and the type filter)."
+  },
+  "financesTypeInvoice": "Invoice",
+  "@financesTypeInvoice": {
+    "description": "#2557 C4 Me › Finances: the document state of an issued invoice (a row and the type filter)."
   },
   "gettingStartedActionChooseDay": "Choose another day",
   "@gettingStartedActionChooseDay": {
@@ -9874,8 +9967,21 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
+  "inboxMoreActions": "More actions",
+  "@inboxMoreActions": {
+    "description": "#2556 inbox header: Tooltip of the secondary menu holding New group and Starred."
+  },
   "inboxNoArchived": "No archived conversations.",
   "inboxNoUnread": "Nothing unread — you are up to date.",
+  "inboxRequestsCount": "Requests: {count}",
+  "@inboxRequestsCount": {
+    "description": "#2556 inbox header: The labelled count of message requests waiting; tapping it shows them.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "inboxRetry": "Try again",
   "inboxShowOlder": "Show older conversations",
   "@inboxShowOlder": {
@@ -18636,6 +18742,10 @@
   "privacyExportHint": "Everything you are the subject of, as one JSON file (art. 20).",
   "@privacyExportHint": {
     "description": "#719 - privacy & data"
+  },
+  "privacyExportInMyData": "Each source exports on its own in My data › Personal information.",
+  "@privacyExportInMyData": {
+    "description": "#2557 C4 Privacy: with the personal shell on, the export lives in My data, one file per source."
   },
   "privacyExportShareText": "My DesKilo data export",
   "@privacyExportShareText": {

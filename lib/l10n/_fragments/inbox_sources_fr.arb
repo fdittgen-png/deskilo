@@ -7,5 +7,12 @@
   "settingLabelMessagingInboxPageSize": "Taille de page de la boîte de réception",
   "settingHintMessagingInboxPageSize": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient par page de la boîte de réception ; les plus anciennes viennent avec Afficher les conversations plus anciennes.",
   "conversationChoose": "Choisissez une conversation",
-  "conversationDraftSessionOnly": "Brouillon non envoyé, conservé dans l’application jusqu’à votre déconnexion ou sa fermeture."
+  "conversationDraftSessionOnly": "Brouillon non envoyé, conservé dans l’application jusqu’à votre déconnexion ou sa fermeture.",
+  "conversationSendInFlight": "Votre message précédent est encore en cours d’envoi.",
+  "conversationSendUnconfirmed": "Remise non confirmée : le message est peut-être arrivé, peut-être pas. Relisez la conversation avant de le renvoyer.",
+  "conversationSendReview": "Relire",
+  "conversationLinkRefused": "Cette conversation ne vous est pas accessible. Rien n’a été ouvert.",
+  "conversationLinkUnreachable": "Cette conversation n’a pas pu être vérifiée, car son serveur n’a pas répondu. Rien n’a été ouvert.",
+  "inboxMoreActions": "Plus d’actions",
+  "inboxRequestsCount": "Demandes : {count}"
 }

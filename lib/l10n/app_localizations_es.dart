@@ -3703,6 +3703,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get conversationLeft => 'Salió';
 
   @override
+  String get conversationLinkRefused =>
+      'Esta conversación no está disponible para usted. No se ha abierto nada.';
+
+  @override
+  String get conversationLinkUnreachable =>
+      'No se pudo comprobar esta conversación porque su servidor no respondió. No se ha abierto nada.';
+
+  @override
   String get conversationLoadEarlier => 'Cargar mensajes anteriores';
 
   @override
@@ -3733,6 +3741,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get conversationSeeProfile => 'Ver perfil';
+
+  @override
+  String get conversationSendInFlight =>
+      'Su mensaje anterior todavía se está enviando.';
+
+  @override
+  String get conversationSendReview => 'Volver a leer';
+
+  @override
+  String get conversationSendUnconfirmed =>
+      'Entrega no confirmada: puede que el mensaje haya llegado o no. Vuelva a leer la conversación antes de enviarlo de nuevo.';
 
   @override
   String get conversationToday => 'Hoy';
@@ -7739,6 +7758,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesAwaitingValidation => 'Pago en validación';
 
   @override
+  String get financesColumnAmount => 'Importe';
+
+  @override
+  String get financesColumnDocument => 'Documento y periodo';
+
+  @override
+  String get financesColumnState => 'Documento y pago';
+
+  @override
+  String get financesColumnWorkspace => 'Emitido por';
+
+  @override
+  String financesCoverageAnswered(String host) {
+    return 'Leído desde $host';
+  }
+
+  @override
+  String get financesCoverageHome => 'su instalación principal';
+
+  @override
+  String get financesCoverageNoDocuments => 'ningún documento';
+
+  @override
+  String financesCoverageWorkspace(String workspace, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documentos',
+      one: '1 documento',
+    );
+    return '$workspace: $_temp0';
+  }
+
+  @override
   String get financesDevSection =>
       'Espacios de desarrollo — datos de prueba, no contados arriba';
 
@@ -7746,6 +7799,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String financesDueOn(String date) {
     return 'Vence el $date';
   }
+
+  @override
+  String get financesExportDocument => 'Exportar este documento (CSV)';
 
   @override
   String get financesFullHistory =>
@@ -7773,6 +7829,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesNothingPaid => 'Aún no hay facturas saldadas.';
 
   @override
+  String get financesOpenDocument => 'Abrir';
+
+  @override
   String get financesOutstanding => 'Pendiente';
 
   @override
@@ -7793,6 +7852,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get financesPayments => 'Pagos';
+
+  @override
+  String get financesPeriodAll => 'Todos los periodos';
 
   @override
   String financesRemindedTimes(int count) {
@@ -7822,10 +7884,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesStateRefunded => 'Reembolsada';
 
   @override
+  String get financesStateUnpaid => 'No pagada';
+
+  @override
   String get financesTitle => 'Finanzas';
 
   @override
   String get financesToPay => 'Por pagar';
+
+  @override
+  String get financesTypeAll => 'Todos los documentos';
+
+  @override
+  String get financesTypeCreditNote => 'Nota de crédito';
+
+  @override
+  String get financesTypeInvoice => 'Factura';
 
   @override
   String get gettingStartedActionChooseDay => 'Elegir otro día';
@@ -8723,10 +8797,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inboxMessengerDoor => 'Abrir mi mensajería';
 
   @override
+  String get inboxMoreActions => 'Más acciones';
+
+  @override
   String get inboxNoArchived => 'Ninguna conversación archivada.';
 
   @override
   String get inboxNoUnread => 'Nada sin leer — está al día.';
+
+  @override
+  String inboxRequestsCount(int count) {
+    return 'Solicitudes: $count';
+  }
 
   @override
   String get inboxRetry => 'Reintentar';
@@ -16111,6 +16193,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get privacyExportHint =>
       'Todo aquello de lo que usted es el sujeto, en un archivo JSON (art. 20).';
+
+  @override
+  String get privacyExportInMyData =>
+      'Cada fuente se exporta por separado en Mis datos › Información personal.';
 
   @override
   String get privacyExportShareText => 'Mi exportación de datos DesKilo';

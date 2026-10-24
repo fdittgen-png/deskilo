@@ -2443,6 +2443,8 @@
   "@conversationLeft": {
     "description": "#687 - messaging centre"
   },
+  "conversationLinkRefused": "Diese Unterhaltung ist für Sie nicht verfügbar. Es wurde nichts geöffnet.",
+  "conversationLinkUnreachable": "Diese Unterhaltung konnte nicht geprüft werden, weil ihr Server nicht geantwortet hat. Es wurde nichts geöffnet.",
   "conversationLoadEarlier": "Frühere Nachrichten laden",
   "conversationMarkUnread": "Als ungelesen markieren",
   "conversationMemberCount": "{count, plural, =1{1 Mitglied} other{{count} Mitglieder}}",
@@ -2465,6 +2467,9 @@
   "@conversationSeeProfile": {
     "description": "#695 - profile from a conversation"
   },
+  "conversationSendInFlight": "Ihre vorherige Nachricht wird noch gesendet.",
+  "conversationSendReview": "Erneut lesen",
+  "conversationSendUnconfirmed": "Zustellung nicht bestätigt: Die Nachricht ist vielleicht angekommen, vielleicht nicht. Lesen Sie die Unterhaltung erneut, bevor Sie sie noch einmal senden.",
   "conversationToday": "Heute",
   "conversationUnarchive": "Aus dem Archiv holen",
   "conversationUnknownMember": "Mitglied",
@@ -5445,6 +5450,14 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesColumnAmount": "Betrag",
+  "financesColumnDocument": "Dokument und Zeitraum",
+  "financesColumnState": "Dokument und Zahlung",
+  "financesColumnWorkspace": "Ausgestellt von",
+  "financesCoverageAnswered": "Gelesen von {host}",
+  "financesCoverageHome": "Ihre Heiminstallation",
+  "financesCoverageNoDocuments": "keine Dokumente",
+  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 Dokument} other{{count} Dokumente}}",
   "financesDevSection": "Entwicklungs-Spaces — Testdaten, oben nicht mitgezählt",
   "financesDueOn": "Fällig am {date}",
   "@financesDueOn": {
@@ -5455,6 +5468,7 @@
       }
     }
   },
+  "financesExportDocument": "Dieses Dokument exportieren (CSV)",
   "financesFullHistory": "Vollständiger Verlauf, Nutzung und andere Server",
   "@financesFullHistory": {
     "description": "Me › Finances"
@@ -5481,6 +5495,7 @@
   "@financesNothingPaid": {
     "description": "Me › Finances"
   },
+  "financesOpenDocument": "Öffnen",
   "financesOutstanding": "Ausstehend",
   "@financesOutstanding": {
     "description": "Me › Finances"
@@ -5515,6 +5530,7 @@
   "@financesPayments": {
     "description": "Me › Finances"
   },
+  "financesPeriodAll": "Alle Zeiträume",
   "financesRemindedTimes": "Erinnert ×{count}",
   "@financesRemindedTimes": {
     "description": "Me › Finances",
@@ -5558,6 +5574,7 @@
   "@financesStateRefunded": {
     "description": "Me › Finances"
   },
+  "financesStateUnpaid": "Unbezahlt",
   "financesTitle": "Finanzen",
   "@financesTitle": {
     "description": "Me › Finances"
@@ -5566,6 +5583,9 @@
   "@financesToPay": {
     "description": "Me › Finances"
   },
+  "financesTypeAll": "Alle Dokumente",
+  "financesTypeCreditNote": "Gutschrift",
+  "financesTypeInvoice": "Rechnung",
   "gettingStartedActionChooseDay": "Anderen Tag wählen",
   "gettingStartedActionChooseTime": "Zeit zum Buchen wählen",
   "gettingStartedActionFinishSetup": "Einrichtung abschließen",
@@ -6010,8 +6030,10 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
+  "inboxMoreActions": "Weitere Aktionen",
   "inboxNoArchived": "Keine archivierten Unterhaltungen.",
   "inboxNoUnread": "Nichts Ungelesenes — Sie sind auf dem Laufenden.",
+  "inboxRequestsCount": "Anfragen: {count}",
   "inboxRetry": "Erneut versuchen",
   "inboxShowOlder": "Ältere Unterhaltungen anzeigen",
   "inboxSourceFailed": "{source} konnte nicht gelesen werden. Der Rest des Posteingangs wird angezeigt.",
@@ -10380,6 +10402,7 @@
   "@privacyExportHint": {
     "description": "#719 - privacy & data"
   },
+  "privacyExportInMyData": "Jede Quelle wird einzeln unter Meine Daten › Persönliche Angaben exportiert.",
   "privacyExportShareText": "Mein DesKilo-Datenexport",
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"

@@ -145,6 +145,9 @@ void main() {
   testWidgets('a new group needs a name and people; the people come from the '
       'search', (tester) async {
     final r = await pump(tester);
+    await tester.tap(find.byKey(const ValueKey('unified-inbox-more')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1)); // the menu opens
     await tester.tap(find.byKey(const ValueKey('unified-inbox-new-group')));
     await tester.pumpAndSettle();
     final submit = find.byKey(const ValueKey('create-group-submit'));

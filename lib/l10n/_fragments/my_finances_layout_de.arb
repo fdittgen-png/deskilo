@@ -1,0 +1,19 @@
+{
+  "@@locale": "de",
+  "financesStateUnpaid": "Unbezahlt",
+  "financesTypeInvoice": "Rechnung",
+  "financesTypeCreditNote": "Gutschrift",
+  "financesTypeAll": "Alle Dokumente",
+  "financesPeriodAll": "Alle Zeiträume",
+  "financesColumnDocument": "Dokument und Zeitraum",
+  "financesColumnWorkspace": "Ausgestellt von",
+  "financesColumnState": "Dokument und Zahlung",
+  "financesColumnAmount": "Betrag",
+  "financesOpenDocument": "Öffnen",
+  "financesExportDocument": "Dieses Dokument exportieren (CSV)",
+  "financesCoverageHome": "Ihre Heiminstallation",
+  "financesCoverageAnswered": "Gelesen von {host}",
+  "financesCoverageNoDocuments": "keine Dokumente",
+  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 Dokument} other{{count} Dokumente}}",
+  "privacyExportInMyData": "Jede Quelle wird einzeln unter Meine Daten › Persönliche Angaben exportiert."
+}

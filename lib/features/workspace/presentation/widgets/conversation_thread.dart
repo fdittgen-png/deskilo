@@ -107,6 +107,8 @@ class ConversationThread extends ConsumerStatefulWidget {
     required this.conversationId,
     this.seedBody,
     this.asPage = false,
+    this.inPane = false,
+    this.onBack,
   });
 
   final String conversationId;
@@ -118,6 +120,10 @@ class ConversationThread extends ConsumerStatefulWidget {
   /// #821 — rendered as a page (full height, back button) rather than
   /// the 72 % sheet.
   final bool asPage;
+
+  /// In the Me messenger's pane rather than a route: Back is [onBack].
+  final bool inPane;
+  final VoidCallback? onBack;
 
   @override
   ConsumerState<ConversationThread> createState() => _ConversationThreadState();
@@ -136,6 +142,10 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
 
   /// One key per bubble so a tapped quote can scroll to its original.
   final Map<String, GlobalKey> _bubbleKeys = {};
+
+  /// A route's Back pops it; in the pane Back is the messenger's.
+  VoidCallback? get _back =>
+      widget.inPane ? widget.onBack : () => context.pop();
 
   bool get _hub => ref
       .watch(enabledFeaturesSyncProvider)
@@ -392,7 +402,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
     final header = ConversationHeader(
       title: title,
       conversation: conversation,
-      asPage: widget.asPage,
+      asPage: widget.asPage, onBack: _back,
       onOpen: _openFromHeader(conversation),
     );
 

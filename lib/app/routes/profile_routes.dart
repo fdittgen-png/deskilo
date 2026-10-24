@@ -6,6 +6,8 @@
 import 'package:go_router/go_router.dart';
 
 import '../../core/backend/backend_uri.dart';
+import '../../features/me/presentation/me_data_tab.dart';
+import '../../features/me/providers/personal_shell_providers.dart';
 import '../../features/profile/presentation/screens/backend_screen.dart';
 import '../../features/profile/presentation/screens/consent_screen.dart';
 import '../../features/profile/presentation/screens/developer_screen.dart';
@@ -69,7 +71,12 @@ List<RouteBase> profileRoutes(RouteEnv env) {
       // #719 — Privacy & data: who can see my data, who did, export,
       // erasure, the policy. Every member; the tools inside are gated.
       path: '/privacy',
-      builder: (context, state) => const PrivacyScreen(),
+      // #2557 C4 — under the personal shell, export lives in My data.
+      builder: (context, state) => PrivacyScreen(
+        myDataPath: env.ref.read(personalShellEnabledProvider)
+            ? meDataRoute(view: MeDataView.profile)
+            : null,
+      ),
     ),
     GoRoute(
       // #734 — Region & formats as a screen of its own.

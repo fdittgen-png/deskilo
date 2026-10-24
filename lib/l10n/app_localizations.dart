@@ -6325,6 +6325,18 @@ abstract class AppLocalizations {
   /// **'Left'**
   String get conversationLeft;
 
+  /// #2556 deep link: A link to a conversation whose server answered and does not list it for this person; nothing opens.
+  ///
+  /// In en, this message translates to:
+  /// **'This conversation is not available to you. Nothing was opened.'**
+  String get conversationLinkRefused;
+
+  /// #2556 deep link: A link to a conversation whose server could not be asked; nothing opens.
+  ///
+  /// In en, this message translates to:
+  /// **'This conversation could not be checked because its server did not answer. Nothing was opened.'**
+  String get conversationLinkUnreachable;
+
   /// No description provided for @conversationLoadEarlier.
   ///
   /// In en, this message translates to:
@@ -6372,6 +6384,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'See profile'**
   String get conversationSeeProfile;
+
+  /// #2556 composer: Above the composer of a conversation opened again while the message sent from it earlier has not answered yet; its text is not shown again and Send waits.
+  ///
+  /// In en, this message translates to:
+  /// **'Your previous message is still being sent.'**
+  String get conversationSendInFlight;
+
+  /// #2556 composer: Button beside the unconfirmed-delivery note: reads the conversation again and ends the unconfirmed state.
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get conversationSendReview;
+
+  /// #2556 composer: Above the composer when a send got no answer in time. The message is never resent automatically; the person reads the conversation again and decides.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery not confirmed: the message may or may not have arrived. Read the conversation again before you send it again.'**
+  String get conversationSendUnconfirmed;
 
   /// No description provided for @conversationToday.
   ///
@@ -12737,6 +12767,54 @@ abstract class AppLocalizations {
   /// **'Payment being validated'**
   String get financesAwaitingValidation;
 
+  /// #2557 C4 Me › Finances: the rows header, the amount in its own currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get financesColumnAmount;
+
+  /// #2557 C4 Me › Finances: the rows header, document and period.
+  ///
+  /// In en, this message translates to:
+  /// **'Document and period'**
+  String get financesColumnDocument;
+
+  /// #2557 C4 Me › Finances: the rows header, document and payment state.
+  ///
+  /// In en, this message translates to:
+  /// **'Document and payment'**
+  String get financesColumnState;
+
+  /// #2557 C4 Me › Finances: the rows header, the issuing workspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued by'**
+  String get financesColumnWorkspace;
+
+  /// #2557 C4 Me › Finances: coverage above the results, a host that answered.
+  ///
+  /// In en, this message translates to:
+  /// **'Read from {host}'**
+  String financesCoverageAnswered(String host);
+
+  /// #2557 C4 Me › Finances: the personal home, as a source that answered.
+  ///
+  /// In en, this message translates to:
+  /// **'your home installation'**
+  String get financesCoverageHome;
+
+  /// #2557 C4 Me › Finances: coverage, a host that answered with no document of yours.
+  ///
+  /// In en, this message translates to:
+  /// **'no documents'**
+  String get financesCoverageNoDocuments;
+
+  /// #2557 C4 Me › Finances: coverage, one workspace a host answered for, with its document count.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspace}: {count, plural, =1{1 document} other{{count} documents}}'**
+  String financesCoverageWorkspace(String workspace, int count);
+
   /// No description provided for @financesDevSection.
   ///
   /// In en, this message translates to:
@@ -12748,6 +12826,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Due {date}'**
   String financesDueOn(String date);
+
+  /// #2557 C4 Me › Finances: a row's Export action, this document as a CSV file (not a payment, not a delivery).
+  ///
+  /// In en, this message translates to:
+  /// **'Export this document (CSV)'**
+  String get financesExportDocument;
 
   /// Me › Finances
   ///
@@ -12791,6 +12875,12 @@ abstract class AppLocalizations {
   /// **'No settled invoice yet.'**
   String get financesNothingPaid;
 
+  /// #2557 C4 Me › Finances: a row's Open action, in the issuing workspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get financesOpenDocument;
+
   /// Me › Finances
   ///
   /// In en, this message translates to:
@@ -12826,6 +12916,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payments'**
   String get financesPayments;
+
+  /// #2557 C4 Me › Finances: the period filter, every year.
+  ///
+  /// In en, this message translates to:
+  /// **'All periods'**
+  String get financesPeriodAll;
 
   /// Me › Finances
   ///
@@ -12869,6 +12965,12 @@ abstract class AppLocalizations {
   /// **'Refunded'**
   String get financesStateRefunded;
 
+  /// #2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get financesStateUnpaid;
+
   /// Me › Finances
   ///
   /// In en, this message translates to:
@@ -12880,6 +12982,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To pay'**
   String get financesToPay;
+
+  /// #2557 C4 Me › Finances: the type filter, every document.
+  ///
+  /// In en, this message translates to:
+  /// **'All documents'**
+  String get financesTypeAll;
+
+  /// #2557 C4 Me › Finances: the document state of a credit note (a row and the type filter).
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note'**
+  String get financesTypeCreditNote;
+
+  /// #2557 C4 Me › Finances: the document state of an issued invoice (a row and the type filter).
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get financesTypeInvoice;
 
   /// #1654 getting started card: gettingStartedActionChooseDay
   ///
@@ -14405,6 +14525,12 @@ abstract class AppLocalizations {
   /// **'Open my messenger'**
   String get inboxMessengerDoor;
 
+  /// #2556 inbox header: Tooltip of the secondary menu holding New group and Starred.
+  ///
+  /// In en, this message translates to:
+  /// **'More actions'**
+  String get inboxMoreActions;
+
   /// No description provided for @inboxNoArchived.
   ///
   /// In en, this message translates to:
@@ -14416,6 +14542,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing unread — you are up to date.'**
   String get inboxNoUnread;
+
+  /// #2556 inbox header: The labelled count of message requests waiting; tapping it shows them.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests: {count}'**
+  String inboxRequestsCount(int count);
 
   /// No description provided for @inboxRetry.
   ///
@@ -26891,6 +27023,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Everything you are the subject of, as one JSON file (art. 20).'**
   String get privacyExportHint;
+
+  /// #2557 C4 Privacy: with the personal shell on, the export lives in My data, one file per source.
+  ///
+  /// In en, this message translates to:
+  /// **'Each source exports on its own in My data › Personal information.'**
+  String get privacyExportInMyData;
 
   /// #719 - privacy & data
   ///

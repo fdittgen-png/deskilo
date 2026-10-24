@@ -29,7 +29,6 @@ fileLength lib/features/money/presentation/invoice_documents.dart // 628→607
 fileLength lib/features/money/presentation/report_defaults.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.
 fileLength lib/features/money/presentation/screens/billing_screen.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/money/presentation/screens/legal_identity_screen.dart // #2388 the import of context.l10n.
-fileLength lib/features/money/presentation/screens/my_finances_screen.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/money/presentation/screens/vat_declarations_screen.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/money/presentation/screens/vat_screen.dart // #2360: a decided change of rate comes prefilled in Change by law.
 fileLength lib/features/money/presentation/widgets/expense_schedule_sheet.dart // #2357 the schedule asks the VAT its occurrences carry (expense_vat_fields.dart, shared with the expense sheet).

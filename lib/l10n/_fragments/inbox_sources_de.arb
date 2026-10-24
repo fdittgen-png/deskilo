@@ -7,5 +7,12 @@
   "settingLabelMessagingInboxPageSize": "Seitengröße des Posteingangs",
   "settingHintMessagingInboxPageSize": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server pro Seite des Posteingangs liefern; ältere kommen mit Ältere Unterhaltungen anzeigen.",
   "conversationChoose": "Wählen Sie eine Unterhaltung",
-  "conversationDraftSessionOnly": "Nicht gesendeter Entwurf, in der App aufbewahrt, bis Sie sich abmelden oder sie schließen."
+  "conversationDraftSessionOnly": "Nicht gesendeter Entwurf, in der App aufbewahrt, bis Sie sich abmelden oder sie schließen.",
+  "conversationSendInFlight": "Ihre vorherige Nachricht wird noch gesendet.",
+  "conversationSendUnconfirmed": "Zustellung nicht bestätigt: Die Nachricht ist vielleicht angekommen, vielleicht nicht. Lesen Sie die Unterhaltung erneut, bevor Sie sie noch einmal senden.",
+  "conversationSendReview": "Erneut lesen",
+  "conversationLinkRefused": "Diese Unterhaltung ist für Sie nicht verfügbar. Es wurde nichts geöffnet.",
+  "conversationLinkUnreachable": "Diese Unterhaltung konnte nicht geprüft werden, weil ihr Server nicht geantwortet hat. Es wurde nichts geöffnet.",
+  "inboxMoreActions": "Weitere Aktionen",
+  "inboxRequestsCount": "Anfragen: {count}"
 }

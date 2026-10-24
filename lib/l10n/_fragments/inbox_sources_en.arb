@@ -44,5 +44,38 @@
   "conversationDraftSessionOnly": "Unsent draft, kept in this app until you sign out or close it.",
   "@conversationDraftSessionOnly": {
     "description": "#2556 conversation pane: Shown above the composer when it reopens with an unsent draft; the draft is kept in memory only, never on the device or in the cloud."
+  },
+  "conversationSendInFlight": "Your previous message is still being sent.",
+  "@conversationSendInFlight": {
+    "description": "#2556 composer: Above the composer of a conversation opened again while the message sent from it earlier has not answered yet; its text is not shown again and Send waits."
+  },
+  "conversationSendUnconfirmed": "Delivery not confirmed: the message may or may not have arrived. Read the conversation again before you send it again.",
+  "@conversationSendUnconfirmed": {
+    "description": "#2556 composer: Above the composer when a send got no answer in time. The message is never resent automatically; the person reads the conversation again and decides."
+  },
+  "conversationSendReview": "Read again",
+  "@conversationSendReview": {
+    "description": "#2556 composer: Button beside the unconfirmed-delivery note: reads the conversation again and ends the unconfirmed state."
+  },
+  "conversationLinkRefused": "This conversation is not available to you. Nothing was opened.",
+  "@conversationLinkRefused": {
+    "description": "#2556 deep link: A link to a conversation whose server answered and does not list it for this person; nothing opens."
+  },
+  "conversationLinkUnreachable": "This conversation could not be checked because its server did not answer. Nothing was opened.",
+  "@conversationLinkUnreachable": {
+    "description": "#2556 deep link: A link to a conversation whose server could not be asked; nothing opens."
+  },
+  "inboxMoreActions": "More actions",
+  "@inboxMoreActions": {
+    "description": "#2556 inbox header: Tooltip of the secondary menu holding New group and Starred."
+  },
+  "inboxRequestsCount": "Requests: {count}",
+  "@inboxRequestsCount": {
+    "description": "#2556 inbox header: The labelled count of message requests waiting; tapping it shows them.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }
