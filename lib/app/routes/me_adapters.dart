@@ -8,6 +8,7 @@
 // pure function of the URI; the hook reads the flag once per redirect.
 import 'package:go_router/go_router.dart';
 
+import '../../features/directory/domain/conversation_link.dart';
 import '../../features/me/presentation/me_shell.dart';
 import '../../features/me/providers/personal_shell_providers.dart';
 import '../route_env.dart';
@@ -26,7 +27,11 @@ String? personalShellAddressOf(Uri uri) {
   switch (uri.path) {
     case '/me':
       final tab = q['tab'];
-      return tab == null ? null : MeTab.fromQuery(tab).path;
+      // #2556 — a link to one conversation travels with the tab.
+      return tab == null
+          ? null
+          : withQuery(MeTab.fromQuery(tab).path,
+              pickQuery(uri, const [ConversationLink.parameter]));
     case '/account-messages':
       final recipient = q['recipient'] ?? '';
       return withQuery(

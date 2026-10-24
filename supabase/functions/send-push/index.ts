@@ -161,6 +161,9 @@ export type NotificationReference = {
   workspaceId: string;
   objectKind: "event" | "note";
   objectId: string;
+  /** #2556 -- the workspace conversation a message belongs to, by id: the
+   * app opens it in the messenger once that workspace lists it. */
+  conversationId?: string | null;
 };
 
 export function referenceData(
@@ -176,6 +179,7 @@ export function referenceData(
     ws: ref.workspaceId,
     ref_kind: ref.objectKind,
     ref_id: ref.objectId,
+    ...(ref.conversationId ? { conv: ref.conversationId } : {}),
   };
 }
 
@@ -454,7 +458,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
   let recipients: { id: string }[];
   // #2559 C2 -- the record the notification is about, by id only.
   let workspaceId: string;
-  let object: { kind: "event" | "note"; id: string };
+  let object: { kind: "event" | "note"; id: string; conversation?: string };
   // #2216 — the members a group message mentions (0391; empty while the
   // workspace has messageMentions off).
   let mentioned = new Set<string>();
@@ -472,7 +476,11 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
     if (!note) return Response.json({ error: "unknown note" }, { status: 404 });
     kind = "member_note";
     workspaceId = note.workspace_id;
-    object = { kind: "note", id: note.id };
+    object = {
+      kind: "note",
+      id: note.id,
+      conversation: note.conversation_id ?? undefined,
+    };
     if (note.to_member_id) {
       recipients = [{ id: note.to_member_id }];
     } else if (note.conversation_id) {
@@ -601,6 +609,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
       workspaceId,
       objectKind: object.kind,
       objectId: object.id,
+      conversationId: object.conversation ?? null,
     }
     : null;
   const results = await deliverAll(endpoints, async (ep) => {

@@ -4,12 +4,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/backend/context_client_providers.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/app_snack.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/conversation_link.dart';
 import '../../domain/conversation_target.dart';
 import '../../domain/messenger.dart';
 import '../../providers/conversation_pane_providers.dart';
@@ -17,6 +17,7 @@ import '../../providers/messenger_providers.dart';
 import '../account_thread.dart';
 import 'context_labels.dart';
 import 'context_thread_screen.dart';
+import 'conversation_link_following.dart';
 import 'open_inbox_entry.dart';
 import 'unified_inbox_view.dart';
 import 'workspace_conversation_pane.dart';
@@ -60,7 +61,8 @@ class AdaptiveMessenger extends ConsumerStatefulWidget {
   ConsumerState<AdaptiveMessenger> createState() => _AdaptiveMessengerState();
 }
 
-class _AdaptiveMessengerState extends ConsumerState<AdaptiveMessenger> {
+class _AdaptiveMessengerState extends ConsumerState<AdaptiveMessenger>
+    with ConversationLinkFollowing {
   final _listKey = GlobalKey(debugLabel: 'messenger-list');
   GlobalKey? _threadKey;
   String? _threadOf;
@@ -74,91 +76,65 @@ class _AdaptiveMessengerState extends ConsumerState<AdaptiveMessenger> {
   late final ActiveWorkspaceId _active = ref.read(
     activeWorkspaceIdProvider.notifier,
   );
-  ({String? account, String? before})? _loan;
+  ({String? account, String? before, String? host})? _loan;
   String? _shownFor;
-
-  /// The link being authorized, and the last one already answered.
-  ProviderSubscription<AsyncValue<UnifiedInbox>>? _linkWatch;
-  String? _linkAnswered;
 
   @override
   void initState() {
     super.initState();
     _active;
-    _follow(widget.link);
+    followLink(widget.link);
   }
 
   @override
   void didUpdateWidget(AdaptiveMessenger oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.link != oldWidget.link) _follow(widget.link);
+    if (widget.link != oldWidget.link) followLink(widget.link);
   }
 
   @override
   void dispose() {
-    _linkWatch?.close();
+    stopFollowing();
     _giveBack(account: _shownFor);
     super.dispose();
   }
 
-  /// Waits for [raw]'s source to answer for the signed-in person, then
-  /// opens the conversation or says why nothing opened — once per link.
-  void _follow(String? raw) {
-    _linkWatch?.close();
-    _linkWatch = null;
-    if (raw == null || raw == _linkAnswered) return;
-    final link = ConversationLink.parse(raw);
-    void answer(LinkVerdict verdict, InboxEntry? entry) {
-      if (raw == _linkAnswered) return;
-      _linkAnswered = raw;
-      // The answer is the signed-in account's; another one opens nothing.
-      final account = ref.read(authStateProvider).value;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _linkWatch?.close();
-        _linkWatch = null;
-        if (!mounted || ref.read(authStateProvider).value != account) return;
-        final l10n = context.l10n;
-        switch (verdict) {
-          case LinkVerdict.authorized:
-            unawaited(_openEntry(entry!));
-          case LinkVerdict.unreachable:
-            AppSnack.error(context, l10n.conversationLinkUnreachable);
-          case LinkVerdict.refused || LinkVerdict.pending:
-            AppSnack.error(context, l10n.conversationLinkRefused);
-        }
-      });
-    }
-
-    if (link == null) return answer(LinkVerdict.refused, null);
-    _linkWatch = ref.listenManual(messengerInboxProvider, (_, inbox) {
-      final (verdict, entry) = switch (inbox) {
-        AsyncData(:final value) => authorizeLink(value, link),
-        AsyncError() => (LinkVerdict.unreachable, null),
-        _ => (LinkVerdict.pending, null),
-      };
-      if (verdict != LinkVerdict.pending) answer(verdict, entry);
-    }, fireImmediately: true);
-  }
-
   /// Lends [workspace] to the pane's workspace conversation; the one
-  /// active before the first loan is what comes back.
+  /// active before the first loan — and the connected installation it
+  /// lives on, when it does — is what comes back.
   Future<void> _lend(String workspace) async {
     final account = ref.read(authStateProvider).value;
     final active = await ref.read(activeWorkspaceIdProvider.future);
     if (!mounted || ref.read(authStateProvider).value != account) return;
-    _loan ??= (account: account, before: active);
-    if (active != workspace) _active.activate(workspace);
+    final host = ref.read(selectedWorkspaceHostProvider);
+    _loan ??= (
+      account: account,
+      before: active,
+      host: host != null && host.workspaceId == active ? host.source : null,
+    );
+    if (active != workspace || host != null) _active.activate(workspace);
   }
 
   /// Gives the lent workspace back to the [account] that borrowed it —
-  /// never to another one.
+  /// never to another one — on the installation it was selected on.
   void _giveBack({required String? account}) {
     final loan = _loan;
     _loan = null;
     final before = loan?.before;
     if (before == null || loan!.account != account) return;
-    final active = _active;
-    unawaited(Future.microtask(() => active.activate(before)));
+    final (active, host) = (_active, loan.host);
+    unawaited(Future.microtask(() {
+      try {
+        host == null
+            ? active.activate(before)
+            : active.activateConnected(before, host);
+      } on Exception catch (e, st) {
+        // The app itself closed with the thread shown: nothing to give
+        // back to.
+        TraceLogger.instance.warn('messages', 'lent workspace not given back',
+            error: e, stackTrace: st);
+      }
+    }));
   }
 
   /// One thread per conversation: the same key across layouts keeps its
@@ -170,6 +146,9 @@ class _AdaptiveMessengerState extends ConsumerState<AdaptiveMessenger> {
     }
     return _threadKey!;
   }
+
+  @override
+  void openAuthorized(InboxEntry entry) => unawaited(_openEntry(entry));
 
   Future<void> _openEntry(InboxEntry entry) async {
     final selection = ref.read(conversationSelectionProvider.notifier);

@@ -9,7 +9,7 @@
 # the payment id — and it is only a notification: the real mollie-webhook
 # fetches the payment back from the stateful stub with the intent's own
 # key, and only a payment that is the intent's, in every field, settles.
-MO_PORT=54996
+MO_PORT=18996
 MO="http://127.0.0.1:$MO_PORT"
 : > "$WORK/mo_hits"
 python3 scripts/payment_scenarios/mollie_stub.py "$MO_PORT" "$WORK/mo_hits" "MO$RUN" &

@@ -146,9 +146,12 @@ Future<void> offerKeptInvitation(
 }
 
 class MeShell extends ConsumerStatefulWidget {
-  const MeShell({super.key, this.tab = MeTab.home});
+  const MeShell({super.key, this.tab = MeTab.home, this.link});
 
   final MeTab tab;
+
+  /// A link to one conversation (`conversation`), followed by Messages.
+  final String? link;
 
   @override
   ConsumerState<MeShell> createState() => _MeShellState();
@@ -188,7 +191,7 @@ class _MeShellState extends ConsumerState<MeShell> {
   Widget _page(MeTab tab) => switch (tab) {
     MeTab.home => const MeHomeTab(),
     MeTab.discover => const DirectoryScreen(embedded: true),
-    MeTab.messages => const MeMessagesTab(),
+    MeTab.messages => MeMessagesTab(link: widget.link),
     MeTab.me => const MeAccountTab(),
     // Branches of the personal shell only; never a tab of this one.
     MeTab.spaces || MeTab.data => const SizedBox.shrink(),
