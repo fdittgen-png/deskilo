@@ -1,0 +1,13 @@
+{
+  "@@locale": "fr",
+  "visibilitySavedPreview": "Aperçu enregistré",
+  "visibilitySavedPreviewHint": "Montre ce qui est enregistré. Une modification apparaît ici une fois enregistrée.",
+  "visibilityUnsupported": "Votre domicile personnel ne peut pas encore enregistrer ce réglage : ses administrateurs doivent le mettre à jour. Rien n’a été modifié.",
+  "visibilityLegacyTitle": "Anciens comptes personnels",
+  "visibilityLegacyIntro": "Vos comptes séparés sur d’autres serveurs gardent leurs propres réglages. Modifier votre domicile personnel ne les modifie pas.",
+  "visibilityLegacyUnsaved": "Pas encore enregistré : {audience}",
+  "visibilityLegacyDiscard": "Abandonner la modification",
+  "visibilityLegacyKeepEditing": "Continuer à modifier",
+  "visibilityLegacyDirtyTitle": "Votre modification n’est pas enregistrée",
+  "visibilityLegacyDirtyBody": "Votre modification de « {field} » sur {server} n’est pas encore enregistrée. Elle appartient à ce compte et ne passe pas à un autre."
+}

@@ -29996,6 +29996,50 @@
   "@visibilityIntro": {
     "description": "Intro of the visibility card."
   },
+  "visibilityLegacyDirtyBody": "Your change to “{field}” on {server} is not saved yet. It belongs to that account and does not move to another one.",
+  "@visibilityLegacyDirtyBody": {
+    "description": "#2558 privacy: body of the save / discard / keep editing question when switching legacy accounts",
+    "placeholders": {
+      "field": {
+        "type": "String",
+        "example": "Contact details"
+      },
+      "server": {
+        "type": "String",
+        "example": "coworkonti.example"
+      }
+    }
+  },
+  "visibilityLegacyDirtyTitle": "Your change is not saved",
+  "@visibilityLegacyDirtyTitle": {
+    "description": "#2558 privacy: switching to another legacy account while a change is unsaved"
+  },
+  "visibilityLegacyDiscard": "Discard change",
+  "@visibilityLegacyDiscard": {
+    "description": "#2558 privacy: drop the unsaved change of a legacy account"
+  },
+  "visibilityLegacyIntro": "Your separate accounts on other servers keep their own settings. Changing your personal home does not change them.",
+  "@visibilityLegacyIntro": {
+    "description": "#2558 privacy: subtitle of the legacy personal accounts section"
+  },
+  "visibilityLegacyKeepEditing": "Keep editing",
+  "@visibilityLegacyKeepEditing": {
+    "description": "#2558 privacy: stay on the legacy account with the unsaved change"
+  },
+  "visibilityLegacyTitle": "Legacy personal accounts",
+  "@visibilityLegacyTitle": {
+    "description": "#2558 privacy: expandable section of the separate accounts the person has on other servers"
+  },
+  "visibilityLegacyUnsaved": "Not saved yet: {audience}",
+  "@visibilityLegacyUnsaved": {
+    "description": "#2558 privacy: a legacy account field with a change that is not saved yet",
+    "placeholders": {
+      "audience": {
+        "type": "String",
+        "example": "Members of my spaces"
+      }
+    }
+  },
   "visibilityMoreSharing": "More sharing settings",
   "@visibilityMoreSharing": {
     "description": "#2558 privacy card: expands the remaining fields"
@@ -30078,6 +30122,14 @@
   "@visibilitySaveFailed": {
     "description": "Error when saving an audience failed."
   },
+  "visibilitySavedPreview": "Saved preview",
+  "@visibilitySavedPreview": {
+    "description": "#2558 privacy: label of the preview, which shows only what the personal home saved"
+  },
+  "visibilitySavedPreviewHint": "Shows what is saved. A change appears here once it is saved.",
+  "@visibilitySavedPreviewHint": {
+    "description": "#2558 privacy: under the saved preview label; an unsaved change is never shown in it"
+  },
   "visibilitySignedIn": "Anyone signed in",
   "@visibilitySignedIn": {
     "description": "Audience: anyone with an account."
@@ -30129,6 +30181,10 @@
   "visibilityUnconfirmedTitle": "Your change could not be confirmed",
   "@visibilityUnconfirmedTitle": {
     "description": "#2558 C2 privacy: the reply was lost and the saved field read back is not the intended one"
+  },
+  "visibilityUnsupported": "Your personal home cannot save this setting yet: the people who run it need to update it. Nothing was changed.",
+  "@visibilityUnsupported": {
+    "description": "#2558 privacy: the personal home lacks the checked privacy writer (incomplete deployment); nothing was written"
   },
   "visibilityWidenAction": "Widen",
   "visibilityWidenAdded": "Added: {spaces}",
