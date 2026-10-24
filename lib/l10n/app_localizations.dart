@@ -6277,6 +6277,18 @@ abstract class AppLocalizations {
   /// **'Conversation archived.'**
   String get conversationArchived;
 
+  /// #2556 conversation pane: The thread pane beside the inbox before a conversation is opened (wide layout).
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a conversation'**
+  String get conversationChoose;
+
+  /// #2556 conversation pane: Shown above the composer when it reopens with an unsent draft; the draft is kept in memory only, never on the device or in the cloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsent draft, kept in this app until you sign out or close it.'**
+  String get conversationDraftSessionOnly;
+
   /// Empty state of a fresh conversation thread
   ///
   /// In en, this message translates to:
@@ -6666,6 +6678,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'None'**
   String get courtesyNone;
+
+  /// #2562 C2c Create: an enrolled server that accepts new spaces
+  ///
+  /// In en, this message translates to:
+  /// **'Accepts new spaces'**
+  String get createHostAvailable;
+
+  /// #2562 C2c Create: action back to choosing a server
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a server'**
+  String get createHostChooseAgain;
+
+  /// #2562 C2c Create: choose the server the app is signed in to
+  ///
+  /// In en, this message translates to:
+  /// **'This server'**
+  String get createHostHere;
+
+  /// #2562 C2c Create: detail of 'This server'
+  ///
+  /// In en, this message translates to:
+  /// **'The server you are signed in to'**
+  String get createHostHereDetail;
+
+  /// #2562 C2c Create: the onboarding was reached without a chosen server held
+  ///
+  /// In en, this message translates to:
+  /// **'The server chosen for this space is no longer held. Nothing was created.'**
+  String get createHostLost;
+
+  /// #2562 C2c Create: an enrolled server closed to new spaces (state and refusal)
+  ///
+  /// In en, this message translates to:
+  /// **'Not accepting new spaces'**
+  String get createHostNotAccepting;
+
+  /// #2562 C2c Create: refusal, the chosen server's enrolment was revoked
+  ///
+  /// In en, this message translates to:
+  /// **'No longer offered by your personal home'**
+  String get createHostRevoked;
+
+  /// #2562 C2c Create: title of the sheet choosing the server a new space is created on
+  ///
+  /// In en, this message translates to:
+  /// **'Where should the space live?'**
+  String get createHostTitle;
+
+  /// #2562 C2c Create: the list of servers could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'The servers your personal home offers could not be read.'**
+  String get createHostUnavailable;
+
+  /// #2562 C2c Create: an enrolled server where the person cannot be verified (state and refusal)
+  ///
+  /// In en, this message translates to:
+  /// **'Your identity cannot be verified there'**
+  String get createHostUnverified;
+
+  /// #2562 C2c Create: onboarding banner naming the chosen server
+  ///
+  /// In en, this message translates to:
+  /// **'This space will be created on {host}.'**
+  String createOnHostBanner(String host);
 
   /// #1916 invoice clauses: customerCapacityBusiness
   ///

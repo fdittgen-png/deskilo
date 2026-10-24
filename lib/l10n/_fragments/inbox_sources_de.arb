@@ -5,5 +5,7 @@
   "inboxSourceUnavailable": "{source} ist mit Ihrer aktuellen Anmeldung nicht erreichbar. Deren Unterhaltungen fehlen in dieser Liste.",
   "inboxShowOlder": "Ältere Unterhaltungen anzeigen",
   "settingLabelMessagingInboxPageSize": "Seitengröße des Posteingangs",
-  "settingHintMessagingInboxPageSize": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server pro Seite des Posteingangs liefern; ältere kommen mit Ältere Unterhaltungen anzeigen."
+  "settingHintMessagingInboxPageSize": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server pro Seite des Posteingangs liefern; ältere kommen mit Ältere Unterhaltungen anzeigen.",
+  "conversationChoose": "Wählen Sie eine Unterhaltung",
+  "conversationDraftSessionOnly": "Nicht gesendeter Entwurf, in der App aufbewahrt, bis Sie sich abmelden oder sie schließen."
 }

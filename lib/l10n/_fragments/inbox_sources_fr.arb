@@ -5,5 +5,7 @@
   "inboxSourceUnavailable": "{source} n’est pas joignable avec votre connexion actuelle. Ses conversations manquent dans cette liste.",
   "inboxShowOlder": "Afficher les conversations plus anciennes",
   "settingLabelMessagingInboxPageSize": "Taille de page de la boîte de réception",
-  "settingHintMessagingInboxPageSize": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient par page de la boîte de réception ; les plus anciennes viennent avec Afficher les conversations plus anciennes."
+  "settingHintMessagingInboxPageSize": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient par page de la boîte de réception ; les plus anciennes viennent avec Afficher les conversations plus anciennes.",
+  "conversationChoose": "Choisissez une conversation",
+  "conversationDraftSessionOnly": "Brouillon non envoyé, conservé dans l’application jusqu’à votre déconnexion ou sa fermeture."
 }

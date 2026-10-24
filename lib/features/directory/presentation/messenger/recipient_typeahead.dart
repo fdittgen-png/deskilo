@@ -32,6 +32,7 @@ class RecipientTypeahead extends ConsumerStatefulWidget {
     required this.onOpen,
     required this.onSearch,
     this.self,
+    this.onOpenGroup,
   });
 
   final TextEditingController controller;
@@ -41,6 +42,9 @@ class RecipientTypeahead extends ConsumerStatefulWidget {
   final String? self;
   final void Function(String source, String id, String name) onOpen;
   final ValueChanged<String> onSearch;
+
+  /// Opens a group somewhere else than its own page (the messenger's pane).
+  final ValueChanged<InboxEntry>? onOpenGroup;
 
   @override
   ConsumerState<RecipientTypeahead> createState() => _TypeaheadState();
@@ -84,7 +88,10 @@ class _TypeaheadState extends ConsumerState<RecipientTypeahead> {
   void _select(Recipient r) {
     widget.controller.clear();
     final group = r.group;
-    if (group != null) {
+    final openGroup = widget.onOpenGroup;
+    if (group != null && openGroup != null) {
+      openGroup(group);
+    } else if (group != null) {
       unawaited(openInboxEntry(context, ref, group));
     } else {
       widget.onOpen(r.source, r.id, r.name);

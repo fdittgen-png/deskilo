@@ -8,6 +8,9 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../domain/conversation_target.dart';
+import '../domain/messenger.dart';
+import '../providers/conversation_pane_providers.dart';
 import '../providers/directory_providers.dart';
 import 'account_messenger_sections.dart';
 import 'account_thread.dart';
@@ -27,9 +30,16 @@ class AccountMessengerScreen extends ConsumerStatefulWidget {
     this.source = '',
     this.recipient,
     this.name = '',
+    this.handOffTo,
   });
   final String source, name;
   final String? recipient;
+
+  /// In the personal shell: the messenger this new discussion was started
+  /// from. A person or group picked here opens there — in its pane, or as
+  /// its focused thread — and this page returns to it (or goes to this
+  /// path when it was opened directly).
+  final String? handOffTo;
   @override
   ConsumerState<AccountMessengerScreen> createState() => _MessengerState();
 }
@@ -70,12 +80,30 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
       '': '',
       for (final s in sources) s.endpoint.url: s.endpoint.host,
     };
+    final handOffTo = widget.handOffTo;
+    void handOff(ConversationTarget target) {
+      ref.read(conversationSelectionProvider.notifier).open(target);
+      if (context.canPop()) {
+        context.pop();
+      } else if (handOffTo != null) {
+        context.go(handOffTo);
+      }
+    }
+
+    void openGroup(InboxEntry group) => handOff(InboxTarget(group));
     void open(
       String source,
       String recipient,
       String name, {
       String? conversation,
-    }) => accountThreadPage.open<void>(
+    }) => handOffTo != null
+        ? handOff(PersonTarget(
+            source: source,
+            recipient: recipient,
+            name: name,
+            conversation: conversation,
+          ))
+        : accountThreadPage.open<void>(
       context,
       AccountThread(
         key: ValueKey((account, source, recipient)),
@@ -122,9 +150,15 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
             servers: servers,
             self: account,
             onOpen: open,
+            onOpenGroup: handOffTo == null ? null : openGroup,
             onSearch: submit,
           ),
-          ReachableSection(servers: servers, self: account, onOpen: open),
+          ReachableSection(
+            servers: servers,
+            self: account,
+            onOpen: open,
+            onOpenGroup: handOffTo == null ? null : openGroup,
+          ),
           if (_query.isNotEmpty)
             for (final server in servers.entries)
               ContactResults(

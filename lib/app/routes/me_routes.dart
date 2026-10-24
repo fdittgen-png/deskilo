@@ -159,9 +159,12 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
                 // list (page_routes.dart), so they match ahead of `:ref`.
                 GoRoute(
                   path: 'new',
+                  // #2556 — a person or group picked here opens in the
+                  // messenger's pane.
                   builder: (context, state) => AccountMessengerScreen(
                     source: _query(state, 'source'),
                     name: _query(state, 'name'),
+                    handOffTo: MeTab.messages.path,
                   ),
                 ),
                 GoRoute(

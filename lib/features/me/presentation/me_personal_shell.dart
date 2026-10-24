@@ -23,6 +23,8 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/navigation/navigation_style.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
+import '../../directory/presentation/messenger/conversation_pane.dart';
+import '../../directory/providers/conversation_pane_providers.dart';
 import '../../directory/providers/messenger_providers.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
 import 'me_account_tab.dart';
@@ -174,7 +176,19 @@ class _MePersonalShellState extends ConsumerState<MePersonalShell>
       textScalePercent: MediaQuery.textScalerOf(context).scale(100),
       menuPreferred: ref.watch(webShellProvider),
     );
-    final nested = MeTab.destinationOf(widget.path).path != widget.path;
+    final body = window.width -
+        switch (layout) {
+          PersonalLayout.sidebar => PersonalShellMetrics.sidebarWidth + 1,
+          PersonalLayout.rail => PersonalShellMetrics.railWidth + 1,
+          _ => 0,
+        };
+    // A conversation focused on a narrow Messages page is a page over the
+    // list: it brings its own header and Back, and no bar competes.
+    final focused = current == MeTab.messages &&
+        ref.watch(conversationSelectionProvider) != null &&
+        !messengerSplits(body);
+    final nested =
+        MeTab.destinationOf(widget.path).path != widget.path || focused;
     final theme = Theme.of(context);
     final tokens = PersonalTheme.of(context);
     return Scaffold(

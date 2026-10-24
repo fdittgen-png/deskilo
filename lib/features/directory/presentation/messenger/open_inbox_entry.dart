@@ -23,9 +23,7 @@ Future<void> openInboxEntry(
   InboxEntry entry,
 ) async {
   final current = ref.read(currentWorkspaceProvider).value?.id;
-  if (entry.kind == MessageContextKind.space &&
-      !entry.isRemote &&
-      entry.workspaceId != null) {
+  if (opensInWorkspaceThread(entry)) {
     // A conversation of one of my workspaces opens in that workspace's own
     // thread — names, quotes, references to reservations, spaces and
     // documents — so it works from the Me messenger exactly as it did in
@@ -44,7 +42,7 @@ Future<void> openInboxEntry(
   } else {
     final l10n = context.l10n;
     final servers = ref.read(serverLabelsProvider).value ?? const {};
-    final peer = entry.peerId ?? await _peerOf(ref, entry);
+    final peer = entry.peerId ?? await inboxEntryPeer(ref, entry);
     if (!context.mounted) return;
     await contextThreadPage.open<void>(
       context,
@@ -61,9 +59,17 @@ Future<void> openInboxEntry(
   ref.invalidate(messengerInboxProvider);
 }
 
+/// Whether [entry] is a conversation of one of my workspaces on this
+/// server, which reads in that workspace's own thread rather than in the
+/// context thread.
+bool opensInWorkspaceThread(InboxEntry entry) =>
+    entry.kind == MessageContextKind.space &&
+    !entry.isRemote &&
+    entry.workspaceId != null;
+
 /// The other person of an account conversation, for a server whose inbox
 /// rows do not name them: the account conversation list does.
-Future<String?> _peerOf(WidgetRef ref, InboxEntry entry) async {
+Future<String?> inboxEntryPeer(WidgetRef ref, InboxEntry entry) async {
   if (entry.kind != MessageContextKind.account) return null;
   try {
     final rows = await ref.read(

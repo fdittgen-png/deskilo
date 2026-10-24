@@ -39,12 +39,15 @@ import '../widgets/template_region_notice.dart';
 /// First-run screen for a signed-in user without a workspace: create one
 /// (become owner) or join via invite code (spec §11 onboarding).
 class OnboardingScreen extends ConsumerStatefulWidget {
-  const OnboardingScreen({super.key, this.navigation, this.joinFirst = false});
+  const OnboardingScreen({super.key, this.navigation, this.joinFirst = false, this.hostLabel});
   final WizardNavigationController? navigation;
 
   /// #1652 — the person came with an invitation: Join is selected
   /// directly, with no Create/Join choice in between.
   final bool joinFirst;
+
+  /// #2562 C2c -- the enrolled host this space is created on; only Create.
+  final String? hostLabel;
 
   @override
   ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -123,8 +126,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     _currency.text = _derivedCurrency = country.currencyCode;
     _timezone.text = _derivedTimezone = country.defaultTimezone;
     // #1652 — the person came to join: Join is selected, not Create.
-    _joinMode = widget.joinFirst ||
-        ref.read(entryIntentsProvider)?.purpose == EntryPurpose.join;
+    _joinMode = widget.hostLabel == null && (widget.joinFirst ||
+        ref.read(entryIntentsProvider)?.purpose == EntryPurpose.join);
+    if (widget.hostLabel != null) { _templateResolved = true; _skipped.add(2); } // the host's templates are not this server's
     unawaited(_resume());
     _takeArrivedInvitation();
     unawaited(_offerKeptInvitation());
@@ -288,11 +292,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     }
     _completed.add(_step);
     _skipped.remove(_step);
-    _goTo((_step + 1).clamp(0, _confirmStep));
+    _goTo((_step + (widget.hostLabel != null && _step == 1 ? 2 : 1)).clamp(0, _confirmStep));
   }
 
   void _goTo(int step) {
-    if (_busy || step == _step) return;
+    if (_busy || step == _step || (step == 2 && widget.hostLabel != null)) return;
     _skipped.remove(step);
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() => _step = step);
@@ -312,7 +316,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Future<void> _create() async {
-    final intent = _intent;
+    final intent = _intent, start = ref.read(workspaceStartProvider);
     final sent = _sent;
     if (_uncertain && sent != null && !intent.sameMaterial(sent)) {
       setState(() => _intentChanged = true);
@@ -321,7 +325,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     await _run(() async {
       _sent = intent;
       await ref.read(creationDraftsProvider).sent(intent);
-      final result = await ref.read(workspaceStartProvider).create(
+      final result = await start.create(
             name: intent.name,
             countryCode: intent.countryCode,
             currencyCode: intent.currencyCode,
@@ -445,7 +449,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget _nameStepBody(AppLocalizations l10n, Widget modeSwitch) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          modeSwitch,
+          if (widget.hostLabel case final host?) OnboardingHostLine(host) else modeSwitch,
           const SizedBox(height: 24),
           TextFormField(
             key: const ValueKey('onboarding-name'),

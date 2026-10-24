@@ -14,6 +14,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/wizard_navigation.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../providers/workspace_host_providers.dart';
 import '../providers/workspace_providers.dart';
 
 Future<bool> runOnboardingAction({required BuildContext context,
@@ -68,7 +69,7 @@ Future<bool> runOnboardingAction({required BuildContext context,
           // saved default. Synchronous activation leaves no delayed selection
           // write that could race another account or workspace switch.
           subscriptions[2].close();
-          ref.read(activeWorkspaceIdProvider.notifier).activate(workspaceId);
+          _activateCreated(ref, workspaceId);
           subscriptions.add(ref.listenManual<AsyncValue<String?>>(activeWorkspaceIdProvider, (before, after) {
             if (before?.value != after.value) current = false;
           }));
@@ -92,9 +93,34 @@ Future<bool> runOnboardingAction({required BuildContext context,
 /// the destination's guard reads my rights there instead of the gap while
 /// they load (the setup guide asks for manageConfiguration).
 Future<void> _settle(WidgetRef ref) async {
+  if (ref.read(creationHostProvider) != null) return _settleOnHost(ref);
   await ref.read(myWorkspacesProvider.future);
   await ref.read(myMemberProvider.future);
   await ref.read(enabledFeaturesProvider.future);
+}
+
+/// #2562 C2c -- a space created on the chosen host is selected THERE (its
+/// connection, session only), never as a space of this server.
+void _activateCreated(WidgetRef ref, String workspaceId) {
+  final notifier = ref.read(activeWorkspaceIdProvider.notifier);
+  switch (ref.read(creationHostProvider)) {
+    case final host?:
+      notifier.activateConnected(workspaceId, host.source);
+    case null:
+      notifier.activate(workspaceId);
+  }
+}
+
+/// #2562 C2c -- the space on its host, read through the pinned client. It
+/// was created whatever this read answers: a refusal is traced, never
+/// reported as "not created".
+Future<void> _settleOnHost(WidgetRef ref) async {
+  try {
+    await ref.read(currentWorkspaceProvider.future);
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn('workspace', 'created space not read on its host',
+        error: e, stackTrace: st);
+  }
 }
 
 /// Goes to [destination], else to the hub with [over] opened on top of it,

@@ -3677,6 +3677,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get conversationArchived => 'Conversación archivada.';
 
   @override
+  String get conversationChoose => 'Elija una conversación';
+
+  @override
+  String get conversationDraftSessionOnly =>
+      'Borrador no enviado, conservado en la aplicación hasta que cierre sesión o la cierre.';
+
+  @override
   String get conversationEmpty => 'Aún no hay mensajes — ¡saluda!';
 
   @override
@@ -3883,6 +3890,43 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get courtesyNone => 'Ninguno';
+
+  @override
+  String get createHostAvailable => 'Acepta nuevos espacios';
+
+  @override
+  String get createHostChooseAgain => 'Elija un servidor';
+
+  @override
+  String get createHostHere => 'Este servidor';
+
+  @override
+  String get createHostHereDetail => 'El servidor en el que ha iniciado sesión';
+
+  @override
+  String get createHostLost =>
+      'El servidor elegido para este espacio ya no está reservado. No se ha creado nada.';
+
+  @override
+  String get createHostNotAccepting => 'No acepta nuevos espacios';
+
+  @override
+  String get createHostRevoked => 'Su hogar personal ya no lo ofrece';
+
+  @override
+  String get createHostTitle => '¿Dónde debe estar el espacio?';
+
+  @override
+  String get createHostUnavailable =>
+      'No se han podido leer los servidores que ofrece su hogar personal.';
+
+  @override
+  String get createHostUnverified => 'Su identidad no se puede verificar allí';
+
+  @override
+  String createOnHostBanner(String host) {
+    return 'Este espacio se creará en $host.';
+  }
 
   @override
   String get customerCapacityBusiness => 'Empresa';
