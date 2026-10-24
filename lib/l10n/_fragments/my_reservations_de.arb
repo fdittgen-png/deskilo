@@ -34,5 +34,10 @@
   "settingLabelPersonalReservationWindowDays": "Zeitraum der Reservierungen",
   "settingHintPersonalReservationWindowDays": "Tage, die der persönliche Bereich standardmäßig anzeigt, wenn er Ihre Reservierungen auflistet. Sie können einen anderen Zeitraum wählen, bis zur Obergrenze.",
   "settingLabelPersonalReservationMaxWindowDays": "Obergrenze des Reservierungszeitraums",
-  "settingHintPersonalReservationMaxWindowDays": "Von der Plattform festgelegt: der längste Zeitraum, den ein Lesezugriff auf Ihre Reservierungen anfragen darf. Er begrenzt die Abfrage."
+  "settingHintPersonalReservationMaxWindowDays": "Von der Plattform festgelegt: der längste Zeitraum, den ein Lesezugriff auf Ihre Reservierungen anfragen darf. Er begrenzt die Abfrage.",
+  "myReservationsHostUnavailable": "Dieser Server ist von diesem Gerät aus nicht erreichbar: Er ist hier nicht verbunden, oder er ist nicht der, der er zu sein vorgibt.",
+  "myReservationsTimedOut": "Dieser Server hat nicht rechtzeitig geantwortet.",
+  "myReservationsSourceUnnamed": "Ein Space-Server",
+  "myReservationsSourceReading": "{source} wird gelesen…",
+  "myReservationsSourceProblem": "{source}: {problem}"
 }

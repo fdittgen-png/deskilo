@@ -23104,6 +23104,12 @@ abstract class AppLocalizations {
   /// **'This server refused to list your reservations.'**
   String get myReservationsForbidden;
 
+  /// #2553 C2 My reservations: one workspace host cannot be reached with its own verified connection on this device.
+  ///
+  /// In en, this message translates to:
+  /// **'This server cannot be reached from this device: it is not connected here, or it is not the one it claims to be.'**
+  String get myReservationsHostUnavailable;
+
   /// #2553 My reservations: the host refused the window or cursor (22023).
   ///
   /// In en, this message translates to:
@@ -23170,6 +23176,24 @@ abstract class AppLocalizations {
   /// **'At most {days} days at a time.'**
   String myReservationsPeriodLimit(int days);
 
+  /// #2553 C2 My reservations: one host's read failed; source is the names of its spaces, problem the sentence saying why.
+  ///
+  /// In en, this message translates to:
+  /// **'{source}: {problem}'**
+  String myReservationsSourceProblem(String source, String problem);
+
+  /// #2553 C2 My reservations: one host's bookings are still being read; source is the names of its spaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading {source}…'**
+  String myReservationsSourceReading(String source);
+
+  /// #2553 C2 My reservations: a workspace host whose spaces have no name the person may read.
+  ///
+  /// In en, this message translates to:
+  /// **'A workspace server'**
+  String get myReservationsSourceUnnamed;
+
   /// #2553 My reservations: booking status.
   ///
   /// In en, this message translates to:
@@ -23199,6 +23223,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reserved'**
   String get myReservationsStatusReserved;
+
+  /// #2553 C2 My reservations: one workspace host did not answer within the personal read timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'This server did not answer in time.'**
+  String get myReservationsTimedOut;
 
   /// #2553 My reservations: a booked place without a name.
   ///

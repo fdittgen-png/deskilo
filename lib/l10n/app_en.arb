@@ -16193,6 +16193,10 @@
   "@myReservationsForbidden": {
     "description": "#2553 My reservations: the host refused the caller (42501)."
   },
+  "myReservationsHostUnavailable": "This server cannot be reached from this device: it is not connected here, or it is not the one it claims to be.",
+  "@myReservationsHostUnavailable": {
+    "description": "#2553 C2 My reservations: one workspace host cannot be reached with its own verified connection on this device."
+  },
   "myReservationsInvalid": "This server refused the period asked for.",
   "@myReservationsInvalid": {
     "description": "#2553 My reservations: the host refused the window or cursor (22023)."
@@ -16242,6 +16246,31 @@
       }
     }
   },
+  "myReservationsSourceProblem": "{source}: {problem}",
+  "@myReservationsSourceProblem": {
+    "description": "#2553 C2 My reservations: one host's read failed; source is the names of its spaces, problem the sentence saying why.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "problem": {
+        "type": "String"
+      }
+    }
+  },
+  "myReservationsSourceReading": "Reading {source}…",
+  "@myReservationsSourceReading": {
+    "description": "#2553 C2 My reservations: one host's bookings are still being read; source is the names of its spaces.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "myReservationsSourceUnnamed": "A workspace server",
+  "@myReservationsSourceUnnamed": {
+    "description": "#2553 C2 My reservations: a workspace host whose spaces have no name the person may read."
+  },
   "myReservationsStatusCancelled": "Cancelled",
   "@myReservationsStatusCancelled": {
     "description": "#2553 My reservations: booking status."
@@ -16261,6 +16290,10 @@
   "myReservationsStatusReserved": "Reserved",
   "@myReservationsStatusReserved": {
     "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsTimedOut": "This server did not answer in time.",
+  "@myReservationsTimedOut": {
+    "description": "#2553 C2 My reservations: one workspace host did not answer within the personal read timeout."
   },
   "myReservationsUnnamedPlace": "(unnamed place)",
   "@myReservationsUnnamedPlace": {

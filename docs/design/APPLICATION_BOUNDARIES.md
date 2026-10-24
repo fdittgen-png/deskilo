@@ -59,6 +59,7 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `me -> events`
 - `me -> money`
 - `me -> profile`
+- `me -> reservations`
 - `me -> task_recorder`
 - `me -> visits`
 - `me -> workspace`

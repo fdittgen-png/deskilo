@@ -186,6 +186,7 @@ class MyReservationsPage {
     required this.items,
     required this.next,
     required this.hasMore,
+    this.zones = const {},
   });
 
   /// The strict read of the wire page. [source] is the installation the
@@ -228,6 +229,20 @@ class MyReservationsPage {
   final List<MyReservationItem> items;
   final MyReservationsCursor? next;
   final bool hasMore;
+
+  /// #2553 C2 -- the IANA zone of each workspace the items name, as the
+  /// host's own workspace row holds it: a day is that workspace's day.
+  /// A workspace missing here has no known zone.
+  final Map<String, String> zones;
+
+  /// This page with the [zones] its host named.
+  MyReservationsPage withZones(Map<String, String> zones) => MyReservationsPage(
+        source: source,
+        items: items,
+        next: next,
+        hasMore: hasMore,
+        zones: Map.unmodifiable(zones),
+      );
 }
 
 /// Why a read answered nothing usable. Each one is shown in its own words;
@@ -253,6 +268,11 @@ enum MyReservationsFailure {
 
   /// No workspace context: nobody signed in or no workspace selected.
   noContext,
+
+  /// #2553 C2 -- the host of a source cannot be reached with its own
+  /// verified client here: not connected on this device, quarantined, or
+  /// it identified itself as another installation.
+  hostUnavailable,
 }
 
 /// A typed refusal of the read, carrying the server's detail when one came.
@@ -267,26 +287,85 @@ class MyReservationsRefused implements Exception {
       'MyReservationsRefused(${failure.name}${detail == null ? '' : ': $detail'})';
 }
 
-/// What the host lets a window be: the default span a person starts with
-/// and the longest one it answers (`personal.reservation_window_days`,
-/// `personal.reservation_max_window_days`), as its registry says.
+/// What the personal home lets a read be, as its platform registry says:
+/// the default span a person starts with and the longest one asked
+/// (`personal.reservation_window_days`, `personal.reservation_max_window_days`),
+/// how many hosts are read at once (`personal.read_concurrency`) and how
+/// long one host is waited for (`personal.read_timeout_seconds`).
 @immutable
 class MyReservationsLimits {
-  const MyReservationsLimits({required this.windowDays, required this.maxDays});
+  const MyReservationsLimits({
+    required this.windowDays,
+    required this.maxDays,
+    required this.concurrency,
+    required this.timeout,
+  });
 
   final int windowDays;
   final int maxDays;
+  final int concurrency;
+  final Duration timeout;
 }
 
-/// The boundary a page reads through: one host, the caller's own rows.
+/// #2553 C2 -- one workspace host my account names: the installation, the
+/// workspaces of mine it holds (by local id) and their names where known.
+/// A source is read with its own verified client, never another's.
+@immutable
+class MyReservationsSource {
+  const MyReservationsSource({
+    required this.installationId,
+    required this.workspaceIds,
+    this.hostedHere = false,
+    this.labels = const [],
+  });
+
+  final String installationId;
+  final List<String> workspaceIds;
+
+  /// The host is the installation my personal home is (combined).
+  final bool hostedHere;
+
+  /// The names of its workspaces I may read; empty when none is known.
+  final List<String> labels;
+
+  @override
+  bool operator ==(Object other) =>
+      other is MyReservationsSource &&
+      other.installationId == installationId &&
+      other.hostedHere == hostedHere &&
+      _sameList(other.workspaceIds, workspaceIds) &&
+      _sameList(other.labels, labels);
+
+  @override
+  int get hashCode => Object.hash(
+        installationId,
+        hostedHere,
+        Object.hashAll(workspaceIds),
+        Object.hashAll(labels),
+      );
+}
+
+bool _sameList(List<String> a, List<String> b) {
+  if (a.length != b.length) return false;
+  for (var i = 0; i < a.length; i++) {
+    if (a[i] != b[i]) return false;
+  }
+  return true;
+}
+
+/// The boundary a page reads through: one host per call, the caller's own
+/// rows.
 abstract class MyReservationsRepository {
-  /// The host's window limits; a registry without the rows is
+  /// The personal home's limits; a registry without the rows is
   /// [MyReservationsFailure.misconfigured], never a literal.
   Future<MyReservationsLimits> limits();
 
-  /// One page for [query]; throws [MyReservationsRefused] for a typed
-  /// refusal and lets a transport failure through unchanged.
-  Future<MyReservationsPage> page(MyReservationsQuery query);
+  /// One page of [source] for [query]; throws [MyReservationsRefused] for a
+  /// typed refusal and lets a transport failure through unchanged.
+  Future<MyReservationsPage> page(
+    MyReservationsSource source,
+    MyReservationsQuery query,
+  );
 }
 
 /// The window a person may ask for: [from] inclusive to [to] exclusive,

@@ -23,6 +23,7 @@ class DemoMyReservationsRepository implements MyReservationsRepository {
     required this.installationId,
     required this.spaces,
     required this.workspaceName,
+    this.workspaceZone,
     this.pageSize = SettingDefaults.personalReservationPageSize,
   });
 
@@ -32,16 +33,35 @@ class DemoMyReservationsRepository implements MyReservationsRepository {
   /// The name of a space by its id, read when a page is built: the list of
   /// spaces moves with the session (a link, a persona, a reset).
   final String Function(String workspaceId) workspaceName;
+
+  /// #2553 C2 — the zone of a space, as its workspace row holds it.
+  final String? Function(String workspaceId)? workspaceZone;
   final int pageSize;
 
   @override
   Future<MyReservationsLimits> limits() async => const MyReservationsLimits(
         windowDays: SettingDefaults.personalReservationWindowDays,
         maxDays: SettingDefaults.personalReservationMaxWindowDays,
+        concurrency: SettingDefaults.personalReadConcurrency,
+        timeout: Duration(seconds: SettingDefaults.personalReadTimeoutSeconds),
       );
 
+  /// The fixture is one installation: a source naming another holds none
+  /// of its bookings, and is answered with an empty page, as a host
+  /// holding none of mine would.
   @override
-  Future<MyReservationsPage> page(MyReservationsQuery query) async {
+  Future<MyReservationsPage> page(
+    MyReservationsSource source,
+    MyReservationsQuery query,
+  ) async {
+    if (source.installationId != installationId) {
+      return MyReservationsPage(
+        source: source.installationId,
+        items: const [],
+        next: null,
+        hasMore: false,
+      );
+    }
     final own = <MyReservationItem>[];
     for (final space in spaces) {
       final mine = space.reservations.myMemberId;
@@ -70,6 +90,11 @@ class DemoMyReservationsRepository implements MyReservationsRepository {
           ? MyReservationsCursor(afterStart: items.last.startsAt, afterId: items.last.id)
           : null,
       hasMore: hasMore,
+      zones: {
+        for (final i in items)
+          if (workspaceZone?.call(i.workspaceId) case final String zone)
+            i.workspaceId: zone,
+      },
     );
   }
 

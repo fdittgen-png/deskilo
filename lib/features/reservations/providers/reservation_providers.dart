@@ -1,30 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider, WidgetRef;
+import 'dart:async';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/backend_settings.dart';
+import '../../../core/backend/connected_installation_providers.dart';
+import '../../../core/backend/connected_pool_host_resolver.dart';
 import '../../../core/backend/context_client_providers.dart';
+import '../../../core/backend/context_clients.dart'
+    show ActiveInstallationHostResolver;
 import '../../../core/cache/cache_store.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/instance/schema_compatibility.dart';
 import '../../../core/privacy/recording_privacy.dart';
 import '../../../core/privacy/recording_providers.dart';
 import '../../../core/roles/audience_roles.dart';
+import '../../../core/session/session_source.dart';
+import '../../../core/settings/active_settings.dart';
 import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
-import '../../../core/time/workspace_calendar.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/booking_recovery.dart';
+import '../application/bounded_reads.dart';
 import '../application/save_calendar_file.dart';
-import '../data/context_my_reservations_repository.dart';
 import '../data/context_reservation_repository.dart';
+import '../data/host_my_reservations_repository.dart';
 import '../data/supabase_series_previewer.dart';
 import '../domain/booking_intent.dart';
 import '../domain/my_reservations.dart';
+import '../domain/my_reservations_composition.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 import '../domain/series_preview.dart';
@@ -297,28 +306,70 @@ Future<List<Reservation>> periodReservations(
   return [...rows]..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 }
 
-// #2553 C1 -- a person's own reservations on the selected workspace's host:
-// the adapter over the context's verified client, the window the host's
-// captured settings allow and the feed that pages through one window.
+// #2553 -- a person's own reservations across every workspace host their
+// account names. C1 read the selected workspace's host; C2 reads each
+// source with its own verified client, at most `personal.read_concurrency`
+// hosts at a time, each waited for `personal.read_timeout_seconds`, and
+// merges the pages by start time. Each host keeps its own state: one that
+// fails or cannot be reached is said beside the others' bookings, with its
+// own Try again. A page that arrives after the account changed, or for a
+// view that was rebuilt meanwhile, is dropped.
 
-/// The read, bound to the workspace context at each call and to that
-/// context's host client. Demo overrides it with the fixture's spaces.
+/// The read, one host per call through that host's own verified client;
+/// the limits from the personal home's platform settings. Demo overrides
+/// it with the fixture's spaces.
 @Riverpod(keepAlive: true)
 MyReservationsRepository myReservationsRepository(Ref ref) =>
-    ContextMyReservationsRepository(
-      context: () => ref.read(workspaceContextProvider.future),
-      clientFor: (id) => ref.read(workspaceClientProvider(id)),
+    HostMyReservationsRepository(
+      platformSettings: () => ref.read(platformSettingsProvider.future),
+      hostOf: (source) => resolveMyReservationsHost(
+        source,
+        connected: () => ref.read(connectedSourcesProvider.future),
+        resolverFor: (origin) => ConnectedPoolHostResolver(
+          active: ActiveInstallationHostResolver(
+            ref.read(personalClientProvider),
+            ref.read(installationIdReaderProvider),
+          ),
+          root: ref.read(personalClientProvider),
+          pool: () => ref.read(connectedInstallationsProvider),
+          sourceOf: (_) => origin,
+        ),
+      ),
     );
 
-/// The window a person starts with and the longest one they may ask for:
-/// the host's own settings as the context captured them, never a literal.
-/// A registry without the rows fails typed.
+/// The hosts My reservations reads. By default the selected workspace's
+/// host alone; the composition root replaces it with every workspace my
+/// personal account names (`myReservationsSourcesFromMe`).
+@riverpod
+Future<List<MyReservationsSource>> myReservationsSources(Ref ref) async {
+  final selected = ref.watch(selectedWorkspaceHostProvider);
+  final context = await ref.watch(workspaceContextProvider.future);
+  if (context == null) return const [];
+  final target = context.target;
+  return [
+    MyReservationsSource(
+      installationId: target.installationId,
+      workspaceIds: [target.workspaceId],
+      hostedHere: selected == null || selected.workspaceId != target.workspaceId,
+    ),
+  ];
+}
+
+/// The personal home's limits for these reads; a registry without the
+/// rows fails typed.
+@Riverpod(retry: myReservationsRetry)
+Future<MyReservationsLimits> myReservationsLimits(Ref ref) {
+  ref.watch(sessionStateProvider.select((s) => s.value));
+  return ref.watch(myReservationsRepositoryProvider).limits();
+}
+
+/// The window a person starts with and the longest one they may ask for.
 @Riverpod(retry: myReservationsRetry)
 class MyReservationsWindowController extends _$MyReservationsWindowController {
   @override
   Future<MyReservationsWindow> build() async {
     final now = ref.watch(clockProvider).now();
-    final limits = await ref.watch(myReservationsRepositoryProvider).limits();
+    final limits = await ref.watch(myReservationsLimitsProvider.future);
     return MyReservationsWindow.fromToday(
       now,
       defaultDays: limits.windowDays,
@@ -334,96 +385,113 @@ class MyReservationsWindowController extends _$MyReservationsWindowController {
   }
 }
 
-/// What one feed holds: the pages read so far, where the next one starts,
-/// whether a further page is being read and why the last one did not come.
-class MyReservationsFeed {
-  const MyReservationsFeed({
-    required this.source,
-    required this.items,
-    required this.next,
-    required this.hasMore,
-    this.loadingMore = false,
-    this.loadMoreFailure,
-  });
-
-  final String source;
-  final List<MyReservationItem> items;
-  final MyReservationsCursor? next;
-  final bool hasMore;
-  final bool loadingMore;
-
-  /// The failure of the last "show more", kept beside the pages it follows
-  /// so they stay on screen; null once a page came.
-  final Object? loadMoreFailure;
-
-  MyReservationsFeed _with({
-    List<MyReservationItem>? items,
-    MyReservationsCursor? next,
-    bool? hasMore,
-    required bool loadingMore,
-    Object? loadMoreFailure,
-  }) =>
-      MyReservationsFeed(
-        source: source,
-        items: items ?? this.items,
-        next: next ?? this.next,
-        hasMore: hasMore ?? this.hasMore,
-        loadingMore: loadingMore,
-        loadMoreFailure: loadMoreFailure,
-      );
-}
-
-/// The feed of one [MyReservationsQuery]: the first page on build, the next
-/// ones appended by [loadMore]. A changed window is another query, so
-/// another feed; a page that arrives for a disposed feed is dropped.
+/// The composition of one [MyReservationsQuery] (a window): every source's
+/// first page read through the bounded reads, each slot emitted as soon as
+/// its host answers; [loadMore] and [retry] per host.
 @Riverpod(retry: myReservationsRetry)
-class MyReservationsFeedController extends _$MyReservationsFeedController {
+class MyReservationsComposer extends _$MyReservationsComposer {
+  int _generation = 0;
+  String? _principal;
+  BoundedReads? _reads;
+  Duration _timeout = Duration.zero;
+
   @override
-  Future<MyReservationsFeed> build(MyReservationsQuery query) async {
-    final page = await ref.watch(myReservationsRepositoryProvider).page(query);
-    return MyReservationsFeed(
-      source: page.source,
-      items: page.items,
-      next: page.next,
-      hasMore: page.hasMore,
-    );
+  Future<MyReservationsComposition> build(MyReservationsQuery query) async {
+    final generation = ++_generation;
+    final principal = ref.watch(sessionStateProvider.select((s) => s.value));
+    final limitsAnswer = ref.watch(myReservationsLimitsProvider.future);
+    // Both watched before the first await; a failure of the second while
+    // the first is awaited must not go unhandled.
+    final sourcesAnswer = ref.watch(myReservationsSourcesProvider.future)..ignore();
+    final limits = await limitsAnswer;
+    final sources = await sourcesAnswer;
+    final reads = BoundedReads(limits.concurrency);
+    ref.onDispose(reads.close);
+    _principal = principal;
+    _reads = reads;
+    _timeout = limits.timeout;
+    for (final source in sources) {
+      unawaited(_read(generation, source, query, first: true));
+    }
+    return MyReservationsComposition(List.unmodifiable([
+      for (final source in sources) MyReservationsSlot.reading(source),
+    ]));
   }
 
-  Future<void> loadMore() async {
-    final current = state.value;
-    final cursor = current?.next;
-    if (current == null || cursor == null || !current.hasMore || current.loadingMore) {
-      return;
-    }
-    state = AsyncData(current._with(loadingMore: true));
+  /// Whether a read started in [generation] may still change the view: the
+  /// same build, the same signed-in account.
+  bool _current(int generation) =>
+      ref.mounted &&
+      generation == _generation &&
+      ref.read(sessionStateProvider).value == _principal;
+
+  Future<void> _read(
+    int generation,
+    MyReservationsSource source,
+    MyReservationsQuery asked, {
+    required bool first,
+  }) async {
+    final reads = _reads;
+    if (reads == null) return;
+    final repository = ref.read(myReservationsRepositoryProvider);
+    MyReservationsPage? page;
+    Object? failure;
     try {
-      final page = await ref
-          .read(myReservationsRepositoryProvider)
-          .page(query.continuedAfter(cursor));
-      if (!ref.mounted) return;
-      state = AsyncData(current._with(
-        items: List.unmodifiable([...current.items, ...page.items]),
-        next: page.next,
-        hasMore: page.hasMore,
-        loadingMore: false,
-      ));
+      page = await reads.run(
+        () => repository.page(source, asked).timeout(_timeout),
+      );
     } on Object catch (e, st) {
+      failure = e;
       TraceLogger.instance.warn(
         'reservations',
-        'the next page of my reservations did not come',
+        'a host of my reservations did not answer',
         error: e,
         stackTrace: st,
       );
-      if (!ref.mounted) return;
-      // The pages already read stay on screen; the failure is shown beside
-      // them with the way to ask for the next page again.
-      state = AsyncData(current._with(loadingMore: false, loadMoreFailure: e));
+    }
+    if (!_current(generation)) return;
+    // The first slots are emitted by build; a page may come before them.
+    // A failed build has nothing to place the answer in.
+    try {
+      await future;
+    } on Object {
+      // trace-exempt: the build's own failure is the view's state.
+      return;
+    }
+    if (!_current(generation)) return;
+    final composition = state.value;
+    if (composition == null) return;
+    state = AsyncData(
+      composition.answered(source, page: page, failure: failure, first: first),
+    );
+  }
+
+  /// The next page of every host that has one; the pages already read
+  /// stay on screen while it comes.
+  void loadMore() {
+    final composition = state.value;
+    if (composition == null) return;
+    final (next, asks) = composition.askingMore();
+    if (asks.isEmpty) return;
+    state = AsyncData(next);
+    for (final (source, cursor) in asks) {
+      unawaited(_read(_generation, source, query.continuedAfter(cursor), first: false));
     }
   }
-}
 
-/// #2561 L4 — the calendar the day headers of My reservations follow: the
-/// selected workspace's captured one, or null before it is captured.
-@riverpod
-WorkspaceCalendar? myReservationsCalendar(Ref ref) =>
-    ref.watch(readyWorkspaceContextProvider)?.calendar;
+  /// Reads the first page of the host [installationId] again; the other
+  /// hosts' bookings stay as they are.
+  void retry(String installationId) {
+    final composition = state.value;
+    final slot = composition?.slotOf(installationId);
+    if (composition == null ||
+        slot == null ||
+        slot.state != MyReservationsSlotState.failed) {
+      return;
+    }
+    state = AsyncData(
+      composition.replacing(MyReservationsSlot.reading(slot.source)),
+    );
+    unawaited(_read(_generation, slot.source, query, first: true));
+  }
+}

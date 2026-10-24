@@ -13812,6 +13812,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This server refused to list your reservations.';
 
   @override
+  String get myReservationsHostUnavailable =>
+      'This server cannot be reached from this device: it is not connected here, or it is not the one it claims to be.';
+
+  @override
   String get myReservationsInvalid =>
       'This server refused the period asked for.';
 
@@ -13851,6 +13855,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String myReservationsSourceProblem(String source, String problem) {
+    return '$source: $problem';
+  }
+
+  @override
+  String myReservationsSourceReading(String source) {
+    return 'Reading $source…';
+  }
+
+  @override
+  String get myReservationsSourceUnnamed => 'A workspace server';
+
+  @override
   String get myReservationsStatusCancelled => 'Cancelled';
 
   @override
@@ -13864,6 +13881,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get myReservationsStatusReserved => 'Reserved';
+
+  @override
+  String get myReservationsTimedOut => 'This server did not answer in time.';
 
   @override
   String get myReservationsUnnamedPlace => '(unnamed place)';

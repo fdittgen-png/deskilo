@@ -154,5 +154,38 @@
   "settingHintPersonalReservationMaxWindowDays": "Fixed by the platform: the longest period one read of your reservations may ask for. It bounds the query.",
   "@settingHintPersonalReservationMaxWindowDays": {
     "description": "#2553 settings: Setting hint."
+  },
+  "myReservationsHostUnavailable": "This server cannot be reached from this device: it is not connected here, or it is not the one it claims to be.",
+  "@myReservationsHostUnavailable": {
+    "description": "#2553 C2 My reservations: one workspace host cannot be reached with its own verified connection on this device."
+  },
+  "myReservationsTimedOut": "This server did not answer in time.",
+  "@myReservationsTimedOut": {
+    "description": "#2553 C2 My reservations: one workspace host did not answer within the personal read timeout."
+  },
+  "myReservationsSourceUnnamed": "A workspace server",
+  "@myReservationsSourceUnnamed": {
+    "description": "#2553 C2 My reservations: a workspace host whose spaces have no name the person may read."
+  },
+  "myReservationsSourceReading": "Reading {source}…",
+  "@myReservationsSourceReading": {
+    "description": "#2553 C2 My reservations: one host's bookings are still being read; source is the names of its spaces.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "myReservationsSourceProblem": "{source}: {problem}",
+  "@myReservationsSourceProblem": {
+    "description": "#2553 C2 My reservations: one host's read failed; source is the names of its spaces, problem the sentence saying why.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "problem": {
+        "type": "String"
+      }
+    }
   }
 }

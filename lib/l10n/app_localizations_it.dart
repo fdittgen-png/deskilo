@@ -13924,6 +13924,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo server ha rifiutato di elencare le Sue prenotazioni.';
 
   @override
+  String get myReservationsHostUnavailable =>
+      'Questo server non è raggiungibile da questo dispositivo: non è collegato qui, oppure non è quello che dichiara di essere.';
+
+  @override
   String get myReservationsInvalid =>
       'Questo server ha rifiutato il periodo richiesto.';
 
@@ -13963,6 +13967,19 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String myReservationsSourceProblem(String source, String problem) {
+    return '$source: $problem';
+  }
+
+  @override
+  String myReservationsSourceReading(String source) {
+    return 'Lettura di $source…';
+  }
+
+  @override
+  String get myReservationsSourceUnnamed => 'Un server di spazio';
+
+  @override
   String get myReservationsStatusCancelled => 'Annullata';
 
   @override
@@ -13976,6 +13993,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get myReservationsStatusReserved => 'Prenotata';
+
+  @override
+  String get myReservationsTimedOut =>
+      'Questo server non ha risposto in tempo.';
 
   @override
   String get myReservationsUnnamedPlace => '(posto senza nome)';
