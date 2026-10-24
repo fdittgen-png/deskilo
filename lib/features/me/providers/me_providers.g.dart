@@ -591,3 +591,171 @@ final class PersonalExportProvider
 }
 
 String _$personalExportHash() => r'5e379fb0090555f0a509acc53ce6c676301d30ec';
+
+/// #2557 C3 — a workspace's own-data export, asked on that workspace's
+/// verified host with its own client: the installation the app is signed
+/// in to, or the connected installation the source names. Demo overrides
+/// it with the fixture's spaces.
+
+@ProviderFor(workspaceExportRepository)
+final workspaceExportRepositoryProvider = WorkspaceExportRepositoryProvider._();
+
+/// #2557 C3 — a workspace's own-data export, asked on that workspace's
+/// verified host with its own client: the installation the app is signed
+/// in to, or the connected installation the source names. Demo overrides
+/// it with the fixture's spaces.
+
+final class WorkspaceExportRepositoryProvider
+    extends
+        $FunctionalProvider<
+          WorkspaceExportRepository,
+          WorkspaceExportRepository,
+          WorkspaceExportRepository
+        >
+    with $Provider<WorkspaceExportRepository> {
+  /// #2557 C3 — a workspace's own-data export, asked on that workspace's
+  /// verified host with its own client: the installation the app is signed
+  /// in to, or the connected installation the source names. Demo overrides
+  /// it with the fixture's spaces.
+  WorkspaceExportRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceExportRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceExportRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<WorkspaceExportRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  WorkspaceExportRepository create(Ref ref) {
+    return workspaceExportRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WorkspaceExportRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WorkspaceExportRepository>(value),
+    );
+  }
+}
+
+String _$workspaceExportRepositoryHash() =>
+    r'57f6714752fefaa5896532339e0346fdd959e5b0';
+
+/// #2557 C3 — the workspaces whose own records I may export, from the
+/// workspaces my personal account names; none while signed out.
+
+@ProviderFor(myWorkspaceExportSources)
+final myWorkspaceExportSourcesProvider = MyWorkspaceExportSourcesProvider._();
+
+/// #2557 C3 — the workspaces whose own records I may export, from the
+/// workspaces my personal account names; none while signed out.
+
+final class MyWorkspaceExportSourcesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<WorkspaceExportSource>>,
+          List<WorkspaceExportSource>,
+          FutureOr<List<WorkspaceExportSource>>
+        >
+    with
+        $FutureModifier<List<WorkspaceExportSource>>,
+        $FutureProvider<List<WorkspaceExportSource>> {
+  /// #2557 C3 — the workspaces whose own records I may export, from the
+  /// workspaces my personal account names; none while signed out.
+  MyWorkspaceExportSourcesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: personalRefsRetry,
+        name: r'myWorkspaceExportSourcesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$myWorkspaceExportSourcesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<WorkspaceExportSource>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<WorkspaceExportSource>> create(Ref ref) {
+    return myWorkspaceExportSources(ref);
+  }
+}
+
+String _$myWorkspaceExportSourcesHash() =>
+    r'171ca5c2f8a92134c6e8d172edf9f594fb57f2b5';
+
+/// #2557 C3 — the export command. The card that offers the exports
+/// watches it, and hands in the signed-in account it reads.
+
+@ProviderFor(workspaceExportCommand)
+final workspaceExportCommandProvider = WorkspaceExportCommandProvider._();
+
+/// #2557 C3 — the export command. The card that offers the exports
+/// watches it, and hands in the signed-in account it reads.
+
+final class WorkspaceExportCommandProvider
+    extends
+        $FunctionalProvider<
+          WorkspaceExportCommand,
+          WorkspaceExportCommand,
+          WorkspaceExportCommand
+        >
+    with $Provider<WorkspaceExportCommand> {
+  /// #2557 C3 — the export command. The card that offers the exports
+  /// watches it, and hands in the signed-in account it reads.
+  WorkspaceExportCommandProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceExportCommandProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceExportCommandHash();
+
+  @$internal
+  @override
+  $ProviderElement<WorkspaceExportCommand> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  WorkspaceExportCommand create(Ref ref) {
+    return workspaceExportCommand(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WorkspaceExportCommand value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WorkspaceExportCommand>(value),
+    );
+  }
+}
+
+String _$workspaceExportCommandHash() =>
+    r'e07e23330f8abfdff0de5a37226876c330ff9c70';

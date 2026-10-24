@@ -8671,6 +8671,18 @@
   "meDataPersonalTitle": "Ihr persönliches Konto",
   "meDataPersonalUnsupported": "Ihr persönliches Zuhause bietet diesen Export noch nicht an. Es wurde nichts exportiert.",
   "meDataViewReservations": "Buchungen",
+  "meDataWorkspaceDisabled": "Dieser Space bietet den Datenexport nicht an.",
+  "meDataWorkspaceExport": "Exportieren",
+  "meDataWorkspaceFailed": "Dieser Space hat nicht geantwortet. Es wurde nichts exportiert.",
+  "meDataWorkspaceForbidden": "Dieser Space hat abgelehnt: Sie sind dort kein aktives Mitglied. Es wurde nichts exportiert.",
+  "meDataWorkspaceHostUnavailable": "Der Server dieses Spaces ist von hier aus nicht erreichbar. Es wurde nichts exportiert.",
+  "meDataWorkspaceMalformed": "Dieser Space hat in einer Form geantwortet, die diese App nicht lesen kann. Es wurde nichts exportiert.",
+  "meDataWorkspaceSuperseded": "Das angemeldete Konto hat sich während des Exports geändert. Es wurde nichts angeboten.",
+  "meDataWorkspaceUnnamed": "Space {id}",
+  "meDataWorkspacesEmpty": "Ihr Konto nennt noch keinen Space.",
+  "meDataWorkspacesFailed": "Die Spaces Ihres Kontos konnten nicht gelesen werden. Es wurde nichts exportiert.",
+  "meDataWorkspacesScope": "Jeder Space exportiert, was er über Sie hält – Mitgliedschaft, Buchungen, Konto und Rechnungen – von seinem eigenen Server, eine Datei je Space. Der Teil Ihres persönlichen Kontos ist die Karte oben.",
+  "meDataWorkspacesTitle": "Ihre Daten in jedem Space",
   "meFinanceGlanceOwed": "Zu zahlen: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -9240,6 +9252,8 @@
   "moneyUsageUnlimited": "{used} halbe Tage genutzt",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mein Badge",
+  "myFinancesExport": "Meine Belege exportieren",
+  "myFinancesExportWorkspace": "{workspace} – Belege (CSV)",
   "myInvoicesTitle": "Meine Rechnungen",
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"

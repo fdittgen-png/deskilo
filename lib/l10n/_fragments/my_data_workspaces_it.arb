@@ -1,0 +1,17 @@
+{
+  "@@locale": "it",
+  "meDataWorkspacesTitle": "I Suoi dati in ogni spazio",
+  "meDataWorkspacesScope": "Ogni spazio esporta ciò che conserva su di Lei — iscrizione, prenotazioni, conto e fatture — dal proprio server, un file per spazio. La parte del Suo account personale è la scheda qui sopra.",
+  "meDataWorkspacesEmpty": "Il Suo account non nomina ancora alcuno spazio.",
+  "meDataWorkspacesFailed": "Non è stato possibile leggere gli spazi del Suo account. Non è stato esportato nulla.",
+  "meDataWorkspaceUnnamed": "Spazio {id}",
+  "meDataWorkspaceExport": "Esporta",
+  "meDataWorkspaceHostUnavailable": "Il server di questo spazio non è raggiungibile da qui. Non è stato esportato nulla.",
+  "meDataWorkspaceDisabled": "Questo spazio non offre l’esportazione dei dati.",
+  "meDataWorkspaceForbidden": "Questo spazio ha rifiutato: Lei non vi è membro attivo. Non è stato esportato nulla.",
+  "meDataWorkspaceMalformed": "Questo spazio ha risposto in una forma che questa app non sa leggere. Non è stato esportato nulla.",
+  "meDataWorkspaceFailed": "Questo spazio non ha risposto. Non è stato esportato nulla.",
+  "meDataWorkspaceSuperseded": "L’account connesso è cambiato durante la lettura dell’esportazione. Non è stato offerto nulla.",
+  "myFinancesExport": "Esporta i miei documenti",
+  "myFinancesExportWorkspace": "{workspace} — documenti (CSV)"
+}

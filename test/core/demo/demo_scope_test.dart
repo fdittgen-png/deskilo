@@ -359,6 +359,7 @@ const Set<String> demoOverriddenProviders = {
   'linkedMeRepositoryProvider',
   'workspaceHostRepositoryProvider',
   'workspaceAccessRepositoryProvider', // #2563
+  'workspaceExportRepositoryProvider', // #2557 C3
   'guestParticipationRepositoryProvider', // #1835
   'messengerRepositoryProvider',
   'deploymentRepositoryProvider',

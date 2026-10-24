@@ -22,6 +22,7 @@ import '../../visits/presentation/my_visits_section.dart';
 import '../../visits/providers/visits_providers.dart';
 import 'me_shell.dart';
 import 'personal_data_card.dart';
+import 'workspace_exports_card.dart';
 
 /// The `view` query of My data; finances when absent or unknown.
 enum MeDataView {
@@ -128,6 +129,8 @@ class MeDataTab extends ConsumerWidget {
                       only: AccountTileGroup.profile),
                   ...accountSettingsTiles(context, ref,
                       only: AccountTileGroup.account),
+                  // #2557 C3 — each workspace's own records, on its host.
+                  const WorkspaceExportsCard(),
                 ],
               ),
           },

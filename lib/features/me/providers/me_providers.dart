@@ -3,13 +3,18 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/backend/connected_pool_host_resolver.dart';
 import '../../../core/backend/context_client_providers.dart';
+import '../../../core/backend/context_clients.dart'
+    show ActiveInstallationHostResolver;
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../application/me_actions.dart';
 import '../application/my_reservation_sources.dart';
+import '../application/workspace_exports.dart';
 import '../data/host_workspace_access_repository.dart';
+import '../data/host_workspace_export_repository.dart';
 import '../data/supabase_linked_me_repository.dart';
 import '../data/supabase_me_repository.dart';
 import '../domain/linked_me_repository.dart';
@@ -19,6 +24,7 @@ import '../domain/personal_export.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../domain/visibility.dart';
 import '../domain/workspace_access_repository.dart';
+import '../domain/workspace_export.dart';
 import 'me_read_retry.dart';
 
 part 'me_providers.g.dart';
@@ -140,3 +146,41 @@ Future<PersonalExport> personalExport(Ref ref) {
   }
   return ref.watch(meRepositoryProvider).exportMyPersonalData();
 }
+
+/// #2557 C3 — a workspace's own-data export, asked on that workspace's
+/// verified host with its own client: the installation the app is signed
+/// in to, or the connected installation the source names. Demo overrides
+/// it with the fixture's spaces.
+@riverpod
+WorkspaceExportRepository workspaceExportRepository(Ref ref) =>
+    HostWorkspaceExportRepository(
+      hostOf: (source) => resolveWorkspaceExportHost(
+        source,
+        connected: () => ref.read(connectedSourcesProvider.future),
+        resolverFor: (origin) => ConnectedPoolHostResolver(
+          active: ActiveInstallationHostResolver(
+            ref.read(personalClientProvider),
+            ref.read(installationIdReaderProvider),
+          ),
+          root: ref.read(personalClientProvider),
+          pool: () => ref.read(connectedInstallationsProvider),
+          sourceOf: (_) => origin,
+        ),
+      ),
+    );
+
+/// #2557 C3 — the workspaces whose own records I may export, from the
+/// workspaces my personal account names; none while signed out.
+@Riverpod(retry: personalRefsRetry)
+Future<List<WorkspaceExportSource>> myWorkspaceExportSources(Ref ref) async {
+  final refs = await ref.watch(personalWorkspaceRefsProvider.future);
+  return workspaceExportSourcesOf(refs);
+}
+
+/// #2557 C3 — the export command. The card that offers the exports
+/// watches it, and hands in the signed-in account it reads.
+@riverpod
+WorkspaceExportCommand workspaceExportCommand(Ref ref) =>
+    WorkspaceExportCommand(
+      repository: ref.watch(workspaceExportRepositoryProvider),
+    );
