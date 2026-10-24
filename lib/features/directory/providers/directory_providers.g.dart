@@ -201,6 +201,9 @@ final class AccountContactActionsFamily extends $Family
 ///
 /// #2561 L3 — the directory is the one the installation declares
 /// ([directoryHomeProvider]); this device's own server is listed beside it.
+///
+/// #2555 — both come from the personal client alone: selecting a workspace
+/// on another host never changes the source list.
 
 @ProviderFor(publicDiscoveryRepository)
 final publicDiscoveryRepositoryProvider = PublicDiscoveryRepositoryProvider._();
@@ -210,6 +213,9 @@ final publicDiscoveryRepositoryProvider = PublicDiscoveryRepositoryProvider._();
 ///
 /// #2561 L3 — the directory is the one the installation declares
 /// ([directoryHomeProvider]); this device's own server is listed beside it.
+///
+/// #2555 — both come from the personal client alone: selecting a workspace
+/// on another host never changes the source list.
 
 final class PublicDiscoveryRepositoryProvider
     extends
@@ -224,6 +230,9 @@ final class PublicDiscoveryRepositoryProvider
   ///
   /// #2561 L3 — the directory is the one the installation declares
   /// ([directoryHomeProvider]); this device's own server is listed beside it.
+  ///
+  /// #2555 — both come from the personal client alone: selecting a workspace
+  /// on another host never changes the source list.
   PublicDiscoveryRepositoryProvider._()
     : super(
         from: null,
@@ -259,7 +268,62 @@ final class PublicDiscoveryRepositoryProvider
 }
 
 String _$publicDiscoveryRepositoryHash() =>
-    r'6fb3d72e8b2e047a644cc1044c6324c53fcea0ca';
+    r'd3d565b67624d4aac659add3f015ee3b72a068ec';
+
+/// #2555 — the raw HTTP client every anonymous public read is built on;
+/// each one is wrapped in an origin-only client by its repository.
+
+@ProviderFor(publicTransport)
+final publicTransportProvider = PublicTransportProvider._();
+
+/// #2555 — the raw HTTP client every anonymous public read is built on;
+/// each one is wrapped in an origin-only client by its repository.
+
+final class PublicTransportProvider
+    extends
+        $FunctionalProvider<
+          http.Client Function(),
+          http.Client Function(),
+          http.Client Function()
+        >
+    with $Provider<http.Client Function()> {
+  /// #2555 — the raw HTTP client every anonymous public read is built on;
+  /// each one is wrapped in an origin-only client by its repository.
+  PublicTransportProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'publicTransportProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$publicTransportHash();
+
+  @$internal
+  @override
+  $ProviderElement<http.Client Function()> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  http.Client Function() create(Ref ref) {
+    return publicTransport(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(http.Client Function() value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<http.Client Function()>(value),
+    );
+  }
+}
+
+String _$publicTransportHash() => r'7397348fb74bd5ede52c0511199a82f384800b7d';
 
 @ProviderFor(publicationRepository)
 final publicationRepositoryProvider = PublicationRepositoryProvider._();
@@ -358,7 +422,7 @@ final class DirectoryParticipantRepositoryProvider
 }
 
 String _$directoryParticipantRepositoryHash() =>
-    r'6938e478052cb80f6bce20db982bafebbab0037f';
+    r'15d6c9259a32f0715ec10b8bc7b58b627b55be5a';
 
 /// #1847 — the card as its installation publishes it now; null once it is
 /// withdrawn. Keyed by the card's identity on its own installation.
