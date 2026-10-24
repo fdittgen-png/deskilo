@@ -2255,7 +2255,8 @@ routine public.payment_config_is_secret(p_key text) -> boolean | function | invo
 routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f135c6a70d02
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
-routine public.personal_native_session() -> boolean | function | definer | stable | exec:anon,authenticated,service_role | body:321fd6e3e7c8
+routine public.personal_account_recognised() -> boolean | function | definer | stable | exec:authenticated,service_role | body:6e6491901997
+routine public.personal_native_session() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:54c14f4d4611
 routine public.place_dunning_hold(p_invoice_id uuid, p_reason text, p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d66df323208a
 routine public.place_feedback_member(p_workspace uuid, p_kind text, p_resource uuid) -> members | function | definer | stable | exec:service_role | body:3b78664cfc6e
 routine public.place_feedback_of(p_workspace uuid, p_kind text, p_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:629f7edf1397

@@ -95,16 +95,33 @@ begin
 end
 $public$;
 
-create or replace function public.personal_native_session()
+-- The ban check reads auth.users, so it is a definer; anon never needs it
+-- (no account to check), so anon cannot execute it (pgTAP 00 test 3).
+create or replace function public.personal_account_recognised()
 returns boolean language sql stable security definer set search_path = '' as $fn$
-  select not (c.claims ? 'client_id')
-     and coalesce(c.claims->>'role', '') <> 'deskilo_identity'
-     and not exists (
-       select 1 from auth.users u
-        where u.id = auth.uid()
-          and (u.deleted_at is not null or u.banned_until > now()))
-    from (select coalesce(nullif(current_setting('request.jwt.claims', true), ''),
-                          '{}')::jsonb as claims) c;
+  select not exists (
+    select 1 from auth.users u
+     where u.id = auth.uid()
+       and (u.deleted_at is not null or u.banned_until > now()));
+$fn$;
+revoke execute on function public.personal_account_recognised() from public, anon;
+grant execute on function public.personal_account_recognised()
+  to authenticated, service_role, supabase_auth_admin;
+
+create or replace function public.personal_native_session()
+returns boolean language plpgsql stable set search_path = '' as $fn$
+declare
+  v_claims jsonb := coalesce(nullif(current_setting('request.jwt.claims', true), ''),
+                             '{}')::jsonb;
+begin
+  if v_claims ? 'client_id' or coalesce(v_claims->>'role', '') = 'deskilo_identity' then
+    return false;
+  end if;
+  if auth.uid() is null then
+    return true;
+  end if;
+  return public.personal_account_recognised();
+end;
 $fn$;
 revoke execute on function public.personal_native_session() from public;
 -- Policies run as the caller: every role a personal table answers to asks.
