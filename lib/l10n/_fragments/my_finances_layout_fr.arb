@@ -1,0 +1,19 @@
+{
+  "@@locale": "fr",
+  "financesStateUnpaid": "Non payée",
+  "financesTypeInvoice": "Facture",
+  "financesTypeCreditNote": "Avoir",
+  "financesTypeAll": "Tous les documents",
+  "financesPeriodAll": "Toutes les périodes",
+  "financesColumnDocument": "Document et période",
+  "financesColumnWorkspace": "Émis par",
+  "financesColumnState": "Document et paiement",
+  "financesColumnAmount": "Montant",
+  "financesOpenDocument": "Ouvrir",
+  "financesExportDocument": "Exporter ce document (CSV)",
+  "financesCoverageHome": "votre installation d’origine",
+  "financesCoverageAnswered": "Lu depuis {host}",
+  "financesCoverageNoDocuments": "aucun document",
+  "financesCoverageWorkspace": "{workspace} : {count, plural, =1{1 document} other{{count} documents}}",
+  "privacyExportInMyData": "Chaque source s’exporte séparément dans Mes données › Informations personnelles."
+}

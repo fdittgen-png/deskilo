@@ -1,0 +1,80 @@
+{
+  "@@locale": "en",
+  "financesStateUnpaid": "Unpaid",
+  "@financesStateUnpaid": {
+    "description": "#2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet."
+  },
+  "financesTypeInvoice": "Invoice",
+  "@financesTypeInvoice": {
+    "description": "#2557 C4 Me › Finances: the document state of an issued invoice (a row and the type filter)."
+  },
+  "financesTypeCreditNote": "Credit note",
+  "@financesTypeCreditNote": {
+    "description": "#2557 C4 Me › Finances: the document state of a credit note (a row and the type filter)."
+  },
+  "financesTypeAll": "All documents",
+  "@financesTypeAll": {
+    "description": "#2557 C4 Me › Finances: the type filter, every document."
+  },
+  "financesPeriodAll": "All periods",
+  "@financesPeriodAll": {
+    "description": "#2557 C4 Me › Finances: the period filter, every year."
+  },
+  "financesColumnDocument": "Document and period",
+  "@financesColumnDocument": {
+    "description": "#2557 C4 Me › Finances: the rows header, document and period."
+  },
+  "financesColumnWorkspace": "Issued by",
+  "@financesColumnWorkspace": {
+    "description": "#2557 C4 Me › Finances: the rows header, the issuing workspace."
+  },
+  "financesColumnState": "Document and payment",
+  "@financesColumnState": {
+    "description": "#2557 C4 Me › Finances: the rows header, document and payment state."
+  },
+  "financesColumnAmount": "Amount",
+  "@financesColumnAmount": {
+    "description": "#2557 C4 Me › Finances: the rows header, the amount in its own currency."
+  },
+  "financesOpenDocument": "Open",
+  "@financesOpenDocument": {
+    "description": "#2557 C4 Me › Finances: a row's Open action, in the issuing workspace."
+  },
+  "financesExportDocument": "Export this document (CSV)",
+  "@financesExportDocument": {
+    "description": "#2557 C4 Me › Finances: a row's Export action, this document as a CSV file (not a payment, not a delivery)."
+  },
+  "financesCoverageHome": "your home installation",
+  "@financesCoverageHome": {
+    "description": "#2557 C4 Me › Finances: the personal home, as a source that answered."
+  },
+  "financesCoverageAnswered": "Read from {host}",
+  "@financesCoverageAnswered": {
+    "description": "#2557 C4 Me › Finances: coverage above the results, a host that answered.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesCoverageNoDocuments": "no documents",
+  "@financesCoverageNoDocuments": {
+    "description": "#2557 C4 Me › Finances: coverage, a host that answered with no document of yours."
+  },
+  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 document} other{{count} documents}}",
+  "@financesCoverageWorkspace": {
+    "description": "#2557 C4 Me › Finances: coverage, one workspace a host answered for, with its document count.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyExportInMyData": "Each source exports on its own in My data › Personal information.",
+  "@privacyExportInMyData": {
+    "description": "#2557 C4 Privacy: with the personal shell on, the export lives in My data, one file per source."
+  }
+}

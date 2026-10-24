@@ -25,11 +25,13 @@ Future<FinanceOverview> financeOverview(Ref ref) async {
   final home = ref.watch(accountActivityRepositoryProvider);
   final split = ref.watch(selectedWorkspaceHostProvider);
   final selected = split == null ? null : _selectedRepository(ref);
-  final mine = await home.overview();
+  // #2557 C4 — each host that answers is recorded, so the coverage above
+  // the results names what was read as well as what was not.
+  final mine = (await home.overview()).answeredBy(null);
   if (split == null) return mine;
   if (selected == null) return mine.withUnavailable(split.source);
   try {
-    return mine.merge(await selected.overview());
+    return mine.merge((await selected.overview()).answeredBy(split.source));
   } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'money',

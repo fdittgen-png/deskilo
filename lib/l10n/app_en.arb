@@ -8814,6 +8814,51 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesColumnAmount": "Amount",
+  "@financesColumnAmount": {
+    "description": "#2557 C4 Me › Finances: the rows header, the amount in its own currency."
+  },
+  "financesColumnDocument": "Document and period",
+  "@financesColumnDocument": {
+    "description": "#2557 C4 Me › Finances: the rows header, document and period."
+  },
+  "financesColumnState": "Document and payment",
+  "@financesColumnState": {
+    "description": "#2557 C4 Me › Finances: the rows header, document and payment state."
+  },
+  "financesColumnWorkspace": "Issued by",
+  "@financesColumnWorkspace": {
+    "description": "#2557 C4 Me › Finances: the rows header, the issuing workspace."
+  },
+  "financesCoverageAnswered": "Read from {host}",
+  "@financesCoverageAnswered": {
+    "description": "#2557 C4 Me › Finances: coverage above the results, a host that answered.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesCoverageHome": "your home installation",
+  "@financesCoverageHome": {
+    "description": "#2557 C4 Me › Finances: the personal home, as a source that answered."
+  },
+  "financesCoverageNoDocuments": "no documents",
+  "@financesCoverageNoDocuments": {
+    "description": "#2557 C4 Me › Finances: coverage, a host that answered with no document of yours."
+  },
+  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 document} other{{count} documents}}",
+  "@financesCoverageWorkspace": {
+    "description": "#2557 C4 Me › Finances: coverage, one workspace a host answered for, with its document count.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "financesDevSection": "Development spaces — test data, not counted above",
   "financesDueOn": "Due {date}",
   "@financesDueOn": {
@@ -8823,6 +8868,10 @@
         "type": "String"
       }
     }
+  },
+  "financesExportDocument": "Export this document (CSV)",
+  "@financesExportDocument": {
+    "description": "#2557 C4 Me › Finances: a row's Export action, this document as a CSV file (not a payment, not a delivery)."
   },
   "financesFullHistory": "Full history, usage and other servers",
   "@financesFullHistory": {
@@ -8849,6 +8898,10 @@
   "financesNothingPaid": "No settled invoice yet.",
   "@financesNothingPaid": {
     "description": "Me › Finances"
+  },
+  "financesOpenDocument": "Open",
+  "@financesOpenDocument": {
+    "description": "#2557 C4 Me › Finances: a row's Open action, in the issuing workspace."
   },
   "financesOutstanding": "Outstanding",
   "@financesOutstanding": {
@@ -8883,6 +8936,10 @@
   "financesPayments": "Payments",
   "@financesPayments": {
     "description": "Me › Finances"
+  },
+  "financesPeriodAll": "All periods",
+  "@financesPeriodAll": {
+    "description": "#2557 C4 Me › Finances: the period filter, every year."
   },
   "financesRemindedTimes": "Reminded ×{count}",
   "@financesRemindedTimes": {
@@ -8927,6 +8984,10 @@
   "@financesStateRefunded": {
     "description": "Me › Finances"
   },
+  "financesStateUnpaid": "Unpaid",
+  "@financesStateUnpaid": {
+    "description": "#2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet."
+  },
   "financesTitle": "Finances",
   "@financesTitle": {
     "description": "Me › Finances"
@@ -8934,6 +8995,18 @@
   "financesToPay": "To pay",
   "@financesToPay": {
     "description": "Me › Finances"
+  },
+  "financesTypeAll": "All documents",
+  "@financesTypeAll": {
+    "description": "#2557 C4 Me › Finances: the type filter, every document."
+  },
+  "financesTypeCreditNote": "Credit note",
+  "@financesTypeCreditNote": {
+    "description": "#2557 C4 Me › Finances: the document state of a credit note (a row and the type filter)."
+  },
+  "financesTypeInvoice": "Invoice",
+  "@financesTypeInvoice": {
+    "description": "#2557 C4 Me › Finances: the document state of an issued invoice (a row and the type filter)."
   },
   "gettingStartedActionChooseDay": "Choose another day",
   "@gettingStartedActionChooseDay": {
@@ -18635,6 +18708,10 @@
   "privacyExportHint": "Everything you are the subject of, as one JSON file (art. 20).",
   "@privacyExportHint": {
     "description": "#719 - privacy & data"
+  },
+  "privacyExportInMyData": "Each source exports on its own in My data › Personal information.",
+  "@privacyExportInMyData": {
+    "description": "#2557 C4 Privacy: with the personal shell on, the export lives in My data, one file per source."
   },
   "privacyExportShareText": "My DesKilo data export",
   "@privacyExportShareText": {

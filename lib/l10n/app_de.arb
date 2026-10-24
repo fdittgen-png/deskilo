@@ -5444,6 +5444,14 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesColumnAmount": "Betrag",
+  "financesColumnDocument": "Dokument und Zeitraum",
+  "financesColumnState": "Dokument und Zahlung",
+  "financesColumnWorkspace": "Ausgestellt von",
+  "financesCoverageAnswered": "Gelesen von {host}",
+  "financesCoverageHome": "Ihre Heiminstallation",
+  "financesCoverageNoDocuments": "keine Dokumente",
+  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 Dokument} other{{count} Dokumente}}",
   "financesDevSection": "Entwicklungs-Spaces — Testdaten, oben nicht mitgezählt",
   "financesDueOn": "Fällig am {date}",
   "@financesDueOn": {
@@ -5454,6 +5462,7 @@
       }
     }
   },
+  "financesExportDocument": "Dieses Dokument exportieren (CSV)",
   "financesFullHistory": "Vollständiger Verlauf, Nutzung und andere Server",
   "@financesFullHistory": {
     "description": "Me › Finances"
@@ -5480,6 +5489,7 @@
   "@financesNothingPaid": {
     "description": "Me › Finances"
   },
+  "financesOpenDocument": "Öffnen",
   "financesOutstanding": "Ausstehend",
   "@financesOutstanding": {
     "description": "Me › Finances"
@@ -5514,6 +5524,7 @@
   "@financesPayments": {
     "description": "Me › Finances"
   },
+  "financesPeriodAll": "Alle Zeiträume",
   "financesRemindedTimes": "Erinnert ×{count}",
   "@financesRemindedTimes": {
     "description": "Me › Finances",
@@ -5557,6 +5568,7 @@
   "@financesStateRefunded": {
     "description": "Me › Finances"
   },
+  "financesStateUnpaid": "Unbezahlt",
   "financesTitle": "Finanzen",
   "@financesTitle": {
     "description": "Me › Finances"
@@ -5565,6 +5577,9 @@
   "@financesToPay": {
     "description": "Me › Finances"
   },
+  "financesTypeAll": "Alle Dokumente",
+  "financesTypeCreditNote": "Gutschrift",
+  "financesTypeInvoice": "Rechnung",
   "gettingStartedActionChooseDay": "Anderen Tag wählen",
   "gettingStartedActionChooseTime": "Zeit zum Buchen wählen",
   "gettingStartedActionFinishSetup": "Einrichtung abschließen",
@@ -10379,6 +10394,7 @@
   "@privacyExportHint": {
     "description": "#719 - privacy & data"
   },
+  "privacyExportInMyData": "Jede Quelle wird einzeln unter Meine Daten › Persönliche Angaben exportiert.",
   "privacyExportShareText": "Mein DesKilo-Datenexport",
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"

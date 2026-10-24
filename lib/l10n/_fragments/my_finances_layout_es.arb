@@ -1,0 +1,19 @@
+{
+  "@@locale": "es",
+  "financesStateUnpaid": "No pagada",
+  "financesTypeInvoice": "Factura",
+  "financesTypeCreditNote": "Nota de crédito",
+  "financesTypeAll": "Todos los documentos",
+  "financesPeriodAll": "Todos los periodos",
+  "financesColumnDocument": "Documento y periodo",
+  "financesColumnWorkspace": "Emitido por",
+  "financesColumnState": "Documento y pago",
+  "financesColumnAmount": "Importe",
+  "financesOpenDocument": "Abrir",
+  "financesExportDocument": "Exportar este documento (CSV)",
+  "financesCoverageHome": "su instalación principal",
+  "financesCoverageAnswered": "Leído desde {host}",
+  "financesCoverageNoDocuments": "ningún documento",
+  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 documento} other{{count} documentos}}",
+  "privacyExportInMyData": "Cada fuente se exporta por separado en Mis datos › Información personal."
+}
