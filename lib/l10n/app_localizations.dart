@@ -10283,6 +10283,18 @@ abstract class AppLocalizations {
   /// **'{key, select, reserved{Booked} checkedIn{Checked in} completed{Completed} cancelled{Cancelled} released{Released} active{Active} paused{Paused} pending{Pending} exited{Left} applied{Applied} confirmed{Confirmed} rejected{Declined} expired{Expired} created{Created} modified{Changed} submitted{Submitted} approved{Approved} accepted{Accepted} declined{Declined} charge{Charge} credit{Credit} subscription{Subscription} overage{Over quota} expense{Expense} payment{Payment} adjustment{Adjustment} service{Service} package{Package} refund{Refund} reimbursement{Reimbursement} seat{Seat} room{Room} parking{Parking} standard{Standard} ev{Electric} accessible{Accessible} workspace{Workspace} n{North} e{East} s{South} w{West} blocked{Not allowed} payg{Pay as you go} none{No} passive{Successor} founder{Founder} invited{Invited} full{Invoice} usage{Usage} settlement{Settlement} other{{key}}}'**
   String exportValueName(String key);
 
+  /// No description provided for @favoriteKeptOnDeviceRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this device only: your account cannot save this space.'**
+  String get favoriteKeptOnDeviceRefused;
+
+  /// No description provided for @favoriteKeptOnDeviceUnreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this device only: your account could not be reached. Try again later.'**
+  String get favoriteKeptOnDeviceUnreachable;
+
   /// Feature switch: bill priced seat accessories on monthly statements (#170)
   ///
   /// In en, this message translates to:
@@ -23985,12 +23997,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My review: {stars} of 5'**
   String mySpacesReviewed(int stars);
-
-  /// #2554 My spaces: the space is a favourite saved on the personal account
-  ///
-  /// In en, this message translates to:
-  /// **'Saved on your account'**
-  String get mySpacesSavedOnAccount;
 
   /// #2554 My spaces: metadata of a development space
   ///

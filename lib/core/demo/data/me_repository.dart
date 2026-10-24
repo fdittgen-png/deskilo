@@ -7,6 +7,7 @@
 // an audience of "my spaces" is met when the two accounts share a space,
 // "chosen spaces" when they share one of the chosen ones, "signed in"
 // always, "nobody" never.
+import 'package:deskilo/features/me/domain/account_favorite.dart';
 import 'package:deskilo/features/me/domain/linked_me_repository.dart';
 import 'package:deskilo/features/me/domain/me_repository.dart';
 import 'package:deskilo/features/me/domain/my_spaces.dart';
@@ -119,7 +120,52 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
     return _refs();
   }
 
-  PersonalWorkspaceRefs _refs() =>
+  /// #2554 — the favourites written through [setAccountFavorite], by
+  /// network reference; a reference not written keeps what it says. A
+  /// space is marked only when [myWorkspaceRefs] names it, as the home
+  /// marks only a space the person is related to.
+  final Map<String, bool> accountFavorites = {};
+
+  /// When set, [setAccountFavorite] throws it and keeps nothing.
+  Exception? favoriteFailure;
+
+  /// How many favourite writes reached the home.
+  int favoriteWrites = 0;
+
+  @override
+  Future<bool> setAccountFavorite(String networkId, {required bool on}) async {
+    favoriteWrites++;
+    if (favoriteFailure != null) throw favoriteFailure!;
+    final known = _named().refs.any((r) => r.networkId == networkId);
+    if (!known && !(accountFavorites[networkId] == true && !on)) {
+      throw const AccountFavoriteRefused(
+          AccountFavoriteRefusal.noRelationship);
+    }
+    accountFavorites[networkId] = on;
+    return on;
+  }
+
+  PersonalWorkspaceRefs _refs() {
+    final named = _named();
+    return PersonalWorkspaceRefs(
+      homeInstallationId: named.homeInstallationId,
+      refs: [
+        for (final r in named.refs)
+          PersonalWorkspaceRef(
+            networkId: r.networkId,
+            hostedHere: r.hostedHere,
+            freshness: r.freshness,
+            label: r.label,
+            status: r.status,
+            isDefault: r.isDefault,
+            isFavorite: accountFavorites[r.networkId] ?? r.isFavorite,
+            audienceFields: r.audienceFields,
+          ),
+      ],
+    );
+  }
+
+  PersonalWorkspaceRefs _named() =>
       workspaceRefs ??
         PersonalWorkspaceRefs(
           homeInstallationId: homeInstallationId,

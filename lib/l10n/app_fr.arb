@@ -4429,6 +4429,8 @@
     "description": "#669 - accounting export formats"
   },
   "exportValueName": "{key, select, reserved{Réservé} checkedIn{Arrivé} completed{Terminé} cancelled{Annulé} released{Libéré} active{Actif} paused{En pause} pending{En attente} exited{Parti} applied{Appliqué} confirmed{Confirmé} rejected{Refusé} expired{Expiré} created{Créé} modified{Modifié} submitted{Soumis} approved{Approuvé} accepted{Accepté} declined{Refusé} charge{Débit} credit{Crédit} subscription{Abonnement} overage{Hors forfait} expense{Dépense} payment{Paiement} adjustment{Ajustement} service{Service} package{Forfait} refund{Remboursement} reimbursement{Défraiement} seat{Place} room{Salle} parking{Parking} standard{Standard} ev{Électrique} accessible{Accessible} workspace{Espace de travail} n{Nord} e{Est} s{Sud} w{Ouest} blocked{Non autorisé} payg{Payé à l'usage} none{Non} passive{Successeur} founder{Fondateur} invited{Invité} full{Facture} usage{Consommation} settlement{Règlement} other{{key}}}",
+  "favoriteKeptOnDeviceRefused": "Gardé sur cet appareil uniquement : votre compte ne peut pas enregistrer cet espace.",
+  "favoriteKeptOnDeviceUnreachable": "Gardé sur cet appareil uniquement : votre compte n’a pas pu être joint. Réessayez plus tard.",
   "featureAccessorySupplements": "Suppléments d'accessoires",
   "featureAccessorySupplementsDesc": "Facturer les accessoires de place tarifés par demi-journée réservée. S'applique aux réservations à partir de l'activation.",
   "featureAccountingBookDesc": "Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant.",
@@ -9348,7 +9350,6 @@
   "mySpacesRequestStatus": "Voir l'état de la demande",
   "mySpacesReview": "Mon avis",
   "mySpacesReviewed": "Mon avis : {stars} sur 5",
-  "mySpacesSavedOnAccount": "Enregistré sur votre compte",
   "mySpacesTestSpace": "Espace de test",
   "mySpacesUnavailable": "Vos espaces n'ont pas pu être lus.",
   "mySpacesVerified": "Adhésion vérifiée",

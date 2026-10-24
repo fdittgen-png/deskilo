@@ -6272,6 +6272,14 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get favoriteKeptOnDeviceRefused =>
+      'Salvato solo su questo dispositivo: il Suo account non può salvare questo spazio.';
+
+  @override
+  String get favoriteKeptOnDeviceUnreachable =>
+      'Salvato solo su questo dispositivo: non è stato possibile raggiungere il Suo account. Riprovi più tardi.';
+
+  @override
   String get featureAccessorySupplements => 'Supplementi accessori';
 
   @override
@@ -14482,9 +14490,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String mySpacesReviewed(int stars) {
     return 'La mia valutazione: $stars su 5';
   }
-
-  @override
-  String get mySpacesSavedOnAccount => 'Salvato sul Suo account';
 
   @override
   String get mySpacesTestSpace => 'Spazio di prova';

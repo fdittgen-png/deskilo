@@ -2,6 +2,7 @@
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/account_favorite.dart';
 import '../domain/me_repository.dart';
 import '../domain/personal_export.dart';
 import '../domain/personal_workspace_refs.dart';
@@ -22,6 +23,22 @@ class SupabaseMeRepository implements MeRepository {
   Future<PersonalWorkspaceRefs> myWorkspaceRefs() async =>
       PersonalWorkspaceRefs.fromJson(
           await _client.rpc<Object?>('my_personal_workspace_refs_v1'));
+
+  @override
+  Future<bool> setAccountFavorite(String networkId, {required bool on}) async {
+    final Object? raw;
+    try {
+      raw = await _client.rpc<Object?>('set_workspace_favorite_ref_v1',
+          params: {'p_ref': networkId, 'p_on': on});
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the heart says where it was kept.
+      final refusal = accountFavoriteRefusalOf(e.code);
+      if (refusal == null) rethrow;
+      Error.throwWithStackTrace(
+          AccountFavoriteRefused(refusal, detail: e.message), st);
+    }
+    return _object(raw)['is_favorite'] == true;
+  }
 
   @override
   Future<PersonalExport> exportMyPersonalData() async {
