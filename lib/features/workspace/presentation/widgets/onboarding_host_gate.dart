@@ -40,7 +40,7 @@ class _OnboardingHostGateState extends ConsumerState<OnboardingHostGate> {
   void initState() {
     super.initState();
     _creation = ref.read(creationHostProvider.notifier);
-    if (widget.host == null && _creation.held) {
+    if (widget.host == null && _creation.isHeld()) {
       // Not while the tree builds: the providers that read it rebuild.
       WidgetsBinding.instance.addPostFrameCallback((_) => _creation.clear());
     }

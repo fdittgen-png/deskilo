@@ -47,7 +47,7 @@ class CreationHost extends _$CreationHost {
   }
 
   /// Whether a host is held now; read where a life-cycle may not read state.
-  bool get held => _held != null;
+  bool isHeld() => _held != null;
 
   void use(CreationHostLease lease) {
     final previous = _held;

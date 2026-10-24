@@ -261,6 +261,6 @@ CreationDrafts creationDrafts(Ref ref) {
     ref.watch(creationDraftStoreProvider),
     () => auth.currentUserId,
     ref.watch(clockProvider),
-    () => creation.held,
+    creation.isHeld,
   );
 }
