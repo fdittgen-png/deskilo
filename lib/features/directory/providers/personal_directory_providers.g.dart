@@ -111,7 +111,7 @@ final class PersonalDirectoryControllerProvider
 }
 
 String _$personalDirectoryControllerHash() =>
-    r'0095f5560e0a4facf3c4034e52465663fd13fdf4';
+    r'347d3ee446c8e4d1447de725dceefd7708073f6c';
 
 /// What the new discussion lists before any search: every workspace I hold
 /// a relationship with, the first page of each one's people, and every
