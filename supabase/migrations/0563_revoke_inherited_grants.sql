@@ -117,4 +117,4 @@ alter default privileges for role postgres in schema public
 alter default privileges for role postgres in schema public
   revoke insert, update, delete on tables from anon;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(563);
