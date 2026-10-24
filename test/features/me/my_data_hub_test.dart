@@ -289,8 +289,9 @@ void main() {
   });
 
   group('My data › Reservations', () {
-    testWidgets('the bookings on the host, and the guest visits beside '
-        'them', (tester) async {
+    testWidgets('the bookings on the host, and the guest visits among '
+        'them as their own kind (#2553 C4)', (tester) async {
+      final tomorrow = DateTime(kTestNow.year, kTestNow.month, kTestNow.day + 1, 10);
       final router = await _pump(
         tester,
         visits: [
@@ -299,19 +300,18 @@ void main() {
             workspaceId: 'w-1',
             workspaceName: 'Kraftwerk',
             siteName: 'Hall',
-            status: GuestVisitStatus.values.first,
-            startsAt: DateTime.utc(2026, 10, 10, 8),
-            endsAt: DateTime.utc(2026, 10, 10, 12),
+            status: GuestVisitStatus.requested,
+            startsAt: tomorrow.toUtc(),
+            endsAt: tomorrow.add(const Duration(hours: 4)).toUtc(),
           ),
         ],
       );
       await goTo(tester, router, '/me/data?view=reservations');
       expect(_key('me-data-reservations'), findsOneWidget);
       expect(find.text('A1'), findsWidgets);
-      expect(find.text('Visits as a guest: 1'), findsOneWidget);
-      await tester.tap(_key('me-data-guest-visits'));
-      await tester.pumpAndSettle();
-      expect(_key('me-visits'), findsOneWidget);
+      expect(_key('my-reservations-visits'), findsOneWidget);
+      expect(_key('my-reservations-visit-v-1'), findsOneWidget);
+      expect(find.text('Kraftwerk · Hall'), findsOneWidget);
     });
 
     testWidgets('a host that refuses is named with Try again, and the '

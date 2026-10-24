@@ -17,6 +17,7 @@ import 'package:deskilo/features/reservations/domain/my_reservations_composition
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/my_reservations_body.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
+import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -114,6 +115,8 @@ List<Override> _overrides(_Hosts hosts, List<MyReservationsSource> sources) => [
       myReservationsRepositoryProvider.overrideWithValue(hosts),
       myReservationsSourcesProvider.overrideWith((ref) async => sources),
       clockProvider.overrideWithValue(FixedClock(kTestNow)),
+      // #2553 C4: the guest visits beside the bookings; none here.
+      myGuestVisitsProvider.overrideWith((ref) async => const []),
     ];
 
 Finder _card(String id) => find.byKey(ValueKey('my-reservation-$id'));
@@ -129,7 +132,7 @@ void main() {
         ..first['inst-a'] = _page('inst-a', [_item('a1', day1), _item('a2', day3)])
         ..first['inst-b'] = _page('inst-b', [_item('b1', day2, workspace: 'ws-b')]);
       await pumpApp(tester, const Scaffold(body: MyReservationsBody()),
-          overrides: _overrides(hosts, [_a, _b]));
+          overrides: _overrides(hosts, [_a, _b]), size: const Size(800, 1600));
       await tester.pumpAndSettle();
 
       expect(hosts.asked.toSet(), {'inst-a', 'inst-b'}, reason: 'each host is asked for itself');
@@ -144,7 +147,7 @@ void main() {
         ..first['inst-a'] = _page('inst-a', [_item('a1', day1)])
         ..failure['inst-b'] = const MyReservationsRefused(MyReservationsFailure.hostUnavailable);
       await pumpApp(tester, const Scaffold(body: MyReservationsBody()),
-          overrides: _overrides(hosts, [_a, _b]));
+          overrides: _overrides(hosts, [_a, _b]), size: const Size(800, 1600));
       await tester.pumpAndSettle();
 
       expect(_card('a1'), findsOneWidget, reason: 'the host that answered is shown');
@@ -174,7 +177,7 @@ void main() {
       final hosts = _Hosts()..first['inst-a'] = _page('inst-a', [_item('a1', day1)]);
       final slow = hosts.hold('inst-b');
       await pumpApp(tester, const Scaffold(body: MyReservationsBody()),
-          overrides: _overrides(hosts, [_a, _b]));
+          overrides: _overrides(hosts, [_a, _b]), size: const Size(800, 1600));
       await tester.pumpAndSettle();
 
       expect(_card('a1'), findsOneWidget, reason: 'no barrier on the slowest host');
@@ -192,7 +195,7 @@ void main() {
         ..first['inst-a'] = _page('inst-a', [_item('a1', day1)])
         ..hold('inst-b'); // never answers
       await pumpApp(tester, const Scaffold(body: MyReservationsBody()),
-          overrides: _overrides(hosts, [_a, _b]));
+          overrides: _overrides(hosts, [_a, _b]), size: const Size(800, 1600));
       await tester.pumpAndSettle();
       expect(find.text(_l10n.myReservationsSourceReading('Leipzig')), findsOneWidget);
       await tester.pump(const Duration(seconds: 6));
@@ -226,7 +229,7 @@ void main() {
         ..more['inst-a'] = _page('inst-a', [_item('a2', day2)])
         ..first['inst-b'] = _page('inst-b', [_item('b1', day3, workspace: 'ws-b')]);
       await pumpApp(tester, const Scaffold(body: MyReservationsBody()),
-          overrides: _overrides(hosts, [_a, _b]));
+          overrides: _overrides(hosts, [_a, _b]), size: const Size(800, 1600));
       await tester.pumpAndSettle();
 
       expect(_card('a1'), findsOneWidget);

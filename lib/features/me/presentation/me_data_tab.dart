@@ -5,8 +5,8 @@
 // (`/me/data?view=`), so a link, Back and a reload all land on the same one.
 // #2557 C2 — each view reads its own source and keeps its own state: the
 // finances per workspace host (the own-finances screen), the reservations
-// on the selected workspace's host (#2553's body) with the guest visits
-// beside them, and the personal information with the personal part of my
+// on every host the account names (#2553's body, the guest visits inside
+// it), and the personal information with the personal part of my
 // data read on my personal home (`export_my_personal_data_v1`). A source
 // that fails says so with Try again in its own view; the others stay.
 import 'package:flutter/material.dart';
@@ -15,11 +15,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/ui/app_sheet.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
-import '../../visits/presentation/my_visits_section.dart';
-import '../../visits/providers/visits_providers.dart';
 import 'me_shell.dart';
 import 'personal_data_card.dart';
 import 'workspace_exports_card.dart';
@@ -140,41 +137,17 @@ class MeDataTab extends ConsumerWidget {
   }
 }
 
-/// The person's own reservations on the selected workspace's host, in the
-/// body that pages and names its own refusals; the visits as a guest, when
-/// there are any, open below it.
-class _ReservationsView extends ConsumerWidget {
+/// The person's own reservations on every host the account names, in the
+/// body that pages and names its own refusals; #2553 C4 -- the guest
+/// visits are inside it, their own kind.
+class _ReservationsView extends StatelessWidget {
   const _ReservationsView({required this.body});
 
   final Widget body;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    final visits = ref.watch(myGuestVisitsProvider).value ?? const [];
-    return Column(
-      key: const ValueKey('me-data-reservations'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(child: body),
-        if (visits.isNotEmpty)
-          ListTile(
-            key: const ValueKey('me-data-guest-visits'),
-            leading: const Icon(Icons.badge_outlined),
-            title: Text(l10n.meDataGuestVisits(visits.length)),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => showAppSheet<void>(
-              context: context,
-              isScrollControlled: true,
-              builder: (_) => const SafeArea(
-                child: SingleChildScrollView(
-                  padding: AppSpacing.gutterAll,
-                  child: MyVisitsSection(),
-                ),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => KeyedSubtree(
+        key: const ValueKey('me-data-reservations'),
+        child: body,
+      );
 }

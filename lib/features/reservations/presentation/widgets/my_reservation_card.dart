@@ -6,13 +6,15 @@
 // never the selected workspace's. A refused action says the host's reason
 // on the row with Try again; the row stays as it was until its host says
 // otherwise. View reads the booking again from its host.
+//
+// C4: the #2551 card (radius 20, padding 24 expanded and 16 compact, body
+// 16/24 and metadata 13/18 from the personal type scale) and, on a wide
+// window, a table row: date and time, workspace, kind, status, actions.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -28,6 +30,7 @@ import '../../domain/my_reservations_composition.dart';
 import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
 import 'my_reservations_body.dart';
+import 'my_reservations_layout.dart';
 
 /// The sentence for an action a host refused: a typed refusal or a lost
 /// answer in the read's own words, else the host's booking reason, else
@@ -45,12 +48,20 @@ String _actionWords(AppLocalizations l10n, Object error) =>
 enum _Act { checkIn, cancel }
 
 class MyReservationCard extends ConsumerStatefulWidget {
-  const MyReservationCard({super.key, required this.entry, required this.query});
+  const MyReservationCard({
+    super.key,
+    required this.entry,
+    required this.query,
+    this.layout = MyReservationsLayout.compact,
+  });
 
   final MyReservationEntry entry;
 
   /// The composition the row belongs to: its actions go through it.
   final MyReservationsQuery query;
+
+  /// A card, or a row of the wide table.
+  final MyReservationsLayout layout;
 
   @override
   ConsumerState<MyReservationCard> createState() => _MyReservationCardState();
@@ -139,25 +150,16 @@ class _MyReservationCardState extends ConsumerState<MyReservationCard> {
     final failed = _failed;
     final error = _error;
     final busy = _busy != null;
-    return Card(
-      key: ValueKey('my-reservation-${item.id}'),
-      child: Padding(
-        padding: AppSpacing.lgAll,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _Details(entry: e),
-            if (failed != null && error != null) ...[
-              const SizedBox(height: AppSpacing.sm),
-              InlineBanner(
-                key: ValueKey('my-reservation-failed-${item.id}'),
-                icon: Icons.error_outline,
-                text: _actionWords(l10n, error),
-                actionLabel: l10n.commonRetry,
-                onAction: () => _run(failed),
-              ),
-            ],
-            Wrap(
+    final banner = failed != null && error != null
+        ? InlineBanner(
+            key: ValueKey('my-reservation-failed-${item.id}'),
+            icon: Icons.error_outline,
+            text: _actionWords(l10n, error),
+            actionLabel: l10n.commonRetry,
+            onAction: () => _run(failed),
+          )
+        : null;
+    final actions = Wrap(
               spacing: AppSpacing.sm,
               children: [
                 TextButton(
@@ -182,7 +184,31 @@ class _MyReservationCardState extends ConsumerState<MyReservationCard> {
                     child: Text(l10n.myReservationsCancel),
                   ),
               ],
-            ),
+            );
+    if (widget.layout == MyReservationsLayout.table) {
+      return MyReservationTableRow(
+        key: ValueKey('my-reservation-${item.id}'),
+        entry: e,
+        actions: actions,
+        banner: banner,
+      );
+    }
+    return Card(
+      key: ValueKey('my-reservation-${item.id}'),
+      shape: myReservationsCardShape(context),
+      elevation: 0,
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
+      child: Padding(
+        padding: widget.layout.cardPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _Details(entry: e),
+            if (banner != null) ...[
+              const SizedBox(height: AppSpacing.sm),
+              banner,
+            ],
+            actions,
           ],
         ),
       ),
@@ -208,9 +234,22 @@ class _Details extends ConsumerWidget {
     final checkedOut = item.checkedOutAt;
     final zone = entry.foreignZone;
     String at(DateTime instant) => format.wallTime(entry.wall(instant));
+    // C4 -- a compact card says when first, then what and where.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          '${myReservationDay(format, entry.day)} · ${at(item.startsAt)}–${at(item.endsAt)}',
+          key: ValueKey('my-reservation-times-${item.id}'),
+          style: theme.textTheme.bodyLarge,
+        ),
+        if (zone != null)
+          Text(
+            l10n.myReservationsTimesIn(zone),
+            key: ValueKey('my-reservation-zone-${item.id}'),
+            style: theme.textTheme.bodySmall,
+          ),
+        const SizedBox(height: AppSpacing.xs),
         Row(
           children: [
             Icon(myReservationKindIcon(item.placeKind)),
@@ -223,17 +262,6 @@ class _Details extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.xs),
-        Text(
-          '${_day(format, entry.day)} · ${at(item.startsAt)}–${at(item.endsAt)}',
-          key: ValueKey('my-reservation-times-${item.id}'),
-        ),
-        if (zone != null)
-          Text(
-            l10n.myReservationsTimesIn(zone),
-            key: ValueKey('my-reservation-zone-${item.id}'),
-            style: theme.textTheme.bodySmall,
-          ),
         Text(
           '${myReservationKindWords(l10n, item.placeKind)} · ${item.workspaceName}',
           style: theme.textTheme.bodySmall,
@@ -246,10 +274,6 @@ class _Details extends ConsumerWidget {
     );
   }
 }
-
-/// A day of the workspace's calendar, already a wall date: formatted as
-/// it is, never shifted by another zone.
-String _day(AppFormat format, DateTime day) => DateFormat.MMMEd(format.locale).format(day);
 
 /// View: the booking read again from its own host, in a sheet.
 Future<void> _showSheet(

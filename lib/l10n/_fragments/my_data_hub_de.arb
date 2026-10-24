@@ -7,6 +7,5 @@
   "meDataPersonalUnsupported": "Ihr persönliches Zuhause bietet diesen Export noch nicht an. Es wurde nichts exportiert.",
   "meDataPersonalForbidden": "Diese Sitzung darf Ihre persönlichen Daten nicht lesen. Melden Sie sich erneut in der App an.",
   "meDataPersonalMalformed": "Ihr persönliches Zuhause hat in einer Form geantwortet, die diese App nicht lesen kann. Es wurde nichts exportiert.",
-  "meDataPersonalFailed": "Ihr persönliches Zuhause hat nicht geantwortet. Es wurde nichts exportiert.",
-  "meDataGuestVisits": "Besuche als Gast: {count}"
+  "meDataPersonalFailed": "Ihr persönliches Zuhause hat nicht geantwortet. Es wurde nichts exportiert."
 }

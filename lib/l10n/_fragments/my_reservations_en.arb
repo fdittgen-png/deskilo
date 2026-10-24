@@ -252,5 +252,29 @@
         "type": "String"
       }
     }
+  },
+  "myReservationsColumnWhen": "Date and time",
+  "@myReservationsColumnWhen": {
+    "description": "#2553 C4 My reservations: the wide table's column of a booking's day and times."
+  },
+  "myReservationsColumnWorkspace": "Workspace",
+  "@myReservationsColumnWorkspace": {
+    "description": "#2553 C4 My reservations: the wide table's column of the booking's workspace and place."
+  },
+  "myReservationsColumnKind": "Kind",
+  "@myReservationsColumnKind": {
+    "description": "#2553 C4 My reservations: the wide table's column of what was booked (seat, desk, office, level)."
+  },
+  "myReservationsColumnStatus": "Status",
+  "@myReservationsColumnStatus": {
+    "description": "#2553 C4 My reservations: the wide table's column of where the booking stands."
+  },
+  "myReservationsColumnActions": "Actions",
+  "@myReservationsColumnActions": {
+    "description": "#2553 C4 My reservations: the wide table's column of View, Check in and Cancel."
+  },
+  "myReservationsSourceStale": "Shown as last read; it may have changed since.",
+  "@myReservationsSourceStale": {
+    "description": "#2553 C4 My reservations: a server did not answer a read again; its bookings stay on screen as they were last read."
   }
 }

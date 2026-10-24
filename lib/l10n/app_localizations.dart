@@ -21538,12 +21538,6 @@ abstract class AppLocalizations {
   /// **'Create a space'**
   String get meCreateSpace;
 
-  /// #2557 My data › Reservations: opens the person's visits as a guest.
-  ///
-  /// In en, this message translates to:
-  /// **'Visits as a guest: {count}'**
-  String meDataGuestVisits(int count);
-
   /// #2557 My data: export the personal-data file.
   ///
   /// In en, this message translates to:
@@ -23656,6 +23650,36 @@ abstract class AppLocalizations {
   /// **'Checked out at {time}'**
   String myReservationsCheckedOutAt(String time);
 
+  /// #2553 C4 My reservations: the wide table's column of View, Check in and Cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get myReservationsColumnActions;
+
+  /// #2553 C4 My reservations: the wide table's column of what was booked (seat, desk, office, level).
+  ///
+  /// In en, this message translates to:
+  /// **'Kind'**
+  String get myReservationsColumnKind;
+
+  /// #2553 C4 My reservations: the wide table's column of where the booking stands.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get myReservationsColumnStatus;
+
+  /// #2553 C4 My reservations: the wide table's column of a booking's day and times.
+  ///
+  /// In en, this message translates to:
+  /// **'Date and time'**
+  String get myReservationsColumnWhen;
+
+  /// #2553 C4 My reservations: the wide table's column of the booking's workspace and place.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get myReservationsColumnWorkspace;
+
   /// #2553 My reservations: the window was read and holds nothing.
   ///
   /// In en, this message translates to:
@@ -23775,6 +23799,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reading {source}…'**
   String myReservationsSourceReading(String source);
+
+  /// #2553 C4 My reservations: a server did not answer a read again; its bookings stay on screen as they were last read.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown as last read; it may have changed since.'**
+  String get myReservationsSourceStale;
 
   /// #2553 C2 My reservations: a workspace host whose spaces have no name the person may read.
   ///

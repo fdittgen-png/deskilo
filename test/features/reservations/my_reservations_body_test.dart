@@ -14,6 +14,7 @@ import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/my_reservations_body.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
+import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -96,6 +97,8 @@ List<Override> _overrides(_FakeRepository repository, {List<MyReservationsSource
       myReservationsRepositoryProvider.overrideWithValue(repository),
       myReservationsSourcesProvider.overrideWith((ref) async => sources),
       clockProvider.overrideWithValue(FixedClock(kTestNow)),
+      // #2553 C4: the guest visits beside the bookings; none here.
+      myGuestVisitsProvider.overrideWith((ref) async => const []),
     ];
 
 void main() {

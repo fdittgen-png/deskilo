@@ -42,14 +42,5 @@
   "meDataPersonalFailed": "Your personal home did not answer. Nothing was exported.",
   "@meDataPersonalFailed": {
     "description": "#2557 My data: the personal home did not answer."
-  },
-  "meDataGuestVisits": "Visits as a guest: {count}",
-  "@meDataGuestVisits": {
-    "description": "#2557 My data › Reservations: opens the person's visits as a guest.",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
   }
 }

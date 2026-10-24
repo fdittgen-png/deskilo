@@ -13037,11 +13037,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meCreateSpace => 'Créer un espace';
 
   @override
-  String meDataGuestVisits(int count) {
-    return 'Visites en tant qu’invité : $count';
-  }
-
-  @override
   String get meDataPersonalExport => 'Exporter les données personnelles';
 
   @override
@@ -14316,6 +14311,21 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get myReservationsColumnActions => 'Actions';
+
+  @override
+  String get myReservationsColumnKind => 'Type';
+
+  @override
+  String get myReservationsColumnStatus => 'Statut';
+
+  @override
+  String get myReservationsColumnWhen => 'Date et heure';
+
+  @override
+  String get myReservationsColumnWorkspace => 'Espace';
+
+  @override
   String get myReservationsEmpty => 'Aucune réservation sur cette période.';
 
   @override
@@ -14388,6 +14398,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String myReservationsSourceReading(String source) {
     return 'Lecture de $source…';
   }
+
+  @override
+  String get myReservationsSourceStale =>
+      'Affiché tel que lu la dernière fois ; cela a pu changer depuis.';
 
   @override
   String get myReservationsSourceUnnamed => 'Un serveur d\'espace';

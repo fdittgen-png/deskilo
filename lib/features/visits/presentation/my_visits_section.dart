@@ -4,6 +4,9 @@
 // newest first, each saying in one line that it is a visit and not a
 // membership. The guest's one action is to cancel what still lies ahead;
 // the server answers, and the list re-reads what it holds.
+//
+// #2553 C4 -- My reservations shows the same card, in its own kind, with
+// the shape and padding of its own cards.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,22 +41,33 @@ class MyVisitsSection extends ConsumerWidget {
           style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: AppSpacing.sm),
-        for (final visit in visits) _VisitCard(visit: visit),
+        for (final visit in visits) GuestVisitCard(visit: visit),
       ],
     );
   }
 }
 
-class _VisitCard extends ConsumerStatefulWidget {
-  const _VisitCard({required this.visit});
+/// One guest visit: where, when, that it is a visit and not a membership,
+/// and Cancel while it lies ahead.
+class GuestVisitCard extends ConsumerStatefulWidget {
+  const GuestVisitCard({
+    super.key,
+    required this.visit,
+    this.shape,
+    this.padding = const EdgeInsets.all(AppSpacing.md),
+  });
 
   final GuestParticipation visit;
 
+  /// The card's shape; the theme's when null.
+  final ShapeBorder? shape;
+  final EdgeInsetsGeometry padding;
+
   @override
-  ConsumerState<_VisitCard> createState() => _VisitCardState();
+  ConsumerState<GuestVisitCard> createState() => _GuestVisitCardState();
 }
 
-class _VisitCardState extends ConsumerState<_VisitCard> {
+class _GuestVisitCardState extends ConsumerState<GuestVisitCard> {
   bool _busy = false;
 
   Future<void> _cancel() async {
@@ -99,8 +113,9 @@ class _VisitCardState extends ConsumerState<_VisitCard> {
     return Card(
       key: ValueKey('me-visit-${visit.id}'),
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+      shape: widget.shape,
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: widget.padding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
