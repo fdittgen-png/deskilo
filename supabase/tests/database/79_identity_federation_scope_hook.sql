@@ -1,6 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #1648: only the operator registers identity clients; the Auth hook rejects
--- caller-overridden email scopes and preserves native/other-client claims.
+-- caller-overridden email scopes and preserves native/other-client claims;
+-- since 9999 (#2562 C1c) an allowed identity token carries deskilo_identity.
 begin;
 select plan(17);
 
@@ -29,10 +30,13 @@ reset role;
 select public.operator_set_identity_federation_client(
   '00000000-0000-4000-8000-000000016481', true);
 
+-- 9999 (#2562 C1c): an allowed identity token carries the identity role.
 select is(public.identity_federation_token_hook(pg_temp.identity_event('openid profile')),
-  pg_temp.identity_event('openid profile'), 'allowed claims survive unchanged');
+  jsonb_set(pg_temp.identity_event('openid profile'), '{claims,role}', '"deskilo_identity"'),
+  'allowed claims survive, with the identity role');
 select is(public.identity_federation_token_hook(pg_temp.identity_event('profile openid')),
-  pg_temp.identity_event('profile openid'), 'scope ordering is immaterial');
+  jsonb_set(pg_temp.identity_event('profile openid'), '{claims,role}', '"deskilo_identity"'),
+  'scope ordering is immaterial');
 select throws_ok($$select public.identity_federation_token_hook(
   pg_temp.identity_event('openid email'))$$, '28000', 'identity_client_scope_refused',
   'requesting email cannot bypass provider defaults or user metadata');

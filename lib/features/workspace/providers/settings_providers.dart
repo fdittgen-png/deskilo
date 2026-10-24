@@ -6,6 +6,7 @@ import '../../../core/backend/context_client_providers.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/instance/settings_bundle_asset.dart';
 import '../../../core/settings/active_settings.dart';
+import '../../../core/settings/platform_settings.dart';
 import '../../../core/settings/settings.dart';
 import '../../../core/settings/settings_capture.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -24,17 +25,18 @@ part 'settings_providers.g.dart';
 /// that captures the settings stay two nodes with no edge between them, so
 /// the cycle that once rebuilt without end (selectedWorkspaceClient ->
 /// workspaceContext -> currentSettingsCapture -> settingsSource ->
-/// settingsRepository) cannot form. The platform's own view, a workspace other
-/// than the selected connected one, and the combined deployment stay on the
-/// installation the app is signed in to.
+/// settingsRepository) cannot form. A workspace other than the selected
+/// connected one and the combined deployment stay on the installation the
+/// app is signed in to; the platform's own view (no workspace) is the
+/// personal home's (#2561 L3).
 @Riverpod(keepAlive: true)
 SettingsStore settingsRepository(Ref ref) {
   final clients = ref.watch(contextClientsProvider);
   return HostBoundSettingsStore(<T>(workspaceId, use) async {
     final selected = ref.read(selectedWorkspaceHostProvider);
-    if (workspaceId == null ||
-        selected == null ||
-        selected.workspaceId != workspaceId) {
+    // #2561 L3 -- the platform's own view is the personal home's.
+    if (workspaceId == null) return use(clients.personal);
+    if (selected == null || selected.workspaceId != workspaceId) {
       return use(clients.legacyActive);
     }
     final host = await ref
@@ -90,11 +92,15 @@ Future<SettingsSet> currentSettings(Ref ref) async {
 Future<SettingsCapture?> currentSettingsCapture(Ref ref) async {
   final source = ref.watch(settingsSourceProvider);
   final installation = ref.watch(bootedBackendUrlProvider);
+  final platform = ref.watch(platformSettingsReaderProvider);
   final principalAnswer = ref.watch(authStateProvider.future);
   final workspaceAnswer = ref.watch(currentWorkspaceProvider.future);
   final principal = await principalAnswer;
   final workspace = (await workspaceAnswer)?.id;
   if (principal == null) return null;
+  // #2561 L3 -- no workspace (a personal home hosts none): the personal
+  // home's own platform scope, never a dummy workspace or another host.
+  if (workspace == null) return platform.read(principal);
   return captureSettings(
     source,
     SettingsIdentity(
@@ -111,3 +117,14 @@ Future<SettingsCapture?> currentSettingsCapture(Ref ref) async {
 final activeSettingsFromWorkspace = activeSettingsProvider.overrideWith(
   (ref) => ref.watch(currentSettingsProvider).asData?.value,
 );
+
+/// #2561 L3 -- the personal home's platform settings: the registry's
+/// platform scope read with a null workspace, which [settingsRepository]
+/// serves on the PERSONAL client, so a personal home that hosts no workspace
+/// has them and no selected workspace (or its host) decides them.
+@Riverpod(keepAlive: true)
+PlatformSettingsReader platformSettingsReader(Ref ref) =>
+    PlatformSettingsReader(
+      source: ref.watch(settingsSourceProvider),
+      installation: ref.watch(bootedBackendUrlProvider),
+    );

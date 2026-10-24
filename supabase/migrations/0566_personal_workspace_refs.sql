@@ -10,7 +10,7 @@
 -- tables are stood down for the backfill so the modification stamps do
 -- not move. Re-running the backfill writes nothing (it fills nulls only).
 --
--- 9999 (#2563 C1) -- the personal account names a workspace by its
+-- 0566 (#2563 C1) -- the personal account names a workspace by its
 -- qualified reference, so it can live on a personal home (P) that hosts no
 -- workspace.
 --
@@ -436,4 +436,4 @@ grant execute on function public.export_my_personal_data_v1() to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(566);

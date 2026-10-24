@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/context_client_providers.dart';
+import '../../../core/backend/personal_home_providers.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../application/directory_actions.dart';
 import '../data/supabase_account_contact_repository.dart';
@@ -33,19 +34,17 @@ AccountContactActions accountContactActions(Ref ref, {String source = ''}) =>
 /// #1847 — anonymous discovery. Holds publishable keys and no session:
 /// the provider does not even watch the auth state.
 ///
-/// #2343 — the directory is the GLOBAL one, on the reference deployment,
-/// whatever server this device uses; this device's own server is listed
-/// beside it when it is another one.
+/// #2561 L3 — the directory is the one the installation declares
+/// ([directoryHomeProvider]); this device's own server is listed beside it.
 @riverpod
 PublicDiscoveryRepository publicDiscoveryRepository(Ref ref) {
   final client = ref.watch(personalClientProvider);
-  final own = Uri.parse(client.rest.url).origin;
   return SupabasePublicDiscoveryRepository(
-    origin: globalDirectoryEndpoint.url,
-    publishableKey: globalDirectoryEndpoint.key,
-    local: own == globalDirectoryEndpoint.url
-        ? null
-        : BackendEndpoint(own, client.auth.headers['apikey']!),
+    directoryHome: () => ref.read(directoryHomeProvider.future),
+    local: BackendEndpoint(
+      Uri.parse(client.rest.url).origin,
+      client.auth.headers['apikey']!,
+    ),
   );
 }
 
@@ -62,6 +61,7 @@ DirectoryParticipantRepository directoryParticipantRepository(Ref ref) =>
       ref.watch(authStateProvider).value == null
           ? null
           : ref.watch(connectedInstallationsProvider),
+      directoryHome: () => ref.read(directoryHomeProvider.future),
     );
 /// #1847 — the card as its installation publishes it now; null once it is
 /// withdrawn. Keyed by the card's identity on its own installation.

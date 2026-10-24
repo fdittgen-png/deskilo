@@ -36,6 +36,9 @@ const HORIZON=[['7','optDays',{n:7}],['14','optDays',{n:14}],['30','optDays',{n:
 const DURATIONS=[['5','optMinutes',{n:5}],['10','optMinutes',{n:10}],['15','optMinutes',{n:15}],['30','optMinutesDefaultMin',{n:30}],['45','optMinutes',{n:45}],['60','optOneHour'],['90','optHourAndHalf'],['120','optHours',{n:2}],['180','optHours',{n:3}],['240','optHours',{n:4}],['300','optHours',{n:5}],['360','optHours',{n:6}],['480','optHours',{n:8}],['600','optHours',{n:10}],['720','optHours',{n:12}],['1440','optHoursDefaultMax',{n:24}]];
 const VATPERIOD=[['month','vatPeriodMonth'],['quarter','vatPeriodQuarter'],['annual','vatPeriodAnnual']];
 const ENVIRONMENTS=[['dev','envDev'],['prod','envProd']];
+// #2561 L3 — the roles a coworking space's server can have (a personal home
+// alone hosts no space, so the questionnaire does not offer it).
+const NETWORK_ROLES=[['combined','networkCombined'],['workspace_host','networkWorkspaceHost']];
 const NUMDATE=[['none','numDateNone'],['year','numDateYear'],['year_month','numDateYearMonth']];
 const NUMRESET=[['never','numResetNever'],['yearly','numResetYearly'],['monthly','numResetMonthly']];
 // #1320 — a number never restarts more often than it prints its date,
@@ -75,6 +78,7 @@ const PARAM_META=[
  ['name','identityName','text'],['environment','identityEnvironment','enum',()=>ENVIRONMENTS.map(x=>x[0])],
  ['country','identityCountry','enum',()=>COUNTRIES.map(c=>c[0])],['currency','identityCurrency','enum',()=>CURRENCIES.slice()],
  ['timezone','identityTimezone','enum',()=>TIMEZONES.slice()],['language','identityLanguage','enum',()=>LANGS.map(x=>x[0])],
+ ['network.roles','networkRoles','enum',()=>NETWORK_ROLES.map(x=>x[0])],['network.homeUrl','networkHomeUrl','text'],['network.homeKey','networkHomeKey','text'],
  ['address','identityAddress','text'],['brandColor','identityBrandColor','color'],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
@@ -125,7 +129,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',network:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it

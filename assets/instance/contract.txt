@@ -417,6 +417,7 @@ constraint identity_federation_clients.identity_federation_clients_purpose_check
 constraint identity_federation_clients.identity_federation_clients_target_auth_url_check CHECK ((target_auth_url ~ '^(https://[^/@?#[:space:]]+|http://(127[.]0[.]0[.]1|localhost)(:[0-9]+)?)(/[A-Za-z0-9._~-]+)*$'::text))
 constraint identity_federation_clients.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint installation_identity.installation_identity_installation_id_key UNIQUE (installation_id)
+constraint installation_identity.installation_identity_personal_home_check CHECK (((personal_home_kind = ANY (ARRAY['unset'::text, 'self'::text, 'endpoint'::text])) AND ((personal_home_kind = 'endpoint'::text) = (personal_home_url IS NOT NULL)) AND ((personal_home_url IS NULL) = (personal_home_key IS NULL)) AND ((personal_home_url IS NULL) OR (personal_home_url ~ '^https://[a-z0-9-]+(\.[a-z0-9-]+)+(:[0-9]{1,5})?$'::text)) AND ((personal_home_key IS NULL) OR is_publishable_backend_key(personal_home_key))))
 constraint installation_identity.installation_identity_pkey PRIMARY KEY (singleton)
 constraint installation_identity.installation_identity_roles_check CHECK (((roles <@ ARRAY['personal_home'::text, 'workspace_host'::text]) AND ((cardinality(roles) >= 1) AND (cardinality(roles) <= 2)) AND ((cardinality(roles) = 1) OR (roles[1] <> roles[2]))))
 constraint installation_identity.installation_identity_singleton_check CHECK (singleton)
@@ -1918,7 +1919,7 @@ routine public.holds_template_grant(p_template_id uuid) -> boolean | function | 
 routine public.identity_binding_revoked_cascade() -> trigger | function | definer | volatile | exec:service_role | body:9f261f2a737d
 routine public.identity_binding_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:dfbda10ae4a1
 routine public.identity_bindings_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:faaf73ca1142
-routine public.identity_federation_token_hook(event jsonb) -> jsonb | function | definer | stable | exec: | body:7a59fef17cf4
+routine public.identity_federation_token_hook(event jsonb) -> jsonb | function | definer | stable | exec: | body:aa69de7aea32
 routine public.import_closure_days(p_workspace_id uuid, p_days jsonb, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e99f11021cb3
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:bc90d83d1544
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f20c38cf0ab5
@@ -1970,6 +1971,7 @@ routine public.is_instance_operator() -> boolean | function | definer | stable |
 routine public.is_member_of(ws uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:b253bbc97fc8
 routine public.is_owner_of(ws uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:4c4558ed7c95
 routine public.is_platform_owner() -> boolean | function | definer | stable | exec:authenticated,service_role | body:141d4fa0c9eb
+routine public.is_publishable_backend_key(p_key text) -> boolean | function | invoker | immutable | exec:service_role | body:818df83a9bd1
 routine public.is_sample_record(p_table text, p_id uuid) -> boolean | function | definer | stable | exec:service_role | body:e56bf90fbab1
 routine public.is_this_installation(p_installation_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:4473eb2d259f
 routine public.issue_member_badge(p_workspace_id uuid, p_member_id uuid, p_label text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e4540f0e7a1d
@@ -2128,7 +2130,7 @@ routine public.mcp_record_reservation_origin(p_reservation_id uuid, p_workspace_
 routine public.mcp_redirect_host(p_uri text) -> text | function | invoker | immutable | exec:service_role | body:3da3bc0693e9
 routine public.mcp_registered_redirects(p_client_id text) -> text | function | definer | stable | exec:service_role | body:206024ad6b6a
 routine public.mcp_request_outcome(p_result jsonb) -> text | function | invoker | immutable | exec:service_role | body:883fde66b9af
-routine public.mcp_require_native() -> void | function | invoker | stable | exec:service_role | body:75faf6e7d8ed
+routine public.mcp_require_native() -> void | function | invoker | stable | exec:service_role | body:3d051d4388d6
 routine public.mcp_reservation_digest(p_reservation_id uuid) -> text | function | invoker | stable | exec:service_role | body:c6a60b1858ba
 routine public.mcp_reservation_outcome(p_status text, p_reservation_id uuid, p_data jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:a59509379176
 routine public.mcp_reservation_view(p_reservation_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:57557dcc51c6
@@ -2258,13 +2260,16 @@ routine public.operator_set_identity_federation_client(p_client_id uuid, p_enabl
 routine public.operator_set_installation_roles(p_roles text[], p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:7dbbfd986503
 routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:service_role | body:c659b2933f84
 routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:46902c960cbd
+routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:862bc3e5136b
 routine public.outgoing_payments_guard() -> trigger | function | invoker | volatile | exec:service_role | body:4bbded633c7e
 routine public.owns_workspace_template(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f91919c37225
 routine public.payment_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:39efd058a90d
 routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f135c6a70d02
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
+routine public.personal_account_recognised() -> boolean | function | definer | stable | exec:authenticated,service_role | body:6e6491901997
 routine public.personal_home_descriptor() -> jsonb | function | definer | stable | exec:service_role | body:1ea555640fdb
+routine public.personal_native_session() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:54c14f4d4611
 routine public.personal_workspace_ref_stamp() -> trigger | function | definer | volatile | exec:service_role | body:49355860cffd
 routine public.place_dunning_hold(p_invoice_id uuid, p_reason text, p_note text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d66df323208a
 routine public.place_feedback_member(p_workspace uuid, p_kind text, p_resource uuid) -> members | function | definer | stable | exec:service_role | body:3b78664cfc6e

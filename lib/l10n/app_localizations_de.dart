@@ -4334,6 +4334,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get directoryEmpty => 'Noch keine Mitglieder.';
 
   @override
+  String get directoryHomeUnavailable =>
+      'Dieser Server nennt kein nutzbares persönliches Zuhause, daher lässt sich das Verzeichnis nicht öffnen. Fragen Sie den Betreiber.';
+
+  @override
   String directoryLastSeenDays(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,
@@ -8963,6 +8967,55 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get instanceMakeAdmin => 'Zum Administrator machen';
+
+  @override
+  String get instanceNetworkCombined => 'Kombiniert: Konten und Spaces';
+
+  @override
+  String get instanceNetworkHomeEndpoint =>
+      'Geben Sie eine https://-Adresse und einen öffentlichen Schlüssel ein, nie einen geheimen.';
+
+  @override
+  String get instanceNetworkHomeIntro =>
+      'Das persönliche Zuhause der Personen dieses Servers: der Server, auf dem ihre Konten liegen. Er wird geprüft, bevor er gespeichert wird.';
+
+  @override
+  String get instanceNetworkHomeIsThisInstance =>
+      'Diese Adresse ist diese Instanz selbst. Wählen Sie stattdessen Kombiniert oder Persönliches Zuhause.';
+
+  @override
+  String get instanceNetworkHomeKey =>
+      'Öffentlicher Schlüssel des persönlichen Zuhauses';
+
+  @override
+  String get instanceNetworkHomeNotPersonal =>
+      'Dieser Server ist kein persönliches Zuhause oder zu alt dafür. Nichts wurde gespeichert.';
+
+  @override
+  String get instanceNetworkHomeRequired =>
+      'Ein Space-Host braucht das persönliche Zuhause seiner Personen.';
+
+  @override
+  String get instanceNetworkHomeUnreachable =>
+      'Das persönliche Zuhause hat nicht geantwortet. Prüfen Sie Adresse und Schlüssel und versuchen Sie es erneut.';
+
+  @override
+  String get instanceNetworkHomeUrl =>
+      'URL des persönlichen Zuhauses (https://…)';
+
+  @override
+  String get instanceNetworkIntro =>
+      'Netzwerk: welche Rolle diese Instanz hat. Kombiniert (die übliche Wahl) hält die Konten der Personen und die Coworking-Spaces auf demselben Server.';
+
+  @override
+  String get instanceNetworkPersonalHome =>
+      'Persönliches Zuhause: nur Konten, kein Space';
+
+  @override
+  String get instanceNetworkRoleLabel => 'Rolle dieser Instanz';
+
+  @override
+  String get instanceNetworkWorkspaceHost => 'Space-Host: nur Spaces';
 
   @override
   String get instanceNoCandidates =>

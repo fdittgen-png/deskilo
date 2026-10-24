@@ -13,6 +13,7 @@
 // failed page throws instead of answering an empty one.
 import 'dart:convert';
 
+import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/public_network/public_network_operations.dart';
 import 'package:deskilo/features/directory/data/supabase_public_discovery_repository.dart';
 import 'package:deskilo/features/directory/domain/discovery_paging.dart';
@@ -78,8 +79,7 @@ void main() {
 
   SupabasePublicDiscoveryRepository repository() =>
       SupabasePublicDiscoveryRepository(
-        origin: home,
-        publishableKey: homeKey,
+        directoryHome: () async => const BackendEndpoint(home, homeKey),
         transport: transport,
       );
 

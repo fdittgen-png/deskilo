@@ -29,19 +29,19 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_people_seed.dart:283` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_second_space_seed.dart:327` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_second_space_seed.dart:334` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:12` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:13` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:14` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:15` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:16` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:17` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:18` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:19` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:20` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:21` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:22` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:23` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:24` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:13` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:14` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:15` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:16` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:17` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:18` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:19` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:20` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:21` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:22` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:23` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:24` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:25` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 
 ## Why each file keeps its literals

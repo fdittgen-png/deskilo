@@ -676,5 +676,15 @@
  "levelsExpertOpen": "Apri la vista esperta: ogni interruttore",
  "setupExpertSwitches": "Mostra ogni interruttore (vista esperta)",
  "levelsOk": "Livelli: {list}.",
- "levelsUnanswered": "Nessuna domanda con risposta: decidono gli interruttori del passo successivo."
+ "levelsUnanswered": "Nessuna domanda con risposta: decidono gli interruttori del passo successivo.",
+ "networkRoles": "Ruolo di questo server",
+ "networkRolesHint": "Combinata: gli account delle persone e lo spazio su un unico server (la scelta abituale). Host di spazi: gli account si trovano su un altro server, la casa personale, indicata qui sotto.",
+ "networkCombined": "Combinata: account e spazi",
+ "networkWorkspaceHost": "Host di spazi: solo spazi",
+ "networkHomeUrl": "URL della casa personale",
+ "networkHomeUrlHint": "L’indirizzo https:// del server dove i Suoi membri hanno i loro account.",
+ "networkHomeKey": "Chiave pubblicabile della casa personale",
+ "networkHomeKeyHint": "La sua chiave pubblicabile (sb_publishable_…), mai una segreta. La procedura guidata dell’istanza verifica entrambe prima di registrarle.",
+ "networkErrHome": "La casa personale richiede un indirizzo https:// senza percorso e una chiave pubblicabile.",
+ "reqNetworkHome": "Obbligatorio perché questo server ospita solo spazi: i suoi membri hanno bisogno di una casa personale."
 }

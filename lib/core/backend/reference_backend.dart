@@ -9,10 +9,10 @@ const referenceEndpoint = BackendEndpoint(
   BackendConfig.referenceKey,
 );
 
-/// #2343 — where the global directory lives: on the reference deployment,
-/// whatever server this device uses. Any server can be linked to it, and
-/// the spaces a linked server publishes are listed there for everyone.
-const globalDirectoryEndpoint = referenceEndpoint;
+// #2561 L3 — the directory no longer lives on a constant: the installation
+// declares its personal home (`directoryHomeOf`, personal_home.dart) and
+// the reference deployment is what an installation that declared nothing
+// keeps.
 
 /// #2343 — whether [url] is the reference deployment's.
 bool isReferenceBackend(String url) =>
