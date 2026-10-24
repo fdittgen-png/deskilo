@@ -134,6 +134,8 @@ class _DirectoryLinkState extends ConsumerState<DirectoryLinkDialog> {
       errorText: context.l10n.directoryHomeUnavailable,
       action: () async => home = await ref.read(directoryHomeProvider.future),
     );
+    // #2555 — a failed read is not kept: the next attempt asks again.
+    if (!read && mounted) ref.invalidate(directoryHomeProvider);
     if (!read || !mounted || home == null) return;
     final connected = await showDialog<bool>(
       context: context,

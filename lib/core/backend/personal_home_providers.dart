@@ -10,17 +10,21 @@ import 'backend_settings.dart';
 import 'context_client_providers.dart';
 import 'personal_home.dart';
 
+/// #2555 -- the endpoint of the installation this device booted on, as its
+/// personal client names it. Never the selected workspace's host.
+final personalEndpointProvider = Provider<BackendEndpoint>((ref) {
+  final client = ref.watch(personalClientProvider);
+  return BackendEndpoint(
+    Uri.parse(client.rest.url).origin,
+    client.auth.headers['apikey'] ?? '',
+  );
+});
+
 /// Where the directory source list lives. Fails with
 /// [PersonalHomeUnavailable] when the installation's declaration cannot be
 /// used; it is never answered by another server instead.
 final directoryHomeProvider = FutureProvider<BackendEndpoint>((ref) async {
   final client = ref.watch(personalClientProvider);
   final declaration = await readPersonalHomeDeclaration(client);
-  return directoryHomeOf(
-    declaration,
-    self: BackendEndpoint(
-      Uri.parse(client.rest.url).origin,
-      client.auth.headers['apikey'] ?? '',
-    ),
-  );
+  return directoryHomeOf(declaration, self: ref.read(personalEndpointProvider));
 }, retry: (_, _) => null);
