@@ -42,11 +42,12 @@ class SupabaseMeRepository implements MeRepository {
   Future<MyVisibility> myVisibility() => readMyNetworkVisibility(_client);
 
   @override
-  Future<void> setVisibility(
+  Future<MyVisibility> setVisibilityIfUnchanged(
     VisibilityField field,
-    FieldAudience audience,
-  ) =>
-      writeVisibility(_client, field, audience);
+    FieldAudience audience, {
+    required FieldAudience expected,
+  }) =>
+      writeVisibilityIfUnchanged(_client, field, audience, expected);
 
   @override
   Future<void> setAbout(String profession, String bio) => _client.rpc<void>(

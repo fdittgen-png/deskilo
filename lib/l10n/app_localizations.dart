@@ -42371,6 +42371,42 @@ abstract class AppLocalizations {
   /// **'Members of chosen spaces'**
   String get visibilityChosenSpaces;
 
+  /// #2558 C2 privacy conflict: close, keeping what is saved
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the saved setting'**
+  String get visibilityConflictKeep;
+
+  /// #2558 C2 privacy conflict: reopen the draft against the value saved now
+  ///
+  /// In en, this message translates to:
+  /// **'Review my change'**
+  String get visibilityConflictReview;
+
+  /// #2558 C2 privacy conflict: the audience the personal home holds now
+  ///
+  /// In en, this message translates to:
+  /// **'Saved now: {audience}'**
+  String visibilityConflictSaved(String audience);
+
+  /// #2558 C2 privacy: the saved field changed (another device) before this change was saved; nothing was written
+  ///
+  /// In en, this message translates to:
+  /// **'This setting changed meanwhile'**
+  String get visibilityConflictTitle;
+
+  /// #2558 C2 privacy conflict: the current saved value could not be read back
+  ///
+  /// In en, this message translates to:
+  /// **'The saved setting cannot be read right now. Your change was not saved.'**
+  String get visibilityConflictUnread;
+
+  /// #2558 C2 privacy conflict: the audience the person chose, kept as a draft
+  ///
+  /// In en, this message translates to:
+  /// **'Your change: {audience}'**
+  String visibilityConflictYours(String audience);
+
   /// Visibility field: contact channels.
   ///
   /// In en, this message translates to:
@@ -42388,12 +42424,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On my other servers'**
   String get visibilityElsewhereTitle;
-
-  /// #2558 a field whose chosen spaces include one on another installation; read-only until the network writer
-  ///
-  /// In en, this message translates to:
-  /// **'It names a space on another server, so it cannot be changed here yet.'**
-  String get visibilityFieldElsewhere;
 
   /// #2558 privacy card: names the personal home whose settings these are; name is its server address
   ///
@@ -42574,6 +42604,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Who sees what of you cannot be read right now. Nothing was changed.'**
   String get visibilityUnavailable;
+
+  /// #2558 C2 privacy: the reply was lost and the saved field read back is not the intended one
+  ///
+  /// In en, this message translates to:
+  /// **'Your change could not be confirmed'**
+  String get visibilityUnconfirmedTitle;
 
   /// No description provided for @visibilityWidenAction.
   ///

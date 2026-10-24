@@ -1750,6 +1750,9 @@ routine public.account_group_messages_mentions_guard() -> trigger | function | d
 routine public.account_message_request_guard() -> trigger | function | definer | volatile | exec:service_role | body:dc478bb36646
 routine public.account_messages_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:9aeca399cd10
 routine public.account_projection(p_user uuid, p_fields text[]) -> jsonb | function | definer | stable | exec:service_role | body:78eb18577763
+routine public.account_space_eligible(p_user uuid, p_ref text) -> boolean | function | definer | stable | exec: | body:1341e629d469
+routine public.account_visibility_lock(p_user uuid) -> void | function | definer | volatile | exec: | body:e19bb24a78c5
+routine public.account_visibility_saved_field(p_user uuid, p_field text) -> jsonb | function | definer | stable | exec: | body:a6b17bfc33d2
 routine public.accounting_source_snapshot_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:0aa9c7b8e902
 routine public.acknowledge_readiness_section(p_workspace_id uuid, p_section text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:a7969e26c0e0
 routine public.acknowledge_setup_step(p_workspace_id uuid, p_step text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:bb43f3a5566c
@@ -2625,6 +2628,7 @@ routine public.set_tax_exemption_certificate(p_workspace_id uuid, p_member_id uu
 routine public.set_tax_reference(p_domain text, p_country text, p_key text, p_value jsonb, p_source text, p_confirmed boolean, p_valid_from date) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6fbadd0c7203
 routine public.set_vat_rates(p_workspace_id uuid, p_rates jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:b1aa551ade20
 routine public.set_visibility(p_field text, p_audience text, p_workspaces uuid[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:46ce2c8861bb
+routine public.set_visibility_if_unchanged_network_v1(p_field text, p_audience text, p_workspace_refs text[], p_expected jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:472c31a146b4
 routine public.set_workspace_branding(p_workspace_id uuid, p_branding jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ebab45e4070
 routine public.set_workspace_code(p_workspace_id uuid, p_code text) -> text | function | definer | volatile | exec:authenticated,service_role | body:f840df34b4ba
 routine public.set_workspace_environment(p_workspace_id uuid, p_environment text) -> void | function | definer | volatile | exec:authenticated,service_role | body:91e4a2526e19
@@ -2799,7 +2803,8 @@ routine public.workspaces_network_id_immutable() -> trigger | function | invoker
 routine public.workspaces_network_id_stamp() -> trigger | function | definer | volatile | exec:service_role | body:7859aca20bbd
 routine public.workspaces_permitting(p_perms text[]) -> SETOF uuid | function | definer | stable | exec:authenticated,service_role | body:ec6bb1c27b83
 routine public.workspaces_sample_data_stays_test() -> trigger | function | definer | volatile | exec:service_role | body:d260749b5b84
-routine public.write_account_audience(p_user uuid, p_field text, p_audience text, p_workspaces uuid[]) -> void | function | definer | volatile | exec:service_role | body:1e02b8454571
+routine public.write_account_audience(p_user uuid, p_field text, p_audience text, p_workspaces uuid[]) -> void | function | definer | volatile | exec: | body:8617ec0cd447
+routine public.write_account_audience_refs(p_user uuid, p_field text, p_audience text, p_refs text[]) -> void | function | definer | volatile | exec: | body:046c060791eb
 trigger accessories.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.accessories FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger account_about.public_person_card_on_about CREATE TRIGGER public_person_card_on_about AFTER INSERT OR DELETE OR UPDATE ON public.account_about FOR EACH ROW EXECUTE FUNCTION public_person_card_sync()
 trigger account_about.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.account_about FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

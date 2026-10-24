@@ -15,8 +15,10 @@ import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
 import '../domain/audience_space.dart';
 import '../domain/visibility.dart';
+import '../domain/visibility_write.dart';
 import '../providers/audience_spaces_provider.dart';
 import '../providers/me_providers.dart';
+import '../providers/visibility_epoch_provider.dart';
 import 'about_dialog.dart';
 import 'public_profile_tile.dart';
 import 'visibility_flow.dart';
@@ -45,6 +47,29 @@ class VisibilityCard extends ConsumerWidget {
     if (ok) ref.invalidate(myVisibilityProvider);
   }
 
+  /// #2558 C2 — the checked write: [read] holds the value the person last
+  /// read (or reviewed after a conflict) for [field]. A reply of an older
+  /// account or home is ignored; a conflict rereads the card and goes on to
+  /// the review.
+  Future<void> _save(BuildContext context, WidgetRef ref,
+      VisibilityField field, MyVisibility read, FieldAudience picked) async {
+    try {
+      final saved = await ref.read(meActionsProvider).choose(
+            field,
+            picked,
+            saved: read,
+            epoch: () =>
+                context.mounted ? ref.read(visibilityEpochProvider) : '',
+          );
+      if (saved != null && context.mounted) {
+        ref.invalidate(myVisibilityProvider);
+      }
+    } on VisibilityConflict {
+      if (context.mounted) ref.invalidate(myVisibilityProvider);
+      rethrow;
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -64,40 +89,27 @@ class VisibilityCard extends ConsumerWidget {
     Widget row(MyVisibility visibility, VisibilityField field,
         {String? question}) {
       final choice = visibility.of(field);
-      // A chosen space on another installation: today's writer would drop
-      // it, so the field is shown and explained, not offered for change.
-      final elsewhere = visibility.namesSpaceElsewhere(field);
       return ListTile(
         key: ValueKey('visibility-field-${field.wire}'),
         leading: Icon(visibilityFieldIcon(field)),
         title: Text(question ?? visibilityFieldLabel(l10n, field)),
-        subtitle: Text(elsewhere
-            ? '${audienceSummary(l10n, choice)}\n'
-                '${l10n.visibilityFieldElsewhere}'
-            : audienceSummary(l10n, choice)),
-        trailing: Icon(elsewhere ? Icons.lock_outline : Icons.chevron_right),
-        onTap: elsewhere
-            ? null
-            : () => chooseAudience(
-                  context,
-                  field: field,
-                  current: choice,
-                  pick: () => showAppSheet<FieldAudience>(
-                    context: context,
-                    isScrollControlled: true,
-                    constraints: BoxConstraints(
-                        maxHeight: MediaQuery.sizeOf(context).height * 0.85),
-                    builder: (_) =>
-                        _AudienceSheet(field: field, current: choice),
-                  ),
-                  save: (picked) async {
-                    await ref
-                        .read(meActionsProvider)
-                        .choose(field, picked, saved: visibility);
-                    if (context.mounted) ref.invalidate(myVisibilityProvider);
-                  },
-                  spaceName: spaceName,
-                ),
+        subtitle: Text(audienceSummary(l10n, choice)),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => chooseAudience(
+          context,
+          field: field,
+          current: choice,
+          pick: (start) => showAppSheet<FieldAudience>(
+            context: context,
+            isScrollControlled: true,
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(context).height * 0.85),
+            builder: (_) => _AudienceSheet(field: field, current: start),
+          ),
+          save: (picked, expected) =>
+              _save(context, ref, field, visibility.withField(field, expected), picked),
+          spaceName: spaceName,
+        ),
       );
     }
 
@@ -201,7 +213,7 @@ class _AudienceSheetState extends ConsumerState<_AudienceSheet> {
 
   /// One space: its name, and when it needs it where it lives (a name
   /// another space shares) and whether the home can verify it. A space on
-  /// another installation is shown and cannot be chosen here yet.
+  /// another installation is chosen while its membership fact is in force.
   Widget _space(String id, AudienceSpace? space, {bool ambiguous = false}) {
     final l10n = context.l10n;
     final chosen = _chosen.contains(id);
@@ -210,10 +222,9 @@ class _AudienceSheetState extends ConsumerState<_AudienceSheet> {
       if (space != null && ambiguous)
         l10n.visibilitySpaceAmbiguous(audienceSpaceSource(l10n, space)),
     ];
-    // A saved space can always be unticked; only a selectable one added.
-    final enabled = space == null
-        ? chosen
-        : space.selectable || (chosen && space.verified);
+    // A saved space can always be unticked (narrowing needs no
+    // verification); only a selectable one added.
+    final enabled = space == null ? chosen : space.selectable || chosen;
     return CheckboxListTile(
       key: ValueKey('visibility-space-$id'),
       value: chosen,

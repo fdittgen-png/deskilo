@@ -8,35 +8,123 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../domain/visibility.dart';
+import '../domain/visibility_write.dart';
 import 'visibility_labels.dart';
 
-/// Gives [field] a new audience: [pick] one, stop when it is [current] or
-/// nothing was picked, ask first when it widens, then [save] it guarded —
+/// Gives [field] a new audience: [pick] one (starting from the given
+/// value), stop when it is the saved one or nothing was picked, ask first
+/// when it widens, then [save] it guarded with the value it was read as —
 /// [save] also rereads what its write changed. #2558 — with [spaceName],
 /// the widening question also lists the chosen spaces added and removed.
+///
+/// #2558 C2 — a [VisibilityConflict] from [save] keeps the draft: the
+/// person sees the value saved now beside their change and either keeps
+/// the saved one or reviews the change against it (picked again from the
+/// draft, asked again if it widens, sent with the new expected value).
 Future<void> chooseAudience(
   BuildContext context, {
   required VisibilityField field,
   required FieldAudience current,
-  required Future<FieldAudience?> Function() pick,
-  required Future<void> Function(FieldAudience) save,
+  required Future<FieldAudience?> Function(FieldAudience start) pick,
+  required Future<void> Function(FieldAudience choice, FieldAudience expected)
+      save,
   String Function(String id)? spaceName,
 }) async {
-  final choice = await pick();
-  if (choice == null || choice == current || !context.mounted) return;
-  // Widening asks first, naming who will see it (#2211).
-  if (choice.widens(current) &&
-      !await _askBeforeWidening(context, field, current, choice, spaceName)) {
-    return;
+  var expected = current;
+  var start = current;
+  while (true) {
+    final choice = await pick(start);
+    if (choice == null || choice == expected || !context.mounted) return;
+    // Widening asks first, naming who will see it (#2211).
+    if (choice.widens(expected) &&
+        !await _askBeforeWidening(
+            context, field, expected, choice, spaceName)) {
+      return;
+    }
+    if (!context.mounted) return;
+    VisibilityConflict? conflict;
+    await runGuarded(
+      context,
+      domain: 'me',
+      message: 'save visibility failed',
+      errorText: context.l10n.visibilitySaveFailed,
+      action: () async {
+        try {
+          await save(choice, expected);
+        } on VisibilityConflict catch (e, st) {
+          // trace-exempt: not a failure; the person reviews it below.
+          debugPrint('visibility conflict: $e\n$st');
+          conflict = e;
+        }
+      },
+    );
+    final found = conflict;
+    if (found == null || !context.mounted) return;
+    final saved = found.current;
+    if (!await _reviewConflict(context, found, choice) || saved == null) {
+      return;
+    }
+    expected = saved;
+    start = choice;
   }
-  if (!context.mounted) return;
-  await runGuarded(
-    context,
-    domain: 'me',
-    message: 'save visibility failed',
-    errorText: context.l10n.visibilitySaveFailed,
-    action: () => save(choice),
-  );
+}
+
+/// #2558 C2 — the field changed before this write, or its outcome is not
+/// known: what is saved now, beside the person's change. True reviews the
+/// change again; false keeps the saved value.
+Future<bool> _reviewConflict(
+  BuildContext context,
+  VisibilityConflict conflict,
+  FieldAudience choice,
+) async {
+  final l10n = context.l10n;
+  final saved = conflict.current;
+  return await showDialog<bool>(
+        context: context,
+        builder: (dialog) => AlertDialog(
+          key: const ValueKey('visibility-conflict'),
+          title: Text(conflict.unconfirmed
+              ? l10n.visibilityUnconfirmedTitle
+              : l10n.visibilityConflictTitle),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  saved == null
+                      ? l10n.visibilityConflictUnread
+                      : l10n.visibilityConflictSaved(
+                          audienceSummary(l10n, saved)),
+                  key: const ValueKey('visibility-conflict-saved'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: AppSpacing.sm),
+                  child: Text(
+                    l10n.visibilityConflictYours(
+                        audienceSummary(l10n, choice)),
+                    key: const ValueKey('visibility-conflict-yours'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              key: const ValueKey('visibility-conflict-keep'),
+              onPressed: () => Navigator.of(dialog).pop(false),
+              child: Text(l10n.visibilityConflictKeep),
+            ),
+            if (saved != null)
+              FilledButton(
+                key: const ValueKey('visibility-conflict-review'),
+                onPressed: () => Navigator.of(dialog).pop(true),
+                child: Text(l10n.visibilityConflictReview),
+              ),
+          ],
+        ),
+      ) ??
+      false;
 }
 
 /// #2211 — widening a field asks first, naming who will see it.

@@ -25545,6 +25545,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityChosenSpaces => 'Mitglieder ausgewählter Spaces';
 
   @override
+  String get visibilityConflictKeep => 'Gespeicherte Einstellung behalten';
+
+  @override
+  String get visibilityConflictReview => 'Meine Änderung prüfen';
+
+  @override
+  String visibilityConflictSaved(String audience) {
+    return 'Jetzt gespeichert: $audience';
+  }
+
+  @override
+  String get visibilityConflictTitle =>
+      'Diese Einstellung wurde inzwischen geändert';
+
+  @override
+  String get visibilityConflictUnread =>
+      'Die gespeicherte Einstellung kann gerade nicht gelesen werden. Ihre Änderung wurde nicht gespeichert.';
+
+  @override
+  String visibilityConflictYours(String audience) {
+    return 'Ihre Änderung: $audience';
+  }
+
+  @override
   String get visibilityContact => 'WhatsApp und E-Mail';
 
   @override
@@ -25553,10 +25577,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get visibilityElsewhereTitle => 'Auf meinen anderen Servern';
-
-  @override
-  String get visibilityFieldElsewhere =>
-      'Diese Einstellung nennt einen Space auf einem anderen Server und lässt sich hier noch nicht ändern.';
 
   @override
   String visibilityHomeHeader(String name) {
@@ -25667,6 +25687,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get visibilityUnavailable =>
       'Wer was von Ihnen sieht, lässt sich gerade nicht lesen. Es wurde nichts geändert.';
+
+  @override
+  String get visibilityUnconfirmedTitle =>
+      'Ihre Änderung konnte nicht bestätigt werden';
 
   @override
   String get visibilityWidenAction => 'Erweitern';
