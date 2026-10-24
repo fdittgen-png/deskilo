@@ -807,4 +807,4 @@ end
 $cron$;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(568);
