@@ -14,6 +14,7 @@
 // rebuilt when it flips, which is the one way a route table changes.
 import 'package:go_router/go_router.dart';
 
+import '../../features/directory/domain/conversation_link.dart';
 import '../../features/directory/presentation/account_messenger_screen.dart';
 import '../../features/directory/presentation/connections_screen.dart';
 import '../../features/directory/presentation/directory_screen.dart';
@@ -152,7 +153,11 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
           routes: [
             GoRoute(
               path: MeTab.messages.path,
-              builder: (context, state) => const MeMessagesTab(),
+              // #2556 — `?conversation=` selects one once its source says
+              // it is this person's (ConversationLink).
+              builder: (context, state) => MeMessagesTab(
+                link: state.uri.queryParameters[ConversationLink.parameter],
+              ),
               routes: [
                 // `/me/messages/thread`, `/inquiries`, `/starred` and
                 // `/new-group` are pages the router registers before this

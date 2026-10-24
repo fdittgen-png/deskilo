@@ -2443,6 +2443,8 @@
   "@conversationLeft": {
     "description": "#687 - messaging centre"
   },
+  "conversationLinkRefused": "Diese Unterhaltung ist für Sie nicht verfügbar. Es wurde nichts geöffnet.",
+  "conversationLinkUnreachable": "Diese Unterhaltung konnte nicht geprüft werden, weil ihr Server nicht geantwortet hat. Es wurde nichts geöffnet.",
   "conversationLoadEarlier": "Frühere Nachrichten laden",
   "conversationMarkUnread": "Als ungelesen markieren",
   "conversationMemberCount": "{count, plural, =1{1 Mitglied} other{{count} Mitglieder}}",
@@ -2465,6 +2467,9 @@
   "@conversationSeeProfile": {
     "description": "#695 - profile from a conversation"
   },
+  "conversationSendInFlight": "Ihre vorherige Nachricht wird noch gesendet.",
+  "conversationSendReview": "Erneut lesen",
+  "conversationSendUnconfirmed": "Zustellung nicht bestätigt: Die Nachricht ist vielleicht angekommen, vielleicht nicht. Lesen Sie die Unterhaltung erneut, bevor Sie sie noch einmal senden.",
   "conversationToday": "Heute",
   "conversationUnarchive": "Aus dem Archiv holen",
   "conversationUnknownMember": "Mitglied",
@@ -6024,8 +6029,10 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
+  "inboxMoreActions": "Weitere Aktionen",
   "inboxNoArchived": "Keine archivierten Unterhaltungen.",
   "inboxNoUnread": "Nichts Ungelesenes — Sie sind auf dem Laufenden.",
+  "inboxRequestsCount": "Anfragen: {count}",
   "inboxRetry": "Erneut versuchen",
   "inboxShowOlder": "Ältere Unterhaltungen anzeigen",
   "inboxSourceFailed": "{source} konnte nicht gelesen werden. Der Rest des Posteingangs wird angezeigt.",

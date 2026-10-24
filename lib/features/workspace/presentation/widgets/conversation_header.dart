@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -15,6 +14,7 @@ class ConversationHeader extends StatelessWidget {
     required this.conversation,
     required this.asPage,
     required this.onOpen,
+    this.onBack,
   });
 
   final String title;
@@ -23,6 +23,9 @@ class ConversationHeader extends StatelessWidget {
 
   /// Null when the conversation is unknown or the other member is gone.
   final VoidCallback? onOpen;
+
+  /// A page's Back; none (the Me messenger's pane beside its list) hides it.
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +46,12 @@ class ConversationHeader extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if (asPage)
+          if (asPage && onBack != null)
             IconButton(
               key: const ValueKey('conversation-back'),
               tooltip: MaterialLocalizations.of(context).backButtonTooltip,
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => context.pop(),
+              onPressed: onBack,
             ),
           Expanded(
             // The HEADER is the way into the roster — WhatsApp's idiom, and

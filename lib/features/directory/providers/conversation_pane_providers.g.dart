@@ -134,7 +134,7 @@ final class ConversationDraftsProvider
 }
 
 String _$conversationDraftsHash() =>
-    r'd609587c1704d3813347f933e91eacea623157b7';
+    r'985f35df30d70fb53febf0c98ff9073dd2253831';
 
 /// Unsent text per conversation, for this session only: kept while the
 /// person moves between conversations, tabs and layouts, never written to
@@ -155,6 +155,89 @@ abstract class _$ConversationDrafts extends $Notifier<Map<String, String>> {
             as $ClassProviderElement<
               AnyNotifier<Map<String, String>, Map<String, String>>,
               Map<String, String>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
+/// The sends still waiting on an answer, per conversation (the draft key),
+/// for this session: a thread opened again while its send is in flight
+/// shows neither the text nor a Send that could repeat it, and one whose
+/// send went unconfirmed says so until the person reads it again.
+///
+/// Every write names the account it was made under: a send that answers
+/// after the account changed marks nothing for the next person.
+
+@ProviderFor(ConversationSends)
+final conversationSendsProvider = ConversationSendsProvider._();
+
+/// The sends still waiting on an answer, per conversation (the draft key),
+/// for this session: a thread opened again while its send is in flight
+/// shows neither the text nor a Send that could repeat it, and one whose
+/// send went unconfirmed says so until the person reads it again.
+///
+/// Every write names the account it was made under: a send that answers
+/// after the account changed marks nothing for the next person.
+final class ConversationSendsProvider
+    extends $NotifierProvider<ConversationSends, Map<String, SendPhase>> {
+  /// The sends still waiting on an answer, per conversation (the draft key),
+  /// for this session: a thread opened again while its send is in flight
+  /// shows neither the text nor a Send that could repeat it, and one whose
+  /// send went unconfirmed says so until the person reads it again.
+  ///
+  /// Every write names the account it was made under: a send that answers
+  /// after the account changed marks nothing for the next person.
+  ConversationSendsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'conversationSendsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$conversationSendsHash();
+
+  @$internal
+  @override
+  ConversationSends create() => ConversationSends();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Map<String, SendPhase> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Map<String, SendPhase>>(value),
+    );
+  }
+}
+
+String _$conversationSendsHash() => r'cb31eee605de59f004d5c7360cbb054a411cbb22';
+
+/// The sends still waiting on an answer, per conversation (the draft key),
+/// for this session: a thread opened again while its send is in flight
+/// shows neither the text nor a Send that could repeat it, and one whose
+/// send went unconfirmed says so until the person reads it again.
+///
+/// Every write names the account it was made under: a send that answers
+/// after the account changed marks nothing for the next person.
+
+abstract class _$ConversationSends extends $Notifier<Map<String, SendPhase>> {
+  Map<String, SendPhase> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<Map<String, SendPhase>, Map<String, SendPhase>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<Map<String, SendPhase>, Map<String, SendPhase>>,
+              Map<String, SendPhase>,
               Object?,
               Object?
             >;

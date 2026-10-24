@@ -16,6 +16,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/presentation/widgets/member_note_composer.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/conversation_delivery.dart';
 import '../../domain/conversation_target.dart';
 import '../../domain/message_marks.dart';
 import '../../domain/messenger.dart';
@@ -89,6 +90,11 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   bool _switchedWorkspace = false;
   bool _autoChosen = false;
 
+  /// The composer's seed and its generation: a send that settles after the
+  /// thread opened gives the composer the draft as it is then.
+  late String _seed = _draft.restored;
+  int _seedGen = 0;
+
   bool get _isInquiry => widget.kind.isInquiry;
   bool get _isGroup => widget.kind == MessageContextKind.accountGroup;
 
@@ -97,7 +103,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
 
   late final _draft = ThreadDraft(
     ref.read(authStateProvider).value,
-    ref.read(conversationDraftsProvider.notifier),
+    ref,
     () => conversationDraftKey(source: widget.source, kind: widget.kind,
         contextId: _contextId, peer: widget.peer),
   );
@@ -155,8 +161,8 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
   Future<void> _chooseWorkspace(String id) async {
     _previousWorkspace ??= await ref.read(activeWorkspaceIdProvider.future);
     _switchedWorkspace = true;
+    // The composer watches the active workspace: it rebuilds on its own.
     await ref.read(activeWorkspaceIdProvider.notifier).select(id);
-    if (mounted) setState(() {});
   }
 
   ContextMessagesProvider get _provider =>
@@ -183,18 +189,16 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
 
   Future<void> _send() async {
     final text = _body.text.trim();
+    // One send at a time per conversation, also across a reopened thread;
+    // an unconfirmed one is read again first, never resent blindly.
     if (_busy || text.isEmpty) return;
-    final l10n = context.l10n;
+    if (ref.read(conversationSendsProvider)[_draft.key] != null) return;
     setState(() => _busy = true);
-    // Fixed before the send: a delivery clears the draft it was typed in,
-    // under the account that typed it, even after the thread closed.
-    final delivered = _draft.clearOnDelivery();
     String? landed;
-    final ok = await runMessenger(
+    final ok = await _draft.deliver(text, runMessenger(
       context,
       message: 'send message failed',
-      errorText:
-          l10n.applicationReplyFailed,
+      errorText: context.l10n.applicationReplyFailed,
       action: () async {
         landed = await ref
             .read(messengerActionsProvider(source: widget.source))
@@ -205,8 +209,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
               peer: widget.peer,
             );
       },
-    );
-    if (ok) delivered();
+    )) ?? false;
     if (!mounted) return;
     setState(() {
       _busy = false;
@@ -221,6 +224,42 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
         ..invalidate(_provider)
         ..invalidate(messengerInboxProvider);
     }
+  }
+
+  /// A send settled: the composer shows the draft as it is now — the text
+  /// back after a refusal, nothing after a late delivery.
+  void _settled() {
+    final draft = _draft.current;
+    if (!mounted || _busy || draft == _body.text) return;
+    setState(() {
+      _body.text = _seed = draft;
+      _seedGen++;
+    });
+  }
+
+  /// The note on a send that waits — none for the one this thread is
+  /// sending right now. A send that settles (here or in this thread opened
+  /// earlier) and a delivery that clears the draft late reach the composer.
+  Widget? _deliveryNote() {
+    final key = _draft.key;
+    ref
+      ..listen(conversationSendsProvider.select((s) => s[key]),
+          (before, now) => before != null && now == null ? _settled() : null)
+      ..listen(conversationDraftsProvider.select((d) => d[key]),
+          (_, _) => _settled());
+    final phase = ref.watch(conversationSendsProvider.select((s) => s[key]));
+    if (phase == null || (_busy && phase == SendPhase.inFlight)) return null;
+    return DeliveryNote(phase, onReview: _review);
+  }
+
+  /// Read again after an unconfirmed send: the person sees whether it
+  /// arrived and decides.
+  void _review() {
+    _draft.reviewed();
+    _earlier.clear(); // read again from the newest page, which rebuilds
+    ref
+      ..invalidate(_provider)
+      ..invalidate(messengerInboxProvider);
   }
 
   Future<void> _loadEarlier(ContextMessage oldest) async {
@@ -245,18 +284,9 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
 
   Future<void> _recordCapture() async {
     if (_contextId.isEmpty || _isGroup) return;
-    try {
-      await ref
-          .read(messengerActionsProvider(source: widget.source))
-          .recordScreenCapture(widget.kind, _contextId);
-      if (mounted) ref.invalidate(_provider);
-    } on Object catch (e, st) {
-      TraceLogger.instance.error(
-        'messages',
-        'record screen capture failed',
-        error: e,
-        stackTrace: st,
-      );
+    final actions = ref.read(messengerActionsProvider(source: widget.source));
+    if (await recordThreadCapture(actions, widget.kind, _contextId) && mounted) {
+      ref.invalidate(_provider);
     }
   }
 
@@ -289,8 +319,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       context,
       domain: 'messages',
       message: 'delete account message failed',
-      errorText:
-          l10n.portalActionFailed,
+      errorText: l10n.portalActionFailed,
       action: () => _isGroup
           ? ref
               .read(messengerActionsProvider(source: widget.source))
@@ -315,8 +344,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       context,
       domain: 'messages',
       message: 'close inquiry failed',
-      errorText:
-          l10n.portalActionFailed,
+      errorText: l10n.portalActionFailed,
       action: () => ref
           .read(messengerActionsProvider(source: widget.source))
           .closeInquiry(_contextId),
@@ -406,6 +434,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
         if (after > before && before > 0) unawaited(_markRead());
       });
     }
+    final note = _deliveryNote();
     return Scaffold(
       key: const ValueKey('context-thread'),
       appBar: AppBar(
@@ -460,6 +489,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
               },
             ),
             if (_draft.restored.isNotEmpty) const DraftSessionNote(),
+            ?note,
             _composer(l10n),
           ],
         ),
@@ -494,9 +524,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
               key: const ValueKey('context-load-earlier'),
               onPressed: _loadingEarlier ? null : () => _loadEarlier(rows.last),
               icon: const Icon(Icons.history, size: 18),
-              label: Text(
-                l10n.conversationLoadEarlier,
-              ),
+              label: Text(l10n.conversationLoadEarlier),
             ),
           );
         }
@@ -513,12 +541,22 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     );
   }
 
+  /// A group's other members, who can be mentioned.
+  List<({String id, String name})> _mentions() => [
+    if (_isGroup && _contextId.isNotEmpty)
+      for (final m in ref.watch(accountGroupMembersProvider(_contextId)).value ?? const <Never>[])
+        if (m.userId != ref.watch(myAccountIdProvider) && m.name.isNotEmpty)
+          (id: m.userId, name: m.name),
+  ];
+
   /// Local conversations carry references: the shared composer (text, the
   /// attach menu for reservations, spaces and documents, send) plus, for
   /// someone in several workspaces, the choice of which workspace the
   /// references speak about. A remote server's thread keeps the plain field.
   Widget _composer(AppLocalizations l10n) {
-    if (widget.source.isNotEmpty) return _plainComposer(l10n);
+    if (widget.source.isNotEmpty) {
+      return PlainComposer(controller: _body, busy: _busy, onSend: _send);
+    }
     final mine = ref.watch(myWorkspacesProvider).value ?? const [];
     final active = ref.watch(activeWorkspaceIdProvider).value;
     // References only point at a workspace both people belong to (0381).
@@ -570,61 +608,24 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
               active: active,
               onChoose: (id) => unawaited(_chooseWorkspace(id)),
             ),
-          MemberNoteComposer(
+          KeyedSubtree(key: ValueKey(_seedGen), child: MemberNoteComposer(
             key: const ValueKey('context-composer'),
             compact: true,
             autofocus: false,
             referencesAllowed: canRef,
-            // #2216 — a group's other members can be mentioned.
-            mentionCandidates: [
-              if (_isGroup && _contextId.isNotEmpty)
-                for (final m in ref.watch(accountGroupMembersProvider(_contextId)).value ?? const <Never>[])
-                  if (m.userId != ref.watch(myAccountIdProvider) && m.name.isNotEmpty)
-                    (id: m.userId, name: m.name),
-            ],
+            mentionCandidates: _mentions(),
             mentionTokens: ref.watch(messageMentionsOnProvider),
             referencesHint: l10n.threadNoRefs,
-            seedBody: _draft.restored,
-            onChanged: _draft.keep,
+            seedBody: _seed,
+            onChanged: (text) => _body.text = text,
             onSend: (body) async {
               _body.text = body;
               await _send();
               return _body.text.isEmpty;
             },
-          ),
+          )),
         ],
       ),
     );
   }
-
-  Widget _plainComposer(AppLocalizations l10n) => SafeArea(
-    top: false,
-    child: Padding(
-      padding: AppSpacing.mdAll,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Expanded(
-            child: TextField(
-              key: const ValueKey('context-composer'),
-              controller: _body,
-              enabled: !_busy,
-              maxLength: MessengerRules.maxBody,
-              minLines: 1,
-              maxLines: 4,
-              decoration: InputDecoration(
-                labelText: l10n.memberNoteHint,
-              ),
-            ),
-          ),
-          IconButton(
-            key: const ValueKey('context-send'),
-            tooltip: l10n.memberNoteSend,
-            onPressed: _busy ? null : _send,
-            icon: const Icon(Icons.send_outlined),
-          ),
-        ],
-      ),
-    ),
-  );
 }

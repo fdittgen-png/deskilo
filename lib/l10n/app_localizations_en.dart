@@ -3684,6 +3684,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get conversationLeft => 'Left';
 
   @override
+  String get conversationLinkRefused =>
+      'This conversation is not available to you. Nothing was opened.';
+
+  @override
+  String get conversationLinkUnreachable =>
+      'This conversation could not be checked because its server did not answer. Nothing was opened.';
+
+  @override
   String get conversationLoadEarlier => 'Load earlier messages';
 
   @override
@@ -3714,6 +3722,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get conversationSeeProfile => 'See profile';
+
+  @override
+  String get conversationSendInFlight =>
+      'Your previous message is still being sent.';
+
+  @override
+  String get conversationSendReview => 'Read again';
+
+  @override
+  String get conversationSendUnconfirmed =>
+      'Delivery not confirmed: the message may or may not have arrived. Read the conversation again before you send it again.';
 
   @override
   String get conversationToday => 'Today';
@@ -8716,10 +8735,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inboxMessengerDoor => 'Open my messenger';
 
   @override
+  String get inboxMoreActions => 'More actions';
+
+  @override
   String get inboxNoArchived => 'No archived conversations.';
 
   @override
   String get inboxNoUnread => 'Nothing unread — you are up to date.';
+
+  @override
+  String inboxRequestsCount(int count) {
+    return 'Requests: $count';
+  }
 
   @override
   String get inboxRetry => 'Try again';

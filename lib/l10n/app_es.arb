@@ -2443,6 +2443,8 @@
   "@conversationLeft": {
     "description": "#687 - messaging centre"
   },
+  "conversationLinkRefused": "Esta conversación no está disponible para usted. No se ha abierto nada.",
+  "conversationLinkUnreachable": "No se pudo comprobar esta conversación porque su servidor no respondió. No se ha abierto nada.",
   "conversationLoadEarlier": "Cargar mensajes anteriores",
   "conversationMarkUnread": "Marcar como no leído",
   "conversationMemberCount": "{count, plural, =1{1 miembro} other{{count} miembros}}",
@@ -2465,6 +2467,9 @@
   "@conversationSeeProfile": {
     "description": "#695 - profile from a conversation"
   },
+  "conversationSendInFlight": "Su mensaje anterior todavía se está enviando.",
+  "conversationSendReview": "Volver a leer",
+  "conversationSendUnconfirmed": "Entrega no confirmada: puede que el mensaje haya llegado o no. Vuelva a leer la conversación antes de enviarlo de nuevo.",
   "conversationToday": "Hoy",
   "conversationUnarchive": "Sacar del archivo",
   "conversationUnknownMember": "Miembro",
@@ -6024,8 +6029,10 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
+  "inboxMoreActions": "Más acciones",
   "inboxNoArchived": "Ninguna conversación archivada.",
   "inboxNoUnread": "Nada sin leer — está al día.",
+  "inboxRequestsCount": "Solicitudes: {count}",
   "inboxRetry": "Reintentar",
   "inboxShowOlder": "Mostrar conversaciones anteriores",
   "inboxSourceFailed": "No se pudo leer {source}. Se muestra el resto de la bandeja de entrada.",

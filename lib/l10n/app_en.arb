@@ -4367,6 +4367,14 @@
   "@conversationLeft": {
     "description": "#687 - messaging centre"
   },
+  "conversationLinkRefused": "This conversation is not available to you. Nothing was opened.",
+  "@conversationLinkRefused": {
+    "description": "#2556 deep link: A link to a conversation whose server answered and does not list it for this person; nothing opens."
+  },
+  "conversationLinkUnreachable": "This conversation could not be checked because its server did not answer. Nothing was opened.",
+  "@conversationLinkUnreachable": {
+    "description": "#2556 deep link: A link to a conversation whose server could not be asked; nothing opens."
+  },
   "conversationLoadEarlier": "Load earlier messages",
   "conversationMarkUnread": "Mark as unread",
   "conversationMemberCount": "{count, plural, =1{1 member} other{{count} members}}",
@@ -4388,6 +4396,18 @@
   "conversationSeeProfile": "See profile",
   "@conversationSeeProfile": {
     "description": "#695 - profile from a conversation"
+  },
+  "conversationSendInFlight": "Your previous message is still being sent.",
+  "@conversationSendInFlight": {
+    "description": "#2556 composer: Above the composer of a conversation opened again while the message sent from it earlier has not answered yet; its text is not shown again and Send waits."
+  },
+  "conversationSendReview": "Read again",
+  "@conversationSendReview": {
+    "description": "#2556 composer: Button beside the unconfirmed-delivery note: reads the conversation again and ends the unconfirmed state."
+  },
+  "conversationSendUnconfirmed": "Delivery not confirmed: the message may or may not have arrived. Read the conversation again before you send it again.",
+  "@conversationSendUnconfirmed": {
+    "description": "#2556 composer: Above the composer when a send got no answer in time. The message is never resent automatically; the person reads the conversation again and decides."
   },
   "conversationToday": "Today",
   "conversationUnarchive": "Restore from archive",
@@ -9946,8 +9966,21 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
+  "inboxMoreActions": "More actions",
+  "@inboxMoreActions": {
+    "description": "#2556 inbox header: Tooltip of the secondary menu holding New group and Starred."
+  },
   "inboxNoArchived": "No archived conversations.",
   "inboxNoUnread": "Nothing unread — you are up to date.",
+  "inboxRequestsCount": "Requests: {count}",
+  "@inboxRequestsCount": {
+    "description": "#2556 inbox header: The labelled count of message requests waiting; tapping it shows them.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "inboxRetry": "Try again",
   "inboxShowOlder": "Show older conversations",
   "@inboxShowOlder": {

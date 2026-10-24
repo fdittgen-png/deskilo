@@ -10,14 +10,18 @@ import '../providers/personal_shell_providers.dart';
 /// Me › Messages (#1823, #1824): the unified inbox — every conversation
 /// the person takes part in, on every server, labelled by its context.
 /// In the personal shell the inbox and the conversation it opens share
-/// the page, laid out for its width (AdaptiveMessenger).
+/// the page, laid out for its width (AdaptiveMessenger), and a [link] to
+/// one conversation selects it once its source authorizes it.
 class MeMessagesTab extends ConsumerWidget {
-  const MeMessagesTab({super.key});
+  const MeMessagesTab({super.key, this.link});
+
+  /// The route's `conversation` parameter (ConversationLink).
+  final String? link;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) =>
       ref.watch(personalShellEnabledProvider)
-          ? const AdaptiveMessenger()
+          ? AdaptiveMessenger(link: link)
           : const Column(
               children: [
                 MessageRequestsCard(),

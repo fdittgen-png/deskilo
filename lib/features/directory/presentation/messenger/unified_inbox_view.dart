@@ -3,26 +3,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/messaging_windows.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/member_note_refs.dart';
 import '../../domain/inbox_composition.dart';
 import '../../domain/inbox_sources.dart';
 import '../../domain/messenger.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/messenger_providers.dart';
-import '../directory_pages.dart';
-import 'context_labels.dart';
 import 'foreground_poll.dart';
+import 'inbox_header.dart';
 import 'open_inbox_entry.dart';
 
 /// #1824 — Me › Messages: every conversation I take part in, on every
@@ -31,7 +26,12 @@ import 'open_inbox_entry.dart';
 ///
 /// A body, not a screen: the Me shell owns the app bar around it.
 class UnifiedInboxView extends ConsumerStatefulWidget {
-  const UnifiedInboxView({super.key, this.onOpen, this.selected});
+  const UnifiedInboxView({
+    super.key,
+    this.onOpen,
+    this.selected,
+    this.requestsInHeader = false,
+  });
 
   /// Opens a row in the messenger's own pane; without it a row opens its
   /// thread as a page of its own.
@@ -40,13 +40,18 @@ class UnifiedInboxView extends ConsumerStatefulWidget {
   /// The [InboxEntry.key] of the conversation the pane shows.
   final String? selected;
 
+  /// The message requests are reached from the header's labelled count
+  /// rather than a card above the list.
+  final bool requestsInHeader;
+
   @override
   ConsumerState<UnifiedInboxView> createState() => _UnifiedInboxState();
 }
 
 class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
-  bool _unreadOnly = false;
-  bool _archived = false;
+  InboxView _view = InboxView.all;
+  bool get _unreadOnly => _view == InboxView.unread;
+  bool get _archived => _view == InboxView.archived;
   bool _searching = false;
   String _query = '';
 
@@ -94,81 +99,16 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
       child: Column(
         key: const ValueKey('unified-inbox'),
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.md,
-              AppSpacing.sm,
-              AppSpacing.md,
-              0,
-            ),
-            child: Wrap(
-              spacing: AppSpacing.xs,
-              runSpacing: AppSpacing.xs,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                FilterChip(
-                  key: const ValueKey('unified-inbox-all'),
-                  label: Text(l10n.inboxFilterAll),
-                  selected: !_unreadOnly,
-                  onSelected: (_) => setState(() {
-                    _unreadOnly = false;
-                    _archived = false;
-                  }),
-                ),
-                FilterChip(
-                  key: const ValueKey('unified-inbox-unread'),
-                  label: Text(
-                    unread > 0
-                        ? '${l10n.inboxFilterUnread} · $unread'
-                        : (l10n.inboxFilterUnread),
-                  ),
-                  selected: _unreadOnly,
-                  onSelected: (_) => setState(() {
-                    _unreadOnly = true;
-                    _archived = false;
-                  }),
-                ),
-                FilterChip(
-                  key: const ValueKey('unified-inbox-archived'),
-                  label: Text(l10n.inboxFilterArchived),
-                  selected: _archived,
-                  onSelected: (_) => setState(() {
-                    _archived = true;
-                    _unreadOnly = false;
-                  }),
-                ),
-                TextButton.icon(
-                  key: const ValueKey('unified-inbox-starred'),
-                  icon: const Icon(Icons.star_outline, size: 18),
-                  label: Text(l10n.messengerStarred),
-                  onPressed: () =>
-                      starredMessagesPage.open<void>(context, null),
-                ),
-                IconButton(
-                  key: const ValueKey('unified-inbox-search'),
-                  tooltip: l10n.messageSearchTitle,
-                  icon: Icon(_searching ? Icons.search_off : Icons.search),
-                  onPressed: () => setState(() {
-                    _searching = !_searching;
-                    if (!_searching) _query = '';
-                  }),
-                ),
-                TextButton.icon(
-                  key: const ValueKey('unified-inbox-new-group'),
-                  onPressed: () => createGroupPage.open<void>(context, null),
-                  icon: const Icon(Icons.group_add_outlined, size: 18),
-                  label: Text(l10n.groupNew),
-                ),
-                FilledButton.tonalIcon(
-                  key: const ValueKey('unified-inbox-people'),
-                  onPressed: () => context.push('/account-messages'),
-                  icon: const Icon(Icons.edit_outlined),
-                  label: Text(
-                    l10n.newConversationTitle,
-                  ),
-                ),
-              ],
-            ),
+          InboxHeader(
+            view: _view,
+            unread: unread,
+            searching: _searching,
+            requests: widget.requestsInHeader,
+            onView: (view) => setState(() => _view = view),
+            onSearch: () => setState(() {
+              _searching = !_searching;
+              if (!_searching) _query = '';
+            }),
           ),
           if (_searching)
             Padding(
@@ -222,7 +162,6 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     Map<String, String> servers,
     AppLocalizations l10n,
   ) {
-    final format = ref.watch(appFormatProvider);
     final marks = ref.watch(inboxMarksProvider);
     // A workspace conversation's pin / archive are the server's (0386); every
     // other kind keeps this device's marks.
@@ -248,96 +187,57 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
         final pb = pinnedOf(b) ? 0 : 1;
         return pa.compareTo(pb);
       });
+    final before = _sourceStates(inbox, l10n);
+    final after = _showOlder(inbox, l10n);
+    final empty = shown.isEmpty ? 1 : 0;
+    // Built as they scroll in: one row per conversation, nothing fetched
+    // for a row that is not on screen.
     return RefreshIndicator(
       onRefresh: () async => ref.invalidate(messengerInboxProvider),
       child: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 760),
-          child: ListView(
-        key: const ValueKey('unified-inbox-list'),
-        padding: AppSpacing.gutterAll,
-        children: [
-          ..._sourceStates(inbox, l10n),
-          if (shown.isEmpty)
-            Padding(
-              padding: AppSpacing.lgAll,
-              child: Text(
-                _unreadOnly
-                    ? (l10n.inboxNoUnread)
-                    : _archived
-                        ? (l10n.inboxNoArchived)
-                        : (l10n.messagesEmpty),
-                key: const ValueKey('unified-inbox-empty'),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          if (shown.isNotEmpty)
-            Card(
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                children: [
-          for (final (i, entry) in shown.indexed) ...[
-            if (i > 0) const Divider(height: 1),
-            ListTile(
-              key: ValueKey('inbox-entry-${entry.contextId}'),
-              selected: entry.key == widget.selected,
-              leading: CircleAvatar(
-                backgroundColor:
-                    Theme.of(context).colorScheme.surfaceContainerHighest,
-                foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
-                child: Icon(contextIcon(entry.kind)),
-              ),
-              title: Text(
-                entry.title,
-                overflow: TextOverflow.ellipsis,
-                style: entry.unread > 0
-                    ? Theme.of(context).textTheme.bodyLarge?.emphasised
-                    : null,
-              ),
-              subtitle: Text(
-                '${contextSubtitle(l10n, entry, servers)}\n${notePreview(entry.lastBody, max: 120, referenceFallback: l10n.uxLinkedReference)}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              isThreeLine: true,
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  if (entry.flags?.muted ?? false)
-                    Icon(
-                      Icons.notifications_off_outlined,
-                      key: ValueKey('inbox-muted-${entry.contextId}'),
-                      size: 14,
-                    ),
-                  if (pinnedOf(entry))
-                    Icon(
-                      Icons.push_pin_outlined,
-                      key: ValueKey('inbox-pinned-${entry.contextId}'),
-                      size: 14,
-                    ),
-                  Text(
-                    format.date(entry.lastAt),
-                    style: Theme.of(context).textTheme.labelSmall,
+          child: ListView.builder(
+            key: const ValueKey('unified-inbox-list'),
+            padding: AppSpacing.gutterAll,
+            itemCount: before.length + empty + shown.length + after.length,
+            itemBuilder: (context, index) {
+              if (index < before.length) return before[index];
+              index -= before.length;
+              if (index < empty) {
+                return Padding(
+                  padding: AppSpacing.lgAll,
+                  child: Text(
+                    _unreadOnly
+                        ? l10n.inboxNoUnread
+                        : _archived
+                        ? l10n.inboxNoArchived
+                        : l10n.messagesEmpty,
+                    key: const ValueKey('unified-inbox-empty'),
+                    textAlign: TextAlign.center,
                   ),
-                  if (entry.unread > 0)
-                    Badge.count(
-                      key: ValueKey('inbox-unread-${entry.contextId}'),
-                      count: entry.unread,
-                    ),
+                );
+              }
+              index -= empty;
+              if (index >= shown.length) return after[index - shown.length];
+              final entry = shown[index];
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (index > 0) const Divider(height: 1),
+                  InboxListRow(
+                    entry: entry,
+                    servers: servers,
+                    pinned: pinnedOf(entry),
+                    selected: entry.key == widget.selected,
+                    onOpen: () => _open(context, entry),
+                    onMarks: () => _marksMenu(context, entry),
+                  ),
                 ],
-              ),
-              onTap: () => _open(context, entry),
-              onLongPress: () => _marksMenu(context, entry),
-            ),
-          ],
-                ],
-              ),
-            ),
-          ..._showOlder(inbox, l10n),
-        ],
-      ),
+              );
+            },
+          ),
         ),
       ),
     );
