@@ -113,7 +113,9 @@ void main() {
       ], next: cursor),
       continuation: _pageOf([_item('r-4', day2.add(const Duration(hours: 6)))]),
     );
-    await pumpApp(tester, const Scaffold(body: MyReservationsBody()), overrides: _overrides(repository));
+    // C3: each card carries its actions; the page is tall enough for all.
+    await pumpApp(tester, const Scaffold(body: MyReservationsBody()),
+        overrides: _overrides(repository), size: const Size(800, 1600));
     await tester.pumpAndSettle();
 
     final asked = repository.asked.single;
@@ -203,7 +205,7 @@ void main() {
       ]),
     );
     await pumpApp(tester, const Scaffold(body: MyReservationsBody()),
-        overrides: _overrides(repository), size: const Size(360, 640));
+        overrides: _overrides(repository), size: const Size(360, 1400));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
     final cards = find.byType(Card);

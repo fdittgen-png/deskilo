@@ -273,6 +273,10 @@ enum MyReservationsFailure {
   /// verified client here: not connected on this device, quarantined, or
   /// it identified itself as another installation.
   hostUnavailable,
+
+  /// #2553 C3 -- the host no longer lists the booking for me where it was:
+  /// moved, deleted, or not mine any more.
+  gone,
 }
 
 /// A typed refusal of the read, carrying the server's detail when one came.
@@ -368,6 +372,35 @@ abstract class MyReservationsRepository {
   );
 }
 
+/// #2553 C3 -- what a row does, each through the host the row was read
+/// from ([source]): its own verified client, never the selected
+/// workspace's. A refusal is typed ([MyReservationsRefused]) or the host's
+/// own error, unchanged; nothing is retried with a fresh id.
+abstract class MyReservationActions {
+  /// The booking as its host holds it now; [MyReservationsFailure.gone]
+  /// when the host no longer lists it for me where it was.
+  Future<MyReservationItem> view(
+    MyReservationsSource source,
+    MyReservationItem item,
+  );
+
+  /// Cancels the booking on its host.
+  Future<void> cancel(MyReservationsSource source, MyReservationItem item);
+
+  /// Checks in to the booking on its host.
+  Future<void> checkIn(MyReservationsSource source, MyReservationItem item);
+}
+
+/// #2553 C3 -- the narrow question that finds [item] again on its host:
+/// its own workspace, from its start for one second. Every booking that
+/// overlaps that second is a candidate, so the page is small.
+MyReservationsQuery myReservationLookup(MyReservationItem item) =>
+    MyReservationsQuery(
+      from: item.startsAt,
+      to: item.startsAt.add(const Duration(seconds: 1)),
+      workspaceId: item.workspaceId,
+    );
+
 /// The window a person may ask for: [from] inclusive to [to] exclusive,
 /// never longer than [maxDays] (the host's ceiling), with the default span
 /// of [defaultDays].
@@ -389,6 +422,21 @@ class MyReservationsWindow {
     return MyReservationsWindow(
       from: start,
       to: DateTime(start.year, start.month, start.day + defaultDays),
+      maxDays: maxDays,
+    );
+  }
+
+  /// #2553 C3 -- the default window of the past: the [defaultDays] local
+  /// days that end with today, read newest first.
+  factory MyReservationsWindow.untilToday(
+    DateTime now, {
+    required int defaultDays,
+    required int maxDays,
+  }) {
+    final to = DateTime(now.year, now.month, now.day + 1);
+    return MyReservationsWindow(
+      from: DateTime(to.year, to.month, to.day - defaultDays),
+      to: to,
       maxDays: maxDays,
     );
   }

@@ -2353,7 +2353,7 @@ routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | functi
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.personal_account_recognised() -> boolean | function | definer | stable | exec:authenticated,service_role | body:6e6491901997
-routine public.personal_directory_relationships(p_user uuid) -> TABLE(network_id text, permitted_name text, fresh boolean) | function | definer | stable | exec: | body:8a3a592c60e9
+routine public.personal_directory_relationships(p_user uuid) -> TABLE(network_id text, permitted_name text, fresh boolean) | function | definer | stable | exec: | body:471dbd6482ea
 routine public.personal_home_descriptor() -> jsonb | function | definer | stable | exec:service_role | body:1ea555640fdb
 routine public.personal_native_session() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:54c14f4d4611
 routine public.personal_workspace_ref_stamp() -> trigger | function | definer | volatile | exec:service_role | body:49355860cffd

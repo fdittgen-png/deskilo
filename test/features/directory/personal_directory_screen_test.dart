@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #2472 (P): the new discussion reads its directory at the personal home.
-// Before any search it lists my workspaces (a remote one by a neutral
-// label), the people of each with Show more, a hidden name as "Person",
-// and my groups; a lapsed source says so instead of reading as nobody; a
-// refusal offers a retry that recovers; only a home without the reader
-// keeps the per-server directory. Who is listed is pgTAP 274's.
+// Before any search it lists my workspaces (a remote one by the name my
+// own fact asserted, else a neutral label), the people of each with Show
+// more, a hidden name as "Person", and my groups; a lapsed source says so
+// instead of reading as nobody; a refusal offers a retry that recovers;
+// only a home without the reader keeps the per-server directory. Who is
+// listed is pgTAP 274's, how a remote one is named 279's.
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/personal_message_directory.dart';
@@ -25,6 +26,7 @@ class _Home implements PersonalMessageDirectoryRepository {
   DirectoryRefused? refusal;
   RelationshipStatus status = RelationshipStatus.ready;
   RelationshipStatus remoteStatus = RelationshipStatus.ready;
+  String? remoteName;
   final calls = <String>[];
 
   void _check() {
@@ -36,9 +38,9 @@ class _Home implements PersonalMessageDirectoryRepository {
   Future<DirectoryPage<DirectoryWorkspace>> workspaces({String? after}) async {
     _check();
     return DirectoryPage(
-      items: const [
-        DirectoryWorkspace(networkId: _local, name: 'Atelier'),
-        DirectoryWorkspace(networkId: _remote),
+      items: [
+        const DirectoryWorkspace(networkId: _local, name: 'Atelier'),
+        DirectoryWorkspace(networkId: _remote, name: remoteName),
       ],
       status: status,
     );
@@ -128,6 +130,14 @@ void main() {
     expect(find.byKey(const ValueKey('reachable-partial')), findsNothing);
     // The per-server directory is not asked.
     expect(find.byKey(const ValueKey('reachable-')), findsNothing);
+  });
+
+  testWidgets('a remote workspace my own fact names shows that name, not '
+      'the neutral label', (tester) async {
+    await _show(tester, _Home()..remoteName = 'Studio Sud');
+    expect(find.text('Studio Sud (1)'), findsOneWidget);
+    expect(find.text('A workspace on another server (1)'), findsNothing);
+    expect(find.text('Atelier (2)'), findsOneWidget);
   });
 
   testWidgets('Show more appends the next page of one workspace', (tester) async {

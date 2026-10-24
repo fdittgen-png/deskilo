@@ -39,5 +39,20 @@
   "myReservationsTimedOut": "Este servidor no ha respondido a tiempo.",
   "myReservationsSourceUnnamed": "Un servidor de espacio",
   "myReservationsSourceReading": "Leyendo {source}…",
-  "myReservationsSourceProblem": "{source}: {problem}"
+  "myReservationsSourceProblem": "{source}: {problem}",
+  "myReservationsTabUpcoming": "Próximas",
+  "myReservationsTabPast": "Pasadas",
+  "myReservationsTabCancelled": "Canceladas",
+  "myReservationsSourceAll": "Todos los servidores",
+  "myReservationsView": "Ver",
+  "myReservationsCheckIn": "Registrarse",
+  "myReservationsCancel": "Cancelar la reserva",
+  "myReservationsKeep": "Conservarla",
+  "myReservationsCancelTitle": "¿Desea cancelar esta reserva?",
+  "myReservationsCancelBody": "El servidor de su espacio la cancela. El puesto vuelve a quedar libre para los demás.",
+  "myReservationsCancelDone": "Reserva cancelada.",
+  "myReservationsCheckInDone": "Llegada registrada.",
+  "myReservationsActionFailed": "No se ha podido hacer. Vuelva a intentarlo en un momento.",
+  "myReservationsGone": "Esta reserva ya no figura a su nombre a esa hora.",
+  "myReservationsTimesIn": "Horas de {zone}"
 }
