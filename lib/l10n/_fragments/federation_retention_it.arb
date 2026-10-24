@@ -1,0 +1,5 @@
+{
+  "@@locale": "it",
+  "settingLabelFederationRetentionHours": "Conservazione degli scambi tra server",
+  "settingHintFederationRetentionHours": "Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d'orologio."
+}

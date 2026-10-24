@@ -21490,6 +21490,78 @@ abstract class AppLocalizations {
   /// **'Reservations'**
   String get meDataViewReservations;
 
+  /// #2557 C3 the workspace has the export switched off.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace does not offer the data export.'**
+  String get meDataWorkspaceDisabled;
+
+  /// #2557 C3 export one workspace's own records.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get meDataWorkspaceExport;
+
+  /// #2557 C3 the workspace did not answer.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace did not answer. Nothing was exported.'**
+  String get meDataWorkspaceFailed;
+
+  /// #2557 C3 the workspace refused.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace refused: you are not an active member there. Nothing was exported.'**
+  String get meDataWorkspaceForbidden;
+
+  /// #2557 C3 the workspace's server is not reachable.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace\'s server is not reachable from here. Nothing was exported.'**
+  String get meDataWorkspaceHostUnavailable;
+
+  /// #2557 C3 the workspace's answer cannot be read.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace answered in a form this app cannot read. Nothing was exported.'**
+  String get meDataWorkspaceMalformed;
+
+  /// #2557 C3 the account changed while the export was read.
+  ///
+  /// In en, this message translates to:
+  /// **'The signed-in account changed while the export was read. Nothing was offered.'**
+  String get meDataWorkspaceSuperseded;
+
+  /// #2557 C3 a workspace whose name may not be read.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace {id}'**
+  String meDataWorkspaceUnnamed(String id);
+
+  /// #2557 C3 no workspace to export from.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account names no workspace yet.'**
+  String get meDataWorkspacesEmpty;
+
+  /// #2557 C3 the workspace list could not be read.
+  ///
+  /// In en, this message translates to:
+  /// **'The workspaces your account names could not be read. Nothing was exported.'**
+  String get meDataWorkspacesFailed;
+
+  /// #2557 C3 what each workspace's export covers.
+  ///
+  /// In en, this message translates to:
+  /// **'Each workspace exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per workspace. Your personal account\'s part is the card above.'**
+  String get meDataWorkspacesScope;
+
+  /// #2557 C3 the per-workspace export card title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your records in each workspace'**
+  String get meDataWorkspacesTitle;
+
   /// No description provided for @meFinanceGlanceOwed.
   ///
   /// In en, this message translates to:
@@ -23398,17 +23470,71 @@ abstract class AppLocalizations {
   /// **'My badge'**
   String get myBadgeTitle;
 
+  /// #2557 C3 Me › Finances: the export menu's tooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Export my documents'**
+  String get myFinancesExport;
+
+  /// #2557 C3 Me › Finances: one workspace's documents as a CSV file.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspace} — documents (CSV)'**
+  String myFinancesExportWorkspace(String workspace);
+
   /// invoicing hub vs my finances
   ///
   /// In en, this message translates to:
   /// **'My invoices'**
   String get myInvoicesTitle;
 
+  /// #2553 C3 My reservations: an action on a booking failed for no reason the server named.
+  ///
+  /// In en, this message translates to:
+  /// **'This could not be done. Try again in a moment.'**
+  String get myReservationsActionFailed;
+
+  /// #2553 C3 My reservations: cancels the booking on its own server.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel reservation'**
+  String get myReservationsCancel;
+
+  /// #2553 C3 My reservations: what cancelling does: the server of the booking's own space is asked.
+  ///
+  /// In en, this message translates to:
+  /// **'The server of its space cancels it. The place is free again for others.'**
+  String get myReservationsCancelBody;
+
+  /// #2553 C3 My reservations: the booking was cancelled on its server.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation cancelled.'**
+  String get myReservationsCancelDone;
+
+  /// #2553 C3 My reservations: the question before a booking is cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this reservation?'**
+  String get myReservationsCancelTitle;
+
   /// #2553 My reservations: opens the period picker.
   ///
   /// In en, this message translates to:
   /// **'Change period'**
   String get myReservationsChangePeriod;
+
+  /// #2553 C3 My reservations: checks in to the booking on its own server.
+  ///
+  /// In en, this message translates to:
+  /// **'Check in'**
+  String get myReservationsCheckIn;
+
+  /// #2553 C3 My reservations: the check-in was recorded on the booking's server.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked in.'**
+  String get myReservationsCheckInDone;
 
   /// #2553 My reservations: the check-in mark of a booking.
   ///
@@ -23440,6 +23566,12 @@ abstract class AppLocalizations {
   /// **'This server refused to list your reservations.'**
   String get myReservationsForbidden;
 
+  /// #2553 C3 My reservations: the booking's server no longer lists it for the person where it was.
+  ///
+  /// In en, this message translates to:
+  /// **'This reservation is no longer listed for you at that time.'**
+  String get myReservationsGone;
+
   /// #2553 C2 My reservations: one workspace host cannot be reached with its own verified connection on this device.
   ///
   /// In en, this message translates to:
@@ -23451,6 +23583,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This server refused the period asked for.'**
   String get myReservationsInvalid;
+
+  /// #2553 C3 My reservations: closes the cancel question and keeps the booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it'**
+  String get myReservationsKeep;
 
   /// #2553 My reservations: the kind of place booked.
   ///
@@ -23512,6 +23650,12 @@ abstract class AppLocalizations {
   /// **'At most {days} days at a time.'**
   String myReservationsPeriodLimit(int days);
 
+  /// #2553 C3 My reservations: the source filter that shows every workspace server.
+  ///
+  /// In en, this message translates to:
+  /// **'All servers'**
+  String get myReservationsSourceAll;
+
   /// #2553 C2 My reservations: one host's read failed; source is the names of its spaces, problem the sentence saying why.
   ///
   /// In en, this message translates to:
@@ -23560,11 +23704,35 @@ abstract class AppLocalizations {
   /// **'Reserved'**
   String get myReservationsStatusReserved;
 
+  /// #2553 C3 My reservations: the tab of cancelled bookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get myReservationsTabCancelled;
+
+  /// #2553 C3 My reservations: the tab of ended, completed or released bookings, newest first.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get myReservationsTabPast;
+
+  /// #2553 C3 My reservations: the tab of bookings reserved or checked in that have not ended.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get myReservationsTabUpcoming;
+
   /// #2553 C2 My reservations: one workspace host did not answer within the personal read timeout.
   ///
   /// In en, this message translates to:
   /// **'This server did not answer in time.'**
   String get myReservationsTimedOut;
+
+  /// #2553 C3 My reservations: the times of a card are its workspace's wall clock, which differs from the device's; zone is the IANA zone name.
+  ///
+  /// In en, this message translates to:
+  /// **'Times in {zone}'**
+  String myReservationsTimesIn(String zone);
 
   /// #2553 My reservations: a booked place without a name.
   ///
@@ -23577,6 +23745,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This server does not list reservations for the personal space yet.'**
   String get myReservationsUnsupported;
+
+  /// #2553 C3 My reservations: reads one booking again from its own server and shows it.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get myReservationsView;
 
   /// #2554 Overview: link to the full My spaces list
   ///
@@ -33030,6 +33204,12 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #2563 C2 retention: settingHintFederationRetentionHours
+  ///
+  /// In en, this message translates to:
+  /// **'Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.'**
+  String get settingHintFederationRetentionHours;
+
   /// #2562 C2a enrolment: settingHintIdentityClockSkewSeconds
   ///
   /// In en, this message translates to:
@@ -33299,6 +33479,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
+
+  /// #2563 C2 retention: settingLabelFederationRetentionHours
+  ///
+  /// In en, this message translates to:
+  /// **'Backchannel retention'**
+  String get settingLabelFederationRetentionHours;
 
   /// #2562 C2a enrolment: settingLabelIdentityClockSkewSeconds
   ///

@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "settingLabelFederationRetentionHours": "Backchannel retention",
+  "@settingLabelFederationRetentionHours": {
+    "description": "#2563 C2 retention: settingLabelFederationRetentionHours"
+  },
+  "settingHintFederationRetentionHours": "Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.",
+  "@settingHintFederationRetentionHours": {
+    "description": "#2563 C2 retention: settingHintFederationRetentionHours"
+  }
+}

@@ -6,11 +6,17 @@
 // slots merge by start time, and an item is shown only up to the horizon:
 // the last row of every slot that still has more, so a later page of a
 // slower host can never land above what is already on screen. Pure Dart.
+//
+// C3: a composition walks one way (a past period newest first); the tabs
+// (Upcoming, Past, Cancelled) and the source filter select from it; a row
+// an action changed is replaced in place; a card's times are its
+// workspace's wall clock, with the zone named when it is not the device's.
 import 'package:meta/meta.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../core/i18n/time_zones.dart';
 import 'my_reservations.dart';
+import 'reservation.dart';
 
 /// Where one host's read stands.
 enum MyReservationsSlotState { reading, read, failed }
@@ -101,6 +107,23 @@ class MyReservationsSlot {
         zones: zones,
         failure: error,
       );
+
+  /// #2553 C3 -- the booking [id] as [item] now; removed when [item] is
+  /// null (its host no longer lists it for me).
+  MyReservationsSlot withItem(String id, MyReservationItem? item) =>
+      MyReservationsSlot._(
+        source: source,
+        state: state,
+        items: List.unmodifiable([
+          for (final i in items)
+            if (i.id != id) i else ?item,
+        ]),
+        next: next,
+        hasMore: hasMore,
+        zones: zones,
+        loadingMore: loadingMore,
+        failure: failure,
+      );
 }
 
 /// One booking in the composed list, with the host it came from and the
@@ -121,13 +144,30 @@ class MyReservationEntry {
   /// The calendar day the booking starts on in its workspace's own zone;
   /// on the device's calendar only when the host named no known zone.
   DateTime get day {
+    final local = wall(item.startsAt);
+    return DateTime(local.year, local.month, local.day);
+  }
+
+  /// #2553 C3 -- [instant] on the wall clock of the booking's workspace;
+  /// the device's when its host named no known zone.
+  DateTime wall(DateTime instant) {
     final name = zone;
     if (name != null && TimeZones.isKnown(name)) {
-      final local = tz.TZDateTime.from(item.startsAt, tz.getLocation(name));
-      return DateTime(local.year, local.month, local.day);
+      return tz.TZDateTime.from(instant, tz.getLocation(name));
     }
-    final local = item.startsAt.toLocal();
-    return DateTime(local.year, local.month, local.day);
+    return instant.toLocal();
+  }
+
+  /// #2553 C3 -- the workspace's zone when its wall clock differs from the
+  /// device's at the booking's start; null when they agree or none is
+  /// known. A card then names the zone its times are in.
+  String? get foreignZone {
+    final name = zone;
+    if (name == null || !TimeZones.isKnown(name)) return null;
+    final there = tz.TZDateTime.from(item.startsAt, tz.getLocation(name));
+    return there.timeZoneOffset == item.startsAt.toLocal().timeZoneOffset
+        ? null
+        : name;
   }
 }
 
@@ -139,18 +179,110 @@ int _order(MyReservationEntry a, MyReservationEntry b) {
   return bySource != 0 ? bySource : a.item.id.compareTo(b.item.id);
 }
 
+/// #2553 C3 -- the three views of a person's bookings, by their actual
+/// status and end.
+enum MyReservationsTab {
+  /// Reserved or checked in, and not yet ended.
+  upcoming,
+
+  /// Ended, completed or released.
+  past,
+
+  /// Cancelled.
+  cancelled;
+
+  /// The tab [item] belongs to at [now].
+  static MyReservationsTab of(MyReservationItem item, DateTime now) {
+    if (item.status == ReservationStatus.cancelled) return cancelled;
+    final open = item.status == ReservationStatus.reserved ||
+        item.status == ReservationStatus.checkedIn;
+    return open && item.endsAt.isAfter(now) ? upcoming : past;
+  }
+
+  /// The direction its period is read in: the past newest first.
+  MyReservationsDirection get direction => this == past
+      ? MyReservationsDirection.descending
+      : MyReservationsDirection.ascending;
+}
+
+/// #2553 C3 -- what one tab shows of a composition, for every source or
+/// the one [MyReservationsSelection.source] names.
+@immutable
+class MyReservationsSelection {
+  MyReservationsSelection(
+    MyReservationsComposition composition, {
+    required this.tab,
+    required DateTime now,
+    this.source,
+  })  : slots = List.unmodifiable([
+          for (final s in composition.slots)
+            if (source == null || s.installationId == source) s,
+        ]),
+        entries = List.unmodifiable([
+          for (final e in composition.visible)
+            if ((source == null || e.source == source) &&
+                MyReservationsTab.of(e.item, now) == tab)
+              e,
+        ]);
+
+  final MyReservationsTab tab;
+
+  /// The installation shown alone; null for every source.
+  final String? source;
+
+  /// The slots the selection reads from.
+  final List<MyReservationsSlot> slots;
+
+  /// The bookings of the tab, in the composition's order.
+  final List<MyReservationEntry> entries;
+
+  /// One of the selected hosts still has a further page.
+  bool get hasMore =>
+      slots.any((s) => s.state == MyReservationsSlotState.read && s.hasMore);
+
+  /// Every selected host answered all of its pages and none holds a
+  /// booking of this tab: only then is the tab empty.
+  bool get empty =>
+      entries.isEmpty &&
+      slots.every((s) => s.state == MyReservationsSlotState.read && !s.hasMore);
+}
+
 /// Every host's slot, in the order the sources were named.
 @immutable
 class MyReservationsComposition {
-  MyReservationsComposition(this.slots);
+  MyReservationsComposition(
+    this.slots, {
+    this.direction = MyReservationsDirection.ascending,
+  });
 
   final List<MyReservationsSlot> slots;
 
+  /// #2553 C3 -- the way the period is walked: the merge, the horizon and
+  /// the pages all follow it.
+  final MyReservationsDirection direction;
+
+  int _ordered(MyReservationEntry a, MyReservationEntry b) =>
+      direction == MyReservationsDirection.ascending ? _order(a, b) : _order(b, a);
+
   /// [slot] in place of the one of the same host.
   MyReservationsComposition replacing(MyReservationsSlot slot) =>
-      MyReservationsComposition(List.unmodifiable(
-        slots.map((s) => s.installationId == slot.installationId ? slot : s),
-      ));
+      MyReservationsComposition(
+        List.unmodifiable(
+          slots.map((s) => s.installationId == slot.installationId ? slot : s),
+        ),
+        direction: direction,
+      );
+
+  /// #2553 C3 -- the booking [id] of host [installationId] as [item] now,
+  /// or removed when [item] is null.
+  MyReservationsComposition withItem(
+    String installationId,
+    String id,
+    MyReservationItem? item,
+  ) {
+    final slot = slotOf(installationId);
+    return slot == null ? this : replacing(slot.withItem(id, item));
+  }
 
   /// [source]'s answer placed in its slot: its first [page] (or the
   /// [failure] of it) when [first], else a further page appended (or its
@@ -173,14 +305,15 @@ class MyReservationsComposition {
   }
 
   /// Every read host that has a further page, marked as reading it, and
-  /// where each one continues.
+  /// where each one continues; only host [only] when it is given.
   (MyReservationsComposition, List<(MyReservationsSource, MyReservationsCursor)>)
-      askingMore() {
+      askingMore({String? only}) {
     var next = this;
     final asks = <(MyReservationsSource, MyReservationsCursor)>[];
     for (final slot in slots) {
       final cursor = slot.next;
-      if (slot.state != MyReservationsSlotState.read ||
+      if ((only != null && slot.installationId != only) ||
+          slot.state != MyReservationsSlotState.read ||
           !slot.hasMore ||
           slot.loadingMore ||
           cursor == null) {
@@ -217,13 +350,13 @@ class MyReservationsComposition {
       }
       if (s.hasMore && s.items.isNotEmpty) {
         final last = MyReservationEntry(item: s.items.last, source: s.installationId);
-        if (horizon == null || _order(last, horizon) < 0) horizon = last;
+        if (horizon == null || _ordered(last, horizon) < 0) horizon = last;
       }
     }
-    all.sort(_order);
+    all.sort(_ordered);
     final h = horizon;
     if (h == null) return List.unmodifiable(all);
-    return List.unmodifiable(all.where((e) => _order(e, h) <= 0));
+    return List.unmodifiable(all.where((e) => _ordered(e, h) <= 0));
   }
 
   /// A host still has a further page.

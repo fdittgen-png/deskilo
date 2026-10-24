@@ -13000,6 +13000,52 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meDataViewReservations => 'Buchungen';
 
   @override
+  String get meDataWorkspaceDisabled =>
+      'Dieser Space bietet den Datenexport nicht an.';
+
+  @override
+  String get meDataWorkspaceExport => 'Exportieren';
+
+  @override
+  String get meDataWorkspaceFailed =>
+      'Dieser Space hat nicht geantwortet. Es wurde nichts exportiert.';
+
+  @override
+  String get meDataWorkspaceForbidden =>
+      'Dieser Space hat abgelehnt: Sie sind dort kein aktives Mitglied. Es wurde nichts exportiert.';
+
+  @override
+  String get meDataWorkspaceHostUnavailable =>
+      'Der Server dieses Spaces ist von hier aus nicht erreichbar. Es wurde nichts exportiert.';
+
+  @override
+  String get meDataWorkspaceMalformed =>
+      'Dieser Space hat in einer Form geantwortet, die diese App nicht lesen kann. Es wurde nichts exportiert.';
+
+  @override
+  String get meDataWorkspaceSuperseded =>
+      'Das angemeldete Konto hat sich während des Exports geändert. Es wurde nichts angeboten.';
+
+  @override
+  String meDataWorkspaceUnnamed(String id) {
+    return 'Space $id';
+  }
+
+  @override
+  String get meDataWorkspacesEmpty => 'Ihr Konto nennt noch keinen Space.';
+
+  @override
+  String get meDataWorkspacesFailed =>
+      'Die Spaces Ihres Kontos konnten nicht gelesen werden. Es wurde nichts exportiert.';
+
+  @override
+  String get meDataWorkspacesScope =>
+      'Jeder Space exportiert, was er über Sie hält – Mitgliedschaft, Buchungen, Konto und Rechnungen – von seinem eigenen Server, eine Datei je Space. Der Teil Ihres persönlichen Kontos ist die Karte oben.';
+
+  @override
+  String get meDataWorkspacesTitle => 'Ihre Daten in jedem Space';
+
+  @override
   String meFinanceGlanceOwed(String amount) {
     return 'Zu zahlen: $amount';
   }
@@ -14140,10 +14186,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myBadgeTitle => 'Mein Badge';
 
   @override
+  String get myFinancesExport => 'Meine Belege exportieren';
+
+  @override
+  String myFinancesExportWorkspace(String workspace) {
+    return '$workspace – Belege (CSV)';
+  }
+
+  @override
   String get myInvoicesTitle => 'Meine Rechnungen';
 
   @override
+  String get myReservationsActionFailed =>
+      'Das hat nicht geklappt. Versuchen Sie es gleich noch einmal.';
+
+  @override
+  String get myReservationsCancel => 'Reservierung stornieren';
+
+  @override
+  String get myReservationsCancelBody =>
+      'Der Server seines Bereichs storniert sie. Der Platz ist dann für andere wieder frei.';
+
+  @override
+  String get myReservationsCancelDone => 'Reservierung storniert.';
+
+  @override
+  String get myReservationsCancelTitle => 'Diese Reservierung stornieren?';
+
+  @override
   String get myReservationsChangePeriod => 'Zeitraum ändern';
+
+  @override
+  String get myReservationsCheckIn => 'Einchecken';
+
+  @override
+  String get myReservationsCheckInDone => 'Eingecheckt.';
 
   @override
   String myReservationsCheckedInAt(String time) {
@@ -14167,12 +14244,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Server hat es abgelehnt, Ihre Reservierungen aufzulisten.';
 
   @override
+  String get myReservationsGone =>
+      'Diese Reservierung ist zu dieser Zeit nicht mehr für Sie eingetragen.';
+
+  @override
   String get myReservationsHostUnavailable =>
       'Dieser Server ist von diesem Gerät aus nicht erreichbar: Er ist hier nicht verbunden, oder er ist nicht der, der er zu sein vorgibt.';
 
   @override
   String get myReservationsInvalid =>
       'Dieser Server hat den angefragten Zeitraum abgelehnt.';
+
+  @override
+  String get myReservationsKeep => 'Behalten';
 
   @override
   String get myReservationsKindDesk => 'Tisch';
@@ -14210,6 +14294,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get myReservationsSourceAll => 'Alle Server';
+
+  @override
   String myReservationsSourceProblem(String source, String problem) {
     return '$source: $problem';
   }
@@ -14238,8 +14325,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myReservationsStatusReserved => 'Reserviert';
 
   @override
+  String get myReservationsTabCancelled => 'Storniert';
+
+  @override
+  String get myReservationsTabPast => 'Vergangen';
+
+  @override
+  String get myReservationsTabUpcoming => 'Anstehend';
+
+  @override
   String get myReservationsTimedOut =>
       'Dieser Server hat nicht rechtzeitig geantwortet.';
+
+  @override
+  String myReservationsTimesIn(String zone) {
+    return 'Uhrzeiten in $zone';
+  }
 
   @override
   String get myReservationsUnnamedPlace => '(Platz ohne Namen)';
@@ -14247,6 +14348,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get myReservationsUnsupported =>
       'Dieser Server listet Reservierungen für den persönlichen Bereich noch nicht auf.';
+
+  @override
+  String get myReservationsView => 'Ansehen';
 
   @override
   String get mySpacesAll => 'Alle meine Spaces';
@@ -19687,6 +19791,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.';
 
   @override
+  String get settingHintFederationRetentionHours =>
+      'Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung.';
+
+  @override
   String get settingHintIdentityClockSkewSeconds =>
       'Sekunden Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, die noch akzeptiert werden, 0 bis 30.';
 
@@ -19858,6 +19966,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
+
+  @override
+  String get settingLabelFederationRetentionHours =>
+      'Aufbewahrung des Server-Austauschs';
 
   @override
   String get settingLabelIdentityClockSkewSeconds => 'Erlaubte Uhrabweichung';

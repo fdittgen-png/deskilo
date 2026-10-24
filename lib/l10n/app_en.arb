@@ -15014,6 +15014,59 @@
   "@meDataViewReservations": {
     "description": "#2552 My data view: the person's own reservations and visits."
   },
+  "meDataWorkspaceDisabled": "This workspace does not offer the data export.",
+  "@meDataWorkspaceDisabled": {
+    "description": "#2557 C3 the workspace has the export switched off."
+  },
+  "meDataWorkspaceExport": "Export",
+  "@meDataWorkspaceExport": {
+    "description": "#2557 C3 export one workspace's own records."
+  },
+  "meDataWorkspaceFailed": "This workspace did not answer. Nothing was exported.",
+  "@meDataWorkspaceFailed": {
+    "description": "#2557 C3 the workspace did not answer."
+  },
+  "meDataWorkspaceForbidden": "This workspace refused: you are not an active member there. Nothing was exported.",
+  "@meDataWorkspaceForbidden": {
+    "description": "#2557 C3 the workspace refused."
+  },
+  "meDataWorkspaceHostUnavailable": "This workspace's server is not reachable from here. Nothing was exported.",
+  "@meDataWorkspaceHostUnavailable": {
+    "description": "#2557 C3 the workspace's server is not reachable."
+  },
+  "meDataWorkspaceMalformed": "This workspace answered in a form this app cannot read. Nothing was exported.",
+  "@meDataWorkspaceMalformed": {
+    "description": "#2557 C3 the workspace's answer cannot be read."
+  },
+  "meDataWorkspaceSuperseded": "The signed-in account changed while the export was read. Nothing was offered.",
+  "@meDataWorkspaceSuperseded": {
+    "description": "#2557 C3 the account changed while the export was read."
+  },
+  "meDataWorkspaceUnnamed": "Workspace {id}",
+  "@meDataWorkspaceUnnamed": {
+    "description": "#2557 C3 a workspace whose name may not be read.",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "meDataWorkspacesEmpty": "Your account names no workspace yet.",
+  "@meDataWorkspacesEmpty": {
+    "description": "#2557 C3 no workspace to export from."
+  },
+  "meDataWorkspacesFailed": "The workspaces your account names could not be read. Nothing was exported.",
+  "@meDataWorkspacesFailed": {
+    "description": "#2557 C3 the workspace list could not be read."
+  },
+  "meDataWorkspacesScope": "Each workspace exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per workspace. Your personal account's part is the card above.",
+  "@meDataWorkspacesScope": {
+    "description": "#2557 C3 what each workspace's export covers."
+  },
+  "meDataWorkspacesTitle": "Your records in each workspace",
+  "@meDataWorkspacesTitle": {
+    "description": "#2557 C3 the per-workspace export card title."
+  },
   "meFinanceGlanceOwed": "To pay: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -16456,13 +16509,54 @@
     }
   },
   "myBadgeTitle": "My badge",
+  "myFinancesExport": "Export my documents",
+  "@myFinancesExport": {
+    "description": "#2557 C3 Me › Finances: the export menu's tooltip."
+  },
+  "myFinancesExportWorkspace": "{workspace} — documents (CSV)",
+  "@myFinancesExportWorkspace": {
+    "description": "#2557 C3 Me › Finances: one workspace's documents as a CSV file.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
   "myInvoicesTitle": "My invoices",
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
+  "myReservationsActionFailed": "This could not be done. Try again in a moment.",
+  "@myReservationsActionFailed": {
+    "description": "#2553 C3 My reservations: an action on a booking failed for no reason the server named."
+  },
+  "myReservationsCancel": "Cancel reservation",
+  "@myReservationsCancel": {
+    "description": "#2553 C3 My reservations: cancels the booking on its own server."
+  },
+  "myReservationsCancelBody": "The server of its space cancels it. The place is free again for others.",
+  "@myReservationsCancelBody": {
+    "description": "#2553 C3 My reservations: what cancelling does: the server of the booking's own space is asked."
+  },
+  "myReservationsCancelDone": "Reservation cancelled.",
+  "@myReservationsCancelDone": {
+    "description": "#2553 C3 My reservations: the booking was cancelled on its server."
+  },
+  "myReservationsCancelTitle": "Cancel this reservation?",
+  "@myReservationsCancelTitle": {
+    "description": "#2553 C3 My reservations: the question before a booking is cancelled."
+  },
   "myReservationsChangePeriod": "Change period",
   "@myReservationsChangePeriod": {
     "description": "#2553 My reservations: opens the period picker."
+  },
+  "myReservationsCheckIn": "Check in",
+  "@myReservationsCheckIn": {
+    "description": "#2553 C3 My reservations: checks in to the booking on its own server."
+  },
+  "myReservationsCheckInDone": "Checked in.",
+  "@myReservationsCheckInDone": {
+    "description": "#2553 C3 My reservations: the check-in was recorded on the booking's server."
   },
   "myReservationsCheckedInAt": "Checked in at {time}",
   "@myReservationsCheckedInAt": {
@@ -16494,6 +16588,10 @@
   "@myReservationsForbidden": {
     "description": "#2553 My reservations: the host refused the caller (42501)."
   },
+  "myReservationsGone": "This reservation is no longer listed for you at that time.",
+  "@myReservationsGone": {
+    "description": "#2553 C3 My reservations: the booking's server no longer lists it for the person where it was."
+  },
   "myReservationsHostUnavailable": "This server cannot be reached from this device: it is not connected here, or it is not the one it claims to be.",
   "@myReservationsHostUnavailable": {
     "description": "#2553 C2 My reservations: one workspace host cannot be reached with its own verified connection on this device."
@@ -16501,6 +16599,10 @@
   "myReservationsInvalid": "This server refused the period asked for.",
   "@myReservationsInvalid": {
     "description": "#2553 My reservations: the host refused the window or cursor (22023)."
+  },
+  "myReservationsKeep": "Keep it",
+  "@myReservationsKeep": {
+    "description": "#2553 C3 My reservations: closes the cancel question and keeps the booking."
   },
   "myReservationsKindDesk": "Desk",
   "@myReservationsKindDesk": {
@@ -16547,6 +16649,10 @@
       }
     }
   },
+  "myReservationsSourceAll": "All servers",
+  "@myReservationsSourceAll": {
+    "description": "#2553 C3 My reservations: the source filter that shows every workspace server."
+  },
   "myReservationsSourceProblem": "{source}: {problem}",
   "@myReservationsSourceProblem": {
     "description": "#2553 C2 My reservations: one host's read failed; source is the names of its spaces, problem the sentence saying why.",
@@ -16592,9 +16698,30 @@
   "@myReservationsStatusReserved": {
     "description": "#2553 My reservations: booking status."
   },
+  "myReservationsTabCancelled": "Cancelled",
+  "@myReservationsTabCancelled": {
+    "description": "#2553 C3 My reservations: the tab of cancelled bookings."
+  },
+  "myReservationsTabPast": "Past",
+  "@myReservationsTabPast": {
+    "description": "#2553 C3 My reservations: the tab of ended, completed or released bookings, newest first."
+  },
+  "myReservationsTabUpcoming": "Upcoming",
+  "@myReservationsTabUpcoming": {
+    "description": "#2553 C3 My reservations: the tab of bookings reserved or checked in that have not ended."
+  },
   "myReservationsTimedOut": "This server did not answer in time.",
   "@myReservationsTimedOut": {
     "description": "#2553 C2 My reservations: one workspace host did not answer within the personal read timeout."
+  },
+  "myReservationsTimesIn": "Times in {zone}",
+  "@myReservationsTimesIn": {
+    "description": "#2553 C3 My reservations: the times of a card are its workspace's wall clock, which differs from the device's; zone is the IANA zone name.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
   },
   "myReservationsUnnamedPlace": "(unnamed place)",
   "@myReservationsUnnamedPlace": {
@@ -16603,6 +16730,10 @@
   "myReservationsUnsupported": "This server does not list reservations for the personal space yet.",
   "@myReservationsUnsupported": {
     "description": "#2553 My reservations: an older host without the read."
+  },
+  "myReservationsView": "View",
+  "@myReservationsView": {
+    "description": "#2553 C3 My reservations: reads one booking again from its own server and shows it."
   },
   "mySpacesAll": "All my spaces",
   "@mySpacesAll": {
@@ -22650,6 +22781,10 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintFederationRetentionHours": "Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.",
+  "@settingHintFederationRetentionHours": {
+    "description": "#2563 C2 retention: settingHintFederationRetentionHours"
+  },
   "settingHintIdentityClockSkewSeconds": "Seconds of clock difference between the personal home and a workspace server that are still accepted, 0 to 30.",
   "@settingHintIdentityClockSkewSeconds": {
     "description": "#2562 C2a enrolment: settingHintIdentityClockSkewSeconds"
@@ -22829,6 +22964,10 @@
   "settingLabelDunningFirstAfterDays": "Days before a first reminder",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
+  },
+  "settingLabelFederationRetentionHours": "Backchannel retention",
+  "@settingLabelFederationRetentionHours": {
+    "description": "#2563 C2 retention: settingLabelFederationRetentionHours"
   },
   "settingLabelIdentityClockSkewSeconds": "Allowed clock difference",
   "@settingLabelIdentityClockSkewSeconds": {

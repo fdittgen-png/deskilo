@@ -12971,6 +12971,52 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meDataViewReservations => 'Reservas';
 
   @override
+  String get meDataWorkspaceDisabled =>
+      'Este espacio no ofrece la exportación de datos.';
+
+  @override
+  String get meDataWorkspaceExport => 'Exportar';
+
+  @override
+  String get meDataWorkspaceFailed =>
+      'Este espacio no respondió. No se exportó nada.';
+
+  @override
+  String get meDataWorkspaceForbidden =>
+      'Este espacio lo ha rechazado: usted no es miembro activo allí. No se exportó nada.';
+
+  @override
+  String get meDataWorkspaceHostUnavailable =>
+      'El servidor de este espacio no es accesible desde aquí. No se exportó nada.';
+
+  @override
+  String get meDataWorkspaceMalformed =>
+      'Este espacio respondió de una forma que esta aplicación no puede leer. No se exportó nada.';
+
+  @override
+  String get meDataWorkspaceSuperseded =>
+      'La cuenta conectada cambió mientras se leía la exportación. No se ofreció nada.';
+
+  @override
+  String meDataWorkspaceUnnamed(String id) {
+    return 'Espacio $id';
+  }
+
+  @override
+  String get meDataWorkspacesEmpty => 'Su cuenta aún no nombra ningún espacio.';
+
+  @override
+  String get meDataWorkspacesFailed =>
+      'No se pudieron leer los espacios de su cuenta. No se exportó nada.';
+
+  @override
+  String get meDataWorkspacesScope =>
+      'Cada espacio exporta lo que conserva sobre usted — afiliación, reservas, cuenta y facturas — desde su propio servidor, un archivo por espacio. La parte de su cuenta personal es la tarjeta de arriba.';
+
+  @override
+  String get meDataWorkspacesTitle => 'Sus datos en cada espacio';
+
+  @override
   String meFinanceGlanceOwed(String amount) {
     return 'A pagar: $amount';
   }
@@ -14107,10 +14153,41 @@ class AppLocalizationsEs extends AppLocalizations {
   String get myBadgeTitle => 'Mi credencial';
 
   @override
+  String get myFinancesExport => 'Exportar mis documentos';
+
+  @override
+  String myFinancesExportWorkspace(String workspace) {
+    return '$workspace — documentos (CSV)';
+  }
+
+  @override
   String get myInvoicesTitle => 'Mis facturas';
 
   @override
+  String get myReservationsActionFailed =>
+      'No se ha podido hacer. Vuelva a intentarlo en un momento.';
+
+  @override
+  String get myReservationsCancel => 'Cancelar la reserva';
+
+  @override
+  String get myReservationsCancelBody =>
+      'El servidor de su espacio la cancela. El puesto vuelve a quedar libre para los demás.';
+
+  @override
+  String get myReservationsCancelDone => 'Reserva cancelada.';
+
+  @override
+  String get myReservationsCancelTitle => '¿Desea cancelar esta reserva?';
+
+  @override
   String get myReservationsChangePeriod => 'Cambiar el periodo';
+
+  @override
+  String get myReservationsCheckIn => 'Registrarse';
+
+  @override
+  String get myReservationsCheckInDone => 'Llegada registrada.';
 
   @override
   String myReservationsCheckedInAt(String time) {
@@ -14134,12 +14211,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este servidor ha rechazado listar sus reservas.';
 
   @override
+  String get myReservationsGone =>
+      'Esta reserva ya no figura a su nombre a esa hora.';
+
+  @override
   String get myReservationsHostUnavailable =>
       'No se puede acceder a este servidor desde este dispositivo: no está conectado aquí, o no es el que dice ser.';
 
   @override
   String get myReservationsInvalid =>
       'Este servidor ha rechazado el periodo solicitado.';
+
+  @override
+  String get myReservationsKeep => 'Conservarla';
 
   @override
   String get myReservationsKindDesk => 'Mesa';
@@ -14177,6 +14261,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get myReservationsSourceAll => 'Todos los servidores';
+
+  @override
   String myReservationsSourceProblem(String source, String problem) {
     return '$source: $problem';
   }
@@ -14205,8 +14292,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get myReservationsStatusReserved => 'Reservada';
 
   @override
+  String get myReservationsTabCancelled => 'Canceladas';
+
+  @override
+  String get myReservationsTabPast => 'Pasadas';
+
+  @override
+  String get myReservationsTabUpcoming => 'Próximas';
+
+  @override
   String get myReservationsTimedOut =>
       'Este servidor no ha respondido a tiempo.';
+
+  @override
+  String myReservationsTimesIn(String zone) {
+    return 'Horas de $zone';
+  }
 
   @override
   String get myReservationsUnnamedPlace => '(sitio sin nombre)';
@@ -14214,6 +14315,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get myReservationsUnsupported =>
       'Este servidor aún no lista las reservas para el espacio personal.';
+
+  @override
+  String get myReservationsView => 'Ver';
 
   @override
   String get mySpacesAll => 'Todos mis espacios';
@@ -19642,6 +19746,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.';
 
   @override
+  String get settingHintFederationRetentionHours =>
+      'Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.';
+
+  @override
   String get settingHintIdentityClockSkewSeconds =>
       'Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.';
 
@@ -19816,6 +19924,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Días antes de un primer recordatorio';
+
+  @override
+  String get settingLabelFederationRetentionHours =>
+      'Conservación de los intercambios entre servidores';
 
   @override
   String get settingLabelIdentityClockSkewSeconds =>
