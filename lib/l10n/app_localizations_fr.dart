@@ -4451,6 +4451,38 @@ class AppLocalizationsFr extends AppLocalizations {
   String get discoveryBookmark => 'Enregistrer';
 
   @override
+  String discoveryLoadedCount(
+    int loaded,
+    int shown,
+    int answered,
+    int sources,
+  ) {
+    return 'Lieux chargés : $loaded · affichés : $shown · annuaires ayant répondu : $answered sur $sources';
+  }
+
+  @override
+  String get discoveryMapContinue => 'Continuer vers la carte';
+
+  @override
+  String discoveryMapDisclosureBody(String tiles, String geocoder) {
+    return 'La carte est dessinée par $tiles, et les adresses sans coordonnées sont placées par $geocoder. Le fournisseur de la carte reçoit des informations de connexion et la zone affichée : l’adresse IP de votre appareil et la partie de la carte que vous regardez. Rien ne lui est envoyé si vous ne continuez pas.';
+  }
+
+  @override
+  String get discoveryMapDisclosureTitle => 'Avant d’ouvrir la carte';
+
+  @override
+  String get discoveryMapRemembered =>
+      'Votre choix est conservé sur cet appareil pour ce fournisseur de carte.';
+
+  @override
+  String get discoveryMapStay => 'Rester sur la liste';
+
+  @override
+  String get discoveryMoreDirectoriesFailed =>
+      'Les autres annuaires n’ont pas pu être chargés.';
+
+  @override
   String get discoveryNoSaved =>
       'Aucun espace enregistré sur cet appareil pour l’instant.';
 
@@ -4462,6 +4494,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get discoverySavedFilter => 'Enregistrés';
+
+  @override
+  String discoveryShowMoreFrom(String source) {
+    return 'Afficher plus de $source';
+  }
+
+  @override
+  String discoverySourceFailed(String source) {
+    return '$source n’a pas répondu. Les lieux déjà affichés restent.';
+  }
 
   @override
   String get discoveryTitle => 'Découvrir des espaces';
@@ -6934,6 +6976,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featurePersonalInfoDesc =>
       'Les membres saisissent nom, adresse postale, téléphone, e-mail et identifiants légaux dans Réglages ; factures et courriers les impriment dans le bloc adresse normalisé.';
+
+  @override
+  String get featurePersonalShellDesc =>
+      'Moi en cinq destinations : Vue d’ensemble, Mes espaces, Découvrir, Messages et Mes données, avec une barre latérale sur une fenêtre large, un rail sur une fenêtre moyenne et une barre sur un téléphone. Désactivée, Moi garde ses quatre onglets.';
+
+  @override
+  String get featurePersonalShellTitle =>
+      'Interface personnelle (cinq destinations)';
 
   @override
   String get featurePlaceFeedbackDesc =>
@@ -12729,7 +12779,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'enregistrer votre adresse. Veuillez réessayer.';
 
   @override
+  String get meContextPersonal => 'Personnel';
+
+  @override
   String get meCreateSpace => 'Créer un espace';
+
+  @override
+  String get meDataViewReservations => 'Réservations';
+
+  @override
+  String get meDataVisitsEmptyBody =>
+      'Vos réservations restent dans le calendrier de chaque espace ; vos visites en tant qu’invité apparaissent ici.';
+
+  @override
+  String get meDataVisitsEmptyTitle => 'Aucune visite pour l’instant';
 
   @override
   String meFinanceGlanceOwed(String amount) {
@@ -12896,6 +12959,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meSpacesSearch => 'Rechercher mes espaces';
 
   @override
+  String get meTabData => 'Mes données';
+
+  @override
+  String get meTabDataShort => 'Données';
+
+  @override
   String get meTabDiscover => 'Découvrir';
 
   @override
@@ -12906,6 +12975,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meTabMessages => 'Messages';
+
+  @override
+  String get meTabOverview => 'Vue d’ensemble';
+
+  @override
+  String get meTabOverviewShort => 'Accueil';
+
+  @override
+  String get meTabSpacesShort => 'Espaces';
+
+  @override
+  String get meUtilityAccount => 'Confidentialité et compte';
+
+  @override
+  String get meUtilityHelp => 'Aide et assistant';
 
   @override
   String get meWhereSpacesLive => 'Où vivent mes espaces';
@@ -13729,6 +13813,91 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get myInvoicesTitle => 'Mes factures';
+
+  @override
+  String get myReservationsChangePeriod => 'Changer de période';
+
+  @override
+  String myReservationsCheckedInAt(String time) {
+    return 'Arrivée à $time';
+  }
+
+  @override
+  String myReservationsCheckedOutAt(String time) {
+    return 'Départ à $time';
+  }
+
+  @override
+  String get myReservationsEmpty => 'Aucune réservation sur cette période.';
+
+  @override
+  String get myReservationsFailed =>
+      'Vos réservations n\'ont pas pu être lues. Réessayez dans un instant.';
+
+  @override
+  String get myReservationsForbidden =>
+      'Ce serveur a refusé de lister vos réservations.';
+
+  @override
+  String get myReservationsInvalid =>
+      'Ce serveur a refusé la période demandée.';
+
+  @override
+  String get myReservationsKindDesk => 'Bureau';
+
+  @override
+  String get myReservationsKindLevel => 'Étage';
+
+  @override
+  String get myReservationsKindOffice => 'Salle';
+
+  @override
+  String get myReservationsKindSeat => 'Place';
+
+  @override
+  String get myReservationsLoadMore => 'Afficher plus';
+
+  @override
+  String get myReservationsLoadingMore => 'Chargement…';
+
+  @override
+  String get myReservationsMalformed =>
+      'Ce serveur a répondu sous une forme que cette application ne comprend pas.';
+
+  @override
+  String get myReservationsMisconfigured =>
+      'Ce serveur n\'a pas encore de réglages pour les lectures personnelles.';
+
+  @override
+  String get myReservationsNoWorkspace =>
+      'Choisissez un espace pour voir vos réservations sur son serveur.';
+
+  @override
+  String myReservationsPeriodLimit(int days) {
+    return 'Au plus $days jours à la fois.';
+  }
+
+  @override
+  String get myReservationsStatusCancelled => 'Annulée';
+
+  @override
+  String get myReservationsStatusCheckedIn => 'Arrivée enregistrée';
+
+  @override
+  String get myReservationsStatusCompleted => 'Terminée';
+
+  @override
+  String get myReservationsStatusReleased => 'Libérée';
+
+  @override
+  String get myReservationsStatusReserved => 'Réservée';
+
+  @override
+  String get myReservationsUnnamedPlace => '(place sans nom)';
+
+  @override
+  String get myReservationsUnsupported =>
+      'Ce serveur ne liste pas encore les réservations pour l\'espace personnel.';
 
   @override
   String get myVisitsHelp =>
@@ -15265,6 +15434,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalDescription => 'Description';
 
   @override
+  String portalDirectoryCount(String name, int count) {
+    return '$name ($count)';
+  }
+
+  @override
   String get portalDirectoryIncompatible =>
       'Certains espaces nécessitent une version plus récente de l’application et ne sont pas affichés.';
 
@@ -15368,6 +15542,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalReachableHeading => 'Personnes à qui vous pouvez écrire';
 
   @override
+  String get portalRecipientHint =>
+      'Tapez un nom : des suggestions apparaissent dès la première lettre';
+
+  @override
   String get portalRegisterDirectory => 'Relier un serveur à l’annuaire global';
 
   @override
@@ -15402,6 +15580,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un serveur est indisponible. Cette vue est incomplète. Appuyez pour réessayer.';
 
   @override
+  String get portalSuggestionGroup => 'Groupe';
+
+  @override
   String get portalThisServer => 'Ce serveur';
 
   @override
@@ -15419,6 +15600,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get portalWebsite => 'Site internet';
+
+  @override
+  String portalWriteTo(String name) {
+    return 'Écrire à $name';
+  }
 
   @override
   String get preferencesSaveFailed =>
@@ -16382,16 +16568,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesTotal => 'Total';
 
   @override
+  String get pushAllowAction => 'Autoriser';
+
+  @override
   String get pushCancelledBody => 'Une réservation a été retirée par un admin.';
 
   @override
   String get pushCancelledTitle => 'Réservation retirée';
 
   @override
+  String get pushMentionBody =>
+      'Vous avez été mentionné dans une conversation.';
+
+  @override
+  String get pushMessageBody => 'Vous avez un nouveau message.';
+
+  @override
   String get pushPendingBody => 'Quelqu\'un attend votre confirmation.';
 
   @override
   String get pushPendingTitle => 'DesKilo';
+
+  @override
+  String get pushReminderBody => 'Un rappel de paiement vous attend.';
 
   @override
   String get pushStatusNoTransport =>
@@ -16410,7 +16609,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le propriétaire termine la configuration Firebase (guide push-setup).';
 
   @override
+  String get pushStatusPermissionNeeded =>
+      'Les notifications ne sont pas autorisées sur cet appareil';
+
+  @override
+  String get pushStatusPermissionNeededHint =>
+      'Touchez Autoriser pour les recevoir. Tout reste disponible dans l\'application dans tous les cas.';
+
+  @override
   String get pushStatusRegistered => 'Les notifications push sont actives';
+
+  @override
+  String get pushUpdateBody => 'Vous avez du nouveau.';
 
   @override
   String get qrBillAcceptancePoint => 'Point de dépôt';
@@ -18997,6 +19207,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupMessaging => 'Messagerie';
 
   @override
+  String get settingGroupPersonal => 'Espace personnel';
+
+  @override
   String get settingGroupPresence => 'Présence';
 
   @override
@@ -19106,6 +19319,26 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintMessagingThreadPollSeconds =>
       'Secondes entre deux actualisations d\'une conversation ouverte. Des valeurs plus basses chargent davantage le serveur.';
+
+  @override
+  String get settingHintPersonalReadConcurrency =>
+      'Nombre de serveurs que l\'espace personnel interroge en même temps lorsqu\'il rassemble vos propres données. Une borne sur les lectures parallèles de l\'appareil, pas sur un serveur.';
+
+  @override
+  String get settingHintPersonalReadTimeoutSeconds =>
+      'Secondes pendant lesquelles l\'espace personnel attend la réponse d\'un serveur avant de l\'afficher comme indisponible et de passer aux autres.';
+
+  @override
+  String get settingHintPersonalReservationMaxWindowDays =>
+      'Fixé par la plateforme : la plus longue période qu\'une lecture de vos réservations peut demander. Il borne la requête.';
+
+  @override
+  String get settingHintPersonalReservationPageSize =>
+      'Nombre de vos réservations qu\'un serveur renvoie par page ; la page suivante vient avec Afficher plus.';
+
+  @override
+  String get settingHintPersonalReservationWindowDays =>
+      'Jours que l\'espace personnel affiche par défaut lorsqu\'il liste vos réservations. Vous pouvez choisir une autre période, jusqu\'au plafond.';
 
   @override
   String get settingHintPresenceOnlineWindowMinutes =>
@@ -19238,6 +19471,23 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelMessagingThreadPollSeconds =>
       'Actualisation de la conversation';
+
+  @override
+  String get settingLabelPersonalReadConcurrency => 'Serveurs lus en parallèle';
+
+  @override
+  String get settingLabelPersonalReadTimeoutSeconds => 'Attente par serveur';
+
+  @override
+  String get settingLabelPersonalReservationMaxWindowDays =>
+      'Plafond de la période des réservations';
+
+  @override
+  String get settingLabelPersonalReservationPageSize => 'Réservations par page';
+
+  @override
+  String get settingLabelPersonalReservationWindowDays =>
+      'Période des réservations';
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Fenêtre en ligne';

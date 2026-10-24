@@ -5170,10 +5170,59 @@
     "description": "Tooltip of the wa.me contact button on a directory row (#223 opt-in); also the swipe-right background label and the contact button in the member detail sheet (#232)"
   },
   "discoveryBookmark": "Bookmark",
+  "discoveryLoadedCount": "Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}",
+  "@discoveryLoadedCount": {
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      },
+      "shown": {
+        "type": "int"
+      },
+      "answered": {
+        "type": "int"
+      },
+      "sources": {
+        "type": "int"
+      }
+    }
+  },
+  "discoveryMapContinue": "Continue to the map",
+  "discoveryMapDisclosureBody": "The map is drawn by {tiles}, and addresses without coordinates are placed by {geocoder}. The map provider receives connection and viewed-area information: your device's IP address and the part of the map you look at. Nothing is sent to them unless you continue.",
+  "@discoveryMapDisclosureBody": {
+    "placeholders": {
+      "tiles": {
+        "type": "String"
+      },
+      "geocoder": {
+        "type": "String"
+      }
+    }
+  },
+  "discoveryMapDisclosureTitle": "Before the map opens",
+  "discoveryMapRemembered": "Your choice is kept on this device for this map provider.",
+  "discoveryMapStay": "Stay with the list",
+  "discoveryMoreDirectoriesFailed": "More directories could not be loaded.",
   "discoveryNoSaved": "No places saved on this device yet.",
   "discoveryRemoveBookmark": "Remove bookmark",
   "discoverySaved": "Saved on this device",
   "discoverySavedFilter": "Saved",
+  "discoveryShowMoreFrom": "Show more from {source}",
+  "@discoveryShowMoreFrom": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "discoverySourceFailed": "{source} did not answer. The places already shown stay.",
+  "@discoverySourceFailed": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
   "discoveryTitle": "Discover workspaces",
   "discoveryView": "View",
   "documentsAdd": "Add a document",
@@ -7930,6 +7979,14 @@
   "featurePersonalInfoDesc": "Members enter their name, postal address, phone, e-mail and legal ids in Settings; invoices and letters print them in the standard postal block.",
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
+  },
+  "featurePersonalShellDesc": "Me as five destinations: Overview, My spaces, Discover, Messages and My data, with a sidebar on a wide window, a rail on a medium one and a bar on a phone. Off, Me keeps its four tabs.",
+  "@featurePersonalShellDesc": {
+    "description": "#2552 Features screen: what the personal shell changes and what off means."
+  },
+  "featurePersonalShellTitle": "Personal shell (five destinations)",
+  "@featurePersonalShellTitle": {
+    "description": "#2552 Features screen: the five-destination Me shell, a platform flag."
   },
   "featurePlaceFeedbackDesc": "Members mark seats, desks, offices and levels as favourites and rate them from 0 to 5 stars. A favourite is the member's own; a rating shows its average and how many gave one, never who. An assistant can list the favourites, book one, and record a rating. Off hides the hearts and stars and refuses the writes; nothing else follows it.",
   "@featurePlaceFeedbackDesc": {
@@ -14663,9 +14720,25 @@
   "@meAddressSaveFailed": {
     "description": "Error when saving the postal address from My account failed."
   },
+  "meContextPersonal": "Personal",
+  "@meContextPersonal": {
+    "description": "#2552 the scope badge in the personal shell's header: this is the person's own layer, never a space."
+  },
   "meCreateSpace": "Create a space",
   "@meCreateSpace": {
     "description": "Button on the Me home: create a new space."
+  },
+  "meDataViewReservations": "Reservations",
+  "@meDataViewReservations": {
+    "description": "#2552 My data view: the person's own reservations and visits."
+  },
+  "meDataVisitsEmptyBody": "Your bookings stay in each space's calendar; your visits as a guest appear here.",
+  "@meDataVisitsEmptyBody": {
+    "description": "#2552 My data › Reservations: where the bookings are, and what this view lists."
+  },
+  "meDataVisitsEmptyTitle": "No visits yet",
+  "@meDataVisitsEmptyTitle": {
+    "description": "#2552 My data › Reservations with no guest visit to show."
   },
   "meFinanceGlanceOwed": "To pay: {amount}",
   "@meFinanceGlanceOwed": {
@@ -14839,6 +14912,14 @@
   },
   "meSpacesNoMatch": "No space matches.",
   "meSpacesSearch": "Search my spaces",
+  "meTabData": "My data",
+  "@meTabData": {
+    "description": "#2552 fifth destination of the personal shell: the person's own records."
+  },
+  "meTabDataShort": "Data",
+  "@meTabDataShort": {
+    "description": "#2552 the My data destination on a phone's bottom bar."
+  },
   "meTabDiscover": "Discover",
   "@meTabDiscover": {
     "description": "Me layer bottom tab: find published spaces."
@@ -14854,6 +14935,26 @@
   "meTabMessages": "Messages",
   "@meTabMessages": {
     "description": "Me layer bottom tab: the person's messages."
+  },
+  "meTabOverview": "Overview",
+  "@meTabOverview": {
+    "description": "#2552 first destination of the personal shell: the person's overview."
+  },
+  "meTabOverviewShort": "Overview",
+  "@meTabOverviewShort": {
+    "description": "#2552 the Overview destination on a phone's bottom bar (FR: Accueil)."
+  },
+  "meTabSpacesShort": "Spaces",
+  "@meTabSpacesShort": {
+    "description": "#2552 the My spaces destination on a phone's bottom bar."
+  },
+  "meUtilityAccount": "Confidentiality and account",
+  "@meUtilityAccount": {
+    "description": "#2552 utility of the personal shell: who sees what of me, and my account."
+  },
+  "meUtilityHelp": "Help and assistant",
+  "@meUtilityHelp": {
+    "description": "#2552 utility of the personal shell: the guide and the task assistant."
   },
   "meWhereSpacesLive": "Where my spaces live",
   "@meWhereSpacesLive": {
@@ -15923,6 +16024,117 @@
   "myInvoicesTitle": "My invoices",
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
+  },
+  "myReservationsChangePeriod": "Change period",
+  "@myReservationsChangePeriod": {
+    "description": "#2553 My reservations: opens the period picker."
+  },
+  "myReservationsCheckedInAt": "Checked in at {time}",
+  "@myReservationsCheckedInAt": {
+    "description": "#2553 My reservations: the check-in mark of a booking.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "myReservationsCheckedOutAt": "Checked out at {time}",
+  "@myReservationsCheckedOutAt": {
+    "description": "#2553 My reservations: the check-out mark of a booking.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "myReservationsEmpty": "No reservations in this period.",
+  "@myReservationsEmpty": {
+    "description": "#2553 My reservations: the window was read and holds nothing."
+  },
+  "myReservationsFailed": "Your reservations could not be read. Try again in a moment.",
+  "@myReservationsFailed": {
+    "description": "#2553 My reservations: a read failed for no typed reason."
+  },
+  "myReservationsForbidden": "This server refused to list your reservations.",
+  "@myReservationsForbidden": {
+    "description": "#2553 My reservations: the host refused the caller (42501)."
+  },
+  "myReservationsInvalid": "This server refused the period asked for.",
+  "@myReservationsInvalid": {
+    "description": "#2553 My reservations: the host refused the window or cursor (22023)."
+  },
+  "myReservationsKindDesk": "Desk",
+  "@myReservationsKindDesk": {
+    "description": "#2553 My reservations: the kind of place booked."
+  },
+  "myReservationsKindLevel": "Level",
+  "@myReservationsKindLevel": {
+    "description": "#2553 My reservations: the kind of place booked."
+  },
+  "myReservationsKindOffice": "Office",
+  "@myReservationsKindOffice": {
+    "description": "#2553 My reservations: the kind of place booked."
+  },
+  "myReservationsKindSeat": "Seat",
+  "@myReservationsKindSeat": {
+    "description": "#2553 My reservations: the kind of place booked."
+  },
+  "myReservationsLoadMore": "Show more",
+  "@myReservationsLoadMore": {
+    "description": "#2553 My reservations: asks the next page."
+  },
+  "myReservationsLoadingMore": "Loading…",
+  "@myReservationsLoadingMore": {
+    "description": "#2553 My reservations: the next page is being read."
+  },
+  "myReservationsMalformed": "This server answered in a form this app does not understand.",
+  "@myReservationsMalformed": {
+    "description": "#2553 My reservations: a malformed or incompatible answer."
+  },
+  "myReservationsMisconfigured": "This server has no settings for personal reads yet.",
+  "@myReservationsMisconfigured": {
+    "description": "#2553 My reservations: the registry lacks the personal rows."
+  },
+  "myReservationsNoWorkspace": "Choose a space to see your reservations on its server.",
+  "@myReservationsNoWorkspace": {
+    "description": "#2553 My reservations: no workspace context to read on."
+  },
+  "myReservationsPeriodLimit": "At most {days} days at a time.",
+  "@myReservationsPeriodLimit": {
+    "description": "#2553 My reservations: the ceiling of one read, under the period.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "myReservationsStatusCancelled": "Cancelled",
+  "@myReservationsStatusCancelled": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsStatusCheckedIn": "Checked in",
+  "@myReservationsStatusCheckedIn": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsStatusCompleted": "Completed",
+  "@myReservationsStatusCompleted": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsStatusReleased": "Released",
+  "@myReservationsStatusReleased": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsStatusReserved": "Reserved",
+  "@myReservationsStatusReserved": {
+    "description": "#2553 My reservations: booking status."
+  },
+  "myReservationsUnnamedPlace": "(unnamed place)",
+  "@myReservationsUnnamedPlace": {
+    "description": "#2553 My reservations: a booked place without a name."
+  },
+  "myReservationsUnsupported": "This server does not list reservations for the personal space yet.",
+  "@myReservationsUnsupported": {
+    "description": "#2553 My reservations: an older host without the read."
   },
   "myVisitsHelp": "Visits you asked for or were admitted to, as a guest. A visit is not a membership.",
   "@myVisitsHelp": {
@@ -17640,6 +17852,18 @@
   },
   "portalCustomised": "Customised",
   "portalDescription": "Description",
+  "portalDirectoryCount": "{name} ({count})",
+  "@portalDirectoryCount": {
+    "description": "A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
   "portalDirectoryUnavailable": "Some directories could not be reached. Results are incomplete.",
   "portalDisconnect": "Disconnect",
@@ -17682,6 +17906,7 @@
   "portalPublished": "Visible in the public directory",
   "portalReachableEmpty": "No one is reachable yet. Search by name to find people.",
   "portalReachableHeading": "People you can write to",
+  "portalRecipientHint": "Type a name: suggestions appear from the first letter",
   "portalRegisterDirectory": "Link a server to the global directory",
   "portalRequestProfile": "Request a workspace profile",
   "portalRequestSent": "Request sent. The workspace will review your profile.",
@@ -17692,6 +17917,7 @@
   "portalSearch": "Search workspaces",
   "portalSendCode": "Send sign-in code",
   "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
+  "portalSuggestionGroup": "Group",
   "portalThisServer": "This server",
   "portalUseCode": "Use an email code",
   "portalUseWorkspaceInfo": "Use workspace information",
@@ -17704,6 +17930,15 @@
     "description": "Subtitle: where that choice is made."
   },
   "portalWebsite": "Website",
+  "portalWriteTo": "Write to {name}",
+  "@portalWriteTo": {
+    "description": "Screen-reader label of a person or group suggested while typing in the new-discussion search (#2472)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "preferencesSaveFailed": "Could not save your preferences. Please try again.",
   "preferencesScopeHint": "Language, appearance and regional formats. Off: edit my defaults.",
   "preferencesUseDefaults": "Use my defaults",
@@ -18890,6 +19125,10 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "pushAllowAction": "Allow",
+  "@pushAllowAction": {
+    "description": "#2559 Settings button: the deliberate action that raises the system notification prompt"
+  },
   "pushCancelledBody": "A reservation was removed by an admin.",
   "@pushCancelledBody": {
     "description": "Push body for the removed-reservation ping — generic, no personal data (#424)"
@@ -18898,6 +19137,14 @@
   "@pushCancelledTitle": {
     "description": "Push title when an admin removed a reservation (#424)"
   },
+  "pushMentionBody": "You were mentioned in a conversation.",
+  "@pushMentionBody": {
+    "description": "#2559 generic push body for a mention: no sender, no conversation name"
+  },
+  "pushMessageBody": "You have a new message.",
+  "@pushMessageBody": {
+    "description": "#2559 generic push body for a new message: no sender, no words of the message"
+  },
   "pushPendingBody": "Someone needs your confirmation.",
   "@pushPendingBody": {
     "description": "Generic push body for a pending confirmation; deliberately carries no personal data"
@@ -18905,6 +19152,10 @@
   "pushPendingTitle": "DesKilo",
   "@pushPendingTitle": {
     "description": "Push notification title (#72) — brand name, usually untranslated"
+  },
+  "pushReminderBody": "A payment reminder is waiting for you.",
+  "@pushReminderBody": {
+    "description": "#2559 generic push body for a payment reminder: never an amount"
   },
   "pushStatusNoTransport": "This build has no push notifications",
   "@pushStatusNoTransport": {
@@ -18922,9 +19173,21 @@
   "@pushStatusNotConfiguredHint": {
     "description": "Fix hint under the not-configured line (#428)"
   },
+  "pushStatusPermissionNeeded": "Notifications are not allowed on this device",
+  "@pushStatusPermissionNeeded": {
+    "description": "#2559 Settings status: push works but this device does not allow notifications"
+  },
+  "pushStatusPermissionNeededHint": "Tap Allow to receive them. Everything stays available in the app either way.",
+  "@pushStatusPermissionNeededHint": {
+    "description": "#2559 hint under the status: the Allow button, and that nothing in the app depends on it"
+  },
   "pushStatusRegistered": "Push notifications are active",
   "@pushStatusRegistered": {
     "description": "Settings status line: push pipeline registered (#424)"
+  },
+  "pushUpdateBody": "You have an update.",
+  "@pushUpdateBody": {
+    "description": "#2559 generic push body for any other or unknown kind"
   },
   "qrBillAcceptancePoint": "Acceptance point",
   "@qrBillAcceptancePoint": {
@@ -21770,6 +22033,10 @@
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupPersonal": "Personal space",
+  "@settingGroupPersonal": {
+    "description": "#2553 settings: Settings group title."
+  },
   "settingGroupPresence": "Presence",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -21885,6 +22152,26 @@
   "settingHintMessagingThreadPollSeconds": "Seconds between two refreshes of an open conversation. Lower values load the server more.",
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
+  },
+  "settingHintPersonalReadConcurrency": "How many servers the personal space asks at once when it gathers your own records. A bound on the device's parallel reads, not on any server.",
+  "@settingHintPersonalReadConcurrency": {
+    "description": "#2553 settings: Setting hint."
+  },
+  "settingHintPersonalReadTimeoutSeconds": "Seconds the personal space waits for one server's answer before it shows that server as unavailable and goes on with the others.",
+  "@settingHintPersonalReadTimeoutSeconds": {
+    "description": "#2553 settings: Setting hint."
+  },
+  "settingHintPersonalReservationMaxWindowDays": "Fixed by the platform: the longest period one read of your reservations may ask for. It bounds the query.",
+  "@settingHintPersonalReservationMaxWindowDays": {
+    "description": "#2553 settings: Setting hint."
+  },
+  "settingHintPersonalReservationPageSize": "How many of your reservations one server returns per page; the next page comes with Show more.",
+  "@settingHintPersonalReservationPageSize": {
+    "description": "#2553 settings: Setting hint."
+  },
+  "settingHintPersonalReservationWindowDays": "Days the personal space shows by default when it lists your reservations. You may choose another period, up to the ceiling.",
+  "@settingHintPersonalReservationWindowDays": {
+    "description": "#2553 settings: Setting hint."
   },
   "settingHintPresenceOnlineWindowMinutes": "Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.",
   "@settingHintPresenceOnlineWindowMinutes": {
@@ -22021,6 +22308,26 @@
   "settingLabelMessagingThreadPollSeconds": "Conversation refresh",
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelPersonalReadConcurrency": "Servers read at once",
+  "@settingLabelPersonalReadConcurrency": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingLabelPersonalReadTimeoutSeconds": "Wait per server",
+  "@settingLabelPersonalReadTimeoutSeconds": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingLabelPersonalReservationMaxWindowDays": "Reservations period ceiling",
+  "@settingLabelPersonalReservationMaxWindowDays": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingLabelPersonalReservationPageSize": "Reservations per page",
+  "@settingLabelPersonalReservationPageSize": {
+    "description": "#2553 settings: Setting label."
+  },
+  "settingLabelPersonalReservationWindowDays": "Reservations period",
+  "@settingLabelPersonalReservationWindowDays": {
+    "description": "#2553 settings: Setting label."
   },
   "settingLabelPresenceOnlineWindowMinutes": "Online window",
   "@settingLabelPresenceOnlineWindowMinutes": {

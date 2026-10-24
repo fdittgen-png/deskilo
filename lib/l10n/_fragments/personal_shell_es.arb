@@ -1,0 +1,15 @@
+{
+  "featurePersonalShellTitle": "Interfaz personal (cinco destinos)",
+  "featurePersonalShellDesc": "Yo en cinco destinos: Resumen, Mis espacios, Descubrir, Mensajes y Mis datos, con una barra lateral en una ventana ancha, un riel en una mediana y una barra en el teléfono. Desactivada, Yo conserva sus cuatro pestañas.",
+  "meTabOverview": "Resumen",
+  "meTabOverviewShort": "Resumen",
+  "meTabSpacesShort": "Espacios",
+  "meTabData": "Mis datos",
+  "meTabDataShort": "Datos",
+  "meContextPersonal": "Personal",
+  "meUtilityAccount": "Confidencialidad y cuenta",
+  "meUtilityHelp": "Ayuda y asistente",
+  "meDataViewReservations": "Reservas",
+  "meDataVisitsEmptyTitle": "Todavía no hay visitas",
+  "meDataVisitsEmptyBody": "Sus reservas permanecen en el calendario de cada espacio; sus visitas como invitado aparecen aquí."
+}

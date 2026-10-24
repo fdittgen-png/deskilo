@@ -177,8 +177,8 @@ void main() {
     await _pump(tester, anaMuted: true, notifications: notifications);
     // Ana's unread note is the only one that would be announced — and
     // her conversation is muted.
-    expect(notifications.shown.where((s) => s.body == 'nine works'),
-        isEmpty);
+    // #2559 — announcements are generic, so nothing at all may ring.
+    expect(notifications.shown, isEmpty);
   });
 
   testWidgets('with the flag off the thread stays a sheet and the face '

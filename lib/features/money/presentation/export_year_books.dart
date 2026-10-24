@@ -52,6 +52,7 @@ Future<ExportSourceBooks?> exportYearBooks(
     ledger: books.ledger,
     repartitions: books.repartitions,
     bookProfiles: books.bookProfiles,
+    revisions: books.revisions,
   );
 }
 

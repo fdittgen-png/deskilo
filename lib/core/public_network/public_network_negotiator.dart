@@ -106,10 +106,20 @@ class PublicNegotiatingServer extends PublicServerProfile {
     required this.capabilities,
     required this.offers,
     required this.unreadable,
+    this.roles = const [],
+    this.roleCapabilities = const [],
   });
   final List<int> protocolVersions;
   final List<String> capabilities;
   final Map<String, PublicOperationOffer> offers;
+
+  /// What the installation is: `personal_home`, `workspace_host` or both.
+  /// Empty for a server from before the roles, which is a combined one.
+  final List<String> roles;
+
+  /// The capability version each held role carries (`personal@1`,
+  /// `workspace@1`), in the server's order.
+  final List<String> roleCapabilities;
 
   /// Operations the server lists with a term this client cannot interpret.
   final Set<String> unreadable;
@@ -175,6 +185,8 @@ PublicServerProfile readPublicDescriptor(Object? raw) {
     capabilities: d['capabilities'] as List<String>? ?? const [],
     offers: offers,
     unreadable: unreadable,
+    roles: d['roles'] as List<String>? ?? const [],
+    roleCapabilities: d['role_capabilities'] as List<String>? ?? const [],
   );
 }
 

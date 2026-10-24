@@ -80,4 +80,33 @@ void main() {
       isFalse,
     );
   });
+
+  test('#2559 C2 — a start never prompts and registers nothing when '
+      'notifications are not allowed', () async {
+    final endpoints = <String>[];
+    final asked = <bool>[];
+    final connector = FirebasePushConnector(
+      tokenSource: () async => 'device-token',
+      permission: ({required ask}) async {
+        asked.add(ask);
+        return ask; // allowed only once the person asked
+      },
+    )..wireEndpointsForTest(endpoints.add);
+
+    expect(await connector.register(), isFalse);
+    expect(endpoints, isEmpty);
+    expect(asked, [false]);
+
+    expect(await connector.register(ask: true), isTrue);
+    expect(endpoints, ['fcm:device-token']);
+    expect(asked, [false, true]);
+  });
+
+  test('#2559 C2 — a tapped message hands on its string data only', () {
+    expect(
+      FirebasePushConnector.openedData(
+          {'kind': 'member_note', 'ws': 'w-1', 'n': 3, 'x': null}),
+      {'kind': 'member_note', 'ws': 'w-1'},
+    );
+  });
 }

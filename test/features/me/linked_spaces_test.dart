@@ -8,11 +8,19 @@
 // that installation's own pinned client (ConnectedSpaceEntry); a refusal is
 // said and changes nothing. The entry itself is proved in
 // test/features/workspace/connected_space_entry_test.dart.
+//
+// #2562 C1b -- a space whose server's sign-in ended offers "Continue with
+// Deskilo": that server's own sign-in, adopted into the pool (proved in
+// test/core/backend/secondary_federation_test.dart and
+// identity_adoption_test.dart), then the space is entered once more.
 import 'dart:async';
 
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/federation_authority.dart';
+import 'package:deskilo/core/backend/federation_handoff.dart';
+import 'package:deskilo/core/backend/secondary_federation.dart';
 import 'package:deskilo/features/me/domain/linked_me_repository.dart';
 import 'package:deskilo/features/me/domain/my_spaces.dart';
 import 'package:deskilo/features/me/domain/visibility.dart';
@@ -167,6 +175,110 @@ void main() {
     expect(find.byType(SnackBar), findsOneWidget);
     expect(router.state.uri.path, isNot('/server'));
   });
+
+  testWidgets('an ended sign-in there: continue with the identity, then the '
+      'space is entered', (tester) async {
+    final entry = _Entry()
+      ..failure = ConnectionFailure(_other, ConnectionFailureReason.expired)
+      ..failOnce = true;
+    final connector = _Connector(SecondaryConnectStatus.connected);
+    final router = await _openLinked(tester, entry, connector: connector);
+    await tester.tap(find.byKey(const ValueKey('linked-space-open')));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/me');
+    await tester.tap(
+      find.byKey(const ValueKey('linked-space-continue-identity')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('identity-connect-continue')));
+    await tester.pumpAndSettle();
+    expect(connector.begun.single.target.url, _other);
+    expect(connector.begun.single.workspaceId, 'remote-1');
+    expect(connector.begun.single.action, SecondaryConnectAction.enter);
+    expect(entry.calls, [(_other, 'remote-1'), (_other, 'remote-1')]);
+    expect(router.state.uri.path, isNot('/me'), reason: 'the space opened');
+  });
+
+  testWidgets('the identity sign-in refused: said in the sheet, nothing is '
+      'entered, the person stays', (tester) async {
+    final entry = _Entry()
+      ..failure = ConnectionFailure(_other, ConnectionFailureReason.expired);
+    final connector = _Connector(SecondaryConnectStatus.failed);
+    final router = await _openLinked(tester, entry, connector: connector);
+    await tester.tap(find.byKey(const ValueKey('linked-space-open')));
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.byKey(const ValueKey('linked-space-continue-identity')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('identity-connect-continue')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('identity-connect-message')),
+        findsOneWidget);
+    expect(entry.calls, [(_other, 'remote-1')], reason: 'not entered again');
+    expect(router.state.uri.path, '/me');
+  });
+
+  testWidgets('an unreachable server offers no sign-in, only the reason', (
+    tester,
+  ) async {
+    final entry = _Entry()
+      ..failure = ConnectionFailure(_other, ConnectionFailureReason.unavailable);
+    await _openLinked(tester, entry);
+    await tester.tap(find.byKey(const ValueKey('linked-space-open')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(SnackBar), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('linked-space-continue-identity')),
+      findsNothing,
+    );
+  });
+}
+
+/// Answers the identity flow with [outcome] once the browser "returns".
+class _Connector implements IdentityConnector {
+  _Connector(this.outcome);
+  final SecondaryConnectStatus outcome;
+  final begun = <SecondaryConnectIntent>[];
+  final _events = StreamController<SecondaryConnectEvent>.broadcast();
+
+  @override
+  Future<IdentityConnectReadiness> assess(BackendEndpoint target) async =>
+      IdentityConnectReadiness(
+        target: target,
+        authority: const FederationAuthority(
+          '00000000-0000-4000-8000-000000002562',
+          'https://home.example/auth/v1',
+        ),
+        identity: const CanonicalIdentity(
+          'https://home.example/auth/v1',
+          'home-user',
+        ),
+      );
+
+  @override
+  Future<String> begin(SecondaryConnectIntent intent) async {
+    begun.add(intent);
+    // After the sheet knows its flow, like a real browser return.
+    unawaited(Future<void>.delayed(Duration.zero, () {
+      _events.add(SecondaryConnectEvent(
+        'flow-1',
+        intent,
+        outcome,
+        failure: outcome == SecondaryConnectStatus.failed
+            ? FederationFailure.expired
+            : null,
+      ));
+    }));
+    return 'flow-1';
+  }
+
+  @override
+  Future<void> cancel(String flow) async {}
+
+  @override
+  Stream<SecondaryConnectEvent> get events => _events.stream;
 }
 
 /// Holds every server's answer until the test releases it, and records the
@@ -197,6 +309,9 @@ class _GatedSpaces implements LinkedMeRepository {
 class _Entry {
   final calls = <(String, String)>[];
   ConnectionFailure? failure;
+
+  /// Only the first entry fails (the sign-in is then renewed).
+  bool failOnce = false;
 }
 
 class _FakeEntry extends ConnectedSpaceEntry {
@@ -209,7 +324,10 @@ class _FakeEntry extends ConnectedSpaceEntry {
   @override
   Future<Workspace?> enter(String source, String workspaceId) async {
     _entry.calls.add((source, workspaceId));
-    if (_entry.failure case final f?) throw f;
+    if (_entry.failure case final f?) {
+      if (_entry.failOnce) _entry.failure = null;
+      throw f;
+    }
     return Workspace(
       id: workspaceId,
       name: 'COWORKONTI',
@@ -221,7 +339,11 @@ class _FakeEntry extends ConnectedSpaceEntry {
   }
 }
 
-Future<GoRouter> _openLinked(WidgetTester tester, _Entry entry) async {
+Future<GoRouter> _openLinked(
+  WidgetTester tester,
+  _Entry entry, {
+  IdentityConnector? connector,
+}) async {
   final linked = FakeLinkedMeRepository()
     ..linkedSpaces[_other] = const [
       LinkedSpace(id: 'remote-1', name: 'COWORKONTI'),
@@ -230,6 +352,7 @@ Future<GoRouter> _openLinked(WidgetTester tester, _Entry entry) async {
     tester,
     linkedMe: linked,
     connectedSources: [_linked(_other)],
+    identityConnector: connector,
     extraOverrides: [connectedSpaceEntryProvider.overrideWith(() => _FakeEntry(entry))],
   );
   await goTo(tester, router, '/me');

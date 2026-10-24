@@ -33,6 +33,7 @@ import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
 import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
+import 'package:deskilo/features/directory/domain/discovery_view.dart';
 import 'package:deskilo/features/directory/domain/saved_place.dart';
 import 'package:deskilo/features/reservations/providers/default_period_controller.dart';
 
@@ -155,6 +156,9 @@ class DemoDevicePrefs {
 
   /// The public pages a visitor bookmarks stay inside the demonstration.
   final InMemorySavedPlacesStore savedPlaces = InMemorySavedPlacesStore();
+
+  /// So is the list-or-map choice and the map provider accepted.
+  final InMemoryDiscoveryViewStore discoveryView = InMemoryDiscoveryViewStore();
 
   /// #780 — which Supabase instance the device talks to. The one a
   /// visitor could change from Settings → Server, and the one the real

@@ -603,8 +603,14 @@ final class WorkspaceDocumentsProvider
 String _$workspaceDocumentsHash() =>
     r'bdab372d7600470af319834cb90cb4d237bf51bb';
 
+/// #2561 L4: open days, hours and closures are the context's calendar; an
+/// edit invalidates [workspaceContextProvider].
+
 @ProviderFor(openWeekdays)
 final openWeekdaysProvider = OpenWeekdaysProvider._();
+
+/// #2561 L4: open days, hours and closures are the context's calendar; an
+/// edit invalidates [workspaceContextProvider].
 
 final class OpenWeekdaysProvider
     extends
@@ -614,6 +620,8 @@ final class OpenWeekdaysProvider
           FutureOr<List<int>>
         >
     with $FutureModifier<List<int>>, $FutureProvider<List<int>> {
+  /// #2561 L4: open days, hours and closures are the context's calendar; an
+  /// edit invalidates [workspaceContextProvider].
   OpenWeekdaysProvider._()
     : super(
         from: null,
@@ -639,7 +647,7 @@ final class OpenWeekdaysProvider
   }
 }
 
-String _$openWeekdaysHash() => r'a009dd9b0d56fe04f6fd083a0511371e97097a80';
+String _$openWeekdaysHash() => r'cbad0c88185c0b4fc7c4624f04cb31aace0c6b61';
 
 /// Booking-granularity rule of the active workspace (#200); flexible
 /// while no workspace is selected or the key is absent.
@@ -1025,7 +1033,7 @@ final class WorkHoursProvider
   }
 }
 
-String _$workHoursHash() => r'3633e9e8c3605565e56f1c45673591d292c221de';
+String _$workHoursHash() => r'b4bfefb76991d00c8421aca4665b157a8d888ec4';
 
 /// #1307 S4 — where the active workspace's working day came from. Watches
 /// [workHoursProvider], so an edit or a reset re-asks.
@@ -1280,7 +1288,7 @@ final class ClosureDaysProvider
   }
 }
 
-String _$closureDaysHash() => r'b4ec3e79a97e7a47c0340ece344f8b12625f590a';
+String _$closureDaysHash() => r'eb3809434b8026558ebb7030a49dff56d1a9d732';
 
 /// Features enabled for the active workspace (#146). Deriving from
 /// [currentWorkspace] is what makes flags "apply on connect": switching

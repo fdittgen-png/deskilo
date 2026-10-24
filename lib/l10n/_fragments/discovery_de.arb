@@ -5,5 +5,14 @@
   "discoveryRemoveBookmark": "Lesezeichen entfernen",
   "discoveryView": "Ansehen",
   "discoverySavedFilter": "Gespeichert",
-  "discoveryNoSaved": "Auf diesem Gerät ist noch kein Arbeitsraum gespeichert."
+  "discoveryNoSaved": "Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.",
+  "discoveryLoadedCount": "Geladene Orte: {loaded} · angezeigt: {shown} · antwortende Verzeichnisse: {answered} von {sources}",
+  "discoveryShowMoreFrom": "Mehr von {source} anzeigen",
+  "discoverySourceFailed": "{source} hat nicht geantwortet. Die bereits angezeigten Orte bleiben.",
+  "discoveryMoreDirectoriesFailed": "Weitere Verzeichnisse konnten nicht geladen werden.",
+  "discoveryMapDisclosureTitle": "Bevor die Karte öffnet",
+  "discoveryMapDisclosureBody": "Die Karte wird von {tiles} gezeichnet, Adressen ohne Koordinaten platziert {geocoder}. Der Kartenanbieter erhält Verbindungsdaten und den angezeigten Bereich: die IP-Adresse Ihres Geräts und den Teil der Karte, den Sie ansehen. Ohne Ihr Weiter wird ihm nichts gesendet.",
+  "discoveryMapRemembered": "Ihre Wahl wird auf diesem Gerät für diesen Kartenanbieter gespeichert.",
+  "discoveryMapContinue": "Weiter zur Karte",
+  "discoveryMapStay": "Bei der Liste bleiben"
 }

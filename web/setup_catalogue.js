@@ -582,6 +582,10 @@ window.SETUP_REGISTRY={
   [
    "dataReport",
    true
+  ],
+  [
+   "personalShell",
+   false
   ]
  ],
  "requires": {

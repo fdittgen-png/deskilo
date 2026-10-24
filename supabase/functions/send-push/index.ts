@@ -23,33 +23,200 @@ const db = (): SupabaseClient =>
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
 
-// Generic English notification text per kind (the 0012 privacy doctrine:
-// no names, no times; a foregrounded app replaces this with its own
-// localized notification).
-const TEXTS: Record<string, { title: string; body: string }> = {
-  pending_request: {
-    title: "DesKilo",
-    body: "Someone needs your confirmation.",
+// #2559 C2 -- what a notification SHOWS: the app's name and a generic line
+// per kind, in the recipient's own language. Never a name, an amount, a
+// time, a place or a message's words (the 0012 privacy doctrine): the same
+// text is what a locked screen, a watch or a notification log keeps.
+export const SUPPORTED_LOCALES = ["en", "fr", "de", "es", "it"] as const;
+export type Locale = typeof SUPPORTED_LOCALES[number];
+
+const TITLE = "DesKilo";
+
+/** The fallback for a kind this table does not know. */
+export const GENERIC_KIND = "update";
+
+const BODIES: Record<Locale, Record<string, string>> = {
+  en: {
+    pending_request: "Someone needs your confirmation.",
+    reservation_cancelled: "A reservation was removed by an admin.",
+    member_note: "You have a new message.",
+    // #2216 -- someone named you in a group conversation.
+    member_mention: "You were mentioned in a conversation.",
+    // #726 -- automatic dunning: the subject member, nobody else.
+    invoice_reminder: "A payment reminder is waiting for you.",
+    update: "You have an update.",
   },
-  reservation_cancelled: {
-    title: "Reservation removed",
-    body: "A reservation was removed by an admin.",
+  fr: {
+    pending_request: "Quelqu'un attend votre confirmation.",
+    reservation_cancelled: "Une réservation a été retirée par un admin.",
+    member_note: "Vous avez un nouveau message.",
+    member_mention: "Vous avez été mentionné dans une conversation.",
+    invoice_reminder: "Un rappel de paiement vous attend.",
+    update: "Vous avez du nouveau.",
   },
-  member_note: {
-    title: "DesKilo",
-    body: "You have a new message.",
+  de: {
+    pending_request: "Jemand wartet auf Ihre Bestätigung.",
+    reservation_cancelled: "Eine Reservierung wurde von einem Admin entfernt.",
+    member_note: "Sie haben eine neue Nachricht.",
+    member_mention: "Sie wurden in einer Unterhaltung erwähnt.",
+    invoice_reminder: "Eine Zahlungserinnerung wartet auf Sie.",
+    update: "Es gibt etwas Neues für Sie.",
   },
-  // #2216 — someone named you in a group conversation.
-  member_mention: {
-    title: "DesKilo",
-    body: "You were mentioned in a conversation.",
+  es: {
+    pending_request: "Alguien necesita su confirmación.",
+    reservation_cancelled: "Un admin eliminó una reserva.",
+    member_note: "Tiene un mensaje nuevo.",
+    member_mention: "Le han mencionado en una conversación.",
+    invoice_reminder: "Tiene un recordatorio de pago.",
+    update: "Tiene una novedad.",
   },
-  // #726 — automatic dunning: the subject member, nobody else.
-  invoice_reminder: {
-    title: "DesKilo",
-    body: "A payment reminder is waiting for you.",
+  it: {
+    pending_request: "Qualcuno attende la sua conferma.",
+    reservation_cancelled: "Una prenotazione è stata rimossa da un admin.",
+    member_note: "Ha un nuovo messaggio.",
+    member_mention: "È stato menzionato in una conversazione.",
+    invoice_reminder: "La attende un promemoria di pagamento.",
+    update: "Ha una novità.",
   },
 };
+
+/** The visible text of [kind] in [locale]: generic, whatever the kind. */
+export function notificationText(
+  kind: string,
+  locale: Locale,
+): { title: string; body: string } {
+  const bodies = BODIES[locale] ?? BODIES.en;
+  return { title: TITLE, body: bodies[kind] ?? bodies[GENERIC_KIND] };
+}
+
+/** The first supported language among the member's own override, their
+ * profile's language and the workspace's language; English otherwise. */
+export function recipientLocale(...candidates: (string | null | undefined)[]): Locale {
+  for (const c of candidates) {
+    const code = (c ?? "").trim().slice(0, 2).toLowerCase();
+    if ((SUPPORTED_LOCALES as readonly string[]).includes(code)) return code as Locale;
+  }
+  return "en";
+}
+
+/** Each recipient's language. A read that fails leaves English: the text is
+ * generic either way, and a lost notification is worse than an English one. */
+export async function recipientLocales(
+  // deno-lint-ignore no-explicit-any
+  supabase: any,
+  memberIds: string[],
+  workspaceId: string,
+): Promise<Map<string, Locale>> {
+  const out = new Map<string, Locale>();
+  try {
+    const { data: ws } = await supabase
+      .from("workspaces")
+      .select("default_locale")
+      .eq("id", workspaceId)
+      .maybeSingle();
+    const members: { id: string; user_id: string | null; preferred_locale_override: string | null }[] = [];
+    for (const ids of chunked([...new Set(memberIds)])) {
+      const { data } = await supabase
+        .from("members")
+        .select("id, user_id, preferred_locale_override")
+        .in("id", ids);
+      members.push(...(data ?? []));
+    }
+    const userIds = [...new Set(members.map((m) => m.user_id).filter((u): u is string => !!u))];
+    const profileLocale = new Map<string, string>();
+    for (const ids of chunked(userIds)) {
+      const { data } = await supabase
+        .from("profiles")
+        .select("id, preferred_locale")
+        .in("id", ids);
+      for (const p of (data ?? []) as { id: string; preferred_locale: string }[]) {
+        profileLocale.set(p.id, p.preferred_locale);
+      }
+    }
+    for (const m of members) {
+      out.set(
+        m.id,
+        recipientLocale(
+          m.preferred_locale_override,
+          m.user_id ? profileLocale.get(m.user_id) : null,
+          ws?.default_locale,
+        ),
+      );
+    }
+  } catch {
+    // English below.
+  }
+  return out;
+}
+
+/** #2559 C2 -- what a notification CARRIES: an opaque, qualified reference
+ * to the record it is about (which installation, which workspace there,
+ * which kind of record, its id), never the record's content, a bearer, an
+ * invitation secret or a signed document address. The app resolves it
+ * against its own verified contexts before it opens anything. */
+export const REFERENCE_VERSION = "1";
+
+export type NotificationReference = {
+  installationId: string;
+  workspaceId: string;
+  objectKind: "event" | "note";
+  objectId: string;
+};
+
+export function referenceData(
+  kind: string,
+  ref: NotificationReference | null,
+): Record<string, string> {
+  if (!ref) return { v: REFERENCE_VERSION, kind };
+  return {
+    v: REFERENCE_VERSION,
+    kind,
+    src: "w",
+    inst: ref.installationId,
+    ws: ref.workspaceId,
+    ref_kind: ref.objectKind,
+    ref_id: ref.objectId,
+  };
+}
+
+/** One FCM v1 message: generic visible text, the reference as data, the
+ * badge when known. Nothing else reaches the device. */
+export function buildMessage(input: {
+  token: string;
+  kind: string;
+  locale: Locale;
+  reference: NotificationReference | null;
+  badge?: number;
+}): { message: Record<string, unknown> } {
+  const text = notificationText(input.kind, input.locale);
+  return {
+    message: {
+      token: input.token,
+      notification: { title: text.title, body: text.body },
+      data: referenceData(input.kind, input.reference),
+      ...(input.badge === undefined ? {} : { apns: { payload: { aps: { badge: input.badge } } } }),
+    },
+  };
+}
+
+/** This installation's own id (0269). Unreadable -> no reference: the
+ * notification still rings and its tap opens a neutral landing. */
+export async function installationId(
+  // deno-lint-ignore no-explicit-any
+  supabase: any,
+): Promise<string | null> {
+  try {
+    const { data } = await supabase
+      .from("installation_identity")
+      .select("installation_id")
+      .limit(1)
+      .maybeSingle();
+    const id = data?.installation_id;
+    return typeof id === "string" && id.length > 0 ? id : null;
+  } catch {
+    return null;
+  }
+}
 
 /** #2020 — every request to Google has a deadline that covers the body
  * too (the abort also ends a stalled body read). */
@@ -256,17 +423,19 @@ export async function fcmAccessToken(sa: {
   return (await res.json()).access_token as string;
 }
 
-export async function handle(req: Request): Promise<Response> {
+export async function handle(
+  req: Request,
+  supabase: SupabaseClient = db(),
+): Promise<Response> {
   try {
-    return await deliver(req);
+    return await deliver(req, supabase);
   } catch (e) {
     if ((e as Error).message !== "recipient query failed") throw e;
     return Response.json({ error: "recipients unknown" }, { status: 502 });
   }
 }
 
-async function deliver(req: Request): Promise<Response> {
-  const supabase = db();
+async function deliver(req: Request, supabase: SupabaseClient): Promise<Response> {
   // #1614 — system-only: a delegated (MCP) token never triggers a push.
   const delegated = refuseDelegated(req);
   if (delegated) return delegated;
@@ -283,6 +452,9 @@ async function deliver(req: Request): Promise<Response> {
 
   let kind: string;
   let recipients: { id: string }[];
+  // #2559 C2 -- the record the notification is about, by id only.
+  let workspaceId: string;
+  let object: { kind: "event" | "note"; id: string };
   // #2216 — the members a group message mentions (0391; empty while the
   // workspace has messageMentions off).
   let mentioned = new Set<string>();
@@ -299,6 +471,8 @@ async function deliver(req: Request): Promise<Response> {
       .maybeSingle();
     if (!note) return Response.json({ error: "unknown note" }, { status: 404 });
     kind = "member_note";
+    workspaceId = note.workspace_id;
+    object = { kind: "note", id: note.id };
     if (note.to_member_id) {
       recipients = [{ id: note.to_member_id }];
     } else if (note.conversation_id) {
@@ -367,6 +541,8 @@ async function deliver(req: Request): Promise<Response> {
       : null;
     if (!eventKind) return Response.json({ skipped: "kind not pushed" });
     kind = eventKind;
+    workspaceId = event.workspace_id;
+    object = { kind: "event", id: event.id };
 
     // Recipients — the 0082 rules, re-derived here for fcm rows.
     const members = await readAll<{ id: string; is_admin: boolean; is_owner: boolean }>(
@@ -413,18 +589,28 @@ async function deliver(req: Request): Promise<Response> {
 
   // iOS/macOS badge: each recipient's live pending count, once per member.
   const badges = await badgeCounts(supabase, endpoints.map((ep) => ep.member_id));
+  const locales = await recipientLocales(
+    supabase,
+    endpoints.map((ep) => ep.member_id),
+    workspaceId,
+  );
+  const installation = await installationId(supabase);
+  const reference: NotificationReference | null = installation
+    ? {
+      installationId: installation,
+      workspaceId,
+      objectKind: object.kind,
+      objectId: object.id,
+    }
+    : null;
   const results = await deliverAll(endpoints, async (ep) => {
-    const badge = badges.get(ep.member_id);
-    const epKind = mentioned.has(ep.member_id) ? "member_mention" : kind;
-    const text = TEXTS[epKind];
-    const message = {
-      message: {
-        token: ep.endpoint.slice(4),
-        notification: { title: text.title, body: text.body },
-        data: { kind: epKind },
-        ...(badge === undefined ? {} : { apns: { payload: { aps: { badge } } } }),
-      },
-    };
+    const message = buildMessage({
+      token: ep.endpoint.slice(4),
+      kind: mentioned.has(ep.member_id) ? "member_mention" : kind,
+      locale: locales.get(ep.member_id) ?? "en",
+      reference,
+      badge: badges.get(ep.member_id),
+    });
     try {
       const res = await fetch(
         `https://fcm.googleapis.com/v1/projects/${sa.project_id}/messages:send`,
@@ -462,4 +648,4 @@ async function deliver(req: Request): Promise<Response> {
   return Response.json({ ...tally, failed: results.length - tally.sent });
 }
 
-if (import.meta.main) Deno.serve(handle);
+if (import.meta.main) Deno.serve((req) => handle(req));

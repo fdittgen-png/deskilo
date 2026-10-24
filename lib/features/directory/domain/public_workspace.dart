@@ -46,40 +46,6 @@ class PublicWorkspace {
           .toList();
 }
 
-class DirectoryPage {
-  const DirectoryPage(
-    this.workspaces, {
-    this.unavailable = const [],
-    this.incompatible = const [],
-    this.moreSources = false,
-    this.moreWorkspaces = false,
-  });
-  final List<PublicWorkspace> workspaces;
-
-  /// Sources that could not be reached.
-  final List<String> unavailable;
-
-  /// #1847 — sources that answered with a card this version cannot honour
-  /// (an unknown required term or state). Their other cards still show.
-  final List<String> incompatible;
-  final bool moreSources, moreWorkspaces;
-}
-
-/// #1847 — the PUBLIC discovery interface: anonymous reads of deliberately
-/// published cards, on this installation and every registered one. It
-/// holds no session and offers no write.
-abstract interface class PublicDiscoveryRepository {
-  Future<DirectoryPage> search(
-    String query, {
-    int sourcePage = 0,
-    int workspacePage = 0,
-  });
-
-  /// The card as its installation publishes it NOW; null when it is no
-  /// longer published.
-  Future<PublicWorkspace?> detail(PublicWorkspace card);
-}
-
 /// #2086 — the public fields that have a counterpart in the workspace's
 /// own information: until the owner overrides one, it follows that
 /// information. Every other public field is only what the owner typed.

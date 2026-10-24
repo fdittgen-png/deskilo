@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/public_network/public_network_negotiator.dart';
 import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
 import 'package:deskilo/features/directory/domain/directory_location.dart';
+import 'package:deskilo/features/directory/domain/discovery_paging.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/account_messenger_screen.dart';
@@ -274,6 +275,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(locate);
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('directory-map-continue')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
     expect(find.byType(DirectoryMap), findsOneWidget);
     expect(tester.getTopLeft(find.byType(DirectoryMap)).dy, greaterThanOrEqualTo(0));
     expect(find.textContaining('Location unavailable'), findsOneWidget);
@@ -397,7 +401,7 @@ void main() {
         find.byKey(const ValueKey('directory-incompatible')),
         findsOneWidget,
       );
-      expect(find.textContaining('https://newer.example'), findsOneWidget);
+      expect(find.textContaining('https://host.example'), findsOneWidget);
       await tester.tap(
         find.byKey(const ValueKey('directory-view-https://host.example/open')),
       );
@@ -495,15 +499,12 @@ void main() {
 
 class _IncompatibleDirectory extends FakeDirectoryRepository {
   @override
-  Future<DirectoryPage> search(
+  Future<SourceCardsPage> workspaces(
+    DirectorySource source,
     String query, {
-    int sourcePage = 0,
-    int workspacePage = 0,
+    int page = 0,
   }) async {
-    final page = await super.search(query, workspacePage: workspacePage);
-    return DirectoryPage(
-      page.workspaces,
-      incompatible: const ['https://newer.example'],
-    );
+    final cards = await super.workspaces(source, query, page: page);
+    return SourceCardsPage(cards.cards, incompatible: true, more: false);
   }
 }

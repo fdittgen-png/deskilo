@@ -3093,10 +3093,19 @@
   "directoryTitle": "Mitglieder",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
   "discoveryBookmark": "Merken",
+  "discoveryLoadedCount": "Geladene Orte: {loaded} · angezeigt: {shown} · antwortende Verzeichnisse: {answered} von {sources}",
+  "discoveryMapContinue": "Weiter zur Karte",
+  "discoveryMapDisclosureBody": "Die Karte wird von {tiles} gezeichnet, Adressen ohne Koordinaten platziert {geocoder}. Der Kartenanbieter erhält Verbindungsdaten und den angezeigten Bereich: die IP-Adresse Ihres Geräts und den Teil der Karte, den Sie ansehen. Ohne Ihr Weiter wird ihm nichts gesendet.",
+  "discoveryMapDisclosureTitle": "Bevor die Karte öffnet",
+  "discoveryMapRemembered": "Ihre Wahl wird auf diesem Gerät für diesen Kartenanbieter gespeichert.",
+  "discoveryMapStay": "Bei der Liste bleiben",
+  "discoveryMoreDirectoriesFailed": "Weitere Verzeichnisse konnten nicht geladen werden.",
   "discoveryNoSaved": "Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.",
   "discoveryRemoveBookmark": "Lesezeichen entfernen",
   "discoverySaved": "Auf diesem Gerät gespeichert",
   "discoverySavedFilter": "Gespeichert",
+  "discoveryShowMoreFrom": "Mehr von {source} anzeigen",
+  "discoverySourceFailed": "{source} hat nicht geantwortet. Die bereits angezeigten Orte bleiben.",
   "discoveryTitle": "Arbeitsräume entdecken",
   "discoveryView": "Ansehen",
   "documentsAdd": "Dokument hinzufügen",
@@ -4899,6 +4908,8 @@
   "@featurePersonalInfoDesc": {
     "description": "#886 personal-information form / feature: featurePersonalInfoDesc"
   },
+  "featurePersonalShellDesc": "Ich als fünf Ziele: Überblick, Meine Spaces, Entdecken, Nachrichten und Meine Daten, mit einer Seitenleiste in einem breiten Fenster, einer schmalen Leiste in einem mittleren und einer Leiste unten auf dem Telefon. Ausgeschaltet behält Ich seine vier Tabs.",
+  "featurePersonalShellTitle": "Persönliche Oberfläche (fünf Ziele)",
   "featurePlaceFeedbackDesc": "Mitglieder markieren Plätze, Tische, Büros und Etagen als Favoriten und bewerten sie mit 0 bis 5 Sternen. Ein Favorit gehört dem Mitglied; eine Bewertung zeigt den Durchschnitt und die Anzahl, nie wer. Ein Assistent kann die Favoriten auflisten, einen buchen und eine Bewertung eintragen. Aus blendet Herzen und Sterne aus und weist das Schreiben ab; sonst hängt nichts daran.",
   "@featurePlaceFeedbackDesc": {
     "description": "#2185 place feedback"
@@ -8605,7 +8616,11 @@
   "meAccountInMe": "Mein Konto ist unter Ich",
   "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören Ihnen – in jedem Space.",
   "meAddressSaveFailed": "Ihre Adresse konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "meContextPersonal": "Persönlich",
   "meCreateSpace": "Space gründen",
+  "meDataViewReservations": "Buchungen",
+  "meDataVisitsEmptyBody": "Ihre Buchungen bleiben im Kalender jedes Spaces; Ihre Besuche als Gast erscheinen hier.",
+  "meDataVisitsEmptyTitle": "Noch keine Besuche",
   "meFinanceGlanceOwed": "Zu zahlen: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -8665,10 +8680,17 @@
   "meSpacePending": "Wartet auf Freigabe",
   "meSpacesNoMatch": "Kein Space passt.",
   "meSpacesSearch": "Meine Spaces durchsuchen",
+  "meTabData": "Meine Daten",
+  "meTabDataShort": "Daten",
   "meTabDiscover": "Entdecken",
   "meTabHome": "Start",
   "meTabMe": "Ich",
   "meTabMessages": "Nachrichten",
+  "meTabOverview": "Überblick",
+  "meTabOverviewShort": "Überblick",
+  "meTabSpacesShort": "Spaces",
+  "meUtilityAccount": "Vertraulichkeit und Konto",
+  "meUtilityHelp": "Hilfe und Assistent",
   "meWhereSpacesLive": "Wo meine Spaces liegen",
   "memberAccountTitle": "Mein Konto",
   "@memberAccountTitle": {
@@ -9142,6 +9164,30 @@
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
   },
+  "myReservationsChangePeriod": "Zeitraum ändern",
+  "myReservationsCheckedInAt": "Eingecheckt um {time}",
+  "myReservationsCheckedOutAt": "Ausgecheckt um {time}",
+  "myReservationsEmpty": "Keine Reservierungen in diesem Zeitraum.",
+  "myReservationsFailed": "Ihre Reservierungen konnten nicht gelesen werden. Versuchen Sie es gleich noch einmal.",
+  "myReservationsForbidden": "Dieser Server hat es abgelehnt, Ihre Reservierungen aufzulisten.",
+  "myReservationsInvalid": "Dieser Server hat den angefragten Zeitraum abgelehnt.",
+  "myReservationsKindDesk": "Tisch",
+  "myReservationsKindLevel": "Etage",
+  "myReservationsKindOffice": "Raum",
+  "myReservationsKindSeat": "Platz",
+  "myReservationsLoadMore": "Mehr anzeigen",
+  "myReservationsLoadingMore": "Wird geladen…",
+  "myReservationsMalformed": "Dieser Server hat in einer Form geantwortet, die diese App nicht versteht.",
+  "myReservationsMisconfigured": "Dieser Server hat noch keine Einstellungen für persönliche Lesezugriffe.",
+  "myReservationsNoWorkspace": "Wählen Sie einen Space, um Ihre Reservierungen auf seinem Server zu sehen.",
+  "myReservationsPeriodLimit": "Höchstens {days} Tage auf einmal.",
+  "myReservationsStatusCancelled": "Storniert",
+  "myReservationsStatusCheckedIn": "Eingecheckt",
+  "myReservationsStatusCompleted": "Abgeschlossen",
+  "myReservationsStatusReleased": "Freigegeben",
+  "myReservationsStatusReserved": "Reserviert",
+  "myReservationsUnnamedPlace": "(Platz ohne Namen)",
+  "myReservationsUnsupported": "Dieser Server listet Reservierungen für den persönlichen Bereich noch nicht auf.",
   "myVisitsHelp": "Besuche, die Sie als Gast angefragt haben oder zu denen Sie zugelassen wurden. Ein Besuch ist keine Mitgliedschaft.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
@@ -10091,6 +10137,7 @@
   "portalCopyEmail": "E-Mail kopieren",
   "portalCustomised": "Angepasst",
   "portalDescription": "Beschreibung",
+  "portalDirectoryCount": "{name} ({count})",
   "portalDirectoryIncompatible": "Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.",
   "portalDirectoryUnavailable": "Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.",
   "portalDisconnect": "Trennen",
@@ -10124,6 +10171,7 @@
   "portalPublished": "Im öffentlichen Verzeichnis sichtbar",
   "portalReachableEmpty": "Noch ist niemand erreichbar. Suchen Sie nach einem Namen, um Personen zu finden.",
   "portalReachableHeading": "Personen, denen Sie schreiben können",
+  "portalRecipientHint": "Geben Sie einen Namen ein: Vorschläge erscheinen ab dem ersten Buchstaben",
   "portalRegisterDirectory": "Server mit dem globalen Verzeichnis verbinden",
   "portalRequestProfile": "Workspace-Profil beantragen",
   "portalRequestSent": "Anfrage gesendet. Der Workspace prüft Ihr Profil.",
@@ -10134,12 +10182,14 @@
   "portalSearch": "Workspaces suchen",
   "portalSendCode": "Anmeldecode senden",
   "portalSourceUnavailable": "Ein Server ist nicht erreichbar. Diese Übersicht ist unvollständig. Zum Wiederholen antippen.",
+  "portalSuggestionGroup": "Gruppe",
   "portalThisServer": "Dieser Server",
   "portalUseCode": "E-Mail-Code verwenden",
   "portalUseWorkspaceInfo": "Arbeitsbereichsangaben verwenden",
   "portalVisibilityLink": "Wer mich finden und mir schreiben darf",
   "portalVisibilityLinkBody": "Festgelegt unter Ich › Wer mich sieht.",
   "portalWebsite": "Website",
+  "portalWriteTo": "{name} schreiben",
   "preferencesSaveFailed": "Ihre Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
   "preferencesScopeHint": "Sprache, Darstellung und regionale Formate. Aus: meine Standardwerte bearbeiten.",
   "preferencesUseDefaults": "Meine Standardwerte verwenden",
@@ -11005,10 +11055,14 @@
   "@purchasesTotal": {
     "description": "#2573 purchases"
   },
+  "pushAllowAction": "Erlauben",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "pushCancelledTitle": "Reservierung entfernt",
+  "pushMentionBody": "Sie wurden in einer Unterhaltung erwähnt.",
+  "pushMessageBody": "Sie haben eine neue Nachricht.",
   "pushPendingBody": "Jemand wartet auf Ihre Bestätigung.",
   "pushPendingTitle": "DesKilo",
+  "pushReminderBody": "Eine Zahlungserinnerung wartet auf Sie.",
   "pushStatusNoTransport": "Diese Version hat keine Push-Benachrichtigungen",
   "@pushStatusNoTransport": {
     "description": "#716 - F-Droid build without a push transport"
@@ -11019,7 +11073,10 @@
   },
   "pushStatusNotConfigured": "Push-Benachrichtigungen sind noch nicht eingerichtet",
   "pushStatusNotConfiguredHint": "Der Inhaber schließt die Firebase-Einrichtung ab (push-setup-Anleitung).",
+  "pushStatusPermissionNeeded": "Benachrichtigungen sind auf diesem Gerät nicht erlaubt",
+  "pushStatusPermissionNeededHint": "Tippen Sie auf Erlauben, um sie zu erhalten. In der App bleibt in jedem Fall alles verfügbar.",
   "pushStatusRegistered": "Push-Benachrichtigungen sind aktiv",
+  "pushUpdateBody": "Es gibt etwas Neues für Sie.",
   "qrBillAcceptancePoint": "Annahmestelle",
   "@qrBillAcceptancePoint": {
     "description": "#2360: qrBillAcceptancePoint"
@@ -13356,6 +13413,7 @@
   "@settingGroupMessaging": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupPersonal": "Persönlicher Bereich",
   "settingGroupPresence": "Anwesenheit",
   "@settingGroupPresence": {
     "description": "#2486 settings: Settings group title."
@@ -13472,6 +13530,11 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalReadConcurrency": "Wie viele Server der persönliche Bereich gleichzeitig abfragt, wenn er Ihre eigenen Daten zusammenträgt. Eine Grenze für die parallelen Lesezugriffe des Geräts, nicht für einen Server.",
+  "settingHintPersonalReadTimeoutSeconds": "Sekunden, die der persönliche Bereich auf die Antwort eines Servers wartet, bevor er ihn als nicht erreichbar anzeigt und mit den anderen fortfährt.",
+  "settingHintPersonalReservationMaxWindowDays": "Von der Plattform festgelegt: der längste Zeitraum, den ein Lesezugriff auf Ihre Reservierungen anfragen darf. Er begrenzt die Abfrage.",
+  "settingHintPersonalReservationPageSize": "Wie viele Ihrer Reservierungen ein Server je Seite zurückgibt; die nächste Seite kommt mit Mehr anzeigen.",
+  "settingHintPersonalReservationWindowDays": "Tage, die der persönliche Bereich standardmäßig anzeigt, wenn er Ihre Reservierungen auflistet. Sie können einen anderen Zeitraum wählen, bis zur Obergrenze.",
   "settingHintPresenceOnlineWindowMinutes": "Minuten nach dem letzten Lebenszeichen, in denen eine Person noch als online gilt. Über dem 2-Minuten-Herzschlag halten.",
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
@@ -13608,6 +13671,11 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalReadConcurrency": "Gleichzeitig gelesene Server",
+  "settingLabelPersonalReadTimeoutSeconds": "Wartezeit je Server",
+  "settingLabelPersonalReservationMaxWindowDays": "Obergrenze des Reservierungszeitraums",
+  "settingLabelPersonalReservationPageSize": "Reservierungen je Seite",
+  "settingLabelPersonalReservationWindowDays": "Zeitraum der Reservierungen",
   "settingLabelPresenceOnlineWindowMinutes": "Online-Fenster",
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
