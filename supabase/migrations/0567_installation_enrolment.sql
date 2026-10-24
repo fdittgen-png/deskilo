@@ -252,4 +252,4 @@ on conflict (key) do nothing;
 -- END GENERATED SEED
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(567);

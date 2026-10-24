@@ -12992,6 +12992,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meNoSpaceTitle => 'Sie sind noch in keinem Space';
 
   @override
+  String get meRefDefault => 'Standard';
+
+  @override
+  String get meRefNoRelationship => 'Keine Mitgliedschaft auf diesem Server';
+
+  @override
+  String get meRefUnnamed => 'Ein Space auf einem anderen Server';
+
+  @override
+  String get meRefUnverified => 'Mitgliedschaft noch nicht bestätigt';
+
+  @override
+  String get meRefsTitle => 'Spaces anderswo';
+
+  @override
+  String get meRefsUnavailable =>
+      'Ihre Spaces anderswo konnten nicht gelesen werden.';
+
+  @override
   String get meSectionMine => 'Mein Verlauf und meine Daten';
 
   @override
@@ -25398,6 +25417,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityMySpaces => 'Mitglieder meiner Spaces';
 
   @override
+  String get visibilityNoSpaces =>
+      'Sie sind noch in keinem Space. Wählen Sie ein anderes Publikum.';
+
+  @override
   String get visibilityNobody => 'Niemand';
 
   @override
@@ -25455,7 +25478,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilitySignedIn => 'Alle Angemeldeten';
 
   @override
+  String get visibilitySpaceUnlisted =>
+      'Ein Space, der nicht mehr aufgeführt ist';
+
+  @override
+  String get visibilitySpacesUnavailable =>
+      'Ihre Spaces lassen sich gerade nicht auflisten.';
+
+  @override
   String get visibilityTitle => 'Wer mich sieht';
+
+  @override
+  String get visibilityUnavailable =>
+      'Wer was von Ihnen sieht, lässt sich gerade nicht lesen. Es wurde nichts geändert.';
 
   @override
   String get visibilityWidenAction => 'Erweitern';

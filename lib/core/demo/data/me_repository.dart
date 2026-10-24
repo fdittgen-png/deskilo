@@ -10,8 +10,10 @@
 import 'package:deskilo/features/me/domain/linked_me_repository.dart';
 import 'package:deskilo/features/me/domain/me_repository.dart';
 import 'package:deskilo/features/me/domain/my_spaces.dart';
+import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
 import 'package:deskilo/features/me/domain/public_person.dart';
 import 'package:deskilo/features/me/domain/visibility.dart';
+import 'package:deskilo/features/me/domain/workspace_access_repository.dart';
 
 /// One account's public facts, before any audience is applied.
 class FakeAccount {
@@ -33,7 +35,8 @@ class FakeAccount {
   MyVisibility visibility = MyVisibility.defaults;
 }
 
-class FakeMeRepository implements MeRepository {
+/// #2563 — also the [WorkspaceAccessRepository]: one in-memory account.
+class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
   FakeMeRepository({String Function()? currentUser, Map<String, FakeAccount>? accounts})
       : _currentUser = currentUser ?? (() => 'user-1'),
         accounts = accounts ??
@@ -55,8 +58,25 @@ class FakeMeRepository implements MeRepository {
   /// When set, [leaveSpace] and [setVisibility] throw it.
   Exception? failure;
 
+  /// #2558 — when set, [myVisibility] throws it: the personal home cannot
+  /// read the saved settings. Clearing it lets a retry succeed.
+  Exception? readFailure;
+
+  /// How many times [myVisibility] was asked.
+  int visibilityReads = 0;
+
   FakeAccount get _me => accounts.putIfAbsent(
       _currentUser(), () => FakeAccount(name: _currentUser()));
+
+  /// What [myWorkspaceRefs] answers; when [refsFailure] is set it throws.
+  PersonalWorkspaceRefs workspaceRefs = PersonalWorkspaceRefs.none;
+  Exception? refsFailure;
+
+  @override
+  Future<PersonalWorkspaceRefs> myWorkspaceRefs() async {
+    if (refsFailure != null) throw refsFailure!;
+    return workspaceRefs;
+  }
 
   @override
   Future<void> leaveSpace(String workspaceId) async {
@@ -65,8 +85,11 @@ class FakeMeRepository implements MeRepository {
   }
 
   @override
-  Future<MyVisibility> myVisibility() async =>
-      _me.visibility.withAbout(_me.profession, _me.bio);
+  Future<MyVisibility> myVisibility() async {
+    visibilityReads++;
+    if (readFailure != null) throw readFailure!;
+    return _me.visibility.withAbout(_me.profession, _me.bio);
+  }
 
   @override
   Future<void> setAbout(String profession, String bio) async {

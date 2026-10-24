@@ -60,6 +60,62 @@ final class MeRepositoryProvider
 
 String _$meRepositoryHash() => r'11082a2caa0013b3781489e7139fc7c3b0e4f3f3';
 
+/// #2563 C1 — the account's calls inside a workspace (leaving it), on the
+/// verified host of that workspace, never on the personal client.
+
+@ProviderFor(workspaceAccessRepository)
+final workspaceAccessRepositoryProvider = WorkspaceAccessRepositoryProvider._();
+
+/// #2563 C1 — the account's calls inside a workspace (leaving it), on the
+/// verified host of that workspace, never on the personal client.
+
+final class WorkspaceAccessRepositoryProvider
+    extends
+        $FunctionalProvider<
+          WorkspaceAccessRepository,
+          WorkspaceAccessRepository,
+          WorkspaceAccessRepository
+        >
+    with $Provider<WorkspaceAccessRepository> {
+  /// #2563 C1 — the account's calls inside a workspace (leaving it), on the
+  /// verified host of that workspace, never on the personal client.
+  WorkspaceAccessRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'workspaceAccessRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$workspaceAccessRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<WorkspaceAccessRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  WorkspaceAccessRepository create(Ref ref) {
+    return workspaceAccessRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WorkspaceAccessRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WorkspaceAccessRepository>(value),
+    );
+  }
+}
+
+String _$workspaceAccessRepositoryHash() =>
+    r'085d4bb9cb69c3526f553b2f5d2768f3dbe99478';
+
 /// The account layer's calls on the linked servers, each with that server's
 /// own session. The readers below ask it nothing while no server is linked.
 
@@ -155,14 +211,18 @@ final class MeActionsProvider
   }
 }
 
-String _$meActionsHash() => r'bf35ed75a5451b3242e41831b11644d5b28925ef';
+String _$meActionsHash() => r'8bff45ddd403d2eab12654329fe47cc36896182f';
 
-/// Who sees what of me, as the server holds it.
+/// Who sees what of me, as the personal home holds it. #2558 — read on the
+/// personal client with no workspace involved; a failure is an error the
+/// editor names, never the defaults shown as if they were saved.
 
 @ProviderFor(myVisibility)
 final myVisibilityProvider = MyVisibilityProvider._();
 
-/// Who sees what of me, as the server holds it.
+/// Who sees what of me, as the personal home holds it. #2558 — read on the
+/// personal client with no workspace involved; a failure is an error the
+/// editor names, never the defaults shown as if they were saved.
 
 final class MyVisibilityProvider
     extends
@@ -172,12 +232,14 @@ final class MyVisibilityProvider
           FutureOr<MyVisibility>
         >
     with $FutureModifier<MyVisibility>, $FutureProvider<MyVisibility> {
-  /// Who sees what of me, as the server holds it.
+  /// Who sees what of me, as the personal home holds it. #2558 — read on the
+  /// personal client with no workspace involved; a failure is an error the
+  /// editor names, never the defaults shown as if they were saved.
   MyVisibilityProvider._()
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: meReadRetry,
         name: r'myVisibilityProvider',
         isAutoDispose: true,
         dependencies: null,
@@ -199,7 +261,7 @@ final class MyVisibilityProvider
   }
 }
 
-String _$myVisibilityHash() => r'40b833db1e3a7393206add0fb996ff27a8868f21';
+String _$myVisibilityHash() => r'66aac5d1ddba65f526a9a4bcf9fccbe0e19efebc';
 
 /// "How others see me": what [audience] would read.
 
@@ -426,3 +488,56 @@ final class LinkedServerSpacesProvider
 
 String _$linkedServerSpacesHash() =>
     r'4ec38ca91b77629106c484bc9ab10624e4d24ed9';
+
+/// #2563 C1 — the workspaces my account names by qualified reference, read
+/// on my personal home with no workspace selected; none while signed out.
+/// A refusal or a malformed answer is final: no silent retries.
+
+@ProviderFor(personalWorkspaceRefs)
+final personalWorkspaceRefsProvider = PersonalWorkspaceRefsProvider._();
+
+/// #2563 C1 — the workspaces my account names by qualified reference, read
+/// on my personal home with no workspace selected; none while signed out.
+/// A refusal or a malformed answer is final: no silent retries.
+
+final class PersonalWorkspaceRefsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PersonalWorkspaceRefs>,
+          PersonalWorkspaceRefs,
+          FutureOr<PersonalWorkspaceRefs>
+        >
+    with
+        $FutureModifier<PersonalWorkspaceRefs>,
+        $FutureProvider<PersonalWorkspaceRefs> {
+  /// #2563 C1 — the workspaces my account names by qualified reference, read
+  /// on my personal home with no workspace selected; none while signed out.
+  /// A refusal or a malformed answer is final: no silent retries.
+  PersonalWorkspaceRefsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: personalRefsRetry,
+        name: r'personalWorkspaceRefsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$personalWorkspaceRefsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<PersonalWorkspaceRefs> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PersonalWorkspaceRefs> create(Ref ref) {
+    return personalWorkspaceRefs(ref);
+  }
+}
+
+String _$personalWorkspaceRefsHash() =>
+    r'69d0d76da6cc0132448ac6e3a8eb92ace24203d2';

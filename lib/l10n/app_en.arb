@@ -14989,6 +14989,30 @@
   "@meNoSpaceTitle": {
     "description": "Empty state title on the Me home when the person has no space."
   },
+  "meRefDefault": "Default",
+  "@meRefDefault": {
+    "description": "#2563 Me home: badge on the default workspace"
+  },
+  "meRefNoRelationship": "No membership on this server",
+  "@meRefNoRelationship": {
+    "description": "#2563 Me home: a saved workspace of this server without membership"
+  },
+  "meRefUnnamed": "A workspace on another server",
+  "@meRefUnnamed": {
+    "description": "#2563 Me home: a referenced workspace whose name may not be read here"
+  },
+  "meRefUnverified": "Membership not verified yet",
+  "@meRefUnverified": {
+    "description": "#2563 Me home: a workspace on another installation, relationship not yet verified"
+  },
+  "meRefsTitle": "Workspaces elsewhere",
+  "@meRefsTitle": {
+    "description": "#2563 Me home: section of workspaces named by reference that this server does not list"
+  },
+  "meRefsUnavailable": "Your workspaces elsewhere could not be read.",
+  "@meRefsUnavailable": {
+    "description": "#2563 Me home: the references could not be read"
+  },
   "meSectionMine": "My history and data",
   "@meSectionMine": {
     "description": "Section heading in Me: the person's own history and data."
@@ -29225,6 +29249,10 @@
   "@visibilityMySpaces": {
     "description": "Audience: members of the person's spaces."
   },
+  "visibilityNoSpaces": "You are in no space yet. Choose another audience.",
+  "@visibilityNoSpaces": {
+    "description": "#2558 — the chosen-spaces picker of an account in no space."
+  },
   "visibilityNobody": "Nobody",
   "@visibilityNobody": {
     "description": "Audience: nobody."
@@ -29299,9 +29327,21 @@
   "@visibilitySignedIn": {
     "description": "Audience: anyone with an account."
   },
+  "visibilitySpaceUnlisted": "A space that is no longer listed",
+  "@visibilitySpaceUnlisted": {
+    "description": "#2558 — a saved chosen space the list no longer names; it stays chosen until the person unticks it."
+  },
+  "visibilitySpacesUnavailable": "Your spaces cannot be listed right now.",
+  "@visibilitySpacesUnavailable": {
+    "description": "#2558 — the chosen-spaces picker when the list of spaces cannot be read."
+  },
   "visibilityTitle": "Who sees me",
   "@visibilityTitle": {
     "description": "Title of the card choosing who sees what of the account."
+  },
+  "visibilityUnavailable": "Who sees what of you cannot be read right now. Nothing was changed.",
+  "@visibilityUnavailable": {
+    "description": "#2558 — the privacy card when the saved settings cannot be read; a retry follows."
   },
   "visibilityWidenAction": "Widen",
   "visibilityWidenConfirm": "Show your {field} to: {audience}? They will be able to see it.",

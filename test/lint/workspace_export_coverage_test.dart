@@ -398,6 +398,10 @@ const Map<String, Set<String>> _notExportedColumns = {
     // The hash of a person's badge PIN (#662): a credential, never in a
     // workbook that is shared on.
     'pin_hash',
+    // The person's own default workspace, by reference (#2563): a personal
+    // preference, exported by export_my_personal_data_v1, never a fact of
+    // the workspace; another installation's id must not travel as data.
+    'default_workspace_network_id',
   },
   'workspaces': {
     // The birth record `installation id:local id` (#2561): stamped by the

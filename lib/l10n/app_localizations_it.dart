@@ -12979,6 +12979,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meNoSpaceTitle => 'Non è ancora in nessuno spazio';
 
   @override
+  String get meRefDefault => 'Predefinito';
+
+  @override
+  String get meRefNoRelationship => 'Nessuna iscrizione su questo server';
+
+  @override
+  String get meRefUnnamed => 'Uno spazio su un altro server';
+
+  @override
+  String get meRefUnverified => 'Iscrizione non ancora verificata';
+
+  @override
+  String get meRefsTitle => 'Spazi altrove';
+
+  @override
+  String get meRefsUnavailable =>
+      'Non è stato possibile leggere i Suoi spazi altrove.';
+
+  @override
   String get meSectionMine => 'Cronologia e dati personali';
 
   @override
@@ -25363,6 +25382,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visibilityMySpaces => 'Membri dei miei spazi';
 
   @override
+  String get visibilityNoSpaces =>
+      'Non è ancora in nessuno spazio. Scelga un altro pubblico.';
+
+  @override
   String get visibilityNobody => 'Nessuno';
 
   @override
@@ -25420,7 +25443,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visibilitySignedIn => 'Chiunque abbia effettuato l\'accesso';
 
   @override
+  String get visibilitySpaceUnlisted => 'Uno spazio non più elencato';
+
+  @override
+  String get visibilitySpacesUnavailable =>
+      'Al momento i Suoi spazi non possono essere elencati.';
+
+  @override
   String get visibilityTitle => 'Chi mi vede';
+
+  @override
+  String get visibilityUnavailable =>
+      'Al momento non è possibile leggere chi vede cosa di Lei. Non è stato modificato nulla.';
 
   @override
   String get visibilityWidenAction => 'Amplia';
