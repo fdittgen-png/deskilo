@@ -125,6 +125,7 @@ select is(public.setting_value(null, 'dunning.first_after_days'), '21'::jsonb,
 reset role;
 select is((select count(*) from public.workspaces), 0::bigint,
   'reading the platform settings wrote no workspace (no dummy workspace at P)');
+select set_config('request.jwt.claims', '{"role": "anon"}', true);
 set local role anon;
 select is((select personal_home_kind from public.installation_identity), 'self',
   'an anonymous client reads the declaration through the column grant');
