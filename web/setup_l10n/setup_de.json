@@ -697,5 +697,11 @@
  "enrolReconcileHint": "Wie oft ein Workspace-Server die gehaltenen Status aktualisiert, auch wenn niemand die App nutzt. Wird in den Einstellungen der App festgelegt.",
  "enrolSkew": "Erlaubte Uhrabweichung",
  "enrolSkewHint": "Noch akzeptierte Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, höchstens 30 Sekunden. Wird in den Einstellungen der App festgelegt.",
- "enrolErrReconcile": "Die Aktualisierung des Identitätsstatus darf nicht langsamer sein als seine Gültigkeit, sonst verfallen Status zwischen zwei Aktualisierungen."
+ "enrolErrReconcile": "Die Aktualisierung des Identitätsstatus darf nicht langsamer sein als seine Gültigkeit, sonst verfallen Status zwischen zwei Aktualisierungen.",
+ "optEntries": "{n} Einträge",
+ "optCharacters": "{n} Zeichen",
+ "dirPageSize": "Neue Unterhaltung: Einträge pro Seite",
+ "dirPageSizeHint": "Wie viele Spaces, Personen oder Gruppen das persönliche Zuhause auf einmal anzeigt, wenn ein Mitglied eine Unterhaltung beginnt; die nächsten kommen mit Mehr anzeigen. Wird in den Einstellungen der App festgelegt.",
+ "dirQueryLength": "Neue Unterhaltung: längste Suche",
+ "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt."
 }

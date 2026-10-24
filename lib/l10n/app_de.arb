@@ -10184,7 +10184,10 @@
   "portalDescription": "Beschreibung",
   "portalDirectoryCount": "{name} ({count})",
   "portalDirectoryIncompatible": "Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.",
+  "portalDirectoryPartial": "Einige Ihrer Spaces können gerade nicht bestätigt werden; ihre Personen werden nicht angezeigt.",
+  "portalDirectoryShowMore": "Mehr anzeigen",
   "portalDirectoryUnavailable": "Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.",
+  "portalDirectoryUnverified": "Dieser Space kann gerade nicht bestätigt werden.",
   "portalDisconnect": "Trennen",
   "portalDiscover": "Arbeitsplatz finden",
   "portalEmail": "Öffentliche E-Mail",
@@ -10208,6 +10211,7 @@
   "portalOpenMe": "Ich: mein Konto und meine Spaces",
   "portalOwner": "Eigentümer",
   "portalPerson": "Privater Anbieter",
+  "portalPersonHidden": "Person",
   "portalPhone": "Öffentliche Telefonnummer",
   "portalPlans": "Angebote und Preise",
   "portalPreview": "Externe Ansicht",
@@ -13578,6 +13582,8 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalMessageDirectoryPageSize": "Wie viele Spaces, Personen oder Gruppen die neue Unterhaltung auf einmal anzeigt; die nächsten kommen mit Mehr anzeigen.",
+  "settingHintPersonalMessageDirectoryQueryLength": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht. Eine längere Suche wird abgelehnt, nie gekürzt.",
   "settingHintPersonalReadConcurrency": "Wie viele Server der persönliche Bereich gleichzeitig abfragt, wenn er Ihre eigenen Daten zusammenträgt. Eine Grenze für die parallelen Lesezugriffe des Geräts, nicht für einen Server.",
   "settingHintPersonalReadTimeoutSeconds": "Sekunden, die der persönliche Bereich auf die Antwort eines Servers wartet, bevor er ihn als nicht erreichbar anzeigt und mit den anderen fortfährt.",
   "settingHintPersonalReservationMaxWindowDays": "Von der Plattform festgelegt: der längste Zeitraum, den ein Lesezugriff auf Ihre Reservierungen anfragen darf. Er begrenzt die Abfrage.",
@@ -13722,6 +13728,8 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalMessageDirectoryPageSize": "Verzeichniseinträge pro Seite",
+  "settingLabelPersonalMessageDirectoryQueryLength": "Längste Verzeichnissuche",
   "settingLabelPersonalReadConcurrency": "Gleichzeitig gelesene Server",
   "settingLabelPersonalReadTimeoutSeconds": "Wartezeit je Server",
   "settingLabelPersonalReservationMaxWindowDays": "Obergrenze des Reservierungszeitraums",
@@ -13854,6 +13862,7 @@
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitCharacters": "Zeichen",
   "settingUnitCurrencyUnits": "Währungseinheiten",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"

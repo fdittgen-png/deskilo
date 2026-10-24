@@ -12,6 +12,7 @@ import 'package:meta/meta.dart';
 
 import '../../../features/directory/domain/account_group.dart';
 import '../../../features/directory/domain/messenger.dart';
+import '../../../features/directory/domain/personal_message_directory.dart';
 import '../../../features/directory/domain/public_workspace.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../data/messenger_repository.dart';
@@ -47,6 +48,16 @@ List<ReachablePerson> demoReachablePeople(String actingMember) {
 @visibleForTesting
 const demoGroupId = 'demo-group-market';
 const _groupTitle = 'Market day lunch';
+
+/// #2472 (P) — the cast's group as the personal home's directory lists it.
+List<DirectoryGroup> demoDirectoryGroups() => const [
+  DirectoryGroup(
+    id: demoGroupId,
+    title: _groupTitle,
+    announceOnly: false,
+    canWrite: true,
+  ),
+];
 
 /// [messenger] with the group, its roster, a first message and its inbox
 /// row.

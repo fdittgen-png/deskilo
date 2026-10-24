@@ -15554,8 +15554,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Algunos espacios requieren una versión más reciente de la aplicación y no se muestran.';
 
   @override
+  String get portalDirectoryPartial =>
+      'Algunos de sus espacios no se pueden verificar en este momento; sus personas no aparecen.';
+
+  @override
+  String get portalDirectoryShowMore => 'Mostrar más';
+
+  @override
   String get portalDirectoryUnavailable =>
       'Algunos directorios no están disponibles. Los resultados están incompletos.';
+
+  @override
+  String get portalDirectoryUnverified =>
+      'Este espacio no se puede verificar en este momento.';
 
   @override
   String get portalDisconnect => 'Desconectar';
@@ -15626,6 +15637,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get portalPerson => 'Anfitrión particular';
+
+  @override
+  String get portalPersonHidden => 'Persona';
 
   @override
   String get portalPhone => 'Teléfono público';
@@ -19438,6 +19452,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Segundos entre dos actualizaciones de una conversación abierta. Valores más bajos cargan más el servidor.';
 
   @override
+  String get settingHintPersonalMessageDirectoryPageSize =>
+      'Cuántos espacios, personas o grupos muestra la nueva conversación a la vez; los siguientes llegan con Mostrar más.';
+
+  @override
+  String get settingHintPersonalMessageDirectoryQueryLength =>
+      'El texto más largo que busca el directorio de la nueva conversación. Una búsqueda más larga se rechaza, nunca se recorta.';
+
+  @override
   String get settingHintPersonalReadConcurrency =>
       'Cuántos servidores consulta a la vez el espacio personal cuando reúne sus propios datos. Un límite de las lecturas paralelas del dispositivo, no de ningún servidor.';
 
@@ -19601,6 +19623,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Actualización de la conversación';
 
   @override
+  String get settingLabelPersonalMessageDirectoryPageSize =>
+      'Entradas del directorio por página';
+
+  @override
+  String get settingLabelPersonalMessageDirectoryQueryLength =>
+      'Búsqueda más larga en el directorio';
+
+  @override
   String get settingLabelPersonalReadConcurrency =>
       'Servidores leídos a la vez';
 
@@ -19706,6 +19736,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingUnitAttempts => 'intentos';
+
+  @override
+  String get settingUnitCharacters => 'caracteres';
 
   @override
   String get settingUnitCurrencyUnits => 'unidades monetarias';

@@ -702,7 +702,13 @@ window.SETUP_L10N={
    "enrolReconcileHint": "How often a workspace server refreshes the statuses it holds, even when nobody uses the app. Set in the app's settings.",
    "enrolSkew": "Allowed clock difference",
    "enrolSkewHint": "Clock difference between the personal home and a workspace server still accepted, 30 seconds at most. Set in the app's settings.",
-   "enrolErrReconcile": "The identity status refresh must not be slower than its lifetime, or statuses lapse between two refreshes."
+   "enrolErrReconcile": "The identity status refresh must not be slower than its lifetime, or statuses lapse between two refreshes.",
+   "optEntries": "{n} entries",
+   "optCharacters": "{n} characters",
+   "dirPageSize": "New discussion: entries per page",
+   "dirPageSizeHint": "How many workspaces, people or groups the personal home lists at a time when a member starts a discussion; the next ones come with Show more. Set in the app's settings.",
+   "dirQueryLength": "New discussion: longest search",
+   "dirQueryLengthHint": "The longest text the new-discussion directory searches for; a longer search is refused, never cut. Set in the app's settings."
   },
   "feature": {
    "calendarTab": [
@@ -2320,7 +2326,13 @@ window.SETUP_L10N={
    "enrolReconcileHint": "À quelle fréquence un serveur d'espaces actualise les statuts qu'il détient, même quand personne n'utilise l'app. Se règle dans les paramètres de l'app.",
    "enrolSkew": "Écart d'horloge toléré",
    "enrolSkewHint": "Écart d'horloge entre le domicile personnel et un serveur d'espaces encore accepté, 30 secondes au plus. Se règle dans les paramètres de l'app.",
-   "enrolErrReconcile": "L'actualisation du statut d'identité ne doit pas être plus lente que sa durée de validité, sinon les statuts expirent entre deux actualisations."
+   "enrolErrReconcile": "L'actualisation du statut d'identité ne doit pas être plus lente que sa durée de validité, sinon les statuts expirent entre deux actualisations.",
+   "optEntries": "{n} entrées",
+   "optCharacters": "{n} caractères",
+   "dirPageSize": "Nouvelle discussion : entrées par page",
+   "dirPageSizeHint": "Combien d’espaces, de personnes ou de groupes la maison personnelle liste à la fois quand un membre commence une discussion ; les suivants viennent avec Afficher plus. Se règle dans les paramètres de l’app.",
+   "dirQueryLength": "Nouvelle discussion : recherche la plus longue",
+   "dirQueryLengthHint": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche ; une recherche plus longue est refusée, jamais tronquée. Se règle dans les paramètres de l’app."
   },
   "feature": {
    "calendarTab": [
@@ -3938,7 +3950,13 @@ window.SETUP_L10N={
    "enrolReconcileHint": "Wie oft ein Workspace-Server die gehaltenen Status aktualisiert, auch wenn niemand die App nutzt. Wird in den Einstellungen der App festgelegt.",
    "enrolSkew": "Erlaubte Uhrabweichung",
    "enrolSkewHint": "Noch akzeptierte Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, höchstens 30 Sekunden. Wird in den Einstellungen der App festgelegt.",
-   "enrolErrReconcile": "Die Aktualisierung des Identitätsstatus darf nicht langsamer sein als seine Gültigkeit, sonst verfallen Status zwischen zwei Aktualisierungen."
+   "enrolErrReconcile": "Die Aktualisierung des Identitätsstatus darf nicht langsamer sein als seine Gültigkeit, sonst verfallen Status zwischen zwei Aktualisierungen.",
+   "optEntries": "{n} Einträge",
+   "optCharacters": "{n} Zeichen",
+   "dirPageSize": "Neue Unterhaltung: Einträge pro Seite",
+   "dirPageSizeHint": "Wie viele Spaces, Personen oder Gruppen das persönliche Zuhause auf einmal anzeigt, wenn ein Mitglied eine Unterhaltung beginnt; die nächsten kommen mit Mehr anzeigen. Wird in den Einstellungen der App festgelegt.",
+   "dirQueryLength": "Neue Unterhaltung: längste Suche",
+   "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt."
   },
   "feature": {
    "calendarTab": [
@@ -5556,7 +5574,13 @@ window.SETUP_L10N={
    "enrolReconcileHint": "Con qué frecuencia un servidor de espacios actualiza los estados que guarda, aunque nadie use la app. Se ajusta en la configuración de la app.",
    "enrolSkew": "Desfase de reloj permitido",
    "enrolSkewHint": "Desfase de reloj entre el hogar personal y un servidor de espacios que aún se acepta, 30 segundos como máximo. Se ajusta en la configuración de la app.",
-   "enrolErrReconcile": "La actualización del estado de identidad no debe ser más lenta que su validez, o los estados caducan entre dos actualizaciones."
+   "enrolErrReconcile": "La actualización del estado de identidad no debe ser más lenta que su validez, o los estados caducan entre dos actualizaciones.",
+   "optEntries": "{n} entradas",
+   "optCharacters": "{n} caracteres",
+   "dirPageSize": "Nueva conversación: entradas por página",
+   "dirPageSizeHint": "Cuántos espacios, personas o grupos muestra a la vez el hogar personal cuando un miembro empieza una conversación; los siguientes llegan con Mostrar más. Se configura en los ajustes de la app.",
+   "dirQueryLength": "Nueva conversación: búsqueda más larga",
+   "dirQueryLengthHint": "El texto más largo que busca el directorio de la nueva conversación; una búsqueda más larga se rechaza, nunca se recorta. Se configura en los ajustes de la app."
   },
   "feature": {
    "calendarTab": [
@@ -7174,7 +7198,13 @@ window.SETUP_L10N={
    "enrolReconcileHint": "Ogni quanto un server di spazi aggiorna gli stati che conserva, anche quando nessuno usa l'app. Si imposta nelle impostazioni dell'app.",
    "enrolSkew": "Scarto d'orologio ammesso",
    "enrolSkewHint": "Scarto d'orologio tra la casa personale e un server di spazi ancora accettato, al massimo 30 secondi. Si imposta nelle impostazioni dell'app.",
-   "enrolErrReconcile": "L'aggiornamento dello stato di identità non deve essere più lento della sua validità, altrimenti gli stati scadono tra due aggiornamenti."
+   "enrolErrReconcile": "L'aggiornamento dello stato di identità non deve essere più lento della sua validità, altrimenti gli stati scadono tra due aggiornamenti.",
+   "optEntries": "{n} voci",
+   "optCharacters": "{n} caratteri",
+   "dirPageSize": "Nuova conversazione: voci per pagina",
+   "dirPageSizeHint": "Quanti spazi, persone o gruppi la casa personale elenca alla volta quando un membro avvia una conversazione; i successivi arrivano con Mostra altro. Si imposta nelle impostazioni dell'app.",
+   "dirQueryLength": "Nuova conversazione: ricerca più lunga",
+   "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app."
   },
   "feature": {
    "calendarTab": [

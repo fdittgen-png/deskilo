@@ -5,6 +5,7 @@
 // which groups I am in (my_inbox); this only merges, folds and ranks what
 // was loaded, so a keystroke never asks a server anything.
 import 'messenger.dart';
+import 'personal_message_directory.dart';
 import 'public_workspace.dart';
 
 /// One person or group a discussion can be started with.
@@ -111,6 +112,50 @@ List<Recipient> recipientsOf(
       ),
   ];
 }
+
+/// #2472 (P) — everyone the personal home's directory loaded, once per
+/// person with every workspace they share with me ([unnamed] labels a
+/// workspace of another installation). A person who hides their name is
+/// not suggested: nothing typed can match a name I may not read.
+List<Recipient> personalRecipients(
+  PersonalDirectory directory, {
+  required String unnamed,
+}) {
+  final labels = {
+    for (final w in directory.workspaces) w.networkId: w.name ?? unnamed,
+  };
+  final names = <String, String>{};
+  final spaces = <String, List<String>>{};
+  for (final page in directory.people.entries) {
+    for (final p in page.value.items) {
+      final name = p.name;
+      if (name == null) continue;
+      names[p.id] = name;
+      final list = spaces.putIfAbsent(p.id, () => []);
+      final label = labels[page.key] ?? unnamed;
+      if (!list.contains(label)) list.add(label);
+    }
+  }
+  return [
+    for (final id in names.keys)
+      Recipient.person(
+        source: '',
+        id: id,
+        name: names[id]!,
+        workspaces: spaces[id]!,
+      ),
+  ];
+}
+
+/// A group of the personal home's directory as the inbox entry its thread
+/// opens from: a group with no message yet has no last message time.
+InboxEntry personalGroupEntry(DirectoryGroup group) => InboxEntry(
+  source: '',
+  kind: MessageContextKind.accountGroup,
+  contextId: group.id,
+  title: group.title,
+  lastAt: DateTime.utc(1970),
+);
 
 String _spaceLabel(String workspace, String host) =>
     host.isEmpty ? workspace : '$workspace · $host';

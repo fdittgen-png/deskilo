@@ -51,6 +51,8 @@ String _rangeSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'personal.reservation_page_size' => l10n.settingLabelPersonalReservationPageSize,
       'personal.reservation_window_days' => l10n.settingLabelPersonalReservationWindowDays,
       'personal.reservation_max_window_days' => l10n.settingLabelPersonalReservationMaxWindowDays,
+      'personal.message_directory_page_size' => l10n.settingLabelPersonalMessageDirectoryPageSize,
+      'personal.message_directory_query_length' => l10n.settingLabelPersonalMessageDirectoryQueryLength,
       'identity.status_assertion_lifetime_seconds' => l10n.settingLabelIdentityStatusAssertionLifetimeSeconds,
       'identity.status_reconcile_seconds' => l10n.settingLabelIdentityStatusReconcileSeconds,
       'identity.clock_skew_seconds' => l10n.settingLabelIdentityClockSkewSeconds,
@@ -99,6 +101,8 @@ String? _rangeSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'personal.reservation_page_size' => l10n.settingHintPersonalReservationPageSize,
       'personal.reservation_window_days' => l10n.settingHintPersonalReservationWindowDays,
       'personal.reservation_max_window_days' => l10n.settingHintPersonalReservationMaxWindowDays,
+      'personal.message_directory_page_size' => l10n.settingHintPersonalMessageDirectoryPageSize,
+      'personal.message_directory_query_length' => l10n.settingHintPersonalMessageDirectoryQueryLength,
       'identity.status_assertion_lifetime_seconds' => l10n.settingHintIdentityStatusAssertionLifetimeSeconds,
       'identity.status_reconcile_seconds' => l10n.settingHintIdentityStatusReconcileSeconds,
       'identity.clock_skew_seconds' => l10n.settingHintIdentityClockSkewSeconds,
@@ -134,6 +138,7 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'per hour' => l10n.settingUnitPerHour,
       'per day' => l10n.settingUnitPerDay,
       'entries' => l10n.settingUnitEntries,
+      'characters' => l10n.settingUnitCharacters,
       _ => unit,
     };
 

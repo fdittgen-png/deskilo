@@ -15449,8 +15449,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Some workspaces need a newer version of the app and are not shown.';
 
   @override
+  String get portalDirectoryPartial =>
+      'Some of your workspaces cannot be verified right now; their people are not listed.';
+
+  @override
+  String get portalDirectoryShowMore => 'Show more';
+
+  @override
   String get portalDirectoryUnavailable =>
       'Some directories could not be reached. Results are incomplete.';
+
+  @override
+  String get portalDirectoryUnverified =>
+      'This workspace cannot be verified right now.';
 
   @override
   String get portalDisconnect => 'Disconnect';
@@ -15522,6 +15533,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get portalPerson => 'Private host';
+
+  @override
+  String get portalPersonHidden => 'Person';
 
   @override
   String get portalPhone => 'Public phone';
@@ -19290,6 +19304,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Seconds between two refreshes of an open conversation. Lower values load the server more.';
 
   @override
+  String get settingHintPersonalMessageDirectoryPageSize =>
+      'How many workspaces, people or groups the new discussion lists at a time; the next ones come with Show more.';
+
+  @override
+  String get settingHintPersonalMessageDirectoryQueryLength =>
+      'The longest text the new-discussion directory searches for. A longer search is refused, never cut.';
+
+  @override
   String get settingHintPersonalReadConcurrency =>
       'How many servers the personal space asks at once when it gathers your own records. A bound on the device\'s parallel reads, not on any server.';
 
@@ -19442,6 +19464,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingLabelMessagingThreadPollSeconds => 'Conversation refresh';
 
   @override
+  String get settingLabelPersonalMessageDirectoryPageSize =>
+      'Directory entries per page';
+
+  @override
+  String get settingLabelPersonalMessageDirectoryQueryLength =>
+      'Longest directory search';
+
+  @override
   String get settingLabelPersonalReadConcurrency => 'Servers read at once';
 
   @override
@@ -19541,6 +19571,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitAttempts => 'attempts';
+
+  @override
+  String get settingUnitCharacters => 'characters';
 
   @override
   String get settingUnitCurrencyUnits => 'currency units';

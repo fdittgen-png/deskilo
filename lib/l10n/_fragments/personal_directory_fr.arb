@@ -1,0 +1,11 @@
+{
+  "portalPersonHidden": "Personne",
+  "portalDirectoryShowMore": "Afficher plus",
+  "portalDirectoryPartial": "Certains de vos espaces ne peuvent pas être vérifiés pour l’instant ; leurs membres ne sont pas listés.",
+  "portalDirectoryUnverified": "Cet espace ne peut pas être vérifié pour l’instant.",
+  "settingLabelPersonalMessageDirectoryPageSize": "Entrées de l’annuaire par page",
+  "settingHintPersonalMessageDirectoryPageSize": "Combien d’espaces, de personnes ou de groupes la nouvelle discussion liste à la fois ; les suivants viennent avec Afficher plus.",
+  "settingLabelPersonalMessageDirectoryQueryLength": "Recherche la plus longue dans l’annuaire",
+  "settingHintPersonalMessageDirectoryQueryLength": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche. Une recherche plus longue est refusée, jamais tronquée.",
+  "settingUnitCharacters": "caractères"
+}

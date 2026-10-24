@@ -697,5 +697,11 @@
  "enrolReconcileHint": "À quelle fréquence un serveur d'espaces actualise les statuts qu'il détient, même quand personne n'utilise l'app. Se règle dans les paramètres de l'app.",
  "enrolSkew": "Écart d'horloge toléré",
  "enrolSkewHint": "Écart d'horloge entre le domicile personnel et un serveur d'espaces encore accepté, 30 secondes au plus. Se règle dans les paramètres de l'app.",
- "enrolErrReconcile": "L'actualisation du statut d'identité ne doit pas être plus lente que sa durée de validité, sinon les statuts expirent entre deux actualisations."
+ "enrolErrReconcile": "L'actualisation du statut d'identité ne doit pas être plus lente que sa durée de validité, sinon les statuts expirent entre deux actualisations.",
+ "optEntries": "{n} entrées",
+ "optCharacters": "{n} caractères",
+ "dirPageSize": "Nouvelle discussion : entrées par page",
+ "dirPageSizeHint": "Combien d’espaces, de personnes ou de groupes la maison personnelle liste à la fois quand un membre commence une discussion ; les suivants viennent avec Afficher plus. Se règle dans les paramètres de l’app.",
+ "dirQueryLength": "Nouvelle discussion : recherche la plus longue",
+ "dirQueryLengthHint": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche ; une recherche plus longue est refusée, jamais tronquée. Se règle dans les paramètres de l’app."
 }

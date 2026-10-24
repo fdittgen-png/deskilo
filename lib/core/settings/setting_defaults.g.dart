@@ -58,6 +58,10 @@ abstract final class SettingDefaults {
   static const int messagingMessageRequestsPerDay = 10;
   /// `messaging.thread_poll_seconds`
   static const int messagingThreadPollSeconds = 15;
+  /// `personal.message_directory_page_size`
+  static const int personalMessageDirectoryPageSize = 50;
+  /// `personal.message_directory_query_length`
+  static const int personalMessageDirectoryQueryLength = 120;
   /// `personal.read_concurrency`
   static const int personalReadConcurrency = 4;
   /// `personal.read_timeout_seconds`

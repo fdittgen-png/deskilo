@@ -10,6 +10,7 @@ import '../../domain/messenger.dart';
 import '../../domain/recipient_search.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/messenger_providers.dart';
+import '../../providers/personal_directory_providers.dart';
 import '../reachable_directory.dart';
 import 'open_inbox_entry.dart';
 
@@ -18,8 +19,9 @@ import 'open_inbox_entry.dart';
 /// ranked prefix first (first or last name), then names that only contain
 /// what I typed, accent- and case-insensitive. Up / Down move, Enter or a
 /// tap opens the conversation, Esc closes the list. The suggestions come
-/// from the directory already loaded (my_reachable_people answers at most
-/// 1000 rows, unpaged), so no keystroke asks a server; Enter with nothing
+/// from the directory already loaded (the personal home's
+/// my_personal_message_directory_v1 pages, or, on a home without it,
+/// my_reachable_people), so no keystroke asks a server; Enter with nothing
 /// suggested runs the full search ([onSearch]) for people I share no
 /// workspace with.
 class RecipientTypeahead extends ConsumerStatefulWidget {
@@ -55,6 +57,16 @@ class _TypeaheadState extends ConsumerState<RecipientTypeahead> {
   }
 
   List<Recipient> _load() {
+    // #2472 (P) — the personal home's directory when it answers; the
+    // per-server directory only when the home lacks the reader.
+    final personal = ref.watch(personalDirectoryControllerProvider);
+    if (personal case AsyncData(:final value)) {
+      return [
+        ...personalRecipients(value, unnamed: context.l10n.meRefUnnamed),
+        for (final g in value.groups) Recipient.group(personalGroupEntry(g)),
+      ];
+    }
+    if (!personalDirectoryUnsupported(personal.error)) return const [];
     final bySource = {
       for (final source in widget.servers.keys)
         source:

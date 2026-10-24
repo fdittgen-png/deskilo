@@ -15573,8 +15573,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Alcuni spazi richiedono una versione più recente dell’app e non vengono mostrati.';
 
   @override
+  String get portalDirectoryPartial =>
+      'Alcuni dei Suoi spazi non possono essere verificati in questo momento; le loro persone non sono elencate.';
+
+  @override
+  String get portalDirectoryShowMore => 'Mostra altro';
+
+  @override
   String get portalDirectoryUnavailable =>
       'Alcune directory non sono raggiungibili. I risultati sono incompleti.';
+
+  @override
+  String get portalDirectoryUnverified =>
+      'Questo spazio non può essere verificato in questo momento.';
 
   @override
   String get portalDisconnect => 'Disconnetti';
@@ -15645,6 +15656,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalPerson => 'Privato';
+
+  @override
+  String get portalPersonHidden => 'Persona';
 
   @override
   String get portalPhone => 'Telefono pubblico';
@@ -19456,6 +19470,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Secondi tra due aggiornamenti di una conversazione aperta. Valori più bassi caricano di più il server.';
 
   @override
+  String get settingHintPersonalMessageDirectoryPageSize =>
+      'Quanti spazi, persone o gruppi la nuova conversazione elenca alla volta; i successivi arrivano con Mostra altro.';
+
+  @override
+  String get settingHintPersonalMessageDirectoryQueryLength =>
+      'Il testo più lungo che la rubrica della nuova conversazione cerca. Una ricerca più lunga viene rifiutata, mai troncata.';
+
+  @override
   String get settingHintPersonalReadConcurrency =>
       'Quanti server lo spazio personale interroga insieme quando raccoglie i Suoi dati. Un limite alle letture parallele del dispositivo, non a un server.';
 
@@ -19620,6 +19642,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Aggiornamento della conversazione';
 
   @override
+  String get settingLabelPersonalMessageDirectoryPageSize =>
+      'Voci della rubrica per pagina';
+
+  @override
+  String get settingLabelPersonalMessageDirectoryQueryLength =>
+      'Ricerca più lunga nella rubrica';
+
+  @override
   String get settingLabelPersonalReadConcurrency => 'Server letti insieme';
 
   @override
@@ -19725,6 +19755,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitAttempts => 'tentativi';
+
+  @override
+  String get settingUnitCharacters => 'caratteri';
 
   @override
   String get settingUnitCurrencyUnits => 'unità monetarie';

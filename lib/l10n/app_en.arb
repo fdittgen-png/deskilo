@@ -18060,7 +18060,19 @@
     }
   },
   "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
+  "portalDirectoryPartial": "Some of your workspaces cannot be verified right now; their people are not listed.",
+  "@portalDirectoryPartial": {
+    "description": "#2472 personal directory: Shown above the new-discussion directory when the personal home holds lapsed membership facts."
+  },
+  "portalDirectoryShowMore": "Show more",
+  "@portalDirectoryShowMore": {
+    "description": "#2472 personal directory: Loads the next page of people of one workspace in the new-discussion directory."
+  },
   "portalDirectoryUnavailable": "Some directories could not be reached. Results are incomplete.",
+  "portalDirectoryUnverified": "This workspace cannot be verified right now.",
+  "@portalDirectoryUnverified": {
+    "description": "#2472 personal directory: Shown inside one workspace section whose membership fact lapsed."
+  },
   "portalDisconnect": "Disconnect",
   "portalDiscover": "Find a workspace",
   "portalEmail": "Public email",
@@ -18093,6 +18105,10 @@
   },
   "portalOwner": "Owner",
   "portalPerson": "Private host",
+  "portalPersonHidden": "Person",
+  "@portalPersonHidden": {
+    "description": "#2472 personal directory: Name of a person in the new-discussion directory who does not show their name to you."
+  },
   "portalPhone": "Public phone",
   "portalPlans": "Plans and prices",
   "portalPreview": "External view",
@@ -22360,6 +22376,14 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalMessageDirectoryPageSize": "How many workspaces, people or groups the new discussion lists at a time; the next ones come with Show more.",
+  "@settingHintPersonalMessageDirectoryPageSize": {
+    "description": "#2472 personal directory: Setting hint."
+  },
+  "settingHintPersonalMessageDirectoryQueryLength": "The longest text the new-discussion directory searches for. A longer search is refused, never cut.",
+  "@settingHintPersonalMessageDirectoryQueryLength": {
+    "description": "#2472 personal directory: Setting hint."
+  },
   "settingHintPersonalReadConcurrency": "How many servers the personal space asks at once when it gathers your own records. A bound on the device's parallel reads, not on any server.",
   "@settingHintPersonalReadConcurrency": {
     "description": "#2553 settings: Setting hint."
@@ -22528,6 +22552,14 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalMessageDirectoryPageSize": "Directory entries per page",
+  "@settingLabelPersonalMessageDirectoryPageSize": {
+    "description": "#2472 personal directory: Setting label."
+  },
+  "settingLabelPersonalMessageDirectoryQueryLength": "Longest directory search",
+  "@settingLabelPersonalMessageDirectoryQueryLength": {
+    "description": "#2472 personal directory: Setting label."
+  },
   "settingLabelPersonalReadConcurrency": "Servers read at once",
   "@settingLabelPersonalReadConcurrency": {
     "description": "#2553 settings: Setting label."
@@ -22674,6 +22706,10 @@
   "settingUnitAttempts": "attempts",
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
+  },
+  "settingUnitCharacters": "characters",
+  "@settingUnitCharacters": {
+    "description": "#2472 personal directory: Unit of a setting counted in characters."
   },
   "settingUnitCurrencyUnits": "currency units",
   "@settingUnitCurrencyUnits": {
