@@ -8694,6 +8694,7 @@
   "meNoSpaceTitle": "Aún no está en ningún espacio",
   "meRefDefault": "Predeterminado",
   "meRefNoRelationship": "Sin membresía en este servidor",
+  "meRefStale": "Membresía no confirmada recientemente",
   "meRefUnnamed": "Un espacio en otro servidor",
   "meRefUnverified": "Membresía aún no verificada",
   "meRefsTitle": "Espacios en otro lugar",

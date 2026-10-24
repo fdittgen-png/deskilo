@@ -3,6 +3,7 @@
   "meRefsTitle": "Espaces ailleurs",
   "meRefUnnamed": "Un espace sur un autre serveur",
   "meRefUnverified": "Adhésion pas encore vérifiée",
+  "meRefStale": "Adhésion non confirmée récemment",
   "meRefNoRelationship": "Aucune adhésion sur ce serveur",
   "meRefDefault": "Par défaut",
   "meRefsUnavailable": "Vos espaces ailleurs n'ont pas pu être lus."

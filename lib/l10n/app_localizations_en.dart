@@ -12880,6 +12880,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meRefNoRelationship => 'No membership on this server';
 
   @override
+  String get meRefStale => 'Membership not confirmed recently';
+
+  @override
   String get meRefUnnamed => 'A workspace on another server';
 
   @override

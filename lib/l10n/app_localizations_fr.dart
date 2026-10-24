@@ -13012,6 +13012,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meRefNoRelationship => 'Aucune adhésion sur ce serveur';
 
   @override
+  String get meRefStale => 'Adhésion non confirmée récemment';
+
+  @override
   String get meRefUnnamed => 'Un espace sur un autre serveur';
 
   @override
