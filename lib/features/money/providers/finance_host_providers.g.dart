@@ -171,4 +171,4 @@ final class FinanceReadLimitsProvider
   }
 }
 
-String _$financeReadLimitsHash() => r'c3ab0e5db63b41681c6d468792fd23d2fc391797';
+String _$financeReadLimitsHash() => r'4e0a7f2bb0413cb13f43b3153f4a7f3f8e03e51f';
