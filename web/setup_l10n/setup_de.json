@@ -703,5 +703,7 @@
  "dirPageSize": "Neue Unterhaltung: Einträge pro Seite",
  "dirPageSizeHint": "Wie viele Spaces, Personen oder Gruppen das persönliche Zuhause auf einmal anzeigt, wenn ein Mitglied eine Unterhaltung beginnt; die nächsten kommen mit Mehr anzeigen. Wird in den Einstellungen der App festgelegt.",
  "dirQueryLength": "Neue Unterhaltung: längste Suche",
- "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt."
+ "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt.",
+ "inboxPageSize": "Posteingang: Unterhaltungen pro Seite",
+ "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt."
 }

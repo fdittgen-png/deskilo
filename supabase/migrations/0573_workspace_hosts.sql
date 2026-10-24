@@ -63,4 +63,4 @@ comment on function public.my_workspace_hosts_v1() is
   'workspace on, with their publishable key and state; revoked ones are absent.';
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(573);

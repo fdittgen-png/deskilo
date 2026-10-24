@@ -26,10 +26,6 @@
   "@visibilityMoreSharing": {
     "description": "#2558 privacy card: expands the remaining fields"
   },
-  "visibilityFieldElsewhere": "It names a space on another server, so it cannot be changed here yet.",
-  "@visibilityFieldElsewhere": {
-    "description": "#2558 a field whose chosen spaces include one on another installation; read-only until the network writer"
-  },
   "visibilitySpaceUnverified": "Verification unavailable",
   "@visibilitySpaceUnverified": {
     "description": "#2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet"

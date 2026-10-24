@@ -288,7 +288,7 @@ class _MessageActionRun {
           ),
         );
         if (!ok || !context.mounted) return;
-        ref.invalidate(unifiedInboxProvider);
+        ref.invalidate(messengerInboxProvider);
         whenChanged?.call();
         AppSnack.success(
           context,

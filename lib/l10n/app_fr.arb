@@ -6010,6 +6010,11 @@
   "inboxNoArchived": "Aucune conversation archivée.",
   "inboxNoUnread": "Rien de non lu — vous êtes à jour.",
   "inboxRetry": "Réessayer",
+  "inboxShowOlder": "Afficher les conversations plus anciennes",
+  "inboxSourceFailed": "{source} n’a pas pu être lu. Le reste de la boîte de réception est affiché.",
+  "inboxSourcePersonal": "Vos messages personnels",
+  "inboxSourceUnavailable": "{source} n’est pas joignable avec votre connexion actuelle. Ses conversations manquent dans cette liste.",
+  "inboxSourceWorkspaces": "Les messages de vos espaces",
   "instanceAccessTitle": "Accès aux assistants",
   "instanceAccessUntil": "Jusqu'au {date}",
   "instanceAccountIntro": "Créez un compte gratuit sur supabase.com, puis un jeton d'accès personnel (Account → Access Tokens) et collez-le ici. L'assistant s'en sert pour créer et configurer le projet ; il n'est jamais enregistré.",
@@ -13593,6 +13598,7 @@
   "@settingHintMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingHintMessagingInboxPageSize": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient par page de la boîte de réception ; les plus anciennes viennent avec Afficher les conversations plus anciennes.",
   "settingHintMessagingInboxPollSeconds": "Secondes entre deux actualisations de la boîte de réception et de son badge de non-lus. Des valeurs plus basses chargent davantage le serveur.",
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
@@ -13739,6 +13745,7 @@
   "@settingLabelMessagingGroupCreationPerHour": {
     "description": "#2485 settings: Settings group title."
   },
+  "settingLabelMessagingInboxPageSize": "Taille de page de la boîte de réception",
   "settingLabelMessagingInboxPollSeconds": "Actualisation de la boîte de réception",
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
@@ -17230,10 +17237,15 @@
   "visibilityBio": "Quelques mots sur vous",
   "visibilityChosenCount": "{count, plural, =1{Membres d'1 espace choisi} other{Membres de {count} espaces choisis}}",
   "visibilityChosenSpaces": "Membres d'espaces choisis",
+  "visibilityConflictKeep": "Garder le réglage enregistré",
+  "visibilityConflictReview": "Revoir ma modification",
+  "visibilityConflictSaved": "Enregistré actuellement : {audience}",
+  "visibilityConflictTitle": "Ce réglage a été modifié entre-temps",
+  "visibilityConflictUnread": "Le réglage enregistré ne peut pas être lu pour le moment. Votre modification n’a pas été enregistrée.",
+  "visibilityConflictYours": "Votre modification : {audience}",
   "visibilityContact": "WhatsApp et e-mail",
   "visibilityElsewhereIntro": "Sur un serveur connecté, vous avez le compte de ce serveur. Les personnes qui n'y partagent aucun espace avec vous voient ce que vous autorisez à toute personne connectée ; vos coordonnées et votre présence ne sortent jamais de vos espaces.",
   "visibilityElsewhereTitle": "Sur mes autres serveurs",
-  "visibilityFieldElsewhere": "Ce réglage nomme un espace sur un autre serveur : il ne peut pas encore être modifié ici.",
   "visibilityHomeHeader": "Domicile personnel : {name}",
   "visibilityIdentity": "Nom et photo",
   "visibilityIntro": "Chaque partie de votre compte choisit son public. Rien n'est public sans votre choix.",
@@ -17278,6 +17290,7 @@
   "visibilitySpacesUnavailable": "Vos espaces ne peuvent pas être listés pour l'instant.",
   "visibilityTitle": "Qui me voit",
   "visibilityUnavailable": "Impossible de lire pour l'instant qui voit quoi de vous. Rien n'a été modifié.",
+  "visibilityUnconfirmedTitle": "Votre modification n’a pas pu être confirmée",
   "visibilityWidenAction": "Élargir",
   "visibilityWidenAdded": "Ajoutés : {spaces}",
   "visibilityWidenConfirm": "Montrer votre {field} à : {audience} ? Ces personnes pourront le voir.",

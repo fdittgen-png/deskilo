@@ -83,6 +83,8 @@ const STEPS=[
   // #2472 (P) — a combined server is its people's personal home: it reads
   // the new discussion's directory.
   ...(S.network.roles==='combined'?[selectEl(T('dirPageSize'),'directory.pageSize',opts(DIR_PAGE),T('dirPageSizeHint'),null,'identity'),selectEl(T('dirQueryLength'),'directory.queryLength',opts(DIR_QUERY),T('dirQueryLengthHint'),null,'identity')]:[]),
+  // #2556 — every server reads its part of the inbox one page at a time.
+  selectEl(T('inboxPageSize'),'inbox.pageSize',opts(INBOX_PAGE),T('inboxPageSizeHint'),null,'identity'),
  ]},
  check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
   // #2562 C2a — a refresh slower than the lifetime lets statuses lapse.

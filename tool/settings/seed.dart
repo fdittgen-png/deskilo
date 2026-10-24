@@ -831,6 +831,25 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       note: 'The longest text the new-discussion directory searches for; a longer one is refused, never cut. A query default, not a rule about names.',
     ),
   ),
+  (
+    since: 'messenger_inbox_sources',
+    row: (
+      key: 'messaging.inbox_page_size',
+      type: 'int',
+      defaultValue: 50,
+      min: 1,
+      max: 100,
+      unit: 'rows',
+      group: 'messaging',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'my_account_inbox_v1, my_workspace_inbox_v1 (#2556)',
+      note: 'How many conversations one inbox source returns per page: the personal home its personal conversations and groups, a workspace server its workspace conversations and inquiries. A bound on one read, not on what the inbox holds.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

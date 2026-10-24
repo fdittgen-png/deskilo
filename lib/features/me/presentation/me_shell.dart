@@ -200,7 +200,7 @@ class _MeShellState extends ConsumerState<MeShell> {
     // Messages keeps its own polling once opened; before then only its
     // badge refreshes.
     if (!_visited.contains(MeTab.messages)) ref.watch(inboxBadgeRefreshProvider);
-    final inbox = ref.watch(unifiedInboxProvider);
+    final inbox = ref.watch(messengerInboxProvider);
     final unread = inbox.isReloading ? 0 : inbox.value?.unread ?? 0;
     Widget icon(MeTab tab, IconData data) => tab == MeTab.messages && unread > 0
         ? Badge.count(count: unread, maxCount: 99, child: Icon(data)) : Icon(data);

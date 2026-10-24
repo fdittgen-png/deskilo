@@ -1,0 +1,10 @@
+{
+  "@@locale": "es",
+  "visibilityConflictTitle": "Este ajuste ha cambiado mientras tanto",
+  "visibilityUnconfirmedTitle": "No se ha podido confirmar su cambio",
+  "visibilityConflictSaved": "Guardado ahora: {audience}",
+  "visibilityConflictYours": "Su cambio: {audience}",
+  "visibilityConflictUnread": "No se puede leer el ajuste guardado en este momento. Su cambio no se ha guardado.",
+  "visibilityConflictKeep": "Conservar el ajuste guardado",
+  "visibilityConflictReview": "Revisar mi cambio"
+}

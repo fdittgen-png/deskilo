@@ -40,7 +40,7 @@ Map<String, int> spaceAttention({
 
 @riverpod
 Map<String, int> spaceAttentionCounts(Ref ref) {
-  final inbox = ref.watch(unifiedInboxProvider);
+  final inbox = ref.watch(messengerInboxProvider);
   final active = ref.watch(currentWorkspaceProvider).value;
   final pending = ref.watch(myPendingEventsProvider).value?.length ?? 0;
   final unread = ref.watch(unreadNoteCountProvider).value ?? 0;

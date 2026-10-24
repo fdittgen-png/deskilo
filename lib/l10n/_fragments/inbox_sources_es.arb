@@ -1,0 +1,9 @@
+{
+  "inboxSourcePersonal": "Sus mensajes personales",
+  "inboxSourceWorkspaces": "Los mensajes de sus espacios",
+  "inboxSourceFailed": "No se pudo leer {source}. Se muestra el resto de la bandeja de entrada.",
+  "inboxSourceUnavailable": "{source} no está disponible con su sesión actual. Sus conversaciones faltan en esta lista.",
+  "inboxShowOlder": "Mostrar conversaciones anteriores",
+  "settingLabelMessagingInboxPageSize": "Tamaño de página de la bandeja de entrada",
+  "settingHintMessagingInboxPageSize": "Cuántas conversaciones devuelven por página de la bandeja de entrada el hogar personal y cada servidor de espacios; las anteriores llegan con Mostrar conversaciones anteriores."
+}

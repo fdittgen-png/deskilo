@@ -52,6 +52,8 @@ abstract final class SettingDefaults {
   static const int messagingEditWindowMinutes = 15;
   /// `messaging.group_creation_per_hour`
   static const int messagingGroupCreationPerHour = 10;
+  /// `messaging.inbox_page_size`
+  static const int messagingInboxPageSize = 50;
   /// `messaging.inbox_poll_seconds`
   static const int messagingInboxPollSeconds = 30;
   /// `messaging.message_requests_per_day`

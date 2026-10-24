@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "visibilityConflictTitle": "Diese Einstellung wurde inzwischen geändert",
+  "visibilityUnconfirmedTitle": "Ihre Änderung konnte nicht bestätigt werden",
+  "visibilityConflictSaved": "Jetzt gespeichert: {audience}",
+  "visibilityConflictYours": "Ihre Änderung: {audience}",
+  "visibilityConflictUnread": "Die gespeicherte Einstellung kann gerade nicht gelesen werden. Ihre Änderung wurde nicht gespeichert.",
+  "visibilityConflictKeep": "Gespeicherte Einstellung behalten",
+  "visibilityConflictReview": "Meine Änderung prüfen"
+}

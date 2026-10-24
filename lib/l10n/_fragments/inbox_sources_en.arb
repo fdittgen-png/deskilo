@@ -1,0 +1,40 @@
+{
+  "inboxSourcePersonal": "Your personal messages",
+  "@inboxSourcePersonal": {
+    "description": "#2556 inbox sources: Names the personal home's part of the inbox (person-to-person conversations and groups) in a status line."
+  },
+  "inboxSourceWorkspaces": "Your workspaces' messages",
+  "@inboxSourceWorkspaces": {
+    "description": "#2556 inbox sources: Names this server's workspace part of the inbox (workspace conversations and inquiries) in a status line."
+  },
+  "inboxSourceFailed": "{source} could not be read. The rest of the inbox is shown.",
+  "@inboxSourceFailed": {
+    "description": "#2556 inbox sources: One source of the inbox failed to answer; a Try again button follows.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "inboxSourceUnavailable": "{source} cannot be reached with your current sign-in. Its conversations are missing from this list.",
+  "@inboxSourceUnavailable": {
+    "description": "#2556 inbox sources: The server of one inbox source refuses this session or does not play that role.",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "inboxShowOlder": "Show older conversations",
+  "@inboxShowOlder": {
+    "description": "#2556 inbox sources: Loads the next page of every inbox source that has more."
+  },
+  "settingLabelMessagingInboxPageSize": "Inbox page size",
+  "@settingLabelMessagingInboxPageSize": {
+    "description": "#2556 inbox sources: Setting label."
+  },
+  "settingHintMessagingInboxPageSize": "How many conversations the personal home and each workspace server return per page of the inbox; older ones come with Show older conversations.",
+  "@settingHintMessagingInboxPageSize": {
+    "description": "#2556 inbox sources: Setting hint."
+  }
+}

@@ -3,8 +3,9 @@
 // #2558 — the spaces the privacy editor offers for "chosen spaces": the
 // qualified references of the personal home (#2563,
 // `my_personal_workspace_refs_v1`), read with no workspace selected. A
-// space is named by its network reference; one on another installation is
-// listed as "verification unavailable" and cannot be chosen here.
+// space is named by its network reference; one on another installation can
+// be chosen while its membership fact is in force, and is listed as
+// "verification unavailable" otherwise.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/providers/auth_providers.dart';

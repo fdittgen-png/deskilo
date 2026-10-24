@@ -3,6 +3,7 @@ import 'personal_export.dart';
 import 'personal_workspace_refs.dart';
 import 'public_person.dart';
 import 'visibility.dart';
+import 'visibility_write.dart';
 
 /// #1823 — the account layer's own calls on this server. Every one is about
 /// the signed-in person; none reads or writes inside a workspace (#2563:
@@ -22,10 +23,16 @@ abstract interface class MeRepository {
   /// reference, and the home that holds them.
   Future<MyVisibility> myVisibility();
 
-  /// `set_visibility(field, audience, workspaces)`: today's writer, which
-  /// takes LOCAL workspace ids of this home. `MeActions.choose` maps the
-  /// references of this home to them and refuses any other.
-  Future<void> setVisibility(VisibilityField field, FieldAudience audience);
+  /// `set_visibility_if_unchanged_network_v1(field, audience, refs,
+  /// expected)` (#2558 C2): gives [field] [audience] — its chosen spaces by
+  /// network reference — only if the saved field is still [expected], and
+  /// answers the saved view of the same transaction. A field that changed
+  /// meanwhile throws [VisibilityConflict] and writes nothing.
+  Future<MyVisibility> setVisibilityIfUnchanged(
+    VisibilityField field,
+    FieldAudience audience, {
+    required FieldAudience expected,
+  });
 
   /// `set_my_about(profession, bio)`: the words only [VisibilityField.about]
   /// lets anyone read.
