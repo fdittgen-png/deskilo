@@ -25279,6 +25279,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityMySpaces => 'Mitglieder meiner Spaces';
 
   @override
+  String get visibilityNoSpaces =>
+      'Sie sind noch in keinem Space. Wählen Sie ein anderes Publikum.';
+
+  @override
   String get visibilityNobody => 'Niemand';
 
   @override
@@ -25336,7 +25340,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilitySignedIn => 'Alle Angemeldeten';
 
   @override
+  String get visibilitySpaceUnlisted =>
+      'Ein Space, der nicht mehr aufgeführt ist';
+
+  @override
+  String get visibilitySpacesUnavailable =>
+      'Ihre Spaces lassen sich gerade nicht auflisten.';
+
+  @override
   String get visibilityTitle => 'Wer mich sieht';
+
+  @override
+  String get visibilityUnavailable =>
+      'Wer was von Ihnen sieht, lässt sich gerade nicht lesen. Es wurde nichts geändert.';
 
   @override
   String get visibilityWidenAction => 'Erweitern';

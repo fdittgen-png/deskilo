@@ -13,6 +13,7 @@ import '../domain/linked_me_repository.dart';
 import '../domain/me_repository.dart';
 import '../domain/my_spaces.dart';
 import '../domain/visibility.dart';
+import 'me_read_retry.dart';
 
 part 'me_providers.g.dart';
 
@@ -35,8 +36,10 @@ MeActions meActions(Ref ref) => MeActions(
       ref.watch(linkedMeRepositoryProvider),
     );
 
-/// Who sees what of me, as the server holds it.
-@riverpod
+/// Who sees what of me, as the personal home holds it. #2558 — read on the
+/// personal client with no workspace involved; a failure is an error the
+/// editor names, never the defaults shown as if they were saved.
+@Riverpod(retry: meReadRetry)
 Future<MyVisibility> myVisibility(Ref ref) {
   if (ref.watch(authStateProvider).value == null) {
     return Future.value(MyVisibility.defaults);

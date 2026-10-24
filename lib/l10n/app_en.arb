@@ -29091,6 +29091,10 @@
   "@visibilityMySpaces": {
     "description": "Audience: members of the person's spaces."
   },
+  "visibilityNoSpaces": "You are in no space yet. Choose another audience.",
+  "@visibilityNoSpaces": {
+    "description": "#2558 — the chosen-spaces picker of an account in no space."
+  },
   "visibilityNobody": "Nobody",
   "@visibilityNobody": {
     "description": "Audience: nobody."
@@ -29165,9 +29169,21 @@
   "@visibilitySignedIn": {
     "description": "Audience: anyone with an account."
   },
+  "visibilitySpaceUnlisted": "A space that is no longer listed",
+  "@visibilitySpaceUnlisted": {
+    "description": "#2558 — a saved chosen space the list no longer names; it stays chosen until the person unticks it."
+  },
+  "visibilitySpacesUnavailable": "Your spaces cannot be listed right now.",
+  "@visibilitySpacesUnavailable": {
+    "description": "#2558 — the chosen-spaces picker when the list of spaces cannot be read."
+  },
   "visibilityTitle": "Who sees me",
   "@visibilityTitle": {
     "description": "Title of the card choosing who sees what of the account."
+  },
+  "visibilityUnavailable": "Who sees what of you cannot be read right now. Nothing was changed.",
+  "@visibilityUnavailable": {
+    "description": "#2558 — the privacy card when the saved settings cannot be read; a retry follows."
   },
   "visibilityWidenAction": "Widen",
   "visibilityWidenConfirm": "Show your {field} to: {audience}? They will be able to see it.",
