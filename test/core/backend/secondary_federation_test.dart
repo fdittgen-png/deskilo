@@ -52,6 +52,11 @@ class _World {
   final String authorityIssuer;
   final bool offersDeskilo;
   final bool failSave;
+
+  /// #2562 C1b -- what the target says at completion (after the browser).
+  String completeInstallation = installation;
+  bool expiredExchange = false;
+  int authorityReads = 0;
   final requests = <http.Request>[];
   late final secrets = _Secrets(failSave: failSave);
   late SupabaseClient active;
@@ -78,13 +83,17 @@ class _World {
       case '/rest/v1/rpc/public_network_descriptor':
         return _json(request, {'code': 'PGRST202', 'message': 'nf'}, 404);
       case '/rest/v1/rpc/public_identity_authority':
+        // The first read is the check before the browser opens.
+        final atCompletion = authorityReads++ > 0;
         return _json(
           request,
           offersDeskilo
               ? {
                   'kind': 'oidc',
                   'provider': 'custom:deskilo',
-                  'installation_id': installation,
+                  'installation_id': atCompletion
+                      ? completeInstallation
+                      : installation,
                   'issuer': authorityIssuer,
                 }
               : null,
@@ -92,6 +101,7 @@ class _World {
       case '/auth/v1/token':
         return _json(request, {
           ...session('target-user'),
+          if (expiredExchange) 'access_token': _expiredToken,
           'user': targetUser('target-user', subject),
           'provider_token': 'canonical-identity-token',
           'provider_refresh_token': 'canonical-identity-refresh',
@@ -166,6 +176,10 @@ class _World {
   }
 }
 
+/// An access token that ended in 2000.
+final _expiredToken =
+    'e30.${base64Url.encode(utf8.encode(jsonEncode({'sub': 'target-user', 'exp': 946684800})))}.signature';
+
 class _Secrets extends MemorySecrets {
   _Secrets({this.failSave = false});
   final bool failSave;
@@ -205,6 +219,11 @@ void main() {
     expect(saved.single.endpoint.url, target);
     expect(saved.single.account, 'target-user');
     expect(saved.single.installationId, installation);
+    // #2562 C1b -- one registration, two local ids: kept under the
+    // canonical identity, not under the home account's id.
+    expect(saved.single.account, isNot(w.active.auth.currentUser!.id));
+    expect(saved.single.issuer, homeIssuer);
+    expect(saved.single.subject, 'home-user');
     expect(
       w.active.auth.currentUser!.id,
       'home-user',
@@ -313,6 +332,111 @@ void main() {
       w.requests.where((r) => r.url.path == '/auth/v1/logout'),
       isNotEmpty,
     );
+  });
+
+  group('#2562 C1b -- the callback intent: target and personal epoch', () {
+    test('signed out and in again here (same person) while the browser was '
+        'open: refused before any code is exchanged', () async {
+      final w = _World();
+      await w.build();
+      final event = w.federation.events.first;
+      await w.federation.begin(w.intent);
+      await w.active.auth.setInitialSession(
+        jsonEncode({
+          ...session('home-user'),
+          'user': {...user('home-user'), 'last_sign_in_at': '2026-10-23T09:00:00Z'},
+        }),
+      );
+      expect(
+        w.dispatcher.call(w.returnWith('target-code')),
+        false,
+        reason: 'the main client never exchanges it',
+      );
+      final result = await event;
+      expect(result.status, SecondaryConnectStatus.failed);
+      expect(result.failure, FederationFailure.wrongAccount);
+      expect(
+        w.requests.where((r) => r.url.path == '/auth/v1/token'),
+        isEmpty,
+        reason: 'no target session was created for an ended sign-in',
+      );
+      expect(await w.registry.list(), isEmpty);
+    });
+
+    test('a tampered return, or the return of a replaced flow, is not '
+        'claimed; the newer flow connects', () async {
+      final w = _World();
+      await w.build();
+      final events = <SecondaryConnectEvent>[];
+      final sub = w.federation.events.listen(events.add);
+      addTearDown(sub.cancel);
+      await w.federation.begin(w.intent);
+      final first = w.returnWith('first-code');
+      final tampered = first.replace(
+        queryParameters: {
+          ...first.queryParameters,
+          'deskilo_flow': 'not-this-flow',
+        },
+      );
+      expect(w.dispatcher.call(tampered), false);
+      final second = await w.federation.begin(w.intent);
+      expect(w.dispatcher.call(first), false, reason: 'replaced: refused');
+      await pumpEventQueue();
+      expect(w.requests.where((r) => r.url.path == '/auth/v1/token'), isEmpty);
+      w.dispatcher.call(w.returnWith('second-code'));
+      await pumpEventQueue();
+      expect(events.map((e) => e.status), [
+        SecondaryConnectStatus.cancelled,
+        SecondaryConnectStatus.connected,
+      ]);
+      expect(events.last.flow, second);
+      expect(await w.registry.list(), hasLength(1));
+    });
+
+    test('the target names another installation after the browser: refused, '
+        'nothing kept, its session ended', () async {
+      final w = _World()
+        ..completeInstallation = '00000000-0000-4000-8000-00000000ffff';
+      await w.build();
+      final event = w.federation.events.first;
+      await w.federation.begin(w.intent);
+      w.dispatcher.call(w.returnWith('target-code'));
+      final result = await event;
+      expect(result.status, SecondaryConnectStatus.failed);
+      expect(result.failure, FederationFailure.incompatibleServer);
+      expect(await w.registry.list(), isEmpty);
+      expect(w.requests.where((r) => r.url.path == '/auth/v1/logout'),
+          isNotEmpty);
+      expect(w.active.auth.currentUser!.id, 'home-user');
+    });
+
+    test('a session that ended before it could be adopted: expired, nothing '
+        'kept; connecting again works', () async {
+      final w = _World()..expiredExchange = true;
+      await w.build();
+      final first = w.federation.events.first;
+      await w.federation.begin(w.intent);
+      w.dispatcher.call(w.returnWith('target-code'));
+      final result = await first;
+      expect(result.status, SecondaryConnectStatus.failed);
+      expect(result.failure, FederationFailure.expired);
+      expect(await w.registry.list(), isEmpty);
+      expect(
+        w.secrets.values.keys.where(
+          (k) => !k.startsWith('deskilo.connections.'),
+        ),
+        isEmpty,
+        reason: 'the verifier and the callback metadata are gone',
+      );
+
+      // Recovery: a fresh flow with a live session connects.
+      w.expiredExchange = false;
+      final again = w.federation.events.first;
+      await w.federation.begin(w.intent);
+      w.dispatcher.call(w.returnWith('target-code'));
+      expect((await again).status, SecondaryConnectStatus.connected);
+      expect(await w.registry.list(), hasLength(1));
+    });
   });
 
   group('a server that cannot take the identity says why', () {
