@@ -2288,6 +2288,7 @@ routine public.my_inquiries() -> jsonb | function | definer | stable | exec:auth
 routine public.my_instance_notices() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:da5e446e7c43
 routine public.my_mcp_connections() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f9722c099712
 routine public.my_message_requests() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f04fa74b6d8e
+routine public.my_personal_message_directory_v1(p_section text, p_workspace_network_id text, p_after_key text, p_query text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c0abfae14d62
 routine public.my_personal_preferences(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:213deec91380
 routine public.my_personal_workspace_refs_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:227294c36bbf
 routine public.my_public_profile() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3c381728dd4f
@@ -2343,6 +2344,7 @@ routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | functi
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.personal_account_recognised() -> boolean | function | definer | stable | exec:authenticated,service_role | body:6e6491901997
+routine public.personal_directory_relationships(p_user uuid) -> TABLE(network_id text, permitted_name text, fresh boolean) | function | definer | stable | exec: | body:8a3a592c60e9
 routine public.personal_home_descriptor() -> jsonb | function | definer | stable | exec:service_role | body:1ea555640fdb
 routine public.personal_native_session() -> boolean | function | invoker | stable | exec:anon,authenticated,service_role | body:54c14f4d4611
 routine public.personal_workspace_ref_stamp() -> trigger | function | definer | volatile | exec:service_role | body:49355860cffd

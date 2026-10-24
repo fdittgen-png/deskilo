@@ -21280,23 +21280,65 @@ abstract class AppLocalizations {
   /// **'Create a space'**
   String get meCreateSpace;
 
+  /// #2557 My data › Reservations: opens the person's visits as a guest.
+  ///
+  /// In en, this message translates to:
+  /// **'Visits as a guest: {count}'**
+  String meDataGuestVisits(int count);
+
+  /// #2557 My data: export the personal-data file.
+  ///
+  /// In en, this message translates to:
+  /// **'Export personal data'**
+  String get meDataPersonalExport;
+
+  /// #2557 My data: the personal home did not answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal home did not answer. Nothing was exported.'**
+  String get meDataPersonalFailed;
+
+  /// #2557 My data: the session may not read the personal export.
+  ///
+  /// In en, this message translates to:
+  /// **'This session may not read your personal data. Sign in to the app again.'**
+  String get meDataPersonalForbidden;
+
+  /// #2557 My data: the personal export answer could not be read.
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal home answered in a form this app cannot read. Nothing was exported.'**
+  String get meDataPersonalMalformed;
+
+  /// #2557 My data: what the personal export covers and what it leaves to each workspace.
+  ///
+  /// In en, this message translates to:
+  /// **'What your personal home holds about you: your profile, preferences, conversations and the workspaces you name. Each workspace\'s bookings and invoices stay with that workspace and are not part of this file.'**
+  String get meDataPersonalScope;
+
+  /// #2557 My data: counts the personal home answered.
+  ///
+  /// In en, this message translates to:
+  /// **'Conversations: {conversations} · Messages: {messages} · Workspaces named: {workspaces}'**
+  String meDataPersonalSummary(int conversations, int messages, int workspaces);
+
+  /// #2557 My data › Personal information: the personal-account source card.
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal account'**
+  String get meDataPersonalTitle;
+
+  /// #2557 My data: the personal home has no personal export.
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal home does not offer this export yet. Nothing was exported.'**
+  String get meDataPersonalUnsupported;
+
   /// #2552 My data view: the person's own reservations and visits.
   ///
   /// In en, this message translates to:
   /// **'Reservations'**
   String get meDataViewReservations;
-
-  /// #2552 My data › Reservations: where the bookings are, and what this view lists.
-  ///
-  /// In en, this message translates to:
-  /// **'Your bookings stay in each space\'s calendar; your visits as a guest appear here.'**
-  String get meDataVisitsEmptyBody;
-
-  /// #2552 My data › Reservations with no guest visit to show.
-  ///
-  /// In en, this message translates to:
-  /// **'No visits yet'**
-  String get meDataVisitsEmptyTitle;
 
   /// No description provided for @meFinanceGlanceOwed.
   ///

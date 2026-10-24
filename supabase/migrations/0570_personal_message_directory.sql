@@ -234,4 +234,4 @@ grant execute on function public.my_personal_message_directory_v1(text, text, te
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(570);
