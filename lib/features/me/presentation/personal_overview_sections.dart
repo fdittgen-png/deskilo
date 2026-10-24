@@ -22,7 +22,7 @@ import '../../../core/time/clock.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../reservations/domain/my_reservations.dart';
 import '../../reservations/domain/my_reservations_composition.dart';
-import '../../reservations/presentation/widgets/my_reservations_body.dart';
+import '../../reservations/presentation/widgets/my_reservations_layout.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../application/personal_overview.dart';
 import 'me_data_tab.dart';

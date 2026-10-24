@@ -37,6 +37,11 @@ part 'my_reservations_providers.g.dart';
 // fails or cannot be reached is said beside the others' bookings, with its
 // own Try again. A page that arrives after the account changed, or for a
 // view that was rebuilt meanwhile, is dropped.
+//
+// C4: the composition names its account. Read again (a pull, a retry, a
+// changed source list) for the same account, each host keeps what it
+// showed, stale, until it answers; an outage leaves it there, a refusal
+// that withdraws it, a host no longer named or another account purges it.
 
 /// The read, one host per call through that host's own verified client;
 /// the limits from the personal home's platform settings. Demo overrides
@@ -179,6 +184,9 @@ class MyReservationsComposer extends _$MyReservationsComposer {
   Future<MyReservationsComposition> build(MyReservationsQuery query) async {
     final generation = ++_generation;
     final principal = ref.watch(sessionStateProvider.select((s) => s.value));
+    // C4 -- what this query showed before, only for the same account.
+    final shown = state.value;
+    final carried = shown != null && shown.principal == principal ? shown : null;
     final limitsAnswer = ref.watch(myReservationsLimitsProvider.future);
     // Both watched before the first await; a failure of the second while
     // the first is awaited must not go unhandled.
@@ -202,9 +210,12 @@ class MyReservationsComposer extends _$MyReservationsComposer {
     }
     return MyReservationsComposition(
       List.unmodifiable([
-        for (final source in sources) MyReservationsSlot.reading(source),
+        for (final source in sources)
+          carried?.slotOf(source.installationId)?.carriedTo(source) ??
+              MyReservationsSlot.reading(source),
       ]),
       direction: query.direction,
+      principal: principal,
     );
   }
 
@@ -280,7 +291,7 @@ class MyReservationsComposer extends _$MyReservationsComposer {
       return;
     }
     state = AsyncData(
-      composition.replacing(MyReservationsSlot.reading(slot.source)),
+      composition.replacing(MyReservationsSlot.refreshing(slot)),
     );
     unawaited(_read(_generation, slot.source, query, first: true));
   }

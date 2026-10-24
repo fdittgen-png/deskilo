@@ -11,6 +11,12 @@
 // (Upcoming, Past, Cancelled) and the source filter select from it; a row
 // an action changed is replaced in place; a card's times are its
 // workspace's wall clock, with the zone named when it is not the device's.
+//
+// C4: the cache identity is (principal, installation, query): a
+// composition names the account it was read for, a slot its host, the
+// family its query. A host read again keeps what it showed before, marked
+// stale, through an outage; a refusal that withdraws it, a host no longer
+// named and another account purge it.
 import 'package:meta/meta.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -34,6 +40,7 @@ class MyReservationsSlot {
     this.zones = const {},
     this.loadingMore = false,
     this.failure,
+    this.stale = false,
   });
 
   /// The first page of [source] is being read.
@@ -47,6 +54,22 @@ class MyReservationsSlot {
           state: MyReservationsSlotState.failed,
           failure: failure,
         );
+
+  /// #2553 C4 -- [prior]'s host read again: what it showed stays, marked
+  /// stale, until the host answers; a plain first read when it showed
+  /// nothing.
+  factory MyReservationsSlot.refreshing(MyReservationsSlot prior) =>
+      prior.items.isEmpty
+          ? MyReservationsSlot.reading(prior.source)
+          : MyReservationsSlot._(
+              source: prior.source,
+              state: MyReservationsSlotState.reading,
+              items: prior.items,
+              next: prior.next,
+              hasMore: prior.hasMore,
+              zones: prior.zones,
+              stale: true,
+            );
 
   /// The first page of [source].
   factory MyReservationsSlot.firstPage(
@@ -73,6 +96,40 @@ class MyReservationsSlot {
   /// For a failed slot, why its first page did not come; for a read one,
   /// why its last further page did not (its pages stay).
   final Object? failure;
+
+  /// #2553 C4 -- [items] are what the host answered before, kept through an
+  /// outage while it is read again or does not answer.
+  final bool stale;
+
+  /// #2553 C4 -- this slot's bookings for the host as [source] names it
+  /// now, read again: a workspace no longer named loses its rows.
+  MyReservationsSlot carriedTo(MyReservationsSource source) {
+    final kept = [
+      for (final i in items)
+        if (source.workspaceIds.contains(i.workspaceId)) i,
+    ];
+    return MyReservationsSlot.refreshing(MyReservationsSlot._(
+      source: source,
+      state: state,
+      items: List.unmodifiable(kept),
+      next: kept.length == items.length ? next : null,
+      hasMore: kept.length == items.length && hasMore,
+      zones: zones,
+    ));
+  }
+
+  /// #2553 C4 -- the host did not answer the read again: what it showed
+  /// stays, stale, beside [error].
+  MyReservationsSlot outage(Object error) => MyReservationsSlot._(
+        source: source,
+        state: MyReservationsSlotState.failed,
+        items: items,
+        next: next,
+        hasMore: hasMore,
+        zones: zones,
+        failure: error,
+        stale: true,
+      );
 
   String get installationId => source.installationId;
 
@@ -123,8 +180,24 @@ class MyReservationsSlot {
         zones: zones,
         loadingMore: loadingMore,
         failure: failure,
+        stale: stale,
       );
 }
+
+/// #2553 C4 -- whether [failure] withdraws what a host showed before: it
+/// refused me, it cannot be reached with its own verified client (not
+/// connected here, quarantined, another installation), or nobody is
+/// signed in. Anything else -- a lost network, a timeout, an answer this
+/// app cannot read -- is an outage: what was read stays, marked stale.
+bool _revoked(Object failure) =>
+    failure is MyReservationsRefused &&
+    switch (failure.failure) {
+      MyReservationsFailure.forbidden ||
+      MyReservationsFailure.hostUnavailable ||
+      MyReservationsFailure.noContext =>
+        true,
+      _ => false,
+    };
 
 /// One booking in the composed list, with the host it came from and the
 /// zone of its workspace.
@@ -253,9 +326,14 @@ class MyReservationsComposition {
   MyReservationsComposition(
     this.slots, {
     this.direction = MyReservationsDirection.ascending,
+    this.principal,
   });
 
   final List<MyReservationsSlot> slots;
+
+  /// #2553 C4 -- the account the composition was read for: shown only to
+  /// it, carried into a read again only for it.
+  final String? principal;
 
   /// #2553 C3 -- the way the period is walked: the merge, the horizon and
   /// the pages all follow it.
@@ -271,6 +349,7 @@ class MyReservationsComposition {
           slots.map((s) => s.installationId == slot.installationId ? slot : s),
         ),
         direction: direction,
+        principal: principal,
       );
 
   /// #2553 C3 -- the booking [id] of host [installationId] as [item] now,
@@ -296,12 +375,18 @@ class MyReservationsComposition {
     final slot = slotOf(source.installationId);
     if (slot == null) return this;
     final error = failure ?? StateError('no page and no failure');
-    return replacing(switch ((first, page)) {
-      (true, final MyReservationsPage p) => MyReservationsSlot.firstPage(source, p),
-      (true, null) => MyReservationsSlot.failed(source, error),
-      (false, final MyReservationsPage p) => slot.appended(p),
-      (false, null) => slot.moreFailed(error),
-    });
+    // C4 -- a refusal that withdraws the host's rows purges them; an
+    // outage keeps them, stale.
+    final revoked = _revoked(error);
+    final MyReservationsSlot answer;
+    if (page != null) {
+      answer = first ? MyReservationsSlot.firstPage(source, page) : slot.appended(page);
+    } else if (revoked || (first && slot.items.isEmpty)) {
+      answer = MyReservationsSlot.failed(source, error);
+    } else {
+      answer = first ? slot.outage(error) : slot.moreFailed(error);
+    }
+    return replacing(answer);
   }
 
   /// Every read host that has a further page, marked as reading it, and
@@ -332,15 +417,16 @@ class MyReservationsComposition {
     return null;
   }
 
-  /// The merged bookings that can be shown now: every read slot's items up
-  /// to the horizon, the smallest last row of a slot that has more.
+  /// The merged bookings that can be shown now: every read slot's items,
+  /// and (C4) a stale slot's, up to the horizon, the smallest last row of a
+  /// slot that has more.
   late final List<MyReservationEntry> visible = _visible();
 
   List<MyReservationEntry> _visible() {
     final all = <MyReservationEntry>[];
     MyReservationEntry? horizon;
     for (final s in slots) {
-      if (s.state != MyReservationsSlotState.read) continue;
+      if (s.state != MyReservationsSlotState.read && !s.stale) continue;
       for (final item in s.items) {
         all.add(MyReservationEntry(
           item: item,

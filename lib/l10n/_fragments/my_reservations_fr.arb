@@ -54,5 +54,11 @@
   "myReservationsCheckInDone": "Arrivée enregistrée.",
   "myReservationsActionFailed": "Cela n’a pas pu être fait. Réessayez dans un instant.",
   "myReservationsGone": "Cette réservation ne figure plus à votre nom à cette heure.",
-  "myReservationsTimesIn": "Heures de {zone}"
+  "myReservationsTimesIn": "Heures de {zone}",
+  "myReservationsColumnWhen": "Date et heure",
+  "myReservationsColumnWorkspace": "Espace",
+  "myReservationsColumnKind": "Type",
+  "myReservationsColumnStatus": "Statut",
+  "myReservationsColumnActions": "Actions",
+  "myReservationsSourceStale": "Affiché tel que lu la dernière fois ; cela a pu changer depuis."
 }

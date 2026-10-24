@@ -12897,11 +12897,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meCreateSpace => 'Create a space';
 
   @override
-  String meDataGuestVisits(int count) {
-    return 'Visits as a guest: $count';
-  }
-
-  @override
   String get meDataPersonalExport => 'Export personal data';
 
   @override
@@ -14164,6 +14159,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get myReservationsColumnActions => 'Actions';
+
+  @override
+  String get myReservationsColumnKind => 'Kind';
+
+  @override
+  String get myReservationsColumnStatus => 'Status';
+
+  @override
+  String get myReservationsColumnWhen => 'Date and time';
+
+  @override
+  String get myReservationsColumnWorkspace => 'Workspace';
+
+  @override
   String get myReservationsEmpty => 'No reservations in this period.';
 
   @override
@@ -14236,6 +14246,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String myReservationsSourceReading(String source) {
     return 'Reading $source…';
   }
+
+  @override
+  String get myReservationsSourceStale =>
+      'Shown as last read; it may have changed since.';
 
   @override
   String get myReservationsSourceUnnamed => 'A workspace server';

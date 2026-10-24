@@ -432,7 +432,7 @@ final class MyReservationsComposerProvider
 }
 
 String _$myReservationsComposerHash() =>
-    r'271f5051138a7a43bc3d15d32e4da7c0ccbb7272';
+    r'4aa07db2e462acfb0e7562f26304dca9484370b5';
 
 /// The composition of one [MyReservationsQuery] (a window): every source's
 /// first page read through the bounded reads, each slot emitted as soon as

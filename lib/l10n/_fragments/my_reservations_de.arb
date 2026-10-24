@@ -54,5 +54,11 @@
   "myReservationsCheckInDone": "Eingecheckt.",
   "myReservationsActionFailed": "Das hat nicht geklappt. Versuchen Sie es gleich noch einmal.",
   "myReservationsGone": "Diese Reservierung ist zu dieser Zeit nicht mehr für Sie eingetragen.",
-  "myReservationsTimesIn": "Uhrzeiten in {zone}"
+  "myReservationsTimesIn": "Uhrzeiten in {zone}",
+  "myReservationsColumnWhen": "Datum und Uhrzeit",
+  "myReservationsColumnWorkspace": "Workspace",
+  "myReservationsColumnKind": "Art",
+  "myReservationsColumnStatus": "Status",
+  "myReservationsColumnActions": "Aktionen",
+  "myReservationsSourceStale": "So angezeigt, wie zuletzt gelesen; es kann sich seitdem geändert haben."
 }

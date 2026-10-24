@@ -15032,15 +15032,6 @@
   "@meCreateSpace": {
     "description": "Button on the Me home: create a new space."
   },
-  "meDataGuestVisits": "Visits as a guest: {count}",
-  "@meDataGuestVisits": {
-    "description": "#2557 My data › Reservations: opens the person's visits as a guest.",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "meDataPersonalExport": "Export personal data",
   "@meDataPersonalExport": {
     "description": "#2557 My data: export the personal-data file."
@@ -16650,6 +16641,26 @@
       }
     }
   },
+  "myReservationsColumnActions": "Actions",
+  "@myReservationsColumnActions": {
+    "description": "#2553 C4 My reservations: the wide table's column of View, Check in and Cancel."
+  },
+  "myReservationsColumnKind": "Kind",
+  "@myReservationsColumnKind": {
+    "description": "#2553 C4 My reservations: the wide table's column of what was booked (seat, desk, office, level)."
+  },
+  "myReservationsColumnStatus": "Status",
+  "@myReservationsColumnStatus": {
+    "description": "#2553 C4 My reservations: the wide table's column of where the booking stands."
+  },
+  "myReservationsColumnWhen": "Date and time",
+  "@myReservationsColumnWhen": {
+    "description": "#2553 C4 My reservations: the wide table's column of a booking's day and times."
+  },
+  "myReservationsColumnWorkspace": "Workspace",
+  "@myReservationsColumnWorkspace": {
+    "description": "#2553 C4 My reservations: the wide table's column of the booking's workspace and place."
+  },
   "myReservationsEmpty": "No reservations in this period.",
   "@myReservationsEmpty": {
     "description": "#2553 My reservations: the window was read and holds nothing."
@@ -16747,6 +16758,10 @@
         "type": "String"
       }
     }
+  },
+  "myReservationsSourceStale": "Shown as last read; it may have changed since.",
+  "@myReservationsSourceStale": {
+    "description": "#2553 C4 My reservations: a server did not answer a read again; its bookings stay on screen as they were last read."
   },
   "myReservationsSourceUnnamed": "A workspace server",
   "@myReservationsSourceUnnamed": {
