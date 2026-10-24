@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/motion.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 import '../providers/discovery_listing_providers.dart';
@@ -19,7 +22,9 @@ String _sourceLabel(String origin) {
 /// The loaded places, source by source: each source shows its own pages
 /// and asks for its own next one, so a source that fails keeps what it
 /// showed and offers to try that page again, while the others carry on.
-class DiscoveryListView extends ConsumerWidget {
+/// Beside the map ([revealSelected]), a place selected there is scrolled
+/// into view here, so both panes show the same selection.
+class DiscoveryListView extends ConsumerStatefulWidget {
   const DiscoveryListView({
     super.key,
     required this.query,
@@ -27,19 +32,97 @@ class DiscoveryListView extends ConsumerWidget {
     required this.selected,
     required this.onView,
     required this.onLocate,
+    this.revealSelected = false,
   });
 
   final String query;
   final DiscoveryResults results;
   final PublicWorkspace? selected;
   final ValueChanged<PublicWorkspace> onView, onLocate;
+  final bool revealSelected;
 
-  Widget _row(PublicWorkspace w) => DirectoryRow(
-    workspace: w,
-    selected: selected?.id == w.id && selected?.source == w.source,
-    onView: () => onView(w),
-    onLocate: () => onLocate(w),
-  );
+  @override
+  ConsumerState<DiscoveryListView> createState() => _DiscoveryListState();
+}
+
+class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
+  final _scroll = ScrollController();
+  final _selectedRow = GlobalKey(debugLabel: 'discovery-selected-row');
+
+  /// Jumps toward a card not built yet before giving up on revealing it.
+  static const _approaches = 2;
+
+  /// Where the selected card sits among the cards shown, as of the last
+  /// build: how a card the list has not built yet is approached.
+  var _selectedAt = -1, _shownRows = 0;
+
+  String get query => widget.query;
+  DiscoveryResults get results => widget.results;
+
+  static bool _same(PublicWorkspace? a, PublicWorkspace? b) =>
+      a?.id == b?.id && a?.source == b?.source;
+
+  @override
+  void didUpdateWidget(DiscoveryListView old) {
+    super.didUpdateWidget(old);
+    if (widget.revealSelected &&
+        widget.selected != null &&
+        !_same(widget.selected, old.selected)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _reveal(_approaches));
+    }
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  /// Scrolls the selected card into view. A card not built yet is first
+  /// approached by its position among the shown cards, then revealed.
+  void _reveal(int tries) {
+    if (!mounted) return;
+    final row = _selectedRow.currentContext;
+    if (row != null) {
+      if (_inView(row)) return;
+      // A card reached by a jump is placed at once: the list's estimate
+      // of the cards above it is still settling.
+      unawaited(Scrollable.ensureVisible(
+        row,
+        alignment: 0.1,
+        duration: tries == _approaches
+            ? AppMotion.viewSwitchOf(context)
+            : Duration.zero,
+      ));
+      return;
+    }
+    if (tries == 0 || _selectedAt < 0 || !_scroll.hasClients) return;
+    final position = _scroll.position;
+    _scroll.jumpTo(position.maxScrollExtent * _selectedAt / _shownRows);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _reveal(tries - 1));
+  }
+
+  /// Whether [row] is wholly inside the list's viewport: a card chosen
+  /// where it already shows is not moved under the person's eyes.
+  static bool _inView(BuildContext row) {
+    final card = row.findRenderObject();
+    final list = Scrollable.of(row).context.findRenderObject();
+    if (card is! RenderBox || list is! RenderBox) return false;
+    final viewport = list.localToGlobal(Offset.zero) & list.size;
+    final rect = card.localToGlobal(Offset.zero) & card.size;
+    return rect.top >= viewport.top && rect.bottom <= viewport.bottom;
+  }
+
+  Widget _row(PublicWorkspace w) {
+    final selected = _same(widget.selected, w);
+    final row = DirectoryRow(
+      workspace: w,
+      selected: selected,
+      onView: () => widget.onView(w),
+      onLocate: () => widget.onLocate(w),
+    );
+    return selected ? KeyedSubtree(key: _selectedRow, child: row) : row;
+  }
 
   /// What follows a source's cards: its progress, its failure with a
   /// retry of the same page, or the way to its next page.
@@ -104,7 +187,7 @@ class DiscoveryListView extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l = context.l10n;
     // Saved places exist only for someone signed in at the personal home;
     // the filter narrows the loaded places to them.
@@ -116,8 +199,18 @@ class DiscoveryListView extends ConsumerWidget {
     final loaded = results.workspaces;
     final shown = loaded.where(shows).length;
     final held = <String>{};
+    final order = <String>{
+      for (final s in results.sources)
+        for (final w in s.cards)
+          if (shows(w)) '${w.source}/${w.id}',
+    }.toList();
+    _shownRows = order.length;
+    _selectedAt = widget.selected == null
+        ? -1
+        : order.indexOf('${widget.selected!.source}/${widget.selected!.id}');
     final refused = results.refused;
     return ListView(
+      controller: _scroll,
       padding: AppSpacing.mdAll,
       children: [
         Text(

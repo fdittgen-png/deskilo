@@ -3123,6 +3123,7 @@
   "discoveryRemoveBookmark": "Lesezeichen entfernen",
   "discoverySaved": "Auf diesem Gerät gespeichert",
   "discoverySavedFilter": "Gespeichert",
+  "discoveryShowAllLoaded": "Alle geladenen Orte zeigen",
   "discoveryShowMoreFrom": "Mehr von {source} anzeigen",
   "discoverySourceFailed": "{source} hat nicht geantwortet. Die bereits angezeigten Orte bleiben.",
   "discoveryTitle": "Arbeitsräume entdecken",

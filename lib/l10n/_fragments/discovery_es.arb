@@ -14,5 +14,6 @@
   "discoveryMapDisclosureBody": "El mapa lo dibuja {tiles} y las direcciones sin coordenadas las sitúa {geocoder}. El proveedor del mapa recibe información de conexión y del área visualizada: la dirección IP de su dispositivo y la parte del mapa que usted mira. No se le envía nada si usted no continúa.",
   "discoveryMapRemembered": "Su elección se guarda en este dispositivo para este proveedor de mapas.",
   "discoveryMapContinue": "Continuar al mapa",
-  "discoveryMapStay": "Quedarse en la lista"
+  "discoveryMapStay": "Quedarse en la lista",
+  "discoveryShowAllLoaded": "Mostrar todos los lugares cargados"
 }

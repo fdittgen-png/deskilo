@@ -14,5 +14,6 @@
   "discoveryMapDisclosureBody": "Die Karte wird von {tiles} gezeichnet, Adressen ohne Koordinaten platziert {geocoder}. Der Kartenanbieter erhält Verbindungsdaten und den angezeigten Bereich: die IP-Adresse Ihres Geräts und den Teil der Karte, den Sie ansehen. Ohne Ihr Weiter wird ihm nichts gesendet.",
   "discoveryMapRemembered": "Ihre Wahl wird auf diesem Gerät für diesen Kartenanbieter gespeichert.",
   "discoveryMapContinue": "Weiter zur Karte",
-  "discoveryMapStay": "Bei der Liste bleiben"
+  "discoveryMapStay": "Bei der Liste bleiben",
+  "discoveryShowAllLoaded": "Alle geladenen Orte zeigen"
 }
