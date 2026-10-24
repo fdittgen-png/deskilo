@@ -10071,6 +10071,56 @@
   "@instanceEndpointTitle": {
     "description": "#2145 assistant onboarding: instanceEndpointTitle"
   },
+  "instanceEnrolAccepting": "Accepts new spaces",
+  "@instanceEnrolAccepting": {
+    "description": "#2562 C2a enrolment: instanceEnrolAccepting"
+  },
+  "instanceEnrolDone": "Enrolled at {home}.",
+  "@instanceEnrolDone": {
+    "description": "#2562 C2a enrolment: instanceEnrolDone",
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceEnrolHomeLabel": "Personal home to enrol at",
+  "@instanceEnrolHomeLabel": {
+    "description": "#2562 C2a enrolment: instanceEnrolHomeLabel"
+  },
+  "instanceEnrolIntro": "Optional. If this installation hosts spaces for people whose accounts live on a personal home you operate, enrol it there: the home then recognises it as a workspace server. Skip this step for a combined installation.",
+  "@instanceEnrolIntro": {
+    "description": "#2562 C2a enrolment: instanceEnrolIntro"
+  },
+  "instanceEnrolNoHome": "No other project of this account can be the personal home.",
+  "@instanceEnrolNoHome": {
+    "description": "#2562 C2a enrolment: instanceEnrolNoHome"
+  },
+  "instanceEnrolNotHome": "{home} is not a personal home.",
+  "@instanceEnrolNotHome": {
+    "description": "#2562 C2a enrolment: instanceEnrolNotHome",
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceEnrolNotHost": "This installation does not host spaces, so it cannot be enrolled.",
+  "@instanceEnrolNotHost": {
+    "description": "#2562 C2a enrolment: instanceEnrolNotHost"
+  },
+  "instanceEnrolRun": "Enrol at this personal home",
+  "@instanceEnrolRun": {
+    "description": "#2562 C2a enrolment: instanceEnrolRun"
+  },
+  "instanceEnrolSame": "An installation cannot enrol itself.",
+  "@instanceEnrolSame": {
+    "description": "#2562 C2a enrolment: instanceEnrolSame"
+  },
+  "instanceEnrolUnreadable": "This project does not answer as a Deskilo installation yet. Install the schema first.",
+  "@instanceEnrolUnreadable": {
+    "description": "#2562 C2a enrolment: instanceEnrolUnreadable"
+  },
   "instanceFamilyChatgpt": "ChatGPT",
   "@instanceFamilyChatgpt": {
     "description": "#2145 assistant onboarding: instanceFamilyChatgpt"
@@ -10439,6 +10489,10 @@
   "instanceStepDone": "Done",
   "@instanceStepDone": {
     "description": "#977 instance wizard: instanceStepDone"
+  },
+  "instanceStepEnrol": "Personal home",
+  "@instanceStepEnrol": {
+    "description": "#2562 C2a enrolment: instanceStepEnrol"
   },
   "instanceStepFailed": "Stopped at {item}: {message}",
   "@instanceStepFailed": {
@@ -22165,6 +22219,18 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintIdentityClockSkewSeconds": "Seconds of clock difference between the personal home and a workspace server that are still accepted, 0 to 30.",
+  "@settingHintIdentityClockSkewSeconds": {
+    "description": "#2562 C2a enrolment: settingHintIdentityClockSkewSeconds"
+  },
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Seconds a workspace server may rely on one identity status signed by the personal home. At most 900: a suspended account is refused new requests within this time plus the clock skew.",
+  "@settingHintIdentityStatusAssertionLifetimeSeconds": {
+    "description": "#2562 C2a enrolment: settingHintIdentityStatusAssertionLifetimeSeconds"
+  },
+  "settingHintIdentityStatusReconcileSeconds": "Seconds between two refreshes of the identity statuses a workspace server holds. Keep it below the status lifetime.",
+  "@settingHintIdentityStatusReconcileSeconds": {
+    "description": "#2562 C2a enrolment: settingHintIdentityStatusReconcileSeconds"
+  },
   "settingHintKpiCapacityRangeDays": "Fixed by the platform: the longest period one capacity figure may cover. It bounds the query.",
   "@settingHintKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -22320,6 +22386,18 @@
   "settingLabelDunningFirstAfterDays": "Days before a first reminder",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
+  },
+  "settingLabelIdentityClockSkewSeconds": "Allowed clock difference",
+  "@settingLabelIdentityClockSkewSeconds": {
+    "description": "#2562 C2a enrolment: settingLabelIdentityClockSkewSeconds"
+  },
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Identity status lifetime",
+  "@settingLabelIdentityStatusAssertionLifetimeSeconds": {
+    "description": "#2562 C2a enrolment: settingLabelIdentityStatusAssertionLifetimeSeconds"
+  },
+  "settingLabelIdentityStatusReconcileSeconds": "Identity status refresh",
+  "@settingLabelIdentityStatusReconcileSeconds": {
+    "description": "#2562 C2a enrolment: settingLabelIdentityStatusReconcileSeconds"
   },
   "settingLabelKpiCapacityRangeDays": "Capacity figure range",
   "@settingLabelKpiCapacityRangeDays": {

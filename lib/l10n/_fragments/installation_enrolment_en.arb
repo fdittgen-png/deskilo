@@ -1,0 +1,81 @@
+{
+  "@@locale": "en",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Identity status lifetime",
+  "@settingLabelIdentityStatusAssertionLifetimeSeconds": {
+    "description": "#2562 C2a enrolment: settingLabelIdentityStatusAssertionLifetimeSeconds"
+  },
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Seconds a workspace server may rely on one identity status signed by the personal home. At most 900: a suspended account is refused new requests within this time plus the clock skew.",
+  "@settingHintIdentityStatusAssertionLifetimeSeconds": {
+    "description": "#2562 C2a enrolment: settingHintIdentityStatusAssertionLifetimeSeconds"
+  },
+  "settingLabelIdentityStatusReconcileSeconds": "Identity status refresh",
+  "@settingLabelIdentityStatusReconcileSeconds": {
+    "description": "#2562 C2a enrolment: settingLabelIdentityStatusReconcileSeconds"
+  },
+  "settingHintIdentityStatusReconcileSeconds": "Seconds between two refreshes of the identity statuses a workspace server holds. Keep it below the status lifetime.",
+  "@settingHintIdentityStatusReconcileSeconds": {
+    "description": "#2562 C2a enrolment: settingHintIdentityStatusReconcileSeconds"
+  },
+  "settingLabelIdentityClockSkewSeconds": "Allowed clock difference",
+  "@settingLabelIdentityClockSkewSeconds": {
+    "description": "#2562 C2a enrolment: settingLabelIdentityClockSkewSeconds"
+  },
+  "settingHintIdentityClockSkewSeconds": "Seconds of clock difference between the personal home and a workspace server that are still accepted, 0 to 30.",
+  "@settingHintIdentityClockSkewSeconds": {
+    "description": "#2562 C2a enrolment: settingHintIdentityClockSkewSeconds"
+  },
+  "instanceStepEnrol": "Personal home",
+  "@instanceStepEnrol": {
+    "description": "#2562 C2a enrolment: instanceStepEnrol"
+  },
+  "instanceEnrolIntro": "Optional. If this installation hosts spaces for people whose accounts live on a personal home you operate, enrol it there: the home then recognises it as a workspace server. Skip this step for a combined installation.",
+  "@instanceEnrolIntro": {
+    "description": "#2562 C2a enrolment: instanceEnrolIntro"
+  },
+  "instanceEnrolHomeLabel": "Personal home to enrol at",
+  "@instanceEnrolHomeLabel": {
+    "description": "#2562 C2a enrolment: instanceEnrolHomeLabel"
+  },
+  "instanceEnrolAccepting": "Accepts new spaces",
+  "@instanceEnrolAccepting": {
+    "description": "#2562 C2a enrolment: instanceEnrolAccepting"
+  },
+  "instanceEnrolRun": "Enrol at this personal home",
+  "@instanceEnrolRun": {
+    "description": "#2562 C2a enrolment: instanceEnrolRun"
+  },
+  "instanceEnrolDone": "Enrolled at {home}.",
+  "@instanceEnrolDone": {
+    "description": "#2562 C2a enrolment: instanceEnrolDone",
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceEnrolNoHome": "No other project of this account can be the personal home.",
+  "@instanceEnrolNoHome": {
+    "description": "#2562 C2a enrolment: instanceEnrolNoHome"
+  },
+  "instanceEnrolNotHost": "This installation does not host spaces, so it cannot be enrolled.",
+  "@instanceEnrolNotHost": {
+    "description": "#2562 C2a enrolment: instanceEnrolNotHost"
+  },
+  "instanceEnrolNotHome": "{home} is not a personal home.",
+  "@instanceEnrolNotHome": {
+    "description": "#2562 C2a enrolment: instanceEnrolNotHome",
+    "placeholders": {
+      "home": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceEnrolSame": "An installation cannot enrol itself.",
+  "@instanceEnrolSame": {
+    "description": "#2562 C2a enrolment: instanceEnrolSame"
+  },
+  "instanceEnrolUnreadable": "This project does not answer as a Deskilo installation yet. Install the schema first.",
+  "@instanceEnrolUnreadable": {
+    "description": "#2562 C2a enrolment: instanceEnrolUnreadable"
+  }
+}

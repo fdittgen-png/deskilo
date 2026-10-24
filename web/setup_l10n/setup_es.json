@@ -686,5 +686,16 @@
  "networkHomeKey": "Clave publicable del hogar personal",
  "networkHomeKeyHint": "Su clave publicable (sb_publishable_…), nunca una secreta. El asistente de instancia comprueba ambas antes de guardarlas.",
  "networkErrHome": "El hogar personal necesita una dirección https:// sin ruta y una clave publicable.",
- "reqNetworkHome": "Obligatorio porque este servidor solo aloja espacios: sus miembros necesitan un hogar personal."
+ "reqNetworkHome": "Obligatorio porque este servidor solo aloja espacios: sus miembros necesitan un hogar personal.",
+ "optSeconds": "{n} segundos",
+ "optOneMinute": "1 minuto",
+ "enrolAccepting": "Acepta espacios nuevos una vez inscrito en un hogar personal",
+ "enrolAcceptingHint": "Solo para un servidor de espacios cuyos miembros tienen su cuenta en un hogar personal: el operador del hogar lo inscribe allí (asistente de instancia o línea de comandos) y puede ofrecerlo para espacios nuevos. Desmárquelo para alojar solo los espacios que ya tiene.",
+ "enrolLifetime": "Validez del estado de identidad",
+ "enrolLifetimeHint": "Cuánto tiempo un servidor de espacios se fía del estado de una persona firmado por el hogar personal. A una cuenta suspendida se le rechazan las nuevas solicitudes en ese plazo, 15 minutos como máximo. Se ajusta en la configuración de la app.",
+ "enrolReconcile": "Actualización del estado de identidad",
+ "enrolReconcileHint": "Con qué frecuencia un servidor de espacios actualiza los estados que guarda, aunque nadie use la app. Se ajusta en la configuración de la app.",
+ "enrolSkew": "Desfase de reloj permitido",
+ "enrolSkewHint": "Desfase de reloj entre el hogar personal y un servidor de espacios que aún se acepta, 30 segundos como máximo. Se ajusta en la configuración de la app.",
+ "enrolErrReconcile": "La actualización del estado de identidad no debe ser más lenta que su validez, o los estados caducan entre dos actualizaciones."
 }

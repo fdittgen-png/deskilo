@@ -111,6 +111,10 @@ void main() {
         contains("select public.operator_set_personal_home('unset');"),
         reason: '#2561 L3 — combined by default, nothing declared: today\'s behaviour');
     await _tap(tester, 'wizard-next');
+    // #2562 C2a — a combined installation skips the enrolment step.
+    expect(find.byKey(const ValueKey('instance-enrol-run')), findsNothing,
+        reason: 'no other project can be its personal home');
+    await _tap(tester, 'wizard-next');
 
     expect(find.textContaining('https://ref1.supabase.co'), findsOneWidget);
     await _tap(tester, 'instance-doctor-run');
@@ -280,10 +284,124 @@ void main() {
     expect(api.authPatches['half1'], isNull,
         reason: 'sign-in already passes, nothing is patched');
     await _tap(tester, 'wizard-next');
+    await _tap(tester, 'wizard-next'); // enrolment: skipped
     await _tap(tester, 'instance-doctor-run');
     await _tap(tester, 'instance-use-here');
     expect(store.value?.url, 'https://half1.supabase.co');
     expect(api.sql['half1'], isNull, reason: 'no schema SQL ran');
+  });
+
+  testWidgets('#2562 C2a — the new workspace host is enrolled at a personal home '
+      'the same token reaches, with the facts read from both projects',
+      (tester) async {
+    final (:api, store: _) = await _pump(tester);
+    api
+      ..projects.add((
+        ref: 'home1',
+        name: 'Home project',
+        organizationId: 'org-1',
+        region: 'eu-west-3',
+        status: 'ACTIVE_HEALTHY',
+      ))
+      ..onQuery = (ref, sql) {
+        if (sql.contains('public_network_descriptor()')) {
+          final home = ref == 'home1';
+          return [
+            {
+              'id': home
+                  ? '00000000-0000-4000-8000-0000002562b0'
+                  : '00000000-0000-4000-8000-0000002562b1',
+              'descriptor': home
+                  ? '{"roles":["personal_home"],"role_capabilities":["personal@1"]}'
+                  : '{"roles":["personal_home","workspace_host"],'
+                      '"role_capabilities":["personal@1","workspace@1"]}',
+            },
+          ];
+        }
+        if (sql.contains('operator_enrol_installation(')) {
+          return [
+            {
+              'result': '{"installation_id":"00000000-0000-4000-8000-0000002562b1",'
+                  '"status":"enrolled","unchanged":false}',
+            },
+          ];
+        }
+        return const [];
+      };
+    await _tap(tester, 'backend-new-instance');
+    await tester.enterText(find.byKey(const ValueKey('instance-token')), 'sbp_token');
+    await _tap(tester, 'instance-check-token');
+    await _tap(tester, 'wizard-next');
+    await tester.enterText(find.byKey(const ValueKey('instance-project-name')), 'Space');
+    await tester.pump();
+    await _tap(tester, 'instance-create-project');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-install-schema');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-deploy-functions');
+    await _tap(tester, 'wizard-next');
+    await tester.enterText(
+        find.byKey(const ValueKey('instance-owner-email')), 'owner@example.org');
+    await _tap(tester, 'instance-apply-signin');
+    await _tap(tester, 'wizard-next');
+
+    await _tap(tester, 'instance-enrol-home');
+    await _tap(tester, 'instance-enrol-home-home1');
+    await _tap(tester, 'instance-enrol-run');
+    final call = api.queriedSql
+        .where((s) => s.contains('operator_enrol_installation('))
+        .single;
+    expect(call, contains("'00000000-0000-4000-8000-0000002562b1'::uuid, "
+        "'https://ref2.supabase.co', 'sb_publishable_ref2_key'"));
+    expect(find.byKey(const ValueKey('instance-enrol-done')), findsOneWidget);
+    expect(find.text('Enrolled at Home project.'), findsOneWidget);
+    await _tap(tester, 'wizard-next');
+    expect(find.byKey(const ValueKey('instance-use-here')), findsOneWidget);
+  });
+
+  testWidgets('#2562 C2a — a home that is no personal home is named and '
+      'nothing is written', (tester) async {
+    final (:api, store: _) = await _pump(tester);
+    api
+      ..projects.add((
+        ref: 'host1',
+        name: 'Other host',
+        organizationId: 'org-1',
+        region: 'eu-west-3',
+        status: 'ACTIVE_HEALTHY',
+      ))
+      ..onQuery = (ref, sql) => sql.contains('public_network_descriptor()')
+          ? [
+              {
+                'id': ref == 'host1'
+                    ? '00000000-0000-4000-8000-0000002562b0'
+                    : '00000000-0000-4000-8000-0000002562b1',
+                'descriptor': '{"roles":["workspace_host"],"role_capabilities":["workspace@1"]}',
+              },
+            ]
+          : const [];
+    await _tap(tester, 'backend-new-instance');
+    await tester.enterText(find.byKey(const ValueKey('instance-token')), 'sbp_token');
+    await _tap(tester, 'instance-check-token');
+    await _tap(tester, 'wizard-next');
+    await tester.enterText(find.byKey(const ValueKey('instance-project-name')), 'Space');
+    await tester.pump();
+    await _tap(tester, 'instance-create-project');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-install-schema');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-deploy-functions');
+    await _tap(tester, 'wizard-next');
+    await tester.enterText(
+        find.byKey(const ValueKey('instance-owner-email')), 'owner@example.org');
+    await _tap(tester, 'instance-apply-signin');
+    await _tap(tester, 'wizard-next');
+    await _tap(tester, 'instance-enrol-home');
+    await _tap(tester, 'instance-enrol-home-host1');
+    await _tap(tester, 'instance-enrol-run');
+    expect(find.text('Other host is not a personal home.'), findsOneWidget);
+    expect(api.queriedSql.where((s) => s.contains('operator_')), isEmpty);
+    expect(find.byKey(const ValueKey('instance-enrol-done')), findsNothing);
   });
 
   group('#1308 S3/S4 — the device switches only after the doctor passes', () {
@@ -305,6 +423,7 @@ void main() {
           find.byKey(const ValueKey('instance-owner-email')), 'owner@example.org');
       await _tap(tester, 'instance-apply-signin');
       await _tap(tester, 'wizard-next');
+      await _tap(tester, 'wizard-next'); // enrolment: skipped
       return api;
     }
 

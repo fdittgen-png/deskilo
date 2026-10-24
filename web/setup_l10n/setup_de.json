@@ -686,5 +686,16 @@
  "networkHomeKey": "Öffentlicher Schlüssel des persönlichen Zuhauses",
  "networkHomeKeyHint": "Sein öffentlicher Schlüssel (sb_publishable_…), nie ein geheimer. Der Instanz-Assistent prüft beides, bevor er es speichert.",
  "networkErrHome": "Das persönliche Zuhause braucht eine https://-Adresse ohne Pfad und einen öffentlichen Schlüssel.",
- "reqNetworkHome": "Erforderlich, weil dieser Server nur Spaces hostet: Seine Mitglieder brauchen ein persönliches Zuhause."
+ "reqNetworkHome": "Erforderlich, weil dieser Server nur Spaces hostet: Seine Mitglieder brauchen ein persönliches Zuhause.",
+ "optSeconds": "{n} Sekunden",
+ "optOneMinute": "1 Minute",
+ "enrolAccepting": "Nimmt neue Spaces an, sobald bei einem persönlichen Zuhause registriert",
+ "enrolAcceptingHint": "Nur für einen Workspace-Server, dessen Mitglieder ihre Konten auf einem persönlichen Zuhause führen: Der Betreiber des Zuhauses registriert ihn dort (Instanz-Assistent oder Kommandozeile) und kann ihn für neue Spaces anbieten. Abwählen, um nur die vorhandenen Spaces zu hosten.",
+ "enrolLifetime": "Gültigkeit des Identitätsstatus",
+ "enrolLifetimeHint": "Wie lange sich ein Workspace-Server auf den vom persönlichen Zuhause signierten Status einer Person verlässt. Ein gesperrtes Konto wird innerhalb dieser Zeit für neue Anfragen abgewiesen, höchstens 15 Minuten. Wird in den Einstellungen der App festgelegt.",
+ "enrolReconcile": "Aktualisierung des Identitätsstatus",
+ "enrolReconcileHint": "Wie oft ein Workspace-Server die gehaltenen Status aktualisiert, auch wenn niemand die App nutzt. Wird in den Einstellungen der App festgelegt.",
+ "enrolSkew": "Erlaubte Uhrabweichung",
+ "enrolSkewHint": "Noch akzeptierte Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, höchstens 30 Sekunden. Wird in den Einstellungen der App festgelegt.",
+ "enrolErrReconcile": "Die Aktualisierung des Identitätsstatus darf nicht langsamer sein als seine Gültigkeit, sonst verfallen Status zwischen zwei Aktualisierungen."
 }

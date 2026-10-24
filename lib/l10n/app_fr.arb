@@ -6084,6 +6084,16 @@
     "description": "#977 instance wizard: instanceDoneIntro"
   },
   "instanceEndpointTitle": "Point d'accès des assistants",
+  "instanceEnrolAccepting": "Accepte de nouveaux espaces",
+  "instanceEnrolDone": "Inscrite sur {home}.",
+  "instanceEnrolHomeLabel": "Domicile personnel où inscrire",
+  "instanceEnrolIntro": "Facultatif. Si cette installation héberge des espaces pour des personnes dont les comptes vivent sur un domicile personnel que vous exploitez, inscrivez-la là-bas : le domicile la reconnaît alors comme serveur d'espaces. Passez cette étape pour une installation combinée.",
+  "instanceEnrolNoHome": "Aucun autre projet de ce compte ne peut être le domicile personnel.",
+  "instanceEnrolNotHome": "{home} n'est pas un domicile personnel.",
+  "instanceEnrolNotHost": "Cette installation n'héberge pas d'espaces : elle ne peut pas être inscrite.",
+  "instanceEnrolRun": "Inscrire sur ce domicile personnel",
+  "instanceEnrolSame": "Une installation ne s'inscrit pas elle-même.",
+  "instanceEnrolUnreadable": "Ce projet ne répond pas encore comme une installation Deskilo. Installez d'abord le schéma.",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Assistant de bureau ou en ligne de commande",
@@ -6218,6 +6228,7 @@
   "@instanceStepDone": {
     "description": "#977 instance wizard: instanceStepDone"
   },
+  "instanceStepEnrol": "Domicile personnel",
   "instanceStepFailed": "Arrêt à {item} : {message}",
   "@instanceStepFailed": {
     "description": "#977 instance wizard: instanceStepFailed",
@@ -13500,6 +13511,9 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintIdentityClockSkewSeconds": "Secondes d'écart d'horloge entre le domicile personnel et un serveur d'espaces encore acceptées, de 0 à 30.",
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Secondes pendant lesquelles un serveur d'espaces peut se fier à un statut d'identité signé par le domicile personnel. 900 au plus : un compte suspendu voit ses nouvelles requêtes refusées dans ce délai, plus l'écart d'horloge.",
+  "settingHintIdentityStatusReconcileSeconds": "Secondes entre deux actualisations des statuts d'identité que détient un serveur d'espaces. Gardez-la sous la durée de validité.",
   "settingHintKpiCapacityRangeDays": "Fixée par la plateforme : la période la plus longue qu’un indicateur de capacité peut couvrir. Elle borne la requête.",
   "@settingHintKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -13641,6 +13655,9 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelIdentityClockSkewSeconds": "Écart d'horloge toléré",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Durée de validité du statut d'identité",
+  "settingLabelIdentityStatusReconcileSeconds": "Actualisation du statut d'identité",
   "settingLabelKpiCapacityRangeDays": "Période de l’indicateur de capacité",
   "@settingLabelKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting label."

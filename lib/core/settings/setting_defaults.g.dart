@@ -30,6 +30,12 @@ abstract final class SettingDefaults {
   static const int directoryUpcomingWindowDays = 14;
   /// `dunning.first_after_days`
   static const int dunningFirstAfterDays = 14;
+  /// `identity.clock_skew_seconds`
+  static const int identityClockSkewSeconds = 30;
+  /// `identity.status_assertion_lifetime_seconds`
+  static const int identityStatusAssertionLifetimeSeconds = 900;
+  /// `identity.status_reconcile_seconds`
+  static const int identityStatusReconcileSeconds = 300;
   /// `kpi.capacity_range_days`
   static const int kpiCapacityRangeDays = 400;
   /// `kpi.finance_range_months`

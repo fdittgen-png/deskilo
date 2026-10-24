@@ -6084,6 +6084,16 @@
     "description": "#977 instance wizard: instanceDoneIntro"
   },
   "instanceEndpointTitle": "Assistenten-Endpunkt",
+  "instanceEnrolAccepting": "Nimmt neue Spaces an",
+  "instanceEnrolDone": "Registriert bei {home}.",
+  "instanceEnrolHomeLabel": "Persönliches Zuhause für die Registrierung",
+  "instanceEnrolIntro": "Optional. Wenn diese Installation Spaces für Personen hostet, deren Konten auf einem von Ihnen betriebenen persönlichen Zuhause liegen, registrieren Sie sie dort: Das Zuhause erkennt sie dann als Workspace-Server an. Überspringen Sie diesen Schritt bei einer kombinierten Installation.",
+  "instanceEnrolNoHome": "Kein anderes Projekt dieses Kontos kann das persönliche Zuhause sein.",
+  "instanceEnrolNotHome": "{home} ist kein persönliches Zuhause.",
+  "instanceEnrolNotHost": "Diese Installation hostet keine Spaces und kann daher nicht registriert werden.",
+  "instanceEnrolRun": "Bei diesem persönlichen Zuhause registrieren",
+  "instanceEnrolSame": "Eine Installation registriert sich nicht selbst.",
+  "instanceEnrolUnreadable": "Dieses Projekt antwortet noch nicht als Deskilo-Installation. Installieren Sie zuerst das Schema.",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Desktop- oder Kommandozeilen-Assistent",
@@ -6218,6 +6228,7 @@
   "@instanceStepDone": {
     "description": "#977 instance wizard: instanceStepDone"
   },
+  "instanceStepEnrol": "Persönliches Zuhause",
   "instanceStepFailed": "Gestoppt bei {item}: {message}",
   "@instanceStepFailed": {
     "description": "#977 instance wizard: instanceStepFailed",
@@ -13500,6 +13511,9 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintIdentityClockSkewSeconds": "Sekunden Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, die noch akzeptiert werden, 0 bis 30.",
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Sekunden, die sich ein Workspace-Server auf einen vom persönlichen Zuhause signierten Identitätsstatus verlassen darf. Höchstens 900: Ein gesperrtes Konto wird innerhalb dieser Zeit plus Uhrabweichung für neue Anfragen abgewiesen.",
+  "settingHintIdentityStatusReconcileSeconds": "Sekunden zwischen zwei Aktualisierungen der Identitätsstatus, die ein Workspace-Server hält. Unter der Gültigkeit halten.",
   "settingHintKpiCapacityRangeDays": "Von der Plattform festgelegt: der längste Zeitraum, den eine Kapazitätskennzahl abdecken darf. Er begrenzt die Abfrage.",
   "@settingHintKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -13641,6 +13655,9 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelIdentityClockSkewSeconds": "Erlaubte Uhrabweichung",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Gültigkeit des Identitätsstatus",
+  "settingLabelIdentityStatusReconcileSeconds": "Aktualisierung des Identitätsstatus",
   "settingLabelKpiCapacityRangeDays": "Zeitraum der Kapazitätskennzahl",
   "@settingLabelKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting label."

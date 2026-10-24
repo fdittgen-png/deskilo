@@ -39,6 +39,11 @@ const ENVIRONMENTS=[['dev','envDev'],['prod','envProd']];
 // #2561 L3 — the roles a coworking space's server can have (a personal home
 // alone hosts no space, so the questionnaire does not offer it).
 const NETWORK_ROLES=[['combined','networkCombined'],['workspace_host','networkWorkspaceHost']];
+// #2562 C2a — the identity freshness a workspace server holds (platform
+// settings identity.*): the lifetime is at most 15 minutes, the skew 0..30 s.
+const ID_LIFETIME=[['60','optOneMinute'],['120','optMinutes',{n:2}],['300','optMinutes',{n:5}],['600','optMinutes',{n:10}],['900','optMinutes',{n:15}]];
+const ID_RECONCILE=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','optMinutes',{n:2}],['300','optMinutes',{n:5}],['600','optMinutes',{n:10}],['900','optMinutes',{n:15}]];
+const ID_SKEW=[['0','optSeconds',{n:0}],['5','optSeconds',{n:5}],['10','optSeconds',{n:10}],['15','optSeconds',{n:15}],['30','optSeconds',{n:30}]];
 const NUMDATE=[['none','numDateNone'],['year','numDateYear'],['year_month','numDateYearMonth']];
 const NUMRESET=[['never','numResetNever'],['yearly','numResetYearly'],['monthly','numResetMonthly']];
 // #1320 — a number never restarts more often than it prints its date,
@@ -80,6 +85,8 @@ const PARAM_META=[
  ['timezone','identityTimezone','enum',()=>TIMEZONES.slice()],['language','identityLanguage','enum',()=>LANGS.map(x=>x[0])],
  ['network.roles','networkRoles','enum',()=>NETWORK_ROLES.map(x=>x[0])],['network.homeUrl','networkHomeUrl','text'],['network.homeKey','networkHomeKey','text'],
  ['address','identityAddress','text'],['brandColor','identityBrandColor','color'],
+ ['enrolment.accepting','enrolAccepting','bool'],['enrolment.lifetime','enrolLifetime','enum',()=>ID_LIFETIME.map(x=>x[0])],
+ ['enrolment.reconcile','enrolReconcile','enum',()=>ID_RECONCILE.map(x=>x[0])],['enrolment.skew','enrolSkew','enum',()=>ID_SKEW.map(x=>x[0])],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
  ['granularity','availGranularity','enum',(s=S)=>(on('workingHours',s)?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
@@ -129,7 +136,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',network:'app',enrolment:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it

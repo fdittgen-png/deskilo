@@ -51,6 +51,9 @@ String _rangeSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'personal.reservation_page_size' => l10n.settingLabelPersonalReservationPageSize,
       'personal.reservation_window_days' => l10n.settingLabelPersonalReservationWindowDays,
       'personal.reservation_max_window_days' => l10n.settingLabelPersonalReservationMaxWindowDays,
+      'identity.status_assertion_lifetime_seconds' => l10n.settingLabelIdentityStatusAssertionLifetimeSeconds,
+      'identity.status_reconcile_seconds' => l10n.settingLabelIdentityStatusReconcileSeconds,
+      'identity.clock_skew_seconds' => l10n.settingLabelIdentityClockSkewSeconds,
       _ => key,
     };
 
@@ -96,6 +99,9 @@ String? _rangeSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'personal.reservation_page_size' => l10n.settingHintPersonalReservationPageSize,
       'personal.reservation_window_days' => l10n.settingHintPersonalReservationWindowDays,
       'personal.reservation_max_window_days' => l10n.settingHintPersonalReservationMaxWindowDays,
+      'identity.status_assertion_lifetime_seconds' => l10n.settingHintIdentityStatusAssertionLifetimeSeconds,
+      'identity.status_reconcile_seconds' => l10n.settingHintIdentityStatusReconcileSeconds,
+      'identity.clock_skew_seconds' => l10n.settingHintIdentityClockSkewSeconds,
       _ => null,
     };
 

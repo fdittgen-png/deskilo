@@ -14675,6 +14675,66 @@ abstract class AppLocalizations {
   /// **'Assistant endpoint'**
   String get instanceEndpointTitle;
 
+  /// #2562 C2a enrolment: instanceEnrolAccepting
+  ///
+  /// In en, this message translates to:
+  /// **'Accepts new spaces'**
+  String get instanceEnrolAccepting;
+
+  /// #2562 C2a enrolment: instanceEnrolDone
+  ///
+  /// In en, this message translates to:
+  /// **'Enrolled at {home}.'**
+  String instanceEnrolDone(String home);
+
+  /// #2562 C2a enrolment: instanceEnrolHomeLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Personal home to enrol at'**
+  String get instanceEnrolHomeLabel;
+
+  /// #2562 C2a enrolment: instanceEnrolIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. If this installation hosts spaces for people whose accounts live on a personal home you operate, enrol it there: the home then recognises it as a workspace server. Skip this step for a combined installation.'**
+  String get instanceEnrolIntro;
+
+  /// #2562 C2a enrolment: instanceEnrolNoHome
+  ///
+  /// In en, this message translates to:
+  /// **'No other project of this account can be the personal home.'**
+  String get instanceEnrolNoHome;
+
+  /// #2562 C2a enrolment: instanceEnrolNotHome
+  ///
+  /// In en, this message translates to:
+  /// **'{home} is not a personal home.'**
+  String instanceEnrolNotHome(String home);
+
+  /// #2562 C2a enrolment: instanceEnrolNotHost
+  ///
+  /// In en, this message translates to:
+  /// **'This installation does not host spaces, so it cannot be enrolled.'**
+  String get instanceEnrolNotHost;
+
+  /// #2562 C2a enrolment: instanceEnrolRun
+  ///
+  /// In en, this message translates to:
+  /// **'Enrol at this personal home'**
+  String get instanceEnrolRun;
+
+  /// #2562 C2a enrolment: instanceEnrolSame
+  ///
+  /// In en, this message translates to:
+  /// **'An installation cannot enrol itself.'**
+  String get instanceEnrolSame;
+
+  /// #2562 C2a enrolment: instanceEnrolUnreadable
+  ///
+  /// In en, this message translates to:
+  /// **'This project does not answer as a Deskilo installation yet. Install the schema first.'**
+  String get instanceEnrolUnreadable;
+
   /// #2145 assistant onboarding: instanceFamilyChatgpt
   ///
   /// In en, this message translates to:
@@ -15124,6 +15184,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get instanceStepDone;
+
+  /// #2562 C2a enrolment: instanceStepEnrol
+  ///
+  /// In en, this message translates to:
+  /// **'Personal home'**
+  String get instanceStepEnrol;
 
   /// #977 instance wizard: instanceStepFailed
   ///
@@ -32460,6 +32526,24 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #2562 C2a enrolment: settingHintIdentityClockSkewSeconds
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds of clock difference between the personal home and a workspace server that are still accepted, 0 to 30.'**
+  String get settingHintIdentityClockSkewSeconds;
+
+  /// #2562 C2a enrolment: settingHintIdentityStatusAssertionLifetimeSeconds
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds a workspace server may rely on one identity status signed by the personal home. At most 900: a suspended account is refused new requests within this time plus the clock skew.'**
+  String get settingHintIdentityStatusAssertionLifetimeSeconds;
+
+  /// #2562 C2a enrolment: settingHintIdentityStatusReconcileSeconds
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds between two refreshes of the identity statuses a workspace server holds. Keep it below the status lifetime.'**
+  String get settingHintIdentityStatusReconcileSeconds;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -32693,6 +32777,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
+
+  /// #2562 C2a enrolment: settingLabelIdentityClockSkewSeconds
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed clock difference'**
+  String get settingLabelIdentityClockSkewSeconds;
+
+  /// #2562 C2a enrolment: settingLabelIdentityStatusAssertionLifetimeSeconds
+  ///
+  /// In en, this message translates to:
+  /// **'Identity status lifetime'**
+  String get settingLabelIdentityStatusAssertionLifetimeSeconds;
+
+  /// #2562 C2a enrolment: settingLabelIdentityStatusReconcileSeconds
+  ///
+  /// In en, this message translates to:
+  /// **'Identity status refresh'**
+  String get settingLabelIdentityStatusReconcileSeconds;
 
   /// #2487 settings: Setting label.
   ///

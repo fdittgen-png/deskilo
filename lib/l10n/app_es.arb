@@ -6084,6 +6084,16 @@
     "description": "#977 instance wizard: instanceDoneIntro"
   },
   "instanceEndpointTitle": "Punto de acceso de los asistentes",
+  "instanceEnrolAccepting": "Acepta espacios nuevos",
+  "instanceEnrolDone": "Inscrita en {home}.",
+  "instanceEnrolHomeLabel": "Hogar personal donde inscribirla",
+  "instanceEnrolIntro": "Opcional. Si esta instalación aloja espacios para personas cuyas cuentas están en un hogar personal que usted opera, inscríbala allí: el hogar la reconoce entonces como servidor de espacios. Omita este paso en una instalación combinada.",
+  "instanceEnrolNoHome": "Ningún otro proyecto de esta cuenta puede ser el hogar personal.",
+  "instanceEnrolNotHome": "{home} no es un hogar personal.",
+  "instanceEnrolNotHost": "Esta instalación no aloja espacios, así que no puede inscribirse.",
+  "instanceEnrolRun": "Inscribir en este hogar personal",
+  "instanceEnrolSame": "Una instalación no se inscribe a sí misma.",
+  "instanceEnrolUnreadable": "Este proyecto aún no responde como una instalación Deskilo. Instale primero el esquema.",
   "instanceFamilyChatgpt": "ChatGPT",
   "instanceFamilyClaude": "Claude",
   "instanceFamilyLoopback": "Asistente de escritorio o de línea de comandos",
@@ -6218,6 +6228,7 @@
   "@instanceStepDone": {
     "description": "#977 instance wizard: instanceStepDone"
   },
+  "instanceStepEnrol": "Hogar personal",
   "instanceStepFailed": "Detenido en {item}: {message}",
   "@instanceStepFailed": {
     "description": "#977 instance wizard: instanceStepFailed",
@@ -13500,6 +13511,9 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintIdentityClockSkewSeconds": "Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.",
+  "settingHintIdentityStatusAssertionLifetimeSeconds": "Segundos durante los que un servidor de espacios puede fiarse de un estado de identidad firmado por el hogar personal. 900 como máximo: a una cuenta suspendida se le rechazan las nuevas solicitudes en ese plazo más el desfase de reloj.",
+  "settingHintIdentityStatusReconcileSeconds": "Segundos entre dos actualizaciones de los estados de identidad que guarda un servidor de espacios. Manténgala por debajo de la validez.",
   "settingHintKpiCapacityRangeDays": "Fijado por la plataforma: el periodo más largo que puede abarcar un indicador de capacidad. Acota la consulta.",
   "@settingHintKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -13641,6 +13655,9 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelIdentityClockSkewSeconds": "Desfase de reloj permitido",
+  "settingLabelIdentityStatusAssertionLifetimeSeconds": "Validez del estado de identidad",
+  "settingLabelIdentityStatusReconcileSeconds": "Actualización del estado de identidad",
   "settingLabelKpiCapacityRangeDays": "Periodo del indicador de capacidad",
   "@settingLabelKpiCapacityRangeDays": {
     "description": "#2487 settings: Setting label."
