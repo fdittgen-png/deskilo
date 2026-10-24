@@ -246,4 +246,4 @@ grant execute on function public.set_visibility_if_unchanged_network_v1(text, te
   to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(9998);
+select public.set_deskilo_schema_version(571);

@@ -352,6 +352,7 @@ const Set<String> demoOverriddenProviders = {
   'identityConnectorProvider', // #1834
   'publicDiscoveryRepositoryProvider', 'publicationRepositoryProvider',
   'directoryParticipantRepositoryProvider', 'accountContactRepositoryProvider',
+  'personalMessageDirectoryRepositoryProvider', // #2472 (P)
   'savedPlacesStoreProvider', // #2555 — saved public pages, device-local
   'discoveryViewStoreProvider', // #2555 — list or map, the map provider accepted
   'meRepositoryProvider', // #1823

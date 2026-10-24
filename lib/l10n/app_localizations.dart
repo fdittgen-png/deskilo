@@ -26016,11 +26016,29 @@ abstract class AppLocalizations {
   /// **'Some workspaces need a newer version of the app and are not shown.'**
   String get portalDirectoryIncompatible;
 
+  /// #2472 personal directory: Shown above the new-discussion directory when the personal home holds lapsed membership facts.
+  ///
+  /// In en, this message translates to:
+  /// **'Some of your workspaces cannot be verified right now; their people are not listed.'**
+  String get portalDirectoryPartial;
+
+  /// #2472 personal directory: Loads the next page of people of one workspace in the new-discussion directory.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get portalDirectoryShowMore;
+
   /// No description provided for @portalDirectoryUnavailable.
   ///
   /// In en, this message translates to:
   /// **'Some directories could not be reached. Results are incomplete.'**
   String get portalDirectoryUnavailable;
+
+  /// #2472 personal directory: Shown inside one workspace section whose membership fact lapsed.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace cannot be verified right now.'**
+  String get portalDirectoryUnverified;
 
   /// No description provided for @portalDisconnect.
   ///
@@ -26159,6 +26177,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Private host'**
   String get portalPerson;
+
+  /// #2472 personal directory: Name of a person in the new-discussion directory who does not show their name to you.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get portalPersonHidden;
 
   /// No description provided for @portalPhone.
   ///
@@ -32772,6 +32796,18 @@ abstract class AppLocalizations {
   /// **'Seconds between two refreshes of an open conversation. Lower values load the server more.'**
   String get settingHintMessagingThreadPollSeconds;
 
+  /// #2472 personal directory: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many workspaces, people or groups the new discussion lists at a time; the next ones come with Show more.'**
+  String get settingHintPersonalMessageDirectoryPageSize;
+
+  /// #2472 personal directory: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The longest text the new-discussion directory searches for. A longer search is refused, never cut.'**
+  String get settingHintPersonalMessageDirectoryQueryLength;
+
   /// #2553 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -33024,6 +33060,18 @@ abstract class AppLocalizations {
   /// **'Conversation refresh'**
   String get settingLabelMessagingThreadPollSeconds;
 
+  /// #2472 personal directory: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Directory entries per page'**
+  String get settingLabelPersonalMessageDirectoryPageSize;
+
+  /// #2472 personal directory: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest directory search'**
+  String get settingLabelPersonalMessageDirectoryQueryLength;
+
   /// #2553 settings: Setting label.
   ///
   /// In en, this message translates to:
@@ -33203,6 +33251,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'attempts'**
   String get settingUnitAttempts;
+
+  /// #2472 personal directory: Unit of a setting counted in characters.
+  ///
+  /// In en, this message translates to:
+  /// **'characters'**
+  String get settingUnitCharacters;
 
   /// #2574 maker-checker settings
   ///

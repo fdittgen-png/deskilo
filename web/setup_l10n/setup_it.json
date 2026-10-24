@@ -697,5 +697,11 @@
  "enrolReconcileHint": "Ogni quanto un server di spazi aggiorna gli stati che conserva, anche quando nessuno usa l'app. Si imposta nelle impostazioni dell'app.",
  "enrolSkew": "Scarto d'orologio ammesso",
  "enrolSkewHint": "Scarto d'orologio tra la casa personale e un server di spazi ancora accettato, al massimo 30 secondi. Si imposta nelle impostazioni dell'app.",
- "enrolErrReconcile": "L'aggiornamento dello stato di identità non deve essere più lento della sua validità, altrimenti gli stati scadono tra due aggiornamenti."
+ "enrolErrReconcile": "L'aggiornamento dello stato di identità non deve essere più lento della sua validità, altrimenti gli stati scadono tra due aggiornamenti.",
+ "optEntries": "{n} voci",
+ "optCharacters": "{n} caratteri",
+ "dirPageSize": "Nuova conversazione: voci per pagina",
+ "dirPageSizeHint": "Quanti spazi, persone o gruppi la casa personale elenca alla volta quando un membro avvia una conversazione; i successivi arrivano con Mostra altro. Si imposta nelle impostazioni dell'app.",
+ "dirQueryLength": "Nuova conversazione: ricerca più lunga",
+ "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app."
 }

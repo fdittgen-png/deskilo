@@ -10191,7 +10191,10 @@
   "portalDescription": "Description",
   "portalDirectoryCount": "{name} ({count})",
   "portalDirectoryIncompatible": "Certains espaces nécessitent une version plus récente de l’application et ne sont pas affichés.",
+  "portalDirectoryPartial": "Certains de vos espaces ne peuvent pas être vérifiés pour l’instant ; leurs membres ne sont pas listés.",
+  "portalDirectoryShowMore": "Afficher plus",
   "portalDirectoryUnavailable": "Certains annuaires sont inaccessibles. Les résultats sont incomplets.",
+  "portalDirectoryUnverified": "Cet espace ne peut pas être vérifié pour l’instant.",
   "portalDisconnect": "Déconnecter",
   "portalDiscover": "Trouver un espace de travail",
   "portalEmail": "E-mail public",
@@ -10215,6 +10218,7 @@
   "portalOpenMe": "Moi : mon compte et mes espaces",
   "portalOwner": "Propriétaire",
   "portalPerson": "Particulier",
+  "portalPersonHidden": "Personne",
   "portalPhone": "Téléphone public",
   "portalPlans": "Formules et tarifs",
   "portalPreview": "Vue externe",
@@ -13585,6 +13589,8 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPersonalMessageDirectoryPageSize": "Combien d’espaces, de personnes ou de groupes la nouvelle discussion liste à la fois ; les suivants viennent avec Afficher plus.",
+  "settingHintPersonalMessageDirectoryQueryLength": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche. Une recherche plus longue est refusée, jamais tronquée.",
   "settingHintPersonalReadConcurrency": "Nombre de serveurs que l'espace personnel interroge en même temps lorsqu'il rassemble vos propres données. Une borne sur les lectures parallèles de l'appareil, pas sur un serveur.",
   "settingHintPersonalReadTimeoutSeconds": "Secondes pendant lesquelles l'espace personnel attend la réponse d'un serveur avant de l'afficher comme indisponible et de passer aux autres.",
   "settingHintPersonalReservationMaxWindowDays": "Fixé par la plateforme : la plus longue période qu'une lecture de vos réservations peut demander. Il borne la requête.",
@@ -13729,6 +13735,8 @@
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelPersonalMessageDirectoryPageSize": "Entrées de l’annuaire par page",
+  "settingLabelPersonalMessageDirectoryQueryLength": "Recherche la plus longue dans l’annuaire",
   "settingLabelPersonalReadConcurrency": "Serveurs lus en parallèle",
   "settingLabelPersonalReadTimeoutSeconds": "Attente par serveur",
   "settingLabelPersonalReservationMaxWindowDays": "Plafond de la période des réservations",
@@ -13861,6 +13869,7 @@
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitCharacters": "caractères",
   "settingUnitCurrencyUnits": "unités monétaires",
   "@settingUnitCurrencyUnits": {
     "description": "#2574 maker-checker settings"

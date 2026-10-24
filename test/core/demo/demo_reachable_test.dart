@@ -63,8 +63,17 @@ void main() {
       find.byKey(const ValueKey('reachable-group-$demoGroupId')),
       findsOneWidget,
     );
+    // #2472 (P) — read from the personal home's directory, by space.
     expect(
-      find.byKey(const ValueKey('reachable-person--ws-1-user-1')),
+      find.byKey(const ValueKey('reachable-workspace-p-ws-1')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('reachable-person-p-ws-1-user-2')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('reachable-person-p-ws-1-user-1')),
       findsNothing,
     );
 

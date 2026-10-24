@@ -80,6 +80,9 @@ const STEPS=[
   ...(S.network.roles==='workspace_host'?[input(T('networkHomeUrl'),'network.homeUrl',T('networkHomeUrlHint'),'url','https://','identity'),input(T('networkHomeKey'),'network.homeKey',T('networkHomeKeyHint'),'text','sb_publishable_','identity')]:[]),
   // #2562 C2a — for a workspace server enrolled at a personal home.
   ...(S.network.roles==='workspace_host'?[checkbox(T('enrolAccepting'),T('enrolAcceptingHint'),S.enrolment.accepting,v=>set('enrolment.accepting',v),'','identity'),selectEl(T('enrolLifetime'),'enrolment.lifetime',opts(ID_LIFETIME),T('enrolLifetimeHint'),null,'identity'),selectEl(T('enrolReconcile'),'enrolment.reconcile',opts(ID_RECONCILE),T('enrolReconcileHint'),null,'identity'),selectEl(T('enrolSkew'),'enrolment.skew',opts(ID_SKEW),T('enrolSkewHint'),null,'identity')]:[]),
+  // #2472 (P) — a combined server is its people's personal home: it reads
+  // the new discussion's directory.
+  ...(S.network.roles==='combined'?[selectEl(T('dirPageSize'),'directory.pageSize',opts(DIR_PAGE),T('dirPageSizeHint'),null,'identity'),selectEl(T('dirQueryLength'),'directory.queryLength',opts(DIR_QUERY),T('dirQueryLengthHint'),null,'identity')]:[]),
  ]},
  check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
   // #2562 C2a — a refresh slower than the lifetime lets statuses lapse.

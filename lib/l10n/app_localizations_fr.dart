@@ -15640,8 +15640,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Certains espaces nécessitent une version plus récente de l’application et ne sont pas affichés.';
 
   @override
+  String get portalDirectoryPartial =>
+      'Certains de vos espaces ne peuvent pas être vérifiés pour l’instant ; leurs membres ne sont pas listés.';
+
+  @override
+  String get portalDirectoryShowMore => 'Afficher plus';
+
+  @override
   String get portalDirectoryUnavailable =>
       'Certains annuaires sont inaccessibles. Les résultats sont incomplets.';
+
+  @override
+  String get portalDirectoryUnverified =>
+      'Cet espace ne peut pas être vérifié pour l’instant.';
 
   @override
   String get portalDisconnect => 'Déconnecter';
@@ -15712,6 +15723,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get portalPerson => 'Particulier';
+
+  @override
+  String get portalPersonHidden => 'Personne';
 
   @override
   String get portalPhone => 'Téléphone public';
@@ -19530,6 +19544,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Secondes entre deux actualisations d\'une conversation ouverte. Des valeurs plus basses chargent davantage le serveur.';
 
   @override
+  String get settingHintPersonalMessageDirectoryPageSize =>
+      'Combien d’espaces, de personnes ou de groupes la nouvelle discussion liste à la fois ; les suivants viennent avec Afficher plus.';
+
+  @override
+  String get settingHintPersonalMessageDirectoryQueryLength =>
+      'Le texte le plus long que l’annuaire de la nouvelle discussion recherche. Une recherche plus longue est refusée, jamais tronquée.';
+
+  @override
   String get settingHintPersonalReadConcurrency =>
       'Nombre de serveurs que l\'espace personnel interroge en même temps lorsqu\'il rassemble vos propres données. Une borne sur les lectures parallèles de l\'appareil, pas sur un serveur.';
 
@@ -19693,6 +19715,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Actualisation de la conversation';
 
   @override
+  String get settingLabelPersonalMessageDirectoryPageSize =>
+      'Entrées de l’annuaire par page';
+
+  @override
+  String get settingLabelPersonalMessageDirectoryQueryLength =>
+      'Recherche la plus longue dans l’annuaire';
+
+  @override
   String get settingLabelPersonalReadConcurrency => 'Serveurs lus en parallèle';
 
   @override
@@ -19796,6 +19826,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitAttempts => 'essais';
+
+  @override
+  String get settingUnitCharacters => 'caractères';
 
   @override
   String get settingUnitCurrencyUnits => 'unités monétaires';
