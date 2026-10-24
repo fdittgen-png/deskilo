@@ -55,6 +55,13 @@ class FakeMeRepository implements MeRepository {
   /// When set, [leaveSpace] and [setVisibility] throw it.
   Exception? failure;
 
+  /// #2558 — when set, [myVisibility] throws it: the personal home cannot
+  /// read the saved settings. Clearing it lets a retry succeed.
+  Exception? readFailure;
+
+  /// How many times [myVisibility] was asked.
+  int visibilityReads = 0;
+
   FakeAccount get _me => accounts.putIfAbsent(
       _currentUser(), () => FakeAccount(name: _currentUser()));
 
@@ -65,8 +72,11 @@ class FakeMeRepository implements MeRepository {
   }
 
   @override
-  Future<MyVisibility> myVisibility() async =>
-      _me.visibility.withAbout(_me.profession, _me.bio);
+  Future<MyVisibility> myVisibility() async {
+    visibilityReads++;
+    if (readFailure != null) throw readFailure!;
+    return _me.visibility.withAbout(_me.profession, _me.bio);
+  }
 
   @override
   Future<void> setAbout(String profession, String bio) async {

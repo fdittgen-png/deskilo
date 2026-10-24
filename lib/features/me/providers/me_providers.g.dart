@@ -157,12 +157,16 @@ final class MeActionsProvider
 
 String _$meActionsHash() => r'bf35ed75a5451b3242e41831b11644d5b28925ef';
 
-/// Who sees what of me, as the server holds it.
+/// Who sees what of me, as the personal home holds it. #2558 — read on the
+/// personal client with no workspace involved; a failure is an error the
+/// editor names, never the defaults shown as if they were saved.
 
 @ProviderFor(myVisibility)
 final myVisibilityProvider = MyVisibilityProvider._();
 
-/// Who sees what of me, as the server holds it.
+/// Who sees what of me, as the personal home holds it. #2558 — read on the
+/// personal client with no workspace involved; a failure is an error the
+/// editor names, never the defaults shown as if they were saved.
 
 final class MyVisibilityProvider
     extends
@@ -172,12 +176,14 @@ final class MyVisibilityProvider
           FutureOr<MyVisibility>
         >
     with $FutureModifier<MyVisibility>, $FutureProvider<MyVisibility> {
-  /// Who sees what of me, as the server holds it.
+  /// Who sees what of me, as the personal home holds it. #2558 — read on the
+  /// personal client with no workspace involved; a failure is an error the
+  /// editor names, never the defaults shown as if they were saved.
   MyVisibilityProvider._()
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: meReadRetry,
         name: r'myVisibilityProvider',
         isAutoDispose: true,
         dependencies: null,
@@ -199,7 +205,7 @@ final class MyVisibilityProvider
   }
 }
 
-String _$myVisibilityHash() => r'40b833db1e3a7393206add0fb996ff27a8868f21';
+String _$myVisibilityHash() => r'66aac5d1ddba65f526a9a4bcf9fccbe0e19efebc';
 
 /// "How others see me": what [audience] would read.
 
