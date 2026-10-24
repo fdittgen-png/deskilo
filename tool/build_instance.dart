@@ -23,6 +23,9 @@ const Map<String, bool> functionVerifyJwt = {
   // protected-resource metadata; the gateway's legacy check would refuse
   // both. Tested in supabase/functions/deskilo-mcp/index_test.ts.
   'deskilo-mcp': false,
+  // #2562 — another installation posts identity statuses; the envelope's
+  // HMAC is the authority, checked by federation_inbox_accept.
+  'federation-inbox': false,
   'create-payment-order': true,
   'mollie-webhook': false,
   'paypal-webhook': false,

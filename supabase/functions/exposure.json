@@ -33,6 +33,10 @@
       "class": "webhook",
       "authority": "PayPal verify-webhook-signature"
     },
+    "federation-inbox": {
+      "class": "webhook",
+      "authority": "the backchannel envelope: HMAC-SHA256 with the key of one installation relationship and direction, verified in the database"
+    },
     "mollie-webhook": {
       "class": "webhook",
       "authority": "the payment fetched back with the workspace key"
