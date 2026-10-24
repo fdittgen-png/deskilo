@@ -21,6 +21,8 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../directory/domain/inbox_composition.dart';
+import '../../directory/domain/inbox_sources.dart';
 import '../../directory/presentation/messenger/open_inbox_entry.dart';
 import '../../directory/providers/messenger_providers.dart';
 import '../../money/presentation/my_finances_route.dart';
@@ -63,7 +65,7 @@ class NeedsAttentionSection extends ConsumerWidget {
     final l10n = context.l10n;
     final documents = ref.watch(financeOverviewProvider);
     final refs = ref.watch(personalWorkspaceRefsProvider);
-    final inbox = ref.watch(unifiedInboxProvider);
+    final inbox = ref.watch(messengerInboxProvider);
     final now = ref.watch(clockProvider).now();
     // Me is production: a development space's test documents never count.
     final owed = documents.value
@@ -94,7 +96,14 @@ class NeedsAttentionSection extends ConsumerWidget {
     final settled = sources.every((a) => a.hasValue && !failed(a));
     final partialDocuments =
         documents.value?.unavailableSources.isNotEmpty ?? false;
-    final partialInbox = inbox.value?.unavailable.isNotEmpty ?? false;
+    final read = inbox.value;
+    // #2556 — a source that failed or cannot be reached is said beside the
+    // others, never counted as nothing waiting.
+    final partialInbox = (read?.unavailable.isNotEmpty ?? false) ||
+        (read is ComposedInbox &&
+            read.sources.any((s) =>
+                s.state == InboxSlotState.failed ||
+                s.state == InboxSlotState.unavailable));
     return OverviewSection(
       sectionKey: 'me-overview-attention',
       title: l10n.meOverviewAttentionTitle,
@@ -121,7 +130,7 @@ class NeedsAttentionSection extends ConsumerWidget {
           SourceUnavailable(
             key: const ValueKey('me-overview-messages-unavailable'),
             text: l10n.meOverviewAttentionMessagesUnavailable,
-            onRetry: () => ref.invalidate(unifiedInboxProvider),
+            onRetry: () => ref.invalidate(messengerInboxProvider),
           )
         else if (partialInbox)
           _CoverageNote(
