@@ -196,9 +196,9 @@ begin
                  where jsonb_typeof(e) <> 'string') then
     raise exception 'malformed expected visibility' using errcode = '22023';
   end if;
-  v_expected_refs := array(select distinct r
+  v_expected_refs := array(select distinct r collate "C"
                              from jsonb_array_elements_text(p_expected->'workspace_refs') r
-                            order by r collate "C");
+                            order by 1);
   if exists (select 1 from unnest(v_expected_refs) r
               where not coalesce(public.workspace_network_ref_valid(r), false))
      or ((p_expected->>'audience') <> 'chosen_spaces' and cardinality(v_expected_refs) > 0) then
@@ -213,7 +213,7 @@ begin
                 where r is null or not coalesce(public.workspace_network_ref_valid(r), false)) then
       raise exception 'malformed workspace reference' using errcode = '22023';
     end if;
-    v_refs := array(select distinct r from unnest(p_workspace_refs) r order by r collate "C");
+    v_refs := array(select distinct r collate "C" from unnest(p_workspace_refs) r order by 1);
     if coalesce(cardinality(v_refs), 0) = 0 then
       raise exception 'choose at least one space' using errcode = '22023';
     end if;
