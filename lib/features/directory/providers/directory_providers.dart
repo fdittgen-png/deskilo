@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/context_client_providers.dart';
 import '../../../core/backend/personal_home_providers.dart';
@@ -36,17 +36,21 @@ AccountContactActions accountContactActions(Ref ref, {String source = ''}) =>
 ///
 /// #2561 L3 — the directory is the one the installation declares
 /// ([directoryHomeProvider]); this device's own server is listed beside it.
+///
+/// #2555 — both come from the personal client alone: selecting a workspace
+/// on another host never changes the source list.
 @riverpod
-PublicDiscoveryRepository publicDiscoveryRepository(Ref ref) {
-  final client = ref.watch(personalClientProvider);
-  return SupabasePublicDiscoveryRepository(
-    directoryHome: () => ref.read(directoryHomeProvider.future),
-    local: BackendEndpoint(
-      Uri.parse(client.rest.url).origin,
-      client.auth.headers['apikey']!,
-    ),
-  );
-}
+PublicDiscoveryRepository publicDiscoveryRepository(Ref ref) =>
+    SupabasePublicDiscoveryRepository(
+      directoryHome: () => ref.read(directoryHomeProvider.future),
+      local: ref.watch(personalEndpointProvider),
+      transport: ref.watch(publicTransportProvider),
+    );
+
+/// #2555 — the raw HTTP client every anonymous public read is built on;
+/// each one is wrapped in an origin-only client by its repository.
+@Riverpod(keepAlive: true)
+http.Client Function() publicTransport(Ref ref) => http.Client.new;
 
 @riverpod
 PublicationRepository publicationRepository(Ref ref) {
@@ -62,6 +66,7 @@ DirectoryParticipantRepository directoryParticipantRepository(Ref ref) =>
           ? null
           : ref.watch(connectedInstallationsProvider),
       directoryHome: () => ref.read(directoryHomeProvider.future),
+      transport: ref.watch(publicTransportProvider),
     );
 /// #1847 — the card as its installation publishes it now; null once it is
 /// withdrawn. Keyed by the card's identity on its own installation.

@@ -4,7 +4,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/backend/backend_settings.dart';
+import '../../../core/backend/personal_home.dart';
+import '../../../core/backend/personal_home_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -185,6 +186,43 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     ]);
   }
 
+  /// The directory could not be listed. A server that names no usable
+  /// personal home says so (#2555): no other server is asked instead. A
+  /// retry reads the declaration again, so a corrected one is seen.
+  Widget _failure(Object error) {
+    final l = context.l10n;
+    void retry() => ref
+      ..invalidate(directoryHomeProvider)
+      ..invalidate(_provider);
+    if (error is PersonalHomeUnavailable) {
+      return Center(
+        child: Padding(
+          padding: AppSpacing.mdAll,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Text(
+              l.directoryHomeUnavailable,
+              key: const ValueKey('directory-home-unavailable'),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            TextButton(
+              key: const ValueKey('directory-home-retry'),
+              onPressed: retry,
+              child: Text(l.commonRetry),
+            ),
+          ]),
+        ),
+      );
+    }
+    return Center(
+      child: TextButton(
+        key: const ValueKey('directory-portal-directory-unavailable-2'),
+        onPressed: retry,
+        child: Text(l.portalDirectoryUnavailable),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -217,11 +255,12 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                   l.portalRegisterDirectory,
               icon: const Icon(Icons.add_business_outlined),
               // #2343 — opens on this device's own server: the one an
-              // operator most often wants listed.
+              // operator most often wants listed. #2555 — as the personal
+              // client names it, never the selected workspace's host.
               onPressed: () => showDialog<void>(
                 context: context,
                 builder: (_) => DirectoryLinkDialog(
-                  initial: ref.read(activeBackendProvider).value,
+                  initial: ref.read(personalEndpointProvider),
                 ),
               ),
             ),
@@ -244,15 +283,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                         onLocate: _locate,
                       ),
               ),
-              AsyncError() => Center(
-                child: TextButton(
-                  key: const ValueKey('directory-portal-directory-unavailable-2'),
-                  onPressed: () => ref.invalidate(_provider),
-                  child: Text(
-                    l.portalDirectoryUnavailable,
-                  ),
-                ),
-              ),
+              AsyncError(:final error) => _failure(error),
               _ => const LoadingView(),
             },
           ),
