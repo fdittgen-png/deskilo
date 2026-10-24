@@ -224,8 +224,10 @@ const DEFAULTS={
  // combined server (platform settings personal.message_directory_*).
  directory:{pageSize:'50',queryLength:'120'},
  // #2563 C2 — how long the backchannel's receipts and ended-membership
- // tombstones are kept (platform setting federation.retention_hours).
- federation:{retentionHours:'24'},
+ // tombstones are kept (platform setting federation.retention_hours), and
+ // how long a server waits for an answer before it sends a message again
+ // (platform setting federation.answer_wait_seconds).
+ federation:{retentionHours:'24',answerWait:'120'},
  // #2556 — the inbox's page per source, read at the personal home and at
  // each workspace server (platform setting messaging.inbox_page_size).
  inbox:{pageSize:'50'},

@@ -19974,6 +19974,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours après l\'émission avant qu\'une première relance soit proposée, et avant l\'échéance d\'une facture sans conditions de paiement.';
 
   @override
+  String get settingHintFederationAnswerWaitSeconds =>
+      'Secondes pendant lesquelles un serveur attend la réponse à un message signé envoyé à un autre serveur avant de renvoyer le même message. Au moins 30 ; gardez-la sous la durée de validité du statut.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Heures pendant lesquelles un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la plus longue validité de statut plus deux fois l\'écart d\'horloge.';
 
@@ -20152,6 +20156,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Jours avant une première relance';
+
+  @override
+  String get settingLabelFederationAnswerWaitSeconds =>
+      'Attente de réponse entre serveurs';
 
   @override
   String get settingLabelFederationRetentionHours =>

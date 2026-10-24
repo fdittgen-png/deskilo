@@ -13724,6 +13724,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintFederationAnswerWaitSeconds": "Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato.",
   "settingHintFederationRetentionHours": "Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d'orologio.",
   "settingHintIdentityClockSkewSeconds": "Secondi di scarto d'orologio tra la casa personale e un server di spazi ancora accettati, da 0 a 30.",
   "settingHintIdentityStatusAssertionLifetimeSeconds": "Secondi per cui un server di spazi può affidarsi a uno stato di identità firmato dalla casa personale. Al massimo 900: a un account sospeso vengono rifiutate le nuove richieste entro questo tempo più lo scarto d'orologio.",
@@ -13872,6 +13873,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelFederationAnswerWaitSeconds": "Attesa della risposta tra server",
   "settingLabelFederationRetentionHours": "Conservazione degli scambi tra server",
   "settingLabelIdentityClockSkewSeconds": "Scarto d'orologio ammesso",
   "settingLabelIdentityStatusAssertionLifetimeSeconds": "Validità dello stato di identità",

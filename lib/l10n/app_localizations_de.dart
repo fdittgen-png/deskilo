@@ -19957,6 +19957,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.';
 
   @override
+  String get settingHintFederationAnswerWaitSeconds =>
+      'Sekunden, die ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30; unter der Statusgültigkeit halten.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung.';
 
@@ -20132,6 +20136,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
+
+  @override
+  String get settingLabelFederationAnswerWaitSeconds =>
+      'Wartezeit auf Antwort im Server-Austausch';
 
   @override
   String get settingLabelFederationRetentionHours =>

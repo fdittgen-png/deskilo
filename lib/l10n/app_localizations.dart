@@ -33468,6 +33468,12 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #2563 C2 answer wait: settingHintFederationAnswerWaitSeconds
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.'**
+  String get settingHintFederationAnswerWaitSeconds;
+
   /// #2563 C2 retention: settingHintFederationRetentionHours
   ///
   /// In en, this message translates to:
@@ -33743,6 +33749,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
+
+  /// #2563 C2 answer wait: settingLabelFederationAnswerWaitSeconds
+  ///
+  /// In en, this message translates to:
+  /// **'Backchannel answer wait'**
+  String get settingLabelFederationAnswerWaitSeconds;
 
   /// #2563 C2 retention: settingLabelFederationRetentionHours
   ///

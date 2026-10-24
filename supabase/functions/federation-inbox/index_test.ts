@@ -111,3 +111,38 @@ Deno.test("only POST, with a body of a bounded size, reaches the database", asyn
   assertEquals((await post(fake, "x".repeat(MAX_BODY_BYTES + 1))).status, 413);
   assertEquals(fake.calls.length, 0);
 });
+
+// #2563 — a retry of an event the home refused the first time: the
+// duplicate answer says what the first delivery decided, so the sender books
+// it refused, not delivered.
+Deno.test("a duplicate carries the first outcome", async () => {
+  const res = await post(
+    fakeAdmin({ data: { outcome: "duplicate", first_outcome: "wrong_issuer" }, error: null }),
+    "{}",
+  );
+  assertEquals(res.status, 200);
+  assertEquals(res.body, { outcome: "duplicate", first_outcome: "wrong_issuer" });
+});
+
+Deno.test("a duplicate of a success carries its first outcome too", async () => {
+  const res = await post(
+    fakeAdmin({ data: { outcome: "duplicate", first_outcome: "applied" }, error: null }),
+    "{}",
+  );
+  assertEquals(res.body, { outcome: "duplicate", first_outcome: "applied" });
+});
+
+Deno.test("only a duplicate carries a first outcome, and only a named one", async () => {
+  const other = await post(
+    fakeAdmin({ data: { outcome: "applied", first_outcome: "wrong_issuer" }, error: null }),
+    "{}",
+  );
+  assertEquals(other.body, { outcome: "applied" });
+  for (const first of [null, 7, ""]) {
+    const res = await post(
+      fakeAdmin({ data: { outcome: "duplicate", first_outcome: first }, error: null }),
+      "{}",
+    );
+    assertEquals(res.body, { outcome: "duplicate" });
+  }
+});

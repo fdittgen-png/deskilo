@@ -13724,6 +13724,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintFederationAnswerWaitSeconds": "Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado.",
   "settingHintFederationRetentionHours": "Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.",
   "settingHintIdentityClockSkewSeconds": "Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.",
   "settingHintIdentityStatusAssertionLifetimeSeconds": "Segundos durante los que un servidor de espacios puede fiarse de un estado de identidad firmado por el hogar personal. 900 como máximo: a una cuenta suspendida se le rechazan las nuevas solicitudes en ese plazo más el desfase de reloj.",
@@ -13872,6 +13873,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelFederationAnswerWaitSeconds": "Espera de respuesta entre servidores",
   "settingLabelFederationRetentionHours": "Conservación de los intercambios entre servidores",
   "settingLabelIdentityClockSkewSeconds": "Desfase de reloj permitido",
   "settingLabelIdentityStatusAssertionLifetimeSeconds": "Validez del estado de identidad",
