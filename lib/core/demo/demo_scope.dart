@@ -39,6 +39,7 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
+import 'package:deskilo/core/demo/demo_workspace_context.dart';
 import 'package:deskilo/core/instance/settings_bundle_asset.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
@@ -330,7 +331,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]),
-      _demoPersonalContext, savedPlacesStoreProvider.overrideWithValue(fixture.prefs.savedPlaces), discoveryViewStoreProvider.overrideWithValue(fixture.prefs.discoveryView), // #2555 — the persona at the fictional installation; saved pages in the session
+      _demoPersonalContext, demoWorkspaceContext(_kDemoInstallationId), savedPlacesStoreProvider.overrideWithValue(fixture.prefs.savedPlaces), discoveryViewStoreProvider.overrideWithValue(fixture.prefs.discoveryView), // #2555 — the persona at the fictional installation; saved pages in the session
       // #1834 — Demo never opens another server's sign-in.
       identityConnectorProvider.overrideWithValue(const OfflineIdentityConnector()),
       // #1847 — public discovery, publication management and participant
@@ -449,7 +450,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
 }
 
 /// #1625 — Demo's fictional installation id (never a real server's).
-const _kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
+const _kDemoInstallationId = kDemoInstallationId;
 
 /// #2472 — this server's directory is both spaces' cast, read at each
 /// call so a persona switch is followed; any other server's is empty.

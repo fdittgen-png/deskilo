@@ -608,6 +608,20 @@
               "maxLength": 200
             }
           },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          "role_capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
           "operations": {
             "type": "array",
             "items": {

@@ -150,14 +150,22 @@ Future<void> settleCreditInvoiceDialog(
 
 /// The current workspace when it issues in sales-tax mode (#2362): the
 /// feature is on and its seller country's gate row says so; else null.
+///
+/// #2561 L4 -- the gate row is read from the tax reference the selected
+/// workspace's context captured from its own installation; while none is
+/// ready the answer is null, never another workspace's data.
 ({String id, String currency})? salesTaxWorkspace(WidgetRef ref) {
   final workspace = ref.watch(currentWorkspaceProvider).value;
+  final captured = ref.watch(readyWorkspaceContextProvider);
   if (workspace == null ||
+      captured == null ||
+      captured.target.workspaceId != workspace.id ||
       !ref
           .watch(enabledFeaturesSyncProvider)
           .contains(WorkspaceFeature.salesTax) ||
-      !ActiveTaxReference.isInstalled ||
-      !(ActiveTaxReference.current.gateOf(workspace.countryCode)?.salesTaxMode ??
+      !(captured.taxReference.set
+              .gateOf(workspace.countryCode)
+              ?.salesTaxMode ??
           false)) {
     return null;
   }

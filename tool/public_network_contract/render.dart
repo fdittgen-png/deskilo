@@ -547,11 +547,11 @@ String _renderDart(Map<String, dynamic> contract) {
   return out.toString();
 }
 
-/// #1847 B — what an installation publishes about its external interface:
-/// the protocol, its capabilities and every non-management operation with
-/// the versions it accepts. No lifecycle (#1850 has not produced any), no
+/// The part of the descriptor that is the same on every installation: the
+/// protocol, its capabilities and every non-management operation with the
+/// versions it accepts. No lifecycle (#1850 has not produced any), no
 /// configuration, build, schema level or flag.
-Map<String, Object?> publicNetworkDescriptor(Map<String, dynamic> contract) => {
+Map<String, Object?> _descriptorStatic(Map<String, dynamic> contract) => {
   'protocol': contract['protocol'],
   'protocol_versions': contract['protocol_versions'],
   'capabilities': (contract['capabilities'] as Map).keys.toList()..sort(),
@@ -567,17 +567,56 @@ Map<String, Object?> publicNetworkDescriptor(Map<String, dynamic> contract) => {
   ],
 };
 
+/// The roles of the contract, in its order, with the capability version
+/// each one carries.
+Map<String, String> _roleCapabilities(Map<String, dynamic> contract) => {
+  for (final MapEntry(:key, :value)
+      in ((contract['roles'] as Map)['values'] as Map).entries)
+    key as String: (value as Map)['capability'] as String,
+};
+
+/// #1847 B, #2561 L1 — what an installation publishes about its external
+/// interface, as a COMBINED installation (the contract's default roles)
+/// answers it: [_descriptorStatic] plus `roles` and `role_capabilities`.
+/// The database fills the two role keys from `installation_identity.roles`.
+Map<String, Object?> publicNetworkDescriptor(Map<String, dynamic> contract) {
+  final roles = ((contract['roles'] as Map)['default'] as List).cast<String>();
+  final capabilities = _roleCapabilities(contract);
+  return {
+    ..._descriptorStatic(contract),
+    'roles': roles,
+    'role_capabilities': [for (final r in roles) capabilities[r]!],
+  };
+}
+
 /// The descriptor as the database answers it; the latest migration that
-/// defines `public_network_descriptor()` carries this verbatim.
-String renderPublicNetworkDescriptorSql(Map<String, dynamic> contract) =>
-    '''create or replace function public.public_network_descriptor()
+/// defines `public_network_descriptor()` carries this verbatim. The static
+/// part is a literal; the roles and their capabilities are read live from
+/// the one `installation_identity` row, so the function is stable, not
+/// immutable, and stays SECURITY INVOKER (anonymous readers hold a column
+/// grant on `roles`, as on `installation_id`).
+String renderPublicNetworkDescriptorSql(Map<String, dynamic> contract) {
+  var ordinal = 0;
+  final rows = [
+    for (final MapEntry(:key, :value) in _roleCapabilities(contract).entries)
+      "(${++ordinal}, '$key', '$value')",
+  ].join(', ');
+  return '''create or replace function public.public_network_descriptor()
 returns jsonb
 language sql
-immutable
+stable
 set search_path = public
 as \$descriptor\$
-  select \$json\$${jsonEncode(publicNetworkDescriptor(contract))}\$json\$::jsonb
+  select \$json\$${jsonEncode(_descriptorStatic(contract))}\$json\$::jsonb
+    || jsonb_build_object(
+         'roles', to_jsonb(i.roles),
+         'role_capabilities', coalesce((
+           select jsonb_agg(c.capability order by c.ordinal)
+             from (values $rows) as c (ordinal, role, capability)
+            where c.role = any (i.roles)), '[]'::jsonb))
+    from public.installation_identity i
 \$descriptor\$;''';
+}
 
 /// Every generated file, by path.
 Map<String, String> renderPublicNetworkContract(Map<String, dynamic> contract) {
