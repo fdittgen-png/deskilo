@@ -252,3 +252,20 @@ class PlaceFields extends StatelessWidget {
     );
   }
 }
+
+/// #2562 C2c -- where this space will be created: the enrolled host chosen
+/// under My spaces, in place of the Create/Join choice of this server.
+class OnboardingHostLine extends StatelessWidget {
+  const OnboardingHostLine(this.host, {super.key});
+
+  /// The host name.
+  final String host;
+
+  @override
+  Widget build(BuildContext context) => InlineBanner(
+        key: const ValueKey('onboarding-host'),
+        icon: Icons.dns_outlined,
+        severity: InlineBannerSeverity.info,
+        text: context.l10n.createOnHostBanner(host),
+      );
+}

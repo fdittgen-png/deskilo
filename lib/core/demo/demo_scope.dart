@@ -87,6 +87,7 @@ import '../../features/workspace/domain/cost_allocation_rules.dart';
 import '../../features/workspace/domain/kpi_overview.dart';
 import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/domain/sample_data.dart';
+import '../../features/workspace/domain/workspace_host.dart';
 import '../../features/workspace/providers/bi_providers.dart';
 import '../../features/workspace/providers/cost_allocation_providers.dart';
 import '../../features/workspace/providers/deployment_providers.dart';
@@ -97,6 +98,7 @@ import '../../features/workspace/providers/overview_kpi_providers.dart';
 import '../../features/workspace/providers/sample_data_providers.dart';
 import '../../features/workspace/providers/template_search_providers.dart';
 import '../../features/workspace/providers/workspace_files_providers.dart';
+import '../../features/workspace/providers/workspace_host_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../backend/backend_settings.dart';
@@ -334,7 +336,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]),
       _demoPersonalContext, demoWorkspaceContext(_kDemoInstallationId), savedPlacesStoreProvider.overrideWithValue(fixture.prefs.savedPlaces), discoveryViewStoreProvider.overrideWithValue(fixture.prefs.discoveryView), // #2555 — the persona at the fictional installation; saved pages in the session
       // #1834 — Demo never opens another server's sign-in.
-      identityConnectorProvider.overrideWithValue(const OfflineIdentityConnector()),
+      identityConnectorProvider.overrideWithValue(const OfflineIdentityConnector()), workspaceHostRepositoryProvider.overrideWithValue(const LocalOnlyWorkspaceHostRepository()), // #2562 C2c: on its own server only
       // #1847 — public discovery, publication management and participant
       // requests: three interfaces, one in-memory directory.
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),

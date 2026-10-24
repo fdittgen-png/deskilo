@@ -124,6 +124,7 @@ import 'package:deskilo/features/workspace/domain/deployment.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_fields_repository.dart';
+import 'package:deskilo/features/workspace/domain/workspace_host.dart';
 import 'package:deskilo/features/workspace/domain/workspace_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_roles_repository.dart';
 import 'package:deskilo/features/workspace/providers/bi_providers.dart';
@@ -135,6 +136,7 @@ import 'package:deskilo/features/workspace/providers/template_search_providers.d
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_fields_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_files_providers.dart';
+import 'package:deskilo/features/workspace/providers/workspace_host_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_roles_providers.dart';
 import 'package:flutter/foundation.dart' show ValueChanged;
@@ -200,6 +202,9 @@ List<Override> standardTestOverrides({
   FakeAccountActivityRepository? accountActivity,
   FakeDirectoryRepository? directory,
   List<ConnectedInstallation> connectedSources = const [],
+  // #2562 C2c — a real pool over an in-memory wire, when a test needs one.
+  ConnectedInstallations? connectedInstallations,
+  WorkspaceHostRepository? workspaceHosts,
   IdentityConnector? identityConnector,
   FakeAccountContactRepository? contacts,
   // #2472 (P) — the personal home's directory; by default a home without
@@ -331,11 +336,14 @@ List<Override> standardTestOverrides({
     enabledFeatureKeysFromWorkspace, // #2495
     ...realtimeWiringFromApp, // #2495
     workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
-    connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()),
+    connectedInstallationsProvider.overrideWith((ref)=>connectedInstallations ?? FakeConnectedInstallations()),
       connectedSourcesProvider.overrideWith((ref) async=>connectedSources),
       // #1834 — no test reaches a real server's sign-in.
       identityConnectorProvider.overrideWithValue(
           identityConnector ?? const OfflineIdentityConnector()),
+      // #2562 C2c — no enrolled host unless a test brings one.
+      workspaceHostRepositoryProvider
+          .overrideWithValue(workspaceHosts ?? const LocalOnlyWorkspaceHostRepository()),
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directoryFake),
       publicationRepositoryProvider.overrideWith((ref)=>directoryFake),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directoryFake),
