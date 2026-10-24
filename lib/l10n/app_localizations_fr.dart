@@ -14013,6 +14013,54 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce serveur ne liste pas encore les réservations pour l\'espace personnel.';
 
   @override
+  String get mySpacesAll => 'Tous mes espaces';
+
+  @override
+  String mySpacesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count espaces',
+      one: '1 espace',
+      zero: 'Aucun espace',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get mySpacesDiscover => 'Découvrir des espaces';
+
+  @override
+  String get mySpacesHostElsewhere => 'Sur une autre installation';
+
+  @override
+  String get mySpacesHostHere => 'Sur ce serveur';
+
+  @override
+  String get mySpacesManage => 'Gérer les espaces de ce serveur';
+
+  @override
+  String get mySpacesNoMatch => 'Aucun espace ne correspond à votre recherche.';
+
+  @override
+  String get mySpacesOpen => 'Ouvrir';
+
+  @override
+  String get mySpacesOpenTest => 'Ouvrir l\'espace de test';
+
+  @override
+  String get mySpacesRequestStatus => 'Voir l\'état de la demande';
+
+  @override
+  String get mySpacesTestSpace => 'Espace de test';
+
+  @override
+  String get mySpacesUnavailable => 'Vos espaces n\'ont pas pu être lus.';
+
+  @override
+  String get mySpacesVerified => 'Adhésion vérifiée';
+
+  @override
   String get myVisitsHelp =>
       'Les visites que vous avez demandées ou auxquelles vous avez été admis, en tant qu\'invité. Une visite n\'est pas une adhésion.';
 

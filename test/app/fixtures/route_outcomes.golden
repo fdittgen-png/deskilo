@@ -53,6 +53,7 @@ signed-out on  /me/messages/new-group -> /auth
 signed-out on  /me/messages/starred -> /auth
 signed-out on  /me/messages/thread -> /auth
 signed-out on  /me/spaces -> /auth
+signed-out on  /me/spaces/manage -> /auth
 signed-out on  /member/:memberId -> /auth
 signed-out on  /members -> /auth
 signed-out on  /members/managed -> /auth
@@ -174,6 +175,7 @@ signed-out off /me/messages/new-group -> /auth
 signed-out off /me/messages/starred -> /auth
 signed-out off /me/messages/thread -> /auth
 signed-out off /me/spaces -> /auth
+signed-out off /me/spaces/manage -> /auth
 signed-out off /member/:memberId -> /auth
 signed-out off /members -> /auth
 signed-out off /members/managed -> /auth
@@ -295,6 +297,7 @@ no-space on  /me/messages/new-group -> (open)
 no-space on  /me/messages/starred -> (open)
 no-space on  /me/messages/thread -> /me
 no-space on  /me/spaces -> /me
+no-space on  /me/spaces/manage -> /profiles
 no-space on  /member/:memberId -> /me
 no-space on  /members -> /me
 no-space on  /members/managed -> /me
@@ -416,6 +419,7 @@ no-space off /me/messages/new-group -> (open)
 no-space off /me/messages/starred -> (open)
 no-space off /me/messages/thread -> /me
 no-space off /me/spaces -> /me
+no-space off /me/spaces/manage -> /profiles
 no-space off /member/:memberId -> /me
 no-space off /members -> /me
 no-space off /members/managed -> /me
@@ -537,6 +541,7 @@ member on  /me/messages/new-group -> (open)
 member on  /me/messages/starred -> (open)
 member on  /me/messages/thread -> /me
 member on  /me/spaces -> /me
+member on  /me/spaces/manage -> /profiles
 member on  /member/:memberId -> (open)
 member on  /members -> /calendar
 member on  /members/managed -> /calendar
@@ -658,6 +663,7 @@ member off /me/messages/new-group -> (open)
 member off /me/messages/starred -> (open)
 member off /me/messages/thread -> /me
 member off /me/spaces -> /me
+member off /me/spaces/manage -> /profiles
 member off /member/:memberId -> /messages
 member off /members -> /messages
 member off /members/managed -> /messages
@@ -779,6 +785,7 @@ admin on  /me/messages/new-group -> (open)
 admin on  /me/messages/starred -> (open)
 admin on  /me/messages/thread -> /me
 admin on  /me/spaces -> /me
+admin on  /me/spaces/manage -> /profiles
 admin on  /member/:memberId -> (open)
 admin on  /members -> (open)
 admin on  /members/managed -> (open)
@@ -900,6 +907,7 @@ admin off /me/messages/new-group -> (open)
 admin off /me/messages/starred -> (open)
 admin off /me/messages/thread -> /me
 admin off /me/spaces -> /me
+admin off /me/spaces/manage -> /profiles
 admin off /member/:memberId -> /messages
 admin off /members -> (open)
 admin off /members/managed -> /members
@@ -1021,6 +1029,7 @@ owner on  /me/messages/new-group -> (open)
 owner on  /me/messages/starred -> (open)
 owner on  /me/messages/thread -> /me
 owner on  /me/spaces -> /me
+owner on  /me/spaces/manage -> /profiles
 owner on  /member/:memberId -> (open)
 owner on  /members -> (open)
 owner on  /members/managed -> (open)
@@ -1142,6 +1151,7 @@ owner off /me/messages/new-group -> (open)
 owner off /me/messages/starred -> (open)
 owner off /me/messages/thread -> /me
 owner off /me/spaces -> /me
+owner off /me/spaces/manage -> /profiles
 owner off /member/:memberId -> /messages
 owner off /members -> (open)
 owner off /members/managed -> /members

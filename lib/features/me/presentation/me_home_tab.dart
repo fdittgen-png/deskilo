@@ -23,7 +23,9 @@ import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/space_pairs.dart';
 import '../providers/me_providers.dart';
+import '../providers/personal_shell_providers.dart';
 import 'linked_spaces_section.dart';
+import 'me_shell.dart';
 import 'me_spaces_list.dart';
 import 'personal_refs_section.dart';
 
@@ -73,6 +75,10 @@ class MeHomeTab extends ConsumerWidget {
     final nothing = spaces.isEmpty &&
         linked.every((s) => s.spaces.isEmpty) &&
         (elsewhere?.beyondLocalSpaces.isEmpty ?? true);
+    // #2554 — under the personal shell My spaces is a destination of its
+    // own: the Overview leads to it, and with no space Join and Discover
+    // lead while Create follows.
+    final shell = ref.watch(personalShellEnabledProvider);
     return Scaffold(
       body: Align(
         alignment: Alignment.topCenter,
@@ -126,29 +132,33 @@ class MeHomeTab extends ConsumerWidget {
               // #1835 — my guest visits: beside my spaces, never among them.
               const MyVisitsSection(),
               const SizedBox(height: AppSpacing.md),
-              Row(
-                children: [
-                  _HomeAction(
-                    actionKey: 'me-home-join',
-                    icon: Icons.qr_code_2_outlined,
-                    label: l10n.meJoinSpace,
-                    route: '/onboarding?join=1',
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  _HomeAction(
-                    actionKey: 'me-home-create',
-                    icon: Icons.add_business_outlined,
-                    label: l10n.meCreateSpace,
-                    route: '/onboarding',
-                  ),
-                ],
-              ),
-              if (spaces.isNotEmpty)
-                TextButton(
-                  key: const ValueKey('me-home-manage'),
-                  onPressed: () => context.push('/profiles'),
-                  child: Text(l10n.meManageSpaces),
+              if (shell)
+                _PersonalHomeActions(empty: nothing)
+              else ...[
+                Row(
+                  children: [
+                    _HomeAction(
+                      actionKey: 'me-home-join',
+                      icon: Icons.qr_code_2_outlined,
+                      label: l10n.meJoinSpace,
+                      route: '/onboarding?join=1',
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    _HomeAction(
+                      actionKey: 'me-home-create',
+                      icon: Icons.add_business_outlined,
+                      label: l10n.meCreateSpace,
+                      route: '/onboarding',
+                    ),
+                  ],
                 ),
+                if (spaces.isNotEmpty)
+                  TextButton(
+                    key: const ValueKey('me-home-manage'),
+                    onPressed: () => context.push('/profiles'),
+                    child: Text(l10n.meManageSpaces),
+                  ),
+              ],
               const SizedBox(height: AppSpacing.xl),
             ],
           ),
@@ -278,6 +288,66 @@ class _MeHeader extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// #2554 — the Overview's ways on under the personal shell: All my spaces
+/// while there is one; with none, Join and Discover first, Create after.
+class _PersonalHomeActions extends StatelessWidget {
+  const _PersonalHomeActions({required this.empty});
+
+  final bool empty;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    const target = Size(0, 48);
+    void join() => context.push('/onboarding?join=1');
+    return Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        if (!empty)
+          FilledButton.tonalIcon(
+            key: const ValueKey('me-home-all-spaces'),
+            style: FilledButton.styleFrom(minimumSize: target),
+            icon: const Icon(Icons.workspaces_outlined),
+            label: Text(l10n.mySpacesAll),
+            onPressed: () => context.go(MeTab.spaces.path),
+          ),
+        if (empty)
+          FilledButton.icon(
+            key: const ValueKey('me-home-join'),
+            style: FilledButton.styleFrom(minimumSize: target),
+            icon: const Icon(Icons.qr_code_2_outlined),
+            label: Text(l10n.meJoinSpace),
+            onPressed: join,
+          )
+        else
+          OutlinedButton.icon(
+            key: const ValueKey('me-home-join'),
+            style: OutlinedButton.styleFrom(minimumSize: target),
+            icon: const Icon(Icons.qr_code_2_outlined),
+            label: Text(l10n.meJoinSpace),
+            onPressed: join,
+          ),
+        OutlinedButton.icon(
+          key: const ValueKey('me-home-discover'),
+          style: OutlinedButton.styleFrom(minimumSize: target),
+          icon: const Icon(Icons.travel_explore_outlined),
+          label: Text(l10n.mySpacesDiscover),
+          onPressed: () => context.go(MeTab.discover.path),
+        ),
+        TextButton.icon(
+          key: const ValueKey('me-home-create'),
+          style: TextButton.styleFrom(minimumSize: target),
+          icon: const Icon(Icons.add_business_outlined),
+          label: Text(l10n.meCreateSpace),
+          onPressed: () => context.push('/onboarding'),
+        ),
+      ],
     );
   }
 }

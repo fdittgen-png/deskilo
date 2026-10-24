@@ -16270,6 +16270,63 @@
   "@myReservationsUnsupported": {
     "description": "#2553 My reservations: an older host without the read."
   },
+  "mySpacesAll": "All my spaces",
+  "@mySpacesAll": {
+    "description": "#2554 Overview: link to the full My spaces list"
+  },
+  "mySpacesCount": "{count, plural, =0{No space} =1{1 space} other{{count} spaces}}",
+  "@mySpacesCount": {
+    "description": "#2554 My spaces: the number of loaded spaces",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mySpacesDiscover": "Discover spaces",
+  "@mySpacesDiscover": {
+    "description": "#2554 My spaces: link to Discover"
+  },
+  "mySpacesHostElsewhere": "On another installation",
+  "@mySpacesHostElsewhere": {
+    "description": "#2554 My spaces: the space lives on another installation"
+  },
+  "mySpacesHostHere": "On this server",
+  "@mySpacesHostHere": {
+    "description": "#2554 My spaces: the space lives on the personal home's own server"
+  },
+  "mySpacesManage": "Manage spaces on this server",
+  "@mySpacesManage": {
+    "description": "#2554 My spaces: link to the management of this server's spaces"
+  },
+  "mySpacesNoMatch": "No space matches your search.",
+  "@mySpacesNoMatch": {
+    "description": "#2554 My spaces: the search matches nothing"
+  },
+  "mySpacesOpen": "Open",
+  "@mySpacesOpen": {
+    "description": "#2554 My spaces: main action, enter an active space"
+  },
+  "mySpacesOpenTest": "Open test space",
+  "@mySpacesOpenTest": {
+    "description": "#2554 My spaces: main action, enter a development (test) space"
+  },
+  "mySpacesRequestStatus": "View request status",
+  "@mySpacesRequestStatus": {
+    "description": "#2554 My spaces: main action of a pending request"
+  },
+  "mySpacesTestSpace": "Test space",
+  "@mySpacesTestSpace": {
+    "description": "#2554 My spaces: metadata of a development space"
+  },
+  "mySpacesUnavailable": "Your spaces could not be read.",
+  "@mySpacesUnavailable": {
+    "description": "#2554 My spaces: the spaces could not be read"
+  },
+  "mySpacesVerified": "Membership verified",
+  "@mySpacesVerified": {
+    "description": "#2554 My spaces: the membership was read from the space's own server"
+  },
   "myVisitsHelp": "Visits you asked for or were admitted to, as a guest. A visit is not a membership.",
   "@myVisitsHelp": {
     "description": "#1835 Me › Home: under the My visits heading"
