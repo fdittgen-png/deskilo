@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2554 SPACE-04 (9999): leaving a workspace is the workspace host's own
+-- #2554 SPACE-04 (282): leaving a workspace is the workspace host's own
 -- act (`leave_workspace`), and the owner handover rule holds there. The
 -- only owner, with no co-owner, is refused and stays the active owner; an
 -- authorized non-owner member leaves; an owner with a co-owner leaves and
