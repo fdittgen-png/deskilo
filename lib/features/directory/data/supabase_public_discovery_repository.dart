@@ -18,18 +18,17 @@ import '../domain/public_workspace.dart';
 /// it binds to and what it keeps are the generated contract's.
 class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
   SupabasePublicDiscoveryRepository({
-    required this.origin,
-    required this.publishableKey,
+    required this.directoryHome,
     this.local,
     http.Client Function()? transport,
   }) : transport = transport ?? http.Client.new;
 
-  /// The directory's origin and publishable key (#2343: the global
-  /// directory on the reference deployment).
-  final String origin, publishableKey;
+  /// The directory's origin and publishable key: #2561 L3 — the personal
+  /// home the installation declares, resolved at each read.
+  final Future<BackendEndpoint> Function() directoryHome;
 
-  /// #2343 — this device's own server when it is not the directory's: its
-  /// published spaces are listed whether or not it was linked.
+  /// #2343 — this device's own server: its published spaces are listed
+  /// whether or not it was linked (once, when it is the directory).
   final BackendEndpoint? local;
 
   /// The raw HTTP client each anonymous client is built on.
@@ -65,7 +64,8 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
   @override
   Future<DirectorySourcesPage> sources({int page = 0}) async {
     final size = _sources.pageSize!;
-    final home = _anonymous(origin, publishableKey);
+    final directory = await directoryHome();
+    final home = _anonymous(directory.url, directory.key);
     final PostgrestList rows;
     try {
       rows = await _read(
@@ -81,7 +81,7 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
     // The directory and this device's own server lead the first page; a
     // later page lists only what the directory names.
     final endpoints = <String, String>{
-      if (page == 0) origin: publishableKey,
+      if (page == 0) directory.url: directory.key,
       if (page == 0)
         if (local case final own?) own.url: own.key,
     };

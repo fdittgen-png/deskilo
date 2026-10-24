@@ -7417,6 +7417,12 @@ abstract class AppLocalizations {
   /// **'No members yet.'**
   String get directoryEmpty;
 
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'This server names no usable personal home, so the directory cannot be opened. Ask its operator.'**
+  String get directoryHomeUnavailable;
+
   /// Directory offline chip: compact relative last-seen, a day or more
   ///
   /// In en, this message translates to:
@@ -14764,6 +14770,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Make administrator'**
   String get instanceMakeAdmin;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'Combined: accounts and spaces'**
+  String get instanceNetworkCombined;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an https:// address and a publishable key, never a secret one.'**
+  String get instanceNetworkHomeEndpoint;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'The personal home of this server\'s people: the server where their accounts live. It is checked before it is recorded.'**
+  String get instanceNetworkHomeIntro;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'That address is this instance itself. Choose Combined or Personal home instead.'**
+  String get instanceNetworkHomeIsThisInstance;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'Personal home publishable key'**
+  String get instanceNetworkHomeKey;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'That server is not a personal home, or too old to be one. Nothing was recorded.'**
+  String get instanceNetworkHomeNotPersonal;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'A workspace host needs the personal home of its people.'**
+  String get instanceNetworkHomeRequired;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'The personal home did not answer. Check the address and the key, then try again.'**
+  String get instanceNetworkHomeUnreachable;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'Personal home URL (https://…)'**
+  String get instanceNetworkHomeUrl;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'Network: what this instance is. Combined (the usual choice) keeps people\'s accounts and the coworking spaces on the same server.'**
+  String get instanceNetworkIntro;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'Personal home: accounts only, no space'**
+  String get instanceNetworkPersonalHome;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'Role of this instance'**
+  String get instanceNetworkRoleLabel;
+
+  /// #2561 L3 personal-home endpoint (instance wizard, directory)
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace host: spaces only'**
+  String get instanceNetworkWorkspaceHost;
 
   /// #1827 B — instance operator console for the installation's assistants
   ///

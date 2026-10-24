@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/backend/personal_home_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
@@ -124,12 +125,19 @@ class _DirectoryLinkState extends ConsumerState<DirectoryLinkDialog> {
   }
 
   Future<void> _connectReference() async {
+    // #2561 L3 — the directory the installation declares, never a constant.
+    BackendEndpoint? home;
+    final read = await runGuarded(
+      context,
+      domain: 'directory',
+      message: 'directory home failed',
+      errorText: context.l10n.directoryHomeUnavailable,
+      action: () async => home = await ref.read(directoryHomeProvider.future),
+    );
+    if (!read || !mounted || home == null) return;
     final connected = await showDialog<bool>(
       context: context,
-      builder: (_) => ConnectionDialog(
-        origin: globalDirectoryEndpoint.url,
-        publicKey: globalDirectoryEndpoint.key,
-      ),
+      builder: (_) => ConnectionDialog(origin: home!.url, publicKey: home!.key),
     );
     if (connected == true && mounted) setState(() => _needsAccount = false);
   }

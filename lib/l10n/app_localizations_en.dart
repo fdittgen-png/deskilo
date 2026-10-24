@@ -4304,6 +4304,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get directoryEmpty => 'No members yet.';
 
   @override
+  String get directoryHomeUnavailable =>
+      'This server names no usable personal home, so the directory cannot be opened. Ask its operator.';
+
+  @override
   String directoryLastSeenDays(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,
@@ -8880,6 +8884,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get instanceMakeAdmin => 'Make administrator';
+
+  @override
+  String get instanceNetworkCombined => 'Combined: accounts and spaces';
+
+  @override
+  String get instanceNetworkHomeEndpoint =>
+      'Enter an https:// address and a publishable key, never a secret one.';
+
+  @override
+  String get instanceNetworkHomeIntro =>
+      'The personal home of this server\'s people: the server where their accounts live. It is checked before it is recorded.';
+
+  @override
+  String get instanceNetworkHomeIsThisInstance =>
+      'That address is this instance itself. Choose Combined or Personal home instead.';
+
+  @override
+  String get instanceNetworkHomeKey => 'Personal home publishable key';
+
+  @override
+  String get instanceNetworkHomeNotPersonal =>
+      'That server is not a personal home, or too old to be one. Nothing was recorded.';
+
+  @override
+  String get instanceNetworkHomeRequired =>
+      'A workspace host needs the personal home of its people.';
+
+  @override
+  String get instanceNetworkHomeUnreachable =>
+      'The personal home did not answer. Check the address and the key, then try again.';
+
+  @override
+  String get instanceNetworkHomeUrl => 'Personal home URL (https://…)';
+
+  @override
+  String get instanceNetworkIntro =>
+      'Network: what this instance is. Combined (the usual choice) keeps people\'s accounts and the coworking spaces on the same server.';
+
+  @override
+  String get instanceNetworkPersonalHome =>
+      'Personal home: accounts only, no space';
+
+  @override
+  String get instanceNetworkRoleLabel => 'Role of this instance';
+
+  @override
+  String get instanceNetworkWorkspaceHost => 'Workspace host: spaces only';
 
   @override
   String get instanceNoCandidates =>

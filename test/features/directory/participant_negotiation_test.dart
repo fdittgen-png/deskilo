@@ -12,6 +12,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/public_network/data/public_network_client.dart';
 import 'package:deskilo/core/public_network/public_network_negotiator.dart';
@@ -77,6 +78,7 @@ void main() {
       _Registry(client),
       negotiator: PublicNetworkNegotiator(transport: transport),
       transport: transport,
+      directoryHome: () async => referenceEndpoint,
     );
   }
 

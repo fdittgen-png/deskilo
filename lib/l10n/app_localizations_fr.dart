@@ -4333,6 +4333,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get directoryEmpty => 'Aucun membre pour l\'instant.';
 
   @override
+  String get directoryHomeUnavailable =>
+      'Ce serveur ne déclare aucun domicile personnel utilisable : l’annuaire ne peut pas s’ouvrir. Demandez à son exploitant.';
+
+  @override
   String directoryLastSeenDays(int days) {
     String _temp0 = intl.Intl.pluralLogic(
       days,
@@ -8967,6 +8971,54 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get instanceMakeAdmin => 'Nommer administrateur';
+
+  @override
+  String get instanceNetworkCombined => 'Combinée : comptes et espaces';
+
+  @override
+  String get instanceNetworkHomeEndpoint =>
+      'Saisissez une adresse https:// et une clé publiable, jamais une clé secrète.';
+
+  @override
+  String get instanceNetworkHomeIntro =>
+      'Le domicile personnel des personnes de ce serveur : le serveur où vivent leurs comptes. Il est vérifié avant d’être enregistré.';
+
+  @override
+  String get instanceNetworkHomeIsThisInstance =>
+      'Cette adresse est cette instance elle-même. Choisissez plutôt Combinée ou Domicile personnel.';
+
+  @override
+  String get instanceNetworkHomeKey => 'Clé publiable du domicile personnel';
+
+  @override
+  String get instanceNetworkHomeNotPersonal =>
+      'Ce serveur n’est pas un domicile personnel, ou trop ancien pour en être un. Rien n’a été enregistré.';
+
+  @override
+  String get instanceNetworkHomeRequired =>
+      'Un hôte d’espaces a besoin du domicile personnel de ses personnes.';
+
+  @override
+  String get instanceNetworkHomeUnreachable =>
+      'Le domicile personnel n’a pas répondu. Vérifiez l’adresse et la clé, puis réessayez.';
+
+  @override
+  String get instanceNetworkHomeUrl => 'URL du domicile personnel (https://…)';
+
+  @override
+  String get instanceNetworkIntro =>
+      'Réseau : le rôle de cette instance. Combinée (le choix habituel) garde les comptes des personnes et les espaces de coworking sur le même serveur.';
+
+  @override
+  String get instanceNetworkPersonalHome =>
+      'Domicile personnel : comptes seulement, aucun espace';
+
+  @override
+  String get instanceNetworkRoleLabel => 'Rôle de cette instance';
+
+  @override
+  String get instanceNetworkWorkspaceHost =>
+      'Hôte d’espaces : espaces seulement';
 
   @override
   String get instanceNoCandidates =>

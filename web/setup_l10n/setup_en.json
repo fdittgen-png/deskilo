@@ -676,5 +676,15 @@
  "levelsExpertOpen": "Open the expert view: every switch",
  "setupExpertSwitches": "Show every switch (expert view)",
  "levelsOk": "Levels: {list}.",
- "levelsUnanswered": "No question answered: the switches of the next step decide."
+ "levelsUnanswered": "No question answered: the switches of the next step decide.",
+ "networkRoles": "This server's role",
+ "networkRolesHint": "Combined: people's accounts and the space on one server (the usual choice). Workspace host: the accounts live on another server, the personal home, named below.",
+ "networkCombined": "Combined: accounts and spaces",
+ "networkWorkspaceHost": "Workspace host: spaces only",
+ "networkHomeUrl": "Personal home URL",
+ "networkHomeUrlHint": "The https:// address of the server where your members keep their accounts.",
+ "networkHomeKey": "Personal home publishable key",
+ "networkHomeKeyHint": "Its publishable key (sb_publishable_…), never a secret one. The instance wizard checks both before recording them.",
+ "networkErrHome": "The personal home needs an https:// address without a path and a publishable key.",
+ "reqNetworkHome": "Required because this server hosts spaces only: its members need a personal home."
 }

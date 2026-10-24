@@ -447,6 +447,7 @@ void main() {
       expect(dest, {
         'name': 'app',
         'environment': 'app',
+        'network': 'app',
         'members': 'app',
         'einvoice': 'file',
       });

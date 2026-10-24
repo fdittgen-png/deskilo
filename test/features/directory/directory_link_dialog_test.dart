@@ -9,6 +9,7 @@ import 'package:deskilo/core/backend/backend_config.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/personal_home_providers.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/ui/server_label.dart';
@@ -53,6 +54,8 @@ Future<void> _pump(WidgetTester tester, FakeDirectoryRepository repo) async {
           (ref) => FakeConnectedInstallations(),
         ),
         enabledFeaturesSyncProvider.overrideWithValue(const {}),
+        // #2561 L3 — the installation declares nothing: the reference.
+        directoryHomeProvider.overrideWith((ref) async => referenceEndpoint),
       ]);
   await tester.pumpAndSettle();
 }

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:meta/meta.dart';
 
 import 'instance_bundle.dart';
+import 'instance_network.dart';
 import 'management_api.dart';
 
 /// The regions a project can live in, with the label a person reads.
@@ -365,6 +366,34 @@ on conflict (version) do nothing;
     } on ManagementApiException catch (e, st) {
       // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
       Error.throwWithStackTrace(InstanceStepFailure('owner', e.message), st);
+    }
+  }
+
+  /// #2561 L3 — records the roles and the personal home the operator
+  /// chose, after [verifyInstanceNetwork] accepted them against this
+  /// project's own installation id. Nothing is written on a refusal.
+  Future<void> declareNetwork(
+    String ref,
+    InstanceNetworkChoice choice, {
+    required PersonalHomeProbe probe,
+  }) async {
+    try {
+      final rows = await api.query(
+        ref,
+        'select installation_id::text as id from public.installation_identity;',
+      );
+      final home = await verifyInstanceNetwork(
+        choice,
+        ownInstallationId: '${rows.firstOrNull?['id']}',
+        probe: probe,
+      );
+      await api.runSql(ref, instanceNetworkSql(choice, home));
+    } on InstanceNetworkRefused catch (e, st) {
+      // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
+      Error.throwWithStackTrace(InstanceStepFailure('network', e.fault.name), st);
+    } on ManagementApiException catch (e, st) {
+      // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
+      Error.throwWithStackTrace(InstanceStepFailure('network', e.message), st);
     }
   }
 
