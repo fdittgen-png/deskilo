@@ -2636,6 +2636,7 @@
   "createHostHere": "Ce serveur",
   "createHostHereDetail": "Le serveur auquel vous êtes connecté",
   "createHostLost": "Le serveur choisi pour cet espace n'est plus retenu. Rien n'a été créé.",
+  "createHostNone": "Aucun serveur n'accepte encore de nouveaux espaces pour votre domicile personnel. Rien n'a été créé.",
   "createHostNotAccepting": "N'accepte pas de nouveaux espaces",
   "createHostRevoked": "N'est plus proposé par votre domicile personnel",
   "createHostTitle": "Où cet espace doit-il vivre ?",

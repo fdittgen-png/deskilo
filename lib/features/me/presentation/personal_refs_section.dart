@@ -55,7 +55,7 @@ class PersonalRefsSection extends ConsumerWidget {
         ),
       );
     }
-    final refs = answer.value?.beyondLocalSpaces ?? const [];
+    final refs = refsOfCurrentAccount(answer)?.beyondLocalSpaces ?? const [];
     if (refs.isEmpty) return const SizedBox.shrink();
     return Column(
       key: const ValueKey('me-refs'),

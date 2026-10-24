@@ -10,5 +10,6 @@
   "createHostUnavailable": "Les serveurs proposés par votre domicile personnel n'ont pas pu être lus.",
   "createOnHostBanner": "Cet espace sera créé sur {host}.",
   "createHostLost": "Le serveur choisi pour cet espace n'est plus retenu. Rien n'a été créé.",
-  "createHostChooseAgain": "Choisir un serveur"
+  "createHostChooseAgain": "Choisir un serveur",
+  "createHostNone": "Aucun serveur n'accepte encore de nouveaux espaces pour votre domicile personnel. Rien n'a été créé."
 }

@@ -3,6 +3,10 @@
 // #1823 — leaving a space is an ordinary action on its card in Me:
 // confirmed, then `leave_workspace`. Cancelling leaves nothing; an owner
 // cannot leave the space ownerless, so the action is not offered.
+//
+// #2554 SPACE-04: the client half; the database refuses an owner's leave
+// without a handover and lets a member leave, keeping the history
+// (pgTAP 9999_owner_leave).
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -18,7 +22,7 @@ Future<void> _openMenu(WidgetTester tester, String id) async {
 Finder _leave(String id) => find.byKey(ValueKey('space-menu-space:$id-leave-$id'));
 
 void main() {
-  testWidgets('leave a space from its card: confirmed, then left',
+  testWidgets('SPACE-04: leave a space from its card: confirmed, then left',
       (tester) async {
     final me = FakeMeRepository();
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
@@ -40,7 +44,8 @@ void main() {
     expect(find.text('You left Second Space.'), findsOneWidget);
   });
 
-  testWidgets('an owner is not offered to leave', (tester) async {
+  testWidgets('SPACE-04: an owner is not offered to leave',
+      (tester) async {
     final me = FakeMeRepository();
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me');
@@ -54,7 +59,8 @@ void main() {
     expect(me.left, isEmpty);
   });
 
-  testWidgets('a refused leave says so and changes nothing', (tester) async {
+  testWidgets('SPACE-04: a refused leave says so and changes nothing',
+      (tester) async {
     final me = FakeMeRepository()..failure = Exception('server says no');
     final router = await pumpMeApp(tester, workspace: twoSpaces(), me: me);
     await goTo(tester, router, '/me');

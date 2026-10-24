@@ -4596,6 +4596,10 @@
   "@createHostLost": {
     "description": "#2562 C2c Create: the onboarding was reached without a chosen server held"
   },
+  "createHostNone": "No server accepts new spaces for your personal home yet. Nothing was created.",
+  "@createHostNone": {
+    "description": "#2554 Create: a personal home that hosts no space and has no enrolled server offers nothing to create on"
+  },
   "createHostNotAccepting": "Not accepting new spaces",
   "@createHostNotAccepting": {
     "description": "#2562 C2c Create: an enrolled server closed to new spaces (state and refusal)"

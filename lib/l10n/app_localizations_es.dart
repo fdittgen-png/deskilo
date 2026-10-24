@@ -3927,6 +3927,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El servidor elegido para este espacio ya no está reservado. No se ha creado nada.';
 
   @override
+  String get createHostNone =>
+      'Todavía ningún servidor acepta nuevos espacios para su hogar personal. No se ha creado nada.';
+
+  @override
   String get createHostNotAccepting => 'No acepta nuevos espacios';
 
   @override
