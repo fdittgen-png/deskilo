@@ -14396,10 +14396,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mySpacesDiscover => 'Descubrir espacios';
 
   @override
+  String get mySpacesFilterActive => 'Activos';
+
+  @override
+  String get mySpacesFilterAll => 'Todos';
+
+  @override
+  String get mySpacesFilterHistory => 'Pasados';
+
+  @override
+  String get mySpacesFilterRequests => 'Solicitudes y visitas';
+
+  @override
   String get mySpacesHostElsewhere => 'En otra instalación';
 
   @override
   String get mySpacesHostHere => 'En este servidor';
+
+  @override
+  String get mySpacesLayoutGrid => 'Ver en cuadrícula';
+
+  @override
+  String get mySpacesLayoutList => 'Ver en lista';
 
   @override
   String get mySpacesManage => 'Gestionar los espacios de este servidor';
@@ -14415,6 +14433,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mySpacesRequestStatus => 'Ver el estado de la solicitud';
+
+  @override
+  String get mySpacesReview => 'Mi valoración';
+
+  @override
+  String mySpacesReviewed(int stars) {
+    return 'Mi valoración: $stars de 5';
+  }
+
+  @override
+  String get mySpacesSavedOnAccount => 'Guardado en su cuenta';
 
   @override
   String get mySpacesTestSpace => 'Espacio de prueba';
@@ -25897,6 +25926,32 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cada parte de su cuenta elige su propio público. Nada es público si usted no lo elige.';
 
   @override
+  String visibilityLegacyDirtyBody(String field, String server) {
+    return 'Su cambio en «$field» en $server aún no está guardado. Pertenece a esa cuenta y no pasa a otra.';
+  }
+
+  @override
+  String get visibilityLegacyDirtyTitle => 'Su cambio no está guardado';
+
+  @override
+  String get visibilityLegacyDiscard => 'Descartar el cambio';
+
+  @override
+  String get visibilityLegacyIntro =>
+      'Sus cuentas independientes en otros servidores conservan sus propios ajustes. Cambiar su hogar personal no las cambia.';
+
+  @override
+  String get visibilityLegacyKeepEditing => 'Seguir editando';
+
+  @override
+  String get visibilityLegacyTitle => 'Cuentas personales anteriores';
+
+  @override
+  String visibilityLegacyUnsaved(String audience) {
+    return 'Aún no guardado: $audience';
+  }
+
+  @override
   String get visibilityMoreSharing => 'Más ajustes para compartir';
 
   @override
@@ -25960,6 +26015,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo guardar quién lo ve. Inténtelo de nuevo.';
 
   @override
+  String get visibilitySavedPreview => 'Vista previa guardada';
+
+  @override
+  String get visibilitySavedPreviewHint =>
+      'Muestra lo que está guardado. Un cambio aparece aquí una vez guardado.';
+
+  @override
   String get visibilitySignedIn => 'Cualquiera con sesión iniciada';
 
   @override
@@ -25996,6 +26058,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get visibilityUnconfirmedTitle =>
       'No se ha podido confirmar su cambio';
+
+  @override
+  String get visibilityUnsupported =>
+      'Su hogar personal aún no puede guardar este ajuste: quienes lo gestionan deben actualizarlo. No se ha cambiado nada.';
 
   @override
   String get visibilityWidenAction => 'Ampliar';

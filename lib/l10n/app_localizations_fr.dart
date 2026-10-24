@@ -14445,10 +14445,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mySpacesDiscover => 'Découvrir des espaces';
 
   @override
+  String get mySpacesFilterActive => 'Actifs';
+
+  @override
+  String get mySpacesFilterAll => 'Tous';
+
+  @override
+  String get mySpacesFilterHistory => 'Passés';
+
+  @override
+  String get mySpacesFilterRequests => 'Demandes et visites';
+
+  @override
   String get mySpacesHostElsewhere => 'Sur une autre installation';
 
   @override
   String get mySpacesHostHere => 'Sur ce serveur';
+
+  @override
+  String get mySpacesLayoutGrid => 'Afficher en grille';
+
+  @override
+  String get mySpacesLayoutList => 'Afficher en liste';
 
   @override
   String get mySpacesManage => 'Gérer les espaces de ce serveur';
@@ -14464,6 +14482,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mySpacesRequestStatus => 'Voir l\'état de la demande';
+
+  @override
+  String get mySpacesReview => 'Mon avis';
+
+  @override
+  String mySpacesReviewed(int stars) {
+    return 'Mon avis : $stars sur 5';
+  }
+
+  @override
+  String get mySpacesSavedOnAccount => 'Enregistré sur votre compte';
 
   @override
   String get mySpacesTestSpace => 'Espace de test';
@@ -25983,6 +26012,33 @@ class AppLocalizationsFr extends AppLocalizations {
       'Chaque partie de votre compte choisit son public. Rien n\'est public sans votre choix.';
 
   @override
+  String visibilityLegacyDirtyBody(String field, String server) {
+    return 'Votre modification de « $field » sur $server n’est pas encore enregistrée. Elle appartient à ce compte et ne passe pas à un autre.';
+  }
+
+  @override
+  String get visibilityLegacyDirtyTitle =>
+      'Votre modification n’est pas enregistrée';
+
+  @override
+  String get visibilityLegacyDiscard => 'Abandonner la modification';
+
+  @override
+  String get visibilityLegacyIntro =>
+      'Vos comptes séparés sur d’autres serveurs gardent leurs propres réglages. Modifier votre domicile personnel ne les modifie pas.';
+
+  @override
+  String get visibilityLegacyKeepEditing => 'Continuer à modifier';
+
+  @override
+  String get visibilityLegacyTitle => 'Anciens comptes personnels';
+
+  @override
+  String visibilityLegacyUnsaved(String audience) {
+    return 'Pas encore enregistré : $audience';
+  }
+
+  @override
   String get visibilityMoreSharing => 'Plus de réglages de partage';
 
   @override
@@ -26046,6 +26102,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'enregistrer qui le voit. Veuillez réessayer.';
 
   @override
+  String get visibilitySavedPreview => 'Aperçu enregistré';
+
+  @override
+  String get visibilitySavedPreviewHint =>
+      'Montre ce qui est enregistré. Une modification apparaît ici une fois enregistrée.';
+
+  @override
   String get visibilitySignedIn => 'Toute personne connectée';
 
   @override
@@ -26081,6 +26144,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get visibilityUnconfirmedTitle =>
       'Votre modification n’a pas pu être confirmée';
+
+  @override
+  String get visibilityUnsupported =>
+      'Votre domicile personnel ne peut pas encore enregistrer ce réglage : ses administrateurs doivent le mettre à jour. Rien n’a été modifié.';
 
   @override
   String get visibilityWidenAction => 'Élargir';

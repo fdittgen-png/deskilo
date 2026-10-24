@@ -128,14 +128,14 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
       body: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 760),
+          constraints: const BoxConstraints(maxWidth: _wideWidth),
           child: SingleChildScrollView(
         key: const ValueKey('me-account-list'),
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           // The jump bar heads the page and scrolls with it: one button per
           // section would take most of a phone's height at large text if it
           // stayed pinned above the list.
-          Padding(
+          _narrow(Padding(
             padding: AppSpacing.smAll,
             child: Wrap(spacing: AppSpacing.xs, children: [
               for (final (index, section) in sections.indexed)
@@ -145,10 +145,13 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
                   child: Text(section.title),
                 ),
             ]),
-          ),
+          )),
           for (final (index, section) in sections.indexed) ...[
-            _header(section, index),
-            ...section.children,
+            _narrow(_header(section, index)),
+            // #2558 — only the privacy card uses a wide window: its saved
+            // preview sits beside the editor there.
+            for (final child in section.children)
+              if (child is VisibilityCard) child else _narrow(child),
           ],
         ]),
       ),
@@ -157,6 +160,17 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
     );
   }
 }
+
+/// How wide the tab's rows grow; the privacy card alone may use [_wideWidth].
+const double _rowWidth = 760;
+const double _wideWidth = 1200;
+
+Widget _narrow(Widget child) => Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: _rowWidth),
+        child: child,
+      ),
+    );
 
 /// A door out of the tab: a row that opens [path].
 class _Door extends StatelessWidget {

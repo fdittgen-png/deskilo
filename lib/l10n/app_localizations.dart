@@ -23866,6 +23866,30 @@ abstract class AppLocalizations {
   /// **'Discover spaces'**
   String get mySpacesDiscover;
 
+  /// #2554 My spaces: filter showing active memberships
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get mySpacesFilterActive;
+
+  /// #2554 My spaces: filter showing every loaded space
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get mySpacesFilterAll;
+
+  /// #2554 My spaces: filter showing paused or left spaces
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get mySpacesFilterHistory;
+
+  /// #2554 My spaces: filter showing pending requests and guest visits
+  ///
+  /// In en, this message translates to:
+  /// **'Requests and visits'**
+  String get mySpacesFilterRequests;
+
   /// #2554 My spaces: the space lives on another installation
   ///
   /// In en, this message translates to:
@@ -23877,6 +23901,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On this server'**
   String get mySpacesHostHere;
+
+  /// #2554 My spaces: show the spaces as a grid of cards
+  ///
+  /// In en, this message translates to:
+  /// **'Show as a grid'**
+  String get mySpacesLayoutGrid;
+
+  /// #2554 My spaces: show the spaces as a single list
+  ///
+  /// In en, this message translates to:
+  /// **'Show as a list'**
+  String get mySpacesLayoutList;
 
   /// #2554 My spaces: link to the management of this server's spaces
   ///
@@ -23907,6 +23943,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View request status'**
   String get mySpacesRequestStatus;
+
+  /// #2554 My spaces: my own star rating of a space, not yet given
+  ///
+  /// In en, this message translates to:
+  /// **'My review'**
+  String get mySpacesReview;
+
+  /// #2554 My spaces: my own star rating of a space
+  ///
+  /// In en, this message translates to:
+  /// **'My review: {stars} of 5'**
+  String mySpacesReviewed(int stars);
+
+  /// #2554 My spaces: the space is a favourite saved on the personal account
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on your account'**
+  String get mySpacesSavedOnAccount;
 
   /// #2554 My spaces: metadata of a development space
   ///
@@ -43031,6 +43085,48 @@ abstract class AppLocalizations {
   /// **'Each part of your account picks its own audience. Nothing is public unless you choose it.'**
   String get visibilityIntro;
 
+  /// #2558 privacy: body of the save / discard / keep editing question when switching legacy accounts
+  ///
+  /// In en, this message translates to:
+  /// **'Your change to “{field}” on {server} is not saved yet. It belongs to that account and does not move to another one.'**
+  String visibilityLegacyDirtyBody(String field, String server);
+
+  /// #2558 privacy: switching to another legacy account while a change is unsaved
+  ///
+  /// In en, this message translates to:
+  /// **'Your change is not saved'**
+  String get visibilityLegacyDirtyTitle;
+
+  /// #2558 privacy: drop the unsaved change of a legacy account
+  ///
+  /// In en, this message translates to:
+  /// **'Discard change'**
+  String get visibilityLegacyDiscard;
+
+  /// #2558 privacy: subtitle of the legacy personal accounts section
+  ///
+  /// In en, this message translates to:
+  /// **'Your separate accounts on other servers keep their own settings. Changing your personal home does not change them.'**
+  String get visibilityLegacyIntro;
+
+  /// #2558 privacy: stay on the legacy account with the unsaved change
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get visibilityLegacyKeepEditing;
+
+  /// #2558 privacy: expandable section of the separate accounts the person has on other servers
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy personal accounts'**
+  String get visibilityLegacyTitle;
+
+  /// #2558 privacy: a legacy account field with a change that is not saved yet
+  ///
+  /// In en, this message translates to:
+  /// **'Not saved yet: {audience}'**
+  String visibilityLegacyUnsaved(String audience);
+
   /// #2558 privacy card: expands the remaining fields
   ///
   /// In en, this message translates to:
@@ -43139,6 +43235,18 @@ abstract class AppLocalizations {
   /// **'Could not save who sees this. Please try again.'**
   String get visibilitySaveFailed;
 
+  /// #2558 privacy: label of the preview, which shows only what the personal home saved
+  ///
+  /// In en, this message translates to:
+  /// **'Saved preview'**
+  String get visibilitySavedPreview;
+
+  /// #2558 privacy: under the saved preview label; an unsaved change is never shown in it
+  ///
+  /// In en, this message translates to:
+  /// **'Shows what is saved. A change appears here once it is saved.'**
+  String get visibilitySavedPreviewHint;
+
   /// Audience: anyone with an account.
   ///
   /// In en, this message translates to:
@@ -43198,6 +43306,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your change could not be confirmed'**
   String get visibilityUnconfirmedTitle;
+
+  /// #2558 privacy: the personal home lacks the checked privacy writer (incomplete deployment); nothing was written
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal home cannot save this setting yet: the people who run it need to update it. Nothing was changed.'**
+  String get visibilityUnsupported;
 
   /// No description provided for @visibilityWidenAction.
   ///

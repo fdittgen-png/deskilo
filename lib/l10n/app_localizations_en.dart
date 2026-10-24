@@ -14301,10 +14301,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mySpacesDiscover => 'Discover spaces';
 
   @override
+  String get mySpacesFilterActive => 'Active';
+
+  @override
+  String get mySpacesFilterAll => 'All';
+
+  @override
+  String get mySpacesFilterHistory => 'Past';
+
+  @override
+  String get mySpacesFilterRequests => 'Requests and visits';
+
+  @override
   String get mySpacesHostElsewhere => 'On another installation';
 
   @override
   String get mySpacesHostHere => 'On this server';
+
+  @override
+  String get mySpacesLayoutGrid => 'Show as a grid';
+
+  @override
+  String get mySpacesLayoutList => 'Show as a list';
 
   @override
   String get mySpacesManage => 'Manage spaces on this server';
@@ -14320,6 +14338,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mySpacesRequestStatus => 'View request status';
+
+  @override
+  String get mySpacesReview => 'My review';
+
+  @override
+  String mySpacesReviewed(int stars) {
+    return 'My review: $stars of 5';
+  }
+
+  @override
+  String get mySpacesSavedOnAccount => 'Saved on your account';
 
   @override
   String get mySpacesTestSpace => 'Test space';
@@ -25684,6 +25713,32 @@ class AppLocalizationsEn extends AppLocalizations {
       'Each part of your account picks its own audience. Nothing is public unless you choose it.';
 
   @override
+  String visibilityLegacyDirtyBody(String field, String server) {
+    return 'Your change to “$field” on $server is not saved yet. It belongs to that account and does not move to another one.';
+  }
+
+  @override
+  String get visibilityLegacyDirtyTitle => 'Your change is not saved';
+
+  @override
+  String get visibilityLegacyDiscard => 'Discard change';
+
+  @override
+  String get visibilityLegacyIntro =>
+      'Your separate accounts on other servers keep their own settings. Changing your personal home does not change them.';
+
+  @override
+  String get visibilityLegacyKeepEditing => 'Keep editing';
+
+  @override
+  String get visibilityLegacyTitle => 'Legacy personal accounts';
+
+  @override
+  String visibilityLegacyUnsaved(String audience) {
+    return 'Not saved yet: $audience';
+  }
+
+  @override
   String get visibilityMoreSharing => 'More sharing settings';
 
   @override
@@ -25745,6 +25800,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save who sees this. Please try again.';
 
   @override
+  String get visibilitySavedPreview => 'Saved preview';
+
+  @override
+  String get visibilitySavedPreviewHint =>
+      'Shows what is saved. A change appears here once it is saved.';
+
+  @override
   String get visibilitySignedIn => 'Anyone signed in';
 
   @override
@@ -25779,6 +25841,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get visibilityUnconfirmedTitle => 'Your change could not be confirmed';
+
+  @override
+  String get visibilityUnsupported =>
+      'Your personal home cannot save this setting yet: the people who run it need to update it. Nothing was changed.';
 
   @override
   String get visibilityWidenAction => 'Widen';
