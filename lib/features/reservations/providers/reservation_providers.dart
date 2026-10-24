@@ -318,7 +318,7 @@ Future<List<Reservation>> periodReservations(
 /// The read, one host per call through that host's own verified client;
 /// the limits from the personal home's platform settings. Demo overrides
 /// it with the fixture's spaces.
-@Riverpod(keepAlive: true)
+@riverpod
 MyReservationsRepository myReservationsRepository(Ref ref) =>
     HostMyReservationsRepository(
       platformSettings: () => ref.read(platformSettingsProvider.future),

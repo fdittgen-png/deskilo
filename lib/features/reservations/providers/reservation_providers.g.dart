@@ -751,7 +751,7 @@ final class MyReservationsRepositoryProvider
         argument: null,
         retry: null,
         name: r'myReservationsRepositoryProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -780,7 +780,7 @@ final class MyReservationsRepositoryProvider
 }
 
 String _$myReservationsRepositoryHash() =>
-    r'f08da657a7aa02de019ae2909317d86641c14513';
+    r'2cbd2a9f260bacd19a840cc9dc15d878858b380e';
 
 /// The hosts My reservations reads. By default the selected workspace's
 /// host alone; the composition root replaces it with every workspace my
