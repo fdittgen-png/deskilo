@@ -350,7 +350,7 @@ vsaved() { q "select public.account_audience_of('$C', '$1')"; }
 echo "8. two checked privacy writes from the same read"
 race 8a "$(claims "$C")
 $(vis presence my_spaces nobody)" "$(claims "$C")
-$(vis presence chosen_spaces nobody)"
+$(vis presence nobody nobody)"
 waited 8a
 expect "$(vans 8a a)|$(vans 8a b)" "ok|PT409" "8a: the first wins, the second is visibility_conflict" \
   "8a: A answered '$(vans 8a a)', B answered '$(vans 8a b)'. B said: $(cat "$TMP/8a.b")"
