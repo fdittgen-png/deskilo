@@ -81,7 +81,7 @@ Uint8List ownFinanceCsv(FinanceOverview overview) {
         '${i.reminderCount}',
         csvCell(i.id),
       ].join(','),
-    for (final source in overview.unavailableSources)
+    for (final source in overview.notAnswered)
       [
         csvCell(_noteMarker),
         csvCell(_host(source)),

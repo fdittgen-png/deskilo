@@ -7752,6 +7752,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesAllSpaces => 'Todos los espacios';
 
   @override
+  String get financesAmountHidden => 'Importe oculto';
+
+  @override
+  String financesAmountMasked(String currency) {
+    return '$currency ••••';
+  }
+
+  @override
   String get financesAutomatic => 'automático';
 
   @override
@@ -7781,6 +7789,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesCoverageNoDocuments => 'ningún documento';
 
   @override
+  String financesCoverageReading(String host) {
+    return 'Leyendo $host…';
+  }
+
+  @override
   String financesCoverageWorkspace(String workspace, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -7806,6 +7819,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get financesFullHistory =>
       'Historial completo, uso y otros servidores';
+
+  @override
+  String get financesHideAmount => 'Ocultar el importe';
 
   @override
   String financesLinkAction(String space) {
@@ -7868,6 +7884,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get financesReminders => 'Recordatorios';
+
+  @override
+  String get financesShowAmount => 'Mostrar el importe';
 
   @override
   String financesSourceUnavailable(String host) {

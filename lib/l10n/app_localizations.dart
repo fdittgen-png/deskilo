@@ -12755,6 +12755,18 @@ abstract class AppLocalizations {
   /// **'All spaces'**
   String get financesAllSpaces;
 
+  /// #2557 C5 Me › Finances: what a screen reader says for a hidden amount on a compact card.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount hidden'**
+  String get financesAmountHidden;
+
+  /// #2557 C5 Me › Finances: a compact card's amount, hidden until shown; only the currency code stays visible.
+  ///
+  /// In en, this message translates to:
+  /// **'{currency} ••••'**
+  String financesAmountMasked(String currency);
+
   /// Me › Finances
   ///
   /// In en, this message translates to:
@@ -12809,6 +12821,12 @@ abstract class AppLocalizations {
   /// **'no documents'**
   String get financesCoverageNoDocuments;
 
+  /// #2557 C5 Me › Finances: coverage, a connected host my account names whose documents are still being read.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading {host}…'**
+  String financesCoverageReading(String host);
+
   /// #2557 C4 Me › Finances: coverage, one workspace a host answered for, with its document count.
   ///
   /// In en, this message translates to:
@@ -12838,6 +12856,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Full history, usage and other servers'**
   String get financesFullHistory;
+
+  /// #2557 C5 Me › Finances: hides one compact card's amount again.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide amount'**
+  String get financesHideAmount;
 
   /// No description provided for @financesLinkAction.
   ///
@@ -12940,6 +12964,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminders'**
   String get financesReminders;
+
+  /// #2557 C5 Me › Finances: reveals one compact card's amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Show amount'**
+  String get financesShowAmount;
 
   /// Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete
   ///

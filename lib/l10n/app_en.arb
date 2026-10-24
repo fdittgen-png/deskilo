@@ -8827,6 +8827,19 @@
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
   },
   "financesAllSpaces": "All spaces",
+  "financesAmountHidden": "Amount hidden",
+  "@financesAmountHidden": {
+    "description": "#2557 C5 Me › Finances: what a screen reader says for a hidden amount on a compact card."
+  },
+  "financesAmountMasked": "{currency} ••••",
+  "@financesAmountMasked": {
+    "description": "#2557 C5 Me › Finances: a compact card's amount, hidden until shown; only the currency code stays visible.",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "financesAutomatic": "automatic",
   "@financesAutomatic": {
     "description": "Me › Finances"
@@ -8868,6 +8881,15 @@
   "@financesCoverageNoDocuments": {
     "description": "#2557 C4 Me › Finances: coverage, a host that answered with no document of yours."
   },
+  "financesCoverageReading": "Reading {host}…",
+  "@financesCoverageReading": {
+    "description": "#2557 C5 Me › Finances: coverage, a connected host my account names whose documents are still being read.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 document} other{{count} documents}}",
   "@financesCoverageWorkspace": {
     "description": "#2557 C4 Me › Finances: coverage, one workspace a host answered for, with its document count.",
@@ -8897,6 +8919,10 @@
   "financesFullHistory": "Full history, usage and other servers",
   "@financesFullHistory": {
     "description": "Me › Finances"
+  },
+  "financesHideAmount": "Hide amount",
+  "@financesHideAmount": {
+    "description": "#2557 C5 Me › Finances: hides one compact card's amount again."
   },
   "financesLinkAction": "Open for {space}",
   "@financesLinkAction": {
@@ -8983,6 +9009,10 @@
   "financesReminders": "Reminders",
   "@financesReminders": {
     "description": "Me › Finances"
+  },
+  "financesShowAmount": "Show amount",
+  "@financesShowAmount": {
+    "description": "#2557 C5 Me › Finances: reveals one compact card's amount."
   },
   "financesSourceUnavailable": "The documents of {host} could not be read right now; what is shown comes from your other spaces.",
   "@financesSourceUnavailable": {

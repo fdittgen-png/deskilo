@@ -12,37 +12,42 @@ part of 'finance_overview_provider.dart';
 /// each read where its documents live. The personal home answers for the
 /// installation the app is signed in to; when the selected workspace lives
 /// on a connected installation, that host answers for its own documents on
-/// the selected workspace's client, and a host that does not answer leaves
-/// the others on screen and is named as unavailable rather than hiding
-/// them or posing as empty.
+/// the selected workspace's client; and (#2557 C5) every other connected
+/// host my personal account names is read with its own verified client, at
+/// most `personal.read_concurrency` at a time, each waited for
+/// `personal.read_timeout_seconds`. A host that does not answer leaves the
+/// others on screen and is named, with its own Try again, rather than
+/// hiding them or posing as empty. An answer that arrives after the
+/// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
 
-@ProviderFor(financeOverview)
-final financeOverviewProvider = FinanceOverviewProvider._();
+@ProviderFor(FinanceOverviewComposer)
+final financeOverviewProvider = FinanceOverviewComposerProvider._();
 
 /// Me › Finances: my invoices and reminders across every workspace (0380),
 /// each read where its documents live. The personal home answers for the
 /// installation the app is signed in to; when the selected workspace lives
 /// on a connected installation, that host answers for its own documents on
-/// the selected workspace's client, and a host that does not answer leaves
-/// the others on screen and is named as unavailable rather than hiding
-/// them or posing as empty.
-
-final class FinanceOverviewProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<FinanceOverview>,
-          FinanceOverview,
-          FutureOr<FinanceOverview>
-        >
-    with $FutureModifier<FinanceOverview>, $FutureProvider<FinanceOverview> {
+/// the selected workspace's client; and (#2557 C5) every other connected
+/// host my personal account names is read with its own verified client, at
+/// most `personal.read_concurrency` at a time, each waited for
+/// `personal.read_timeout_seconds`. A host that does not answer leaves the
+/// others on screen and is named, with its own Try again, rather than
+/// hiding them or posing as empty. An answer that arrives after the
+/// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
+final class FinanceOverviewComposerProvider
+    extends $AsyncNotifierProvider<FinanceOverviewComposer, FinanceOverview> {
   /// Me › Finances: my invoices and reminders across every workspace (0380),
   /// each read where its documents live. The personal home answers for the
   /// installation the app is signed in to; when the selected workspace lives
   /// on a connected installation, that host answers for its own documents on
-  /// the selected workspace's client, and a host that does not answer leaves
-  /// the others on screen and is named as unavailable rather than hiding
-  /// them or posing as empty.
-  FinanceOverviewProvider._()
+  /// the selected workspace's client; and (#2557 C5) every other connected
+  /// host my personal account names is read with its own verified client, at
+  /// most `personal.read_concurrency` at a time, each waited for
+  /// `personal.read_timeout_seconds`. A host that does not answer leaves the
+  /// others on screen and is named, with its own Try again, rather than
+  /// hiding them or posing as empty. An answer that arrives after the
+  /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
+  FinanceOverviewComposerProvider._()
     : super(
         from: null,
         argument: null,
@@ -54,21 +59,46 @@ final class FinanceOverviewProvider
       );
 
   @override
-  String debugGetCreateSourceHash() => _$financeOverviewHash();
+  String debugGetCreateSourceHash() => _$financeOverviewComposerHash();
 
   @$internal
   @override
-  $FutureProviderElement<FinanceOverview> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<FinanceOverview> create(Ref ref) {
-    return financeOverview(ref);
-  }
+  FinanceOverviewComposer create() => FinanceOverviewComposer();
 }
 
-String _$financeOverviewHash() => r'abb9d90fd9a85c7cc9ab4f32d63103fd43c541c2';
+String _$financeOverviewComposerHash() =>
+    r'456ad8634ca94641190374d9d0788f8b0c7d2b50';
+
+/// Me › Finances: my invoices and reminders across every workspace (0380),
+/// each read where its documents live. The personal home answers for the
+/// installation the app is signed in to; when the selected workspace lives
+/// on a connected installation, that host answers for its own documents on
+/// the selected workspace's client; and (#2557 C5) every other connected
+/// host my personal account names is read with its own verified client, at
+/// most `personal.read_concurrency` at a time, each waited for
+/// `personal.read_timeout_seconds`. A host that does not answer leaves the
+/// others on screen and is named, with its own Try again, rather than
+/// hiding them or posing as empty. An answer that arrives after the
+/// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
+
+abstract class _$FinanceOverviewComposer
+    extends $AsyncNotifier<FinanceOverview> {
+  FutureOr<FinanceOverview> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<FinanceOverview>, FinanceOverview>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<FinanceOverview>, FinanceOverview>,
+              AsyncValue<FinanceOverview>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
 
 /// A one-shot request to open one invoice in its own space's Money screen
 /// (Me › Finances → the workspace, in the right environment). The screen

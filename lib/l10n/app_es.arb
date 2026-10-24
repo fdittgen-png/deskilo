@@ -5442,6 +5442,8 @@
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
   },
   "financesAllSpaces": "Todos los espacios",
+  "financesAmountHidden": "Importe oculto",
+  "financesAmountMasked": "{currency} ••••",
   "financesAutomatic": "automático",
   "@financesAutomatic": {
     "description": "Me › Finances"
@@ -5457,6 +5459,7 @@
   "financesCoverageAnswered": "Leído desde {host}",
   "financesCoverageHome": "su instalación principal",
   "financesCoverageNoDocuments": "ningún documento",
+  "financesCoverageReading": "Leyendo {host}…",
   "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 documento} other{{count} documentos}}",
   "financesDevSection": "Espacios de desarrollo — datos de prueba, no contados arriba",
   "financesDueOn": "Vence el {date}",
@@ -5473,6 +5476,7 @@
   "@financesFullHistory": {
     "description": "Me › Finances"
   },
+  "financesHideAmount": "Ocultar el importe",
   "financesLinkAction": "Abrir para {space}",
   "@financesLinkAction": {
     "placeholders": {
@@ -5553,6 +5557,7 @@
   "@financesReminders": {
     "description": "Me › Finances"
   },
+  "financesShowAmount": "Mostrar el importe",
   "financesSourceUnavailable": "No se pudieron leer los documentos de {host} por ahora; lo que se muestra procede de sus otros espacios.",
   "@financesSourceUnavailable": {
     "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",

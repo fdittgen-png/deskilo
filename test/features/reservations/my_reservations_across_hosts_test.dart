@@ -9,9 +9,9 @@
 // a page that arrives after the account changed is dropped.
 import 'dart:async';
 
+import 'package:deskilo/core/backend/bounded_reads.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/time/clock.dart';
-import 'package:deskilo/features/reservations/application/bounded_reads.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations_composition.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
