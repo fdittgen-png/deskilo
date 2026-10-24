@@ -132,6 +132,12 @@ void main() {
     expect(calls.first, isNot(contains('topology_faults_test.dart')));
     expect(calls.last, contains('test/topology/topology_faults_test.dart'));
     expect(calls.last, isNot(contains('three_stacks_test.dart')));
+    // #2472 C2 -- the directory blocks W-B as well: it shares the fault
+    // call, one file at a time, and is never beside the files that need
+    // every gateway up.
+    expect(calls.last, contains('test/topology/personal_directory_test.dart'));
+    expect(calls.last, contains('--concurrency=1'));
+    expect(calls.first, isNot(contains('personal_directory_test.dart')));
     expect(_run(consumer),
         contains("grep -q 'All tests passed!' report-topology-faults.log"),
         reason: 'a skipped fault file is not evidence');
@@ -157,6 +163,8 @@ void main() {
     expect(workflow, manifest);
     expect(manifest, isNot(contains("'")));
     expect(manifest, contains('SEP-R3, R4 and R11'));
+    expect(manifest, contains('SEP-01 to SEP-05'));
+    expect(manifest, contains('#2472 C2'));
   });
 
   test('shared-database fixtures run before the seed that persists, and '

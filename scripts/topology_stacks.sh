@@ -19,8 +19,11 @@
 #
 #   prepare   project directories for P and W-B (distinct ids, ports, secrets)
 #   seed      users (two at P), the equal-id workspace at W-A and W-B, one reservation each,
-#             and at W-A the invoice-preview fixture (#2585: a member, a
-#             stranger of another workspace, seeded money)
+#             a second member of it at W-A (SEP-05), and at W-A the
+#             invoice-preview fixture (#2585: a member, a stranger of
+#             another workspace, seeded money); at P the directory fixture
+#             (#2472 C2): three more accounts, W-A and W-B enrolled, their
+#             membership facts and one group without a message
 #   down      restore any fault, stop P and W-B, remove the W-A fixture rows
 #   fault <stall|block|restore> <p|wa|wb|w|all>
 #             #2561 L2 -- a physical fault on a stack's API gateway (its
@@ -32,6 +35,12 @@
 #             restore unpause or start it again, and wait until it answers
 #             w is W-A and W-B; all is the three. TOPOLOGY_DRY_RUN=1 prints
 #             the checks and docker commands instead of running them.
+#   facts <fresh|lapse> <wa|wb|w>
+#             #2472 C2 -- at P, the membership facts the named workspace
+#             installation asserted: lapse moves their deadline into the
+#             past, as when that host stopped re-asserting them (it is
+#             offline) and the deadline passed; fresh asserts them again.
+#             Always a newer revision, so the fact guard admits it.
 #
 # Every operation names its target explicitly and refuses anything that is
 # not a disposable local stack of this job. The descriptor holds the local
@@ -44,6 +53,8 @@ FILE=$DIR/topology.json
 PASSWORD='Topology-2026-fixture'
 # Equal local workspace id on W-A and W-B: the collision the harness exists for.
 WS=00000000-0000-4000-8000-0000000e0001
+# #2472 C2 -- the group the directory account A is in, with no message.
+GROUP=00000000-0000-4000-8000-0000000e2472
 # Port bases of the two prepared stacks: db shadow = base, API = base + 1,
 # db = base + 2. The fault mode finds their gateways by the same numbers.
 P_BASE=54420
@@ -230,6 +241,34 @@ update public.workspaces set feature_flags = feature_flags || '{"invoiceSettleme
 SQL
 }
 
+# #2472 C2 -- the directory fixture at P, as the facts flow leaves it: W-A
+# and W-B enrolled (operator_enrol_installation; the origin is a label, P
+# never calls it for the directory), and the facts membership_fact_apply
+# stores (274 seeds the same shape; 273 proves the apply). A and B are
+# co-members of the workspace at W-A; A and C of the workspace with the
+# SAME local id at W-B. A is in one group that has no message.
+seed_directory() { # db api wa-installation wb-installation a b c
+  psql "$1" -qX -v ON_ERROR_STOP=1 >/dev/null <<SQL || return 1
+select public.operator_enrol_installation('$3', 'https://w-a.topology.test',
+  'sb_publishable_topology_w_a_key', array['workspace_host'], array['workspace@1']);
+select public.operator_enrol_installation('$4', 'https://w-b.topology.test',
+  'sb_publishable_topology_w_b_key', array['workspace_host'], array['workspace@1']);
+insert into public.membership_facts (user_id, network_id, issuer, source_installation_id,
+  revision, status, asserted_at, valid_until, enrolment_epoch, event_id, workspace_name)
+select v.u, e.installation_id::text || ':$WS', '$2/auth/v1', e.installation_id,
+       1, 'active', now(), now() + interval '2 hours', e.enrolled_at, gen_random_uuid(), v.name
+  from (values ('$5'::uuid, 'https://w-a.topology.test', 'Topology a'),
+               ('$6'::uuid, 'https://w-a.topology.test', 'Topology a'),
+               ('$5'::uuid, 'https://w-b.topology.test', 'Topology b'),
+               ('$7'::uuid, 'https://w-b.topology.test', 'Topology b')) v(u, origin, name)
+  join public.enrolled_installations e on e.origin = v.origin;
+insert into public.account_groups (id, title, announce_only, created_by)
+values ('$GROUP', 'Topology group', false, '$6');
+insert into public.account_group_members (group_id, user_id, is_admin, left_at)
+values ('$GROUP', '$5', false, null);
+SQL
+}
+
 seed() {
   [ -d "$DIR/p" ] && [ -d "$DIR/wb" ] || fail "prepare has not run: $DIR"
   local run=$$
@@ -260,6 +299,13 @@ seed() {
   a_user=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "topology-a-$run@deskilo.test") || fail "W-A: user"
   a_stranger=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "topology-a-stranger-$run@deskilo.test") || fail "W-A: stranger"
   b_user=$(mkuser "${API[wb]}" "${SERVICE[wb]}" "topology-b-$run@deskilo.test") || fail "W-B: user"
+  # SEP-05 -- another member of the same workspace at W-A: the account a
+  # restored app may come back as on the same target.
+  a_peer=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "topology-a-peer-$run@deskilo.test") || fail "W-A: peer"
+  # #2472 C2 -- the directory's accounts at P.
+  d_a=$(mkuser "${API[p]}" "${SERVICE[p]}" "topology-dir-a-$run@deskilo.test") || fail "P: directory A"
+  d_b=$(mkuser "${API[p]}" "${SERVICE[p]}" "topology-dir-b-$run@deskilo.test") || fail "P: directory B"
+  d_c=$(mkuser "${API[p]}" "${SERVICE[p]}" "topology-dir-c-$run@deskilo.test") || fail "P: directory C"
 
   pv_owner=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "preview-owner-$run@deskilo.test") || fail "W-A: preview owner"
   pv_member=$(mkuser "${API[wa]}" "${SERVICE[wa]}" "preview-member-$run@deskilo.test") || fail "W-A: preview member"
@@ -268,6 +314,14 @@ seed() {
   start=$(seed_workspace "${DB[wa]}" a "$a_user" Europe/Paris EUR) || fail "W-A: fixture"
   start_b=$(seed_workspace "${DB[wb]}" b "$b_user" America/New_York USD) || fail "W-B: fixture"
   [ "$start" = "$start_b" ] || fail "the two windows differ: $start $start_b"
+  psql "${DB[wa]}" -qX -v ON_ERROR_STOP=1 -c "insert into public.members (id, workspace_id, user_id, is_owner, is_admin)
+    values ('0000000e-0a04-4000-8000-0000000e0a04', '$WS', '$a_peer', false, false)" >/dev/null \
+    || fail "W-A: peer member"
+  wa_inst=$(psql "${DB[wa]}" -qtAX -c "select installation_id from public.installation_identity")
+  wb_inst=$(psql "${DB[wb]}" -qtAX -c "select installation_id from public.installation_identity")
+  [ -n "$wa_inst" ] && [ -n "$wb_inst" ] && [ "$wa_inst" != "$wb_inst" ] \
+    || fail "W-A and W-B need two installation ids: '$wa_inst' '$wb_inst'"
+  seed_directory "${DB[p]}" "${API[p]}" "$wa_inst" "$wb_inst" "$d_a" "$d_b" "$d_c" || fail "P: directory fixture"
   from=$(date -u -d "$start - 1 hour" +%Y-%m-%dT%H:%M:%SZ)
   to=$(date -u -d "$start + 5 hours" +%Y-%m-%dT%H:%M:%SZ)
 
@@ -281,11 +335,16 @@ seed() {
   "p":  {"url": "${API[p]}",  "anon": "${ANON[p]}",  "service": "${SERVICE[p]}",
          "roles": ["personal_home"],
          "user": {"id": "$p_user", "email": "topology-p-$run@deskilo.test"},
-         "user2": {"id": "$p2_user", "email": "topology-p2-$run@deskilo.test"}},
+         "user2": {"id": "$p2_user", "email": "topology-p2-$run@deskilo.test"},
+         "directory": {"a": {"id": "$d_a", "email": "topology-dir-a-$run@deskilo.test"},
+                       "b": {"id": "$d_b", "email": "topology-dir-b-$run@deskilo.test"},
+                       "c": {"id": "$d_c", "email": "topology-dir-c-$run@deskilo.test"},
+                       "waRef": "$wa_inst:$WS", "wbRef": "$wb_inst:$WS", "groupId": "$GROUP"}},
   "wa": {"url": "${API[wa]}", "anon": "${ANON[wa]}", "service": "${SERVICE[wa]}",
          "roles": ["personal_home", "workspace_host"],
          "user": {"id": "$a_user", "email": "topology-a-$run@deskilo.test"},
          "stranger": {"id": "$a_stranger", "email": "topology-a-stranger-$run@deskilo.test"},
+         "peer": {"id": "$a_peer", "email": "topology-a-peer-$run@deskilo.test"},
          "reservationId": "0000000e-0a0a-4000-8000-0000000e0a0a", "timezone": "Europe/Paris",
          "preview": {"workspaceId": "$PWS", "memberId": "$PMEMBER",
                      "member": {"id": "$pv_member", "email": "preview-member-$run@deskilo.test"},
@@ -387,6 +446,39 @@ fault() { # mode target
   done
 }
 
+facts() { # fresh|lapse wa|wb|w
+  local mode=${1:-} target=${2:-} roles role out db api
+  case "$mode" in fresh|lapse) ;; *)
+    echo "usage: topology_stacks.sh facts fresh|lapse wa|wb|w" >&2; exit 2 ;;
+  esac
+  case "$target" in wa|wb) roles=$target ;; w) roles="wa wb" ;; *)
+    echo "usage: topology_stacks.sh facts fresh|lapse wa|wb|w" >&2; exit 2 ;;
+  esac
+  if dry; then
+    for role in $roles; do echo "+ facts $mode $role at P"; done
+    return 0
+  fi
+  [ -d "$DIR/p" ] || fail "prepare has not run: $DIR"
+  out=$(status "$DIR/p") || fail "P: no running stack (supabase status failed)"
+  api=$(val API_URL <<<"$out"); db=$(val DB_URL <<<"$out")
+  [ -n "$api" ] && [ -n "$db" ] || fail "P: supabase status reports an incomplete stack"
+  local_only "$api" P
+  for role in $roles; do
+    psql "$db" -qX -v ON_ERROR_STOP=1 >/dev/null <<SQL || fail "P: facts $mode $role"
+update public.membership_facts f
+   set revision = f.revision + 1,
+       asserted_at = case when '$mode' = 'fresh' then now() else now() - interval '3 hours' end,
+       valid_until = case when '$mode' = 'fresh' then now() + interval '2 hours'
+                          else now() - interval '2 hours' end,
+       event_id = gen_random_uuid()
+  from public.enrolled_installations e
+ where e.origin = 'https://w-${role#w}.topology.test'
+   and f.source_installation_id = e.installation_id;
+SQL
+    say "facts $mode $role at P"
+  done
+}
+
 cleanup() {
   # #2561 L2 -- a fault a failed test left behind is lifted first: a
   # paused gateway would hold the stop, and W-A is the job's own stack.
@@ -417,5 +509,6 @@ case "${1:-}" in
   seed) seed ;;
   down) cleanup ;;
   fault) shift; fault "$@" ;;
-  *) echo "usage: topology_stacks.sh prepare|seed|down|fault" >&2; exit 2 ;;
+  facts) shift; facts "$@" ;;
+  *) echo "usage: topology_stacks.sh prepare|seed|down|fault|facts" >&2; exit 2 ;;
 esac
