@@ -3,6 +3,7 @@
 // #2561 C1 -- the providers of the context clients. This file and the
 // bootstrap are where the process-wide client is named; everything else
 // receives a client (or a context) from here.
+import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -30,6 +31,12 @@ SupabaseClient personalClient(Ref ref) =>
 @Riverpod(keepAlive: true)
 SupabaseClient workspaceClient(Ref ref, String installationId) =>
     ref.watch(contextClientsProvider).workspace(installationId);
+
+/// The raw HTTP client every anonymous public read is built on; each one
+/// is wrapped in an origin-only client by its reader, apart from any
+/// session client.
+@Riverpod(keepAlive: true)
+http.Client Function() publicTransport(Ref ref) => http.Client.new;
 
 @Riverpod(keepAlive: true)
 InstallationIdReader installationIdReader(Ref ref) => readInstallationId;

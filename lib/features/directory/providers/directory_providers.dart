@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/connected_installation_providers.dart';
@@ -46,11 +45,6 @@ PublicDiscoveryRepository publicDiscoveryRepository(Ref ref) =>
       local: ref.watch(personalEndpointProvider),
       transport: ref.watch(publicTransportProvider),
     );
-
-/// #2555 — the raw HTTP client every anonymous public read is built on;
-/// each one is wrapped in an origin-only client by its repository.
-@Riverpod(keepAlive: true)
-http.Client Function() publicTransport(Ref ref) => http.Client.new;
 
 @riverpod
 PublicationRepository publicationRepository(Ref ref) {
