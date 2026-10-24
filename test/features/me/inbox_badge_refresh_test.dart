@@ -17,14 +17,11 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         messagingWindowsProvider.overrideWithValue(MessagingWindows.defaults),
-        unifiedInboxProvider.overrideWith((ref) async {
-          reads++;
-          return const UnifiedInbox([]);
-        }),
+        messengerInboxProvider.overrideWith(() => _CountingInbox(() => reads++)),
       ],
     );
     addTearDown(container.dispose);
-    final inbox = container.listen(unifiedInboxProvider, (_, _) {});
+    final inbox = container.listen(messengerInboxProvider, (_, _) {});
     addTearDown(inbox.close);
     final badge = container.listen(inboxBadgeRefreshProvider, (_, _) {});
     final poll = badge.read();
@@ -42,4 +39,16 @@ void main() {
     await tester.pump(poll * 3);
     expect(reads, 3, reason: 'the open inbox polls on its own');
   });
+}
+
+/// An inbox that counts its reads and answers nothing.
+class _CountingInbox extends MessengerInbox {
+  _CountingInbox(this.onRead);
+  final void Function() onRead;
+
+  @override
+  Future<UnifiedInbox> build() async {
+    onRead();
+    return const UnifiedInbox([]);
+  }
 }

@@ -1,0 +1,9 @@
+{
+  "inboxSourcePersonal": "Vos messages personnels",
+  "inboxSourceWorkspaces": "Les messages de vos espaces",
+  "inboxSourceFailed": "{source} n’a pas pu être lu. Le reste de la boîte de réception est affiché.",
+  "inboxSourceUnavailable": "{source} n’est pas joignable avec votre connexion actuelle. Ses conversations manquent dans cette liste.",
+  "inboxShowOlder": "Afficher les conversations plus anciennes",
+  "settingLabelMessagingInboxPageSize": "Taille de page de la boîte de réception",
+  "settingHintMessagingInboxPageSize": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient par page de la boîte de réception ; les plus anciennes viennent avec Afficher les conversations plus anciennes."
+}

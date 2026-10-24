@@ -73,7 +73,7 @@ class _TypeaheadState extends ConsumerState<RecipientTypeahead> {
             ref.watch(reachablePeopleProvider(source: source)).value ??
             const [],
     };
-    final entries = ref.watch(unifiedInboxProvider).value?.entries ?? const [];
+    final entries = ref.watch(messengerInboxProvider).value?.entries ?? const [];
     return [
       ...recipientsOf(bySource, hostOf: widget.servers, self: widget.self),
       for (final e in entries)

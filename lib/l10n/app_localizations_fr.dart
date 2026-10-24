@@ -8710,6 +8710,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inboxRetry => 'Réessayer';
 
   @override
+  String get inboxShowOlder => 'Afficher les conversations plus anciennes';
+
+  @override
+  String inboxSourceFailed(String source) {
+    return '$source n’a pas pu être lu. Le reste de la boîte de réception est affiché.';
+  }
+
+  @override
+  String get inboxSourcePersonal => 'Vos messages personnels';
+
+  @override
+  String inboxSourceUnavailable(String source) {
+    return '$source n’est pas joignable avec votre connexion actuelle. Ses conversations manquent dans cette liste.';
+  }
+
+  @override
+  String get inboxSourceWorkspaces => 'Les messages de vos espaces';
+
+  @override
   String get instanceAccessTitle => 'Accès aux assistants';
 
   @override
@@ -19532,6 +19551,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Nombre de groupes qu\'une personne peut créer par heure. Peut seulement être diminué.';
 
   @override
+  String get settingHintMessagingInboxPageSize =>
+      'Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient par page de la boîte de réception ; les plus anciennes viennent avec Afficher les conversations plus anciennes.';
+
+  @override
   String get settingHintMessagingInboxPollSeconds =>
       'Secondes entre deux actualisations de la boîte de réception et de son badge de non-lus. Des valeurs plus basses chargent davantage le serveur.';
 
@@ -19701,6 +19724,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelMessagingGroupCreationPerHour =>
       'Groupes créés par heure';
+
+  @override
+  String get settingLabelMessagingInboxPageSize =>
+      'Taille de page de la boîte de réception';
 
   @override
   String get settingLabelMessagingInboxPollSeconds =>

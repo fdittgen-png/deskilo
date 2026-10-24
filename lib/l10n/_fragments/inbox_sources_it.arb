@@ -1,0 +1,9 @@
+{
+  "inboxSourcePersonal": "I Suoi messaggi personali",
+  "inboxSourceWorkspaces": "I messaggi dei Suoi spazi",
+  "inboxSourceFailed": "Impossibile leggere {source}. Il resto della posta in arrivo è mostrato.",
+  "inboxSourceUnavailable": "{source} non è raggiungibile con il Suo accesso attuale. Le sue conversazioni mancano da questo elenco.",
+  "inboxShowOlder": "Mostra conversazioni precedenti",
+  "settingLabelMessagingInboxPageSize": "Dimensione pagina della posta in arrivo",
+  "settingHintMessagingInboxPageSize": "Quante conversazioni restituiscono per pagina della posta in arrivo la casa personale e ogni server di spazi; le precedenti arrivano con Mostra conversazioni precedenti."
+}

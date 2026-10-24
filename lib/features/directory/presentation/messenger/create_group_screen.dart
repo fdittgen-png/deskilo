@@ -51,7 +51,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
     setState(() => _busy = false);
     final created = id;
     if (!ok || created == null) return;
-    ref.invalidate(unifiedInboxProvider);
+    ref.invalidate(messengerInboxProvider);
     await contextThreadPage.replace<void>(
       context,
       ContextThreadScreen(

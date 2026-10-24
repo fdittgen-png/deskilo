@@ -43,7 +43,7 @@ class _ForwardTargetSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final inbox = ref.watch(unifiedInboxProvider);
+    final inbox = ref.watch(messengerInboxProvider);
     final servers = ref.watch(serverLabelsProvider).value ?? const {};
     return SafeArea(
       key: const ValueKey('forward-target-sheet'),
@@ -107,7 +107,7 @@ class _ForwardTargetSheet extends ConsumerWidget {
                 AsyncError() => Center(
                   child: TextButton(
                     key: const ValueKey('forward-target-sheet-retry'),
-                    onPressed: () => ref.invalidate(unifiedInboxProvider),
+                    onPressed: () => ref.invalidate(messengerInboxProvider),
                     child: Text(l10n.commonRetry),
                   ),
                 ),

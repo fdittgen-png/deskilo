@@ -58,7 +58,7 @@ Future<void> openInboxEntry(
       ),
     );
   }
-  ref.invalidate(unifiedInboxProvider);
+  ref.invalidate(messengerInboxProvider);
 }
 
 /// The other person of an account conversation, for a server whose inbox

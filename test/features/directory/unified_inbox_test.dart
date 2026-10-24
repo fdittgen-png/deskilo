@@ -10,6 +10,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/settings/active_settings.dart';
 import 'package:deskilo/core/settings/settings.dart';
+import 'package:deskilo/features/directory/domain/inbox_sources.dart';
 import 'package:deskilo/features/directory/domain/message_marks.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/me/presentation/me_messages_tab.dart';
@@ -180,21 +181,121 @@ void main() {
     expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsOneWidget);
   });
 
-  testWidgets('a server that does not answer is named; the rest still show', (
+  testWidgets('a server that does not answer is named with Try again; the '
+      'rest still show, and Try again reads that server alone', (
     tester,
   ) async {
     remote.fail = true;
     await pumpInbox(tester, home: home, remote: remote);
     expect(
-      find.byKey(const ValueKey('unified-inbox-unavailable')),
+      find.byKey(const ValueKey('inbox-source-failed-other.example')),
       findsOneWidget,
+      reason: 'both roles of the server fail under one name',
     );
-    expect(find.textContaining('other.example'), findsOneWidget);
+    expect(find.textContaining('other.example could not be read'), findsOneWidget);
     expect(find.byKey(const ValueKey('inbox-entry-c-space')), findsOneWidget);
+    expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsOneWidget);
+    final homeReads = home.inboxPageLog.length;
     remote.fail = false;
-    await tester.tap(find.byKey(const ValueKey('unified-inbox-unavailable')));
+    await tester.tap(
+      find.byKey(const ValueKey('inbox-source-retry-other.example')),
+    );
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('inbox-entry-c-inq')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('inbox-source-failed-other.example')),
+      findsNothing,
+    );
+    expect(home.inboxPageLog.length, homeReads,
+        reason: 'Try again re-reads the failed source, not the others');
+  });
+
+  group('#2556 the inbox reads each source where it lives', () {
+    testWidgets('the personal home answers person-to-person conversations, '
+        'the workspace host its conversations and inquiries', (tester) async {
+      await pumpInbox(tester, home: home, remote: remote);
+      expect(
+        home.inboxPageLog,
+        containsAll(['personal_home:', 'workspace_host:']),
+      );
+      expect(home.inboxPageLog.where((l) => l.endsWith(':')), hasLength(2),
+          reason: 'one first page per role, no legacy read');
+      expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsOneWidget);
+      expect(find.byKey(const ValueKey('inbox-entry-c-space')), findsOneWidget);
+    });
+
+    testWidgets('a personal home that does not answer as one is unavailable; '
+        'the workspace part still shows', (tester) async {
+      home.roles = {InboxSourceRole.workspaceHost};
+      await pumpInbox(tester, home: home, remote: remote);
+      expect(
+        find.byKey(const ValueKey('inbox-source-unavailable-Your personal messages')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsNothing);
+      expect(find.byKey(const ValueKey('inbox-entry-c-space')), findsOneWidget);
+      expect(find.byKey(const ValueKey('inbox-entry-c-inq')), findsOneWidget);
+      // Restored, a tap reads it again.
+      home.roles = {...InboxSourceRole.values};
+      await tester.tap(find.byKey(
+          const ValueKey('inbox-source-unavailable-Your personal messages')));
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsOneWidget);
+    });
+
+    testWidgets('a connected server that plays one role says nothing about '
+        'the other', (tester) async {
+      remote.roles = {InboxSourceRole.workspaceHost};
+      await pumpInbox(tester, home: home, remote: remote);
+      expect(find.byKey(const ValueKey('inbox-entry-c-inq')), findsOneWidget);
+      expect(find.textContaining('cannot be reached'), findsNothing);
+      expect(find.textContaining('could not be read'), findsNothing);
+    });
+
+    testWidgets('a server older than the readers is read the legacy way, '
+        'each conversation once', (tester) async {
+      remote
+        ..splitReaders = false
+        ..inboxRows.add(inboxRow(MessageContextKind.account, 'c-old-friend', 'Old friend'));
+      await pumpInbox(tester, home: home, remote: remote);
+      expect(find.byKey(const ValueKey('inbox-entry-c-inq')), findsOneWidget);
+      expect(find.byKey(const ValueKey('inbox-entry-c-old-friend')), findsOneWidget);
+      expect(remote.inboxPageLog, isEmpty);
+    });
+
+    testWidgets('older conversations come a page at a time, and a later page '
+        'never lands above what is shown', (tester) async {
+      home
+        ..inboxPageSize = 1
+        ..inboxRows.add(inboxRow(
+          MessageContextKind.space,
+          'c-older',
+          'Older thread',
+          at: '2026-07-15T06:00:00Z',
+        ));
+      await pumpInbox(tester, home: home, remote: remote);
+      List<String> rows() => tester
+          .widgetList<ListTile>(find.byWidgetPredicate(
+            (w) => w is ListTile && '${w.key}'.contains('inbox-entry-'),
+          ))
+          .map((t) => '${t.key}'.replaceAll(RegExp(r"[\[\]<>']"), ''))
+          .toList();
+      // The workspace page stopped at 09:00 with more to come: nothing
+      // older than that is shown yet, from any source.
+      expect(rows(), ['inbox-entry-c-space']);
+      await tester.tap(find.byKey(const ValueKey('inbox-show-older')));
+      await tester.pump();
+      await tester.pump();
+      expect(home.inboxPageLog, contains('workspace_host:space:c-space'));
+      expect(rows(), [
+        'inbox-entry-c-space',
+        'inbox-entry-c-inq',
+        'inbox-entry-c-ana',
+        'inbox-entry-c-older',
+      ]);
+      expect(find.byKey(const ValueKey('inbox-show-older')), findsNothing);
+    });
   });
 
   testWidgets('opening a conversation reads it and replies to the right '

@@ -127,7 +127,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       await ref
           .read(messengerActionsProvider(source: widget.source))
           .markRead(widget.kind, _contextId);
-      if (mounted) ref.invalidate(unifiedInboxProvider);
+      if (mounted) ref.invalidate(messengerInboxProvider);
     } on Object catch (e, st) {
       // A receipt that does not move must never block reading.
       TraceLogger.instance.warn(
@@ -173,7 +173,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     if (ok) {
       ref
         ..invalidate(_provider)
-        ..invalidate(unifiedInboxProvider);
+        ..invalidate(messengerInboxProvider);
     }
   }
 
@@ -282,7 +282,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           .closeInquiry(_contextId),
     );
     if (!ok || !mounted) return;
-    ref.invalidate(unifiedInboxProvider);
+    ref.invalidate(messengerInboxProvider);
     AppSnack.success(
       context,
       l10n.messengerInquiryClosed,

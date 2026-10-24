@@ -1,0 +1,9 @@
+{
+  "inboxSourcePersonal": "Ihre persönlichen Nachrichten",
+  "inboxSourceWorkspaces": "Die Nachrichten Ihrer Spaces",
+  "inboxSourceFailed": "{source} konnte nicht gelesen werden. Der Rest des Posteingangs wird angezeigt.",
+  "inboxSourceUnavailable": "{source} ist mit Ihrer aktuellen Anmeldung nicht erreichbar. Deren Unterhaltungen fehlen in dieser Liste.",
+  "inboxShowOlder": "Ältere Unterhaltungen anzeigen",
+  "settingLabelMessagingInboxPageSize": "Seitengröße des Posteingangs",
+  "settingHintMessagingInboxPageSize": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server pro Seite des Posteingangs liefern; ältere kommen mit Ältere Unterhaltungen anzeigen."
+}

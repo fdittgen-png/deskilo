@@ -316,7 +316,7 @@ class _ReachableGroups extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    final entries = ref.watch(unifiedInboxProvider).value?.entries ?? const [];
+    final entries = ref.watch(messengerInboxProvider).value?.entries ?? const [];
     final groups = [
       for (final e in entries)
         if (e.kind == MessageContextKind.accountGroup) e,

@@ -8626,6 +8626,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inboxRetry => 'Try again';
 
   @override
+  String get inboxShowOlder => 'Show older conversations';
+
+  @override
+  String inboxSourceFailed(String source) {
+    return '$source could not be read. The rest of the inbox is shown.';
+  }
+
+  @override
+  String get inboxSourcePersonal => 'Your personal messages';
+
+  @override
+  String inboxSourceUnavailable(String source) {
+    return '$source cannot be reached with your current sign-in. Its conversations are missing from this list.';
+  }
+
+  @override
+  String get inboxSourceWorkspaces => 'Your workspaces\' messages';
+
+  @override
   String get instanceAccessTitle => 'Assistant access';
 
   @override
@@ -19325,6 +19344,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'How many groups one person may create per hour. Can only be lowered.';
 
   @override
+  String get settingHintMessagingInboxPageSize =>
+      'How many conversations the personal home and each workspace server return per page of the inbox; older ones come with Show older conversations.';
+
+  @override
   String get settingHintMessagingInboxPollSeconds =>
       'Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.';
 
@@ -19485,6 +19508,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelMessagingGroupCreationPerHour =>
       'Groups created per hour';
+
+  @override
+  String get settingLabelMessagingInboxPageSize => 'Inbox page size';
 
   @override
   String get settingLabelMessagingInboxPollSeconds => 'Inbox refresh';
