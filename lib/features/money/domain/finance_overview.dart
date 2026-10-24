@@ -57,6 +57,10 @@ class FinanceInvoice {
         _ => 0,
       };
 
+  /// A credit note gives money back: its face value is negative, the same
+  /// rule the workspace's own documents follow (`Invoice.isCreditNote`).
+  bool get isCreditNote => totalCents < 0;
+
   bool overdueAt(DateTime now) =>
       state.owed && dueOn != null && dueOn!.isBefore(DateTime(now.year, now.month, now.day));
 
@@ -109,15 +113,33 @@ class FinanceReminder {
   }
 }
 
+/// #2557 C4 — one host that answered for my documents: the personal home
+/// ([origin] null) or a connected installation, by origin, with the
+/// workspaces whose documents it returned.
+class FinanceSourceRead {
+  const FinanceSourceRead({this.origin, this.workspaceIds = const {}});
+
+  /// The connected host's origin; null for the personal home.
+  final String? origin;
+
+  /// The workspaces this host returned documents of.
+  final Set<String> workspaceIds;
+}
+
 class FinanceOverview {
   const FinanceOverview({
     this.invoices = const [],
     this.reminders = const [],
     this.unavailableSources = const [],
+    this.answered = const [],
   });
 
   final List<FinanceInvoice> invoices;
   final List<FinanceReminder> reminders;
+
+  /// The hosts that answered this time, in the order they were read: the
+  /// coverage shown above the results, beside [unavailableSources].
+  final List<FinanceSourceRead> answered;
 
   /// The hosts whose documents could not be read this time, by origin: what
   /// is shown is complete only for the others. A host that answered an empty
@@ -141,8 +163,24 @@ class FinanceOverview {
           if (!reminderIds.contains(r.id)) r,
       ],
       unavailableSources: [...unavailableSources, ...other.unavailableSources],
+      answered: [...answered, ...other.answered],
     );
   }
+
+  /// The same documents, recorded as read from [origin] (null: the
+  /// personal home), with the workspaces they belong to.
+  FinanceOverview answeredBy(String? origin) => FinanceOverview(
+        invoices: invoices,
+        reminders: reminders,
+        unavailableSources: unavailableSources,
+        answered: [
+          ...answered,
+          FinanceSourceRead(
+            origin: origin,
+            workspaceIds: {for (final i in invoices) i.workspaceId},
+          ),
+        ],
+      );
 
   /// The same documents, with [source] recorded as a host that did not
   /// answer.
@@ -150,6 +188,7 @@ class FinanceOverview {
         invoices: invoices,
         reminders: reminders,
         unavailableSources: [...unavailableSources, source],
+        answered: answered,
       );
 
   /// The workspaces my documents come from, as (id, name), by name.
@@ -176,6 +215,7 @@ class FinanceOverview {
       invoices: mine,
       reminders: [for (final r in reminders) if (ids.contains(r.invoiceId)) r],
       unavailableSources: unavailableSources,
+      answered: answered,
     );
   }
 

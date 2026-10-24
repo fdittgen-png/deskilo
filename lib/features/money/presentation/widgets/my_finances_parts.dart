@@ -10,6 +10,8 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../domain/finance_filter.dart';
+import '../../domain/finance_overview.dart';
 import '../../providers/finance_overview_provider.dart';
 import 'dev_label.dart';
 
@@ -117,6 +119,146 @@ class FinancesSourceBanners extends ConsumerWidget {
             onAction: () => ref.invalidate(financeOverviewProvider),
           ),
       ],
+    );
+  }
+}
+
+/// #2557 C4 — the coverage above the results: each host that answered,
+/// with each of its workspaces and how many documents it returned, then one
+/// banner per host that did not answer. Each workspace states its own
+/// reading; one host down never reads as "everything".
+class FinancesCoverage extends StatelessWidget {
+  const FinancesCoverage({super.key, required this.overview});
+
+  /// Everything read, before any filter.
+  final FinanceOverview overview;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final names = {for (final (id, name) in overview.workspaces) id: name};
+    final counts = <String, int>{};
+    for (final i in overview.invoices) {
+      counts[i.workspaceId] = (counts[i.workspaceId] ?? 0) + 1;
+    }
+    final muted = theme.textTheme.bodySmall
+        ?.copyWith(color: theme.colorScheme.onSurfaceVariant);
+    return Padding(
+      key: const ValueKey('finances-coverage'),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (final source in overview.answered)
+            Padding(
+              key: ValueKey<String>(
+                'finances-coverage-${_hostOf(source.origin) ?? 'home'}',
+              ),
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.cloud_done_outlined,
+                      size: 18, color: theme.colorScheme.primary),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Text(
+                      [
+                        l10n.financesCoverageAnswered(
+                          _hostOf(source.origin) ?? l10n.financesCoverageHome,
+                        ),
+                        if (source.workspaceIds.isEmpty)
+                          l10n.financesCoverageNoDocuments
+                        else
+                          for (final id in source.workspaceIds)
+                            l10n.financesCoverageWorkspace(
+                              names[id] ?? id,
+                              counts[id] ?? 0,
+                            ),
+                      ].join(' · '),
+                      style: muted,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          FinancesSourceBanners(sources: overview.unavailableSources),
+        ],
+      ),
+    );
+  }
+}
+
+/// The host of an origin, or null for the personal home.
+String? _hostOf(String? origin) {
+  if (origin == null) return null;
+  final host = Uri.tryParse(origin)?.host ?? '';
+  return host.isEmpty ? origin : host;
+}
+
+/// #2557 C4 — the period (issue year) and the document type: the two
+/// filters the documents' own facts support, beside the space filter.
+class FinancesPeriodTypeFilter extends StatelessWidget {
+  const FinancesPeriodTypeFilter({
+    super.key,
+    required this.years,
+    required this.filter,
+    required this.onChanged,
+  });
+
+  /// The issue years present, newest first.
+  final List<int> years;
+  final FinanceFilter filter;
+  final ValueChanged<FinanceFilter> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+      child: Wrap(
+        spacing: AppSpacing.lg,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          DropdownButton<int?>(
+            key: const ValueKey('finances-period'),
+            value: filter.year,
+            hint: Text(l10n.financesPeriodAll),
+            onChanged: (year) => onChanged(filter.copyWith(year: () => year)),
+            items: [
+              DropdownMenuItem<int?>(
+                key: const ValueKey('finances-period-all'),
+                child: Text(l10n.financesPeriodAll),
+              ),
+              for (final year in years)
+                DropdownMenuItem<int?>(
+                  key: ValueKey('finances-period-$year'),
+                  value: year,
+                  child: Text('$year'),
+                ),
+            ],
+          ),
+          DropdownButton<FinanceDocType>(
+            key: const ValueKey('finances-type'),
+            value: filter.type,
+            onChanged: (type) => onChanged(filter.copyWith(type: type)),
+            items: [
+              for (final type in FinanceDocType.values)
+                DropdownMenuItem(
+                  key: ValueKey('finances-type-${type.name}'),
+                  value: type,
+                  child: Text(switch (type) {
+                    FinanceDocType.all => l10n.financesTypeAll,
+                    FinanceDocType.invoice => l10n.financesTypeInvoice,
+                    FinanceDocType.creditNote => l10n.financesTypeCreditNote,
+                  }),
+                ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

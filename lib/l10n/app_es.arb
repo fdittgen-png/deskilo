@@ -5444,6 +5444,14 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesColumnAmount": "Importe",
+  "financesColumnDocument": "Documento y periodo",
+  "financesColumnState": "Documento y pago",
+  "financesColumnWorkspace": "Emitido por",
+  "financesCoverageAnswered": "Leído desde {host}",
+  "financesCoverageHome": "su instalación principal",
+  "financesCoverageNoDocuments": "ningún documento",
+  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 documento} other{{count} documentos}}",
   "financesDevSection": "Espacios de desarrollo — datos de prueba, no contados arriba",
   "financesDueOn": "Vence el {date}",
   "@financesDueOn": {
@@ -5454,6 +5462,7 @@
       }
     }
   },
+  "financesExportDocument": "Exportar este documento (CSV)",
   "financesFullHistory": "Historial completo, uso y otros servidores",
   "@financesFullHistory": {
     "description": "Me › Finances"
@@ -5480,6 +5489,7 @@
   "@financesNothingPaid": {
     "description": "Me › Finances"
   },
+  "financesOpenDocument": "Abrir",
   "financesOutstanding": "Pendiente",
   "@financesOutstanding": {
     "description": "Me › Finances"
@@ -5514,6 +5524,7 @@
   "@financesPayments": {
     "description": "Me › Finances"
   },
+  "financesPeriodAll": "Todos los periodos",
   "financesRemindedTimes": "Recordada ×{count}",
   "@financesRemindedTimes": {
     "description": "Me › Finances",
@@ -5557,6 +5568,7 @@
   "@financesStateRefunded": {
     "description": "Me › Finances"
   },
+  "financesStateUnpaid": "No pagada",
   "financesTitle": "Finanzas",
   "@financesTitle": {
     "description": "Me › Finances"
@@ -5565,6 +5577,9 @@
   "@financesToPay": {
     "description": "Me › Finances"
   },
+  "financesTypeAll": "Todos los documentos",
+  "financesTypeCreditNote": "Nota de crédito",
+  "financesTypeInvoice": "Factura",
   "gettingStartedActionChooseDay": "Elegir otro día",
   "gettingStartedActionChooseTime": "Elegir un horario para reservar",
   "gettingStartedActionFinishSetup": "Terminar la configuración",
@@ -10379,6 +10394,7 @@
   "@privacyExportHint": {
     "description": "#719 - privacy & data"
   },
+  "privacyExportInMyData": "Cada fuente se exporta por separado en Mis datos › Información personal.",
   "privacyExportShareText": "Mi exportación de datos DesKilo",
   "@privacyExportShareText": {
     "description": "#719 - privacy & data"

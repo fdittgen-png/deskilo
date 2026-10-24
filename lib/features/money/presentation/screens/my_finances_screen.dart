@@ -4,6 +4,8 @@
 // to: what I still owe, what I paid, my payments and the reminders I got.
 // Issuing and chasing invoices is the workspace's process (Invoicing); this
 // screen never shows another member's document.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +14,6 @@ import 'package:intl/intl.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
-import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -23,6 +24,7 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/account_activity.dart';
+import '../../domain/finance_filter.dart';
 import '../../domain/finance_overview.dart';
 import '../../domain/money_face.dart';
 import '../../providers/account_activity_providers.dart';
@@ -30,6 +32,7 @@ import '../../providers/finance_overview_provider.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
 import '../widgets/dev_label.dart';
+import '../widgets/finance_document_views.dart';
 import '../widgets/my_finances_parts.dart';
 import '../widgets/own_finance_export_menu.dart';
 import '../widgets/personal_payment_provider.dart';
@@ -46,7 +49,7 @@ class MyFinancesScreen extends ConsumerStatefulWidget {
 }
 
 class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
-  late String? _workspace = widget.workspaceId;
+  late FinanceFilter _filter = FinanceFilter(workspaceId: widget.workspaceId);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     // Me is production. A development space's documents are test data:
     // shown apart, in the development colour, and never counted.
     final devIds = ref.watch(myDevelopmentWorkspaceIdsProvider);
-    final data = all.inWorkspace(_workspace);
+    final data = _filter.apply(all);
     final (prod, dev) = (data.production(devIds), data.development(devIds));
     final (owed, options) = (prod.outstanding.length, all.workspaces);
     return DefaultTabController(
@@ -90,21 +93,29 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
               ),
             ),
           AsyncData() => Column(
-              children: [FinancesSourceBanners(sources: all.unavailableSources),
-                if (options.length > 1 || _workspace != null)
+              children: [FinancesCoverage(overview: all), // #2557 C4
+                if (options.length > 1 || _filter.workspaceId != null)
                   FinancesWorkspaceFilter(
                     key: const ValueKey('my-finances-finances-workspace-filter'),
                     options: options,
                     devIds: devIds,
-                    selected: _workspace,
-                    onSelected: (id) => setState(() => _workspace = id),
+                    selected: _filter.workspaceId,
+                    onSelected: (id) => setState(
+                        () => _filter = _filter.copyWith(workspaceId: () => id)),
+                  ),
+                if (all.invoices.isNotEmpty)
+                  FinancesPeriodTypeFilter(
+                    key: const ValueKey('finances-period-type-filter'),
+                    years: financeYears(all),
+                    filter: _filter,
+                    onChanged: (f) => setState(() => _filter = f),
                   ),
                 Expanded(
                   child: TabBarView(
                     children: [
                       _Outstanding(data: prod, dev: dev),
                       _Paid(data: prod, dev: dev),
-                      _Payments(workspaceId: _workspace, devIds: devIds),
+                      _Payments(filter: _filter, devIds: devIds),
                       _Reminders(data: prod, dev: dev),
                     ],
                   ),
@@ -117,6 +128,9 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     );
   }
 }
+
+/// The window width from which the documents read as rows.
+const double _rowsWindowWidth = 840;
 
 /// A bounded, centred column: a list of money rows is read, not scanned
 /// edge to edge.
@@ -132,13 +146,19 @@ class _Column extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       children: children,
     );
-    return Align(
-      alignment: Alignment.topCenter,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 760),
-        child: onRefresh == null
-            ? list
-            : RefreshIndicator(onRefresh: onRefresh!, child: list),
+    // #2557 C4 — a wide window gets the documents as rows, in a wider
+    // column; a phone keeps the narrow one.
+    return LayoutBuilder(
+      builder: (context, box) => Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: box.maxWidth >= _rowsWindowWidth ? 1200 : 760,
+          ),
+          child: onRefresh == null
+              ? list
+              : RefreshIndicator(onRefresh: onRefresh!, child: list),
+        ),
       ),
     );
   }
@@ -234,12 +254,19 @@ class _Outstanding extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          for (final invoice in list) _InvoiceCard(invoice: invoice, now: now),
+          FinanceDocumentList(invoices: list, documents: data, now: now,
+              onOpen: (i) => unawaited(
+                  _openMyInvoice(context, ref, i.workspaceId, i.id))),
         ],
         if (dev.outstanding.isNotEmpty) ...[
           const FinancesDevSection(),
-          for (final invoice in dev.outstanding)
-            _InvoiceCard(invoice: invoice, now: now, isDev: true),
+          FinanceDocumentList(
+              invoices: dev.outstanding,
+              documents: dev,
+              now: now,
+              isDev: true,
+              onOpen: (i) => unawaited(
+                  _openMyInvoice(context, ref, i.workspaceId, i.id))),
         ],
       ],
     );
@@ -269,139 +296,23 @@ class _Paid extends ConsumerWidget {
             title: l10n.financesNothingPaid,
           )
         else
-          for (final invoice in list) _InvoiceCard(invoice: invoice, now: now),
+          FinanceDocumentList(
+              invoices: newestFirst(list),
+              documents: data,
+              now: now,
+              onOpen: (i) => unawaited(
+                  _openMyInvoice(context, ref, i.workspaceId, i.id))),
         if (dev.paid.isNotEmpty) ...[
           const FinancesDevSection(),
-          for (final invoice in dev.paid)
-            _InvoiceCard(invoice: invoice, now: now, isDev: true),
+          FinanceDocumentList(
+              invoices: newestFirst(dev.paid),
+              documents: dev,
+              now: now,
+              isDev: true,
+              onOpen: (i) => unawaited(
+                  _openMyInvoice(context, ref, i.workspaceId, i.id))),
         ],
       ],
-    );
-  }
-}
-
-class _InvoiceCard extends ConsumerWidget {
-  const _InvoiceCard({
-    required this.invoice,
-    required this.now,
-    this.isDev = false,
-  });
-  final FinanceInvoice invoice;
-  final DateTime now;
-
-  /// A development space's invoice: tinted and labelled DEV.
-  final bool isDev;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
-    final overdue = invoice.overdueAt(now);
-    final due = invoice.dueOn;
-    final status = switch (invoice.state) {
-      FinanceState.open => null,
-      FinanceState.awaitingValidation =>
-        l10n.financesAwaitingValidation,
-      FinanceState.partiallyPaid => l10n.financesPartlyPaid,
-      FinanceState.paid => l10n.financesStatePaid,
-      FinanceState.refunded => l10n.financesStateRefunded,
-      FinanceState.closed => l10n.financesStateClosed,
-    };
-    final amount = invoice.state.owed ? invoice.remainingCents : invoice.totalCents;
-    final devTone = AppEnvironmentColors.developmentOf(theme.brightness);
-    return Card(
-      key: ValueKey('finances-invoice-${invoice.id}'),
-      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-      clipBehavior: Clip.antiAlias,
-      color: isDev ? devTone.withValues(alpha: .10) : null,
-      shape: isDev
-          ? RoundedRectangleBorder(
-              borderRadius: AppRadius.lgAll,
-              side: BorderSide(color: devTone.withValues(alpha: .55)),
-            )
-          : null,
-      child: InkWell(
-        key: ValueKey('finances-open-${invoice.id}'),
-        onTap: () =>
-            _openMyInvoice(context, ref, invoice.workspaceId, invoice.id),
-        child: Padding(
-          padding: AppSpacing.mdAll,
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: scheme.surfaceContainerHighest,
-                foregroundColor: scheme.onSurfaceVariant,
-                child: Text(invoice.workspaceName.isEmpty
-                    ? '?'
-                    : invoice.workspaceName.characters.first.toUpperCase()),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(invoice.number,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleSmall),
-                    if (isDev)
-                      DevLabel(name: invoice.workspaceName, small: true)
-                    else
-                      Text(invoice.workspaceName,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodySmall
-                              ?.copyWith(color: scheme.onSurfaceVariant)),
-                    const SizedBox(height: 2),
-                    if (invoice.state.owed && due != null)
-                      Text(
-                        overdue
-                            ? (l10n.financesOverdueSince(format.format(due)))
-                            : (l10n.financesDueOn(format.format(due))),
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: overdue ? scheme.error : scheme.onSurfaceVariant,
-                        ),
-                      )
-                    else
-                      Text(format.format(invoice.issuedAt),
-                          style: theme.textTheme.bodySmall
-                              ?.copyWith(color: scheme.onSurfaceVariant)),
-                    if (status != null || invoice.reminderCount > 0)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Wrap(
-                          spacing: 6,
-                          children: [
-                            if (status != null)
-                              Chip(
-                                label: Text(status),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                            if (invoice.reminderCount > 0 && invoice.state.owed)
-                              Chip(
-                                label: Text(l10n.financesRemindedTimes(
-                                        invoice.reminderCount)),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Text(
-                moneyFormat(invoice.currency).formatMinor(amount),
-                style: theme.textTheme.titleSmall?.strong.copyWith(
-                  color: overdue ? scheme.error : null,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
@@ -481,13 +392,17 @@ class _Reminders extends ConsumerWidget {
 }
 
 class _Payments extends ConsumerWidget {
-  const _Payments({this.workspaceId, this.devIds = const {}});
+  const _Payments({required this.filter, this.devIds = const {}});
 
-  /// Only this workspace's payments; all of them when null.
-  final String? workspaceId;
+  /// The space and the period the payments are narrowed to (#2557 C4).
+  final FinanceFilter filter;
 
   /// My development spaces: their payments are tinted and labelled DEV.
   final Set<String> devIds;
+
+  bool _kept(AccountActivity e) =>
+      (filter.workspaceId == null || e.workspaceId == filter.workspaceId) &&
+      filter.inPeriod(e.occurredAt);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -502,7 +417,7 @@ class _Payments extends ConsumerWidget {
         const PersonalPaymentProvider(),
         switch (rows) {
           AsyncData(value: final all) when all
-              .where((e) => workspaceId == null || e.workspaceId == workspaceId)
+              .where(_kept)
               .isEmpty => EmptyState(
               key: const ValueKey('finances-payments-empty'),
               icon: Icons.payments_outlined,
@@ -510,9 +425,7 @@ class _Payments extends ConsumerWidget {
             ),
           AsyncData(value: final all) => Column(
               children: [
-                for (final e in all.where(
-                  (e) => workspaceId == null || e.workspaceId == workspaceId,
-                ))
+                for (final e in all.where(_kept))
                   Card(
                     key: ValueKey('finances-payment-${e.id}'),
                     margin: const EdgeInsets.only(bottom: AppSpacing.sm),

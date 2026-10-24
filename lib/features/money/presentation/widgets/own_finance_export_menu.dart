@@ -21,17 +21,18 @@ class OwnFinanceExportMenu extends ConsumerWidget {
   /// Every document read, all workspaces; each entry exports one of them.
   final FinanceOverview overview;
 
-  Future<void> _export(
+  /// Writes [documents] to one CSV file named after [label] and hands it
+  /// to the platform's truthful delivery; a host that did not answer is
+  /// noted inside the file. The workspace entries and a row's Export
+  /// (#2557 C4) both go through here.
+  static Future<void> export(
     BuildContext context,
-    WidgetRef ref,
-    String workspaceId,
-    String workspaceName,
-  ) async {
-    final bytes = ownFinanceCsv(overview.inWorkspace(workspaceId));
-    final name = ownFinanceCsvName(
-      workspaceName.isEmpty ? workspaceId : workspaceName,
-      ref.read(clockProvider).now(),
-    );
+    WidgetRef ref, {
+    required FinanceOverview documents,
+    required String label,
+  }) async {
+    final bytes = ownFinanceCsv(documents);
+    final name = ownFinanceCsvName(label, ref.read(clockProvider).now());
     Future<void> deliver() async {
       final delivery = await deliverFile(
         context,
@@ -55,7 +56,12 @@ class OwnFinanceExportMenu extends ConsumerWidget {
       key: const ValueKey('my-finances-export'),
       icon: const Icon(Icons.download_outlined),
       tooltip: l10n.myFinancesExport,
-      onSelected: (w) => _export(context, ref, w.$1, w.$2),
+      onSelected: (w) => export(
+        context,
+        ref,
+        documents: overview.inWorkspace(w.$1),
+        label: w.$2.isEmpty ? w.$1 : w.$2,
+      ),
       itemBuilder: (_) => [
         for (final w in workspaces)
           PopupMenuItem(

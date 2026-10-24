@@ -43,8 +43,21 @@ String _amount(int minor, String currency) {
 /// The due date as the host wrote it (a date, no zone to convert).
 String _day(DateTime? on) => on == null ? '' : isoDay(on);
 
+/// #2557 C4 — the first cell of a coverage note: a row that is not a
+/// document, after the documents, saying the file is not complete.
+const _noteMarker = '# unavailable_source';
+
+/// The host part of [source] (an origin), or [source] itself.
+String _host(String source) {
+  final host = Uri.tryParse(source)?.host ?? '';
+  return host.isEmpty ? source : host;
+}
+
 /// The invoices of [overview], newest first (the id breaks a tie), as CSV
-/// rows under [_columns]; UTF-8, CRLF line ends.
+/// rows under [_columns]; UTF-8, CRLF line ends. When a host did not
+/// answer, one note row per such host follows the documents — the marker
+/// and the host, both through [csvCell] — so the file itself says it holds
+/// only what the other hosts returned.
 Uint8List ownFinanceCsv(FinanceOverview overview) {
   final invoices = [...overview.invoices]
     ..sort((a, b) {
@@ -67,6 +80,12 @@ Uint8List ownFinanceCsv(FinanceOverview overview) {
         _amount(i.remainingCents, i.currency),
         '${i.reminderCount}',
         csvCell(i.id),
+      ].join(','),
+    for (final source in overview.unavailableSources)
+      [
+        csvCell(_noteMarker),
+        csvCell(_host(source)),
+        for (var c = 2; c < _columns.length; c++) '',
       ].join(','),
   ];
   return Uint8List.fromList(utf8.encode('${lines.join('\r\n')}\r\n'));
