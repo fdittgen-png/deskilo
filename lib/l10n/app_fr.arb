@@ -17170,6 +17170,7 @@
   "visibilityIdentity": "Nom et photo",
   "visibilityIntro": "Chaque partie de votre compte choisit son public. Rien n'est public sans votre choix.",
   "visibilityMySpaces": "Membres de mes espaces",
+  "visibilityNoSpaces": "Vous n'êtes encore dans aucun espace. Choisissez un autre public.",
   "visibilityNobody": "Personne",
   "visibilityOnServer": "Qui me voit sur {host}",
   "@visibilityOnServer": {
@@ -17200,7 +17201,10 @@
   "visibilityReachability": "Qui peut démarrer une conversation avec moi",
   "visibilitySaveFailed": "Impossible d'enregistrer qui le voit. Veuillez réessayer.",
   "visibilitySignedIn": "Toute personne connectée",
+  "visibilitySpaceUnlisted": "Un espace qui n'est plus listé",
+  "visibilitySpacesUnavailable": "Vos espaces ne peuvent pas être listés pour l'instant.",
   "visibilityTitle": "Qui me voit",
+  "visibilityUnavailable": "Impossible de lire pour l'instant qui voit quoi de vous. Rien n'a été modifié.",
   "visibilityWidenAction": "Élargir",
   "visibilityWidenConfirm": "Montrer votre {field} à : {audience} ? Ces personnes pourront le voir.",
   "@visibilityWidenConfirm": {
