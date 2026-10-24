@@ -2636,6 +2636,7 @@
   "createHostHere": "Dieser Server",
   "createHostHereDetail": "Der Server, bei dem Sie angemeldet sind",
   "createHostLost": "Der für diesen Space gewählte Server ist nicht mehr vorgemerkt. Es wurde nichts angelegt.",
+  "createHostNone": "Für Ihr persönliches Zuhause nimmt noch kein Server neue Spaces an. Es wurde nichts angelegt.",
   "createHostNotAccepting": "Nimmt keine neuen Spaces an",
   "createHostRevoked": "Wird von Ihrem persönlichen Zuhause nicht mehr angeboten",
   "createHostTitle": "Wo soll der Space liegen?",
@@ -5444,6 +5445,8 @@
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
   },
   "financesAllSpaces": "Alle Spaces",
+  "financesAmountHidden": "Betrag ausgeblendet",
+  "financesAmountMasked": "{currency} ••••",
   "financesAutomatic": "automatisch",
   "@financesAutomatic": {
     "description": "Me › Finances"
@@ -5459,6 +5462,7 @@
   "financesCoverageAnswered": "Gelesen von {host}",
   "financesCoverageHome": "Ihre Heiminstallation",
   "financesCoverageNoDocuments": "keine Dokumente",
+  "financesCoverageReading": "{host} wird gelesen …",
   "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 Dokument} other{{count} Dokumente}}",
   "financesDevSection": "Entwicklungs-Spaces — Testdaten, oben nicht mitgezählt",
   "financesDueOn": "Fällig am {date}",
@@ -5475,6 +5479,7 @@
   "@financesFullHistory": {
     "description": "Me › Finances"
   },
+  "financesHideAmount": "Betrag ausblenden",
   "financesLinkAction": "Für {space} öffnen",
   "@financesLinkAction": {
     "placeholders": {
@@ -5555,6 +5560,7 @@
   "@financesReminders": {
     "description": "Me › Finances"
   },
+  "financesShowAmount": "Betrag anzeigen",
   "financesSourceUnavailable": "Die Dokumente von {host} konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.",
   "@financesSourceUnavailable": {
     "description": "Me › Finances: a connected host whose documents could not be read is named above the lists; the rest is complete",

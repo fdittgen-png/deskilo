@@ -3908,6 +3908,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The server chosen for this space is no longer held. Nothing was created.';
 
   @override
+  String get createHostNone =>
+      'No server accepts new spaces for your personal home yet. Nothing was created.';
+
+  @override
   String get createHostNotAccepting => 'Not accepting new spaces';
 
   @override
@@ -7706,6 +7710,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesAllSpaces => 'All spaces';
 
   @override
+  String get financesAmountHidden => 'Amount hidden';
+
+  @override
+  String financesAmountMasked(String currency) {
+    return '$currency ••••';
+  }
+
+  @override
   String get financesAutomatic => 'automatic';
 
   @override
@@ -7735,6 +7747,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesCoverageNoDocuments => 'no documents';
 
   @override
+  String financesCoverageReading(String host) {
+    return 'Reading $host…';
+  }
+
+  @override
   String financesCoverageWorkspace(String workspace, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -7759,6 +7776,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesFullHistory => 'Full history, usage and other servers';
+
+  @override
+  String get financesHideAmount => 'Hide amount';
 
   @override
   String financesLinkAction(String space) {
@@ -7821,6 +7841,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesReminders => 'Reminders';
+
+  @override
+  String get financesShowAmount => 'Show amount';
 
   @override
   String financesSourceUnavailable(String host) {

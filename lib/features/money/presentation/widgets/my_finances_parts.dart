@@ -11,6 +11,7 @@ import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../domain/finance_filter.dart';
+import '../../domain/finance_hosts.dart';
 import '../../domain/finance_overview.dart';
 import '../../providers/finance_overview_provider.dart';
 import 'dev_label.dart';
@@ -126,15 +127,17 @@ class FinancesSourceBanners extends ConsumerWidget {
 /// #2557 C4 — the coverage above the results: each host that answered,
 /// with each of its workspaces and how many documents it returned, then one
 /// banner per host that did not answer. Each workspace states its own
-/// reading; one host down never reads as "everything".
-class FinancesCoverage extends StatelessWidget {
+/// reading; one host down never reads as "everything". C5: each connected
+/// host my account names keeps its own state — reading, answered, or a
+/// banner with its own Try again.
+class FinancesCoverage extends ConsumerWidget {
   const FinancesCoverage({super.key, required this.overview});
 
   /// Everything read, before any filter.
   final FinanceOverview overview;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final names = {for (final (id, name) in overview.workspaces) id: name};
@@ -144,6 +147,26 @@ class FinancesCoverage extends StatelessWidget {
     }
     final muted = theme.textTheme.bodySmall
         ?.copyWith(color: theme.colorScheme.onSurfaceVariant);
+    String answered(String host, Set<String> workspaceIds) => [
+          l10n.financesCoverageAnswered(host),
+          if (workspaceIds.isEmpty)
+            l10n.financesCoverageNoDocuments
+          else
+            for (final id in workspaceIds)
+              l10n.financesCoverageWorkspace(names[id] ?? id, counts[id] ?? 0),
+        ].join(' · ');
+    Widget line(String key, IconData icon, String text) => Padding(
+          key: ValueKey<String>(key),
+          padding: const EdgeInsets.only(top: AppSpacing.xs),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(icon, size: 18, color: theme.colorScheme.primary),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(child: Text(text, style: muted)),
+            ],
+          ),
+        );
     return Padding(
       key: const ValueKey('finances-coverage'),
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
@@ -152,38 +175,40 @@ class FinancesCoverage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           for (final source in overview.answered)
-            Padding(
-              key: ValueKey<String>(
-                'finances-coverage-${_hostOf(source.origin) ?? 'home'}',
-              ),
-              padding: const EdgeInsets.only(top: AppSpacing.xs),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(Icons.cloud_done_outlined,
-                      size: 18, color: theme.colorScheme.primary),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      [
-                        l10n.financesCoverageAnswered(
-                          _hostOf(source.origin) ?? l10n.financesCoverageHome,
-                        ),
-                        if (source.workspaceIds.isEmpty)
-                          l10n.financesCoverageNoDocuments
-                        else
-                          for (final id in source.workspaceIds)
-                            l10n.financesCoverageWorkspace(
-                              names[id] ?? id,
-                              counts[id] ?? 0,
-                            ),
-                      ].join(' · '),
-                      style: muted,
-                    ),
-                  ),
-                ],
+            line(
+              'finances-coverage-${_hostOf(source.origin) ?? 'home'}',
+              Icons.cloud_done_outlined,
+              answered(
+                _hostOf(source.origin) ?? l10n.financesCoverageHome,
+                source.workspaceIds,
               ),
             ),
+          for (final read in overview.hosts)
+            switch (read.status) {
+              FinanceHostStatus.answered => line(
+                  'finances-coverage-host-${read.host.installationId}',
+                  Icons.cloud_done_outlined,
+                  answered(read.host.name, read.workspaceIds),
+                ),
+              FinanceHostStatus.reading => line(
+                  'finances-coverage-reading-${read.host.installationId}',
+                  Icons.cloud_sync_outlined,
+                  l10n.financesCoverageReading(read.host.name),
+                ),
+              FinanceHostStatus.failed => InlineBanner(
+                  key: ValueKey<String>(
+                    'finances-source-unavailable-${read.host.installationId}',
+                  ),
+                  icon: Icons.cloud_off_outlined,
+                  text: l10n.financesSourceUnavailable(read.host.name),
+                  actionLabel: l10n.commonRetry,
+                  onAction: () => ref
+                      .read<FinanceOverviewComposer>(
+                        financeOverviewProvider.notifier,
+                      )
+                      .retry(read.host.installationId),
+                ),
+            },
           FinancesSourceBanners(sources: overview.unavailableSources),
         ],
       ),

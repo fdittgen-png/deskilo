@@ -171,7 +171,7 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
     final localFailed = localAsync.hasError && !localAsync.hasValue;
     // A failed read is never an empty list; a refresh keeps what was shown.
     final failed = answer.hasError && !answer.isLoading;
-    final loaded = failed ? null : answer.value;
+    final loaded = failed ? null : refsOfCurrentAccount(answer);
     final all = loaded?.refs ?? const <PersonalWorkspaceRef>[];
     final ordered = loaded == null
         ? const <PersonalSpaceRow>[]

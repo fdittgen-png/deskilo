@@ -6,6 +6,7 @@
 // own currency — pages and currencies are never summed together.
 
 import '../../../core/data/json_reader.dart';
+import 'finance_hosts.dart';
 
 /// Where one of MY invoices stands (the 0067/0068 lifecycle, as the server
 /// derives it).
@@ -132,6 +133,7 @@ class FinanceOverview {
     this.reminders = const [],
     this.unavailableSources = const [],
     this.answered = const [],
+    this.hosts = const [],
   });
 
   final List<FinanceInvoice> invoices;
@@ -146,25 +148,86 @@ class FinanceOverview {
   /// list is not here — zero is only ever a successful result.
   final List<String> unavailableSources;
 
+  /// #2557 C5 — the connected hosts my personal account names, each with
+  /// its own state, in the order they are read.
+  final List<FinanceHostRead> hosts;
+
+  /// Every host whose documents are not part of what is shown: the ones
+  /// that did not answer, and the connected ones not answered yet. What a
+  /// file notes as unavailable.
+  List<String> get notAnswered => [
+    ...unavailableSources,
+    for (final h in hosts)
+      if (h.status != FinanceHostStatus.answered) h.host.name,
+  ];
+
   /// These documents and [other]'s together, each document once: the same
-  /// id read from two hosts is one document, and the first reading stays.
+  /// qualified id (workspace, then document) read from two hosts is one
+  /// document, and the first reading stays. Two hosts' equal local ids in
+  /// different workspaces are two documents.
   FinanceOverview merge(FinanceOverview other) {
-    final ids = {for (final i in invoices) i.id};
-    final reminderIds = {for (final r in reminders) r.id};
+    final ids = {for (final i in invoices) (i.workspaceId, i.id)};
+    final reminderIds = {for (final r in reminders) (r.workspaceName, r.id)};
     return FinanceOverview(
       invoices: [
         ...invoices,
         for (final i in other.invoices)
-          if (!ids.contains(i.id)) i,
+          if (!ids.contains((i.workspaceId, i.id))) i,
       ],
       reminders: [
         ...reminders,
         for (final r in other.reminders)
-          if (!reminderIds.contains(r.id)) r,
+          if (!reminderIds.contains((r.workspaceName, r.id))) r,
       ],
       unavailableSources: [...unavailableSources, ...other.unavailableSources],
       answered: [...answered, ...other.answered],
+      hosts: [...hosts, ...other.hosts],
     );
+  }
+
+  /// The same documents, with [reading] recorded as connected hosts being
+  /// read.
+  FinanceOverview reading(Iterable<FinanceHost> reading) => FinanceOverview(
+    invoices: invoices,
+    reminders: reminders,
+    unavailableSources: unavailableSources,
+    answered: answered,
+    hosts: [
+      ...hosts,
+      for (final h in reading) FinanceHostRead(h, FinanceHostStatus.reading),
+    ],
+  );
+
+  /// The connected host [host] in [status], with its [answer] (null when it
+  /// failed) among the documents; the other hosts are as they were.
+  FinanceOverview hostSettled(
+    FinanceHost host,
+    FinanceHostStatus status, [
+    FinanceOverview? answer,
+  ]) {
+    final read = FinanceHostRead(
+      host,
+      status,
+      workspaceIds: {
+        for (final i in answer?.invoices ?? const <FinanceInvoice>[])
+          i.workspaceId,
+      },
+    );
+    final next = FinanceOverview(
+      invoices: invoices,
+      reminders: reminders,
+      unavailableSources: unavailableSources,
+      answered: answered,
+      hosts: [
+        for (final h in hosts)
+          if (h.host.installationId == host.installationId) read else h,
+      ],
+    );
+    return answer == null
+        ? next
+        : next.merge(
+            FinanceOverview(invoices: answer.invoices, reminders: answer.reminders),
+          );
   }
 
   /// The same documents, recorded as read from [origin] (null: the
@@ -173,6 +236,7 @@ class FinanceOverview {
         invoices: invoices,
         reminders: reminders,
         unavailableSources: unavailableSources,
+        hosts: hosts,
         answered: [
           ...answered,
           FinanceSourceRead(
@@ -189,6 +253,7 @@ class FinanceOverview {
         reminders: reminders,
         unavailableSources: [...unavailableSources, source],
         answered: answered,
+        hosts: hosts,
       );
 
   /// The workspaces my documents come from, as (id, name), by name.
@@ -216,6 +281,7 @@ class FinanceOverview {
       reminders: [for (final r in reminders) if (ids.contains(r.invoiceId)) r],
       unavailableSources: unavailableSources,
       answered: answered,
+      hosts: hosts,
     );
   }
 

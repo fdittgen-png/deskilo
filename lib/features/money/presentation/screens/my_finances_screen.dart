@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
+import '../../../../core/session/session_source.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -173,7 +174,11 @@ Future<void> _openMyInvoice(
   String invoiceId,
 ) async {
   final router = GoRouter.of(context);
+  // CACHE-01 (#2557): the tap stands only for the account it was made in.
+  final principal = ref.read(sessionStateProvider).value;
   await ref.read(activeWorkspaceIdProvider.notifier).select(workspaceId);
+  if (!context.mounted) return;
+  if (ref.read(sessionStateProvider).value != principal) return;
   ref.read(invoiceFocusProvider.notifier).request(workspaceId, invoiceId);
   router.go('/money');
 }
@@ -186,7 +191,11 @@ Future<void> _openMyPayment(
   DateTime at,
 ) async {
   final router = GoRouter.of(context);
+  // CACHE-01 (#2557): the tap stands only for the account it was made in.
+  final principal = ref.read(sessionStateProvider).value;
   await ref.read(activeWorkspaceIdProvider.notifier).select(workspaceId);
+  if (!context.mounted) return;
+  if (ref.read(sessionStateProvider).value != principal) return;
   ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
   final local = at.toLocal();
   ref
@@ -207,7 +216,7 @@ class _Outstanding extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final now = ref.watch(clockProvider).now();
-    final list = data.outstanding;
+    final list = newestFirst(data.outstanding);
     final overdue = list.where((i) => i.overdueAt(now)).length;
     return _Column(
       onRefresh: () async {
@@ -261,7 +270,7 @@ class _Outstanding extends ConsumerWidget {
         if (dev.outstanding.isNotEmpty) ...[
           const FinancesDevSection(),
           FinanceDocumentList(
-              invoices: dev.outstanding,
+              invoices: newestFirst(dev.outstanding),
               documents: dev,
               now: now,
               isDev: true,

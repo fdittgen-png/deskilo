@@ -128,6 +128,15 @@ Future<PersonalWorkspaceRefs> personalWorkspaceRefs(Ref ref) {
 /// it is unavailable at once rather than after ten attempts.
 Duration? personalRefsRetry(int retryCount, Object error) => null;
 
+/// What [answer] may show of the account signed in now. A reload is the
+/// read started again because the account or its personal home changed:
+/// what the previous read holds belongs to that other context and is not
+/// shown. A refresh of the same account (Try again) keeps it on screen.
+PersonalWorkspaceRefs? refsOfCurrentAccount(
+  AsyncValue<PersonalWorkspaceRefs> answer,
+) =>
+    answer.isReloading ? null : answer.value;
+
 /// #2553 C2 -- My reservations reads every host my personal account names,
 /// not only the selected workspace's. The composition root puts it in its
 /// scope's overrides (reservations sits below me in the feature graph).
