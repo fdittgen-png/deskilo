@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2561 L3 -- the directory home comes from the installation's own
-// declaration, read through the personal client, never from a constant or a
+// declaration, read on the personal home, never from a constant or a
 // selected workspace. A combined installation that declared nothing keeps
 // the reference deployment (today's behaviour); a workspace host that named
 // no home, or a declaration its roles contradict, is a typed refusal with no
@@ -236,6 +236,7 @@ void main() {
       final c = ProviderContainer(
         overrides: [
           personalClientProvider.overrideWithValue(server.client(_self)),
+          publicTransportProvider.overrideWithValue(server.transport),
         ],
       );
       addTearDown(c.dispose);
@@ -267,7 +268,7 @@ void main() {
             '${_home.url}/rest/v1/public_directory_sources',
           ],
           reason:
-              'the declaration is read on the personal client, the list '
+              'the declaration is read on the personal home, the list '
               'on the home it names; the reference is never asked',
         );
         expect(page.sources.map((s) => s.origin), [_home.url, _self.url]);
