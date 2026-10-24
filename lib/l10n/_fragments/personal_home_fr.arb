@@ -1,0 +1,17 @@
+{
+  "@@locale": "fr",
+  "instanceNetworkIntro": "Réseau : le rôle de cette instance. Combinée (le choix habituel) garde les comptes des personnes et les espaces de coworking sur le même serveur.",
+  "instanceNetworkRoleLabel": "Rôle de cette instance",
+  "instanceNetworkCombined": "Combinée : comptes et espaces",
+  "instanceNetworkPersonalHome": "Domicile personnel : comptes seulement, aucun espace",
+  "instanceNetworkWorkspaceHost": "Hôte d’espaces : espaces seulement",
+  "instanceNetworkHomeIntro": "Le domicile personnel des personnes de ce serveur : le serveur où vivent leurs comptes. Il est vérifié avant d’être enregistré.",
+  "instanceNetworkHomeUrl": "URL du domicile personnel (https://…)",
+  "instanceNetworkHomeKey": "Clé publiable du domicile personnel",
+  "instanceNetworkHomeRequired": "Un hôte d’espaces a besoin du domicile personnel de ses personnes.",
+  "instanceNetworkHomeEndpoint": "Saisissez une adresse https:// et une clé publiable, jamais une clé secrète.",
+  "instanceNetworkHomeUnreachable": "Le domicile personnel n’a pas répondu. Vérifiez l’adresse et la clé, puis réessayez.",
+  "instanceNetworkHomeNotPersonal": "Ce serveur n’est pas un domicile personnel, ou trop ancien pour en être un. Rien n’a été enregistré.",
+  "instanceNetworkHomeIsThisInstance": "Cette adresse est cette instance elle-même. Choisissez plutôt Combinée ou Domicile personnel.",
+  "directoryHomeUnavailable": "Ce serveur ne déclare aucun domicile personnel utilisable : l’annuaire ne peut pas s’ouvrir. Demandez à son exploitant."
+}

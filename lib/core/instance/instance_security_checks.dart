@@ -245,6 +245,8 @@ List<DoctorFinding> checkGuards(List<Map<String, Object?>> rows) {
 /// null on a schema from before the column instead of failing the probe.
 const String installationRolesSql = '''
 select to_jsonb(i) -> 'roles' as roles,
+       to_jsonb(i) ->> 'personal_home_kind' as personal_home_kind,
+       to_jsonb(i) ->> 'personal_home_url' as personal_home_url,
        (select count(*) from public.workspaces) as workspaces,
        (select count(*) from public.members) as members
   from public.installation_identity i;
@@ -313,5 +315,34 @@ List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
   return [
     DoctorFinding(DoctorLevel.ok, 'Installation roles',
         '$kind (${roles.join(', ')}) — $held'),
+    ..._checkPersonalHome(row, isPersonalHome: roles.contains('personal_home')),
   ];
+}
+
+/// #2561 L3 — the personal home the installation declares, against its
+/// roles: a workspace host that is nobody's home must name one; a personal
+/// home names none but itself. Null kind = a schema from before 9999.
+List<DoctorFinding> _checkPersonalHome(
+  Map<String, Object?> row, {
+  required bool isPersonalHome,
+}) {
+  final kind = row['personal_home_kind'] as String?;
+  if (kind == null) return const [];
+  const title = 'Personal home';
+  const fix = '\n        operator_set_personal_home records the declaration.';
+  return switch ((kind, isPersonalHome)) {
+    ('unset', false) => const [
+      DoctorFinding(DoctorLevel.alarm, title,
+          'a workspace host that is nobody\'s home declares no personal home: '
+              'its people have nowhere to keep their account.$fix'),
+    ],
+    ('self', false) || ('endpoint', true) => [
+      DoctorFinding(DoctorLevel.alarm, title,
+          'the declaration ($kind) contradicts the roles.$fix'),
+    ],
+    ('endpoint', false) => [
+      DoctorFinding(DoctorLevel.ok, title, '${row['personal_home_url']}'),
+    ],
+    _ => [DoctorFinding(DoctorLevel.ok, title, kind)],
+  };
 }

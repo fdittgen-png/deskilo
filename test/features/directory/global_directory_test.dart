@@ -101,7 +101,7 @@ void main() {
     registry,
     negotiator: PublicNetworkNegotiator(transport: transport),
     transport: transport,
-    directory: directory,
+    directoryHome: () async => directory,
   );
 
   List<http.Request> registrations() => [
@@ -212,8 +212,7 @@ void main() {
       {'origin': other.url, 'publishable_key': other.key},
     ];
     final repository = SupabasePublicDiscoveryRepository(
-      origin: directory.url,
-      publishableKey: directory.key,
+      directoryHome: () async => directory,
       local: own,
       transport: transport,
     );

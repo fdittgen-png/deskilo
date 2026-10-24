@@ -76,9 +76,13 @@ const STEPS=[
   // #1289 — the brand seed; the app derives its themes from it and
   // refuses one that cannot be read, so the page only checks the shape.
   input(T('identityBrandColor'),'brandColor',T('identityBrandColorHint'),'text','#C2410C','identity'),
+  selectEl(T('networkRoles'),'network.roles',opts(NETWORK_ROLES),T('networkRolesHint'),null,'identity'),
+  ...(S.network.roles==='workspace_host'?[input(T('networkHomeUrl'),'network.homeUrl',T('networkHomeUrlHint'),'url','https://','identity'),input(T('networkHomeKey'),'network.homeKey',T('networkHomeKeyHint'),'text','sb_publishable_','identity')]:[]),
  ]},
  check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
   // #2331 — the server refuses to issue for any other seller country.
+  // #2561 L3 — a personal home is an HTTPS origin and a publishable key.
+  if(S.network.roles==='workspace_host'&&((S.network.homeUrl.trim()&&!/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)+(:\d{1,5})?\/?$/i.test(S.network.homeUrl.trim()))||(S.network.homeKey.trim()&&!/^(sb_publishable_\S{6,}|eyJ\S+\.\S+\.\S*)$/.test(S.network.homeKey.trim()))))f.push(F.err(T('networkErrHome'),'identity'));
   if(on('invoicing')&&!INVOICING_COUNTRIES.includes(S.country))f.push(F.warn(T('identityWarnInvoicingCountry',{country:countryName(S.country),list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),'identity'));return f}},
 
 // #2868 — the plain questions, right after the country: each answer sets

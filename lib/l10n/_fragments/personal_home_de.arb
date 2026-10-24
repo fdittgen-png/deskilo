@@ -1,0 +1,17 @@
+{
+  "@@locale": "de",
+  "instanceNetworkIntro": "Netzwerk: welche Rolle diese Instanz hat. Kombiniert (die übliche Wahl) hält die Konten der Personen und die Coworking-Spaces auf demselben Server.",
+  "instanceNetworkRoleLabel": "Rolle dieser Instanz",
+  "instanceNetworkCombined": "Kombiniert: Konten und Spaces",
+  "instanceNetworkPersonalHome": "Persönliches Zuhause: nur Konten, kein Space",
+  "instanceNetworkWorkspaceHost": "Space-Host: nur Spaces",
+  "instanceNetworkHomeIntro": "Das persönliche Zuhause der Personen dieses Servers: der Server, auf dem ihre Konten liegen. Er wird geprüft, bevor er gespeichert wird.",
+  "instanceNetworkHomeUrl": "URL des persönlichen Zuhauses (https://…)",
+  "instanceNetworkHomeKey": "Öffentlicher Schlüssel des persönlichen Zuhauses",
+  "instanceNetworkHomeRequired": "Ein Space-Host braucht das persönliche Zuhause seiner Personen.",
+  "instanceNetworkHomeEndpoint": "Geben Sie eine https://-Adresse und einen öffentlichen Schlüssel ein, nie einen geheimen.",
+  "instanceNetworkHomeUnreachable": "Das persönliche Zuhause hat nicht geantwortet. Prüfen Sie Adresse und Schlüssel und versuchen Sie es erneut.",
+  "instanceNetworkHomeNotPersonal": "Dieser Server ist kein persönliches Zuhause oder zu alt dafür. Nichts wurde gespeichert.",
+  "instanceNetworkHomeIsThisInstance": "Diese Adresse ist diese Instanz selbst. Wählen Sie stattdessen Kombiniert oder Persönliches Zuhause.",
+  "directoryHomeUnavailable": "Dieser Server nennt kein nutzbares persönliches Zuhause, daher lässt sich das Verzeichnis nicht öffnen. Fragen Sie den Betreiber."
+}

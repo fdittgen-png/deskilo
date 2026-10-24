@@ -12,6 +12,7 @@ import '../../../../core/instance/instance_bundle_asset.dart';
 import '../../../../core/instance/instance_doctor.dart';
 import '../../../../core/instance/instance_readiness.dart';
 import '../../../../core/instance/management_api.dart';
+import '../../../../core/instance/personal_home_probe_provider.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -21,6 +22,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../widgets/instance_done_step.dart';
+import '../widgets/instance_network_field.dart';
 import '../widgets/instance_owner_claim_field.dart';
 import '../widgets/instance_readiness_card.dart';
 import '../widgets/instance_run_step.dart';
@@ -53,6 +55,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   final _token = TextEditingController();
   final _name = TextEditingController();
   final _ownerEmail = TextEditingController(); // #1829
+  final _network = InstanceNetworkController(); // #2561 L3
   _Step _step = _Step.account;
   bool _busy = false;
   String? _error;
@@ -94,6 +97,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     _token.dispose();
     _name.dispose();
     _ownerEmail.dispose();
+    _network.dispose();
     super.dispose();
   }
 
@@ -129,6 +133,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
   }
 
   String _stepFailed(String item, String message) =>
+      InstanceNetworkField.describe(context.l10n, item, message) ??
       context.l10n.instanceStepFailed(item, message);
 
   Future<void> _checkToken() async {
@@ -222,6 +227,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     if (ref == null) return;
     await _run('configure auth', () async {
       await _builder.recordOwnerClaim(ref, _ownerEmail.text);
+      await _builder.declareNetwork(ref, _network.choice, probe: this.ref.read(personalHomeProbeProvider));
       await _builder.configureAuth(ref);
       final endpoint = await _builder.endpointOf(ref);
       setState(() {
@@ -358,6 +364,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           ],
         _Step.signIn => [
             InstanceOwnerClaimField(controller: _ownerEmail, enabled: !_signInConfigured),
+            InstanceNetworkField(controller: _network, enabled: !_signInConfigured),
             InstanceRunStep(
               intro: l10n.instanceSignInExplain,
               buttonKey: 'instance-apply-signin',

@@ -1,0 +1,17 @@
+{
+  "@@locale": "es",
+  "instanceNetworkIntro": "Red: qué es esta instancia. Combinada (la opción habitual) mantiene las cuentas de las personas y los espacios de coworking en el mismo servidor.",
+  "instanceNetworkRoleLabel": "Función de esta instancia",
+  "instanceNetworkCombined": "Combinada: cuentas y espacios",
+  "instanceNetworkPersonalHome": "Hogar personal: solo cuentas, ningún espacio",
+  "instanceNetworkWorkspaceHost": "Anfitrión de espacios: solo espacios",
+  "instanceNetworkHomeIntro": "El hogar personal de las personas de este servidor: el servidor donde están sus cuentas. Se comprueba antes de guardarlo.",
+  "instanceNetworkHomeUrl": "URL del hogar personal (https://…)",
+  "instanceNetworkHomeKey": "Clave publicable del hogar personal",
+  "instanceNetworkHomeRequired": "Un anfitrión de espacios necesita el hogar personal de sus personas.",
+  "instanceNetworkHomeEndpoint": "Introduzca una dirección https:// y una clave publicable, nunca una secreta.",
+  "instanceNetworkHomeUnreachable": "El hogar personal no respondió. Compruebe la dirección y la clave e inténtelo de nuevo.",
+  "instanceNetworkHomeNotPersonal": "Ese servidor no es un hogar personal, o es demasiado antiguo para serlo. No se ha guardado nada.",
+  "instanceNetworkHomeIsThisInstance": "Esa dirección es esta misma instancia. Elija Combinada u Hogar personal.",
+  "directoryHomeUnavailable": "Este servidor no indica ningún hogar personal utilizable, por lo que el directorio no puede abrirse. Consulte a su operador."
+}

@@ -17,9 +17,10 @@ part of 'settings_providers.dart';
 /// that captures the settings stay two nodes with no edge between them, so
 /// the cycle that once rebuilt without end (selectedWorkspaceClient ->
 /// workspaceContext -> currentSettingsCapture -> settingsSource ->
-/// settingsRepository) cannot form. The platform's own view, a workspace other
-/// than the selected connected one, and the combined deployment stay on the
-/// installation the app is signed in to.
+/// settingsRepository) cannot form. A workspace other than the selected
+/// connected one and the combined deployment stay on the installation the
+/// app is signed in to; the platform's own view (no workspace) is the
+/// personal home's (#2561 L3).
 
 @ProviderFor(settingsRepository)
 final settingsRepositoryProvider = SettingsRepositoryProvider._();
@@ -33,9 +34,10 @@ final settingsRepositoryProvider = SettingsRepositoryProvider._();
 /// that captures the settings stay two nodes with no edge between them, so
 /// the cycle that once rebuilt without end (selectedWorkspaceClient ->
 /// workspaceContext -> currentSettingsCapture -> settingsSource ->
-/// settingsRepository) cannot form. The platform's own view, a workspace other
-/// than the selected connected one, and the combined deployment stay on the
-/// installation the app is signed in to.
+/// settingsRepository) cannot form. A workspace other than the selected
+/// connected one and the combined deployment stay on the installation the
+/// app is signed in to; the platform's own view (no workspace) is the
+/// personal home's (#2561 L3).
 
 final class SettingsRepositoryProvider
     extends $FunctionalProvider<SettingsStore, SettingsStore, SettingsStore>
@@ -49,9 +51,10 @@ final class SettingsRepositoryProvider
   /// that captures the settings stay two nodes with no edge between them, so
   /// the cycle that once rebuilt without end (selectedWorkspaceClient ->
   /// workspaceContext -> currentSettingsCapture -> settingsSource ->
-  /// settingsRepository) cannot form. The platform's own view, a workspace other
-  /// than the selected connected one, and the combined deployment stay on the
-  /// installation the app is signed in to.
+  /// settingsRepository) cannot form. A workspace other than the selected
+  /// connected one and the combined deployment stay on the installation the
+  /// app is signed in to; the platform's own view (no workspace) is the
+  /// personal home's (#2561 L3).
   SettingsRepositoryProvider._()
     : super(
         from: null,
@@ -86,7 +89,7 @@ final class SettingsRepositoryProvider
 }
 
 String _$settingsRepositoryHash() =>
-    r'cfd04d50655e12bdf8626e8912159f6f6774721c';
+    r'2c637fb9d7bc2c63bde09bca319d9b27497823a6';
 
 /// The registry, falling back to the definitions bundled with the app
 /// (defaults only) when the installation cannot answer.
@@ -387,4 +390,66 @@ final class CurrentSettingsCaptureProvider
 }
 
 String _$currentSettingsCaptureHash() =>
-    r'90022add542c010037890661a775f57c0e20d224';
+    r'25dd05a31be3e1f26ba9e6bd898da2c0dc387d0c';
+
+/// #2561 L3 -- the personal home's platform settings: the registry's
+/// platform scope read with a null workspace, which [settingsRepository]
+/// serves on the PERSONAL client, so a personal home that hosts no workspace
+/// has them and no selected workspace (or its host) decides them.
+
+@ProviderFor(platformSettingsReader)
+final platformSettingsReaderProvider = PlatformSettingsReaderProvider._();
+
+/// #2561 L3 -- the personal home's platform settings: the registry's
+/// platform scope read with a null workspace, which [settingsRepository]
+/// serves on the PERSONAL client, so a personal home that hosts no workspace
+/// has them and no selected workspace (or its host) decides them.
+
+final class PlatformSettingsReaderProvider
+    extends
+        $FunctionalProvider<
+          PlatformSettingsReader,
+          PlatformSettingsReader,
+          PlatformSettingsReader
+        >
+    with $Provider<PlatformSettingsReader> {
+  /// #2561 L3 -- the personal home's platform settings: the registry's
+  /// platform scope read with a null workspace, which [settingsRepository]
+  /// serves on the PERSONAL client, so a personal home that hosts no workspace
+  /// has them and no selected workspace (or its host) decides them.
+  PlatformSettingsReaderProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'platformSettingsReaderProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$platformSettingsReaderHash();
+
+  @$internal
+  @override
+  $ProviderElement<PlatformSettingsReader> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  PlatformSettingsReader create(Ref ref) {
+    return platformSettingsReader(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PlatformSettingsReader value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PlatformSettingsReader>(value),
+    );
+  }
+}
+
+String _$platformSettingsReaderHash() =>
+    r'8125c6c13b17c95c41587d10451a9b1757a792c8';

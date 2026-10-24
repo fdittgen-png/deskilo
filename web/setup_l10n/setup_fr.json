@@ -676,5 +676,15 @@
  "levelsExpertOpen": "Ouvrir la vue experte : chaque interrupteur",
  "setupExpertSwitches": "Afficher chaque interrupteur (vue experte)",
  "levelsOk": "Niveaux : {list}.",
- "levelsUnanswered": "Aucune question répondue : les interrupteurs de l’étape suivante décident."
+ "levelsUnanswered": "Aucune question répondue : les interrupteurs de l’étape suivante décident.",
+ "networkRoles": "Rôle de ce serveur",
+ "networkRolesHint": "Combinée : les comptes des personnes et l’espace sur un seul serveur (le choix habituel). Hôte d’espaces : les comptes vivent sur un autre serveur, le domicile personnel, indiqué ci-dessous.",
+ "networkCombined": "Combinée : comptes et espaces",
+ "networkWorkspaceHost": "Hôte d’espaces : espaces seulement",
+ "networkHomeUrl": "URL du domicile personnel",
+ "networkHomeUrlHint": "L’adresse https:// du serveur où vos membres gardent leurs comptes.",
+ "networkHomeKey": "Clé publiable du domicile personnel",
+ "networkHomeKeyHint": "Sa clé publiable (sb_publishable_…), jamais une clé secrète. L’assistant d’instance vérifie les deux avant de les enregistrer.",
+ "networkErrHome": "Le domicile personnel demande une adresse https:// sans chemin et une clé publiable.",
+ "reqNetworkHome": "Obligatoire, car ce serveur n’héberge que des espaces : ses membres ont besoin d’un domicile personnel."
 }

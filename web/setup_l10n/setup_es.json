@@ -676,5 +676,15 @@
  "levelsExpertOpen": "Abrir la vista experta: cada interruptor",
  "setupExpertSwitches": "Mostrar cada interruptor (vista experta)",
  "levelsOk": "Niveles: {list}.",
- "levelsUnanswered": "Ninguna pregunta respondida: deciden los interruptores del paso siguiente."
+ "levelsUnanswered": "Ninguna pregunta respondida: deciden los interruptores del paso siguiente.",
+ "networkRoles": "Función de este servidor",
+ "networkRolesHint": "Combinada: las cuentas de las personas y el espacio en un solo servidor (la opción habitual). Anfitrión de espacios: las cuentas están en otro servidor, el hogar personal, indicado abajo.",
+ "networkCombined": "Combinada: cuentas y espacios",
+ "networkWorkspaceHost": "Anfitrión de espacios: solo espacios",
+ "networkHomeUrl": "URL del hogar personal",
+ "networkHomeUrlHint": "La dirección https:// del servidor donde sus miembros tienen sus cuentas.",
+ "networkHomeKey": "Clave publicable del hogar personal",
+ "networkHomeKeyHint": "Su clave publicable (sb_publishable_…), nunca una secreta. El asistente de instancia comprueba ambas antes de guardarlas.",
+ "networkErrHome": "El hogar personal necesita una dirección https:// sin ruta y una clave publicable.",
+ "reqNetworkHome": "Obligatorio porque este servidor solo aloja espacios: sus miembros necesitan un hogar personal."
 }

@@ -199,9 +199,8 @@ final class AccountContactActionsFamily extends $Family
 /// #1847 — anonymous discovery. Holds publishable keys and no session:
 /// the provider does not even watch the auth state.
 ///
-/// #2343 — the directory is the GLOBAL one, on the reference deployment,
-/// whatever server this device uses; this device's own server is listed
-/// beside it when it is another one.
+/// #2561 L3 — the directory is the one the installation declares
+/// ([directoryHomeProvider]); this device's own server is listed beside it.
 
 @ProviderFor(publicDiscoveryRepository)
 final publicDiscoveryRepositoryProvider = PublicDiscoveryRepositoryProvider._();
@@ -209,9 +208,8 @@ final publicDiscoveryRepositoryProvider = PublicDiscoveryRepositoryProvider._();
 /// #1847 — anonymous discovery. Holds publishable keys and no session:
 /// the provider does not even watch the auth state.
 ///
-/// #2343 — the directory is the GLOBAL one, on the reference deployment,
-/// whatever server this device uses; this device's own server is listed
-/// beside it when it is another one.
+/// #2561 L3 — the directory is the one the installation declares
+/// ([directoryHomeProvider]); this device's own server is listed beside it.
 
 final class PublicDiscoveryRepositoryProvider
     extends
@@ -224,9 +222,8 @@ final class PublicDiscoveryRepositoryProvider
   /// #1847 — anonymous discovery. Holds publishable keys and no session:
   /// the provider does not even watch the auth state.
   ///
-  /// #2343 — the directory is the GLOBAL one, on the reference deployment,
-  /// whatever server this device uses; this device's own server is listed
-  /// beside it when it is another one.
+  /// #2561 L3 — the directory is the one the installation declares
+  /// ([directoryHomeProvider]); this device's own server is listed beside it.
   PublicDiscoveryRepositoryProvider._()
     : super(
         from: null,
@@ -262,7 +259,7 @@ final class PublicDiscoveryRepositoryProvider
 }
 
 String _$publicDiscoveryRepositoryHash() =>
-    r'61d3dceeaaae884c66badfce27f91e630807f2ce';
+    r'6fb3d72e8b2e047a644cc1044c6324c53fcea0ca';
 
 @ProviderFor(publicationRepository)
 final publicationRepositoryProvider = PublicationRepositoryProvider._();
@@ -361,7 +358,7 @@ final class DirectoryParticipantRepositoryProvider
 }
 
 String _$directoryParticipantRepositoryHash() =>
-    r'8450458787db02370b62be4ca006eb0003e88f0c';
+    r'6938e478052cb80f6bce20db982bafebbab0037f';
 
 /// #1847 — the card as its installation publishes it now; null once it is
 /// withdrawn. Keyed by the card's identity on its own installation.

@@ -25,7 +25,7 @@ class SupabaseDirectoryParticipantRepository
     this.connections, {
     PublicNetworkNegotiator? negotiator,
     http.Client Function()? transport,
-    this.directory = globalDirectoryEndpoint,
+    required this.directoryHome,
   }) : negotiator = negotiator ?? PublicNetworkNegotiator(),
        transport = transport ?? http.Client.new;
   final SupabaseClient active;
@@ -33,10 +33,11 @@ class SupabaseDirectoryParticipantRepository
   final PublicNetworkNegotiator negotiator;
   final http.Client Function() transport;
 
-  /// #2343 — the server that carries the global directory. A link is
-  /// written THERE, whatever server this device uses; from another
-  /// server it goes through the account's connection to the directory.
-  final BackendEndpoint directory;
+  /// #2343 — the server that carries the directory. A link is written
+  /// THERE, whatever server this device uses; from another server it goes
+  /// through the account's connection to the directory. #2561 L3 — the
+  /// installation's declared personal home, resolved at each call.
+  final Future<BackendEndpoint> Function() directoryHome;
 
   static const _probe = PublicNetworkOperations.directoryWorkspacesSearch;
   static const _sources = PublicNetworkOperations.directorySourcesList;
@@ -94,7 +95,10 @@ class SupabaseDirectoryParticipantRepository
   /// #2343 — [action] with a session on the directory's server: this
   /// device's own when it uses that server, else the account's connection
   /// to it ([ConnectionFailureReason.notConnected] when there is none).
-  Future<void> _onDirectory(Future<void> Function(SupabaseClient) action) {
+  Future<void> _onDirectory(
+    BackendEndpoint directory,
+    Future<void> Function(SupabaseClient) action,
+  ) {
     if (Uri.parse(active.rest.url).origin == directory.url) {
       return action(active);
     }
@@ -113,6 +117,7 @@ class SupabaseDirectoryParticipantRepository
     if (validateBackendEndpoint(origin, key) != null) {
       throw StateError('invalid public endpoint');
     }
+    final directory = await directoryHome();
     final negotiation = await negotiator.negotiate(
       directory.url,
       directory.key,
@@ -123,6 +128,7 @@ class SupabaseDirectoryParticipantRepository
       directory.url,
       negotiation,
       () => _onDirectory(
+        directory,
         (client) => client
             .rpc<void>(
               _register.rpc!,
@@ -139,6 +145,7 @@ class SupabaseDirectoryParticipantRepository
     if (canonical == null || validateBackendEndpoint(origin, key) != null) {
       throw StateError('invalid public endpoint');
     }
+    final directory = await directoryHome();
     if (canonical == directory.url) return DirectoryLinkState.directory;
     try {
       await _probeCards(canonical, key);

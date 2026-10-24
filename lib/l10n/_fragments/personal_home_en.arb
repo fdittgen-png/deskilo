@@ -1,0 +1,59 @@
+{
+  "@@locale": "en",
+  "instanceNetworkIntro": "Network: what this instance is. Combined (the usual choice) keeps people's accounts and the coworking spaces on the same server.",
+  "@instanceNetworkIntro": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkRoleLabel": "Role of this instance",
+  "@instanceNetworkRoleLabel": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkCombined": "Combined: accounts and spaces",
+  "@instanceNetworkCombined": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkPersonalHome": "Personal home: accounts only, no space",
+  "@instanceNetworkPersonalHome": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkWorkspaceHost": "Workspace host: spaces only",
+  "@instanceNetworkWorkspaceHost": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkHomeIntro": "The personal home of this server's people: the server where their accounts live. It is checked before it is recorded.",
+  "@instanceNetworkHomeIntro": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkHomeUrl": "Personal home URL (https://…)",
+  "@instanceNetworkHomeUrl": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkHomeKey": "Personal home publishable key",
+  "@instanceNetworkHomeKey": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkHomeRequired": "A workspace host needs the personal home of its people.",
+  "@instanceNetworkHomeRequired": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkHomeEndpoint": "Enter an https:// address and a publishable key, never a secret one.",
+  "@instanceNetworkHomeEndpoint": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkHomeUnreachable": "The personal home did not answer. Check the address and the key, then try again.",
+  "@instanceNetworkHomeUnreachable": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkHomeNotPersonal": "That server is not a personal home, or too old to be one. Nothing was recorded.",
+  "@instanceNetworkHomeNotPersonal": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "instanceNetworkHomeIsThisInstance": "That address is this instance itself. Choose Combined or Personal home instead.",
+  "@instanceNetworkHomeIsThisInstance": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  },
+  "directoryHomeUnavailable": "This server names no usable personal home, so the directory cannot be opened. Ask its operator.",
+  "@directoryHomeUnavailable": {
+    "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
+  }
+}

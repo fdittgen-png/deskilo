@@ -681,7 +681,17 @@ window.SETUP_L10N={
    "levelsExpertOpen": "Open the expert view: every switch",
    "setupExpertSwitches": "Show every switch (expert view)",
    "levelsOk": "Levels: {list}.",
-   "levelsUnanswered": "No question answered: the switches of the next step decide."
+   "levelsUnanswered": "No question answered: the switches of the next step decide.",
+   "networkRoles": "This server's role",
+   "networkRolesHint": "Combined: people's accounts and the space on one server (the usual choice). Workspace host: the accounts live on another server, the personal home, named below.",
+   "networkCombined": "Combined: accounts and spaces",
+   "networkWorkspaceHost": "Workspace host: spaces only",
+   "networkHomeUrl": "Personal home URL",
+   "networkHomeUrlHint": "The https:// address of the server where your members keep their accounts.",
+   "networkHomeKey": "Personal home publishable key",
+   "networkHomeKeyHint": "Its publishable key (sb_publishable_…), never a secret one. The instance wizard checks both before recording them.",
+   "networkErrHome": "The personal home needs an https:// address without a path and a publishable key.",
+   "reqNetworkHome": "Required because this server hosts spaces only: its members need a personal home."
   },
   "feature": {
    "calendarTab": [
@@ -2278,7 +2288,17 @@ window.SETUP_L10N={
    "levelsExpertOpen": "Ouvrir la vue experte : chaque interrupteur",
    "setupExpertSwitches": "Afficher chaque interrupteur (vue experte)",
    "levelsOk": "Niveaux : {list}.",
-   "levelsUnanswered": "Aucune question répondue : les interrupteurs de l’étape suivante décident."
+   "levelsUnanswered": "Aucune question répondue : les interrupteurs de l’étape suivante décident.",
+   "networkRoles": "Rôle de ce serveur",
+   "networkRolesHint": "Combinée : les comptes des personnes et l’espace sur un seul serveur (le choix habituel). Hôte d’espaces : les comptes vivent sur un autre serveur, le domicile personnel, indiqué ci-dessous.",
+   "networkCombined": "Combinée : comptes et espaces",
+   "networkWorkspaceHost": "Hôte d’espaces : espaces seulement",
+   "networkHomeUrl": "URL du domicile personnel",
+   "networkHomeUrlHint": "L’adresse https:// du serveur où vos membres gardent leurs comptes.",
+   "networkHomeKey": "Clé publiable du domicile personnel",
+   "networkHomeKeyHint": "Sa clé publiable (sb_publishable_…), jamais une clé secrète. L’assistant d’instance vérifie les deux avant de les enregistrer.",
+   "networkErrHome": "Le domicile personnel demande une adresse https:// sans chemin et une clé publiable.",
+   "reqNetworkHome": "Obligatoire, car ce serveur n’héberge que des espaces : ses membres ont besoin d’un domicile personnel."
   },
   "feature": {
    "calendarTab": [
@@ -3875,7 +3895,17 @@ window.SETUP_L10N={
    "levelsExpertOpen": "Expertenansicht öffnen: jeder Schalter",
    "setupExpertSwitches": "Jeden Schalter zeigen (Expertenansicht)",
    "levelsOk": "Stufen: {list}.",
-   "levelsUnanswered": "Keine Frage beantwortet: die Schalter des nächsten Schritts entscheiden."
+   "levelsUnanswered": "Keine Frage beantwortet: die Schalter des nächsten Schritts entscheiden.",
+   "networkRoles": "Rolle dieses Servers",
+   "networkRolesHint": "Kombiniert: Konten der Personen und der Space auf einem Server (die übliche Wahl). Space-Host: Die Konten liegen auf einem anderen Server, dem persönlichen Zuhause, das Sie unten angeben.",
+   "networkCombined": "Kombiniert: Konten und Spaces",
+   "networkWorkspaceHost": "Space-Host: nur Spaces",
+   "networkHomeUrl": "URL des persönlichen Zuhauses",
+   "networkHomeUrlHint": "Die https://-Adresse des Servers, auf dem Ihre Mitglieder ihre Konten haben.",
+   "networkHomeKey": "Öffentlicher Schlüssel des persönlichen Zuhauses",
+   "networkHomeKeyHint": "Sein öffentlicher Schlüssel (sb_publishable_…), nie ein geheimer. Der Instanz-Assistent prüft beides, bevor er es speichert.",
+   "networkErrHome": "Das persönliche Zuhause braucht eine https://-Adresse ohne Pfad und einen öffentlichen Schlüssel.",
+   "reqNetworkHome": "Erforderlich, weil dieser Server nur Spaces hostet: Seine Mitglieder brauchen ein persönliches Zuhause."
   },
   "feature": {
    "calendarTab": [
@@ -5472,7 +5502,17 @@ window.SETUP_L10N={
    "levelsExpertOpen": "Abrir la vista experta: cada interruptor",
    "setupExpertSwitches": "Mostrar cada interruptor (vista experta)",
    "levelsOk": "Niveles: {list}.",
-   "levelsUnanswered": "Ninguna pregunta respondida: deciden los interruptores del paso siguiente."
+   "levelsUnanswered": "Ninguna pregunta respondida: deciden los interruptores del paso siguiente.",
+   "networkRoles": "Función de este servidor",
+   "networkRolesHint": "Combinada: las cuentas de las personas y el espacio en un solo servidor (la opción habitual). Anfitrión de espacios: las cuentas están en otro servidor, el hogar personal, indicado abajo.",
+   "networkCombined": "Combinada: cuentas y espacios",
+   "networkWorkspaceHost": "Anfitrión de espacios: solo espacios",
+   "networkHomeUrl": "URL del hogar personal",
+   "networkHomeUrlHint": "La dirección https:// del servidor donde sus miembros tienen sus cuentas.",
+   "networkHomeKey": "Clave publicable del hogar personal",
+   "networkHomeKeyHint": "Su clave publicable (sb_publishable_…), nunca una secreta. El asistente de instancia comprueba ambas antes de guardarlas.",
+   "networkErrHome": "El hogar personal necesita una dirección https:// sin ruta y una clave publicable.",
+   "reqNetworkHome": "Obligatorio porque este servidor solo aloja espacios: sus miembros necesitan un hogar personal."
   },
   "feature": {
    "calendarTab": [
@@ -7069,7 +7109,17 @@ window.SETUP_L10N={
    "levelsExpertOpen": "Apri la vista esperta: ogni interruttore",
    "setupExpertSwitches": "Mostra ogni interruttore (vista esperta)",
    "levelsOk": "Livelli: {list}.",
-   "levelsUnanswered": "Nessuna domanda con risposta: decidono gli interruttori del passo successivo."
+   "levelsUnanswered": "Nessuna domanda con risposta: decidono gli interruttori del passo successivo.",
+   "networkRoles": "Ruolo di questo server",
+   "networkRolesHint": "Combinata: gli account delle persone e lo spazio su un unico server (la scelta abituale). Host di spazi: gli account si trovano su un altro server, la casa personale, indicata qui sotto.",
+   "networkCombined": "Combinata: account e spazi",
+   "networkWorkspaceHost": "Host di spazi: solo spazi",
+   "networkHomeUrl": "URL della casa personale",
+   "networkHomeUrlHint": "L’indirizzo https:// del server dove i Suoi membri hanno i loro account.",
+   "networkHomeKey": "Chiave pubblicabile della casa personale",
+   "networkHomeKeyHint": "La sua chiave pubblicabile (sb_publishable_…), mai una segreta. La procedura guidata dell’istanza verifica entrambe prima di registrarle.",
+   "networkErrHome": "La casa personale richiede un indirizzo https:// senza percorso e una chiave pubblicabile.",
+   "reqNetworkHome": "Obbligatorio perché questo server ospita solo spazi: i suoi membri hanno bisogno di una casa personale."
   },
   "feature": {
    "calendarTab": [
