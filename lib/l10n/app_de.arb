@@ -13552,6 +13552,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintFederationRetentionHours": "Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung.",
   "settingHintIdentityClockSkewSeconds": "Sekunden Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, die noch akzeptiert werden, 0 bis 30.",
   "settingHintIdentityStatusAssertionLifetimeSeconds": "Sekunden, die sich ein Workspace-Server auf einen vom persönlichen Zuhause signierten Identitätsstatus verlassen darf. Höchstens 900: Ein gesperrtes Konto wird innerhalb dieser Zeit plus Uhrabweichung für neue Anfragen abgewiesen.",
   "settingHintIdentityStatusReconcileSeconds": "Sekunden zwischen zwei Aktualisierungen der Identitätsstatus, die ein Workspace-Server hält. Unter der Gültigkeit halten.",
@@ -13699,6 +13700,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelFederationRetentionHours": "Aufbewahrung des Server-Austauschs",
   "settingLabelIdentityClockSkewSeconds": "Erlaubte Uhrabweichung",
   "settingLabelIdentityStatusAssertionLifetimeSeconds": "Gültigkeit des Identitätsstatus",
   "settingLabelIdentityStatusReconcileSeconds": "Aktualisierung des Identitätsstatus",

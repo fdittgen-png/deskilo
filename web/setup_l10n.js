@@ -710,7 +710,9 @@ window.SETUP_L10N={
    "dirQueryLength": "New discussion: longest search",
    "dirQueryLengthHint": "The longest text the new-discussion directory searches for; a longer search is refused, never cut. Set in the app's settings.",
    "inboxPageSize": "Inbox: conversations per page",
-   "inboxPageSizeHint": "How many conversations the personal home and each workspace server return at a time in a member's inbox; older ones come with Show older conversations. Set in the app's settings."
+   "inboxPageSizeHint": "How many conversations the personal home and each workspace server return at a time in a member's inbox; older ones come with Show older conversations. Set in the app's settings.",
+   "fedRetention": "Backchannel retention",
+   "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings."
   },
   "feature": {
    "calendarTab": [
@@ -2336,7 +2338,9 @@ window.SETUP_L10N={
    "dirQueryLength": "Nouvelle discussion : recherche la plus longue",
    "dirQueryLengthHint": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche ; une recherche plus longue est refusée, jamais tronquée. Se règle dans les paramètres de l’app.",
    "inboxPageSize": "Boîte de réception : conversations par page",
-   "inboxPageSizeHint": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient à la fois dans la boîte de réception d’un membre ; les plus anciennes viennent avec Afficher les conversations plus anciennes. Se règle dans les paramètres de l’application."
+   "inboxPageSizeHint": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient à la fois dans la boîte de réception d’un membre ; les plus anciennes viennent avec Afficher les conversations plus anciennes. Se règle dans les paramètres de l’application.",
+   "fedRetention": "Conservation des échanges entre serveurs",
+   "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app."
   },
   "feature": {
    "calendarTab": [
@@ -3962,7 +3966,9 @@ window.SETUP_L10N={
    "dirQueryLength": "Neue Unterhaltung: längste Suche",
    "dirQueryLengthHint": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht; eine längere Suche wird abgelehnt, nie gekürzt. Wird in den Einstellungen der App festgelegt.",
    "inboxPageSize": "Posteingang: Unterhaltungen pro Seite",
-   "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt."
+   "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt.",
+   "fedRetention": "Aufbewahrung des Server-Austauschs",
+   "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt."
   },
   "feature": {
    "calendarTab": [
@@ -5588,7 +5594,9 @@ window.SETUP_L10N={
    "dirQueryLength": "Nueva conversación: búsqueda más larga",
    "dirQueryLengthHint": "El texto más largo que busca el directorio de la nueva conversación; una búsqueda más larga se rechaza, nunca se recorta. Se configura en los ajustes de la app.",
    "inboxPageSize": "Bandeja de entrada: conversaciones por página",
-   "inboxPageSizeHint": "Cuántas conversaciones devuelven a la vez el hogar personal y cada servidor de espacios en la bandeja de entrada de un miembro; las anteriores llegan con Mostrar conversaciones anteriores. Se configura en los ajustes de la aplicación."
+   "inboxPageSizeHint": "Cuántas conversaciones devuelven a la vez el hogar personal y cada servidor de espacios en la bandeja de entrada de un miembro; las anteriores llegan con Mostrar conversaciones anteriores. Se configura en los ajustes de la aplicación.",
+   "fedRetention": "Conservación de los intercambios entre servidores",
+   "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app."
   },
   "feature": {
    "calendarTab": [
@@ -7214,7 +7222,9 @@ window.SETUP_L10N={
    "dirQueryLength": "Nuova conversazione: ricerca più lunga",
    "dirQueryLengthHint": "Il testo più lungo che la rubrica della nuova conversazione cerca; una ricerca più lunga viene rifiutata, mai troncata. Si imposta nelle impostazioni dell'app.",
    "inboxPageSize": "Posta in arrivo: conversazioni per pagina",
-   "inboxPageSizeHint": "Quante conversazioni restituiscono alla volta la casa personale e ogni server di spazi nella posta in arrivo di un membro; le precedenti arrivano con Mostra conversazioni precedenti. Si imposta nelle impostazioni dell’app."
+   "inboxPageSizeHint": "Quante conversazioni restituiscono alla volta la casa personale e ogni server di spazi nella posta in arrivo di un membro; le precedenti arrivano con Mostra conversazioni precedenti. Si imposta nelle impostazioni dell’app.",
+   "fedRetention": "Conservazione degli scambi tra server",
+   "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app."
   },
   "feature": {
    "calendarTab": [

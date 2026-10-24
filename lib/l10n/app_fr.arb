@@ -13552,6 +13552,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintFederationRetentionHours": "Heures pendant lesquelles un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la plus longue validité de statut plus deux fois l'écart d'horloge.",
   "settingHintIdentityClockSkewSeconds": "Secondes d'écart d'horloge entre le domicile personnel et un serveur d'espaces encore acceptées, de 0 à 30.",
   "settingHintIdentityStatusAssertionLifetimeSeconds": "Secondes pendant lesquelles un serveur d'espaces peut se fier à un statut d'identité signé par le domicile personnel. 900 au plus : un compte suspendu voit ses nouvelles requêtes refusées dans ce délai, plus l'écart d'horloge.",
   "settingHintIdentityStatusReconcileSeconds": "Secondes entre deux actualisations des statuts d'identité que détient un serveur d'espaces. Gardez-la sous la durée de validité.",
@@ -13699,6 +13700,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelFederationRetentionHours": "Conservation des échanges entre serveurs",
   "settingLabelIdentityClockSkewSeconds": "Écart d'horloge toléré",
   "settingLabelIdentityStatusAssertionLifetimeSeconds": "Durée de validité du statut d'identité",
   "settingLabelIdentityStatusReconcileSeconds": "Actualisation du statut d'identité",
