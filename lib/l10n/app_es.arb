@@ -4429,6 +4429,8 @@
     "description": "#669 - accounting export formats"
   },
   "exportValueName": "{key, select, reserved{Reservado} checkedIn{Presente} completed{Completado} cancelled{Cancelado} released{Liberado} active{Activo} paused{En pausa} pending{Pendiente} exited{Salió} applied{Aplicado} confirmed{Confirmado} rejected{Rechazado} expired{Caducado} created{Creado} modified{Modificado} submitted{Enviado} approved{Aprobado} accepted{Aceptado} declined{Rechazado} charge{Cargo} credit{Abono} subscription{Suscripción} overage{Exceso} expense{Gasto} payment{Pago} adjustment{Ajuste} service{Servicio} package{Paquete} refund{Reembolso} reimbursement{Reintegro} seat{Puesto} room{Sala} parking{Aparcamiento} standard{Estándar} ev{Eléctrico} accessible{Accesible} workspace{Espacio de trabajo} n{Norte} e{Este} s{Sur} w{Oeste} blocked{No permitido} payg{Pago por uso} none{No} passive{Sucesor} founder{Fundador} invited{Invitado} full{Factura} usage{Consumo} settlement{Liquidación} other{{key}}}",
+  "favoriteKeptOnDeviceRefused": "Guardado solo en este dispositivo: su cuenta no puede guardar este espacio.",
+  "favoriteKeptOnDeviceUnreachable": "Guardado solo en este dispositivo: no se pudo contactar con su cuenta. Inténtelo de nuevo más tarde.",
   "featureAccessorySupplements": "Suplementos de accesorios",
   "featureAccessorySupplementsDesc": "Facturar los accesorios de sitio con precio por media jornada reservada. Se aplica a las reservas desde la activación.",
   "featureAccountingBookDesc": "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes.",
@@ -9348,7 +9350,6 @@
   "mySpacesRequestStatus": "Ver el estado de la solicitud",
   "mySpacesReview": "Mi valoración",
   "mySpacesReviewed": "Mi valoración: {stars} de 5",
-  "mySpacesSavedOnAccount": "Guardado en su cuenta",
   "mySpacesTestSpace": "Espacio de prueba",
   "mySpacesUnavailable": "No se pudieron leer sus espacios.",
   "mySpacesVerified": "Membresía verificada",

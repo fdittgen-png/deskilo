@@ -93,9 +93,5 @@
         "type": "int"
       }
     }
-  },
-  "mySpacesSavedOnAccount": "Saved on your account",
-  "@mySpacesSavedOnAccount": {
-    "description": "#2554 My spaces: the space is a favourite saved on the personal account"
   }
 }

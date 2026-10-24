@@ -4,9 +4,11 @@
 // test/production pair of this server with the test side inside it. The
 // card is not a button: its actions are, each its own target — the main
 // action its state allows, the favourite heart, My review, and Move
-// up/down where the person orders the list by hand. Favourite, review and
-// order are kept on this device (SpacePrefs), under the same key the
-// legacy list used, so nothing chosen there is lost.
+// up/down where the person orders the list by hand. Review and order are
+// kept on this device (SpacePrefs), under the same key the legacy list
+// used, so nothing chosen there is lost. The heart is kept on the account
+// by reference (AccountFavoriteCommand), this device's copy being the
+// fallback when the account refuses it or cannot be reached.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -22,9 +24,11 @@ import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace.dart';
+import '../application/account_favorite.dart';
 import '../application/personal_spaces_view.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../domain/space_pairs.dart';
+import '../providers/me_providers.dart';
 import '../providers/space_prefs_provider.dart';
 import 'personal_refs_section.dart';
 import 'space_row_controls.dart';
@@ -52,7 +56,9 @@ class PersonalSpaceCard extends ConsumerWidget {
     final main = row.main;
     final id = main.ref.networkId;
     final unverified = main.ref.freshness == RefFreshness.unavailable;
-    final favorite = prefs.favorites.contains(row.key);
+    final favorite = row.favoriteIn(prefs);
+    // Watched: the command reads my references again after its write.
+    final favorites = ref.watch(accountFavoriteCommandProvider);
     final test = row.testSide;
     return Card(
       key: ValueKey('my-space-$id'),
@@ -84,13 +90,6 @@ class PersonalSpaceCard extends ConsumerWidget {
                     style: theme.textTheme.titleMedium?.strong,
                   ),
                 ),
-                // Saved on my account (#2563): not the heart of this device.
-                if (row.sides.any((s) => s.ref.isFavorite))
-                  Icon(
-                    Icons.bookmark_outline,
-                    color: tokens.secondaryText,
-                    semanticLabel: l10n.mySpacesSavedOnAccount,
-                  ),
                 IconButton(
                   key: ValueKey('my-space-favorite-${row.key}'),
                   tooltip: favorite
@@ -100,9 +99,7 @@ class PersonalSpaceCard extends ConsumerWidget {
                   icon: const Icon(Icons.favorite_border),
                   selectedIcon: Icon(Icons.favorite, color: tokens.danger),
                   onPressed: () => unawaited(
-                    ref
-                        .read(spacePrefsProvider.notifier)
-                        .toggleFavorite(row.key),
+                    _setFavorite(context, favorites, row, on: !favorite),
                   ),
                 ),
               ],
@@ -152,6 +149,35 @@ class PersonalSpaceCard extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+/// The heart: kept on the account, or on this device only — then the
+/// person is told why.
+Future<void> _setFavorite(
+  BuildContext context,
+  AccountFavoriteCommand command,
+  PersonalSpaceRow row, {
+  required bool on,
+}) async {
+  final l10n = context.l10n;
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  final kept = await command.set(
+    on: on,
+    deviceKey: row.key,
+    mark: row.main.ref.networkId,
+    clear: [
+      for (final side in row.sides)
+        if (side.ref.isFavorite) side.ref.networkId,
+    ],
+  );
+  final message = switch (kept) {
+    FavoriteKept.account => null,
+    FavoriteKept.deviceRefused => l10n.favoriteKeptOnDeviceRefused,
+    FavoriteKept.deviceUnreachable => l10n.favoriteKeptOnDeviceUnreachable,
+  };
+  if (message != null) {
+    messenger?.showSnackBar(SnackBar(content: Text(message)));
   }
 }
 

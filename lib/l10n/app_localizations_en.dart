@@ -6232,6 +6232,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get favoriteKeptOnDeviceRefused =>
+      'Kept on this device only: your account cannot save this space.';
+
+  @override
+  String get favoriteKeptOnDeviceUnreachable =>
+      'Kept on this device only: your account could not be reached. Try again later.';
+
+  @override
   String get featureAccessorySupplements => 'Accessory supplements';
 
   @override
@@ -14360,9 +14368,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String mySpacesReviewed(int stars) {
     return 'My review: $stars of 5';
   }
-
-  @override
-  String get mySpacesSavedOnAccount => 'Saved on your account';
 
   @override
   String get mySpacesTestSpace => 'Test space';
