@@ -5288,6 +5288,7 @@
   "discoveryRemoveBookmark": "Remove bookmark",
   "discoverySaved": "Saved on this device",
   "discoverySavedFilter": "Saved",
+  "discoveryShowAllLoaded": "Show all loaded places",
   "discoveryShowMoreFrom": "Show more from {source}",
   "@discoveryShowMoreFrom": {
     "placeholders": {

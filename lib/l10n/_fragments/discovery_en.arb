@@ -54,5 +54,6 @@
   },
   "discoveryMapRemembered": "Your choice is kept on this device for this map provider.",
   "discoveryMapContinue": "Continue to the map",
-  "discoveryMapStay": "Stay with the list"
+  "discoveryMapStay": "Stay with the list",
+  "discoveryShowAllLoaded": "Show all loaded places"
 }

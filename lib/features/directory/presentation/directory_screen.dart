@@ -21,6 +21,7 @@ import 'directory_link_dialog.dart';
 import 'directory_map.dart';
 import 'directory_pages.dart';
 import 'discovery_list_view.dart';
+import 'discovery_split.dart';
 import 'map_disclosure_dialog.dart';
 import 'public_workspace_view.dart';
 
@@ -37,6 +38,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
   String _query = '';
 
   PublicWorkspace? _selected;
+
+  /// One map per listing: it keeps its camera when the window crosses the
+  /// split width, and a new search starts a new one.
+  var _mapKey = GlobalKey(debugLabel: 'discovery-map');
+
+  /// The list keeps its scroll when the map opens beside it or closes.
+  final _listKey = GlobalKey(debugLabel: 'discovery-list');
   @override
   void dispose() {
     _search.dispose();
@@ -107,24 +115,51 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
   void _submit(String value) => setState(() {
     _query = value;
     _selected = null;
+    _mapKey = GlobalKey(debugLabel: 'discovery-map');
   });
 
-  /// The map first: it takes the whole screen, the search floats over it
-  /// and the workspaces are cards to swipe through under it. The pin and
-  /// the card in front are the same selection.
+  Widget _map(DiscoveryResults result) => DirectoryMap(
+    key: _mapKey,
+    workspaces: result.workspaces,
+    selected: _selected == null
+        ? null
+        : '${_selected!.source}/${_selected!.id}',
+    onSelect: _select,
+  );
+
+  Widget _list(DiscoveryResults result, {required bool beside}) =>
+      DiscoveryListView(
+        key: _listKey,
+        query: _query,
+        results: result,
+        selected: _selected,
+        onView: _open,
+        onLocate: _locate,
+        revealSelected: beside,
+      );
+
+  /// Wide enough for both: the whole loaded list beside the map, 53:47.
+  /// A place selected in either pane is the selection of both.
+  Widget _split(DiscoveryResults result) => Row(
+    key: const ValueKey('directory-split'),
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Expanded(
+        flex: DiscoverySplit.listFlex,
+        child: _list(result, beside: true),
+      ),
+      const VerticalDivider(width: 1),
+      Expanded(flex: DiscoverySplit.mapFlex, child: _map(result)),
+    ],
+  );
+
+  /// The map alone, on a screen too narrow for the split: the workspaces
+  /// are cards to swipe through under it. The pin and the card in front
+  /// are the same selection.
   Widget _mapView(DiscoveryResults result) {
     final l = context.l10n;
     return Stack(children: [
-      Positioned.fill(
-        child: DirectoryMap(
-          key: ValueKey(_query),
-          workspaces: result.workspaces,
-          selected: _selected == null
-              ? null
-              : '${_selected!.source}/${_selected!.id}',
-          onSelect: _select,
-        ),
-      ),
+      Positioned.fill(child: _map(result)),
       Positioned(
         left: 0,
         right: 0,
@@ -223,6 +258,29 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     );
   }
 
+  /// The list alone; or, with the map chosen, the split where it fits and
+  /// otherwise the map alone. The search stays above either, never over
+  /// the map's own controls.
+  Widget _body(
+    AsyncValue<DiscoveryResults> rows,
+    Widget searchField, {
+    required bool map,
+    required bool split,
+  }) => Column(children: [
+    searchField,
+    Expanded(
+      child: switch (rows) {
+        AsyncData(value: final result) => split
+            ? _split(result)
+            : map
+                ? _mapView(result)
+                : _list(result, beside: false),
+        AsyncError(:final error) => _failure(error),
+        _ => const LoadingView(),
+      },
+    ),
+  ]);
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -266,47 +324,14 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
             ),
         ],
       ),
-      body: Stack(children: [
-        Column(
-        children: [
-          if (!map) searchField,
-          Expanded(
-            child: switch (rows) {
-              AsyncData(value: final result) => LayoutBuilder(
-                builder: (context, constraints) => map
-                    ? _mapView(result)
-                    : DiscoveryListView(
-                        query: _query,
-                        results: result,
-                        selected: _selected,
-                        onView: _open,
-                        onLocate: _locate,
-                      ),
-              ),
-              AsyncError(:final error) => _failure(error),
-              _ => const LoadingView(),
-            },
-          ),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) => _body(
+          rows,
+          searchField,
+          map: map,
+          split: map && DiscoverySplit.fits(constraints.maxWidth),
+        ),
       ),
-        if (map)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: AppSpacing.smAll,
-                child: Material(
-                  elevation: 4,
-                  borderRadius: AppRadius.lgAll,
-                  child: searchField,
-                ),
-              ),
-            ),
-          ),
-      ]),
     );
   }
 }

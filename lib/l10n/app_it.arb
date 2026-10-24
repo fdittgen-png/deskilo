@@ -3123,6 +3123,7 @@
   "discoveryRemoveBookmark": "Rimuovi dai salvati",
   "discoverySaved": "Salvato su questo dispositivo",
   "discoverySavedFilter": "Salvati",
+  "discoveryShowAllLoaded": "Mostra tutti i luoghi caricati",
   "discoveryShowMoreFrom": "Mostra altri da {source}",
   "discoverySourceFailed": "{source} non ha risposto. I luoghi già mostrati restano.",
   "discoveryTitle": "Scoprire spazi",

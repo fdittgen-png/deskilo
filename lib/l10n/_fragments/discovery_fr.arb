@@ -14,5 +14,6 @@
   "discoveryMapDisclosureBody": "La carte est dessinée par {tiles}, et les adresses sans coordonnées sont placées par {geocoder}. Le fournisseur de la carte reçoit des informations de connexion et la zone affichée : l’adresse IP de votre appareil et la partie de la carte que vous regardez. Rien ne lui est envoyé si vous ne continuez pas.",
   "discoveryMapRemembered": "Votre choix est conservé sur cet appareil pour ce fournisseur de carte.",
   "discoveryMapContinue": "Continuer vers la carte",
-  "discoveryMapStay": "Rester sur la liste"
+  "discoveryMapStay": "Rester sur la liste",
+  "discoveryShowAllLoaded": "Afficher tous les lieux chargés"
 }

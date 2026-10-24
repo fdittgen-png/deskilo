@@ -157,7 +157,7 @@ select (select count(*)::int from public.federation_inbox_receipts
          where received_at <= now() - public.federation_retention_interval()) r,
        (select count(*)::int from public.membership_facts
          where status = 'tombstone' and received_at <= now() - public.federation_retention_interval()) t;
-select is(public.federation_retention_purge(), (select jsonb_build_object('receipts', r, 'tombstones', t)
+select is(public.federation_retention_purge() - array['identity_statuses', 'snapshot_pages'], (select jsonb_build_object('receipts', r, 'tombstones', t)
                                                   from old_rows where r >= 6 and t >= 1),
   'the purge removes every old receipt (ours: six) and old tombstone (ours: one)');
 select is((select string_agg(right(event_id::text, 2), ',' order by event_id) from public.federation_inbox_receipts
@@ -167,7 +167,8 @@ select is((select string_agg(right(event_id::text, 2), ',' order by event_id) fr
   '07,08 active', 'fresh receipts and a fact that is not a tombstone stay');
 select is(pg_temp.go(9, 'a', 1, 11, 'active', now() - interval '1000 seconds'), 'expired_assertion',
   'an older fact arriving after its tombstone went is refused on its own deadline');
-select is(public.federation_retention_purge()::text, '{"receipts": 0, "tombstones": 0}',
+select is((public.federation_retention_purge() - array['identity_statuses', 'snapshot_pages'])::text,
+  '{"receipts": 0, "tombstones": 0}',
   'a second purge finds nothing');
 update public.setting_definitions set max_value = 5000 where key = 'identity.status_assertion_lifetime_seconds';
 select is(extract(epoch from public.federation_retention_interval())::int, 86400,

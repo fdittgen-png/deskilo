@@ -809,6 +809,30 @@ constraint membership_facts.membership_facts_status_check CHECK ((status = ANY (
 constraint membership_facts.membership_facts_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 constraint membership_facts.membership_facts_workspace_name CHECK (((workspace_name IS NULL) OR ((status <> 'tombstone'::text) AND ((char_length(workspace_name) >= 1) AND (char_length(workspace_name) <= 120)) AND (workspace_name !~ '[[:cntrl:]]'::text))))
 constraint membership_facts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint membership_snapshot_outbox.membership_snapshot_outbox_check CHECK ((valid_until > asserted_at))
+constraint membership_snapshot_outbox.membership_snapshot_outbox_entry_count_check CHECK ((entry_count >= 0))
+constraint membership_snapshot_outbox.membership_snapshot_outbox_manifest_hash_check CHECK ((manifest_hash ~ '^[0-9a-f]{64}$'::text))
+constraint membership_snapshot_outbox.membership_snapshot_outbox_one_page UNIQUE (snapshot_id, page)
+constraint membership_snapshot_outbox.membership_snapshot_outbox_page CHECK ((page <= pages))
+constraint membership_snapshot_outbox.membership_snapshot_outbox_page_check CHECK ((page > 0))
+constraint membership_snapshot_outbox.membership_snapshot_outbox_pkey PRIMARY KEY (event_id)
+constraint membership_snapshot_outbox.membership_snapshot_outbox_state_check CHECK ((state = ANY (ARRAY['pending'::text, 'sent'::text, 'delivered'::text, 'refused'::text, 'expired'::text])))
+constraint membership_snapshot_outbox.membership_snapshot_outbox_watermark_check CHECK ((watermark >= 0))
+constraint membership_snapshot_outbox.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint membership_snapshot_pages.membership_snapshot_pages_check CHECK ((valid_until > asserted_at))
+constraint membership_snapshot_pages.membership_snapshot_pages_entries_check CHECK ((jsonb_typeof(entries) = 'array'::text))
+constraint membership_snapshot_pages.membership_snapshot_pages_entry_count_check CHECK ((entry_count >= 0))
+constraint membership_snapshot_pages.membership_snapshot_pages_manifest_hash_check CHECK ((manifest_hash ~ '^[0-9a-f]{64}$'::text))
+constraint membership_snapshot_pages.membership_snapshot_pages_page CHECK ((page <= pages))
+constraint membership_snapshot_pages.membership_snapshot_pages_page_check CHECK ((page > 0))
+constraint membership_snapshot_pages.membership_snapshot_pages_pkey PRIMARY KEY (source_installation_id, snapshot_id, page)
+constraint membership_snapshot_pages.membership_snapshot_pages_watermark_check CHECK ((watermark >= 0))
+constraint membership_snapshot_pages.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint membership_snapshot_watermarks.membership_snapshot_watermarks_live_count_check CHECK ((live_count >= 0))
+constraint membership_snapshot_watermarks.membership_snapshot_watermarks_pkey PRIMARY KEY (source_installation_id)
+constraint membership_snapshot_watermarks.membership_snapshot_watermarks_removed_check CHECK ((removed >= 0))
+constraint membership_snapshot_watermarks.membership_snapshot_watermarks_watermark_check CHECK ((watermark >= 0))
+constraint membership_snapshot_watermarks.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint message_events.message_events_actor_user_id_fkey FOREIGN KEY (actor_user_id) REFERENCES auth.users(id) ON DELETE SET NULL
 constraint message_events.message_events_event_check CHECK ((event = ANY (ARRAY['sent'::text, 'read'::text, 'forwarded'::text, 'deleted'::text, 'captured'::text])))
 constraint message_events.message_events_message_kind_check CHECK ((message_kind = ANY (ARRAY['member_note'::text, 'account_message'::text, 'inquiry_message'::text, 'group_message'::text])))
@@ -1943,9 +1967,9 @@ routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_ope
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
 routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c6dfdb60371c
 routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
-routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:efd1cb1b800f
+routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:9eb383212bb9
 routine public.federation_retention_interval() -> interval | function | definer | stable | exec: | body:dddcb725ba48
-routine public.federation_retention_purge() -> jsonb | function | definer | volatile | exec: | body:1deb39938f51
+routine public.federation_retention_purge() -> jsonb | function | definer | volatile | exec: | body:b6ca15045603
 routine public.federation_signing_input(p_method text, p_path text, p_purpose text, p_source uuid, p_target uuid, p_event uuid, p_timestamp bigint, p_digest text, p_key_id text) -> text | function | invoker | immutable | exec: | body:02a8f231c3d2
 routine public.federation_verify(p_method text, p_path text, p_headers jsonb, p_raw bytea) -> jsonb | function | definer | volatile | exec: | body:cfd8c540eeac
 routine public.field_answer_is_personal(p_member_id uuid) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:455cc7017735
@@ -2260,6 +2284,10 @@ routine public.membership_fact_on_binding_change() -> trigger | function | defin
 routine public.membership_fact_on_member_change() -> trigger | function | definer | volatile | exec: | body:865c3b9b8a98
 routine public.membership_fact_produce(p_workspace uuid, p_user uuid) -> integer | function | definer | volatile | exec: | body:ff593077a19e
 routine public.membership_fact_reconcile() -> jsonb | function | definer | volatile | exec: | body:da5cf18644bd
+routine public.membership_snapshot_apply(p_body jsonb, p_source uuid, p_event uuid, p_request_ts bigint) -> text | function | definer | volatile | exec: | body:e9ae4b827a82
+routine public.membership_snapshot_digest(p_entries jsonb) -> text | function | invoker | stable | exec: | body:8611fd1e0d7c
+routine public.membership_snapshot_drain() -> jsonb | function | definer | volatile | exec: | body:8a2e7e517ad3
+routine public.membership_snapshot_issue() -> jsonb | function | definer | volatile | exec: | body:32e6e257c08a
 routine public.merge_floor_plan(p_workspace_id uuid, p_tree jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:1d7ab6c6b4f3
 routine public.message_body_workspaces(p_body text) -> uuid[] | function | definer | stable | exec:service_role | body:048f72b54450
 routine public.message_history(p_kind text, p_message_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c152cb52fbea
@@ -2389,7 +2417,7 @@ routine public.profile_row_readable(p_subject uuid) -> boolean | function | defi
 routine public.profiles_default_workspace_ref() -> trigger | function | definer | volatile | exec:service_role | body:8ca04a9d8556
 routine public.propose_price_negotiation(p_member_id uuid, p_fee_cents integer, p_overage_fee_cents integer, p_discount_percent numeric, p_note text, p_valid_from date, p_subscription_pct integer, p_items jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:629fe93a2903
 routine public.protect_enrolled_installation() -> trigger | function | invoker | volatile | exec: | body:1bfa66ade934
-routine public.protect_federation_history() -> trigger | function | invoker | volatile | exec: | body:3d1d54966930
+routine public.protect_federation_history() -> trigger | function | invoker | volatile | exec: | body:108aa471d239
 routine public.protect_identity_federation_client() -> trigger | function | invoker | volatile | exec:service_role | body:de8119cc60cd
 routine public.protect_last_owner() -> trigger | function | definer | volatile | exec:service_role | body:ab5c4b3b7f91
 routine public.protect_membership_fact() -> trigger | function | invoker | volatile | exec: | body:5c839ff452c2
@@ -2990,6 +3018,9 @@ trigger membership_fact_state.protect_membership_fact CREATE TRIGGER protect_mem
 trigger membership_fact_state.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.membership_fact_state FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger membership_facts.protect_membership_fact CREATE TRIGGER protect_membership_fact BEFORE UPDATE ON public.membership_facts FOR EACH ROW EXECUTE FUNCTION protect_membership_fact()
 trigger membership_facts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.membership_facts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger membership_snapshot_outbox.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.membership_snapshot_outbox FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger membership_snapshot_pages.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.membership_snapshot_pages FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger membership_snapshot_watermarks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.membership_snapshot_watermarks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger message_events.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.message_events FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger message_reactions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.message_reactions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger message_stars.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.message_stars FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

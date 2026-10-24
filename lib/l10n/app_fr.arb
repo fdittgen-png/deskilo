@@ -3123,6 +3123,7 @@
   "discoveryRemoveBookmark": "Retirer l’enregistrement",
   "discoverySaved": "Enregistré sur cet appareil",
   "discoverySavedFilter": "Enregistrés",
+  "discoveryShowAllLoaded": "Afficher tous les lieux chargés",
   "discoveryShowMoreFrom": "Afficher plus de {source}",
   "discoverySourceFailed": "{source} n’a pas répondu. Les lieux déjà affichés restent.",
   "discoveryTitle": "Découvrir des espaces",
