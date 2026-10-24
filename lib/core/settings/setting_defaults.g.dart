@@ -52,6 +52,16 @@ abstract final class SettingDefaults {
   static const int messagingMessageRequestsPerDay = 10;
   /// `messaging.thread_poll_seconds`
   static const int messagingThreadPollSeconds = 15;
+  /// `personal.read_concurrency`
+  static const int personalReadConcurrency = 4;
+  /// `personal.read_timeout_seconds`
+  static const int personalReadTimeoutSeconds = 12;
+  /// `personal.reservation_max_window_days`
+  static const int personalReservationMaxWindowDays = 400;
+  /// `personal.reservation_page_size`
+  static const int personalReservationPageSize = 50;
+  /// `personal.reservation_window_days`
+  static const int personalReservationWindowDays = 31;
   /// `presence.online_window_minutes`
   static const int presenceOnlineWindowMinutes = 5;
   /// `purchase.payment_checker_from_units`
