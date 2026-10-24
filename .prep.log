@@ -1,0 +1,2 @@
+{"dart": "3.13.4", "database": "NOT_REQUESTED", "flutter": "3.47.5", "hosted_writes": false, "packages": [".", "packages/deskilo_document_editor", "packages/deskilo_document_model", "packages/deskilo_document_pdf", "packages/deskilo_push", "packages/deskilo_push_foss", "packages/deskilo_task_recording"], "resolved": true, "tests": "NOT_RUN", "tooling": "READY"}
+exit=0
