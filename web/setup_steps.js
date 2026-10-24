@@ -82,6 +82,8 @@ const STEPS=[
   ...(S.network.roles==='workspace_host'?[checkbox(T('enrolAccepting'),T('enrolAcceptingHint'),S.enrolment.accepting,v=>set('enrolment.accepting',v),'','identity'),selectEl(T('enrolLifetime'),'enrolment.lifetime',opts(ID_LIFETIME),T('enrolLifetimeHint'),null,'identity'),selectEl(T('enrolReconcile'),'enrolment.reconcile',opts(ID_RECONCILE),T('enrolReconcileHint'),null,'identity'),selectEl(T('enrolSkew'),'enrolment.skew',opts(ID_SKEW),T('enrolSkewHint'),null,'identity')]:[]),
   // #2472 (P) — a combined server is its people's personal home: it reads
   // the new discussion's directory.
+  // #2563 C2 — every server that signs or receives backchannel messages.
+  selectEl(T('fedRetention'),'federation.retentionHours',opts(FED_RETENTION),T('fedRetentionHint'),null,'identity'),
   ...(S.network.roles==='combined'?[selectEl(T('dirPageSize'),'directory.pageSize',opts(DIR_PAGE),T('dirPageSizeHint'),null,'identity'),selectEl(T('dirQueryLength'),'directory.queryLength',opts(DIR_QUERY),T('dirQueryLengthHint'),null,'identity')]:[]),
   // #2556 — every server reads its part of the inbox one page at a time.
   selectEl(T('inboxPageSize'),'inbox.pageSize',opts(INBOX_PAGE),T('inboxPageSizeHint'),null,'identity'),

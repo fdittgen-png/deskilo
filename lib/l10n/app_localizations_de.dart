@@ -19660,6 +19660,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage nach der Ausstellung, bis eine erste Mahnung vorgeschlagen wird und bis eine Rechnung ohne Zahlungsfrist fällig wird.';
 
   @override
+  String get settingHintFederationRetentionHours =>
+      'Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung.';
+
+  @override
   String get settingHintIdentityClockSkewSeconds =>
       'Sekunden Uhrabweichung zwischen persönlichem Zuhause und Workspace-Server, die noch akzeptiert werden, 0 bis 30.';
 
@@ -19831,6 +19835,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelDunningFirstAfterDays => 'Tage bis zur ersten Mahnung';
+
+  @override
+  String get settingLabelFederationRetentionHours =>
+      'Aufbewahrung des Server-Austauschs';
 
   @override
   String get settingLabelIdentityClockSkewSeconds => 'Erlaubte Uhrabweichung';

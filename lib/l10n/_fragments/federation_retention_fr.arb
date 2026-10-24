@@ -1,0 +1,5 @@
+{
+  "@@locale": "fr",
+  "settingLabelFederationRetentionHours": "Conservation des échanges entre serveurs",
+  "settingHintFederationRetentionHours": "Heures pendant lesquelles un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la plus longue validité de statut plus deux fois l'écart d'horloge."
+}

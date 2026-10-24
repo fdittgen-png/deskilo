@@ -19615,6 +19615,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.';
 
   @override
+  String get settingHintFederationRetentionHours =>
+      'Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.';
+
+  @override
   String get settingHintIdentityClockSkewSeconds =>
       'Segundos de desfase de reloj entre el hogar personal y un servidor de espacios que aún se aceptan, de 0 a 30.';
 
@@ -19789,6 +19793,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Días antes de un primer recordatorio';
+
+  @override
+  String get settingLabelFederationRetentionHours =>
+      'Conservación de los intercambios entre servidores';
 
   @override
   String get settingLabelIdentityClockSkewSeconds =>

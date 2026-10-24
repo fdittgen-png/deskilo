@@ -19466,6 +19466,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.';
 
   @override
+  String get settingHintFederationRetentionHours =>
+      'Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.';
+
+  @override
   String get settingHintIdentityClockSkewSeconds =>
       'Seconds of clock difference between the personal home and a workspace server that are still accepted, 0 to 30.';
 
@@ -19636,6 +19640,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Days before a first reminder';
+
+  @override
+  String get settingLabelFederationRetentionHours => 'Backchannel retention';
 
   @override
   String get settingLabelIdentityClockSkewSeconds => 'Allowed clock difference';

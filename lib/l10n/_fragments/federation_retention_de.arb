@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "settingLabelFederationRetentionHours": "Aufbewahrung des Server-Austauschs",
+  "settingHintFederationRetentionHours": "Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung."
+}
