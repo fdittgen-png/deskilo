@@ -231,7 +231,9 @@ void main() {
         'nothing to manage', (tester) async {
       final router = await _pump(
         tester,
-        me: FakeMeRepository(),
+        // The fake derives references from its account's spaces (#2558);
+        // a person in no space has none.
+        me: FakeMeRepository()..workspaceRefs = _refs([]),
         workspace: FakeWorkspaceRepository(workspaces: []),
       );
       await goTo(tester, router, '/me/spaces');
