@@ -65,6 +65,9 @@ Deno.test("the raw bytes, the envelope and the own path reach the database", asy
 for (
   const [outcome, status] of [
     ["applied", 200],
+    ["renewed", 200],
+    ["staged", 200],
+    ["reconciled", 200],
     ["duplicate", 200],
     ["superseded", 200],
     ["bad_signature", 401],
@@ -72,10 +75,16 @@ for (
     ["unknown_key", 401],
     ["bad_digest", 400],
     ["event_conflict", 409],
+    ["revision_conflict", 409],
+    ["snapshot_conflict", 409],
     ["wrong_target", 421],
     ["expired_assertion", 422],
     ["future_assertion", 422],
     ["unlinked_subject", 422],
+    ["foreign_workspace", 422],
+    ["unenrolled_source", 422],
+    ["unverified", 422],
+    ["expired_snapshot", 422],
   ] as const
 ) {
   Deno.test(`the outcome ${outcome} answers ${status}`, async () => {
