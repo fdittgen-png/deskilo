@@ -26,7 +26,7 @@
 -- at once. They are TODO so the suite stays green; remove the todo() when
 -- the format is fixed.
 begin;
-select plan(19);
+select plan(21);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -125,14 +125,18 @@ select is(pg_temp.draw('zz_plain'), 'N-0060', 'and the next draw prints exactly 
 -- An UPDATE or DELETE refused by row-level security raises nothing: it
 -- matches no rows. Each is read back as postgres.
 select pg_temp.act_as_owner();
-update public.number_sequences set next_value = 1
- where workspace_id = current_setting('deskilo.ctr.ws')::uuid and journal = 'zz_plain';
-delete from public.number_sequences
- where workspace_id = current_setting('deskilo.ctr.ws')::uuid and journal = 'zz_plain';
+select throws_ok(
+  $$ update public.number_sequences set next_value = 1
+      where workspace_id = current_setting('deskilo.ctr.ws')::uuid and journal = 'zz_plain' $$,
+  '42501', null, 'an owner cannot rewind a series directly: no UPDATE is granted (#2942)');
+select throws_ok(
+  $$ delete from public.number_sequences
+      where workspace_id = current_setting('deskilo.ctr.ws')::uuid and journal = 'zz_plain' $$,
+  '42501', null, 'nor delete it: no DELETE is granted (#2942)');
 select throws_like(
   format($$ insert into public.number_sequences (workspace_id, journal, prefix, next_value)
             values (%L, 'zz_forged', 'N-', 1) $$, current_setting('deskilo.ctr.ws')),
-  '%row-level security%',
+  '%permission denied%',
   'an owner cannot create a series row directly');
 reset role;
 
