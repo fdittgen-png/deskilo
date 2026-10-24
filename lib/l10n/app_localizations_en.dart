@@ -14298,10 +14298,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mySpacesDiscover => 'Discover spaces';
 
   @override
+  String get mySpacesFilterActive => 'Active';
+
+  @override
+  String get mySpacesFilterAll => 'All';
+
+  @override
+  String get mySpacesFilterHistory => 'Past';
+
+  @override
+  String get mySpacesFilterRequests => 'Requests and visits';
+
+  @override
   String get mySpacesHostElsewhere => 'On another installation';
 
   @override
   String get mySpacesHostHere => 'On this server';
+
+  @override
+  String get mySpacesLayoutGrid => 'Show as a grid';
+
+  @override
+  String get mySpacesLayoutList => 'Show as a list';
 
   @override
   String get mySpacesManage => 'Manage spaces on this server';
@@ -14317,6 +14335,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mySpacesRequestStatus => 'View request status';
+
+  @override
+  String get mySpacesReview => 'My review';
+
+  @override
+  String mySpacesReviewed(int stars) {
+    return 'My review: $stars of 5';
+  }
+
+  @override
+  String get mySpacesSavedOnAccount => 'Saved on your account';
 
   @override
   String get mySpacesTestSpace => 'Test space';

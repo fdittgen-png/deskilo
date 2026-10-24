@@ -16825,6 +16825,22 @@
   "@mySpacesDiscover": {
     "description": "#2554 My spaces: link to Discover"
   },
+  "mySpacesFilterActive": "Active",
+  "@mySpacesFilterActive": {
+    "description": "#2554 My spaces: filter showing active memberships"
+  },
+  "mySpacesFilterAll": "All",
+  "@mySpacesFilterAll": {
+    "description": "#2554 My spaces: filter showing every loaded space"
+  },
+  "mySpacesFilterHistory": "Past",
+  "@mySpacesFilterHistory": {
+    "description": "#2554 My spaces: filter showing paused or left spaces"
+  },
+  "mySpacesFilterRequests": "Requests and visits",
+  "@mySpacesFilterRequests": {
+    "description": "#2554 My spaces: filter showing pending requests and guest visits"
+  },
   "mySpacesHostElsewhere": "On another installation",
   "@mySpacesHostElsewhere": {
     "description": "#2554 My spaces: the space lives on another installation"
@@ -16832,6 +16848,14 @@
   "mySpacesHostHere": "On this server",
   "@mySpacesHostHere": {
     "description": "#2554 My spaces: the space lives on the personal home's own server"
+  },
+  "mySpacesLayoutGrid": "Show as a grid",
+  "@mySpacesLayoutGrid": {
+    "description": "#2554 My spaces: show the spaces as a grid of cards"
+  },
+  "mySpacesLayoutList": "Show as a list",
+  "@mySpacesLayoutList": {
+    "description": "#2554 My spaces: show the spaces as a single list"
   },
   "mySpacesManage": "Manage spaces on this server",
   "@mySpacesManage": {
@@ -16852,6 +16876,23 @@
   "mySpacesRequestStatus": "View request status",
   "@mySpacesRequestStatus": {
     "description": "#2554 My spaces: main action of a pending request"
+  },
+  "mySpacesReview": "My review",
+  "@mySpacesReview": {
+    "description": "#2554 My spaces: my own star rating of a space, not yet given"
+  },
+  "mySpacesReviewed": "My review: {stars} of 5",
+  "@mySpacesReviewed": {
+    "description": "#2554 My spaces: my own star rating of a space",
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      }
+    }
+  },
+  "mySpacesSavedOnAccount": "Saved on your account",
+  "@mySpacesSavedOnAccount": {
+    "description": "#2554 My spaces: the space is a favourite saved on the personal account"
   },
   "mySpacesTestSpace": "Test space",
   "@mySpacesTestSpace": {

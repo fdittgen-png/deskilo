@@ -14393,10 +14393,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mySpacesDiscover => 'Descubrir espacios';
 
   @override
+  String get mySpacesFilterActive => 'Activos';
+
+  @override
+  String get mySpacesFilterAll => 'Todos';
+
+  @override
+  String get mySpacesFilterHistory => 'Pasados';
+
+  @override
+  String get mySpacesFilterRequests => 'Solicitudes y visitas';
+
+  @override
   String get mySpacesHostElsewhere => 'En otra instalación';
 
   @override
   String get mySpacesHostHere => 'En este servidor';
+
+  @override
+  String get mySpacesLayoutGrid => 'Ver en cuadrícula';
+
+  @override
+  String get mySpacesLayoutList => 'Ver en lista';
 
   @override
   String get mySpacesManage => 'Gestionar los espacios de este servidor';
@@ -14412,6 +14430,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mySpacesRequestStatus => 'Ver el estado de la solicitud';
+
+  @override
+  String get mySpacesReview => 'Mi valoración';
+
+  @override
+  String mySpacesReviewed(int stars) {
+    return 'Mi valoración: $stars de 5';
+  }
+
+  @override
+  String get mySpacesSavedOnAccount => 'Guardado en su cuenta';
 
   @override
   String get mySpacesTestSpace => 'Espacio de prueba';

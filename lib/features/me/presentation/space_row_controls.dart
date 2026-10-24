@@ -188,7 +188,7 @@ class SpaceRowControls extends StatelessWidget {
               PopupMenuItem(
                 key: ValueKey('$key-rate-$n'),
                 value: _Rate(n),
-                child: _Stars(n),
+                child: SpaceStars(n),
               ),
             PopupMenuItem(
               key: ValueKey('$key-clear'),
@@ -215,8 +215,8 @@ class SpaceRowControls extends StatelessWidget {
 
 /// n of 5 stars, the earned ones gold and filled, the rest plain outlines,
 /// with the number beside them — so 3 and 4 cannot be mistaken in a menu.
-class _Stars extends StatelessWidget {
-  const _Stars(this.n);
+class SpaceStars extends StatelessWidget {
+  const SpaceStars(this.n, {super.key});
   final int n;
 
   @override

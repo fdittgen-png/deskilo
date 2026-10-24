@@ -64,6 +64,7 @@ Future<GoRouter> pumpMeApp(
   IdentityConnector? identityConnector,
   FakeMessengerRepository? messenger,
   FakeAccountContactRepository? contacts,
+  FakeGuestParticipationRepository? guestVisits,
   Size size = const Size(800, 1600),
   LinkLauncher? launcher,
   List<Override> extraOverrides = const [],
@@ -85,6 +86,7 @@ Future<GoRouter> pumpMeApp(
         identityConnector: identityConnector,
         messenger: messenger,
         contacts: contacts,
+        guestVisits: guestVisits,
       )..addAll([
         if (launcher != null) linkLauncherProvider.overrideWithValue(launcher),
         ...extraOverrides,

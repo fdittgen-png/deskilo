@@ -56,5 +56,46 @@
   "mySpacesAll": "All my spaces",
   "@mySpacesAll": {
     "description": "#2554 Overview: link to the full My spaces list"
+  },
+  "mySpacesFilterAll": "All",
+  "@mySpacesFilterAll": {
+    "description": "#2554 My spaces: filter showing every loaded space"
+  },
+  "mySpacesFilterActive": "Active",
+  "@mySpacesFilterActive": {
+    "description": "#2554 My spaces: filter showing active memberships"
+  },
+  "mySpacesFilterRequests": "Requests and visits",
+  "@mySpacesFilterRequests": {
+    "description": "#2554 My spaces: filter showing pending requests and guest visits"
+  },
+  "mySpacesFilterHistory": "Past",
+  "@mySpacesFilterHistory": {
+    "description": "#2554 My spaces: filter showing paused or left spaces"
+  },
+  "mySpacesLayoutGrid": "Show as a grid",
+  "@mySpacesLayoutGrid": {
+    "description": "#2554 My spaces: show the spaces as a grid of cards"
+  },
+  "mySpacesLayoutList": "Show as a list",
+  "@mySpacesLayoutList": {
+    "description": "#2554 My spaces: show the spaces as a single list"
+  },
+  "mySpacesReview": "My review",
+  "@mySpacesReview": {
+    "description": "#2554 My spaces: my own star rating of a space, not yet given"
+  },
+  "mySpacesReviewed": "My review: {stars} of 5",
+  "@mySpacesReviewed": {
+    "description": "#2554 My spaces: my own star rating of a space",
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      }
+    }
+  },
+  "mySpacesSavedOnAccount": "Saved on your account",
+  "@mySpacesSavedOnAccount": {
+    "description": "#2554 My spaces: the space is a favourite saved on the personal account"
   }
 }
