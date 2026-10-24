@@ -30,6 +30,8 @@ abstract final class SettingDefaults {
   static const int directoryUpcomingWindowDays = 14;
   /// `dunning.first_after_days`
   static const int dunningFirstAfterDays = 14;
+  /// `federation.retention_hours`
+  static const int federationRetentionHours = 24;
   /// `identity.clock_skew_seconds`
   static const int identityClockSkewSeconds = 30;
   /// `identity.status_assertion_lifetime_seconds`

@@ -1,0 +1,17 @@
+{
+  "@@locale": "es",
+  "meDataWorkspacesTitle": "Sus datos en cada espacio",
+  "meDataWorkspacesScope": "Cada espacio exporta lo que conserva sobre usted — afiliación, reservas, cuenta y facturas — desde su propio servidor, un archivo por espacio. La parte de su cuenta personal es la tarjeta de arriba.",
+  "meDataWorkspacesEmpty": "Su cuenta aún no nombra ningún espacio.",
+  "meDataWorkspacesFailed": "No se pudieron leer los espacios de su cuenta. No se exportó nada.",
+  "meDataWorkspaceUnnamed": "Espacio {id}",
+  "meDataWorkspaceExport": "Exportar",
+  "meDataWorkspaceHostUnavailable": "El servidor de este espacio no es accesible desde aquí. No se exportó nada.",
+  "meDataWorkspaceDisabled": "Este espacio no ofrece la exportación de datos.",
+  "meDataWorkspaceForbidden": "Este espacio lo ha rechazado: usted no es miembro activo allí. No se exportó nada.",
+  "meDataWorkspaceMalformed": "Este espacio respondió de una forma que esta aplicación no puede leer. No se exportó nada.",
+  "meDataWorkspaceFailed": "Este espacio no respondió. No se exportó nada.",
+  "meDataWorkspaceSuperseded": "La cuenta conectada cambió mientras se leía la exportación. No se ofreció nada.",
+  "myFinancesExport": "Exportar mis documentos",
+  "myFinancesExportWorkspace": "{workspace} — documentos (CSV)"
+}

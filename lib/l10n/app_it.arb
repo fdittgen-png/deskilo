@@ -8671,6 +8671,18 @@
   "meDataPersonalTitle": "Il Suo account personale",
   "meDataPersonalUnsupported": "Il Suo spazio personale non offre ancora questa esportazione. Non è stato esportato nulla.",
   "meDataViewReservations": "Prenotazioni",
+  "meDataWorkspaceDisabled": "Questo spazio non offre l’esportazione dei dati.",
+  "meDataWorkspaceExport": "Esporta",
+  "meDataWorkspaceFailed": "Questo spazio non ha risposto. Non è stato esportato nulla.",
+  "meDataWorkspaceForbidden": "Questo spazio ha rifiutato: Lei non vi è membro attivo. Non è stato esportato nulla.",
+  "meDataWorkspaceHostUnavailable": "Il server di questo spazio non è raggiungibile da qui. Non è stato esportato nulla.",
+  "meDataWorkspaceMalformed": "Questo spazio ha risposto in una forma che questa app non sa leggere. Non è stato esportato nulla.",
+  "meDataWorkspaceSuperseded": "L’account connesso è cambiato durante la lettura dell’esportazione. Non è stato offerto nulla.",
+  "meDataWorkspaceUnnamed": "Spazio {id}",
+  "meDataWorkspacesEmpty": "Il Suo account non nomina ancora alcuno spazio.",
+  "meDataWorkspacesFailed": "Non è stato possibile leggere gli spazi del Suo account. Non è stato esportato nulla.",
+  "meDataWorkspacesScope": "Ogni spazio esporta ciò che conserva su di Lei — iscrizione, prenotazioni, conto e fatture — dal proprio server, un file per spazio. La parte del Suo account personale è la scheda qui sopra.",
+  "meDataWorkspacesTitle": "I Suoi dati in ogni spazio",
   "meFinanceGlanceOwed": "Da pagare: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -9240,6 +9252,8 @@
   "moneyUsageUnlimited": "{used} mezze giornate usate",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Il mio badge",
+  "myFinancesExport": "Esporta i miei documenti",
+  "myFinancesExportWorkspace": "{workspace} — documenti (CSV)",
   "myInvoicesTitle": "Le mie fatture",
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
@@ -13603,6 +13617,7 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintFederationRetentionHours": "Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d'orologio.",
   "settingHintIdentityClockSkewSeconds": "Secondi di scarto d'orologio tra la casa personale e un server di spazi ancora accettati, da 0 a 30.",
   "settingHintIdentityStatusAssertionLifetimeSeconds": "Secondi per cui un server di spazi può affidarsi a uno stato di identità firmato dalla casa personale. Al massimo 900: a un account sospeso vengono rifiutate le nuove richieste entro questo tempo più lo scarto d'orologio.",
   "settingHintIdentityStatusReconcileSeconds": "Secondi tra due aggiornamenti degli stati di identità che un server di spazi conserva. Lo mantenga sotto la validità.",
@@ -13750,6 +13765,7 @@
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
   },
+  "settingLabelFederationRetentionHours": "Conservazione degli scambi tra server",
   "settingLabelIdentityClockSkewSeconds": "Scarto d'orologio ammesso",
   "settingLabelIdentityStatusAssertionLifetimeSeconds": "Validità dello stato di identità",
   "settingLabelIdentityStatusReconcileSeconds": "Aggiornamento dello stato di identità",

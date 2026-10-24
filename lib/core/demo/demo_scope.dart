@@ -41,6 +41,7 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_workspace_context.dart';
+import 'package:deskilo/core/demo/demo_workspace_exports.dart';
 import 'package:deskilo/core/instance/settings_bundle_asset.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
@@ -342,10 +343,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
-      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), // #1823, #2563
+      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
-      guestParticipationRepositoryProvider
-          .overrideWithValue(fixture.guests),
+      guestParticipationRepositoryProvider.overrideWithValue(fixture.guests),
       ..._demoContacts(fixture), // #2472
       // #1824 — the messenger of every server, one in-memory one each.
       // #2327 — this server's is the fixture's, seeded; any other is empty.

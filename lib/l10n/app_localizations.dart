@@ -21448,6 +21448,78 @@ abstract class AppLocalizations {
   /// **'Reservations'**
   String get meDataViewReservations;
 
+  /// #2557 C3 the workspace has the export switched off.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace does not offer the data export.'**
+  String get meDataWorkspaceDisabled;
+
+  /// #2557 C3 export one workspace's own records.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get meDataWorkspaceExport;
+
+  /// #2557 C3 the workspace did not answer.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace did not answer. Nothing was exported.'**
+  String get meDataWorkspaceFailed;
+
+  /// #2557 C3 the workspace refused.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace refused: you are not an active member there. Nothing was exported.'**
+  String get meDataWorkspaceForbidden;
+
+  /// #2557 C3 the workspace's server is not reachable.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace\'s server is not reachable from here. Nothing was exported.'**
+  String get meDataWorkspaceHostUnavailable;
+
+  /// #2557 C3 the workspace's answer cannot be read.
+  ///
+  /// In en, this message translates to:
+  /// **'This workspace answered in a form this app cannot read. Nothing was exported.'**
+  String get meDataWorkspaceMalformed;
+
+  /// #2557 C3 the account changed while the export was read.
+  ///
+  /// In en, this message translates to:
+  /// **'The signed-in account changed while the export was read. Nothing was offered.'**
+  String get meDataWorkspaceSuperseded;
+
+  /// #2557 C3 a workspace whose name may not be read.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace {id}'**
+  String meDataWorkspaceUnnamed(String id);
+
+  /// #2557 C3 no workspace to export from.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account names no workspace yet.'**
+  String get meDataWorkspacesEmpty;
+
+  /// #2557 C3 the workspace list could not be read.
+  ///
+  /// In en, this message translates to:
+  /// **'The workspaces your account names could not be read. Nothing was exported.'**
+  String get meDataWorkspacesFailed;
+
+  /// #2557 C3 what each workspace's export covers.
+  ///
+  /// In en, this message translates to:
+  /// **'Each workspace exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per workspace. Your personal account\'s part is the card above.'**
+  String get meDataWorkspacesScope;
+
+  /// #2557 C3 the per-workspace export card title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your records in each workspace'**
+  String get meDataWorkspacesTitle;
+
   /// No description provided for @meFinanceGlanceOwed.
   ///
   /// In en, this message translates to:
@@ -23355,6 +23427,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My badge'**
   String get myBadgeTitle;
+
+  /// #2557 C3 Me › Finances: the export menu's tooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Export my documents'**
+  String get myFinancesExport;
+
+  /// #2557 C3 Me › Finances: one workspace's documents as a CSV file.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspace} — documents (CSV)'**
+  String myFinancesExportWorkspace(String workspace);
 
   /// invoicing hub vs my finances
   ///
@@ -33078,6 +33162,12 @@ abstract class AppLocalizations {
   /// **'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.'**
   String get settingHintDunningFirstAfterDays;
 
+  /// #2563 C2 retention: settingHintFederationRetentionHours
+  ///
+  /// In en, this message translates to:
+  /// **'Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.'**
+  String get settingHintFederationRetentionHours;
+
   /// #2562 C2a enrolment: settingHintIdentityClockSkewSeconds
   ///
   /// In en, this message translates to:
@@ -33347,6 +33437,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days before a first reminder'**
   String get settingLabelDunningFirstAfterDays;
+
+  /// #2563 C2 retention: settingLabelFederationRetentionHours
+  ///
+  /// In en, this message translates to:
+  /// **'Backchannel retention'**
+  String get settingLabelFederationRetentionHours;
 
   /// #2562 C2a enrolment: settingLabelIdentityClockSkewSeconds
   ///

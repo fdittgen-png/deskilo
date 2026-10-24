@@ -31,6 +31,7 @@ import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/my_finances_parts.dart';
+import '../widgets/own_finance_export_menu.dart';
 import '../widgets/personal_payment_provider.dart';
 import 'account_activity_screen.dart';
 
@@ -56,15 +57,14 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     // shown apart, in the development colour, and never counted.
     final devIds = ref.watch(myDevelopmentWorkspaceIdsProvider);
     final data = all.inWorkspace(_workspace);
-    final prod = data.production(devIds);
-    final dev = data.development(devIds);
-    final owed = prod.outstanding.length;
-    final options = all.workspaces;
+    final (prod, dev) = (data.production(devIds), data.development(devIds));
+    final (owed, options) = (prod.outstanding.length, all.workspaces);
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.financesTitle),
+          actions: [if (overview.hasValue) OwnFinanceExportMenu(overview: all)], // #2557 C3
           bottom: AppTabBar.bottom(
             context,
             barKey: const ValueKey('finances-tabs'),

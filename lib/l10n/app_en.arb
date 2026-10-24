@@ -14981,6 +14981,59 @@
   "@meDataViewReservations": {
     "description": "#2552 My data view: the person's own reservations and visits."
   },
+  "meDataWorkspaceDisabled": "This workspace does not offer the data export.",
+  "@meDataWorkspaceDisabled": {
+    "description": "#2557 C3 the workspace has the export switched off."
+  },
+  "meDataWorkspaceExport": "Export",
+  "@meDataWorkspaceExport": {
+    "description": "#2557 C3 export one workspace's own records."
+  },
+  "meDataWorkspaceFailed": "This workspace did not answer. Nothing was exported.",
+  "@meDataWorkspaceFailed": {
+    "description": "#2557 C3 the workspace did not answer."
+  },
+  "meDataWorkspaceForbidden": "This workspace refused: you are not an active member there. Nothing was exported.",
+  "@meDataWorkspaceForbidden": {
+    "description": "#2557 C3 the workspace refused."
+  },
+  "meDataWorkspaceHostUnavailable": "This workspace's server is not reachable from here. Nothing was exported.",
+  "@meDataWorkspaceHostUnavailable": {
+    "description": "#2557 C3 the workspace's server is not reachable."
+  },
+  "meDataWorkspaceMalformed": "This workspace answered in a form this app cannot read. Nothing was exported.",
+  "@meDataWorkspaceMalformed": {
+    "description": "#2557 C3 the workspace's answer cannot be read."
+  },
+  "meDataWorkspaceSuperseded": "The signed-in account changed while the export was read. Nothing was offered.",
+  "@meDataWorkspaceSuperseded": {
+    "description": "#2557 C3 the account changed while the export was read."
+  },
+  "meDataWorkspaceUnnamed": "Workspace {id}",
+  "@meDataWorkspaceUnnamed": {
+    "description": "#2557 C3 a workspace whose name may not be read.",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "meDataWorkspacesEmpty": "Your account names no workspace yet.",
+  "@meDataWorkspacesEmpty": {
+    "description": "#2557 C3 no workspace to export from."
+  },
+  "meDataWorkspacesFailed": "The workspaces your account names could not be read. Nothing was exported.",
+  "@meDataWorkspacesFailed": {
+    "description": "#2557 C3 the workspace list could not be read."
+  },
+  "meDataWorkspacesScope": "Each workspace exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per workspace. Your personal account's part is the card above.",
+  "@meDataWorkspacesScope": {
+    "description": "#2557 C3 what each workspace's export covers."
+  },
+  "meDataWorkspacesTitle": "Your records in each workspace",
+  "@meDataWorkspacesTitle": {
+    "description": "#2557 C3 the per-workspace export card title."
+  },
   "meFinanceGlanceOwed": "To pay: {amount}",
   "@meFinanceGlanceOwed": {
     "placeholders": {
@@ -16423,6 +16476,19 @@
     }
   },
   "myBadgeTitle": "My badge",
+  "myFinancesExport": "Export my documents",
+  "@myFinancesExport": {
+    "description": "#2557 C3 Me › Finances: the export menu's tooltip."
+  },
+  "myFinancesExportWorkspace": "{workspace} — documents (CSV)",
+  "@myFinancesExportWorkspace": {
+    "description": "#2557 C3 Me › Finances: one workspace's documents as a CSV file.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
   "myInvoicesTitle": "My invoices",
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
@@ -22682,6 +22748,10 @@
   "@settingHintDunningFirstAfterDays": {
     "description": "#2484 settings: Setting hint."
   },
+  "settingHintFederationRetentionHours": "Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.",
+  "@settingHintFederationRetentionHours": {
+    "description": "#2563 C2 retention: settingHintFederationRetentionHours"
+  },
   "settingHintIdentityClockSkewSeconds": "Seconds of clock difference between the personal home and a workspace server that are still accepted, 0 to 30.",
   "@settingHintIdentityClockSkewSeconds": {
     "description": "#2562 C2a enrolment: settingHintIdentityClockSkewSeconds"
@@ -22861,6 +22931,10 @@
   "settingLabelDunningFirstAfterDays": "Days before a first reminder",
   "@settingLabelDunningFirstAfterDays": {
     "description": "#2484 settings: Setting label."
+  },
+  "settingLabelFederationRetentionHours": "Backchannel retention",
+  "@settingLabelFederationRetentionHours": {
+    "description": "#2563 C2 retention: settingLabelFederationRetentionHours"
   },
   "settingLabelIdentityClockSkewSeconds": "Allowed clock difference",
   "@settingLabelIdentityClockSkewSeconds": {
