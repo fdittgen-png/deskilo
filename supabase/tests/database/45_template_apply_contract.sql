@@ -172,7 +172,7 @@ select throws_like(
   format($$ insert into public.workspace_templates (key, name, visibility, owner_workspace_id, configuration, entities)
             values ('forged', 'Forged', 'private', %L, '{"workspace":{"vat_id":"FRK1338X"}}', '{identity}') $$,
          current_setting('deskilo.ct.src')),
-  '%row-level security%',
+  '%permission denied%',
   'an owner cannot write a template row directly: the strip cannot be skipped by a client');
 
 -- ================================================================ equivalence
