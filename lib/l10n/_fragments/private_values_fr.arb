@@ -1,0 +1,8 @@
+{
+  "@@locale": "fr",
+  "privateValueHidden": "Masqué",
+  "privateValueShow": "Afficher",
+  "privateValueHide": "Masquer",
+  "privateValuesTitle": "Masquer les valeurs privées",
+  "privateValuesHint": "Les montants et les aperçus restent masqués jusqu’à ce que vous les affichiez. Enregistré sur cet appareil et sur votre compte."
+}

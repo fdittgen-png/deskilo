@@ -16247,6 +16247,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'The rule per category, the people it names today, and who actually looked.';
 
   @override
+  String get privateValueHidden => 'Hidden';
+
+  @override
+  String get privateValueHide => 'Hide';
+
+  @override
+  String get privateValueShow => 'Show';
+
+  @override
+  String get privateValuesHint =>
+      'Amounts and previews stay hidden until you reveal them. Kept on this device and on your account.';
+
+  @override
+  String get privateValuesTitle => 'Hide private values';
+
+  @override
   String processAlsoNeeds(String features) {
     return 'Switching it all on also needs: $features';
   }

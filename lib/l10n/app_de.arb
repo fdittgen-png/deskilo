@@ -10539,6 +10539,11 @@
   "@privacyWhoCanSeeHint": {
     "description": "#719 - privacy & data"
   },
+  "privateValueHidden": "Verborgen",
+  "privateValueHide": "Verbergen",
+  "privateValueShow": "Anzeigen",
+  "privateValuesHint": "Beträge und Vorschauen bleiben verborgen, bis Sie sie anzeigen. Gespeichert auf diesem Gerät und in Ihrem Konto.",
+  "privateValuesTitle": "Private Werte verbergen",
   "processAlsoNeeds": "Alles einzuschalten braucht auch: {features}",
   "processApplied": "{count} Funktionen geändert.",
   "processBillingPayments": "Abrechnung und Zahlungen",

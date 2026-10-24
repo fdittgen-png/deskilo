@@ -18950,6 +18950,26 @@
   "@privacyWhoCanSeeHint": {
     "description": "#719 - privacy & data"
   },
+  "privateValueHidden": "Hidden",
+  "@privateValueHidden": {
+    "description": "#2552 XPRIV-01: what a screen reader hears for a masked private value (an amount, a preview); never the value."
+  },
+  "privateValueHide": "Hide",
+  "@privateValueHide": {
+    "description": "#2552 XPRIV-01: the action that masks a revealed private value again."
+  },
+  "privateValueShow": "Show",
+  "@privateValueShow": {
+    "description": "#2552 XPRIV-01: the action that reveals one masked private value."
+  },
+  "privateValuesHint": "Amounts and previews stay hidden until you reveal them. Kept on this device and on your account.",
+  "@privateValuesHint": {
+    "description": "#2552 XPRIV-01 Me › Account: what the private-values switch does and where it is kept."
+  },
+  "privateValuesTitle": "Hide private values",
+  "@privateValuesTitle": {
+    "description": "#2552 XPRIV-01 Me › Account: the switch that keeps private values masked until revealed."
+  },
   "processAlsoNeeds": "Switching it all on also needs: {features}",
   "@processAlsoNeeds": {
     "description": "#1327 the process-first overview of the Features screen",

@@ -1,0 +1,8 @@
+{
+  "@@locale": "es",
+  "privateValueHidden": "Oculto",
+  "privateValueShow": "Mostrar",
+  "privateValueHide": "Ocultar",
+  "privateValuesTitle": "Ocultar valores privados",
+  "privateValuesHint": "Los importes y las vistas previas permanecen ocultos hasta que usted los muestre. Se guarda en este dispositivo y en su cuenta."
+}

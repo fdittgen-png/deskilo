@@ -16354,6 +16354,22 @@ class AppLocalizationsEs extends AppLocalizations {
       'La regla por categoría, las personas que nombra hoy y quién miró realmente.';
 
   @override
+  String get privateValueHidden => 'Oculto';
+
+  @override
+  String get privateValueHide => 'Ocultar';
+
+  @override
+  String get privateValueShow => 'Mostrar';
+
+  @override
+  String get privateValuesHint =>
+      'Los importes y las vistas previas permanecen ocultos hasta que usted los muestre. Se guarda en este dispositivo y en su cuenta.';
+
+  @override
+  String get privateValuesTitle => 'Ocultar valores privados';
+
+  @override
   String processAlsoNeeds(String features) {
     return 'Activarlo todo también necesita: $features';
   }

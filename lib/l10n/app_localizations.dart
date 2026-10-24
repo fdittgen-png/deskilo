@@ -27294,6 +27294,36 @@ abstract class AppLocalizations {
   /// **'The rule per category, the people it names today, and who actually looked.'**
   String get privacyWhoCanSeeHint;
 
+  /// #2552 XPRIV-01: what a screen reader hears for a masked private value (an amount, a preview); never the value.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get privateValueHidden;
+
+  /// #2552 XPRIV-01: the action that masks a revealed private value again.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get privateValueHide;
+
+  /// #2552 XPRIV-01: the action that reveals one masked private value.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get privateValueShow;
+
+  /// #2552 XPRIV-01 Me › Account: what the private-values switch does and where it is kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Amounts and previews stay hidden until you reveal them. Kept on this device and on your account.'**
+  String get privateValuesHint;
+
+  /// #2552 XPRIV-01 Me › Account: the switch that keeps private values masked until revealed.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide private values'**
+  String get privateValuesTitle;
+
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
