@@ -71,7 +71,7 @@ concurrency:
 jobs:
   classify:
     name: classify the change · web
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
       web: ${{ steps.verdict.outputs.web }}
@@ -89,7 +89,7 @@ jobs:
           artifact: web-classification
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     needs: [classify]
     # Always evaluated, so the check reports on every pull request — built,
@@ -209,7 +209,7 @@ jobs:
     # itself `if: always()`: a stood-down or failed build must not publish.
     if: ${{ github.event_name != 'pull_request' && inputs.deploy == true && needs.build.result == 'success' }}
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
