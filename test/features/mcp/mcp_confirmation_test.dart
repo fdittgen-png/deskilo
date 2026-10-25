@@ -158,4 +158,75 @@ void main() {
     expect(find.text('New members'), findsOneWidget);
     expect(find.text('It will be marked as done.'), findsOneWidget);
   });
+
+  testWidgets('a change of hours names every field from its value to the new '
+      'one', (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'set_opening_hours',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'open_weekdays': '1,2,3,4,5,6', 'work_start_minutes': 540},
+        target: {
+          'kind': 'opening_hours',
+          'changes': [
+            {'field': 'open_weekdays', 'from': [1, 2, 3, 4, 5], 'to': [1, 2, 3, 4, 5, 6]},
+            {'field': 'work_start_minutes', 'from': 480, 'to': 540},
+          ],
+        },
+      ),
+    );
+    expect(find.text('Set the opening days and hours'), findsOneWidget);
+    expect(find.text('Working hours'), findsOneWidget);
+    expect(find.textContaining('Open weekdays: Mon, Tue, Wed, Thu, Fri → Mon, Tue, Wed, Thu, Fri, Sat'),
+        findsOneWidget);
+    expect(find.textContaining(RegExp(r'Day starts: 0?8[:.]00.* → 0?9[:.]00')), findsOneWidget);
+  });
+
+  testWidgets('closure days name each day and the reason', (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'add_closure_days',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'days': '2026-12-24', 'reason': 'Christmas'},
+        target: {'kind': 'closure_days', 'days': ['2026-12-24'], 'reason': 'Christmas'},
+      ),
+    );
+    expect(find.text('Add closure days'), findsOneWidget);
+    expect(find.textContaining('2026'), findsWidgets);
+    expect(find.text('Reason: Christmas'), findsOneWidget);
+  });
+
+  testWidgets('a number series names the journal and each changed field',
+      (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'set_number_sequence',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'journal': 'invoice', 'prefix': 'F-', 'reset': 'never'},
+        target: {
+          'kind': 'number_sequence',
+          'journal': 'invoice',
+          'changes': [
+            {'field': 'prefix', 'from': 'INV-', 'to': 'F-'},
+            {'field': 'reset', 'from': 'yearly', 'to': 'never'},
+          ],
+        },
+      ),
+    );
+    expect(find.text('Set how documents are numbered'), findsOneWidget);
+    expect(find.text('Invoices'), findsOneWidget);
+    expect(find.text('Prefix: INV- → F-\nRestart: Every year → Never'), findsOneWidget);
+  });
 }

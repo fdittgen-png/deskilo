@@ -349,8 +349,9 @@ const RESOURCES = [
   { path: "capabilities", operation: "get_capabilities", name: "What the assistant may do here", mimeType: "application/json" },
   { path: "booking-periods", operation: "get_capabilities", name: "Booking periods and opening hours", mimeType: "application/json" },
   { path: "setup-status", operation: "get_setup_status", name: "Where the space's setup stands", mimeType: "application/json" },
+  { path: "setup-steps", operation: "explain_setup_step", name: "The setup steps, in the guide's order", mimeType: "application/json" },
 ] as const;
-const RESOURCE_URI = /^deskilo:\/\/workspace\/([0-9a-f-]{36})\/(capabilities|booking-periods|setup-status)$/i;
+const RESOURCE_URI = /^deskilo:\/\/workspace\/([0-9a-f-]{36})\/(capabilities|booking-periods|setup-status|setup-steps)$/i;
 const PLACE_URI = /^deskilo:\/\/workspace\/([0-9a-f-]{36})\/place\/(seat|desk|office|level)\/([0-9a-f-]{36})\/image$/i;
 
 /** #2393 — the prompts that chain the tools the instructions describe. */
@@ -389,7 +390,7 @@ function setupPromptText(args: Record<string, string | undefined>): string {
     "2. Ask me about the space, one question at a time: do members owe money, do I issue invoices, am I VAT-registered, do I keep books, do I track purchases, are there several rooms or sites, a tablet at the door, a public page, online payments. Then propose a level for each process, or a quick start (essentiel, standard, complet; deskilo_list_setup_levels lists them), and say why.",
     "3. deskilo_preview_setup_levels with that choice: tell me what it switches on and off, and any gap to fix first.",
     "4. When I agree, deskilo_apply_setup_levels with the same choice and a new request_id. It answers requires_confirmation: I confirm in the DesKilo app, then you call it again with the same request_id and arguments.",
-    "5. Read the status again. A step whose assistant is mark_done or set_aside, once I say it is done or can wait: deskilo_mark_setup_step, confirmed the same way. Any other open step: tell me which screen of the app to open (its route) and what it needs.",
+    "5. Read the status again. A step whose assistant is mark_done or set_aside, once I say it is done or can wait: deskilo_mark_setup_step, confirmed the same way. Any other open step: deskilo_explain_setup_step says what it is, what it waits for and what it unlocks; tell me which screen of the app to open (its route) and what it needs.",
     "Never ask me for passwords, API keys, tokens or other credentials (payment providers, e-invoicing): I enter them in the DesKilo app myself.",
   ].join("\n");
 }
@@ -484,11 +485,13 @@ function buildServer(db: SupabaseClient, installation: string, signal: AbortSign
     const workspaceResource = RESOURCE_URI.exec(uri);
     if (workspaceResource) {
       const [, workspace, path] = workspaceResource;
-      const data = projectData("get_capabilities", await facadeRead("get_capabilities", workspace, {})) as Record<string, unknown>;
-      if (path === "setup-status") {
-        const status = projectData("get_setup_status", await facadeRead("get_setup_status", workspace, {}));
-        return { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(status) }] };
+      // Each resource is read through its own operation, so its own gates apply.
+      if (path === "setup-status" || path === "setup-steps") {
+        const op = path === "setup-status" ? "get_setup_status" : "explain_setup_step";
+        const body = projectData(op, await facadeRead(op, workspace, {}));
+        return { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(body) }] };
       }
+      const data = projectData("get_capabilities", await facadeRead("get_capabilities", workspace, {})) as Record<string, unknown>;
       const body = path === "booking-periods"
         ? { time_zone: data.time_zone, opening_hours: data.opening_hours, booking_periods: data.booking_periods }
         : data;

@@ -324,6 +324,17 @@
     "input": "09338a5eebae270a",
     "output": "25b372280b4f1176"
   },
+  "explain_setup_step": {
+    "name": "deskilo_explain_setup_step",
+    "title": "What a setup step is",
+    "annotations": {
+      "title": "What a setup step is",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "d9561fff6e7417c0",
+    "output": "1ff943b3d9ed047c"
+  },
   "preview_setup_levels": {
     "name": "deskilo_preview_setup_levels",
     "title": "Preview a change of levels",
@@ -360,5 +371,44 @@
     },
     "input": "912827c23382fa07",
     "output": "a17d819e76025b35"
+  },
+  "set_opening_hours": {
+    "name": "deskilo_set_opening_hours",
+    "title": "Set the opening days and hours",
+    "annotations": {
+      "title": "Set the opening days and hours",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "a9d8fc8e1a60ff63",
+    "output": "e640be064c85ab8a"
+  },
+  "add_closure_days": {
+    "name": "deskilo_add_closure_days",
+    "title": "Add closure days",
+    "annotations": {
+      "title": "Add closure days",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "66961d591ee463cf",
+    "output": "e01be08f0e18f5d6"
+  },
+  "set_number_sequence": {
+    "name": "deskilo_set_number_sequence",
+    "title": "Set how documents are numbered",
+    "annotations": {
+      "title": "Set how documents are numbered",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "cd8fb8b813e9dbfe",
+    "output": "d387c3d84ba21917"
   }
 }

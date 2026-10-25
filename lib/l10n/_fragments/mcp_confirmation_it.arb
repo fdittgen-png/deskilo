@@ -20,5 +20,7 @@
   "mcpConfirmSwitchOn": "Attiva: {features}",
   "mcpConfirmSwitchOff": "Disattiva: {features}. I loro dati vengono conservati.",
   "mcpConfirmStepDone": "Verrà segnato come fatto.",
-  "mcpConfirmStepLater": "Verrà messo da parte per dopo."
+  "mcpConfirmStepLater": "Verrà messo da parte per dopo.",
+  "mcpConfirmFieldChange": "{field}: {from} → {to}",
+  "mcpConfirmClosureReason": "Motivo: {reason}"
 }
