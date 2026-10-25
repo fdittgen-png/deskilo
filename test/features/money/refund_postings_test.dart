@@ -11,6 +11,7 @@ import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/datev_collective.dart';
 import 'support/seeded_export_year.dart';
 
 Map<String, InvoiceMatch> _matches({String resolution = 'refunded'}) => {
@@ -65,7 +66,7 @@ void main() {
 
   test('DATEV: the refund debits the customers and credits the bank', () {
     const accounts = DatevAccounts();
-    final rows = buildDatevFile(DatevRequest(
+    final rows = buildDatevFile(DatevRequest(detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: _matches(),
       accounts: accounts,
@@ -80,7 +81,7 @@ void main() {
     final f = rows.single.split(';');
     expect(f[0], '50,00');
     expect(f[1], '"S"');
-    expect(f[6], accounts.customers);
+    expect(f[6], '10000');
     expect(f[7], accounts.bank);
     expect(f[9], '1006');
   });

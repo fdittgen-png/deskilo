@@ -126,6 +126,12 @@ String datevProblemsText(AppLocalizations l10n, List<DatevProblem> problems) {
             given,
           ),
           DatevClientNumber(:final given) => l10n.datevProblemClient(given),
+          DatevSachkontenlaenge(:final length) =>
+            l10n.datevProblemSachkontenlaenge('$length'),
+          DatevCurrency(:final given) => l10n.datevProblemCurrency(given),
+          DatevReferenceTooLong(:final field, :final value) =>
+            l10n.datevProblemReferenceTooLong(field, value),
+          DatevFiscalYearStarts() => l10n.datevProblemFiscalYearStarts,
           DatevAccountLength(:final account, :final length) =>
             l10n.datevProblemAccountLength(account, '$length'),
           DatevMemberNumber(:final member, :final number) =>

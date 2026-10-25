@@ -17,6 +17,7 @@ import '../domain/datev_fields.dart';
 import '../domain/datev_package.dart';
 import '../domain/gobd_package.dart';
 import '../domain/invoice.dart';
+import '../domain/number_sequence.dart';
 import '../providers/book_period_providers.dart';
 import 'accounting_export_run.dart';
 import 'datev_profile.dart';
@@ -27,13 +28,19 @@ import 'invoice_documents.dart';
 import 'widgets/export_accounts_dialogs.dart';
 
 /// #2375 — the DATEV and GoBD exports of [AccountingExportRun].
+/// The number series members are numbered in.
+const _memberJournal = 'member';
+
 extension GermanAccountingExports on AccountingExportRun {
   Future<void> datevExport() async {
     // Beraternummer and Mandantennummer come from the accountant.
     // DATEV refuses an import whose numbers do not match the target
     // client, and that is a GOOD refusal: it stops a file landing in
     // the wrong company's books.
-    final datev = await showDatevAccountsDialog(context);
+    final datev = await showDatevAccountsDialog(
+      context,
+      costCentre: workspace.name,
+    );
     if (datev == null || !context.mounted) return;
     await runGuarded(
       context,
@@ -53,6 +60,8 @@ extension GermanAccountingExports on AccountingExportRun {
             stackTrace: st,
           );
         }
+        final sequences = await repo.fetchNumberSequences(workspace.id);
+        final numbers = await memberNumbers();
         final package = buildDatevPackage(
           DatevPackageRequest(
             request: DatevRequest(
@@ -64,6 +73,11 @@ extension GermanAccountingExports on AccountingExportRun {
               generatedAt: now,
               consultantNumber: datev.consultantNumber,
               clientNumber: datev.clientNumber,
+              accountLength: datev.accountLength,
+              detail: DatevDetail(
+                defaultCostCentre: datev.costCentre,
+                voucherLinks: datev.voucherLinks,
+              ),
               ledger: ledger,
               repartitions: repartitions,
               development: development,
@@ -73,10 +87,13 @@ extension GermanAccountingExports on AccountingExportRun {
             ),
             bookProfiles: bookProfiles,
             closed: (from, to) => periods.closedOn(from)?.contains(to) ?? false,
-            defaultCostCentre: workspace.name,
-            memberNumbers: memberNumbers,
+            memberSequence: sequences.firstWhere(
+              (s) => s.journal == _memberJournal,
+              orElse: () => NumberSequence.defaultsFor(_memberJournal),
+            ),
+            debtorBase: datev.debtorBase,
+            memberNumbers: numbers,
             memberNames: memberNames,
-            voucherLinks: true,
           ),
         );
         if (!context.mounted) return;
@@ -89,7 +106,7 @@ extension GermanAccountingExports on AccountingExportRun {
         // The vouchers the rows link, named by their Beleglink id.
         final vouchers = await _vouchers(
           package.vouchers,
-          (i) => 'Belege/${i.id}.pdf',
+          (i) => 'belege/${i.id}.pdf',
         );
         if (vouchers == null || !context.mounted) return;
         await _saveZip({

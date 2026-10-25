@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/datev.dart';
+import '../../domain/datev_problem.dart';
 import '../../domain/fec.dart';
 import '../../domain/sage.dart';
 
@@ -121,15 +122,33 @@ class DatevExportSettings {
     required this.accounts,
     required this.consultantNumber,
     required this.clientNumber,
+    required this.accountLength,
+    required this.debtorBase,
+    required this.costCentre,
+    required this.voucherLinks,
   });
 
   final DatevAccounts accounts;
   final String consultantNumber;
   final String clientNumber;
+
+  /// The Sachkontenlänge of the accountant's chart; an unreadable entry is
+  /// 0, which the export refuses with its own reason.
+  final int accountLength;
+
+  /// The Debitor of member counter 0.
+  final int debtorBase;
+
+  /// KOST1 of a row whose document names no site.
+  final String costCentre;
+
+  /// Whether the invoice PDFs travel with the file, linked from each row.
+  final bool voucherLinks;
 }
 
 Future<DatevExportSettings?> showDatevAccountsDialog(
   BuildContext context, {
+  required String costCentre,
   DatevAccounts initial = const DatevAccounts(),
 }) {
   final l10n = context.l10n;
@@ -140,7 +159,15 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
   final revenue = TextEditingController(text: initial.revenue);
   final bank = TextEditingController(text: initial.bank);
   final expenses = TextEditingController(text: initial.expenses);
-  final vat = TextEditingController(text: initial.vat);
+  // The accountant's chart decides these; the defaults are DATEV's own
+  // (four-digit Sachkonten, the first Debitor of that length).
+  final length = DatevFormatRules.accountLengths.$1;
+  final accountLength = TextEditingController(text: '$length');
+  final debtorBase = TextEditingController(
+    text: '${DatevFormatRules.debtorRange(length).$1}',
+  );
+  final kost = TextEditingController(text: costCentre);
+  final links = ValueNotifier(true);
 
   Widget field(String key, TextEditingController controller, String label) =>
       TextField(
@@ -166,13 +193,29 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
           field('datev-client', client,
               l10n.datevClientNumber),
           const SizedBox(height: AppSpacing.md),
+          field('datev-account-length', accountLength,
+              l10n.datevAccountLength),
           field('datev-account-revenue', revenue,
               l10n.fecAccountRevenue),
-          field('datev-account-vat', vat,
-              l10n.fecAccountVat),
           field('datev-account-bank', bank, l10n.fecAccountBank),
           field('datev-account-expenses', expenses,
               l10n.fecAccountExpenses),
+          field('datev-debtor-base', debtorBase, l10n.datevDebtorBase),
+          TextField(
+            key: const ValueKey('datev-cost-centre'),
+            controller: kost,
+            decoration: InputDecoration(labelText: l10n.datevCostCentre),
+          ),
+          ValueListenableBuilder<bool>(
+            valueListenable: links,
+            builder: (context, on, _) => SwitchListTile(
+              key: const ValueKey('datev-voucher-links'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(l10n.datevVoucherLinks),
+              value: on,
+              onChanged: (value) => links.value = value,
+            ),
+          ),
         ]),
       ),
       actions: [
@@ -189,9 +232,12 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
             accounts: DatevAccounts(
               revenue: revenue.text.trim(),
               bank: bank.text.trim(),
-              vat: vat.text.trim(),
               expenses: expenses.text.trim(),
             ),
+            accountLength: int.tryParse(accountLength.text.trim()) ?? 0,
+            debtorBase: int.tryParse(debtorBase.text.trim()) ?? 0,
+            costCentre: kost.text.trim(),
+            voucherLinks: links.value,
           )),
           child: Text(l10n.commonSave),
         ),

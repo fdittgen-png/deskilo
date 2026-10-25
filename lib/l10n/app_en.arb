@@ -4843,6 +4843,10 @@
   "@dataReportYes": {
     "description": "#2862 data report: dataReportYes"
   },
+  "datevAccountLength": "Account length (Sachkontenlänge)",
+  "@datevAccountLength": {
+    "description": "DATEV export dialog (#2375): the Sachkontenlänge of the chart"
+  },
   "datevAccountsIntro": "Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
@@ -4867,6 +4871,14 @@
   "datevConsultantNumber": "Beraternummer",
   "@datevConsultantNumber": {
     "description": "#669 - accounting export formats"
+  },
+  "datevCostCentre": "Cost centre (KOST1) when a document names no site",
+  "@datevCostCentre": {
+    "description": "DATEV export dialog (#2375): KOST1 when the document names no site"
+  },
+  "datevDebtorBase": "Debitor of member number 0",
+  "@datevDebtorBase": {
+    "description": "DATEV export dialog (#2375): the Debitor account of member counter 0"
   },
   "datevProblemAccountLength": "account {account} does not have {length} digits",
   "@datevProblemAccountLength": {
@@ -4910,6 +4922,15 @@
       }
     }
   },
+  "datevProblemCurrency": "the amounts are in {currency}; the DATEV file is written in euros",
+  "@datevProblemCurrency": {
+    "description": "DATEV export (#2375): the workspace currency is not the one DATEV is written in",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "datevProblemDebtorClash": "{members} would share Debitor {account}",
   "@datevProblemDebtorClash": {
     "description": "DATEV export (#2375): two members would share one Debitor account",
@@ -4922,6 +4943,10 @@
       }
     }
   },
+  "datevProblemFiscalYearStarts": "the book profiles of the sites start the fiscal year on different days",
+  "@datevProblemFiscalYearStarts": {
+    "description": "DATEV export (#2375): the issuers' book profiles start the fiscal year on different days"
+  },
   "datevProblemMemberNumber": "{member} has no member number that gives a Debitor (\"{number}\"): give them a number first",
   "@datevProblemMemberNumber": {
     "description": "DATEV export (#2375): a member number gives no Debitor account",
@@ -4930,6 +4955,27 @@
         "type": "String"
       },
       "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemReferenceTooLong": "{field} \"{value}\" is longer than DATEV takes and would be cut",
+  "@datevProblemReferenceTooLong": {
+    "description": "DATEV export (#2375): a Belegfeld 1 or KOST1 longer than its field",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemSachkontenlaenge": "the account length {length} is not 4 to 8",
+  "@datevProblemSachkontenlaenge": {
+    "description": "DATEV export (#2375): the account length is not one DATEV knows",
+    "placeholders": {
+      "length": {
         "type": "String"
       }
     }
@@ -4945,6 +4991,10 @@
         "type": "String"
       }
     }
+  },
+  "datevVoucherLinks": "Include the invoice PDFs and link them from each row (Beleglink)",
+  "@datevVoucherLinks": {
+    "description": "DATEV export dialog (#2375): include the invoice PDFs, linked from each row"
   },
   "decisionSurfaceEmpty": "Nothing needs you",
   "@decisionSurfaceEmpty": {

@@ -14,6 +14,7 @@
 import 'dart:convert';
 
 import '../../../core/time/date_text.dart';
+import '../../../core/time/workspace_time.dart';
 import '../../../core/vat/tax_reference.dart';
 import 'accounting_source_snapshot.dart';
 import 'audit_trail.dart';
@@ -80,6 +81,7 @@ class GobdRequest {
     this.taxRates = const [],
     this.vouchers = const {},
     this.procedure = const {},
+    this.dayOf = WorkspaceTime.dateOf,
   });
 
   final String supplierName;
@@ -107,6 +109,9 @@ class GobdRequest {
 
   /// The Verfahrensdokumentation, path to bytes.
   final Map<String, List<int>> procedure;
+
+  /// The workspace's calendar day of an instant: every date column is one.
+  final DateTime Function(DateTime instant) dayOf;
 }
 
 /// The index's own file name.
@@ -118,7 +123,7 @@ Map<String, List<int>> buildGobdPackage(GobdRequest r) {
   return {
     _gobdIndexFileName: utf8.encode(_gobdIndexXml(r, tables)),
     gobdDtdFileName: utf8.encode(gobdDtd),
-    for (final t in tables) t.url: utf8.encode(_gobdCsv(t)),
+    for (final t in tables) t.url: utf8.encode(_gobdCsv(t, r.dayOf)),
     for (final files in r.vouchers.values) ...files,
     ...r.procedure,
   };
@@ -131,7 +136,7 @@ String _day(DateTime d) => dmy(d, separator: '.');
 /// The cell of [value] in a column of [type]: text quoted with its quotes
 /// doubled and control characters as spaces, an amount in cents as a comma
 /// decimal with two places, a date as DD.MM.YYYY, nothing for null.
-String _cell(Object? value, GobdType type) {
+String _cell(Object? value, GobdType type, DateTime Function(DateTime) dayOf) {
   if (value == null) return '';
   return switch (type) {
     GobdType.text =>
@@ -139,7 +144,7 @@ String _cell(Object? value, GobdType type) {
     GobdType.amount => _cents(value as int),
     GobdType.number => '$value',
     GobdType.percent => _rate(value as double),
-    GobdType.date => _day(value as DateTime),
+    GobdType.date => _day(dayOf(value as DateTime)),
   };
 }
 
@@ -156,9 +161,9 @@ String _cents(int cents) {
 String _rate(double p) => _cents((p * 100).round());
 
 /// [t]'s rows, `;`-separated and CRLF-terminated, as the index declares.
-String _gobdCsv(GobdTable t) => [
+String _gobdCsv(GobdTable t, DateTime Function(DateTime) dayOf) => [
   for (final row in t.rows)
-    '${[for (final (i, c) in t.columns.indexed) _cell(row[i], c.type)].join(';')}\r\n',
+    '${[for (final (i, c) in t.columns.indexed) _cell(row[i], c.type, dayOf)].join(';')}\r\n',
 ].join();
 
 String _x(String text) => text

@@ -314,7 +314,6 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
     taxCodeModel: TaxCodeModel.perRate,
     format: _datevFormat,
-    customerIdRule: CustomerIdRule(maxLength: 9, numericRange: (10000, 699999999)),
   ),
   ...germanAccountingTargets,
   AccountingTarget(

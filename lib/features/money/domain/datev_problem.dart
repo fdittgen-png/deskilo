@@ -35,10 +35,12 @@ abstract final class DatevFormatRules {
   /// The Sachkontenlänge a header may declare.
   static const accountLengths = (4, 8);
 
-  /// The first digit of a Debitor (1 to 6) and of a Kreditor (7 to 9): a
-  /// Personenkonto is one digit longer than the Sachkonten.
+  /// The first digit of a Debitor, 1 to 6: a Personenkonto is one digit
+  /// longer than the Sachkonten.
   static const debtorLeadingDigits = (1, 6);
-  static const creditorLeadingDigits = (7, 9);
+
+  /// The fields a Buchungsstapel row of format 700, version 13 holds.
+  static const rowFields = 125;
 
   /// The inclusive range of a Debitor for Sachkonten of [accountLength]
   /// digits: 10000 to 69999 for four.
@@ -69,6 +71,31 @@ final class DatevConsultantNumber extends DatevProblem {
 final class DatevClientNumber extends DatevProblem {
   const DatevClientNumber(this.given);
   final String given;
+}
+
+/// The Sachkontenlänge is not one DATEV knows.
+final class DatevSachkontenlaenge extends DatevProblem {
+  const DatevSachkontenlaenge(this.length);
+  final int length;
+}
+
+/// The amounts are not in the currency the format writes.
+final class DatevCurrency extends DatevProblem {
+  const DatevCurrency(this.given);
+  final String given;
+}
+
+/// A reference DATEV matches on (Belegfeld 1) or groups by (KOST1) is
+/// longer than its field: cutting it would merge or orphan it.
+final class DatevReferenceTooLong extends DatevProblem {
+  const DatevReferenceTooLong(this.field, this.value);
+  final String field;
+  final String value;
+}
+
+/// The issuers' book profiles start the fiscal year on different days.
+final class DatevFiscalYearStarts extends DatevProblem {
+  const DatevFiscalYearStarts();
 }
 
 /// An account typed for the export is not as long as the header's

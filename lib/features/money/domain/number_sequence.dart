@@ -161,6 +161,22 @@ class NumberSequence {
     return '$prefix$date${value.toString().padLeft(digits, '0')}$suffix';
   }
 
+  /// The counter of [number] read back through this series' pattern
+  /// ([format]'s inverse): the prefix, the date part and the suffix taken
+  /// off, the zero-padded counter left; null when [number] is not one of
+  /// this series'.
+  int? counterOf(String number) {
+    final date = switch (datePart) {
+      NumberDatePart.none => '',
+      NumberDatePart.year => r'\d{4}-',
+      NumberDatePart.yearMonth => r'\d{4}-\d{2}-',
+    };
+    final match = RegExp(
+      '^${RegExp.escape(prefix)}$date(\\d+)${RegExp.escape(suffix)}\$',
+    ).firstMatch(number.trim());
+    return match == null ? null : int.tryParse(match.group(1)!);
+  }
+
   NumberSequence copyWith({
     String? prefix,
     String? suffix,

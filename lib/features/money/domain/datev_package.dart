@@ -16,7 +16,9 @@ import 'datev_debtors.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';
 import 'datev_stammdaten.dart';
+import 'datev_writer.dart';
 import 'invoice.dart';
+import 'number_sequence.dart';
 
 /// What one DATEV export is built from: the request of the year with the
 /// person's numbers and accounts, and what its sub-ledger rows need.
@@ -25,10 +27,10 @@ class DatevPackageRequest {
     required this.request,
     required this.bookProfiles,
     required this.closed,
-    required this.defaultCostCentre,
+    required this.memberSequence,
+    required this.debtorBase,
     this.memberNumbers = const {},
     this.memberNames = const {},
-    this.voucherLinks = false,
     this.rowsPerBatch = DatevFormatRules.rowsPerBatch,
   });
 
@@ -41,16 +43,17 @@ class DatevPackageRequest {
   /// Whether every day of [from]..[to] lies in a closed period.
   final bool Function(DateTime from, DateTime to) closed;
 
-  /// KOST1 of a row whose document names no site.
-  final String defaultCostCentre;
+  /// The space's member number series: the counter each Debitor is
+  /// numbered from.
+  final NumberSequence memberSequence;
+
+  /// The Debitor of member counter 0: the accountant's first free one.
+  final int debtorBase;
 
   /// Member numbers and names today, for a member whose documents froze
   /// none.
   final Map<String, String> memberNumbers;
   final Map<String, String> memberNames;
-
-  /// The vouchers travel with the file: each row of a document links it.
-  final bool voucherLinks;
   final int rowsPerBatch;
 }
 
@@ -90,31 +93,32 @@ String _batchName(DatevJournal journal, String name) => switch (journal) {
 
 DatevPackage buildDatevPackage(DatevPackageRequest p) {
   final r = p.request;
+  final header = _numberProblems(r);
+  if (header.isNotEmpty) return DatevPackage._(problems: header);
   final debtors = DatevDebtors.of(
     invoices: r.invoices,
     ledger: r.ledger,
     accountLength: r.accountLength,
+    sequence: p.memberSequence,
+    base: p.debtorBase,
     memberNumbers: p.memberNumbers,
     memberNames: p.memberNames,
   );
-  final detailed = r.withDetail(
-    DatevDetail(
-      debtors: debtors.accounts,
-      defaultCostCentre: p.defaultCostCentre,
-      voucherLinks: p.voucherLinks,
-    ),
-  );
+  if (debtors.problems.isNotEmpty) {
+    return DatevPackage._(problems: debtors.problems);
+  }
+  final detailed = r.withDebtors(debtors.accounts);
   final writer = datevWriterOf(detailed);
   final problems = [
-    ..._numberProblems(r),
-    ...debtors.problems,
     ..._taxProblems(r),
-    // A member without a Debitor is named above; the collective account
-    // their rows fell back to is not a second problem.
-    ..._accountProblems(writer.bookings, {
-      ...debtors.accounts.values,
-      r.accounts.customers,
-    }, r.accountLength),
+    ..._accountProblems(
+      writer.bookings,
+      debtors.accounts.values.toSet(),
+      r.accountLength,
+    ),
+    ..._referenceProblems(writer),
+    if (_fiscalStartsDisagree(p, writer.bookings))
+      const DatevFiscalYearStarts(),
   ];
   if (problems.isNotEmpty) return DatevPackage._(problems: problems);
 
@@ -180,7 +184,7 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
   final linked = {for (final b in writer.bookings) ?b.invoice};
   return DatevPackage._(
     files: files,
-    vouchers: p.voucherLinks ? linked.toList() : const [],
+    vouchers: r.detail.voucherLinks ? linked.toList() : const [],
     rows: writer.bookings.length,
   );
 }
@@ -200,7 +204,9 @@ List<DatevProblem> _numberProblems(DatevRequest r) {
     if (!inRange(r.clientNumber, DatevFormatRules.clientRange))
       DatevClientNumber(r.clientNumber),
     if (r.accountLength < shortest || r.accountLength > longest)
-      DatevAccountLength('${r.accountLength}', r.accountLength),
+      DatevSachkontenlaenge(r.accountLength),
+    if (r.currency.toUpperCase() != DatevWriter.amountCurrency)
+      DatevCurrency(r.currency),
   ];
 }
 
@@ -219,6 +225,41 @@ List<DatevProblem> _taxProblems(DatevRequest r) {
     for (final percent in percents.toList()..sort())
       ?r.accounts.taxGapAt(percent),
   ];
+}
+
+/// A Belegfeld 1 or a KOST1 longer than its field: DATEV matches open
+/// items on the first and groups costs by the second, so neither is cut.
+List<DatevProblem> _referenceProblems(DatevWriter writer) {
+  final seen = <(String, String)>{};
+  for (final b in writer.bookings) {
+    if (b.documentRef.runes.length > DatevFormatRules.documentRefLength) {
+      seen.add(('Belegfeld 1', b.documentRef));
+    }
+    final kost = writer.costCentreOf(b);
+    if (kost.runes.length > DatevFormatRules.costCentreLength) {
+      seen.add(('KOST1', kost));
+    }
+  }
+  return [
+    for (final (field, value) in seen) DatevReferenceTooLong(field, value),
+  ];
+}
+
+/// Whether the issuers' book profiles start the fiscal year of a month the
+/// bookings fall in on different days.
+bool _fiscalStartsDisagree(DatevPackageRequest p, List<DatevBooking> bookings) {
+  final months = {
+    for (final b in bookings) DateTime(b.date.year, b.date.month),
+  };
+  return months.any(
+    (from) =>
+        datevProfileFiscalStarts(
+          p.bookProfiles,
+          from,
+          DateTime(from.year, from.month + 1, 0),
+        ).length >
+        1,
+  );
 }
 
 /// Every Sachkonto a row uses must be as long as the header says; the

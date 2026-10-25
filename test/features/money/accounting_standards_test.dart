@@ -26,6 +26,7 @@ import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'support/datev_collective.dart';
 
 const _company = InvoiceParty(
   name: 'pezenas1',
@@ -316,7 +317,7 @@ void main() {
       // DATEV reads an unmarked file as Windows-1252. "Bürogemeinschaft
       // München" imports as "BÃ¼rogemeinschaft MÃ¼nchen" in the
       // accountant's books, and nothing errors anywhere.
-      final file = buildDatevFile(DatevRequest(
+      final file = buildDatevFile(DatevRequest(detail: datevCollective, 
         invoices: _aRealYear(),
         matches: _matches(),
         accounts: const DatevAccounts(),
@@ -340,7 +341,7 @@ void main() {
       // bills members called Škoda, and that charset cannot spell the
       // second one. Transcoding would substitute or drop it silently.
       const name = 'Bürogemeinschaft Škoda';
-      final file = buildDatevFile(DatevRequest(
+      final file = buildDatevFile(DatevRequest(detail: datevCollective, 
         invoices: const [],
         matches: const {},
         accounts: const DatevAccounts(),
@@ -377,7 +378,7 @@ void main() {
     late List<String> columns;
 
     setUp(() {
-      final file = buildDatevFile(DatevRequest(
+      final file = buildDatevFile(DatevRequest(detail: datevCollective, 
         invoices: _aRealYear(),
         matches: _matches(),
         accounts: const DatevAccounts(),
@@ -403,17 +404,18 @@ void main() {
           reason: 'Erzeugt am is YYYYMMDDHHMMSSFFF');
     });
 
-    test('every row carries every field up to 116, no gaps', () {
-      // DATEV positions by column and tolerates a truncated TAIL. It
-      // does not tolerate a hole: one missing field shifts every
-      // following column into the wrong meaning. #2355 — the rows run to
-      // field 116, `Datum Zuord. Steuerperiode`, and so does the header.
+    test('every row carries every field up to 125, no gaps', () {
+      // DATEV positions by column and does not tolerate a hole: one
+      // missing field shifts every following column into the wrong
+      // meaning. Format 700, version 13 has 125 fields (#2375); field 116
+      // is `Datum Zuord. Steuerperiode` (#2355), 125 `Abw. Skontokonto`.
       expect(rows, isNotEmpty);
-      expect(columns, hasLength(116));
-      expect(columns.last, 'Datum Zuord. Steuerperiode');
+      expect(columns, hasLength(125));
+      expect(columns[115], 'Datum Zuord. Steuerperiode');
       expect(columns[114], 'Leistungsdatum');
+      expect(columns.last, 'Abw. Skontokonto');
       for (final row in rows) {
-        expect(row, hasLength(116), reason: 'row: $row');
+        expect(row, hasLength(125), reason: 'row: $row');
       }
     });
 
@@ -519,7 +521,7 @@ void main() {
           .where((r) => r['CompteNum'] == '445710')
           .fold<int>(0, (sum, r) => sum + _cents(r['Credit']!) - _cents(r['Debit']!));
 
-      final datev = buildDatevFile(DatevRequest(
+      final datev = buildDatevFile(DatevRequest(detail: datevCollective, 
         invoices: year,
         matches: const {},
         accounts: const DatevAccounts(),

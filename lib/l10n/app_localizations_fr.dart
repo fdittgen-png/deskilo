@@ -4148,6 +4148,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dataReportYes => 'Oui';
 
   @override
+  String get datevAccountLength => 'Longueur des comptes (Sachkontenlänge)';
+
+  @override
   String get datevAccountsIntro =>
       'Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.';
 
@@ -4164,6 +4167,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get datevConsultantNumber => 'Beraternummer (numéro de conseil)';
+
+  @override
+  String get datevCostCentre =>
+      'Centre de coûts (KOST1) quand un document ne nomme aucun site';
+
+  @override
+  String get datevDebtorBase => 'Compte Debitor du membre n° 0';
 
   @override
   String datevProblemAccountLength(String account, String length) {
@@ -4186,9 +4196,18 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String datevProblemCurrency(String currency) {
+    return 'les montants sont en $currency ; le fichier DATEV est écrit en euros';
+  }
+
+  @override
   String datevProblemDebtorClash(String members, String account) {
     return '$members partageraient le compte Debitor $account';
   }
+
+  @override
+  String get datevProblemFiscalYearStarts =>
+      'les profils comptables des sites commencent l\'exercice à des dates différentes';
 
   @override
   String datevProblemMemberNumber(String member, String number) {
@@ -4196,9 +4215,23 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String datevProblemReferenceTooLong(String field, String value) {
+    return '$field « $value » dépasse la longueur que DATEV accepte et serait tronqué';
+  }
+
+  @override
+  String datevProblemSachkontenlaenge(String length) {
+    return 'la longueur de compte $length n\'est pas comprise entre 4 et 8';
+  }
+
+  @override
   String datevProblemTaxKey(String percent, String account) {
     return 'aucun BU-Schlüssel n\'est enregistré pour $percent % sur le compte $account';
   }
+
+  @override
+  String get datevVoucherLinks =>
+      'Joindre les PDF des factures et les lier depuis chaque ligne (Beleglink)';
 
   @override
   String get decisionSurfaceEmpty => 'Rien ne vous attend';

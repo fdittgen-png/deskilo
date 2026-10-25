@@ -23,5 +23,13 @@
   "gobdProcedureHandoverHeading": "Consegna dei dati (Z3)",
   "gobdProcedureHandoverBody": "Questo pacchetto segue il Beschreibungsstandard: index.xml descrive ogni tabella, le sue colonne, chiavi e relazioni, e indica la DTD gdpdu-01-08-2002.dtd fornita accanto. Ogni tabella è un file CSV UTF-8 senza riga di intestazione. La cartella belege contiene la fattura elettronica strutturata di ogni fattura e, dove è stato generato, il suo PDF/A-3 con quell'XML incorporato.",
   "gobdProcedureExportsHeading": "Esportazioni",
-  "gobdProcedureExportsBody": "Ogni esportazione contabile è registrata nel registro delle esportazioni con periodo, dimensione e impronta SHA-256; l'esportazione di un periodo chiuso restituisce gli stessi byte."
+  "gobdProcedureExportsBody": "Ogni esportazione contabile è registrata nel registro delle esportazioni con periodo, dimensione e impronta SHA-256; l'esportazione di un periodo chiuso restituisce gli stessi byte.",
+  "datevAccountLength": "Lunghezza dei conti (Sachkontenlänge)",
+  "datevDebtorBase": "Conto Debitor del membro n. 0",
+  "datevCostCentre": "Centro di costo (KOST1) quando un documento non indica una sede",
+  "datevVoucherLinks": "Allegare i PDF delle fatture e collegarli da ogni riga (Beleglink)",
+  "datevProblemSachkontenlaenge": "la lunghezza del conto {length} non è compresa tra 4 e 8",
+  "datevProblemCurrency": "gli importi sono in {currency}; il file DATEV è scritto in euro",
+  "datevProblemReferenceTooLong": "{field} «{value}» supera la lunghezza accettata da DATEV e verrebbe troncato",
+  "datevProblemFiscalYearStarts": "i profili contabili delle sedi iniziano l'esercizio in giorni diversi"
 }

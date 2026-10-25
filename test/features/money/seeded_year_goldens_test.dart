@@ -52,6 +52,7 @@ import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/fr_ereporting.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
@@ -360,36 +361,14 @@ Invoice _atGermanRates(Invoice i) => i.copyWith(
   ],
 );
 
-/// DATEV of the seeded year at German rates, on SKR03 or [chart].
+/// The Buchungsstapel of the seeded year's DATEV export on SKR03 or
+/// [chart], one after the other, each with its BOM and header.
 Future<String> _datev(String? chart) async {
-  final input = await _read(
-    'datev',
-    country: 'DE',
-    invoices: [
-      for (final i in SeededExportYear.acceptanceInvoices) _atGermanRates(i),
-    ],
-  );
-  final b = input.books;
-  return buildDatevFile(
-    DatevRequest(
-      invoices: b.invoices,
-      matches: b.matches,
-      accounts: datevAccountsFor(
-        b.bookProfiles,
-        DatevAccounts(chart: chart),
-        _year,
-      ),
-      from: DateTime(_year),
-      to: DateTime(_year, 12, 31),
-      generatedAt: _generatedAt,
-      consultantNumber: '1234567',
-      clientNumber: '54321',
-      ledger: b.ledger,
-      repartitions: b.repartitions,
-      batchName: 'Cowork',
-      taxPoints: _taxPoints(input),
-    ),
-  );
+  final package = await _datevPackage(chart);
+  return [
+    for (final MapEntry(:key, :value) in package.files.entries)
+      if (key.startsWith('EXTF_Buchungsstapel_')) value,
+  ].join();
 }
 
 /// #2375 — the DATEV export of the seeded year at German rates as the run
@@ -421,6 +400,7 @@ Future<DatevPackage> _datevPackage(String? chart) async {
         generatedAt: _generatedAt,
         consultantNumber: '1234567',
         clientNumber: '54321',
+        detail: const DatevDetail(defaultCostCentre: 'Cowork', voucherLinks: true),
         ledger: b.ledger,
         repartitions: b.repartitions,
         batchName: 'Cowork',
@@ -428,10 +408,10 @@ Future<DatevPackage> _datevPackage(String? chart) async {
       ),
       bookProfiles: b.bookProfiles,
       closed: (from, to) => !to.isAfter(DateTime(_year, 6, 30)),
-      defaultCostCentre: 'Cowork',
+      memberSequence: NumberSequence.defaultsFor('member'),
+      debtorBase: 10000,
       memberNumbers: const {'m1': _memberNumber},
       memberNames: const {'m1': 'Ana'},
-      voucherLinks: true,
     ),
   );
 }
@@ -517,8 +497,6 @@ Future<Map<String, String>> _bundle({required bool local}) async {
 final Map<String, Future<String> Function()> _files = {
   'fec.txt': () async => _fec(await _read('fec')),
   'fec_local_book.txt': () async => _postedFec(await _read('fec', local: true)),
-  'datev_skr03.csv': () => _datev(null),
-  'datev_skr04.csv': () => _datev('SKR04'),
   'sage50.csv': () async {
     final b = (await _read('sage50', country: 'GB')).books;
     return buildSageFile(
@@ -631,6 +609,8 @@ void main() {
           'bundle'
         else
           name.split(RegExp(r'[._]')).first,
+      // DATEV's goldens are its export's files, compared below.
+      'datev',
     };
     expect(
       covered,
@@ -768,7 +748,7 @@ void main() {
     final datev = (await _datev(null)).split('\r\n');
     expect(
       datev.where((l) => l.contains('"Erstattung CN-1"')).single.split(';'),
-      containsAllInOrder(['50,00', '"S"', '10000', '1200']),
+      containsAllInOrder(['50,00', '"S"', '10001', '1200']),
     );
   });
 

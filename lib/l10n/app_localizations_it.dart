@@ -4135,6 +4135,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get dataReportYes => 'Sì';
 
   @override
+  String get datevAccountLength => 'Lunghezza dei conti (Sachkontenlänge)';
+
+  @override
   String get datevAccountsIntro =>
       'I numeri di consulente e di cliente glieli dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.';
 
@@ -4151,6 +4154,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get datevConsultantNumber => 'Beraternummer (n. consulente)';
+
+  @override
+  String get datevCostCentre =>
+      'Centro di costo (KOST1) quando un documento non indica una sede';
+
+  @override
+  String get datevDebtorBase => 'Conto Debitor del membro n. 0';
 
   @override
   String datevProblemAccountLength(String account, String length) {
@@ -4173,9 +4183,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String datevProblemCurrency(String currency) {
+    return 'gli importi sono in $currency; il file DATEV è scritto in euro';
+  }
+
+  @override
   String datevProblemDebtorClash(String members, String account) {
     return '$members condividerebbero il conto Debitor $account';
   }
+
+  @override
+  String get datevProblemFiscalYearStarts =>
+      'i profili contabili delle sedi iniziano l\'esercizio in giorni diversi';
 
   @override
   String datevProblemMemberNumber(String member, String number) {
@@ -4183,9 +4202,23 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String datevProblemReferenceTooLong(String field, String value) {
+    return '$field «$value» supera la lunghezza accettata da DATEV e verrebbe troncato';
+  }
+
+  @override
+  String datevProblemSachkontenlaenge(String length) {
+    return 'la lunghezza del conto $length non è compresa tra 4 e 8';
+  }
+
+  @override
   String datevProblemTaxKey(String percent, String account) {
     return 'nessun BU-Schlüssel è registrato per il $percent % sul conto $account';
   }
+
+  @override
+  String get datevVoucherLinks =>
+      'Allegare i PDF delle fatture e collegarli da ogni riga (Beleglink)';
 
   @override
   String get decisionSurfaceEmpty => 'Niente la aspetta';

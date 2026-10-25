@@ -18,6 +18,7 @@ import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/datev_problem.dart';
 import 'package:deskilo/features/money/domain/datev_stammdaten.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';
@@ -25,7 +26,7 @@ import 'support/seeded_export_year.dart';
 const _bom = '\u{FEFF}';
 
 /// [i] at German rates (19 % and 7 %), with the buyer as frozen at issue.
-Invoice _german(Invoice i, {String number = '10042', String site = ''}) =>
+Invoice _german(Invoice i, {String number = 'M-0042', String site = ''}) =>
     i.copyWith(
       lines: [
         for (final l in i.lines)
@@ -58,6 +59,8 @@ DatevRequest _request({
   DatevAccounts accounts = const DatevAccounts(),
   String consultant = '1234567',
   String client = '54321',
+  String currency = 'EUR',
+  int accountLength = 4,
 }) => DatevRequest(
   invoices: invoices ?? _year,
   matches: SeededExportYear.acceptanceMatches,
@@ -67,6 +70,9 @@ DatevRequest _request({
   generatedAt: DateTime(2027, 1, 5, 9),
   consultantNumber: consultant,
   clientNumber: client,
+  detail: const DatevDetail(defaultCostCentre: 'Cowork', voucherLinks: true),
+  currency: currency,
+  accountLength: accountLength,
   batchName: 'Bürogemeinschaft München Schwabing Nord',
   ledger: [
     for (final e in SeededExportYear.ledger)
@@ -83,9 +89,9 @@ DatevPackage _package({
     request: request ?? _request(),
     bookProfiles: const [],
     closed: (from, to) => !to.isAfter(DateTime(2026, 4, 30)),
-    defaultCostCentre: 'Cowork',
+    memberSequence: NumberSequence.defaultsFor('member'),
+    debtorBase: 10000,
     memberNumbers: memberNumbers,
-    voucherLinks: true,
     rowsPerBatch: rowsPerBatch,
   ),
 );
@@ -140,21 +146,41 @@ void main() {
   tearDown(WorkspaceTime.reset);
 
   group('the Debitor of a member number', () {
-    test('a counter becomes the first Debitor plus it', () {
-      expect(datevDebtorOf('M-0007', 4), '10007');
-      expect(datevDebtorOf('42', 4), '10042');
-      expect(datevDebtorOf('M-0007', 5), '100007');
+    String? debtor(
+      String number, {
+      NumberSequence? sequence,
+      int base = 10000,
+      int length = 4,
+    }) => datevDebtorOf(
+      number,
+      sequence: sequence ?? NumberSequence.defaultsFor('member'),
+      base: base,
+      accountLength: length,
+    );
+
+    test('the counter of the member series above the first Debitor', () {
+      expect(debtor('M-0007'), '10007');
+      expect(debtor('M-0007', base: 20000), '20007');
+      expect(debtor('M-0007', base: 100000, length: 5), '100007');
     });
 
-    test('a number that already is a Debitor is kept', () {
-      expect(datevDebtorOf('23456', 4), '23456');
-      expect(datevDebtorOf('69999', 4), '69999');
+    test('a series with a date part gives its counter, not its date', () {
+      const monthly = NumberSequence(
+        journal: 'member',
+        prefix: 'M-',
+        datePart: NumberDatePart.yearMonth,
+      );
+      expect(monthly.format(7, DateTime(2026, 3)), 'M-2026-03-0007');
+      expect(debtor('M-2026-03-0007', sequence: monthly), '10007');
+      const yearly = NumberSequence(journal: 'member', prefix: 'M-');
+      expect(debtor('M-2026-0007', sequence: yearly), '10007');
     });
 
-    test('no digits, or past the range, gives none', () {
-      expect(datevDebtorOf('', 4), isNull);
-      expect(datevDebtorOf('M-', 4), isNull);
-      expect(datevDebtorOf('M-60000', 4), isNull);
+    test('a number not of the series, or past the range, gives none', () {
+      expect(debtor(''), isNull);
+      expect(debtor('X-0007'), isNull);
+      expect(debtor('M-60000'), isNull);
+      expect(debtor('M-0007', base: 1000), isNull);
       expect(DatevFormatRules.debtorRange(4), (10000, 69999));
       expect(DatevFormatRules.debtorRange(6), (1000000, 6999999));
     });
@@ -251,7 +277,7 @@ void main() {
         expect(b.header.take(5), ['EXTF', '700', '21', 'Buchungsstapel', '13']);
         expect(b.header[16].runes.length, lessThanOrEqualTo(30), reason: key);
         for (final r in b.rows) {
-          expect(r, hasLength(116));
+          expect(r, hasLength(DatevFormatRules.rowFields));
           expect(r[0], matches(RegExp(r'^\d+,\d\d$')));
           expect(r[1], 'S');
           expect(r[9], matches(RegExp(r'^\d{4}$')));
@@ -281,7 +307,7 @@ void main() {
         [
           'Ana Kowalczyk',
           '0',
-          '10042',
+          'M-0042',
           'Leopoldstraße 1',
           '80802',
           'München',
@@ -366,6 +392,32 @@ void main() {
       expect(clash.account, '10042');
     });
 
+    test('a workspace not in euros, the currency named', () {
+      final p = _package(request: _request(currency: 'CHF'));
+      expect(p.files, isEmpty);
+      expect((p.problems.single as DatevCurrency).given, 'CHF');
+    });
+
+    test('a Sachkontenlänge DATEV does not know', () {
+      final p = _package(request: _request(accountLength: 9));
+      expect((p.problems.single as DatevSachkontenlaenge).length, 9);
+    });
+
+    test('a 37-character invoice number is refused, never cut', () {
+      final long = 'R' * 37;
+      final p = _package(
+        request: _request(
+          invoices: [
+            for (final i in _year)
+              if (i.number == 'INV-2') i.copyWith(number: long) else i,
+          ],
+        ),
+      );
+      final refused = p.problems.single as DatevReferenceTooLong;
+      expect((refused.field, refused.value), ('Belegfeld 1', long));
+      expect(p.files, isEmpty);
+    });
+
     test('an account not as long as the header says', () {
       final p = _package(
         request: _request(accounts: const DatevAccounts(bank: '12000')),
@@ -444,5 +496,21 @@ void main() {
       final clash = p.problems.whereType<DatevAutomaticClash>().single;
       expect((clash.percent, clash.account), (19.0, '8300'));
     });
+  });
+
+  test('a document is dated on the workspace calendar, wherever the export '
+      'is made', () {
+    WorkspaceTime.install('Pacific/Auckland');
+    // 31 March 12:00 UTC is 1 April 01:00 in Auckland.
+    final boundary = _german(
+      SeededExportYear.inv2,
+    ).copyWith(issuedAt: DateTime.utc(2026, 3, 31, 12));
+    final p = _package(request: _request(invoices: [boundary]));
+    expect(p.problems, isEmpty);
+    final april = _parse(p.files['EXTF_Buchungsstapel_202604_sales.csv']!);
+    final sale = april.rows.single;
+    expect(sale[9], '0104');
+    expect(sale[23], '01.04.2026');
+    expect(p.files.keys.where((k) => k.contains('202603_sales')), isEmpty);
   });
 }

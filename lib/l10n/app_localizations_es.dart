@@ -4136,6 +4136,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dataReportYes => 'Sí';
 
   @override
+  String get datevAccountLength => 'Longitud de las cuentas (Sachkontenlänge)';
+
+  @override
   String get datevAccountsIntro =>
       'Su asesor le da los números de asesor y de cliente. DATEV rechaza un archivo cuyos números no coincidan — que es lo que evita que acabe en los libros de otra empresa.';
 
@@ -4152,6 +4155,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get datevConsultantNumber => 'Beraternummer (n.º de asesor)';
+
+  @override
+  String get datevCostCentre =>
+      'Centro de coste (KOST1) cuando un documento no indica sede';
+
+  @override
+  String get datevDebtorBase => 'Cuenta Debitor del miembro n.º 0';
 
   @override
   String datevProblemAccountLength(String account, String length) {
@@ -4174,9 +4184,18 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String datevProblemCurrency(String currency) {
+    return 'los importes están en $currency; el archivo DATEV se escribe en euros';
+  }
+
+  @override
   String datevProblemDebtorClash(String members, String account) {
     return '$members compartirían la cuenta Debitor $account';
   }
+
+  @override
+  String get datevProblemFiscalYearStarts =>
+      'los perfiles contables de las sedes empiezan el ejercicio en días distintos';
 
   @override
   String datevProblemMemberNumber(String member, String number) {
@@ -4184,9 +4203,23 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String datevProblemReferenceTooLong(String field, String value) {
+    return '$field «$value» supera la longitud que admite DATEV y se recortaría';
+  }
+
+  @override
+  String datevProblemSachkontenlaenge(String length) {
+    return 'la longitud de cuenta $length no está entre 4 y 8';
+  }
+
+  @override
   String datevProblemTaxKey(String percent, String account) {
     return 'no hay ningún BU-Schlüssel registrado para el $percent % en la cuenta $account';
   }
+
+  @override
+  String get datevVoucherLinks =>
+      'Adjuntar los PDF de las facturas y enlazarlos desde cada línea (Beleglink)';
 
   @override
   String get decisionSurfaceEmpty => 'Nada le espera';

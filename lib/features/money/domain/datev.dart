@@ -32,9 +32,9 @@ import 'vat_tax_point.dart';
 ///  2. Amounts use a **comma** decimal separator and are always
 ///     POSITIVE; direction is carried by `Soll/Haben-Kennzeichen`
 ///     ('S'/'H'), not by a minus sign.
-///  3. `Festschreibung` = 1 marks the batch as final. We write **0**:
-///     locking someone else's books is the accountant's decision, not an
-///     exporting app's.
+///  3. `Festschreibung` = 1 marks the batch as final. It is written only
+///     for a month that lies in a period the space closed: an open month
+///     stays 0, the accountant's to lock.
 ///  4. The file is read as **Windows-1252 unless it carries a UTF-8 BOM**.
 ///     This is the one that corrupts silently and in the accountant's
 ///     books rather than ours: without the three-byte mark, "Bürogemein-
@@ -63,18 +63,14 @@ import 'vat_tax_point.dart';
 /// so.
 class DatevAccounts {
   const DatevAccounts({
-    String? customers,
     String? revenue,
     String? bank,
-    String? vat,
     String? chart,
     String? expenses,
     this.reference,
     this.fiscalYearStart,
-  }) : _givenCustomers = customers,
-       _givenRevenue = revenue,
+  }) : _givenRevenue = revenue,
        _givenBank = bank,
-       _givenVat = vat,
        _givenChart = chart,
        _givenExpenses = expenses;
 
@@ -83,10 +79,8 @@ class DatevAccounts {
   final TaxReferenceSet? reference;
   /// The book profile's fiscal-year start, when known (#2365).
   final DateTime? fiscalYearStart;
-  final String? _givenCustomers;
   final String? _givenRevenue;
   final String? _givenBank;
-  final String? _givenVat;
   final String? _givenChart;
   final String? _givenExpenses;
 
@@ -98,21 +92,12 @@ class DatevAccounts {
       (_givenChart == null ? null : datevChartAccount(_ref, _givenChart, role)) ??
       _ref.accountOf('coa', role, 'DE');
 
-  /// SKR03 debtor range starts at 10000. A real chart numbers each
-  /// customer; one collective account keeps the export honest about
-  /// what the app actually knows.
-  String get customers => _givenCustomers ?? _default('customers');
-
   /// SKR03 8400 — Erlöse 19 % USt. The accountant re-points this when
   /// the workspace charges a different rate or none.
   String get revenue => _givenRevenue ?? _default('revenue');
 
   /// SKR03 1200 — Bank.
   String get bank => _givenBank ?? _default('bank');
-
-  /// SKR03 1776 — Umsatzsteuer 19 %. Only reached when the workspace is
-  /// VAT-registered; an exempt one never books to it.
-  String get vat => _givenVat ?? _default('vat');
 
   /// Named on the export sheet so the accountant can see which chart the
   /// numbers belong to before importing.
@@ -189,10 +174,8 @@ class DatevAccounts {
 
   /// These accounts with the fiscal year starting on [start].
   DatevAccounts withFiscalYearStart(DateTime start) => DatevAccounts(
-    customers: _givenCustomers,
     revenue: _givenRevenue,
     bank: _givenBank,
-    vat: _givenVat,
     chart: _givenChart,
     expenses: _givenExpenses,
     reference: reference,
@@ -254,6 +237,7 @@ class DatevRequest {
     required this.generatedAt,
     required this.consultantNumber,
     required this.clientNumber,
+    required this.detail,
     this.currency = 'EUR',
     this.batchName = 'DesKilo',
     this.accountLength = 4,
@@ -262,31 +246,12 @@ class DatevRequest {
     this.development = false,
     this.taxPoints,
     this.dayOf = WorkspaceTime.dateOf,
-    this.detail,
     this.slice,
   });
 
-  /// This request with the sub-ledger [detail] on every row.
-  DatevRequest withDetail(DatevDetail detail) => DatevRequest(
-    invoices: invoices,
-    matches: matches,
-    accounts: accounts,
-    from: from,
-    to: to,
-    generatedAt: generatedAt,
-    consultantNumber: consultantNumber,
-    clientNumber: clientNumber,
-    currency: currency,
-    batchName: batchName,
-    accountLength: accountLength,
-    ledger: ledger,
-    repartitions: repartitions,
-    development: development,
-    taxPoints: taxPoints,
-    dayOf: dayOf,
-    detail: detail,
-    slice: slice,
-  );
+  /// This request with each member on the Debitor [debtors] names.
+  DatevRequest withDebtors(Map<String, String> debtors) =>
+      _copy(detail: detail.withDebtors(debtors));
 
   /// This request for the Buchungsstapel [slice] alone, under the header
   /// [accounts] (its fiscal-year start) and the name [batchName].
@@ -294,25 +259,32 @@ class DatevRequest {
     DatevSlice slice, {
     required DatevAccounts accounts,
     required String batchName,
+  }) => _copy(slice: slice, accounts: accounts, batchName: batchName);
+
+  DatevRequest _copy({
+    DatevDetail? detail,
+    DatevSlice? slice,
+    DatevAccounts? accounts,
+    String? batchName,
   }) => DatevRequest(
     invoices: invoices,
     matches: matches,
-    accounts: accounts,
+    accounts: accounts ?? this.accounts,
     from: from,
     to: to,
     generatedAt: generatedAt,
     consultantNumber: consultantNumber,
     clientNumber: clientNumber,
+    detail: detail ?? this.detail,
     currency: currency,
-    batchName: batchName,
+    batchName: batchName ?? this.batchName,
     accountLength: accountLength,
     ledger: ledger,
     repartitions: repartitions,
     development: development,
     taxPoints: taxPoints,
     dayOf: dayOf,
-    detail: detail,
-    slice: slice,
+    slice: slice ?? this.slice,
   );
 
   final List<Invoice> invoices;
@@ -336,9 +308,9 @@ class DatevRequest {
   final List<VatTaxPointAmount>? taxPoints;
   final DateTime Function(DateTime instant) dayOf;
 
-  /// #2375 — the sub-ledger detail of every row; null writes the one
-  /// collective customers account and no document detail.
-  final DatevDetail? detail;
+  /// #2375 — the sub-ledger detail of every row: each member's Debitor,
+  /// the cost centre, the voucher links.
+  final DatevDetail detail;
 
   /// #2375 — the one Buchungsstapel of the bookings to write; null writes
   /// every booking of [from]..[to] in one.
@@ -370,15 +342,23 @@ class DatevSlice {
   final bool locked;
 }
 
-/// #2375 — what makes each row a sub-ledger row: the member's Debitor in
-/// place of the collective account, the site as cost centre, the voucher
-/// details and, when the vouchers travel with the file, their link.
+/// #2375 — what makes each row a sub-ledger row: the member's Debitor, the
+/// site as cost centre, the voucher details and, when the vouchers travel
+/// with the file, their link. The cost centre and the links are the
+/// person's choices in the DATEV dialog; the Debitors are the export's.
 class DatevDetail {
   const DatevDetail({
-    required this.debtors,
     required this.defaultCostCentre,
-    this.voucherLinks = false,
+    required this.voucherLinks,
+    this.debtors = const {},
   });
+
+  /// This detail with [debtors].
+  DatevDetail withDebtors(Map<String, String> debtors) => DatevDetail(
+    defaultCostCentre: defaultCostCentre,
+    voucherLinks: voucherLinks,
+    debtors: debtors,
+  );
 
   /// The Debitor of each member, by member id.
   final Map<String, String> debtors;

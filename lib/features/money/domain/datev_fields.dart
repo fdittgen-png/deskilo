@@ -28,8 +28,18 @@ DateTime _fiscalYearStart(int month, int day, DateTime from) {
 
 /// The fiscal-year start the book profiles agree on for the period
 /// [from]..[to]: each issuer's latest version in force at [to]; null when
-/// there is none or the issuers disagree (the header then says 1 January).
+/// there is none or the issuers disagree ([datevProfileFiscalStarts]).
 DateTime? datevProfileFiscalStart(
+  List<BookProfile> profiles,
+  DateTime from,
+  DateTime to,
+) {
+  final starts = datevProfileFiscalStarts(profiles, from, to);
+  return starts.length == 1 ? starts.single : null;
+}
+
+/// The fiscal-year starts of the issuers' latest profiles in force at [to].
+Set<DateTime> datevProfileFiscalStarts(
   List<BookProfile> profiles,
   DateTime from,
   DateTime to,
@@ -42,11 +52,10 @@ DateTime? datevProfileFiscalStart(
       latest[p.issuerSiteId] = p;
     }
   }
-  final starts = {
+  return {
     for (final p in latest.values)
       _fiscalYearStart(p.fiscalYearStartMonth, p.fiscalYearStartDay, from),
   };
-  return starts.length == 1 ? starts.single : null;
 }
 
 /// One booking line of the Buchungsstapel: amount (always positive), the
@@ -63,8 +72,20 @@ class DatevBooking {
     this.taxPeriodDate,
     this.taxKey = '',
     this.invoice,
-    this.memberId = '',
   });
+
+  /// This booking dated [day].
+  DatevBooking on(DateTime day) => DatevBooking(
+    cents: cents,
+    debit: debit,
+    credit: credit,
+    date: day,
+    documentRef: documentRef,
+    text: text,
+    taxPeriodDate: taxPeriodDate,
+    taxKey: taxKey,
+    invoice: invoice,
+  );
 
   final int cents;
   final String debit;
@@ -80,9 +101,6 @@ class DatevBooking {
   /// The document the row books, when it books one: its site, number,
   /// dates and voucher travel with the row.
   final Invoice? invoice;
-
-  /// The member a row without a document books (an expense credit).
-  final String memberId;
 }
 
 /// Where the builder's bookings go.
@@ -108,10 +126,10 @@ void bookDatevWriteOff(
   ));
 }
 
-/// Fields 21 to 116 of the EXTF Buchungsstapel (format 700, category 21),
+/// Fields 21 to 125 of the EXTF Buchungsstapel (format 700, category 21),
 /// in DATEV's order: the importer reads by position, so field 116,
 /// `Datum Zuord. Steuerperiode`, needs every field before it (#2355).
-final List<String> datevColumns21To116 = List.unmodifiable([
+final List<String> datevColumns21To125 = List.unmodifiable([
   for (var i = 1; i <= 8; i++) ...[
     'Beleginfo - Art $i',
     'Beleginfo - Inhalt $i',
@@ -160,4 +178,13 @@ final List<String> datevColumns21To116 = List.unmodifiable([
   'Festschreibung',
   'Leistungsdatum',
   'Datum Zuord. Steuerperiode',
+  'Fälligkeit',
+  'Generalumkehr (GU)',
+  'Steuersatz',
+  'Land',
+  'Abrechnungsreferenz',
+  'BVV-Position (Betriebsvermögensvergleich)',
+  'EU-Land u. UStID (Ursprung)',
+  'EU-Steuersatz (Ursprung)',
+  'Abw. Skontokonto',
 ]);

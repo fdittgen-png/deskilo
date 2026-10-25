@@ -21,13 +21,13 @@ const _amount = GobdType.amount;
 const _number = GobdType.number;
 const _date = GobdType.date;
 
-const _yesNo = {true: 'ja', false: 'nein'};
+const _yesNo = {true: 'yes', false: 'no'};
 
 String _status(Invoice i) => i.isVoided
-    ? 'storniert'
+    ? 'voided'
     : i.isCreditNote
-    ? 'gutschrift'
-    : 'ausgestellt';
+    ? 'credit_note'
+    : 'issued';
 
 /// The tables of [r], each with its rows; the key columns first.
 List<GobdTable> gobdTables(GobdRequest r) {
@@ -68,7 +68,7 @@ List<GobdTable> _invoiceTables(List<Invoice> invoices) => [
       _c('ust', 'Umsatzsteuer', _amount),
       _c('zahlbetrag', 'Zahlbetrag nach Verrechnung', _amount),
       _c('waehrung', 'Währung (ISO 4217)', _text),
-      _c('status', 'ausgestellt, gutschrift oder storniert', _text),
+      _c('status', 'issued, credit_note oder voided', _text),
       _c('ersetzt_nummer', 'Nummer des ersetzten Belegs', _text),
       _c('faellig', 'Fälligkeit', _date),
       _c('standort', 'Standort (Kostenstelle)', _text),
@@ -160,7 +160,7 @@ List<GobdTable> _paymentTables(
       _c('bezahlt', 'Gezahlter Betrag', _amount),
       _c('ergebnis', 'paid, partial, writeoff, refund', _text),
       _c('datum', 'Tag der Zahlung', _date),
-      _c('vorlaeufig', 'ja, wenn die Zahlung noch zu bestätigen ist', _text),
+      _c('vorlaeufig', 'yes, wenn die Zahlung noch zu bestätigen ist', _text),
     ],
     rows: [
       for (final (i, m) in matches)

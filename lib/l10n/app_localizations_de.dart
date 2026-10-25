@@ -4148,6 +4148,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dataReportYes => 'Ja';
 
   @override
+  String get datevAccountLength => 'Sachkontenlänge';
+
+  @override
   String get datevAccountsIntro =>
       'Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.';
 
@@ -4164,6 +4167,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get datevConsultantNumber => 'Beraternummer';
+
+  @override
+  String get datevCostCentre =>
+      'Kostenstelle (KOST1), wenn ein Beleg keinen Standort nennt';
+
+  @override
+  String get datevDebtorBase => 'Debitor zu Mitgliedsnummer 0';
 
   @override
   String datevProblemAccountLength(String account, String length) {
@@ -4186,9 +4196,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String datevProblemCurrency(String currency) {
+    return 'die Beträge lauten auf $currency; die DATEV-Datei wird in Euro geschrieben';
+  }
+
+  @override
   String datevProblemDebtorClash(String members, String account) {
     return '$members hätten denselben Debitor $account';
   }
+
+  @override
+  String get datevProblemFiscalYearStarts =>
+      'die Buchungsprofile der Standorte beginnen das Wirtschaftsjahr an verschiedenen Tagen';
 
   @override
   String datevProblemMemberNumber(String member, String number) {
@@ -4196,9 +4215,23 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String datevProblemReferenceTooLong(String field, String value) {
+    return '$field „$value“ ist länger, als DATEV übernimmt, und würde gekürzt';
+  }
+
+  @override
+  String datevProblemSachkontenlaenge(String length) {
+    return 'die Sachkontenlänge $length liegt nicht zwischen 4 und 8';
+  }
+
+  @override
   String datevProblemTaxKey(String percent, String account) {
     return 'für $percent % auf Konto $account ist kein BU-Schlüssel hinterlegt';
   }
+
+  @override
+  String get datevVoucherLinks =>
+      'Rechnungs-PDFs beilegen und aus jeder Buchung verlinken (Beleglink)';
 
   @override
   String get decisionSurfaceEmpty => 'Nichts wartet auf Sie';

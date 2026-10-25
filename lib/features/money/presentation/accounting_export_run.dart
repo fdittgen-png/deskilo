@@ -98,9 +98,10 @@ class AccountingExportRun {
   List<ExpenseRepartition> get repartitions => books.repartitions;
   List<BookProfile> get bookProfiles => books.bookProfiles;
   /// The member numbers held today, by member id: a document issued
-  /// before numbers were frozen carries none.
-  Map<String, String> get memberNumbers => {
-    for (final m in [...?ref.read(workspaceMembersProvider).value])
+  /// before numbers were frozen carries none. Awaited, never the list of
+  /// whatever moment the provider was last read in.
+  Future<Map<String, String>> memberNumbers() async => {
+    for (final m in await ref.read(workspaceMembersProvider.future))
       m.id: m.memberNumber,
   };
   InvoiceQueries get invoiceQueries => ref.read(invoiceQueriesProvider);

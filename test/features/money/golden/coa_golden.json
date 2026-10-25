@@ -41,5 +41,5 @@
 "us|notSubject":{"code":"GEN","name":"Generic","accounts":[["customers","1200","Accounts receivable","note:customers"],["revenue","4000","Service revenue","note:revenue"],["bank","1000","Bank","note:bank"],["expenses","6500","Übriger Betriebsaufwand","note:expenses"]]},
 "us|exempt":{"code":"GEN","name":"Generic","accounts":[["customers","1200","Accounts receivable","note:customers"],["revenue","4000","Service revenue","note:revenue"],["bank","1000","Bank","note:bank"],["expenses","6500","Übriger Betriebsaufwand","note:expenses"]]},
 "us|vatRegistered":{"code":"GEN","name":"Generic","accounts":[["customers","1200","Accounts receivable","note:customers"],["revenue","4000","Service revenue","note:revenue"],["bank","1000","Bank","note:bank"],["vat","2200","Sales tax payable","note:vat"],["expenses","6500","Übriger Betriebsaufwand","note:expenses"]]},
-"defaults":{"fec":["411000","706000","512000","445710","606000","445740"],"datev":["10000","8400","1200","1776","SKR03","4900"],"sage":["1100","4000","1200","T1"],"sageCodes":["T0","T2","T5","T9"]}
+"defaults":{"fec":["411000","706000","512000","445710","606000","445740"],"datev":["8400","1200","SKR03","4900"],"sage":["1100","4000","1200","T1"],"sageCodes":["T0","T2","T5","T9"]}
 }

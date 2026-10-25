@@ -4117,6 +4117,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dataReportYes => 'Yes';
 
   @override
+  String get datevAccountLength => 'Account length (Sachkontenlänge)';
+
+  @override
   String get datevAccountsIntro =>
       'Your accountant gives you the consultant and client numbers. DATEV refuses a file whose numbers do not match — which is what keeps it out of the wrong company’s books.';
 
@@ -4133,6 +4136,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get datevConsultantNumber => 'Beraternummer';
+
+  @override
+  String get datevCostCentre =>
+      'Cost centre (KOST1) when a document names no site';
+
+  @override
+  String get datevDebtorBase => 'Debitor of member number 0';
 
   @override
   String datevProblemAccountLength(String account, String length) {
@@ -4155,9 +4165,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String datevProblemCurrency(String currency) {
+    return 'the amounts are in $currency; the DATEV file is written in euros';
+  }
+
+  @override
   String datevProblemDebtorClash(String members, String account) {
     return '$members would share Debitor $account';
   }
+
+  @override
+  String get datevProblemFiscalYearStarts =>
+      'the book profiles of the sites start the fiscal year on different days';
 
   @override
   String datevProblemMemberNumber(String member, String number) {
@@ -4165,9 +4184,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String datevProblemReferenceTooLong(String field, String value) {
+    return '$field \"$value\" is longer than DATEV takes and would be cut';
+  }
+
+  @override
+  String datevProblemSachkontenlaenge(String length) {
+    return 'the account length $length is not 4 to 8';
+  }
+
+  @override
   String datevProblemTaxKey(String percent, String account) {
     return 'no BU-Schlüssel is recorded for $percent % on account $account';
   }
+
+  @override
+  String get datevVoucherLinks =>
+      'Include the invoice PDFs and link them from each row (Beleglink)';
 
   @override
   String get decisionSurfaceEmpty => 'Nothing needs you';

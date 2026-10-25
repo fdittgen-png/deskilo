@@ -36,7 +36,7 @@ class DatevWriter {
     required this.development,
     required this.taxPoints,
     required this.dayOf,
-    this.detail,
+    required this.detail,
     this.slice,
   });
 
@@ -59,8 +59,9 @@ class DatevWriter {
   final List<VatTaxPointAmount>? taxPoints;
   final DateTime Function(DateTime instant) dayOf;
 
-  /// #2375 — the sub-ledger detail; null writes the collective account.
-  final DatevDetail? detail;
+  /// #2375 — the sub-ledger detail: each member's Debitor, the cost
+  /// centre, the voucher links.
+  final DatevDetail detail;
 
   /// #2375 — the one Buchungsstapel to write; null writes them all.
   final DatevSlice? slice;
@@ -75,10 +76,17 @@ class DatevWriter {
   /// Every booking of the request, in the order they were made.
   List<DatevBooking> get bookings => List.unmodifiable(_bookings);
 
-  /// The account a member's side of a row is booked on: their Debitor,
-  /// the collective customers account without the sub-ledger detail.
+  /// The account a member's side of a row is booked on: their Debitor. An
+  /// export resolves every member's before it books (datev_package.dart).
   String _customer(String memberId) =>
-      detail?.debtors[memberId] ?? accounts.customers;
+      detail.debtors[memberId] ??
+      (throw StateError('no Debitor for member $memberId'));
+
+  /// KOST1 of [b]: its document's site, else the person's default.
+  String costCentreOf(DatevBooking b) {
+    final site = b.invoice?.sellerParty?.site ?? '';
+    return site.isEmpty ? detail.defaultCostCentre : site;
+  }
 
   /// Which Buchungsstapel [b] belongs in.
   DatevJournal journalOf(DatevBooking b) =>
@@ -92,11 +100,18 @@ class DatevWriter {
       ? null
       : VatTaxPointIndex(taxPoints!);
 
+  /// The currency the amounts are written in: DATEV EXTF is a German and
+  /// Austrian format, both eurozone; an export in another refuses
+  /// (datev_package.dart), it is never written with euro digits.
+  static const amountCurrency = 'EUR';
+
   /// Always positive, comma decimal — see the header note.
-  String _amount(int cents) =>
-      // #1077 — two decimals is CORRECT here: DATEV EXTF is a German
-      // and Austrian format, both eurozone. Not a hardcoded-euro bug.
-      minorToText(cents, 'EUR', decimalSeparator: ',', absolute: true);
+  String _amount(int cents) => minorToText(
+    cents,
+    amountCurrency,
+    decimalSeparator: ',',
+    absolute: true,
+  );
 
   String _quoted(String text) =>
       csvCell(text, dialect: _datev, quoteEmpty: true);
@@ -147,26 +162,27 @@ class DatevWriter {
     ].join(';');
   }
 
-  /// The column line: fields 1 to 116.
+  /// The column line: fields 1 to 125.
   static String columns() => [
     'Umsatz (ohne Soll/Haben-Kz);Soll/Haben-Kennzeichen;'
         'WKZ Umsatz;Kurs;Basisumsatz;WKZ Basisumsatz;Konto;'
         'Gegenkonto (ohne BU-Schlüssel);BU-Schlüssel;Belegdatum;Belegfeld 1;'
         'Belegfeld 2;Skonto;Buchungstext;Postensperre;Diverse Adressnummer;'
         'Geschäftspartnerbank;Sachverhalt;Zinssperre;Beleglink',
-    ...datevColumns21To116,
+    ...datevColumns21To125,
   ].join(';');
 
   /// One booking line. DATEV's minimum is amount, direction, the two
   /// accounts, the document date and a text.
-  void book(DatevBooking b) => _bookings.add(b);
+  /// Every row is dated on the workspace's calendar ([dayOf]): its
+  /// Belegdatum, its month's Buchungsstapel and its Beleginfo agree
+  /// wherever the export is made.
+  void book(DatevBooking b) => _bookings.add(b.on(dayOf(b.date)));
 
-  /// The 116 fields of [b].
+  /// The 125 fields of [b].
   String _row(DatevBooking b) {
     final taxPeriodDate = b.taxPeriodDate;
-    final detail = this.detail;
-    final invoice = b.invoice;
-    final fields = List<String>.filled(116, '');
+    final fields = List<String>.filled(DatevFormatRules.rowFields, '');
     // Always 'S': the DEBIT account in `Konto`, the credit in `Gegenkonto`
     // (the pair the other way round with 'H' posts it twice-mirrored).
     fields[0] = _amount(b.cents);
@@ -180,7 +196,7 @@ class DatevWriter {
       datevClip(b.documentRef, DatevFormatRules.documentRefLength),
     );
     fields[13] = _quoted(datevClip(b.text, DatevFormatRules.textLength));
-    if (detail != null) _detail(fields, detail, invoice);
+    _detail(fields, b);
     if (slice?.locked ?? false) fields[113] = '1';
     // Field 116 is the tax period's date, TTMMJJJJ.
     if (taxPeriodDate != null) {
@@ -193,12 +209,14 @@ class DatevWriter {
   /// voucher link (20), the number, date and due date as Beleginfo
   /// (21-26), the site as KOST1 (37) and the buyer's VAT id for a reverse
   /// charge (40).
-  void _detail(List<String> fields, DatevDetail detail, Invoice? invoice) {
-    final site = invoice?.sellerParty?.site ?? '';
-    fields[36] = _quoted(datevClip(
-      site.isEmpty ? detail.defaultCostCentre : site,
-      DatevFormatRules.costCentreLength,
-    ));
+  void _detail(List<String> fields, DatevBooking b) {
+    final costCentre = costCentreOf(b);
+    if (costCentre.isNotEmpty) {
+      fields[36] = _quoted(
+        datevClip(costCentre, DatevFormatRules.costCentreLength),
+      );
+    }
+    final invoice = b.invoice;
     if (invoice == null) return;
     // `BEDI "<guid>"`, its quotes doubled inside the quoted cell: the
     // DATEV dialect would turn them into apostrophes. The id is a uuid.
@@ -418,7 +436,6 @@ class DatevWriter {
           credit: _customer(entry.memberId),
           date: entry.on,
           documentRef: entry.id,
-          memberId: entry.memberId,
           text: entry.description.isEmpty
               ? 'Auslagenerstattung'
               : 'Auslagen ${entry.description}',

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The Personenkonten of a DATEV export: one Debitor per member, numbered
-// from the member number the space already gives (the number sequence
-// `member`), never invented. DATEV keeps open items per Debitor; one
+// from the counter of the member number the space already gives (the number
+// sequence `member`) above the accountant's first Debitor, never invented. DATEV keeps open items per Debitor; one
 // collective account would leave the accountant to split every customer
 // by hand.
 import 'package:meta/meta.dart';
@@ -10,28 +10,24 @@ import 'package:meta/meta.dart';
 import 'datev_problem.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
+import 'number_sequence.dart';
 
-/// The Debitor a member number [number] gives with Sachkonten of
-/// [accountLength] digits, or null when it gives none in DATEV's range.
-///
-/// A number that already is a Debitor (all digits, one longer than the
-/// Sachkonten, in range) is taken as it is; any other number is the
-/// counter it carries added to the first Debitor, so `M-0007` is 10007.
+/// The Debitor of the member number [number]: [base] plus the counter the
+/// member series [sequence] wrote into it (`M-2026-0007` is counter 7), as
+/// long as it falls in DATEV's Debitor range for Sachkonten of
+/// [accountLength] digits; null otherwise.
 @visibleForTesting
-String? datevDebtorOf(String number, int accountLength) {
-  final digits = number.replaceAll(RegExp('[^0-9]'), '');
-  if (digits.isEmpty) return null;
+String? datevDebtorOf(
+  String number, {
+  required NumberSequence sequence,
+  required int base,
+  required int accountLength,
+}) {
+  final counter = sequence.counterOf(number);
+  if (counter == null) return null;
   final (first, last) = DatevFormatRules.debtorRange(accountLength);
-  final value = int.tryParse(digits);
-  if (value == null) return null;
-  if (digits == number.trim() &&
-      digits.length == accountLength + 1 &&
-      value >= first &&
-      value <= last) {
-    return digits;
-  }
-  final shifted = first + value;
-  return shifted > last ? null : '$shifted';
+  final account = base + counter;
+  return account < first || account > last ? null : '$account';
 }
 
 /// The Debitor of every member an export books, the party each one is
@@ -48,6 +44,8 @@ class DatevDebtors {
     required List<Invoice> invoices,
     required List<LedgerEntry> ledger,
     required int accountLength,
+    required NumberSequence sequence,
+    required int base,
     Map<String, String> memberNumbers = const {},
     Map<String, String> memberNames = const {},
   }) {
@@ -73,7 +71,12 @@ class DatevDebtors {
       final frozen = invoice?.buyerParty?.memberNumber ?? '';
       final number = frozen.isNotEmpty ? frozen : memberNumbers[member] ?? '';
       final name = invoice?.clientName ?? memberNames[member] ?? member;
-      final account = datevDebtorOf(number, accountLength);
+      final account = datevDebtorOf(
+        number,
+        sequence: sequence,
+        base: base,
+        accountLength: accountLength,
+      );
       if (account == null) {
         problems.add(DatevMemberNumber(name, number));
         continue;

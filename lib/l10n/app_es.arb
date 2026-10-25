@@ -2741,6 +2741,7 @@
   "dataReportSubtitle": "Miembros, reservas, facturas, pagos, compras y el plano con sus precios, con totales, para leer o imprimir.",
   "dataReportTitle": "Informe de datos del espacio",
   "dataReportYes": "Sí",
+  "datevAccountLength": "Longitud de las cuentas (Sachkontenlänge)",
   "datevAccountsIntro": "Su asesor le da los números de asesor y de cliente. DATEV rechaza un archivo cuyos números no coincidan — que es lo que evita que acabe en los libros de otra empresa.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
@@ -2758,13 +2759,20 @@
   "@datevConsultantNumber": {
     "description": "#669 - accounting export formats"
   },
+  "datevCostCentre": "Centro de coste (KOST1) cuando un documento no indica sede",
+  "datevDebtorBase": "Cuenta Debitor del miembro n.º 0",
   "datevProblemAccountLength": "la cuenta {account} no tiene {length} dígitos",
   "datevProblemAutomatic": "el {percent} % se contabilizaría en {account}, la cuenta automática de otro tipo",
   "datevProblemClient": "La Mandantennummer «{number}» no es un número de 1 a 99999",
   "datevProblemConsultant": "La Beraternummer «{number}» no es un número de 1001 a 9999999",
+  "datevProblemCurrency": "los importes están en {currency}; el archivo DATEV se escribe en euros",
   "datevProblemDebtorClash": "{members} compartirían la cuenta Debitor {account}",
+  "datevProblemFiscalYearStarts": "los perfiles contables de las sedes empiezan el ejercicio en días distintos",
   "datevProblemMemberNumber": "{member} no tiene un número de miembro que dé una cuenta Debitor («{number}»): asígnele primero un número",
+  "datevProblemReferenceTooLong": "{field} «{value}» supera la longitud que admite DATEV y se recortaría",
+  "datevProblemSachkontenlaenge": "la longitud de cuenta {length} no está entre 4 y 8",
   "datevProblemTaxKey": "no hay ningún BU-Schlüssel registrado para el {percent} % en la cuenta {account}",
+  "datevVoucherLinks": "Adjuntar los PDF de las facturas y enlazarlos desde cada línea (Beleglink)",
   "decisionSurfaceEmpty": "Nada le espera",
   "@decisionSurfaceEmpty": {
     "description": "#1247: decisionSurfaceEmpty"

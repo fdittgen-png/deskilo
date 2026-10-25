@@ -7057,6 +7057,12 @@ abstract class AppLocalizations {
   /// **'Yes'**
   String get dataReportYes;
 
+  /// DATEV export dialog (#2375): the Sachkontenlänge of the chart
+  ///
+  /// In en, this message translates to:
+  /// **'Account length (Sachkontenlänge)'**
+  String get datevAccountLength;
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -7087,6 +7093,18 @@ abstract class AppLocalizations {
   /// **'Beraternummer'**
   String get datevConsultantNumber;
 
+  /// DATEV export dialog (#2375): KOST1 when the document names no site
+  ///
+  /// In en, this message translates to:
+  /// **'Cost centre (KOST1) when a document names no site'**
+  String get datevCostCentre;
+
+  /// DATEV export dialog (#2375): the Debitor account of member counter 0
+  ///
+  /// In en, this message translates to:
+  /// **'Debitor of member number 0'**
+  String get datevDebtorBase;
+
   /// DATEV export (#2375): an account does not have the declared length
   ///
   /// In en, this message translates to:
@@ -7111,11 +7129,23 @@ abstract class AppLocalizations {
   /// **'Beraternummer \"{number}\" is not a number from 1001 to 9999999'**
   String datevProblemConsultant(String number);
 
+  /// DATEV export (#2375): the workspace currency is not the one DATEV is written in
+  ///
+  /// In en, this message translates to:
+  /// **'the amounts are in {currency}; the DATEV file is written in euros'**
+  String datevProblemCurrency(String currency);
+
   /// DATEV export (#2375): two members would share one Debitor account
   ///
   /// In en, this message translates to:
   /// **'{members} would share Debitor {account}'**
   String datevProblemDebtorClash(String members, String account);
+
+  /// DATEV export (#2375): the issuers' book profiles start the fiscal year on different days
+  ///
+  /// In en, this message translates to:
+  /// **'the book profiles of the sites start the fiscal year on different days'**
+  String get datevProblemFiscalYearStarts;
 
   /// DATEV export (#2375): a member number gives no Debitor account
   ///
@@ -7123,11 +7153,29 @@ abstract class AppLocalizations {
   /// **'{member} has no member number that gives a Debitor (\"{number}\"): give them a number first'**
   String datevProblemMemberNumber(String member, String number);
 
+  /// DATEV export (#2375): a Belegfeld 1 or KOST1 longer than its field
+  ///
+  /// In en, this message translates to:
+  /// **'{field} \"{value}\" is longer than DATEV takes and would be cut'**
+  String datevProblemReferenceTooLong(String field, String value);
+
+  /// DATEV export (#2375): the account length is not one DATEV knows
+  ///
+  /// In en, this message translates to:
+  /// **'the account length {length} is not 4 to 8'**
+  String datevProblemSachkontenlaenge(String length);
+
   /// DATEV export (#2375): no BU key for a rate booked to a non-automatic account
   ///
   /// In en, this message translates to:
   /// **'no BU-Schlüssel is recorded for {percent} % on account {account}'**
   String datevProblemTaxKey(String percent, String account);
+
+  /// DATEV export dialog (#2375): include the invoice PDFs, linked from each row
+  ///
+  /// In en, this message translates to:
+  /// **'Include the invoice PDFs and link them from each row (Beleglink)'**
+  String get datevVoucherLinks;
 
   /// #1247: decisionSurfaceEmpty
   ///
