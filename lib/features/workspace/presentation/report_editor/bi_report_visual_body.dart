@@ -21,7 +21,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
@@ -79,7 +78,11 @@ class BiVisualBody extends ConsumerWidget {
     final query = plan.groupBy == null
         ? base
         : base.copyWith(groupBy: plan.groupBy);
-    final today = WorkspaceTime.dateOf(ref.watch(clockProvider).now());
+    // The workspace's own calendar decides which month "now" is.
+    final now = ref.watch(clockProvider).now();
+    final today =
+        ref.watch(readyWorkspaceContextProvider)?.calendar.dateOf(now) ??
+        DateTime(now.year, now.month, now.day);
     final period = query.current(today);
     final body = visual.type == BiVisualType.line
         ? BiLineBody(

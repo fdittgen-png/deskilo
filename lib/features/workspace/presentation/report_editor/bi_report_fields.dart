@@ -58,6 +58,7 @@ class _BiSyncedFieldState extends State<BiSyncedField> {
     focusNode: _focus,
     skipTraversal: true,
     child: AppTextField(
+      key: ValueKey('${(widget.key as ValueKey<String>?)?.value}-input'),
       controller: _text,
       label: widget.label,
       maxLength: widget.maxLength,
@@ -90,7 +91,7 @@ class BiChoiceField<T> extends StatelessWidget {
     padding: const EdgeInsets.only(bottom: AppSpacing.sm),
     child: DropdownButtonFormField<T>(
       // A value changed elsewhere (Undo) rebuilds the field with it.
-      key: ValueKey<Object?>(value),
+      key: ValueKey('${(key as ValueKey<String>?)?.value}-$value'),
       initialValue: value,
       isExpanded: true,
       decoration: InputDecoration(labelText: label),

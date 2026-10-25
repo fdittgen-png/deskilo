@@ -74,35 +74,32 @@ Set<String> biFormatsOf(BiModule module) => {
   },
 };
 
-/// Why [type] cannot show [module] grouped by [dimension]; null when it can.
-BiBindingRefusal? biTypeRefusal(
-  BiVisualType type,
-  BiModule module, {
-  String? dimension,
-}) => switch (type) {
-  BiVisualType.text => BiBindingRefusal.textHasNoMetric,
-  BiVisualType.kpi || BiVisualType.table => null,
-  BiVisualType.line =>
-    module.metric.coverage == KpiCoverage.currentStateOnly
-        ? BiBindingRefusal.noHistory
-        : null,
-  BiVisualType.bar =>
-    biDimensionsOf(module).isEmpty ? BiBindingRefusal.noGrouping : null,
-  BiVisualType.stackedBar =>
-    biDimensionsOf(module).isEmpty
-        ? BiBindingRefusal.noGrouping
-        : module.aggregation != KpiAggregation.sum
-        ? BiBindingRefusal.notAdditive
-        : null,
-};
+/// Why [type] cannot show [module]; null when it can.
+BiBindingRefusal? _typeRefusal(BiVisualType type, BiModule module) =>
+    switch (type) {
+      BiVisualType.text => BiBindingRefusal.textHasNoMetric,
+      BiVisualType.kpi || BiVisualType.table => null,
+      BiVisualType.line =>
+        module.metric.coverage == KpiCoverage.currentStateOnly
+            ? BiBindingRefusal.noHistory
+            : null,
+      BiVisualType.bar =>
+        biDimensionsOf(module).isEmpty ? BiBindingRefusal.noGrouping : null,
+      BiVisualType.stackedBar =>
+        biDimensionsOf(module).isEmpty
+            ? BiBindingRefusal.noGrouping
+            : module.aggregation != KpiAggregation.sum
+            ? BiBindingRefusal.notAdditive
+            : null,
+    };
 
 /// Why [visual] is not a valid binding; null when every part of it fits its
 /// figure.
-BiBindingRefusal? biVisualRefusal(BiReportVisual visual) {
+BiBindingRefusal? _visualRefusal(BiReportVisual visual) {
   if (visual.type == BiVisualType.text) return null;
   final module = biModuleOf(visual.metricId);
   if (module == null) return BiBindingRefusal.unknownMetric;
-  if (biTypeRefusal(visual.type, module) case final r?) return r;
+  if (_typeRefusal(visual.type, module) case final r?) return r;
   final dimension = visual.dimension;
   if (dimension != null && !biDimensionsOf(module).contains(dimension)) {
     return BiBindingRefusal.dimensionUnsupported;
@@ -130,7 +127,7 @@ class BiBinding {
 }
 
 /// [next] when it is valid, else the reason.
-BiBinding biChecked(BiReportVisual next) => switch (biVisualRefusal(next)) {
+BiBinding biChecked(BiReportVisual next) => switch (_visualRefusal(next)) {
   final r? => BiBinding.refused(r),
   null => BiBinding.ok(next),
 };
@@ -146,9 +143,7 @@ BiBinding biBindMetric(BiReportVisual visual, String metricId) {
   if (module == null) {
     return const BiBinding.refused(BiBindingRefusal.unknownMetric);
   }
-  return biChecked(
-    visual.copyWith(metricId: metricId, metricVersion: module.metric.version),
-  );
+  return biChecked(visual.withMetric(metricId, module.metric.version));
 }
 
 /// [visual] shown as [type]; a bar or stacked bar takes the figure's first
@@ -167,13 +162,14 @@ BiBinding biSetType(BiReportVisual visual, BiVisualType type) {
       ? biDimensionsOf(module).firstOrNull
       : null;
   return biChecked(
-    visual.copyWith(
-      type: type,
-      dimension: dimension,
-      style: type == BiVisualType.line
-          ? null
-          : visual.style.withValue('axis', 'zero'),
-    ),
+    visual
+        .copyWith(
+          type: type,
+          style: type == BiVisualType.line
+              ? null
+              : visual.style.withValue('axis', 'zero'),
+        )
+        .withDimension(dimension ?? visual.dimension),
   );
 }
 
@@ -187,21 +183,19 @@ BiBinding biSetDimension(BiReportVisual visual, String? dimension) {
   }
   return biChecked(
     dimension == null
-        ? visual.copyWith(clearDimension: true)
-        : visual.copyWith(dimension: dimension),
+        ? visual.withDimension(null)
+        : visual.withDimension(dimension),
   );
 }
 
 /// [visual] with the number format [format] (`auto` clears it).
 BiBinding biSetFormat(BiReportVisual visual, String format) => biChecked(
-  format == 'auto'
-      ? visual.copyWith(clearFormat: true)
-      : visual.copyWith(format: format),
+  format == 'auto' ? visual.withFormat(null) : visual.withFormat(format),
 );
 
 /// [visual] sorted by [sort].
 BiBinding biSetSort(BiReportVisual visual, String sort) =>
-    biChecked(visual.copyWith(sort: sort));
+    biChecked(visual.withSort(sort));
 
 /// [visual] with its style's [key] set to [value].
 BiBinding biSetStyle(BiReportVisual visual, String key, Object? value) {

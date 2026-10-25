@@ -223,7 +223,7 @@ class _Binding extends ConsumerWidget {
           trailing: TextButton(
             key: ValueKey('bi-prop-metric-change-$id'),
             onPressed: () async {
-              final metric = await pickBiMetric(context, ref);
+              final metric = await pickBiMetric(context, biBindableModules(ref));
               if (metric != null) bind((v) => biBindMetric(v, metric));
             },
             child: Text(l10n.biEditorChangeFigure),

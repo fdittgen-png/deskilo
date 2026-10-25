@@ -143,7 +143,7 @@ class BiPagesPanel extends ConsumerWidget {
               );
               return;
             }
-            final metric = await pickBiMetric(context, ref);
+            final metric = await pickBiMetric(context, biBindableModules(ref));
             if (metric == null) return;
             run(
               (r, p) =>

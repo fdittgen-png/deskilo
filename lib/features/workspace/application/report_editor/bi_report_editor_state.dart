@@ -156,11 +156,16 @@ class BiEditorState {
   BiEditorState applied(BiEdit edit, {String? coalesceKey}) {
     final next = edit.report;
     if (next == null) {
-      return _copy(refusal: edit.refusal, binding: edit.binding);
+      return BiEditorState._from(
+        this,
+        refusal: edit.refusal,
+        binding: edit.binding,
+      );
     }
     final merge = coalesceKey != null && coalesceKey == coalesce;
     final history = merge ? past : [...past, _step];
-    return _copy(
+    return BiEditorState._from(
+      this,
       report: next,
       page: edit.page ?? page,
       selected: edit.selected ?? selected,
@@ -180,7 +185,8 @@ class BiEditorState {
   BiEditorState undone() {
     if (!canUndo) return this;
     final last = past.last;
-    return _copy(
+    return BiEditorState._from(
+      this,
       report: last.report,
       page: last.page.clamp(0, last.report.pages.length - 1),
       selected: last.selected,
@@ -193,7 +199,8 @@ class BiEditorState {
   BiEditorState redone() {
     if (!canRedo) return this;
     final next = future.first;
-    return _copy(
+    return BiEditorState._from(
+      this,
       report: next.report,
       page: next.page.clamp(0, next.report.pages.length - 1),
       selected: next.selected,
@@ -203,14 +210,19 @@ class BiEditorState {
     );
   }
 
-  BiEditorState withName(String value) =>
-      _copy(name: value, coalesce: 'name', clearRequest: true);
+  BiEditorState withName(String value) => BiEditorState._from(
+    this,
+    name: value,
+    coalesce: 'name',
+    clearRequest: true,
+  );
 
   /// Page [page] and/or visual [selected] on screen. Another page drops
   /// the selection made on this one.
   BiEditorState shown({int? page, String? selected}) {
     final p = (page ?? this.page).clamp(0, report.pages.length - 1);
-    return _copy(
+    return BiEditorState._from(
+      this,
       page: p,
       selected: selected,
       clearSelected: page != null && selected == null,
@@ -218,10 +230,14 @@ class BiEditorState {
     );
   }
 
-  BiEditorState withSelection(BiReportSelection? value) =>
-      _copy(selection: value, clearSelection: value == null);
+  BiEditorState withSelection(BiReportSelection? value) => BiEditorState._from(
+    this,
+    selection: value,
+    clearSelection: value == null,
+  );
 
-  BiEditorState withPreview({required bool on}) => _copy(preview: on);
+  BiEditorState withPreview({required bool on}) =>
+      BiEditorState._from(this, preview: on);
 
   BiEditorState withSave(
     BiEditorSave save, {
@@ -244,7 +260,10 @@ class BiEditorState {
     preview: preview,
   );
 
-  BiEditorState _copy({
+  /// [o] with the parts named replaced; a `clear…` flag empties its part,
+  /// and the one-shot refusal, binding and coalescing key are not carried.
+  BiEditorState._from(
+    BiEditorState o, {
     BiReportDefinition? report,
     String? name,
     int? page,
@@ -253,28 +272,23 @@ class BiEditorState {
     List<BiEditorStep>? past,
     List<BiEditorStep>? future,
     BiEditorSave? save,
-    BiEditRefusal? refusal,
-    BiBindingRefusal? binding,
-    String? coalesce,
+    this.refusal,
+    this.binding,
+    this.coalesce,
     bool clearRequest = false,
     BiReportSelection? selection,
     bool clearSelection = false,
     bool? preview,
-  }) => BiEditorState(
-    base: base,
-    report: report ?? this.report,
-    name: name ?? this.name,
-    page: page ?? this.page,
-    selected: clearSelected ? null : selected ?? this.selected,
-    past: past ?? this.past,
-    future: future ?? this.future,
-    save: save ?? this.save,
-    failure: failure,
-    requestId: clearRequest ? null : requestId,
-    refusal: refusal,
-    binding: binding,
-    coalesce: coalesce,
-    selection: clearSelection ? null : selection ?? this.selection,
-    preview: preview ?? this.preview,
-  );
+  }) : base = o.base,
+       report = report ?? o.report,
+       name = name ?? o.name,
+       page = page ?? o.page,
+       selected = clearSelected ? null : selected ?? o.selected,
+       past = past ?? o.past,
+       future = future ?? o.future,
+       save = save ?? o.save,
+       failure = o.failure,
+       requestId = clearRequest ? null : o.requestId,
+       selection = clearSelection ? null : selection ?? o.selection,
+       preview = preview ?? o.preview;
 }

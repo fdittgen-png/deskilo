@@ -4,7 +4,7 @@
 // indicators: which figures are pinned, in which order. It is a saved report
 // like any other (#2579's store: one revision per save, a stale save refused,
 // a retried request applied once), private to its author, whose one page has
-// the id [biOverviewPageId]: so two people's layouts never touch, a layout
+// the id [_overviewPageId]: so two people's layouts never touch, a layout
 // survives a restart and another device, and it opens in the report editor
 // and the analytics page as what it is.
 //
@@ -20,7 +20,7 @@ import 'bi_report_definition.dart';
 import 'bi_saved_view.dart';
 
 /// The page id that marks a saved report as its author's overview layout.
-const biOverviewPageId = 'overview';
+const _overviewPageId = 'overview';
 
 /// The reader's own overview layout among [views], or null (the standard,
 /// registry-ordered overview).
@@ -29,7 +29,7 @@ BiSavedView? biOverviewLayoutOf(List<BiSavedView> views) => views
       (v) =>
           v.scope == BiViewScope.private &&
           v.mine &&
-          v.definition?.report?.pages.firstOrNull?.id == biOverviewPageId,
+          v.definition?.report?.pages.firstOrNull?.id == _overviewPageId,
     )
     .firstOrNull;
 
@@ -46,7 +46,7 @@ BiReportDefinition biOverviewReport(
   period: const BiReportPeriod.relative(BiGrain.month, 0),
   pages: [
     BiReportPage(
-      id: biOverviewPageId,
+      id: _overviewPageId,
       title: title,
       visuals: [
         for (final (i, t) in tiles.indexed)

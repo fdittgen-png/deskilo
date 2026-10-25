@@ -152,7 +152,7 @@ BiEdit biAddVisual(
 }
 
 /// The visual [id] of page [page], or null.
-BiReportVisual? biVisualOn(BiReportDefinition report, int page, String id) =>
+BiReportVisual? _visualOn(BiReportDefinition report, int page, String id) =>
     report.pages[page].visuals.where((v) => v.id == id).firstOrNull;
 
 BiEdit _replace(
@@ -162,7 +162,7 @@ BiEdit _replace(
   BiReportVisual Function(BiReportVisual v) change,
 ) {
   final p = report.pages[page];
-  if (biVisualOn(report, page, id) == null) {
+  if (_visualOn(report, page, id) == null) {
     return const BiEdit.refused(BiEditRefusal.missing);
   }
   return BiEdit(
@@ -185,7 +185,7 @@ BiEdit biChangeVisual(
   String id,
   BiBinding Function(BiReportVisual v) change,
 ) {
-  final v = biVisualOn(report, page, id);
+  final v = _visualOn(report, page, id);
   if (v == null) return const BiEdit.refused(BiEditRefusal.missing);
   final bound = change(v);
   if (bound.refusal case final r?) return BiEdit.unbound(r);
@@ -198,7 +198,7 @@ BiEdit biSetText(BiReportDefinition report, int page, String id, String text) {
   if (t.isEmpty || t.length > BiReportVisual.maxText) {
     return const BiEdit.refused(BiEditRefusal.invalidText);
   }
-  final v = biVisualOn(report, page, id);
+  final v = _visualOn(report, page, id);
   if (v == null || v.type != BiVisualType.text) {
     return const BiEdit.refused(BiEditRefusal.missing);
   }
@@ -342,7 +342,7 @@ BiEdit biDeletePage(BiReportDefinition report, int page) {
 /// The report's filters ([page] null) or page [page]'s, set to [filters].
 /// A level that would widen the one above it, or leave a lower level wider
 /// than itself, is refused.
-BiEdit biSetFilters(
+BiEdit _setFilters(
   BiReportDefinition report,
   int? page,
   List<BiReportFilter> filters,
@@ -380,7 +380,7 @@ BiEdit biAddPageFilter(
   if (kept.length >= BiReportFilter.maxPerLevel) {
     return const BiEdit.refused(BiEditRefusal.limit);
   }
-  return biSetFilters(report, page, [...kept, filter]);
+  return _setFilters(report, page, [...kept, filter]);
 }
 
 /// The report's filters ([page] null) or page [page]'s without filter
@@ -391,5 +391,5 @@ BiEdit biRemoveFilter(BiReportDefinition report, int? page, int index) {
   if (index < 0 || index >= filters.length) {
     return const BiEdit.refused(BiEditRefusal.missing);
   }
-  return biSetFilters(report, page, [...filters]..removeAt(index));
+  return _setFilters(report, page, [...filters]..removeAt(index));
 }

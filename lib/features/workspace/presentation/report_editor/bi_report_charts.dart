@@ -187,6 +187,7 @@ class _Legend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
+    key: ValueKey('${(key as ValueKey<String>?)?.value}-pick'),
     onTap: onTap,
     child: Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),

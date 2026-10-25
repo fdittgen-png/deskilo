@@ -41,6 +41,7 @@ import '../widgets/setup_resume_banner.dart';
 import 'attention_screen.dart';
 
 /// The groups of the key indicators, in their order.
+@visibleForTesting
 enum OverviewGroup { people, capacity, sales, purchases, cash }
 
 /// The group [module] is shown in.
@@ -108,7 +109,6 @@ class _WorkspaceOverviewScreenState
     final views = analytics && workspace != null
         ? ref.watch(biViewsProvider(workspace.id)).value ?? const <BiSavedView>[]
         : const <BiSavedView>[];
-    final layout = biOverviewLayoutOf(views);
     final canCustomize =
         analytics &&
         workspace != null &&
@@ -141,59 +141,13 @@ class _WorkspaceOverviewScreenState
               AttentionRow(key: ValueKey('overview-attention-$i'), item: item),
           if (modules.isNotEmpty) ...[
             heading(l10n.overviewIndicators, 'overview-indicators'),
-            if (canCustomize && !_customizing)
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: TextButton.icon(
-                  key: const ValueKey('overview-customize'),
-                  focusNode: _customize,
-                  onPressed: () => _setCustomizing(on: true),
-                  icon: const Icon(Icons.tune),
-                  label: Text(l10n.overviewCustomize),
-                ),
+            if (workspace != null)
+              ..._indicators(
+                workspace.id,
+                modules,
+                views,
+                canCustomize: canCustomize,
               ),
-            if (_customizing && canCustomize)
-              OverviewLayoutEditor(
-                workspaceId: workspace.id,
-                modules: modules,
-                layout: layout,
-                reports: [
-                  for (final v in views)
-                    if (v.definition?.report != null && v != layout) v,
-                ],
-                onClose: () => _setCustomizing(on: false),
-              )
-            else if (layout?.definition?.report case final report?)
-              _Pinned(
-                workspaceId: workspace!.id,
-                modules: [
-                  for (final id in biTilesOf(report))
-                    ?modules.where((m) => m.id == id).firstOrNull,
-                ],
-              )
-            else
-            for (final group in OverviewGroup.values)
-              if (modules.where((m) => overviewGroupOf(m) == group).toList()
-                  case final inGroup when inGroup.isNotEmpty) ...[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                  child: Text(
-                    _groupLabel(l10n, group),
-                    key: ValueKey('overview-group-${group.name}'),
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ),
-                Wrap(
-                  spacing: AppSpacing.sm,
-                  runSpacing: AppSpacing.sm,
-                  children: [
-                    for (final m in inGroup)
-                      if (workspace != null)
-                        _IndicatorTile(workspaceId: workspace.id, module: m),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.md),
-              ],
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: TextButton.icon(
@@ -208,6 +162,89 @@ class _WorkspaceOverviewScreenState
       ),
     );
   }
+
+  /// The key indicators: Customize, then the person's layout being edited,
+  /// their pinned tiles, or the registry's groups.
+  List<Widget> _indicators(
+    String workspaceId,
+    List<BiModule> modules,
+    List<BiSavedView> views, {
+    required bool canCustomize,
+  }) {
+    final layout = biOverviewLayoutOf(views);
+    final report = layout?.definition?.report;
+    return [
+      if (canCustomize && !_customizing)
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: TextButton.icon(
+            key: const ValueKey('overview-customize'),
+            focusNode: _customize,
+            onPressed: () => _setCustomizing(on: true),
+            icon: const Icon(Icons.tune),
+            label: Text(context.l10n.overviewCustomize),
+          ),
+        ),
+      if (_customizing && canCustomize)
+        OverviewLayoutEditor(
+          workspaceId: workspaceId,
+          modules: modules,
+          layout: layout,
+          reports: [
+            for (final v in views)
+              if (v.definition?.report != null && v != layout) v,
+          ],
+          onClose: () => _setCustomizing(on: false),
+        )
+      else if (report != null)
+        _Pinned(
+          workspaceId: workspaceId,
+          modules: [
+            for (final id in biTilesOf(report))
+              ?modules.where((m) => m.id == id).firstOrNull,
+          ],
+        )
+      else
+        _Grouped(workspaceId: workspaceId, modules: modules),
+    ];
+  }
+}
+
+/// The registry's layout: the tiles grouped Capacity / Sales / Purchases /
+/// Cash.
+class _Grouped extends StatelessWidget {
+  const _Grouped({required this.workspaceId, required this.modules});
+
+  final String workspaceId;
+  final List<BiModule> modules;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      for (final group in OverviewGroup.values)
+        if (modules.where((m) => overviewGroupOf(m) == group).toList()
+            case final inGroup when inGroup.isNotEmpty) ...[
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+            child: Text(
+              _groupLabel(context.l10n, group),
+              key: ValueKey('overview-group-${group.name}'),
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final m in inGroup)
+                _IndicatorTile(workspaceId: workspaceId, module: m),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+        ],
+    ],
+  );
 }
 
 /// The person's pinned tiles, in their order, without the registry groups.

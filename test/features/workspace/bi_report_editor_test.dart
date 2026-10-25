@@ -129,7 +129,7 @@ BiReportDefinition _report() => BiReportDefinition(
           id: 'v2',
           metricId: _capacity,
           layout: const BiVisualLayout(order: 1),
-        ).copyWith(type: BiVisualType.bar, dimension: 'level'),
+        ).copyWith(type: BiVisualType.bar).withDimension('level'),
       ],
     ),
     BiReportPage(

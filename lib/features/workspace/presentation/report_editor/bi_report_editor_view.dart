@@ -182,9 +182,9 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
 
   Future<void> _leave() async {
     final navigator = Navigator.of(context);
-    final choice = await showBiLeaveDialog(context);
+    final choice = await _showLeaveDialog(context);
     if (!mounted || choice == null) return;
-    if (choice == BiLeaveChoice.save) {
+    if (choice == _LeaveChoice.save) {
       final saved = await _editor.save();
       if (saved == null) {
         _afterSave();
@@ -443,13 +443,13 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
 }
 
 /// What the person chose when leaving with unsaved changes.
-enum BiLeaveChoice { save, discard }
+enum _LeaveChoice { save, discard }
 
 /// Save / Discard / Keep editing; null (Keep editing, or the question
 /// dismissed) saves nothing and stays.
-Future<BiLeaveChoice?> showBiLeaveDialog(BuildContext context) {
+Future<_LeaveChoice?> _showLeaveDialog(BuildContext context) {
   final l10n = context.l10n;
-  return showDialog<BiLeaveChoice>(
+  return showDialog<_LeaveChoice>(
     context: context,
     builder: (context) => AlertDialog(
       key: const ValueKey('bi-editor-leave'),
@@ -463,12 +463,12 @@ Future<BiLeaveChoice?> showBiLeaveDialog(BuildContext context) {
         ),
         TextButton(
           key: const ValueKey('bi-editor-discard'),
-          onPressed: () => Navigator.of(context).pop(BiLeaveChoice.discard),
+          onPressed: () => Navigator.of(context).pop(_LeaveChoice.discard),
           child: Text(l10n.biEditorDiscard),
         ),
         FilledButton(
           key: const ValueKey('bi-editor-leave-save'),
-          onPressed: () => Navigator.of(context).pop(BiLeaveChoice.save),
+          onPressed: () => Navigator.of(context).pop(_LeaveChoice.save),
           child: Text(l10n.biViewSave),
         ),
       ],

@@ -33,9 +33,8 @@ String biFigureFacts(AppLocalizations l10n, BiModule module) =>
       biCoverageLabel(l10n, module.metric.coverage),
     );
 
-/// Asks which figure to bind; null when the person closes the list.
-Future<String?> pickBiMetric(BuildContext context, WidgetRef ref) {
-  final modules = biBindableModules(ref);
+/// Asks which of [modules] to bind; null when the person closes the list.
+Future<String?> pickBiMetric(BuildContext context, List<BiModule> modules) {
   return showAppSheet<String>(
     context: context,
     isScrollControlled: true,

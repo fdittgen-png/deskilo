@@ -329,18 +329,10 @@ class BiReportVisual {
     'style',
   };
 
-  /// This visual with the parts named replaced; a `clear…` flag sets its
-  /// part back to none.
+  /// This visual with the presentation parts named replaced.
   BiReportVisual copyWith({
     String? id,
     BiVisualType? type,
-    String? metricId,
-    int? metricVersion,
-    String? dimension,
-    bool clearDimension = false,
-    String? sort,
-    String? format,
-    bool clearFormat = false,
     BiVisualLayout? layout,
     String? interaction,
     String? text,
@@ -348,18 +340,37 @@ class BiReportVisual {
   }) => BiReportVisual(
     id: id ?? this.id,
     type: type ?? this.type,
-    metricId: metricId ?? this.metricId,
-    metricVersion: metricVersion ?? this.metricVersion,
-    dimension: clearDimension ? null : dimension ?? this.dimension,
+    metricId: metricId,
+    metricVersion: metricVersion,
+    dimension: dimension,
     filters: filters,
-    sort: sort ?? this.sort,
-    format: clearFormat ? null : format ?? this.format,
+    sort: sort,
+    format: format,
     layout: layout ?? this.layout,
     interaction: interaction ?? this.interaction,
     drill: drill,
     text: text ?? this.text,
     style: style ?? this.style,
   );
+
+  /// Bound to [id] at [version] of its metric.
+  BiReportVisual withMetric(String id, int version) =>
+      _merged({'metricId': id, 'metricVersion': version});
+
+  /// Grouped by [value] (null: not grouped).
+  BiReportVisual withDimension(String? value) => _merged({'dimension': value});
+
+  /// With the number format [value] (null: the figure's own).
+  BiReportVisual withFormat(String? value) => _merged({'format': value});
+
+  /// Sorted by [value].
+  BiReportVisual withSort(String value) => _merged({'sort': value});
+
+  /// This visual with [changes] merged into its stored form (a null clears
+  /// that part); itself when the result would not be a valid visual.
+  BiReportVisual _merged(Map<String, Object?> changes) =>
+      fromJson({...toJson(), ...changes}..removeWhere((_, v) => v == null)) ??
+      this;
 
   Map<String, Object?> toJson() => {
     'id': id,
