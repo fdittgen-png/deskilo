@@ -339,4 +339,4 @@ revoke execute on function public.mcp_op_set_number_sequence(public.mcp_call_con
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(582);
