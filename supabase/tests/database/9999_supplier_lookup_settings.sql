@@ -36,9 +36,13 @@ select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
   from generate_series(1, 2) i;
 -- 1 owner of A, 2 a stranger to A.
 
-select pg_temp.act_as(pg_temp.u(1));
-select set_config('t.a', public.create_workspace('Lookup A', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
-reset role;
+-- Seeds are direct inserts as postgres: no session is needed to create
+-- the workspace, and only the reads below run as `authenticated`.
+select set_config('t.a', '00000000-0000-4000-8000-0000286a0001', true);
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, environment)
+values (current_setting('t.a')::uuid, 'Lookup A', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 'dev');
+insert into public.members (workspace_id, user_id, is_owner, is_admin, status)
+values (current_setting('t.a')::uuid, pg_temp.u(1), true, true, 'active');
 
 select is(
   (select jsonb_build_array(type, default_value, min_value, max_value, scopes, editable)
