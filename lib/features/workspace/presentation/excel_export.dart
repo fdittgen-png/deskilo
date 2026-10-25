@@ -204,3 +204,31 @@ Future<void> exportWorkspaceExcel(
     },
   );
 }
+
+/// #2862 — the rows the workbook's sheets are written from, as the data
+/// report reads them.
+Future<WorkspaceExportDetails> readDataReportDetails(
+  WidgetRef ref, Workspace workspace) async {
+  final levels = await ref.read(levelsProvider.future);
+  final invoices = ref.read(invoiceQueriesProvider);
+  return WorkspaceExportDetails(
+    workspace: workspace,
+    levels: levels,
+    plansByLevel: {
+      for (final level in levels)
+        level.id: await ref.read(floorPlanProvider(level.id).future),
+    },
+    memberName: await ref.read(memberNamesProvider.future),
+    ledger: await ref
+        .read(memberAccountQueriesProvider)
+        .fetchWorkspaceLedger(workspace.id),
+    events: const [],
+    decisions: const {},
+    invoices: await invoices.fetchInvoices(workspace.id),
+    members: await ref.read(workspaceMembersProvider.future),
+    reservations: await ref
+        .read(reservationRepositoryProvider)
+        .fetchAllForExport(workspace.id),
+    invoiceMatches: await invoices.fetchInvoiceMatches(workspace.id),
+  );
+}
