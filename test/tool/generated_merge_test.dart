@@ -20,6 +20,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_arb.dart' show encodeArb;
+import '../../tool/code_health.dart' show baselineDocument;
 import '../../tool/code_health_budgets.dart' show Budgets;
 import '../../tool/dependency_map.dart' show render;
 
@@ -117,6 +118,48 @@ void main() {
     // And two lowerings of the SAME file still conflict, which is right:
     // the combined count needs a new number.
     expect(_merge(budgets(700, 800), budgets(690, 800), budgets(680, 800)),
+        isNull);
+  });
+
+  test('code-health baseline: two pull requests changing, adding and '
+      'removing neighbouring functions merge cleanly into the generator '
+      'output', () {
+    Map<String, Object?> fn(String id, int cog) =>
+        {'id': id, 'cog': cog, 'cyc': 1, 'len': 10, 'params': 1};
+    String doc(Map<String, int> held) => baselineDocument(
+        Budgets(partOfFiles: 1, maps: {'fileLength': {'lib/a.dart': 600}}),
+        [for (final e in held.entries) fn(e.key, e.value)]);
+    String id(String n) => 'lib/$n.dart#$n()';
+    final base = {for (final n in ['a', 'b', 'd', 'f', 'h', 'j']) id(n): 40};
+    // Pull request 1 lowers a and adds c; pull request 2 lowers b (a's
+    // neighbour, c's too), removes f and adds i.
+    final one = {...base, id('a'): 35, id('c'): 31};
+    final two = {...base, id('b'): 33, id('i'): 32}..remove(id('f'));
+    final both = {...one, id('b'): 33, id('i'): 32}..remove(id('f'));
+
+    final merged = _merge(doc(base), doc(one), doc(two));
+    expect(merged, isNotNull, reason: 'the baseline conflicted');
+    expect(merged, doc(both));
+
+    // Negative control: the old layout — a commit, a date and totals in
+    // the header, every function on adjacent lines.
+    String old(Map<String, int> held, String sha) => '{\n'
+        '  "recordedSha": "$sha",\n  "recordedDate": "2026-10-2${sha.length}",\n'
+        '  "totals": {"functions":${held.length}},\n  "functions": [\n'
+        '${held.entries.map((e) => '    ${jsonEncode(fn(e.key, e.value))}').join(',\n')}'
+        '\n  ]\n}\n';
+    expect(_merge(old(base, 'a'), old(one, 'bb'), old(two, 'ccc')), isNull,
+        reason: 'the control must conflict, or this test proves nothing');
+    // Without the header, adjacent entries still conflict.
+    String adjacent(Map<String, int> held) => old(held, 'x')
+        .replaceFirst(RegExp(r'  "recordedSha".*\n.*\n.*\n'), '');
+    expect(_merge(adjacent(base), adjacent(one), adjacent(two)), isNull);
+    // What still conflicts, by nature of a line merge: two structural
+    // changes to neighbouring entries (removing two neighbours, or adding
+    // an entry next to one the other side removes) — the combined list
+    // needs a look, as two lowerings of the same function do.
+    final gone = {...base}..remove(id('d'));
+    expect(_merge(doc(base), doc(gone), doc({...base}..remove(id('f')))),
         isNull);
   });
 }

@@ -16,13 +16,15 @@
 //    same change; the failure prints the line to write.
 //
 // The second group proves the rules on synthetic functions, so the gate
-// cannot rot into a presence check. The generated summary has a drift test.
+// cannot rot into a presence check. The baseline's layout has a drift test;
+// the summary (CODE_HEALTH.md) is published by CI, never committed (#2121).
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/code_health.dart';
+import '../../tool/code_health_budgets.dart' show Budgets;
 
 /// `void <name>() { if (a) { if (a) { ... } } }` nested [depth] deep:
 /// cognitive complexity depth * (depth + 1) / 2, cyclomatic depth + 1.
@@ -93,12 +95,25 @@ void main() {
       expect(header, thresholdsJson());
     });
 
-    test('docs/design/CODE_HEALTH.md is what the tool writes from the '
-        'baseline (run: dart run tool/code_health.dart --baseline)', () {
+    test('the baseline holds nothing that moves with an unrelated edit '
+        '(#2121): no commit, date, totals or per-file measurement, and one '
+        'partOfFiles', () {
       final text = File('docs/design/CODE_HEALTH_BASELINE.json')
           .readAsStringSync();
-      expect(File('docs/design/CODE_HEALTH.md').readAsStringSync(),
-          summaryOf(jsonDecode(text) as Map<String, Object?>));
+      expect((jsonDecode(text) as Map<String, Object?>).keys.toSet(),
+          {'thresholds', 'budgets', 'functions'});
+      expect('"partOfFiles"'.allMatches(text), hasLength(1));
+    });
+
+    test('the baseline is in the layout the tool writes: sorted, one entry '
+        'per line, a blank line between entries (run: dart run '
+        'tool/code_health.dart --baseline)', () {
+      final text = File('docs/design/CODE_HEALTH_BASELINE.json')
+          .readAsStringSync();
+      final held = ((jsonDecode(text) as Map<String, Object?>)['functions']!
+              as List)
+          .cast<Map<String, Object?>>();
+      expect(text, baselineDocument(Budgets.fromBaseline(text), held));
     });
   });
 

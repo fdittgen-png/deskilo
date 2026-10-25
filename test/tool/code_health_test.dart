@@ -153,4 +153,21 @@ void main() {
     final listed = cycles().map((l) => l.split('  ').first).toList();
     expect(listed, documented);
   });
+
+  test('the published summary takes its totals from the measured tree and '
+      'its worst functions from the baseline (#2121)', () {
+    final baseline = {
+      'thresholds': thresholdsJson(),
+      'functions': [
+        {'id': 'lib/a.dart#a()', 'cog': 31, 'cyc': 2, 'len': 9, 'params': 1},
+        {'id': 'lib/b.dart#b()', 'cog': 44, 'cyc': 3, 'len': 8, 'params': 2},
+      ],
+    };
+    final text = summaryOf(baseline, {'files': 7, 'functions': 12}, sha: 'abc');
+    expect(text, contains('Measured at `abc`.'));
+    expect(text, contains('| files | 7 |'));
+    expect(text.indexOf('lib/b.dart#b'), lessThan(text.indexOf('lib/a.dart#a')),
+        reason: 'worst first');
+    expect(summaryOf(baseline, const {}), isNot(contains('Measured at')));
+  });
 }

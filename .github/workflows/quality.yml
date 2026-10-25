@@ -545,6 +545,28 @@ jobs:
           path: docs/testing/TEST_INVENTORY.md
           if-no-files-found: ignore
 
+      # #2121 — the code-health summary (totals of the tested tree, the
+      # worst held functions) is generated, never committed: the committed
+      # copy, with its commit, date and totals, changed in almost every
+      # pull request and put every open one in conflict. It is published
+      # as this job's summary and as its own artifact (never inside
+      # quality-code, see above). Informational: test/lint/code_health_test
+      # is what fails a build.
+      - name: Code health summary (published, not committed)
+        if: always()
+        continue-on-error: true
+        run: |
+          dart run tool/code_health.dart --summary
+          cat docs/design/CODE_HEALTH.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: code-health-attempt-${{ github.run_attempt }}
+          path: docs/design/CODE_HEALTH.md
+          if-no-files-found: ignore
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:

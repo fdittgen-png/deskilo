@@ -58,4 +58,10 @@ scratchpad/
 # writes it and CI publishes it with the quality report. A committed copy
 # put every open pull request that adds a test in conflict.
 /docs/testing/TEST_INVENTORY.md
+
+# #2121 — generated, never committed: `dart run tool/code_health.dart
+# --summary` writes it and CI publishes it as the code-health job summary.
+# The committed copy, with its commit, date and totals, changed in almost
+# every pull request and put the open ones in conflict.
+/docs/design/CODE_HEALTH.md
 fastlane/metadata/ios/review_information/phone_number.txt
