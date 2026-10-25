@@ -8,9 +8,11 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/open_invoice_rows.dart';
 import '../../domain/accounting_view.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/dunning.dart';
@@ -19,6 +21,7 @@ import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_journey.dart';
 import 'invoice_journey_view.dart';
+import 'open_invoice_act_view.dart';
 
 /// Everything an open card can do — the same callbacks the hub already
 /// wires, so the process view never invents an action of its own.
@@ -187,153 +190,21 @@ class OpenInvoiceCard extends StatelessWidget {
   final DateTime now;
   final OpenInvoiceActions actions;
 
+  /// The move names ONE expected action; it gets the label (#812).
+  OpenInvoiceAct? get _primary => switch (journey.move) {
+        InvoiceMove.issuerRefunds => OpenInvoiceAct.refund,
+        InvoiceMove.issuerMatchesPayment => OpenInvoiceAct.match,
+        InvoiceMove.adminConfirmsPayment => OpenInvoiceAct.confirmInEvents,
+        InvoiceMove.memberPays ||
+        InvoiceMove.memberPaysRemainder when journey.reminderDue != null =>
+          OpenInvoiceAct.remind,
+        _ => null,
+      };
+
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final theme = Theme.of(context);
     final invoice = entry.invoice;
-    final id = invoice.id;
-    final muted = theme.textTheme.bodySmall?.copyWith(
-      color: theme.colorScheme.onSurfaceVariant,
-    );
-    final days = now.difference(invoice.issuedAt).inDays;
-    final due = journey.reminderDue;
-
-    // ── The actions, by move ─────────────────────────────────────────
-    // The move names ONE expected action; it gets the label. Everything
-    // else the lifecycle still permits stays an icon with a tooltip.
-    final primary = switch (journey.move) {
-      InvoiceMove.issuerRefunds => _Primary(
-          key: 'invoice-refund-$id',
-          icon: Icons.currency_exchange,
-          label: l10n.invoiceRefundButton,
-          onPressed: () => actions.onRefund(entry),
-        ),
-      InvoiceMove.issuerMatchesPayment => _Primary(
-          key: 'invoice-match-$id',
-          icon: Icons.price_check_outlined,
-          label: l10n.invoiceMatchAction,
-          onPressed: () => actions.onMatch(entry),
-        ),
-      InvoiceMove.adminConfirmsPayment => _Primary(
-          key: 'invoice-events-$id',
-          icon: Icons.how_to_vote_outlined,
-          label: l10n.journeyPrimaryConfirmInEvents,
-          onPressed: () => actions.onEvents(entry),
-        ),
-      InvoiceMove.memberPays ||
-      InvoiceMove.memberPaysRemainder when due != null =>
-        _Primary(
-          key: 'invoice-remind-$id',
-          icon: Icons.notification_important,
-          label: l10n.journeyPrimaryRemind(due),
-          onPressed: () => actions.onRemind(entry),
-        ),
-      _ => null,
-    };
-    final creditNote = invoice.totalCents < 0;
-    final standingPartial =
-        entry.pendingMatch != null && !entry.pendingMatch!.pending;
-    final pendingMatch = entry.pendingMatch != null && entry.pendingMatch!.pending;
-
-    Widget icon({
-      required String key,
-      required IconData icon,
-      required String tooltip,
-      required VoidCallback onPressed,
-      Color? color,
-      bool tonal = false,
-    }) =>
-        tonal
-            // The expected move is named, not guessed from an icon.
-            ? FilledButton.tonalIcon(
-                key: ValueKey(key),
-                onPressed: onPressed,
-                icon: Icon(icon, color: color),
-                label: Text(tooltip),
-              )
-            : IconButton(
-                key: ValueKey(key),
-                tooltip: tooltip,
-                icon: Icon(icon, color: color),
-                onPressed: onPressed,
-              );
-    bool isPrimary(String key) => primary?.key == key;
-
-    final secondary = <Widget>[
-      if (!standingPartial && !pendingMatch)
-        icon(
-          key: 'invoice-void-open-$id',
-          icon: Icons.block_outlined,
-          tooltip: l10n.invoiceVoidAction,
-          onPressed: () => actions.onVoid(entry),
-        ),
-      if (!creditNote && !standingPartial && !pendingMatch)
-        icon(
-          key: 'invoice-proforma-$id',
-          icon: Icons.description_outlined,
-          tooltip: l10n.invoiceProformaAction,
-          onPressed: () => actions.onProforma(entry),
-        ),
-      if (!creditNote && !pendingMatch && !isPrimary('invoice-remind-$id'))
-        icon(
-          key: 'invoice-remind-$id',
-          icon: Icons.notifications_outlined,
-          tooltip: l10n.invoiceRemindAction,
-          onPressed: () => actions.onRemind(entry),
-        ),
-      if (!creditNote && !pendingMatch && !isPrimary('invoice-match-$id'))
-        icon(
-          key: 'invoice-match-$id',
-          icon: Icons.price_check_outlined,
-          tooltip: l10n.invoiceMatchAction,
-          onPressed: () => actions.onMatch(entry),
-          tonal: primary == null,
-        ),
-      if (standingPartial)
-        if (journey.facts.writeoffPending)
-          Chip(
-            key: ValueKey('invoice-writeoff-pending-$id'),
-            avatar: const Icon(Icons.how_to_vote_outlined, size: 18),
-            label: Text(
-              l10n.invoiceMatchPendingBadge,
-            ),
-          )
-        else
-          icon(
-            key: 'invoice-writeoff-$id',
-            icon: Icons.money_off_csred_outlined,
-            tooltip: l10n.invoiceWriteoffButton,
-            onPressed: () => actions.onWriteoff(entry),
-          ),
-      if (creditNote && !isPrimary('invoice-refund-$id'))
-        icon(
-          key: 'invoice-refund-$id',
-          icon: Icons.currency_exchange,
-          tooltip: l10n.invoiceRefundButton,
-          onPressed: () => actions.onRefund(entry),
-          tonal: true,
-        ),
-      if (pendingMatch)
-        Chip(
-          key: ValueKey('invoice-match-pending-$id'),
-          avatar: const Icon(Icons.how_to_vote_outlined, size: 18),
-          label: Text(
-            l10n.invoiceMatchPendingBadge,
-          ),
-        ),
-    ];
-
-    // The figure the move is about, beside the actions: what is left on
-    // a partial, what the workspace pays back on a credit note.
-    final figure = creditNote
-        ? '${l10n.invoiceRefundLabel}: '
-            '${currency.formatMinor(-invoice.totalCents)}'
-        : standingPartial
-            ? '${l10n.invoiceRemainingLabel}: '
-                '${currency.formatMinor(journey.remainingCents)}'
-            : null;
-
     return Card(
       child: InkWell(
         key: const ValueKey('open-invoice-card-invoice-open-age'),
@@ -372,86 +243,142 @@ class OpenInvoiceCard extends StatelessWidget {
                 child: InvoiceJourneyBar(journey: journey),
               ),
               const SizedBox(height: AppSpacing.xs),
-              Text.rich(
-                TextSpan(style: muted, children: [
-                  TextSpan(text: dateFormat.format(invoice.issuedAt)),
-                  const TextSpan(text: ' · '),
-                  TextSpan(text: l10n.invoiceOpenAge(days)),
-                  if (journey.reminderCount > 0) ...[
-                    const TextSpan(text: ' · '),
-                    TextSpan(
-                      text: l10n.invoiceRemindedBadge(journey.reminderCount),
-                    ),
-                  ],
-                ]),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              InvoiceMoveLine(
-                journey: journey,
-                invoice: invoice,
-                match: entry.pendingMatch,
-                issuer: true,
-              ),
-              if (due != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-                  child: Chip(
-                    key: ValueKey('invoice-dunning-due-$id'),
-                    visualDensity: VisualDensity.compact,
-                    avatar: Icon(
-                      Icons.notification_important,
-                      size: 18,
-                      color: theme.colorScheme.error,
-                    ),
-                    label: Text(
-                      l10n.dunningDueChip(due),
-                    ),
-                  ),
-                ),
-              Row(children: [
-                if (figure != null)
-                  Expanded(
-                    child: Text(
-                      figure,
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        color: creditNote
-                            ? theme.colorScheme.tertiary
-                            : theme.colorScheme.error,
-                      ),
-                    ),
-                  )
-                else
-                  const Spacer(),
-                ...secondary,
-                if (primary != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: AppSpacing.xs),
-                    child: FilledButton.icon(
-                      key: ValueKey(primary.key),
-                      onPressed: primary.onPressed,
-                      icon: Icon(primary.icon, size: 18),
-                      label: Text(primary.label),
-                    ),
-                  ),
-              ]),
+              ..._standing(context),
+              _actionRow(context),
             ],
           ),
         ),
       ),
     );
   }
-}
 
-class _Primary {
-  const _Primary({
-    required this.key,
-    required this.icon,
-    required this.label,
-    required this.onPressed,
-  });
+  /// The age line, the next move and the due dunning level.
+  List<Widget> _standing(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final invoice = entry.invoice;
+    final muted = theme.textTheme.bodySmall?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+    final days = now.difference(invoice.issuedAt).inDays;
+    final due = journey.reminderDue;
+    return [
+      Text.rich(
+        TextSpan(style: muted, children: [
+          TextSpan(text: dateFormat.format(invoice.issuedAt)),
+          const TextSpan(text: ' · '),
+          TextSpan(text: l10n.invoiceOpenAge(days)),
+          if (journey.reminderCount > 0) ...[
+            const TextSpan(text: ' · '),
+            TextSpan(
+              text: l10n.invoiceRemindedBadge(journey.reminderCount),
+            ),
+          ],
+        ]),
+      ),
+      const SizedBox(height: AppSpacing.xs),
+      InvoiceMoveLine(
+        journey: journey,
+        invoice: invoice,
+        match: entry.pendingMatch,
+        issuer: true,
+      ),
+      if (due != null)
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+          child: Chip(
+            key: ValueKey('invoice-dunning-due-${invoice.id}'),
+            visualDensity: VisualDensity.compact,
+            avatar: Icon(
+              Icons.notification_important,
+              size: 18,
+              color: theme.colorScheme.error,
+            ),
+            label: Text(
+              l10n.dunningDueChip(due),
+            ),
+          ),
+        ),
+    ];
+  }
 
-  final String key;
-  final IconData icon;
-  final String label;
-  final VoidCallback onPressed;
+  /// The figure the move is about, the other actions the lifecycle still
+  /// permits as icons with tooltips, and the move's labelled button.
+  Widget _actionRow(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final invoice = entry.invoice;
+    final primaryAct = _primary;
+    final primary = primaryAct == null
+        ? null
+        : OpenInvoiceActView(primaryAct, entry, actions);
+    final creditNote = invoice.totalCents < 0;
+    final standingPartial =
+        entry.pendingMatch != null && !entry.pendingMatch!.pending;
+    // What is left on a partial, what the workspace pays back on a
+    // credit note.
+    final figure = creditNote
+        ? '${l10n.invoiceRefundLabel}: '
+            '${currency.formatMinor(-invoice.totalCents)}'
+        : standingPartial
+            ? '${l10n.invoiceRemainingLabel}: '
+                '${currency.formatMinor(journey.remainingCents)}'
+            : null;
+    return Row(children: [
+      if (figure != null)
+        Expanded(
+          child: Text(
+            figure,
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: creditNote
+                  ? theme.colorScheme.tertiary
+                  : theme.colorScheme.error,
+            ),
+          ),
+        )
+      else
+        const Spacer(),
+      for (final choice in OpenInvoiceRows.journeyActs(entry,
+          primary: primaryAct,
+          writeoffPending: journey.facts.writeoffPending))
+        _secondary(choice, l10n),
+      if (primary != null)
+        Padding(
+          padding: const EdgeInsets.only(left: AppSpacing.xs),
+          child: FilledButton.icon(
+            key: ValueKey(primary.key),
+            onPressed: primary.onPressed,
+            icon: Icon(
+              primaryAct == OpenInvoiceAct.remind
+                  ? Icons.notification_important
+                  : primary.icon,
+              size: 18,
+            ),
+            label: Text(primaryAct == OpenInvoiceAct.remind
+                ? l10n.journeyPrimaryRemind(journey.reminderDue!)
+                : primary.label(l10n)),
+          ),
+        ),
+    ]);
+  }
+
+  Widget _secondary(OpenInvoiceActChoice choice, AppLocalizations l10n) {
+    final view = OpenInvoiceActView(choice.act, entry, actions);
+    final chip = view.chip(l10n);
+    if (chip != null) return chip;
+    return choice.tonal
+        // The expected move is named, not guessed from an icon.
+        ? FilledButton.tonalIcon(
+            key: ValueKey(view.key),
+            onPressed: view.onPressed,
+            icon: Icon(view.icon),
+            label: Text(view.label(l10n)),
+          )
+        : IconButton(
+            key: ValueKey(view.key),
+            tooltip: view.label(l10n),
+            icon: Icon(view.icon),
+            onPressed: view.onPressed,
+          );
+  }
 }

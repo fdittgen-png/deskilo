@@ -1,10 +1,10 @@
 {
-  "recordedSha": "8264108e608456abfe39cd93545fb52bc8e048ff",
+  "recordedSha": "7804a50c6f01bb2763206f18587a762103eb80b1",
   "recordedDate": "2026-10-25",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2115,"functions":11932,"cyclomatic>=9":1183,"cyclomatic>=25":84,"cognitive>=15":451,"cognitive>=30":73,"length>=150":50,"parameters>=5":525,"parameters>=7":146,"partOfFiles":28},
+  "totals": {"files":2130,"functions":12018,"cyclomatic>=9":1180,"cyclomatic>=25":81,"cognitive>=15":441,"cognitive>=30":72,"length>=150":45,"parameters>=5":527,"parameters>=7":143,"partOfFiles":22},
   "budgets": {
-    "partOfFiles": 28,
+    "partOfFiles": 22,
     "fileLength": {
       "lib/core/backend/backend_settings.dart": 572,
 
@@ -58,8 +58,6 @@
 
       "lib/features/money/presentation/screens/billing_screen.dart": 612,
 
-      "lib/features/money/presentation/screens/vat_declarations_screen.dart": 570,
-
       "lib/features/money/presentation/widgets/expense_schedule_sheet.dart": 576,
 
       "lib/features/money/presentation/widgets/invoice_form_sheet.dart": 552,
@@ -71,8 +69,6 @@
       "lib/features/reservations/presentation/reserve_seat_actions.dart": 834,
 
       "lib/features/reservations/presentation/widgets/booking_sheet.dart": 644,
-
-      "lib/features/reservations/presentation/widgets/space_scan.dart": 550,
 
       "lib/features/task_recorder/application/recorder_controller.dart": 548,
 
@@ -131,7 +127,7 @@
 
       "lib/features/directory/presentation/public_page_editor.dart": 9,
 
-      "lib/features/editor/presentation/screens/level_canvas_screen.dart": 14,
+      "lib/features/editor/presentation/screens/level_canvas_screen.dart": 13,
 
       "lib/features/events/presentation/widgets/policy_editor_sheet.dart": 13,
 
@@ -178,8 +174,6 @@
       "lib/features/reservations/presentation/widgets/booking_sheet.dart": 9,
 
       "lib/features/reservations/presentation/widgets/space_act_form.dart": 6,
-
-      "lib/features/reservations/presentation/widgets/space_scan.dart": 8,
 
       "lib/features/task_recorder/presentation/guide_host/guide_host.dart": 9,
 
@@ -247,9 +241,9 @@
 
       "calendar -> workspace": 16,
 
-      "editor -> plan": 20,
+      "editor -> plan": 42,
 
-      "editor -> workspace": 6,
+      "editor -> workspace": 8,
 
       "events -> money": 5,
 
@@ -277,11 +271,11 @@
 
       "members -> plan": 3,
 
-      "members -> profile": 7,
+      "members -> profile": 8,
 
-      "members -> reservations": 10,
+      "members -> reservations": 14,
 
-      "members -> workspace": 35,
+      "members -> workspace": 36,
 
       "money -> events": 35,
 
@@ -309,15 +303,15 @@
 
       "reservations -> calendar": 1,
 
-      "reservations -> events": 5,
+      "reservations -> events": 6,
 
-      "reservations -> plan": 83,
+      "reservations -> plan": 86,
 
       "reservations -> profile": 1,
 
       "reservations -> task_recorder": 9,
 
-      "reservations -> workspace": 76,
+      "reservations -> workspace": 79,
 
       "task_recorder -> events": 2,
 
@@ -464,7 +458,9 @@
 
       "lib/features/reservations/presentation/widgets/space_act_sheet.dart": 1,
 
-      "lib/features/reservations/presentation/widgets/space_scan.dart": 4,
+      "lib/features/reservations/presentation/widgets/space_scan.dart": 1,
+
+      "lib/features/reservations/presentation/widgets/space_sheet_booking.dart": 3,
 
       "lib/features/workspace/presentation/excel_export.dart": 1,
 
@@ -561,7 +557,7 @@
 
       "lib/features/events/presentation/screens/events_screen.dart": 1,
 
-      "lib/features/members/presentation/screens/directory_screen.dart": 1,
+      "lib/features/members/presentation/widgets/directory_member_row.dart": 1,
 
       "lib/features/members/presentation/widgets/managed_access_editor.dart": 1,
 
@@ -1296,16 +1292,21 @@
     {"p":"lib/features/directory/providers/messenger_providers.dart","loc":198,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":16,"cyc":14,"len":54,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/providers/personal_directory_providers.dart","loc":94,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":10,"cyc":8,"len":34,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/directory/providers/saved_places_providers.dart","loc":44,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":7,"cyc":5,"len":14,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/application/level_canvas_edits.dart","loc":113,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":16,"cyc":13,"len":24,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/application/level_canvas_rules.dart","loc":166,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":9,"cyc":10,"len":23,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/domain/editor_tool.dart","loc":1,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/delete_confirm_text.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":4,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/presentation/level_canvas_flows.dart","loc":334,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":7,"cyc":9,"len":49,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/plan_media_write.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":5,"len":40,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/screens/editor_screen.dart","loc":328,"part":false,"setState":1,"repositoryReads":1,"fn":7,"cog":20,"cyc":10,"len":150,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
-    {"p":"lib/features/editor/presentation/screens/editor_tool.dart","loc":1,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/editor/presentation/screens/level_canvas_screen.dart","loc":210,"part":false,"setState":1,"repositoryReads":0,"fn":6,"cog":23,"cyc":16,"len":123,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/editor/presentation/screens/level_canvas_screen_part1.dart","loc":395,"part":true,"setState":8,"repositoryReads":1,"fn":15,"cog":17,"cyc":14,"len":63,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/editor/presentation/screens/level_canvas_screen_part2.dart","loc":349,"part":true,"setState":5,"repositoryReads":1,"fn":10,"cog":25,"cyc":21,"len":137,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/presentation/screens/level_canvas_screen.dart","loc":366,"part":false,"setState":13,"repositoryReads":1,"fn":19,"cog":13,"cyc":14,"len":90,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/presentation/widgets/editor_empty_floor.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":47,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/widgets/editor_selection_bar.dart","loc":74,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":53,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/widgets/editor_tool_hint.dart","loc":61,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":5,"len":37,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/widgets/editor_toolbar.dart","loc":115,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":5,"len":48,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/presentation/widgets/erase_confirm_dialog.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":25,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/presentation/widgets/level_background_menu.dart","loc":38,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":4,"len":25,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/editor/presentation/widgets/level_canvas_view.dart","loc":94,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":4,"len":62,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/widgets/placement_problem.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":3,"len":15,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/editor/presentation/widgets/seat_properties_sheet.dart","loc":328,"part":false,"setState":0,"repositoryReads":1,"fn":2,"cog":46,"cyc":21,"len":246,"params":5,"nest":7,"over":{"cog":1,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/editor/presentation/widgets/space_properties_sheet.dart","loc":94,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":6,"len":103,"params":7,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
@@ -1485,18 +1486,21 @@
     {"p":"lib/features/me/providers/space_attention_provider.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":11,"cyc":13,"len":24,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/providers/space_prefs_provider.dart","loc":109,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":6,"cyc":5,"len":14,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/me/providers/visibility_epoch_provider.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/application/directory_card.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":3,"cyc":3,"len":5,"params":0,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/domain/directory_status.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":12,"cyc":11,"len":44,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/domain/member_page_sections.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":11,"cyc":19,"len":21,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/presentation/member_profile_link.dart","loc":97,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":13,"len":63,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/presentation/screens/directory_screen.dart","loc":217,"part":false,"setState":1,"repositoryReads":0,"fn":9,"cog":26,"cyc":24,"len":131,"params":3,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/presentation/screens/directory_screen_part2.dart","loc":288,"part":true,"setState":0,"repositoryReads":0,"fn":6,"cog":20,"cyc":12,"len":184,"params":13,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":1}},
-    {"p":"lib/features/members/presentation/screens/directory_screen_part3.dart","loc":300,"part":true,"setState":0,"repositoryReads":0,"fn":3,"cog":15,"cyc":15,"len":199,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
+    {"p":"lib/features/members/presentation/last_seen_label.dart","loc":18,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":4,"len":19,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/member_profile_link.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":13,"len":65,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/screens/directory_screen.dart","loc":205,"part":false,"setState":1,"repositoryReads":0,"fn":9,"cog":26,"cyc":24,"len":133,"params":3,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/screens/managed_profile_screen.dart","loc":140,"part":false,"setState":2,"repositoryReads":1,"fn":4,"cog":11,"cyc":12,"len":62,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/presentation/screens/member_page.dart","loc":420,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":11,"cyc":14,"len":111,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/screens/member_page.dart","loc":404,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":11,"cyc":14,"len":111,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/widgets/directory_chips.dart","loc":192,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":6,"cyc":7,"len":43,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/widgets/directory_member_row.dart","loc":224,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":6,"cyc":6,"len":46,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/widgets/managed_access_editor.dart","loc":89,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":6,"cyc":9,"len":78,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/widgets/member_contact_card.dart","loc":97,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":12,"cyc":16,"len":71,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/widgets/member_money_card.dart","loc":199,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":26,"cyc":28,"len":149,"params":2,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/widgets/member_page_cards.dart","loc":792,"part":true,"setState":0,"repositoryReads":1,"fn":18,"cog":21,"cyc":21,"len":145,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/widgets/member_profile_sheet.dart","loc":190,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":3,"cyc":4,"len":52,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/providers/directory_providers.dart","loc":23,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":5,"len":31,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/providers/realtime_invalidations.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/accounting_export_source.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":7,"len":48,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1516,10 +1520,12 @@
     {"p":"lib/features/money/application/file_purchase_receipt.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":7,"len":31,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/generic_journal_export.dart","loc":83,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":9,"cyc":8,"len":37,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/invoice_action.dart","loc":117,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":6,"len":38,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/invoice_detail_facts.dart","loc":46,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":8,"len":29,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/issue_invoice.dart","loc":154,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":5,"cyc":6,"len":28,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/lease_commands.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":3,"cyc":7,"len":18,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/lookup_company.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":3,"len":17,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/offer_subscription_levels.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":3,"len":15,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/open_invoice_rows.dart","loc":156,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":17,"cyc":19,"len":42,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/purchase_commands.dart","loc":146,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":4,"cyc":6,"len":29,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/record_consumption.dart","loc":58,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":5,"cyc":6,"len":27,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/record_payment.dart","loc":52,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":6,"cyc":7,"len":34,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1538,6 +1544,7 @@
     {"p":"lib/features/money/application/supplier_commands.dart","loc":26,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":1,"cyc":2,"len":12,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/tax_reference_commands.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":4,"cyc":5,"len":12,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/usage_commands.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":9,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/application/vat_declaration_rows.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":5,"cyc":4,"len":7,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/data/command_receipt_decoder.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":5,"len":33,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/data/host_finance_reader.dart","loc":58,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":8,"cyc":5,"len":22,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/data/invoice_preview_decoder.dart","loc":51,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":4,"cyc":7,"len":20,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1841,7 +1848,7 @@
     {"p":"lib/features/money/presentation/screens/report_editor_screen.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":23,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/services_screen.dart","loc":293,"part":false,"setState":3,"repositoryReads":0,"fn":7,"cog":28,"cyc":15,"len":86,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/tax_reference_screen.dart","loc":150,"part":false,"setState":2,"repositoryReads":0,"fn":7,"cog":21,"cyc":10,"len":82,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/screens/vat_declarations_screen.dart","loc":500,"part":false,"setState":1,"repositoryReads":0,"fn":15,"cog":17,"cyc":12,"len":97,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/screens/vat_declarations_screen.dart","loc":409,"part":false,"setState":1,"repositoryReads":0,"fn":13,"cog":7,"cyc":10,"len":86,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/vat_screen.dart","loc":313,"part":false,"setState":7,"repositoryReads":0,"fn":11,"cog":11,"cyc":16,"len":84,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/workspace_status_screen.dart","loc":221,"part":false,"setState":2,"repositoryReads":0,"fn":6,"cog":10,"cyc":11,"len":77,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/status_report_data.dart","loc":75,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":7,"len":64,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1895,7 +1902,7 @@
     {"p":"lib/features/money/presentation/widgets/invoice_archive_tab.dart","loc":394,"part":false,"setState":5,"repositoryReads":0,"fn":8,"cog":40,"cyc":38,"len":143,"params":7,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/widgets/invoice_correction_reason_field.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sections.dart","loc":285,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":18,"cyc":24,"len":88,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":261,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":22,"cyc":25,"len":169,"params":12,"nest":2,"over":{"cog":0,"cyc":1,"len":1,"params":1}},
+    {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":270,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":8,"cyc":7,"len":69,"params":12,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":466,"part":false,"setState":7,"repositoryReads":0,"fn":14,"cog":31,"cyc":14,"len":103,"params":5,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_integrity_chip.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":6,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_issue_runner.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":10,"len":41,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1925,9 +1932,10 @@
     {"p":"lib/features/money/presentation/widgets/my_invoices_list.dart","loc":206,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":14,"cyc":14,"len":112,"params":9,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/widgets/negotiation_card.dart","loc":472,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":47,"cyc":33,"len":238,"params":6,"nest":5,"over":{"cog":1,"cyc":1,"len":2,"params":0}},
     {"p":"lib/features/money/presentation/widgets/online_payment_status_card.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":5,"len":30,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/open_invoice_card.dart","loc":417,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":28,"cyc":32,"len":253,"params":2,"nest":4,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/open_invoice_act_view.dart","loc":63,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":1,"cyc":10,"len":14,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/open_invoice_card.dart","loc":346,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":14,"cyc":11,"len":59,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/open_invoice_subtitle.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":40,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/open_invoices_tab.dart","loc":316,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":49,"cyc":28,"len":298,"params":2,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/open_invoices_tab.dart","loc":237,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":7,"cyc":8,"len":64,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/own_finance_export_menu.dart","loc":74,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":8,"cyc":6,"len":36,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/payment_terms_card.dart","loc":251,"part":false,"setState":2,"repositoryReads":1,"fn":8,"cog":9,"cyc":11,"len":87,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/personal_payment_provider.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":5,"len":46,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2006,6 +2014,7 @@
     {"p":"lib/features/money/presentation/widgets/template_live_data.dart","loc":77,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":14,"cyc":26,"len":70,"params":3,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/uk_land_taxation_fields.dart","loc":96,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":5,"len":50,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/usage_face.dart","loc":304,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":10,"cyc":14,"len":108,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/vat_declaration_card.dart","loc":115,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":12,"cyc":9,"len":96,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_declaration_period_field.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":4,"len":31,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_mark_filed_dialog.dart","loc":55,"part":false,"setState":1,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":37,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_rate_editor.dart","loc":292,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":9,"cyc":10,"len":70,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2203,6 +2212,7 @@
     {"p":"lib/features/reservations/domain/seat_state_logic.dart","loc":257,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":17,"cyc":12,"len":44,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/domain/series_preview.dart","loc":26,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/space_act.dart","loc":33,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":16,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/domain/space_bookability.dart","loc":131,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":11,"len":46,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/space_code.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":9,"len":20,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/walk_up_window.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":10,"cyc":8,"len":43,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/week_tap_window.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":5,"len":50,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2220,7 +2230,7 @@
     {"p":"lib/features/reservations/presentation/screens/reserve_hub_host.dart","loc":36,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reserve_hub_metrics.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reserve_hub_recorder.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":0,"cyc":1,"len":9,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/screens/reserve_hub_views.dart","loc":349,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":11,"cyc":9,"len":61,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/screens/reserve_hub_views.dart","loc":348,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":11,"cyc":9,"len":61,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reserve_screen.dart","loc":337,"part":false,"setState":10,"repositoryReads":0,"fn":28,"cog":8,"cyc":9,"len":43,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reserve_window_rules.dart","loc":188,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":12,"cyc":12,"len":36,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/space_subjects.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":10,"len":30,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2233,7 +2243,7 @@
     {"p":"lib/features/reservations/presentation/widgets/booking_window_summary.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":13,"cyc":11,"len":53,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/calendar_file_button.dart","loc":205,"part":false,"setState":3,"repositoryReads":0,"fn":6,"cog":5,"cyc":7,"len":76,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/getting_started_card.dart","loc":236,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":10,"cyc":14,"len":157,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/list_space_tap.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":10,"cyc":10,"len":42,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/list_space_tap.dart","loc":62,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":10,"cyc":10,"len":45,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/message_reserver.dart","loc":120,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":5,"len":44,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/widgets/month_grid.dart","loc":264,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":38,"cyc":26,"len":123,"params":2,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/my_reservation_card.dart","loc":302,"part":false,"setState":2,"repositoryReads":0,"fn":12,"cog":12,"cyc":11,"len":77,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2241,12 +2251,12 @@
     {"p":"lib/features/reservations/presentation/widgets/my_reservations_layout.dart","loc":189,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":2,"cyc":6,"len":90,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/pending_booking_banner.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":20,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/place_feedback_bar.dart","loc":172,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":15,"cyc":12,"len":91,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/reference_open.dart","loc":119,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":13,"cyc":13,"len":55,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/reference_open.dart","loc":109,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":13,"cyc":13,"len":55,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reservation_detail_actions.dart","loc":392,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":15,"cyc":15,"len":93,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart","loc":370,"part":false,"setState":0,"repositoryReads":1,"fn":6,"cog":21,"cyc":18,"len":122,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reservation_status_note.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":6,"len":40,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reservation_time_picker.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":42,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/reserve_canvas.dart","loc":176,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":33,"cyc":21,"len":146,"params":2,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/reserve_canvas.dart","loc":174,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":33,"cyc":21,"len":144,"params":2,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reserve_hub_layout.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":6,"len":40,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reserve_view_menu.dart","loc":109,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":12,"cyc":10,"len":82,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/resource_row_info.dart","loc":55,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":11,"cyc":9,"len":19,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2259,10 +2269,11 @@
     {"p":"lib/features/reservations/presentation/widgets/space_act_sheet.dart","loc":301,"part":false,"setState":4,"repositoryReads":1,"fn":10,"cog":12,"cyc":14,"len":111,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_conflict_actions.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":7,"len":41,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_price_line.dart","loc":69,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":8,"len":47,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/space_scan.dart","loc":447,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":15,"cyc":19,"len":128,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/space_scan_part1.dart","loc":269,"part":true,"setState":8,"repositoryReads":1,"fn":8,"cog":13,"cyc":15,"len":124,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
-    {"p":"lib/features/reservations/presentation/widgets/space_scan_part2.dart","loc":117,"part":true,"setState":0,"repositoryReads":1,"fn":3,"cog":18,"cyc":15,"len":93,"params":9,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/reservations/presentation/widgets/space_scan.dart","loc":321,"part":false,"setState":1,"repositoryReads":1,"fn":13,"cog":18,"cyc":15,"len":92,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_scan_sheet.dart","loc":155,"part":false,"setState":2,"repositoryReads":0,"fn":6,"cog":6,"cyc":7,"len":79,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/space_sheet_booking.dart","loc":246,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":7,"cyc":9,"len":72,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/space_sheet_tiles.dart","loc":67,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":5,"len":28,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/space_whole_section.dart","loc":120,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":8,"cyc":7,"len":48,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/stale_availability_banner.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":2,"len":25,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/week_grid.dart","loc":361,"part":false,"setState":0,"repositoryReads":0,"fn":21,"cog":15,"cyc":11,"len":71,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/week_grid_cells.dart","loc":366,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":7,"cyc":6,"len":59,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2874,8 +2885,6 @@
     {"id":"lib/features/mcp/data/supabase_mcp_admin_repository.dart#SupabaseMcpAdminRepository.savePolicy({required String workspaceId,required int expectedRevision,required String mutationId,required bool enabled,required Set<String> operations,required String targetCeiling,required Set<String> optionalFields})","cog":0,"cyc":1,"len":23,"params":7},
     {"id":"lib/features/mcp/domain/mcp_access_status.dart#McpAccessStatus.new.derive(McpContextRef context,{McpGoogleSignIn? google,required IdentityBindingStatus? identity,required DatabaseCapabilities? capabilities,required McpPolicy? policy,required ConsentOptions? options,required List<McpConnectionInfo>? connections})","cog":17,"cyc":15,"len":44,"params":7},
     {"id":"lib/features/mcp/presentation/mcp_consent_screen.dart#_McpConsentScreenState.build(BuildContext context)","cog":39,"cyc":24,"len":144,"params":1},
-    {"id":"lib/features/members/presentation/screens/directory_screen_part2.dart#showMemberProfileSheet(BuildContext context,{required Member member,required String name,required bool isSelf,required Profile? profile,required DirectoryPresence presence,required ReservationInfo? reservationInfo,required List<Reservation> memberReservations,required Map<String, String> targetNames,required DateTime now,required void Function(Uri uri) onWhatsapp,required void Function(Reservation reservation) onOpenReservation,VoidCallback? onNotify})","cog":20,"cyc":12,"len":184,"params":13},
-    {"id":"lib/features/members/presentation/screens/directory_screen_part3.dart#_MemberRow.build(BuildContext context)","cog":15,"cyc":15,"len":199,"params":1},
     {"id":"lib/features/members/presentation/widgets/member_money_card.dart#MemberMoneyCard.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":28,"len":149,"params":2},
     {"id":"lib/features/money/application/book_repartition.dart#Repartitions.book({required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":0,"cyc":1,"len":20,"params":7},
     {"id":"lib/features/money/application/book_repartition.dart#bookRepartition(MoneyRepository repository,{required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":3,"cyc":3,"len":32,"params":8},
@@ -2952,14 +2961,11 @@
     {"id":"lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body(BuildContext context,AppLocalizations l10n,List<Invoice> invoices)","cog":40,"cyc":38,"len":143,"params":3},
     {"id":"lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._row(BuildContext context,AppLocalizations l10n,Invoice invoice,{required InvoiceMatch? match,required ({int count, DateTime last})? reminder,required String replacedByNumber,required DateFormat dateFormat})","cog":5,"cyc":6,"len":62,"params":7},
     {"id":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart#showInvoiceDetailSheet(BuildContext context,{required WidgetRef ref,required Invoice invoice,required InvoiceMatch? match,required bool canIssue,required bool isEu,({int count, DateTime last})? reminder,String replacedByNumber,bool showMemberName,InvoiceTransmission? transmission,InvoiceJourney? journey,String settledByNumber})","cog":2,"cyc":4,"len":64,"params":12},
-    {"id":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart#_InvoiceDetailBody.build(BuildContext context,WidgetRef ref)","cog":22,"cyc":25,"len":169,"params":2},
     {"id":"lib/features/money/presentation/widgets/invoice_form_sheet.dart#_InvoiceFormState._previewBody(BuildContext context,({List<InvoiceLine> lines, int totalCents})? preview,List<InvoiceLine> lines)","cog":31,"cyc":10,"len":96,"params":3},
     {"id":"lib/features/money/presentation/widgets/invoice_sheet_actions.dart#InvoiceSheetActions._button(BuildContext context,{required String key,required IconData icon,required String label,required InvoiceAction action,bool primary,bool danger})","cog":5,"cyc":6,"len":46,"params":7},
     {"id":"lib/features/money/presentation/widgets/my_invoices_list.dart#MyInvoicesList._row(BuildContext context,WidgetRef ref,AppLocalizations l10n,ThemeData theme,Invoice invoice,InvoiceMatch? match,({int count, DateTime last})? reminder,DateFormat dateFormat,DateTime now)","cog":14,"cyc":14,"len":112,"params":9},
     {"id":"lib/features/money/presentation/widgets/negotiation_card.dart#NegotiationCard.build(BuildContext context,WidgetRef ref)","cog":29,"cyc":24,"len":168,"params":2},
     {"id":"lib/features/money/presentation/widgets/negotiation_card.dart#showPriceNegotiationSheet(BuildContext context,WidgetRef ref,{required String memberId,required String memberName,required MoneyFormat currency,bool readOnly})","cog":47,"cyc":33,"len":238,"params":6},
-    {"id":"lib/features/money/presentation/widgets/open_invoice_card.dart#OpenInvoiceCard.build(BuildContext context)","cog":28,"cyc":32,"len":253,"params":1},
-    {"id":"lib/features/money/presentation/widgets/open_invoices_tab.dart#OpenInvoicesTab.build(BuildContext context,WidgetRef ref)","cog":49,"cyc":28,"len":298,"params":2},
     {"id":"lib/features/money/presentation/widgets/purchases_sheet.dart#showPurchasesSheet(BuildContext context,String workspaceId,{required bool canCapture,bool canPay,bool canDecide,bool canOffset,bool toPay})","cog":0,"cyc":1,"len":22,"params":7},
     {"id":"lib/features/money/presentation/widgets/report_field_picker.dart#reportFieldMeaning(String field,AppLocalizations l10n)","cog":1,"cyc":91,"len":98,"params":2},
     {"id":"lib/features/money/presentation/widgets/report_layout_preview.dart#LayoutPageView.build(BuildContext context)","cog":16,"cyc":25,"len":113,"params":1},
@@ -2991,15 +2997,13 @@
     {"id":"lib/features/reservations/presentation/widgets/getting_started_card.dart#GettingStartedCard.build(BuildContext context,WidgetRef ref)","cog":10,"cyc":14,"len":157,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/message_reserver.dart#showBlockedSpaceSheet(BuildContext context,WidgetRef ref,{required String title,required String infoLine,required Reservation blocking,required String name,required String spaceName})","cog":6,"cyc":5,"len":44,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/month_grid.dart#MonthGrid.build(BuildContext context,WidgetRef ref)","cog":38,"cyc":26,"len":123,"params":2},
-    {"id":"lib/features/reservations/presentation/widgets/reserve_canvas.dart#ReserveCanvas.build(BuildContext context,WidgetRef ref)","cog":33,"cyc":21,"len":146,"params":2},
+    {"id":"lib/features/reservations/presentation/widgets/reserve_canvas.dart#ReserveCanvas.build(BuildContext context,WidgetRef ref)","cog":33,"cyc":21,"len":144,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/seat_day_sheet.dart#showSeatDaySheet(BuildContext context,{required Seat seat,required List<SeatDaySegment> segments,required Map<String, String> names,required DateTime dayStart,required DateTime dayEnd,required DateTime now})","cog":0,"cyc":1,"len":23,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._header(BuildContext context,IconData icon,String name,double indent,{required String key,VoidCallback? onTap,String? subtitle})","cog":4,"cyc":5,"len":27,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._wholeLine(BuildContext context,String currency,{required bool offered,required Reservation? taken,int tables,required int seats,required int priceCents})","cog":5,"cyc":7,"len":21,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._officeRows(BuildContext context,WidgetRef ref,String officeId,{required String? levelName,required bool byLevel,required String? wholeLevelName,required String currency,required Set<String> placed})","cog":19,"cyc":15,"len":79,"params":8},
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._seatRow(BuildContext context,WidgetRef ref,Seat seat,double indent,String place)","cog":20,"cyc":29,"len":147,"params":5},
     {"id":"lib/features/reservations/presentation/widgets/space_act_form.dart#SpaceActFormState.build(BuildContext context)","cog":20,"cyc":12,"len":159,"params":1},
-    {"id":"lib/features/reservations/presentation/widgets/space_scan_part1.dart#_SpaceSheetStatePart1._create({String? seatId,String? deskId,String? officeId,String? levelId,required bool checkIn,DateTime? startsAt,DateTime? endsAt})","cog":6,"cyc":8,"len":54,"params":7},
-    {"id":"lib/features/reservations/presentation/widgets/space_scan_part2.dart#showSpaceSheet(BuildContext context,{required SpaceKind kind,Level? level,Office? office,Desk? desk,Seat? seat,FloorPlan? plan,({DateTime start, DateTime end})? initialWindow,List<({String id, String name})> members})","cog":0,"cyc":1,"len":32,"params":9},
     {"id":"lib/features/task_recorder/data/recorder_store.dart#recoverRecordingLog(String id,String text,{RecordingLimits limits})","cog":48,"cyc":40,"len":134,"params":3},
     {"id":"lib/features/task_recorder/export/task_document.dart#buildTaskDocument(TaskRecording r,AppLocalizations l,{TaskDocumentOptions options,RecordingLimits limits,StoryboardPictures? illustrations})","cog":33,"cyc":29,"len":103,"params":5},
     {"id":"lib/features/task_recorder/export/task_export_labels.dart#TaskExportLabels.value(String key,String value)","cog":1,"cyc":32,"len":35,"params":2},

@@ -46,12 +46,15 @@ void Function(String? deskId, String? officeId)? listSpaceTap(
           : officeId != null
               ? SpaceKind.office
               : SpaceKind.level,
-      level: level,
-      office: plan.offices
-          .where((o) => o.id == (officeId ?? desk?.officeId))
-          .firstOrNull,
-      desk: desk,
-      plan: plan,
+      space: (
+        level: level,
+        office: plan.offices
+            .where((o) => o.id == (officeId ?? desk?.officeId))
+            .firstOrNull,
+        desk: desk,
+        seat: null,
+        plan: plan,
+      ),
       initialWindow: (start: window.start, end: window.end),
     ));
   };

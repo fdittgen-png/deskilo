@@ -51,6 +51,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/directory_status.dart';
 import '../../domain/member_page_sections.dart';
 import '../../providers/directory_providers.dart';
+import '../last_seen_label.dart';
 import '../widgets/member_contact_card.dart';
 import '../widgets/member_money_card.dart';
 
@@ -451,26 +452,6 @@ class _MemberSectionsState extends State<_MemberSections> {
       ),
     ),
   );
-}
-
-/// "Seen 20 h ago" — the directory's relative last-seen label, shared
-/// with the row chip (#825: it now says what the number means).
-String relativeLastSeen(
-  AppLocalizations l10n,
-  DateTime now,
-  DateTime lastSeenAt,
-) {
-  final diff = now.difference(lastSeenAt);
-  if (diff.inMinutes < 60) {
-    final minutes = diff.inMinutes < 1 ? 1 : diff.inMinutes;
-    return l10n.directoryLastSeenMinutes(minutes);
-  }
-  if (diff.inHours < 24) {
-    final hours = diff.inHours;
-    return l10n.directoryLastSeenHours(hours);
-  }
-  final days = diff.inDays;
-  return l10n.directoryLastSeenDays(days);
 }
 
 /// #887 — takes an unredeemed handover back; the member stays managed.
