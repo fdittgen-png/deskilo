@@ -2479,6 +2479,60 @@ abstract class AppLocalizations {
   /// **'The equipment register is off: no capital addition is known.'**
   String get biAssetsRegisterOff;
 
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'period of the book values'**
+  String get biBasisBookValuePeriod;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'as it stands today'**
+  String get biBasisCurrentState;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'date of the document'**
+  String get biBasisDocumentDate;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'month of the invoice'**
+  String get biBasisInvoiceMonth;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'due date'**
+  String get biBasisOccurrenceDue;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'date the payment was matched'**
+  String get biBasisPaymentMatchedAt;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'date reported paid'**
+  String get biBasisPaymentReportedPaid;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'end of the period'**
+  String get biBasisPeriodEnd;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'booked time'**
+  String get biBasisReservationTime;
+
   /// No description provided for @biBookingBasis.
   ///
   /// In en, this message translates to:
@@ -2719,6 +2773,30 @@ abstract class AppLocalizations {
   /// **'{count} lines nobody classified are left out.'**
   String biCostsUnresolved(String count);
 
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'confirmed values only'**
+  String get biCoverageConfirmedValues;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'current records'**
+  String get biCoverageCurrentRecords;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'today only'**
+  String get biCoverageCurrentStateOnly;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'recorded history'**
+  String get biCoverageRecordedHistory;
+
   /// No description provided for @biCurrentBasis.
   ///
   /// In en, this message translates to:
@@ -2797,11 +2875,137 @@ abstract class AppLocalizations {
   /// **'Evolution'**
   String get biEvolutionTitle;
 
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Export the report'**
+  String get biExportAction;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Figures computed on {time}. This export reads them itself: if the data changed since the dashboard was shown, they differ from it.'**
+  String biExportComputedAt(String time);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Digest {hash}'**
+  String biExportDigest(String hash);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in this report can be exported yet.'**
+  String get biExportFailedEmpty;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'You may not export these figures: exporting needs the right to export data and the right to read every figure of the report.'**
+  String get biExportFailedForbidden;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'The export could not be made from this report.'**
+  String get biExportFailedInvalid;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting this kind of file is switched off in this workspace.'**
+  String get biExportFailedOff;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'The report changed since you opened it. Open it again, then export.'**
+  String get biExportFailedStale;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'This report asks for more figures than one export may carry. Narrow it: fewer pages, cards or periods.'**
+  String get biExportFailedTooLarge;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not answer. Nothing was exported; try again.'**
+  String get biExportFailedUnavailable;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'CSV (data)'**
+  String get biExportFormatCsv;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get biExportFormatPdf;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Workbook (XLSX)'**
+  String get biExportFormatXlsx;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.'**
+  String biExportLeftOut(String count);
+
   /// Business analytics dashboard: biExportPdf
   ///
   /// In en, this message translates to:
   /// **'Export as PDF'**
   String get biExportPdf;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Read the figures'**
+  String get biExportPreview;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'A saved file is a copy of these figures: it cannot be recalled later, even if your rights change.'**
+  String get biExportRecallNote;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get biExportRefresh;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Read again on {time}: new figures and a new digest.'**
+  String biExportRefreshedAt(String time);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Save the file'**
+  String get biExportSave;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Reading the figures for this export…'**
+  String get biExportTaking;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Export the report'**
+  String get biExportTitle;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -3060,6 +3264,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Business analytics'**
   String get biPdfTitle;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Made of'**
+  String get biPrintColBasis;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get biPrintColPeriod;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get biPrintColStatus;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get biPrintColValue;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Every figure of this copy is known and covers its whole period.'**
+  String get biPrintComplete;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Computed'**
+  String get biPrintComputed;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get biPrintCurrency;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Date basis'**
+  String get biPrintDateBasis;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'not answered'**
+  String get biPrintFailed;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get biPrintFilters;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Footer line'**
+  String get biPrintFooter;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Header line'**
+  String get biPrintHeader;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Landscape'**
+  String get biPrintLandscape;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Print layout'**
+  String get biPrintLayoutAction;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Use this layout'**
+  String get biPrintLayoutApply;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Print layout of the report'**
+  String get biPrintLayoutTitle;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'not in this export'**
+  String get biPrintLeftOut;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Plain text, printed on every sheet.'**
+  String get biPrintLineHelper;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Plain text only: no line breaks or control characters.'**
+  String get biPrintLineInvalid;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Management information, not statutory accounts.'**
+  String get biPrintManagement;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow'**
+  String get biPrintMarginNarrow;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get biPrintMarginNormal;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Wide'**
+  String get biPrintMarginWide;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Margins'**
+  String get biPrintMargins;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'none'**
+  String get biPrintNoFilters;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Orientation'**
+  String get biPrintOrientation;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Each report page on a new sheet'**
+  String get biPrintPageBreaks;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Paper'**
+  String get biPrintPaper;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'A4'**
+  String get biPrintPaperA4;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'US Letter'**
+  String get biPrintPaperLetter;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Partial copy: some figures are unknown, cover only part of their period or are not in this export.'**
+  String get biPrintPartial;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get biPrintPeriod;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Portrait'**
+  String get biPrintPortrait;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace, the report and its revision, the period, the date basis, the currencies, the filters, when the figures were computed and whether they are complete are always printed.'**
+  String get biPrintProvenanceNote;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'partial'**
+  String get biPrintQualified;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get biPrintReport;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'revision {revision}'**
+  String biPrintRevision(String revision);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Sheet preview'**
+  String get biPrintSheetPreview;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'List the source of every figure'**
+  String get biPrintShowSources;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Digest'**
+  String get biPrintSnapshot;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'unknown'**
+  String get biPrintUnknown;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'not saved'**
+  String get biPrintUnsaved;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get biPrintWorkspace;
 
   /// Business analytics dashboard: biProjectionBasis
   ///
@@ -10946,7 +11408,7 @@ abstract class AppLocalizations {
   /// Description under the data-export feature toggle (#395).
   ///
   /// In en, this message translates to:
-  /// **'Download all workspace data as an Excel workbook.'**
+  /// **'Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook.'**
   String get featureDataExportDesc;
 
   /// #2862 data report feature description
@@ -11846,7 +12308,7 @@ abstract class AppLocalizations {
   /// One-line description under the PDF export switch
   ///
   /// In en, this message translates to:
-  /// **'Export the monthly bill as a PDF.'**
+  /// **'Export the monthly bill and the analytics reports as a PDF.'**
   String get featurePdfExportDesc;
 
   /// #886 personal-information form / feature: featurePersonalInfo

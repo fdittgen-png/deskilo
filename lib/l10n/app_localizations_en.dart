@@ -1412,6 +1412,33 @@ class AppLocalizationsEn extends AppLocalizations {
       'The equipment register is off: no capital addition is known.';
 
   @override
+  String get biBasisBookValuePeriod => 'period of the book values';
+
+  @override
+  String get biBasisCurrentState => 'as it stands today';
+
+  @override
+  String get biBasisDocumentDate => 'date of the document';
+
+  @override
+  String get biBasisInvoiceMonth => 'month of the invoice';
+
+  @override
+  String get biBasisOccurrenceDue => 'due date';
+
+  @override
+  String get biBasisPaymentMatchedAt => 'date the payment was matched';
+
+  @override
+  String get biBasisPaymentReportedPaid => 'date reported paid';
+
+  @override
+  String get biBasisPeriodEnd => 'end of the period';
+
+  @override
+  String get biBasisReservationTime => 'booked time';
+
+  @override
   String get biBookingBasis =>
       'Reserved capacity measures bookings, not actual attendance.';
 
@@ -1563,6 +1590,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get biCoverageConfirmedValues => 'confirmed values only';
+
+  @override
+  String get biCoverageCurrentRecords => 'current records';
+
+  @override
+  String get biCoverageCurrentStateOnly => 'today only';
+
+  @override
+  String get biCoverageRecordedHistory => 'recorded history';
+
+  @override
   String get biCurrentBasis =>
       'The whole period is included. Comparison with a completed period is not like-for-like.';
 
@@ -1605,7 +1644,86 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biEvolutionTitle => 'Evolution';
 
   @override
+  String get biExportAction => 'Export the report';
+
+  @override
+  String biExportComputedAt(String time) {
+    return 'Figures computed on $time. This export reads them itself: if the data changed since the dashboard was shown, they differ from it.';
+  }
+
+  @override
+  String biExportDigest(String hash) {
+    return 'Digest $hash';
+  }
+
+  @override
+  String get biExportFailedEmpty =>
+      'Nothing in this report can be exported yet.';
+
+  @override
+  String get biExportFailedForbidden =>
+      'You may not export these figures: exporting needs the right to export data and the right to read every figure of the report.';
+
+  @override
+  String get biExportFailedInvalid =>
+      'The export could not be made from this report.';
+
+  @override
+  String get biExportFailedOff =>
+      'Exporting this kind of file is switched off in this workspace.';
+
+  @override
+  String get biExportFailedStale =>
+      'The report changed since you opened it. Open it again, then export.';
+
+  @override
+  String get biExportFailedTooLarge =>
+      'This report asks for more figures than one export may carry. Narrow it: fewer pages, cards or periods.';
+
+  @override
+  String get biExportFailedUnavailable =>
+      'The server did not answer. Nothing was exported; try again.';
+
+  @override
+  String get biExportFormatCsv => 'CSV (data)';
+
+  @override
+  String get biExportFormatPdf => 'PDF';
+
+  @override
+  String get biExportFormatXlsx => 'Workbook (XLSX)';
+
+  @override
+  String biExportLeftOut(String count) {
+    return '$count cards are not in this export: their figure, filters or grouping are not ones an export answers yet.';
+  }
+
+  @override
   String get biExportPdf => 'Export as PDF';
+
+  @override
+  String get biExportPreview => 'Read the figures';
+
+  @override
+  String get biExportRecallNote =>
+      'A saved file is a copy of these figures: it cannot be recalled later, even if your rights change.';
+
+  @override
+  String get biExportRefresh => 'Read again';
+
+  @override
+  String biExportRefreshedAt(String time) {
+    return 'Read again on $time: new figures and a new digest.';
+  }
+
+  @override
+  String get biExportSave => 'Save the file';
+
+  @override
+  String get biExportTaking => 'Reading the figures for this export…';
+
+  @override
+  String get biExportTitle => 'Export the report';
 
   @override
   String get biExposureDiffers =>
@@ -1765,6 +1883,142 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biPdfTitle => 'Business analytics';
+
+  @override
+  String get biPrintColBasis => 'Made of';
+
+  @override
+  String get biPrintColPeriod => 'Period';
+
+  @override
+  String get biPrintColStatus => 'Status';
+
+  @override
+  String get biPrintColValue => 'Value';
+
+  @override
+  String get biPrintComplete =>
+      'Every figure of this copy is known and covers its whole period.';
+
+  @override
+  String get biPrintComputed => 'Computed';
+
+  @override
+  String get biPrintCurrency => 'Currency';
+
+  @override
+  String get biPrintDateBasis => 'Date basis';
+
+  @override
+  String get biPrintFailed => 'not answered';
+
+  @override
+  String get biPrintFilters => 'Filters';
+
+  @override
+  String get biPrintFooter => 'Footer line';
+
+  @override
+  String get biPrintHeader => 'Header line';
+
+  @override
+  String get biPrintLandscape => 'Landscape';
+
+  @override
+  String get biPrintLayoutAction => 'Print layout';
+
+  @override
+  String get biPrintLayoutApply => 'Use this layout';
+
+  @override
+  String get biPrintLayoutTitle => 'Print layout of the report';
+
+  @override
+  String get biPrintLeftOut => 'not in this export';
+
+  @override
+  String get biPrintLineHelper => 'Plain text, printed on every sheet.';
+
+  @override
+  String get biPrintLineInvalid =>
+      'Plain text only: no line breaks or control characters.';
+
+  @override
+  String get biPrintManagement =>
+      'Management information, not statutory accounts.';
+
+  @override
+  String get biPrintMarginNarrow => 'Narrow';
+
+  @override
+  String get biPrintMarginNormal => 'Normal';
+
+  @override
+  String get biPrintMarginWide => 'Wide';
+
+  @override
+  String get biPrintMargins => 'Margins';
+
+  @override
+  String get biPrintNoFilters => 'none';
+
+  @override
+  String get biPrintOrientation => 'Orientation';
+
+  @override
+  String get biPrintPageBreaks => 'Each report page on a new sheet';
+
+  @override
+  String get biPrintPaper => 'Paper';
+
+  @override
+  String get biPrintPaperA4 => 'A4';
+
+  @override
+  String get biPrintPaperLetter => 'US Letter';
+
+  @override
+  String get biPrintPartial =>
+      'Partial copy: some figures are unknown, cover only part of their period or are not in this export.';
+
+  @override
+  String get biPrintPeriod => 'Period';
+
+  @override
+  String get biPrintPortrait => 'Portrait';
+
+  @override
+  String get biPrintProvenanceNote =>
+      'The workspace, the report and its revision, the period, the date basis, the currencies, the filters, when the figures were computed and whether they are complete are always printed.';
+
+  @override
+  String get biPrintQualified => 'partial';
+
+  @override
+  String get biPrintReport => 'Report';
+
+  @override
+  String biPrintRevision(String revision) {
+    return 'revision $revision';
+  }
+
+  @override
+  String get biPrintSheetPreview => 'Sheet preview';
+
+  @override
+  String get biPrintShowSources => 'List the source of every figure';
+
+  @override
+  String get biPrintSnapshot => 'Digest';
+
+  @override
+  String get biPrintUnknown => 'unknown';
+
+  @override
+  String get biPrintUnsaved => 'not saved';
+
+  @override
+  String get biPrintWorkspace => 'Workspace';
 
   @override
   String biProjectionBasis(int count) {
@@ -6638,7 +6892,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureDataExportDesc =>
-      'Download all workspace data as an Excel workbook.';
+      'Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook.';
 
   @override
   String get featureDataReportDesc =>
@@ -7170,7 +7424,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featurePdfExport => 'PDF export';
 
   @override
-  String get featurePdfExportDesc => 'Export the monthly bill as a PDF.';
+  String get featurePdfExportDesc =>
+      'Export the monthly bill and the analytics reports as a PDF.';
 
   @override
   String get featurePersonalInfo => 'Personal information';
