@@ -707,5 +707,7 @@
  "inboxPageSize": "Posteingang: Unterhaltungen pro Seite",
  "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt.",
  "fedRetention": "Aufbewahrung des Server-Austauschs",
- "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt."
+ "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt.",
+ "fedAnswerWait": "Wartezeit auf Antwort im Server-Austausch",
+ "fedAnswerWaitHint": "Wie lange ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server (einen Identitätsstatus, eine Mitgliedschaft) wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30 Sekunden; unter der Gültigkeit des Identitätsstatus halten. Wird in den Einstellungen der App festgelegt."
 }

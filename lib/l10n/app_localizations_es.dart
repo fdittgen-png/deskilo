@@ -19928,6 +19928,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Días tras la emisión antes de proponer un primer recordatorio y antes del vencimiento de una factura sin plazo de pago.';
 
   @override
+  String get settingHintFederationAnswerWaitSeconds =>
+      'Segundos que un servidor espera la respuesta a un mensaje firmado enviado a otro servidor antes de volver a enviar el mismo mensaje. Al menos 30; manténgala por debajo de la validez del estado.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Horas que un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de que la limpieza horaria los elimine. Nunca menos que la validez de estado más larga más dos veces el desfase de reloj.';
 
@@ -20106,6 +20110,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Días antes de un primer recordatorio';
+
+  @override
+  String get settingLabelFederationAnswerWaitSeconds =>
+      'Espera de respuesta entre servidores';
 
   @override
   String get settingLabelFederationRetentionHours =>

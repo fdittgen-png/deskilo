@@ -707,5 +707,7 @@
  "inboxPageSize": "Boîte de réception : conversations par page",
  "inboxPageSizeHint": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient à la fois dans la boîte de réception d’un membre ; les plus anciennes viennent avec Afficher les conversations plus anciennes. Se règle dans les paramètres de l’application.",
  "fedRetention": "Conservation des échanges entre serveurs",
- "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app."
+ "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app.",
+ "fedAnswerWait": "Attente de réponse entre serveurs",
+ "fedAnswerWaitHint": "Combien de temps un serveur attend la réponse à un message signé envoyé à un autre serveur (un statut d'identité, une adhésion) avant de renvoyer le même message. Au moins 30 secondes ; gardez-la sous la durée de validité du statut d'identité. Se règle dans les paramètres de l'app."
 }

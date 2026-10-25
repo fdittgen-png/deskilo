@@ -707,5 +707,7 @@
  "inboxPageSize": "Posta in arrivo: conversazioni per pagina",
  "inboxPageSizeHint": "Quante conversazioni restituiscono alla volta la casa personale e ogni server di spazi nella posta in arrivo di un membro; le precedenti arrivano con Mostra conversazioni precedenti. Si imposta nelle impostazioni dell’app.",
  "fedRetention": "Conservazione degli scambi tra server",
- "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app."
+ "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app.",
+ "fedAnswerWait": "Attesa della risposta tra server",
+ "fedAnswerWaitHint": "Per quanto tempo un server attende la risposta a un messaggio firmato inviato a un altro server (uno stato di identità, un'iscrizione) prima di inviare di nuovo lo stesso messaggio. Almeno 30 secondi; tenerla sotto la validità dello stato di identità. Si imposta nelle impostazioni dell'app."
 }

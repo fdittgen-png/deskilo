@@ -84,6 +84,7 @@ const STEPS=[
   // the new discussion's directory.
   // #2563 C2 — every server that signs or receives backchannel messages.
   selectEl(T('fedRetention'),'federation.retentionHours',opts(FED_RETENTION),T('fedRetentionHint'),null,'identity'),
+  selectEl(T('fedAnswerWait'),'federation.answerWait',opts(FED_ANSWER_WAIT),T('fedAnswerWaitHint'),null,'identity'),
   ...(S.network.roles==='combined'?[selectEl(T('dirPageSize'),'directory.pageSize',opts(DIR_PAGE),T('dirPageSizeHint'),null,'identity'),selectEl(T('dirQueryLength'),'directory.queryLength',opts(DIR_QUERY),T('dirQueryLengthHint'),null,'identity')]:[]),
   // #2556 — every server reads its part of the inbox one page at a time.
   selectEl(T('inboxPageSize'),'inbox.pageSize',opts(INBOX_PAGE),T('inboxPageSizeHint'),null,'identity'),

@@ -52,6 +52,9 @@ const INBOX_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','o
 // #2563 C2 — backchannel retention (platform setting
 // federation.retention_hours): 1..720 hours.
 const FED_RETENTION=[['1','optOneHour'],['6','optHours',{n:6}],['24','optHours',{n:24}],['72','optHours',{n:72}],['168','optDays',{n:7}],['720','optDays',{n:30}]];
+// #2563 C2 — the wait for a backchannel answer (platform setting
+// federation.answer_wait_seconds): 30..600 seconds.
+const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','optMinutes',{n:2}],['300','optMinutes',{n:5}],['600','optMinutes',{n:10}]];
 const DIR_QUERY=[['60','optCharacters',{n:60}],['120','optCharacters',{n:120}],['200','optCharacters',{n:200}]];
 const NUMDATE=[['none','numDateNone'],['year','numDateYear'],['year_month','numDateYearMonth']];
 const NUMRESET=[['never','numResetNever'],['yearly','numResetYearly'],['monthly','numResetMonthly']];
@@ -98,6 +101,7 @@ const PARAM_META=[
  ['enrolment.reconcile','enrolReconcile','enum',()=>ID_RECONCILE.map(x=>x[0])],['enrolment.skew','enrolSkew','enum',()=>ID_SKEW.map(x=>x[0])],
  ['directory.pageSize','dirPageSize','enum',()=>DIR_PAGE.map(x=>x[0])],['directory.queryLength','dirQueryLength','enum',()=>DIR_QUERY.map(x=>x[0])],
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
+ ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],

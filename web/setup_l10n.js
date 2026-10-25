@@ -712,7 +712,9 @@ window.SETUP_L10N={
    "inboxPageSize": "Inbox: conversations per page",
    "inboxPageSizeHint": "How many conversations the personal home and each workspace server return at a time in a member's inbox; older ones come with Show older conversations. Set in the app's settings.",
    "fedRetention": "Backchannel retention",
-   "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings."
+   "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings.",
+   "fedAnswerWait": "Backchannel answer wait",
+   "fedAnswerWaitHint": "How long a server waits for the answer to a signed message it sent to another server (an identity status, a membership) before it sends the same message again. At least 30 seconds; keep it below the identity status lifetime. Set in the app's settings."
   },
   "feature": {
    "calendarTab": [
@@ -2340,7 +2342,9 @@ window.SETUP_L10N={
    "inboxPageSize": "Boîte de réception : conversations par page",
    "inboxPageSizeHint": "Combien de conversations le domicile personnel et chaque serveur d’espaces renvoient à la fois dans la boîte de réception d’un membre ; les plus anciennes viennent avec Afficher les conversations plus anciennes. Se règle dans les paramètres de l’application.",
    "fedRetention": "Conservation des échanges entre serveurs",
-   "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app."
+   "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app.",
+   "fedAnswerWait": "Attente de réponse entre serveurs",
+   "fedAnswerWaitHint": "Combien de temps un serveur attend la réponse à un message signé envoyé à un autre serveur (un statut d'identité, une adhésion) avant de renvoyer le même message. Au moins 30 secondes ; gardez-la sous la durée de validité du statut d'identité. Se règle dans les paramètres de l'app."
   },
   "feature": {
    "calendarTab": [
@@ -3968,7 +3972,9 @@ window.SETUP_L10N={
    "inboxPageSize": "Posteingang: Unterhaltungen pro Seite",
    "inboxPageSizeHint": "Wie viele Unterhaltungen das persönliche Zuhause und jeder Space-Server auf einmal im Posteingang eines Mitglieds liefern; ältere kommen mit Ältere Unterhaltungen anzeigen. Wird in den Einstellungen der App festgelegt.",
    "fedRetention": "Aufbewahrung des Server-Austauschs",
-   "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt."
+   "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt.",
+   "fedAnswerWait": "Wartezeit auf Antwort im Server-Austausch",
+   "fedAnswerWaitHint": "Wie lange ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server (einen Identitätsstatus, eine Mitgliedschaft) wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30 Sekunden; unter der Gültigkeit des Identitätsstatus halten. Wird in den Einstellungen der App festgelegt."
   },
   "feature": {
    "calendarTab": [
@@ -5596,7 +5602,9 @@ window.SETUP_L10N={
    "inboxPageSize": "Bandeja de entrada: conversaciones por página",
    "inboxPageSizeHint": "Cuántas conversaciones devuelven a la vez el hogar personal y cada servidor de espacios en la bandeja de entrada de un miembro; las anteriores llegan con Mostrar conversaciones anteriores. Se configura en los ajustes de la aplicación.",
    "fedRetention": "Conservación de los intercambios entre servidores",
-   "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app."
+   "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app.",
+   "fedAnswerWait": "Espera de respuesta entre servidores",
+   "fedAnswerWaitHint": "Cuánto tiempo espera un servidor la respuesta a un mensaje firmado enviado a otro servidor (un estado de identidad, una membresía) antes de volver a enviar el mismo mensaje. Al menos 30 segundos; manténgala por debajo de la validez del estado de identidad. Se ajusta en la configuración de la app."
   },
   "feature": {
    "calendarTab": [
@@ -7224,7 +7232,9 @@ window.SETUP_L10N={
    "inboxPageSize": "Posta in arrivo: conversazioni per pagina",
    "inboxPageSizeHint": "Quante conversazioni restituiscono alla volta la casa personale e ogni server di spazi nella posta in arrivo di un membro; le precedenti arrivano con Mostra conversazioni precedenti. Si imposta nelle impostazioni dell’app.",
    "fedRetention": "Conservazione degli scambi tra server",
-   "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app."
+   "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app.",
+   "fedAnswerWait": "Attesa della risposta tra server",
+   "fedAnswerWaitHint": "Per quanto tempo un server attende la risposta a un messaggio firmato inviato a un altro server (uno stato di identità, un'iscrizione) prima di inviare di nuovo lo stesso messaggio. Almeno 30 secondi; tenerla sotto la validità dello stato di identità. Si imposta nelle impostazioni dell'app."
   },
   "feature": {
    "calendarTab": [

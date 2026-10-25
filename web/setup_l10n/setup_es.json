@@ -707,5 +707,7 @@
  "inboxPageSize": "Bandeja de entrada: conversaciones por página",
  "inboxPageSizeHint": "Cuántas conversaciones devuelven a la vez el hogar personal y cada servidor de espacios en la bandeja de entrada de un miembro; las anteriores llegan con Mostrar conversaciones anteriores. Se configura en los ajustes de la aplicación.",
  "fedRetention": "Conservación de los intercambios entre servidores",
- "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app."
+ "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app.",
+ "fedAnswerWait": "Espera de respuesta entre servidores",
+ "fedAnswerWaitHint": "Cuánto tiempo espera un servidor la respuesta a un mensaje firmado enviado a otro servidor (un estado de identidad, una membresía) antes de volver a enviar el mismo mensaje. Al menos 30 segundos; manténgala por debajo de la validez del estado de identidad. Se ajusta en la configuración de la app."
 }
