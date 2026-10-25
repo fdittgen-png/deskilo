@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2580) -- a report visual may carry how it is presented.
+-- 0592 (#2580) -- a report visual may carry how it is presented.
 --
 --   Style. bi_report_valid accepts an optional `style` object on a visual:
 --       a visible title (1 to 80 characters) and description (1 to 200),
@@ -67,11 +67,11 @@ begin
   for i in 1 .. cardinality(v_old) loop
     if position(v_old[i] in v_def) = 0
        or (length(v_def) - length(replace(v_def, v_old[i], ''))) <> length(v_old[i]) then
-      raise exception '9999: anchor % missing or repeated in bi_report_valid', i;
+      raise exception '0592: anchor % missing or repeated in bi_report_valid', i;
     end if;
     v_next := pg_temp.anchor_replace(v_def, v_old[i], v_new[i]);
     if v_next is null or v_next = v_def then
-      raise exception '9999: anchor % not replaced in bi_report_valid', i;
+      raise exception '0592: anchor % not replaced in bi_report_valid', i;
     end if;
     v_def := v_next;
   end loop;
@@ -82,4 +82,4 @@ revoke execute on function public.bi_report_valid(jsonb) from public, anon;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(592);
