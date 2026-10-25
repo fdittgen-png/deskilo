@@ -54,3 +54,22 @@ String fillInvitationTemplate(String template, Map<String, String> values) {
   }
   return text;
 }
+
+/// The settings form's invitation drafts, one per language in [languages].
+/// A workspace with any non-blank per-language template keeps each
+/// language's own (an absent one is empty: the built-in message); a
+/// workspace still on the legacy single template (0049) sees [legacy],
+/// trimmed, in every language until it saves.
+Map<String, String> invitationDraftsOf(
+  Map<String, Object?> templates, {
+  required String legacy,
+  required Iterable<String> languages,
+}) {
+  final perLanguage = templates.values
+      .any((t) => (t as String? ?? '').trim().isNotEmpty);
+  final fallback = legacy.trim();
+  return {
+    for (final lang in languages)
+      lang: perLanguage ? ((templates[lang] as String?) ?? '') : fallback,
+  };
+}

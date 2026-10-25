@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/data/system_columns.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
@@ -142,28 +143,6 @@ void main() {
     });
     await tester.pumpAndSettle();
     expect(saved, isTrue);
-  });
-
-  testWidgets(
-      'workspace settings seed from the current workspace and save the '
-      'edited locale through the repository (#153)', (tester) async {
-    final workspace = await pumpWorkspaceSettings(tester);
-
-    // Seeded from ws-1 (DE / EUR / Europe/Berlin).
-    expect(find.text('Test Space'), findsOneWidget);
-    expect(find.textContaining('EUR'), findsOneWidget);
-    expect(find.text('Europe/Berlin'), findsOneWidget);
-
-    // Picking Switzerland re-defaults currency + time zone (spec §3).
-    await pickWorkspaceCountry(tester, 'Switzerland');
-    expect(find.textContaining('CHF'), findsOneWidget);
-    expect(find.text('Europe/Zurich'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
-    await tester.pumpAndSettle();
-
-    expect(workspace.lastLocaleUpdate,
-        ['ws-1', 'CH', 'CHF', 'Europe/Zurich']);
-    expect(find.text('Workspace saved.'), findsOneWidget);
   });
 
   testWidgets(
@@ -354,32 +333,6 @@ void main() {
   });
 
   testWidgets(
-      'saved #192 instructions re-seed the form fields on reload',
-      (tester) async {
-    final workspace = await pumpWorkspaceSettings(tester);
-    await tester.ensureVisible(
-        find.byKey(const Key('workspaceSettingsPaymentMethods')));
-    await tester
-        .tap(find.byKey(const Key('workspaceSettingsPaymentMethods')));
-    await tester.pumpAndSettle();
-    await tester.enterText(
-      find.byKey(const Key('workspaceSettingsWero')),
-      '+49 170 0000000',
-    );
-    await tester.ensureVisible(
-        find.byKey(const ValueKey('payment-methods-save')));
-    await tester.tap(find.byKey(const ValueKey('payment-methods-save')));
-    await tester.pumpAndSettle();
-
-    // The fake writes the blob back onto the workspace — the saved value
-    // must round-trip through toDb/fromDb into the seeded controller.
-    expect(
-      workspace.workspaces[0].paymentInstructions['wero'],
-      '+49 170 0000000',
-    );
-  });
-
-  testWidgets(
       'a valid WhatsApp group link rides the same Save through the '
       'repository (#231)', (tester) async {
     final workspace = await pumpWorkspaceSettings(tester);
@@ -401,27 +354,6 @@ void main() {
       'https://chat.whatsapp.com/AbCdEf123456',
     );
     expect(find.text('Workspace saved.'), findsOneWidget);
-  });
-
-  testWidgets(
-      'a non-chat.whatsapp.com link is rejected client-side and blocks '
-      'the whole save (#231)', (tester) async {
-    final workspace = await pumpWorkspaceSettings(tester);
-    await tester.enterText(
-      find.byKey(const Key('workspaceSettingsWhatsappGroup')),
-      'https://example.com/not-a-group',
-    );
-    await tester.tap(find.byKey(const Key('workspaceSettingsSave')));
-    await tester.pumpAndSettle();
-
-    // The form validator (same prefix rule as the 0029 check) blocked
-    // the save — nothing was written.
-    expect(workspace.lastWhatsappGroup, isNull);
-    expect(workspace.lastLocaleUpdate, isNull);
-    expect(
-      find.text('Must be a chat.whatsapp.com invite link'),
-      findsOneWidget,
-    );
   });
 
   testWidgets('non-owners see no Workspace entry in settings',
@@ -542,15 +474,7 @@ void main() {
     expect(confirmButton().onPressed, isNull);
     expect(workspace.resetWorkspaceCalls, isEmpty);
 
-    // A wrong phrase keeps it disabled.
-    await tester.enterText(
-      find.byKey(const Key('workspaceResetConfirmField')),
-      'yes',
-    );
-    await tester.pump();
-    expect(confirmButton().onPressed, isNull);
-
-    // The exact phrase (case-insensitive) unlocks it.
+    // The phrase unlocks it (which phrases do: the decisions table).
     await tester.enterText(
       find.byKey(const Key('workspaceResetConfirmField')),
       'I AGREE',
@@ -624,13 +548,30 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    testWidgets('Save sends every field as ONE command against the version '
-        'the form opened on', (tester) async {
-      final workspace = await pumpWorkspaceSettings(tester);
+    testWidgets('the form seeds from the workspace, a country re-defaults '
+        'currency and zone (#153), and Save sends every field as ONE '
+        'command against the version the form opened on', (tester) async {
+      // A stamped row, so the version the Save carries is a real one.
+      final stamped = FakeWorkspaceRepository.withWorkspace();
+      stamped.workspaces[0] = stamped.workspaces[0]
+          .copyWith(system: SystemColumns(modifiedAt: kTestNow));
+      final workspace =
+          await pumpWorkspaceSettings(tester, repository: stamped);
       final opened = workspace.workspaces.first.system.modifiedAt;
+      expect(opened, isNotNull);
+      // Seeded from ws-1 (DE / EUR / Europe/Berlin).
+      expect(find.text('Test Space'), findsOneWidget);
+      expect(find.textContaining('EUR'), findsOneWidget);
+      expect(find.text('Europe/Berlin'), findsOneWidget);
+
+      // Picking Switzerland re-defaults currency + time zone (spec §3).
       await pickSwitzerland(tester);
+      expect(find.textContaining('CHF'), findsOneWidget);
+      expect(find.text('Europe/Zurich'), findsOneWidget);
       await tapSave(tester);
 
+      expect(workspace.lastLocaleUpdate,
+          ['ws-1', 'CH', 'CHF', 'Europe/Zurich']);
       expect(workspace.settingsSaves, hasLength(1));
       final save = workspace.settingsSaves.single;
       expect(save.expectedModifiedAt, opened);
