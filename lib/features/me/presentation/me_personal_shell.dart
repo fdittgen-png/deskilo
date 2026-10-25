@@ -27,6 +27,7 @@ import '../../directory/presentation/messenger/conversation_pane.dart';
 import '../../directory/providers/conversation_pane_providers.dart';
 import '../../directory/providers/messenger_providers.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
+import '../providers/personal_return_providers.dart';
 import 'me_account_tab.dart';
 import 'me_shell.dart';
 import 'task_wizard_entry.dart';
@@ -69,6 +70,8 @@ class _MePersonalShellState extends ConsumerState<MePersonalShell>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // Back in Me: a return kept from entering a space is spent.
+    ref.read(personalReturnProvider).arrived();
     if (widget.path == MeTab.home.path) {
       unawaited(offerKeptInvitation(ref, context,
           stillOnHome: () =>
