@@ -36,7 +36,7 @@ begin
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by,
                                  feature_flags, role_permissions)
   values ('Definitions', 'FR', 'EUR', 'Europe/Paris', u_o,
-          '{"biReportDesigner": true, "capacityKpi": true, "customRoles": true, "moneyTab": true, "invoicing": true, "workspaceStatus": true}'::jsonb,
+          '{"biReportDesigner": true, "capacityKpi": true, "customRoles": true, "moneyTab": true, "invoicing": true, "workspaceStatus": true, "configurableSettings": true}'::jsonb,
           '{"admin": ["viewAnalytics", "viewFinances", "designDocuments"]}'::jsonb)
   returning id into ws;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)

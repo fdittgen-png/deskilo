@@ -511,4 +511,4 @@ grant execute on function public.bi_view_set_default(uuid, text, uuid) to authen
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(588);

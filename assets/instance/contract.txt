@@ -1823,16 +1823,22 @@ routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | d
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
 routine public.bi_cost_allocation_rules_guard() -> trigger | function | invoker | volatile | exec:service_role | body:1accf0f116ad
+routine public.bi_definition_for_reader(p_workspace_id uuid, p jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:f3058d8868ca
+routine public.bi_definition_metrics(p jsonb) -> SETOF text | function | invoker | immutable | exec:service_role | body:42c2c9bee325
 routine public.bi_definition_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:432c0d6c93d7
+routine public.bi_metric_readable(p_workspace_id uuid, p_metric text) -> boolean | function | invoker | stable | exec:service_role | body:0786fa27fd61
 routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:83b19130b4de
-routine public.bi_report_filters_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:ce62df941ea3
-routine public.bi_report_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:2bfaeb6fdbe7
-routine public.bi_view_delete(p_workspace_id uuid, p_id uuid, p_expected_revision integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:7546fa7d352c
-routine public.bi_view_json(v bi_views) -> jsonb | function | invoker | stable | exec:service_role | body:e5541298b118
-routine public.bi_view_save(p_workspace_id uuid, p_id uuid, p_scope text, p_name text, p_definition jsonb, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e07a4f9c96a6
-routine public.bi_view_set_default(p_workspace_id uuid, p_scope text, p_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c9bf955f2bd2
+routine public.bi_report_dimensions() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:2d05f6cb55bc
+routine public.bi_report_filters_narrow(p_higher jsonb, p_lower jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:af02e844457e
+routine public.bi_report_filters_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:35b1153b461a
+routine public.bi_report_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:1093e7037245
+routine public.bi_view_delete(p_workspace_id uuid, p_id uuid, p_expected_revision integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:d4af14c8c53b
+routine public.bi_view_json(v bi_views) -> jsonb | function | invoker | stable | exec:service_role | body:a650127880c9
+routine public.bi_view_save(p_workspace_id uuid, p_id uuid, p_scope text, p_name text, p_definition jsonb, p_expected_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:540dd276221c
+routine public.bi_view_set_default(p_workspace_id uuid, p_scope text, p_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:d335368d90f8
 routine public.bi_views_gate(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:e6858809d33b
 routine public.bi_views_list(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5197bc3183b
+routine public.bi_views_team_writer(p_workspace_id uuid) -> boolean | function | invoker | stable | exec:service_role | body:5446e2613be5
 routine public.block_account(p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:2c1298a0c4c0
 routine public.book_actor(p_workspace_id uuid, p_owner boolean) -> uuid | function | definer | stable | exec:service_role | body:dfbffead3f5e
 routine public.book_chart(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b41fc3441b69
