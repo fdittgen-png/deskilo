@@ -16,6 +16,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/number_sequence.dart';
 import '../../providers/money_providers.dart';
@@ -125,15 +126,6 @@ class _SequenceCardState extends ConsumerState<NumberSequenceCard> {
         .copyWith(prefix: _prefix.text.trim(), suffix: _suffix.text.trim())
         .removesDateFrom(widget.sequence);
     final repairedPair = !widget.sequence.isValidPair;
-    final journalLabel = switch (_draft.journal) {
-      'invoice' => l10n.numberSequenceJournalInvoice,
-      'credit_note' => l10n.numberSequenceJournalCreditNote,
-      'vat_declaration' =>
-        l10n.numberSequenceJournalVatDeclaration,
-      'member' => l10n.numberSequenceJournalMember,
-      'payment' => l10n.numberSequenceJournalPayment,
-      _ => _draft.journal,
-    };
     return Card(
       key: ValueKey('number-sequence-${_draft.journal}'),
       margin: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -142,174 +134,13 @@ class _SequenceCardState extends ConsumerState<NumberSequenceCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Wrap(
-              spacing: AppSpacing.sm,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Text(journalLabel, style: theme.textTheme.titleMedium),
-                Chip(
-                  label: Text(
-                    l10n.numberSequenceGapless,
-                  ),
-                  visualDensity: VisualDensity.compact,
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            // The live preview is the reason the screen exists.
-            Text(
-              '${l10n.numberSequenceNext} · $preview',
-              key: ValueKey('number-sequence-preview-${_draft.journal}'),
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
-            ),
-            // #2356 — a credit note draws from its own series only once
-            // the series was saved; until then it takes an invoice number.
-            if (_draft.journal == 'credit_note' && !widget.sequence.stored)
-              Padding(
-                key: const ValueKey('number-sequence-credit-note-unsaved'),
-                padding: const EdgeInsets.only(top: AppSpacing.xs),
-                child: Text(
-                  l10n.numberSequenceCreditNoteUnsaved,
-                  style: theme.textTheme.bodySmall,
-                ),
-              ),
+            ..._heading(l10n, theme, preview),
             const SizedBox(height: AppSpacing.md),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    key: ValueKey('number-sequence-prefix-${_draft.journal}'),
-                    controller: _prefix,
-                    enabled: !_saving,
-                    onChanged: (_) => setState(() {}),
-                    decoration: InputDecoration(
-                      labelText: l10n.numberSequencePrefix,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: TextField(
-                    key: ValueKey('number-sequence-suffix-${_draft.journal}'),
-                    controller: _suffix,
-                    enabled: !_saving,
-                    onChanged: (_) => setState(() {}),
-                    decoration: InputDecoration(
-                      labelText: l10n.numberSequenceSuffix,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _affixRow(l10n),
             const SizedBox(height: AppSpacing.md),
-            Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<NumberDatePart>(
-                    key: ValueKey('number-sequence-date-${_draft.journal}'),
-                    initialValue: _draft.datePart,
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: l10n.numberSequenceDatePart,
-                      errorText: removalBlocked
-                          ? l10n.numberSequenceDateRemovalBlocked
-                          : null,
-                      errorMaxLines: 4,
-                    ),
-                    items: [
-                      DropdownMenuItem(
-                        value: NumberDatePart.none,
-                        child: Text(l10n.numberSequenceDateNone),
-                      ),
-                      DropdownMenuItem(
-                        value: NumberDatePart.year,
-                        child: Text(l10n.numberSequenceDateYear),
-                      ),
-                      DropdownMenuItem(
-                        value: NumberDatePart.yearMonth,
-                        child: Text(
-                          l10n.numberSequenceDateYearMonth,
-                        ),
-                      ),
-                    ],
-                    onChanged: _saving
-                        ? null
-                        : (v) => setState(
-                            () => _draft = v == null
-                                ? _draft
-                                : _draft.copyWith(
-                                    datePart: v,
-                                    // #1320 — a restart the new date cannot
-                                    // carry becomes the finest one it can.
-                                    reset: NumberSequence.effectiveReset(
-                                      v,
-                                      _draft.reset,
-                                    ),
-                                  ),
-                          ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: DropdownButtonFormField<int>(
-                    key: ValueKey('number-sequence-digits-${_draft.journal}'),
-                    initialValue: _draft.digits,
-                    decoration: InputDecoration(
-                      labelText: l10n.numberSequenceDigits,
-                    ),
-                    items: [
-                      for (var d = 1; d <= 9; d++)
-                        DropdownMenuItem(value: d, child: Text(d.toString())),
-                    ],
-                    onChanged: _saving
-                        ? null
-                        : (v) => setState(
-                            () => _draft = _draft.copyWith(digits: v),
-                          ),
-                  ),
-                ),
-              ],
-            ),
+            _dateAndDigitsRow(l10n, removalBlocked: removalBlocked),
             const SizedBox(height: AppSpacing.md),
-            DropdownButtonFormField<NumberReset>(
-              // Keyed by the date part: the restarts on offer change with
-              // it, and a form field keeps its initial value otherwise.
-              key: ValueKey(
-                'number-sequence-reset-${_draft.journal}-${_draft.datePart.name}',
-              ),
-              initialValue: _draft.reset,
-              isExpanded: true,
-              decoration: InputDecoration(
-                labelText: l10n.numberSequenceReset,
-                helperText: _draft.datePart == NumberDatePart.yearMonth
-                    ? null
-                    : l10n.numberSequenceResetLimited,
-                helperMaxLines: 4,
-                errorText: repairedPair
-                    ? l10n.numberSequenceResetWasInvalid
-                    : null,
-                errorMaxLines: 4,
-              ),
-              items: [
-                for (final reset in NumberSequence.resetsFor(_draft.datePart))
-                  DropdownMenuItem(
-                    value: reset,
-                    child: Text(switch (reset) {
-                      NumberReset.never =>
-                        l10n.numberSequenceResetNever,
-                      NumberReset.yearly =>
-                        l10n.numberSequenceResetYearly,
-                      NumberReset.monthly =>
-                        l10n.numberSequenceResetMonthly,
-                    }),
-                  ),
-              ],
-              onChanged: _saving
-                  ? null
-                  : (v) => setState(() => _draft = _draft.copyWith(reset: v)),
-            ),
+            _resetField(l10n, repairedPair: repairedPair),
             const SizedBox(height: AppSpacing.md),
             FilledButton(
               key: ValueKey('number-sequence-save-${_draft.journal}'),
@@ -319,6 +150,201 @@ class _SequenceCardState extends ConsumerState<NumberSequenceCard> {
           ],
         ),
       ),
+    );
+  }
+
+  String _journalLabel(AppLocalizations l10n) => switch (_draft.journal) {
+    'invoice' => l10n.numberSequenceJournalInvoice,
+    'credit_note' => l10n.numberSequenceJournalCreditNote,
+    'vat_declaration' =>
+      l10n.numberSequenceJournalVatDeclaration,
+    'member' => l10n.numberSequenceJournalMember,
+    'payment' => l10n.numberSequenceJournalPayment,
+    _ => _draft.journal,
+  };
+
+  /// The series' name, its next number and the credit-note caveat.
+  List<Widget> _heading(
+    AppLocalizations l10n,
+    ThemeData theme,
+    String preview,
+  ) => [
+      Wrap(
+        spacing: AppSpacing.sm,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          Text(_journalLabel(l10n), style: theme.textTheme.titleMedium),
+          Chip(
+            label: Text(
+              l10n.numberSequenceGapless,
+            ),
+            visualDensity: VisualDensity.compact,
+          ),
+        ],
+      ),
+      const SizedBox(height: AppSpacing.sm),
+      // The live preview is the reason the screen exists.
+      Text(
+        '${l10n.numberSequenceNext} · $preview',
+        key: ValueKey('number-sequence-preview-${_draft.journal}'),
+        style: theme.textTheme.titleLarge?.copyWith(
+          fontFeatures: const [FontFeature.tabularFigures()],
+        ),
+      ),
+      // #2356 — a credit note draws from its own series only once
+      // the series was saved; until then it takes an invoice number.
+      if (_draft.journal == 'credit_note' && !widget.sequence.stored)
+        Padding(
+          key: const ValueKey('number-sequence-credit-note-unsaved'),
+          padding: const EdgeInsets.only(top: AppSpacing.xs),
+          child: Text(
+            l10n.numberSequenceCreditNoteUnsaved,
+            style: theme.textTheme.bodySmall,
+          ),
+        ),
+    ];
+
+  Widget _affixRow(AppLocalizations l10n) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            key: ValueKey('number-sequence-prefix-${_draft.journal}'),
+            controller: _prefix,
+            enabled: !_saving,
+            onChanged: (_) => setState(() {}),
+            decoration: InputDecoration(
+              labelText: l10n.numberSequencePrefix,
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.md),
+        Expanded(
+          child: TextField(
+            key: ValueKey('number-sequence-suffix-${_draft.journal}'),
+            controller: _suffix,
+            enabled: !_saving,
+            onChanged: (_) => setState(() {}),
+            decoration: InputDecoration(
+              labelText: l10n.numberSequenceSuffix,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _dateAndDigitsRow(
+    AppLocalizations l10n, {
+    required bool removalBlocked,
+  }) {
+    return Row(
+      children: [
+        Expanded(
+          child: DropdownButtonFormField<NumberDatePart>(
+            key: ValueKey('number-sequence-date-${_draft.journal}'),
+            initialValue: _draft.datePart,
+            isExpanded: true,
+            decoration: InputDecoration(
+              labelText: l10n.numberSequenceDatePart,
+              errorText: removalBlocked
+                  ? l10n.numberSequenceDateRemovalBlocked
+                  : null,
+              errorMaxLines: 4,
+            ),
+            items: [
+              DropdownMenuItem(
+                value: NumberDatePart.none,
+                child: Text(l10n.numberSequenceDateNone),
+              ),
+              DropdownMenuItem(
+                value: NumberDatePart.year,
+                child: Text(l10n.numberSequenceDateYear),
+              ),
+              DropdownMenuItem(
+                value: NumberDatePart.yearMonth,
+                child: Text(
+                  l10n.numberSequenceDateYearMonth,
+                ),
+              ),
+            ],
+            onChanged: _saving
+                ? null
+                : (v) => setState(
+                    () => _draft = v == null
+                        ? _draft
+                        : _draft.copyWith(
+                            datePart: v,
+                            // #1320 — a restart the new date cannot
+                            // carry becomes the finest one it can.
+                            reset: NumberSequence.effectiveReset(
+                              v,
+                              _draft.reset,
+                            ),
+                          ),
+                  ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.md),
+        Expanded(
+          child: DropdownButtonFormField<int>(
+            key: ValueKey('number-sequence-digits-${_draft.journal}'),
+            initialValue: _draft.digits,
+            decoration: InputDecoration(
+              labelText: l10n.numberSequenceDigits,
+            ),
+            items: [
+              for (var d = 1; d <= 9; d++)
+                DropdownMenuItem(value: d, child: Text(d.toString())),
+            ],
+            onChanged: _saving
+                ? null
+                : (v) => setState(
+                    () => _draft = _draft.copyWith(digits: v),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _resetField(AppLocalizations l10n, {required bool repairedPair}) {
+    return DropdownButtonFormField<NumberReset>(
+      // Keyed by the date part: the restarts on offer change with
+      // it, and a form field keeps its initial value otherwise.
+      key: ValueKey(
+        'number-sequence-reset-${_draft.journal}-${_draft.datePart.name}',
+      ),
+      initialValue: _draft.reset,
+      isExpanded: true,
+      decoration: InputDecoration(
+        labelText: l10n.numberSequenceReset,
+        helperText: _draft.datePart == NumberDatePart.yearMonth
+            ? null
+            : l10n.numberSequenceResetLimited,
+        helperMaxLines: 4,
+        errorText: repairedPair
+            ? l10n.numberSequenceResetWasInvalid
+            : null,
+        errorMaxLines: 4,
+      ),
+      items: [
+        for (final reset in NumberSequence.resetsFor(_draft.datePart))
+          DropdownMenuItem(
+            value: reset,
+            child: Text(switch (reset) {
+              NumberReset.never =>
+                l10n.numberSequenceResetNever,
+              NumberReset.yearly =>
+                l10n.numberSequenceResetYearly,
+              NumberReset.monthly =>
+                l10n.numberSequenceResetMonthly,
+            }),
+          ),
+      ],
+      onChanged: _saving
+          ? null
+          : (v) => setState(() => _draft = _draft.copyWith(reset: v)),
     );
   }
 }

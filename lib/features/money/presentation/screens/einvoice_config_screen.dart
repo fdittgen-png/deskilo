@@ -10,6 +10,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/einvoice_gateway.dart';
@@ -159,27 +160,244 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     );
   }
 
+  void _loadOnce(EInvoiceProviderStatus status) {
+    if (_loaded) return;
+    _loaded = true;
+    _providerForm.load(status);
+    _endpoint.text = status.fields['endpoint'] ?? '';
+    _header.text = status.fields['auth_header'] ?? '';
+    _field.text = status.fields['field_name'] ?? '';
+    // Pre-0074 the server reports suffixed endpoints as secrets instead
+    // of echoing them; the fields then simply start blank. Saving still
+    // works — degraded read-back, never broken config.
+    _uatEndpoint.text = status.fields['endpoint_uat'] ?? '';
+    _devEndpoint.text = status.fields['endpoint_dev'] ?? '';
+    // Pre-0112 the customer keys are classified secret the same way.
+    _customerEndpoint.text = status.fields['customer_endpoint'] ?? '';
+    _customerHeader.text = status.fields['customer_auth_header'] ?? '';
+    _customerField.text = status.fields['customer_field_name'] ?? '';
+  }
+
+  Widget _errorBody(AppLocalizations l10n) => ListView(
+        padding: AppSpacing.gutterAll,
+        children: [
+          InlineBanner(
+            key: const ValueKey('einvoice-config-error'),
+            icon: Icons.cloud_off_outlined,
+            text: l10n.einvoiceConfigUnavailable,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          FilledButton(
+            key: const ValueKey('einvoice-config-retry'),
+            onPressed: () => ref.invalidate(eInvoiceStatusProvider),
+            child: Text(l10n.commonRetry),
+          ),
+        ],
+      );
+
+  /// The generic connector's endpoint and credential fields.
+  List<Widget> _genericFields(
+    AppLocalizations l10n,
+    EInvoiceProviderStatus status,
+  ) =>
+      [
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-endpoint'),
+          controller: _endpoint,
+          keyboardType: TextInputType.url,
+          decoration: InputDecoration(
+            labelText: l10n.einvoiceConfigEndpoint,
+            suffixIcon: HelpDot(
+              l10n.helpTopicEinvoice,
+              anchor: HelpAnchor.einvoiceEndpoint,
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-token'),
+          controller: _token,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText:
+                l10n.einvoiceConfigToken,
+            helperMaxLines: 2,
+            helperText: status.secretsSet.contains('auth_value')
+                ? (l10n.einvoiceConfigTokenSet)
+                : null,
+            suffixIcon: HelpDot(
+              l10n.helpTopicEinvoice,
+              anchor: HelpAnchor.einvoiceToken,
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-header'),
+          controller: _header,
+          decoration: InputDecoration(
+            labelText: l10n.einvoiceConfigHeader,
+            suffixIcon: HelpDot(
+              l10n.helpTopicEinvoice,
+              anchor: HelpAnchor.einvoiceAuthHeader,
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-field'),
+          controller: _field,
+          decoration: InputDecoration(
+            labelText: l10n.einvoiceConfigField,
+            suffixIcon: HelpDot(
+              l10n.helpTopicEinvoice,
+              anchor: HelpAnchor.einvoiceFileField,
+            ),
+          ),
+        ),
+      ];
+
+  /// The customer's own delivery service, beside the platform above.
+  List<Widget> _customerFields(
+    AppLocalizations l10n,
+    EInvoiceProviderStatus status,
+  ) =>
+      [
+        const SizedBox(height: AppSpacing.lg),
+        Text(
+          l10n.einvoiceCustomerSectionTitle,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          l10n.einvoiceCustomerSectionHelp,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color:
+                    Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-customer-endpoint'),
+          controller: _customerEndpoint,
+          keyboardType: TextInputType.url,
+          decoration: InputDecoration(
+            labelText: l10n.einvoiceConfigEndpoint,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-customer-token'),
+          controller: _customerToken,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText:
+                l10n.einvoiceConfigToken,
+            helperMaxLines: 2,
+            helperText:
+                status.secretsSet.contains('customer_auth_value')
+                    ? (l10n.einvoiceConfigTokenSet)
+                    : null,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-customer-header'),
+          controller: _customerHeader,
+          decoration: InputDecoration(
+            labelText: l10n.einvoiceConfigHeader,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-customer-field'),
+          controller: _customerField,
+          decoration: InputDecoration(
+            labelText:
+                l10n.einvoiceConfigField,
+          ),
+        ),
+      ];
+
+  /// The rehearsal endpoints beside the real one.
+  List<Widget> _testEnvFields(
+    AppLocalizations l10n,
+    EInvoiceProviderStatus status,
+  ) =>
+      [
+        const SizedBox(height: AppSpacing.lg),
+        Text(
+          l10n.einvoiceTestEnvsTitle,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          l10n.einvoiceTestEnvsHelp,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-endpoint-uat'),
+          controller: _uatEndpoint,
+          keyboardType: TextInputType.url,
+          decoration: InputDecoration(
+            labelText: l10n.einvoiceUatEndpoint,
+            suffixIcon: HelpDot(
+              l10n.helpTopicEinvoice,
+              anchor: HelpAnchor.einvoiceUat,
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-token-uat'),
+          controller: _uatToken,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText:
+                l10n.einvoiceUatToken,
+            helperText: status.secretsSet.contains('auth_value_uat')
+                ? (l10n.einvoiceConfigTokenSet)
+                : null,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-endpoint-dev'),
+          controller: _devEndpoint,
+          keyboardType: TextInputType.url,
+          decoration: InputDecoration(
+            labelText: l10n.einvoiceDevEndpoint,
+            suffixIcon: HelpDot(
+              l10n.helpTopicEinvoice,
+              anchor: HelpAnchor.einvoiceDev,
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('einvoice-token-dev'),
+          controller: _devToken,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText:
+                l10n.einvoiceDevToken,
+            helperText: status.secretsSet.contains('auth_value_dev')
+                ? (l10n.einvoiceConfigTokenSet)
+                : null,
+          ),
+        ),
+      ];
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final statusAsync = ref.watch(eInvoiceStatusProvider);
     final status = statusAsync.value;
-    if (status != null && !_loaded) {
-      _loaded = true;
-      _providerForm.load(status);
-      _endpoint.text = status.fields['endpoint'] ?? '';
-      _header.text = status.fields['auth_header'] ?? '';
-      _field.text = status.fields['field_name'] ?? '';
-      // Pre-0074 the server reports suffixed endpoints as secrets instead
-      // of echoing them; the fields then simply start blank. Saving still
-      // works — degraded read-back, never broken config.
-      _uatEndpoint.text = status.fields['endpoint_uat'] ?? '';
-      _devEndpoint.text = status.fields['endpoint_dev'] ?? '';
-      // Pre-0112 the customer keys are classified secret the same way.
-      _customerEndpoint.text = status.fields['customer_endpoint'] ?? '';
-      _customerHeader.text = status.fields['customer_auth_header'] ?? '';
-      _customerField.text = status.fields['customer_field_name'] ?? '';
-    }
+    if (status != null) _loadOnce(status);
 
     return Scaffold(
       appBar: AppBar(
@@ -189,22 +407,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       // (field report): a failing RPC is now something the owner can see
       // and retry, not a blank page.
       body: switch (statusAsync) {
-        AsyncError() => ListView(
-            padding: AppSpacing.gutterAll,
-            children: [
-              InlineBanner(
-                key: const ValueKey('einvoice-config-error'),
-                icon: Icons.cloud_off_outlined,
-                text: l10n.einvoiceConfigUnavailable,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              FilledButton(
-                key: const ValueKey('einvoice-config-retry'),
-                onPressed: () => ref.invalidate(eInvoiceStatusProvider),
-                child: Text(l10n.commonRetry),
-              ),
-            ],
-          ),
+        AsyncError() => _errorBody(l10n),
         _ when status == null => const LoadingView(),
         _ => ListView(
               padding: AppSpacing.gutterAll,
@@ -222,187 +425,15 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
                   secretsSet: status.secretsSet,
                   onChanged: (_) => setState(() {}),
                 ),
-                if (_providerForm.provider == 'generic') ...[
-                const SizedBox(height: AppSpacing.md),
-                TextField(
-                  key: const ValueKey('einvoice-endpoint'),
-                  controller: _endpoint,
-                  keyboardType: TextInputType.url,
-                  decoration: InputDecoration(
-                    labelText: l10n.einvoiceConfigEndpoint,
-                    suffixIcon: HelpDot(
-                      l10n.helpTopicEinvoice,
-                      anchor: HelpAnchor.einvoiceEndpoint,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                TextField(
-                  key: const ValueKey('einvoice-token'),
-                  controller: _token,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText:
-                        l10n.einvoiceConfigToken,
-                    helperMaxLines: 2,
-                    helperText: status.secretsSet.contains('auth_value')
-                        ? (l10n.einvoiceConfigTokenSet)
-                        : null,
-                    suffixIcon: HelpDot(
-                      l10n.helpTopicEinvoice,
-                      anchor: HelpAnchor.einvoiceToken,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                TextField(
-                  key: const ValueKey('einvoice-header'),
-                  controller: _header,
-                  decoration: InputDecoration(
-                    labelText: l10n.einvoiceConfigHeader,
-                    suffixIcon: HelpDot(
-                      l10n.helpTopicEinvoice,
-                      anchor: HelpAnchor.einvoiceAuthHeader,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                TextField(
-                  key: const ValueKey('einvoice-field'),
-                  controller: _field,
-                  decoration: InputDecoration(
-                    labelText: l10n.einvoiceConfigField,
-                    suffixIcon: HelpDot(
-                      l10n.helpTopicEinvoice,
-                      anchor: HelpAnchor.einvoiceFileField,
-                    ),
-                  ),
-                ),
-                ],
+                if (_providerForm.provider == 'generic')
+                  ..._genericFields(l10n, status),
                 // #568 — the customer's own delivery service, beside the
                 // government platform above. Behind its feature flag.
                 if (ref
                     .watch(enabledFeaturesSyncProvider)
-                    .contains(WorkspaceFeature.einvoiceCustomerDelivery)) ...[
-                  const SizedBox(height: AppSpacing.lg),
-                  Text(
-                    l10n.einvoiceCustomerSectionTitle,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  Text(
-                    l10n.einvoiceCustomerSectionHelp,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color:
-                              Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  TextField(
-                    key: const ValueKey('einvoice-customer-endpoint'),
-                    controller: _customerEndpoint,
-                    keyboardType: TextInputType.url,
-                    decoration: InputDecoration(
-                      labelText: l10n.einvoiceConfigEndpoint,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  TextField(
-                    key: const ValueKey('einvoice-customer-token'),
-                    controller: _customerToken,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText:
-                          l10n.einvoiceConfigToken,
-                      helperMaxLines: 2,
-                      helperText:
-                          status.secretsSet.contains('customer_auth_value')
-                              ? (l10n.einvoiceConfigTokenSet)
-                              : null,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  TextField(
-                    key: const ValueKey('einvoice-customer-header'),
-                    controller: _customerHeader,
-                    decoration: InputDecoration(
-                      labelText: l10n.einvoiceConfigHeader,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  TextField(
-                    key: const ValueKey('einvoice-customer-field'),
-                    controller: _customerField,
-                    decoration: InputDecoration(
-                      labelText:
-                          l10n.einvoiceConfigField,
-                    ),
-                  ),
-                ],
-                const SizedBox(height: AppSpacing.lg),
-                Text(
-                  l10n.einvoiceTestEnvsTitle,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  l10n.einvoiceTestEnvsHelp,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                TextField(
-                  key: const ValueKey('einvoice-endpoint-uat'),
-                  controller: _uatEndpoint,
-                  keyboardType: TextInputType.url,
-                  decoration: InputDecoration(
-                    labelText: l10n.einvoiceUatEndpoint,
-                    suffixIcon: HelpDot(
-                      l10n.helpTopicEinvoice,
-                      anchor: HelpAnchor.einvoiceUat,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                TextField(
-                  key: const ValueKey('einvoice-token-uat'),
-                  controller: _uatToken,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText:
-                        l10n.einvoiceUatToken,
-                    helperText: status.secretsSet.contains('auth_value_uat')
-                        ? (l10n.einvoiceConfigTokenSet)
-                        : null,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                TextField(
-                  key: const ValueKey('einvoice-endpoint-dev'),
-                  controller: _devEndpoint,
-                  keyboardType: TextInputType.url,
-                  decoration: InputDecoration(
-                    labelText: l10n.einvoiceDevEndpoint,
-                    suffixIcon: HelpDot(
-                      l10n.helpTopicEinvoice,
-                      anchor: HelpAnchor.einvoiceDev,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                TextField(
-                  key: const ValueKey('einvoice-token-dev'),
-                  controller: _devToken,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText:
-                        l10n.einvoiceDevToken,
-                    helperText: status.secretsSet.contains('auth_value_dev')
-                        ? (l10n.einvoiceConfigTokenSet)
-                        : null,
-                  ),
-                ),
+                    .contains(WorkspaceFeature.einvoiceCustomerDelivery))
+                  ..._customerFields(l10n, status),
+                ..._testEnvFields(l10n, status),
                 const SizedBox(height: AppSpacing.lg),
                 FilledButton(
                   key: const ValueKey('einvoice-save'),

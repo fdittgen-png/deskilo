@@ -212,20 +212,35 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
               .levels
           : 0;
 
-  // #2386 — the operations; each body is in a part file.
-  @override Widget build(BuildContext context) => _buildImpl(context);
-
   /// Lets the section extensions rebuild (setState is protected).
   void _update(VoidCallback fn) => setState(fn);
 
-  Widget _buildImpl(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
+    final content = _content(context);
+    if (!widget.asPage) {
+      return SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            left: AppSpacing.xl,
+            right: AppSpacing.xl,
+            top: AppSpacing.xl,
+            bottom:
+                MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
+          ),
+          child: content,
+        ),
+      );
+    }
+    return _page(context, content);
+  }
+
+  /// The editor itself, the same in the sheet and on the page.
+  Widget _content(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final wide = widget.asPage && MediaQuery.sizeOf(context).width >= 1000;
-    final designExchange = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.reportDesignExchange);
-    final content = Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -271,96 +286,96 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor> {
         ),
         const SizedBox(height: AppSpacing.sm),
         // #488 — markup or WYSIWYG, same underlying bands.
-        SegmentedButton<bool>(
-          key: const ValueKey('invoice-template-mode'),
-          segments: [
-            ButtonSegment(
-              value: false,
-              icon: const Icon(Icons.code),
-              label: Text(l10n.reportEditorMarkup),
-            ),
-            ButtonSegment(
-              value: true,
-              icon: const Icon(Icons.design_services_outlined),
-              label: Text(l10n.reportEditorVisual),
-            ),
-          ],
-          selected: {_visual},
-          onSelectionChanged: (selection) => _update(() {
-            _visual = selection.first;
-            _bumpEpoch();
-          }),
-        ),
+        _modeButton(l10n),
         _editorArea(l10n, sideBySide: wide),
         const SizedBox(height: AppSpacing.md),
-        // #474: pick a ready-made report, see it INSTANTLY, then
-        // download or share the PDF — or save the bands.
-        ReportTemplateActions(
-          doc: _doc,
-          busy: _busy,
-          showSave: !widget.asPage,
-          onPreset: (preset) async {
-            if (!await _confirmReplace() || !mounted) return;
-            _apply(preset.bands);
-          },
-          onInsertImage: _insertImage,
-          onQuickPreview: _quickPreview,
-          onPdf: (download) => _pdf(download: download),
-          onReset: () async {
-            if (!await _confirmReplace() || !mounted) return;
-            _apply(defaultBandsForDoc(
-                _doc, _lang.isEmpty ? l10n : l10nForLanguage(_lang)));
-          },
-          onSave: _save,
-          // #864 — the design exchange, when the workspace has it.
-          onExportDesign: designExchange ? _exportDesign : null,
-          onImportDesign: designExchange ? _importDesign : null,
-        ),
-        // #875 — last in the column on purpose: the panel adds height
-        // below every existing control, and moves none of them.
-        if (ref
-            .watch(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.reportLayouts)) ...[
-          const SizedBox(height: AppSpacing.sm),
-          ReportLayoutPanel(
-            hasLayout: _layoutOfDoc != null,
-            busy: _busy,
-            onExport: _exportLayout,
-            onImport: _importLayout,
-            onRemove: () => _update(() => _layoutDrafts[_doc] = ''),
-            onPreview: _previewLayout,
-          ),
-        ],
-        // #880 — the owner's texts, after the layout panel for the same
-        // reason: nothing above moves.
-        if (ref
-            .watch(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.reportTexts)) ...[
-          const SizedBox(height: AppSpacing.sm),
-          ReportTextsPanel(
-            key: ValueKey('report-texts-$_lang'),
-            language: _lang,
-            texts: _textsFor(_lang),
-            inherited: _lang.isEmpty ? const {} : _textsFor(''),
-            onChanged: _setTexts,
-          ),
-        ],
+        ..._actionsAndPanels(l10n),
       ],
     );
-    if (!widget.asPage) {
-      return SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(
-            left: AppSpacing.xl,
-            right: AppSpacing.xl,
-            top: AppSpacing.xl,
-            bottom:
-                MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
+  }
+
+  Widget _modeButton(AppLocalizations l10n) =>
+      SegmentedButton<bool>(
+        key: const ValueKey('invoice-template-mode'),
+        segments: [
+          ButtonSegment(
+            value: false,
+            icon: const Icon(Icons.code),
+            label: Text(l10n.reportEditorMarkup),
           ),
-          child: content,
-        ),
+          ButtonSegment(
+            value: true,
+            icon: const Icon(Icons.design_services_outlined),
+            label: Text(l10n.reportEditorVisual),
+          ),
+        ],
+        selected: {_visual},
+        onSelectionChanged: (selection) => _update(() {
+          _visual = selection.first;
+          _bumpEpoch();
+        }),
       );
-    }
+
+  /// The ready-made reports and the PDF, then the layout and texts panels
+  /// where the workspace has them.
+  List<Widget> _actionsAndPanels(AppLocalizations l10n) {
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final designExchange =
+        features.contains(WorkspaceFeature.reportDesignExchange);
+    return [
+      // #474: pick a ready-made report, see it INSTANTLY, then
+      // download or share the PDF — or save the bands.
+      ReportTemplateActions(
+        doc: _doc,
+        busy: _busy,
+        showSave: !widget.asPage,
+        onPreset: (preset) async {
+          if (!await _confirmReplace() || !mounted) return;
+          _apply(preset.bands);
+        },
+        onInsertImage: _insertImage,
+        onQuickPreview: _quickPreview,
+        onPdf: (download) => _pdf(download: download),
+        onReset: () async {
+          if (!await _confirmReplace() || !mounted) return;
+          _apply(defaultBandsForDoc(
+              _doc, _lang.isEmpty ? l10n : l10nForLanguage(_lang)));
+        },
+        onSave: _save,
+        // #864 — the design exchange, when the workspace has it.
+        onExportDesign: designExchange ? _exportDesign : null,
+        onImportDesign: designExchange ? _importDesign : null,
+      ),
+      // #875 — last in the column on purpose: the panel adds height
+      // below every existing control, and moves none of them.
+      if (features.contains(WorkspaceFeature.reportLayouts)) ...[
+        const SizedBox(height: AppSpacing.sm),
+        ReportLayoutPanel(
+          hasLayout: _layoutOfDoc != null,
+          busy: _busy,
+          onExport: _exportLayout,
+          onImport: _importLayout,
+          onRemove: () => _update(() => _layoutDrafts[_doc] = ''),
+          onPreview: _previewLayout,
+        ),
+      ],
+      // #880 — the owner's texts, after the layout panel for the same
+      // reason: nothing above moves.
+      if (features.contains(WorkspaceFeature.reportTexts)) ...[
+        const SizedBox(height: AppSpacing.sm),
+        ReportTextsPanel(
+          key: ValueKey('report-texts-$_lang'),
+          language: _lang,
+          texts: _textsFor(_lang),
+          inherited: _lang.isEmpty ? const {} : _textsFor(''),
+          onChanged: _setTexts,
+        ),
+      ],
+    ];
+  }
+
+  Widget _page(BuildContext context, Widget content) {
+    final l10n = context.l10n;
     // #822 — the page: a toolbar with undo / redo / save, the same
     // content underneath, and a guard on the way out.
     return PopScope(

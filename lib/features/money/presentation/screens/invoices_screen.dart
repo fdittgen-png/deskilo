@@ -7,6 +7,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -47,8 +48,6 @@ class InvoicesScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final countryCode = workspace?.countryCode ?? '';
-    // 2014/55/EU: the e-invoice affordance shows for EU workspaces.
-    final isEu = isEuCountry(countryCode);
     final me = ref.watch(myMemberProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
     // #454: warm the template before any render action can be tapped —
@@ -62,145 +61,25 @@ class InvoicesScreen extends ConsumerWidget {
             .watch(myPermissionsProvider)
             .contains(WorkspacePermission.issueInvoices);
     final perms = ref.watch(myPermissionsProvider);
-    final showMemberNames = (me?.canAdminister ?? false) ||
-        perms.contains(WorkspacePermission.viewFinances);
-    final currency = moneyFormat(workspace?.currencyCode ?? 'EUR');
+    final facts = (
+      countryCode: countryCode,
+      currencyCode: workspace?.currencyCode ?? 'EUR',
+      vatExempt: workspace?.vatRegime == 'exempt',
+      // 2014/55/EU: the e-invoice affordance shows for EU workspaces.
+      isEu: isEuCountry(countryCode),
+      showMemberNames: (me?.canAdminister ?? false) ||
+          perms.contains(WorkspacePermission.viewFinances),
+      features: features,
+    );
 
     final archive = InvoiceArchiveTab(
       canIssue: canIssue,
-      showMemberNames: showMemberNames,
+      showMemberNames: facts.showMemberNames,
       countryCode: countryCode,
-      isEu: isEu,
+      isEu: facts.isEu,
     );
-
-    // #454: the PDF template editor — owner only (workspaces_update RLS
-    // would refuse anyone else anyway), behind its feature flag.
-    // #2137 — set_invoice_pdf_template asks designDocuments.
-    final templateAction =
-        perms.contains(WorkspacePermission.designDocuments) &&
-            features.contains(WorkspaceFeature.invoicePdfTemplate)
-        ? IconButton(
-            key: const ValueKey('invoice-template-button'),
-            tooltip: l10n.invoiceTemplateTitle,
-            icon: const Icon(Icons.edit_note_outlined),
-            onPressed: () => showInvoiceTemplateSheet(context, ref),
-          )
-        : null;
-    // Mahnwesen (#472): the dunning policy — owner only.
-    // #2137 — set_dunning_rules asks manageBilling.
-    final dunningAction = (perms.contains(WorkspacePermission.manageBilling) &&
-            features.contains(WorkspaceFeature.dunning))
-        ? IconButton(
-            key: const ValueKey('invoice-dunning-settings'),
-            tooltip: l10n.dunningSettingsTitle,
-            icon: const Icon(Icons.rule_outlined),
-            onPressed: () => showDunningRulesDialog(context, ref),
-          )
-        : null;
-
-    // #812 — the process, explained: the same sheet a member opens from
-    // their Invoices face.
-    final journeyOn = features.contains(WorkspaceFeature.invoiceJourney);
-    final processAction = journeyOn
-        ? IconButton(
-            key: const ValueKey('invoice-process-help'),
-            tooltip: l10n.journeyHowTitle,
-            icon: const Icon(Icons.help_outline),
-            onPressed: () => showInvoiceProcessSheet(context),
-          )
-        : null;
-
-    // #828 — a shared expense split over the members.
-    final repartitionAction =
-        (canIssue && features.contains(WorkspaceFeature.expenseRepartition))
-            ? IconButton(
-                key: const ValueKey('invoice-distribute-button'),
-                tooltip: '${l10n.assistantPrefix} · ${l10n.repartitionAction}',
-                icon: const Icon(Icons.call_split),
-                onPressed: () => showExpenseRepartitionSheet(context, ref),
-              )
-            : null;
-    // #804 — regrouping a member's open invoices into one they pay.
-    final settlementAction =
-        (canIssue && features.contains(WorkspaceFeature.invoiceSettlement))
-            ? IconButton(
-                key: const ValueKey('invoice-settlement'),
-                tooltip: '${l10n.assistantPrefix} · ${l10n.settlementAction}',
-                icon: const Icon(Icons.merge_outlined),
-                onPressed: () => showSettlementSheet(context, ref),
-              )
-            : null;
-
-    // One labelled menu instead of six unlabelled icons: every tool names
-    // itself, and each keeps its key.
-    final toolItems = <(String, IconData, String, VoidCallback)>[
-      (
-        'invoicing-my-finances-tool',
-        Icons.account_balance_wallet_outlined,
-        l10n.invoicingMyFinances,
-        () => context.push(myFinancesRoute(
-          workspaceId: ref.read(activeWorkspaceIdProvider).value)),
-      ),
-      if (repartitionAction != null)
-        (
-          'invoice-distribute-button',
-          Icons.call_split,
-          l10n.repartitionAction,
-          () => showExpenseRepartitionSheet(context, ref),
-        ),
-      if (settlementAction != null)
-        (
-          'invoice-settlement',
-          Icons.merge_outlined,
-          l10n.settlementAction,
-          () => showSettlementSheet(context, ref),
-        ),
-      (
-        'invoice-register-button',
-        Icons.table_rows_outlined,
-        l10n.invoiceRegisterTitle,
-        () => context.push('/invoice-register'),
-      ),
-      if (dunningAction != null)
-        (
-          'invoice-dunning-settings',
-          Icons.rule_outlined,
-          l10n.dunningSettingsTitle,
-          () => showDunningRulesDialog(context, ref),
-        ),
-      if (templateAction != null)
-        (
-          'invoice-template-button',
-          Icons.edit_note_outlined,
-          l10n.invoiceTemplateTitle,
-          () => showInvoiceTemplateSheet(context, ref),
-        ),
-      if (processAction != null)
-        (
-          'invoice-process-help',
-          Icons.help_outline,
-          l10n.journeyHowTitle,
-          () => showInvoiceProcessSheet(context),
-        ),
-    ];
-    final tools = PopupMenuButton<int>(
-      key: const ValueKey('invoicing-tools'),
-      tooltip: l10n.invoicingTools,
-      icon: const Icon(Icons.tune),
-      onSelected: (i) => toolItems[i].$4(),
-      itemBuilder: (_) => [
-        for (final (i, t) in toolItems.indexed)
-          PopupMenuItem<int>(
-            key: ValueKey(t.$1),
-            value: i,
-            child: Row(children: [
-              Icon(t.$2, size: 20),
-              const SizedBox(width: 12),
-              Flexible(child: Text(t.$3)),
-            ]),
-          ),
-      ],
-    );
+    final tools = _toolsMenu(
+        l10n, _toolItems(context, ref, perms, canIssue: canIssue));
 
     if (!canIssue) {
       return Scaffold(
@@ -216,51 +95,59 @@ class InvoicesScreen extends ConsumerWidget {
         ]),
       );
     }
+    return _hub(context, ref, facts, tools: tools, archive: archive);
+  }
 
-    // The month as a proforma: derived on the spot for a member who has
-    // no invoice yet, or re-rendered from the issued one.
-    Future<void> proformaForEntry(String memberId, String period) async {
-      final invoice = await proformaForMonth(
-        ref,
-        memberId: memberId,
-        period: period,
-      );
-      if (!context.mounted) return;
-      if (invoice == null) {
-        AppSnack.info(
-          context,
-          l10n.invoiceProformaNothing,
-        );
-        return;
-      }
-      await shareProforma(context, ref, invoice);
-    }
-
-    Future<void> openDetail(OpenInvoiceEntry entry) async {
-      final reminders =
-          ref.read(invoiceRemindersProvider).value ?? const {};
-      await showInvoiceDetailSheet(
+  /// The month as a proforma: derived on the spot for a member who has no
+  /// invoice yet, or re-rendered from the issued one.
+  Future<void> _proformaForEntry(BuildContext context, WidgetRef ref,
+      String memberId, String period) async {
+    final invoice = await proformaForMonth(
+      ref,
+      memberId: memberId,
+      period: period,
+    );
+    if (!context.mounted) return;
+    if (invoice == null) {
+      AppSnack.info(
         context,
-        ref: ref,
-        invoice: entry.invoice,
-        match: entry.pendingMatch,
-        settledByNumber: settledByNumberOf(
-            entry.invoice, ref.read(invoicesProvider).value ?? const []),
-        canIssue: true,
-        isEu: isEu,
-        reminder: reminders[entry.invoice.id],
-        showMemberName: showMemberNames,
-        transmission:
-            ref.read(invoiceTransmissionsProvider).value?[entry.invoice.id],
-        journey: readInvoiceJourney(
-          ref,
-          entry.invoice,
-          match: entry.pendingMatch,
-          reminder: reminders[entry.invoice.id],
-        ),
+        context.l10n.invoiceProformaNothing,
       );
+      return;
     }
+    await shareProforma(context, ref, invoice);
+  }
 
+  Future<void> _openDetail(BuildContext context, WidgetRef ref,
+      OpenInvoiceEntry entry, _HubFacts facts) async {
+    final reminders = ref.read(invoiceRemindersProvider).value ?? const {};
+    await showInvoiceDetailSheet(
+      context,
+      ref: ref,
+      invoice: entry.invoice,
+      match: entry.pendingMatch,
+      settledByNumber: settledByNumberOf(
+          entry.invoice, ref.read(invoicesProvider).value ?? const []),
+      canIssue: true,
+      isEu: facts.isEu,
+      reminder: reminders[entry.invoice.id],
+      showMemberName: facts.showMemberNames,
+      transmission:
+          ref.read(invoiceTransmissionsProvider).value?[entry.invoice.id],
+      journey: readInvoiceJourney(
+        ref,
+        entry.invoice,
+        match: entry.pendingMatch,
+        reminder: reminders[entry.invoice.id],
+      ),
+    );
+  }
+
+  /// The invoicing hub of someone who issues: to invoice, open, archive.
+  Widget _hub(BuildContext context, WidgetRef ref, _HubFacts facts,
+      {required Widget tools, required Widget archive}) {
+    final l10n = context.l10n;
+    final currency = moneyFormat(facts.currencyCode);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -287,15 +174,15 @@ class InvoicesScreen extends ConsumerWidget {
             text: l10n.invoicingBanner,
           ),
           RecapitulativeNotice(
-              enabled: features
+              enabled: facts.features
                   .contains(WorkspaceFeature.recapitulativeStatement)), // #2354
           SmallBusinessNotice(
             // #2440
-            exempt: workspace?.vatRegime == 'exempt',
-            country: countryCode,
-            currency: workspace?.currencyCode ?? 'EUR',
+            exempt: facts.vatExempt,
+            country: facts.countryCode,
+            currency: facts.currencyCode,
           ),
-          if (journeyOn)
+          if (facts.features.contains(WorkspaceFeature.invoiceJourney))
             Builder(
               builder: (context) => InvoiceStageStrip(
                 currency: currency,
@@ -307,40 +194,8 @@ class InvoicesScreen extends ConsumerWidget {
             InvoicingSummaryBar(currency: currency),
           Expanded(
             child: TabBarView(children: [
-              ToInvoiceTab(
-                currency: currency,
-                onIssue: (memberId, period) => showInvoiceIssueSheet(
-                  context,
-                  ref,
-                  memberId: memberId,
-                  period: period,
-                ),
-                onIssueAll: (entries, period) => issueInvoicesForAll(
-                  context,
-                  ref,
-                  entries,
-                  period,
-                  currency,
-                ),
-                onProforma: proformaForEntry,
-              ),
-              OpenInvoicesTab(
-                currency: currency,
-                onOpen: openDetail,
-                onRemind: (entry) =>
-                    remindInvoice(context, ref, entry.invoice),
-                onMatch: (entry) =>
-                    matchInvoiceToPayment(context, ref, entry.invoice),
-                onWriteoff: (entry) =>
-                    requestInvoiceWriteoffDialog(context, ref, entry.invoice),
-                onRefund: (entry) =>
-                    settleCreditInvoiceDialog(context, ref, entry.invoice),
-                onVoid: (entry) =>
-                    voidInvoiceWithConfirm(context, ref, entry.invoice),
-                onProforma: (entry) =>
-                    shareProforma(context, ref, entry.invoice),
-                onEvents: (_) => context.go('/events'),
-              ),
+              _toInvoiceTab(context, ref, currency),
+              _openTab(context, ref, currency, facts),
               archive,
             ]),
           ),
@@ -348,7 +203,158 @@ class InvoicesScreen extends ConsumerWidget {
       ),
     );
   }
+
+  Widget _toInvoiceTab(
+          BuildContext context, WidgetRef ref, MoneyFormat currency) =>
+      ToInvoiceTab(
+        currency: currency,
+        onIssue: (memberId, period) => showInvoiceIssueSheet(
+          context,
+          ref,
+          memberId: memberId,
+          period: period,
+        ),
+        onIssueAll: (entries, period) => issueInvoicesForAll(
+          context,
+          ref,
+          entries,
+          period,
+          currency,
+        ),
+        onProforma: (memberId, period) =>
+            _proformaForEntry(context, ref, memberId, period),
+      );
+
+  Widget _openTab(BuildContext context, WidgetRef ref, MoneyFormat currency,
+          _HubFacts facts) =>
+      OpenInvoicesTab(
+        currency: currency,
+        onOpen: (entry) => _openDetail(context, ref, entry, facts),
+        onRemind: (entry) => remindInvoice(context, ref, entry.invoice),
+        onMatch: (entry) => matchInvoiceToPayment(context, ref, entry.invoice),
+        onWriteoff: (entry) =>
+            requestInvoiceWriteoffDialog(context, ref, entry.invoice),
+        onRefund: (entry) =>
+            settleCreditInvoiceDialog(context, ref, entry.invoice),
+        onVoid: (entry) => voidInvoiceWithConfirm(context, ref, entry.invoice),
+        onProforma: (entry) => shareProforma(context, ref, entry.invoice),
+        onEvents: (_) => context.go('/events'),
+      );
 }
+
+/// What the screen shows, read once from the workspace, the member and the
+/// enabled features.
+typedef _HubFacts = ({
+  String countryCode,
+  String currencyCode,
+  bool vatExempt,
+  bool isEu,
+  bool showMemberNames,
+  Set<WorkspaceFeature> features,
+});
+
+/// One entry of the tools menu: its key, icon, label and action.
+typedef _ToolItem = (String, IconData, String, VoidCallback);
+
+/// One labelled menu instead of six unlabelled icons: every tool names
+/// itself, and each keeps its key.
+List<_ToolItem> _toolItems(
+  BuildContext context,
+  WidgetRef ref,
+  Set<WorkspacePermission> perms, {
+  required bool canIssue,
+}) {
+  final l10n = context.l10n;
+  final features = ref.read(enabledFeaturesSyncProvider);
+  // #454: the PDF template editor — owner only (workspaces_update RLS
+  // would refuse anyone else anyway), behind its feature flag.
+  // #2137 — set_invoice_pdf_template asks designDocuments.
+  final templateOn = perms.contains(WorkspacePermission.designDocuments) &&
+      features.contains(WorkspaceFeature.invoicePdfTemplate);
+  // Mahnwesen (#472): the dunning policy — owner only.
+  // #2137 — set_dunning_rules asks manageBilling.
+  final dunningOn = perms.contains(WorkspacePermission.manageBilling) &&
+      features.contains(WorkspaceFeature.dunning);
+  // #812 — the process, explained: the same sheet a member opens from
+  // their Invoices face.
+  final processOn = features.contains(WorkspaceFeature.invoiceJourney);
+  // #828 — a shared expense split over the members.
+  final repartitionOn =
+      canIssue && features.contains(WorkspaceFeature.expenseRepartition);
+  // #804 — regrouping a member's open invoices into one they pay.
+  final settlementOn =
+      canIssue && features.contains(WorkspaceFeature.invoiceSettlement);
+  return [
+    (
+      'invoicing-my-finances-tool',
+      Icons.account_balance_wallet_outlined,
+      l10n.invoicingMyFinances,
+      () => context.push(myFinancesRoute(
+        workspaceId: ref.read(activeWorkspaceIdProvider).value)),
+    ),
+    if (repartitionOn)
+      (
+        'invoice-distribute-button',
+        Icons.call_split,
+        l10n.repartitionAction,
+        () => showExpenseRepartitionSheet(context, ref),
+      ),
+    if (settlementOn)
+      (
+        'invoice-settlement',
+        Icons.merge_outlined,
+        l10n.settlementAction,
+        () => showSettlementSheet(context, ref),
+      ),
+    (
+      'invoice-register-button',
+      Icons.table_rows_outlined,
+      l10n.invoiceRegisterTitle,
+      () => context.push('/invoice-register'),
+    ),
+    if (dunningOn)
+      (
+        'invoice-dunning-settings',
+        Icons.rule_outlined,
+        l10n.dunningSettingsTitle,
+        () => showDunningRulesDialog(context, ref),
+      ),
+    if (templateOn)
+      (
+        'invoice-template-button',
+        Icons.edit_note_outlined,
+        l10n.invoiceTemplateTitle,
+        () => showInvoiceTemplateSheet(context, ref),
+      ),
+    if (processOn)
+      (
+        'invoice-process-help',
+        Icons.help_outline,
+        l10n.journeyHowTitle,
+        () => showInvoiceProcessSheet(context),
+      ),
+  ];
+}
+
+Widget _toolsMenu(AppLocalizations l10n, List<_ToolItem> toolItems) =>
+    PopupMenuButton<int>(
+      key: const ValueKey('invoicing-tools'),
+      tooltip: l10n.invoicingTools,
+      icon: const Icon(Icons.tune),
+      onSelected: (i) => toolItems[i].$4(),
+      itemBuilder: (_) => [
+        for (final (i, t) in toolItems.indexed)
+          PopupMenuItem<int>(
+            key: ValueKey(t.$1),
+            value: i,
+            child: Row(children: [
+              Icon(t.$2, size: 20),
+              const SizedBox(width: 12),
+              Flexible(child: Text(t.$3)),
+            ]),
+          ),
+      ],
+    );
 
 /// Says which of the two money jobs this screen is, and where the other
 /// one lives: an admin must never confuse invoicing with their own invoices.
