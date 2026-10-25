@@ -24,6 +24,7 @@ import '../features/workspace/providers/workspace_roles_providers.dart';
 import 'entry_intent.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
+import 'resume_places.dart';
 import 'route_access.dart';
 import 'route_classes.dart';
 import 'route_env.dart';
@@ -50,6 +51,9 @@ String? appRedirect(RouteEnv env, GoRouterState state) {
   // being updated that is a rebuild twice in one frame. The policy
   // knows AuthFact.loading for its table; the router never sends it.
   if (auth.isLoading) return null;
+  // A cold start opens where the account was last; the policy then
+  // decides about that location as about any other.
+  if (startRedirect(ref, state.uri) case final start?) return start;
   final facts = _factsOf(env, intent, signedIn: auth.value != null);
   final request =
       RouteRequest(state.uri.path, query: state.uri.queryParameters);

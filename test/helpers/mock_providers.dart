@@ -67,6 +67,7 @@ import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
+import 'package:deskilo/core/storage/resume_place_store.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/oauth_consent.dart';
@@ -225,6 +226,7 @@ List<Override> standardTestOverrides({
   bool devMode = false,
   BackendSettingsStore? backendSettings,
   EntryIntentStore? entryIntent,
+  ResumePlaceStore? resumePlaces,
   CreationDraftStore? creationDraft,
   PendingInvitationStore? pendingInvitation,
   FakeActionConfirmationRepository? actionConfirmations,
@@ -505,6 +507,9 @@ List<Override> standardTestOverrides({
     // #1650 — the resumable errand: in memory, so no test resumes another's.
     entryIntentStoreProvider
         .overrideWithValue(entryIntent ?? InMemoryEntryIntentStore()),
+    // Where an account was last: in memory, so no test resumes another's.
+    resumePlaceStoreProvider
+        .overrideWithValue(resumePlaces ?? InMemoryResumePlaceStore()),
     // #1636 — the pending creation draft: in memory, per test.
     creationDraftStoreProvider
         .overrideWithValue(creationDraft ?? InMemoryCreationDraftStore()),

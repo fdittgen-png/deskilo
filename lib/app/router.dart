@@ -13,6 +13,7 @@ import '../features/workspace/providers/workspace_providers.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
 import 'page_routes.dart';
+import 'resume_places.dart';
 import 'route_env.dart';
 import 'route_redirect.dart';
 import 'routes/auth_routes.dart';
@@ -66,7 +67,9 @@ GoRouter router(Ref ref) {
     ..listen(schemaCompatibilityProvider, (_, _) => reask()) // #1312
     // #1650 — the continuation restored from the device, or captured on
     // the way to sign-in: its destination is where sign-in returns to.
-    ..listen(entryIntentsProvider, (_, _) => reask());
+    ..listen(entryIntentsProvider, (_, _) => reask())
+    // Where a cold start goes, once it is known (resume_places.dart).
+    ..listen(startPlaceProvider, (_, _) => reask());
 
   final env = RouteEnv(ref);
   router = GoRouter(
@@ -101,8 +104,13 @@ GoRouter router(Ref ref) {
     ],
   );
   ref.onDispose(router.dispose);
-  // #1650 — the continuation is spent where the person arrives.
-  void arrived() => spendOnArrival(router, ref);
+  // #1650 — the continuation is spent where the person arrives, and the
+  // account's places are kept from there.
+  final keeper = ref.read(resumeKeeperProvider);
+  void arrived() {
+    spendOnArrival(router, ref);
+    keeper.arrive(router.state.uri);
+  }
   router.routerDelegate.addListener(arrived);
   ref.onDispose(() => router.routerDelegate.removeListener(arrived));
   return router;

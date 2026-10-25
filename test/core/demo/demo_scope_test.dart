@@ -402,6 +402,7 @@ const Set<String> demoOverriddenProviders = {
   'defaultLevelStoreProvider',
   'defaultPeriodStoreProvider',
   'entryIntentStoreProvider',
+  'resumePlaceStoreProvider',
   'creationDraftStoreProvider',
   'bookingIntentStoreProvider',
   'notificationFilterStoreProvider',
