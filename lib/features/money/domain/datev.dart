@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'datev_fields.dart';
+import 'datev_problem.dart';
 import 'datev_revenue.dart';
 import 'datev_writer.dart';
 import 'expense_repartition.dart';
@@ -40,7 +40,7 @@ import 'vat_tax_point.dart';
 ///     books rather than ours: without the three-byte mark, "Bürogemein-
 ///     schaft München" imports as "BÃ¼rogemeinschaft MÃ¼nchen" in every
 ///     Buchungstext and every customer name, and nothing anywhere
-///     errors. [_datevBom] is prepended for that reason — and UTF-8 with
+///     errors. [datevBom] is prepended for that reason — and UTF-8 with
 ///     the mark rather than transcoding to Windows-1252, because a
 ///     coworking in Munich bills members called Kowalczyk and Škoda, and
 ///     Windows-1252 cannot spell either.
@@ -133,6 +133,49 @@ class DatevAccounts {
   String revenueAt(double percent) =>
       datevRevenueAt(_ref, percent, revenue, chart: chart);
 
+  /// Every automatic revenue account of the chart: the standard rate's and
+  /// each rate group's `revenue:<group>` row.
+  Set<String> get _automaticRevenue => {
+    _default('revenue'),
+    for (final row in _ref.ownRows(TaxDomain.rate, 'DE'))
+      ?datevAutomaticRevenue(
+        _ref,
+        chart,
+        (row.value as RateValue).group,
+        _default('revenue'),
+      ),
+  };
+
+  /// #2375 — where a position at [percent] is booked: on the rate's
+  /// automatic account with no BU-Schlüssel (DATEV derives the tax from
+  /// the account), on any other account with the rate group's key. An
+  /// account that is automatic for another rate, or a group the reference
+  /// has no key for, gets none here; [taxGapAt] names it.
+  DatevRevenueTarget revenueTargetAt(double percent) {
+    final account = revenueAt(percent);
+    if (_automaticRevenue.contains(account)) {
+      return (account: account, taxKey: '');
+    }
+    final group = _ref.groupOfRate('DE', percent, 'S');
+    return (account: account, taxKey: datevGroupTaxKey(_ref, group) ?? '');
+  }
+
+  /// Why a position at [percent] cannot be booked as DATEV posts it: its
+  /// account is automatic for another rate, or it needs a BU-Schlüssel the
+  /// reference does not hold; null when it can.
+  DatevProblem? taxGapAt(double percent) {
+    final account = revenueAt(percent);
+    final group = _ref.groupOfRate('DE', percent, 'S');
+    final own = datevAutomaticRevenue(_ref, chart, group, _default('revenue'));
+    if (account == own) return null;
+    if (_automaticRevenue.contains(account)) {
+      return DatevAutomaticClash(percent, account);
+    }
+    return datevGroupTaxKey(_ref, group) == null
+        ? DatevTaxKeyMissing(percent, account)
+        : null;
+  }
+
   /// #2365 — header field 27, the Standardkontenrahmen as DATEV writes it:
   /// the digits of the chart's name ('03' for SKR03), empty when it has
   /// none.
@@ -162,12 +205,8 @@ class DatevAccounts {
 /// DATEV's importer treats an unmarked file as Windows-1252. Declaring
 /// format version 700 in the header — as this exporter does — is what
 /// makes the marked UTF-8 form recognised, so the two belong together.
-const String _datevBom = '\u{FEFF}';
+const String datevBom = '\u{FEFF}';
 
-/// DATEV expects `EXTF_<something>.csv`; the name is free-form after the
-/// prefix, and DATEV keys on the header, not the filename.
-String datevFileName(int year, int month) =>
-    'EXTF_Buchungsstapel_${yearMonth(year, month, separator: '')}.csv';
 
 /// Builds the EXTF Buchungsstapel for one period.
 ///
@@ -175,8 +214,12 @@ String datevFileName(int year, int month) =>
 /// come from the accountant — DATEV refuses an import whose numbers do
 /// not match the target client, which is a good refusal: it stops a file
 /// landing in the wrong company's books.
-String buildDatevFile(DatevRequest request) {
-  final writer = DatevWriter(
+String buildDatevFile(DatevRequest request) =>
+    '$datevBom${datevWriterOf(request).lines()}';
+
+/// The writer of [request] with every booking made: what [buildDatevFile]
+/// writes, and what an export cuts into its Buchungsstapel.
+DatevWriter datevWriterOf(DatevRequest request) => DatevWriter(
     invoices: request.invoices,
     matches: request.matches,
     accounts: request.accounts,
@@ -193,12 +236,12 @@ String buildDatevFile(DatevRequest request) {
     development: request.development,
     taxPoints: request.taxPoints,
     dayOf: request.dayOf,
+    detail: request.detail,
+    slice: request.slice,
   )
     ..bookInvoices()
     ..bookExpenses()
     ..bookRepartitions();
-  return '$_datevBom${writer.lines()}';
-}
 
 /// #2492 — what one Buchungsstapel is built from.
 class DatevRequest {
@@ -219,7 +262,58 @@ class DatevRequest {
     this.development = false,
     this.taxPoints,
     this.dayOf = WorkspaceTime.dateOf,
+    this.detail,
+    this.slice,
   });
+
+  /// This request with the sub-ledger [detail] on every row.
+  DatevRequest withDetail(DatevDetail detail) => DatevRequest(
+    invoices: invoices,
+    matches: matches,
+    accounts: accounts,
+    from: from,
+    to: to,
+    generatedAt: generatedAt,
+    consultantNumber: consultantNumber,
+    clientNumber: clientNumber,
+    currency: currency,
+    batchName: batchName,
+    accountLength: accountLength,
+    ledger: ledger,
+    repartitions: repartitions,
+    development: development,
+    taxPoints: taxPoints,
+    dayOf: dayOf,
+    detail: detail,
+    slice: slice,
+  );
+
+  /// This request for the Buchungsstapel [slice] alone, under the header
+  /// [accounts] (its fiscal-year start) and the name [batchName].
+  DatevRequest withSlice(
+    DatevSlice slice, {
+    required DatevAccounts accounts,
+    required String batchName,
+  }) => DatevRequest(
+    invoices: invoices,
+    matches: matches,
+    accounts: accounts,
+    from: from,
+    to: to,
+    generatedAt: generatedAt,
+    consultantNumber: consultantNumber,
+    clientNumber: clientNumber,
+    currency: currency,
+    batchName: batchName,
+    accountLength: accountLength,
+    ledger: ledger,
+    repartitions: repartitions,
+    development: development,
+    taxPoints: taxPoints,
+    dayOf: dayOf,
+    detail: detail,
+    slice: slice,
+  );
 
   final List<Invoice> invoices;
   final Map<String, InvoiceMatch> matches;
@@ -241,4 +335,56 @@ class DatevRequest {
   final bool development;
   final List<VatTaxPointAmount>? taxPoints;
   final DateTime Function(DateTime instant) dayOf;
+
+  /// #2375 — the sub-ledger detail of every row; null writes the one
+  /// collective customers account and no document detail.
+  final DatevDetail? detail;
+
+  /// #2375 — the one Buchungsstapel of the bookings to write; null writes
+  /// every booking of [from]..[to] in one.
+  final DatevSlice? slice;
+}
+
+/// The journal a Buchungsstapel holds: the sales side, or every booking
+/// that moves the bank account, so the accountant imports each on its own.
+enum DatevJournal { sales, bank }
+
+/// #2375 — one Buchungsstapel of an export: the bookings of [journal] dated
+/// [from]..[to], the [part]-th run of [rowsPerPart] of them, written as
+/// final (Festschreibung) when [locked].
+class DatevSlice {
+  const DatevSlice({
+    required this.journal,
+    required this.from,
+    required this.to,
+    this.part = 0,
+    this.rowsPerPart = DatevFormatRules.rowsPerBatch,
+    this.locked = false,
+  });
+
+  final DatevJournal journal;
+  final DateTime from;
+  final DateTime to;
+  final int part;
+  final int rowsPerPart;
+  final bool locked;
+}
+
+/// #2375 — what makes each row a sub-ledger row: the member's Debitor in
+/// place of the collective account, the site as cost centre, the voucher
+/// details and, when the vouchers travel with the file, their link.
+class DatevDetail {
+  const DatevDetail({
+    required this.debtors,
+    required this.defaultCostCentre,
+    this.voucherLinks = false,
+  });
+
+  /// The Debitor of each member, by member id.
+  final Map<String, String> debtors;
+
+  /// KOST1 of a row whose document names no site, and of a row with no
+  /// document.
+  final String defaultCostCentre;
+  final bool voucherLinks;
 }

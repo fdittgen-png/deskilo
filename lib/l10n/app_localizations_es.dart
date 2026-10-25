@@ -4143,10 +4143,50 @@ class AppLocalizationsEs extends AppLocalizations {
   String get datevAccountsTitle => 'Exportación DATEV';
 
   @override
+  String datevBlocked(String problems) {
+    return 'La exportación DATEV no se ha escrito: $problems';
+  }
+
+  @override
   String get datevClientNumber => 'Mandantennummer (n.º de cliente)';
 
   @override
   String get datevConsultantNumber => 'Beraternummer (n.º de asesor)';
+
+  @override
+  String datevProblemAccountLength(String account, String length) {
+    return 'la cuenta $account no tiene $length dígitos';
+  }
+
+  @override
+  String datevProblemAutomatic(String percent, String account) {
+    return 'el $percent % se contabilizaría en $account, la cuenta automática de otro tipo';
+  }
+
+  @override
+  String datevProblemClient(String number) {
+    return 'La Mandantennummer «$number» no es un número de 1 a 99999';
+  }
+
+  @override
+  String datevProblemConsultant(String number) {
+    return 'La Beraternummer «$number» no es un número de 1001 a 9999999';
+  }
+
+  @override
+  String datevProblemDebtorClash(String members, String account) {
+    return '$members compartirían la cuenta Debitor $account';
+  }
+
+  @override
+  String datevProblemMemberNumber(String member, String number) {
+    return '$member no tiene un número de miembro que dé una cuenta Debitor («$number»): asígnele primero un número';
+  }
+
+  @override
+  String datevProblemTaxKey(String percent, String account) {
+    return 'no hay ningún BU-Schlüssel registrado para el $percent % en la cuenta $account';
+  }
 
   @override
   String get decisionSurfaceEmpty => 'Nada le espera';
@@ -8161,6 +8201,66 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get gobdProcedureExportsBody =>
+      'Cada exportación contable se registra en el registro de exportaciones con su periodo, tamaño y huella SHA-256; la exportación de un periodo cerrado vuelve a dar los mismos bytes.';
+
+  @override
+  String get gobdProcedureExportsHeading => 'Exportaciones';
+
+  @override
+  String gobdProcedureGenerated(String date, String from, String to) {
+    return 'Elaborada el $date para el periodo del $from al $to.';
+  }
+
+  @override
+  String get gobdProcedureHandoverBody =>
+      'Este paquete sigue el Beschreibungsstandard: index.xml describe cada tabla, sus columnas, claves y relaciones, y nombra la DTD gdpdu-01-08-2002.dtd entregada junto a él. Cada tabla es un archivo CSV UTF-8 sin línea de cabecera. La carpeta belege contiene la factura electrónica estructurada de cada factura y, cuando se generó, su PDF/A-3 con ese XML incrustado.';
+
+  @override
+  String get gobdProcedureHandoverHeading => 'Entrega de datos (Z3)';
+
+  @override
+  String get gobdProcedureImmutableBody =>
+      'Una factura o nota de crédito emitida no se puede modificar ni eliminar: la base de datos lo rechaza. Cada documento se firma en una cadena con el anterior. Una corrección es un documento nuevo (nota de crédito o factura de sustitución) que nombra el que corrige. Un periodo cerrado rechaza anulaciones y pagos fechados en él.';
+
+  @override
+  String get gobdProcedureImmutableHeading => 'Inalterabilidad';
+
+  @override
+  String gobdProcedureRetentionUntil(String date) {
+    return 'un documento fechado al final de este periodo puede borrarse a partir del $date';
+  }
+
+  @override
+  String gobdProcedureSchemaApp(String version) {
+    return 'Versión de esquema para la que se compiló esta aplicación: $version';
+  }
+
+  @override
+  String gobdProcedureSchemaLive(String version) {
+    return 'Versión del esquema de base de datos de esta instalación: $version';
+  }
+
+  @override
+  String get gobdProcedureSchemaUnknown =>
+      'Versión del esquema de base de datos de esta instalación: no se pudo leer al elaborar este documento';
+
+  @override
+  String get gobdProcedureSystemBody =>
+      'DesKilo lleva las facturas, notas de crédito, pagos, cuentas de miembros, costes compartidos y documentos de compra aprobados de este espacio. Es un libro auxiliar: el libro mayor y las cuentas anuales los lleva el asesor contable en su propio sistema, que importa la exportación DATEV.';
+
+  @override
+  String get gobdProcedureSystemHeading => 'Sistema y alcance';
+
+  @override
+  String gobdProcedureTitle(String workspace) {
+    return 'Documentación del procedimiento (Verfahrensdokumentation) — $workspace';
+  }
+
+  @override
+  String get gobdProcedureVersionHeading => 'Versión del software';
+
+  @override
   String get groupAnnounceOnly => 'Solo los admins pueden escribir';
 
   @override
@@ -9952,6 +10052,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invoiceExportGenericJournal =>
       'Diario (CSV, para cualquier programa contable)';
+
+  @override
+  String get invoiceExportGobd => 'Acceso a datos GoBD (Z3)';
 
   @override
   String get invoiceExportJournals =>

@@ -383,17 +383,19 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
 /// the syntax the format mandates). A human opens it and sees the invoice;
 /// a platform opens it and finds `factur-x.xml`. This is what French and
 /// German small businesses actually hand to their platform.
-Future<({List<int> bytes, String fileName})> buildFacturXFile(
+/// The structured e-invoice (CII) of [invoice], the XML a Factur-X PDF
+/// embeds: the same positions, due date and terms the PDF prints.
+String facturXmlOf(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice, {
   required InvoiceParty seller,
   required InvoiceParty buyer,
   required String iban,
-}) async {
+}) {
   final association = ref.read(sellerIsAssociationProvider);
   final words = reportStringsOf(context.l10n);
-  final xml = buildInvoiceCii(EInvoiceInput(invoice: invoice,
+  return buildInvoiceCii(EInvoiceInput(invoice: invoice,
     seller: seller,
     buyer: buyer,
     iban: iban,
@@ -405,6 +407,18 @@ Future<({List<int> bytes, String fileName})> buildFacturXFile(
     paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
         memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
         ''));
+}
+
+Future<({List<int> bytes, String fileName})> buildFacturXFile(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  required String iban,
+}) async {
+  final xml = facturXmlOf(context, ref, invoice,
+      seller: seller, buyer: buyer, iban: iban);
   // PDF/A-3 cannot exist without an embedded output intent.
   final icc = await rootBundle.load('assets/pdf/sRGB2014.icc');
   if (!context.mounted) {

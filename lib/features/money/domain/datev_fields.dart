@@ -61,6 +61,9 @@ class DatevBooking {
     required this.documentRef,
     required this.text,
     this.taxPeriodDate,
+    this.taxKey = '',
+    this.invoice,
+    this.memberId = '',
   });
 
   final int cents;
@@ -70,6 +73,16 @@ class DatevBooking {
   final String documentRef;
   final String text;
   final DateTime? taxPeriodDate;
+
+  /// The BU-Schlüssel; '' on an automatic account and where none applies.
+  final String taxKey;
+
+  /// The document the row books, when it books one: its site, number,
+  /// dates and voucher travel with the row.
+  final Invoice? invoice;
+
+  /// The member a row without a document books (an expense credit).
+  final String memberId;
 }
 
 /// Where the builder's bookings go.
@@ -91,5 +104,6 @@ void bookDatevWriteOff(
   book(DatevBooking(
     cents: owed, debit: lossAccount, credit: customersAccount, date: day,
     documentRef: invoice.number, text: 'Forderungsverlust ${invoice.number}',
+    invoice: invoice,
   ));
 }

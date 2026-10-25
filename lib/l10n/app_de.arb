@@ -2749,6 +2749,7 @@
   "@datevAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
+  "datevBlocked": "Der DATEV-Export wurde nicht geschrieben: {problems}",
   "datevClientNumber": "Mandantennummer",
   "@datevClientNumber": {
     "description": "#669 - accounting export formats"
@@ -2757,6 +2758,13 @@
   "@datevConsultantNumber": {
     "description": "#669 - accounting export formats"
   },
+  "datevProblemAccountLength": "Konto {account} hat nicht {length} Stellen",
+  "datevProblemAutomatic": "{percent} % würde auf {account} gebucht, das Automatikkonto eines anderen Satzes",
+  "datevProblemClient": "Mandantennummer „{number}“ ist keine Zahl von 1 bis 99999",
+  "datevProblemConsultant": "Beraternummer „{number}“ ist keine Zahl von 1001 bis 9999999",
+  "datevProblemDebtorClash": "{members} hätten denselben Debitor {account}",
+  "datevProblemMemberNumber": "{member} hat keine Mitgliedsnummer, aus der ein Debitor wird („{number}“): zuerst eine Nummer vergeben",
+  "datevProblemTaxKey": "für {percent} % auf Konto {account} ist kein BU-Schlüssel hinterlegt",
   "decisionSurfaceEmpty": "Nichts wartet auf Sie",
   "@decisionSurfaceEmpty": {
     "description": "#1247: decisionSurfaceEmpty"
@@ -5704,6 +5712,21 @@
   "gettingStartedStateReleased": "freigegeben",
   "gettingStartedStateReserved": "reserviert",
   "gettingStartedTitle": "Erste Schritte in {workspace}",
+  "gobdProcedureExportsBody": "Jeder Buchhaltungsexport wird mit Zeitraum, Größe und SHA-256-Prüfsumme im Exportprotokoll festgehalten; ein Export eines abgeschlossenen Zeitraums ergibt wieder dieselben Bytes.",
+  "gobdProcedureExportsHeading": "Exporte",
+  "gobdProcedureGenerated": "Erstellt am {date} für den Zeitraum {from} bis {to}.",
+  "gobdProcedureHandoverBody": "Dieses Paket folgt dem Beschreibungsstandard: index.xml beschreibt jede Tabelle, ihre Spalten, Schlüssel und Verknüpfungen und nennt die mitgelieferte DTD gdpdu-01-08-2002.dtd. Jede Tabelle ist eine UTF-8-CSV-Datei ohne Kopfzeile. Der Ordner belege enthält zu jeder Rechnung die strukturierte E-Rechnung und, wo sie erzeugt wurde, das PDF/A-3 mit eingebettetem XML.",
+  "gobdProcedureHandoverHeading": "Datenüberlassung (Z3)",
+  "gobdProcedureImmutableBody": "Eine ausgestellte Rechnung oder Gutschrift kann weder geändert noch gelöscht werden: die Datenbank verweigert es. Jeder Beleg wird mit seinem Vorgänger in eine Kette signiert. Eine Korrektur ist ein neuer Beleg (Gutschrift oder Ersatzrechnung), der den korrigierten nennt. Ein abgeschlossener Zeitraum verweigert Stornierungen und Zahlungen, die in ihm datiert sind.",
+  "gobdProcedureImmutableHeading": "Unveränderbarkeit",
+  "gobdProcedureRetentionUntil": "ein Beleg vom Ende dieses Zeitraums darf ab {date} gelöscht werden",
+  "gobdProcedureSchemaApp": "Schemaversion, für die diese App gebaut ist: {version}",
+  "gobdProcedureSchemaLive": "Datenbankschema dieser Installation: Version {version}",
+  "gobdProcedureSchemaUnknown": "Datenbankschema dieser Installation: bei der Erstellung nicht lesbar",
+  "gobdProcedureSystemBody": "DesKilo führt die Rechnungen, Gutschriften, Zahlungen, Mitgliederkonten, umgelegten Kosten und genehmigten Eingangsbelege dieses Space. Es ist ein Nebenbuch: Hauptbuch und Jahresabschluss führt die Steuerberatung in ihrem eigenen System, das den DATEV-Export importiert.",
+  "gobdProcedureSystemHeading": "System und Umfang",
+  "gobdProcedureTitle": "Verfahrensdokumentation — {workspace}",
+  "gobdProcedureVersionHeading": "Softwarestand",
   "groupAnnounceOnly": "Nur Admins dürfen schreiben",
   "@groupAnnounceOnly": {
     "description": "workspace groups: rename, description, admins, info"
@@ -6616,6 +6639,7 @@
   "invoiceExportFrEReporting": "E-Reporting Frankreich (B2C, International, Zahlungen)",
   "invoiceExportGeneralLedger": "Hauptbuch (PDF, aus der Buchführung)",
   "invoiceExportGenericJournal": "Journal (CSV, für jede Buchhaltungssoftware)",
+  "invoiceExportGobd": "GoBD-Datenüberlassung (Z3)",
   "invoiceExportJournals": "Journale mit Sammeljournal (PDF, aus der Buchführung)",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",

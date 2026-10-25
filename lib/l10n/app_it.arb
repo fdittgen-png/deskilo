@@ -2749,6 +2749,7 @@
   "@datevAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
+  "datevBlocked": "L'esportazione DATEV non è stata scritta: {problems}",
   "datevClientNumber": "Mandantennummer (n. cliente)",
   "@datevClientNumber": {
     "description": "#669 - accounting export formats"
@@ -2757,6 +2758,13 @@
   "@datevConsultantNumber": {
     "description": "#669 - accounting export formats"
   },
+  "datevProblemAccountLength": "il conto {account} non ha {length} cifre",
+  "datevProblemAutomatic": "il {percent} % sarebbe registrato su {account}, il conto automatico di un'altra aliquota",
+  "datevProblemClient": "La Mandantennummer «{number}» non è un numero da 1 a 99999",
+  "datevProblemConsultant": "La Beraternummer «{number}» non è un numero da 1001 a 9999999",
+  "datevProblemDebtorClash": "{members} condividerebbero il conto Debitor {account}",
+  "datevProblemMemberNumber": "{member} non ha un numero di membro che dia un conto Debitor («{number}»): gli assegni prima un numero",
+  "datevProblemTaxKey": "nessun BU-Schlüssel è registrato per il {percent} % sul conto {account}",
   "decisionSurfaceEmpty": "Niente la aspetta",
   "@decisionSurfaceEmpty": {
     "description": "#1247: decisionSurfaceEmpty"
@@ -5704,6 +5712,21 @@
   "gettingStartedStateReleased": "rilasciata",
   "gettingStartedStateReserved": "prenotata",
   "gettingStartedTitle": "Primi passi in {workspace}",
+  "gobdProcedureExportsBody": "Ogni esportazione contabile è registrata nel registro delle esportazioni con periodo, dimensione e impronta SHA-256; l'esportazione di un periodo chiuso restituisce gli stessi byte.",
+  "gobdProcedureExportsHeading": "Esportazioni",
+  "gobdProcedureGenerated": "Redatta il {date} per il periodo dal {from} al {to}.",
+  "gobdProcedureHandoverBody": "Questo pacchetto segue il Beschreibungsstandard: index.xml descrive ogni tabella, le sue colonne, chiavi e relazioni, e indica la DTD gdpdu-01-08-2002.dtd fornita accanto. Ogni tabella è un file CSV UTF-8 senza riga di intestazione. La cartella belege contiene la fattura elettronica strutturata di ogni fattura e, dove è stato generato, il suo PDF/A-3 con quell'XML incorporato.",
+  "gobdProcedureHandoverHeading": "Consegna dei dati (Z3)",
+  "gobdProcedureImmutableBody": "Una fattura o nota di credito emessa non può essere modificata né eliminata: il database lo rifiuta. Ogni documento è firmato in una catena con il precedente. Una correzione è un nuovo documento (nota di credito o fattura sostitutiva) che indica quello che corregge. Un periodo chiuso rifiuta annullamenti e pagamenti datati al suo interno.",
+  "gobdProcedureImmutableHeading": "Inalterabilità",
+  "gobdProcedureRetentionUntil": "un documento datato alla fine di questo periodo può essere cancellato dal {date}",
+  "gobdProcedureSchemaApp": "Versione dello schema per cui è stata compilata questa app: {version}",
+  "gobdProcedureSchemaLive": "Versione dello schema del database di questa installazione: {version}",
+  "gobdProcedureSchemaUnknown": "Versione dello schema del database di questa installazione: non leggibile al momento della redazione",
+  "gobdProcedureSystemBody": "DesKilo tiene le fatture, note di credito, pagamenti, conti dei membri, costi condivisi e documenti di acquisto approvati di questo spazio. È un libro ausiliario: il libro mastro e il bilancio sono tenuti dal commercialista nel proprio sistema, che importa l'esportazione DATEV.",
+  "gobdProcedureSystemHeading": "Sistema e ambito",
+  "gobdProcedureTitle": "Documentazione delle procedure (Verfahrensdokumentation) — {workspace}",
+  "gobdProcedureVersionHeading": "Versione del software",
   "groupAnnounceOnly": "Solo gli admin possono scrivere",
   "@groupAnnounceOnly": {
     "description": "workspace groups: rename, description, admins, info"
@@ -6616,6 +6639,7 @@
   "invoiceExportFrEReporting": "E-reporting Francia (B2C, internazionale, pagamenti)",
   "invoiceExportGeneralLedger": "Libro mastro (PDF, dalla contabilità)",
   "invoiceExportGenericJournal": "Giornale (CSV, per qualsiasi software contabile)",
+  "invoiceExportGobd": "Accesso ai dati GoBD (Z3)",
   "invoiceExportJournals": "Giornali e riepilogo (PDF, dalla contabilità)",
   "invoiceExportSafT": "SAF-T (XML, internazionale)",
   "invoiceExportSafTPt": "SAF-T (Portogallo)",

@@ -135,7 +135,8 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
   final l10n = context.l10n;
   final consultant = TextEditingController();
   final client = TextEditingController();
-  final customers = TextEditingController(text: initial.customers);
+  // The customer side is each member's Debitor, numbered from their
+  // member number: no collective account is asked.
   final revenue = TextEditingController(text: initial.revenue);
   final bank = TextEditingController(text: initial.bank);
   final expenses = TextEditingController(text: initial.expenses);
@@ -165,8 +166,6 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
           field('datev-client', client,
               l10n.datevClientNumber),
           const SizedBox(height: AppSpacing.md),
-          field('datev-account-customers', customers,
-              l10n.fecAccountCustomers),
           field('datev-account-revenue', revenue,
               l10n.fecAccountRevenue),
           field('datev-account-vat', vat,
@@ -188,7 +187,6 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
             consultantNumber: consultant.text.trim(),
             clientNumber: client.text.trim(),
             accounts: DatevAccounts(
-              customers: customers.text.trim(),
               revenue: revenue.text.trim(),
               bank: bank.text.trim(),
               vat: vat.text.trim(),

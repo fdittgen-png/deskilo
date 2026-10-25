@@ -106,6 +106,30 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'datev',
     state: QualificationState.locallyValidated,
   ),
+  // The Beschreibungsstandard and its DTD are the spec; the package holds
+  // the sub-ledger, not complete books, and no auditor has read one yet.
+  'gobd': AccountingCapability(
+    formatId: 'gobd',
+    state: QualificationState.locallyValidated,
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
+    specification: 'GDPdU Beschreibungsstandard 1.1, gdpdu-01-08-2002.dtd',
+  ),
+  // Each needs a DATEV marketplace partnership and the client's SmartLogin.
+  'datev_buchungsdatenservice': AccountingCapability(
+    formatId: 'datev_buchungsdatenservice',
+    state: QualificationState.specificationNeeded,
+  ),
+  'datev_rechnungsdatenservice': AccountingCapability(
+    formatId: 'datev_rechnungsdatenservice',
+    state: QualificationState.specificationNeeded,
+  ),
+  'datev_belegbilderservice': AccountingCapability(
+    formatId: 'datev_belegbilderservice',
+    state: QualificationState.specificationNeeded,
+  ),
   'sage50': AccountingCapability(
     formatId: 'sage50',
     state: QualificationState.implemented,

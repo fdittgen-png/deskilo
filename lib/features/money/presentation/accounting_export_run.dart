@@ -8,13 +8,18 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/backend/schema_version.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/vat/tax_reference.dart';
+import '../../../core/vat/tax_reference_active.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../workspace/domain/member.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
@@ -22,14 +27,18 @@ import '../domain/accounting_format.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
+import '../domain/book_period.dart';
 import '../domain/book_profile.dart';
 import '../domain/datev.dart';
+import '../domain/datev_fields.dart';
+import '../domain/datev_package.dart';
 import '../domain/document_numbering.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/export_year.dart';
 import '../domain/fec.dart';
 import '../domain/fiscal_year.dart';
 import '../domain/fr_ereporting.dart';
+import '../domain/gobd_package.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_queries.dart';
@@ -49,6 +58,7 @@ import 'accounting_export_journal.dart';
 import 'datev_profile.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
+import 'gobd_procedure_document.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
 import 'report_strings_l10n.dart';
@@ -183,6 +193,8 @@ class AccountingExportRun {
         await _accountantCsv();
       case 'bundle':
         await _bundle();
+      case 'gobd':
+        await _gobd();
       case 'fr_ereporting':
         await _frEReporting();
       case 'audit_trail':
@@ -265,26 +277,149 @@ class AccountingExportRun {
       domain: 'money',
       message: 'DATEV export failed',
       errorText: l10n.workspaceGenericError,
-      action: () async => save(
-        buildDatevFile(DatevRequest(
+      action: () async {
+        // Unreadable periods count as open: a Stapel is never made final
+        // by mistake.
+        var periods = const BookPeriodsOverview();
+        try {
+          periods = await ref.read(bookPeriodsProvider(workspace.id).future);
+        } on Exception catch (e, st) {
+          TraceLogger.instance.warn('money', 'book periods unreadable for DATEV', error: e, stackTrace: st);
+        }
+        final package = buildDatevPackage(DatevPackageRequest(
+          request: DatevRequest(
+            invoices: exported,
+            matches: matches,
+            accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
+            from: DateTime(year),
+            to: DateTime(year, 12, 31),
+            generatedAt: now,
+            consultantNumber: datev.consultantNumber,
+            clientNumber: datev.clientNumber,
+            ledger: ledger,
+            repartitions: repartitions,
+            development: development,
+            currency: workspace.currencyCode,
+            batchName: workspace.name,
+            taxPoints: taxPoints,
+          ),
+          bookProfiles: bookProfiles,
+          closed: (from, to) => periods.closedOn(from)?.contains(to) ?? false,
+          defaultCostCentre: workspace.name,
+          memberNumbers: {
+            for (final m in ref.read(workspaceMembersProvider).value ?? const <Member>[])
+              m.id: m.memberNumber,
+          },
+          memberNames: memberNames,
+          voucherLinks: true,
+        ));
+        if (!context.mounted) return;
+        if (package.problems.isNotEmpty) {
+          return AppSnack.error(context, l10n.datevBlocked(datevProblemsText(l10n, package.problems)));
+        }
+        // The vouchers the rows link, named by their Beleglink id.
+        final vouchers = await _vouchers(package.vouchers, (i) => 'Belege/${i.id}.pdf');
+        if (vouchers == null || !context.mounted) return;
+        await _saveZip({
+          for (final MapEntry(:key, :value) in package.files.entries) key: textBytes(value),
+          ...vouchers,
+        }, rows: package.rows);
+      },
+    );
+  }
+
+  /// #2375 — the GoBD data handover of the year: the tables of the one
+  /// snapshot, every invoice's e-invoice and PDF/A-3, the
+  /// Verfahrensdokumentation with the server's schema version.
+  Future<void> _gobd() async {
+    await runGuarded(
+      context,
+      domain: 'money',
+      message: 'GoBD export failed',
+      errorText: l10n.workspaceGenericError,
+      action: () async {
+        final sequences = await repo.fetchNumberSequences(workspace.id);
+        int? schema;
+        try {
+          schema = await ref.read(schemaVersionSourceProvider).read();
+        } on SchemaVersionUnavailable catch (e, st) {
+          TraceLogger.instance.warn('money', 'schema version unreadable for the GoBD package', error: e, stackTrace: st);
+        }
+        if (!context.mounted) return;
+        final pdfs = await _vouchers(exported, (i) => 'belege/${i.id}.pdf');
+        if (pdfs == null || !context.mounted) return;
+        final vouchers = <String, Map<String, List<int>>>{
+          for (final i in exported)
+            i.id: {
+              'belege/${i.id}.xml': textBytes(facturXmlOf(context, ref, i,
+                  seller: sellerOf(i, workspace), buyer: buyerOf(i, workspace), iban: workspaceIban(workspace))),
+              'belege/${i.id}.pdf': pdfs['belege/${i.id}.pdf']!,
+            },
+        };
+        final from = DateTime(year);
+        final to = DateTime(year, 12, 31);
+        final files = buildGobdPackage(GobdRequest(
+          supplierName: company.name,
+          supplierLocation: workspace.address,
+          from: from,
+          to: to,
           invoices: exported,
           matches: matches,
-          accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
-          from: DateTime(year),
-          to: DateTime(year, 12, 31),
-          generatedAt: now,
-          consultantNumber: datev.consultantNumber,
-          clientNumber: datev.clientNumber,
+          instalments: books.instalments,
           ledger: ledger,
           repartitions: repartitions,
-          development: development,
-          currency: workspace.currencyCode,
-          batchName: workspace.name,
-          taxPoints: taxPoints,
-        )),
-        datevFileName(year, invoices.last.issuedAt.month),
-      ),
+          purchases: books.purchases,
+          memberNames: memberNames,
+          sequences: sequences,
+          auditEvents: buildAuditEvents(invoices: exported, matches: matches, ledger: ledger),
+          taxRates: [
+            for (final row in ActiveTaxReference.current.where(TaxDomain.rate))
+              if (row.country == country) row,
+          ],
+          vouchers: vouchers,
+          procedure: {
+            gobdProcedureFileName: textBytes(buildGobdProcedureDocument(l10n, (
+              workspace: workspace.name,
+              country: country,
+              from: from,
+              to: to,
+              generatedAt: now,
+              fiscalYearStart: datevProfileFiscalStart(bookProfiles, from, to),
+              serverSchema: schema,
+              sequences: sequences,
+            ))),
+          },
+        ));
+        await _saveZip(files, rows: exported.length);
+      },
     );
+  }
+
+  /// The PDF/A-3 of each of [invoices] at [pathOf]; null when one did not
+  /// render, which ends the export: a package missing a voucher is never
+  /// saved as complete.
+  Future<Map<String, List<int>>?> _vouchers(
+    List<Invoice> invoices,
+    String Function(Invoice invoice) pathOf,
+  ) async {
+    final files = <String, List<int>>{};
+    for (final invoice in invoices) {
+      if (!context.mounted) return null;
+      final pdf = await buildFacturXFile(context, ref, invoice,
+          seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace));
+      if (pdf.bytes.isEmpty) return null;
+      files[pathOf(invoice)] = pdf.bytes;
+    }
+    return files;
+  }
+
+  /// Saves [files] as one zip and logs it with its digest.
+  Future<void> _saveZip(Map<String, List<int>> files, {required int rows}) async {
+    final bytes = zipBundle(files);
+    if (!context.mounted) return;
+    await savePdfToDownloads(context, ref, bytes: bytes, fileName: named(format.id));
+    await ref.read(bookPeriodCommandProvider).logExportBytes(workspace.id,
+        formatId: format.id, year: year, bytes: bytes, rows: rows, documents: exported.length);
   }
 
   Future<void> _sage() async {

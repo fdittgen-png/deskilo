@@ -4124,10 +4124,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get datevAccountsTitle => 'DATEV export';
 
   @override
+  String datevBlocked(String problems) {
+    return 'The DATEV export was not written: $problems';
+  }
+
+  @override
   String get datevClientNumber => 'Mandantennummer';
 
   @override
   String get datevConsultantNumber => 'Beraternummer';
+
+  @override
+  String datevProblemAccountLength(String account, String length) {
+    return 'account $account does not have $length digits';
+  }
+
+  @override
+  String datevProblemAutomatic(String percent, String account) {
+    return '$percent % would be booked to $account, the automatic account of another rate';
+  }
+
+  @override
+  String datevProblemClient(String number) {
+    return 'Mandantennummer \"$number\" is not a number from 1 to 99999';
+  }
+
+  @override
+  String datevProblemConsultant(String number) {
+    return 'Beraternummer \"$number\" is not a number from 1001 to 9999999';
+  }
+
+  @override
+  String datevProblemDebtorClash(String members, String account) {
+    return '$members would share Debitor $account';
+  }
+
+  @override
+  String datevProblemMemberNumber(String member, String number) {
+    return '$member has no member number that gives a Debitor (\"$number\"): give them a number first';
+  }
+
+  @override
+  String datevProblemTaxKey(String percent, String account) {
+    return 'no BU-Schlüssel is recorded for $percent % on account $account';
+  }
 
   @override
   String get decisionSurfaceEmpty => 'Nothing needs you';
@@ -8105,6 +8145,66 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get gobdProcedureExportsBody =>
+      'Every accounting export is recorded in the export log with its period, size and SHA-256 digest; an export of a closed period gives the same bytes again.';
+
+  @override
+  String get gobdProcedureExportsHeading => 'Exports';
+
+  @override
+  String gobdProcedureGenerated(String date, String from, String to) {
+    return 'Made on $date for the period $from to $to.';
+  }
+
+  @override
+  String get gobdProcedureHandoverBody =>
+      'This package follows the Beschreibungsstandard: index.xml describes every table, its columns, keys and joins, and names the DTD gdpdu-01-08-2002.dtd delivered beside it. Each table is a UTF-8 CSV file without a header line. The folder belege holds each invoice\'s structured e-invoice and, where it was rendered, its PDF/A-3 with that XML embedded.';
+
+  @override
+  String get gobdProcedureHandoverHeading => 'Data handover (Z3)';
+
+  @override
+  String get gobdProcedureImmutableBody =>
+      'An issued invoice or credit note cannot be changed or deleted: the database refuses it. Each document is signed into a chain with the one before it. A correction is a new document (a credit note or a replacement) that names the one it corrects. A closed period refuses cancellations and payments dated inside it.';
+
+  @override
+  String get gobdProcedureImmutableHeading => 'Unalterability';
+
+  @override
+  String gobdProcedureRetentionUntil(String date) {
+    return 'a document dated at the end of this period may be erased from $date';
+  }
+
+  @override
+  String gobdProcedureSchemaApp(String version) {
+    return 'Schema version this app was built for: $version';
+  }
+
+  @override
+  String gobdProcedureSchemaLive(String version) {
+    return 'Database schema version of this installation: $version';
+  }
+
+  @override
+  String get gobdProcedureSchemaUnknown =>
+      'Database schema version of this installation: it could not be read when this document was made';
+
+  @override
+  String get gobdProcedureSystemBody =>
+      'DesKilo keeps this space\'s invoices, credit notes, payments, member accounts, shared costs and approved purchase documents. It is a sub-ledger: the general ledger and the annual accounts are kept by the accountant in their own system, which imports the DATEV export.';
+
+  @override
+  String get gobdProcedureSystemHeading => 'System and scope';
+
+  @override
+  String gobdProcedureTitle(String workspace) {
+    return 'Procedure documentation (Verfahrensdokumentation) — $workspace';
+  }
+
+  @override
+  String get gobdProcedureVersionHeading => 'Software version';
+
+  @override
   String get groupAnnounceOnly => 'Only admins can post';
 
   @override
@@ -9889,6 +9989,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceExportGenericJournal =>
       'Journal (CSV, for any accounting system)';
+
+  @override
+  String get invoiceExportGobd => 'GoBD data access (Z3)';
 
   @override
   String get invoiceExportJournals =>

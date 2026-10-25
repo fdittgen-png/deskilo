@@ -4851,6 +4851,15 @@
   "@datevAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
+  "datevBlocked": "The DATEV export was not written: {problems}",
+  "@datevBlocked": {
+    "description": "DATEV export (#2375): the export was refused, with the reasons",
+    "placeholders": {
+      "problems": {
+        "type": "String"
+      }
+    }
+  },
   "datevClientNumber": "Mandantennummer",
   "@datevClientNumber": {
     "description": "#669 - accounting export formats"
@@ -4858,6 +4867,84 @@
   "datevConsultantNumber": "Beraternummer",
   "@datevConsultantNumber": {
     "description": "#669 - accounting export formats"
+  },
+  "datevProblemAccountLength": "account {account} does not have {length} digits",
+  "@datevProblemAccountLength": {
+    "description": "DATEV export (#2375): an account does not have the declared length",
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "length": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemAutomatic": "{percent} % would be booked to {account}, the automatic account of another rate",
+  "@datevProblemAutomatic": {
+    "description": "DATEV export (#2375): a rate is booked to the automatic account of another rate",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemClient": "Mandantennummer \"{number}\" is not a number from 1 to 99999",
+  "@datevProblemClient": {
+    "description": "DATEV export (#2375): the client number is out of range",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemConsultant": "Beraternummer \"{number}\" is not a number from 1001 to 9999999",
+  "@datevProblemConsultant": {
+    "description": "DATEV export (#2375): the consultant number is out of range",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemDebtorClash": "{members} would share Debitor {account}",
+  "@datevProblemDebtorClash": {
+    "description": "DATEV export (#2375): two members would share one Debitor account",
+    "placeholders": {
+      "members": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemMemberNumber": "{member} has no member number that gives a Debitor (\"{number}\"): give them a number first",
+  "@datevProblemMemberNumber": {
+    "description": "DATEV export (#2375): a member number gives no Debitor account",
+    "placeholders": {
+      "member": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemTaxKey": "no BU-Schlüssel is recorded for {percent} % on account {account}",
+  "@datevProblemTaxKey": {
+    "description": "DATEV export (#2375): no BU key for a rate booked to a non-automatic account",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
   },
   "decisionSurfaceEmpty": "Nothing needs you",
   "@decisionSurfaceEmpty": {
@@ -9373,6 +9460,97 @@
       }
     }
   },
+  "gobdProcedureExportsBody": "Every accounting export is recorded in the export log with its period, size and SHA-256 digest; an export of a closed period gives the same bytes again.",
+  "@gobdProcedureExportsBody": {
+    "description": "Procedure documentation (#2375): the export log"
+  },
+  "gobdProcedureExportsHeading": "Exports",
+  "@gobdProcedureExportsHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureGenerated": "Made on {date} for the period {from} to {to}.",
+  "@gobdProcedureGenerated": {
+    "description": "Procedure documentation (#2375): when and for which period",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureHandoverBody": "This package follows the Beschreibungsstandard: index.xml describes every table, its columns, keys and joins, and names the DTD gdpdu-01-08-2002.dtd delivered beside it. Each table is a UTF-8 CSV file without a header line. The folder belege holds each invoice's structured e-invoice and, where it was rendered, its PDF/A-3 with that XML embedded.",
+  "@gobdProcedureHandoverBody": {
+    "description": "Procedure documentation (#2375): what the package holds"
+  },
+  "gobdProcedureHandoverHeading": "Data handover (Z3)",
+  "@gobdProcedureHandoverHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureImmutableBody": "An issued invoice or credit note cannot be changed or deleted: the database refuses it. Each document is signed into a chain with the one before it. A correction is a new document (a credit note or a replacement) that names the one it corrects. A closed period refuses cancellations and payments dated inside it.",
+  "@gobdProcedureImmutableBody": {
+    "description": "Procedure documentation (#2375): how issued documents are protected"
+  },
+  "gobdProcedureImmutableHeading": "Unalterability",
+  "@gobdProcedureImmutableHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureRetentionUntil": "a document dated at the end of this period may be erased from {date}",
+  "@gobdProcedureRetentionUntil": {
+    "description": "Procedure documentation (#2375): the first day a document of the period may be erased",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureSchemaApp": "Schema version this app was built for: {version}",
+  "@gobdProcedureSchemaApp": {
+    "description": "Procedure documentation (#2375): the schema version the app was built for",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureSchemaLive": "Database schema version of this installation: {version}",
+  "@gobdProcedureSchemaLive": {
+    "description": "Procedure documentation (#2375): the database schema version read from the server",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureSchemaUnknown": "Database schema version of this installation: it could not be read when this document was made",
+  "@gobdProcedureSchemaUnknown": {
+    "description": "Procedure documentation (#2375): the schema version could not be read"
+  },
+  "gobdProcedureSystemBody": "DesKilo keeps this space's invoices, credit notes, payments, member accounts, shared costs and approved purchase documents. It is a sub-ledger: the general ledger and the annual accounts are kept by the accountant in their own system, which imports the DATEV export.",
+  "@gobdProcedureSystemBody": {
+    "description": "Procedure documentation (#2375): what the system keeps"
+  },
+  "gobdProcedureSystemHeading": "System and scope",
+  "@gobdProcedureSystemHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureTitle": "Procedure documentation (Verfahrensdokumentation) — {workspace}",
+  "@gobdProcedureTitle": {
+    "description": "Procedure documentation (#2375): title",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureVersionHeading": "Software version",
+  "@gobdProcedureVersionHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
   "groupAnnounceOnly": "Only admins can post",
   "@groupAnnounceOnly": {
     "description": "workspace groups: rename, description, admins, info"
@@ -11366,6 +11544,10 @@
     "description": "Accounting export sheet (#2376): the general ledger report"
   },
   "invoiceExportGenericJournal": "Journal (CSV, for any accounting system)",
+  "invoiceExportGobd": "GoBD data access (Z3)",
+  "@invoiceExportGobd": {
+    "description": "Accounting export sheet (#2375): the GoBD data handover package"
+  },
   "invoiceExportJournals": "Journals and their summary (PDF, from the book)",
   "@invoiceExportJournals": {
     "description": "Accounting export sheet (#2376): the journals report"

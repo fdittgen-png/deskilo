@@ -38,8 +38,26 @@ class BookPeriodCommands {
     required String content,
     required int documents,
     FiscalYear? period,
+  }) => logExportBytes(
+    workspaceId,
+    formatId: formatId,
+    year: year,
+    bytes: utf8.encode(content),
+    rows: const LineSplitter().convert(content).length,
+    documents: documents,
+    period: period,
+  );
+
+  /// [logExport] for a file of [bytes] (a zip) holding [rows] records.
+  Future<void> logExportBytes(
+    String workspaceId, {
+    required String formatId,
+    required int year,
+    required List<int> bytes,
+    required int rows,
+    required int documents,
+    FiscalYear? period,
   }) async {
-    final bytes = utf8.encode(content);
     try {
       await _repository.recordExport(
         workspaceId,
@@ -49,7 +67,7 @@ class BookPeriodCommands {
           to: period?.to ?? DateTime(year, 12, 31),
           sha256: sha256.convert(bytes).toString(),
           bytes: bytes.length,
-          rows: const LineSplitter().convert(content).length,
+          rows: rows,
           documents: documents,
         ),
       );

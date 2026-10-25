@@ -129,11 +129,24 @@ const fecFormat = AccountingFormat(
 /// DATEV EXTF Buchungsstapel — what a German or Austrian Steuerberater
 /// imports. Switzerland is NOT here: DATEV is a German-market product
 /// and a Swiss fiduciary does not run it.
+///
+/// The export is a zip: one Buchungsstapel per month and journal, the
+/// Debitoren-Stammdaten, and the vouchers the rows link.
 const _datevFormat = AccountingFormat(
   id: 'datev',
   claim: FormatClaim.exchange,
-  extension: 'csv',
+  extension: 'zip',
   needsAccounts: true,
+);
+
+/// The GoBD data handover (Z3) of a fiscal year: the Beschreibungsstandard's
+/// index.xml with its DTD, one CSV per table, the vouchers and the
+/// Verfahrensdokumentation. A subset: DesKilo's sub-ledger, not the
+/// company's complete books, and its index says so.
+const _gobdFormat = AccountingFormat(
+  id: 'gobd',
+  claim: FormatClaim.subset,
+  extension: 'zip',
 );
 
 /// Sage 50's audit-trail CSV — the British and Irish import shape.
@@ -311,6 +324,56 @@ const List<AccountingTarget> accountingTargets = [
     taxCodeModel: TaxCodeModel.perRate,
     format: _datevFormat,
     customerIdRule: CustomerIdRule(maxLength: 9, numericRange: (10000, 699999999)),
+  ),
+  AccountingTarget(
+    id: 'gobd',
+    vendor: 'BMF',
+    product: 'GoBD Datenträgerüberlassung (Z3)',
+    edition: 'Beschreibungsstandard, gdpdu-01-08-2002.dtd',
+    countries: {'DE'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense, AccountingOperation.attachment},
+    taxCodeModel: TaxCodeModel.none,
+    format: _gobdFormat,
+  ),
+  // The DATEV online services take postings, invoices and voucher images
+  // straight into the accountant's DATEV. Each needs a DATEV marketplace
+  // partnership (DATEV-Marktplatz-Partner) and the client's own SmartLogin
+  // authorisation; neither exists for DesKilo, so they are decided and not
+  // reachable. The file export is the working route until then.
+  AccountingTarget(
+    id: 'datev_buchungsdatenservice',
+    vendor: 'DATEV',
+    product: 'Buchungsdatenservice',
+    edition: 'DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin',
+    countries: {'DE', 'AT'},
+    transport: AccountingTransport.api,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.perRate,
+  ),
+  AccountingTarget(
+    id: 'datev_rechnungsdatenservice',
+    vendor: 'DATEV',
+    product: 'Rechnungsdatenservice 1.0',
+    edition: 'DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin',
+    countries: {'DE', 'AT'},
+    transport: AccountingTransport.api,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit},
+    taxCodeModel: TaxCodeModel.perRate,
+  ),
+  AccountingTarget(
+    id: 'datev_belegbilderservice',
+    vendor: 'DATEV',
+    product: 'Belegbilderservice',
+    edition: 'DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin',
+    countries: {'DE', 'AT'},
+    transport: AccountingTransport.api,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.attachment},
+    taxCodeModel: TaxCodeModel.none,
   ),
   AccountingTarget(
     id: 'sage50',
