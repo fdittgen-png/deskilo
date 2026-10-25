@@ -27,6 +27,6 @@ Future<int> billingInvoiceSweep(Ref ref, String workspaceId) async {
   return traced(
     'money',
     'sweep billing invoices',
-    () => ref.read(moneyRepositoryProvider).sweepBillingInvoices(workspaceId),
+    () => ref.read(billingRulesRepositoryProvider).sweepBillingInvoices(workspaceId),
   );
 }

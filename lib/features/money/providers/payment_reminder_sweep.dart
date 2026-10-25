@@ -23,6 +23,6 @@ Future<int> paymentReminderSweep(Ref ref, String workspaceId) async {
   return traced(
     'money',
     'sweep payment reminders',
-    () => ref.read(moneyRepositoryProvider).sweepPaymentReminders(workspaceId),
+    () => ref.read(dunningRepositoryProvider).sweepPaymentReminders(workspaceId),
   );
 }

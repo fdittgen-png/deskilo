@@ -19,7 +19,7 @@
 import 'package:meta/meta.dart';
 
 import '../../../core/time/date_text.dart';
-import '../domain/money_repository.dart';
+import '../domain/member_account_commands.dart';
 import '../domain/payment_method.dart';
 
 /// What happened to a payment somebody tried to register.
@@ -50,7 +50,7 @@ String periodOfPayment(DateTime day) =>
 
 class Payments {
   const Payments(this._money);
-  final MoneyRepository _money;
+  final MemberAccountCommands _money;
 
   /// Registers a payment a member made, as the month it was paid in.
   ///

@@ -78,7 +78,7 @@ final class BillingInvoiceSweepProvider
 }
 
 String _$billingInvoiceSweepHash() =>
-    r'5284919a983b40873d8078e5705c2c7cae456134';
+    r'69a8f7624ad0b8121912f7f51f5f11c059b0a565';
 
 /// #816 — the client-side clock for the billing cycle (#802): the first
 /// issuer who opens Finances in a session runs `sweep_billing_invoices`

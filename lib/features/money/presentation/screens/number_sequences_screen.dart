@@ -102,7 +102,7 @@ class _SequenceCardState extends ConsumerState<NumberSequenceCard> {
       errorText:
           l10n.workspaceGenericError,
       action: () => ref
-          .read(moneyRepositoryProvider)
+          .read(documentNumberingProvider)
           .setNumberSequence(workspace.id, draft),
     );
     if (!mounted) return;

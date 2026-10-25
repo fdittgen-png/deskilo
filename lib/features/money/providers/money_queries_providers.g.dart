@@ -628,3 +628,325 @@ final class AccountingSourceQueriesProvider
 
 String _$accountingSourceQueriesHash() =>
     r'edfe751038a4f51ea46405ca0b2ba451160a4203';
+
+/// #2591 — the dunning policy, its sweep and the holds on an invoice.
+
+@ProviderFor(dunningRepository)
+final dunningRepositoryProvider = DunningRepositoryProvider._();
+
+/// #2591 — the dunning policy, its sweep and the holds on an invoice.
+
+final class DunningRepositoryProvider
+    extends
+        $FunctionalProvider<
+          DunningRepository,
+          DunningRepository,
+          DunningRepository
+        >
+    with $Provider<DunningRepository> {
+  /// #2591 — the dunning policy, its sweep and the holds on an invoice.
+  DunningRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'dunningRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$dunningRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<DunningRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  DunningRepository create(Ref ref) {
+    return dunningRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DunningRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DunningRepository>(value),
+    );
+  }
+}
+
+String _$dunningRepositoryHash() => r'34e0bc7e1d71845ad7fa400c40163de4554cbeb0';
+
+/// #2591 — when the invoice runs happen, the remembered repartition rule
+/// and the workspace status the repartition wizard reads.
+
+@ProviderFor(billingRulesRepository)
+final billingRulesRepositoryProvider = BillingRulesRepositoryProvider._();
+
+/// #2591 — when the invoice runs happen, the remembered repartition rule
+/// and the workspace status the repartition wizard reads.
+
+final class BillingRulesRepositoryProvider
+    extends
+        $FunctionalProvider<
+          BillingRulesRepository,
+          BillingRulesRepository,
+          BillingRulesRepository
+        >
+    with $Provider<BillingRulesRepository> {
+  /// #2591 — when the invoice runs happen, the remembered repartition rule
+  /// and the workspace status the repartition wizard reads.
+  BillingRulesRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'billingRulesRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$billingRulesRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<BillingRulesRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  BillingRulesRepository create(Ref ref) {
+    return billingRulesRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BillingRulesRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BillingRulesRepository>(value),
+    );
+  }
+}
+
+String _$billingRulesRepositoryHash() =>
+    r'1ea322349411b5a9e760bb0392e45b5e0b419918';
+
+/// #2591 — the number series and the invoice fingerprint check.
+
+@ProviderFor(documentNumbering)
+final documentNumberingProvider = DocumentNumberingProvider._();
+
+/// #2591 — the number series and the invoice fingerprint check.
+
+final class DocumentNumberingProvider
+    extends
+        $FunctionalProvider<
+          DocumentNumbering,
+          DocumentNumbering,
+          DocumentNumbering
+        >
+    with $Provider<DocumentNumbering> {
+  /// #2591 — the number series and the invoice fingerprint check.
+  DocumentNumberingProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'documentNumberingProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$documentNumberingHash();
+
+  @$internal
+  @override
+  $ProviderElement<DocumentNumbering> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  DocumentNumbering create(Ref ref) {
+    return documentNumbering(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DocumentNumbering value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DocumentNumbering>(value),
+    );
+  }
+}
+
+String _$documentNumberingHash() => r'64b1998f694cbce613eb07a7662c9e75fcb5fc71';
+
+/// #2591 — payments, service charges, packages and usage requests
+/// recorded against a member's account.
+
+@ProviderFor(memberAccountCommands)
+final memberAccountCommandsProvider = MemberAccountCommandsProvider._();
+
+/// #2591 — payments, service charges, packages and usage requests
+/// recorded against a member's account.
+
+final class MemberAccountCommandsProvider
+    extends
+        $FunctionalProvider<
+          MemberAccountCommands,
+          MemberAccountCommands,
+          MemberAccountCommands
+        >
+    with $Provider<MemberAccountCommands> {
+  /// #2591 — payments, service charges, packages and usage requests
+  /// recorded against a member's account.
+  MemberAccountCommandsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'memberAccountCommandsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberAccountCommandsHash();
+
+  @$internal
+  @override
+  $ProviderElement<MemberAccountCommands> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  MemberAccountCommands create(Ref ref) {
+    return memberAccountCommands(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MemberAccountCommands value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MemberAccountCommands>(value),
+    );
+  }
+}
+
+String _$memberAccountCommandsHash() =>
+    r'a35d33835638fd328f28796edc1569b72b62a72a';
+
+/// #2591 — online payments: attempts, providers, credentials, checkout.
+
+@ProviderFor(paymentGatewayRepository)
+final paymentGatewayRepositoryProvider = PaymentGatewayRepositoryProvider._();
+
+/// #2591 — online payments: attempts, providers, credentials, checkout.
+
+final class PaymentGatewayRepositoryProvider
+    extends
+        $FunctionalProvider<
+          PaymentGatewayRepository,
+          PaymentGatewayRepository,
+          PaymentGatewayRepository
+        >
+    with $Provider<PaymentGatewayRepository> {
+  /// #2591 — online payments: attempts, providers, credentials, checkout.
+  PaymentGatewayRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'paymentGatewayRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$paymentGatewayRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<PaymentGatewayRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  PaymentGatewayRepository create(Ref ref) {
+    return paymentGatewayRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PaymentGatewayRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PaymentGatewayRepository>(value),
+    );
+  }
+}
+
+String _$paymentGatewayRepositoryHash() =>
+    r'82d8dd3b99b1f13a20499f35984a4054fc99e083';
+
+/// #2591 — e-invoice transmission, its receipts and channel credentials.
+
+@ProviderFor(eInvoiceTransmissions)
+final eInvoiceTransmissionsProvider = EInvoiceTransmissionsProvider._();
+
+/// #2591 — e-invoice transmission, its receipts and channel credentials.
+
+final class EInvoiceTransmissionsProvider
+    extends
+        $FunctionalProvider<
+          EInvoiceTransmissions,
+          EInvoiceTransmissions,
+          EInvoiceTransmissions
+        >
+    with $Provider<EInvoiceTransmissions> {
+  /// #2591 — e-invoice transmission, its receipts and channel credentials.
+  EInvoiceTransmissionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'eInvoiceTransmissionsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$eInvoiceTransmissionsHash();
+
+  @$internal
+  @override
+  $ProviderElement<EInvoiceTransmissions> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  EInvoiceTransmissions create(Ref ref) {
+    return eInvoiceTransmissions(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EInvoiceTransmissions value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<EInvoiceTransmissions>(value),
+    );
+  }
+}
+
+String _$eInvoiceTransmissionsHash() =>
+    r'b26994d7c9edb702b5039a27c589dc8561499dfd';

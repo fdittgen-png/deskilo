@@ -54,7 +54,7 @@ class MoneySheets {
       domain: 'money',
       message: 'record payment failed',
       errorText: l10n.workspaceGenericError,
-      action: () => _ref.read(moneyRepositoryProvider).recordPayment(
+      action: () => _ref.read(memberAccountCommandsProvider).recordPayment(
             workspaceId: workspace.id,
             memberId: member.id,
             amountCents: cents,
@@ -150,7 +150,7 @@ class MoneySheets {
       domain: 'money',
       message: 'buy package failed',
       errorText: l10n.workspaceGenericError,
-      action: () => _ref.read(moneyRepositoryProvider).buyPackage(
+      action: () => _ref.read(memberAccountCommandsProvider).buyPackage(
             workspace.id,
             chosen.id,
           ),

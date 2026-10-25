@@ -76,7 +76,7 @@ final class PaymentGatewayStatusProvider
 }
 
 String _$paymentGatewayStatusHash() =>
-    r'f8889959200291cce88fb16240c3d18c6bf9e3c2';
+    r'579eee3735fdaaadb4d1f6af43c7ddfd450d690e';
 
 /// Which online-payment providers [workspaceId] has connected, as the
 /// online-payments screen reads it: configured or not, the public fields,
@@ -177,7 +177,7 @@ final class PaymentTestCheckProvider
   }
 }
 
-String _$paymentTestCheckHash() => r'223b96930f04078933dad58d7bcb3604db6ae374';
+String _$paymentTestCheckHash() => r'4800c47aaae0d86df482b176b1ccf6308003e5c2';
 
 /// The online-payments test of [workspaceId]: what a member's checkout
 /// would do with the keys it holds. Read only when the owner asks, and

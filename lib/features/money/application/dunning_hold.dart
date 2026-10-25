@@ -15,12 +15,12 @@ Future<void> placeDunningHold(
   String note = '',
 }) async {
   await ref
-      .read(moneyRepositoryProvider)
+      .read(dunningRepositoryProvider)
       .placeDunningHold(invoiceId, reason: reason, note: note);
   ref.invalidate(dunningHoldsProvider);
 }
 
 Future<void> releaseDunningHold(WidgetRef ref, String invoiceId) async {
-  await ref.read(moneyRepositoryProvider).releaseDunningHold(invoiceId);
+  await ref.read(dunningRepositoryProvider).releaseDunningHold(invoiceId);
   ref.invalidate(dunningHoldsProvider);
 }

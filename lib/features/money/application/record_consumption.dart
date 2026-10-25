@@ -15,7 +15,7 @@
 // supply may not go negative: the member would be billed for units
 // nobody handed them, and the shelf would claim stock it does not have.
 import 'package:meta/meta.dart';
-import '../domain/money_repository.dart';
+import '../domain/member_account_commands.dart';
 import '../domain/service_item.dart';
 
 /// What recording a consumption means.
@@ -79,7 +79,7 @@ ConsumptionOutcome consumptionOutcome({
 class Consumptions {
   const Consumptions(this._money);
 
-  final MoneyRepository _money;
+  final MemberAccountCommands _money;
 
   /// Records [quantity] of [service] onto [period]'s bill, and says
   /// which outcome it was.
