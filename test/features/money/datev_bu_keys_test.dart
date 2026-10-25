@@ -8,15 +8,11 @@
 import 'package:deskilo/core/vat/tax_reference.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/core/vat/tax_value.dart';
+import 'package:deskilo/features/money/domain/datev_revenue.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-String? _key(String group) {
-  final row = ActiveTaxReference.current
-      .resolved(null)
-      .lookup(TaxDomain.accountMap, 'DE', 'datev/tax:$group');
-  final code = (row?.value as AccountMapValue?)?.taxCode ?? '';
-  return code.isEmpty ? null : code;
-}
+String? _key(String group) =>
+    datevGroupTaxKey(ActiveTaxReference.current, group);
 
 void main() {
   test('every German rate resolves to its group\'s BU-Schlüssel', () {
