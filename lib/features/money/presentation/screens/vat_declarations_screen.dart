@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/files/file_saver.dart';
-import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -24,6 +23,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/vat_declaration_rows.dart';
 import '../../domain/invoice_legal.dart';
 import '../../domain/vat_declaration.dart';
 import '../../domain/vat_declaration_period.dart';
@@ -39,6 +39,7 @@ import '../sales_tax_worksheet_actions.dart';
 import '../vat_filing_file_actions.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
+import '../widgets/vat_declaration_card.dart';
 import '../widgets/vat_declaration_period_field.dart';
 import '../widgets/vat_mark_filed_dialog.dart';
 import '../widgets/vat_tax_point_notice.dart';
@@ -179,11 +180,11 @@ class _VatDeclarationsScreenState
   }
 
   String _statusLabel(AppLocalizations l10n, VatDeclaration declaration) =>
-      declaration.isFiled
-          ? (l10n.vatDeclFiled)
-          : declaration.isPrepared
-              ? (l10n.vatDeclPrepared)
-              : (l10n.vatDeclDraft);
+      switch (VatDeclarationRow(declaration).stage) {
+        VatDeclarationStage.filed => l10n.vatDeclFiled,
+        VatDeclarationStage.prepared => l10n.vatDeclPrepared,
+        VatDeclarationStage.draft => l10n.vatDeclDraft,
+      };
 
   Future<void> _markFiled(VatDeclaration declaration) async {
     final l10n = context.l10n;
@@ -349,7 +350,7 @@ class _VatDeclarationsScreenState
         label: Text(label),
         onPressed: () => exportVatFilingFile(context, ref.read(saveVatFilingFileProvider), declaration),
       ),
-    if (declaration.isPrepared)
+    if (VatDeclarationRow(declaration).canMarkFiled)
       OutlinedButton.icon(
         key: ValueKey(
             'vat-decl-filed-${declaration.id}'),
@@ -362,104 +363,6 @@ class _VatDeclarationsScreenState
             _markFiled(declaration),
       ),
   ],
-);
-  }
-
-  Widget _declarationCard(BuildContext context, VatDeclaration declaration) {
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final dateFormat = DateFormat.yMMMd();
-    return Card(
-  key: ValueKey(
-      'vat-decl-${declaration.id}'),
-  child: Padding(
-    padding: AppSpacing.lgAll,
-    child: Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                '${dateFormat.format(declaration.periodStart)}'
-                ' – '
-                '${dateFormat.format(declaration.periodEnd)}',
-                style: theme
-                    .textTheme.titleMedium,
-              ),
-            ),
-            Chip(
-              key: ValueKey(
-                  'vat-decl-status-${declaration.id}'),
-              label: Text(
-                _statusLabel(l10n, declaration),
-              ),
-              visualDensity:
-                  VisualDensity.compact,
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        for (final line in declaration.lines)
-          Text(
-            key: line.isCorrection
-                ? ValueKey(
-                    'vat-decl-correction-${declaration.id}-${line.corrects}')
-                : null,
-            '${line.isCorrection || line.isInput ? '${_lineNote(l10n, line)} · ' : ''}'
-            '${_pctLabel(line.percent)}'
-            '${line.category.isEmpty ? '' : ' ${line.category}'} · '
-            '${l10n.vatDeclNet} '
-            '${centsToMajor(line.netCents)} ${declaration.currency} · '
-            '${l10n.vatDeclVat} '
-            '${centsToMajor(line.vatCents)} ${declaration.currency}',
-            style:
-                theme.textTheme.bodySmall,
-          ),
-        if (declaration.lines
-            .any((l) => l.isCorrection))
-          Text(
-            vatWords(l10n).vatDeclCorrectionsNote,
-            style: theme.textTheme.bodySmall,
-          ),
-        const SizedBox(height: 4),
-        Text(
-          '${l10n.vatDeclTotals}: '
-          '${centsToMajor(declaration.totalNetCents)} ${declaration.currency} · '
-          '${l10n.vatDeclVat} '
-          '${centsToMajor(declaration.totalVatCents)} ${declaration.currency} · '
-          '${declaration.invoiceCount} '
-          '${l10n.vatDeclInvoices}',
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(
-                  fontWeight:
-                      FontWeight.w600),
-        ),
-        // #2357 — with deductible VAT, what is
-        // left to pay, or to claim back.
-        if (declaration.lines.any((l) => l.isInput))
-          Text(
-            key: ValueKey(
-                'vat-decl-balance-${declaration.id}'),
-            '${declaration.totalVatCents >= 0 ? vatWords(l10n).vatDeclPayable : vatWords(l10n).vatDeclCredit}: '
-            '${centsToMajor(declaration.totalVatCents.abs())} ${declaration.currency}',
-            style: theme.textTheme.bodyMedium,
-          ),
-        if (declaration.isFiled)
-          Text(
-            '${declaration.number.isEmpty ? '' : '${declaration.number} · '}'
-            '${declaration.submittedChannel}'
-            '${declaration.submittedReceipt.isEmpty ? '' : ' · ${declaration.submittedReceipt}'}',
-            style: theme.textTheme.bodySmall,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        const SizedBox(height: AppSpacing.sm),
-        _declarationActions(context, declaration),
-      ],
-    ),
-  ),
 );
   }
 
@@ -530,8 +433,14 @@ class _VatDeclarationsScreenState
                     ),
                   AsyncData(value: final declarations) => Column(
                       children: [
-                        for (final declaration in declarations)
-                          _declarationCard(context, declaration),
+                        for (final row in VatDeclarationRows.of(declarations))
+                          VatDeclarationCard(
+                            row: row,
+                            statusLabel: _statusLabel(l10n, row.declaration),
+                            lineNote: (line) => _lineNote(l10n, line),
+                            actions:
+                                _declarationActions(context, row.declaration),
+                          ),
                       ],
                     ),
                   AsyncError() => Text(
@@ -544,7 +453,3 @@ class _VatDeclarationsScreenState
     );
   }
 }
-
-String _pctLabel(double percent) => percent == percent.roundToDouble()
-    ? '${percent.toStringAsFixed(0)} %'
-    : '$percent %';

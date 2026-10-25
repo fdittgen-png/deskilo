@@ -10,21 +10,12 @@ import '../../../plan/domain/level.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../domain/space_bookability.dart';
 import '../../domain/space_code.dart';
 import '../../providers/reservation_providers.dart';
 import '../space_subjects.dart';
 import 'reservation_detail_sheet.dart';
 import 'space_scan.dart';
-
-/// A space fully resolved against the live floor plan — what
-/// [showSpaceSheet] wants. Null members follow the kind.
-typedef ResolvedSpace = ({
-  Level? level,
-  Office? office,
-  Desk? desk,
-  Seat? seat,
-  FloorPlan? plan,
-});
 
 /// Resolves a space id against the current floor plans — the same walk
 /// the QR scan performs, shared so message references (#523) and any
@@ -104,11 +95,7 @@ Future<void> openSpaceById(
   await showSpaceSheet(
     context,
     kind: kind,
-    level: resolved.level,
-    office: resolved.office,
-    desk: resolved.desk,
-    seat: resolved.seat,
-    plan: resolved.plan,
+    space: resolved,
     // #687 — the same roster every other whole-space path
     // offers. Without it, a space reached by REFERENCE could only be
     // booked for yourself while the same room double-tapped on the

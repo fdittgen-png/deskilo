@@ -5,7 +5,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../screens/editor_tool.dart';
+import '../../domain/editor_tool.dart';
 
 /// The armed tool, said out loud on the canvas (#1216).
 ///

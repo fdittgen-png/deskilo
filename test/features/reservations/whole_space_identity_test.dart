@@ -77,8 +77,9 @@ void main() {
     setUpAll(() {
       actions = sourceOf('lib/features/reservations/presentation/widgets/'
               'space_conflict_actions.dart');
+      // #2494 — the sheet's whole-space rows are their own section.
       sheet = sourceOf('lib/features/reservations/presentation/widgets/'
-              'space_scan.dart');
+              'space_whole_section.dart');
     });
 
     test('the sheet still mounts the conflict actions', () {
@@ -124,8 +125,14 @@ void main() {
     late String sheet;
 
     setUpAll(() {
-      sheet = sourceOf('lib/features/reservations/presentation/widgets/'
-              'space_scan.dart');
+      // #2494 — the sheet (its own-booking routine) and its whole-space
+      // section (the rows that call it), read as one.
+      sheet = [
+        sourceOf('lib/features/reservations/presentation/widgets/'
+            'space_scan.dart'),
+        sourceOf('lib/features/reservations/presentation/widgets/'
+            'space_whole_section.dart'),
+      ].join('\n');
     });
 
     test('a CHECKED-IN booking of yours is recognised as yours', () {

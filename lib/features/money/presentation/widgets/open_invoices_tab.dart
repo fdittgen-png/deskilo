@@ -10,12 +10,14 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../events/domain/workspace_event.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/open_invoice_rows.dart';
 import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
+import 'open_invoice_act_view.dart';
 import 'open_invoice_card.dart';
 import 'open_invoice_subtitle.dart';
 
@@ -64,6 +66,17 @@ class OpenInvoicesTab extends ConsumerWidget {
   /// original.
   final void Function(OpenInvoiceEntry entry) onProforma;
 
+  OpenInvoiceActions get _actions => (
+        onOpen: onOpen,
+        onRemind: onRemind,
+        onMatch: onMatch,
+        onWriteoff: onWriteoff,
+        onRefund: onRefund,
+        onVoid: onVoid,
+        onProforma: onProforma,
+        onEvents: onEvents ?? (_) {},
+      );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -77,11 +90,8 @@ class OpenInvoicesTab extends ConsumerWidget {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.dunning);
     // #504 — write-offs already filed and awaiting their quorum.
-    final pendingWriteoffs = {
-      for (final event in ref.watch(eventsProvider).value ?? const <WorkspaceEvent>[])
-        if (event.isPending && event.type == EventType.invoiceWriteoff)
-          event.payload['invoice_id'] as String? ?? '',
-    };
+    final pendingWriteoffs = OpenInvoiceRows.pendingWriteoffs(
+        ref.watch(eventsProvider).value ?? const []);
     final dunning =
         ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
     if (overview == null) return const LoadingView();
@@ -98,16 +108,7 @@ class OpenInvoicesTab extends ConsumerWidget {
       return OpenInvoiceJourneyList(
         entries: overview.open,
         currency: currency,
-        actions: (
-          onOpen: onOpen,
-          onRemind: onRemind,
-          onMatch: onMatch,
-          onWriteoff: onWriteoff,
-          onRefund: onRefund,
-          onVoid: onVoid,
-          onProforma: onProforma,
-          onEvents: onEvents ?? (_) {},
-        ),
+        actions: _actions,
       );
     }
     final dateFormat = DateFormat.yMMMd(
@@ -115,252 +116,171 @@ class OpenInvoicesTab extends ConsumerWidget {
     );
     // One instant for the whole list, not one clock read per row.
     final now = ref.read(clockProvider).now();
-    final dueLevels = !dunningOn
-        ? const <String, int>{}
-        : {
-      for (final e in overview.open)
-        // #508 — a credit note owes the MEMBER nothing; never remind.
-        if (e.invoice.totalCents > 0)
-          e.invoice.id: dueReminderLevel(
-          dueOn: e.invoice.dueOn,
-          issuedAt: e.invoice.issuedAt,
-          reminderCount: reminders[e.invoice.id]?.count ?? 0,
-          lastReminderAt: reminders[e.invoice.id]?.last,
-          rules: dunning,
-          now: now,
-        ),
-    };
+    final rows = OpenInvoiceRows.of(
+      overview.open,
+      dueLevels: OpenInvoiceRows.dueLevels(
+        overview.open,
+        dunningOn: dunningOn,
+        reminders: reminders,
+        rules: dunning,
+        now: now,
+      ),
+      pendingWriteoffs: pendingWriteoffs,
+    );
     return ListView(
       padding: AppSpacing.mdAll,
       children: [
-        for (final entry in overview.open)
-          Card(
-            key: ValueKey('invoice-open-${entry.invoice.id}'),
-            child: InkWell(
-              key: ValueKey('invoice-open-tap-${entry.invoice.id}'),
-              // The card reads the invoice; the buttons act on it.
-              onTap: () => onOpen(entry),
-              borderRadius: AppRadius.lgAll,
-              child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 8, 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(children: [
-                    Expanded(
-                      child: Text(
-                        '${entry.invoice.number} · '
-                        '${entry.invoice.memberName}',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                    ),
-                    Text(
-                      currency.formatMinor(entry.invoice.totalCents),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ]),
-                  const SizedBox(height: 2),
-                  openInvoiceSubtitle(
-                      context, l10n, entry, reminders, dateFormat, now),
-                  if (dueLevels[entry.invoice.id]
-                      case final int dueLevel)
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 4),
-                        child: Chip(
-                          key: ValueKey(
-                              'invoice-dunning-due-${entry.invoice.id}'),
-                          visualDensity: VisualDensity.compact,
-                          avatar: Icon(Icons.notification_important,
-                              size: 18,
-                              color:
-                                  Theme.of(context).colorScheme.error),
-                          label: Text(
-                            l10n.dunningDueChip(dueLevel),
-                          ),
-                        ),
-                      ),
-                    ),
-                  if (entry.invoice.totalCents < 0 &&
-                      entry.pendingMatch == null)
-                    // #508 — a NEGATIVE document is a credit note the
-                    // WORKSPACE pays: no reminders, no member-payment
-                    // matching — record the refund.
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: Text(
-                            '${l10n.invoiceRefundLabel}: '
-                            '${currency.formatMinor(-entry.invoice.totalCents)}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .tertiary),
-                          ),
-                        ),
-                        IconButton(
-                          key: ValueKey(
-                              'invoice-void-open-${entry.invoice.id}'),
-                          tooltip: l10n.invoiceVoidAction,
-                          icon: const Icon(Icons.block_outlined),
-                          onPressed: () => onVoid(entry),
-                        ),
-                        IconButton.filledTonal(
-                          key: ValueKey(
-                              'invoice-refund-${entry.invoice.id}'),
-                          tooltip: l10n.invoiceRefundButton,
-                          icon: const Icon(Icons.currency_exchange),
-                          onPressed: () => onRefund(entry),
-                        ),
-                      ],
-                    )
-                  else if (entry.pendingMatch != null &&
-                      !entry.pendingMatch!.pending)
-                    // #504 — STANDING partial match: the remainder is
-                    // still owed. Remind, or request the validated
-                    // write-off; nothing else applies to a matched
-                    // invoice.
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: Text(
-                            '${l10n.invoiceRemainingLabel}: '
-                            '${currency.formatMinor(entry.invoice.totalCents - entry.pendingMatch!.paidCents)}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .error),
-                          ),
-                        ),
-                        IconButton(
-                          key: ValueKey(
-                              'invoice-remind-${entry.invoice.id}'),
-                          tooltip: l10n.invoiceRemindAction,
-                          icon: Icon(
-                            dueLevels[entry.invoice.id] != null
-                                ? Icons.notification_important
-                                : Icons.notifications_outlined,
-                            color: dueLevels[entry.invoice.id] != null
-                                ? Theme.of(context).colorScheme.error
-                                : null,
-                          ),
-                          onPressed: () => onRemind(entry),
-                        ),
-                        // #506 — new payments keep coming in: match
-                        // them against the REMAINING amount, maybe
-                        // until fully paid.
-                        IconButton.filledTonal(
-                          key: ValueKey(
-                              'invoice-match-${entry.invoice.id}'),
-                          tooltip:
-                              l10n.invoiceMatchAction,
-                          icon: const Icon(Icons.price_check_outlined),
-                          onPressed: () => onMatch(entry),
-                        ),
-                        if (pendingWriteoffs
-                            .contains(entry.invoice.id))
-                          Chip(
-                            key: ValueKey(
-                                'invoice-writeoff-pending-${entry.invoice.id}'),
-                            avatar: const Icon(Icons.how_to_vote_outlined,
-                                size: 18),
-                            label: Text(l10n.invoiceMatchPendingBadge),
-                          )
-                        else
-                          IconButton.filledTonal(
-                            key: ValueKey(
-                                'invoice-writeoff-${entry.invoice.id}'),
-                            tooltip: l10n.invoiceWriteoffButton,
-                            icon: const Icon(
-                                Icons.money_off_csred_outlined),
-                            onPressed: () => onWriteoff(entry),
-                          ),
-                      ],
-                    )
-                  else if (entry.pendingMatch != null)
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Chip(
-                          key: ValueKey(
-                              'invoice-match-pending-${entry.invoice.id}'),
-                          avatar:
-                              const Icon(Icons.how_to_vote_outlined, size: 18),
-                          label: Text(l10n.invoiceMatchPendingBadge),
-                        ),
-                      ),
-                    )
-                  else
-                    // Icons, not sentences: three localized labels side by
-                    // side ran off the card on a phone (field report).
-                    // Every one keeps its tooltip, and the card itself
-                    // opens the invoice where the actions are spelled out.
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          key: ValueKey(
-                              'invoice-void-open-${entry.invoice.id}'),
-                          tooltip: l10n.invoiceVoidAction,
-                          icon: const Icon(Icons.block_outlined),
-                          onPressed: () => onVoid(entry),
-                        ),
-                        IconButton(
-                          key: ValueKey(
-                              'invoice-proforma-${entry.invoice.id}'),
-                          tooltip: l10n.invoiceProformaAction,
-                          icon: const Icon(Icons.description_outlined),
-                          onPressed: () => onProforma(entry),
-                        ),
-                        IconButton(
-                          key: ValueKey(
-                              'invoice-remind-${entry.invoice.id}'),
-                          tooltip: l10n.invoiceRemindAction,
-                          // Filled + error tone while a level is due
-                          // (#472) — the suggested action stands out.
-                          icon: Icon(
-                            dueLevels[entry.invoice.id] != null
-                                ? Icons.notification_important
-                                : Icons.notifications_outlined,
-                            color: dueLevels[entry.invoice.id] != null
-                                ? Theme.of(context).colorScheme.error
-                                : null,
-                          ),
-                          onPressed: () => onRemind(entry),
-                        ),
-                        IconButton.filledTonal(
-                          key:
-                              ValueKey('invoice-match-${entry.invoice.id}'),
-                          tooltip:
-                              l10n.invoiceMatchAction,
-                          icon: const Icon(Icons.price_check_outlined),
-                          onPressed: () => onMatch(entry),
-                        ),
-                      ],
-                    ),
-                ],
-              ),
-              ),
-            ),
+        for (final row in rows)
+          _OpenInvoiceRowCard(
+            row: row,
+            currency: currency,
+            actions: _actions,
+            subtitle: openInvoiceSubtitle(
+                context, l10n, row.entry, reminders, dateFormat, now),
           ),
       ],
     );
   }
 
+}
+
+/// One card of the classic Open list: the invoice, its age and reminders,
+/// the due dunning level, and the actions its standing allows.
+class _OpenInvoiceRowCard extends StatelessWidget {
+  const _OpenInvoiceRowCard({
+    required this.row,
+    required this.currency,
+    required this.actions,
+    required this.subtitle,
+  });
+
+  final OpenInvoiceRow row;
+  final MoneyFormat currency;
+  final OpenInvoiceActions actions;
+  final Widget subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final entry = row.entry;
+    final id = entry.invoice.id;
+    return Card(
+      key: ValueKey('invoice-open-$id'),
+      child: InkWell(
+        key: ValueKey('invoice-open-tap-$id'),
+        // The card reads the invoice; the buttons act on it.
+        onTap: () => actions.onOpen(entry),
+        borderRadius: AppRadius.lgAll,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 8, 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                Expanded(
+                  child: Text(
+                    '${entry.invoice.number} · '
+                    '${entry.invoice.memberName}',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                Text(
+                  currency.formatMinor(entry.invoice.totalCents),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ]),
+              const SizedBox(height: 2),
+              subtitle,
+              if (row.dueLevel case final int dueLevel)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Chip(
+                      key: ValueKey('invoice-dunning-due-$id'),
+                      visualDensity: VisualDensity.compact,
+                      avatar: Icon(Icons.notification_important,
+                          size: 18,
+                          color: Theme.of(context).colorScheme.error),
+                      label: Text(l10n.dunningDueChip(dueLevel)),
+                    ),
+                  ),
+                ),
+              _actionsRow(context, l10n),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// #508 — a credit note is refunded, never reminded; #504 — a standing
+  /// partial match is reminded or written off; a pending match only
+  /// waits. Icons, not sentences: three localized labels side by side
+  /// ran off the card on a phone (field report). Every one keeps its
+  /// tooltip, and the card itself opens the invoice where the actions
+  /// are spelled out.
+  Widget _actionsRow(BuildContext context, AppLocalizations l10n) {
+    if (row.standing == OpenInvoiceStanding.matchPending) {
+      return Align(
+        alignment: Alignment.centerRight,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: OpenInvoiceActView(
+                  OpenInvoiceAct.matchPending, row.entry, actions)
+              .chip(l10n),
+        ),
+      );
+    }
+    final scheme = Theme.of(context).colorScheme;
+    final figure = row.figureCents;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        if (figure != null)
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Text(
+              '${row.standing == OpenInvoiceStanding.creditNote ? l10n.invoiceRefundLabel : l10n.invoiceRemainingLabel}: '
+              '${currency.formatMinor(figure)}',
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: row.standing == OpenInvoiceStanding.creditNote
+                      ? scheme.tertiary
+                      : scheme.error),
+            ),
+          ),
+        for (final choice in row.acts) _button(choice, l10n, scheme),
+      ],
+    );
+  }
+
+  Widget _button(
+      OpenInvoiceActChoice choice, AppLocalizations l10n, ColorScheme scheme) {
+    final view = OpenInvoiceActView(choice.act, row.entry, actions);
+    final chip = view.chip(l10n);
+    if (chip != null) return chip;
+    // Filled + error tone while a level is due (#472) — the suggested
+    // action stands out.
+    final due = choice.act == OpenInvoiceAct.remind && row.reminderDue;
+    final icon = Icon(
+      due ? Icons.notification_important : view.icon,
+      color: due ? scheme.error : null,
+    );
+    return choice.tonal
+        ? IconButton.filledTonal(
+            key: ValueKey(view.key),
+            tooltip: view.label(l10n),
+            icon: icon,
+            onPressed: view.onPressed,
+          )
+        : IconButton(
+            key: ValueKey(view.key),
+            tooltip: view.label(l10n),
+            icon: icon,
+            onPressed: view.onPressed,
+          );
+  }
 }
