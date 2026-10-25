@@ -35,6 +35,7 @@ import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'support/datev_collective.dart';
 
 const _write = bool.fromEnvironment('WRITE_GOLDEN');
 const _dir = 'test/features/money/goldens/exports';
@@ -187,7 +188,7 @@ Map<String, String Function()> _files() => {
     accounts: const FecAccounts(),
     lineText: _lineText,
   )),
-  'datev.csv': () => buildDatevFile(DatevRequest(
+  'datev.csv': () => buildDatevFile(DatevRequest(detail: datevCollective, 
     invoices: _invoices,
     matches: _matches,
     accounts: const DatevAccounts(),

@@ -7057,6 +7057,12 @@ abstract class AppLocalizations {
   /// **'Yes'**
   String get dataReportYes;
 
+  /// DATEV export dialog (#2375): the Sachkontenlänge of the chart
+  ///
+  /// In en, this message translates to:
+  /// **'Account length (Sachkontenlänge)'**
+  String get datevAccountLength;
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -7069,6 +7075,12 @@ abstract class AppLocalizations {
   /// **'DATEV export'**
   String get datevAccountsTitle;
 
+  /// DATEV export (#2375): the export was refused, with the reasons
+  ///
+  /// In en, this message translates to:
+  /// **'The DATEV export was not written: {problems}'**
+  String datevBlocked(String problems);
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -7080,6 +7092,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Beraternummer'**
   String get datevConsultantNumber;
+
+  /// DATEV export dialog (#2375): KOST1 when the document names no site
+  ///
+  /// In en, this message translates to:
+  /// **'Cost centre (KOST1) when a document names no site'**
+  String get datevCostCentre;
+
+  /// DATEV export dialog (#2375): the Debitor account of member counter 0
+  ///
+  /// In en, this message translates to:
+  /// **'Debitor of member number 0'**
+  String get datevDebtorBase;
+
+  /// DATEV export (#2375): an account does not have the declared length
+  ///
+  /// In en, this message translates to:
+  /// **'account {account} does not have {length} digits'**
+  String datevProblemAccountLength(String account, String length);
+
+  /// DATEV export (#2375): a rate is booked to the automatic account of another rate
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} % would be booked to {account}, the automatic account of another rate'**
+  String datevProblemAutomatic(String percent, String account);
+
+  /// DATEV export (#2375): the client number is out of range
+  ///
+  /// In en, this message translates to:
+  /// **'Mandantennummer \"{number}\" is not a number from 1 to 99999'**
+  String datevProblemClient(String number);
+
+  /// DATEV export (#2375): the consultant number is out of range
+  ///
+  /// In en, this message translates to:
+  /// **'Beraternummer \"{number}\" is not a number from 1001 to 9999999'**
+  String datevProblemConsultant(String number);
+
+  /// DATEV export (#2375): the workspace currency is not the one DATEV is written in
+  ///
+  /// In en, this message translates to:
+  /// **'the amounts are in {currency}; the DATEV file is written in euros'**
+  String datevProblemCurrency(String currency);
+
+  /// DATEV export (#2375): two members would share one Debitor account
+  ///
+  /// In en, this message translates to:
+  /// **'{members} would share Debitor {account}'**
+  String datevProblemDebtorClash(String members, String account);
+
+  /// DATEV export (#2375): the issuers' book profiles start the fiscal year on different days
+  ///
+  /// In en, this message translates to:
+  /// **'the book profiles of the sites start the fiscal year on different days'**
+  String get datevProblemFiscalYearStarts;
+
+  /// DATEV export (#2375): a member number gives no Debitor account
+  ///
+  /// In en, this message translates to:
+  /// **'{member} has no member number that gives a Debitor (\"{number}\"): give them a number first'**
+  String datevProblemMemberNumber(String member, String number);
+
+  /// DATEV export (#2375): a Belegfeld 1 or KOST1 longer than its field
+  ///
+  /// In en, this message translates to:
+  /// **'{field} \"{value}\" is longer than DATEV takes and would be cut'**
+  String datevProblemReferenceTooLong(String field, String value);
+
+  /// DATEV export (#2375): the account length is not one DATEV knows
+  ///
+  /// In en, this message translates to:
+  /// **'the account length {length} is not 4 to 8'**
+  String datevProblemSachkontenlaenge(String length);
+
+  /// DATEV export (#2375): no BU key for a rate booked to a non-automatic account
+  ///
+  /// In en, this message translates to:
+  /// **'no BU-Schlüssel is recorded for {percent} % on account {account}'**
+  String datevProblemTaxKey(String percent, String account);
+
+  /// DATEV export dialog (#2375): include the invoice PDFs, linked from each row
+  ///
+  /// In en, this message translates to:
+  /// **'Include the invoice PDFs and link them from each row (Beleglink)'**
+  String get datevVoucherLinks;
 
   /// #1247: decisionSurfaceEmpty
   ///
@@ -13433,6 +13529,96 @@ abstract class AppLocalizations {
   /// **'Get started in {workspace}'**
   String gettingStartedTitle(String workspace);
 
+  /// Procedure documentation (#2375): the export log
+  ///
+  /// In en, this message translates to:
+  /// **'Every accounting export is recorded in the export log with its period, size and SHA-256 digest; an export of a closed period gives the same bytes again.'**
+  String get gobdProcedureExportsBody;
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'Exports'**
+  String get gobdProcedureExportsHeading;
+
+  /// Procedure documentation (#2375): when and for which period
+  ///
+  /// In en, this message translates to:
+  /// **'Made on {date} for the period {from} to {to}.'**
+  String gobdProcedureGenerated(String date, String from, String to);
+
+  /// Procedure documentation (#2375): what the package holds
+  ///
+  /// In en, this message translates to:
+  /// **'This package follows the Beschreibungsstandard: index.xml describes every table, its columns, keys and joins, and names the DTD gdpdu-01-08-2002.dtd delivered beside it. Each table is a UTF-8 CSV file without a header line. The folder belege holds each invoice\'s structured e-invoice and, where it was rendered, its PDF/A-3 with that XML embedded.'**
+  String get gobdProcedureHandoverBody;
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'Data handover (Z3)'**
+  String get gobdProcedureHandoverHeading;
+
+  /// Procedure documentation (#2375): how issued documents are protected
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice or credit note cannot be changed or deleted: the database refuses it. Each document is signed into a chain with the one before it. A correction is a new document (a credit note or a replacement) that names the one it corrects. A closed period refuses cancellations and payments dated inside it.'**
+  String get gobdProcedureImmutableBody;
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'Unalterability'**
+  String get gobdProcedureImmutableHeading;
+
+  /// Procedure documentation (#2375): the first day a document of the period may be erased
+  ///
+  /// In en, this message translates to:
+  /// **'a document dated at the end of this period may be erased from {date}'**
+  String gobdProcedureRetentionUntil(String date);
+
+  /// Procedure documentation (#2375): the schema version the app was built for
+  ///
+  /// In en, this message translates to:
+  /// **'Schema version this app was built for: {version}'**
+  String gobdProcedureSchemaApp(String version);
+
+  /// Procedure documentation (#2375): the database schema version read from the server
+  ///
+  /// In en, this message translates to:
+  /// **'Database schema version of this installation: {version}'**
+  String gobdProcedureSchemaLive(String version);
+
+  /// Procedure documentation (#2375): the schema version could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Database schema version of this installation: it could not be read when this document was made'**
+  String get gobdProcedureSchemaUnknown;
+
+  /// Procedure documentation (#2375): what the system keeps
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo keeps this space\'s invoices, credit notes, payments, member accounts, shared costs and approved purchase documents. It is a sub-ledger: the general ledger and the annual accounts are kept by the accountant in their own system, which imports the DATEV export.'**
+  String get gobdProcedureSystemBody;
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'System and scope'**
+  String get gobdProcedureSystemHeading;
+
+  /// Procedure documentation (#2375): title
+  ///
+  /// In en, this message translates to:
+  /// **'Procedure documentation (Verfahrensdokumentation) — {workspace}'**
+  String gobdProcedureTitle(String workspace);
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'Software version'**
+  String get gobdProcedureVersionHeading;
+
   /// workspace groups: rename, description, admins, info
   ///
   /// In en, this message translates to:
@@ -16432,6 +16618,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Journal (CSV, for any accounting system)'**
   String get invoiceExportGenericJournal;
+
+  /// Accounting export sheet (#2375): the GoBD data handover package
+  ///
+  /// In en, this message translates to:
+  /// **'GoBD data access (Z3)'**
+  String get invoiceExportGobd;
 
   /// Accounting export sheet (#2376): the journals report
   ///

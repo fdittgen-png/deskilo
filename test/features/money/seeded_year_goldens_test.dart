@@ -45,12 +45,14 @@ import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
+import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/fec_import_contract.dart';
 import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/fr_ereporting.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
@@ -369,8 +371,22 @@ Invoice _atGermanRates(Invoice i) => i.copyWith(
   ],
 );
 
-/// DATEV of the seeded year at German rates, on SKR03 or [chart].
+/// The Buchungsstapel of the seeded year's DATEV export on SKR03 or
+/// [chart], one after the other, each with its BOM and header.
 Future<String> _datev(String? chart) async {
+  final package = await _datevPackage(chart);
+  return [
+    for (final MapEntry(:key, :value) in package.files.entries)
+      if (key.startsWith('EXTF_Buchungsstapel_')) value,
+  ].join();
+}
+
+/// #2375 — the DATEV export of the seeded year at German rates as the run
+/// writes it: a Buchungsstapel per month and journal, the member's Debitor
+/// from their number (M-0001, frozen on none of the documents, so the
+/// number the member holds today), KOST1, the voucher links, the first
+/// half-year closed, and the Stammdaten.
+Future<DatevPackage> _datevPackage(String? chart) async {
   final input = await _read(
     'datev',
     country: 'DE',
@@ -379,24 +395,33 @@ Future<String> _datev(String? chart) async {
     ],
   );
   final b = input.books;
-  return buildDatevFile(
-    DatevRequest(
-      invoices: b.invoices,
-      matches: b.matches,
-      accounts: datevAccountsFor(
-        b.bookProfiles,
-        DatevAccounts(chart: chart),
-        _year,
+  return buildDatevPackage(
+    DatevPackageRequest(
+      request: DatevRequest(
+        invoices: b.invoices,
+        matches: b.matches,
+        accounts: datevAccountsFor(
+          b.bookProfiles,
+          DatevAccounts(chart: chart),
+          _year,
+        ),
+        from: DateTime(_year),
+        to: DateTime(_year, 12, 31),
+        generatedAt: _generatedAt,
+        consultantNumber: '1234567',
+        clientNumber: '54321',
+        detail: const DatevDetail(defaultCostCentre: 'Cowork', voucherLinks: true),
+        ledger: b.ledger,
+        repartitions: b.repartitions,
+        batchName: 'Cowork',
+        taxPoints: _taxPoints(input),
       ),
-      from: DateTime(_year),
-      to: DateTime(_year, 12, 31),
-      generatedAt: _generatedAt,
-      consultantNumber: '1234567',
-      clientNumber: '54321',
-      ledger: b.ledger,
-      repartitions: b.repartitions,
-      batchName: 'Cowork',
-      taxPoints: _taxPoints(input),
+      bookProfiles: b.bookProfiles,
+      closed: (from, to) => !to.isAfter(DateTime(_year, 6, 30)),
+      memberSequence: NumberSequence.defaultsFor('member'),
+      debtorBase: 10000,
+      memberNumbers: const {'m1': _memberNumber},
+      memberNames: const {'m1': 'Ana'},
     ),
   );
 }
@@ -482,8 +507,6 @@ Future<Map<String, String>> _bundle({required bool local}) async {
 final Map<String, Future<String> Function()> _files = {
   'fec.txt': () async => _fec(await _read('fec')),
   'fec_local_book.txt': () async => _postedFec(await _read('fec', local: true)),
-  'datev_skr03.csv': () => _datev(null),
-  'datev_skr04.csv': () => _datev('SKR04'),
   'sage50.csv': () async {
     final b = (await _read('sage50', country: 'GB')).books;
     return buildSageFile(
@@ -596,6 +619,8 @@ void main() {
           'bundle'
         else
           name.split(RegExp(r'[._]')).first,
+      // DATEV's goldens are its export's files, compared below.
+      'datev',
     };
     expect(
       covered,
@@ -630,6 +655,35 @@ void main() {
         reason: '$name has no golden: UPDATE_GOLDEN=1 writes it',
       );
       expect(bytes, file.readAsBytesSync(), reason: name);
+    });
+  }
+
+  // #2375 — the export's files are its goldens: the same names, the same
+  // bytes. A file added or gone is a difference too.
+  for (final (chart, dir) in [(null, 'datev_skr03'), ('SKR04', 'datev_skr04')]) {
+    test('the DATEV export ($dir) is byte-identical to its goldens', () async {
+      final package = await _datevPackage(chart);
+      expect(package.problems, isEmpty);
+      final folder = Directory('$_dir/$dir');
+      if (_update) {
+        if (folder.existsSync()) folder.deleteSync(recursive: true);
+        folder.createSync(recursive: true);
+        for (final MapEntry(:key, :value) in package.files.entries) {
+          File('${folder.path}/$key').writeAsBytesSync(utf8.encode(value));
+        }
+      }
+      expect(
+        {for (final f in folder.listSync().whereType<File>()) f.uri.pathSegments.last},
+        package.files.keys.toSet(),
+        reason: '$dir: UPDATE_GOLDEN=1 writes the files',
+      );
+      for (final MapEntry(:key, :value) in package.files.entries) {
+        expect(
+          utf8.encode(value),
+          File('${folder.path}/$key').readAsBytesSync(),
+          reason: '$dir/$key',
+        );
+      }
     });
   }
 
@@ -704,7 +758,7 @@ void main() {
     final datev = (await _datev(null)).split('\r\n');
     expect(
       datev.where((l) => l.contains('"Erstattung CN-1"')).single.split(';'),
-      containsAllInOrder(['50,00', '"S"', '10000', '1200']),
+      containsAllInOrder(['50,00', '"S"', '10001', '1200']),
     );
   });
 

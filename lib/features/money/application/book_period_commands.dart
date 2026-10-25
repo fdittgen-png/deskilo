@@ -38,19 +38,60 @@ class BookPeriodCommands {
     required String content,
     required int documents,
     FiscalYear? period,
-  }) async {
-    final bytes = utf8.encode(content);
+  }) => _record(
+    workspaceId,
+    utf8.encode(content),
+    BookExportRecord(
+      formatId: formatId,
+      from: period?.from ?? DateTime(year),
+      to: period?.to ?? DateTime(year, 12, 31),
+      sha256: '',
+      bytes: 0,
+      rows: const LineSplitter().convert(content).length,
+      documents: documents,
+    ),
+  );
+
+  /// [logExport] for a file of [bytes] (a zip) of the calendar [year]
+  /// holding [rows] records.
+  Future<void> logExportBytes(
+    String workspaceId, {
+    required String formatId,
+    required int year,
+    required List<int> bytes,
+    required int rows,
+    required int documents,
+  }) => _record(
+    workspaceId,
+    bytes,
+    BookExportRecord(
+      formatId: formatId,
+      from: DateTime(year),
+      to: DateTime(year, 12, 31),
+      sha256: '',
+      bytes: 0,
+      rows: rows,
+      documents: documents,
+    ),
+  );
+
+  /// Records [what] with the digest and size of [bytes].
+  Future<void> _record(
+    String workspaceId,
+    List<int> bytes,
+    BookExportRecord what,
+  ) async {
     try {
       await _repository.recordExport(
         workspaceId,
         BookExportRecord(
-          formatId: formatId,
-          from: period?.from ?? DateTime(year),
-          to: period?.to ?? DateTime(year, 12, 31),
+          formatId: what.formatId,
+          from: what.from,
+          to: what.to,
           sha256: sha256.convert(bytes).toString(),
           bytes: bytes.length,
-          rows: const LineSplitter().convert(content).length,
-          documents: documents,
+          rows: what.rows,
+          documents: what.documents,
         ),
       );
     } on Exception catch (e, st) {

@@ -19,6 +19,7 @@ import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -173,6 +174,11 @@ Future<void> settleCreditInvoiceDialog(
 }
 
 bool salesTaxModeOn(WidgetRef ref) => salesTaxWorkspace(ref) != null;
+
+/// The tax reference the selected workspace's context captured from its own
+/// installation; null while none is ready.
+TaxReferenceSet? workspaceTaxReference(WidgetRef ref) =>
+    ref.read(readyWorkspaceContextProvider)?.taxReference.set;
 
 /// Runs what the detail sheet decided on, with the SCREEN's context — the
 /// sheet is already gone by then.

@@ -2741,6 +2741,7 @@
   "dataReportSubtitle": "Membres, réservations, factures, paiements, achats et le plan avec ses prix, avec les totaux, à lire ou à imprimer.",
   "dataReportTitle": "Rapport de données de l’espace",
   "dataReportYes": "Oui",
+  "datevAccountLength": "Longueur des comptes (Sachkontenlänge)",
   "datevAccountsIntro": "Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
@@ -2749,6 +2750,7 @@
   "@datevAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
+  "datevBlocked": "L'export DATEV n'a pas été écrit : {problems}",
   "datevClientNumber": "Mandantennummer (numéro de dossier)",
   "@datevClientNumber": {
     "description": "#669 - accounting export formats"
@@ -2757,6 +2759,20 @@
   "@datevConsultantNumber": {
     "description": "#669 - accounting export formats"
   },
+  "datevCostCentre": "Centre de coûts (KOST1) quand un document ne nomme aucun site",
+  "datevDebtorBase": "Compte Debitor du membre n° 0",
+  "datevProblemAccountLength": "le compte {account} n'a pas {length} chiffres",
+  "datevProblemAutomatic": "{percent} % serait comptabilisé sur {account}, le compte automatique d'un autre taux",
+  "datevProblemClient": "Mandantennummer « {number} » n'est pas un nombre de 1 à 99999",
+  "datevProblemConsultant": "Beraternummer « {number} » n'est pas un nombre de 1001 à 9999999",
+  "datevProblemCurrency": "les montants sont en {currency} ; le fichier DATEV est écrit en euros",
+  "datevProblemDebtorClash": "{members} partageraient le compte Debitor {account}",
+  "datevProblemFiscalYearStarts": "les profils comptables des sites commencent l'exercice à des dates différentes",
+  "datevProblemMemberNumber": "{member} n'a pas de numéro de membre qui donne un compte Debitor (« {number} ») : attribuez-lui d'abord un numéro",
+  "datevProblemReferenceTooLong": "{field} « {value} » dépasse la longueur que DATEV accepte et serait tronqué",
+  "datevProblemSachkontenlaenge": "la longueur de compte {length} n'est pas comprise entre 4 et 8",
+  "datevProblemTaxKey": "aucun BU-Schlüssel n'est enregistré pour {percent} % sur le compte {account}",
+  "datevVoucherLinks": "Joindre les PDF des factures et les lier depuis chaque ligne (Beleglink)",
   "decisionSurfaceEmpty": "Rien ne vous attend",
   "@decisionSurfaceEmpty": {
     "description": "#1247: decisionSurfaceEmpty"
@@ -5706,6 +5722,21 @@
   "gettingStartedStateReleased": "libérée",
   "gettingStartedStateReserved": "réservée",
   "gettingStartedTitle": "Premiers pas dans {workspace}",
+  "gobdProcedureExportsBody": "Chaque export comptable est consigné dans le journal des exports avec sa période, sa taille et son empreinte SHA-256 ; l'export d'une période clôturée redonne les mêmes octets.",
+  "gobdProcedureExportsHeading": "Exports",
+  "gobdProcedureGenerated": "Établie le {date} pour la période du {from} au {to}.",
+  "gobdProcedureHandoverBody": "Ce paquet suit le Beschreibungsstandard : index.xml décrit chaque table, ses colonnes, clés et jointures, et nomme la DTD gdpdu-01-08-2002.dtd fournie à côté. Chaque table est un fichier CSV UTF-8 sans ligne d'en-tête. Le dossier belege contient la facture électronique structurée de chaque facture et, lorsqu'il a été produit, son PDF/A-3 avec ce XML intégré.",
+  "gobdProcedureHandoverHeading": "Remise des données (Z3)",
+  "gobdProcedureImmutableBody": "Une facture ou un avoir émis ne peut être ni modifié ni supprimé : la base de données le refuse. Chaque document est signé dans une chaîne avec le précédent. Une correction est un nouveau document (avoir ou facture de remplacement) qui cite celui qu'il corrige. Une période clôturée refuse les annulations et les paiements datés en son sein.",
+  "gobdProcedureImmutableHeading": "Inaltérabilité",
+  "gobdProcedureRetentionUntil": "un document daté de la fin de cette période peut être effacé à partir du {date}",
+  "gobdProcedureSchemaApp": "Version de schéma pour laquelle cette application est construite : {version}",
+  "gobdProcedureSchemaLive": "Version du schéma de base de données de cette installation : {version}",
+  "gobdProcedureSchemaUnknown": "Version du schéma de base de données de cette installation : illisible au moment de l'établissement",
+  "gobdProcedureSystemBody": "DesKilo tient les factures, avoirs, paiements, comptes des membres, frais partagés et pièces d'achat approuvées de cet espace. C'est un livre auxiliaire : le grand livre et les comptes annuels sont tenus par le comptable dans son propre système, qui importe l'export DATEV.",
+  "gobdProcedureSystemHeading": "Système et périmètre",
+  "gobdProcedureTitle": "Documentation des procédures (Verfahrensdokumentation) — {workspace}",
+  "gobdProcedureVersionHeading": "Version du logiciel",
   "groupAnnounceOnly": "Seuls les admins peuvent écrire",
   "@groupAnnounceOnly": {
     "description": "workspace groups: rename, description, admins, info"
@@ -6618,6 +6649,7 @@
   "invoiceExportFrEReporting": "E-reporting (ventes aux particuliers, international, encaissements)",
   "invoiceExportGeneralLedger": "Grand-livre (PDF, depuis la comptabilité)",
   "invoiceExportGenericJournal": "Journal (CSV, pour tout logiciel comptable)",
+  "invoiceExportGobd": "Accès aux données GoBD (Z3)",
   "invoiceExportJournals": "Journaux et journal centralisateur (PDF, depuis la comptabilité)",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",

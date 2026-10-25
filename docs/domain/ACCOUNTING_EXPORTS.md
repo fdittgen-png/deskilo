@@ -29,7 +29,8 @@ authority. Widening one needs the authority's own spec in hand.
 |---|---|---|---|
 | FEC | regulatory | FR | balance per entry and file-wide, 18 columns in order, chronological, no BOM, `DateLet` on every lettered row, a written-off rest on 654 lettered with its invoice |
 | SAF-T (PT), `TaxAccountingBasis` **F** | regulatory | PT | declared invoicing-only, `SoftwareCertificateNumber` 0 |
-| DATEV EXTF Buchungsstapel | exchange | DE, AT | 31-field header (SKR in field 27, fiscal-year start from the book profile), first 20 fields per row, Belegfeld 1 cut at 36 and Buchungstext at 60, positive amounts + S/H, DDMM, `Festschreibung` 0, **UTF-8 BOM**, a written-off rest on SKR03 2400 |
+| DATEV EXTF Buchungsstapel | exchange | DE, AT | a zip (#2375): one Buchungsstapel per calendar month and journal (sales; every booking that moves the bank) of the workspace's calendar, at most 99 999 rows each, 125 fields per row (format 700, version 13), each under its month's header (SKR in field 27, fiscal-year start from the book profile — refused when the sites' profiles disagree — Bezeichnung cut at 30, `Festschreibung` 1 when the month lies in a closed period, else 0); every customer row on the member's Debitor: the first Debitor the person enters plus the counter of the member number read through the space's member series (`M-2026-0007` is counter 7), in DATEV's range for the Sachkontenlänge entered (10000–69999 for four); KOST1 = the document's site, else the cost centre entered; Beleginfo Rechnungsnummer/Belegdatum/Fälligkeit; when chosen, Beleglink `BEDI "<invoice id>"` to the voucher PDF/A-3 in `belege/`; EU-Land u. UStID on a reverse charge; each rate on its automatic account without a key, a non-automatic revenue account with the rate group's BU-Schlüssel (`account_map` `datev/tax:<group>`, refused with the rate named while no such row exists); the Debitoren-Stammdaten (category 16) name every Debitor used; a Belegfeld 1 or KOST1 longer than 36 is refused, never cut; Buchungstext cut at 60, positive amounts + S/H, DDMM, **UTF-8 BOM**, a written-off rest on SKR03 2400. Berater-/Mandantennummer, the Sachkontenlänge and the currency (euros only) are checked before anything is written. The DATEV online services (Buchungsdatenservice, Rechnungsdatenservice 1.0, Belegbilderservice) are decided targets that need a DATEV marketplace partnership and the client's SmartLogin; none exists. |
+| GoBD data handover (Z3) | subset | DE | a zip (#2375): `index.xml` valid against the published `gdpdu-01-08-2002.dtd` (shipped beside it), one header-less UTF-8 CSV per table with every column, key and join described (invoices, lines, tax amounts, payments, instalments, write-offs, member ledger, shared costs, purchase documents and lines, customers, tax rates with their versions, number sequences, audit trail, vouchers), each invoice's e-invoice XML and PDF/A-3 in `belege/`, and the Verfahrensdokumentation (server schema version, number sequences, retention clocks). Says in its own index that it is DesKilo's sub-ledger, not the complete books. |
 | Sage 50 audit trail | exchange | GB, IE | a written-off rest is an SC to 8100 without tax |
 | Swiss booking journal (KMU accounts, Ziffer per row) | exchange | CH | Not a native Banana or bexio template: neither publishes its column specification. |
 | SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted unless the owner maps accounts; then sales cycle only, every transaction balances, credit notes reverse the sale, netted cash is posted, a written-off rest to the mapped loss account, in the sales journal (none mapped, none posted) |
@@ -90,6 +91,10 @@ reached and how far it is qualified. The table below is generated from it;
 | `fr_ereporting` | DGFiP · e-reporting · flows 10.1-10.4 | file | documents | FR | implemented | DGFiP e-reporting flows 10.1-10.4 (structure only) |
 | `saft_pt` | Autoridade Tributária · SAF-T (PT) · 1.04_01, TaxAccountingBasis F | file | documents | PT | locallyValidated | SAF-T PT, TaxAccountingBasis F |
 | `datev` | DATEV · Rechnungswesen · EXTF 700 Buchungsstapel | file | journal | AT, DE | locallyValidated | not named yet |
+| `gobd` | BMF · GoBD Datenträgerüberlassung (Z3) · Beschreibungsstandard, gdpdu-01-08-2002.dtd | file | documents | DE | locallyValidated | GDPdU Beschreibungsstandard 1.1, gdpdu-01-08-2002.dtd |
+| `datev_buchungsdatenservice` | DATEV · Buchungsdatenservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | journal | AT, DE | specificationNeeded | not named yet |
+| `datev_rechnungsdatenservice` | DATEV · Rechnungsdatenservice 1.0 · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
+| `datev_belegbilderservice` | DATEV · Belegbilderservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
 | `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
 | `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV, Ziffer per row | file | journal | CH | implemented | not named yet |
 | `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |
@@ -128,7 +133,7 @@ amount of exporting closes that.
 
 | country | obligation we do not meet | why |
 |---|---|---|
-| DE | GoBD machine-readable handover for a Betriebsprüfung (the descriptor-file form) | ledger; DATEV covers the accountant, not the auditor |
+| DE | GoBD handover of the COMPLETE books for a Betriebsprüfung | ledger; the GoBD export (#2375) hands over DesKilo's sub-ledger in the descriptor-file form and says so |
 | AT | §§131/132 BAO data provision | ledger |
 | PT | SAF-T accounting variants (`TaxAccountingBasis` C / I); certified-software obligation above the threshold | ledger; certification is a separate obligation the file cannot satisfy |
 | NO | SAF-T Financial on demand | ledger |
@@ -184,7 +189,7 @@ divide cleanly:
 - reverse charge collects no VAT — nothing reaches 44571;
 - rows are chronological, and a sale precedes the cash that settled it;
 - the FEC carries no BOM and DATEV carries one;
-- every DATEV row has 20 fields, a positive amount, an `S` flag, a
+- every DATEV row has 125 fields, a positive amount, an `S` flag, a
   four-digit `Belegdatum`, and never posts an account against itself;
 - the two files reconcile on revenue;
 - a file for one fiscal year holds that year's invoices, ledger entries and repartitions only, and the export screen cuts them before DATEV, whose Belegdatum has no year, can re-date them (#2365);

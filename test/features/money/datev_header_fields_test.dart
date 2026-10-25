@@ -8,12 +8,13 @@ import 'package:deskilo/features/money/domain/datev_fields.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/datev_collective.dart';
 import 'support/seeded_export_year.dart';
 
 String _file({
   List<Invoice>? invoices,
   DatevAccounts accounts = const DatevAccounts(),
-}) => buildDatevFile(DatevRequest(
+}) => buildDatevFile(DatevRequest(detail: datevCollective, 
   invoices: invoices ?? SeededExportYear.invoices,
   matches: SeededExportYear.matches,
   accounts: accounts,

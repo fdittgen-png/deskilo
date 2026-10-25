@@ -35,15 +35,13 @@ enum TaxCodeModel { perRate, perComponent, none }
 
 /// What a customer id may look like in the target; null fields are free.
 class CustomerIdRule {
-  const CustomerIdRule({this.maxLength, this.charset, this.numericRange});
+  const CustomerIdRule({this.maxLength, this.charset});
 
   final int? maxLength;
 
   /// A regular expression every id must match in full.
   final String? charset;
 
-  /// The inclusive range a numeric id must fall in.
-  final (int, int)? numericRange;
 }
 
 /// The volume a target takes; null is unbounded or unknown.
