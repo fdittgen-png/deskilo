@@ -347,43 +347,43 @@
   },
   "explain_setup_step": {
    "positive": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ],
    "denial": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ]
   },
   "set_opening_hours": {
    "positive": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ],
    "denial": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ],
    "state": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ]
   },
   "add_closure_days": {
    "positive": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ],
    "denial": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ],
    "state": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ]
   },
   "set_number_sequence": {
    "positive": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ],
    "denial": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ],
    "state": [
-    "supabase/tests/database/9999_mcp_setup_steps_writes.sql"
+    "supabase/tests/database/288_mcp_setup_steps_writes.sql"
    ]
   }
  }
