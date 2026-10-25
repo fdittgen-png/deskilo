@@ -26,7 +26,11 @@
   "mcpOpRespond": "Auf eine Freigabeanfrage antworten",
   "mcpOpSetupStatus": "Sehen, wie weit die Einrichtung ist",
   "mcpOpSetupLevels": "Die Einrichtungsstufen sehen",
+  "mcpOpSetupStepExplain": "Einen Einrichtungsschritt erklären",
   "mcpOpSetupLevelsPreview": "Eine Änderung der Stufen vorab ansehen",
   "mcpOpSetupLevelsApply": "Die Einrichtungsstufen ändern",
-  "mcpOpSetupStepMark": "Einen Einrichtungsschritt als erledigt oder für später markieren"
+  "mcpOpSetupStepMark": "Einen Einrichtungsschritt als erledigt oder für später markieren",
+  "mcpOpSetupHours": "Öffnungstage und -zeiten festlegen",
+  "mcpOpSetupClosures": "Schließtage hinzufügen",
+  "mcpOpSetupNumbering": "Die Nummerierung der Belege festlegen"
 }

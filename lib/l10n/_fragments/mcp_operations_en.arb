@@ -107,6 +107,10 @@
   "@mcpOpSetupLevels": {
     "description": "#2394 generated from contracts/mcp/operations.json (list_setup_levels)"
   },
+  "mcpOpSetupStepExplain": "Explain a setup step",
+  "@mcpOpSetupStepExplain": {
+    "description": "#2394 generated from contracts/mcp/operations.json (explain_setup_step)"
+  },
   "mcpOpSetupLevelsPreview": "Preview a change of levels",
   "@mcpOpSetupLevelsPreview": {
     "description": "#2394 generated from contracts/mcp/operations.json (preview_setup_levels)"
@@ -118,5 +122,17 @@
   "mcpOpSetupStepMark": "Mark a setup step done or for later",
   "@mcpOpSetupStepMark": {
     "description": "#2394 generated from contracts/mcp/operations.json (mark_setup_step)"
+  },
+  "mcpOpSetupHours": "Set the opening days and hours",
+  "@mcpOpSetupHours": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_opening_hours)"
+  },
+  "mcpOpSetupClosures": "Add closure days",
+  "@mcpOpSetupClosures": {
+    "description": "#2394 generated from contracts/mcp/operations.json (add_closure_days)"
+  },
+  "mcpOpSetupNumbering": "Set how documents are numbered",
+  "@mcpOpSetupNumbering": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_number_sequence)"
   }
 }
