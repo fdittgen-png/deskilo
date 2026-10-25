@@ -19,7 +19,7 @@ const _allowed = <String>{'lib/core/demo/demo_scope.dart'};
 
 /// Hand-written lib files outside the allowlist that still read the
 /// untyped seam. RATCHET: this number only falls.
-const _budget = 14;
+const _budget = 13;
 
 void main() {
   test('the files reading the untyped local save only shrink', () {
