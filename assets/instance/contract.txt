@@ -127,6 +127,13 @@ constraint bi_cost_allocation_rules.bi_cost_allocation_rules_workspace_id_fkey F
 constraint bi_cost_allocation_rules.bi_cost_allocation_rules_workspace_id_request_id_key UNIQUE (workspace_id, request_id)
 constraint bi_cost_allocation_rules.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint bi_cost_allocation_rules.system_company_present CHECK ((company_id IS NOT NULL))
+constraint bi_export_evidence.bi_export_evidence_format_check CHECK ((format = ANY (ARRAY['pdf'::text, 'csv'::text, 'xlsx'::text])))
+constraint bi_export_evidence.bi_export_evidence_pkey PRIMARY KEY (id)
+constraint bi_export_evidence.bi_export_evidence_requests_check CHECK ((requests >= 1))
+constraint bi_export_evidence.bi_export_evidence_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE SET NULL
+constraint bi_export_evidence.bi_export_evidence_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint bi_export_evidence.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bi_export_evidence.system_company_present CHECK ((company_id IS NOT NULL))
 constraint bi_views.bi_views_definition_check CHECK (bi_definition_valid(definition))
 constraint bi_views.bi_views_name_check CHECK (((char_length(btrim(name)) >= 1) AND (char_length(btrim(name)) <= 80)))
 constraint bi_views.bi_views_pkey PRIMARY KEY (id)
@@ -1826,12 +1833,14 @@ routine public.bi_cost_allocation_rules_guard() -> trigger | function | invoker 
 routine public.bi_definition_for_reader(p_workspace_id uuid, p jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:f3058d8868ca
 routine public.bi_definition_metrics(p jsonb) -> SETOF text | function | invoker | immutable | exec:service_role | body:42c2c9bee325
 routine public.bi_definition_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:432c0d6c93d7
+routine public.bi_export_evidence_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:5af9af0e68d5
+routine public.bi_export_snapshot_v1(p_workspace_id uuid, p_requests jsonb, p_report_id uuid, p_report_revision integer, p_format text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f1c95e253a37
 routine public.bi_metric_readable(p_workspace_id uuid, p_metric text) -> boolean | function | invoker | stable | exec:service_role | body:0786fa27fd61
 routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:83b19130b4de
 routine public.bi_report_dimensions() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:2d05f6cb55bc
 routine public.bi_report_filters_narrow(p_higher jsonb, p_lower jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:af02e844457e
 routine public.bi_report_filters_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:35b1153b461a
-routine public.bi_report_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:1093e7037245
+routine public.bi_report_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:ed9c2d5728a8
 routine public.bi_view_delete(p_workspace_id uuid, p_id uuid, p_expected_revision integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:d4af14c8c53b
 routine public.bi_view_json(v bi_views) -> jsonb | function | invoker | stable | exec:service_role | body:a650127880c9
 routine public.bi_view_save(p_workspace_id uuid, p_id uuid, p_scope text, p_name text, p_definition jsonb, p_expected_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:540dd276221c
@@ -2893,6 +2902,8 @@ trigger asset_valuation_rows.zz_system_columns_stamp CREATE TRIGGER zz_system_co
 trigger badge_auth_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.badge_auth_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bi_cost_allocation_rules.bi_cost_allocation_rules_guard CREATE TRIGGER bi_cost_allocation_rules_guard BEFORE UPDATE ON public.bi_cost_allocation_rules FOR EACH ROW EXECUTE FUNCTION bi_cost_allocation_rules_guard()
 trigger bi_cost_allocation_rules.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_cost_allocation_rules FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger bi_export_evidence.bi_export_evidence_append_only CREATE TRIGGER bi_export_evidence_append_only BEFORE UPDATE ON public.bi_export_evidence FOR EACH ROW EXECUTE FUNCTION bi_export_evidence_append_only()
+trigger bi_export_evidence.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_export_evidence FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bi_views.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_views FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_accounts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_accounts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_exports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_exports FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
