@@ -1,8 +1,8 @@
 {
-  "recordedSha": "7dd1f5015836d2c0ada572b78c73021c87ccaa85",
+  "recordedSha": "55b1d51574ccd619f4f4eca2640b3ece0d65485b",
   "recordedDate": "2026-10-25",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2099,"functions":11764,"cyclomatic>=9":1180,"cyclomatic>=25":102,"cognitive>=15":468,"cognitive>=30":91,"length>=150":74,"parameters>=5":520,"parameters>=7":151,"partOfFiles":35},
+  "totals": {"files":2100,"functions":11765,"cyclomatic>=9":1180,"cyclomatic>=25":102,"cognitive>=15":468,"cognitive>=30":91,"length>=150":74,"parameters>=5":520,"parameters>=7":151,"partOfFiles":35},
   "budgets": {
     "partOfFiles": 35,
     "fileLength": {
@@ -1377,7 +1377,7 @@
     {"p":"lib/features/kiosk/presentation/screens/kiosk_screen.dart","loc":467,"part":false,"setState":2,"repositoryReads":1,"fn":11,"cog":33,"cyc":27,"len":239,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/kiosk/presentation/widgets/kiosk_act_sheet.dart","loc":308,"part":false,"setState":6,"repositoryReads":0,"fn":11,"cog":10,"cyc":16,"len":101,"params":10,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/kiosk/presentation/widgets/kiosk_greeting.dart","loc":38,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":31,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/kiosk/presentation/widgets/kiosk_success_card.dart","loc":80,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":2,"cyc":3,"len":45,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/kiosk/presentation/widgets/kiosk_success_card.dart","loc":81,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":2,"cyc":3,"len":46,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/providers/kiosk_mode.dart","loc":10,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":2,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/mcp/application/active_target_client.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":3,"len":9,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/mcp/application/answer_confirmation.dart","loc":29,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":20,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1814,6 +1814,7 @@
     {"p":"lib/features/money/presentation/invoice_actions_part1.dart","loc":362,"part":true,"setState":0,"repositoryReads":1,"fn":7,"cog":15,"cyc":12,"len":104,"params":10,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/invoice_actions_part2.dart","loc":410,"part":true,"setState":0,"repositoryReads":0,"fn":4,"cog":37,"cyc":34,"len":201,"params":5,"nest":3,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/invoice_documents.dart","loc":432,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":13,"cyc":14,"len":108,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/invoice_issue_block_text.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":9,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/invoice_journey.dart","loc":288,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":22,"cyc":18,"len":66,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/invoice_pdf_file_parts.dart","loc":80,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":5,"len":51,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/invoice_proforma.dart","loc":145,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":13,"cyc":18,"len":79,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1921,7 +1922,7 @@
     {"p":"lib/features/money/presentation/widgets/invoice_correction_reason_field.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sections.dart","loc":285,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":18,"cyc":24,"len":88,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":261,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":22,"cyc":25,"len":169,"params":12,"nest":2,"over":{"cog":0,"cyc":1,"len":1,"params":1}},
-    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":470,"part":false,"setState":7,"repositoryReads":0,"fn":14,"cog":31,"cyc":14,"len":103,"params":5,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":467,"part":false,"setState":7,"repositoryReads":0,"fn":14,"cog":31,"cyc":14,"len":103,"params":5,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_integrity_chip.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":6,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_issue_runner.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":10,"len":41,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_journey_view.dart","loc":312,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":21,"cyc":22,"len":58,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},

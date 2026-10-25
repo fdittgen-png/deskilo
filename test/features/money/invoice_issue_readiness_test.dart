@@ -4,6 +4,9 @@
 // may not, as a table on the decision (no taps): the form only maps each
 // answer to its widgets.
 import 'package:deskilo/features/money/domain/invoice_issue_readiness.dart';
+import 'package:deskilo/features/money/presentation/invoice_issue_block_text.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -74,4 +77,19 @@ void main() {
       expect(state.asksCorrectionReason, asks);
     });
   }
+
+  // The banner's title for each block, in the English the form shows.
+  group('the banner title', () {
+    final l10n = lookupAppLocalizations(const Locale('en'));
+    final titles = <InvoiceIssueBlock, String>{
+      InvoiceIssueBlock.missing: 'Complete these details before issuing',
+      InvoiceIssueBlock.external: 'Issue this invoice outside the app',
+      InvoiceIssueBlock.disabled: 'Invoice creation unavailable',
+    };
+    for (final MapEntry(key: block, value: title) in titles.entries) {
+      test(block.name, () {
+        expect(invoiceIssueBlockTitle(l10n, block), title);
+      });
+    }
+  });
 }

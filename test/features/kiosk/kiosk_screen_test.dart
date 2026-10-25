@@ -173,12 +173,43 @@ void main() {
     );
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
+    // A booked window is named on the receipt.
+    expect(find.byKey(const ValueKey('kiosk-summary-range')), findsOneWidget);
     await confirmSummary(tester);
 
     final act = reservations.kioskActs.single;
     expect(act.action, 'check_in');
     expect(act.badgeToken, 'badge-token-1');
     expect(act.seatId, isNotNull);
+  });
+
+  testWidgets(
+      'a check-out books no window: the receipt names no time range and '
+      'kiosk_act carries none', (tester) async {
+    final reservations = await pumpKiosk(tester);
+
+    await tester.tapAt(seatCenter(tester));
+    // The sheet's open/close animation, bounded instead of settled.
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.tap(find.byKey(const ValueKey('kiosk-check-out')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.enterText(
+      find.byKey(const ValueKey('kiosk-badge-field')),
+      'badge-token-1',
+    );
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.byKey(const ValueKey('kiosk-success-card')), findsOneWidget);
+    expect(find.byKey(const ValueKey('kiosk-summary-range')), findsNothing);
+    final act = reservations.kioskActs.single;
+    expect(act.action, 'check_out');
+    expect(act.startsAt, isNull);
+    expect(act.endsAt, isNull);
+    await confirmSummary(tester);
   });
 
   testWidgets('#616 — the receipt carries the member avatar (photo flag '
