@@ -66,7 +66,6 @@ void main() {
       '/editor',
       '/validation',
       '/services',
-      '/developer',
       '/settings/roles-of-this-space',
     ]) {
       expect(mayOpen(path, treasurer), isFalse, reason: path);
@@ -95,6 +94,8 @@ void main() {
       expect(mayOpen(path, const {}), isFalse, reason: path);
     }
     expect(mayOpen('/settings', const {}), isTrue);
+    // The device's own diagnostics ask no workspace permission (#2521).
+    expect(mayOpen('/developer', const {}), isTrue);
     expect(mayOpen('/member/abc', const {}), isTrue);
     expect(mayOpen('/messages', {WorkspacePermission.useMessages}), isTrue);
     expect(mayOpen('/reserve', {WorkspacePermission.makeReservations}), isTrue);

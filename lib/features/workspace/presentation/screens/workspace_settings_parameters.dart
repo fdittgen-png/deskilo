@@ -163,6 +163,7 @@ class WorkspaceParameterTiles {
   /// Payments and billing: methods, legal identity, reports and the billing tools.
   Widget _payments(AppLocalizations l10n) =>
                   WorkspaceFormGroup(id: 'payments', title: l10n.workspacePaymentsBillingTitle, icon: Icons.account_balance_wallet_outlined, children: [
+                  if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.moneyTab))
                   ListTile(
                     key: const Key('workspaceSettingsPaymentMethods'),
                     contentPadding: EdgeInsets.zero,

@@ -22,10 +22,8 @@ import 'development_banner.dart';
 /// Whether [path] is the person's own layer rather than a space's: every
 /// registered route that needs no membership.
 bool _isMeLayer(String path) => switch (classifyRoute(path)) {
-      RouteClass.publicEntry ||
-      RouteClass.nativeAccount ||
-      RouteClass.operator =>
-        true,
+      RouteClass.nativeAccount => !workspaceChromeAccountRoutes.contains(path),
+      RouteClass.publicEntry || RouteClass.operator => true,
       RouteClass.workspace || RouteClass.unknown => false,
     };
 

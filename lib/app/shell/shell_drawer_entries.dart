@@ -164,7 +164,8 @@ class DrawerEntries {
           () => go('/invoices'),
           route: '/invoices',
         ),
-      if (may(WorkspacePermission.manageIntegrations))
+      if (may(WorkspacePermission.manageIntegrations) &&
+          features.contains(WorkspaceFeature.moneyTab))
         DrawerEntry(
           'drawer-payment-methods',
           Icons.account_balance_wallet_outlined,
@@ -208,7 +209,8 @@ class DrawerEntries {
           () => go('/accessories'),
           route: '/accessories',
         ),
-      if (may(WorkspacePermission.manageBilling))
+      if (may(WorkspacePermission.manageBilling) &&
+          features.contains(WorkspaceFeature.moneyTab))
         DrawerEntry(
           'drawer-billing',
           Icons.tune,

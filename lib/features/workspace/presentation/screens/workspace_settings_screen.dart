@@ -105,7 +105,7 @@ class _WorkspaceSettingsScreenState
                   // #2313 — tips sit at the top of every screen.
                   const HelpHint(HelpHintId.workspaceSettings),
                   const AdminVisibilityTile(),
-                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
+                  if((ref.watch(myMemberProvider).value?.actsAsOwner??false)&&ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.publicListings))ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ...WorkspaceParameterTiles(this, _form, _update,
                       helpTopic: helpTopic,
