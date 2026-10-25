@@ -4,7 +4,10 @@ import '../../../core/data/read_provenance.dart';
 import '../../../core/data/system_columns.dart';
 import 'book_profile.dart';
 import 'expense_repartition.dart';
+import 'invoice.dart';
+import 'invoice_match_row.dart';
 import 'ledger_entry.dart';
+import 'vat_tax_point.dart';
 
 /// Why a fiscal source was not accepted. None of them is a smaller file:
 /// the export stops and says which.
@@ -90,6 +93,8 @@ class AccountingSourceSnapshot {
     required this.repartitions,
     required this.bookProfiles,
     required this.matchedCents,
+    required this.matches,
+    required this.instalments,
     required this.purchases,
     required this.revisions,
   });
@@ -102,11 +107,13 @@ class AccountingSourceSnapshot {
     required this.repartitions,
     this.bookProfiles = const [],
     this.purchases = const [],
+    this.matches = const {},
+    this.instalments = const {},
     this.revisions = _demoAccountingSourceRevisions,
   })  : provenance = const ReadProvenance.traversal(
           reason: 'in-memory demo books',
         ),
-        matchedCents = 0;
+        matchedCents = matches.values.fold(0, (a, m) => a + m.paidCents);
 
   final ReadProvenance provenance;
 
@@ -125,6 +132,17 @@ class AccountingSourceSnapshot {
 
   /// Sum of the matches of the in-scope invoices, as delivered.
   final int matchedCents;
+
+  /// The payment matches of the in-scope invoices and of the settlements
+  /// that regroup them, by invoice, read in the same statement as the
+  /// invoices: an export pairs each document with its payment state of this
+  /// snapshot, never with a list loaded earlier.
+  final Map<String, InvoiceMatch> matches;
+
+  /// The instalments recorded against the in-scope invoices (#2355), by
+  /// invoice, from the same statement (#2365): the tax points of an export
+  /// come from here, not from a second read.
+  final Map<String, List<TaxPointPayment>> instalments;
 
   /// The approved purchase documents of the period with their lines (#2587).
   final List<SourcePurchase> purchases;
@@ -173,7 +191,8 @@ class AccountingSourceSnapshot {
       'repartitions',
       (row) => ExpenseRepartition.fromJson(row.json),
     );
-    final matched = r.objects('matches', (m) => m.integer('paid_cents'));
+    final matchRows = r.objects('matches', invoiceMatchOf);
+    final matched = [for (final m in matchRows) m.paidCents];
     // An answer without the profiles is an older producer: the export
     // stops, it does not assume "no profile".
     if (r.raw('book_profiles') is! List) bad('no book profiles in the answer');
@@ -189,6 +208,7 @@ class AccountingSourceSnapshot {
     final purchases = r.objects('purchases', _purchase);
 
     final totals = r.objectOrAbsent('totals');
+    final instalmentRows = _instalments(r, totals, bad);
     void agree(String what, JsonReader t, int count, int value, String key) {
       if (t.integer('count') != count || t.integer(key) != value) {
         bad('$what totals disagree with the rows');
@@ -241,6 +261,8 @@ class AccountingSourceSnapshot {
       repartitions: repartitions,
       bookProfiles: profiles,
       matchedCents: sum(matched),
+      matches: {for (final m in matchRows) m.invoiceId: m},
+      instalments: instalmentsByInvoice(instalmentRows),
       purchases: purchases,
       revisions: revisions,
     );
@@ -281,6 +303,25 @@ AccountingSourceRevisions _revisions(JsonReader r, Never Function(String) bad) {
     bookProfile: token('book_profile'),
     calendar: token('calendar'),
   );
+}
+
+/// #2365 — the instalments of the in-scope invoices, agreeing with their
+/// totals. An answer without them is an older producer: the export stops,
+/// it never reads that as "nothing was paid in parts".
+List<({String invoiceId, TaxPointPayment payment})> _instalments(
+  JsonReader r,
+  JsonReader totals,
+  Never Function(String) bad,
+) {
+  if (r.raw('instalments') is! List) bad('no instalments in the answer');
+  final rows = r.objects('instalments', invoiceInstalmentOf);
+  final t = totals.objectOrAbsent('instalments');
+  if (t.integer('count') != rows.length ||
+      t.integer('amount_cents') !=
+          rows.fold<int>(0, (a, i) => a + i.payment.cents)) {
+    bad('instalment totals disagree with the rows');
+  }
+  return rows;
 }
 
 SourcePurchase _purchase(JsonReader row) {

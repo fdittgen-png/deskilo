@@ -20599,6 +20599,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupApprovalsOpenRules => 'Regeln je Art von Anfrage';
 
   @override
+  String get setupApprovalsOwnRulesNone =>
+      'Jede Anfrage folgt der Standardregel oben.';
+
+  @override
+  String setupApprovalsOwnRulesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Regeln verlangen mehr Freigaben, als Personen sie geben können: Ihre Anfragen werden nie entschieden. Ändern Sie sie in den Freigaberegeln.',
+      one: 'Eine Regel verlangt mehr Freigaben, als Personen sie geben können: Ihre Anfragen werden nie entschieden. Ändern Sie sie in den Freigaberegeln.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupApprovalsOwnRulesTitle => 'Eigene Regeln';
+
+  @override
   String setupApprovalsPeople(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -20629,6 +20648,41 @@ class AppLocalizationsDe extends AppLocalizations {
       one: 'Wartet auf 1 Freigabe',
     );
     return '$_temp0';
+  }
+
+  @override
+  String setupApprovalsRuleReach(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required Freigaben',
+      one: '1 Freigabe',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: '$people Personen können freigeben',
+      one: '1 Person kann freigeben',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String setupApprovalsRuleShort(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required Freigaben',
+      one: '1 Freigabe',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: 'nur $people Personen können freigeben',
+      one: 'nur 1 Person kann freigeben',
+      zero: 'niemand kann freigeben',
+    );
+    return '$_temp0, aber $_temp1';
   }
 
   @override
@@ -21459,6 +21513,19 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get setupOnlineKeyInstallation =>
+      'Von der Installation festgelegt, die dieser Test nicht lesen kann';
+
+  @override
+  String get setupOnlineKeyLive => 'Live-Schlüssel';
+
+  @override
+  String get setupOnlineKeyTest => 'Testschlüssel';
+
+  @override
+  String get setupOnlineKeyUnknown => 'Ein Schlüssel unbekannter Art';
+
+  @override
   String get setupOnlineOpenConfig => 'Einstellungen für Online-Zahlungen';
 
   @override
@@ -21472,6 +21539,40 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupOnlinePreviewOn =>
       'Ein Anbieter ist verbunden: Mitglieder können ihre Abrechnung online bezahlen.';
+
+  @override
+  String get setupOnlineTestBody =>
+      'Dieser Test prüft, was die Zahlung eines Mitglieds mit den Schlüsseln dieses Bereichs tun würde. Es wird nichts bezahlt und keine Rechnung oder Abrechnungszeile geschrieben.';
+
+  @override
+  String get setupOnlineTestLimits =>
+      'Was dieser Test nicht sieht: ob der Anbieter die Schlüssel annimmt und DesKilo meldet, dass eine Zahlung eingegangen ist. Das beweist nur eine erste Zahlung mit Testschlüsseln im Produktionsbereich; der Betreiber, der die Schlüssel hält, führt sie aus.';
+
+  @override
+  String get setupOnlineTestLiveKeys =>
+      'Live-Schlüssel: Die Zahlung eines Mitglieds belastet eine echte Karte.';
+
+  @override
+  String get setupOnlineTestNoProvider =>
+      'Noch kein Anbieter verbunden: Es gibt nichts zu testen.';
+
+  @override
+  String get setupOnlineTestRehearsal =>
+      'Dies ist ein Probebereich: Seine Zahlung eröffnet nie eine Transaktion, gleich welche Schlüssel.';
+
+  @override
+  String get setupOnlineTestRun => 'Schlüssel testen';
+
+  @override
+  String get setupOnlineTestTestKeys =>
+      'Testschlüssel: Die Zahlung eines Mitglieds bewegt kein echtes Geld.';
+
+  @override
+  String get setupOnlineTestTitle => 'Testzahlung';
+
+  @override
+  String get setupOnlineTestUnverified =>
+      'Diese Schlüssel zeigen nicht, ob es Test- oder Live-Schlüssel sind. Prüfen Sie sie im Dashboard des Anbieters.';
 
   @override
   String get setupPaymentsPreviewEmpty =>

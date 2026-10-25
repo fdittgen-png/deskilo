@@ -1,0 +1,95 @@
+{
+  "setupOnlineTestTitle": "Test payment",
+  "@setupOnlineTestTitle": {
+    "description": "#2871 setup run steps: setupOnlineTestTitle"
+  },
+  "setupOnlineTestBody": "This test checks what a member's checkout would do with the keys this space holds. Nothing is paid, and no invoice or statement line is written.",
+  "@setupOnlineTestBody": {
+    "description": "#2871 setup run steps: setupOnlineTestBody"
+  },
+  "setupOnlineTestRun": "Test the keys",
+  "@setupOnlineTestRun": {
+    "description": "#2871 setup run steps: setupOnlineTestRun"
+  },
+  "setupOnlineTestNoProvider": "No provider is connected yet: there is nothing to test.",
+  "@setupOnlineTestNoProvider": {
+    "description": "#2871 setup run steps: setupOnlineTestNoProvider"
+  },
+  "setupOnlineTestTestKeys": "Test keys: a member's checkout takes no real money.",
+  "@setupOnlineTestTestKeys": {
+    "description": "#2871 setup run steps: setupOnlineTestTestKeys"
+  },
+  "setupOnlineTestLiveKeys": "Live keys: a member's checkout charges a real card.",
+  "@setupOnlineTestLiveKeys": {
+    "description": "#2871 setup run steps: setupOnlineTestLiveKeys"
+  },
+  "setupOnlineTestUnverified": "These keys do not show whether they are test or live keys. Check them in the provider's dashboard.",
+  "@setupOnlineTestUnverified": {
+    "description": "#2871 setup run steps: setupOnlineTestUnverified"
+  },
+  "setupOnlineTestRehearsal": "This is a rehearsal space: its checkout never opens a payment, whatever the keys.",
+  "@setupOnlineTestRehearsal": {
+    "description": "#2871 setup run steps: setupOnlineTestRehearsal"
+  },
+  "setupOnlineTestLimits": "What this test cannot see: whether the provider accepts the keys and tells DesKilo that a payment arrived. Only a first payment made with test keys in the production space proves that; the operator who holds the keys makes it.",
+  "@setupOnlineTestLimits": {
+    "description": "#2871 setup run steps: setupOnlineTestLimits"
+  },
+  "setupOnlineKeyTest": "Test key",
+  "@setupOnlineKeyTest": {
+    "description": "#2871 setup run steps: setupOnlineKeyTest"
+  },
+  "setupOnlineKeyLive": "Live key",
+  "@setupOnlineKeyLive": {
+    "description": "#2871 setup run steps: setupOnlineKeyLive"
+  },
+  "setupOnlineKeyUnknown": "A key of unknown kind",
+  "@setupOnlineKeyUnknown": {
+    "description": "#2871 setup run steps: setupOnlineKeyUnknown"
+  },
+  "setupOnlineKeyInstallation": "Set by the installation, which this test cannot read",
+  "@setupOnlineKeyInstallation": {
+    "description": "#2871 setup run steps: setupOnlineKeyInstallation"
+  },
+  "setupApprovalsOwnRulesTitle": "Rules of their own",
+  "@setupApprovalsOwnRulesTitle": {
+    "description": "#2871 setup run steps: setupApprovalsOwnRulesTitle"
+  },
+  "setupApprovalsOwnRulesNone": "Every request follows the default rule above.",
+  "@setupApprovalsOwnRulesNone": {
+    "description": "#2871 setup run steps: setupApprovalsOwnRulesNone"
+  },
+  "setupApprovalsOwnRulesShort": "{count, plural, =1{One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.} other{{count} rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.}}",
+  "@setupApprovalsOwnRulesShort": {
+    "description": "#2871 setup run steps: setupApprovalsOwnRulesShort",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsRuleReach": "{required, plural, =1{1 approval} other{{required} approvals}}, {people, plural, =1{1 person can approve} other{{people} people can approve}}",
+  "@setupApprovalsRuleReach": {
+    "description": "#2871 setup run steps: setupApprovalsRuleReach",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  },
+  "setupApprovalsRuleShort": "{required, plural, =1{1 approval} other{{required} approvals}}, but {people, plural, =0{nobody can approve} =1{only 1 person can approve} other{only {people} people can approve}}",
+  "@setupApprovalsRuleShort": {
+    "description": "#2871 setup run steps: setupApprovalsRuleShort",
+    "placeholders": {
+      "required": {
+        "type": "int"
+      },
+      "people": {
+        "type": "int"
+      }
+    }
+  }
+}

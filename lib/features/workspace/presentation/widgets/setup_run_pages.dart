@@ -43,12 +43,14 @@ typedef SetupCheckoutBuilder = Widget Function(
 typedef SetupOnlinePaymentsBuilder = Widget Function({
   required String workspaceId,
   required Widget Function({required bool payOnline}) checkout,
+  required bool testOffered,
 });
 
+/// [members] are the active members, as the server counts them when it
+/// calls a rule short.
 typedef SetupApprovalsBuilder = Widget Function({
   required String workspaceId,
-  required int owners,
-  required int admins,
+  required List<({String id, bool isOwner, bool isAdmin})> members,
 });
 
 typedef SetupServicesBuilder = Widget Function({
@@ -100,13 +102,7 @@ class SetupRunPages {
       workspace: workspace,
       checkout: checkout,
     ),
-    'online_payments' => onlinePayments(
-      workspaceId: workspace.id,
-      checkout: ({required bool payOnline}) => checkout(
-        PaymentInstructions.fromDb(workspace.paymentInstructions),
-        payOnline: payOnline,
-      ),
-    ),
+    'online_payments' => _OnlinePaymentsHost(pages: this, workspace: workspace),
     'approvals' => _ApprovalsHost(pages: this, workspaceId: workspace.id),
     'services' => services(
       workspaceId: workspace.id,
@@ -148,6 +144,26 @@ class _PurchaseSideHost extends ConsumerWidget {
   );
 }
 
+/// The online-payments page offers its test payment only while online
+/// payments are on, as the server only answers then.
+class _OnlinePaymentsHost extends ConsumerWidget {
+  const _OnlinePaymentsHost({required this.pages, required this.workspace});
+  final SetupRunPages pages;
+  final Workspace workspace;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => pages.onlinePayments(
+    workspaceId: workspace.id,
+    checkout: ({required bool payOnline}) => pages.checkout(
+      PaymentInstructions.fromDb(workspace.paymentInstructions),
+      payOnline: payOnline,
+    ),
+    testOffered: ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.onlinePayments),
+  );
+}
+
 class _PricingHost extends ConsumerWidget {
   const _PricingHost({required this.pages, required this.workspace});
   final SetupRunPages pages;
@@ -164,8 +180,8 @@ class _PricingHost extends ConsumerWidget {
   );
 }
 
-/// Counts who can approve the way the server does when it calls a rule
-/// short: active members, each once, owners apart from administrators.
+/// Hands the approvals page the active members, each once, from which
+/// it counts who can approve the way the server does.
 class _ApprovalsHost extends ConsumerWidget {
   const _ApprovalsHost({required this.pages, required this.workspaceId});
   final SetupRunPages pages;
@@ -176,14 +192,11 @@ class _ApprovalsHost extends ConsumerWidget {
       switch (ref.watch(workspaceMembersProvider)) {
         AsyncValue(hasValue: true, :final value) => pages.approvals(
           workspaceId: workspaceId,
-          owners: [
+          members: [
             for (final m in value ?? const <Member>[])
-              if (m.status == MemberStatus.active && m.isOwner) m,
-          ].length,
-          admins: [
-            for (final m in value ?? const <Member>[])
-              if (m.status == MemberStatus.active && m.isAdmin && !m.isOwner) m,
-          ].length,
+              if (m.status == MemberStatus.active)
+                (id: m.id, isOwner: m.isOwner, isAdmin: m.isAdmin),
+          ],
         ),
         AsyncError() => Padding(
           padding: AppSpacing.lgAll,

@@ -11,6 +11,7 @@ import 'number_sequence.dart';
 import 'payment_intent.dart';
 import 'payment_method.dart';
 import 'payment_provider.dart';
+import 'payment_test_check.dart';
 import 'report_template_repository.dart';
 import 'tax_reporting_repository.dart';
 import 'workspace_status.dart';
@@ -164,6 +165,11 @@ abstract class MoneyRepository implements
   Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(
     String workspaceId,
   );
+
+  /// Owner-only: what a member's checkout would do with the keys
+  /// [workspaceId] holds (RPC `payment_test_check`), read without a
+  /// payment; refused while online payments are off.
+  Future<PaymentTestCheck> testPaymentKeys(String workspaceId);
 
   /// Owner-only: merge [config] into a provider's server credentials
   /// (blank fields keep existing values). Secrets go to the deny-all

@@ -1,0 +1,20 @@
+{
+  "setupOnlineTestTitle": "Pagamento di prova",
+  "setupOnlineTestBody": "Questa prova verifica che cosa farebbe il pagamento di un membro con le chiavi di questo spazio. Non viene pagato nulla e non viene scritta alcuna fattura né riga di estratto.",
+  "setupOnlineTestRun": "Provi le chiavi",
+  "setupOnlineTestNoProvider": "Nessun fornitore è ancora collegato: non c’è nulla da provare.",
+  "setupOnlineTestTestKeys": "Chiavi di prova: il pagamento di un membro non muove denaro reale.",
+  "setupOnlineTestLiveKeys": "Chiavi reali: il pagamento di un membro addebita una carta vera.",
+  "setupOnlineTestUnverified": "Queste chiavi non indicano se sono di prova o reali. Le verifichi nel pannello del fornitore.",
+  "setupOnlineTestRehearsal": "Questo è uno spazio di prova generale: il suo pagamento non apre mai una transazione, qualunque siano le chiavi.",
+  "setupOnlineTestLimits": "Ciò che questa prova non vede: se il fornitore accetta le chiavi e segnala a DesKilo che un pagamento è arrivato. Lo dimostra solo un primo pagamento fatto con chiavi di prova nello spazio di produzione; lo esegue l’operatore che detiene le chiavi.",
+  "setupOnlineKeyTest": "Chiave di prova",
+  "setupOnlineKeyLive": "Chiave reale",
+  "setupOnlineKeyUnknown": "Una chiave di tipo sconosciuto",
+  "setupOnlineKeyInstallation": "Impostata dall’installazione, che questa prova non può leggere",
+  "setupApprovalsOwnRulesTitle": "Regole proprie",
+  "setupApprovalsOwnRulesNone": "Ogni richiesta segue la regola predefinita qui sopra.",
+  "setupApprovalsOwnRulesShort": "{count, plural, =1{Una regola chiede più approvazioni di quante le persone possano darne: le sue richieste non vengono mai decise. La modifichi nelle regole di approvazione.} other{{count} regole chiedono più approvazioni di quante le persone possano darne: le loro richieste non vengono mai decise. Le modifichi nelle regole di approvazione.}}",
+  "setupApprovalsRuleReach": "{required, plural, =1{1 approvazione} other{{required} approvazioni}}, {people, plural, =1{1 persona può approvare} other{{people} persone possono approvare}}",
+  "setupApprovalsRuleShort": "{required, plural, =1{1 approvazione} other{{required} approvazioni}}, ma {people, plural, =0{nessuno può approvare} =1{solo 1 persona può approvare} other{solo {people} persone possono approvare}}"
+}

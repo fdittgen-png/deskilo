@@ -20389,6 +20389,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupApprovalsOpenRules => 'Rules for each kind of request';
 
   @override
+  String get setupApprovalsOwnRulesNone =>
+      'Every request follows the default rule above.';
+
+  @override
+  String setupApprovalsOwnRulesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.',
+      one: 'One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupApprovalsOwnRulesTitle => 'Rules of their own';
+
+  @override
   String setupApprovalsPeople(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -20419,6 +20438,41 @@ class AppLocalizationsEn extends AppLocalizations {
       one: 'Waiting for 1 approval',
     );
     return '$_temp0';
+  }
+
+  @override
+  String setupApprovalsRuleReach(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required approvals',
+      one: '1 approval',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: '$people people can approve',
+      one: '1 person can approve',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String setupApprovalsRuleShort(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required approvals',
+      one: '1 approval',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: 'only $people people can approve',
+      one: 'only 1 person can approve',
+      zero: 'nobody can approve',
+    );
+    return '$_temp0, but $_temp1';
   }
 
   @override
@@ -21241,6 +21295,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get setupOnlineKeyInstallation =>
+      'Set by the installation, which this test cannot read';
+
+  @override
+  String get setupOnlineKeyLive => 'Live key';
+
+  @override
+  String get setupOnlineKeyTest => 'Test key';
+
+  @override
+  String get setupOnlineKeyUnknown => 'A key of unknown kind';
+
+  @override
   String get setupOnlineOpenConfig => 'Online payment settings';
 
   @override
@@ -21254,6 +21321,40 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupOnlinePreviewOn =>
       'A provider is connected: members can pay their statement online.';
+
+  @override
+  String get setupOnlineTestBody =>
+      'This test checks what a member\'s checkout would do with the keys this space holds. Nothing is paid, and no invoice or statement line is written.';
+
+  @override
+  String get setupOnlineTestLimits =>
+      'What this test cannot see: whether the provider accepts the keys and tells DesKilo that a payment arrived. Only a first payment made with test keys in the production space proves that; the operator who holds the keys makes it.';
+
+  @override
+  String get setupOnlineTestLiveKeys =>
+      'Live keys: a member\'s checkout charges a real card.';
+
+  @override
+  String get setupOnlineTestNoProvider =>
+      'No provider is connected yet: there is nothing to test.';
+
+  @override
+  String get setupOnlineTestRehearsal =>
+      'This is a rehearsal space: its checkout never opens a payment, whatever the keys.';
+
+  @override
+  String get setupOnlineTestRun => 'Test the keys';
+
+  @override
+  String get setupOnlineTestTestKeys =>
+      'Test keys: a member\'s checkout takes no real money.';
+
+  @override
+  String get setupOnlineTestTitle => 'Test payment';
+
+  @override
+  String get setupOnlineTestUnverified =>
+      'These keys do not show whether they are test or live keys. Check them in the provider\'s dashboard.';
 
   @override
   String get setupPaymentsPreviewEmpty =>

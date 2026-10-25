@@ -73,12 +73,15 @@ List<int> textBytes(String text) => utf8.encode(text);
 
 /// #2365 — the FEC is the French regulatory file: only a French workspace's
 /// archive carries one.
+bool archiveCarriesFec(String countryCode) => countryCode.toUpperCase() == 'FR';
+
+/// Adds [fec] to [files] when the archive of [countryCode] carries one.
 void addArchiveFec(
   Map<String, List<int>> files,
   String countryCode,
   String fec,
 ) {
-  if (countryCode.toUpperCase() == 'FR') files['fec.txt'] = textBytes(fec);
+  if (archiveCarriesFec(countryCode)) files['fec.txt'] = textBytes(fec);
 }
 
 /// #2571 — the bundle with its retention notice: how long the country makes

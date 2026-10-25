@@ -5,6 +5,40 @@ part of 'money_repository.dart';
 // file holds the whole class.
 extension _FakeMoneyRepositoryPart4 on FakeMoneyRepository {
 
+  /// The year's books in one call from the same memory (#2365): the
+  /// matches of the year's invoices and of the settlements that regroup
+  /// them, and their instalments, as the server's source delivers them.
+  AccountingSourceSnapshot _accountingSourceImpl(int year) {
+    final inYear = [
+      for (final i in invoices)
+        if (i.issuedAt.year == year) i,
+    ];
+    final held = {for (final i in inYear) i.id};
+    final settlements = {for (final i in inYear) ?i.settledByInvoiceId};
+    return AccountingSourceSnapshot.demo(
+      invoices: [
+        for (final i in inYear)
+          (id: i.id, number: i.number, totalCents: i.totalCents),
+      ],
+      matches: {
+        for (final e in invoiceMatchesStore.entries)
+          if (held.contains(e.key) || settlements.contains(e.key)) e.key: e.value,
+      },
+      instalments: {
+        for (final e in invoiceInstalmentsStore.entries)
+          if (held.contains(e.key)) e.key: List.of(e.value),
+      },
+      ledger: [
+        for (final e in ledger)
+          if (e.on.year == year) e,
+      ],
+      repartitions: [
+        for (final r in repartitions)
+          if ((r.appliedAt ?? r.createdAt).year == year) r,
+      ],
+    );
+  }
+
   Future<ServiceItem> _updateServiceImpl(
     String serviceId, {
     String? name,
@@ -244,6 +278,20 @@ extension _FakeMoneyRepositoryPart4 on FakeMoneyRepository {
   Future<Map<PaymentProvider, PaymentProviderStatus>>
       _fetchPaymentGatewayStatusImpl(String workspaceId) async =>
           Map.of(paymentStatus);
+
+  /// The demo is a rehearsal: it opens no payment, and its keys are the
+  /// installation's, which the test cannot read.
+  Future<PaymentTestCheck> _testPaymentKeysImpl(String workspaceId) async =>
+      PaymentTestCheck(
+        verdict: paymentStatus.isEmpty
+            ? PaymentTestVerdict.noProvider
+            : PaymentTestVerdict.unverified,
+        takesPayments: false,
+        modes: {
+          for (final provider in paymentStatus.keys)
+            provider: PaymentKeyMode.installation,
+        },
+      );
 
   Future<void> _setPaymentCredentialsImpl(
     String workspaceId,

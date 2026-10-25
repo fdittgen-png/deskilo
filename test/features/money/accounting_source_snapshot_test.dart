@@ -11,6 +11,7 @@ import 'package:deskilo/core/data/read_provenance.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
+import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/presentation/datev_profile.dart';
@@ -72,7 +73,21 @@ Map<String, Object?> _answer() => {
         {'id': 'i-c', 'number': 'C', 'total_cents': 7000},
       ],
       'matches': [
-        {'id': 'm-a', 'paid_cents': 12000},
+        {
+          'id': 'm-a',
+          'invoice_id': 'i-a',
+          'paid_cents': 12000,
+          'resolution': 'exact',
+          'status': 'confirmed',
+          'matched_at': '2026-04-02T09:00:00+00:00',
+        },
+      ],
+      // #2365: A was paid in two instalments, in the same snapshot.
+      'instalments': [
+        {'id': 'p-1', 'invoice_id': 'i-a', 'amount_cents': 7000,
+         'matched_at': '2026-03-12T09:00:00+00:00'},
+        {'id': 'p-2', 'invoice_id': 'i-a', 'amount_cents': 5000,
+         'matched_at': '2026-04-02T09:00:00+00:00'},
       ],
       'ledger': [
         _ledger('l-1', 'credit', 'payment', 12000),
@@ -118,6 +133,7 @@ Map<String, Object?> _answer() => {
         'book_profiles': {'count': 2, 'revision_sum': 3},
         'invoices': {'count': 2, 'total_cents': 19000},
         'matches': {'count': 1, 'paid_cents': 12000},
+        'instalments': {'count': 2, 'amount_cents': 12000},
         'ledger': {
           'count': 3,
           'sum_cents': 18000,
@@ -258,6 +274,62 @@ void main() {
       trail(source: books.revisions).split('\n').length,
       trail().split('\n').length + 1,
     );
+  });
+
+  test('#2365: the matches and instalments come in the same answer; missing '
+      'or off their totals stops', () {
+    final s = _parse(_answer());
+    expect(s.matches.keys, ['i-a']);
+    expect(s.matches['i-a']!.paidCents, 12000);
+    expect(s.matches['i-a']!.matchedAt, DateTime.utc(2026, 4, 2, 9).toLocal());
+    expect(s.instalments['i-a']!.map((p) => p.cents), [7000, 5000]);
+    expect(s.instalments['i-a']!.first.on, DateTime.utc(2026, 3, 12, 9).toLocal());
+    // An older producer sends no instalments: never read as "none".
+    _refused(_answer()..remove('instalments'), AccountingSourceFailure.inconsistent);
+    final a = _answer();
+    ((a['totals']! as Map)['instalments']! as Map)['amount_cents'] = 11999;
+    _refused(a, AccountingSourceFailure.inconsistent);
+    final b = _answer();
+    (b['instalments']! as List).removeLast();
+    _refused(b, AccountingSourceFailure.inconsistent);
+  });
+
+  test('#2365: the export takes its payment state from the source, a '
+      'settlement made transparent (#831), never from a list loaded before', () async {
+    final a = _answer();
+    // S, issued in 2027, regroups the 2026 invoice C and was paid 70.00:
+    // the source delivers its match beside C's invoice.
+    (a['matches']! as List).add({
+      'id': 'm-s',
+      'invoice_id': 'i-s',
+      'paid_cents': 7000,
+      'resolution': 'exact',
+      'matched_at': '2027-01-10T09:00:00+00:00',
+    });
+    ((a['totals']! as Map)['matches']! as Map)
+      ..['count'] = 2
+      ..['paid_cents'] = 19000;
+    final base = SeededExportYear.invoices.first;
+    final loaded = <Invoice>[
+      base.copyWith(id: 'i-a', number: 'A', totalCents: 12000),
+      base.copyWith(id: 'i-c', number: 'C', totalCents: 7000, settledByInvoiceId: 'i-s'),
+      base.copyWith(
+        id: 'i-s',
+        number: 'S',
+        totalCents: 7000,
+        kind: InvoiceKind.settlement,
+        issuedAt: DateTime(2027, 1, 5),
+        settles: const [
+          SettledSource(invoiceId: 'i-c', number: 'C', period: '2026-12', totalCents: 7000),
+        ],
+      ),
+    ];
+    final books = (await exportYearBooks(_Source(a), _ws, 2026, loaded, loaded: loaded))!;
+    expect(books.invoices.map((i) => i.number), ['A', 'C']);
+    expect(books.matches.keys, unorderedEquals(['i-a', 'i-c']));
+    expect(books.matches['i-c']!.paidCents, 7000);
+    expect(books.matches['i-c']!.note, 'via S');
+    expect(books.instalments.keys, ['i-a']);
   });
 
   test('an over-budget scope is a named refusal with no rows', () {

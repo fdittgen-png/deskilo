@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/payment_provider.dart';
+import '../domain/payment_test_check.dart';
 import 'money_providers.dart';
 
 part 'payment_gateway_providers.g.dart';
@@ -14,3 +15,13 @@ Future<Map<PaymentProvider, PaymentProviderStatus>> paymentGatewayStatus(
   Ref ref,
   String workspaceId,
 ) => ref.watch(moneyRepositoryProvider).fetchPaymentGatewayStatus(workspaceId);
+
+/// The online-payments test of [workspaceId]: what a member's checkout
+/// would do with the keys it holds. Read only when the owner asks, and
+/// again on each retry; nothing is paid or written by reading it. A
+/// refusal is the answer, shown at once, never retried behind a spinner.
+@Riverpod(retry: _noRetry)
+Future<PaymentTestCheck> paymentTestCheck(Ref ref, String workspaceId) =>
+    ref.watch(moneyRepositoryProvider).testPaymentKeys(workspaceId);
+
+Duration? _noRetry(int retryCount, Object error) => null;

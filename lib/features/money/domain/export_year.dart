@@ -4,6 +4,7 @@ import 'book_profile.dart';
 import 'expense_repartition.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
+import 'vat_tax_point.dart';
 
 /// #2365 — the books of ONE fiscal year. The export screen and the year
 /// archive hold the workspace's whole ledger and every repartition; a
@@ -16,11 +17,14 @@ typedef ExportYearBooks = ({
   List<ExpenseRepartition> repartitions,
 });
 
-/// [ExportYearBooks] plus the book-profile versions of the same source
+/// [ExportYearBooks] plus the payment matches (settlements transparent,
+/// #831) and instalments, the book-profile versions of the same source
 /// response (#2365) and the revisions it was read with (#2564): what the
 /// export screen holds after the one read, and what its files state.
 typedef ExportSourceBooks = ({
   List<Invoice> invoices,
+  Map<String, InvoiceMatch> matches,
+  Map<String, List<TaxPointPayment>> instalments,
   List<LedgerEntry> ledger,
   List<ExpenseRepartition> repartitions,
   List<BookProfile> bookProfiles,

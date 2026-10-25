@@ -29,6 +29,7 @@ import '../domain/package.dart';
 import '../domain/payment_intent.dart';
 import '../domain/payment_method.dart';
 import '../domain/payment_provider.dart';
+import '../domain/payment_test_check.dart';
 import '../domain/price_negotiation.dart';
 import '../domain/reminder_evidence.dart';
 import '../domain/report_template_repository.dart';
@@ -182,6 +183,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) => _fetchPaymentConfigImpl(workspaceId);
   @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => _createPaymentOrderImpl(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);
   @override Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(String workspaceId) => _fetchPaymentGatewayStatusImpl(workspaceId);
+  @override Future<PaymentTestCheck> testPaymentKeys(String workspaceId) async => PaymentTestCheck.fromJson(await _client.rpc<Object?>('payment_test_check', params: {'p_workspace_id': workspaceId}));
   @override Future<void> setPaymentCredentials(String workspaceId, PaymentProvider provider, Map<String, String> config) => _setPaymentCredentialsImpl(workspaceId, provider, config);
   @override Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider) => _clearPaymentProviderImpl(workspaceId, provider);
 

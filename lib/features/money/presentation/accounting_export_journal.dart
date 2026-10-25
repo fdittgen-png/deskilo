@@ -10,7 +10,8 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
 
-export '../application/generic_journal_export.dart' show localBookOf;
+export '../application/generic_journal_export.dart'
+    show GenericJournal, JournalBlocked, JournalPosted, journalCsvOf, postedFecOf, writtenWith;
 
 /// Builds a posted file through [build] (the generic journal, or #2365 the
 /// FEC of a local book) and hands it to [save].
@@ -35,7 +36,8 @@ Future<void> exportGenericJournal(
       AppSnack.error(context, l10n.journalNeedsLocalBook);
     case JournalBlocked(:final roles):
       AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
-    case null:
+    // A journal not yet written is not a file; never saved as one.
+    case JournalPosted() || null:
       return;
   }
 }
