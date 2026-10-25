@@ -4,6 +4,7 @@
 // belong to the feature that already owned their entry point: a deep link
 // redirects while the flag is off, opens while it is on, and every link to
 // the route disappears with the flag.
+import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/app/shell/shell_drawer_entries.dart';
 import 'package:deskilo/core/help/help_tips.dart';
 import 'package:deskilo/features/profile/presentation/widgets/settings_task_section.dart';
@@ -52,6 +53,18 @@ void main() {
         final app = await bootRouter(tester, featureFlags: _on(owner));
         expect(await resolveRoute(app, path), path);
       });
+    }
+  });
+
+  test('the account routes drawn in workspace chrome are account routes', () {
+    for (final path in workspaceChromeAccountRoutes) {
+      expect(
+        routeRules.where(
+          (r) => r.pattern == path && r.kind == RouteClass.nativeAccount,
+        ),
+        hasLength(1),
+        reason: path,
+      );
     }
   });
 

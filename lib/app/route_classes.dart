@@ -203,6 +203,11 @@ const List<RouteRule> routeRules = [
   RouteRule('/editor/level/:levelId', RouteClass.workspace),
 ];
 
+/// Account routes whose content is the workspace's own sections: they open
+/// outside any workspace (policy: nativeAccount) but render inside the
+/// workspace chrome, strip included, whenever a workspace is selected.
+const Set<String> workspaceChromeAccountRoutes = {'/settings', '/developer'};
+
 /// The rule [path] (no query) matches, or null when none does.
 RouteRule? matchRoute(String path) {
   for (final rule in routeRules) {
