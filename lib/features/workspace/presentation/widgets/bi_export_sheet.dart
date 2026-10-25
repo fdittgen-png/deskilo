@@ -72,8 +72,8 @@ class _Target {
   final List<BiExportFormat> formats;
 }
 
-/// The page's file actions: "Export the report" for a reader who may
-/// export, and the dashboard's own PDF.
+/// The page's file actions, both for a reader who may export: "Export the
+/// report", and the dashboard's own PDF while PDF export is on.
 class BiExportActions extends ConsumerWidget {
   const BiExportActions({
     super.key,
@@ -114,19 +114,22 @@ class BiExportActions extends ConsumerWidget {
               builder: (_) => _BiExportSheet(target: _target(ref, l10n, formats)),
             ),
           ),
-        IconButton(
-          key: const ValueKey('bi-export-pdf'),
-          tooltip: l10n.biExportPdf,
-          icon: const Icon(Icons.picture_as_pdf_outlined),
-          onPressed: () => exportBiPdf(
-            context,
-            ref,
-            workspaceId: workspaceId,
-            workspaceName: ref.read(currentWorkspaceProvider).value?.name ?? 'DesKilo',
-            modules: modules,
-            query: query,
+        // The dashboard on paper (charts, projections, by level): the same
+        // right to export a PDF as the report export, never a way around it.
+        if (formats.contains(BiExportFormat.pdf))
+          IconButton(
+            key: const ValueKey('bi-export-pdf'),
+            tooltip: l10n.biExportPdf,
+            icon: const Icon(Icons.picture_as_pdf_outlined),
+            onPressed: () => exportBiPdf(
+              context,
+              ref,
+              workspaceId: workspaceId,
+              workspaceName: ref.read(currentWorkspaceProvider).value?.name ?? 'DesKilo',
+              modules: modules,
+              query: query,
+            ),
           ),
-        ),
       ],
     );
   }
@@ -351,7 +354,7 @@ class _BiExportSheetState extends ConsumerState<_BiExportSheet> {
         key: const ValueKey('bi-export-computed'),
       ),
       Text(
-        l10n.biExportDigest(snapshot.hash),
+        l10n.biExportDigest(snapshot.digest),
         key: const ValueKey('bi-export-digest'),
       ),
       if (snapshot.plan.leftOut.isNotEmpty)

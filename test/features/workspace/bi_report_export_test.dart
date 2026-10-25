@@ -18,7 +18,10 @@ import 'package:deskilo/features/workspace/domain/bi_report_pdf.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_print.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_snapshot.dart';
 import 'package:deskilo/features/workspace/presentation/bi_print_strings_l10n.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/bi_print_preview.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -159,7 +162,9 @@ void main() {
     );
   });
 
-  test('preview, PDF, CSV and workbook show the same figures', () async {
+  testWidgets('preview, PDF, CSV and workbook show the same figures', (
+    tester,
+  ) async {
     final s = fixtureSnapshot();
     final words = biPrintStringsOf(AppLocalizationsEn(), 'en', wall: (at) => at);
     final doc = biPrintDocument(s, words);
@@ -168,14 +173,28 @@ void main() {
         File('assets/fonts/Roboto-$n.ttf').readAsBytesSync(),
       ),
     );
-    final pdf = pdfPageLines(
-      await buildBiPrintPdf(
+    final bytes = await tester.runAsync(
+      () => buildBiPrintPdf(
         doc,
         fonts: (base: font('Regular'), bold: font('Bold')),
         pageLabel: 'Page',
       ),
-    ).join(' ');
-    final preview = doc.text.join(' ');
+    );
+    final pdf = pdfPageLines(bytes!).join(' ');
+    // The preview as it is drawn: every run of text on the sheet.
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: SingleChildScrollView(child: BiPrintPreview(document: doc)),
+        ),
+      ),
+    );
+    final preview = tester
+        .widgetList<RichText>(find.byType(RichText))
+        .map((t) => t.text.toPlainText())
+        .join(' ');
     final csv = _csv(s);
     for (final f in s.figures.where((f) => f.value != null)) {
       final shown = biSnapshotValueText(f, 'en');
@@ -189,7 +208,7 @@ void main() {
     final s = fixtureSnapshot(format: BiExportFormat.xlsx);
     expect(
       biExportFileName(s, 'pezenas'),
-      'pezenas-analytics-2026-09-${fixtureHash.substring(0, 8)}.xlsx',
+      'pezenas-analytics-2026-09-${fixtureHash.substring(0, 12)}.xlsx',
     );
   });
 }

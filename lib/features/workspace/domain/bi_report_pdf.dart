@@ -387,12 +387,7 @@ Future<Uint8List> buildBiPrintPdf(
   final document = pw.Document(title: doc.title);
   final header = doc.style.header;
   final footer = doc.style.footer;
-  pw.Widget small(String text) => pw.Text(
-    text,
-    style: const pw.TextStyle(fontSize: reportSmallSize, color: reportMuted),
-  );
-  pw.Widget heading(String text, double size) =>
-      pw.Text(text, style: pw.TextStyle(fontSize: size, fontWeight: pw.FontWeight.bold));
+  const small = _printSmall, heading = _printHeading;
   document.addPage(
     reportFlowPage(
       pageTheme: pw.PageTheme(
@@ -420,14 +415,26 @@ Future<Uint8List> buildBiPrintPdf(
         small(doc.sourceLine),
         ...reportBlockWidgets(letterhead?.footer ?? const [], images: images),
       ],
-      body: (context) => [
-        ..._printProvenance(doc, small),
-        for (final section in doc.sections) ..._printSection(section, heading, small),
-      ],
+      body: (context) => biPrintBodyWidgets(doc),
     ),
   );
   return document.save();
 }
+
+/// The figures of [doc] as they print under any header: its provenance and
+/// its sections. [title] also heads them, for a positioned layout whose
+/// own header does not name the report.
+List<pw.Widget> biPrintBodyWidgets(BiPrintDocument doc, {bool title = false}) => [
+  if (title) ...[_printHeading(doc.title, 16), pw.SizedBox(height: 6)],
+  ..._printProvenance(doc, _printSmall),
+  for (final section in doc.sections) ..._printSection(section, _printHeading, _printSmall),
+];
+
+pw.Widget _printSmall(String text) =>
+    pw.Text(text, style: const pw.TextStyle(fontSize: reportSmallSize, color: reportMuted));
+
+pw.Widget _printHeading(String text, double size) =>
+    pw.Text(text, style: pw.TextStyle(fontSize: size, fontWeight: pw.FontWeight.bold));
 
 List<pw.Widget> _printProvenance(BiPrintDocument doc, pw.Widget Function(String) small) => [
   pw.Table(

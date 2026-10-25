@@ -183,34 +183,6 @@ class BiPrintDocument {
   /// The footer of every sheet: workspace, report, filters, computation
   /// time and digest.
   final String sourceLine;
-
-  /// Every word the document prints, in order (tests, text search).
-  Iterable<String> get text sync* {
-    yield style.header;
-    yield title;
-    for (final l in provenance) {
-      yield l.label;
-      yield l.value;
-    }
-    yield qualification;
-    if (management != null) yield management!;
-    yield* sources;
-    for (final s in sections) {
-      yield s.title;
-      for (final b in s.blocks) {
-        switch (b) {
-          case BiPrintFigure():
-            yield* [b.title, b.value, b.note];
-          case BiPrintTable():
-            yield* [b.title, ...b.headings, ...b.rows.expand((r) => r)];
-          case BiPrintText():
-            yield b.text;
-        }
-      }
-    }
-    yield style.footer;
-    yield sourceLine;
-  }
 }
 
 /// The printout of [s] in the words of [w].
@@ -222,7 +194,7 @@ BiPrintDocument biPrintDocument(BiReportSnapshot s, BiPrintStrings w) {
   final filters = s.report.filters.isEmpty
       ? w.noFilters
       : s.report.filters.map(f.filter).join(', ');
-  final hash = s.hash.length > 12 ? s.hash.substring(0, 12) : s.hash;
+  final hash = s.digest;
   final computed = f.dateTime(s.computedAt);
   return BiPrintDocument(
     style: style,

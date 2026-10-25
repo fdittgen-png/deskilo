@@ -4979,7 +4979,7 @@
     "description": "#718/#719"
   },
   "featureDataExport": "Esportazione dati (Excel)",
-  "featureDataExportDesc": "Scaricare tutti i dati dello spazio in una cartella Excel.",
+  "featureDataExportDesc": "Scarichi tutti i dati dello spazio in una cartella Excel, e i report di analisi come file CSV o cartella di lavoro.",
   "featureDataReportDesc": "I dati dello spazio in un PDF leggibile: membri, prenotazioni per mese, registro delle fatture, pagamenti e saldi, acquisti e fornitori, e la pianta con i suoi prezzi. Le stesse righe della cartella Excel, con i totali.",
   "featureDataReportTitle": "Rapporto dati (PDF)",
   "featureDecisionSurfaceDesc": "Un solo posto che risponde a «c’è qualcosa che mi aspetta?», ordinato per quanto costa il ritardo: prima il denaro che se ne va, poi qualcuno che aspetta una risposta. Una riga appare solo se una persona deve decidere o agire; un numero su cui nessuno può agire resta sullo schermo che lo possiede.",
@@ -5321,7 +5321,7 @@
   "featurePaymentRemindersDesc": "Le fatture aperte oltre il termine configurato ricevono i livelli di sollecito automaticamente — un avviso nel feed del membro e una notifica, una volta al giorno. Disattivato: sollecitare resta un gesto manuale.",
   "featurePaymentRemindersTitle": "Solleciti di pagamento automatici",
   "featurePdfExport": "Esportazione PDF",
-  "featurePdfExportDesc": "Esporti la fattura mensile come PDF.",
+  "featurePdfExportDesc": "Esporti la fattura mensile e i report di analisi come PDF.",
   "featurePersonalInfo": "Dati personali",
   "@featurePersonalInfo": {
     "description": "#886 personal-information form / feature: featurePersonalInfo"

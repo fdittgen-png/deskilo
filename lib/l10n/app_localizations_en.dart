@@ -6819,7 +6819,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureDataExportDesc =>
-      'Download all workspace data as an Excel workbook.';
+      'Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook.';
 
   @override
   String get featureDataReportDesc =>
@@ -7351,7 +7351,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featurePdfExport => 'PDF export';
 
   @override
-  String get featurePdfExportDesc => 'Export the monthly bill as a PDF.';
+  String get featurePdfExportDesc =>
+      'Export the monthly bill and the analytics reports as a PDF.';
 
   @override
   String get featurePersonalInfo => 'Personal information';

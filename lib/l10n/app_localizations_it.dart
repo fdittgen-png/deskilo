@@ -6862,7 +6862,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureDataExportDesc =>
-      'Scaricare tutti i dati dello spazio in una cartella Excel.';
+      'Scarichi tutti i dati dello spazio in una cartella Excel, e i report di analisi come file CSV o cartella di lavoro.';
 
   @override
   String get featureDataReportDesc =>
@@ -7397,7 +7397,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featurePdfExport => 'Esportazione PDF';
 
   @override
-  String get featurePdfExportDesc => 'Esporti la fattura mensile come PDF.';
+  String get featurePdfExportDesc =>
+      'Esporti la fattura mensile e i report di analisi come PDF.';
 
   @override
   String get featurePersonalInfo => 'Dati personali';

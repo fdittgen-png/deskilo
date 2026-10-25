@@ -206,6 +206,11 @@ void main() {
     await _open(tester, _page);
     expect(_key('bi-page'), findsOneWidget);
     expect(_key('bi-export-report'), findsNothing);
+    expect(
+      _key('bi-export-pdf'),
+      findsNothing,
+      reason: 'the dashboard PDF is no way around the right to export',
+    );
   });
 
   testWidgets(
@@ -213,6 +218,7 @@ void main() {
     (tester) async {
       final (exports, saver, _) = await _pump(tester);
       await _open(tester, _page);
+      expect(_key('bi-export-pdf'), findsOneWidget);
       await _tap(tester, 'bi-export-report');
       expect(exports.calls, isEmpty, reason: 'opening the export asks nothing');
       await _tap(tester, 'bi-export-format-csv');
@@ -234,7 +240,7 @@ void main() {
         reason: 'an unsaved analysis has no report id',
       );
       expect(_key('bi-print-preview'), findsOneWidget);
-      expect(_text(tester, 'bi-export-digest'), _en.biExportDigest('1' * 64));
+      expect(_text(tester, 'bi-export-digest'), _en.biExportDigest('1' * 12));
       expect(
         _text(tester, 'bi-export-computed'),
         startsWith('Figures computed on'),
@@ -252,7 +258,7 @@ void main() {
       final csv = utf8.decode(saver.saved.single.bytes.sublist(3));
       expect(csv, contains(',${20 / 120},"percent"'));
       expect(csv, contains('"snapshot_hash","${'1' * 64}"'));
-      expect(saver.saved.single.name, endsWith('-2026-09-11111111.csv'));
+      expect(saver.saved.single.name, endsWith('-2026-09-111111111111.csv'));
       expect(
         find.text(_en.commonSavedTo(saver.saved.single.name)),
         findsOneWidget,
@@ -271,7 +277,7 @@ void main() {
       await _tap(tester, 'bi-export-refresh');
       expect(exports.calls, hasLength(2));
       expect(_text(tester, 'bi-export-computed'), startsWith('Read again on'));
-      expect(_text(tester, 'bi-export-digest'), _en.biExportDigest('2' * 64));
+      expect(_text(tester, 'bi-export-digest'), _en.biExportDigest('2' * 12));
       await _tap(tester, 'bi-export-save');
       final csv = utf8.decode(saver.saved.single.bytes.sublist(3));
       expect(

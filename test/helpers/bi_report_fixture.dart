@@ -4,8 +4,8 @@
 // snapshot, print, export and export-sheet tests: seat utilisation 20 of
 // 120 seat hours, an invoiced amount in euros, collected amounts in two
 // currencies with one month the server could not answer, a qualified
-// (partial) month, a text card, a card this export does not answer and a
-// card whose filter it cannot answer.
+// (partial) month, a text card, a card the server does not answer in an
+// export (its 0A000) and a card whose filter the plan cannot answer.
 import 'package:deskilo/features/workspace/domain/bi_batch.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
@@ -142,6 +142,21 @@ Map<String, Object?> _money(
 /// The figure the server gives for [r], by metric and month; [shift] adds
 /// to every amount (the data changed).
 Map<String, Object?> _result(BiBatchRequestLike r, int shift) {
+  // The batch answers three metrics; any other is that figure's 0A000,
+  // without a descriptor, as `bi_query_batch_v1` gives it.
+  if (!const {
+    'capacity.seat_utilisation',
+    'finance.invoiced',
+    'finance.collected',
+  }.contains(r.metricId)) {
+    return {
+      'request_key': r.key,
+      'metric_id': r.metricId,
+      'ok': false,
+      'code': '0A000',
+      'message': 'unsupported metric',
+    };
+  }
   final month = r.fromMonth ?? r.from!.toIso8601String().substring(0, 7);
   final meta = <String, Object?>{
     'request_key': r.key,

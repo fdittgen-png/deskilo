@@ -26,15 +26,13 @@ import 'kpi_contract.dart';
 enum BiExportFormat {
   pdf,
   csv,
-  xlsx;
-
-  static BiExportFormat? fromWire(Object? v) =>
-      values.where((f) => f.name == v).firstOrNull;
+  xlsx,
 }
 
 /// Why a visual of the report is not in an export.
 enum BiLeftOutReason {
-  /// The figure is not one this export answers yet.
+  /// The figure is not one this export answers yet: the server said so
+  /// (its per-figure `0A000`), or this client does not know the metric.
   notExportable,
 
   /// Its filters or grouping are not ones this export answers; the total
@@ -75,12 +73,9 @@ class BiExportRefused implements Exception {
   String toString() => 'BiExportRefused(${failure.name})';
 }
 
-/// The figure metrics this export answers: the ones the batch answers.
-const _exportable = {
-  'capacity.seat_utilisation',
-  'finance.invoiced',
-  'finance.collected',
-};
+/// The code of a figure the server does not answer in an export: a metric
+/// the batch does not answer, or one at another version there.
+const _notAnswered = '0A000';
 
 /// A visual of the report with the periods it shows.
 class BiSnapshotItem {
@@ -119,7 +114,6 @@ class BiSnapshotPlan {
     required this.report,
     required this.period,
     required this.items,
-    required this.texts,
     required this.leftOut,
     required this.requests,
   });
@@ -128,8 +122,8 @@ class BiSnapshotPlan {
   final BiPeriod period;
   final List<BiSnapshotItem> items;
 
-  /// The text visuals, printed as they are.
-  final List<({int pageIndex, BiReportVisual visual})> texts;
+  /// Before the answer: what the plan cannot ask. In a snapshot's plan,
+  /// also the figures the server did not answer, in the report's order.
   final List<BiLeftOut> leftOut;
 
   /// Every distinct figure, once.
@@ -152,7 +146,6 @@ BiSnapshotPlan biSnapshotPlan(
   required int limit,
 }) {
   final items = <BiSnapshotItem>[];
-  final texts = <({int pageIndex, BiReportVisual visual})>[];
   final leftOut = <BiLeftOut>[];
   final keyOf = <String, String>{};
   final requests = <BiBatchRequest>[];
@@ -168,7 +161,8 @@ BiSnapshotPlan biSnapshotPlan(
     for (final visual in biVisualsInOrder(page.visuals)) {
       switch (_classify(report, page, visual)) {
         case null:
-          texts.add((pageIndex: pageIndex, visual: visual));
+          // A text is printed as it is: nothing to ask.
+          break;
         case final BiLeftOutReason reason:
           leftOut.add(BiLeftOut(page, visual, reason));
         case (metricId: final String metricId, levelId: final String? levelId):
@@ -197,7 +191,6 @@ BiSnapshotPlan biSnapshotPlan(
     report: report,
     period: period,
     items: items,
-    texts: texts,
     leftOut: leftOut,
     requests: requests,
   );
@@ -212,7 +205,9 @@ Object? _classify(
 ) {
   final metricId = visual.metricId;
   if (visual.type == BiVisualType.text || metricId == null) return null;
-  if (!_exportable.contains(metricId)) return BiLeftOutReason.notExportable;
+  // Which figures an export answers is the server's to say (per figure);
+  // a metric this client does not know cannot even be typed.
+  if (kpiDefinitionOf(metricId) == null) return BiLeftOutReason.notExportable;
   final scope = report.scopeOf(page, visual);
   final level = scope == null || visual.dimension != null
       ? null
@@ -345,6 +340,10 @@ class BiReportSnapshot {
 
   /// The server's digest of the figures it gave.
   final String hash;
+
+  /// The digest as the person reads it, in the preview, the printout and
+  /// the file name: its first 12 characters.
+  String get digest => hash.length > 12 ? hash.substring(0, 12) : hash;
   final List<BiSnapshotVisual> visuals;
 
   BiReportDefinition get report => plan.report;
@@ -377,7 +376,9 @@ class BiReportSnapshot {
 /// The answer of `bi_export_snapshot_v1` for [plan], typed. An answer about
 /// another workspace, or without a time or digest, is refused, never shown;
 /// an answer the plan did not ask is ignored, a request it does not answer
-/// is that figure's failure.
+/// is that figure's failure. A visual none of whose figures the server
+/// answers in an export (`0A000`) is left out as [BiLeftOutReason.notExportable],
+/// so the server's list of exportable figures is the only one.
 BiReportSnapshot biReportSnapshotOf(
   BiSnapshotPlan plan,
   Object? answer, {
@@ -403,21 +404,42 @@ BiReportSnapshot biReportSnapshotOf(
     requests[key]!,
     p,
   );
+  final visuals = <BiSnapshotVisual>[];
+  final leftOut = [...plan.leftOut];
+  for (final item in plan.items) {
+    final figures = [
+      for (final (i, p) in item.periods.indexed) figure(item.keys[i], p),
+    ];
+    if (figures.every((f) => f.failure == _notAnswered)) {
+      leftOut.add(
+        BiLeftOut(item.page, item.visual, BiLeftOutReason.notExportable),
+      );
+    } else {
+      visuals.add(BiSnapshotVisual(item: item, figures: figures));
+    }
+  }
+  // Nothing the server answers in an export: nothing to export.
+  if (visuals.isEmpty) throw const BiExportRefused(BiExportFailure.empty);
+  final order = Map<BiReportVisual, int>.identity();
+  for (final page in plan.report.pages) {
+    for (final visual in biVisualsInOrder(page.visuals)) {
+      order[visual] = order.length;
+    }
+  }
+  leftOut.sort((a, b) => order[a.visual]!.compareTo(order[b.visual]!));
   return BiReportSnapshot(
     source: source,
-    plan: plan,
+    plan: BiSnapshotPlan(
+      report: plan.report,
+      period: plan.period,
+      items: [for (final v in visuals) v.item],
+      leftOut: leftOut,
+      requests: plan.requests,
+    ),
     format: format,
     computedAt: computedAt,
     hash: hash,
-    visuals: [
-      for (final item in plan.items)
-        BiSnapshotVisual(
-          item: item,
-          figures: [
-            for (final (i, p) in item.periods.indexed) figure(item.keys[i], p),
-          ],
-        ),
-    ],
+    visuals: visuals,
   );
 }
 

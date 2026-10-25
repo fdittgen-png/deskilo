@@ -157,7 +157,6 @@ Uint8List biExportWorkbook(
 
 /// The file name: the workspace, the period and the digest, nothing else.
 String biExportFileName(BiReportSnapshot s, String slug) {
-  final hash = s.hash.length > 8 ? s.hash.substring(0, 8) : s.hash;
   final ext = s.format.name;
-  return '$slug-analytics-${s.period.wire}-$hash.$ext';
+  return '$slug-analytics-${s.period.wire}-${s.digest}.$ext';
 }

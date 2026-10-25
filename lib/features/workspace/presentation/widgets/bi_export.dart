@@ -6,7 +6,8 @@
 // left out of the report and said — never printed with a made-up figure.
 //
 // [BiSnapshotPrinter] prints an exported report's snapshot instead: its own
-// print layout, inside the workspace's analytics header and footer bands.
+// print layout, inside the workspace's positioned analytics layout when one
+// is designed, else inside its analytics header and footer bands.
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -199,10 +200,13 @@ class BiSnapshotPrinter {
   final BuildContext context;
   final WidgetRef ref;
 
+  /// A positioned `bi_analytics` layout wins over the bands, as for every
+  /// printed document; the bands are the fallback.
   Future<Uint8List> pdf(BiReportSnapshot snapshot) async {
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context).toString();
-    final document = biPrintDocument(snapshot, biPrintStringsFor(context, ref));
+    final strings = biPrintStringsFor(context, ref);
+    final document = biPrintDocument(snapshot, strings);
     final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
     final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
     await warmLetterDocProviders(ref, 'bi_analytics');
@@ -211,14 +215,28 @@ class BiSnapshotPrinter {
       <String, Object?>{
         'workspace': snapshot.source.workspaceName,
         'period': biPeriodLabel(snapshot.period, l10n, locale),
-        'issued': document.provenance
-            .firstWhere((l) => l.label == l10n.biPrintComputed)
-            .value,
+        'issued': strings.formats.dateTime(snapshot.computedAt),
       },
       invoicePdfTemplateFor(ref).texts,
     );
-    final letterhead = renderLetterDoc(context, ref, docId: 'bi_analytics', data: data);
     final mark = developmentMark(context, ref);
+    final layout = letterLayoutXml(ref, docId: 'bi_analytics', l10n: l10n);
+    if (layout != null) {
+      final bytes = await tryLayoutPdf(
+        layoutXml: layout,
+        data: data,
+        what: document.title,
+        documentTitle: document.title,
+        pageLabel: l10n.invoicePdfPage,
+        watermark: mark,
+        font: (asset) async => pw.Font.ttf(asset.contains('Bold') ? bold : regular),
+        image: (name) => layoutImage(ref, name),
+        additionalBody: biPrintBodyWidgets(document, title: true),
+      );
+      if (bytes != null) return bytes;
+    }
+    if (!context.mounted) throw const BiExportRefused(BiExportFailure.stale);
+    final letterhead = renderLetterDoc(context, ref, docId: 'bi_analytics', data: data);
     return buildBiPrintPdf(
       document,
       fonts: (base: pw.Font.ttf(regular), bold: pw.Font.ttf(bold)),

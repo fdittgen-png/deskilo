@@ -6880,7 +6880,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureDataExportDesc =>
-      'Télécharger toutes les données de l’espace dans un classeur Excel.';
+      'Télécharger toutes les données de l’espace dans un classeur Excel, et les rapports d’analyse en fichier CSV ou en classeur.';
 
   @override
   String get featureDataReportDesc =>
@@ -7417,7 +7417,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featurePdfExport => 'Export PDF';
 
   @override
-  String get featurePdfExportDesc => 'Exporter la facture mensuelle en PDF.';
+  String get featurePdfExportDesc =>
+      'Exporter la facture mensuelle et les rapports d’analyse en PDF.';
 
   @override
   String get featurePersonalInfo => 'Informations personnelles';

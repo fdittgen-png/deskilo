@@ -29,25 +29,106 @@ void main() {
         'finance.collected',
         'finance.collected',
         'finance.collected',
+        'purchases.ap_outstanding',
       ]);
-      expect(plan.items.map((i) => i.visual.id), ['v1', 'v2', 'v4', 'v5']);
+      expect(plan.items.map((i) => i.visual.id), [
+        'v1',
+        'v2',
+        'v4',
+        'v5',
+        'v6',
+      ], reason: 'the text v3 asks nothing');
       expect(plan.items.first.keys.single, plan.items[1].keys.last);
       expect(plan.items[1].periods.map((p) => p.wire), [
         '2026-07',
         '2026-08',
         '2026-09',
       ]);
-      expect(plan.texts.single.visual.id, 'v3');
     });
 
     test('leaves out what it cannot answer, and says why', () {
-      final left = {
-        for (final l in fixturePlan().leftOut) l.visual.id: l.reason,
-      };
-      expect(left, {
-        'v6': BiLeftOutReason.notExportable,
-        'v7': BiLeftOutReason.unsupportedScope,
-      });
+      expect(
+        {for (final l in fixturePlan().leftOut) l.visual.id: l.reason},
+        {'v7': BiLeftOutReason.unsupportedScope},
+        reason: 'the plan cannot narrow v7; whether v6 exports is the '
+            'server\'s to say',
+      );
+      final s = fixtureSnapshot();
+      expect(
+        [for (final l in s.plan.leftOut) (l.visual.id, l.reason)],
+        [
+          ('v6', BiLeftOutReason.notExportable),
+          ('v7', BiLeftOutReason.unsupportedScope),
+        ],
+        reason: 'the server\'s 0A000 leaves v6 out, in the report\'s order',
+      );
+      expect(s.visuals.map((v) => v.item.visual.id), ['v1', 'v2', 'v4', 'v5']);
+      expect(s.partial, isTrue);
+    });
+
+    test('a metric this client does not know is left out unasked', () {
+      const report = BiReportDefinition(
+        period: BiReportPeriod.fixed(BiGrain.month, '2026-09'),
+        pages: [
+          BiReportPage(
+            id: 'p1',
+            title: 'Mixed',
+            visuals: [
+              BiReportVisual(
+                id: 'v1',
+                type: BiVisualType.kpi,
+                metricId: 'finance.invoiced',
+                layout: BiVisualLayout(order: 0),
+              ),
+              BiReportVisual(
+                id: 'v2',
+                type: BiVisualType.kpi,
+                metricId: 'nobody.knows',
+                layout: BiVisualLayout(order: 1),
+              ),
+            ],
+          ),
+        ],
+      );
+      final plan = fixturePlan(report: report);
+      expect(plan.requests.map((r) => r.metricId), ['finance.invoiced']);
+      expect(plan.leftOut.single.reason, BiLeftOutReason.notExportable);
+    });
+
+    test('nothing the server answers in an export is nothing to export', () {
+      const report = BiReportDefinition(
+        period: BiReportPeriod.fixed(BiGrain.month, '2026-09'),
+        pages: [
+          BiReportPage(
+            id: 'p1',
+            title: 'Purchases',
+            visuals: [
+              BiReportVisual(
+                id: 'v1',
+                type: BiVisualType.kpi,
+                metricId: 'purchases.ap_outstanding',
+                layout: BiVisualLayout(order: 0),
+              ),
+            ],
+          ),
+        ],
+      );
+      final plan = fixturePlan(report: report);
+      expect(
+        () => biReportSnapshotOf(
+          plan,
+          fixtureAnswer(plan),
+          source: fixtureSource,
+          format: BiExportFormat.pdf,
+        ),
+        throwsA(
+          isA<BiExportRefused>().having(
+            (e) => e.failure,
+            'failure',
+            BiExportFailure.empty,
+          ),
+        ),
+      );
     });
 
     test('narrows the capacity figure to one level, never widens it', () {
@@ -86,7 +167,7 @@ void main() {
 
     test('refuses a report over the limit and one with nothing to export', () {
       expect(
-        () => fixturePlan(limit: 6),
+        () => fixturePlan(limit: 7),
         throwsA(
           isA<BiExportRefused>().having(
             (e) => e.failure,
@@ -95,7 +176,7 @@ void main() {
           ),
         ),
       );
-      expect(fixturePlan(limit: 7).requests, hasLength(7));
+      expect(fixturePlan(limit: 8).requests, hasLength(8));
       const textOnly = BiReportDefinition(
         period: BiReportPeriod.fixed(BiGrain.month, '2026-09'),
         pages: [

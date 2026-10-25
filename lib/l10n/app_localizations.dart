@@ -11312,7 +11312,7 @@ abstract class AppLocalizations {
   /// Description under the data-export feature toggle (#395).
   ///
   /// In en, this message translates to:
-  /// **'Download all workspace data as an Excel workbook.'**
+  /// **'Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook.'**
   String get featureDataExportDesc;
 
   /// #2862 data report feature description
@@ -12212,7 +12212,7 @@ abstract class AppLocalizations {
   /// One-line description under the PDF export switch
   ///
   /// In en, this message translates to:
-  /// **'Export the monthly bill as a PDF.'**
+  /// **'Export the monthly bill and the analytics reports as a PDF.'**
   String get featurePdfExportDesc;
 
   /// #886 personal-information form / feature: featurePersonalInfo

@@ -4979,7 +4979,7 @@
     "description": "#718/#719"
   },
   "featureDataExport": "Exportación de datos (Excel)",
-  "featureDataExportDesc": "Descargar todos los datos del espacio en un libro de Excel.",
+  "featureDataExportDesc": "Descargue todos los datos del espacio en un libro de Excel, y los informes de análisis como archivo CSV o libro.",
   "featureDataReportDesc": "Los datos del espacio en un PDF legible: miembros, reservas por mes, registro de facturas, pagos y saldos, compras y proveedores, y el plano con sus precios. Las mismas filas que el libro de Excel, con totales.",
   "featureDataReportTitle": "Informe de datos (PDF)",
   "featureDecisionSurfaceDesc": "Un único lugar que responde «¿hay algo que me espere?», ordenado por lo que cuesta la demora: primero el dinero que se va, luego alguien que espera una respuesta. Una línea aparece solo si alguien debe decidir o actuar; una cifra sobre la que nadie puede actuar se queda en la pantalla que la tiene.",
@@ -5321,7 +5321,7 @@
   "featurePaymentRemindersDesc": "Las facturas abiertas más allá del plazo configurado reciben sus niveles de recordatorio automáticamente — un aviso en el feed del miembro y una notificación, una vez al día. Desactivado: recordar sigue siendo una acción manual.",
   "featurePaymentRemindersTitle": "Recordatorios de pago automáticos",
   "featurePdfExport": "Exportar PDF",
-  "featurePdfExportDesc": "Exportar la factura mensual como PDF.",
+  "featurePdfExportDesc": "Exporte la factura mensual y los informes de análisis como PDF.",
   "featurePersonalInfo": "Datos personales",
   "@featurePersonalInfo": {
     "description": "#886 personal-information form / feature: featurePersonalInfo"
