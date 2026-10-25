@@ -10,6 +10,7 @@ import 'dart:convert';
 
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/accountant_handoff.dart';
+import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_components.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
@@ -223,5 +224,15 @@ void main() {
     );
     expect(report.columns, [...accountantCsvColumns, 'GST', 'QST']);
     expect(report.toJson()['format_version'], 3);
+  });
+
+  test('the target registry states the format and codes tax per component', () {
+    final target = accountingTargets.singleWhere((t) => t.id == 'accountant_csv');
+    expect(target.edition, 'format $accountantCsvFormatVersion');
+    expect(target.taxCodeModel, TaxCodeModel.perComponent);
+    expect(
+      accountingTargets.singleWhere((t) => t.id == 'fec').taxCodeModel,
+      TaxCodeModel.none,
+    );
   });
 }

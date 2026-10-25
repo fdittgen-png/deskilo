@@ -36,6 +36,7 @@ library;
 
 import 'package:meta/meta.dart';
 
+import 'accountant_csv.dart';
 import 'accounting_target.dart';
 import 'accounting_targets_de.dart';
 
@@ -272,7 +273,7 @@ const List<AccountingTarget> accountingTargets = [
     transport: AccountingTransport.file,
     payload: AccountingPayload.journal,
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
-    taxCodeModel: TaxCodeModel.perComponent,
+    taxCodeModel: TaxCodeModel.none,
     format: fecFormat,
     // #2376 — the client code of an auxiliary account: the plan
     // comptable's practice of up to 13 capitals and digits after the
@@ -357,12 +358,13 @@ const List<AccountingTarget> accountingTargets = [
     id: 'accountant_csv',
     vendor: 'DesKilo',
     product: 'Accountant CSV',
-    edition: 'format 2',
+    edition: 'format $accountantCsvFormatVersion',
     countries: <String>{},
     transport: AccountingTransport.file,
     payload: AccountingPayload.documents,
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund},
-    taxCodeModel: TaxCodeModel.none,
+    // #2378 — every tax component in its own column.
+    taxCodeModel: TaxCodeModel.perComponent,
     format: _accountantCsvFormat,
   ),
   AccountingTarget(

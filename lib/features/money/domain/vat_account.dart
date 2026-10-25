@@ -90,8 +90,8 @@ String buildVatAccountCsv(List<VatAccountPeriod> periods) {
   String day(DateTime d) => d.toIso8601String().substring(0, 10);
   final buffer = StringBuffer()
     ..writeln('# VAT account: output tax and input tax per return period, '
-        'corrections of earlier periods apart; payable = box 1, '
-        'allowable = box 4 of the return')
+        'corrections of earlier periods apart, read from the lines of '
+        'each return')
     ..writeln([
       'period_start',
       'period_end',

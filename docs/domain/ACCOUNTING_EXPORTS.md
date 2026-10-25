@@ -98,7 +98,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
 | `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV, Ziffer per row | file | journal | CH | implemented | not named yet |
 | `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |
-| `accountant_csv` | DesKilo · Accountant CSV · format 2 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `accountant_csv` | DesKilo · Accountant CSV · format 3 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `generic_journal_csv` | DesKilo · Generic journal CSV · compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `general_ledger` | DesKilo · General ledger · PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `trial_balance` | DesKilo · Trial balance · general and auxiliary, PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
