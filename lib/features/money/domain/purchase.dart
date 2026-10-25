@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/json_reader.dart';
+import 'document_exchange_rate.dart';
 import 'purchase_draft.dart';
 import 'purchase_obligation.dart';
 
+export 'document_exchange_rate.dart';
 export 'purchase_draft.dart';
 export 'purchase_obligation.dart';
 
@@ -336,4 +338,23 @@ abstract interface class PurchaseRepository {
   /// #2573 — the sites, levels and offices a purchase line can name, sites
   /// first, each level followed by its offices.
   Future<List<PurchasePlace>> fetchPlaces(String workspaceId);
+
+  /// The exchange rate recorded with a purchase in another currency than
+  /// the space's; null when none is.
+  Future<DocumentExchangeRate?> fetchExchangeRate(
+    String workspaceId,
+    String purchaseId,
+  );
+
+  /// Records the rate of a purchase in another currency, or corrects it
+  /// while the purchase awaits its approval; an approved purchase's rate
+  /// is fixed. Returns the rate as stored.
+  Future<DocumentExchangeRate> recordExchangeRate(
+    String workspaceId,
+    String purchaseId,
+    ExchangeRateEntry entry,
+  );
+
+  /// The sources a rate may name (the reference list), in display order.
+  Future<List<String>> fetchExchangeRateSources();
 }

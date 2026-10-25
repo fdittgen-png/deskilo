@@ -70,7 +70,8 @@ void main() {
     // #2582 — purchaseAnalytics: the purchase figures are asked for.
     // #2583 — workspaceOverview: the overview is asked for.
     // #2552 — personalShell: the person's layer is the installation's decision.
-    expect(onCount, featureManifest.length - 48);
+    // #3031 — foreignCurrencyPurchases: another currency is asked for.
+    expect(onCount, featureManifest.length - 49);
   });
 
   testWidgets(

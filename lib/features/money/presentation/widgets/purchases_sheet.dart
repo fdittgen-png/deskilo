@@ -14,6 +14,7 @@ import '../../providers/purchase_providers.dart';
 import 'purchase_claims.dart';
 import 'purchase_decision_bar.dart';
 import 'purchase_dialogs.dart';
+import 'purchase_exchange_rate.dart';
 import 'purchase_labels.dart';
 import 'purchase_link_inbox.dart';
 import 'purchase_payables.dart';
@@ -312,6 +313,12 @@ class _PurchaseDetailView extends ConsumerWidget {
         Text(
           '${l10n.purchasesTotal}: ${money.formatMinor(detail.grossCents)}',
           key: const ValueKey('purchase-total'),
+        ),
+        // Another currency than the space's: the rate the books read it at.
+        PurchaseExchangeRateTile(
+          workspaceId: workspaceId,
+          summary: s,
+          canEdit: canCapture || canDecide,
         ),
         if (detail.taxPartial && detail.lines.any((l) => l.taxStated))
           Text(l10n.purchasesTaxPartial),

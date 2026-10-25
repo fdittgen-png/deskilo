@@ -464,6 +464,7 @@ class AccountingExportRun {
         // #2365 — a local book's archive carries its posted FEC, the one
         // the FEC export writes; a role left unmapped stops the archive.
         if (posted case JournalBlocked(:final roles)) return AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
+        if (posted case JournalNeedsRates(:final documents)) return AppSnack.error(context, l10n.journalNeedsRates(documents.join(', ')));
         final yearInvoices = exported;
         // #1154 — the signature checks are independent server calls:
         // all of them in flight at once, not one round-trip per invoice.

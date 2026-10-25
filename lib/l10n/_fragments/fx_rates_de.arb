@@ -1,0 +1,21 @@
+{
+  "@@locale": "de",
+  "featureForeignCurrencyPurchasesTitle": "Einkäufe in anderer Währung",
+  "featureForeignCurrencyPurchasesDesc": "Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt.",
+  "purchasesFxCurrency": "Währung",
+  "purchasesFxSpaceCurrency": "{currency} (Währung des Space)",
+  "purchasesFxRate": "Wechselkurs: 1 {currency} in {spaceCurrency}",
+  "purchasesFxRateDate": "Kursdatum",
+  "purchasesFxSource": "Quelle des Kurses",
+  "purchasesFxSourceTaxAuthority": "Von der Steuerverwaltung für den Steuerzeitpunkt veröffentlicht",
+  "purchasesFxSourceBank": "Von der Bank angewandt",
+  "purchasesFxSourceManual": "Von Hand erfasst",
+  "purchasesFxTitle": "Wechselkurs",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} am {date} · {source}",
+  "purchasesFxMissing": "Es ist kein Wechselkurs erfasst: Die Buchhaltung lehnt diesen Einkauf ab, bis er erfasst ist.",
+  "purchasesFxEnter": "Kurs erfassen oder korrigieren",
+  "purchasesFxInvalid": "Ein Kurs ist eine positive Zahl mit höchstens 10 Nachkommastellen, mit Datum und Quelle.",
+  "purchasesFxSaved": "Der Wechselkurs ist erfasst.",
+  "purchasesFxRefused": "Der Wechselkurs wurde nicht erfasst.",
+  "journalNeedsRates": "Diese Einkäufe sind in einer anderen Währung als der des Space und haben keinen erfassten Wechselkurs; es wurde nichts geschrieben. Erfassen Sie zuerst den Kurs jedes einzelnen: {documents}"
+}

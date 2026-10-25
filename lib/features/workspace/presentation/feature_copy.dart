@@ -286,6 +286,8 @@ String _lateDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
 String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
     switch (feature) {
       WorkspaceFeature.personalShell => l10n.featurePersonalShellDesc,
+      WorkspaceFeature.foreignCurrencyPurchases =>
+        l10n.featureForeignCurrencyPurchasesDesc,
       _ => feature.name,
     };
 

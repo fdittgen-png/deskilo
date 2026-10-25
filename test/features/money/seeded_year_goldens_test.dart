@@ -218,11 +218,15 @@ class _Books implements BookProfileRepository {
       groupOf: (t) =>
           ActiveTaxReference.current.groupOfRate('FR', t.percent, t.category),
     );
+    // #3031 — B-2 is in Swiss francs: booked in euros at its recorded
+    // rate, as `compute_postings` books it.
     final bought = purchasePostingsOf(
-      purchases: [SeededExportYear.supplierBill],
+      purchases: [SeededExportYear.supplierBill, SeededExportYear.francBill],
       book: book,
       groupOf: (percent) =>
           ActiveTaxReference.current.groupOfRate('FR', percent, 'S'),
+      functional: 'EUR',
+      rates: {SeededExportYear.francBill.summary.id: SeededExportYear.francRate},
     );
     return PostingSet(
       [
@@ -257,6 +261,12 @@ class _Books implements BookProfileRepository {
         kind: 'supplier',
         number: '17',
         name: 'Nettoyage Pézenas',
+      ),
+    if (documentIds.contains(SeededExportYear.francBill.summary.id))
+      SeededExportYear.francBill.summary.id: const PostingParty(
+        kind: 'supplier',
+        number: '23',
+        name: 'Logiciels Léman SA',
       ),
   };
 
@@ -758,7 +768,14 @@ void main() {
     for (final r in third) {
       expect(
         (r['CompAuxNum'], r['CompAuxLib']!.isNotEmpty),
-        (r['CompteNum'] == '411000' ? '411M0001' : '40117', true),
+        (
+          r['CompteNum'] == '411000'
+              ? '411M0001'
+              : r['PieceRef'] == 'B-2'
+              ? '40123'
+              : '40117',
+          true,
+        ),
         reason: r['EcritureNum'],
       );
     }
@@ -816,6 +833,54 @@ void main() {
     expect(refused, isA<JournalRefused>());
     expect((refused as JournalRefused).blockers.map((b) => b.subject).toSet(), {
       'Nettoyage Pézenas ()',
+      'Logiciels Léman SA ()',
     });
+  });
+
+  // #3031 — the seeded year's Swiss-franc bill through the real export path:
+  // the local book's one read, the posted FEC written from it.
+  test('the CHF bill is posted in EUR at its recorded rate, with '
+      'Montantdevise and Idevise', () async {
+    final rows = _fecRows(await _files['fec_local_book.txt']!())
+        .where((r) => r['PieceRef'] == 'B-2')
+        .toList();
+    expect(rows.map((r) => r['EcritureNum']).toSet(), {'HA-B-2', 'BQ-B-2'});
+    for (final r in rows) {
+      expect(r['Idevise'], 'CHF', reason: r['EcritureNum']);
+      expect(r['Montantdevise'], isNotEmpty, reason: r['EcritureNum']);
+    }
+    final bill = rows.where((r) => r['EcritureNum'] == 'HA-B-2').toList();
+    // 240.00 CHF × 1.0657 = 255.768 → 255.77; 12.50 × 1.0657 = 13.32;
+    // the whole 252.50 × 1.0657 = 269.09 on the supplier.
+    expect(
+      {
+        for (final r in bill)
+          (r['Montantdevise'], _cents(r['Debit']!), _cents(r['Credit']!)),
+      },
+      {('240,00', 25577, 0), ('12,50', 1332, 0), ('252,50', 0, 26909)},
+    );
+    final total = bill.fold(
+      0,
+      (s, r) => s + _cents(r['Debit']!) - _cents(r['Credit']!),
+    );
+    expect(total, 0);
+  });
+
+  test('without its recorded rate the CHF bill stops the books, named', () async {
+    final book = PostingBook(
+      accounts: _accounts(),
+      mappings: _mappings(),
+      issuerSiteId: _localBook.issuerSiteId,
+    );
+    final out = purchasePostingsOf(
+      purchases: [SeededExportYear.francBill],
+      book: book,
+      groupOf: (_) => 'standard',
+      functional: 'EUR',
+    );
+    expect(out, isEmpty);
+    expect(book.blockers.map((b) => (b.block, b.subject)), [
+      (PostingBlock.missingRate, 'B-2 (CHF)'),
+    ]);
   });
 }

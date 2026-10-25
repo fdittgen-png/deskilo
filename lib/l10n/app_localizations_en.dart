@@ -6708,6 +6708,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureFinanceFacesTitle => 'Finances in four faces';
 
   @override
+  String get featureForeignCurrencyPurchasesDesc =>
+      'A supplier\'s bill in another currency than the space\'s, with the exchange rate recorded on it. The books and the FEC read it in the space\'s currency at that rate and keep the original amount beside it; a bill without its rate is refused.';
+
+  @override
+  String get featureForeignCurrencyPurchasesTitle =>
+      'Purchases in another currency';
+
+  @override
   String get featureFormHelpHintsDesc =>
       'A dismissible tip carousel on every main screen, and a small ? beside every parameter and entry field — one tap opens the guide at the right section. Restorable from Settings.';
 
@@ -10744,6 +10752,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get journalNeedsLocalBook =>
       'The journal is posted from a local book: set up the issuer\'s book chart first.';
+
+  @override
+  String journalNeedsRates(String documents) {
+    return 'These purchases are in another currency than the space\'s and have no recorded exchange rate, so nothing was written; record each one\'s rate first: $documents';
+  }
 
   @override
   String journeyClosedPaid(String date) {
@@ -17021,6 +17034,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesEvidence => 'Evidence';
+
+  @override
+  String get purchasesFxCurrency => 'Currency';
+
+  @override
+  String get purchasesFxEnter => 'Enter or correct the rate';
+
+  @override
+  String get purchasesFxInvalid =>
+      'A rate is a positive number with at most 10 decimals, with its date and its source.';
+
+  @override
+  String get purchasesFxMissing =>
+      'No exchange rate is recorded: the books refuse this purchase until it is.';
+
+  @override
+  String purchasesFxRate(String currency, String spaceCurrency) {
+    return 'Exchange rate: 1 $currency in $spaceCurrency';
+  }
+
+  @override
+  String get purchasesFxRateDate => 'Rate date';
+
+  @override
+  String purchasesFxRecorded(
+    String currency,
+    String rate,
+    String spaceCurrency,
+    String date,
+    String source,
+  ) {
+    return '1 $currency = $rate $spaceCurrency on $date · $source';
+  }
+
+  @override
+  String get purchasesFxRefused => 'The exchange rate was not recorded.';
+
+  @override
+  String get purchasesFxSaved => 'The exchange rate is recorded.';
+
+  @override
+  String get purchasesFxSource => 'Source of the rate';
+
+  @override
+  String get purchasesFxSourceBank => 'Applied by the bank';
+
+  @override
+  String get purchasesFxSourceManual => 'Entered by hand';
+
+  @override
+  String get purchasesFxSourceTaxAuthority =>
+      'Published by the tax authority for the tax point';
+
+  @override
+  String purchasesFxSpaceCurrency(String currency) {
+    return '$currency (the space\'s currency)';
+  }
+
+  @override
+  String get purchasesFxTitle => 'Exchange rate';
 
   @override
   String get purchasesGross => 'Total including tax';

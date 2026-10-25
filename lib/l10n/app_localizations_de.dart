@@ -6762,6 +6762,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureFinanceFacesTitle => 'Finanzen in vier Ansichten';
 
   @override
+  String get featureForeignCurrencyPurchasesDesc =>
+      'Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt.';
+
+  @override
+  String get featureForeignCurrencyPurchasesTitle =>
+      'Einkäufe in anderer Währung';
+
+  @override
   String get featureFormHelpHintsDesc =>
       'Ein ausblendbares Tipp-Karussell auf jedem Hauptbildschirm und ein kleines ? neben jedem Parameter und Eingabefeld — ein Tipp öffnet das Handbuch am richtigen Abschnitt. In den Einstellungen wiederherstellbar.';
 
@@ -10837,6 +10845,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get journalNeedsLocalBook =>
       'Das Journal stammt aus einer hier geführten Buchhaltung: richten Sie zuerst den Kontenplan des Ausstellers ein.';
+
+  @override
+  String journalNeedsRates(String documents) {
+    return 'Diese Einkäufe sind in einer anderen Währung als der des Space und haben keinen erfassten Wechselkurs; es wurde nichts geschrieben. Erfassen Sie zuerst den Kurs jedes einzelnen: $documents';
+  }
 
   @override
   String journeyClosedPaid(String date) {
@@ -17181,6 +17194,66 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesEvidence => 'Nachweise';
+
+  @override
+  String get purchasesFxCurrency => 'Währung';
+
+  @override
+  String get purchasesFxEnter => 'Kurs erfassen oder korrigieren';
+
+  @override
+  String get purchasesFxInvalid =>
+      'Ein Kurs ist eine positive Zahl mit höchstens 10 Nachkommastellen, mit Datum und Quelle.';
+
+  @override
+  String get purchasesFxMissing =>
+      'Es ist kein Wechselkurs erfasst: Die Buchhaltung lehnt diesen Einkauf ab, bis er erfasst ist.';
+
+  @override
+  String purchasesFxRate(String currency, String spaceCurrency) {
+    return 'Wechselkurs: 1 $currency in $spaceCurrency';
+  }
+
+  @override
+  String get purchasesFxRateDate => 'Kursdatum';
+
+  @override
+  String purchasesFxRecorded(
+    String currency,
+    String rate,
+    String spaceCurrency,
+    String date,
+    String source,
+  ) {
+    return '1 $currency = $rate $spaceCurrency am $date · $source';
+  }
+
+  @override
+  String get purchasesFxRefused => 'Der Wechselkurs wurde nicht erfasst.';
+
+  @override
+  String get purchasesFxSaved => 'Der Wechselkurs ist erfasst.';
+
+  @override
+  String get purchasesFxSource => 'Quelle des Kurses';
+
+  @override
+  String get purchasesFxSourceBank => 'Von der Bank angewandt';
+
+  @override
+  String get purchasesFxSourceManual => 'Von Hand erfasst';
+
+  @override
+  String get purchasesFxSourceTaxAuthority =>
+      'Von der Steuerverwaltung für den Steuerzeitpunkt veröffentlicht';
+
+  @override
+  String purchasesFxSpaceCurrency(String currency) {
+    return '$currency (Währung des Space)';
+  }
+
+  @override
+  String get purchasesFxTitle => 'Wechselkurs';
 
   @override
   String get purchasesGross => 'Gesamtbetrag inkl. Steuer';

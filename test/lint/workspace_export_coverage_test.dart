@@ -193,6 +193,10 @@ const Map<String, String> _notExported = {
       '#2585 — the receipt of a native financial command attempt (request id and '
           'the invoice or event it made); technical recovery state, never a '
           'workbook row',
+  'document_exchange_rates':
+      '#3031 — the rate recorded with a purchase in another currency; it names '
+          'purchase documents of this server, and the posted exports carry it '
+          'beside each converted line',
   'purchase_requests':
       '#2573 — replay ledger of the purchase writes (request ids and their '
           'committed answers); technical, never a workbook row',

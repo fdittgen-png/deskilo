@@ -4747,6 +4747,8 @@
   },
   "featureFinanceFacesDesc": "La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.",
   "featureFinanceFacesTitle": "Finanzas en cuatro vistas",
+  "featureForeignCurrencyPurchasesDesc": "Una factura de proveedor en otra moneda distinta de la del espacio, con el tipo de cambio registrado en ella. La contabilidad y el FEC la leen en la moneda del espacio a ese tipo y conservan el importe original al lado; una factura sin su tipo se rechaza.",
+  "featureForeignCurrencyPurchasesTitle": "Compras en otra moneda",
   "featureFormHelpHintsDesc": "Un carrusel de consejos descartable en cada pantalla principal, y un pequeño ? junto a cada parámetro y campo — un toque abre la guía en la sección correcta. Restaurable desde Ajustes.",
   "featureFormHelpHintsTitle": "Consejos de ayuda",
   "featureGuestParticipationDesc": "Permite a una persona que no es miembro pedir visitar este espacio, y a quien gestiona las reservas admitirla o rechazarla. Una visita no crea membresía, suscripción ni rol. Desactivado: nadie pide ni es admitido aquí.",
@@ -7302,6 +7304,7 @@
   "journalFecMissingRate": "Estos documentos están en otra moneda que la contabilidad y no tienen un tipo de cambio registrado; el FEC no se ha generado: {documents}",
   "journalFecPartyCode": "El FEC necesita un código de cliente para cada tercero, de hasta 13 letras y cifras: asigne primero un número de miembro o de proveedor a: {names}",
   "journalNeedsLocalBook": "El diario sale de una contabilidad llevada aquí: configure primero el plan de cuentas del emisor.",
+  "journalNeedsRates": "Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: {documents}",
   "journeyClosedPaid": "Pagada el {date} — cerrada",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -10995,6 +10998,21 @@
   "@purchasesEvidence": {
     "description": "#2573 purchases"
   },
+  "purchasesFxCurrency": "Moneda",
+  "purchasesFxEnter": "Introduzca o corrija el tipo",
+  "purchasesFxInvalid": "Un tipo es un número positivo de 10 decimales como máximo, con su fecha y su origen.",
+  "purchasesFxMissing": "No hay ningún tipo de cambio registrado: la contabilidad rechaza esta compra hasta que lo esté.",
+  "purchasesFxRate": "Tipo de cambio: 1 {currency} en {spaceCurrency}",
+  "purchasesFxRateDate": "Fecha del tipo",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} el {date} · {source}",
+  "purchasesFxRefused": "El tipo de cambio no se ha registrado.",
+  "purchasesFxSaved": "El tipo de cambio está registrado.",
+  "purchasesFxSource": "Origen del tipo",
+  "purchasesFxSourceBank": "Aplicado por el banco",
+  "purchasesFxSourceManual": "Introducido a mano",
+  "purchasesFxSourceTaxAuthority": "Publicado por la administración tributaria para el devengo",
+  "purchasesFxSpaceCurrency": "{currency} (moneda del espacio)",
+  "purchasesFxTitle": "Tipo de cambio",
   "purchasesGross": "Total con impuestos",
   "@purchasesGross": {
     "description": "#2573 purchases"
