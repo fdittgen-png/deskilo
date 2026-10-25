@@ -46,7 +46,7 @@ $$;
 create function pg_temp.lines(p_number text, p_kind text) returns text language sql as $$
   select string_agg((l ->> 'account_code') || ':' ||
            case when (l ->> 'debit_cents')::bigint > 0 then 'D' || (l ->> 'debit_cents') else 'C' || (l ->> 'credit_cents') end,
-           ',' order by n)
+           ',' order by (l ->> 'account_code') collate "C", n)
     from jsonb_array_elements(current_setting('t.r')::jsonb -> 'postings') p,
          jsonb_array_elements(p -> 'lines') with ordinality z(l, n)
    where p ->> 'document_number' = p_number and p ->> 'kind' = p_kind;
@@ -72,7 +72,7 @@ select set_config('t.r', public.compute_postings('00000000-0000-4000-8000-000000
 select is(pg_temp.lines('CN-R','refund'), '411:D6000,512:C6000',
   'the refunded credit note pays the member back: customers debited, bank credited');
 select is(pg_temp.lines('CN-R','receipt'), null, 'and is no receipt');
-select is(pg_temp.lines('INV-R','receipt'), '512:D6000,411:C6000', 'the invoice''s payment stays a receipt');
+select is(pg_temp.lines('INV-R','receipt'), '411:C6000,512:D6000', 'the invoice''s payment stays a receipt');
 select is(pg_temp.lines('CN-R','write_off'), null, 'the refund leaves nothing open to write off');
 select ok((select bool_and((select sum((l ->> 'debit_cents')::bigint) = sum((l ->> 'credit_cents')::bigint)
                               from jsonb_array_elements(p -> 'lines') l))
