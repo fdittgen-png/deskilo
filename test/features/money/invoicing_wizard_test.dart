@@ -441,6 +441,21 @@ void main() {
     expect(find.byKey(const ValueKey('wizard-todo-inv-b')), findsOneWidget);
   });
 
+  testWidgets('#2521 — CLOSE offers no regrouping while invoiceSettlement '
+      'is off', (tester) async {
+    final money = FakeMoneyRepository();
+    money.invoices.addAll([
+      _invoice('inv-a', member: 'member-2', total: 3000),
+      _invoice('inv-b', member: 'member-2', total: 2000),
+    ]);
+    await _pumpWizard(tester,
+        run: WizardRun.endOfMonth,
+        money: money,
+        featureFlags: const {'invoiceSettlement': false});
+    await _goTo(tester, WizardStep.close);
+    expect(find.byKey(const ValueKey('wizard-settle-member-2')), findsNothing);
+  });
+
   testWidgets('Back and Next walk the rail; Finish leaves', (tester) async {
     await _pumpWizard(tester, money: await seededMoney());
     expect(

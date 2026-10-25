@@ -41,6 +41,7 @@ class WizardContext {
     required this.previews,
     required this.loading,
     required this.issuingEnabled,
+    required this.settlementEnabled,
   });
 
   final WizardState state;
@@ -61,6 +62,9 @@ class WizardContext {
   /// True while any of the lists is still on its first load.
   final bool loading;
   final bool issuingEnabled;
+
+  /// Whether a member's open invoices may be regrouped into one.
+  final bool settlementEnabled;
 
   Iterable<({String id, String name})> get activeMembers => [
         for (final m in members)
@@ -112,6 +116,7 @@ class WizardContext {
       issuingEnabled: features.contains(WorkspaceFeature.invoicing) &&
           features.contains(kind == InvoiceKind.subscription
               ? WorkspaceFeature.subscriptionInvoices : WorkspaceFeature.usageInvoices),
+      settlementEnabled: features.contains(WorkspaceFeature.invoiceSettlement),
       now: now,
       workspaceId: workspace?.id ?? '',
       currency: moneyFormat(workspace?.currencyCode),

@@ -226,7 +226,7 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
         route: '/roles',
         feature: 'roleManagement',
       ),
-      HelpTip(t.tipMembersPrices, route: '/billing'),
+      HelpTip(t.tipMembersPrices, route: '/billing', feature: 'moneyTab'),
       HelpTip(
         t.tipMembersNotify,
         feature: 'memberNotifications',
@@ -302,7 +302,7 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
     ],
     HelpHintId.workspaceSettings => [
       HelpTip(t.tipWorkspaceSettingsGeneral),
-      HelpTip(t.tipWorkspaceSettingsPay, route: '/payment-methods'),
+      HelpTip(t.tipWorkspaceSettingsPay, route: '/payment-methods', feature: 'moneyTab'),
       HelpTip(t.tipWorkspaceSettingsLegal, route: '/legal-identity'),
       HelpTip(t.tipWorkspaceSettingsNewMembers),
       HelpTip(t.tipWorkspaceSettingsWording, route: '/settings/wording'),

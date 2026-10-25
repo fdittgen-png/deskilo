@@ -100,6 +100,12 @@ const List<RouteRule> routeRules = [
   RouteRule('/task-workbench', RouteClass.publicEntry),
   RouteRule('/account-activity', RouteClass.nativeAccount),
   RouteRule('/linked-accounts', RouteClass.nativeAccount),
+  // The person's own settings (sign-out, status line) and this
+  // device's local diagnostics: no workspace decides them, so they open
+  // with zero workspaces and while a membership is pending. The workspace
+  // sections inside Settings keep their own permissions and flags.
+  RouteRule('/settings', RouteClass.nativeAccount),
+  RouteRule('/developer', RouteClass.nativeAccount),
   // #2388 — pages opened over another screen (they were Navigator pushes
   // with no path): each has the class of the screen it is opened from.
   RouteRule('/discover/workspace', RouteClass.publicEntry),
@@ -138,8 +144,6 @@ const List<RouteRule> routeRules = [
   RouteRule('/directory', RouteClass.workspace),
   RouteRule('/money', RouteClass.workspace),
   RouteRule('/reserve', RouteClass.workspace),
-  RouteRule('/settings', RouteClass.workspace),
-  RouteRule('/developer', RouteClass.workspace),
   RouteRule('/formats', RouteClass.workspace),
   RouteRule('/events', RouteClass.workspace),
   RouteRule('/plan', RouteClass.workspace),
