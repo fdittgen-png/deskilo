@@ -1716,6 +1716,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biGroupNone => 'Sin agrupar';
 
   @override
+  String get biIncompatible =>
+      'El servidor define ahora esta cifra de otra forma que la que conoce esta versión de la aplicación: actualice la aplicación para verla.';
+
+  @override
   String get biInvalidAddress =>
       'Esta dirección pide un análisis que no existe; no se ha leído nada.';
 
@@ -1959,6 +1963,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biUnavailable => 'No se pudo calcular este análisis.';
+
+  @override
+  String biViewCardsIncompatible(String count) {
+    return '$count análisis de esta vista se guardaron cuando su cifra significaba otra cosa y se omiten en lugar de mostrarse con otro significado.';
+  }
 
   @override
   String get biViewChart => 'Gráfico';

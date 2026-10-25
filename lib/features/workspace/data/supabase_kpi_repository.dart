@@ -125,24 +125,9 @@ class SupabaseBiBatchReader implements KpiBatchReader {
     }
     final byKey = {
       for (final raw in JsonReader.of(body, context: 'bi batch').list('results'))
-        JsonReader.of(raw).stringOr('request_key'): JsonReader.of(raw),
+        JsonReader.of(raw).stringOr('request_key'): JsonReader.of(raw).json,
     };
-    return [for (final r in requests) _entry(r, byKey[r.key])];
-  }
-
-  BiBatchEntry _entry(BiBatchRequest r, JsonReader? raw) {
-    if (raw == null) return BiBatchEntry.failed(r.key, message: 'no answer');
-    final result = raw.objectOrNull('result');
-    if (!raw.boolOr('ok', fallback: false) || result == null) {
-      return BiBatchEntry.failed(
-        r.key,
-        code: raw.stringOrNull('code'),
-        message: raw.stringOrNull('message'),
-      );
-    }
-    return r.metricId == 'capacity.seat_utilisation'
-        ? BiBatchEntry.seat(r.key, seatCapacityFromJson(result.json))
-        : BiBatchEntry.finance(r.key, financeSummaryFromJson(result.json));
+    return [for (final r in requests) biBatchEntryFromJson(r, byKey[r.key])];
   }
 }
 

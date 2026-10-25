@@ -119,5 +119,7 @@
   "biFinanceNotProfit": "No es un beneficio: esta cifra no incluye costes y las dos cifras no se restan entre sí.",
   "biFinanceSameAsReport": "Las mismas reglas que el informe de estado del espacio, calculadas una vez en el servidor.",
   "biFinanceLastChange": "Último cambio en la fuente: {date}",
-  "biFinanceComputed": "Calculado el {date}"
+  "biFinanceComputed": "Calculado el {date}",
+  "biIncompatible": "El servidor define ahora esta cifra de otra forma que la que conoce esta versión de la aplicación: actualice la aplicación para verla.",
+  "biViewCardsIncompatible": "{count} análisis de esta vista se guardaron cuando su cifra significaba otra cosa y se omiten en lugar de mostrarse con otro significado."
 }

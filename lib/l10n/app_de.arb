@@ -925,6 +925,7 @@
   "biGrainYear": "Jahr",
   "biGroupBy": "Gruppieren nach",
   "biGroupNone": "Keine Gruppierung",
+  "biIncompatible": "Der Server definiert diese Kennzahl inzwischen anders, als diese App-Version sie kennt: Aktualisieren Sie die App, um sie zu sehen.",
   "biInvalidAddress": "Diese Adresse verlangt eine Analyse, die es nicht gibt; es wurde nichts gelesen.",
   "biKindCurrent": "Jetzt",
   "@biKindCurrent": {
@@ -1201,6 +1202,7 @@
   },
   "biTotal": "Gesamt",
   "biUnavailable": "Diese Analyse konnte nicht berechnet werden.",
+  "biViewCardsIncompatible": "{count} Analysen dieser Ansicht wurden gespeichert, als ihre Kennzahl etwas anderes bedeutete, und werden weggelassen statt mit anderer Bedeutung gezeigt.",
   "biViewChart": "Diagramm",
   "biViewClearMyDefault": "Meine Standardansicht nicht mehr öffnen",
   "biViewClearTeamDefault": "Standardansicht des Teams entfernen",

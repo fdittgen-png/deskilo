@@ -8,6 +8,7 @@
 // DST change.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
+import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
 import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/providers/bi_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -40,6 +41,7 @@ void main() {
       'v': 1,
       'query': {'by': 'level'},
       'cards': ['capacity.seat_utilisation'],
+      'metrics': {'capacity.seat_utilisation': 1},
     });
     final back = BiViewDefinition.fromJson(d.toJson())!;
     expect(checkView(back, {'capacity.seat_utilisation'}).query, query);
@@ -89,6 +91,89 @@ void main() {
       ).query,
       isNull,
     );
+  });
+
+  group('#2578 a view keeps the metric versions it was saved with', () {
+    const capacity = 'capacity.seat_utilisation';
+    const invoiced = 'finance.invoiced';
+    const visible = {capacity, invoiced};
+
+    test('a view saved before versions were recorded opens whole', () {
+      final old = BiViewDefinition.fromJson({
+        'v': 1,
+        'query': {'by': 'level'},
+        'cards': [capacity],
+      })!;
+      expect(old.savedVersion(capacity), 1);
+      final check = checkView(old, visible);
+      expect(check.complete, isTrue);
+      expect(check.query!.cards, [capacity]);
+    });
+
+    test('a card saved for another version is left out and named', () {
+      final d = BiViewDefinition.fromJson({
+        'v': 1,
+        'query': <String, Object?>{},
+        'cards': [capacity, invoiced],
+        'metrics': {capacity: 2, invoiced: 1},
+      })!;
+      final check = checkView(d, visible);
+      expect(check.query!.cards, [invoiced]);
+      expect(check.incompatibleCards, [capacity]);
+      expect(check.unavailableCards, isEmpty);
+      expect(check.complete, isFalse);
+    });
+
+    test('every card of another version: the view is refused, never '
+        'replaced by every module', () {
+      final d = BiViewDefinition.fromJson({
+        'v': 1,
+        'cards': [capacity],
+        'metrics': {capacity: 7},
+      })!;
+      expect(checkView(d, visible).query, isNull);
+    });
+
+    test('malformed versions make the definition unreadable', () {
+      for (final bad in <Object?>[
+        'x',
+        {capacity: 0},
+        {capacity: 100},
+        {capacity: '1'},
+        {for (var i = 0; i < 21; i++) 'm$i': 1},
+      ]) {
+        expect(
+          BiViewDefinition.fromJson({
+            'v': 1,
+            'cards': [capacity],
+            'metrics': bad,
+          }),
+          isNull,
+          reason: '$bad',
+        );
+      }
+    });
+
+    test('a v2 report names the version of each visual', () {
+      final report = BiReportDefinition.standard(
+        query: const BiQueryContext(cards: [capacity, invoiced]),
+        cards: const [capacity, invoiced],
+        pageTitle: 'p',
+      );
+      expect(
+        report.pages.first.visuals.map((v) => v.metricVersion),
+        [1, 1],
+      );
+      final d = BiViewDefinition.ofReport(report);
+      expect(d.metricVersions, {capacity: 1, invoiced: 1});
+      expect(checkView(d, visible).complete, isTrue);
+      final later = BiViewDefinition(
+        cards: d.cards,
+        metricVersions: {capacity: 1, invoiced: 2},
+        report: report,
+      );
+      expect(checkView(later, visible).incompatibleCards, [invoiced]);
+    });
   });
 
   test('my own default wins over the team default; none means standard', () {

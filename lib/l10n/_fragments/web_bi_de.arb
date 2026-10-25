@@ -119,5 +119,7 @@
   "biFinanceNotProfit": "Kein Gewinn: Diese Zahl enthält keine Kosten, und die beiden Zahlen werden nicht voneinander abgezogen.",
   "biFinanceSameAsReport": "Dieselben Regeln wie der Statusbericht des Arbeitsbereichs, einmal auf dem Server berechnet.",
   "biFinanceLastChange": "Letzte Änderung der Quelle: {date}",
-  "biFinanceComputed": "Berechnet am {date}"
+  "biFinanceComputed": "Berechnet am {date}",
+  "biIncompatible": "Der Server definiert diese Kennzahl inzwischen anders, als diese App-Version sie kennt: Aktualisieren Sie die App, um sie zu sehen.",
+  "biViewCardsIncompatible": "{count} Analysen dieser Ansicht wurden gespeichert, als ihre Kennzahl etwas anderes bedeutete, und werden weggelassen statt mit anderer Bedeutung gezeigt."
 }

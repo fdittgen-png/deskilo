@@ -17,21 +17,11 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
+import 'kpi_descriptor.dart';
 import 'kpi_overview.dart';
 import 'kpi_purchases.dart';
 
-/// How a KPI may be combined across a dimension or across time.
-enum KpiAggregation {
-  /// sum(numerator) / sum(denominator) over the whole scope.
-  ratioOfSums,
-
-  /// Additive over disjoint intervals and resources.
-  sum,
-
-  /// #2582 — a stock read at the end of the period (what is owed then):
-  /// never summed over months; a longer period is its last month's value.
-  lastAtCutoff,
-}
+export 'kpi_descriptor.dart';
 
 /// #1921 — what a KPI discloses, and so who may read it.
 enum KpiDisclosure {
@@ -64,6 +54,8 @@ class KpiDefinition {
     required this.version,
     required this.unit,
     required this.timeBasis,
+    required this.dateBasis,
+    required this.coverage,
     required this.dimensions,
     required this.numerator,
     required this.denominator,
@@ -81,6 +73,10 @@ class KpiDefinition {
   /// What the interval means: `[from, to)` in UTC, buckets in the
   /// workspace's time zone.
   final String timeBasis;
+
+  /// [timeBasis] as a date basis, and which past the figure can speak for.
+  final KpiDateBasis dateBasis;
+  final KpiCoverage coverage;
   final List<String> dimensions;
   final String numerator;
   final String denominator;
@@ -109,6 +105,8 @@ const seatUtilisationKpi = KpiDefinition(
   timeBasis:
       'reservation time within opening hours, [from, to) UTC, '
       'days and opening hours in the workspace time zone',
+  dateBasis: KpiDateBasis.reservationTime,
+  coverage: KpiCoverage.recordedHistory,
   dimensions: ['level'],
   numerator: 'reserved_seat_hours',
   denominator: 'offered_seat_hours',
@@ -135,6 +133,8 @@ const invoicedKpi = KpiDefinition(
   timeBasis:
       'the invoice\'s month (YYYY-MM), whole months [from, to] on the '
       'workspace calendar',
+  dateBasis: KpiDateBasis.invoiceMonth,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'invoiced_minor',
   denominator: '',
@@ -155,6 +155,8 @@ const collectedKpi = KpiDefinition(
   timeBasis:
       'the month a payment was matched to an invoice, on the workspace '
       'clock, whole months [from, to]',
+  dateBasis: KpiDateBasis.paymentMatchedAt,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'collected_minor',
   denominator: '',
@@ -174,6 +176,10 @@ const kpiCatalogue = <KpiDefinition>[
   ...purchaseKpis,
   ...overviewKpis,
 ];
+
+/// The definition registered under [id], or null for an unknown id.
+KpiDefinition? kpiDefinitionOf(String id) =>
+    kpiCatalogue.where((k) => k.id == id).firstOrNull;
 
 /// Why a value is what it is. Several can hold at once.
 enum KpiQuality {
@@ -467,13 +473,25 @@ class KpiUnavailable implements Exception {
   String toString() => 'KpiUnavailable: $reason';
 }
 
+/// The server answered another version, unit, date basis or coverage of
+/// the metric: the figure would mean something else. Never retried.
+class KpiIncompatible extends KpiUnavailable {
+  const KpiIncompatible() : super('incompatible_metric');
+}
+
 /// #1921 — the server's copy of the catalogue: per KPI its version, what
-/// it discloses and the permissions it needs. `kpi_registry()` in the
-/// latest migration must hold exactly this (kpi_registry_sql_test).
+/// it discloses and the permissions it needs, and the unit, the
+/// aggregation, the date basis and the coverage every batched answer
+/// echoes. `kpi_registry()` in the latest migration must hold exactly this
+/// (kpi_registry_sql_test).
 String kpiRegistryJson() => jsonEncode({
   for (final k in kpiCatalogue)
     k.id: {
       'version': k.version,
+      'unit': k.unit,
+      'aggregation': k.aggregation.wire,
+      'date_basis': k.dateBasis.wire,
+      'coverage': k.coverage.wire,
       'disclosure': k.disclosure.wire,
       'permissions': k.permissions,
       if (k.minCohort != null) 'min_cohort': k.minCohort,
