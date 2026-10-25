@@ -31,6 +31,8 @@ const Map<String, String> _exempt = {
       'the half-open end of a period query',
   'lib/features/money/presentation/widgets/expense_schedule_sheet.dart':
       'date-picker bounds — how far the picker may scroll',
+  'lib/features/money/presentation/widgets/schedule_supplier_field.dart':
+      'date-picker bounds — how far the picker may scroll',
   'lib/features/money/presentation/widgets/register_payment_sheet.dart':
       'a date-picker bound',
   'lib/features/money/domain/report_data_letters.dart':

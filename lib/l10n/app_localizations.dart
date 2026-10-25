@@ -32952,6 +32952,18 @@ abstract class AppLocalizations {
   /// **'No end date'**
   String get scheduleNoEnd;
 
+  /// No description provided for @scheduleNoSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier'**
+  String get scheduleNoSupplier;
+
+  /// No description provided for @schedulePaysSupplier.
+  ///
+  /// In en, this message translates to:
+  /// **'pays {supplier}'**
+  String schedulePaysSupplier(Object supplier);
+
   /// No description provided for @schedulePending.
   ///
   /// In en, this message translates to:
@@ -32993,6 +33005,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Schedule it'**
   String get scheduleSubmit;
+
+  /// No description provided for @scheduleSupplierLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier it pays (optional)'**
+  String get scheduleSupplierLabel;
 
   /// No description provided for @scheduleTimes.
   ///

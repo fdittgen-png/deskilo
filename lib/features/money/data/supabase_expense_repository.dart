@@ -112,6 +112,15 @@ class SupabaseExpenseRepository implements ExpenseRepository {
   );
 
   @override
+  Future<void> setExpenseScheduleSupplier(
+    String scheduleId,
+    String? supplierId,
+  ) => _client.rpc<void>(
+    'set_expense_schedule_supplier',
+    params: {'p_schedule_id': scheduleId, 'p_supplier_id': supplierId},
+  );
+
+  @override
   Future<int> sweepExpenseSchedules(String workspaceId) async {
     final n = await _client.rpc<void>(
       'sweep_expense_schedules',
