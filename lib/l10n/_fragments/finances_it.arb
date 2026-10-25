@@ -116,5 +116,21 @@
         "type": "String"
       }
     }
+  },
+  "financesPaymentsMoreFrom": "Altri pagamenti da {host}",
+  "@financesPaymentsMoreFrom": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaymentsMoreFailed": "{host} non ha risposto per altri pagamenti. Tocchi per riprovare.",
+  "@financesPaymentsMoreFailed": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   }
 }

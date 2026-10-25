@@ -12959,6 +12959,18 @@ abstract class AppLocalizations {
   /// **'Payments'**
   String get financesPayments;
 
+  /// #2557 C7 Me › Finances › Payments: the next page of one host did not answer; the rows shown stay
+  ///
+  /// In en, this message translates to:
+  /// **'{host} did not answer for more payments. Tap to try again.'**
+  String financesPaymentsMoreFailed(String host);
+
+  /// #2557 C7 Me › Finances › Payments: a connected host whose first page was full offers its next page
+  ///
+  /// In en, this message translates to:
+  /// **'More payments from {host}'**
+  String financesPaymentsMoreFrom(String host);
+
   /// #2557 C4 Me › Finances: the period filter, every year.
   ///
   /// In en, this message translates to:

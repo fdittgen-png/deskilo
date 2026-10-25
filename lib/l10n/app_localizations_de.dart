@@ -7888,6 +7888,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesPayments => 'Zahlungen';
 
   @override
+  String financesPaymentsMoreFailed(String host) {
+    return '$host hat für weitere Zahlungen nicht geantwortet. Tippen, um es erneut zu versuchen.';
+  }
+
+  @override
+  String financesPaymentsMoreFrom(String host) {
+    return 'Weitere Zahlungen von $host';
+  }
+
+  @override
   String get financesPeriodAll => 'Alle Zeiträume';
 
   @override

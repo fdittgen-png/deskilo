@@ -5537,6 +5537,22 @@
   "@financesPayments": {
     "description": "Me › Finances"
   },
+  "financesPaymentsMoreFailed": "{host} non ha risposto per altri pagamenti. Tocchi per riprovare.",
+  "@financesPaymentsMoreFailed": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaymentsMoreFrom": "Altri pagamenti da {host}",
+  "@financesPaymentsMoreFrom": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "financesPeriodAll": "Tutti i periodi",
   "financesRemindedTimes": "Sollecitata ×{count}",
   "@financesRemindedTimes": {

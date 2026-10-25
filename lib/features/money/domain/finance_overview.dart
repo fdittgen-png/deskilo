@@ -298,13 +298,19 @@ class FinanceOverview {
     FinanceHostStatus status, [
     FinanceOverview? answer,
   ]) {
+    final payments = answer?.payments ?? const <AccountActivity>[];
     final read = FinanceHostRead(
       host,
       status,
+      // A workspace of payments alone is answered here as well.
       workspaceIds: {
         for (final i in answer?.invoices ?? const <FinanceInvoice>[])
           i.workspaceId,
+        for (final p in payments) p.workspaceId,
       },
+      morePaymentsBefore: payments.length < activityPageSize
+          ? null
+          : payments.last.cursor,
     );
     final next = _with(
       hosts: [
@@ -330,7 +336,10 @@ class FinanceOverview {
           ...answered,
           FinanceSourceRead(
             origin: origin,
-            workspaceIds: {for (final i in invoices) i.workspaceId},
+            workspaceIds: {
+              for (final i in invoices) i.workspaceId,
+              for (final p in payments) p.workspaceId,
+            },
           ),
         ],
       );
@@ -341,14 +350,24 @@ class FinanceOverview {
       _with(unavailableSources: [...unavailableSources, source]);
 
   /// The workspaces my documents come from, as (id, name), by name.
-  List<(String, String)> get workspaces {
-    final seen = <String, String>{};
-    for (final i in invoices) {
-      seen.putIfAbsent(i.workspaceId, () => i.workspaceName);
+  List<(String, String)> get workspaces => _byName({
+    for (final i in invoices) i.workspaceId: i.workspaceName,
+  });
+
+  /// The workspaces my documents or my payments come from — these
+  /// payments and [more] (the personal home's own) — as (id, name), by
+  /// name: a workspace I only paid in has a file of its own too.
+  List<(String, String)> workspacesWith(Iterable<AccountActivity> more) {
+    final seen = {for (final (id, name) in workspaces) id: name};
+    for (final p in [...payments, ...more]) {
+      seen.putIfAbsent(p.workspaceId, () => p.workspaceName);
     }
-    return [for (final e in seen.entries) (e.key, e.value)]
-      ..sort((a, b) => a.$2.toLowerCase().compareTo(b.$2.toLowerCase()));
+    return _byName(seen);
   }
+
+  static List<(String, String)> _byName(Map<String, String> seen) =>
+      [for (final e in seen.entries) (e.key, e.value)]
+        ..sort((a, b) => a.$2.toLowerCase().compareTo(b.$2.toLowerCase()));
 
   /// Only [workspaceId]'s documents; every workspace when it is null. A
   /// reminder follows its invoice.

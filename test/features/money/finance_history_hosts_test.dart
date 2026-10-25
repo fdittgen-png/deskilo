@@ -508,4 +508,133 @@ void main() {
       expect(saver.calls, 0);
     });
   });
+  group('Me › Finances › Payments, host by host', () {
+    Future<void> pumpPayments(
+      WidgetTester tester,
+      _Reader reader,
+    ) async {
+      await pumpApp(
+        tester,
+        const MyFinancesScreen(),
+        size: const Size(1440, 9000),
+        overrides: _overrides(FakeAccountActivityRepository(), reader),
+      );
+      await tester.pumpAndSettle();
+      await _tap(tester, 'finances-tab-payments');
+    }
+
+    /// Lyon holds one page and one row more; its overview answered the
+    /// first page, as the host reader does. Nice holds one payment.
+    _Reader twoHosts() {
+      final lyon = [
+        for (var i = 0; i < activityPageSize + 1; i++)
+          _row('pay-$i', minutes: i),
+      ];
+      return _Reader()
+        ..rows['inst-b'] = lyon
+        ..overviews['inst-b'] = FinanceOverview(
+          invoices: [invoice('b1', ws: 'Lyon')],
+          payments: lyon.take(activityPageSize).toList(),
+        )
+        ..rows['inst-c'] = [_row('nice-1', ws: 'Nice', minutes: 300)]
+        ..overviews['inst-c'] = FinanceOverview(
+          payments: [_row('nice-1', ws: 'Nice', minutes: 300)],
+        );
+    }
+
+    testWidgets('a host with a full first page offers more of its own, read '
+        'on that host after its last row; a short page ends it', (
+      tester,
+    ) async {
+      final reader = twoHosts();
+      await pumpPayments(tester, reader);
+      expect(_key('finances-payment-pay-0'), findsOneWidget);
+      expect(_key('finances-payment-pay-49'), findsOneWidget);
+      expect(_key('finances-payment-pay-50'), findsNothing);
+      expect(_key('finances-payment-nice-1'), findsOneWidget);
+      expect(_key('finances-payments-more-inst-c'), findsNothing,
+          reason: 'a short first page has nothing more');
+      expect(reader.askedOf('inst-b'), 0);
+
+      await _tap(tester, 'finances-payments-more-inst-b');
+      expect(reader.asked, ['inst-b:payments:pay-49']);
+      expect(_key('finances-payment-pay-50'), findsOneWidget);
+      expect(_key('finances-payment-pay-0'), findsOneWidget);
+      expect(_key('finances-payments-more-inst-b'), findsNothing);
+    });
+
+    testWidgets('a page that does not answer is named with its own Try '
+        'again; the rows shown stay, and the retry reads that page again', (
+      tester,
+    ) async {
+      final reader = twoHosts()..down.add('inst-b');
+      await pumpPayments(tester, reader);
+      await _tap(tester, 'finances-payments-more-inst-b');
+      expect(_key('finances-payments-more-retry-inst-b'), findsOneWidget);
+      expect(_key('finances-payment-pay-49'), findsOneWidget);
+      expect(_key('finances-payment-nice-1'), findsOneWidget);
+
+      reader.down.remove('inst-b');
+      await _tap(tester, 'finances-payments-more-retry-inst-b');
+      expect(_key('finances-payment-pay-50'), findsOneWidget);
+      expect(reader.asked, [
+        'inst-b:payments:pay-49',
+        'inst-b:payments:pay-49',
+      ]);
+    });
+  });
+
+  group('Me › Finances › Export of a workspace with payments only', () {
+    Future<void> pumpFinances(
+      WidgetTester tester,
+      FakeAccountActivityRepository home,
+      _Reader reader,
+      _Saver saver,
+    ) async {
+      await pumpApp(
+        tester,
+        const MyFinancesScreen(),
+        size: const Size(1440, 1400),
+        overrides: [
+          ..._overrides(home, reader),
+          fileDeliveryModeProvider.overrideWithValue(FileDeliveryMode.direct),
+          typedFileSaverProvider.overrideWithValue(saver.save),
+        ],
+      );
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('a connected host\'s workspace with payments and no invoice '
+        'has its entry; its file carries its payments, named after the '
+        'host', (tester) async {
+      final saver = _Saver();
+      final reader = _Reader()
+        ..rows['inst-b'] = [_row('pay-1')]
+        ..overviews['inst-b'] = FinanceOverview(payments: [_row('pay-1')]);
+      await pumpFinances(tester, FakeAccountActivityRepository(), reader, saver);
+      await _tap(tester, 'my-finances-export');
+      await _tap(tester, 'my-finances-export-ws-Lyon');
+
+      final rows = _lines(saver.files.values.single);
+      final payments = rows.where((r) => r.contains(',payment,')).toList();
+      expect(payments, hasLength(1));
+      expect(payments.single, contains(',payment,"Lyon",'));
+      expect(rows.where((r) => r.contains(',invoice,')), isEmpty);
+    });
+
+    testWidgets('the home\'s workspace with payments and no invoice has its '
+        'entry, read on the home', (tester) async {
+      final saver = _Saver();
+      final home = FakeAccountActivityRepository()
+        ..records[AccountActivityKind.payments] = [
+          _row('pay-home', ws: 'Office A', currency: 'EUR', amount: 1200),
+        ];
+      await pumpFinances(tester, home, _Reader(), saver);
+      await _tap(tester, 'my-finances-export');
+      await _tap(tester, 'my-finances-export-ws-Office A');
+
+      final rows = _lines(saver.files.values.single);
+      expect(rows.last, contains(',"EUR",,12.00,,,,payment,"home",'));
+    });
+  });
 }

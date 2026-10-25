@@ -5537,6 +5537,22 @@
   "@financesPayments": {
     "description": "Me › Finances"
   },
+  "financesPaymentsMoreFailed": "{host} no respondió con más pagos. Toque para volver a intentarlo.",
+  "@financesPaymentsMoreFailed": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaymentsMoreFrom": "Más pagos de {host}",
+  "@financesPaymentsMoreFrom": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "financesPeriodAll": "Todos los periodos",
   "financesRemindedTimes": "Recordada ×{count}",
   "@financesRemindedTimes": {

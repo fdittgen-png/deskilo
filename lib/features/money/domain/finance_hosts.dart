@@ -71,11 +71,17 @@ class FinanceHostRead {
     this.host,
     this.status, {
     this.workspaceIds = const {},
+    this.morePaymentsBefore,
   });
 
   final FinanceHost host;
   final FinanceHostStatus status;
   final Set<String> workspaceIds;
+
+  /// Where the next page of my payments on this host starts: the last row
+  /// of a full first page. Null when that page was short (nothing more)
+  /// or the host has not answered.
+  final ActivityCursor? morePaymentsBefore;
 }
 
 /// The personal home's limits for these reads (its platform settings).

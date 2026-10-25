@@ -34,6 +34,7 @@ import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/finance_document_views.dart';
+import '../widgets/host_payment_pages.dart';
 import '../widgets/my_finances_parts.dart';
 import '../widgets/own_finance_export_menu.dart';
 import '../widgets/personal_payment_provider.dart';
@@ -389,13 +390,6 @@ class _Payments extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final home = ref.watch(accountActivityProvider(AccountActivityKind.payments));
-    final rows = home.whenData(
-      (own) => FinanceOverview.newestFirst(
-        FinanceOverview(payments: own)
-            .merge(FinanceOverview(payments: hostPayments))
-            .payments,
-      ),
-    );
     final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
     Widget list(List<AccountActivity> all) => Column(
               children: [
@@ -444,30 +438,42 @@ class _Payments extends ConsumerWidget {
       },
       children: [
         const PersonalPaymentProvider(),
-        switch (rows) {
-          AsyncData(value: final all) when all
-              .where(_kept)
-              .isEmpty => EmptyState(
-              key: const ValueKey('finances-payments-empty'),
-              icon: Icons.payments_outlined,
-              title: l10n.accountActivityEmpty,
-            ),
-          AsyncData(value: final all) => list(all),
-          // The home did not answer: its Try again, and the connected
-          // hosts' payments stay.
-          AsyncError() => Column(
-              children: [
-                TextButton(
-                  key: const ValueKey('finances-payments-retry'),
-                  onPressed: () => ref.invalidate(
-                      accountActivityProvider(AccountActivityKind.payments)),
-                  child: Text(l10n.accountActivityFailed),
+        HostPaymentPages(
+          builder: (more) {
+            final away = [...hostPayments, ...more];
+            final rows = home.whenData(
+              (own) => FinanceOverview.newestFirst(
+                FinanceOverview(payments: own)
+                    .merge(FinanceOverview(payments: away))
+                    .payments,
+              ),
+            );
+            return switch (rows) {
+              AsyncData(value: final all) when all
+                  .where(_kept)
+                  .isEmpty => EmptyState(
+                  key: const ValueKey('finances-payments-empty'),
+                  icon: Icons.payments_outlined,
+                  title: l10n.accountActivityEmpty,
                 ),
-                list(FinanceOverview.newestFirst(hostPayments)),
-              ],
-            ),
-          _ => const LoadingView(),
-        },
+              AsyncData(value: final all) => list(all),
+              // The home did not answer: its Try again, and the connected
+              // hosts' payments stay.
+              AsyncError() => Column(
+                  children: [
+                    TextButton(
+                      key: const ValueKey('finances-payments-retry'),
+                      onPressed: () => ref.invalidate(
+                          accountActivityProvider(AccountActivityKind.payments)),
+                      child: Text(l10n.accountActivityFailed),
+                    ),
+                    list(FinanceOverview.newestFirst(away)),
+                  ],
+                ),
+              _ => const LoadingView(),
+            };
+          },
+        ),
         Align(
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
