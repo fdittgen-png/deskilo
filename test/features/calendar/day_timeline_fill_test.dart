@@ -4,6 +4,7 @@
 // the lower part empty — they grow into it, to a readable maximum — and a
 // long list keeps the compact rows and scrolls.
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
+import 'package:deskilo/features/calendar/presentation/widgets/day_timeline_axis.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/screens/day_timeline.dart' show pumpTimeline, todayReservation;

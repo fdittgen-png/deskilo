@@ -35,6 +35,7 @@ import '../application/book_seat.dart';
 import '../application/booking_outcome_observation.dart';
 import '../application/booking_recovery.dart';
 import '../domain/booking_error_text.dart';
+import '../domain/booking_gate.dart';
 import '../domain/own_booking_removal.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
@@ -458,51 +459,16 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     // Defense in depth (#161): the tap handler never routes blocked seats
     // here, but a stale plan could — the RPCs reject them anyway.
     if (seat.isBlockedAt(booked.start)) {
-      AppSnack.info(
-        context,
-        l10n.planSeatBlocked,
-        replace: true,
-      );
+      AppSnack.info(context, l10n.planSeatBlocked, replace: true);
       return;
     }
     final myMemberId = ref.read(myMemberProvider).value?.id;
     final dayBased = effective.isDayBased;
-    // #814 — the gate BEFORE the sheet: a Day-row or Week-cell tap on a
-    // closed day, a window in the past, beyond the horizon or outside
-    // the hours under 'off' used to open a full sheet and fail at the
-    // server. Now it says why, here, and opens nothing.
     final gate = bookingGateOf(ref);
-    if (gate != null) {
-      final refusal = gate.refusalFor(
-        start: booked.start,
-        end: booked.end,
-        walkUp: walkUp,
-        seat: seat,
-      );
-      // #2016 — with the walk-up offered, the sheet opens when EITHER
-      // action is allowed; it shows the refusal of the chosen one.
-      final walkUpAllowed = offerWalkUp &&
-          gate.refusalFor(
-                start: booked.start,
-                end: booked.end,
-                walkUp: true,
-                seat: seat,
-              ) ==
-              null;
-      if (refusal != null && !walkUpAllowed) {
-        traceGateRefusal(seat: seat, refusal: refusal, walkUp: walkUp);
-        AppSnack.info(
-          context,
-          bookingRefusalText(
-            l10n,
-            refusal,
-            policies: gate.policies,
-            stepMinutes: effective.stepMinutes,
-          ),
-          replace: true,
-        );
-        return;
-      }
+    if (gate != null &&
+        _gateRefuses(gate, seat, booked,
+            walkUp: walkUp, offerWalkUp: offerWalkUp, effective: effective)) {
+      return;
     }
     // Cap by the next reservation on the seat (plan parity): a
     // range-filtered free seat cannot be capped below the window, but a
@@ -519,34 +485,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             at: booked.start,
           );
     // #687 — a WALK-UP ends where the current stint ends, not where the
-    // browsed window does. Ported with the Plan tab's job: under
-    // half-day granularity that is the current half (or the whole day
-    // for a member whose default period IS the day, #586); full-day and
-    // hourly grids end with the working day, overtime-safe; a minute
-    // grid keeps the default stay.
-    //
-    // Without this, walking up in a half-day workspace booked the
-    // member's default period from NOW — a morning that started at 11:00
-    // and ran to midnight.
+    // browsed window does ([ReserveWindowRules.walkUpEnd]).
     final walkUpEnd = rules.walkUpEnd(booked,
         period: ref.read(defaultPeriodProvider).value,
         ownSlot: ownSlot);
-    var end = walkUp ? walkUpEnd : booked.end;
-    var capped = false;
-    if (next != null && next.startsAt.isBefore(end)) {
-      end = next.startsAt;
-      capped = true;
-    }
-    final nextStart = next?.startsAt;
-    final walkUpCapped = nextStart != null && nextStart.isBefore(walkUpEnd);
-    final WalkUpOption? walkUpOption = offerWalkUp
-        ? (
-            start: booked.start,
-            end: walkUpCapped ? nextStart : walkUpEnd,
-            cap: nextStart,
-            capped: walkUpCapped,
-          )
-        : null;
+    final opening = ReserveWindowRules.sheetEnd(booked,
+        walkUpEnd: walkUpEnd, nextStart: next?.startsAt,
+        walkUp: walkUp, offerWalkUp: offerWalkUp);
 
     final choice = await showAppSheet<BookingChoice>(
       context: context,
@@ -559,12 +504,12 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           ?ref.read(levelsProvider).value?.where((l) => l.id == seatPlan?.levelId).firstOrNull?.name,
           ?seatPlan?.desks.where((d) => d.id == seat.deskId).firstOrNull?.name],
         start: booked.start,
-        initialEnd: end,
+        initialEnd: opening.end,
         cap: next?.startsAt,
-        capped: capped,
+        capped: opening.capped,
         granularity: effective,
         walkUp: walkUp,
-        walkUpOption: walkUpOption,
+        walkUpOption: opening.walkUpOption,
         liveWindow: liveWindow,
         // #2016 — the check-in-right-away switch follows the window the
         // member edits, not the one the hub browsed.
@@ -621,6 +566,15 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     // #2016 T08 — the choice belongs to the workspace the sheet opened for:
     // after a switch it is dropped, never booked in either workspace.
     if (ref.read(currentWorkspaceProvider).value?.id != workspace.id) return;
+    await _book(choice, seat, workspace.id, myMemberId, liveWindow: liveWindow);
+  }
+
+  /// What the member chose in the booking sheet for [seat]: a block, or a
+  /// booking (a series names the dates that would fail first), and what to
+  /// say once the server answered.
+  Future<void> _book(BookingChoice choice, Seat seat, String workspaceId,
+      String? myMemberId, {required bool liveWindow}) async {
+    final l10n = context.l10n;
     // Blocking is not a booking: it takes the seat OUT of service from
     // now, open-ended, and returns before any reservation is created.
     if (choice.block) {
@@ -639,7 +593,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     }
 
     // #2575 — a series names the dates that would fail before it books.
-    final ask = ownSeriesAsk(choice, workspace.id, seat.id, myMemberId);
+    final ask = ownSeriesAsk(choice, workspaceId, seat.id, myMemberId);
     SeriesPreviewer previewer() => ref.read(seriesPreviewerProvider);
     if (!await confirmSeriesPreview(context, previewer, ask) || !mounted) {
       return;
@@ -671,7 +625,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       final outcome = await bookSeat(
         ref.read(reservationRepositoryProvider),
         (
-          workspaceId: workspace.id,
+          workspaceId: workspaceId,
           seatId: seat.id,
           start: choice.start,
           end: choice.end,
@@ -694,27 +648,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       recorded?.resolveWith(bookingOutcomeObservation(outcome));
       if (!mounted) return;
 
-      switch (outcome) {
-        case SentForConfirmation(:final subjectMemberId):
-          final who = (ref.read(memberNamesProvider).value ??
-                  const <String, String>{})[subjectMemberId] ??
-              '';
-          AppSnack.success(
-            context,
-            l10n.planBookedForPending(who),
-            replace: true,
-          );
-        case Booked(:final reservationId, :final checkedIn, :final start, :final end):
-          // #663: the Reserve hub reported every refusal and no success
-          // at all — a booking simply happened, or appeared to. Say
-          // which, and say it about what the SERVER did: reporting
-          // `false` while it checked them in is the confirmation lying.
-          announceBooking(context, l10n,
-              checkedIn: checkedIn, start: start, end: end, spaceName: seat.name,
-              now: ref.read(clockProvider).now(), onOpen: () => openReservationById(context, ref, reservationId));
-        case SeriesBooked(:final result):
-          await showSeriesResultDialog(context, result);
-      }
+      await _announce(outcome, seat);
     } on BookingIntentNotSaved catch (e, st) {
       // Nothing was sent: an unprotected mutation is worse than none.
       recorded?.resolveWith(bookingErrorObservation(e));
@@ -767,6 +701,69 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     }
     if (!mounted) return;
     invalidateBookingData(ref);}
+  /// Says what the server did with a booking of [seat].
+  Future<void> _announce(BookingOutcome outcome, Seat seat) async {
+    final l10n = context.l10n;
+  switch (outcome) {
+    case SentForConfirmation(:final subjectMemberId):
+      final who = (ref.read(memberNamesProvider).value ??
+              const <String, String>{})[subjectMemberId] ??
+          '';
+      AppSnack.success(
+        context,
+        l10n.planBookedForPending(who),
+        replace: true,
+      );
+    case Booked(:final reservationId, :final checkedIn, :final start, :final end):
+      // #663: the Reserve hub reported every refusal and no success
+      // at all — a booking simply happened, or appeared to. Say
+      // which, and say it about what the SERVER did: reporting
+      // `false` while it checked them in is the confirmation lying.
+      announceBooking(context, l10n,
+          checkedIn: checkedIn, start: start, end: end, spaceName: seat.name,
+          now: ref.read(clockProvider).now(), onOpen: () => openReservationById(context, ref, reservationId));
+    case SeriesBooked(:final result):
+      await showSeriesResultDialog(context, result);
+  }
+  }
+
+  /// #814 — the gate BEFORE the sheet: a Day-row or Week-cell tap on a
+  /// closed day, a window in the past, beyond the horizon or outside the
+  /// hours under 'off' used to open a full sheet and fail at the server.
+  /// Now it says why and returns true; false opens the sheet. With the
+  /// walk-up offered (#2016) the sheet opens when EITHER action is allowed.
+  bool _gateRefuses(BookingGate gate, Seat seat, HalfDayWindow booked,
+      {required bool walkUp, required bool offerWalkUp,
+      required BookingGranularity effective}) {
+    final refusal = gate.refusalFor(
+      start: booked.start,
+      end: booked.end,
+      walkUp: walkUp,
+      seat: seat,
+    );
+    final walkUpAllowed = offerWalkUp &&
+        gate.refusalFor(
+              start: booked.start,
+              end: booked.end,
+              walkUp: true,
+              seat: seat,
+            ) ==
+            null;
+    if (refusal == null || walkUpAllowed) return false;
+    traceGateRefusal(seat: seat, refusal: refusal, walkUp: walkUp);
+    AppSnack.info(
+      context,
+      bookingRefusalText(
+        context.l10n,
+        refusal,
+        policies: gate.policies,
+        stepMinutes: effective.stepMinutes,
+      ),
+      replace: true,
+    );
+    return true;
+  }
+
   /// #903 — the day on this seat, when more than one booking shares it.
   /// Returns true when the tap was handled here.
   Future<bool> _seatDayHandled(

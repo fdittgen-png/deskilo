@@ -4,6 +4,7 @@
 // level chips and the collapsible All-levels view.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/calendar/presentation/widgets/day_timeline.dart';
+import 'package:deskilo/features/calendar/presentation/widgets/day_timeline_axis.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

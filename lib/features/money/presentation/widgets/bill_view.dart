@@ -1,30 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
-import '../../../workspace/domain/overage_policy.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../domain/bill_sections.dart';
-import '../../domain/invoice_line_text.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/money_face.dart';
 import '../../domain/statement.dart';
 import '../invoice_status.dart';
-import '../period_label.dart';
-import '../report_strings_l10n.dart';
+import 'bill_view_cards.dart';
 import 'how_to_pay_tiles.dart';
-
-part 'bill_view_part1.dart';
 
 
 /// The structured monthly bill (#132, ADR 0008): subscription, consumed
@@ -114,13 +107,13 @@ class BillView extends StatelessWidget {
       if (showStatement) ...[
         // At-a-glance usage for the current month (days included, used and
         // left) — the member's answer to "how much can I still book?".
-        _EntitlementCard(statement: statement, money: currency.formatMinor),
-        _SubscriptionCard(
+        BillEntitlementCard(statement: statement, money: currency.formatMinor),
+        BillSubscriptionCard(
             statement: statement,
             money: currency.formatMinor,
             association: association),
         if (sections.serviceEntries.isNotEmpty)
-          _ServicesCard(sections: sections, money: currency.formatMinor),
+          BillServicesCard(sections: sections, money: currency.formatMinor),
         if (sections.packageEntries.isNotEmpty)
           _PackagesCard(entries: sections.packageEntries, money: currency.formatMinor),
         if (sections.openPositions.isNotEmpty)
@@ -128,7 +121,7 @@ class BillView extends StatelessWidget {
         if (sections.creditEntries.isNotEmpty)
           _CreditsCard(entries: sections.creditEntries, money: currency.formatMinor),
         if (settlement != null)
-          _InvoiceCard(settlement: settlement!, money: currency.formatMinor),
+          BillInvoiceCard(settlement: settlement!, money: currency.formatMinor),
       ],
       if (face == null) balance,
       if (showPayments &&
@@ -186,7 +179,7 @@ class _PackagesCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             for (final entry in entries)
-              _BillLine(
+              BillLine(
                 label: entry.description.isEmpty
                     ? (l10n.billPackages)
                     : entry.description,
@@ -291,7 +284,7 @@ class _OpenPositionsCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             for (final position in positions) ...[
-              _BillLine(
+              BillLine(
                 label: _label(l10n, position.event),
                 value: position.isCredit
                     ? '+${money(position.amountCents)}'
@@ -343,7 +336,7 @@ class _CreditsCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             for (final entry in entries)
-              _BillLine(
+              BillLine(
                 label: entry.description.isEmpty
                     ? _label(l10n, entry)
                     : entry.description,
@@ -415,45 +408,6 @@ class _BalanceFooter extends StatelessWidget {
           content.last,
         ]) : Wrap(spacing: AppSpacing.md, runSpacing: AppSpacing.sm,
             crossAxisAlignment: WrapCrossAlignment.center, children: content),
-      ),
-    );
-  }
-}
-
-class _BillLine extends StatelessWidget {
-  const _BillLine({
-    required this.label,
-    required this.value,
-    this.detail,
-    this.emphasized = false,
-  });
-
-  final String label;
-  final String value;
-  final String? detail;
-  final bool emphasized;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
-    final style = emphasized ? theme.titleSmall : theme.bodyMedium;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(label, style: style),
-                if (detail != null)
-                  Text(detail!, style: theme.bodySmall),
-              ],
-            ),
-          ),
-          Text(value, style: style),
-        ],
       ),
     );
   }

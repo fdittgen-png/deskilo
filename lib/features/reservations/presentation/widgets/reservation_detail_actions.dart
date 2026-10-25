@@ -1,13 +1,59 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'reservation_detail_sheet.dart';
+//
+// #2494 — what the reservation detail sheet's buttons do, and how far a
+// booking may still be extended or shortened; the sheet decides which show.
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// #2386 — part 1 of ReservationDetailSheet, split out of reservation_detail_sheet.dart so no
-// file holds the whole class.
-extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/l10n/lexicon.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/time/workspace_time.dart';
+import '../../../../core/trace/act_trace.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../plan/domain/half_day_windows.dart';
+import '../../../workspace/domain/booking_granularity.dart';
+import '../../application/change_reservation.dart';
+import '../../domain/booking_error_text.dart';
+import '../../domain/reservation.dart';
+import '../../domain/reservation_repository.dart';
+import 'reservation_detail_sheet.dart';
+import 'reservation_time_picker.dart';
+import 'series_result_dialog.dart';
+
+/// The actions of one booking's detail sheet ([ReservationDetailSheet]).
+class ReservationDetailActions {
+  const ReservationDetailActions(
+    this.reservation, {
+    required this.readGranularity,
+    required this.seriesAllowed,
+    required this.refresh,
+    required this.repository,
+  });
+
+  final Reservation reservation;
+
+  /// The workspace's booking granularity, read when an action runs.
+  final BookingGranularity? Function() readGranularity;
+
+  /// Whether series booking is on, read when the times are edited.
+  final bool Function() seriesAllowed;
+
+  /// The plan and lists behind the sheet are stale after a change.
+  final void Function() refresh;
+
+  /// The bookings, resolved by the sheet when an action runs.
+  final ReservationRepository Function() repository;
+
+  BookingGranularity get _granularity =>
+      readGranularity() ?? BookingGranularity.flexible;
 
   /// #492 — the request dialog, then the sheet closes (#2328: the plan's
   /// seat sheet files the same request through [requestBookingDeletion]).
-  Future<void> _requestDeletion(BuildContext context, WidgetRef ref) async {
+  Future<void> requestDeletion(BuildContext context, WidgetRef ref) async {
     if (!await requestBookingDeletion(context, ref, reservation)) return;
     if (context.mounted) Navigator.of(context).pop();
   }
@@ -16,7 +62,7 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
 
   /// Same choice flow as the calendar's menu (#118): a single booking
   /// offers one cancel action; a series adds "this and following".
-  Future<void> _cancel(BuildContext context, WidgetRef ref) async {
+  Future<void> cancel(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
     final r = reservation;
     final choice = await showAppSheet<CancelScope>(
@@ -26,25 +72,27 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              key: const ValueKey('reservation-detail-sheet-plan-cancel-reservation-button'),
+              key: const ValueKey(
+                'reservation-detail-sheet-plan-cancel-reservation-button',
+              ),
               leading: const Icon(Icons.event_busy_outlined),
               title: Text(
                 r.seriesId == null
                     ? (l10n.planCancelReservationButton)
                     : (l10n.calendarCancelOccurrence),
               ),
-              onTap: () =>
-                  Navigator.of(sheetContext).pop(CancelScope.thisOne),
+              onTap: () => Navigator.of(sheetContext).pop(CancelScope.thisOne),
             ),
             if (r.seriesId != null)
               ListTile(
-                key: const ValueKey('reservation-detail-sheet-calendar-cancel-following'),
-                leading: const Icon(Icons.fast_forward_outlined),
-                title: Text(
-                  l10n.calendarCancelFollowing,
+                key: const ValueKey(
+                  'reservation-detail-sheet-calendar-cancel-following',
                 ),
-                onTap: () => Navigator.of(sheetContext)
-                    .pop(CancelScope.thisAndFollowing),
+                leading: const Icon(Icons.fast_forward_outlined),
+                title: Text(l10n.calendarCancelFollowing),
+                onTap: () =>
+                    Navigator.of(sheetContext)
+                        .pop(CancelScope.thisAndFollowing),
               ),
             const SizedBox(height: 8),
           ],
@@ -55,31 +103,23 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
     try {
       // #1234 — which occurrences a cancellation touches is a decision,
       // and it lives in application/ where a test can reach it.
-      await cancelReservation(
-        ref.read(reservationRepositoryProvider),
-        r,
-        scope: choice,
-      );
+      await cancelReservation(repository(), r, scope: choice);
     } on Object catch (e, st) {
       debugPrint('cancel failed: $e\n$st');
       TraceLogger.instance.error(
-          'reservations',
-          'reservation cancel failed server=${ActTrace.serverAnswer(e)}',
-          error: e, stackTrace: st);
-      if (!context.mounted) return;
-      AppSnack.error(
-        context,
-        l10n.workspaceGenericError,
+        'reservations',
+        'reservation cancel failed server=${ActTrace.serverAnswer(e)}',
+        error: e,
+        stackTrace: st,
       );
+      if (!context.mounted) return;
+      AppSnack.error(context, l10n.workspaceGenericError);
       return;
     }
-    invalidateBookingData(ref);
+    refresh();
     if (!context.mounted) return;
     Navigator.of(context).pop();
-    AppSnack.success(
-      context,
-      l10n.reservationCancelledSnack,
-    );
+    AppSnack.success(context, l10n.reservationCancelledSnack);
   }
 
   // ── edit ──
@@ -88,11 +128,10 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
   /// half-day offers the three canonical windows, minute grids and
   /// legacy flexible offer snapped from/to pickers, full-day re-books
   /// the full day (nothing else exists to pick).
-  Future<void> _editTimes(BuildContext context, WidgetRef ref) async {
+  Future<void> editTimes(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
     final r = reservation;
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
+    final granularity = _granularity;
     final day = WorkspaceTime.dateOf(r.startsAt);
 
     HalfDayWindow? window;
@@ -115,10 +154,7 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
     // series here. Only offered when the workspace enables series and
     // this isn't already a series instance (changing a series' pattern
     // is out of scope — cancel + rebook for that).
-    final canRepeat = r.seriesId == null &&
-        ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.seriesBooking);
+    final canRepeat = r.seriesId == null && seriesAllowed();
     SeriesPattern? pattern;
     if (canRepeat) {
       pattern = await _pickPattern(context, l10n);
@@ -134,7 +170,7 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
       // could be booked the second returned NORMALLY with an empty
       // `booked`, so nothing here ever caught it.
       outcome = await rescheduleReservation(
-        ref.read(reservationRepositoryProvider),
+        repository(),
         r,
         start: window.start,
         end: window.end,
@@ -149,9 +185,11 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
     } on Object catch (e, st) {
       debugPrint('reservation edit failed: $e\n$st');
       TraceLogger.instance.error(
-          'reservations',
-          'reservation edit failed server=${ActTrace.serverAnswer(e)}',
-          error: e, stackTrace: st);
+        'reservations',
+        'reservation edit failed server=${ActTrace.serverAnswer(e)}',
+        error: e,
+        stackTrace: st,
+      );
       if (!context.mounted) return;
       // #574 — the server's own reason (granularity, one-place, quota),
       // not a generic "taken": the edit flow used to swallow it.
@@ -166,7 +204,7 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
       );
       return;
     }
-    invalidateBookingData(ref);
+    refresh();
     if (!context.mounted) return;
     Navigator.of(context).pop();
     // A repeat may book some dates and skip others, and the skips are
@@ -176,10 +214,7 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
       case BecameSeries(:final result):
         await showSeriesResultDialog(context, result);
       case Moved():
-        AppSnack.success(
-          context,
-          l10n.reservationUpdatedSnack,
-        );
+        AppSnack.success(context, l10n.reservationUpdatedSnack);
     }
   }
 
@@ -187,9 +222,8 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
   /// when nothing later exists: under half-day granularity a morning
   /// grows to the day's end; grids/hours/flexible may pick any later
   /// time; a booking already at its day's end has nowhere to grow.
-  DateTime? _laterEndFor(WidgetRef ref, Reservation r) {
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
+  DateTime? laterEndFor(Reservation r) {
+    final granularity = _granularity;
     final day = WorkspaceTime.dateOf(r.startsAt);
     final dayEnd = HalfDayWindows.fullDay(day).end;
     if (granularity == BookingGranularity.halfDay ||
@@ -210,9 +244,8 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
   /// the immovable start). Grids/hours/flexible let the picker choose:
   /// they qualify as soon as one whole step still fits between now and
   /// the current end.
-  DateTime? _earlierEndFor(WidgetRef ref, Reservation r, DateTime now) {
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
+  DateTime? earlierEndFor(Reservation r, DateTime now) {
+    final granularity = _granularity;
     final day = WorkspaceTime.dateOf(r.startsAt);
     if (granularity.isDayBased) {
       final boundary = HalfDayWindows.morning(day).end;
@@ -237,20 +270,23 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
     TimeOfDay picked,
     BookingGranularity granularity,
   ) {
-    final minutes =
-        granularity.snapMinutesOfDay(picked.hour * 60 + picked.minute);
-    return WorkspaceTime.at(day.year, day.month, day.day)
-        .add(Duration(minutes: minutes.clamp(0, 24 * 60)));
+    final minutes = granularity.snapMinutesOfDay(
+      picked.hour * 60 + picked.minute,
+    );
+    return WorkspaceTime.at(
+      day.year,
+      day.month,
+      day.day,
+    ).add(Duration(minutes: minutes.clamp(0, 24 * 60)));
   }
 
   /// #574 — extend a RUNNING booking's end within the workspace's
   /// granularity. Day-based: one confirm to the day's end (that IS the
   /// only later canonical edge). Grids/hours: a snapped time picker.
-  Future<void> _extendEnd(BuildContext context, WidgetRef ref) async {
+  Future<void> extendEnd(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
     final r = reservation;
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
+    final granularity = _granularity;
     final day = WorkspaceTime.dateOf(r.startsAt);
 
     DateTime? newEnd;
@@ -259,19 +295,14 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
     } else {
       final picked = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay.fromDateTime(
-          WorkspaceTime.display(r.endsAt),
-        ),
+        initialTime: TimeOfDay.fromDateTime(WorkspaceTime.display(r.endsAt)),
       );
       if (picked == null || !context.mounted) return;
       newEnd = _snappedOnDay(day, picked, granularity);
     }
     if (!newEnd.isAfter(r.endsAt)) {
       if (!context.mounted) return;
-      AppSnack.info(
-        context,
-        l10n.reservationExtendLaterOnly,
-      );
+      AppSnack.info(context, l10n.reservationExtendLaterOnly);
       return;
     }
     await _writeEnd(context, ref, newEnd, granularity);
@@ -283,25 +314,22 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
   /// boundary — "cancel the rest of the day", the affordance the guide
   /// already described; grids/hours offer a snapped picker that refuses
   /// anything not still ahead of now.
-  Future<void> _endEarly(BuildContext context, WidgetRef ref) async {
+  Future<void> endEarly(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
     final r = reservation;
-    final granularity = ref.read(bookingGranularityProvider).value ??
-        BookingGranularity.flexible;
+    final granularity = _granularity;
     final now = ref.read(clockProvider).now();
     final day = WorkspaceTime.dateOf(r.startsAt);
 
     DateTime newEnd;
     if (granularity.isDayBased) {
-      final boundary = _earlierEndFor(ref, r, now);
+      final boundary = earlierEndFor(r, now);
       if (boundary == null) return; // the button is not offered then
       newEnd = boundary;
     } else {
       final picked = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay.fromDateTime(
-          WorkspaceTime.display(r.endsAt),
-        ),
+        initialTime: TimeOfDay.fromDateTime(WorkspaceTime.display(r.endsAt)),
       );
       if (picked == null || !context.mounted) return;
       newEnd = _snappedOnDay(day, picked, granularity);
@@ -311,10 +339,7 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
     // round-trip that says "invalid".
     if (!newEnd.isBefore(r.endsAt) || !newEnd.isAfter(now)) {
       if (!context.mounted) return;
-      AppSnack.info(
-        context,
-        l10n.reservationEndEarlyAheadOnly,
-      );
+      AppSnack.info(context, l10n.reservationEndEarlyAheadOnly);
       return;
     }
     await _writeEnd(context, ref, newEnd, granularity);
@@ -335,16 +360,14 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
       // #1234 — "I am leaving at a different time", never "I arrived at
       // a different time": the command keeps the start out of the
       // caller's hands, which is the rule update_reservation enforces.
-      await changeReservationEnd(
-        ref.read(reservationRepositoryProvider),
-        r,
-        end: newEnd,
-      );
+      await changeReservationEnd(repository(), r, end: newEnd);
     } on Object catch (e, st) {
       TraceLogger.instance.error(
-          'reservations',
-          'reservation end change failed server=${ActTrace.serverAnswer(e)}',
-          error: e, stackTrace: st);
+        'reservations',
+        'reservation end change failed server=${ActTrace.serverAnswer(e)}',
+        error: e,
+        stackTrace: st,
+      );
       if (!context.mounted) return;
       AppSnack.error(
         context,
@@ -357,13 +380,10 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
       );
       return;
     }
-    invalidateBookingData(ref);
+    refresh();
     if (!context.mounted) return;
     Navigator.of(context).pop();
-    AppSnack.success(
-      context,
-      l10n.reservationUpdatedSnack,
-    );
+    AppSnack.success(context, l10n.reservationUpdatedSnack);
   }
 
   /// Repeat-modality picker for the edit flow (spec §5.2): the same
@@ -385,21 +405,37 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            row('edit-repeat-none', null,
-                l10n.repeatNone, Icons.event_outlined),
-            row('edit-repeat-daily', SeriesPattern.daily,
-                l10n.repeatDaily, Icons.repeat),
-            row('edit-repeat-weekdays', SeriesPattern.weekdays,
-                l10n.repeatWeekdays,
-                Icons.work_outline),
-            row('edit-repeat-weekly', SeriesPattern.weekly,
-                l10n.repeatWeekly, Icons.view_week_outlined),
+            row(
+              'edit-repeat-none',
+              null,
+              l10n.repeatNone,
+              Icons.event_outlined,
+            ),
+            row(
+              'edit-repeat-daily',
+              SeriesPattern.daily,
+              l10n.repeatDaily,
+              Icons.repeat,
+            ),
+            row(
+              'edit-repeat-weekdays',
+              SeriesPattern.weekdays,
+              l10n.repeatWeekdays,
+              Icons.work_outline,
+            ),
+            row(
+              'edit-repeat-weekly',
+              SeriesPattern.weekly,
+              l10n.repeatWeekly,
+              Icons.view_week_outlined,
+            ),
             const SizedBox(height: 8),
           ],
         ),
       ),
     );
   }
+
   Future<HalfDayWindow?> _pickHalfDayWindow(
     BuildContext context,
     AppLocalizations l10n,
@@ -414,23 +450,41 @@ extension _ReservationDetailSheetPart1 on ReservationDetailSheet {
             ListTile(
               key: const ValueKey('edit-window-am'),
               leading: const Icon(Icons.wb_twilight_outlined),
-              title: Text(lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip)),
-              onTap: () => Navigator.of(sheetContext)
-                  .pop(HalfDayWindows.morning(day)),
+              title: Text(
+                lexiconText(
+                  context,
+                  key: 'planMorningChip',
+                  fallback: l10n.planMorningChip,
+                ),
+              ),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(HalfDayWindows.morning(day)),
             ),
             ListTile(
               key: const ValueKey('edit-window-pm'),
               leading: const Icon(Icons.wb_sunny_outlined),
-              title: Text(lexiconText(context, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip)),
-              onTap: () => Navigator.of(sheetContext)
-                  .pop(HalfDayWindows.afternoon(day)),
+              title: Text(
+                lexiconText(
+                  context,
+                  key: 'planAfternoonChip',
+                  fallback: l10n.planAfternoonChip,
+                ),
+              ),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(HalfDayWindows.afternoon(day)),
             ),
             ListTile(
               key: const ValueKey('edit-window-day'),
               leading: const Icon(Icons.today_outlined),
-              title: Text(lexiconText(context, key: 'reserveFullDayChip', fallback: l10n.reserveFullDayChip)),
-              onTap: () => Navigator.of(sheetContext)
-                  .pop(HalfDayWindows.fullDay(day)),
+              title: Text(
+                lexiconText(
+                  context,
+                  key: 'reserveFullDayChip',
+                  fallback: l10n.reserveFullDayChip,
+                ),
+              ),
+              onTap: () =>
+                  Navigator.of(sheetContext).pop(HalfDayWindows.fullDay(day)),
             ),
             const SizedBox(height: 8),
           ],

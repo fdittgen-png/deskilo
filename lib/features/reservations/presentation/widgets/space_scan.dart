@@ -86,6 +86,14 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     ];
   }
 
+  /// The scanned desk's, office's or level's id, by kind.
+  String? get _spaceId => switch (widget.kind) {
+        SpaceKind.desk => widget.desk?.id,
+        SpaceKind.office => widget.office?.id,
+        SpaceKind.level => widget.level?.id,
+        SpaceKind.seat => null,
+      };
+
   /// The sheet's title: the scanned space's name (a double tap may open the
   /// sheet without the plan or the level, both are found from the office).
   String _title(FloorPlan? plan) {
@@ -118,26 +126,36 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
   /// booking and the one action that moves it forward, or the check-in and
   /// reserve buttons with a visible conflict, or why the space is not
   /// offered (permission transparency, field request).
-  List<Widget> _wholeSection(
-    BuildContext context, {
-    required ({bool bookable, int priceCents}) target,
-    required String title,
-    required String? priceLine,
-    required String? myId,
-    required Reservation? myWholeReservation,
-    required bool allowed,
-    required bool granted,
-    required bool featureOn,
-    required Reservation? blocking,
-    required Desk? desk,
-    required Office? office,
-    required Level? level,
-  }) {
+  List<Widget> _wholeSection(BuildContext context, _WholeSpace whole) {
+    final myWholeReservation = whole.myWholeReservation;
+    return [
+      const SizedBox(height: 12),
+      if (myWholeReservation != null)
+        ..._myWholeActions(context, whole, myWholeReservation)
+      else if (whole.allowed)
+        ..._wholeOffer(context, whole)
+      else
+        // Permission transparency (field request: "show the
+        // functionalities to which the user is permitted").
+        Text(
+          !whole.featureOn || !whole.target.bookable
+              ? (context.l10n.spaceNotBookable)
+              : (context.l10n.levelNotAllowed),
+          key: const ValueKey('space-not-allowed'),
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+    ];
+  }
+
+  /// My own live booking of the space: the one action that moves it
+  /// forward, whichever state it is in, and the way to undo it.
+  List<Widget> _myWholeActions(
+    BuildContext context,
+    _WholeSpace whole,
+    Reservation myWholeReservation,
+  ) {
     final l10n = context.l10n;
     return [
-
-          const SizedBox(height: 12),
-          if (myWholeReservation != null) ...[
             Text(
               myWholeReservation.status == ReservationStatus.checkedIn
                   ? (l10n.spaceYoursCheckedIn)
@@ -172,26 +190,30 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
             // owning a second, drifting copy of them.
             SpaceConflictActions(
               blocking: myWholeReservation,
-              myMemberId: myId,
-              spaceName: title,
+              myMemberId: whole.myId,
+              spaceName: whole.title,
               busy: _busy,
             ),
-          ] else if (allowed) ...[
+    ];
+  }
+
+  /// The space is offered: check in (with the personal grant) and
+  /// reserve, and the visible conflict when someone holds it.
+  List<Widget> _wholeOffer(BuildContext context, _WholeSpace whole) {
+    final l10n = context.l10n;
+    final blocking = whole.blocking;
+    return [
             // Checking in seats ME here and now — that needs the
             // personal grant, never the assignment right alone (#638).
-            if (granted) ...[
+            if (whole.granted) ...[
               FilledButton.icon(
                 key: const ValueKey('space-checkin'),
                 onPressed: _busy || blocking != null
                     ? null
                     : () => _create(
-                          deskId:
-                              widget.kind == SpaceKind.desk ? desk?.id : null,
-                          officeId: widget.kind == SpaceKind.office
-                              ? office?.id
-                              : null,
-                          levelId:
-                              widget.kind == SpaceKind.level ? level?.id : null,
+                          deskId: whole.deskId,
+                          officeId: whole.officeId,
+                          levelId: whole.levelId,
                           checkIn: true,
                         ),
                 icon: const Icon(Icons.login_outlined),
@@ -207,15 +229,12 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
               onPressed: _busy
                   ? null
                   : () => _reserveSpace(
-                        deskId:
-                            widget.kind == SpaceKind.desk ? desk?.id : null,
-                        officeId:
-                            widget.kind == SpaceKind.office ? office?.id : null,
-                        levelId:
-                            widget.kind == SpaceKind.level ? level?.id : null,
-                        name: title,
-                        knownPrice: priceLine,
-                        granted: granted,
+                        deskId: whole.deskId,
+                        officeId: whole.officeId,
+                        levelId: whole.levelId,
+                        name: whole.title,
+                        knownPrice: whole.priceLine,
+                        granted: whole.granted,
                       ),
               icon: const Icon(Icons.event_available_outlined),
               label: Text(l10n.kioskReserve),
@@ -223,7 +242,7 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
             if (blocking != null) ...[
               const SizedBox(height: 8),
               Text(
-                blocking.memberId == myId
+                blocking.memberId == whole.myId
                     ? (l10n.spaceBlockedByYou)
                     : (l10n.levelConflict),
                 key: const ValueKey('space-conflict'),
@@ -231,23 +250,11 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
               ),
               SpaceConflictActions(
                 blocking: blocking,
-                myMemberId: myId,
-                spaceName: title,
+                myMemberId: whole.myId,
+                spaceName: whole.title,
                 busy: _busy,
               ),
             ],
-          ] else ...[
-            // Permission transparency (field request: "show the
-            // functionalities to which the user is permitted").
-            Text(
-              !featureOn || !target.bookable
-                  ? (l10n.spaceNotBookable)
-                  : (l10n.levelNotAllowed),
-              key: const ValueKey('space-not-allowed'),
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
-        
     ];
   }
 
@@ -310,14 +317,12 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     // out anywhere on it.
     final myWholeReservation = me == null
         ? null
-        : _myLiveWholeReservation(
+        : myLiveWholeReservation(
             widget.kind,
             reservations,
             me.id,
             window,
-            deskId: desk?.id,
-            officeId: office?.id,
-            levelId: level?.id,
+            spaceId: _spaceId,
           );
 
     final priceLine = wholeTarget != null && wholeTarget.priceCents > 0
@@ -342,18 +347,19 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
         if (wholeTarget != null)
           ..._wholeSection(
             context,
-            target: wholeTarget,
-            title: title,
-            priceLine: priceLine,
-            myId: me?.id,
-            myWholeReservation: myWholeReservation,
-            allowed: wholeAllowed,
-            granted: granted,
-            featureOn: featureOn,
-            blocking: wholeBlocking,
-            desk: desk,
-            office: office,
-            level: level,
+            _WholeSpace(
+              target: wholeTarget,
+              title: title,
+              priceLine: priceLine,
+              myId: me?.id,
+              myWholeReservation: myWholeReservation,
+              allowed: wholeAllowed,
+              granted: granted,
+              featureOn: featureOn,
+              blocking: wholeBlocking,
+              kind: widget.kind,
+              spaceId: _spaceId,
+            ),
           ),
         if (seats.isNotEmpty) ...[
           const SizedBox(height: 8),
@@ -433,34 +439,41 @@ List<Seat> _seatsShown(
   SpaceKind.seat => null,
 };
 
-/// My own live booking of exactly this space in the window. Both states, and
-/// that is the fix for a field report: with `reserved` alone, a level you had
-/// CHECKED INTO fell through to the conflict branch and the sheet became a
-/// dead end -- it stated that the space was taken, by you, and offered
-/// nothing. There was no check out anywhere on it.
-Reservation? _myLiveWholeReservation(
-  SpaceKind kind,
-  List<Reservation> reservations,
-  String myMemberId,
-  ({DateTime start, DateTime end}) window, {
-  String? deskId,
-  String? officeId,
-  String? levelId,
-}) => reservations
-    .where(
-      (r) =>
-          r.memberId == myMemberId &&
-          (r.status == ReservationStatus.reserved ||
-              r.status == ReservationStatus.checkedIn) &&
-          r.coversRange(window.start, window.end) &&
-          switch (kind) {
-            SpaceKind.desk => r.deskId == deskId,
-            SpaceKind.office => r.officeId == officeId,
-            SpaceKind.level => r.levelId == levelId,
-            SpaceKind.seat => false,
-          },
-    )
-    .firstOrNull;
+/// What the whole-space section shows, gathered once by the sheet's build.
+class _WholeSpace {
+  const _WholeSpace({
+    required this.target,
+    required this.title,
+    required this.priceLine,
+    required this.myId,
+    required this.myWholeReservation,
+    required this.allowed,
+    required this.granted,
+    required this.featureOn,
+    required this.blocking,
+    required this.kind,
+    required this.spaceId,
+  });
+
+  final ({bool bookable, int priceCents}) target;
+  final String title;
+  final String? priceLine;
+  final String? myId;
+  final Reservation? myWholeReservation;
+  final bool allowed;
+  final bool granted;
+  final bool featureOn;
+  final Reservation? blocking;
+
+  final SpaceKind kind;
+
+  /// The scanned desk's, office's or level's id.
+  final String? spaceId;
+
+  String? get deskId => kind == SpaceKind.desk ? spaceId : null;
+  String? get officeId => kind == SpaceKind.office ? spaceId : null;
+  String? get levelId => kind == SpaceKind.level ? spaceId : null;
+}
 
 class _SeatTile extends StatelessWidget {
   const _SeatTile({
