@@ -29,6 +29,7 @@ import '../../providers/notification_filter_providers.dart';
 import '../event_labels.dart';
 import '../event_lines.dart';
 import '../feed_notes.dart';
+import '../widgets/event_feed_facts.dart';
 import '../widgets/events_filter_bar.dart';
 import '../widgets/note_row.dart';
 import '../widgets/pending_decisions_section.dart';
@@ -237,16 +238,13 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     AppLocalizations l10n,
     WorkspaceEvent event, {
     required bool unread,
-    required Map<String, String> names,
-    required Map<String, String> targets,
-    required MoneyFormat currency,
-    required List<EventDecision> decisions,
-    required List<ValidationPolicy> policies,
-  }) =>
-      ListTile(
+    required EventFeedFacts facts,
+  }) {
+    final decisions = facts.decisions[event.id] ?? const <EventDecision>[];
+    return ListTile(
                         leading: Icon(_icon(event)),
                         title: Text(
-                          _line(l10n, event, names, targets, currency),
+                          _line(l10n, event, facts.names, facts.targets, facts.currency),
                           style: unread
                               ? const TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -273,9 +271,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                               Text(method),
                             ValidationTrail(
                               decisions: decisions,
-                              names: names,
+                              names: facts.names,
                               sequential:
-                                  policyFor(event.type.dbName, policies)
+                                  policyFor(event.type.dbName, facts.policies)
                                       .sequential,
                             ),
                             // Quorum progress stays neutral: it only
@@ -285,7 +283,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                               l10n,
                               event,
                               decisions,
-                              policies,
+                              facts.policies,
                             ) case final progress?)
                               Text(progress),
                           ],
@@ -296,6 +294,85 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         // outcome mark.
                         trailing: eventOutcomeMark(context, event.status),
       );
+  }
+
+  Widget _emptyFeed(AppLocalizations l10n) => RefreshIndicator(
+                onRefresh: () async => invalidateBookingData(ref),
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 48),
+                      child: EmptyState(
+                        icon: Icons.notifications_none_outlined,
+                        title: l10n.eventsEmpty,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+
+  Widget _feedRow(BuildContext context, AppLocalizations l10n, FeedItem item, EventFeedFacts facts) =>
+                  switch (item) {
+                    NoteFeedItem(:final note, :final unread) => NoteRow(
+                        key: ValueKey('note-${note.id}'),
+                        note: note,
+                        names: facts.names,
+                        myMemberId: facts.myMemberId,
+                        unread: unread,
+                      ),
+                    EventFeedItem(:final event, :final unread) =>
+                      _eventTile(
+                        context,
+                        l10n,
+                        event,
+                        unread: unread,
+                        facts: facts,
+                      ),
+                  };
+
+  Widget _feedList(BuildContext context, AppLocalizations l10n, EventFeedFacts facts) {
+    final grouping = facts.grouping;
+    return RefreshIndicator(
+              onRefresh: () async => invalidateBookingData(ref),
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                // #546 — the bell's unread filter narrows the whole
+                // screen to what is new; the pending decisions step
+                // aside while it is on.
+                if (!facts.unreadOnly && facts.matchingPending.isNotEmpty) ...[
+                  // #1306 — the same section the calendar shows when the
+                  // bell is switched off.
+                  PendingDecisionsSection(pending: facts.matchingPending),
+                  const Divider(),
+                ],
+                EventsFilterBar(
+                  filter: facts.filter,
+                  unreadCount: facts.unreadCount,
+                  groupingOn: facts.groupingOn,
+                ),
+                // The MIXED feed (#581): notes and events interleaved,
+                // date-sorted under the user's direction of choice —
+                // optionally folded into groups (#598).
+                for (final group in groupFeed(facts.feed, grouping)) ...[
+                  if (grouping != FeedGrouping.none)
+                    _groupHeader(context, l10n, grouping, group, facts.names),
+                for (final item in group.items) _feedRow(context, l10n, item, facts),
+                ],
+                if (facts.feed.isEmpty)
+                  Padding(
+                    padding: AppSpacing.lgAll,
+                    child: Text(
+                      l10n.uxAlertsFilterEmpty,
+                      key: const ValueKey('notes-filter-empty'),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
+            );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -332,29 +409,17 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     final scope = ref.watch(attentionScopeProvider);
     final seenBefore = scope == null ? ref.watch(eventsSeenCutoffProvider).value
         : ref.watch(updatesSeenProvider(scope)).value?.visitCutoff;
-    final unreadOnly = filter.read == ReadFilter.unread;
     // #598 — the regrouping axis; the flag OFF forces the flat list
     // even when an older persisted choice still says otherwise.
     final groupingOn = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.notificationGrouping);
-    final grouping = groupingOn ? filter.grouping : FeedGrouping.none;
 
     final body = switch (eventsAsync) {
       AsyncData(value: final all) => Builder(
           builder: (context) {
-            final pendingForMe = all.where((e) {
-              if (myMember == null) return false;
-              final policy = policyFor(e.type.dbName, policies);
-              return e.isDecidedBy(
-                myMember,
-                policy: policy,
-                alreadyDecided: (decisions[e.id] ?? const [])
-                    .any((d) => d.memberId == myMember.id),
-              );
-            }).toList();
-            final matchingPending = pendingForMe.where((event) => filter.categories.isEmpty ||
-                filter.categories.contains(categoryOfEvent(event))).toList();
+            final pendingForMe = eventsAwaitingDecisionBy(myMember, all,
+                policies: policies, decisions: decisions);
             final feed = buildNotificationFeed(
               events: all
                   .where((e) => !pendingForMe.contains(e))
@@ -365,81 +430,23 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
               seenForCategory: scope == null ? null : ref.watch(updatesSeenProvider(scope)).value?.visitFor,
               filter: filter,
             );
-            if (all.isEmpty && notes.isEmpty) {
-              return RefreshIndicator(
-                onRefresh: () async => invalidateBookingData(ref),
-                child: ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 48),
-                      child: EmptyState(
-                        icon: Icons.notifications_none_outlined,
-                        title: l10n.eventsEmpty,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-            return RefreshIndicator(
-              onRefresh: () async => invalidateBookingData(ref),
-              child: ListView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                children: [
-                // #546 — the bell's unread filter narrows the whole
-                // screen to what is new; the pending decisions step
-                // aside while it is on.
-                if (!unreadOnly && matchingPending.isNotEmpty) ...[
-                  // #1306 — the same section the calendar shows when the
-                  // bell is switched off.
-                  PendingDecisionsSection(pending: matchingPending),
-                  const Divider(),
-                ],
-                EventsFilterBar(
-                  filter: filter,
-                  unreadCount: unreadIds.length,
-                  groupingOn: groupingOn,
-                ),
-                // The MIXED feed (#581): notes and events interleaved,
-                // date-sorted under the user's direction of choice —
-                // optionally folded into groups (#598).
-                for (final group in groupFeed(feed, grouping)) ...[
-                  if (grouping != FeedGrouping.none)
-                    _groupHeader(context, l10n, grouping, group, names),
-                for (final item in group.items)
-                  switch (item) {
-                    NoteFeedItem(:final note, :final unread) => NoteRow(
-                        key: ValueKey('note-${note.id}'),
-                        note: note,
-                        names: names,
-                        myMemberId: myMember?.id,
-                        unread: unread,
-                      ),
-                    EventFeedItem(:final event, :final unread) =>
-                      _eventTile(
-                        context,
-                        l10n,
-                        event,
-                        unread: unread,
-                        names: names,
-                        targets: targets,
-                        currency: currency,
-                        decisions: decisions[event.id] ?? const [],
-                        policies: policies,
-                      ),
-                  },
-                ],
-                if (feed.isEmpty)
-                  Padding(
-                    padding: AppSpacing.lgAll,
-                    child: Text(
-                      l10n.uxAlertsFilterEmpty,
-                      key: const ValueKey('notes-filter-empty'),
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                ],
+            if (all.isEmpty && notes.isEmpty) return _emptyFeed(l10n);
+            return _feedList(
+              context,
+              l10n,
+              EventFeedFacts(
+                filter: filter,
+                groupingOn: groupingOn,
+                feed: feed,
+                matchingPending: pendingForMe.where((event) => filter.categories.isEmpty ||
+                    filter.categories.contains(categoryOfEvent(event))).toList(),
+                unreadCount: unreadIds.length,
+                names: names,
+                targets: targets,
+                currency: currency,
+                decisions: decisions,
+                policies: policies,
+                myMemberId: myMember?.id,
               ),
             );
           },

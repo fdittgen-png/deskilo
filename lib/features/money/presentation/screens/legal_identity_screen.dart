@@ -11,6 +11,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/member_customer_capacity.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -18,6 +19,7 @@ import '../../domain/address_window.dart';
 import '../../domain/invoice_legal.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/vat_declaration_period.dart';
+import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
 import '../../domain/vat_tax_point.dart';
 import '../../providers/money_providers.dart';
@@ -150,20 +152,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final workspace = ref.watch(currentWorkspaceProvider).value;
-    final rates = ref.watch(vatRatesProvider).value ?? const [];
-    if (workspace == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(l10n.legalIdentityTitle),
-        ),
-        body: const LoadingView(),
-      );
-    }
-    if (!_loaded) {
+  /// The saved identity into the fields, once: later builds keep what the
+  /// owner is typing.
+  void _load() {
+    final workspace = ref.read(currentWorkspaceProvider).value!;
       _loaded = true;
       _regime = vatRegimeFromWire(workspace.vatRegime);
       _addressWindow =
@@ -188,24 +180,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
       _mentions.load(legal);
       _einvoice.load(legal);
       _landTax.load(legal);
-    }
+  }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          l10n.legalIdentityTitle,
-        ),
-      ),
-      body: ListView(
-        padding: AppSpacing.gutterAll,
-        children: [
-          Text(
-            l10n.legalIdentityIntro,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-          ),
-          const SizedBox(height: AppSpacing.lg),
+  Widget _regimeRow(AppLocalizations l10n) =>
           Row(children: [
             Expanded(
               child: DropdownButtonFormField<VatRegime>(
@@ -245,7 +222,12 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               l10n.helpTopicVat,
               anchor: HelpAnchor.moneyVatRegime,
             ),
-          ]),
+          ]);
+
+  /// What a VAT-registered space adds: the rates are a link, and a
+  /// warning only when there is no rate to charge.
+  List<Widget> _vatFields(AppLocalizations l10n, List<VatRate> rates) {
+    return [
           // Only a workspace that charges VAT and has no rate to charge
           // it at is in trouble — the rest is a link, not a warning.
           // #895 — the customer's tax, across the border.
@@ -341,7 +323,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
                 ),
               ),
             ),
-          const SizedBox(height: AppSpacing.md),
+    ];
+  }
+
+  List<Widget> _identifierFields(AppLocalizations l10n) => [
           // Only the identifier the declared regime needs — the other one
           // would make the document invalid, not merely redundant.
           if (_regime.requiresVatId)
@@ -387,91 +372,11 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          LegalAddressFields(street: _street, postalCode: _postalCode, city: _city),
-          const SizedBox(height: AppSpacing.md),
-          // The other half of the same question: who receives the file.
-          ListTile(
-            key: const ValueKey('legal-identity-platform'),
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.cloud_upload_outlined),
-            title: HelpDotTitle(
-              l10n.einvoiceConfigTitle,
-              l10n.helpTopicEinvoice,
-              anchor: HelpAnchor.einvoiceOverview,
-            ),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/einvoice-config'),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          // #480 — the statutory mention lines the documents print.
-          Text(
-            l10n.invoiceLegalSection,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            l10n.invoiceLegalIntro,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          // #484 — associations invoice differently: no B2B clause
-          // defaults, RNA instead of a trade register, an exemption
-          // mention instead of VAT.
-          Row(children: [
-            Expanded(
-              child: SegmentedButton<String>(
-                key: const ValueKey('legal-identity-kind'),
-                segments: [
-                  ButtonSegment(
-                    value: '',
-                    label: Text(
-                        l10n.invoiceLegalKindCompany),
-                  ),
-                  ButtonSegment(
-                    value: 'association',
-                    label: Text(l10n.invoiceLegalKindAssociation),
-                  ),
-                ],
-                selected: {_sellerKind},
-                onSelectionChanged: (selection) =>
-                    setState(() => _sellerKind = selection.first),
-              ),
-            ),
-            HelpDot(
-              l10n.helpTopicLegalIdentity,
-              anchor: HelpAnchor.legalSellerKind,
-            ),
-          ]),
-          const SizedBox(height: AppSpacing.md),
-          // #1916 — the customers' capacity decides the clauses, not the
-          // seller's legal form; a member's own capacity wins.
-          Text(l10n.invoiceLegalCustomerCapacityField),
-          const SizedBox(height: AppSpacing.xs),
-          SegmentedButton<String>(
-            key: const ValueKey('legal-identity-capacity'),
-            segments: [
-              for (final wire in const ['', 'business', 'consumer'])
-                ButtonSegment(
-                  value: wire,
-                  label: Text(customerCapacityName(l10n, wire)),
-                ),
-            ],
-            selected: {_customerCapacity},
-            onSelectionChanged: (selection) =>
-                setState(() => _customerCapacity = selection.first),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            l10n.invoiceLegalCustomerCapacityHint,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          LegalMentionFields(controllers: _mentions, sellerKind: _sellerKind),
+      ];
+
+  /// The fields only one country's law asks for, then the e-invoice
+  /// identity and the address window where their features are on.
+  List<Widget> _countryFields() => [
           // #2359 — the UK treats land as exempt unless the owner opted to tax.
           if (_regime == VatRegime.vatRegistered &&
               ref.watch(currentWorkspaceProvider).value?.countryCode == 'GB')
@@ -490,6 +395,69 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             ),
           if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.invoicing))
             EInvoiceIdentityFields(key: const ValueKey('legal-identity-einvoice'), form: _einvoice),
+      ];
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
+    if (workspace == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.legalIdentityTitle),
+        ),
+        body: const LoadingView(),
+      );
+    }
+    if (!_loaded) _load();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          l10n.legalIdentityTitle,
+        ),
+      ),
+      body: ListView(
+        padding: AppSpacing.gutterAll,
+        children: [
+          Text(
+            l10n.legalIdentityIntro,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          _regimeRow(l10n),
+          ..._vatFields(l10n, rates),
+          const SizedBox(height: AppSpacing.md),
+          ..._identifierFields(l10n),
+          const SizedBox(height: AppSpacing.md),
+          LegalAddressFields(street: _street, postalCode: _postalCode, city: _city),
+          const SizedBox(height: AppSpacing.md),
+          // The other half of the same question: who receives the file.
+          ListTile(
+            key: const ValueKey('legal-identity-platform'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.cloud_upload_outlined),
+            title: HelpDotTitle(
+              l10n.einvoiceConfigTitle,
+              l10n.helpTopicEinvoice,
+              anchor: HelpAnchor.einvoiceOverview,
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/einvoice-config'),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          LegalPartyFields(
+            sellerKind: _sellerKind,
+            customerCapacity: _customerCapacity,
+            capacityName: (wire) => customerCapacityName(l10n, wire),
+            onSellerKind: (kind) => setState(() => _sellerKind = kind),
+            onCustomerCapacity: (wire) => setState(() => _customerCapacity = wire),
+          ),
+          LegalMentionFields(controllers: _mentions, sellerKind: _sellerKind),
+          ..._countryFields(),
           const SizedBox(height: AppSpacing.md),
           // #869 — where the sheet is addressed. It sits with the legal
           // identity rather than the band editor because it applies

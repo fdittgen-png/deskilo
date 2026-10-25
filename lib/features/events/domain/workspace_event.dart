@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/data/system_columns.dart';
 import '../../workspace/domain/member.dart';
+import 'event_decision.dart';
 import 'validation_policy.dart';
 
 part 'workspace_event.freezed.dart';
@@ -233,4 +234,27 @@ sealed class WorkspaceEvent with _$WorkspaceEvent implements SystemStamped {
 
   String? get payloadTargetId =>
       (payload['seat_id'] ?? payload['office_id']) as String?;
+}
+
+/// The events of [all] that [me] may decide now, in feed order: each one
+/// judged against its type's rule from [policies] and against the
+/// decisions already recorded for it, so a validator who has decided is
+/// not asked again. Nobody signed in decides nothing.
+List<WorkspaceEvent> eventsAwaitingDecisionBy(
+  Member? me,
+  Iterable<WorkspaceEvent> all, {
+  required List<ValidationPolicy> policies,
+  required Map<String, List<EventDecision>> decisions,
+}) {
+  if (me == null) return const [];
+  return [
+    for (final e in all)
+      if (e.isDecidedBy(
+        me,
+        policy: policyFor(e.type.dbName, policies),
+        alreadyDecided:
+            (decisions[e.id] ?? const []).any((d) => d.memberId == me.id),
+      ))
+        e,
+  ];
 }

@@ -20,6 +20,7 @@ import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../../core/ui/view_toggle.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
@@ -161,32 +162,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     invalidateBookingData(ref);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final myMember = ref.watch(myMemberProvider).value;
-    final monthKey = monthKeyOf(_month);
-    final monthRead = ref.watch(reservationsForMonthProvider(monthKey));
-    final reservations = monthRead.value ?? const <Reservation>[];
-    final visible = _visible(reservations, myMember?.id);
-    final names = ref.watch(memberNamesProvider).value ?? const {};
-    final targets = ref.watch(targetNamesProvider).value ?? const {};
-
-    final dayReservations = visible
-        .where((r) => _sameDay(WorkspaceTime.dateOf(r.startsAt), _selectedDay))
-        .toList()
-      ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
-
-    // In landscape the month + controls move to a side panel so the day's
-    // reservations fill the rest of the screen (and the month grid stops
-    // being clipped to a couple of weeks under the header).
-    final header = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // #606 — the calendar's contextual how-to; gated in the widget.
-        // #611 — eased in/out at the call site instead of popping.
-        const MotionReveal(child: HelpHint(HelpHintId.calendar)),
-        Padding(
+  Widget _monthNavigator(AppLocalizations l10n) => Padding(
           padding: AppSpacing.smH,
           child: Row(
             children: [
@@ -211,8 +187,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               ),
             ],
           ),
-        ),
-        Padding(
+        );
+
+  Widget _whoseAndView(AppLocalizations l10n) => Padding(
           padding: AppSpacing.lgH,
           child: Row(
             children: [
@@ -264,10 +241,11 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               ),
             ],
           ),
-        ),
-        // The month sits on a soft rounded card — a calmer, more modern
-        // surface than a bare grid on the scaffold.
-        Container(
+        );
+
+  /// The month sits on a soft rounded card — a calmer, more modern
+  /// surface than a bare grid on the scaffold; [visible] marks its days.
+  Widget _monthCard(List<Reservation> visible, String? myMemberId) => Container(
           margin: const EdgeInsets.fromLTRB(
             AppSpacing.screenGutter,
             AppSpacing.xs,
@@ -318,12 +296,12 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             // a blue one — a day with BOTH shows both dots side by side.
             myDays: {
               for (final r in visible)
-                if (r.memberId == myMember?.id)
+                if (r.memberId == myMemberId)
                   WorkspaceTime.dateOf(r.startsAt),
             },
             otherDays: {
               for (final r in visible)
-                if (r.memberId != myMember?.id)
+                if (r.memberId != myMemberId)
                   WorkspaceTime.dateOf(r.startsAt),
             },
             onSelect: (day) {
@@ -336,27 +314,23 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               ),
             ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.xs),
-      ],
-    );
-    final content = Expanded(
-          child: RefreshIndicator(
-            onRefresh: () async => invalidateBookingData(ref),
-            // #209: cross-fade the list/timeline toggle. The two branches
-            // carry distinct subtree keys so the switcher animates the
-            // swap; empty vs. populated list share one key (no fade when
-            // only the day's content changes).
-            child: AnimatedSwitcher(
-              duration: AppMotion.viewSwitchOf(context),
-              child: _timeline
+        );
+
+  /// The selected day as a timeline or a list; [read] tells an empty day
+  /// from a failed read (#1848).
+  Widget _dayView(AppLocalizations l10n, {required List<Reservation> visible,
+      required List<Reservation> dayReservations,
+      required AsyncValue<List<Reservation>> read, required String? myMemberId}) {
+    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final targets = ref.watch(targetNamesProvider).value ?? const {};
+    return _timeline
                 ? KeyedSubtree(
                     key: const ValueKey('calendar-timeline-view'),
                     child: DayTimeline(
                       day: _selectedDay,
                       reservations: visible,
                       everyone: _everyone,
-                      myMemberId: myMember?.id,
+                      myMemberId: myMemberId,
                       onReservationTap: _detailSheet,
                     ),
                   )
@@ -369,10 +343,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 48),
                           // #1848 — a failed read is not an empty day.
-                          child: monthRead.hasError && !monthRead.hasValue
+                          child: read.hasError && !read.hasValue
                               ? AvailabilityUnavailableBanner(
                                   onRetry: () => ref.invalidate(
-                                      reservationsForMonthProvider(monthKey)))
+                                      reservationsForMonthProvider(monthKeyOf(_month))))
                               : EmptyState(
                                   icon: Icons.event_available_outlined,
                                   title: l10n.calendarNoReservations,
@@ -396,13 +370,55 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                         reservation: r,
                         seatLabel: r.spaceNameFrom(targets),
                         occupant: _everyone ? (names[r.memberId] ?? '') : '',
-                        own: r.memberId == myMember?.id,
+                        own: r.memberId == myMemberId,
                         onTap: () => _detailSheet(r),
                         onActions: () => _cancelMenu(r),
                       );
                     },
                     ),
-                  ),
+                  );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final myMember = ref.watch(myMemberProvider).value;
+    final monthKey = monthKeyOf(_month);
+    final monthRead = ref.watch(reservationsForMonthProvider(monthKey));
+    final reservations = monthRead.value ?? const <Reservation>[];
+    final visible = _visible(reservations, myMember?.id);
+
+    final dayReservations = visible
+        .where((r) => _sameDay(WorkspaceTime.dateOf(r.startsAt), _selectedDay))
+        .toList()
+      ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+
+    // In landscape the month + controls move to a side panel so the day's
+    // reservations fill the rest of the screen (and the month grid stops
+    // being clipped to a couple of weeks under the header).
+    final header = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // #606 — the calendar's contextual how-to; gated in the widget.
+        // #611 — eased in/out at the call site instead of popping.
+        const MotionReveal(child: HelpHint(HelpHintId.calendar)),
+        _monthNavigator(l10n),
+        _whoseAndView(l10n),
+        _monthCard(visible, myMember?.id),
+        const SizedBox(height: AppSpacing.xs),
+      ],
+    );
+    final content = Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async => invalidateBookingData(ref),
+            // #209: cross-fade the list/timeline toggle. The two branches
+            // carry distinct subtree keys so the switcher animates the
+            // swap; empty vs. populated list share one key (no fade when
+            // only the day's content changes).
+            child: AnimatedSwitcher(
+              duration: AppMotion.viewSwitchOf(context),
+              child: _dayView(l10n, visible: visible, dayReservations: dayReservations,
+                  read: monthRead, myMemberId: myMember?.id),
             ),
           ),
         );

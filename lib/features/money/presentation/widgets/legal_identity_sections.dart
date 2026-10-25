@@ -227,3 +227,102 @@ Widget _mentionField(
     ),
   );
 }
+
+/// The statutory-mentions heading, who sells (a company or an
+/// association) and who buys (#484, #1916): the two choices that decide
+/// which clauses the documents print.
+class LegalPartyFields extends StatelessWidget {
+  const LegalPartyFields({
+    super.key,
+    required this.sellerKind,
+    required this.customerCapacity,
+    required this.capacityName,
+    required this.onSellerKind,
+    required this.onCustomerCapacity,
+  });
+
+  /// '' = company/business, 'association' = non-profit.
+  final String sellerKind;
+  final String customerCapacity;
+  final String Function(String wire) capacityName;
+  final ValueChanged<String> onSellerKind;
+  final ValueChanged<String> onCustomerCapacity;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // #480 — the statutory mention lines the documents print.
+        Text(
+          l10n.invoiceLegalSection,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          l10n.invoiceLegalIntro,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        // #484 — associations invoice differently: no B2B clause
+        // defaults, RNA instead of a trade register, an exemption
+        // mention instead of VAT.
+        Row(children: [
+          Expanded(
+            child: SegmentedButton<String>(
+              key: const ValueKey('legal-identity-kind'),
+              segments: [
+                ButtonSegment(
+                  value: '',
+                  label: Text(
+                      l10n.invoiceLegalKindCompany),
+                ),
+                ButtonSegment(
+                  value: 'association',
+                  label: Text(l10n.invoiceLegalKindAssociation),
+                ),
+              ],
+              selected: {sellerKind},
+              onSelectionChanged: (selection) =>
+                  onSellerKind(selection.first),
+            ),
+          ),
+          HelpDot(
+            l10n.helpTopicLegalIdentity,
+            anchor: HelpAnchor.legalSellerKind,
+          ),
+        ]),
+        const SizedBox(height: AppSpacing.md),
+        // #1916 — the customers' capacity decides the clauses, not the
+        // seller's legal form; a member's own capacity wins.
+        Text(l10n.invoiceLegalCustomerCapacityField),
+        const SizedBox(height: AppSpacing.xs),
+        SegmentedButton<String>(
+          key: const ValueKey('legal-identity-capacity'),
+          segments: [
+            for (final wire in const ['', 'business', 'consumer'])
+              ButtonSegment(
+                value: wire,
+                label: Text(capacityName(wire)),
+              ),
+          ],
+          selected: {customerCapacity},
+          onSelectionChanged: (selection) =>
+              onCustomerCapacity(selection.first),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          l10n.invoiceLegalCustomerCapacityHint,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+      ],
+    );
+  }
+}

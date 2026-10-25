@@ -104,36 +104,22 @@ class _MemberPageBody extends ConsumerWidget {
     return seatName.isEmpty ? when : '$when · $seatName';
   }
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  /// What the cards decide on, gathered once: who looks, what they may
+  /// do, and which features are on.
+  (_PageCtx, Set<MemberPageSection>) _facts(BuildContext context, WidgetRef ref,
+      {required Member? me, required bool isSelf, required Uri? whatsappProfileUri}) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final now = ref.watch(clockProvider).now();
-    final me = ref.watch(myMemberProvider).value;
-    final isSelf = me?.id == member.id;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final perms = ref.watch(myPermissionsProvider);
-    final profile = ref.watch(memberProfilesProvider).value?[member.userId];
     final email = ref.watch(memberEmailsProvider).value?[member.id] ?? '';
-    final reservations =
-        ref.watch(directoryReservationsProvider).value ?? const <Reservation>[];
-    final targets = ref.watch(targetNamesProvider).value ?? const {};
     final policies =
         ref.watch(bookingPoliciesProvider).value ?? const BookingPolicies();
-    final windows = ref.watch(directoryWindowsProvider);
-    final presence = resolveDirectoryPresence(lastSeenAt: profile?.lastSeenAt, now: now, isSelf: isSelf, onlineWindow: windows.onlineWindow);
-    final info = resolveReservationInfo(memberId: member.id, reservations: reservations, now: now, upcomingWindow: windows.upcomingWindow);
-    final upcoming = [
-      for (final r in reservations)
-        if (r.memberId == member.id && r.endsAt.isAfter(now)) r,
-    ]..sort((a, b) => a.startsAt.compareTo(b.startsAt));
-
     final active = member.status == MemberStatus.active;
     final pending = member.status == MemberStatus.pending;
     final canAdmin = me?.canAdminister ?? false;
     final isOwner = me?.actsAsOwner ?? false;
     final whatsappOn = features.contains(WorkspaceFeature.whatsappIntegration);
-    final whatsappUri = whatsappOn ? profile?.whatsappUri : null;
+    final whatsappUri = whatsappOn ? whatsappProfileUri : null;
     final sections = memberPageSections(
       MemberPageFacts(
         isSelf: isSelf,
@@ -190,6 +176,83 @@ class _MemberPageBody extends ConsumerWidget {
       rolesOn: rolesOn,
       negotiationVisible: negotiationVisible,
     );
+    return (c, sections);
+  }
+
+  /// #1187 — two equal columns of quick actions; a lone last button
+  /// spans both, so the group reads as a group.
+  static Widget _actionGrid(List<Widget> quickActions) =>
+                LayoutBuilder(
+                  key: const ValueKey('member-page-actions'),
+                  builder: (context, constraints) {
+                    const gap = AppSpacing.sm;
+                    final cell = (constraints.maxWidth - gap) / 2;
+                    return Wrap(
+                      spacing: gap,
+                      runSpacing: gap,
+                      children: [
+                        for (final (i, action) in quickActions.indexed)
+                          SizedBox(
+                            key: ValueKey('member-page-cell-$i'),
+                            // A lone last button spans both columns rather
+                            // than sitting half-width beside nothing.
+                            width: i == quickActions.length - 1 && i.isEven
+                                ? constraints.maxWidth
+                                : cell,
+                            child: action,
+                          ),
+                      ],
+                    );
+                  },
+                );
+
+  static Widget _groupCard(ThemeData theme, String title, List<Widget> tiles) =>
+                  Card(
+                    margin: const EdgeInsets.only(top: AppSpacing.sm),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                            AppSpacing.lg,
+                            AppSpacing.md,
+                            AppSpacing.lg,
+                            0,
+                          ),
+                          child: Text(
+                            title,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        ...tiles,
+                      ],
+                    ),
+                  );
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final now = ref.watch(clockProvider).now();
+    final me = ref.watch(myMemberProvider).value;
+    final isSelf = me?.id == member.id;
+    final profile = ref.watch(memberProfilesProvider).value?[member.userId];
+    final reservations =
+        ref.watch(directoryReservationsProvider).value ?? const <Reservation>[];
+    final targets = ref.watch(targetNamesProvider).value ?? const {};
+    final windows = ref.watch(directoryWindowsProvider);
+    final presence = resolveDirectoryPresence(lastSeenAt: profile?.lastSeenAt, now: now, isSelf: isSelf, onlineWindow: windows.onlineWindow);
+    final info = resolveReservationInfo(memberId: member.id, reservations: reservations, now: now, upcomingWindow: windows.upcomingWindow);
+    final upcoming = [
+      for (final r in reservations)
+        if (r.memberId == member.id && r.endsAt.isAfter(now)) r,
+    ]..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+
+    final (c, sections) = _facts(context, ref,
+        me: me, isSelf: isSelf, whatsappProfileUri: profile?.whatsappUri);
+    final canMessage = c.canMessage;
     final quickActions = _quickActions(c);
 
     // ---- the admin groups: every row carries its CURRENT value.
@@ -247,29 +310,7 @@ class _MemberPageBody extends ConsumerWidget {
                 // its own label: three rows, three widths, ragged right. Two
                 // equal columns instead, and a lone last button spans them,
                 // so the group reads as a group.
-                LayoutBuilder(
-                  key: const ValueKey('member-page-actions'),
-                  builder: (context, constraints) {
-                    const gap = AppSpacing.sm;
-                    final cell = (constraints.maxWidth - gap) / 2;
-                    return Wrap(
-                      spacing: gap,
-                      runSpacing: gap,
-                      children: [
-                        for (final (i, action) in quickActions.indexed)
-                          SizedBox(
-                            key: ValueKey('member-page-cell-$i'),
-                            // A lone last button spans both columns rather
-                            // than sitting half-width beside nothing.
-                            width: i == quickActions.length - 1 && i.isEven
-                                ? constraints.maxWidth
-                                : cell,
-                            child: action,
-                          ),
-                      ],
-                    );
-                  },
-                ),
+                _actionGrid(quickActions),
               ],
               // Role-gated INSIDE each card, as on the old sheet.
               MemberContactCard(member: member, isSelf: isSelf),
@@ -287,29 +328,7 @@ class _MemberPageBody extends ConsumerWidget {
               l10n.memberPageManageHeading,
               [
                 for (final (title, tiles) in groups)
-                  Card(
-                    margin: const EdgeInsets.only(top: AppSpacing.sm),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            AppSpacing.lg,
-                            AppSpacing.md,
-                            AppSpacing.lg,
-                            0,
-                          ),
-                          child: Text(
-                            title,
-                            style: theme.textTheme.labelLarge?.copyWith(
-                              color: theme.colorScheme.onSurfaceVariant,
-                            ),
-                          ),
-                        ),
-                        ...tiles,
-                      ],
-                    ),
-                  ),
+                  _groupCard(theme, title, tiles),
               ],
             ),
           if (sections.contains(MemberPageSection.paymentTerms))

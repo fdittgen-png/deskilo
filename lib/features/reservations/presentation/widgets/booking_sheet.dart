@@ -260,32 +260,45 @@ class _BookingSheetState extends State<BookingSheet> {
     widget.onFieldCommitted?.call('time');
   }
 
+  /// #574 — minute-grid workspaces get the SLIDER: the duration in the
+  /// workspace's own steps, walk-up and punctual alike (a 10:00 arrival
+  /// under a 5-minute grid slides to "until 12:00" in 5-minute ticks).
+  int? get _gridStep => switch (widget.granularity) {
+        BookingGranularity.minutes5 ||
+        BookingGranularity.minutes15 ||
+        BookingGranularity.minutes30 ||
+        BookingGranularity.minutes60 =>
+          widget.granularity.stepMinutes,
+        _ => null,
+      };
+
+  /// Shown whenever there is a real choice OR the only subject is not
+  /// me — the actor must always SEE who it lands on (#638, the rule the
+  /// deleted level sheet enforced).
+  bool get _offersMemberChoice =>
+      widget.members.length > 1 ||
+      (widget.members.length == 1 &&
+          widget.members.first.id != widget.myMemberId);
+
+  // Half-day granularity offers the three canonical windows (hours
+  // offers them as shortcuts too, #446); full-day is a single locked
+  // window; a walk-up keeps its computed end — except under hours,
+  // where the implicit reservation lets the user set its end.
+  bool get _showHalfDayPicker => !_walkUp &&
+      (widget.granularity == BookingGranularity.halfDay ||
+          widget.granularity == BookingGranularity.hours);
+  bool get _showTimePickers => !_walkUp && !widget.fixedEnd;
+  bool get _hoursWalkUp => _walkUp &&
+      widget.granularity == BookingGranularity.hours;
+  bool get _showRepeat => !_walkUp && !_forOther && widget.allowSeries;
+  bool get _offerModes => widget.walkUpOption != null && !_forOther;
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final words = l10n;
     final timeFormat = appFormatOf(context); // #1150
-    // Half-day granularity offers the three canonical windows (hours
-    // offers them as shortcuts too, #446); full-day is a single locked
-    // window; a walk-up keeps its computed end — except under hours,
-    // where the implicit reservation lets the user set its end.
-    final showHalfDayPicker = !_walkUp &&
-        (widget.granularity == BookingGranularity.halfDay ||
-            widget.granularity == BookingGranularity.hours);
-    final showTimePickers = !_walkUp && !widget.fixedEnd;
-    final hoursWalkUp = _walkUp &&
-        widget.granularity == BookingGranularity.hours;
-    // #574 — minute-grid workspaces get the SLIDER: the duration in the
-    // workspace's own steps, walk-up and punctual alike (a 10:00 arrival
-    // under a 5-minute grid slides to "until 12:00" in 5-minute ticks).
-    final gridStep = switch (widget.granularity) {
-      BookingGranularity.minutes5 ||
-      BookingGranularity.minutes15 ||
-      BookingGranularity.minutes30 ||
-      BookingGranularity.minutes60 =>
-        widget.granularity.stepMinutes,
-      _ => null,
-    };
+    final gridStep = _gridStep;
     final maxDuration =
         gridStep == null ? 0 : _maxDurationMinutes(gridStep);
     final showDurationSlider =
@@ -297,13 +310,64 @@ class _BookingSheetState extends State<BookingSheet> {
     // a walk-up is already capped at the next one.
     final overlap =
         !_walkUp && (widget.overlaps?.call(_start, _end) ?? false);
-    final showRepeat = !_walkUp && !_forOther && widget.allowSeries;
-    final offerModes = widget.walkUpOption != null && !_forOther;
 
     return BookingSheetFrame(
-      action: FilledButton(
+      action: _confirmButton(l10n, blocked: refusal != null || overlap),
+      children: [
+            _titleRow(l10n),
+            if (_offerModes) ...[
+              const SizedBox(height: AppSpacing.sm),
+              BookingModeSelector(key: const ValueKey('booking-sheet-booking-mode-selector'), walkUp: _walkUp, onChanged: _setMode),
+            ],
+            if (_offerModes)
+              Text(words.uxBookingModesHelp,
+                style: Theme.of(context).textTheme.bodySmall),
+
+            _summary(l10n),
+            if (widget.seatId != null)
+              SeatAccessoryRow(seatId: widget.seatId!),
+            // ── period (fits the workspace granularity) ──
+            if (_showHalfDayPicker) ...[
+              const SizedBox(height: AppSpacing.sm),
+              _periodChips(l10n),
+            ],
+            if (_showTimePickers) ...[
+              _fromTile(l10n),
+              _untilTile(l10n),
+            ],
+            if (showDurationSlider)
+              ..._durationSlider(l10n, gridStep, maxDuration),
+            // #446 hours walk-up: the check-in creates the reservation
+            // implicitly — the start is "now", the end is the user's to
+            // fill (prefilled with the end of the working day).
+            if (_hoursWalkUp) _untilTile(l10n),
+            if (_offersMemberChoice) _memberPicker(l10n),
+
+            if (_capped && _cap != null)
+              Text(
+                l10n.planCappedByNext(
+                      timeFormat.time(_cap!),
+                    ),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            if (overlap) const BookingOverlapNotice(),
+            if (refusal != null) _refusalRow(refusal, l10n),
+            if (_showRepeat) _moreOptions(l10n),
+            if (_liveWindow) _checkInSwitch(l10n),
+            if (widget.seatId != null) ...[
+              PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
+            ],
+            if (widget.allowBlocking)
+              BookingManagementOptions(onBlock: () => Navigator.of(context).pop(
+                BookingChoice(_start, _end, null, null, null, block: true))),
+      ],
+    );
+  }
+
+  Widget _confirmButton(AppLocalizations l10n, {required bool blocked}) =>
+      FilledButton(
               key: const ValueKey('booking-confirm'),
-              onPressed: refusal != null || overlap
+              onPressed: blocked
                   ? null
                   : () => Navigator.of(context).pop(
                 BookingChoice(
@@ -323,9 +387,9 @@ class _BookingSheetState extends State<BookingSheet> {
                         ? (lexiconText(context, key: 'planCheckInButton', fallback: l10n.planCheckInButton))
                         : (lexiconText(context, key: 'planReserveButton', fallback: l10n.planReserveButton)),
               ),
-            ),
-      children: [
-            Row(children: [
+            );
+
+  Widget _titleRow(AppLocalizations l10n) => Row(children: [
               Expanded(
                 child: Text(
                   widget.seatName.isEmpty
@@ -339,39 +403,22 @@ class _BookingSheetState extends State<BookingSheet> {
               // SpaceActForm), and pure-widget tests pump it without a
               // ProviderScope: no scope, no dot.
               BookingSheetActions(helpDot: _hasProviderScope(context)),
-            ]),
-            if (offerModes) ...[
-              const SizedBox(height: AppSpacing.sm),
-              BookingModeSelector(key: const ValueKey('booking-sheet-booking-mode-selector'), walkUp: _walkUp, onChanged: _setMode),
-            ],
-            if (offerModes)
-              Text(words.uxBookingModesHelp,
-                style: Theme.of(context).textTheme.bodySmall),
+            ]);
 
-            BookingReviewSummary(
+  Widget _summary(AppLocalizations l10n) => BookingReviewSummary(
               resource: [...widget.resourceContext, widget.seatName],
               resourcePriceLabel: widget.resourcePriceLabel,
               person: widget.members.where((m) => m.id == _forMemberId)
-                  .firstOrNull?.name ?? words.levelAssignMyself,
+                  .firstOrNull?.name ?? l10n.levelAssignMyself,
               window: (start: _start, end: _end), timezone: widget.timezone, walkUp: _walkUp,
               today: WorkspaceTime.dateOf(widget.now ?? widget.start),
               recurrence: _pattern == null || _forOther
                   ? _patternLabel(l10n, null)
                   : '${_patternLabel(l10n, _pattern)} · '
                       '${appFormatOf(context).date(_until)}',
-            ),
-            if (widget.seatId != null)
-              SeatAccessoryRow(seatId: widget.seatId!),
-            // ── period (fits the workspace granularity) ──
-            if (showHalfDayPicker) ...[
-              const SizedBox(height: AppSpacing.sm),
-              _periodChips(l10n),
-            ],
-            if (showTimePickers) ...[
-              _fromTile(l10n),
-              _untilTile(l10n),
-            ],
-            if (showDurationSlider) ...[
+            );
+
+  List<Widget> _durationSlider(AppLocalizations l10n, int gridStep, int maxDuration) => [
               const SizedBox(height: AppSpacing.sm),
               Text(
                 '${lexiconText(context, key: 'planDurationLabel', fallback: l10n.planDurationLabel)} · '
@@ -400,19 +447,9 @@ class _BookingSheetState extends State<BookingSheet> {
                   widget.onFieldCommitted?.call('time');
                 },
               ),
-            ],
-            // #446 hours walk-up: the check-in creates the reservation
-            // implicitly — the start is "now", the end is the user's to
-            // fill (prefilled with the end of the working day).
-            if (hoursWalkUp) _untilTile(l10n),
+            ];
 
-            // Shown whenever there is a real choice OR the only subject
-            // is not me — the actor must always SEE who it lands on
-            // (#638, the rule the deleted level sheet enforced).
-            if (widget.members.length > 1 ||
-                (widget.members.length == 1 &&
-                    widget.members.first.id != widget.myMemberId))
-              DropdownButtonFormField<String>(
+  Widget _memberPicker(AppLocalizations l10n) => DropdownButtonFormField<String>(
                 key: const ValueKey('booking-for-member'),
                 initialValue: _forMemberId,
                 decoration: InputDecoration(
@@ -429,40 +466,20 @@ class _BookingSheetState extends State<BookingSheet> {
                   setState(() => _forMemberId = id);
                   widget.onFieldCommitted?.call('for_whom');
                 },
-              ),
+              );
 
-            if (_capped && _cap != null)
-              Text(
-                l10n.planCappedByNext(
-                      timeFormat.time(_cap!),
-                    ),
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            if (overlap) const BookingOverlapNotice(),
-            if (refusal != null) _refusalRow(refusal, l10n),
-            if (showRepeat) _moreOptions(l10n),
-            if (_liveWindow)
-              SwitchListTile(
+  Widget _checkInSwitch(AppLocalizations l10n) => SwitchListTile(
                 key: const ValueKey('booking-check-in-now'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                     l10n.kioskCheckInRightAway),
-                subtitle: Text(words.uxBookingCheckInHelp),
+                subtitle: Text(l10n.uxBookingCheckInHelp),
                 value: _checkInNow,
                 onChanged: (v) {
                   setState(() => _checkInNow = v);
                   widget.onFieldCommitted?.call('check_in');
                 },
-              ),
-            if (widget.seatId != null) ...[
-              PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
-            ],
-            if (widget.allowBlocking)
-              BookingManagementOptions(onBlock: () => Navigator.of(context).pop(
-                BookingChoice(_start, _end, null, null, null, block: true))),
-      ],
-    );
-  }
+              );
 
   /// The "until" tile (#446: also the one input of an hours walk-up).
   Widget _untilTile(AppLocalizations l10n) => BookingTimeTile(
