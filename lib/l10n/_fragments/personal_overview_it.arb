@@ -11,7 +11,7 @@
   "meOverviewView": "Vedi",
   "meOverviewAttentionTitle": "Da gestire",
   "meOverviewAttentionNone": "Nulla richiede la Sua attenzione.",
-  "meOverviewAttentionDocument": "{amount} da pagare · {number}",
+  "meOverviewAttentionDocumentToPay": "da pagare · {number}",
   "meOverviewAttentionOverdue": "Scaduto",
   "meOverviewAttentionViewDocument": "Vedi il documento",
   "meOverviewAttentionDocumentsUnavailable": "Non è stato possibile leggere i Suoi documenti.",

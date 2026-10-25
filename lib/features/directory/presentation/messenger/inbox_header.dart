@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/private_value.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../domain/messenger.dart';
 import '../../providers/blocks_providers.dart';
@@ -190,10 +191,32 @@ class InboxListRow extends ConsumerWidget {
               ? theme.textTheme.bodyLarge?.emphasised
               : null,
         ),
-        subtitle: Text(
-          '${contextSubtitle(l10n, entry, servers)}\n${notePreview(entry.lastBody, max: 120, referenceFallback: l10n.uxLinkedReference)}',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        // The latest words are private: where the mask is offered they
+        // stay hidden until revealed; the context is not.
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              contextSubtitle(l10n, entry, servers),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            PrivateValue(
+              onlyWhereOffered: true,
+              revealKey: ValueKey('inbox-preview-reveal-${entry.contextId}'),
+              child: Text(
+                notePreview(
+                  entry.lastBody,
+                  max: 120,
+                  referenceFallback: l10n.uxLinkedReference,
+                ),
+                key: ValueKey('inbox-preview-${entry.contextId}'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
         isThreeLine: true,
         trailing: Column(

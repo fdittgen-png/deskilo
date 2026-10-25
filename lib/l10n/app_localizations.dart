@@ -21910,11 +21910,11 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 unread message} other{{count} unread messages}}'**
   String meOverviewAttentionConversation(int count);
 
-  /// #2554 Overview: an unpaid document, its remaining amount and number
+  /// #2554 Overview: an unpaid document's number, after its remaining amount (#2552: the amount is a private value shown before this text)
   ///
   /// In en, this message translates to:
-  /// **'{amount} to pay · {number}'**
-  String meOverviewAttentionDocument(String amount, String number);
+  /// **'to pay · {number}'**
+  String meOverviewAttentionDocumentToPay(String number);
 
   /// #2554 Overview: some hosts' documents could not be read
   ///

@@ -13267,8 +13267,8 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String meOverviewAttentionDocument(String amount, String number) {
-    return '$amount zu zahlen · $number';
+  String meOverviewAttentionDocumentToPay(String number) {
+    return 'zu zahlen · $number';
   }
 
   @override

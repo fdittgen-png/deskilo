@@ -15329,13 +15329,10 @@
       }
     }
   },
-  "meOverviewAttentionDocument": "{amount} to pay · {number}",
-  "@meOverviewAttentionDocument": {
-    "description": "#2554 Overview: an unpaid document, its remaining amount and number",
+  "meOverviewAttentionDocumentToPay": "to pay · {number}",
+  "@meOverviewAttentionDocumentToPay": {
+    "description": "#2554 Overview: an unpaid document's number, after its remaining amount (#2552: the amount is a private value shown before this text)",
     "placeholders": {
-      "amount": {
-        "type": "String"
-      },
       "number": {
         "type": "String"
       }

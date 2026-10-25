@@ -8762,7 +8762,7 @@
   "meOverviewAttentionApplication": "La Sua richiesta di entrare in {name} è in attesa.",
   "meOverviewAttentionApplicationsUnavailable": "Non è stato possibile leggere le Sue richieste.",
   "meOverviewAttentionConversation": "{count, plural, =1{1 messaggio non letto} other{{count} messaggi non letti}}",
-  "meOverviewAttentionDocument": "{amount} da pagare · {number}",
+  "meOverviewAttentionDocumentToPay": "da pagare · {number}",
   "meOverviewAttentionDocumentsPartial": "Non è stato possibile leggere alcuni documenti.",
   "meOverviewAttentionDocumentsUnavailable": "Non è stato possibile leggere i Suoi documenti.",
   "meOverviewAttentionMessagesPartial": "Non è stato possibile leggere alcune conversazioni.",

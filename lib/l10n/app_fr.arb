@@ -8762,7 +8762,7 @@
   "meOverviewAttentionApplication": "Votre demande pour rejoindre {name} est en attente.",
   "meOverviewAttentionApplicationsUnavailable": "Vos demandes n'ont pas pu être lues.",
   "meOverviewAttentionConversation": "{count, plural, =1{1 message non lu} other{{count} messages non lus}}",
-  "meOverviewAttentionDocument": "{amount} à payer · {number}",
+  "meOverviewAttentionDocumentToPay": "à payer · {number}",
   "meOverviewAttentionDocumentsPartial": "Certains documents n'ont pas pu être lus.",
   "meOverviewAttentionDocumentsUnavailable": "Vos documents n'ont pas pu être lus.",
   "meOverviewAttentionMessagesPartial": "Certaines conversations n'ont pas pu être lues.",
