@@ -8,6 +8,7 @@
 // the others' documents, with its own Try again.
 import 'package:meta/meta.dart';
 
+import 'account_activity.dart';
 import 'finance_overview.dart';
 
 /// One workspace host my personal account names: the installation, the
@@ -89,6 +90,14 @@ class FinanceReadLimits {
 /// Reads my own documents on one host, through that host's own client.
 abstract interface class FinanceHostReader {
   Future<FinanceOverview> overview(FinanceHost host);
+
+  /// One page of my [kind] activity on [host], older than [before]: what
+  /// the full history pages through, host by host.
+  Future<List<AccountActivity>> activity(
+    FinanceHost host,
+    AccountActivityKind kind, {
+    ActivityCursor? before,
+  });
 }
 
 /// The host of a source could not be reached with its own verified client

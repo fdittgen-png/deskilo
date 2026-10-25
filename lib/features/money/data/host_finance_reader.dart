@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2557 C5 — my own documents (C6: and my payments) on one workspace host, asked through THAT
+// #2557 C5 — my own documents (C6: and my payments; C7: every page of my
+// history) on one workspace host, asked through THAT
 // host's own verified client (the installation the app is signed in to,
 // or the connected pool's pinned client for the host's origin), never
 // through the personal home's or the selected workspace's. A host that is
@@ -43,7 +44,30 @@ class HostFinanceReader implements FinanceHostReader {
   final Future<ResolvedWorkspaceHost> Function(FinanceHost host) hostOf;
 
   @override
-  Future<FinanceOverview> overview(FinanceHost host) async {
+  Future<FinanceOverview> overview(FinanceHost host) =>
+      _on(host, (repository) async {
+        // My invoices and reminders, then my payments, on the same host and
+        // its own client: a host answers for all three or not at all.
+        final overview = await repository.overview();
+        final payments = await repository.list(AccountActivityKind.payments);
+        return overview.withPayments(payments);
+      });
+
+  @override
+  Future<List<AccountActivity>> activity(
+    FinanceHost host,
+    AccountActivityKind kind, {
+    ActivityCursor? before,
+  }) =>
+      _on(host, (repository) => repository.list(kind, before: before));
+
+  /// [read] on [host]'s own verified client, refused before anything is
+  /// read when the host answers as another installation; its pinned
+  /// client is released either way.
+  Future<T> _on<T>(
+    FinanceHost host,
+    Future<T> Function(AccountActivityRepository repository) read,
+  ) async {
     final resolved = await hostOf(host);
     try {
       if (resolved.installationId != host.installationId) {
@@ -51,12 +75,7 @@ class HostFinanceReader implements FinanceHostReader {
           'asked ${host.installationId}, answered ${resolved.installationId}',
         );
       }
-      // My invoices and reminders, then my payments, on the same host and
-      // its own client: a host answers for all three or not at all.
-      final repository = SupabaseAccountActivityRepository(resolved.client);
-      final overview = await repository.overview();
-      final payments = await repository.list(AccountActivityKind.payments);
-      return overview.withPayments(payments);
+      return await read(SupabaseAccountActivityRepository(resolved.client));
     } finally {
       resolved.lease?.release();
     }

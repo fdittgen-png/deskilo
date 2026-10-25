@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/backend/context_client_providers.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../data/supabase_account_activity_repository.dart';
@@ -34,22 +33,4 @@ Future<List<AccountActivity>> accountActivity(
   return ref
       .watch(accountActivityRepositoryProvider)
       .list(kind, before: before);
-}
-
-@riverpod
-Future<List<AccountActivity>> connectedAccountActivity(
-  Ref ref,
-  String source,
-  AccountActivityKind kind, {
-  ActivityCursor? before,
-}) {
-  ref.watch(authStateProvider);
-  return ref
-      .watch(connectedInstallationsProvider)
-      .use(
-        source,
-        (client) =>
-            SupabaseAccountActivityRepository(client)
-                .list(kind, before: before),
-      );
 }

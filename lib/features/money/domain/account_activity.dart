@@ -8,6 +8,31 @@ enum AccountActivityKind { invoices, payments, usage }
 
 typedef ActivityCursor = ({DateTime at, String id});
 
+/// The rows `my_financial_activity` answers per page (its `limit 50`): a
+/// shorter page is the last one. Not a choice; the RPC fixes it.
+const int activityPageSize = 50;
+
+/// Every row [page] answers, page after page by the keyset cursor, until a
+/// page is shorter than [activityPageSize] (or the cursor stops moving, so
+/// a host that repeats its last page cannot hold the reader forever). A
+/// failed page fails the whole read: an export is never silently short.
+Future<List<AccountActivity>> everyActivityPage(
+  Future<List<AccountActivity>> Function(ActivityCursor? before) page,
+) async {
+  final all = <AccountActivity>[];
+  ActivityCursor? before;
+  while (true) {
+    final rows = await page(before);
+    // The same page again: nothing new is coming.
+    if (before != null && rows.isNotEmpty && rows.last.cursor == before) {
+      return all;
+    }
+    all.addAll(rows);
+    if (rows.length < activityPageSize) return all;
+    before = rows.last.cursor;
+  }
+}
+
 class AccountActivity {
   const AccountActivity({
     required this.id,

@@ -21,7 +21,8 @@ part of 'finance_overview_provider.dart';
 /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
 /// C6: each host answers for my payments and reminders as well as my
 /// invoices; the selected workspace's host retries alone; a refresh waits
-/// for every host ([settled]).
+/// for every host ([settled]). C7: a file of one workspace reads every page
+/// of its payments on that workspace's own source ([paymentsOf]).
 
 @ProviderFor(FinanceOverviewComposer)
 final financeOverviewProvider = FinanceOverviewComposerProvider._();
@@ -39,7 +40,8 @@ final financeOverviewProvider = FinanceOverviewComposerProvider._();
 /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
 /// C6: each host answers for my payments and reminders as well as my
 /// invoices; the selected workspace's host retries alone; a refresh waits
-/// for every host ([settled]).
+/// for every host ([settled]). C7: a file of one workspace reads every page
+/// of its payments on that workspace's own source ([paymentsOf]).
 final class FinanceOverviewComposerProvider
     extends $AsyncNotifierProvider<FinanceOverviewComposer, FinanceOverview> {
   /// Me › Finances: my invoices and reminders across every workspace (0380),
@@ -55,7 +57,8 @@ final class FinanceOverviewComposerProvider
   /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
   /// C6: each host answers for my payments and reminders as well as my
   /// invoices; the selected workspace's host retries alone; a refresh waits
-  /// for every host ([settled]).
+  /// for every host ([settled]). C7: a file of one workspace reads every page
+  /// of its payments on that workspace's own source ([paymentsOf]).
   FinanceOverviewComposerProvider._()
     : super(
         from: null,
@@ -76,7 +79,7 @@ final class FinanceOverviewComposerProvider
 }
 
 String _$financeOverviewComposerHash() =>
-    r'e9517b78b85eab718c2ec264c50dc38dabf035e2';
+    r'50b8683459de253343bfba1ab4f8087bc58b3d29';
 
 /// Me › Finances: my invoices and reminders across every workspace (0380),
 /// each read where its documents live. The personal home answers for the
@@ -91,7 +94,8 @@ String _$financeOverviewComposerHash() =>
 /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
 /// C6: each host answers for my payments and reminders as well as my
 /// invoices; the selected workspace's host retries alone; a refresh waits
-/// for every host ([settled]).
+/// for every host ([settled]). C7: a file of one workspace reads every page
+/// of its payments on that workspace's own source ([paymentsOf]).
 
 abstract class _$FinanceOverviewComposer
     extends $AsyncNotifier<FinanceOverview> {
