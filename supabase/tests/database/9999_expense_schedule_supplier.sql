@@ -10,7 +10,10 @@
 --   R a member who may not read the suppliers, another member's schedule,
 --     another workspace's supplier, an unknown schedule, the flag off, a
 --     contract's schedule, an ended schedule.
--- Seeds are direct inserts as postgres (users, workspaces, members).
+-- Seeds are direct inserts as postgres (users, workspaces, members); the
+-- workspaces switch on, explicitly, every flag the RPCs gate on and its
+-- parent: scheduledExpenses (create_expense_schedule, 0227) under moneyTab,
+-- supplyExpenses under services, einvoiceCustomerDelivery under invoicing.
 begin;
 select plan(28);
 
@@ -99,9 +102,9 @@ select set_config('t.b', '00000000-0000-4000-8000-0000256a9002', true);
 
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, environment, feature_flags)
 values (current_setting('t.a')::uuid, 'Schedule supplier A', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 'dev',
-        '{"services": true, "supplyExpenses": true, "invoicing": true, "einvoiceCustomerDelivery": true}'::jsonb),
+        '{"moneyTab": true, "scheduledExpenses": true, "services": true, "supplyExpenses": true, "invoicing": true, "einvoiceCustomerDelivery": true}'::jsonb),
        (current_setting('t.b')::uuid, 'Schedule supplier B', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(3), 'dev',
-        '{"services": true, "supplyExpenses": true, "invoicing": true, "einvoiceCustomerDelivery": true}'::jsonb);
+        '{"moneyTab": true, "scheduledExpenses": true, "services": true, "supplyExpenses": true, "invoicing": true, "einvoiceCustomerDelivery": true}'::jsonb);
 
 insert into public.members (workspace_id, user_id, is_owner, is_admin, status) values
  (current_setting('t.a')::uuid, pg_temp.u(1), true, true, 'active'),
