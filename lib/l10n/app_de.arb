@@ -14523,6 +14523,7 @@
   "setupLevelsPresets": "Schnellstart",
   "setupLevelsQuestions": "Über Ihren Raum",
   "setupLevelsSeeDemo": "In der Demo ansehen",
+  "setupLevelsStepsFollow": "Danach im Assistenten einrichten: {steps}",
   "setupLevelsSwitchOff": "Schaltet aus: {features}",
   "setupLevelsSwitchOn": "Schaltet ein: {features}",
   "setupLevelsTitle": "Was Ihr Raum tut",

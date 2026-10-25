@@ -35597,6 +35597,12 @@ abstract class AppLocalizations {
   /// **'See it in the demo'**
   String get setupLevelsSeeDemo;
 
+  /// #2871 setup levels: the guide steps that set up the features the choice switches on, by their titles, in guide order
+  ///
+  /// In en, this message translates to:
+  /// **'Then set them up in the guide: {steps}'**
+  String setupLevelsStepsFollow(String steps);
+
   /// #2868 setup levels: setupLevelsSwitchOff
   ///
   /// In en, this message translates to:

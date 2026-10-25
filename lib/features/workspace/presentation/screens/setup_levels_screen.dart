@@ -30,6 +30,7 @@ import '../../domain/setup_journey.dart';
 import '../../domain/setup_level_change.dart';
 import '../../domain/setup_level_demo.dart';
 import '../../domain/setup_levels.dart';
+import '../../domain/setup_step_reach.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/local_setup_providers.dart';
@@ -363,6 +364,16 @@ class _Preview extends StatelessWidget {
                 l10n.setupLevelsSwitchOn(names(change.switchOn)),
                 key: const ValueKey('setup-levels-on'),
               ),
+            if (setupStepsFor(change.switchOn) case final steps
+                when steps.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                l10n.setupLevelsStepsFollow(
+                  steps.map((s) => l10n.setupStepTitle(s.id)).join(', '),
+                ),
+                key: const ValueKey('setup-levels-steps'),
+              ),
+            ],
             if (change.switchOff.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
