@@ -12,6 +12,9 @@
     "roleAssignment>customRoles@lib/features/workspace/presentation/screens/roles_screen.dart": "Deliberate: customRoles is additive and requires nothing (feature_manifest_part3); the Roles screen and the invite sheet offer the role links only where both it and roleAssignment are on, and Settings reaches customRoles alone.",
     "roleAssignment>customRoles@lib/features/workspace/presentation/widgets/invite_sheet.dart": "Deliberate: customRoles is additive and requires nothing (feature_manifest_part3); the Roles screen and the invite sheet offer the role links only where both it and roleAssignment are on, and Settings reaches customRoles alone."
   },
+  "screenGates": {
+    "memberPage>vatCounterparty": "Reviewed, deliberate (#2522): the one surface is the administrator's VAT-treatment tile of the member page (member_page_cards.dart, key member-page-vat-treatment). requires holds one parent, and vatCounterparty's is vatManagement: a buyer's VAT kind means nothing without VAT, while the member page is only where it is edited. With memberPage off the tile is unreachable and a stored treatment keeps applying; no requires change."
+  },
   "unregisteredServerKeys": {
   }
 }
