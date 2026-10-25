@@ -40,6 +40,12 @@ SubscriptionChange subscriptionChange(Member member, int pct) {
   return SubscriptionChange.saved;
 }
 
+/// Whether [policy] is offered for [member] once the monthly entitlement
+/// is used: pay-as-you-go without a subscription would book for free, the
+/// twin of [SubscriptionChange.noneWithPayg].
+bool overagePolicyOffered(Member member, OveragePolicy policy) =>
+    !(policy == OveragePolicy.payg && member.subscriptionPct == 0);
+
 /// Whether [text], typed as a custom share, is one (1-100).
 int? customShare(String text) {
   final value = int.tryParse(text.trim());

@@ -41,7 +41,7 @@
 12 test/features/members/directory_screen_test.dart
 15 test/features/members/managed_profile_test.dart
 22 test/features/members/member_page_test.dart
-63 test/features/members/members_screen_test.dart
+59 test/features/members/members_screen_test.dart
 10 test/features/money/account_activity_test.dart
 11 test/features/money/accountant_handoff_flow_test.dart
 11 test/features/money/asset_register_test.dart

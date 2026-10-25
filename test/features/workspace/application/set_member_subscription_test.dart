@@ -40,6 +40,24 @@ void main() {
     expect(customShare('abc'), isNull);
   });
 
+  // #2603 -- the overage dialog's rule (#1279), one row per policy and share.
+  group('which overage policy is offered', () {
+    final table = <String, (int, OveragePolicy, bool)>{
+      'no subscription cannot pay as it goes': (0, OveragePolicy.payg, false),
+      'no subscription can be blocked': (0, OveragePolicy.blocked, true),
+      'no subscription can buy a package': (0, OveragePolicy.package, true),
+      'a subscription can pay as it goes': (50, OveragePolicy.payg, true),
+      'the smallest subscription can too': (1, OveragePolicy.payg, true),
+    };
+    for (final MapEntry(key: name, value: (pct, policy, offered))
+        in table.entries) {
+      test(name, () {
+        final repo = FakeWorkspaceRepository.withWorkspace();
+        expect(overagePolicyOffered(_member(repo, pct: pct), policy), offered);
+      });
+    }
+  });
+
   test(
     'unchanged and refused choices write nothing; a permitted one is written',
     () async {
