@@ -14,7 +14,8 @@
 //     the settlement's payment is allocated to its sources
 //     ([accountingView]).
 //   * receipt (a confirmed match): Dr bank / Cr customers on the match day;
-//     a negative match is a refund and mirrors it.
+//     a negative match is a refund and mirrors it, and so is a refunded
+//     credit note, whose match holds the amount paid out (0436).
 //   * write-off (`writeoffAt`): Dr `write_off` the net and Dr
 //     `vat_output:<group>` the tax regularised of the open rest, split over
 //     the rate groups by their gross; Cr customers that rest.
@@ -29,6 +30,7 @@ import 'accounting_amount.dart';
 import 'accounting_view.dart';
 import 'book_chart.dart';
 import 'invoice.dart';
+import 'invoice_line_cash.dart';
 import 'posting.dart';
 import 'vat_rate.dart';
 import 'vat_tax_point.dart';
@@ -352,33 +354,36 @@ List<Posting> _settled(
   bool deferred = false,
 }) {
   if (m == null || m.pending) return const [];
+  // A refunded credit note's match holds the amount paid OUT, positive
+  // (0436): it is money leaving the bank, signed as such.
+  final paid = refundedCents(i, m) > 0 ? -m.paidCents : m.paidCents;
   return [
-    if (m.paidCents != 0)
+    if (paid != 0)
       Posting(
         journal: PostingJournal.bank,
         date: m.matchedAt,
-        kind: m.paidCents < 0 ? PostingKind.refund : PostingKind.receipt,
+        kind: paid < 0 ? PostingKind.refund : PostingKind.receipt,
         documentId: i.id,
         documentNumber: i.number,
         lines: [
           ?postingLine(
             BookRole.bank,
             book.code(BookRole.bank, m.matchedAt),
-            _amount(i, m.paidCents),
+            _amount(i, paid),
             debitSide: true,
           ),
           ?postingLine(
             BookRole.customers,
             book.code(BookRole.customers, m.matchedAt),
-            _amount(i, m.paidCents),
+            _amount(i, paid),
             debitSide: false,
           ),
         ],
       ),
-    if (m.writeoffAt case final day? when i.totalCents - m.paidCents > 0)
+    if (m.writeoffAt case final day? when i.totalCents - paid > 0)
       _writeOff(
         i,
-        i.totalCents - m.paidCents,
+        i.totalCents - paid,
         day,
         book,
         groupOf,

@@ -1,0 +1,11 @@
+Record retention for the fiscal year 2026 (workspace country: FR).
+Dates are the first day a document dated 31 December 2026 may be erased.
+
+invoice: 6 years from the end of the fiscal year -> 2032-12-31 (not yet confirmed)
+  source: Code de commerce L123-22 (accounting books and vouchers 10 years); Livre des procédures fiscales L102 B (documents for the tax audit 6 years) (#2571); not yet verified by a person with the authority to confirm it
+books: 10 years from the end of the fiscal year -> 2036-12-31 (not yet confirmed)
+  source: Code de commerce L123-22 (accounting books and vouchers 10 years); Livre des procédures fiscales L102 B (documents for the tax audit 6 years) (#2571); not yet verified by a person with the authority to confirm it
+correspondence: 6 years from the end of the fiscal year -> 2032-12-31 (not yet confirmed)
+  source: Code de commerce L123-22 (accounting books and vouchers 10 years); Livre des procédures fiscales L102 B (documents for the tax audit 6 years) (#2571); not yet verified by a person with the authority to confirm it
+voucher: 6 years from the end of the fiscal year -> 2032-12-31 (not yet confirmed)
+  source: Code de commerce L123-22 (accounting books and vouchers 10 years); Livre des procédures fiscales L102 B (documents for the tax audit 6 years) (#2571); not yet verified by a person with the authority to confirm it
