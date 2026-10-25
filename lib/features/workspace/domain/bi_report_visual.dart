@@ -130,8 +130,12 @@ class BiVisualLayout {
   static const maxHeight = 12;
   static const maxOrder = 255;
 
-  BiVisualLayout copyWith({int? order}) =>
-      BiVisualLayout(order: order ?? this.order, span: span, height: height);
+  BiVisualLayout copyWith({int? order, int? span, int? height}) =>
+      BiVisualLayout(
+        order: order ?? this.order,
+        span: span ?? this.span,
+        height: height ?? this.height,
+      );
 
   Map<String, Object> toJson() => {
     'order': order,
@@ -152,6 +156,104 @@ class BiVisualLayout {
   }
 }
 
+/// How a visual presents its figure: a heading and a description of its
+/// own, its legend and value labels, a permitted palette, the axis of a line
+/// and whether the source note shows. Presentation only — no formula, no
+/// figure, no link: changing it never asks the server anything again. A key
+/// left at its default is not written, so a visual nobody styled is stored
+/// as it always was.
+class BiVisualStyle {
+  const BiVisualStyle({
+    this.title,
+    this.description,
+    this.legend = true,
+    this.labels = true,
+    this.palette = 'standard',
+    this.axis = 'zero',
+    this.note = true,
+  });
+
+  /// The visible heading; null shows the figure's own name.
+  final String? title;
+  final String? description;
+  final bool legend;
+
+  /// Values written beside their marks, so colour is never the only sign.
+  final bool labels;
+
+  /// One of [palettes]: the app's tokens, a high-contrast set or one hue.
+  final String palette;
+
+  /// `zero` (the axis starts at zero) or `fit` (a line's axis fits its
+  /// values, and says it is cut). A bar always starts at zero.
+  final String axis;
+
+  /// Whether the figure's source and basis are written under it.
+  final bool note;
+
+  static const palettes = {'standard', 'contrast', 'mono'};
+  static const axes = {'zero', 'fit'};
+  static const maxTitle = 80;
+  static const maxDescription = 200;
+  static const _keys = {
+    'title',
+    'description',
+    'legend',
+    'labels',
+    'palette',
+    'axis',
+    'note',
+  };
+
+  bool get isDefault => toJson().isEmpty;
+
+  /// This style with [key] set to [value] (null or an empty text clears
+  /// it); itself when that would not be a valid style.
+  BiVisualStyle withValue(String key, Object? value) {
+    final json = <String, Object?>{...toJson(), key: value}
+      ..removeWhere((_, v) => v == null || v == '');
+    return fromJson(json) ?? this;
+  }
+
+  Map<String, Object> toJson() => {
+    'title': ?title,
+    'description': ?description,
+    if (!legend) 'legend': false,
+    if (!labels) 'labels': false,
+    if (palette != 'standard') 'palette': palette,
+    if (axis != 'zero') 'axis': axis,
+    if (!note) 'note': false,
+  };
+
+  /// Absent, or plain text of 1 to [max] characters on one line.
+  static bool _line(Object? v, int max) =>
+      v == null ||
+      (v is String && v.isNotEmpty && v.length <= max && !_control.hasMatch(v));
+  static final _control = RegExp(r'[\x00-\x1F\x7F]');
+
+  static BiVisualStyle? fromJson(Object? raw) {
+    if (raw == null) return const BiVisualStyle();
+    final r = biReportReader(raw);
+    if (r == null || !biReportOnly(r, _keys)) return null;
+    final t = r.raw('title'), d = r.raw('description');
+    final legend = r.raw('legend') ?? true, labels = r.raw('labels') ?? true;
+    final palette = r.raw('palette') ?? 'standard';
+    final axis = r.raw('axis') ?? 'zero', note = r.raw('note') ?? true;
+    if (!_line(t, maxTitle) || !_line(d, maxDescription)) return null;
+    if (legend is! bool || labels is! bool || note is! bool) return null;
+    if (!palettes.contains(palette) || !axes.contains(axis)) return null;
+    return BiVisualStyle(
+      title: t as String?,
+      description: d as String?,
+      legend: legend,
+      labels: labels,
+      palette: palette as String,
+      axis: axis as String,
+      note: note,
+    );
+  }
+}
+
 class BiReportVisual {
   const BiReportVisual({
     required this.id,
@@ -166,6 +268,7 @@ class BiReportVisual {
     this.interaction = 'filter',
     this.drill,
     this.text,
+    this.style = const BiVisualStyle(),
   });
 
   /// A figure card of [metricId], bound to the version of the metric this
@@ -203,6 +306,9 @@ class BiReportVisual {
   /// Plain content of a text visual, shown escaped.
   final String? text;
 
+  /// How the figure is presented; never what it is.
+  final BiVisualStyle style;
+
   static const maxText = 500;
   static const sorts = {'natural', 'value_desc', 'value_asc'};
   static const formats = {'auto', 'number', 'percent', 'currency'};
@@ -220,21 +326,39 @@ class BiReportVisual {
     'interaction',
     'drill',
     'text',
+    'style',
   };
 
-  BiReportVisual copyWith({BiVisualLayout? layout}) => BiReportVisual(
-    id: id,
-    type: type,
-    metricId: metricId,
-    metricVersion: metricVersion,
-    dimension: dimension,
+  /// This visual with the parts named replaced; a `clear…` flag sets its
+  /// part back to none.
+  BiReportVisual copyWith({
+    String? id,
+    BiVisualType? type,
+    String? metricId,
+    int? metricVersion,
+    String? dimension,
+    bool clearDimension = false,
+    String? sort,
+    String? format,
+    bool clearFormat = false,
+    BiVisualLayout? layout,
+    String? interaction,
+    String? text,
+    BiVisualStyle? style,
+  }) => BiReportVisual(
+    id: id ?? this.id,
+    type: type ?? this.type,
+    metricId: metricId ?? this.metricId,
+    metricVersion: metricVersion ?? this.metricVersion,
+    dimension: clearDimension ? null : dimension ?? this.dimension,
     filters: filters,
-    sort: sort,
-    format: format,
+    sort: sort ?? this.sort,
+    format: clearFormat ? null : format ?? this.format,
     layout: layout ?? this.layout,
-    interaction: interaction,
+    interaction: interaction ?? this.interaction,
     drill: drill,
-    text: text,
+    text: text ?? this.text,
+    style: style ?? this.style,
   );
 
   Map<String, Object?> toJson() => {
@@ -250,6 +374,7 @@ class BiReportVisual {
     'interaction': interaction,
     'drill': drill,
     'text': ?text,
+    if (!style.isDefault) 'style': style.toJson(),
   };
 
   static BiReportVisual? fromJson(Object? raw) {
@@ -263,6 +388,8 @@ class BiReportVisual {
     final version = r.raw('metricVersion');
     final text = r.raw('text');
     final interaction = r.raw('interaction') ?? 'filter';
+    final style = BiVisualStyle.fromJson(r.raw('style'));
+    if (style == null) return null;
     if (id is! String || !biReportId.hasMatch(id)) return null;
     if (type == null || layout == null || filters == null) return null;
     if (version is! int || version < 1 || version > 99) return null;
@@ -281,6 +408,7 @@ class BiReportVisual {
       interaction: interaction as String,
       drill: r.raw('drill') as String?,
       text: text as String?,
+      style: style,
     );
   }
 

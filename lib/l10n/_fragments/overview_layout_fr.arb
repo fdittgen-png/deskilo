@@ -1,0 +1,101 @@
+{
+  "overviewCustomize": "Personnaliser",
+  "@overviewCustomize": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewPinned": "Vos tuiles épinglées",
+  "@overviewPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewNoPinned": "Aucune tuile épinglée : épinglez les indicateurs que vous voulez voir ici en premier.",
+  "@overviewNoPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewAddTile": "Épingler une tuile",
+  "@overviewAddTile": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewUnpinTile": "Désépingler {title}",
+  "@overviewUnpinTile": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveEarlier": "Avancer {title}",
+  "@overviewMoveEarlier": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveLater": "Reculer {title}",
+  "@overviewMoveLater": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewTilePosition": "{title}, tuile {position} sur {count}",
+  "@overviewTilePosition": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "position": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewCopyFrom": "Copier la disposition d’un rapport",
+  "@overviewCopyFrom": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopyTo": "Enregistrer comme rapport",
+  "@overviewCopyTo": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopiedAsReport": "Enregistré comme le rapport « {name} ».",
+  "@overviewCopiedAsReport": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewLayoutSave": "Enregistrer ma disposition",
+  "@overviewLayoutSave": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutSaved": "Votre disposition est enregistrée.",
+  "@overviewLayoutSaved": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutName": "Ma vue d’ensemble",
+  "@overviewLayoutName": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutConflict": "Votre disposition a été modifiée ailleurs depuis son ouverture. Rien n’a été écrasé : rechargez-la, puis refaites votre changement.",
+  "@overviewLayoutConflict": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutReload": "Recharger",
+  "@overviewLayoutReload": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutLost": "Votre disposition n’a pas pu être enregistrée : aucune réponse n’est revenue. Vos changements sont gardés ; réessayer renvoie le même enregistrement, jamais appliqué deux fois.",
+  "@overviewLayoutLost": {
+    "description": "#2583 C2 overview layout"
+  }
+}

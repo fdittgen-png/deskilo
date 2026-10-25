@@ -1831,7 +1831,7 @@ routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb
 routine public.bi_report_dimensions() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:2d05f6cb55bc
 routine public.bi_report_filters_narrow(p_higher jsonb, p_lower jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:af02e844457e
 routine public.bi_report_filters_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:35b1153b461a
-routine public.bi_report_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:1093e7037245
+routine public.bi_report_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:6d6606ce9358
 routine public.bi_view_delete(p_workspace_id uuid, p_id uuid, p_expected_revision integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:d4af14c8c53b
 routine public.bi_view_json(v bi_views) -> jsonb | function | invoker | stable | exec:service_role | body:a650127880c9
 routine public.bi_view_save(p_workspace_id uuid, p_id uuid, p_scope text, p_name text, p_definition jsonb, p_expected_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:540dd276221c
