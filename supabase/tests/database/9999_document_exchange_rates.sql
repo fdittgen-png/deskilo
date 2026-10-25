@@ -271,7 +271,12 @@ select is(pg_temp.posted('CH-1', 'supplier_payment'), '401:D26909,512:C26909',
 -- An approved bill in francs without a rate (a space whose currency moved):
 -- set up as postgres, the guard held aside for the seed only.
 alter table public.purchase_documents disable trigger purchase_rate_required;
-update public.purchase_documents set state = 'approved' where id = pg_temp.doc('CH-3')::uuid;
+-- purchase_documents_approval_check (0468): an approved bill names who decided it.
+update public.purchase_documents
+   set state = 'approved', decided_at = now(),
+       decided_by_member_id = (select m.id from public.members m
+                                where m.workspace_id = current_setting('t.a')::uuid and m.user_id = pg_temp.u(4))
+ where id = pg_temp.doc('CH-3')::uuid;
 alter table public.purchase_documents enable trigger purchase_rate_required;
 insert into public.purchase_obligations (workspace_id, purchase_id, creditor_kind, creditor_supplier_id, amount_cents, currency)
 values (current_setting('t.a')::uuid, pg_temp.doc('CH-3')::uuid, 'supplier', current_setting('t.sup_a')::uuid, 25250, 'CHF');
@@ -295,8 +300,8 @@ select ok(not has_function_privilege('anon', 'public.record_purchase_exchange_ra
   'G1 the RPC for signed-in callers only; the converter and the writer for nobody');
 select like(pg_temp.as_text(pg_temp.u(1), format(
     'insert into public.document_exchange_rates (workspace_id, document_kind, document_id, currency, functional_currency, rate, rate_date, source) values (%L, ''purchase'', %L, ''CHF'', ''EUR'', 2, current_date, ''bank'') returning id::text',
-    current_setting('t.a'), pg_temp.doc('CH-1'))), 'error: permission denied%',
-  'G2 a client never writes a rate by hand');
+    current_setting('t.a'), pg_temp.doc('CH-1'))), 'error: permission denied%'::text,
+  'G2 a client never writes a rate by hand'::text);
 
 select * from finish();
 rollback;
