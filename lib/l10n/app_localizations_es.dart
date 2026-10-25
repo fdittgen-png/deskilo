@@ -7007,6 +7007,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureFinanceFacesTitle => 'Finanzas en cuatro vistas';
 
   @override
+  String get featureForeignCurrencyPurchasesDesc =>
+      'Una factura de proveedor en otra moneda distinta de la del espacio, con el tipo de cambio registrado en ella. La contabilidad y el FEC la leen en la moneda del espacio a ese tipo y conservan el importe original al lado; una factura sin su tipo se rechaza.';
+
+  @override
+  String get featureForeignCurrencyPurchasesTitle => 'Compras en otra moneda';
+
+  @override
   String get featureFormHelpHintsDesc =>
       'Un carrusel de consejos descartable en cada pantalla principal, y un pequeño ? junto a cada parámetro y campo — un toque abre la guía en la sección correcta. Restaurable desde Ajustes.';
 
@@ -11069,6 +11076,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get journalNeedsLocalBook =>
       'El diario sale de una contabilidad llevada aquí: configure primero el plan de cuentas del emisor.';
+
+  @override
+  String journalNeedsRates(String documents) {
+    return 'Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: $documents';
+  }
 
   @override
   String journeyClosedPaid(String date) {
@@ -17388,6 +17400,66 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesEvidence => 'Justificantes';
+
+  @override
+  String get purchasesFxCurrency => 'Moneda';
+
+  @override
+  String get purchasesFxEnter => 'Introduzca o corrija el tipo';
+
+  @override
+  String get purchasesFxInvalid =>
+      'Un tipo es un número positivo de 10 decimales como máximo, con su fecha y su origen.';
+
+  @override
+  String get purchasesFxMissing =>
+      'No hay ningún tipo de cambio registrado: la contabilidad rechaza esta compra hasta que lo esté.';
+
+  @override
+  String purchasesFxRate(String currency, String spaceCurrency) {
+    return 'Tipo de cambio: 1 $currency en $spaceCurrency';
+  }
+
+  @override
+  String get purchasesFxRateDate => 'Fecha del tipo';
+
+  @override
+  String purchasesFxRecorded(
+    String currency,
+    String rate,
+    String spaceCurrency,
+    String date,
+    String source,
+  ) {
+    return '1 $currency = $rate $spaceCurrency el $date · $source';
+  }
+
+  @override
+  String get purchasesFxRefused => 'El tipo de cambio no se ha registrado.';
+
+  @override
+  String get purchasesFxSaved => 'El tipo de cambio está registrado.';
+
+  @override
+  String get purchasesFxSource => 'Origen del tipo';
+
+  @override
+  String get purchasesFxSourceBank => 'Aplicado por el banco';
+
+  @override
+  String get purchasesFxSourceManual => 'Introducido a mano';
+
+  @override
+  String get purchasesFxSourceTaxAuthority =>
+      'Publicado por la administración tributaria para el devengo';
+
+  @override
+  String purchasesFxSpaceCurrency(String currency) {
+    return '$currency (moneda del espacio)';
+  }
+
+  @override
+  String get purchasesFxTitle => 'Tipo de cambio';
 
   @override
   String get purchasesGross => 'Total con impuestos';

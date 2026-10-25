@@ -49,8 +49,8 @@ mixin NoFiledPurchases implements PurchaseRepository {
 }
 
 /// A draft as the server stores it under [id]: its lines numbered from 1,
-/// the next revision, a draft of its kind. The currency stays the space's
-/// (the demonstration names none).
+/// the next revision, a draft of its kind. A bill names its currency when it
+/// is not the space's; otherwise the demonstration names none.
 PurchaseDetail demoDraftDetail(String id, PurchaseDraft draft) => PurchaseDetail(
   summary: PurchaseSummary(
     id: id,
@@ -58,7 +58,7 @@ PurchaseDetail demoDraftDetail(String id, PurchaseDraft draft) => PurchaseDetail
     state: PurchaseState.draft,
     category: draft.category,
     reference: draft.reference,
-    currency: '',
+    currency: draft is PurchaseBillDraft ? draft.currency ?? '' : '',
     grossCents: draft.lines.fold(0, (sum, l) => sum + l.grossCents),
     receivedOn: draft.originalDate,
   ),

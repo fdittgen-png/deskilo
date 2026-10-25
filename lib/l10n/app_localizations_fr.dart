@@ -7025,6 +7025,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureFinanceFacesTitle => 'Finances en quatre volets';
 
   @override
+  String get featureForeignCurrencyPurchasesDesc =>
+      'Une facture fournisseur dans une autre devise que celle de l’espace, avec le taux de change enregistré sur elle. La comptabilité et le FEC la lisent dans la devise de l’espace à ce taux et gardent le montant d’origine à côté ; une facture sans son taux est refusée.';
+
+  @override
+  String get featureForeignCurrencyPurchasesTitle =>
+      'Achats dans une autre devise';
+
+  @override
   String get featureFormHelpHintsDesc =>
       'Un carrousel d\'astuces masquable sur chaque écran principal, et un petit ? à côté de chaque paramètre et champ de saisie — un geste ouvre le guide à la bonne section. Réactivable dans les réglages.';
 
@@ -11101,6 +11109,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get journalNeedsLocalBook =>
       'Le journal est tiré d\'une comptabilité tenue ici : configurez d\'abord le plan de comptes de l\'émetteur.';
+
+  @override
+  String journalNeedsRates(String documents) {
+    return 'Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : $documents';
+  }
 
   @override
   String journeyClosedPaid(String date) {
@@ -17445,6 +17458,66 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesEvidence => 'Justificatifs';
+
+  @override
+  String get purchasesFxCurrency => 'Devise';
+
+  @override
+  String get purchasesFxEnter => 'Saisir ou corriger le taux';
+
+  @override
+  String get purchasesFxInvalid =>
+      'Un taux est un nombre positif d’au plus 10 décimales, avec sa date et sa source.';
+
+  @override
+  String get purchasesFxMissing =>
+      'Aucun taux de change n’est enregistré : la comptabilité refuse cet achat tant qu’il ne l’est pas.';
+
+  @override
+  String purchasesFxRate(String currency, String spaceCurrency) {
+    return 'Taux de change : 1 $currency en $spaceCurrency';
+  }
+
+  @override
+  String get purchasesFxRateDate => 'Date du taux';
+
+  @override
+  String purchasesFxRecorded(
+    String currency,
+    String rate,
+    String spaceCurrency,
+    String date,
+    String source,
+  ) {
+    return '1 $currency = $rate $spaceCurrency au $date · $source';
+  }
+
+  @override
+  String get purchasesFxRefused => 'Le taux de change n’a pas été enregistré.';
+
+  @override
+  String get purchasesFxSaved => 'Le taux de change est enregistré.';
+
+  @override
+  String get purchasesFxSource => 'Source du taux';
+
+  @override
+  String get purchasesFxSourceBank => 'Appliqué par la banque';
+
+  @override
+  String get purchasesFxSourceManual => 'Saisi à la main';
+
+  @override
+  String get purchasesFxSourceTaxAuthority =>
+      'Publié par l’administration fiscale pour le fait générateur';
+
+  @override
+  String purchasesFxSpaceCurrency(String currency) {
+    return '$currency (devise de l’espace)';
+  }
+
+  @override
+  String get purchasesFxTitle => 'Taux de change';
 
   @override
   String get purchasesGross => 'Total TTC';

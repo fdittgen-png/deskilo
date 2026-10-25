@@ -5080,6 +5080,8 @@
   },
   "featureFinanceFacesDesc": "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
   "featureFinanceFacesTitle": "Finanze in quattro viste",
+  "featureForeignCurrencyPurchasesDesc": "Una fattura fornitore in una valuta diversa da quella dello spazio, con il tasso di cambio registrato su di essa. La contabilità e il FEC la leggono nella valuta dello spazio a quel tasso e conservano accanto l'importo originale; una fattura senza il suo tasso viene rifiutata.",
+  "featureForeignCurrencyPurchasesTitle": "Acquisti in altra valuta",
   "featureFormHelpHintsDesc": "Un carosello di suggerimenti richiudibile su ogni schermata principale, e un piccolo ? accanto a ogni parametro e campo — un tocco apre la guida alla sezione giusta. Ripristinabile dalle impostazioni.",
   "featureFormHelpHintsTitle": "Suggerimenti di aiuto",
   "featureGuestParticipationDesc": "Permette a una persona che non è membro di chiedere di visitare questo spazio, e a chi gestisce le prenotazioni di ammetterla o rifiutarla. Una visita non crea iscrizione, abbonamento né ruolo. Disattivato: nessuno chiede né viene ammesso qui.",
@@ -7635,6 +7637,7 @@
   "journalFecMissingRate": "Questi documenti sono in una valuta diversa da quella della contabilità e non hanno un tasso di cambio registrato; il FEC non è stato generato: {documents}",
   "journalFecPartyCode": "Il FEC richiede un codice cliente per ogni terzo, fino a 13 lettere e cifre: assegni prima un numero di membro o di fornitore a: {names}",
   "journalNeedsLocalBook": "Il giornale nasce da una contabilità tenuta qui: configura prima il piano dei conti dell'emittente.",
+  "journalNeedsRates": "Questi acquisti sono in una valuta diversa da quella dello spazio e non hanno un tasso di cambio registrato; non è stato scritto nulla. Registri prima il tasso di ciascuno: {documents}",
   "journeyClosedPaid": "Pagata il {date} — chiusa",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -11328,6 +11331,21 @@
   "@purchasesEvidence": {
     "description": "#2573 purchases"
   },
+  "purchasesFxCurrency": "Valuta",
+  "purchasesFxEnter": "Inserisca o corregga il tasso",
+  "purchasesFxInvalid": "Un tasso è un numero positivo con al massimo 10 decimali, con la sua data e la sua fonte.",
+  "purchasesFxMissing": "Nessun tasso di cambio registrato: la contabilità rifiuta questo acquisto finché non lo è.",
+  "purchasesFxRate": "Tasso di cambio: 1 {currency} in {spaceCurrency}",
+  "purchasesFxRateDate": "Data del tasso",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} il {date} · {source}",
+  "purchasesFxRefused": "Il tasso di cambio non è stato registrato.",
+  "purchasesFxSaved": "Il tasso di cambio è registrato.",
+  "purchasesFxSource": "Fonte del tasso",
+  "purchasesFxSourceBank": "Applicato dalla banca",
+  "purchasesFxSourceManual": "Inserito a mano",
+  "purchasesFxSourceTaxAuthority": "Pubblicato dall’amministrazione fiscale per il momento impositivo",
+  "purchasesFxSpaceCurrency": "{currency} (valuta dello spazio)",
+  "purchasesFxTitle": "Tasso di cambio",
   "purchasesGross": "Totale imposte incluse",
   "@purchasesGross": {
     "description": "#2573 purchases"

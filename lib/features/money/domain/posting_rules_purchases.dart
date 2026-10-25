@@ -19,30 +19,68 @@
 // account (`customers`) instead of `suppliers`; the invoice that later nets
 // that credit books no expense (posting_rules.dart), so it is booked once.
 // A reimbursement paid to the member is Dr `customers` / Cr `bank`.
+//
+// A supplier's bill in another currency than the space's is booked, with
+// its payments, in the space's currency at the rate recorded with it
+// (`postingAtRate`); each line keeps its original amount. Without a recorded
+// rate the bill and its payments block, named `reference (currency)`.
 
 import 'accounting_amount.dart';
 import 'book_chart.dart';
 import 'posting.dart';
+import 'posting_fx.dart';
 import 'posting_rules.dart';
 import 'purchase.dart';
 
 /// The postings of [purchases] on [book]. [groupOf] names the rate group of
-/// a line's tax rate.
+/// a line's tax rate. A document in another currency than [functional] is
+/// converted at its rate in [rates] (by document id).
 List<Posting> purchasePostingsOf({
   required List<PurchaseDetail> purchases,
   required PostingBook book,
   required String Function(double percent) groupOf,
+  String? functional,
+  Map<String, FxRate> rates = const {},
 }) => [
   for (final d in purchases)
     if (d.summary.state == PurchaseState.approved &&
         (d.summary.kind == PurchaseKind.memberReceipt ||
             d.obligations.any(
               (o) => o.creditorKind == CreditorKind.supplier,
-            ))) ...[
-      ?_bill(d, book, groupOf),
-      ..._payments(d, book),
-    ],
+            )))
+      ...?_inBookCurrency(
+        d,
+        [?_bill(d, book, groupOf), ..._payments(d, book)],
+        book,
+        functional,
+        rates[d.summary.id],
+      ),
 ];
+
+/// [postings] of [d] in [functional] currency; null (and [d] named on
+/// [book]) when [d] is in another currency and has no recorded [rate].
+List<Posting>? _inBookCurrency(
+  PurchaseDetail d,
+  List<Posting> postings,
+  PostingBook book,
+  String? functional,
+  FxRate? rate,
+) {
+  final currency = d.summary.currency.toUpperCase();
+  if (functional == null || currency == functional || postings.isEmpty) {
+    return postings;
+  }
+  if (rate == null ||
+      rate.base.toUpperCase() != currency ||
+      rate.quote.toUpperCase() != functional) {
+    final named = d.summary.reference.isEmpty
+        ? d.summary.id
+        : d.summary.reference;
+    book.block(PostingBlock.missingRate, '$named ($currency)');
+    return null;
+  }
+  return [for (final p in postings) postingAtRate(p, rate)];
+}
 
 /// #2573 — what a line is for decides its debit: equipment, stock, a
 /// prepayment or a deposit is not an operating cost, and an unmapped role

@@ -44,3 +44,17 @@ final purchasePlacesProvider = FutureProvider.autoDispose
       (ref, workspaceId) =>
           ref.watch(purchaseRepositoryProvider).fetchPlaces(workspaceId),
     );
+
+/// The exchange rate recorded with a purchase in another currency than the
+/// space's; null when none is.
+final purchaseExchangeRateProvider = FutureProvider.autoDispose
+    .family<DocumentExchangeRate?, ({String workspaceId, String purchaseId})>(
+      (ref, key) => ref
+          .watch(purchaseRepositoryProvider)
+          .fetchExchangeRate(key.workspaceId, key.purchaseId),
+    );
+
+/// The sources an exchange rate may name, in display order.
+final exchangeRateSourcesProvider = FutureProvider.autoDispose<List<String>>(
+  (ref) => ref.watch(purchaseRepositoryProvider).fetchExchangeRateSources(),
+);

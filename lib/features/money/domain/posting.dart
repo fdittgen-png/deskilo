@@ -33,6 +33,10 @@ enum PostingBlock {
 
   /// #2365 — a document whose parts do not add up to its total.
   unbalanced,
+
+  /// A document in another currency than the space's with no exchange
+  /// rate recorded for it, named `reference (currency)`.
+  missingRate,
 }
 
 class PostingBlocker {
@@ -53,6 +57,7 @@ class PostingLine {
     required this.debit,
     required this.credit,
     this.qualifier,
+    this.original,
   });
 
   final BookRole role;
@@ -65,6 +70,11 @@ class PostingLine {
   /// Exactly one of the two is non-zero.
   final AccountingAmount debit;
   final AccountingAmount credit;
+
+  /// The amount in the document's own currency this line was converted
+  /// from at the document's recorded rate; null when the document is in
+  /// the book's currency.
+  final AccountingAmount? original;
 }
 
 /// The journal a posting belongs to, with its usual code.
@@ -160,6 +170,7 @@ PostingBlocker _blockerFromJson(JsonReader r) => PostingBlocker(
 Posting _postingFromJson(Object? raw) {
   final r = JsonReader.of(raw, context: 'posting');
   final currency = r.string('currency');
+  final original = r.stringOrNull('original_currency');
   return Posting(
     journal: PostingJournal.values.byName(r.string('journal')),
     date: r.dateTime('date'),
@@ -168,18 +179,26 @@ Posting _postingFromJson(Object? raw) {
     documentNumber: r.string('document_number'),
     lines: [
       for (final l in r.list('lines'))
-        _lineFromJson(JsonReader.of(l, context: 'posting line'), currency),
+        _lineFromJson(
+          JsonReader.of(l, context: 'posting line'),
+          currency,
+          original,
+        ),
     ],
   );
 }
 
-PostingLine _lineFromJson(JsonReader r, String currency) => PostingLine(
-  role: BookRole.fromWire(r.string('role')),
-  qualifier: r.stringOrNull('qualifier'),
-  accountCode: r.string('account_code'),
-  debit: AccountingAmount(currency, r.integer('debit_cents')),
-  credit: AccountingAmount(currency, r.integer('credit_cents')),
-);
+PostingLine _lineFromJson(JsonReader r, String currency, String? original) =>
+    PostingLine(
+      role: BookRole.fromWire(r.string('role')),
+      qualifier: r.stringOrNull('qualifier'),
+      accountCode: r.string('account_code'),
+      debit: AccountingAmount(currency, r.integer('debit_cents')),
+      credit: AccountingAmount(currency, r.integer('credit_cents')),
+      original: original == null
+          ? null
+          : AccountingAmount(original, r.integer('original_cents')),
+    );
 
 /// #2376 (0525) — the third party of a posted document: the member of an
 /// invoice or of a receipt, the supplier of a bill, by number and name. The

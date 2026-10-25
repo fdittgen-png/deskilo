@@ -24,3 +24,7 @@ const String recordingPrivacyKey = 'recordingPrivacy';
 /// #2376 — the money feature offers the books printed from the postings
 /// only where the space keeps a book.
 const String accountingBookKey = 'accountingBook';
+
+/// A supplier's bill in another currency than the space's, with the
+/// exchange rate recorded on it.
+const String foreignCurrencyPurchasesKey = 'foreignCurrencyPurchases';

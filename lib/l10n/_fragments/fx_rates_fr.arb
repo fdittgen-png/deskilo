@@ -1,0 +1,21 @@
+{
+  "@@locale": "fr",
+  "featureForeignCurrencyPurchasesTitle": "Achats dans une autre devise",
+  "featureForeignCurrencyPurchasesDesc": "Une facture fournisseur dans une autre devise que celle de l’espace, avec le taux de change enregistré sur elle. La comptabilité et le FEC la lisent dans la devise de l’espace à ce taux et gardent le montant d’origine à côté ; une facture sans son taux est refusée.",
+  "purchasesFxCurrency": "Devise",
+  "purchasesFxSpaceCurrency": "{currency} (devise de l’espace)",
+  "purchasesFxRate": "Taux de change : 1 {currency} en {spaceCurrency}",
+  "purchasesFxRateDate": "Date du taux",
+  "purchasesFxSource": "Source du taux",
+  "purchasesFxSourceTaxAuthority": "Publié par l’administration fiscale pour le fait générateur",
+  "purchasesFxSourceBank": "Appliqué par la banque",
+  "purchasesFxSourceManual": "Saisi à la main",
+  "purchasesFxTitle": "Taux de change",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} au {date} · {source}",
+  "purchasesFxMissing": "Aucun taux de change n’est enregistré : la comptabilité refuse cet achat tant qu’il ne l’est pas.",
+  "purchasesFxEnter": "Saisir ou corriger le taux",
+  "purchasesFxInvalid": "Un taux est un nombre positif d’au plus 10 décimales, avec sa date et sa source.",
+  "purchasesFxSaved": "Le taux de change est enregistré.",
+  "purchasesFxRefused": "Le taux de change n’a pas été enregistré.",
+  "journalNeedsRates": "Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : {documents}"
+}

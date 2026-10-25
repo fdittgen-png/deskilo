@@ -992,6 +992,12 @@
       ]
     },
     {
+      "key": "foreignCurrencyPurchases",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "formHelpHints",
       "maturity": "beta",
       "lifecycle": "active",

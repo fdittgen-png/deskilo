@@ -180,6 +180,7 @@ begin
       "expenseRepartitionWizard": false,
       "externalRooms": false,
       "financeFaces": true,
+      "foreignCurrencyPurchases": false,
       "formHelpHints": true,
       "guestParticipation": false,
       "holidayImport": false,

@@ -50,6 +50,11 @@ Close a leaf when its own scoped acceptance is verified; parent scope alone is
 not a closure blocker. Keep release/operator gates separate. Record the next
 outcome in #2596. Do not deploy or change permissions automatically.
 
+An issue waiting on "owner review" of something you produced is yours to
+decide: post the reasoned decision on the issue, then implement and commit.
+Never leave useful work uncommitted; remove merged worktrees; branch, merge
+and conflict rules: `docs/AGENT_RULES.md#decide-commit-never-park-owner-2026-10-25`.
+
 ## Non-negotiables in one breath
 
 One registry-touching branch at a time. Harness a migration before you apply it.

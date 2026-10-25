@@ -1,0 +1,21 @@
+{
+  "@@locale": "it",
+  "featureForeignCurrencyPurchasesTitle": "Acquisti in altra valuta",
+  "featureForeignCurrencyPurchasesDesc": "Una fattura fornitore in una valuta diversa da quella dello spazio, con il tasso di cambio registrato su di essa. La contabilità e il FEC la leggono nella valuta dello spazio a quel tasso e conservano accanto l'importo originale; una fattura senza il suo tasso viene rifiutata.",
+  "purchasesFxCurrency": "Valuta",
+  "purchasesFxSpaceCurrency": "{currency} (valuta dello spazio)",
+  "purchasesFxRate": "Tasso di cambio: 1 {currency} in {spaceCurrency}",
+  "purchasesFxRateDate": "Data del tasso",
+  "purchasesFxSource": "Fonte del tasso",
+  "purchasesFxSourceTaxAuthority": "Pubblicato dall’amministrazione fiscale per il momento impositivo",
+  "purchasesFxSourceBank": "Applicato dalla banca",
+  "purchasesFxSourceManual": "Inserito a mano",
+  "purchasesFxTitle": "Tasso di cambio",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} il {date} · {source}",
+  "purchasesFxMissing": "Nessun tasso di cambio registrato: la contabilità rifiuta questo acquisto finché non lo è.",
+  "purchasesFxEnter": "Inserisca o corregga il tasso",
+  "purchasesFxInvalid": "Un tasso è un numero positivo con al massimo 10 decimali, con la sua data e la sua fonte.",
+  "purchasesFxSaved": "Il tasso di cambio è registrato.",
+  "purchasesFxRefused": "Il tasso di cambio non è stato registrato.",
+  "journalNeedsRates": "Questi acquisti sono in una valuta diversa da quella dello spazio e non hanno un tasso di cambio registrato; non è stato scritto nulla. Registri prima il tasso di ciascuno: {documents}"
+}
