@@ -150,21 +150,19 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       levelId: levelId,
     );
     if (done == null) return;
-    final (effective, identity) = done;
-    final booksWindow = request.action != KioskAction.checkOut;
+    final (plan, identity) = done;
+    final booksWindow = plan.booksWindow;
     if (!mounted) return;
     invalidateBookingData(ref);
 
     // The receipt: who, what, where, until when — self-dismissing, so
     // the next member finds a clean wall.
-    final actionLabel = request.action == KioskAction.reserve &&
-            effective == KioskAction.checkIn
-        ? (l10n.kioskReserveAndCheckIn)
-        : switch (request.action) {
-            KioskAction.checkIn => l10n.kioskCheckIn,
-            KioskAction.reserve => l10n.kioskReserve,
-            KioskAction.checkOut => l10n.kioskCheckOut,
-          };
+    final actionLabel = switch (plan.receipt) {
+      KioskReceipt.reserveAndCheckIn => l10n.kioskReserveAndCheckIn,
+      KioskReceipt.checkIn => l10n.kioskCheckIn,
+      KioskReceipt.reserve => l10n.kioskReserve,
+      KioskReceipt.checkOut => l10n.kioskCheckOut,
+    };
     // #616 — the member's own photo on the receipt: the visual
     // wrong-badge check, behind its own kiosk-family toggle.
     final showPhoto = ref
@@ -227,9 +225,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     );
   }
 
-  /// Identifies the badge and acts in one go; the effective action and who
-  /// acted, or null once the refusal has been told on the wall.
-  Future<(KioskAction, KioskIdentity)?> _perform(
+  /// Identifies the badge and acts in one go; the plan it carried out and
+  /// who acted, or null once the refusal has been told on the wall.
+  Future<(KioskActPlan, KioskIdentity)?> _perform(
     String workspaceId,
     KioskActRequest request, {
     required String title,
@@ -298,7 +296,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       AppSnack.error(context, message, replace: true);
       return null;
     }
-    return (effective, identity);
+    return (plan, identity);
   }
 
   /// The member whose reservation blocks the requested window on the
