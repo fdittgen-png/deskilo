@@ -2,6 +2,8 @@
 //
 // Me › Finances, the pieces around the lists: the space filter, the
 // development heading, the hosts that did not answer.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -94,7 +96,8 @@ class FinancesDevSection extends StatelessWidget {
 
 /// One banner per host whose documents could not be read: a host that did
 /// not answer is named, never folded into an empty list, and what is shown
-/// below is complete for the others. Its action reads every host again.
+/// below is complete for the others. Its action reads that host again
+/// (C6), not the whole overview.
 class FinancesSourceBanners extends ConsumerWidget {
   const FinancesSourceBanners({super.key, required this.sources});
 
@@ -117,7 +120,13 @@ class FinancesSourceBanners extends ConsumerWidget {
               Uri.tryParse(source)?.host ?? source,
             ),
             actionLabel: l10n.commonRetry,
-            onAction: () => ref.invalidate(financeOverviewProvider),
+            onAction: () => unawaited(
+              ref
+                  .read<FinanceOverviewComposer>(
+                    financeOverviewProvider.notifier,
+                  )
+                  .retrySource(source),
+            ),
           ),
       ],
     );
@@ -283,6 +292,41 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// The window width from which the documents read as rows.
+const double _rowsWindowWidth = 840;
+
+/// A bounded, centred column of Me › Finances: a list of money rows is read, not scanned
+/// edge to edge.
+class FinancesColumn extends StatelessWidget {
+  const FinancesColumn({super.key, required this.children, this.onRefresh});
+  final List<Widget> children;
+  final Future<void> Function()? onRefresh;
+
+  @override
+  Widget build(BuildContext context) {
+    final list = ListView(
+      padding: AppSpacing.mdAll,
+      physics: const AlwaysScrollableScrollPhysics(),
+      children: children,
+    );
+    // #2557 C4 — a wide window gets the documents as rows, in a wider
+    // column; a phone keeps the narrow one.
+    return LayoutBuilder(
+      builder: (context, box) => Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: box.maxWidth >= _rowsWindowWidth ? 1200 : 760,
+          ),
+          child: onRefresh == null
+              ? list
+              : RefreshIndicator(onRefresh: onRefresh!, child: list),
+        ),
       ),
     );
   }

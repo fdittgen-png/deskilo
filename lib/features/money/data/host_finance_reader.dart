@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2557 C5 — my own documents on one workspace host, asked through THAT
+// #2557 C5 — my own documents (C6: and my payments) on one workspace host, asked through THAT
 // host's own verified client (the installation the app is signed in to,
 // or the connected pool's pinned client for the host's origin), never
 // through the personal home's or the selected workspace's. A host that is
@@ -8,6 +8,7 @@
 // `my_finance_overview` stays local to each host.
 import '../../../core/backend/connected_target.dart';
 import '../../../core/backend/context_clients.dart';
+import '../domain/account_activity.dart';
 import '../domain/finance_hosts.dart';
 import '../domain/finance_overview.dart';
 import 'supabase_account_activity_repository.dart';
@@ -50,7 +51,12 @@ class HostFinanceReader implements FinanceHostReader {
           'asked ${host.installationId}, answered ${resolved.installationId}',
         );
       }
-      return await SupabaseAccountActivityRepository(resolved.client).overview();
+      // My invoices and reminders, then my payments, on the same host and
+      // its own client: a host answers for all three or not at all.
+      final repository = SupabaseAccountActivityRepository(resolved.client);
+      final overview = await repository.overview();
+      final payments = await repository.list(AccountActivityKind.payments);
+      return overview.withPayments(payments);
     } finally {
       resolved.lease?.release();
     }

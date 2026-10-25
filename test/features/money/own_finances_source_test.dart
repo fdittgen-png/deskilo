@@ -6,14 +6,18 @@
 // selected workspace's own client. A host that does not answer is named
 // above the lists while the others stay on screen; without a connected
 // selection the connected repository is never asked.
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
+import 'package:deskilo/core/session/session_source.dart';
+import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/presentation/screens/my_finances_screen.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
+import 'package:deskilo/features/money/providers/finance_overview_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,13 +29,22 @@ import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 import '../../helpers/screens/my_finances_screen.dart' show invoice;
 
-/// A repository that counts how often it was asked.
+/// A repository that counts how often it was asked; its next read can be
+/// held open until the test answers it.
 class _Host extends FakeAccountActivityRepository {
   int reads = 0;
+  Completer<FinanceOverview>? held;
+
+  /// The host refuses my documents (its payments still answer).
+  bool down = false;
 
   @override
-  Future<FinanceOverview> overview() {
+  Future<FinanceOverview> overview() async {
     reads++;
+    final wait = held;
+    held = null;
+    if (wait != null) return wait.future;
+    if (down) throw StateError('financial overview unavailable');
     return super.overview();
   }
 }
@@ -45,7 +58,7 @@ Future<({_Host home, _Host remote})> pump(
   final home = _Host()
     ..financeOverview = FinanceOverview(invoices: [invoice('p1')]);
   final remote = _Host()
-    ..unavailable = remoteDown
+    ..down = remoteDown
     ..financeOverview = FinanceOverview(
       invoices: [invoice('w1', ws: 'Remote Two')],
     );
@@ -130,14 +143,113 @@ void main() {
       expect(banner, findsOneWidget);
       expect(find.textContaining('two.example'), findsOneWidget);
 
-      hosts.remote.unavailable = false;
+      final homeReads = hosts.home.reads;
+      hosts.remote.down = false;
       await tester.tap(find.text('Try again'));
       await tester.pumpAndSettle();
       expect(hosts.remote.reads, 2);
       expect(find.byKey(const ValueKey('finances-invoice-w1')), findsOneWidget);
       expect(banner, findsNothing);
+      expect(hosts.home.reads, homeReads,
+          reason: 'C6 — that host only is read again, not the overview');
+      expect(find.byKey(const ValueKey('finances-invoice-p1')), findsOneWidget);
     },
   );
+
+  testWidgets(
+    'a retry the host still refuses keeps it named, with its Try again; '
+    'the home is not read again',
+    (tester) async {
+      final hosts = await pump(tester, remoteDown: true);
+      await _selectRemote(tester);
+      final homeReads = hosts.home.reads;
+      await tester.tap(find.text('Try again'));
+      await tester.pumpAndSettle();
+      expect(hosts.remote.reads, 2);
+      expect(hosts.home.reads, homeReads);
+      expect(
+        find.byKey(const ValueKey('finances-source-unavailable-two.example')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('finances-invoice-p1')), findsOneWidget);
+    },
+  );
+
+  testWidgets('the selected connected workspace adds its own payments', (
+    tester,
+  ) async {
+    final hosts = await pump(tester);
+    hosts.remote.records[AccountActivityKind.payments] = [
+      AccountActivity(
+        id: 'pay-w',
+        workspaceId: 'ws-Remote Two',
+        workspaceName: 'Remote Two',
+        occurredAt: DateTime.utc(2026, 9, 3),
+        reference: 'R-1',
+        description: 'Card',
+        currency: 'EUR',
+        status: 'succeeded',
+        amountCents: 500,
+      ),
+    ];
+    await _selectRemote(tester);
+    await tester.tap(find.byKey(const ValueKey('finances-tab-payments')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('finances-payment-pay-w')), findsOneWidget);
+  });
+
+  test('a retry answer that arrives after the account changed never lands', () async {
+    final session = StreamController<String?>.broadcast();
+    addTearDown(session.close);
+    final home = _Host();
+    final remote = _Host()..down = true;
+    final container = ProviderContainer(
+      overrides: [
+        ...standardTestOverrides(
+          auth: FakeAuthRepository.signedIn(),
+          accountActivity: home,
+        ),
+        selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(
+          remote,
+        ),
+        sessionStateProvider.overrideWith((ref) => session.stream),
+      ],
+    );
+    addTearDown(container.dispose);
+    final sub = container.listen(financeOverviewProvider, (_, _) {});
+    addTearDown(sub.close);
+    // A selection belongs to the account that made it.
+    Future<void> selectAs(String person) async {
+      session.add(person);
+      await pumpEventQueue();
+      container
+          .read(selectedWorkspaceHostProvider.notifier)
+          .select('ws-Remote Two', _remote);
+      await pumpEventQueue();
+    }
+
+    await selectAs('person-1');
+    var now = await container.read(financeOverviewProvider.future);
+    expect(now.unavailableSources, [_remote]);
+
+    // The first account's Try again is held; meanwhile another account
+    // signs in and the host still refuses it.
+    final stale = remote.held = Completer();
+    final retry = container
+        .read<FinanceOverviewComposer>(financeOverviewProvider.notifier)
+        .retrySource(_remote);
+    await selectAs('person-2');
+    now = await container.read(financeOverviewProvider.future);
+    expect(now.unavailableSources, [_remote]);
+
+    stale.complete(FinanceOverview(invoices: [invoice('old', ws: 'Remote Two')]));
+    await retry;
+    await pumpEventQueue();
+    now = container.read(financeOverviewProvider).value!;
+    expect(now.invoices, isEmpty,
+        reason: 'the first account\'s documents never fill the second\'s view');
+    expect(now.unavailableSources, [_remote]);
+  });
 
   test(
     'the selected workspace repository runs my_finance_overview on the '

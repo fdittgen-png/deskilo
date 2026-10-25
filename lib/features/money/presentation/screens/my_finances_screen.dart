@@ -116,7 +116,10 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
                     children: [
                       _Outstanding(data: prod, dev: dev),
                       _Paid(data: prod, dev: dev),
-                      _Payments(filter: _filter, devIds: devIds),
+                      _Payments(
+                          filter: _filter,
+                          devIds: devIds,
+                          hostPayments: all.payments),
                       _Reminders(data: prod, dev: dev),
                     ],
                   ),
@@ -125,41 +128,6 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
             ),
           _ => const LoadingView(),
         },
-      ),
-    );
-  }
-}
-
-/// The window width from which the documents read as rows.
-const double _rowsWindowWidth = 840;
-
-/// A bounded, centred column: a list of money rows is read, not scanned
-/// edge to edge.
-class _Column extends StatelessWidget {
-  const _Column({required this.children, this.onRefresh});
-  final List<Widget> children;
-  final Future<void> Function()? onRefresh;
-
-  @override
-  Widget build(BuildContext context) {
-    final list = ListView(
-      padding: AppSpacing.mdAll,
-      physics: const AlwaysScrollableScrollPhysics(),
-      children: children,
-    );
-    // #2557 C4 — a wide window gets the documents as rows, in a wider
-    // column; a phone keeps the narrow one.
-    return LayoutBuilder(
-      builder: (context, box) => Align(
-        alignment: Alignment.topCenter,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: box.maxWidth >= _rowsWindowWidth ? 1200 : 760,
-          ),
-          child: onRefresh == null
-              ? list
-              : RefreshIndicator(onRefresh: onRefresh!, child: list),
-        ),
       ),
     );
   }
@@ -218,11 +186,8 @@ class _Outstanding extends ConsumerWidget {
     final now = ref.watch(clockProvider).now();
     final list = newestFirst(data.outstanding);
     final overdue = list.where((i) => i.overdueAt(now)).length;
-    return _Column(
-      onRefresh: () async {
-        ref.invalidate(financeOverviewProvider);
-        await ref.read(financeOverviewProvider.future);
-      },
+    return FinancesColumn(
+      onRefresh: () => refreshMyFinances(ref),
       children: [
         if (list.isEmpty)
           EmptyState(
@@ -292,11 +257,8 @@ class _Paid extends ConsumerWidget {
     final l10n = context.l10n;
     final now = ref.watch(clockProvider).now();
     final list = data.paid;
-    return _Column(
-      onRefresh: () async {
-        ref.invalidate(financeOverviewProvider);
-        await ref.read(financeOverviewProvider.future);
-      },
+    return FinancesColumn(
+      onRefresh: () => refreshMyFinances(ref),
       children: [
         if (list.isEmpty)
           EmptyState(
@@ -341,8 +303,12 @@ class _Reminders extends ConsumerWidget {
     };
     Widget row(FinanceReminder r, {bool isDev = false}) {
       final tone = AppEnvironmentColors.developmentOf(theme.brightness);
-      final workspaceId = workspaceOf[r.invoiceId];
-      return Card(
+      // A reminder opens its invoice in the reminder's own workspace: an
+      // equal local invoice id on another host is another invoice.
+      final workspaceId = r.workspaceId ?? workspaceOf[r.invoiceId];
+      return KeyedSubtree(
+        key: ValueKey((workspaceId ?? r.workspaceName, r.id)),
+        child: Card(
         key: ValueKey('finances-reminder-${r.id}'),
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
         color: isDev ? tone.withValues(alpha: .10) : null,
@@ -375,14 +341,12 @@ class _Reminders extends ConsumerWidget {
               ? null
               : () => _openMyInvoice(context, ref, workspaceId, r.invoiceId),
         ),
+      ),
       );
     }
 
-    return _Column(
-      onRefresh: () async {
-        ref.invalidate(financeOverviewProvider);
-        await ref.read(financeOverviewProvider.future);
-      },
+    return FinancesColumn(
+      onRefresh: () => refreshMyFinances(ref),
       children: [
         if (data.reminders.isEmpty && dev.reminders.isEmpty)
           EmptyState(
@@ -401,7 +365,15 @@ class _Reminders extends ConsumerWidget {
 }
 
 class _Payments extends ConsumerWidget {
-  const _Payments({required this.filter, this.devIds = const {}});
+  const _Payments({
+    required this.filter,
+    this.devIds = const {},
+    this.hostPayments = const [],
+  });
+
+  /// C6 — my payments on the connected hosts, as they answer; beside the
+  /// personal home's own, each payment once by workspace and id.
+  final List<AccountActivity> hostPayments;
 
   /// The space and the period the payments are narrowed to (#2557 C4).
   final FinanceFilter filter;
@@ -416,26 +388,21 @@ class _Payments extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final rows = ref.watch(accountActivityProvider(AccountActivityKind.payments));
+    final home = ref.watch(accountActivityProvider(AccountActivityKind.payments));
+    final rows = home.whenData(
+      (own) => FinanceOverview.newestFirst(
+        FinanceOverview(payments: own)
+            .merge(FinanceOverview(payments: hostPayments))
+            .payments,
+      ),
+    );
     final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
-    return _Column(
-      onRefresh: () async {
-        ref.invalidate(accountActivityProvider(AccountActivityKind.payments));
-      },
-      children: [
-        const PersonalPaymentProvider(),
-        switch (rows) {
-          AsyncData(value: final all) when all
-              .where(_kept)
-              .isEmpty => EmptyState(
-              key: const ValueKey('finances-payments-empty'),
-              icon: Icons.payments_outlined,
-              title: l10n.accountActivityEmpty,
-            ),
-          AsyncData(value: final all) => Column(
+    Widget list(List<AccountActivity> all) => Column(
               children: [
                 for (final e in all.where(_kept))
-                  Card(
+                  KeyedSubtree(
+                    key: ValueKey((e.workspaceId, e.id)),
+                    child: Card(
                     key: ValueKey('finances-payment-${e.id}'),
                     margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                     color: devIds.contains(e.workspaceId)
@@ -464,13 +431,40 @@ class _Payments extends ConsumerWidget {
                           : Text(moneyFormat(e.currency).formatMinor(e.amountCents!)),
                     ),
                   ),
+                  ),
               ],
+            );
+    return FinancesColumn(
+      onRefresh: () async {
+        ref.invalidate(accountActivityProvider(AccountActivityKind.payments));
+        await Future.wait([
+          refreshMyFinances(ref),
+          ref.read(accountActivityProvider(AccountActivityKind.payments).future),
+        ]);
+      },
+      children: [
+        const PersonalPaymentProvider(),
+        switch (rows) {
+          AsyncData(value: final all) when all
+              .where(_kept)
+              .isEmpty => EmptyState(
+              key: const ValueKey('finances-payments-empty'),
+              icon: Icons.payments_outlined,
+              title: l10n.accountActivityEmpty,
             ),
-          AsyncError() => TextButton(
-              key: const ValueKey('finances-payments-retry'),
-              onPressed: () =>
-                  ref.invalidate(accountActivityProvider(AccountActivityKind.payments)),
-              child: Text(l10n.accountActivityFailed),
+          AsyncData(value: final all) => list(all),
+          // The home did not answer: its Try again, and the connected
+          // hosts' payments stay.
+          AsyncError() => Column(
+              children: [
+                TextButton(
+                  key: const ValueKey('finances-payments-retry'),
+                  onPressed: () => ref.invalidate(
+                      accountActivityProvider(AccountActivityKind.payments)),
+                  child: Text(l10n.accountActivityFailed),
+                ),
+                list(FinanceOverview.newestFirst(hostPayments)),
+              ],
             ),
           _ => const LoadingView(),
         },

@@ -19,6 +19,9 @@ part of 'finance_overview_provider.dart';
 /// others on screen and is named, with its own Try again, rather than
 /// hiding them or posing as empty. An answer that arrives after the
 /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
+/// C6: each host answers for my payments and reminders as well as my
+/// invoices; the selected workspace's host retries alone; a refresh waits
+/// for every host ([settled]).
 
 @ProviderFor(FinanceOverviewComposer)
 final financeOverviewProvider = FinanceOverviewComposerProvider._();
@@ -34,6 +37,9 @@ final financeOverviewProvider = FinanceOverviewComposerProvider._();
 /// others on screen and is named, with its own Try again, rather than
 /// hiding them or posing as empty. An answer that arrives after the
 /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
+/// C6: each host answers for my payments and reminders as well as my
+/// invoices; the selected workspace's host retries alone; a refresh waits
+/// for every host ([settled]).
 final class FinanceOverviewComposerProvider
     extends $AsyncNotifierProvider<FinanceOverviewComposer, FinanceOverview> {
   /// Me › Finances: my invoices and reminders across every workspace (0380),
@@ -47,6 +53,9 @@ final class FinanceOverviewComposerProvider
   /// others on screen and is named, with its own Try again, rather than
   /// hiding them or posing as empty. An answer that arrives after the
   /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
+  /// C6: each host answers for my payments and reminders as well as my
+  /// invoices; the selected workspace's host retries alone; a refresh waits
+  /// for every host ([settled]).
   FinanceOverviewComposerProvider._()
     : super(
         from: null,
@@ -67,7 +76,7 @@ final class FinanceOverviewComposerProvider
 }
 
 String _$financeOverviewComposerHash() =>
-    r'fe614d09e5d286a73b3089fa8384190396eb1ed9';
+    r'e9517b78b85eab718c2ec264c50dc38dabf035e2';
 
 /// Me › Finances: my invoices and reminders across every workspace (0380),
 /// each read where its documents live. The personal home answers for the
@@ -80,6 +89,9 @@ String _$financeOverviewComposerHash() =>
 /// others on screen and is named, with its own Try again, rather than
 /// hiding them or posing as empty. An answer that arrives after the
 /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
+/// C6: each host answers for my payments and reminders as well as my
+/// invoices; the selected workspace's host retries alone; a refresh waits
+/// for every host ([settled]).
 
 abstract class _$FinanceOverviewComposer
     extends $AsyncNotifier<FinanceOverview> {
