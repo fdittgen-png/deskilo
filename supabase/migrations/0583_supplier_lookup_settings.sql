@@ -22,4 +22,4 @@ values
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(583);
