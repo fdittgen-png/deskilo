@@ -13810,6 +13810,8 @@
   "@settingHintPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingHintPurchaseSupplierLookupPerMinute": "Le nombre maximal de recherches fournisseur qu’une personne peut faire par minute sur ce serveur. Au-delà, rien n’est envoyé au registre et la recherche est signalée comme occupée.",
+  "settingHintPurchaseSupplierLookupTimeoutSeconds": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) avant qu’une recherche fournisseur soit considérée comme expirée. La personne garde ce qu’elle a saisi et peut réessayer ou continuer à la main.",
   "settingHintReadinessRecentExportDays": "Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -13959,6 +13961,8 @@
   "@settingLabelPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingLabelPurchaseSupplierLookupPerMinute": "Recherches fournisseur par personne et par minute",
+  "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Attente de la recherche fournisseur (secondes)",
   "settingLabelReadinessRecentExportDays": "Fenêtre d’export récent",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -15058,6 +15062,9 @@
       }
     }
   },
+  "supplierNameMissing": "Un fournisseur a besoin d’un nom.",
+  "supplierSaving": "Enregistrement du fournisseur…",
+  "supplierSimilarName": "Un fournisseur porte déjà ce nom : {supplier}. Vérifiez qu’il ne s’agit pas de la même société ; vous pouvez tout de même enregistrer.",
   "suppliersAdd": "Ajouter un fournisseur",
   "@suppliersAdd": {
     "description": "#2567 suppliers"
@@ -15245,6 +15252,7 @@
   "@suppliersSaved": {
     "description": "#2567 suppliers"
   },
+  "suppliersSavedOpen": "Ouvrir",
   "suppliersTaxUnverified": "Identifiant fiscal non vérifié",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

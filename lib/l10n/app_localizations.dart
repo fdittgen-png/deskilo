@@ -33672,6 +33672,18 @@ abstract class AppLocalizations {
   /// **'Bills of the space\'s supplier below this amount may be approved by the person who drafted or sent them, if that person may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.'**
   String get settingHintPurchaseSingleApproval;
 
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The most supplier lookups one person may make per minute on this server. Over the limit nothing is sent to the registry and the lookup is answered as busy.'**
+  String get settingHintPurchaseSupplierLookupPerMinute;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.'**
+  String get settingHintPurchaseSupplierLookupTimeoutSeconds;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -33953,6 +33965,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bills one person may approve below (currency units)'**
   String get settingLabelPurchaseSingleApproval;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier lookups per person per minute'**
+  String get settingLabelPurchaseSupplierLookupPerMinute;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier lookup wait (seconds)'**
+  String get settingLabelPurchaseSupplierLookupTimeoutSeconds;
 
   /// #2487 settings: Setting label.
   ///
@@ -37037,6 +37061,24 @@ abstract class AppLocalizations {
   /// **'No registry answers for {country} yet. You can enter the details yourself.'**
   String supplierLookupUnsupported(String country);
 
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier needs a name.'**
+  String get supplierNameMissing;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Saving the supplier…'**
+  String get supplierSaving;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier with the same name exists: {supplier}. Check it is not the same company; you can still save.'**
+  String supplierSimilarName(String supplier);
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
@@ -37258,6 +37300,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplier saved.'**
   String get suppliersSaved;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get suppliersSavedOpen;
 
   /// #2567 suppliers
   ///

@@ -13810,6 +13810,8 @@
   "@settingHintPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingHintPurchaseSupplierLookupPerMinute": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor. Por encima, no se envía nada al registro y la búsqueda se responde como ocupada.",
+  "settingHintPurchaseSupplierLookupTimeoutSeconds": "Cuánto espera el servidor al registro de empresas (VIES) antes de que una búsqueda de proveedor se considere agotada. Se conserva lo que usted escribió y puede volver a intentarlo o continuar a mano.",
   "settingHintReadinessRecentExportDays": "Días durante los que una exportación registrada por la aplicación sigue contando como prueba reciente de que la recuperación funciona. Pasado ese plazo, la recuperación queda sin verificar.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -13959,6 +13961,8 @@
   "@settingLabelPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingLabelPurchaseSupplierLookupPerMinute": "Búsquedas de proveedores por persona y minuto",
+  "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Espera de la búsqueda de proveedores (segundos)",
   "settingLabelReadinessRecentExportDays": "Ventana de exportación reciente",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -15058,6 +15062,9 @@
       }
     }
   },
+  "supplierNameMissing": "Un proveedor necesita un nombre.",
+  "supplierSaving": "Guardando el proveedor…",
+  "supplierSimilarName": "Ya existe un proveedor con el mismo nombre: {supplier}. Compruebe que no se trata de la misma empresa; aun así puede guardar.",
   "suppliersAdd": "Añadir proveedor",
   "@suppliersAdd": {
     "description": "#2567 suppliers"
@@ -15245,6 +15252,7 @@
   "@suppliersSaved": {
     "description": "#2567 suppliers"
   },
+  "suppliersSavedOpen": "Abrir",
   "suppliersTaxUnverified": "Identificador fiscal no verificado",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

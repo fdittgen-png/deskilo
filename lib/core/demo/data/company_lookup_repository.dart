@@ -50,13 +50,18 @@ class FakeCompanyLookupRepository implements CompanyLookupRepository {
   /// Every question asked, in order.
   final List<CompanyLookupRequest> requests = [];
 
+  /// How long each question was waited for, in the same order.
+  final List<Duration> waits = [];
+
   @override
   Future<CompanyLookupResult> lookup(
     String workspaceId,
     String providerId,
-    CompanyLookupRequest request,
-  ) async {
+    CompanyLookupRequest request, {
+    required Duration wait,
+  }) async {
     requests.add(request);
+    waits.add(wait);
     return answers[request.identifier.canonical] ??
         CompanyLookupResult(
           providerId: providerId,

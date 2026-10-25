@@ -13810,6 +13810,8 @@
   "@settingHintPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingHintPurchaseSupplierLookupPerMinute": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server. Oltre il limite non viene inviato nulla al registro e la ricerca risulta occupata.",
+  "settingHintPurchaseSupplierLookupTimeoutSeconds": "Quanto il server attende il registro delle imprese (VIES) prima che una ricerca fornitore sia considerata scaduta. Ciò che Lei ha digitato resta; può riprovare o proseguire a mano.",
   "settingHintReadinessRecentExportDays": "Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -13959,6 +13961,8 @@
   "@settingLabelPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingLabelPurchaseSupplierLookupPerMinute": "Ricerche fornitore per persona al minuto",
+  "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Attesa della ricerca fornitore (secondi)",
   "settingLabelReadinessRecentExportDays": "Finestra dell’esportazione recente",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -15058,6 +15062,9 @@
       }
     }
   },
+  "supplierNameMissing": "Un fornitore ha bisogno di un nome.",
+  "supplierSaving": "Salvataggio del fornitore…",
+  "supplierSimilarName": "Esiste già un fornitore con lo stesso nome: {supplier}. Verifichi che non si tratti della stessa società; può comunque salvare.",
   "suppliersAdd": "Aggiungi fornitore",
   "@suppliersAdd": {
     "description": "#2567 suppliers"
@@ -15245,6 +15252,7 @@
   "@suppliersSaved": {
     "description": "#2567 suppliers"
   },
+  "suppliersSavedOpen": "Apri",
   "suppliersTaxUnverified": "Identificativo fiscale non verificato",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"
