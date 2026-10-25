@@ -129,8 +129,8 @@ void main() {
       revision: 1,
     );
     test('no local book, no journal', () async {
-      final out = await GenericJournalExport(_Postings(set))
-          .of('ws', [profile(BookAuthority.externalBook)], 2026);
+      final out = writtenWith(await GenericJournalExport(_Postings(set))
+          .read('ws', [profile(BookAuthority.externalBook)], 2026), journalCsvOf);
       expect(out, isA<JournalNeedsLocalBook>());
     });
     test(
@@ -140,14 +140,14 @@ void main() {
           PostingBlocker(PostingBlock.unmappedRole, 'write_off'),
           PostingBlocker(PostingBlock.badAccount, 'write_off'),
         ]);
-        final out = await GenericJournalExport(_Postings(blocked))
-            .of('ws', [profile(BookAuthority.localBook)], 2026);
+        final out = writtenWith(await GenericJournalExport(_Postings(blocked))
+            .read('ws', [profile(BookAuthority.localBook)], 2026), journalCsvOf);
         expect((out as JournalBlocked).roles, ['write_off']);
       },
     );
     test('a local book gives the file', () async {
-      final out = await GenericJournalExport(_Postings(set))
-          .of('ws', [profile(BookAuthority.localBook)], 2026);
+      final out = writtenWith(await GenericJournalExport(_Postings(set))
+          .read('ws', [profile(BookAuthority.localBook)], 2026), journalCsvOf);
       expect(
         (out as JournalFile).content,
         buildGenericJournalCsv(set.postings),

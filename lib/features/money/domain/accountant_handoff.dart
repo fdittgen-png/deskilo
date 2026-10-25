@@ -15,6 +15,7 @@ import 'dart:typed_data';
 import 'package:archive/archive.dart';
 
 import 'package:crypto/crypto.dart';
+import 'package:meta/meta.dart';
 
 import 'accountant_csv.dart';
 import 'accounting_amount.dart';
@@ -334,11 +335,30 @@ AccountantHandoff buildAccountantHandoff({
   );
 }
 
+/// #2365 — [accountantSourceDigest] of the documents in [kept] only: an
+/// export's matches are its one source's, so another year's never count on
+/// either side of the recheck.
+String accountantScopeDigest(
+  Iterable<Invoice> invoices,
+  Map<String, InvoiceMatch> matches,
+  Set<String> kept,
+) => accountantSourceDigest(
+  [
+    for (final i in invoices)
+      if (kept.contains(i.id)) i,
+  ],
+  {
+    for (final e in matches.entries)
+      if (kept.contains(e.key)) e.key: e.value,
+  },
+);
+
 /// #1640 — a fingerprint of what the export was built from: each
 /// document's identity, amounts, currency, lifecycle and settlement, and
 /// each payment match's amount, status and date, independent of order.
 /// Read again just before saving; a different fingerprint means the
 /// source changed while the owner was reviewing, and nothing is saved.
+@visibleForTesting
 String accountantSourceDigest(
   List<Invoice> invoices,
   Map<String, InvoiceMatch> matches,

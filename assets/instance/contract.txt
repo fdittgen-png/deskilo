@@ -1778,7 +1778,7 @@ routine public.account_projection(p_user uuid, p_fields text[]) -> jsonb | funct
 routine public.account_space_eligible(p_user uuid, p_ref text) -> boolean | function | definer | stable | exec: | body:1341e629d469
 routine public.account_visibility_lock(p_user uuid) -> void | function | definer | volatile | exec: | body:e19bb24a78c5
 routine public.account_visibility_saved_field(p_user uuid, p_field text) -> jsonb | function | definer | stable | exec: | body:a6b17bfc33d2
-routine public.accounting_source_snapshot_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:0aa9c7b8e902
+routine public.accounting_source_snapshot_v1(p_workspace_id uuid, p_from date, p_to date) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:b3570b63dea2
 routine public.acknowledge_readiness_section(p_workspace_id uuid, p_section text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:a7969e26c0e0
 routine public.acknowledge_setup_step(p_workspace_id uuid, p_step text) -> readiness_acknowledgements | function | definer | volatile | exec:authenticated,service_role | body:bb43f3a5566c
 routine public.acknowledge_workspace_notice(p_workspace_id uuid, p_version text) -> void | function | definer | volatile | exec:authenticated,service_role | body:359ab91b1c36
