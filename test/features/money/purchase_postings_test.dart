@@ -252,4 +252,78 @@ void main() {
       ]);
     },
   );
+
+  // #2573 — a member's receipt of three lines: cleaning (operating),
+  // equipment and a refundable deposit.
+  PurchaseLine classed(int no, int net, int tax, String kind) => PurchaseLine(
+    lineNo: no,
+    description: kind,
+    grossCents: net + tax,
+    netCents: net,
+    taxCents: tax,
+    taxRatePercent: tax == 0 ? 0 : 20,
+    recoverableTaxCents: tax,
+    recognitionKind: kind,
+  );
+  final mixed = _doc(
+    'R-MIX',
+    PurchaseKind.memberReceipt,
+    [
+      classed(1, 10000, 2000, 'operating'),
+      classed(2, 20000, 4000, 'asset'),
+      classed(3, 5000, 0, 'deposit'),
+    ],
+    creditor: CreditorKind.member,
+  );
+
+  test('equipment and a deposit debit their own roles, not expenses (#2573)', () {
+    final book = PostingBook(
+      accounts: [
+        _account('411', AccountType.asset),
+        _account('606', AccountType.expense),
+        _account('44566', AccountType.asset),
+        _account('2183', AccountType.asset),
+        _account('275', AccountType.asset),
+      ],
+      mappings: [
+        _map(BookRole.customers, '411'),
+        _map(BookRole.expenses, '606'),
+        _map(BookRole.vatInput, '44566'),
+        _map(BookRole.fixedAssets, '2183'),
+        _map(BookRole.deposits, '275'),
+      ],
+      issuerSiteId: 'site',
+    );
+    final out = purchasePostingsOf(
+      purchases: [mixed],
+      book: book,
+      groupOf: (_) => 'standard',
+    );
+    expect(book.blockers, isEmpty);
+    expect(_lines(out.single), [
+      '606:D10000',
+      '44566:D2000',
+      '2183:D20000',
+      '44566:D4000',
+      '275:D5000',
+      '411:C41000',
+    ]);
+  });
+
+  test('an unmapped asset role blocks its receipt, named, never an expense '
+      '(#2573)', () {
+    final book = _book();
+    purchasePostingsOf(
+      purchases: [mixed],
+      book: book,
+      groupOf: (_) => 'standard',
+    );
+    expect(
+      book.blockers.map((b) => (b.block, b.subject)),
+      containsAll([
+        (PostingBlock.unmappedRole, 'fixed_assets'),
+        (PostingBlock.unmappedRole, 'deposits'),
+      ]),
+    );
+  });
 }

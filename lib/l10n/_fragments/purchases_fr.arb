@@ -181,5 +181,16 @@
   "purchaseEntryUnpaid": "Pas encore payé",
   "purchaseEntryUnpaidHint": "Une facture fournisseur que l'espace doit encore régler.",
   "purchaseEntryPaid": "L'espace a déjà payé",
-  "purchaseEntryPaidHint": "Saisissez la facture ; une fois validée, enregistrez son paiement depuis « À payer »."
+  "purchaseEntryPaidHint": "Saisissez la facture ; une fois validée, enregistrez son paiement depuis « À payer ».",
+  "purchasesPlace": "Où imputer le coût",
+  "purchasesPlaceNone": "Aucun lieu précis",
+  "purchaseReceiptAdd": "Justificatif à plusieurs lignes",
+  "purchaseReceiptIntro": "Pour un justificatif à plusieurs taux de TVA, ou un équipement à côté d'autres articles : une ligne chacun. Il est soumis comme une seule dépense du montant total, que vous avez payé.",
+  "purchaseReceiptLine": "Ligne {number}",
+  "purchaseReceiptAddLine": "Ajouter une ligne",
+  "purchaseReceiptRemoveLine": "Retirer cette ligne",
+  "purchaseReceiptSubmit": "Soumettre le justificatif",
+  "purchaseReceiptAmount": "Saisissez un montant positif sur chaque ligne.",
+  "purchaseReceiptDeductible": "La part déductible de chaque ligne taxée est comprise entre 0 et 100 %.",
+  "purchaseReceiptSubmitted": "Justificatif soumis : il attend son approbation."
 }

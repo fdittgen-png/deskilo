@@ -13,6 +13,8 @@ import '../../domain/purchase.dart';
 import '../../domain/supplier.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
+import 'purchase_labels.dart';
+import 'purchase_place_field.dart';
 
 /// Captures a supplier bill as a draft and saves it. True once the server
 /// has it; a refusal keeps the dialog and every entry, and a retry of the
@@ -41,6 +43,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   final _tax = TextEditingController();
   String? _supplierId;
   var _purpose = 'unresolved';
+  PurchasePlace? _place;
   DateTime? _invoiceDate;
   DateTime? _dueDate;
   bool _invalid = false;
@@ -72,6 +75,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       dueOn: _dueDate,
       taxCents: tax,
       recognitionKind: _purpose,
+      place: _place,
     );
   }
 
@@ -111,6 +115,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       a.description == b.description &&
       a.originalDate == b.originalDate &&
       a.recognitionKind == b.recognitionKind &&
+      a.place == b.place &&
       a.dueOn == b.dueOn;
 
   Future<DateTime?> _pick(DateTime? current) => showDatePicker(
@@ -162,14 +167,17 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               isExpanded: true,
               decoration: InputDecoration(labelText: l10n.purchasesPurpose),
               items: [
-                DropdownMenuItem(value: 'operating', child: Text(l10n.purchasesPurposeOperating)),
-                DropdownMenuItem(value: 'stock', child: Text(l10n.purchasesPurposeStock)),
-                DropdownMenuItem(value: 'asset', child: Text(l10n.purchasesPurposeAsset)),
-                DropdownMenuItem(value: 'prepayment', child: Text(l10n.purchasesPurposePrepayment)),
-                DropdownMenuItem(value: 'deposit', child: Text(l10n.purchasesPurposeDeposit)),
-                DropdownMenuItem(value: 'unresolved', child: Text(l10n.purchasesPurposeReview)),
+                for (final p in purchasePurposes)
+                  DropdownMenuItem(value: p, child: Text(purchasePurposeLabel(l10n, p))),
               ],
               onChanged: (v) => _purpose = v ?? _purpose,
+            ),
+            // #2573 — where its cost belongs.
+            PurchasePlaceField(
+              fieldKey: 'purchase-place',
+              workspaceId: widget.workspaceId,
+              value: _place,
+              onChanged: (p) => _place = p,
             ),
             AppTextField(
               key: const ValueKey('purchase-reference'),

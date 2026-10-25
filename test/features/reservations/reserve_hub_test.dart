@@ -258,15 +258,6 @@ void main() {
     expect(find.byKey(_toChip), findsNothing);
   });
 
-  testWidgets('minute-slot workspace books via from→to clock chips (0032)',
-      (tester) async {
-    await pumpHub(tester, granularity: BookingGranularity.minutes30);
-
-    expect(find.byKey(_fromChip), findsOneWidget);
-    expect(find.byKey(_toChip), findsOneWidget);
-    expect(find.byKey(_dayChip), findsNothing);
-  });
-
   testWidgets('hours workspace shows BOTH families: half/full-day chips '
       'as shortcuts next to the from→to clock chips (#446)',
       (tester) async {
@@ -462,15 +453,21 @@ void main() {
     }
   });
 
+  // #2603 — who holds a half (mine, others, none; a full day holds both) is
+  // the halfSlotOccupancy table; this test proves the grid paints the answer:
+  // the mine tone, the occupied tone with the occupant's initial (everyone
+  // mode), and an empty outline.
   testWidgets(
-      'half-slot occupancy: a 01:15–05:15 booking of mine colors that '
-      "day's AM half in the mine tone and leaves PM an empty outline",
+      "half-slot occupancy: my 01:15–05:15 colors that day's AM half in the "
+      "mine tone and leaves PM an empty outline; another member's "
+      '15:00–19:00 colors PM only, in the occupied tone, with her initial',
       (tester) async {
-    // Tuesday of the current week — past days still render occupancy.
-    // Seeds anchor to the workspace clock: the grid classifies halves
-    // against workspace-local windows whatever the device zone.
+    // Tuesday and Wednesday of the current week — past days still render
+    // occupancy. Seeds anchor to the workspace clock: the grid classifies
+    // halves against workspace-local windows whatever the device zone.
     WorkspaceTime.install('Europe/Berlin');
     final tuesday = _weekDay(1);
+    final wednesday = _weekDay(2);
     await pumpHub(
       tester,
       seed: [
@@ -483,6 +480,17 @@ void main() {
               tuesday.year, tuesday.month, tuesday.day, 1, 15),
           endsAt: WorkspaceTime.at(
               tuesday.year, tuesday.month, tuesday.day, 5, 15),
+          status: ReservationStatus.reserved,
+        ),
+        Reservation(
+          id: 'res-pm',
+          workspaceId: 'ws-1',
+          seatId: 'seat-4',
+          memberId: 'member-2',
+          startsAt: WorkspaceTime.at(
+              wednesday.year, wednesday.month, wednesday.day, 15),
+          endsAt: WorkspaceTime.at(
+              wednesday.year, wednesday.month, wednesday.day, 19),
           status: ReservationStatus.reserved,
         ),
       ],
@@ -500,67 +508,19 @@ void main() {
       _cellFill(tester, WeekGrid.cellKey('seat-4', tuesday, morning: false)),
       isNull,
     );
-  });
-
-  testWidgets(
-      "half-slot occupancy: another member's 15:00–19:00 colors PM only in "
-      'the occupied tone; a full-day booking colors both halves',
-      (tester) async {
-    WorkspaceTime.install('Europe/Berlin');
-    final wednesday = _weekDay(2);
-    final thursday = _weekDay(3);
-    await pumpHub(
-      tester,
-      seed: [
-        Reservation(
-          id: 'res-pm',
-          workspaceId: 'ws-1',
-          seatId: 'seat-4',
-          memberId: 'member-2',
-          startsAt: WorkspaceTime.at(
-              wednesday.year, wednesday.month, wednesday.day, 15),
-          endsAt: WorkspaceTime.at(
-              wednesday.year, wednesday.month, wednesday.day, 19),
-          status: ReservationStatus.reserved,
-        ),
-        Reservation(
-          id: 'res-full',
-          workspaceId: 'ws-1',
-          seatId: 'seat-4',
-          memberId: 'member-2',
-          startsAt: WorkspaceTime.at(
-              thursday.year, thursday.month, thursday.day),
-          endsAt: WorkspaceTime.at(
-              thursday.year, thursday.month, thursday.day + 1),
-          status: ReservationStatus.reserved,
-        ),
-      ],
-    );
-
-    await pickReserveView(tester, 'week');
-    await tester.pumpAndSettle();
-
-    final brightness = _gridBrightness(tester);
-    final occupied =
-        SeatStateColors.of(SeatState.reserved, brightness: brightness);
     expect(
       _cellFill(tester, WeekGrid.cellKey('seat-4', wednesday, morning: true)),
       isNull,
     );
+    final wednesdayPm =
+        WeekGrid.cellKey('seat-4', wednesday, morning: false);
     expect(
-      _cellFill(
-        tester,
-        WeekGrid.cellKey('seat-4', wednesday, morning: false),
-      ),
-      occupied,
+      _cellFill(tester, wednesdayPm),
+      SeatStateColors.of(SeatState.reserved, brightness: brightness),
     );
     expect(
-      _cellFill(tester, WeekGrid.cellKey('seat-4', thursday, morning: true)),
-      occupied,
-    );
-    expect(
-      _cellFill(tester, WeekGrid.cellKey('seat-4', thursday, morning: false)),
-      occupied,
+      find.descendant(of: find.byKey(wednesdayPm), matching: find.text('A')),
+      findsOneWidget,
     );
   });
 
@@ -905,38 +865,6 @@ void main() {
   });
 
   testWidgets(
-      'Week view: an occupied half-slot names its occupant with an '
-      'initial (everyone mode)', (tester) async {
-    WorkspaceTime.install('Europe/Berlin');
-    final today = _today;
-    await pumpHub(
-      tester,
-      seed: [
-        Reservation(
-          id: 'res-ana',
-          workspaceId: 'ws-1',
-          seatId: 'seat-4',
-          memberId: 'member-2',
-          startsAt: WorkspaceTime.at(today.year, today.month, today.day, 9),
-          endsAt: WorkspaceTime.at(today.year, today.month, today.day, 11),
-          status: ReservationStatus.reserved,
-        ),
-      ],
-    );
-
-    await pickReserveView(tester, 'week');
-    await tester.pumpAndSettle();
-
-    expect(
-      find.descendant(
-        of: find.byKey(WeekGrid.cellKey('seat-4', today, morning: true)),
-        matching: find.text('A'),
-      ),
-      findsOneWidget,
-    );
-  });
-
-  testWidgets(
       'Day view is an availability surface: seat rows render on an empty '
       'day and a free-row tap books the selected window', (tester) async {
     WorkspaceTime.install('Europe/Berlin');
@@ -968,22 +896,16 @@ void main() {
     expect(created.endsAt.toUtc(), expected.end.toUtc());
   });
 
+  // #2603 — which views show the chips is the ReserveView table
+  // (reserve_view_test); this proves the header reads it, both ways.
   testWidgets(
-      'honest controls: the window chips show on Plan and Day, never on '
-      'Week or Month', (tester) async {
+      'honest controls: the window chips show on Plan, never on Week',
+      (tester) async {
     await pumpHub(tester, granularity: BookingGranularity.halfDay);
 
     expect(find.byKey(_amChip), findsOneWidget); // Plan view
 
-    await pickReserveView(tester, 'day');
-    await tester.pumpAndSettle();
-    expect(find.byKey(_amChip), findsOneWidget);
-
     await pickReserveView(tester, 'week');
-    await tester.pumpAndSettle();
-    expect(find.byKey(_amChip), findsNothing);
-
-    await pickReserveView(tester, 'month');
     await tester.pumpAndSettle();
     expect(find.byKey(_amChip), findsNothing);
   });

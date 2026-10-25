@@ -10,7 +10,25 @@ import '../../../../core/theme/app_spacing.dart';
 /// [plan] and [list] are two presentations of the SAME booking view — where
 /// can I book, for this window — and switch directly. [day], [week] and
 /// [month] are time views for exploring, and live behind [ReserveViewMenu].
-enum ReserveView { plan, list, day, week, month }
+enum ReserveView {
+  plan,
+  list,
+  day,
+  week,
+  month;
+
+  /// Whether the window chips act on this view: Plan and its list filter by
+  /// the booking window and Day books it on a free-row tap; Week books per
+  /// tapped half and Month is an overview, so neither shows them.
+  bool get showsWindowControls => this != week && this != month;
+
+  /// Whether the map ↔ list toggle applies: only the two presentations of
+  /// the booking view switch between each other.
+  bool get showsSeatViewSwitch => this == plan || this == list;
+
+  /// Whether the legend names closed days: the time views draw them.
+  bool get legendShowsClosed => this == day || this == week || this == month;
+}
 
 /// #1301 S2 — the time views behind ONE named control.
 ///

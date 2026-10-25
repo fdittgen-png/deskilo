@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/data/json_reader.dart';
-import '../../../core/time/date_text.dart';
+import 'purchase_draft.dart';
 import 'purchase_obligation.dart';
 
+export 'purchase_draft.dart';
 export 'purchase_obligation.dart';
 
 /// The permission that captures supplier bills; pinned to
@@ -56,6 +57,10 @@ class PurchaseLine {
     this.taxRatePercent,
     this.recoverableTaxCents,
     this.recognitionKind = 'unresolved',
+    this.costSiteId,
+    this.resourceKind,
+    this.resourceId,
+    this.placeName = '',
   });
 
   factory PurchaseLine.fromJson(Object? raw) {
@@ -69,6 +74,10 @@ class PurchaseLine {
       taxRatePercent: r.doubleOrNull('tax_rate_percent'),
       recoverableTaxCents: r.intOrNull('recoverable_tax_cents'),
       recognitionKind: r.stringOr('recognition_kind', 'unresolved'),
+      costSiteId: r.stringOrNull('cost_site_id'),
+      resourceKind: r.stringOrNull('resource_kind'),
+      resourceId: r.stringOrNull('resource_id'),
+      placeName: r.stringOr('place_name'),
     );
   }
 
@@ -80,6 +89,16 @@ class PurchaseLine {
   final double? taxRatePercent;
   final int? recoverableTaxCents;
   final String recognitionKind;
+
+  /// #2573 — where the cost belongs: a site of the space, and/or one of its
+  /// levels, offices, desks or seats (a resource names its site); null when
+  /// the line names none.
+  final String? costSiteId;
+  final String? resourceKind;
+  final String? resourceId;
+
+  /// The name of that place as the server read it; '' when there is none.
+  final String placeName;
 
   bool get taxStated => taxCents != null;
 }
@@ -221,64 +240,6 @@ class PurchaseDetail {
   int get taxCents => lines.fold(0, (sum, l) => sum + (l.taxCents ?? 0));
 }
 
-/// What the bill dialog collects: ONE line, its tax optional. A bill with
-/// several rates is captured by a later form, not guessed here.
-class PurchaseBillDraft {
-  const PurchaseBillDraft({
-    required this.grossCents,
-    this.purchaseId,
-    this.expectedRevision = 0,
-    this.supplierId,
-    this.reference = '',
-    this.description = '',
-    this.originalDate,
-    this.dueOn,
-    this.taxCents,
-    this.recognitionKind = 'unresolved',
-  });
-
-  final String? purchaseId;
-  final int expectedRevision;
-  final String? supplierId;
-  final String reference;
-  final String description;
-  final DateTime? originalDate;
-  final DateTime? dueOn;
-  final int grossCents;
-
-  /// The tax the bill states; null when it does not (partial, not zero).
-  final int? taxCents;
-
-  /// #2576 — what the line is for, in the server's words: `operating`,
-  /// `stock`, `asset`, `prepayment`, `deposit` or `unresolved` (needs
-  /// review). Nobody has to choose a tax class or a useful life to submit.
-  final String recognitionKind;
-
-  static String? _day(DateTime? d) => d == null ? null : isoDay(d);
-
-  /// The `save_purchase_draft_v1` payload. The server derives the actor, the
-  /// state and the totals; none of them is sent.
-  Map<String, Object?> toPayload() => {
-    if (purchaseId != null) 'purchase_id': purchaseId,
-    'kind': PurchaseKind.bill.wire,
-    'supplier_id': supplierId,
-    'original_reference': reference,
-    'original_date': _day(originalDate),
-    'due_on': _day(dueOn),
-    'lines': [
-      {
-        'description': description,
-        'gross_cents': grossCents,
-        'recognition_kind': recognitionKind,
-        if (taxCents != null) ...{
-          'tax_cents': taxCents,
-          'net_cents': grossCents - taxCents!,
-        },
-      },
-    ],
-  };
-}
-
 /// The purchase documents of a workspace and their commands.
 abstract interface class PurchaseRepository {
   /// Newest first; the server shows a member their own and a manager all.
@@ -320,7 +281,8 @@ abstract interface class PurchaseRepository {
     ReimbursementCommand command,
   );
 
-  /// Sends a captured supplier bill to approval. Returns the new state.
+  /// Sends a draft to approval: a supplier bill to a second person, a
+  /// member's receipt to the expense validation. Returns the new state.
   Future<PurchaseState> submitBill(
     String workspaceId,
     String purchaseId,
@@ -368,6 +330,10 @@ abstract interface class PurchaseRepository {
   Future<String> saveDraft(
     String workspaceId,
     String requestId,
-    PurchaseBillDraft draft,
+    PurchaseDraft draft,
   );
+
+  /// #2573 — the sites, levels and offices a purchase line can name, sites
+  /// first, each level followed by its offices.
+  Future<List<PurchasePlace>> fetchPlaces(String workspaceId);
 }

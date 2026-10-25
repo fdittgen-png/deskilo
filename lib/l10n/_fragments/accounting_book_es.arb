@@ -42,5 +42,9 @@
   "bookRoleWriteOff": "Créditos incobrables",
   "bookRoleCashDiscount": "Descuentos concedidos",
   "bookRoleClearing": "Proveedor de pagos (en tránsito)",
-  "bookRoleFees": "Comisiones del proveedor de pagos"
+  "bookRoleFees": "Comisiones del proveedor de pagos",
+  "bookRoleFixedAssets": "Inmovilizado (equipos)",
+  "bookRoleStock": "Existencias (mercaderías)",
+  "bookRolePrepayments": "Gastos anticipados",
+  "bookRoleDeposits": "Fianzas constituidas"
 }

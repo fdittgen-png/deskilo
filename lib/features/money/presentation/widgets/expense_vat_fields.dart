@@ -76,6 +76,23 @@ Future<List<double>> expenseVatPercents(WidgetRef ref, String vatRegime) async {
   }.toList()..sort((a, b) => b.compareTo(a));
 }
 
+/// #2573 — the rates a receipt line may carry in the current space, and its
+/// currency; null while no space is open.
+Future<({List<double> percents, MoneyFormat currency})?> receiptVatContext(
+  WidgetRef ref,
+) async {
+  final workspace = await ref.read(currentWorkspaceProvider.future);
+  if (workspace == null) return null;
+  return (
+    percents: await expenseVatPercents(ref, workspace.vatRegime),
+    currency: moneyFormat(workspace.currencyCode),
+  );
+}
+
+/// « 20 % », in the reader's number format.
+String expenseVatPercentLabel(AppLocalizations l10n, double percent) =>
+    _percentLabel(l10n, percent);
+
 /// The fields, keyed `<keyPrefix>-vat-rate`, `-vat-deductible` and
 /// `-vat-asset`; [amount] is the gross amount as typed.
 List<Widget> expenseVatFields({

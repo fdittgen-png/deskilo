@@ -30,6 +30,10 @@ String bookRoleLabel(AppLocalizations l10n, BookRole r) => switch (r) {
   BookRole.cashDiscount => l10n.bookRoleCashDiscount,
   BookRole.clearing => l10n.bookRoleClearing,
   BookRole.fees => l10n.bookRoleFees,
+  BookRole.fixedAssets => l10n.bookRoleFixedAssets,
+  BookRole.stock => l10n.bookRoleStock,
+  BookRole.prepayments => l10n.bookRolePrepayments,
+  BookRole.deposits => l10n.bookRoleDeposits,
 };
 
 String _accountTypeLabel(AppLocalizations l10n, AccountType t) => switch (t) {

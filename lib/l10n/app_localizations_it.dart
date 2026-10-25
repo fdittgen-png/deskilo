@@ -2474,13 +2474,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookRoleCustomers => 'Clienti (crediti)';
 
   @override
+  String get bookRoleDeposits => 'Depositi cauzionali versati';
+
+  @override
   String get bookRoleExpenses => 'Costi';
 
   @override
   String get bookRoleFees => 'Commissioni del fornitore di pagamenti';
 
   @override
+  String get bookRoleFixedAssets => 'Immobilizzazioni (attrezzature)';
+
+  @override
+  String get bookRolePrepayments => 'Risconti attivi';
+
+  @override
   String get bookRoleRevenue => 'Ricavi';
+
+  @override
+  String get bookRoleStock => 'Rimanenze (merci)';
 
   @override
   String get bookRoleSuppliers => 'Fornitori';
@@ -16901,6 +16913,39 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchaseQualified => 'Contabilità qualificata';
 
   @override
+  String get purchaseReceiptAdd => 'Ricevuta con più righe';
+
+  @override
+  String get purchaseReceiptAddLine => 'Aggiungere una riga';
+
+  @override
+  String get purchaseReceiptAmount =>
+      'Inserisca un importo positivo su ogni riga.';
+
+  @override
+  String get purchaseReceiptDeductible =>
+      'La quota detraibile di ogni riga tassata è compresa tra 0 e 100 %.';
+
+  @override
+  String get purchaseReceiptIntro =>
+      'Per una ricevuta con più aliquote IVA, o un\'attrezzatura accanto ad altri articoli: una riga ciascuno. Viene presentata come un\'unica spesa dell\'importo totale, che Lei ha pagato.';
+
+  @override
+  String purchaseReceiptLine(int number) {
+    return 'Riga $number';
+  }
+
+  @override
+  String get purchaseReceiptRemoveLine => 'Togliere questa riga';
+
+  @override
+  String get purchaseReceiptSubmit => 'Presentare la ricevuta';
+
+  @override
+  String get purchaseReceiptSubmitted =>
+      'Ricevuta presentata: è in attesa di approvazione.';
+
+  @override
   String get purchaseSettlementNothingOwed => 'Nulla di dovuto';
 
   @override
@@ -17126,6 +17171,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchasesPickDate => 'Scegli una data';
+
+  @override
+  String get purchasesPlace => 'Dove si imputa il costo';
+
+  @override
+  String get purchasesPlaceNone => 'Nessun luogo preciso';
 
   @override
   String get purchasesPurpose => 'A cosa serve?';

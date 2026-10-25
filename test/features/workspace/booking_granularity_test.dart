@@ -54,6 +54,34 @@ void main() {
       expect(BookingGranularity.minutes30.offersDayWindows, isFalse);
     });
 
+    // #2603 — which window controls the Reserve hub and the Plan tab show,
+    // per granularity: (Morning/Afternoon chips, Full day chip, from→to
+    // clock times). The hub keeps one wiring test per family.
+    group('the window controls a granularity offers', () {
+      const table = <BookingGranularity, (bool, bool, bool)>{
+        BookingGranularity.flexible: (false, false, true),
+        BookingGranularity.halfDay: (true, true, false),
+        BookingGranularity.minutes5: (false, false, true),
+        BookingGranularity.minutes15: (false, false, true),
+        BookingGranularity.minutes30: (false, false, true),
+        BookingGranularity.minutes60: (false, false, true),
+        BookingGranularity.fullDay: (false, true, false),
+        BookingGranularity.hours: (true, true, true),
+      };
+      test('every granularity has a row', () {
+        expect(table.keys.toSet(), BookingGranularity.values.toSet());
+      });
+      for (final MapEntry(key: g, value: (halves, day, clock))
+          in table.entries) {
+        test(g.name, () {
+          expect(
+            (g.offersHalfDayChips, g.offersDayWindows, g.offersClockRange),
+            (halves, day, clock),
+          );
+        });
+      }
+    });
+
     test('fromWire falls back to flexible for null / unknown values', () {
       expect(BookingGranularity.fromWire('flexible'),
           BookingGranularity.flexible);
