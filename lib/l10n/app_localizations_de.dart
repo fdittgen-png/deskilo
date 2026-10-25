@@ -20111,6 +20111,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Lieferantenrechnungen unter diesem Betrag darf die Person freigeben, die sie erfasst oder gesendet hat, wenn sie Ausgaben freigeben darf. 0 behält die Regel bei, dass jede Rechnung eine andere Person freigibt. Ablehnen erfordert immer eine andere Person.';
 
   @override
+  String get settingHintPurchaseSupplierLookupPerMinute =>
+      'Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf. Darüber wird nichts an das Register gesendet und die Suche als ausgelastet beantwortet.';
+
+  @override
+  String get settingHintPurchaseSupplierLookupTimeoutSeconds =>
+      'Wie lange der Server auf das Unternehmensregister (VIES) wartet, bevor eine Lieferantensuche als abgelaufen gilt. Die Eingaben bleiben erhalten; Sie können es erneut versuchen oder von Hand weitermachen.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.';
 
@@ -20284,6 +20292,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelPurchaseSingleApproval =>
       'Rechnungen, die eine Person freigeben darf, unter (Währungseinheiten)';
+
+  @override
+  String get settingLabelPurchaseSupplierLookupPerMinute =>
+      'Lieferantensuchen pro Person und Minute';
+
+  @override
+  String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
+      'Wartezeit der Lieferantensuche (Sekunden)';
 
   @override
   String get settingLabelReadinessRecentExportDays =>
@@ -22517,6 +22533,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get supplierNameMissing => 'Ein Lieferant braucht einen Namen.';
+
+  @override
+  String get supplierSaving => 'Lieferant wird gespeichert…';
+
+  @override
+  String supplierSimilarName(String supplier) {
+    return 'Ein Lieferant mit demselben Namen existiert: $supplier. Prüfen Sie, ob es nicht dasselbe Unternehmen ist; Sie können trotzdem speichern.';
+  }
+
+  @override
   String get suppliersAdd => 'Lieferant hinzufügen';
 
   @override
@@ -22641,6 +22668,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get suppliersSaved => 'Lieferant gespeichert.';
+
+  @override
+  String get suppliersSavedOpen => 'Öffnen';
 
   @override
   String get suppliersTaxUnverified => 'Steuernummer nicht geprüft';

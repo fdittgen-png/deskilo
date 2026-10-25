@@ -100,18 +100,60 @@ SupplierPrefill prefillFromLookup({
 /// the server's verified key or the typed text, compared without
 /// separators. A VAT-group identifier is shared by several legal parties,
 /// so it never names a duplicate; a name alone never does either.
+/// [exceptId] is the supplier being edited, which never duplicates itself.
 Supplier? supplierWithIdentifier(
   Iterable<Supplier> suppliers,
-  CompanyIdentifier identifier,
-) {
+  CompanyIdentifier identifier, {
+  String? exceptId,
+}) {
   final keys = {
     identifier.canonical,
     '${identifier.countryCode}${identifier.body}',
   };
   for (final s in suppliers) {
-    if (s.taxIdKind != SupplierIdKind.vat) continue;
+    if (s.taxIdKind != SupplierIdKind.vat || s.id == exceptId) continue;
     final typed = compactIdentifier(s.taxIdEntered);
     if (keys.contains(s.taxIdentifier) || keys.contains(typed)) return s;
+  }
+  return null;
+}
+
+/// The supplier a draft would duplicate by its VAT identifier, read the way
+/// the lookup reads it (separators, case, prefix from the country); null for
+/// a VAT group, an empty or unreadable identifier, or no match. The server
+/// refuses the same duplicate on save; this names it before the attempt.
+Supplier? supplierDuplicateOf(
+  Iterable<Supplier> suppliers,
+  SupplierDraft draft,
+) {
+  if (draft.taxIdKind != SupplierIdKind.vat) return null;
+  final identifier = normalizeCompanyIdentifier(
+    draft.taxId,
+    country: draft.countryCode,
+  );
+  if (identifier == null) return null;
+  return supplierWithIdentifier(suppliers, identifier, exceptId: draft.id);
+}
+
+final _notLetterOrDigit = RegExp(r'[^\p{L}\p{N}]', unicode: true);
+
+/// [name] as names are compared: lower case, letters and digits only.
+String _nameKey(String name) =>
+    name.toLowerCase().replaceAll(_notLetterOrDigit, '');
+
+/// Another supplier whose name reads the same as [draft]'s once case,
+/// spaces and punctuation are set aside — a caution, never a block: two
+/// companies may share a name, so the person decides. A supplier that
+/// already carries the same identifier is the duplicate, not this.
+Supplier? supplierWithSimilarName(
+  Iterable<Supplier> suppliers,
+  SupplierDraft draft,
+) {
+  final key = _nameKey(draft.name);
+  if (key.isEmpty) return null;
+  for (final s in suppliers) {
+    if (s.id == draft.id) continue;
+    if (_nameKey(s.name) == key) return s;
   }
   return null;
 }

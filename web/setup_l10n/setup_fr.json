@@ -709,5 +709,10 @@
  "fedRetention": "Conservation des échanges entre serveurs",
  "fedRetentionHint": "Combien de temps un serveur garde les accusés de réception des messages signés entre serveurs, et un domicile personnel les traces des adhésions terminées, avant le nettoyage horaire. Jamais moins que la validité du statut d'identité plus deux fois l'écart d'horloge. Se règle dans les paramètres de l'app.",
  "fedAnswerWait": "Attente de réponse entre serveurs",
- "fedAnswerWaitHint": "Combien de temps un serveur attend la réponse à un message signé envoyé à un autre serveur (un statut d'identité, une adhésion) avant de renvoyer le même message. Au moins 30 secondes ; gardez-la sous la durée de validité du statut d'identité. Se règle dans les paramètres de l'app."
+ "fedAnswerWaitHint": "Combien de temps un serveur attend la réponse à un message signé envoyé à un autre serveur (un statut d'identité, une adhésion) avant de renvoyer le même message. Au moins 30 secondes ; gardez-la sous la durée de validité du statut d'identité. Se règle dans les paramètres de l'app.",
+ "supLookupWait": "Attente de la recherche fournisseur",
+ "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
+ "supLookupRate": "Recherches fournisseur par minute",
+ "supLookupRateHint": "Le nombre maximal de recherches fournisseur qu'une personne peut faire par minute sur ce serveur ; au-delà, la recherche est signalée comme occupée et rien n'est envoyé au registre. Se règle dans les paramètres de l'app.",
+ "optPerMinute": "{n} par minute"
 }

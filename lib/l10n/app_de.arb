@@ -13816,6 +13816,8 @@
   "@settingHintPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingHintPurchaseSupplierLookupPerMinute": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf. Darüber wird nichts an das Register gesendet und die Suche als ausgelastet beantwortet.",
+  "settingHintPurchaseSupplierLookupTimeoutSeconds": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, bevor eine Lieferantensuche als abgelaufen gilt. Die Eingaben bleiben erhalten; Sie können es erneut versuchen oder von Hand weitermachen.",
   "settingHintReadinessRecentExportDays": "Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -13965,6 +13967,8 @@
   "@settingLabelPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingLabelPurchaseSupplierLookupPerMinute": "Lieferantensuchen pro Person und Minute",
+  "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Wartezeit der Lieferantensuche (Sekunden)",
   "settingLabelReadinessRecentExportDays": "Zeitfenster für aktuelle Exporte",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -15064,6 +15068,9 @@
       }
     }
   },
+  "supplierNameMissing": "Ein Lieferant braucht einen Namen.",
+  "supplierSaving": "Lieferant wird gespeichert…",
+  "supplierSimilarName": "Ein Lieferant mit demselben Namen existiert: {supplier}. Prüfen Sie, ob es nicht dasselbe Unternehmen ist; Sie können trotzdem speichern.",
   "suppliersAdd": "Lieferant hinzufügen",
   "@suppliersAdd": {
     "description": "#2567 suppliers"
@@ -15251,6 +15258,7 @@
   "@suppliersSaved": {
     "description": "#2567 suppliers"
   },
+  "suppliersSavedOpen": "Öffnen",
   "suppliersTaxUnverified": "Steuernummer nicht geprüft",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"
