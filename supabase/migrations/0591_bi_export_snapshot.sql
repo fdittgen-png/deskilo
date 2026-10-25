@@ -298,4 +298,4 @@ grant execute on function public.bi_export_snapshot_v1(uuid, jsonb, uuid, int, t
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(590);
+select public.set_deskilo_schema_version(591);
