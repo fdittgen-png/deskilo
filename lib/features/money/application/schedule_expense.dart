@@ -77,6 +77,20 @@ bool canEndSchedule(ScheduleStatus status) =>
 bool isSchedulable({required String title, required int? amountCents}) =>
     title.trim().isNotEmpty && amountCents != null && amountCents > 0;
 
+/// What a schedule carries beside its amount and its rule: the note, the
+/// VAT every occurrence carries, and the supplier it pays.
+class ScheduleDetails {
+  const ScheduleDetails({this.description = '', this.vat, this.supplierId});
+
+  final String description;
+
+  /// {percent, deductible_pct, asset}; null: no VAT is recorded.
+  final Map<String, Object?>? vat;
+
+  /// An active supplier of the workspace; null: it pays no one named.
+  final String? supplierId;
+}
+
 /// Recurring expenses, as the decisions behind them.
 class ExpenseSchedules {
   const ExpenseSchedules(this._money);
@@ -94,8 +108,7 @@ class ExpenseSchedules {
     int every = 1,
     int? repeatCount,
     DateTime? endsOn,
-    String description = '',
-    Map<String, Object?>? vat,
+    ScheduleDetails details = const ScheduleDetails(),
   }) async {
     if (!isSchedulable(title: title, amountCents: amountCents)) return false;
     final id = await _money.createExpenseSchedule(
@@ -107,10 +120,17 @@ class ExpenseSchedules {
       every: every,
       repeatCount: repeatCount,
       endsOn: endsOn,
-      description: description,
+      description: details.description,
     );
     // #2357 — the VAT every occurrence carries.
+    final vat = details.vat;
     if (vat != null) await _money.setExpenseScheduleVat(id, vat);
+    // The supplier is named on the schedule that now exists, so a refused
+    // schedule never names one.
+    final supplierId = details.supplierId;
+    if (supplierId != null) {
+      await _money.setExpenseScheduleSupplier(id, supplierId);
+    }
     return true;
   }
 

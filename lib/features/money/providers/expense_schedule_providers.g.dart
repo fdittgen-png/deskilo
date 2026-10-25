@@ -99,6 +99,95 @@ final class ExpenseSchedulesFamily extends $Family
   String toString() => r'expenseSchedulesProvider';
 }
 
+/// The suppliers a new schedule may name: the workspace's ACTIVE ones while
+/// the suppliers are switched on, none otherwise.
+
+@ProviderFor(scheduleSuppliers)
+final scheduleSuppliersProvider = ScheduleSuppliersFamily._();
+
+/// The suppliers a new schedule may name: the workspace's ACTIVE ones while
+/// the suppliers are switched on, none otherwise.
+
+final class ScheduleSuppliersProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Supplier>>,
+          List<Supplier>,
+          FutureOr<List<Supplier>>
+        >
+    with $FutureModifier<List<Supplier>>, $FutureProvider<List<Supplier>> {
+  /// The suppliers a new schedule may name: the workspace's ACTIVE ones while
+  /// the suppliers are switched on, none otherwise.
+  ScheduleSuppliersProvider._({
+    required ScheduleSuppliersFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'scheduleSuppliersProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$scheduleSuppliersHash();
+
+  @override
+  String toString() {
+    return r'scheduleSuppliersProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Supplier>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Supplier>> create(Ref ref) {
+    final argument = this.argument as String;
+    return scheduleSuppliers(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ScheduleSuppliersProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$scheduleSuppliersHash() => r'262b98e6de8e3dfd1229b866a1e46a1741a87c88';
+
+/// The suppliers a new schedule may name: the workspace's ACTIVE ones while
+/// the suppliers are switched on, none otherwise.
+
+final class ScheduleSuppliersFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<Supplier>>, String> {
+  ScheduleSuppliersFamily._()
+    : super(
+        retry: null,
+        name: r'scheduleSuppliersProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The suppliers a new schedule may name: the workspace's ACTIVE ones while
+  /// the suppliers are switched on, none otherwise.
+
+  ScheduleSuppliersProvider call(String workspaceId) =>
+      ScheduleSuppliersProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'scheduleSuppliersProvider';
+}
+
 /// The member's materialised occurrences — the awaiting and rejected
 /// ones are what the Payments face presents for confirmation.
 
