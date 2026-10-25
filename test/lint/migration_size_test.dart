@@ -5,11 +5,10 @@
 // failed "Install, resume and upgrade" only in CI. Every migration stays
 // under that limit, and every migration from 0589 on keeps a margin below
 // it, so a restated function or a registry line does not tip it over.
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/instance_lifecycle/psql_management.dart';
+import 'lint_sources.dart';
 
 /// The first migration written under the margin rule (AGENT_RULES "Decide,
 /// commit, never park"); older files predate it and only keep the hard limit.
@@ -22,9 +21,7 @@ const int marginBytes = 110000;
 final _fileName = RegExp(r'^(\d{4})_[a-z0-9_]+\.sql$');
 
 void main() {
-  final files = Directory('supabase/migrations')
-      .listSync()
-      .whereType<File>()
+  final files = sqlFiles('supabase/migrations')
       .where((f) => _fileName.hasMatch(f.uri.pathSegments.last))
       .toList();
 
