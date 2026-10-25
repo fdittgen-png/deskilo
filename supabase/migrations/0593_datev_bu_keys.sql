@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2375, DATEV) -- a sale booked to a revenue account that is not one
+-- 0593 (#2375, DATEV) -- a sale booked to a revenue account that is not one
 -- of DATEV's automatic accounts carries the BU-Schlüssel of its rate, so
 -- DATEV computes the tax: two new `account_map` rows of the tax reference
 -- store, `datev/tax:standard` (BU-Schlüssel 3, Umsatzsteuer 19 %) and
@@ -19,4 +19,4 @@ values
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(593);

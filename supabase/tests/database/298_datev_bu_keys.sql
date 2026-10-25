@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2375 / 9999: the DATEV BU-Schlüssel of each German rate group. A sale
+-- #2375 / 0593: the DATEV BU-Schlüssel of each German rate group. A sale
 -- booked to a revenue account that is not automatic carries the key of its
 -- rate: 3 for the standard rate, 2 for the reduced one. The rows resolve
 -- through the store's reader on any day, pass the account_map shape check,
