@@ -31,6 +31,7 @@ import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
+import 'package:deskilo/core/storage/resume_place_store.dart';
 import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
 import 'package:deskilo/features/directory/domain/discovery_view.dart';
@@ -169,6 +170,10 @@ class DemoDevicePrefs {
   /// demonstration is the demonstration's; the live draft is neither
   /// read nor spent by entering it.
   final InMemoryEntryIntentStore entryIntent = InMemoryEntryIntentStore();
+
+  /// Where the visitor was in the demonstration: never the live
+  /// account's last place, and never written over it.
+  final InMemoryResumePlaceStore resumePlaces = InMemoryResumePlaceStore();
 
   /// #1855 — a visitor's interrupted booking is the demonstration's; the
   /// device's real ledger is neither read nor written by entering it.

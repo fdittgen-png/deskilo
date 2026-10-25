@@ -11,6 +11,7 @@ import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
+import 'package:deskilo/core/storage/resume_place_store.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -67,6 +68,7 @@ Future<GoRouter> pumpMeApp(
   FakeGuestParticipationRepository? guestVisits,
   Size size = const Size(800, 1600),
   LinkLauncher? launcher,
+  ResumePlaceStore? resumePlaces,
   List<Override> extraOverrides = const [],
 }) async {
   tester.view.physicalSize = size;
@@ -87,6 +89,7 @@ Future<GoRouter> pumpMeApp(
         messenger: messenger,
         contacts: contacts,
         guestVisits: guestVisits,
+        resumePlaces: resumePlaces,
       )..addAll([
         if (launcher != null) linkLauncherProvider.overrideWithValue(launcher),
         ...extraOverrides,

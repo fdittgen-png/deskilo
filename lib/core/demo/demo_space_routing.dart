@@ -30,6 +30,7 @@ import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
+import '../storage/resume_place_store.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
@@ -106,6 +107,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ),
     // #2553 — the visitor's own bookings of both spaces, one installation.
     myReservationsRepositoryProvider.overrideWithValue(myReservations),
+    // Where the visitor was last stays inside the demonstration.
+    resumePlaceStoreProvider.overrideWithValue(fixture.prefs.resumePlaces),
     // #2553 C3 — View, Check in and Cancel on the fixture's own spaces.
     myReservationActionsProvider.overrideWithValue(
       DemoMyReservationActions(myReservations),
