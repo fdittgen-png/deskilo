@@ -49,7 +49,7 @@ final class MoneyRepositoryProvider
   }
 }
 
-String _$moneyRepositoryHash() => r'a7e54df7db5a022a69c810dac8a8eb462eafb349';
+String _$moneyRepositoryHash() => r'9bdaea43040eabcd9fbb098c331362166871db1d';
 
 /// The signed-in member's statement for a period ('yyyy-MM').
 /// #1449 — the decision behind Register payment: the sheet says what was
@@ -104,7 +104,7 @@ final class PaymentsProvider
   }
 }
 
-String _$paymentsHash() => r'54e542be93d1801d2528087cec596766efad0ffb';
+String _$paymentsHash() => r'4270a090a7f12843b7b9450d9140538a64f3fb8d';
 
 /// #1449 — the decision behind the legal-identity Save: which of the two
 /// aggregates is written first, and therefore which one can be left
@@ -170,12 +170,17 @@ final class SettlementsProvider
 
 String _$settlementsHash() => r'242522bf8c92d7a09aa2cdaa3e97ba61084f17b1';
 
+/// #2591 — the facade's one reader: a rule (billing) and money (expenses).
+
 @ProviderFor(repartitions)
 final repartitionsProvider = RepartitionsProvider._();
+
+/// #2591 — the facade's one reader: a rule (billing) and money (expenses).
 
 final class RepartitionsProvider
     extends $FunctionalProvider<Repartitions, Repartitions, Repartitions>
     with $Provider<Repartitions> {
+  /// #2591 — the facade's one reader: a rule (billing) and money (expenses).
   RepartitionsProvider._()
     : super(
         from: null,
@@ -364,7 +369,7 @@ final class ConsumptionsProvider
   }
 }
 
-String _$consumptionsHash() => r'32231b1df8048f66ffe107772aef50ff8bdb02b5';
+String _$consumptionsHash() => r'6c76140fd99c3795c06cff81c07d65e5f8eff248';
 
 /// #1449 — an expense, and whether it may be filed as typed.
 
@@ -632,7 +637,7 @@ final class MyPaymentIntentsProvider
   }
 }
 
-String _$myPaymentIntentsHash() => r'ac07681d6ce33c6071d99aa8c82c5991f5b39b18';
+String _$myPaymentIntentsHash() => r'260a3af6e4c9af59f52520857aba01ed741f221c';
 
 /// ONE MEMBER's money, for the dossier on their profile (#704).
 ///
@@ -1634,7 +1639,7 @@ final class DunningRulesProvider
   }
 }
 
-String _$dunningRulesHash() => r'e98a6d7629a06d72cd8fd2178b01e750da684dcd';
+String _$dunningRulesHash() => r'55ee8bc5b8cf5cd84ee0a37683dd87e8435d03a6';
 
 /// #802 — when the two automatic invoice runs happen; defaults while
 /// nothing is stored, which is what every workspace starts with.
@@ -1681,7 +1686,7 @@ final class BillingRulesProvider
   }
 }
 
-String _$billingRulesHash() => r'9fe2e40d2d3932e4f71cf1e16fa011bdc2e28aad';
+String _$billingRulesHash() => r'12ec5427139ca3844831899f4ae42bb8f1113542';
 
 /// The member's REAL cross-month position (#512): credit on account,
 /// open remainders from any month, refunds due, net. Watches the
@@ -1780,7 +1785,7 @@ final class DunningHoldsProvider
   }
 }
 
-String _$dunningHoldsHash() => r'48dbd28ac456c7bc2f5552adcdc7d891be6a31e7';
+String _$dunningHoldsHash() => r'0716c9fbb595f81252c067ea83a26d6c8f37f78d';
 
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
 
@@ -1926,7 +1931,7 @@ final class EInvoiceGatewayProvider
   }
 }
 
-String _$eInvoiceGatewayHash() => r'92f62c9e97f81e9a65f6ce84a83fe9958829651f';
+String _$eInvoiceGatewayHash() => r'8d5dbfd08be515414e765feaaf2f9a7a77f3d45d';
 
 /// The owner-visible state of the platform credentials (0071): non-secret
 /// fields plus the NAMES of the secrets that are set.
@@ -1975,7 +1980,7 @@ final class EInvoiceStatusProvider
   }
 }
 
-String _$eInvoiceStatusHash() => r'3003ae3fe1a9d6dc1dc7d13cd5ab0c675cb27557';
+String _$eInvoiceStatusHash() => r'90f665e0e32f0a864bd75645548816a3328275a5';
 
 /// invoiceId → its latest transmission (0071), for the detail sheet's
 /// "sent on / accepted by" line.
@@ -2025,7 +2030,7 @@ final class InvoiceTransmissionsProvider
 }
 
 String _$invoiceTransmissionsHash() =>
-    r'14674c21ad83c1552830a9c8a4d19a680b33c689';
+    r'cb49a719cc741aa5f06e99e0c649d4f28f1bf8ea';
 
 /// The invoicing overview (issuers only — callers gate on canIssue).
 ///
@@ -2101,7 +2106,7 @@ final class InvoicingOverviewProvider
   }
 }
 
-String _$invoicingOverviewHash() => r'556dab0a477fa89f0cf98d51290193f3d61ee4b5';
+String _$invoicingOverviewHash() => r'2668c62742dabe00e23f8ca313148ec3eea03d81';
 
 /// #739 — a member's deal (default, active, pending). The server logs
 /// a read by anyone but the member; the provider is per member so the
@@ -2294,7 +2299,7 @@ final class NumberSequencesProvider
   }
 }
 
-String _$numberSequencesHash() => r'28a4ce9e3329227ca5d6be4407a66dbfbee6c935';
+String _$numberSequencesHash() => r'ca6a2e28fda0e8fafe19378dd9d1fab142026845';
 
 /// #934 — the workspace's status over a range of months.
 
@@ -2356,7 +2361,7 @@ final class WorkspaceStatusProvider
   }
 }
 
-String _$workspaceStatusHash() => r'56748c4ac1006dde02ac46bb86fd2e5d9c10b942';
+String _$workspaceStatusHash() => r'5f595569e661f80c5644f2782d39aa26a05aafed';
 
 /// #934 — the workspace's status over a range of months.
 
@@ -2423,7 +2428,7 @@ final class RepartitionRuleProvider
   }
 }
 
-String _$repartitionRuleHash() => r'15e240c4526551c2b737b6746cd0ca04457e5709';
+String _$repartitionRuleHash() => r'1b38fcfcd2e2fadd60093673b02c72c04a9b2e44';
 
 /// member id -> name, for the lists that name a member (the To-pay claims).
 

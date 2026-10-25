@@ -8,6 +8,7 @@
 // Pure Dart.
 library;
 
+import '../../../core/data/json_reader.dart';
 import 'kpi_contract.dart';
 
 /// One figure asked for. A capacity figure has a window `[from, to)` and an
@@ -54,6 +55,8 @@ class BiBatchRequest {
   Map<String, Object?> toJson() => {
     'request_key': key,
     'metric_id': metricId,
+    // The version this client reads; the server answers its own beside it.
+    if (kpiDefinitionOf(metricId) case final d?) 'metric_version': d.version,
     if (from != null) 'from': from!.toUtc().toIso8601String(),
     if (to != null) 'to': to!.toUtc().toIso8601String(),
     if (levelId != null) 'level_id': levelId,
@@ -106,7 +109,58 @@ class BiBatchEntry {
   );
 
   /// The failure the single-figure read would have thrown.
-  KpiUnavailable toError() => KpiUnavailable(message ?? code ?? 'unavailable');
+  KpiUnavailable toError() => code == incompatibleCode
+      ? const KpiIncompatible()
+      : KpiUnavailable(message ?? code ?? 'unavailable');
+
+  /// The [code] of an answer about another metric than this client knows.
+  static const incompatibleCode = 'incompatible';
+}
+
+/// The descriptor fields an answer names, against this client's metric:
+/// a field the server leaves out is not a disagreement (a server before
+/// the descriptors echoed only the version).
+bool _sameMetric(KpiDefinition? d, Map<String, Object?> raw) {
+  if (d == null) return false;
+  final mine = <String, Object>{
+    'metric_version': d.version,
+    'unit': d.unit,
+    'date_basis': d.dateBasis.wire,
+    'coverage': d.coverage.wire,
+  };
+  return mine.entries.every(
+    (e) => !raw.containsKey(e.key) || raw[e.key] == e.value,
+  );
+}
+
+/// One answer of `bi_query_batch_v1` for [request], typed. Missing, failed
+/// or about another version, unit, date basis or coverage of the metric:
+/// a failure of that request, never a figure.
+BiBatchEntry biBatchEntryFromJson(
+  BiBatchRequest request,
+  Map<String, Object?>? raw,
+) {
+  if (raw == null) {
+    return BiBatchEntry.failed(request.key, message: 'no answer');
+  }
+  if (!_sameMetric(kpiDefinitionOf(request.metricId), raw)) {
+    return BiBatchEntry.failed(
+      request.key,
+      code: BiBatchEntry.incompatibleCode,
+    );
+  }
+  final reader = JsonReader(raw, context: 'bi batch');
+  final result = reader.objectOrNull('result');
+  if (!reader.boolOr('ok', fallback: false) || result == null) {
+    return BiBatchEntry.failed(
+      request.key,
+      code: reader.stringOrNull('code'),
+      message: reader.stringOrNull('message'),
+    );
+  }
+  return request.metricId == 'capacity.seat_utilisation'
+      ? BiBatchEntry.seat(request.key, seatCapacityFromJson(result.json))
+      : BiBatchEntry.finance(request.key, financeSummaryFromJson(result.json));
 }
 
 /// Reads a batch. The server answers it in one call; a fan-out stands in

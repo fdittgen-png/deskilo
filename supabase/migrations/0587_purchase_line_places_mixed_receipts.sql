@@ -820,4 +820,4 @@ grant execute on function public.compute_postings(uuid, uuid, date, date) to aut
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(587);

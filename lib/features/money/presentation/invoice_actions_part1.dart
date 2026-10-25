@@ -136,7 +136,7 @@ Future<void> sendEInvoice(
       }
       if (file.fileName.isEmpty) return;
       result = await ref
-          .read(moneyRepositoryProvider)
+          .read(eInvoiceTransmissionsProvider)
           .sendEInvoice(
             workspaceId: workspaceId,
             invoiceId: invoice.id,

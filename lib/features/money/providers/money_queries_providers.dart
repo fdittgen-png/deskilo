@@ -3,21 +3,33 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../application/invoice_action.dart';
 import '../data/supabase_accounting_source_queries.dart';
+import '../data/supabase_billing_rules_repository.dart';
 import '../data/supabase_commercial_terms_repository.dart';
+import '../data/supabase_document_numbering.dart';
+import '../data/supabase_dunning_repository.dart';
+import '../data/supabase_einvoice_transmissions.dart';
 import '../data/supabase_expense_repository.dart';
 import '../data/supabase_invoice_action_commands.dart';
 import '../data/supabase_invoice_commands.dart';
 import '../data/supabase_invoice_queries.dart';
+import '../data/supabase_member_account_commands.dart';
 import '../data/supabase_member_account_queries.dart';
+import '../data/supabase_payment_gateway_repository.dart';
 import '../data/supabase_report_template_repository.dart';
 import '../data/supabase_tax_reporting_repository.dart';
 import '../domain/accounting_source_queries.dart';
+import '../domain/billing_rules_repository.dart';
 import '../domain/commercial_terms_repository.dart';
+import '../domain/document_numbering.dart';
+import '../domain/dunning_repository.dart';
+import '../domain/einvoice_transmissions.dart';
 import '../domain/expense_repository.dart';
 import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_queries.dart';
+import '../domain/member_account_commands.dart';
 import '../domain/member_account_queries.dart';
+import '../domain/payment_gateway_repository.dart';
 import '../domain/report_template_repository.dart';
 import '../domain/tax_reporting_repository.dart';
 import 'credit_providers.dart';
@@ -90,3 +102,35 @@ ExpenseRepository expenseRepository(Ref ref) =>
 @Riverpod(keepAlive: true)
 AccountingSourceQueries accountingSourceQueries(Ref ref) =>
     SupabaseAccountingSourceQueries(ref.watch(moneyClientProvider));
+
+/// #2591 — the dunning policy, its sweep and the holds on an invoice.
+@Riverpod(keepAlive: true)
+DunningRepository dunningRepository(Ref ref) =>
+    SupabaseDunningRepository(ref.watch(moneyClientProvider));
+
+/// #2591 — when the invoice runs happen, the remembered repartition rule
+/// and the workspace status the repartition wizard reads.
+@Riverpod(keepAlive: true)
+BillingRulesRepository billingRulesRepository(Ref ref) =>
+    SupabaseBillingRulesRepository(ref.watch(moneyClientProvider));
+
+/// #2591 — the number series and the invoice fingerprint check.
+@Riverpod(keepAlive: true)
+DocumentNumbering documentNumbering(Ref ref) =>
+    SupabaseDocumentNumbering(ref.watch(moneyClientProvider));
+
+/// #2591 — payments, service charges, packages and usage requests
+/// recorded against a member's account.
+@Riverpod(keepAlive: true)
+MemberAccountCommands memberAccountCommands(Ref ref) =>
+    SupabaseMemberAccountCommands(ref.watch(moneyClientProvider));
+
+/// #2591 — online payments: attempts, providers, credentials, checkout.
+@Riverpod(keepAlive: true)
+PaymentGatewayRepository paymentGatewayRepository(Ref ref) =>
+    SupabasePaymentGatewayRepository(ref.watch(moneyClientProvider));
+
+/// #2591 — e-invoice transmission, its receipts and channel credentials.
+@Riverpod(keepAlive: true)
+EInvoiceTransmissions eInvoiceTransmissions(Ref ref) =>
+    SupabaseEInvoiceTransmissions(ref.watch(moneyClientProvider));

@@ -53,14 +53,14 @@ Future<void> exportWorkspaceExcel(
       final profiles = await ref
           .read(memberProfileRepositoryProvider)
           .fetchProfiles(workspace.id, accountIdsOf(members));
-      final money = ref.read(moneyRepositoryProvider);
+      final eInvoices = ref.read(eInvoiceTransmissionsProvider);
       final invoiceQueries = ref.read(invoiceQueriesProvider);
       final events = await ref
           .read(eventRepositoryProvider)
           .fetchEvents(workspace.id, limit: 0);
       final features = await ref.read(enabledFeaturesProvider.future);
       final transmissions =
-          await money.fetchInvoiceTransmissions(workspace.id);
+          await eInvoices.fetchInvoiceTransmissions(workspace.id);
 
       final profilesByUserId = <String, Profile>{
         for (final p in profiles) p.id: p,
@@ -89,7 +89,7 @@ Future<void> exportWorkspaceExcel(
           for (final e in events)
             if (e.status == EventStatus.pending) e,
         ],
-        paymentIntents: await money.fetchPaymentIntents(workspace.id),
+        paymentIntents: await ref.read(paymentGatewayRepositoryProvider).fetchPaymentIntents(workspace.id),
         services:
             await ref.read(commercialTermsProvider).fetchServices(workspace.id, includeInactive: true),
         invoices: invoices,

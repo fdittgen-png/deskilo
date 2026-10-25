@@ -5955,6 +5955,7 @@ Map<String, _Getter> _part21() => {
   'biAreaFinance': (l) => l.biAreaFinance,
   'biFinanceCurrencyMix': (l) => l.biFinanceCurrencyMix,
   'biGrainQuarter': (l) => l.biGrainQuarter,
+  'biIncompatible': (l) => l.biIncompatible,
   'billPackages': (l) => l.billPackages,
   'billSettled': (l) => l.billSettled,
   'billingAddPackage': (l) => l.billingAddPackage,

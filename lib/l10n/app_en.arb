@@ -1929,6 +1929,10 @@
   "@biGroupNone": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
+  "biIncompatible": "The server now defines this figure differently from what this version of the app knows: update the app to see it.",
+  "@biIncompatible": {
+    "description": "#2578 a batched figure answered for another version, unit, date basis or coverage of its metric"
+  },
   "biInvalidAddress": "This address asks for an analysis that does not exist; nothing was read.",
   "@biInvalidAddress": {
     "description": "#1923 B Web-BI toolbar and module section"
@@ -2271,6 +2275,15 @@
   "biUnavailable": "This analysis could not be computed.",
   "@biUnavailable": {
     "description": "#1923 B Web-BI toolbar and module section"
+  },
+  "biViewCardsIncompatible": "{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.",
+  "@biViewCardsIncompatible": {
+    "description": "#2578 saved-view cards saved for another metric version",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   },
   "biViewChart": "Chart",
   "@biViewChart": {

@@ -1719,6 +1719,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biGroupNone => 'Keine Gruppierung';
 
   @override
+  String get biIncompatible =>
+      'Der Server definiert diese Kennzahl inzwischen anders, als diese App-Version sie kennt: Aktualisieren Sie die App, um sie zu sehen.';
+
+  @override
   String get biInvalidAddress =>
       'Diese Adresse verlangt eine Analyse, die es nicht gibt; es wurde nichts gelesen.';
 
@@ -1964,6 +1968,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biUnavailable => 'Diese Analyse konnte nicht berechnet werden.';
+
+  @override
+  String biViewCardsIncompatible(String count) {
+    return '$count Analysen dieser Ansicht wurden gespeichert, als ihre Kennzahl etwas anderes bedeutete, und werden weggelassen statt mit anderer Bedeutung gezeigt.';
+  }
 
   @override
   String get biViewChart => 'Diagramm';

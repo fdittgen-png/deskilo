@@ -1704,6 +1704,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biGroupNone => 'No grouping';
 
   @override
+  String get biIncompatible =>
+      'The server now defines this figure differently from what this version of the app knows: update the app to see it.';
+
+  @override
   String get biInvalidAddress =>
       'This address asks for an analysis that does not exist; nothing was read.';
 
@@ -1946,6 +1950,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biUnavailable => 'This analysis could not be computed.';
+
+  @override
+  String biViewCardsIncompatible(String count) {
+    return '$count analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.';
+  }
 
   @override
   String get biViewChart => 'Chart';

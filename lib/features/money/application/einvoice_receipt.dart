@@ -16,7 +16,7 @@ Future<EInvoiceSubmission> requestEInvoiceReceipt(
   required String transmissionId,
 }) async {
   final answer = await ref
-      .read(moneyRepositoryProvider)
+      .read(eInvoiceTransmissionsProvider)
       .requestEInvoiceReceipt(
         workspaceId: workspaceId,
         transmissionId: transmissionId,

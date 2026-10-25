@@ -925,6 +925,7 @@
   "biGrainYear": "Anno",
   "biGroupBy": "Raggruppa per",
   "biGroupNone": "Nessun raggruppamento",
+  "biIncompatible": "Il server definisce ora questo indicatore in modo diverso da come lo conosce questa versione dell'app: aggiorni l'app per vederlo.",
   "biInvalidAddress": "Questo indirizzo chiede un’analisi che non esiste; non è stato letto nulla.",
   "biKindCurrent": "Ora",
   "@biKindCurrent": {
@@ -1201,6 +1202,7 @@
   },
   "biTotal": "Totale",
   "biUnavailable": "Non è stato possibile calcolare questa analisi.",
+  "biViewCardsIncompatible": "{count} analisi di questa vista sono state salvate quando il loro indicatore significava altro e vengono omesse invece di essere mostrate con un altro significato.",
   "biViewChart": "Grafico",
   "biViewClearMyDefault": "Non aprire più la mia vista predefinita",
   "biViewClearTeamDefault": "Rimuovi la vista predefinita del team",

@@ -1720,6 +1720,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biGroupNone => 'Sans regroupement';
 
   @override
+  String get biIncompatible =>
+      'Le serveur définit désormais cet indicateur autrement que ne le connaît cette version de l\'application : mettez l\'application à jour pour le voir.';
+
+  @override
   String get biInvalidAddress =>
       'Cette adresse demande une analyse qui n’existe pas ; rien n’a été lu.';
 
@@ -1964,6 +1968,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get biUnavailable => 'Cette analyse n’a pas pu être calculée.';
+
+  @override
+  String biViewCardsIncompatible(String count) {
+    return '$count analyses de cette vue ont été enregistrées quand leur indicateur avait un autre sens ; elles sont omises plutôt que montrées avec un autre sens.';
+  }
 
   @override
   String get biViewChart => 'Graphique';

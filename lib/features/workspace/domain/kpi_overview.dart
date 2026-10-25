@@ -26,6 +26,8 @@ const _activeMembershipsKpi = KpiDefinition(
   timeBasis:
       'now: the memberships whose status is active, each role included; a '
       'past period has no recorded count',
+  dateBasis: KpiDateBasis.currentState,
+  coverage: KpiCoverage.currentStateOnly,
   dimensions: [],
   numerator: 'active_memberships',
   denominator: '',
@@ -44,6 +46,8 @@ const _overdueReceivablesKpi = KpiDefinition(
       'now: issued invoices past their proven due date, what is still '
       'collectible under the dunning rules; unknown due dates and holds '
       'apart',
+  dateBasis: KpiDateBasis.currentState,
+  coverage: KpiCoverage.currentStateOnly,
   dimensions: [],
   numerator: 'overdue_minor',
   denominator: '',

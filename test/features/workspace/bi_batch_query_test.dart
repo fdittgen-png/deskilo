@@ -280,6 +280,7 @@ void main() {
     expect(finance, {
       'request_key': 'f',
       'metric_id': 'finance.invoiced',
+      'metric_version': 1,
       'from_month': '2026-08',
       'to_month': '2026-09',
     });

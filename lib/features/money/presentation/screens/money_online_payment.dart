@@ -119,7 +119,7 @@ class MoneyOnlinePayment {
       errorText: l10n.workspaceGenericError,
       action: () async {
         config = await _ref
-            .read(moneyRepositoryProvider)
+            .read(paymentGatewayRepositoryProvider)
             .fetchPaymentConfig(workspaceId);
       },
     );
@@ -173,7 +173,7 @@ class MoneyOnlinePayment {
       message: 'create payment order failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-        final repo = _ref.read(moneyRepositoryProvider);
+        final repo = _ref.read(paymentGatewayRepositoryProvider);
         final currency =
             _ref.read(currentWorkspaceProvider).value?.currencyCode ?? 'EUR';
         start = await _requests.run(workspaceId, memberId, provider, period,

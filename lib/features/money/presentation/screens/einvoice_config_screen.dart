@@ -84,7 +84,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       domain: 'money',
       message: 'e-invoice platform save failed',
       errorText: l10n.workspaceGenericError,
-      action: () => ref.read(moneyRepositoryProvider).setEInvoiceCredentials(
+      action: () => ref.read(eInvoiceTransmissionsProvider).setEInvoiceCredentials(
             workspace.id,
             {
               ..._providerForm.values(),
@@ -131,7 +131,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       message: 'e-invoice platform clear failed',
       errorText: l10n.workspaceGenericError,
       action: () => ref
-          .read(moneyRepositoryProvider)
+          .read(eInvoiceTransmissionsProvider)
           .clearEInvoiceCredentials(workspace.id),
     )) {
       return;

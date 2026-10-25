@@ -132,21 +132,40 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     calendarRepositoryProvider.overrideWith(
       (ref) => pick(ref, home.calendar, second.calendar),
     ),
-    // #2591 — the money interfaces, all one in-memory repository a space.
+    // #2591 — each money port has its own demo adapter over the space's
+    // one in-memory store; the facade stays for the tests that read it.
     moneyRepositoryProvider.overrideWith(money),
-    invoiceQueriesProvider.overrideWith(money),
-    memberAccountQueriesProvider.overrideWith(money),
-    reportTemplateRepositoryProvider.overrideWith(money),
-    invoiceCommandsProvider.overrideWith(money),
+    invoiceQueriesProvider.overrideWith((ref) => money(ref).invoiceQueries),
+    memberAccountQueriesProvider.overrideWith(
+      (ref) => money(ref).accountQueries,
+    ),
+    memberAccountCommandsProvider.overrideWith(
+      (ref) => money(ref).accountCommands,
+    ),
+    reportTemplateRepositoryProvider.overrideWith(
+      (ref) => money(ref).reportTemplates,
+    ),
+    invoiceCommandsProvider.overrideWith((ref) => money(ref).invoiceCommands),
     // #2585
     invoiceActionCommandsProvider.overrideWith(
       (ref) => pick(ref, homeActions, secondActions),
     ),
-    taxReportingRepositoryProvider.overrideWith(money),
-    commercialTermsProvider.overrideWith(money),
-    expenseRepositoryProvider.overrideWith(money),
+    taxReportingRepositoryProvider.overrideWith(
+      (ref) => money(ref).taxReporting,
+    ),
+    commercialTermsProvider.overrideWith((ref) => money(ref).commercialTerms),
+    expenseRepositoryProvider.overrideWith((ref) => money(ref).expenses),
+    dunningRepositoryProvider.overrideWith((ref) => money(ref).dunning),
+    billingRulesRepositoryProvider.overrideWith((ref) => money(ref).billing),
+    documentNumberingProvider.overrideWith((ref) => money(ref).numbering),
+    paymentGatewayRepositoryProvider.overrideWith(
+      (ref) => money(ref).paymentGateway,
+    ),
+    eInvoiceTransmissionsProvider.overrideWith((ref) => money(ref).eInvoices),
     // #2365
-    accountingSourceQueriesProvider.overrideWith(money),
+    accountingSourceQueriesProvider.overrideWith(
+      (ref) => money(ref).accountingSource,
+    ),
     creditRepositoryProvider.overrideWith(
       (ref) => pick(ref, home.credits, second.credits),
     ),
