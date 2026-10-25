@@ -243,4 +243,4 @@ $fn$;
 revoke execute on function public.accounting_source_snapshot_v1(uuid, date, date) from public, anon;
 grant execute on function public.accounting_source_snapshot_v1(uuid, date, date) to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(581);
