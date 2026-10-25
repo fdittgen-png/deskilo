@@ -68,9 +68,13 @@ Future<ExportSourceBooks?> exportYearBooks(
 
 /// What one export run holds: the year's [books] and, for a posted format,
 /// its [posted] journal (null for a format written from the documents).
+/// The year archive of a local book holds [archiveYears] instead: the
+/// posted journal of every fiscal year its calendar year overlaps, oldest
+/// first, [posted] being the last; every other format holds none.
 typedef AccountingExportInput = ({
   ExportSourceBooks books,
   GenericJournal? posted,
+  List<GenericJournal> archiveYears,
 });
 
 /// The formats written from the posting engine when the issuer keeps a
@@ -79,14 +83,15 @@ typedef AccountingExportInput = ({
 const Set<String> _postedWhenLocalBook = {
   'fec',
   'saft',
-  'bundle',
+  _archiveFormat,
   ...bookReportFormats,
 };
 
 /// The posted formats that name the accounts and the parties: the FEC,
 /// and #2376 the books printed from the postings.
-const Set<String> _postedFec = {'fec', 'bundle', ...bookReportFormats};
+const Set<String> _postedFec = {'fec', _archiveFormat, ...bookReportFormats};
 const String _postedOnlyFormat = 'generic_journal_csv';
+const String _archiveFormat = 'bundle';
 
 /// #2376 — the day of the latest document the person exports, on the same
 /// clock the export year is taken from: the posted formats read the fiscal
@@ -129,19 +134,35 @@ class AccountingExportSource {
     final posted =
         formatId == _postedOnlyFormat ||
         (_postedWhenLocalBook.contains(formatId) &&
-            (formatId != 'bundle' || archiveCarriesFec(country)) &&
+            (formatId != _archiveFormat || archiveCarriesFec(country)) &&
             localBookOf(books.bookProfiles, year) != null);
+    if (!posted) {
+      return (
+        books: books,
+        posted: null,
+        archiveYears: const <GenericJournal>[],
+      );
+    }
+    final asOf = _latestDay(invoices);
+    if (formatId == _archiveFormat) {
+      final years = await _journal().readArchiveYears(
+        workspaceId,
+        books.bookProfiles,
+        year,
+        asOf: asOf,
+      );
+      return (books: books, posted: years.last, archiveYears: years);
+    }
     return (
       books: books,
-      posted: posted
-          ? await _journal().read(
-              workspaceId,
-              books.bookProfiles,
-              year,
-              named: _postedFec.contains(formatId),
-              asOf: _latestDay(invoices),
-            )
-          : null,
+      posted: await _journal().read(
+        workspaceId,
+        books.bookProfiles,
+        year,
+        named: _postedFec.contains(formatId),
+        asOf: asOf,
+      ),
+      archiveYears: const <GenericJournal>[],
     );
   }
 }

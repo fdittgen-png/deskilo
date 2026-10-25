@@ -167,13 +167,86 @@ class GenericJournalExport {
   }) async {
     final local = localBookOf(profiles, year);
     if (local == null) return const JournalNeedsLocalBook();
-    final period = bookYearOf(local, asOf ?? DateTime(year, 12, 31));
-    final set = await _books.fetchPostings(
-      workspaceId,
-      local.issuerSiteId,
-      period.from,
-      period.to,
-    );
+    final journals = await _readYears(workspaceId, local, [
+      bookYearOf(local, asOf ?? DateTime(year, 12, 31)),
+    ], named: named);
+    return journals.single;
+  }
+
+  /// The year archive's books: the postings of every fiscal year the
+  /// calendar [year] overlaps up to [asOf] (the export's latest document),
+  /// oldest first. With a fiscal year that is not the calendar one, the
+  /// year that closes inside [year] travels beside the one still running,
+  /// so the archive of [year] holds every entry its register lists. Each
+  /// year is read exactly as [read] reads it, so its FEC is byte for byte
+  /// the one the FEC export writes and logs; the chart and the parties are
+  /// read once for all of them.
+  Future<List<GenericJournal>> readArchiveYears(
+    String workspaceId,
+    List<BookProfile> profiles,
+    int year, {
+    DateTime? asOf,
+  }) async {
+    final local = localBookOf(profiles, year);
+    if (local == null) return const [JournalNeedsLocalBook()];
+    final periods = {
+      bookYearOf(local, DateTime(year)),
+      bookYearOf(local, asOf ?? DateTime(year, 12, 31)),
+    }.toList()..sort((a, b) => a.from.compareTo(b.from));
+    return _readYears(workspaceId, local, periods, named: true);
+  }
+
+  /// One postings read per period of [periods]; a period whose engine
+  /// blocked is named, the others are posted.
+  Future<List<GenericJournal>> _readYears(
+    String workspaceId,
+    BookProfile local,
+    List<FiscalYear> periods, {
+    required bool named,
+  }) async {
+    final sets = [
+      for (final period in periods)
+        await _books.fetchPostings(
+          workspaceId,
+          local.issuerSiteId,
+          period.from,
+          period.to,
+        ),
+    ];
+    final posted = [
+      for (final set in sets)
+        if (set.blockers.isEmpty) set,
+    ];
+    final chart = named && posted.isNotEmpty
+        ? await _books.fetchBookChart(workspaceId)
+        : null;
+    final parties = named && posted.isNotEmpty
+        ? await _books.fetchPostingParties(workspaceId, [
+            ...{
+              for (final set in posted)
+                for (final p in set.postings) p.documentId,
+            },
+          ])
+        : const <String, PostingParty>{};
+    return [
+      for (var i = 0; i < periods.length; i++)
+        _journalOf(
+          sets[i],
+          periods[i],
+          local,
+          chart: chart,
+          parties: parties,
+        ),
+    ];
+  }
+
+  GenericJournal _journalOf(
+    PostingSet set,
+    FiscalYear period,
+    BookProfile local, {
+    required ({List<BookAccount> accounts, List<BookMapping> mappings})? chart,
+    required Map<String, PostingParty> parties,
+  }) {
     if (set.blockers.isNotEmpty) {
       final roles = {
         for (final b in set.blockers)
@@ -183,11 +256,8 @@ class GenericJournalExport {
           ? JournalBlocked([...roles])
           : JournalNeedsRates([for (final b in set.blockers) b.subject]);
     }
-    if (!named) return JournalPosted(set.postings, year: period);
-    final chart = await _books.fetchBookChart(workspaceId);
-    final parties = await _books.fetchPostingParties(workspaceId, [
-      ...{for (final p in set.postings) p.documentId},
-    ]);
+    if (chart == null) return JournalPosted(set.postings, year: period);
+    final documents = {for (final p in set.postings) p.documentId};
     return JournalPosted(
       set.postings,
       year: period,
@@ -196,7 +266,10 @@ class GenericJournalExport {
         for (final a in chart.accounts)
           if (a.issuerSiteId == local.issuerSiteId) a.code: a.name,
       },
-      parties: parties,
+      parties: {
+        for (final e in parties.entries)
+          if (documents.contains(e.key)) e.key: e.value,
+      },
     );
   }
 }

@@ -91,6 +91,7 @@ class AccountingExportRun {
 
   /// The posted journal of a posted format, read with [books] (#2365).
   late final GenericJournal? posted;
+  late final List<GenericJournal> archiveYears; // the archive's, one per fiscal year
   late final List<VatTaxPointAmount> taxPoints;
   late final Map<String, String> memberNames;
 
@@ -148,7 +149,7 @@ class AccountingExportRun {
       formatId: format.id, workspaceId: workspace.id, country: country, year: year, invoices: invoices));
   if (read == null || !context.mounted) return;
   books = read.books;
-  posted = read.posted;
+  posted = read.posted; archiveYears = read.archiveYears;
   matches = books.matches;
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
@@ -463,8 +464,7 @@ class AccountingExportRun {
       action: () async {
         // #2365 — a local book's archive carries its posted FEC, the one
         // the FEC export writes; a role left unmapped stops the archive.
-        if (posted case JournalBlocked(:final roles)) return AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
-        if (posted case JournalNeedsRates(:final documents)) return AppSnack.error(context, l10n.journalNeedsRates(documents.join(', ')));
+        if (fecActions.archiveYearBlocked(archiveYears)) return;
         final yearInvoices = exported;
         // #1154 — the signature checks are independent server calls:
         // all of them in flight at once, not one round-trip per invoice.
@@ -502,7 +502,7 @@ class AccountingExportRun {
           source: books.revisions,
         ));
         final fecAccounts = workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount);
-        if (!context.mounted || !await fecActions.addYearFec(files, country: country, posted: posted, year: year,
+        if (!context.mounted || !await fecActions.addYearFec(files, country: country, years: archiveYears, year: year,
             documents: (thirdParties: {fecAccounts.customers}, fec: () => buildFecFile(FecRequest(
           invoices: yearInvoices,
           matches: matches,
