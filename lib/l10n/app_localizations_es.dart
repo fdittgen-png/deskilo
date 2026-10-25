@@ -19608,6 +19608,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scheduleNoEnd => 'Sin fecha de fin';
 
   @override
+  String get scheduleNoSupplier => 'Ningún proveedor';
+
+  @override
+  String schedulePaysSupplier(Object supplier) {
+    return 'paga a $supplier';
+  }
+
+  @override
   String get schedulePending =>
       'Programado — a la espera de la confirmación de los validadores.';
 
@@ -19628,6 +19636,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get scheduleSubmit => 'Programar';
+
+  @override
+  String get scheduleSupplierLabel => 'Proveedor al que paga (opcional)';
 
   @override
   String scheduleTimes(Object count) {

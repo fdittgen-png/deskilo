@@ -22,6 +22,7 @@ import '../../domain/expense_schedule.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../../providers/money_providers.dart';
 import 'expense_vat_fields.dart';
+import 'schedule_supplier_field.dart';
 
 /// #767 — the localized wording of one recurrence rule: "every 2 weeks,
 /// 12 times", "monthly until 31.12.2026", "every 10 days".
@@ -116,7 +117,8 @@ Future<void> showExpenseSchedulesSheet(
                 title: Text(s.title),
                 subtitle: Text(
                   '${currency.formatMinor(s.amountCents)} · '
-                  '${_scheduleRuleText(l10n, s, dates)}\n'
+                  '${_scheduleRuleText(l10n, s, dates)}'
+                  '${_pays(l10n, scheduleSupplierName(ref, workspace.id, s.supplierId))}\n'
                   '${_statusText(l10n, s.status)}'
                   '${s.nextDue != null ? ' · ${l10n.scheduleNextDue(dates.format(s.nextDue!))}' : ''}',
                 ),
@@ -147,8 +149,7 @@ Future<void> showExpenseSchedulesSheet(
             FilledButton.icon(
               key: const ValueKey('schedule-new'),
               icon: const Icon(Icons.event_repeat_outlined),
-              label: Text(
-                  l10n.scheduleNew),
+              label: Text(l10n.scheduleNew),
               onPressed: () async {
                 final created =
                     await _showCreateExpenseScheduleSheet(context, ref, currency);
@@ -188,6 +189,10 @@ Future<void> showExpenseSchedulesSheet(
   );
 }
 
+/// ' · pays ACME' when the schedule names a supplier.
+String _pays(AppLocalizations l10n, String? supplier) =>
+    supplier == null ? '' : ' · ${l10n.schedulePaysSupplier(supplier)}';
+
 /// Whether [s] can still produce a due date.
 ///
 /// `rejected` and `ended` never will: the first was refused by the
@@ -224,6 +229,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
   final now = ref.read(clockProvider).now();
   var startsOn = now;
   DateTime? endsOn;
+  String? supplierId;
   final topic = l10n.helpTopicScheduledExpenses;
   // #2357 — the VAT every occurrence will carry.
   final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
@@ -274,6 +280,12 @@ Future<bool> _showCreateExpenseScheduleSheet(
             amount: amount.text,
             refresh: () => setSheetState(() {}),
             keyPrefix: 'schedule',
+          ),
+          ScheduleSupplierField(
+            key: const ValueKey('schedule-supplier-field'),
+            workspaceId: workspace.id,
+            value: supplierId,
+            onChanged: (v) => setSheetState(() => supplierId = v),
           ),
           const SizedBox(height: 12),
           ListTile(
@@ -328,30 +340,12 @@ Future<bool> _showCreateExpenseScheduleSheet(
             ),
             keyboardType: TextInputType.number,
           ),
-          ListTile(
-            key: const ValueKey('schedule-ends'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(l10n.scheduleEndsOn),
-            subtitle: Text(endsOn == null
-                ? (l10n.scheduleNoEnd)
-                : dates.format(endsOn!)),
-            trailing: endsOn == null
-                ? const Icon(Icons.edit_calendar_outlined)
-                : IconButton(
-                  key: const ValueKey('expense-schedule-sheet-a11y-clear-date'),
-                  tooltip: l10n.a11yClearDate,
-                    icon: const Icon(Icons.clear),
-                    onPressed: () => setSheetState(() => endsOn = null),
-                  ),
-            onTap: () async {
-              final picked = await showDatePicker(
-                context: context,
-                initialDate: endsOn ?? startsOn.add(const Duration(days: 365)),
-                firstDate: startsOn,
-                lastDate: startsOn.add(const Duration(days: 3650)),
-              );
-              if (picked != null) setSheetState(() => endsOn = picked);
-            },
+          ScheduleEndsTile(
+            key: const ValueKey('schedule-ends-tile'),
+            startsOn: startsOn,
+            endsOn: endsOn,
+            dates: dates,
+            onChanged: (d) => setSheetState(() => endsOn = d),
           ),
           const SizedBox(height: 8),
           Text(
@@ -395,8 +389,11 @@ Future<bool> _showCreateExpenseScheduleSheet(
           every: int.tryParse(every.text) ?? 1,
           repeatCount: int.tryParse(times.text),
           endsOn: endsOn,
-          description: description.text.trim(),
-          vat: vat.payload,
+          details: ScheduleDetails(
+            description: description.text.trim(),
+            vat: vat.payload,
+            supplierId: supplierId,
+          ),
         ),
   );
   if (!ok || !context.mounted) return false;

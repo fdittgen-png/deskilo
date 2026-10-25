@@ -1872,7 +1872,7 @@ routine public.commitment_variance_apply() -> trigger | function | definer | vol
 routine public.commitment_variance_write(p_workspace_id uuid, p_occurrence_id uuid, p_purchase_id uuid, p_line_no integer, p_amount_cents bigint, p_reason text, p_request_id uuid, p_actor uuid) -> uuid | function | definer | volatile | exec:service_role | body:ff4fa1be3993
 routine public.complete_check_out(p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:bce60bfd206c
 routine public.complete_rights_request(p_request_id uuid, p_outcome jsonb, p_refusal_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c774bc970470
-routine public.compute_postings(p_workspace_id uuid, p_issuer_site_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0daba1b26cbe
+routine public.compute_postings(p_workspace_id uuid, p_issuer_site_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:04692fb4a4ae
 routine public.compute_vat_return(p_workspace uuid, p_start date, p_end date) -> TABLE(direction text, percent numeric, category text, tax_point date, credit_note boolean, correction boolean, corrects uuid, gross_cents bigint, net_cents bigint, vat_cents bigint, invoice_count integer) | function | definer | stable | exec:authenticated,service_role | body:aa24ffac9871
 routine public.configuration_change_set(p_to uuid, p_snapshot jsonb, p_entities text[], p_mode text) -> jsonb | function | definer | stable | exec:service_role | body:20f005547b90
 routine public.configuration_group_states(p_set jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:f26d382ab7a3
@@ -2633,6 +2633,7 @@ routine public.set_deskilo_schema_version(p_version integer) -> void | function 
 routine public.set_dev_mode(p_workspace_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:1b53c8d30e42
 routine public.set_dunning_rules(p_workspace_id uuid, p_rules jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:af1c88f3202e
 routine public.set_einvoice_credentials(p_workspace_id uuid, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:af5af8ad29d0
+routine public.set_expense_schedule_supplier(p_schedule_id uuid, p_supplier_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:73819586b316
 routine public.set_expense_schedule_vat(p_schedule_id uuid, p_vat jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:e2971cdc5ddb
 routine public.set_favorite(p_workspace uuid, p_kind text, p_resource uuid, p_on boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:de88f8ec85e3
 routine public.set_feature_flags(p_workspace_id uuid, p_flags jsonb, p_expected jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:266bd6df81ae

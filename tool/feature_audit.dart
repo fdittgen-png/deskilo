@@ -31,13 +31,19 @@
 //                          collection-if, a conditional, `a && b`) where
 //                          neither is in the other's `requires` chain: a
 //                          hypothesis that B should require A, never a verdict
+//   screenGates            `B>A`: every surface gating on A sits in screens
+//                          the route guards of B own, and neither is in the
+//                          other's chain (the same hypothesis). The screen-to-
+//                          feature map is derived from the code: the GoRoutes
+//                          of lib/ (their `RouteAccess(features:)` and
+//                          `if (!featureEnabled(f)) return` redirects,
+//                          parents included), the classes their builders construct,
+//                          the RouteRules that class a path `workspace`, and
+//                          the presentation imports of each screen
+//                          (`screenOwnership`).
 // Information, not ratcheted:
-//   serverOnlyFlags, platformDefaultOn, singleCapabilitySubprocesses and the
-//   errors of validateProcessRegistry.
-//
-// NOT detected: "the surrounding screen is owned by feature B and A is not in
-// B's chain" needs a screen-to-feature ownership map that does not exist; only
-// the nested form is found, and the human review of #2522 step 2 adds the rest.
+//   routeOwners, serverOnlyFlags, platformDefaultOn,
+//   singleCapabilitySubprocesses and the errors of validateProcessRegistry.
 import 'dart:convert';
 import 'dart:io';
 
@@ -84,6 +90,27 @@ class FileGates {
   /// Outer, inner, line - a gate nested inside another gate's guarded part.
   final nested = <({String outer, String inner, int line})>[];
   final errors = <String>[];
+
+  /// The classes this file declares.
+  final classes = <String>{};
+
+  /// The `import` URIs, as written.
+  final imports = <String>[];
+
+  /// The `part` URIs, as written.
+  final parts = <String>[];
+
+  /// The top-level names this file declares (classes among them).
+  final declared = <String>{};
+
+  /// Every simple identifier this file uses.
+  final referenced = <String>{};
+
+  /// The `GoRoute`s this file declares, nested ones flattened.
+  final routes = <RouteFacts>[];
+
+  /// `RouteRule(pattern, RouteClass.kind)` entries: pattern -> kind.
+  final routeRules = <String, String>{};
 }
 
 const _gateCalls = {
@@ -188,7 +215,92 @@ class _Collector extends RecursiveAstVisitor<void> {
   void visitMethodInvocation(MethodInvocation node) {
     final f = gateOf(node);
     if (f != null) _record(f, node);
+    _structure(node);
     super.visitMethodInvocation(node);
+  }
+
+  @override
+  void visitInstanceCreationExpression(InstanceCreationExpression node) {
+    _structure(node);
+    super.visitInstanceCreationExpression(node);
+  }
+
+  /// A top-level `GoRoute` (its children come with it) or a `RouteRule`.
+  void _structure(Expression node) {
+    final call = callOf(node);
+    if (call == null) return;
+    if (call.name == 'GoRoute' && !_insideRoute(node)) {
+      out.routes.addAll(routeTree(node, '', const {}));
+    } else if (call.name == 'RouteRule') {
+      final args = call.args.arguments;
+      final kind = args.length == 2
+          ? RegExp(r'^RouteClass\.(\w+)$').firstMatch(args[1].toSource())
+          : null;
+      final pattern = args.isEmpty ? null : args.first;
+      if (kind != null && pattern is SimpleStringLiteral) {
+        out.routeRules[pattern.value] = kind.group(1)!;
+      }
+    }
+  }
+
+  @override
+  void visitClassDeclaration(ClassDeclaration node) {
+    out.classes.add(node.namePart.typeName.lexeme);
+    out.declared.add(node.namePart.typeName.lexeme);
+    super.visitClassDeclaration(node);
+  }
+
+  @override
+  void visitFunctionDeclaration(FunctionDeclaration node) {
+    if (node.parent is CompilationUnit) out.declared.add(node.name.lexeme);
+    super.visitFunctionDeclaration(node);
+  }
+
+  @override
+  void visitTopLevelVariableDeclaration(TopLevelVariableDeclaration node) {
+    for (final v in node.variables.variables) {
+      out.declared.add(v.name.lexeme);
+    }
+    super.visitTopLevelVariableDeclaration(node);
+  }
+
+  @override
+  void visitEnumDeclaration(EnumDeclaration node) {
+    out.declared.add(node.namePart.typeName.lexeme);
+    super.visitEnumDeclaration(node);
+  }
+
+  @override
+  void visitMixinDeclaration(MixinDeclaration node) {
+    out.declared.add(node.name.lexeme);
+    super.visitMixinDeclaration(node);
+  }
+
+  @override
+  void visitExtensionDeclaration(ExtensionDeclaration node) {
+    final name = node.name?.lexeme;
+    if (name != null) out.declared.add(name);
+    super.visitExtensionDeclaration(node);
+  }
+
+  @override
+  void visitSimpleIdentifier(SimpleIdentifier node) {
+    out.referenced.add(node.name);
+    super.visitSimpleIdentifier(node);
+  }
+
+  @override
+  void visitImportDirective(ImportDirective node) {
+    final uri = node.uri.stringValue;
+    if (uri != null) out.imports.add(uri);
+    super.visitImportDirective(node);
+  }
+
+  @override
+  void visitPartDirective(PartDirective node) {
+    final uri = node.uri.stringValue;
+    if (uri != null) out.parts.add(uri);
+    super.visitPartDirective(node);
   }
 
   @override
@@ -251,6 +363,330 @@ FileGates gatesOfSource(String path, String source) {
   return out;
 }
 
+// ---- (b) a screen owned by feature B gates on feature A -----------------
+
+/// A call by its callee name: `X(...)`, `const X(...)`, `new X.named(...)`.
+({String name, ArgumentList args})? callOf(AstNode node) {
+  if (node is MethodInvocation && node.target == null) {
+    return (name: node.methodName.name, args: node.argumentList);
+  }
+  if (node is InstanceCreationExpression) {
+    final type = node.constructorName.type.toSource().split('<').first;
+    return (name: type.split('.').last, args: node.argumentList);
+  }
+  return null;
+}
+
+bool _insideRoute(AstNode node) {
+  for (var p = node.parent; p != null; p = p.parent) {
+    if (callOf(p)?.name == 'GoRoute') return true;
+  }
+  return false;
+}
+
+/// The expression of the named argument [name] of [args], or null.
+AstNode? namedArgument(ArgumentList args, String name) {
+  for (final a in args.arguments) {
+    if (a is NamedArgument && a.name.lexeme == name) {
+      final value = a.childEntities.last;
+      return value is AstNode ? value : null;
+    }
+  }
+  return null;
+}
+
+/// One registered route: its full path, the features its guard and its
+/// parents' guards ask (go_router runs a parent's redirect for a child), and
+/// the classes its builder constructs.
+class RouteFacts {
+  const RouteFacts(this.path, this.owners, this.screens);
+  final String path;
+  final Set<String> owners;
+  final Set<String> screens;
+}
+
+/// The features a `redirect:` refuses without: every `RouteAccess(features:
+/// [...])` in it, and every `if (!gate(f)) return ...;`. A redirect that
+/// only sends elsewhere when features are ON (`/messages` -> `/calendar`)
+/// owns nothing.
+Set<String> redirectOwners(AstNode? redirect) {
+  final out = <String>{};
+  redirect?.accept(_RedirectOwners(out));
+  return out;
+}
+
+class _RedirectOwners extends RecursiveAstVisitor<void> {
+  _RedirectOwners(this.out);
+  final Set<String> out;
+
+  void _access(AstNode node) {
+    final call = callOf(node);
+    if (call?.name != 'RouteAccess') return;
+    final features = namedArgument(call!.args, 'features');
+    if (features == null) return;
+    for (final m in _anyFeature.allMatches(features.toSource())) {
+      out.add(m.group(1)!);
+    }
+  }
+
+  @override
+  void visitMethodInvocation(MethodInvocation node) {
+    _access(node);
+    super.visitMethodInvocation(node);
+  }
+
+  @override
+  void visitInstanceCreationExpression(InstanceCreationExpression node) {
+    _access(node);
+    super.visitInstanceCreationExpression(node);
+  }
+
+  @override
+  void visitIfStatement(IfStatement node) {
+    final condition = node.expression;
+    final then = node.thenStatement;
+    final refuses =
+        then is ReturnStatement ||
+        (then is Block && then.statements.lastOrNull is ReturnStatement);
+    if (refuses &&
+        condition is PrefixExpression &&
+        condition.operator.type == TokenType.BANG) {
+      final operand = condition.operand;
+      final f = operand is MethodInvocation ? gateOf(operand) : null;
+      if (f != null) out.add(f);
+    }
+    super.visitIfStatement(node);
+  }
+}
+
+/// The classes [builder] constructs (`XScreen(...)`), by name.
+Set<String> builtClasses(AstNode? builder) {
+  final out = <String>{};
+  builder?.accept(_BuiltClasses(out));
+  return out;
+}
+
+class _BuiltClasses extends RecursiveAstVisitor<void> {
+  _BuiltClasses(this.out);
+  final Set<String> out;
+
+  void _add(AstNode node) {
+    final name = callOf(node)?.name;
+    if (name != null && RegExp('^[A-Z]').hasMatch(name)) out.add(name);
+  }
+
+  @override
+  void visitMethodInvocation(MethodInvocation node) {
+    _add(node);
+    super.visitMethodInvocation(node);
+  }
+
+  @override
+  void visitInstanceCreationExpression(InstanceCreationExpression node) {
+    _add(node);
+    super.visitInstanceCreationExpression(node);
+  }
+}
+
+/// [route] (a `GoRoute(...)` call) and its `routes:` children, flattened.
+List<RouteFacts> routeTree(
+  AstNode route,
+  String parentPath,
+  Set<String> inherited,
+) {
+  final call = callOf(route)!;
+  final pathArg = namedArgument(call.args, 'path');
+  final segment = pathArg is SimpleStringLiteral
+      ? pathArg.value
+      : '?${pathArg?.toSource()}';
+  final path = segment.startsWith('/') || parentPath.isEmpty
+      ? segment
+      : '${parentPath == '/' ? '' : parentPath}/$segment';
+  final owners = {
+    ...inherited,
+    ...redirectOwners(namedArgument(call.args, 'redirect')),
+  };
+  final out = [
+    RouteFacts(path, owners, {
+      ...builtClasses(namedArgument(call.args, 'builder')),
+      ...builtClasses(namedArgument(call.args, 'pageBuilder')),
+    }),
+  ];
+  final children = namedArgument(call.args, 'routes');
+  if (children is ListLiteral) {
+    for (final element in children.elements) {
+      if (callOf(element)?.name == 'GoRoute') {
+        out.addAll(routeTree(element, path, owners));
+      }
+    }
+  }
+  return out;
+}
+
+/// The repo-relative file an import of [from] names, or null when it is
+/// outside `lib/` (`dart:`, another package).
+String? importedFile(String from, String uri) {
+  if (uri.startsWith('package:deskilo/')) {
+    return 'lib/${uri.substring('package:deskilo/'.length)}';
+  }
+  if (uri.contains(':')) return null;
+  final parts = from.split('/')..removeLast();
+  for (final seg in uri.split('/')) {
+    if (seg == '..') {
+      parts.removeLast();
+    } else if (seg != '.') {
+      parts.add(seg);
+    }
+  }
+  return parts.join('/');
+}
+
+/// `owner>gate`: every client surface of `gate` sits inside screens a guard
+/// on `owner` owns, and neither is in the other's `requires` chain. The
+/// hypothesis is that `gate` needs `owner` and should say so (`calendarHub`
+/// inside the calendar tab was one, #2656), never a verdict. A gate with
+/// one surface (`isSurface`) outside such screens (the shell, a route file,
+/// `core/`, a screen whose route no feature guards, a `PageSpec` page) is
+/// not a candidate.
+///
+/// The map from screen to feature is derived, not listed: every `GoRoute`
+/// of `lib/` with its full path, the features its guard and its parents'
+/// guards ask (`redirectOwners`), and the classes its builder constructs;
+/// a guard counts when a `RouteRule` classes the path `workspace`. From
+/// each screen's file the walk follows `part`s, and `import`s into files
+/// under `/presentation/`. An import of a file holding another route's page
+/// is followed only when it uses something else that file declares (a sheet,
+/// a widget: `showConversationThread` beside `ConversationThreadPage`); one
+/// that only names the page is a way there, judged by that page's route
+/// (`openMemberPage` building `MemberPage`). A file reached by several
+/// routes is owned only by what all their guards share. Of two owners where
+/// one requires the other, only the nearer is named.
+List<String> screenGates(AuditRegistry registry, List<FileGates> files) =>
+    screenOwnership(registry, files).candidates;
+
+/// What each registered route's guard asks, `workspace` routes only, the
+/// features sorted (an empty list: no feature owns the route).
+Map<String, List<String>> routeOwners(
+  AuditRegistry registry,
+  List<FileGates> files,
+) {
+  final rules = {for (final f in files) ...f.routeRules};
+  final out = <String, Set<String>>{};
+  for (final f in files) {
+    for (final r in f.routes) {
+      if (rules[r.path] != 'workspace') continue;
+      out.putIfAbsent(r.path, () => {}).addAll(r.owners);
+    }
+  }
+  return {
+    for (final path in out.keys.toList()..sort())
+      path: out[path]!.toList()..sort(),
+  };
+}
+
+/// Whether a gate in [path] is a place a person meets the feature. The
+/// layers that decide or fetch (`domain/`, `application/`, `data/`,
+/// `providers/`) gate for a screen that is a surface itself; a catalogue in
+/// `domain/` that lists features per setup level shows nothing.
+bool isSurface(String path) => !RegExp(
+  r'/(domain|application|data|providers)/',
+).hasMatch(path);
+
+/// The owner sets per presentation file and the candidates built on them.
+({Map<String, Set<String>> owners, List<String> candidates}) screenOwnership(
+  AuditRegistry registry,
+  List<FileGates> files,
+) {
+  final byPath = {for (final f in files) f.path: f};
+  final declaredIn = <String, Set<String>>{};
+  final rules = <String, String>{};
+  final routes = <RouteFacts>[];
+  for (final f in files) {
+    for (final c in f.classes) {
+      declaredIn.putIfAbsent(c, () => {}).add(f.path);
+    }
+    rules.addAll(f.routeRules);
+    routes.addAll(f.routes);
+  }
+  final screens = {for (final r in routes) ...r.screens};
+  // A library with its parts: what it declares, and its route screens.
+  Iterable<String> library(String path) => [
+    path,
+    for (final uri in byPath[path]?.parts ?? const <String>[])
+      ?importedFile(path, uri),
+  ];
+  Set<String> offered(String path) => {
+    for (final p in library(path)) ...?byPath[p]?.declared,
+  }.difference(screens);
+  bool holdsScreen(String path) => library(
+    path,
+  ).any((p) => byPath[p]?.classes.any(screens.contains) ?? false);
+  // file -> what every route reaching it asks (intersection).
+  final owned = <String, Set<String>>{};
+  for (final route in routes) {
+    final owners = rules[route.path] == 'workspace'
+        ? route.owners.where(registry.requires.containsKey).toSet()
+        : <String>{};
+    final start = {for (final s in route.screens) ...?declaredIn[s]};
+    final seen = <String>{};
+    final queue = [...start];
+    while (queue.isNotEmpty) {
+      final at = queue.removeLast();
+      if (!seen.add(at)) continue;
+      final file = byPath[at];
+      if (file == null) continue;
+      for (final uri in file.parts) {
+        final next = importedFile(at, uri);
+        if (next != null) queue.add(next);
+      }
+      for (final uri in file.imports) {
+        final next = importedFile(at, uri);
+        if (next == null || seen.contains(next)) continue;
+        if (!next.contains('/presentation/')) continue;
+        // An import that only names another route's page is a way there,
+        // judged by that route; one that uses a sheet or a widget the
+        // file also holds embeds it.
+        if (holdsScreen(next) &&
+            offered(next).intersection(file.referenced).isEmpty) {
+          continue;
+        }
+        queue.add(next);
+      }
+    }
+    for (final at in seen) {
+      final held = owned[at];
+      owned[at] = held == null ? {...owners} : held.intersection(owners);
+    }
+  }
+  final consumers = <String, Set<String>>{};
+  for (final f in files) {
+    if (!isSurface(f.path)) continue;
+    for (final g in f.gates) {
+      consumers.putIfAbsent(g, () => {}).add(f.path);
+    }
+  }
+  final out = <String>[];
+  for (final gate in consumers.keys.toList()..sort()) {
+    if (!registry.requires.containsKey(gate)) continue;
+    Set<String>? shared;
+    for (final file in consumers[gate]!) {
+      final here = owned[file] ?? const <String>{};
+      shared = shared == null ? {...here} : shared.intersection(here);
+    }
+    final owners = (shared ?? const <String>{})
+        .where((o) => o != gate && !registry.related(o, gate))
+        .toSet();
+    for (final o in owners.toList()..sort()) {
+      // A nearer owner already requires this one: name the nearer.
+      if (owners.any((n) => n != o && registry.chain(n).contains(o))) {
+        continue;
+      }
+      out.add('$o>$gate');
+    }
+  }
+  return (owners: owned, candidates: out..sort());
+}
+
 /// The keys a SQL text gates on.
 final RegExp _serverGate = RegExp(
   r"feature_effective(?:_in)?\s*\([^;]*?,\s*'([A-Za-z0-9_]+)'\s*\)",
@@ -310,6 +746,8 @@ class AuditReport {
     required this.deadFlags,
     required this.unregisteredServerKeys,
     required this.doubleGates,
+    required this.screenGates,
+    required this.routeOwners,
     required this.serverOnlyFlags,
     required this.platformDefaultOn,
     required this.singleCapabilitySubprocesses,
@@ -321,6 +759,8 @@ class AuditReport {
   final List<String> deadFlags;
   final List<String> unregisteredServerKeys;
   final List<String> doubleGates;
+  final List<String> screenGates;
+  final Map<String, List<String>> routeOwners;
   final List<String> serverOnlyFlags;
   final List<String> platformDefaultOn;
   final List<String> singleCapabilitySubprocesses;
@@ -330,6 +770,7 @@ class AuditReport {
   Map<String, List<String>> get findings => {
     'deadFlags': deadFlags,
     'doubleGates': doubleGates,
+    'screenGates': screenGates,
     'unregisteredServerKeys': unregisteredServerKeys,
   };
 
@@ -345,6 +786,7 @@ class AuditReport {
     },
     'findings': findings,
     'information': {
+      'routeOwners': routeOwners,
       'serverOnlyFlags': serverOnlyFlags,
       'platformDefaultOn': platformDefaultOn,
       'singleCapabilitySubprocesses': singleCapabilitySubprocesses,
@@ -397,6 +839,8 @@ AuditReport audit({
     ),
     unregisteredServerKeys: sorted(serverKeys.where((k) => !keys.contains(k))),
     doubleGates: sorted(pairs),
+    screenGates: screenGates(registry, files),
+    routeOwners: routeOwners(registry, files),
     serverOnlyFlags: sorted(
       keys.where((k) => !consumers.containsKey(k) && serverKeys.contains(k)),
     ),
@@ -549,6 +993,17 @@ String summary(AuditReport r) {
   list('Dead flags', r.deadFlags);
   list('Server gates on unregistered keys', r.unregisteredServerKeys);
   list('Nested double gates (candidates)', r.doubleGates);
+  list(
+    'Gates inside screens another feature owns (candidates)',
+    r.screenGates,
+  );
+  b
+    ..writeln(
+      'Workspace routes: ${r.routeOwners.length}, '
+      '${r.routeOwners.values.where((o) => o.isEmpty).length} owned by no '
+      'feature (information, see --json)',
+    )
+    ..writeln();
   list('Gated by the server only', r.serverOnlyFlags);
   b
     ..writeln(

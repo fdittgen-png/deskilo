@@ -4,14 +4,15 @@
 // the findings may only leave.
 //
 // `tool/feature_audit.dart` finds the dead flags, the server gates on keys
-// the registry does not have, and the nested double gates (a hypothesis that
-// one feature should `requires` the other, never a verdict). Those findings
-// are pinned in docs/design/FEATURE_AUDIT_BASELINE.json, each with a reviewed
-// reason: a NEW finding fails here until it is fixed or reviewed, and a
-// finding that is gone fails until its line is deleted, so the baseline
+// the registry does not have, the nested double gates and the gates whose
+// every surface sits inside screens another feature owns (both a hypothesis
+// that one feature should `requires` the other, never a verdict). Those
+// findings are pinned in docs/design/FEATURE_AUDIT_BASELINE.json, each with a
+// reviewed reason: a NEW finding fails here until it is fixed or reviewed,
+// and a finding that is gone fails until its line is deleted, so the baseline
 // equals the tool's output at every commit.
 //
-// The first group proves each finding type on synthetic input, so the gate
+// The first groups prove each finding type on synthetic input, so the gate
 // cannot rot into a presence check.
 import 'dart:convert';
 import 'dart:io';
@@ -51,7 +52,85 @@ AuditReport _synthetic() {
   );
 }
 
+/// The files of [fixture], split at its `// ==> path` lines.
+List<FileGates> _sources(String fixture) {
+  final text = File('$_fixtures/$fixture').readAsStringSync();
+  final parts = text.split(RegExp(r'^// ==> ', multiLine: true)).skip(1);
+  return [
+    for (final part in parts)
+      gatesOfSource(
+        part.substring(0, part.indexOf('\n')).trim(),
+        part.substring(part.indexOf('\n') + 1),
+      ),
+  ];
+}
+
+const _screenRegistry = AuditRegistry({
+  'host': null,
+  'child': 'host',
+  'nav': null,
+  'guest': null,
+  'shared': null,
+  'sheetOnly': null,
+  'inPart': null,
+  'door': null,
+  'knob': null,
+  'acct': null,
+  'acctTip': null,
+});
+
 void main() {
+  group('a gate inside screens another feature owns (screenGates)', () {
+    late List<FileGates> files;
+    setUpAll(() => files = _sources('screen_owners.dart.fixture'));
+
+    test('the fixture parses whole', () {
+      expect([for (final f in files) ...f.errors], isEmpty);
+    });
+
+    test('the route map comes from the guards, parents included, and only '
+        'workspace routes count', () {
+      expect(routeOwners(_screenRegistry, files), {
+        '/door': ['door'],
+        '/open': <String>[],
+        '/owned': ['host'],
+        '/owned/detail': ['host'],
+        '/thread': ['host'],
+      });
+    });
+
+    test('a gate whose every surface sits in screens of another feature '
+        'is a candidate', () {
+      expect(screenGates(_screenRegistry, files), [
+        'door>knob', // an `if (!featureEnabled(door)) return` redirect
+        'host>guest', // imported presentation code, a domain list aside
+        'host>inPart', // a child route in a part file inherits the guard
+        'host>nav', // an import that only names the page is a way there
+      ]);
+    });
+
+    test('a surface outside, a requires chain, a sheet used elsewhere and '
+        'an account route are not candidates', () {
+      final found = screenGates(_screenRegistry, files).join(' ');
+      for (final quiet in ['shared', 'child', 'sheetOnly', 'acctTip']) {
+        expect(found, isNot(contains('>$quiet')), reason: quiet);
+      }
+    });
+
+    test('the report carries them as a ratcheted finding', () {
+      final report = audit(
+        registry: _screenRegistry,
+        files: files,
+        serverByFunction: const {},
+        serverOutside: const {},
+      );
+      expect(
+        report.findings['screenGates'],
+        screenGates(_screenRegistry, files),
+      );
+    });
+  });
+
   group('the tool finds each finding type', () {
     late AuditReport report;
     setUpAll(() => report = _synthetic());
@@ -113,6 +192,24 @@ void main() {
         'deadFlags': [...report.deadFlags, 'tempDeadFlag'],
       }, baseline);
       expect(drift.single, contains('deadFlags: NEW tempDeadFlag'));
+    });
+
+    test('a new screen gate fails the gate, and one that is gone must '
+        'leave the baseline', () {
+      final added = baselineDrift({
+        ...report.findings,
+        'screenGates': [...report.screenGates, 'memberPage>tempScreenGate'],
+      }, baseline);
+      expect(
+        added.single,
+        contains('screenGates: NEW memberPage>tempScreenGate'),
+      );
+      final gone = baselineDrift({
+        ...report.findings,
+        'screenGates': const <String>[],
+      }, baseline);
+      expect(gone, hasLength(baseline['screenGates']!.length));
+      expect(gone.join('\n'), contains('GONE memberPage>vatCounterparty'));
     });
 
     test('a finding that is gone must leave the baseline', () {

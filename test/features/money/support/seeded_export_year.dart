@@ -5,9 +5,17 @@
 // (30.00), INV-2 part-paid, INV-3 written off, a credit note on INV-2, a
 // 2024 expense credit and a 2025 confirmed repartition (both outside the
 // export year).
+//
+// The acceptance year adds the cases the goldens need (seeded_year_goldens_
+// test.dart): INV-4 (20 %) and INV-5 (5.5 %) regrouped by the settlement S-1
+// and paid through it, CN-1 refunded to the member, and B-1 a supplier bill
+// with recoverable input VAT, paid. The members above are unchanged, so the
+// hand-worked tests over them keep their figures.
+import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 
 const seededCompany = InvoiceParty(
@@ -200,4 +208,134 @@ class SeededExportYear {
       createdAt: DateTime(2025, 3, 3),
     ),
   ];
+
+  static final inv4 = _inv(
+    'INV-4',
+    DateTime(2026, 7, 6),
+    const [
+      InvoiceLine(
+        kind: 'subscription',
+        label: '100',
+        amountCents: 12000,
+        vatPercent: 20,
+      ),
+    ],
+    12000,
+    [_vt(20, 12000, 10000, 2000)],
+  ).copyWith(settledByInvoiceId: 'id-S-1');
+  static final inv5 = _inv(
+    'INV-5',
+    DateTime(2026, 7, 13),
+    const [
+      InvoiceLine(
+        kind: 'accessories',
+        label: 'x',
+        amountCents: 4220,
+        vatPercent: 5.5,
+      ),
+    ],
+    4220,
+    [_vt(5.5, 4220, 4000, 220)],
+  ).copyWith(settledByInvoiceId: 'id-S-1');
+
+  /// The settlement regrouping INV-4 and INV-5 (#831): a management
+  /// document, transparent to every export; its payment is allocated to
+  /// its sources.
+  static final settlement = _inv(
+    'S-1',
+    DateTime(2026, 8, 3),
+    [
+      for (final source in [inv4, inv5])
+        for (final line in source.lines)
+          line.copyWith(sourceNumber: source.number),
+    ],
+    16220,
+    [_vt(20, 12000, 10000, 2000), _vt(5.5, 4220, 4000, 220)],
+  ).copyWith(
+    kind: InvoiceKind.settlement,
+    settles: [
+      for (final source in [inv4, inv5])
+        SettledSource(
+          invoiceId: source.id,
+          number: source.number,
+          totalCents: source.totalCents,
+          lines: source.lines,
+        ),
+    ],
+  );
+
+  /// The acceptance year's documents, in issue order.
+  static List<Invoice> get acceptanceInvoices => [
+    ...invoices,
+    inv4,
+    inv5,
+    settlement,
+  ];
+
+  /// [matches], plus CN-1 refunded on 10 June (0436: `refunded`, the
+  /// positive amount paid out) and S-1 paid in full on 10 August.
+  static Map<String, InvoiceMatch> get acceptanceMatches => {
+    ...matches,
+    creditNote.id: InvoiceMatch(
+      invoiceId: creditNote.id,
+      paidCents: 5000,
+      resolution: 'refunded',
+      matchedAt: DateTime(2026, 6, 10),
+    ),
+    settlement.id: InvoiceMatch(
+      invoiceId: settlement.id,
+      paidCents: 16220,
+      resolution: 'exact',
+      matchedAt: DateTime(2026, 8, 10),
+    ),
+  };
+
+  /// B-1, a supplier's bill of 120.00 (100.00 at 20 %, its 20.00 of tax
+  /// recoverable), approved on 10 March and paid on 2 April.
+  static PurchaseDetail get supplierBill => PurchaseDetail(
+    summary: PurchaseSummary(
+      id: 'B-1',
+      kind: PurchaseKind.bill,
+      state: PurchaseState.approved,
+      category: 'supplies',
+      reference: 'B-1',
+      currency: 'EUR',
+      originalDate: DateTime(2026, 3, 10),
+    ),
+    revision: 1,
+    lines: const [
+      PurchaseLine(
+        lineNo: 1,
+        description: 'Cleaning',
+        grossCents: 12000,
+        netCents: 10000,
+        taxCents: 2000,
+        taxRatePercent: 20,
+        recoverableTaxCents: 2000,
+      ),
+    ],
+    sources: const [],
+    obligations: [
+      PurchaseObligation(
+        id: 'o-B-1',
+        purchaseId: 'B-1',
+        creditorKind: CreditorKind.supplier,
+        creditorId: 'supplier-1',
+        amountCents: 12000,
+        currency: 'EUR',
+        appliedCents: 12000,
+        remainingCents: 0,
+        allocations: [
+          SettlementAllocation(
+            id: 'pay-B-1',
+            isReversal: false,
+            amountCents: 12000,
+            method: 'transfer',
+            reference: 'SEPA',
+            paidOn: DateTime(2026, 4, 2),
+          ),
+        ],
+      ),
+    ],
+  );
 }
