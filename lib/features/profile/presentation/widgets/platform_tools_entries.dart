@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/feature_sheets.dart';
 import '../../../../core/settings/settings.dart';
-import '../../../money/presentation/screens/tax_reference_screen.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/widgets/settings_editor.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -25,7 +25,11 @@ class PlatformToolsEntries extends ConsumerWidget {
             key: const ValueKey('profiles-tax-reference'),
             leading: const Icon(Icons.percent),
             title: Text(context.l10n.taxRefTitle),
-            onTap: () => showTaxReferenceScreen(context, canEdit: true),
+            onTap: () => openFeatureSheet(
+              context,
+              ref,
+              FeatureSheet.taxReferenceEditor,
+            ),
           ),
           // #2484 — the platform's default values of the settings registry.
           if (ref

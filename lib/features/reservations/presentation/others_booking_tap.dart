@@ -58,6 +58,7 @@ Future<void> _openOthersBooking(
       // #622 — admins get the message affordance ON TOP of their
       // admin actions.
       offerMessage: canMessageReserver(ref, other),
+      afterWrite: () => invalidateBookingData(ref),
     );
     return;
   }

@@ -21,7 +21,7 @@ import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/browsed_level.dart';
-import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 
 part 'day_timeline_part1.dart';
 

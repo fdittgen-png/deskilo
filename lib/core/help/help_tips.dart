@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import '../../features/workspace/domain/workspace_feature.dart';
 import '../../l10n/app_localizations.dart';
 
 /// Every surface that carries a contextual help hint (#606). The enum
@@ -41,8 +40,10 @@ class HelpTip {
   /// The form the tip names, as a route the router resolves.
   final String? route;
 
-  /// The workspace feature the scenario needs; null: always available.
-  final WorkspaceFeature? feature;
+  /// The key (`WorkspaceFeature.dbKey`) of the feature the scenario
+  /// needs; null: always available. A key, not the workspace's enum, so
+  /// core names no feature (#2495); a test pins each to its feature.
+  final String? feature;
 }
 
 /// Tip 1 — the surface's basic how-to sentence (#606).
@@ -150,26 +151,26 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
       HelpTip(t.tipReserveBook),
       HelpTip(t.tipReserveAhead),
       HelpTip(t.tipReserveList),
-      HelpTip(t.tipReserveRepeat, feature: WorkspaceFeature.seriesBooking),
+      HelpTip(t.tipReserveRepeat, feature: 'seriesBooking'),
       HelpTip(t.tipReserveCheckIn),
-      HelpTip(t.tipReserveScan, feature: WorkspaceFeature.spaceQrCodes),
+      HelpTip(t.tipReserveScan, feature: 'spaceQrCodes'),
       HelpTip(t.tipReserveChange),
-      HelpTip(t.tipReserveFavourite, feature: WorkspaceFeature.placeFeedback),
-      HelpTip(t.tipReserveLevel, feature: WorkspaceFeature.levelBooking),
+      HelpTip(t.tipReserveFavourite, feature: 'placeFeedback'),
+      HelpTip(t.tipReserveLevel, feature: 'levelBooking'),
       HelpTip(t.tipReserveDefault, route: '/settings'),
     ],
     HelpHintId.calendar => [
-      HelpTip(t.tipCalendarViews, feature: WorkspaceFeature.calendarViews),
+      HelpTip(t.tipCalendarViews, feature: 'calendarViews'),
       HelpTip(t.tipCalendarKinds),
       HelpTip(t.tipCalendarMine),
-      HelpTip(t.tipCalendarAlerts, feature: WorkspaceFeature.eventsTab),
+      HelpTip(t.tipCalendarAlerts, feature: 'eventsTab'),
       HelpTip(t.tipCalendarMoney, route: '/money'),
     ],
     HelpHintId.events => [
       HelpTip(t.tipEventsDecide),
       HelpTip(t.tipEventsTopic),
       HelpTip(t.tipEventsUnread),
-      HelpTip(t.tipEventsGroup, feature: WorkspaceFeature.notificationGrouping),
+      HelpTip(t.tipEventsGroup, feature: 'notificationGrouping'),
       HelpTip(t.tipEventsMessages, route: '/me?tab=messages'),
     ],
     HelpHintId.editor => [
@@ -177,31 +178,31 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
       HelpTip(t.tipEditorDraw),
       HelpTip(t.tipEditorSeats),
       HelpTip(t.tipEditorSeat),
-      HelpTip(t.tipEditorNfc, feature: WorkspaceFeature.nfcSeatTags),
+      HelpTip(t.tipEditorNfc, feature: 'nfcSeatTags'),
       HelpTip(t.tipEditorBackground),
       HelpTip(
         t.tipEditorAccessories,
         route: '/accessories',
-        feature: WorkspaceFeature.accessorySupplements,
+        feature: 'accessorySupplements',
       ),
       HelpTip(
         t.tipEditorQr,
         route: '/reports?section=documents',
-        feature: WorkspaceFeature.spaceQrCodes,
+        feature: 'spaceQrCodes',
       ),
     ],
     HelpHintId.availability => [
       HelpTip(t.tipAvailabilityDays),
       HelpTip(t.tipAvailabilityGrid),
-      HelpTip(t.tipAvailabilityHours, feature: WorkspaceFeature.workingHours),
+      HelpTip(t.tipAvailabilityHours, feature: 'workingHours'),
       HelpTip(t.tipAvailabilityClosure),
       HelpTip(
         t.tipAvailabilityHolidays,
-        feature: WorkspaceFeature.publicHolidays,
+        feature: 'publicHolidays',
       ),
       HelpTip(
         t.tipAvailabilityPolicies,
-        feature: WorkspaceFeature.bookingPolicies,
+        feature: 'bookingPolicies',
       ),
     ],
     HelpHintId.features => [
@@ -215,7 +216,7 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
       HelpTip(
         t.tipMembersManaged,
         route: '/members/managed',
-        feature: WorkspaceFeature.managedProfiles,
+        feature: 'managedProfiles',
       ),
       HelpTip(t.tipMembersPlan),
       HelpTip(t.tipMembersApprove),
@@ -223,17 +224,17 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
       HelpTip(
         t.tipMembersRole,
         route: '/roles',
-        feature: WorkspaceFeature.roleManagement,
+        feature: 'roleManagement',
       ),
       HelpTip(t.tipMembersPrices, route: '/billing'),
       HelpTip(
         t.tipMembersNotify,
-        feature: WorkspaceFeature.memberNotifications,
+        feature: 'memberNotifications',
       ),
     ],
     HelpHintId.money => [
       HelpTip(t.tipMoneyMonth),
-      HelpTip(t.tipMoneyPdf, feature: WorkspaceFeature.pdfExport),
+      HelpTip(t.tipMoneyPdf, feature: 'pdfExport'),
       HelpTip(t.tipMoneyRecord),
       HelpTip(t.tipMoneyExpense),
       HelpTip(t.tipMoneyDays),
@@ -246,19 +247,19 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
     HelpHintId.moneyPayments => [
       HelpTip(
         t.tipMoneyPaymentsOnline,
-        feature: WorkspaceFeature.onlinePayments,
+        feature: 'onlinePayments',
       ),
       HelpTip(t.tipMoneyPaymentsTransfer),
       HelpTip(t.tipMoneyPaymentsRecord),
       HelpTip(t.tipMoneyPaymentsExpense),
       HelpTip(
         t.tipMoneyPaymentsScheduled,
-        feature: WorkspaceFeature.scheduledExpenses,
+        feature: 'scheduledExpenses',
       ),
       HelpTip(t.tipMoneyPaymentsDays),
       HelpTip(
         t.tipMoneyPaymentsConsumption,
-        feature: WorkspaceFeature.services,
+        feature: 'services',
       ),
       HelpTip(t.tipMoneyPaymentsAcross, route: '/account-activity'),
     ],
@@ -270,33 +271,33 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
     HelpHintId.moneyDocuments => [
       HelpTip(
         t.tipMoneyDocumentsConditions,
-        feature: WorkspaceFeature.memberReports,
+        feature: 'memberReports',
       ),
       HelpTip(
         t.tipMoneyDocumentsPayments,
-        feature: WorkspaceFeature.memberReports,
+        feature: 'memberReports',
       ),
-      HelpTip(t.tipMoneyDocumentsUsage, feature: WorkspaceFeature.usageReport),
+      HelpTip(t.tipMoneyDocumentsUsage, feature: 'usageReport'),
       HelpTip(
         t.tipMoneyDocumentsStatement,
-        feature: WorkspaceFeature.pdfExport,
+        feature: 'pdfExport',
       ),
       HelpTip(
         t.tipMoneyDocumentsLibrary,
         route: '/documents',
-        feature: WorkspaceFeature.documents,
+        feature: 'documents',
       ),
     ],
     HelpHintId.validation => [
       HelpTip(t.tipValidationDefault),
       HelpTip(t.tipValidationOverride),
       HelpTip(t.tipValidationCount),
-      HelpTip(t.tipValidationChain, feature: WorkspaceFeature.validationChain),
-      HelpTip(t.tipValidationWho, feature: WorkspaceFeature.validationScopes),
+      HelpTip(t.tipValidationChain, feature: 'validationChain'),
+      HelpTip(t.tipValidationWho, feature: 'validationScopes'),
       HelpTip(
         t.tipValidationRoles,
         route: '/roles',
-        feature: WorkspaceFeature.roleManagement,
+        feature: 'roleManagement',
       ),
     ],
     HelpHintId.workspaceSettings => [
@@ -308,7 +309,7 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
       HelpTip(
         t.tipWorkspaceSettingsColours,
         route: '/settings/colours',
-        feature: WorkspaceFeature.workspaceBranding,
+        feature: 'workspaceBranding',
       ),
       HelpTip(
         t.tipWorkspaceSettingsDocuments,
@@ -318,21 +319,21 @@ List<HelpTip> helpHintTips(AppLocalizations l10n, HelpHintId id) {
       HelpTip(t.tipWorkspaceSettingsSave),
     ],
     HelpHintId.badges => [
-      HelpTip(t.tipBadgesQr, feature: WorkspaceFeature.qrBadges),
-      HelpTip(t.tipBadgesNfc, feature: WorkspaceFeature.nfcBadges),
+      HelpTip(t.tipBadgesQr, feature: 'qrBadges'),
+      HelpTip(t.tipBadgesNfc, feature: 'nfcBadges'),
       HelpTip(t.tipBadgesLost),
       HelpTip(t.tipBadgesSignIn),
     ],
     HelpHintId.privacy => [
       HelpTip(t.tipPrivacyWho),
-      HelpTip(t.tipPrivacyExport, feature: WorkspaceFeature.memberDataExport),
-      HelpTip(t.tipPrivacyErase, feature: WorkspaceFeature.memberDataExport),
+      HelpTip(t.tipPrivacyExport, feature: 'memberDataExport'),
+      HelpTip(t.tipPrivacyErase, feature: 'memberDataExport'),
       HelpTip(t.tipPrivacyConsent, route: '/consent?review=1'),
     ],
     HelpHintId.messages => [
       HelpTip(t.tipMessagesWrite, route: '/me?tab=messages'),
       HelpTip(t.tipMessagesUnread, route: '/me?tab=messages'),
-      HelpTip(t.tipMessagesAlerts, feature: WorkspaceFeature.eventsTab),
+      HelpTip(t.tipMessagesAlerts, feature: 'eventsTab'),
     ],
   };
 }

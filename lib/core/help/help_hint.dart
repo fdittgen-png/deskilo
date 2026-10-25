@@ -108,7 +108,7 @@ class _HelpHintState extends ConsumerState<HelpHint> {
     // #2313 — a scenario of a switched-off feature is not offered.
     final tips = [
       for (final tip in HelpHint.tips(l10n, id))
-        if (tip.feature == null || featureOn(features, tip.feature!.dbKey, byDefault: true)) tip,
+        if (tip.feature == null || featureOn(features, tip.feature!, byDefault: true)) tip,
     ];
     if (tips.isEmpty) return const SizedBox.shrink();
     if (_page >= tips.length) _page = 0;

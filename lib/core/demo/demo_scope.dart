@@ -69,6 +69,7 @@ import 'package:deskilo/features/workspace/providers/settings_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../../app/feature_sheets_wiring.dart';
 import '../../app/realtime_invalidations.dart';
 import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/auth/providers/auth_providers.dart';
@@ -290,12 +291,11 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // from `Supabase.instance.client`; inside this scope none of them
       // is, which is what makes an external effect impossible rather
       // than refused.
-      authRepositoryProvider.overrideWithValue(fixture.auth), sessionSourceFromAuth, captureReaderNameFromProfile, enabledFeatureKeysFromWorkspace, ...realtimeWiringFromApp, // #2495
+      authRepositoryProvider.overrideWithValue(fixture.auth), sessionSourceFromAuth, captureReaderNameFromProfile, enabledFeatureKeysFromWorkspace, ...realtimeWiringFromApp, ...featureSheetsFromApp, // #2495
       workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
       oauthConsentRepositoryProvider.overrideWithValue(FakeOAuthConsentRepository()),
       // #1647 — Demo binds no identity: the visitor is not a Deskilo user.
-      identityBindingRepositoryProvider
-          .overrideWithValue(FakeIdentityBindingRepository()),
+      identityBindingRepositoryProvider.overrideWithValue(FakeIdentityBindingRepository()),
       // #1619 — Demo has no assistant, so nothing to confirm.
       actionConfirmationRepositoryProvider
           .overrideWithValue(FakeActionConfirmationRepository()),

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/validation_policy.dart';
 import '../../domain/workspace_event.dart';
 import '../../providers/event_providers.dart';

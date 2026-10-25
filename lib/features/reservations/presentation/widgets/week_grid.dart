@@ -21,10 +21,10 @@ import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/half_slot_occupancy.dart';
 import '../../domain/reservation.dart';
 import '../../providers/browsed_level.dart';
-import '../../providers/reservation_providers.dart';
 import 'booking_range_text.dart';
 
 part 'week_grid_part1.dart';

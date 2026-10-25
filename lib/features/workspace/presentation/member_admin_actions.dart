@@ -11,7 +11,6 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../events/providers/event_providers.dart';
-import '../../members/providers/directory_providers.dart';
 import '../../money/domain/report_data_letters.dart';
 import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';

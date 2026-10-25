@@ -9,7 +9,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/debouncer.dart';
 import '../../../../core/ui/labeled_rows.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member.dart';
 import '../../domain/member_note.dart';

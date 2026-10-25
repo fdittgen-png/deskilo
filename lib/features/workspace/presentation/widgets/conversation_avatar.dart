@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_radius.dart';
 
-import '../../../members/providers/directory_providers.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../providers/workspace_providers.dart';
 

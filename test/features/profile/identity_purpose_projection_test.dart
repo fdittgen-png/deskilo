@@ -16,7 +16,6 @@
 // each field only from the group its purpose names.
 import 'dart:convert';
 
-import 'package:deskilo/features/members/providers/directory_providers.dart';
 import 'package:deskilo/features/profile/data/supabase_profile_repository.dart';
 import 'package:deskilo/features/profile/domain/profile_projection.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';

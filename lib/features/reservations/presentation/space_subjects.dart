@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../providers/reservation_providers.dart';
 
 /// Who a WHOLE SPACE may be reserved for (#687), in one place.
 ///

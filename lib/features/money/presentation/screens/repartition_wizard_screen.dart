@@ -18,7 +18,6 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/book_repartition.dart';

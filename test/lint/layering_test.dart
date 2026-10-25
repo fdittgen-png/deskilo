@@ -57,22 +57,20 @@ import 'lint_sources.dart';
 const Set<String> _knownPairs = {
   // #1865 — the task recorder: the help screen offers "Record this
   // task"; the Reserve hub, the booking sheet flow and the reservation
-  // sheet call the recorder's seam; the booking adapter reads the
-  // booking command's outcome type; the recorder reads the workspace's
+  // sheet call the recorder's seam, and the booking feature maps its own
+  // outcome to the recorder's (#2495); the recorder reads the workspace's
   // flag and active workspace for its scope.
   'reservations -> task_recorder',
-  'task_recorder -> reservations',
   'task_recorder -> workspace',
   // #1884 — the feature switch calls the recorder's seam.
   'workspace -> task_recorder',
   // #2142 — Me → Account offers "Record a task" (the recorder's route).
   'me -> task_recorder',
   // #1881 B — the calendar and its decisions call the recorder's seam
-  // and its calendar adapter; the recorder names a calendar kind the way
-  // the calendar does.
+  // and its calendar adapter; the recorder names a calendar kind through
+  // core/calendar (#2495), as the calendar does.
   'calendar -> task_recorder',
   'events -> task_recorder',
-  'task_recorder -> calendar',
   // #1884 B — the recorder names an event type's validation rule the
   // way the validation screen does.
   'task_recorder -> events',
@@ -108,7 +106,6 @@ const Set<String> _knownPairs = {
   // #718 — the calendar hub opens invoices and the Money month from a
   // dated row: money's own sheet and its focus controller, not a copy.
   'calendar -> money',
-  'money -> calendar',
   'calendar -> events',
   'calendar -> plan',
   'calendar -> reservations',
@@ -127,10 +124,8 @@ const Set<String> _knownPairs = {
   // data", not a second.
   'profile -> calendar',
   'events -> plan',
-  'events -> reservations',
   'events -> workspace',
   'kiosk -> events',
-  'kiosk -> members',
   'kiosk -> plan',
   'kiosk -> reservations',
   'kiosk -> workspace',
@@ -148,33 +143,22 @@ const Set<String> _knownPairs = {
   'members -> reservations',
   'members -> workspace',
   'money -> events',
-  'money -> members',
   // #496 — the agreement/reminder letters resolve the reader's language
   // from their profile.
   'money -> profile',
-  'workspace -> members',
   // #494 — the financial agreement prices whole-space bookings and
   // accessory supplements straight from the plan catalog.
   'money -> plan',
-  'money -> reservations',
   'money -> workspace',
-  'plan -> events',
-  'plan -> members',
   'plan -> profile',
   'plan -> reservations',
   'plan -> workspace',
   'profile -> auth',
-  'profile -> members',
-  // #2477 — the platform owner's tax reference editor opens from the
-  // platform section of the profile list.
-  'profile -> money',
   // #586 — Settings surfaces the member's default reservation period.
   'profile -> reservations',
   'profile -> workspace',
   'reservations -> calendar',
   'reservations -> events',
-  'reservations -> members',
-  'reservations -> money',
   // #537 (2026-08-11): accessory supplements are PRICED — the plan's
   // accessories screen names the workspace default VAT rate on its
   // rows, via money's vat_price_label + vatRatesProvider.
