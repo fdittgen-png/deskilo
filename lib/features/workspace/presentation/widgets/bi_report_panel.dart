@@ -203,14 +203,13 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
                   tooltip: l10n.biReportAddCard,
                   onSelected: (id) => _change([
                     ..._visuals,
-                    BiReportVisual(
+                    BiReportVisual.kpi(
                       id: biNextVisualId(
                         _stored.pages
                             .expand((p) => p.visuals)
                             .map((x) => x.id)
                             .followedBy(_visuals.map((x) => x.id)),
                       ),
-                      type: BiVisualType.kpi,
                       metricId: id,
                       layout: BiVisualLayout(order: _visuals.length),
                     ),

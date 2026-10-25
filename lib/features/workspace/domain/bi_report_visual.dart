@@ -9,6 +9,7 @@
 library;
 
 import '../../../core/data/json_reader.dart';
+import 'kpi_contract.dart';
 
 /// The visual kinds a report may hold.
 enum BiVisualType {
@@ -135,6 +136,20 @@ class BiReportVisual {
     this.drill,
     this.text,
   });
+
+  /// A figure card of [metricId], bound to the version of the metric this
+  /// client reads, so a later version is recognised as another figure.
+  factory BiReportVisual.kpi({
+    required String id,
+    required String metricId,
+    required BiVisualLayout layout,
+  }) => BiReportVisual(
+    id: id,
+    type: BiVisualType.kpi,
+    metricId: metricId,
+    metricVersion: kpiDefinitionOf(metricId)?.version ?? 1,
+    layout: layout,
+  );
 
   final String id;
   final BiVisualType type;

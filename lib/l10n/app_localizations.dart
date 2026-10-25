@@ -2959,6 +2959,12 @@ abstract class AppLocalizations {
   /// **'No grouping'**
   String get biGroupNone;
 
+  /// #2578 a batched figure answered for another version, unit, date basis or coverage of its metric
+  ///
+  /// In en, this message translates to:
+  /// **'The server now defines this figure differently from what this version of the app knows: update the app to see it.'**
+  String get biIncompatible;
+
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
@@ -3360,6 +3366,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This analysis could not be computed.'**
   String get biUnavailable;
+
+  /// #2578 saved-view cards saved for another metric version
+  ///
+  /// In en, this message translates to:
+  /// **'{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.'**
+  String biViewCardsIncompatible(String count);
 
   /// #1923 B Web-BI toolbar and module section
   ///

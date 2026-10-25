@@ -1820,8 +1820,8 @@ routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | d
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
 routine public.bi_cost_allocation_rules_guard() -> trigger | function | invoker | volatile | exec:service_role | body:1accf0f116ad
-routine public.bi_definition_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:eb7977fea8d1
-routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e9fae509a6c
+routine public.bi_definition_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:432c0d6c93d7
+routine public.bi_query_batch_v1(p_workspace_id uuid, p_requests jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:83b19130b4de
 routine public.bi_report_filters_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:ce62df941ea3
 routine public.bi_report_valid(p jsonb) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:2bfaeb6fdbe7
 routine public.bi_view_delete(p_workspace_id uuid, p_id uuid, p_expected_revision integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:7546fa7d352c
@@ -2085,7 +2085,7 @@ routine public.kpi_overdue_receivables(p_workspace_id uuid, p_from text, p_to te
 routine public.kpi_overview_scope(p_workspace_id uuid, p_kpi text, p_from text, p_to text) -> jsonb | function | definer | stable | exec:service_role | body:f681b6e08334
 routine public.kpi_purchases_summary(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:64d46e663c59
 routine public.kpi_readable(p_workspace_id uuid, p_kpi text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f8729471516e
-routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:33b863064dad
+routine public.kpi_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:b8ff3c380a40
 routine public.kpi_resource_counts(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:cc790ee3f32a
 routine public.kpi_seat_capacity(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_level_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d509da87d1b8
 routine public.lease_actor(p_workspace_id uuid, p_write boolean) -> uuid | function | definer | stable | exec:service_role | body:60a893c64c97

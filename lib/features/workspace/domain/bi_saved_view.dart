@@ -12,6 +12,7 @@ library;
 
 import 'bi_query.dart';
 import 'bi_report_definition.dart';
+import 'kpi_contract.dart';
 
 enum BiViewScope {
   private,
@@ -21,21 +22,27 @@ enum BiViewScope {
       values.where((s) => s.name == v).firstOrNull;
 }
 
-/// The stored definition: `{v: 1, query: {...}, cards: [...]}`, or a v2
+/// The stored definition: `{v: 1, query: {...}, cards: [...], metrics:
+/// {id: version}}`, or a v2
 /// report (#2579, [report]) whose period and first page are also exposed as
 /// [query] and [cards], so every place that opens a view keeps working.
 class BiViewDefinition {
   const BiViewDefinition({
     this.query = const {},
     this.cards = const [],
+    this.metricVersions = const {},
     this.report,
   });
 
-  /// A v2 report as a definition.
+  /// A v2 report as a definition: each visual names its own version.
   factory BiViewDefinition.ofReport(BiReportDefinition report) =>
       BiViewDefinition(
         query: report.period.toQuery(),
         cards: report.firstPageCards,
+        metricVersions: {
+          for (final v in report.pages.first.visuals)
+            ?v.metricId: v.metricVersion,
+        },
         report: report,
       );
 
@@ -48,9 +55,18 @@ class BiViewDefinition {
   /// Module ids, in display order; empty means every module.
   final List<String> cards;
 
+  /// The metric version each card was saved with. A card it does
+  /// not name was saved before versions were recorded, when every metric
+  /// was at version 1.
+  final Map<String, int> metricVersions;
+
+  /// The version [card] was saved with.
+  int savedVersion(String card) => metricVersions[card] ?? 1;
+
   static const version = 1;
 
-  /// The largest definition the server stores (2 KB) and reads back.
+  /// The largest definition the server stores (2 KB, the metric versions
+  /// apart) and reads back.
   static const maxBytes = 2048;
   static const maxCards = 20;
 
@@ -59,10 +75,20 @@ class BiViewDefinition {
   factory BiViewDefinition.of(BiQueryContext context) => BiViewDefinition(
     query: context.toQuery()..remove('cards'),
     cards: context.cards,
+    metricVersions: {
+      for (final c in context.cards)
+        if (kpiDefinitionOf(c) case final d?) c: d.version,
+    },
   );
 
   Map<String, Object> toJson() =>
-      report?.toJson() ?? {'v': version, 'query': query, 'cards': cards};
+      report?.toJson() ??
+      {
+        'v': version,
+        'query': query,
+        'cards': cards,
+        if (metricVersions.isNotEmpty) 'metrics': metricVersions,
+      };
 
   /// Parses a stored definition; null when it is not one this client
   /// understands (another version, a malformed shape). Untrusted input:
@@ -75,9 +101,11 @@ class BiViewDefinition {
     if (json is! Map || json['v'] != version) return null;
     final query = json['query'] ?? const <String, Object?>{};
     final cards = json['cards'] ?? const <Object?>[];
+    final versions = _versions(biReportReader(json)?.raw('metrics'));
     if (query is! Map || cards is! List || cards.length > maxCards) {
       return null;
     }
+    if (versions == null) return null;
     final q = <String, String>{};
     for (final e in query.entries) {
       if (e.key is! String || e.value is! String) return null;
@@ -88,7 +116,21 @@ class BiViewDefinition {
       if (x is! String) return null;
       c.add(x);
     }
-    return BiViewDefinition(query: q, cards: c);
+    return BiViewDefinition(query: q, cards: c, metricVersions: versions);
+  }
+
+  /// `{id: version}` as stored, or null when it is not one (untrusted).
+  static Map<String, int>? _versions(Object? raw) {
+    if (raw == null) return const {};
+    if (raw is! Map || raw.length > maxCards) return null;
+    final out = <String, int>{};
+    for (final MapEntry(:key, :value) in raw.entries) {
+      if (key is! String || value is! int || value < 1 || value > 99) {
+        return null;
+      }
+      out[key] = value;
+    }
+    return out;
   }
 }
 
@@ -156,6 +198,7 @@ class BiViewCheck {
     required this.query,
     required this.unavailableCards,
     required this.unreadable,
+    this.incompatibleCards = const [],
   });
 
   /// The parsed context with the cards that remain (in the saved
@@ -165,10 +208,19 @@ class BiViewCheck {
   /// Cards that no longer exist or that this reader may not see.
   final List<String> unavailableCards;
 
+  /// Cards saved for another version of their metric: the figure
+  /// would mean something else now, so they are left out, never shown
+  /// under the old name.
+  final List<String> incompatibleCards;
+
   /// The definition could not be read at all (version, shape).
   final bool unreadable;
 
-  bool get complete => !unreadable && query != null && unavailableCards.isEmpty;
+  bool get complete =>
+      !unreadable &&
+      query != null &&
+      unavailableCards.isEmpty &&
+      incompatibleCards.isEmpty;
 }
 
 /// Checks [definition] against the modules [visible] to this reader now.
@@ -180,9 +232,11 @@ BiViewCheck checkView(BiViewDefinition? definition, Set<String> visible) {
       unreadable: true,
     );
   }
+  bool current(String c) =>
+      definition.savedVersion(c) == (kpiDefinitionOf(c)?.version ?? 1);
   final kept = [
     for (final c in definition.cards)
-      if (visible.contains(c)) c,
+      if (visible.contains(c) && current(c)) c,
   ];
   // Every card gone is not "all cards": the view is then refused below.
   final query = definition.cards.isNotEmpty && kept.isEmpty
@@ -193,6 +247,10 @@ BiViewCheck checkView(BiViewDefinition? definition, Set<String> visible) {
     unavailableCards: [
       for (final c in definition.cards)
         if (!visible.contains(c)) c,
+    ],
+    incompatibleCards: [
+      for (final c in definition.cards)
+        if (visible.contains(c) && !current(c)) c,
     ],
     unreadable: false,
   );

@@ -360,9 +360,20 @@ void main() {
     expect(find.text('€0.00'), findsNothing);
   });
 
+  testWidgets('#2578 a figure the server defines otherwise is said, with '
+      'no retry and no amount', (tester) async {
+    final finance = await _pump(tester);
+    finance.failure = const KpiIncompatible();
+    await _open(tester, '/bi?cards=finance.invoiced');
+    expect(find.byKey(const ValueKey('bi-incompatible')), findsOneWidget);
+    expect(find.byKey(const ValueKey('bi-retry')), findsNothing);
+    expect(find.text('€0.00'), findsNothing);
+  });
+
   group('a failed read answers at once', () {
     test('a final answer is never retried', () {
       for (final e in <Object>[
+        const KpiIncompatible(),
         const KpiUnavailable('no server'),
         const KpiForbidden(),
         const FormatException('bad'),

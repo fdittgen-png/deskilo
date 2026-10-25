@@ -223,6 +223,17 @@ class _ViewsMenu {
             return;
           }
           onOpen(v, check.query!);
+          if (check.incompatibleCards.isNotEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  l10n.biViewCardsIncompatible(
+                    '${check.incompatibleCards.length}',
+                  ),
+                ),
+              ),
+            );
+          }
         },
         child: Text(label(v)),
       ),

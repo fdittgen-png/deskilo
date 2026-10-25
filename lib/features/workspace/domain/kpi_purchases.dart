@@ -29,6 +29,8 @@ const _apOutstandingKpi = KpiDefinition(
       'at the end of the last month of [from, to] on the workspace '
       'calendar: approved supplier payables dated by then, less what was '
       'paid, credited or offset by then',
+  dateBasis: KpiDateBasis.periodEnd,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'ap_outstanding_minor',
   denominator: '',
@@ -47,6 +49,8 @@ const _memberReimbursementsDueKpi = KpiDefinition(
       'at the end of the last month of [from, to]: members\' approved '
       'claims dated by then, less what was paid back or offset by then; '
       'a claim an invoice netted by then is settled',
+  dateBasis: KpiDateBasis.periodEnd,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'member_due_minor',
   denominator: '',
@@ -64,6 +68,8 @@ const _pendingReviewsKpi = KpiDefinition(
   timeBasis:
       'now: the purchase documents waiting for a decision; a past period '
       'has no recorded queue',
+  dateBasis: KpiDateBasis.currentState,
+  coverage: KpiCoverage.currentStateOnly,
   dimensions: [],
   numerator: 'pending_count',
   denominator: '',
@@ -81,6 +87,8 @@ const _recordedOutflowsKpi = KpiDefinition(
   timeBasis:
       'the day a payment out was reported paid, whole months [from, to] on '
       'the workspace calendar; reversed and prepared payments left out',
+  dateBasis: KpiDateBasis.paymentReportedPaid,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'outflows_minor',
   denominator: '',

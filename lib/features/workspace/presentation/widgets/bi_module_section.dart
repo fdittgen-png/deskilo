@@ -256,6 +256,11 @@ class BiModuleSection extends ConsumerWidget {
                   l10n.biForbidden,
                   key: const ValueKey('bi-forbidden'),
                 ),
+                // Another version of the figure: asking again changes nothing.
+                KpiIncompatible() => Text(
+                  l10n.biIncompatible,
+                  key: const ValueKey('bi-incompatible'),
+                ),
                 _ => Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [

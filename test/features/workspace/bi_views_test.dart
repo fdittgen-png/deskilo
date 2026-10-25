@@ -49,6 +49,7 @@ Future<_Kpis> _pump(
   WidgetTester tester,
   InMemoryBiViewRepository views, {
   bool manage = true,
+  Map<String, bool> flags = const {'capacityKpi': true},
 }) async {
   tester.view.physicalSize = const Size(1200, 2400);
   tester.view.devicePixelRatio = 1.0;
@@ -59,7 +60,7 @@ Future<_Kpis> _pump(
       overrides: [
         ...standardTestOverrides(
           workspace: FakeWorkspaceRepository.withWorkspace(
-            featureFlags: {'capacityKpi': true},
+            featureFlags: flags,
           ),
           clock: FixedClock(DateTime(2026, 3, 15, 12)),
           biViews: views,
@@ -281,6 +282,7 @@ void main() {
     await _go(tester, '/bi?cards=finance.retired,capacity.seat_utilisation');
     expect(find.byKey(const ValueKey('bi-cards-unavailable')), findsOneWidget);
 
+
     const unreadable = BiSavedView(
       id: 'v-old',
       scope: BiViewScope.private,
@@ -297,6 +299,54 @@ void main() {
     await _menu(tester, 'bi-views-open-v-old');
     expect(find.textContaining('cannot be opened here'), findsOneWidget);
     expect(_query(tester), {'saved': 'standard'});
+  });
+
+  testWidgets('#2578 a card saved for another version of its metric is left '
+      'out and said; with every card so, the view opens nothing', (
+    tester,
+  ) async {
+    final views = InMemoryBiViewRepository();
+    final mixed = await views.save(
+      'ws-1',
+      scope: BiViewScope.private,
+      name: 'Mixed',
+      definition: const BiViewDefinition(
+        cards: ['capacity.seat_utilisation', 'finance.invoiced'],
+        metricVersions: {'finance.invoiced': 2},
+      ),
+      expectedRevision: 0,
+    );
+    final later = await views.save(
+      'ws-1',
+      scope: BiViewScope.private,
+      name: 'Later',
+      definition: const BiViewDefinition(
+        cards: ['capacity.seat_utilisation'],
+        metricVersions: {'capacity.seat_utilisation': 2},
+      ),
+      expectedRevision: 0,
+    );
+    await _pump(
+      tester,
+      views,
+      flags: const {
+        'capacityKpi': true,
+        'invoicing': true,
+        'workspaceStatus': true,
+      },
+    );
+    await _open(tester, '/bi?saved=standard');
+    await _menu(tester, 'bi-views-open-${mixed.id}');
+    expect(_query(tester)['cards'], 'capacity.seat_utilisation');
+    expect(find.textContaining('meant something else'), findsOneWidget);
+
+    ScaffoldMessenger.of(
+      tester.element(find.byKey(const ValueKey('bi-page'))),
+    ).removeCurrentSnackBar();
+    await tester.pump(const Duration(seconds: 1));
+    await _menu(tester, 'bi-views-open-${later.id}');
+    expect(find.textContaining('cannot be opened here'), findsOneWidget);
+    expect(_query(tester)['saved'], mixed.id, reason: 'nothing else opened');
   });
 }
 

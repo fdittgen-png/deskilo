@@ -925,6 +925,7 @@
   "biGrainYear": "Año",
   "biGroupBy": "Agrupar por",
   "biGroupNone": "Sin agrupar",
+  "biIncompatible": "El servidor define ahora esta cifra de otra forma que la que conoce esta versión de la aplicación: actualice la aplicación para verla.",
   "biInvalidAddress": "Esta dirección pide un análisis que no existe; no se ha leído nada.",
   "biKindCurrent": "Ahora",
   "@biKindCurrent": {
@@ -1201,6 +1202,7 @@
   },
   "biTotal": "Total",
   "biUnavailable": "No se pudo calcular este análisis.",
+  "biViewCardsIncompatible": "{count} análisis de esta vista se guardaron cuando su cifra significaba otra cosa y se omiten en lugar de mostrarse con otro significado.",
   "biViewChart": "Gráfico",
   "biViewClearMyDefault": "Dejar de abrir mi vista por defecto",
   "biViewClearTeamDefault": "Quitar la vista por defecto del equipo",
