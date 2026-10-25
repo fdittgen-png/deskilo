@@ -1535,9 +1535,13 @@
   "bookRoleCashDiscount": "Gewährte Skonti",
   "bookRoleClearing": "Zahlungsdienst (unterwegs)",
   "bookRoleCustomers": "Kunden (Forderungen)",
+  "bookRoleDeposits": "Geleistete Kautionen",
   "bookRoleExpenses": "Aufwand",
   "bookRoleFees": "Gebühren des Zahlungsdienstes",
+  "bookRoleFixedAssets": "Anlagevermögen (Ausstattung)",
+  "bookRolePrepayments": "Aktive Rechnungsabgrenzung",
   "bookRoleRevenue": "Erlöse",
+  "bookRoleStock": "Vorräte (Handelswaren)",
   "bookRoleSuppliers": "Lieferanten",
   "bookRoleVatInput": "Vorsteuer",
   "@bookRoleVatInput": {

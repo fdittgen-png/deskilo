@@ -4237,6 +4237,12 @@ abstract class AppLocalizations {
   /// **'Customers (receivable)'**
   String get bookRoleCustomers;
 
+  /// #2573 posting role of a purchase line that is not an operating cost
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits paid'**
+  String get bookRoleDeposits;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
@@ -4249,11 +4255,29 @@ abstract class AppLocalizations {
   /// **'Payment provider fees'**
   String get bookRoleFees;
 
+  /// #2573 posting role of a purchase line that is not an operating cost
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed assets (equipment)'**
+  String get bookRoleFixedAssets;
+
+  /// #2573 posting role of a purchase line that is not an operating cost
+  ///
+  /// In en, this message translates to:
+  /// **'Prepaid expenses'**
+  String get bookRolePrepayments;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
   /// **'Revenue'**
   String get bookRoleRevenue;
+
+  /// #2573 posting role of a purchase line that is not an operating cost
+  ///
+  /// In en, this message translates to:
+  /// **'Stock (goods for resale)'**
+  String get bookRoleStock;
 
   /// No description provided for @bookRoleSuppliers.
   ///

@@ -389,6 +389,7 @@ void main() {
 
     final draft = repo.drafts.single as PurchaseReceiptDraft;
     expect(draft.category, 'coffee');
+    expect(draft.originalDate, isNotNull, reason: 'dated, so it reaches the books');
     expect([for (final l in draft.lines) l.taxRatePercent], [20, 5.5]);
     expect([for (final l in draft.lines) l.recoverableTaxCents], [2000, 28]);
     expect([for (final l in draft.lines) l.place], [_office, _site]);

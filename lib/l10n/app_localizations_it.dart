@@ -2465,13 +2465,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookRoleCustomers => 'Clienti (crediti)';
 
   @override
+  String get bookRoleDeposits => 'Depositi cauzionali versati';
+
+  @override
   String get bookRoleExpenses => 'Costi';
 
   @override
   String get bookRoleFees => 'Commissioni del fornitore di pagamenti';
 
   @override
+  String get bookRoleFixedAssets => 'Immobilizzazioni (attrezzature)';
+
+  @override
+  String get bookRolePrepayments => 'Risconti attivi';
+
+  @override
   String get bookRoleRevenue => 'Ricavi';
+
+  @override
+  String get bookRoleStock => 'Rimanenze (merci)';
 
   @override
   String get bookRoleSuppliers => 'Fornitori';

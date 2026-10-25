@@ -42,5 +42,9 @@
   "bookRoleWriteOff": "Pertes sur créances irrécouvrables",
   "bookRoleCashDiscount": "Escomptes accordés",
   "bookRoleClearing": "Prestataire de paiement (en transit)",
-  "bookRoleFees": "Frais du prestataire de paiement"
+  "bookRoleFees": "Frais du prestataire de paiement",
+  "bookRoleFixedAssets": "Immobilisations (équipements)",
+  "bookRoleStock": "Stocks (marchandises)",
+  "bookRolePrepayments": "Charges constatées d'avance",
+  "bookRoleDeposits": "Dépôts et cautionnements versés"
 }

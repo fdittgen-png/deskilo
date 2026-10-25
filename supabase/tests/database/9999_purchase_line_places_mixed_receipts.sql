@@ -11,17 +11,20 @@
 --     and nothing from the event. A replayed submit files no second event. A
 --     one-rate receipt still files its one-rate payload; input VAT off files
 --     none.
+--   K the books (compute_postings): equipment with no fixed-assets account
+--     blocks the receipt, named, and is never booked as an expense; mapped,
+--     it debits fixed assets; operating lines book as before.
 --   R a taxed line without its tax or rate, tax amounts that do not follow
 --     from the rate, an unqualified deductible share; a resource or a site of
 --     another workspace, a resource of another site, a half-named or unknown
 --     resource; another workspace's owner reading the detail; a client write.
 -- Seeds are direct inserts as postgres (users, workspaces, members, sites,
--- levels, an office); the workspaces switch on every flag the RPCs gate on
+-- levels, an office, A's book accounts and mappings); the workspaces switch on every flag the RPCs gate on
 -- and its parents: purchases under moneyTab, inputVat under vatDeclarations
 -- under vatManagement under invoicing. The expense validation's outcome is
 -- seeded on the event (pgTAP 206 proves the validation path itself).
 begin;
-select plan(34);
+select plan(38);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -69,7 +72,8 @@ create function pg_temp.save(p_req int, p_lines jsonb) returns jsonb language sq
   select pg_temp.as_json(pg_temp.u(2), format(
     'select public.save_purchase_draft_v1(%L, %L, 0, %L::jsonb)', current_setting('t.a'),
     ('a0000000-0000-4000-8000-00000000' || lpad(p_req::text, 4, '0'))::uuid,
-    jsonb_build_object('kind', 'member_receipt', 'category', 'supplies', 'lines', p_lines)::text));
+    jsonb_build_object('kind', 'member_receipt', 'category', 'supplies', 'original_date', current_date,
+                       'lines', p_lines)::text));
 $$;
 
 -- Submits draft [p_purchase] at revision 1 as member 2 under request [p_req].
@@ -95,6 +99,32 @@ $$;
 create function pg_temp.docs_of_a() returns int language sql as $$
   select count(*)::int from public.purchase_documents
    where workspace_id = current_setting('t.a')::uuid;
+$$;
+
+-- The postings of document [p_doc] in A's books today: code:Dn / code:Cn.
+create function pg_temp.posted(p_doc text) returns text language sql as $$
+  select coalesce(string_agg((l ->> 'account_code') || ':' ||
+           case when (l ->> 'debit_cents')::bigint > 0 then 'D' || (l ->> 'debit_cents') else 'C' || (l ->> 'credit_cents') end,
+           ',' order by n), '')
+    from jsonb_array_elements(pg_temp.as_json(pg_temp.u(1), format('select public.compute_postings(%L, %L, %L, %L)',
+           current_setting('t.a'), current_setting('t.site_a1'), current_date - 1, current_date + 1)) -> 'postings') p,
+         jsonb_array_elements(p -> 'lines') with ordinality z(l, n)
+   where p ->> 'document_id' = p_doc;
+$$;
+
+create function pg_temp.blockers() returns text language sql as $$
+  select coalesce(string_agg((b ->> 'block') || ':' || (b ->> 'subject'), ',' order by b ->> 'block', b ->> 'subject'), '')
+    from jsonb_array_elements(pg_temp.as_json(pg_temp.u(1), format('select public.compute_postings(%L, %L, %L, %L)',
+           current_setting('t.a'), current_setting('t.site_a1'), current_date - 1, current_date + 1)) -> 'blockers') b;
+$$;
+
+create function pg_temp.book(p_role text, p_code text, p_type text) returns void language sql as $$
+  insert into public.book_accounts (workspace_id, issuer_site_id, code, name, account_type)
+  values (current_setting('t.a')::uuid, current_setting('t.site_a1')::uuid, p_code, p_code, p_type);
+  insert into public.book_mappings (workspace_id, issuer_site_id, role, account_id, effective_from)
+  select current_setting('t.a')::uuid, current_setting('t.site_a1')::uuid, p_role, a.id, date '2020-01-01'
+    from public.book_accounts a
+   where a.issuer_site_id = current_setting('t.site_a1')::uuid and a.code = p_code;
 $$;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
@@ -127,6 +157,12 @@ insert into public.sites (id, workspace_id, name) values
  (current_setting('t.site_a1')::uuid, current_setting('t.a')::uuid, 'Rue Haute'),
  (current_setting('t.site_a2')::uuid, current_setting('t.a')::uuid, 'Quai Bas'),
  (current_setting('t.site_b1')::uuid, current_setting('t.b')::uuid, 'Elsewhere');
+-- Rue Haute is A's default issuer: it books A's purchases.
+update public.sites set is_default = false where workspace_id = current_setting('t.a')::uuid;
+update public.sites set is_default = true where id = current_setting('t.site_a1')::uuid;
+select pg_temp.book('customers', '411', 'asset');
+select pg_temp.book('expenses', '606', 'expense');
+select pg_temp.book('vat_input', '44566', 'asset');
 insert into public.levels (id, workspace_id, name, site_id) values
  (current_setting('t.level_a1')::uuid, current_setting('t.a')::uuid, 'Ground floor', current_setting('t.site_a1')::uuid),
  (current_setting('t.level_b1')::uuid, current_setting('t.b')::uuid, 'B floor', current_setting('t.site_b1')::uuid);
@@ -158,7 +194,7 @@ select is((select string_agg(e ->> 'place_name', ',' order by (e ->> 'line_no'):
                current_setting('t.a'), current_setting('t.pm'))) -> 'lines') e),
   'Blue room,Quai Bas,,', 'P4 the submitter reads the place of each line by its name');
 select set_config('t.sm', pg_temp.submit(2, current_setting('t.pm'))::text, true);
-select is(current_setting('t.sm')::jsonb ->> 'state', 'pending',
+select is(coalesce(current_setting('t.sm')::jsonb ->> 'error', current_setting('t.sm')::jsonb ->> 'state'), 'pending',
   'P5 golden: submitting it files the expense; the receipt awaits its validation');
 select is((select (e.payload ->> 'amount_cents') || '/' || (e.payload -> 'vat')::text || '/' || (e.payload ->> 'purchase_id')
              from public.events e where e.id = (current_setting('t.sm')::jsonb ->> 'event_id')::uuid),
@@ -186,7 +222,8 @@ select set_config('t.one', pg_temp.save(3, jsonb_build_array(
   pg_temp.line(6000, 5000, 1000, 20, 1000, 'operating'),
   pg_temp.line(1200, 1000, 200, 20, 200, 'operating')))::text, true);
 select set_config('t.so', pg_temp.submit(4, current_setting('t.one')::jsonb ->> 'purchase_id')::text, true);
-select is((select (e.payload -> 'vat')::text from public.events e where e.id = (current_setting('t.so')::jsonb ->> 'event_id')::uuid),
+select is(coalesce(current_setting('t.so')::jsonb ->> 'error',
+                   (select (e.payload -> 'vat')::text from public.events e where e.id = (current_setting('t.so')::jsonb ->> 'event_id')::uuid)),
   '{"percent": 20, "deductible_pct": 100}', 'P12 a receipt of one rate and one class files ONE rate and share, as before');
 update public.events set status = 'confirmed', decided_at = now()
  where id = (current_setting('t.so')::jsonb ->> 'event_id')::uuid;
@@ -194,6 +231,17 @@ select is((select string_agg(concat_ws('/', v.percent, v.category, v.gross_cents
              from public.vat_input_amounts(current_setting('t.a')::uuid, current_date - 1, current_date + 1) v
             where v.expense_id = (current_setting('t.so')::jsonb ->> 'event_id')::uuid),
   '20/S/7200/6000', 'P13 and its input VAT is read from that payload, once');
+
+-- ── K: what a line is for decides its debit ────────────────────────────
+select ok(pg_temp.blockers() like '%unmappedRole:fixed_assets%',
+  'K1 equipment with no fixed-assets account blocks the receipt, named');
+select ok(pg_temp.posted(current_setting('t.pm')) not like '%22000%',
+  'K2 and the equipment is never booked as an operating cost');
+select pg_temp.book('fixed_assets', '2183', 'asset');
+select is(pg_temp.posted(current_setting('t.pm')), '606:D10000,44566:D2000,606:D1000,44566:D55,2183:D22000,44566:D2000,606:D300,411:C37355',
+  'K3 mapped, the equipment debits fixed assets: cost 200.00 plus the 20.00 not recovered');
+select is(pg_temp.posted(current_setting('t.so')::jsonb ->> 'purchase_id'), '606:D5000,44566:D1000,606:D1000,44566:D200,411:C7200',
+  'K4 a receipt of operating lines books its expenses as before');
 
 -- a receipt with equipment and no tax at all
 select set_config('t.notax', pg_temp.save(5, jsonb_build_array(

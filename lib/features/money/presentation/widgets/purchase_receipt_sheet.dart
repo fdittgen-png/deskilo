@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -135,8 +136,12 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
 
   Future<String?> _submit(AppLocalizations l10n) async {
     final vatAsked = _vat?.percents.isNotEmpty ?? false;
+    final now = ref.read(clockProvider).now();
     final draft = PurchaseReceiptDraft(
       category: _category,
+      // The day the member files it: the date the receipt is booked on
+      // (a document without a date never reaches the books).
+      originalDate: DateTime(now.year, now.month, now.day),
       lines: [for (final l in _lines) _lineDraft(l, vatAsked: vatAsked)],
     );
     try {

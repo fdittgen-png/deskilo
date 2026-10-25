@@ -1535,9 +1535,13 @@
   "bookRoleCashDiscount": "Sconti concessi",
   "bookRoleClearing": "Fornitore di pagamenti (in transito)",
   "bookRoleCustomers": "Clienti (crediti)",
+  "bookRoleDeposits": "Depositi cauzionali versati",
   "bookRoleExpenses": "Costi",
   "bookRoleFees": "Commissioni del fornitore di pagamenti",
+  "bookRoleFixedAssets": "Immobilizzazioni (attrezzature)",
+  "bookRolePrepayments": "Risconti attivi",
   "bookRoleRevenue": "Ricavi",
+  "bookRoleStock": "Rimanenze (merci)",
   "bookRoleSuppliers": "Fornitori",
   "bookRoleVatInput": "IVA a credito",
   "@bookRoleVatInput": {

@@ -182,5 +182,21 @@
   "bookRoleWriteOff": "Bad debts written off",
   "bookRoleCashDiscount": "Discounts granted",
   "bookRoleClearing": "Payment provider (in transit)",
-  "bookRoleFees": "Payment provider fees"
+  "bookRoleFees": "Payment provider fees",
+  "bookRoleFixedAssets": "Fixed assets (equipment)",
+  "@bookRoleFixedAssets": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
+  "bookRoleStock": "Stock (goods for resale)",
+  "@bookRoleStock": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
+  "bookRolePrepayments": "Prepaid expenses",
+  "@bookRolePrepayments": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
+  "bookRoleDeposits": "Deposits paid",
+  "@bookRoleDeposits": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  }
 }

@@ -3,8 +3,9 @@
 // #2365 — the purchase side of the posting rules: a supplier's bill and its
 // payments, held to the server engine (`compute_postings`).
 //
-//   * supplier bill (approved, a supplier's): per line, Dr `expenses` the
-//     net plus the tax that cannot be recovered, Dr `vat_input:<group>` the
+//   * supplier bill (approved, a supplier's): per line, Dr `expenses` (or,
+//     for a line bought as equipment, stock, a prepayment or a deposit, its
+//     own asset role, #2573) the net plus the tax that cannot be recovered, Dr `vat_input:<group>` the
 //     recoverable tax / Cr `suppliers` the gross. A supplier's credit note
 //     mirrors it.
 //   * supplier payment (a paid allocation on the supplier's payable, not
@@ -43,6 +44,17 @@ List<Posting> purchasePostingsOf({
     ],
 ];
 
+/// #2573 — what a line is for decides its debit: equipment, stock, a
+/// prepayment or a deposit is not an operating cost, and an unmapped role
+/// blocks; a line nobody classified stays an expense.
+BookRole _debitRole(String recognitionKind) => switch (recognitionKind) {
+  'asset' => BookRole.fixedAssets,
+  'stock' => BookRole.stock,
+  'prepayment' => BookRole.prepayments,
+  'deposit' => BookRole.deposits,
+  _ => BookRole.expenses,
+};
+
 AccountingAmount _amount(PurchaseDetail d, int minor) =>
     AccountingAmount(d.summary.currency, minor);
 
@@ -71,10 +83,11 @@ Posting? _bill(
     final net = l.netCents ?? l.grossCents - tax;
     gross += l.grossCents;
     final group = l.taxRatePercent == null ? null : groupOf(l.taxRatePercent!);
+    final debit = _debitRole(l.recognitionKind);
     lines.addAll([
       ?postingLine(
-        BookRole.expenses,
-        book.code(BookRole.expenses, day),
+        debit,
+        book.code(debit, day),
         _amount(d, sign * (net + tax - recoverable)),
         debitSide: true,
       ),

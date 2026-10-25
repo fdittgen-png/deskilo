@@ -2943,14 +2943,30 @@
   "@bookRoleCustomers": {
     "description": "#1869 B chart of accounts"
   },
+  "bookRoleDeposits": "Deposits paid",
+  "@bookRoleDeposits": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
   "bookRoleExpenses": "Expenses",
   "@bookRoleExpenses": {
     "description": "#1869 B chart of accounts"
   },
   "bookRoleFees": "Payment provider fees",
+  "bookRoleFixedAssets": "Fixed assets (equipment)",
+  "@bookRoleFixedAssets": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
+  "bookRolePrepayments": "Prepaid expenses",
+  "@bookRolePrepayments": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
   "bookRoleRevenue": "Revenue",
   "@bookRoleRevenue": {
     "description": "#1869 B chart of accounts"
+  },
+  "bookRoleStock": "Stock (goods for resale)",
+  "@bookRoleStock": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
   },
   "bookRoleSuppliers": "Suppliers",
   "bookRoleVatInput": "Input VAT",

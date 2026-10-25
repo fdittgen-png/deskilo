@@ -2451,13 +2451,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookRoleCustomers => 'Customers (receivable)';
 
   @override
+  String get bookRoleDeposits => 'Deposits paid';
+
+  @override
   String get bookRoleExpenses => 'Expenses';
 
   @override
   String get bookRoleFees => 'Payment provider fees';
 
   @override
+  String get bookRoleFixedAssets => 'Fixed assets (equipment)';
+
+  @override
+  String get bookRolePrepayments => 'Prepaid expenses';
+
+  @override
   String get bookRoleRevenue => 'Revenue';
+
+  @override
+  String get bookRoleStock => 'Stock (goods for resale)';
 
   @override
   String get bookRoleSuppliers => 'Suppliers';

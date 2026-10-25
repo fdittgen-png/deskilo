@@ -42,5 +42,9 @@
   "bookRoleWriteOff": "Forderungsverluste",
   "bookRoleCashDiscount": "Gewährte Skonti",
   "bookRoleClearing": "Zahlungsdienst (unterwegs)",
-  "bookRoleFees": "Gebühren des Zahlungsdienstes"
+  "bookRoleFees": "Gebühren des Zahlungsdienstes",
+  "bookRoleFixedAssets": "Anlagevermögen (Ausstattung)",
+  "bookRoleStock": "Vorräte (Handelswaren)",
+  "bookRolePrepayments": "Aktive Rechnungsabgrenzung",
+  "bookRoleDeposits": "Geleistete Kautionen"
 }

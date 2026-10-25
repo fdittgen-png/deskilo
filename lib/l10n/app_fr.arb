@@ -1535,9 +1535,13 @@
   "bookRoleCashDiscount": "Escomptes accordés",
   "bookRoleClearing": "Prestataire de paiement (en transit)",
   "bookRoleCustomers": "Clients (créances)",
+  "bookRoleDeposits": "Dépôts et cautionnements versés",
   "bookRoleExpenses": "Charges",
   "bookRoleFees": "Frais du prestataire de paiement",
+  "bookRoleFixedAssets": "Immobilisations (équipements)",
+  "bookRolePrepayments": "Charges constatées d'avance",
   "bookRoleRevenue": "Produits",
+  "bookRoleStock": "Stocks (marchandises)",
   "bookRoleSuppliers": "Fournisseurs",
   "bookRoleVatInput": "TVA déductible",
   "@bookRoleVatInput": {
