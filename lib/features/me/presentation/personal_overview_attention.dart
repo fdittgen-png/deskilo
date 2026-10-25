@@ -20,6 +20,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/ui/private_value.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../directory/domain/inbox_composition.dart';
 import '../../directory/domain/inbox_sources.dart';
@@ -190,11 +191,11 @@ class _AttentionRow extends ConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.titleSmall?.strong,
                 ),
-                Text(
-                  detail,
+                DefaultTextStyle.merge(
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: tokens.secondaryText,
                   ),
+                  child: detail,
                 ),
                 if (item.overdue)
                   Text(
@@ -220,7 +221,7 @@ class _AttentionRow extends ConsumerWidget {
     );
   }
 
-  (IconData, String, String, String, VoidCallback) _describe(
+  (IconData, String, Widget, String, VoidCallback) _describe(
     BuildContext context,
     WidgetRef ref,
     AppLocalizations l10n,
@@ -229,12 +230,26 @@ class _AttentionRow extends ConsumerWidget {
       case AttentionKind.document:
         final d = item.document!;
         final format = ref.watch(appFormatProvider);
+        // The amount is private: masked until revealed, as on Finances.
         return (
           Icons.receipt_long_outlined,
           d.workspaceName,
-          l10n.meOverviewAttentionDocument(
-            format.money(d.remainingCents, currency: d.currency),
-            d.number,
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: AppSpacing.xs,
+            children: [
+              PrivateValue(
+                revealKey: ValueKey('me-overview-amount-${item.key}'),
+                maskedText: l10n.financesAmountMasked(d.currency),
+                hiddenLabel: l10n.financesAmountHidden,
+                showLabel: l10n.financesShowAmount,
+                hideLabel: l10n.financesHideAmount,
+                child: Text(
+                  format.money(d.remainingCents, currency: d.currency),
+                ),
+              ),
+              Text(l10n.meOverviewAttentionDocumentToPay(d.number)),
+            ],
           ),
           l10n.meOverviewAttentionViewDocument,
           () => context.push(myFinancesRoute(workspaceId: d.workspaceId)),
@@ -244,7 +259,7 @@ class _AttentionRow extends ConsumerWidget {
         return (
           Icons.hourglass_top_outlined,
           name,
-          l10n.meOverviewAttentionApplication(name),
+          Text(l10n.meOverviewAttentionApplication(name)),
           l10n.mySpacesRequestStatus,
           () => context.push('/applications'),
         );
@@ -253,7 +268,7 @@ class _AttentionRow extends ConsumerWidget {
         return (
           Icons.forum_outlined,
           c.title.isNotEmpty ? c.title : c.workspaceName,
-          l10n.meOverviewAttentionConversation(c.unread),
+          Text(l10n.meOverviewAttentionConversation(c.unread)),
           l10n.meOverviewAttentionOpenConversation,
           () => unawaited(openInboxEntry(context, ref, c)),
         );

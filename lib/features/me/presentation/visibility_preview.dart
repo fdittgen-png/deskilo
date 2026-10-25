@@ -11,6 +11,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/private_value.dart';
 import '../domain/visibility.dart';
 import '../providers/me_providers.dart';
 import 'visibility_labels.dart';
@@ -87,6 +88,19 @@ class _Preview extends StatelessWidget {
           leading: Icon(icon),
           title: Text(text),
         );
+    Widget contact(String key, IconData icon, String text) => ListTile(
+          key: ValueKey(key),
+          dense: true,
+          leading: Icon(icon),
+          title: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: PrivateValue(
+              onlyWhereOffered: true,
+              revealKey: ValueKey('$key-reveal'),
+              child: Text(text),
+            ),
+          ),
+        );
     return DecoratedBox(
       key: const ValueKey('visibility-preview'),
       decoration: BoxDecoration(
@@ -111,10 +125,12 @@ class _Preview extends StatelessWidget {
             line('visibility-preview-profession', Icons.work_outline, profession),
           if (view.bio case final bio?)
             line('visibility-preview-bio', Icons.notes_outlined, bio),
+          // Contact details are private: where the mask is offered they
+          // stay hidden until revealed.
           if (view.whatsapp case final whatsapp?)
-            line('visibility-preview-whatsapp', Icons.chat_outlined, whatsapp),
+            contact('visibility-preview-whatsapp', Icons.chat_outlined, whatsapp),
           if (view.email case final email?)
-            line('visibility-preview-email', Icons.alternate_email, email),
+            contact('visibility-preview-email', Icons.alternate_email, email),
           if (view.presenceShared)
             line('visibility-preview-presence', Icons.location_on_outlined,
                 view.presence ??

@@ -22,6 +22,7 @@ class PrivateValue extends ConsumerStatefulWidget {
     this.showLabel,
     this.hideLabel,
     this.revealKey,
+    this.onlyWhereOffered = false,
   });
 
   /// The value, built only while it is shown.
@@ -41,6 +42,12 @@ class PrivateValue extends ConsumerStatefulWidget {
   /// The key of the reveal button, for tests and the task recorder.
   final Key? revealKey;
 
+  /// True for a value that was always shown before the choice existed (a
+  /// message preview, a contact detail): it is masked only where the
+  /// choice is offered, and reads as before elsewhere. False keeps a
+  /// value masked even where the choice is not offered (an amount).
+  final bool onlyWhereOffered;
+
   @override
   ConsumerState<PrivateValue> createState() => _PrivateValueState();
 }
@@ -56,6 +63,10 @@ class _PrivateValueState extends ConsumerState<PrivateValue> {
     ref.listen(privateValuesMaskedProvider, (_, masked) {
       if (masked && _shown) setState(() => _shown = false);
     });
+    if (widget.onlyWhereOffered &&
+        !ref.watch(privateValuesPolicyProvider).enabled) {
+      return widget.child;
+    }
     if (!ref.watch(privateValuesMaskedProvider)) return widget.child;
     final l10n = context.l10n;
     final style = TextButton.styleFrom(minimumSize: const Size(48, 48));

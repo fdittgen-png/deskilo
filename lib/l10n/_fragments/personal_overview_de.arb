@@ -11,7 +11,7 @@
   "meOverviewView": "Ansehen",
   "meOverviewAttentionTitle": "Wartet auf Sie",
   "meOverviewAttentionNone": "Nichts wartet auf Sie.",
-  "meOverviewAttentionDocument": "{amount} zu zahlen · {number}",
+  "meOverviewAttentionDocumentToPay": "zu zahlen · {number}",
   "meOverviewAttentionOverdue": "Überfällig",
   "meOverviewAttentionViewDocument": "Dokument ansehen",
   "meOverviewAttentionDocumentsUnavailable": "Ihre Dokumente konnten nicht gelesen werden.",

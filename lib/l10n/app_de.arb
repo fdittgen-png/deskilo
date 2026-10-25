@@ -8762,7 +8762,7 @@
   "meOverviewAttentionApplication": "Ihre Anfrage, {name} beizutreten, ist offen.",
   "meOverviewAttentionApplicationsUnavailable": "Ihre Anfragen konnten nicht gelesen werden.",
   "meOverviewAttentionConversation": "{count, plural, =1{1 ungelesene Nachricht} other{{count} ungelesene Nachrichten}}",
-  "meOverviewAttentionDocument": "{amount} zu zahlen · {number}",
+  "meOverviewAttentionDocumentToPay": "zu zahlen · {number}",
   "meOverviewAttentionDocumentsPartial": "Einige Dokumente konnten nicht gelesen werden.",
   "meOverviewAttentionDocumentsUnavailable": "Ihre Dokumente konnten nicht gelesen werden.",
   "meOverviewAttentionMessagesPartial": "Einige Unterhaltungen konnten nicht gelesen werden.",

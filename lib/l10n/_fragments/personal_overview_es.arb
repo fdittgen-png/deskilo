@@ -11,7 +11,7 @@
   "meOverviewView": "Ver",
   "meOverviewAttentionTitle": "Requiere su atención",
   "meOverviewAttentionNone": "Nada requiere su atención.",
-  "meOverviewAttentionDocument": "{amount} por pagar · {number}",
+  "meOverviewAttentionDocumentToPay": "por pagar · {number}",
   "meOverviewAttentionOverdue": "Vencido",
   "meOverviewAttentionViewDocument": "Ver el documento",
   "meOverviewAttentionDocumentsUnavailable": "No se han podido leer sus documentos.",
