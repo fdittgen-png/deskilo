@@ -32,10 +32,7 @@ typedef GobdProcedureFacts = ({
 });
 
 /// The Verfahrensdokumentation of [f] in [l10n]'s language.
-String buildGobdProcedureDocument(
-  AppLocalizations l10n,
-  GobdProcedureFacts f,
-) {
+String buildGobdProcedureDocument(AppLocalizations l10n, GobdProcedureFacts f) {
   final day = DateFormat.yMd(l10n.localeName);
   final serverSchema = f.serverSchema;
   final lines = <String>[
@@ -121,8 +118,9 @@ String datevProblemsText(AppLocalizations l10n, List<DatevProblem> problems) {
   return problems
       .map(
         (p) => switch (p) {
-          DatevConsultantNumber(:final given) =>
-            l10n.datevProblemConsultant(given),
+          DatevConsultantNumber(:final given) => l10n.datevProblemConsultant(
+            given,
+          ),
           DatevClientNumber(:final given) => l10n.datevProblemClient(given),
           DatevAccountLength(:final account, :final length) =>
             l10n.datevProblemAccountLength(account, '$length'),

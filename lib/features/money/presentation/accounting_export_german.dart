@@ -50,44 +50,60 @@ extension GermanAccountingExports on AccountingExportRun {
         try {
           periods = await ref.read(bookPeriodsProvider(workspace.id).future);
         } on Exception catch (e, st) {
-          TraceLogger.instance.warn('money', 'book periods unreadable for DATEV', error: e, stackTrace: st);
+          TraceLogger.instance.warn(
+            'money',
+            'book periods unreadable for DATEV',
+            error: e,
+            stackTrace: st,
+          );
         }
-        final package = buildDatevPackage(DatevPackageRequest(
-          request: DatevRequest(
-            invoices: exported,
-            matches: matches,
-            accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
-            from: DateTime(year),
-            to: DateTime(year, 12, 31),
-            generatedAt: now,
-            consultantNumber: datev.consultantNumber,
-            clientNumber: datev.clientNumber,
-            ledger: ledger,
-            repartitions: repartitions,
-            development: development,
-            currency: workspace.currencyCode,
-            batchName: workspace.name,
-            taxPoints: taxPoints,
+        final package = buildDatevPackage(
+          DatevPackageRequest(
+            request: DatevRequest(
+              invoices: exported,
+              matches: matches,
+              accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
+              from: DateTime(year),
+              to: DateTime(year, 12, 31),
+              generatedAt: now,
+              consultantNumber: datev.consultantNumber,
+              clientNumber: datev.clientNumber,
+              ledger: ledger,
+              repartitions: repartitions,
+              development: development,
+              currency: workspace.currencyCode,
+              batchName: workspace.name,
+              taxPoints: taxPoints,
+            ),
+            bookProfiles: bookProfiles,
+            closed: (from, to) => periods.closedOn(from)?.contains(to) ?? false,
+            defaultCostCentre: workspace.name,
+            memberNumbers: {
+              for (final m
+                  in ref.read(workspaceMembersProvider).value ??
+                      const <Member>[])
+                m.id: m.memberNumber,
+            },
+            memberNames: memberNames,
+            voucherLinks: true,
           ),
-          bookProfiles: bookProfiles,
-          closed: (from, to) => periods.closedOn(from)?.contains(to) ?? false,
-          defaultCostCentre: workspace.name,
-          memberNumbers: {
-            for (final m in ref.read(workspaceMembersProvider).value ?? const <Member>[])
-              m.id: m.memberNumber,
-          },
-          memberNames: memberNames,
-          voucherLinks: true,
-        ));
+        );
         if (!context.mounted) return;
         if (package.problems.isNotEmpty) {
-          return AppSnack.error(context, l10n.datevBlocked(datevProblemsText(l10n, package.problems)));
+          return AppSnack.error(
+            context,
+            l10n.datevBlocked(datevProblemsText(l10n, package.problems)),
+          );
         }
         // The vouchers the rows link, named by their Beleglink id.
-        final vouchers = await _vouchers(package.vouchers, (i) => 'Belege/${i.id}.pdf');
+        final vouchers = await _vouchers(
+          package.vouchers,
+          (i) => 'Belege/${i.id}.pdf',
+        );
         if (vouchers == null || !context.mounted) return;
         await _saveZip({
-          for (final MapEntry(:key, :value) in package.files.entries) key: textBytes(value),
+          for (final MapEntry(:key, :value) in package.files.entries)
+            key: textBytes(value),
           ...vouchers,
         }, rows: package.rows);
       },
@@ -109,7 +125,12 @@ extension GermanAccountingExports on AccountingExportRun {
         try {
           schema = await ref.read(schemaVersionSourceProvider).read();
         } on SchemaVersionUnavailable catch (e, st) {
-          TraceLogger.instance.warn('money', 'schema version unreadable for the GoBD package', error: e, stackTrace: st);
+          TraceLogger.instance.warn(
+            'money',
+            'schema version unreadable for the GoBD package',
+            error: e,
+            stackTrace: st,
+          );
         }
         if (!context.mounted) return;
         final pdfs = await _vouchers(exported, (i) => 'belege/${i.id}.pdf');
@@ -117,45 +138,67 @@ extension GermanAccountingExports on AccountingExportRun {
         final vouchers = <String, Map<String, List<int>>>{
           for (final i in exported)
             i.id: {
-              'belege/${i.id}.xml': textBytes(facturXmlOf(context, ref, i,
-                  seller: sellerOf(i, workspace), buyer: buyerOf(i, workspace), iban: workspaceIban(workspace))),
+              'belege/${i.id}.xml': textBytes(
+                facturXmlOf(
+                  context,
+                  ref,
+                  i,
+                  seller: sellerOf(i, workspace),
+                  buyer: buyerOf(i, workspace),
+                  iban: workspaceIban(workspace),
+                ),
+              ),
               'belege/${i.id}.pdf': pdfs['belege/${i.id}.pdf']!,
             },
         };
         final from = DateTime(year);
         final to = DateTime(year, 12, 31);
-        final files = buildGobdPackage(GobdRequest(
-          supplierName: company.name,
-          supplierLocation: workspace.address,
-          from: from,
-          to: to,
-          invoices: exported,
-          matches: matches,
-          instalments: books.instalments,
-          ledger: ledger,
-          repartitions: repartitions,
-          purchases: books.purchases,
-          memberNames: memberNames,
-          sequences: sequences,
-          auditEvents: buildAuditEvents(invoices: exported, matches: matches, ledger: ledger),
-          taxRates: [
-            for (final row in ActiveTaxReference.current.where(TaxDomain.rate))
-              if (row.country == country) row,
-          ],
-          vouchers: vouchers,
-          procedure: {
-            gobdProcedureFileName: textBytes(buildGobdProcedureDocument(l10n, (
-              workspace: workspace.name,
-              country: country,
-              from: from,
-              to: to,
-              generatedAt: now,
-              fiscalYearStart: datevProfileFiscalStart(bookProfiles, from, to),
-              serverSchema: schema,
-              sequences: sequences,
-            ))),
-          },
-        ));
+        final files = buildGobdPackage(
+          GobdRequest(
+            supplierName: company.name,
+            supplierLocation: workspace.address,
+            from: from,
+            to: to,
+            invoices: exported,
+            matches: matches,
+            instalments: books.instalments,
+            ledger: ledger,
+            repartitions: repartitions,
+            purchases: books.purchases,
+            memberNames: memberNames,
+            sequences: sequences,
+            auditEvents: buildAuditEvents(
+              invoices: exported,
+              matches: matches,
+              ledger: ledger,
+            ),
+            taxRates: [
+              for (final row in ActiveTaxReference.current.where(
+                TaxDomain.rate,
+              ))
+                if (row.country == country) row,
+            ],
+            vouchers: vouchers,
+            procedure: {
+              gobdProcedureFileName: textBytes(
+                buildGobdProcedureDocument(l10n, (
+                  workspace: workspace.name,
+                  country: country,
+                  from: from,
+                  to: to,
+                  generatedAt: now,
+                  fiscalYearStart: datevProfileFiscalStart(
+                    bookProfiles,
+                    from,
+                    to,
+                  ),
+                  serverSchema: schema,
+                  sequences: sequences,
+                )),
+              ),
+            },
+          ),
+        );
         await _saveZip(files, rows: exported.length);
       },
     );
@@ -171,8 +214,14 @@ extension GermanAccountingExports on AccountingExportRun {
     final files = <String, List<int>>{};
     for (final invoice in invoices) {
       if (!context.mounted) return null;
-      final pdf = await buildFacturXFile(context, ref, invoice,
-          seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace));
+      final pdf = await buildFacturXFile(
+        context,
+        ref,
+        invoice,
+        seller: sellerOf(invoice, workspace),
+        buyer: buyerOf(invoice, workspace),
+        iban: workspaceIban(workspace),
+      );
       if (pdf.bytes.isEmpty) return null;
       files[pathOf(invoice)] = pdf.bytes;
     }
@@ -180,12 +229,27 @@ extension GermanAccountingExports on AccountingExportRun {
   }
 
   /// Saves [files] as one zip and logs it with its digest.
-  Future<void> _saveZip(Map<String, List<int>> files, {required int rows}) async {
+  Future<void> _saveZip(
+    Map<String, List<int>> files, {
+    required int rows,
+  }) async {
     final bytes = zipBundle(files);
     if (!context.mounted) return;
-    await savePdfToDownloads(context, ref, bytes: bytes, fileName: named(format.id));
-    await ref.read(bookPeriodCommandProvider).logExportBytes(workspace.id,
-        formatId: format.id, year: year, bytes: bytes, rows: rows, documents: exported.length);
+    await savePdfToDownloads(
+      context,
+      ref,
+      bytes: bytes,
+      fileName: named(format.id),
+    );
+    await ref
+        .read(bookPeriodCommandProvider)
+        .logExportBytes(
+          workspace.id,
+          formatId: format.id,
+          year: year,
+          bytes: bytes,
+          rows: rows,
+          documents: exported.length,
+        );
   }
-
 }

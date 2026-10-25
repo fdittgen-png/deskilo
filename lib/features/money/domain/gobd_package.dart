@@ -99,7 +99,8 @@ String _day(DateTime d) => dmy(d, separator: '.');
 String _cell(Object? value, GobdType type) {
   if (value == null) return '';
   return switch (type) {
-    GobdType.text => '"${'$value'.replaceAll(RegExp(r'[\x00-\x1F\x7F]+'), ' ').replaceAll('"', '""')}"',
+    GobdType.text =>
+      '"${'$value'.replaceAll(RegExp(r'[\x00-\x1F\x7F]+'), ' ').replaceAll('"', '""')}"',
     GobdType.amount => _cents(value as int),
     GobdType.number => '$value',
     GobdType.percent => _percent(value as double),
@@ -150,15 +151,19 @@ String _gobdIndexXml(GobdRequest r, List<GobdTable> tables) {
     ..write('    <Comment>${_x(_scope)}</Comment>\r\n')
     ..write('  </DataSupplier>\r\n')
     ..write('  <Media>\r\n')
-    ..write('    <Name>${_x(r.supplierName)} ${_day(r.from)} - ${_day(r.to)}</Name>\r\n');
+    ..write(
+      '    <Name>${_x(r.supplierName)} ${_day(r.from)} - ${_day(r.to)}</Name>\r\n',
+    );
   for (final t in tables) {
     b
       ..write('    <Table>\r\n')
       ..write('      <URL>${_x(t.url)}</URL>\r\n')
       ..write('      <Name>${_x(t.name)}</Name>\r\n')
       ..write('      <Description>${_x(t.description)}</Description>\r\n')
-      ..write('      <Validity><Range><From>${_day(r.from)}</From>'
-          '<To>${_day(r.to)}</To></Range><Format>$_d</Format></Validity>\r\n')
+      ..write(
+        '      <Validity><Range><From>${_day(r.from)}</From>'
+        '<To>${_day(r.to)}</To></Range><Format>$_d</Format></Validity>\r\n',
+      )
       ..write('      <UTF8/>\r\n')
       ..write('      <DecimalSymbol>,</DecimalSymbol>\r\n')
       ..write('      <DigitGroupingSymbol>.</DigitGroupingSymbol>\r\n')
@@ -168,14 +173,18 @@ String _gobdIndexXml(GobdRequest r, List<GobdTable> tables) {
       ..write('        <TextEncapsulator>&quot;</TextEncapsulator>\r\n');
     for (final c in t.columns) {
       final tag = c.key ? 'VariablePrimaryKey' : 'VariableColumn';
-      b.write('        <$tag><Name>${_x(c.name)}</Name>'
-          '<Description>${_x(c.description)}</Description>'
-          '${_type(c.type)}</$tag>\r\n');
+      b.write(
+        '        <$tag><Name>${_x(c.name)}</Name>'
+        '<Description>${_x(c.description)}</Description>'
+        '${_type(c.type)}</$tag>\r\n',
+      );
     }
     for (final (columns, table) in t.foreignKeys) {
-      b.write('        <ForeignKey>'
-          '${[for (final c in columns) '<Name>${_x(c)}</Name>'].join()}'
-          '<References>${_x(table)}</References></ForeignKey>\r\n');
+      b.write(
+        '        <ForeignKey>'
+        '${[for (final c in columns) '<Name>${_x(c)}</Name>'].join()}'
+        '<References>${_x(table)}</References></ForeignKey>\r\n',
+      );
     }
     b
       ..write('      </VariableLength>\r\n')

@@ -103,10 +103,24 @@ List<GobdTable> gobdTables(GobdRequest r) {
       rows: [
         for (final i in invoices)
           [
-            i.id, i.number, i.issuedAt, i.period, i.kind.name, i.memberId,
-            i.buyerParty?.memberNumber, i.clientName, i.chargesCents,
-            i.netCents, i.vatCents, i.totalCents, i.currency, _status(i),
-            i.replacesNumber, i.dueOn, i.sellerParty?.site, i.signature,
+            i.id,
+            i.number,
+            i.issuedAt,
+            i.period,
+            i.kind.name,
+            i.memberId,
+            i.buyerParty?.memberNumber,
+            i.clientName,
+            i.chargesCents,
+            i.netCents,
+            i.vatCents,
+            i.totalCents,
+            i.currency,
+            _status(i),
+            i.replacesNumber,
+            i.dueOn,
+            i.sellerParty?.site,
+            i.signature,
           ],
       ],
       foreignKeys: const [
@@ -186,7 +200,8 @@ List<GobdTable> gobdTables(GobdRequest r) {
       ],
       rows: [
         for (final i in invoices)
-          for (final (n, p) in (r.instalments[i.id] ?? const <TaxPointPayment>[]).indexed)
+          for (final (n, p)
+              in (r.instalments[i.id] ?? const <TaxPointPayment>[]).indexed)
             [i.id, n + 1, p.on, p.cents],
       ],
       foreignKeys: const [
@@ -229,8 +244,15 @@ List<GobdTable> gobdTables(GobdRequest r) {
       rows: [
         for (final e in r.ledger)
           [
-            e.id, e.memberId, e.kind.name, e.category.name, e.amountCents,
-            e.description, e.period, e.on, e.createdAt,
+            e.id,
+            e.memberId,
+            e.kind.name,
+            e.category.name,
+            e.amountCents,
+            e.description,
+            e.period,
+            e.on,
+            e.createdAt,
           ],
       ],
       foreignKeys: const [
@@ -283,7 +305,14 @@ List<GobdTable> gobdTables(GobdRequest r) {
       rows: [
         for (final p in r.purchases)
           for (final l in p.lines)
-            [p.id, l.lineNo, l.grossCents, l.netCents, l.taxCents, l.recognitionKind],
+            [
+              p.id,
+              l.lineNo,
+              l.grossCents,
+              l.netCents,
+              l.taxCents,
+              l.recognitionKind,
+            ],
       ],
       foreignKeys: const [
         (['beleg_id'], _purchases),
@@ -309,9 +338,18 @@ List<GobdTable> gobdTables(GobdRequest r) {
         for (final row in r.taxRates)
           if (row.value case final RateValue v)
             [
-              row.country, row.key, DateTime.parse(row.validFrom),
-              switch (row.validTo) { final t? => DateTime.parse(t), null => null },
-              v.label, v.percent, v.group, v.category, row.source,
+              row.country,
+              row.key,
+              DateTime.parse(row.validFrom),
+              switch (row.validTo) {
+                final t? => DateTime.parse(t),
+                null => null,
+              },
+              v.label,
+              v.percent,
+              v.group,
+              v.category,
+              row.source,
             ],
       ],
     ),
@@ -332,8 +370,14 @@ List<GobdTable> gobdTables(GobdRequest r) {
       rows: [
         for (final s in r.sequences)
           [
-            s.journal, s.prefix, s.suffix, s.datePart.name, s.digits,
-            s.reset.name, s.nextValue, s.periodKey,
+            s.journal,
+            s.prefix,
+            s.suffix,
+            s.datePart.name,
+            s.digits,
+            s.reset.name,
+            s.nextValue,
+            s.periodKey,
           ],
       ],
     ),
@@ -357,9 +401,17 @@ List<GobdTable> gobdTables(GobdRequest r) {
       rows: [
         for (final (n, e) in r.auditEvents.indexed)
           [
-            n + 1, e.at, e.at.toIso8601String(), e.kind, e.reference,
-            e.description, e.amountCents, e.actor, e.counterparty,
-            e.relatesTo, e.status,
+            n + 1,
+            e.at,
+            e.at.toIso8601String(),
+            e.kind,
+            e.reference,
+            e.description,
+            e.amountCents,
+            e.actor,
+            e.counterparty,
+            e.relatesTo,
+            e.status,
           ],
       ],
     ),
@@ -373,7 +425,8 @@ List<GobdTable> gobdTables(GobdRequest r) {
       ],
       rows: [
         for (final i in invoices)
-          for (final path in (r.vouchers[i.id]?.keys.toList() ?? <String>[])..sort())
+          for (final path
+              in (r.vouchers[i.id]?.keys.toList() ?? <String>[])..sort())
             [i.id, path],
       ],
       foreignKeys: const [
@@ -415,8 +468,14 @@ GobdTable _customerTable(GobdRequest r, List<Invoice> invoices) {
           final i = latest[m];
           final p = i?.buyerParty;
           return [
-            m, p?.memberNumber, i?.clientName ?? r.memberNames[m] ?? '',
-            p?.company, p?.street, p?.postalCode, p?.city, p?.country,
+            m,
+            p?.memberNumber,
+            i?.clientName ?? r.memberNames[m] ?? '',
+            p?.company,
+            p?.street,
+            p?.postalCode,
+            p?.city,
+            p?.country,
             p?.vatId,
           ];
         }(),

@@ -100,8 +100,7 @@ _Batch _parse(String file) {
   return (
     header: _fields(lines[0]),
     rows: [
-      for (final l in lines.skip(2).where((l) => l.isNotEmpty))
-        _fields(l),
+      for (final l in lines.skip(2).where((l) => l.isNotEmpty)) _fields(l),
     ],
   );
 }
@@ -167,8 +166,7 @@ void main() {
 
     test('nothing stops it', () => expect(package.problems, isEmpty));
 
-    test('a sales and a bank Buchungsstapel per month, each its own month',
-        () {
+    test('a sales and a bank Buchungsstapel per month, each its own month', () {
       final byMonth = <String, Set<String>>{};
       for (final MapEntry(:key, value: b) in batches.entries) {
         final m = RegExp(r'_(\d{6})_(sales|bank)\.csv$').firstMatch(key)!;
@@ -216,7 +214,9 @@ void main() {
 
     test('Belegfeld 1 is the number; Beleginfo and Beleglink name it', () {
       for (final b in batches.values) {
-        for (final r in b.rows.where((r) => r[10].startsWith(RegExp('INV|CN')))) {
+        for (final r in b.rows.where(
+          (r) => r[10].startsWith(RegExp('INV|CN')),
+        )) {
           expect(r[19], 'BEDI "id-${r[10]}"');
           expect([r[20], r[21]], ['Rechnungsnummer', r[10]]);
           expect(r[22], 'Belegdatum');
@@ -267,29 +267,46 @@ void main() {
           for (final r in b.rows) ...[r[6], r[7]].where((a) => a.length == 5),
       };
       final s = _parse(package.files[datevStammdatenFileName]!);
-      expect(s.header.take(5), ['EXTF', '700', '16', 'Debitoren/Kreditoren', '5']);
+      expect(s.header.take(5), [
+        'EXTF',
+        '700',
+        '16',
+        'Debitoren/Kreditoren',
+        '5',
+      ]);
       expect({for (final r in s.rows) r[0]}, used);
       final ana = s.rows.single;
-      expect([ana[5], ana[6], ana[7], ana[15], ana[17], ana[18], ana[19]], [
-        'Ana Kowalczyk', '0', '10042', 'Leopoldstraße 1', '80802', 'München',
-        'DE',
-      ]);
+      expect(
+        [ana[5], ana[6], ana[7], ana[15], ana[17], ana[18], ana[19]],
+        [
+          'Ana Kowalczyk',
+          '0',
+          '10042',
+          'Leopoldstraße 1',
+          '80802',
+          'München',
+          'DE',
+        ],
+      );
     });
 
     test('the vouchers are the documents the rows link', () {
-      expect(
-        package.vouchers.map((i) => i.number).toSet(),
-        {'INV-1', 'INV-2', 'INV-3', 'CN-1', 'INV-4', 'INV-5'},
-      );
+      expect(package.vouchers.map((i) => i.number).toSet(), {
+        'INV-1',
+        'INV-2',
+        'INV-3',
+        'CN-1',
+        'INV-4',
+        'INV-5',
+      });
     });
   });
 
   test('a month over the row limit is cut into numbered Stapel', () {
     final package = _package(rowsPerBatch: 1);
-    final march = package.files.keys
-        .where((k) => k.contains('202603_bank'))
-        .toList()
-      ..sort();
+    final march =
+        package.files.keys.where((k) => k.contains('202603_bank')).toList()
+          ..sort();
     expect(march, [
       'EXTF_Buchungsstapel_202603_bank.csv',
       'EXTF_Buchungsstapel_202603_bank_2.csv',
@@ -301,7 +318,9 @@ void main() {
 
   group('what stops the export, named', () {
     test('numbers DATEV refuses', () {
-      final p = _package(request: _request(consultant: '12', client: 'ab'));
+      final p = _package(
+        request: _request(consultant: '12', client: 'ab'),
+      );
       expect(p.files, isEmpty);
       expect(p.problems, [
         isA<DatevConsultantNumber>(),
@@ -311,9 +330,11 @@ void main() {
 
     test('a member with no number, the member named', () {
       final p = _package(
-        request: _request(invoices: [
-          for (final i in _year) i.copyWith(buyerParty: const InvoiceParty()),
-        ]),
+        request: _request(
+          invoices: [
+            for (final i in _year) i.copyWith(buyerParty: const InvoiceParty()),
+          ],
+        ),
       );
       final problem = p.problems.single as DatevMemberNumber;
       expect((problem.member, problem.number), ('Ana', ''));
@@ -321,18 +342,25 @@ void main() {
 
     test('the number the member holds today stands in for none frozen', () {
       final p = _package(
-        request: _request(invoices: [
-          for (final i in _year) i.copyWith(buyerParty: const InvoiceParty()),
-        ]),
+        request: _request(
+          invoices: [
+            for (final i in _year) i.copyWith(buyerParty: const InvoiceParty()),
+          ],
+        ),
         memberNumbers: const {'m1': 'M-0003'},
       );
       expect(p.problems, isEmpty);
-      expect(_parse(p.files[datevStammdatenFileName]!).rows.single.first, '10003');
+      expect(
+        _parse(p.files[datevStammdatenFileName]!).rows.single.first,
+        '10003',
+      );
     });
 
     test('two members on one Debitor', () {
-      final other = _german(SeededExportYear.inv2, number: 'M-42')
-          .copyWith(id: 'x', number: 'INV-9', memberId: 'm2');
+      final other = _german(
+        SeededExportYear.inv2,
+        number: 'M-42',
+      ).copyWith(id: 'x', number: 'INV-9', memberId: 'm2');
       final p = _package(request: _request(invoices: [..._year, other]));
       final clash = p.problems.single as DatevDebtorClash;
       expect(clash.account, '10042');
@@ -342,10 +370,9 @@ void main() {
       final p = _package(
         request: _request(accounts: const DatevAccounts(bank: '12000')),
       );
-      expect(
-        p.problems.whereType<DatevAccountLength>().map((x) => x.account),
-        ['12000'],
-      );
+      expect(p.problems.whereType<DatevAccountLength>().map((x) => x.account), [
+        '12000',
+      ]);
     });
   });
 
@@ -354,23 +381,30 @@ void main() {
     setUp(() => installed = ActiveTaxReference.current);
     tearDown(() => ActiveTaxReference.install(installed));
 
-    void withKeys() => ActiveTaxReference.install(TaxReferenceSet([
-      ...installed.rows,
-      for (final (group, key) in [('standard', '3'), ('reduced', '2')])
-        TaxReferenceRow(
-          country: 'DE',
-          key: 'datev/tax:$group',
-          validFrom: '1900-01-01',
-          value: AccountMapValue(format: 'datev', role: 'tax:$group', taxCode: key),
-          source: 'test',
-          confirmed: true,
-        ),
-    ]));
+    void withKeys() => ActiveTaxReference.install(
+      TaxReferenceSet([
+        ...installed.rows,
+        for (final (group, key) in [('standard', '3'), ('reduced', '2')])
+          TaxReferenceRow(
+            country: 'DE',
+            key: 'datev/tax:$group',
+            validFrom: '1900-01-01',
+            value: AccountMapValue(
+              format: 'datev',
+              role: 'tax:$group',
+              taxCode: key,
+            ),
+            source: 'test',
+            confirmed: true,
+          ),
+      ]),
+    );
 
     List<(String, String, String)> revenueRows(DatevPackage p) => [
       for (final b in _batches(p).values)
         for (final r in b.rows)
-          if (r[13].startsWith('Rechnung INV-2') || r[13].startsWith('Rechnung INV-1'))
+          if (r[13].startsWith('Rechnung INV-2') ||
+              r[13].startsWith('Rechnung INV-1'))
             (r[0], r[7], r[8]),
     ];
 

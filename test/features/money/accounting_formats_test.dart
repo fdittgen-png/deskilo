@@ -84,9 +84,11 @@ void main() {
     // DATEV was built, committed, and called by nothing. It is easy to
     // repeat: a domain file compiles and its tests pass whether or not
     // anything invokes it.
-    final export =
-        File('lib/features/money/presentation/accounting_export_run.dart')
-            .readAsStringSync();
+    // The run and its German exports (DATEV, GoBD), which it dispatches to.
+    final export = [
+      'lib/features/money/presentation/accounting_export_run.dart',
+      'lib/features/money/presentation/accounting_export_german.dart',
+    ].map((p) => File(p).readAsStringSync()).join();
 
     test('the export switch handles every registry format', () {
       for (final format in accountingTargets.map((t) => t.format).nonNulls) {
@@ -101,7 +103,8 @@ void main() {
         'fec': 'buildFecFile',
         'saft': 'buildSafTFile',
         'saft_pt': 'buildSafTFile',
-        'datev': 'buildDatevFile',
+        'datev': 'buildDatevPackage',
+        'gobd': 'buildGobdPackage',
         'sage50': 'buildSageFile',
         'ch_kmu': 'buildSwissKmuFile',
         'accountant_csv': 'buildAccountantCsv',

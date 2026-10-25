@@ -58,8 +58,7 @@ class DatevDebtors {
     final members = <String>{
       ...latest.keys,
       for (final e in ledger)
-        if (e.kind == LedgerKind.credit &&
-            e.category == LedgerCategory.expense)
+        if (e.kind == LedgerKind.credit && e.category == LedgerCategory.expense)
           e.memberId,
     };
     final accounts = <String, String>{};
@@ -70,16 +69,17 @@ class DatevDebtors {
       final invoice = latest[member];
       final frozen = invoice?.buyerParty?.memberNumber ?? '';
       final number = frozen.isNotEmpty ? frozen : memberNumbers[member] ?? '';
-      final name =
-          invoice?.clientName ?? memberNames[member] ?? member;
+      final name = invoice?.clientName ?? memberNames[member] ?? member;
       final account = datevDebtorOf(number, accountLength);
       if (account == null) {
         problems.add(DatevMemberNumber(name, number));
         continue;
       }
       accounts[member] = account;
-      parties[member] = (invoice?.buyerParty ?? const InvoiceParty())
-          .copyWith(name: name, memberNumber: number);
+      parties[member] = (invoice?.buyerParty ?? const InvoiceParty()).copyWith(
+        name: name,
+        memberNumber: number,
+      );
       (byAccount[account] ??= []).add(name);
     }
     for (final MapEntry(key: account, value: names) in byAccount.entries) {

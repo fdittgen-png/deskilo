@@ -59,58 +59,66 @@ String _procedure(AppLocalizations l10n) => buildGobdProcedureDocument(l10n, (
 Map<String, List<int>> _package() {
   final invoices = SeededExportYear.acceptanceInvoices;
   final words = reportStringsOf(_de);
-  return buildGobdPackage(GobdRequest(
-    supplierName: 'Cowork',
-    supplierLocation: 'Leopoldstraße 1, 80802 München',
-    from: _from,
-    to: _to,
-    invoices: invoices,
-    matches: SeededExportYear.acceptanceMatches,
-    instalments: {
-      SeededExportYear.inv2.id: [TaxPointPayment(DateTime(2026, 4, 20), 12000)],
-    },
-    ledger: SeededExportYear.ledger,
-    purchases: [
-      (
-        id: 'B-1',
-        kind: 'bill',
-        currency: 'EUR',
-        dated: DateTime(2026, 3, 10),
-        lines: const [
-          (
-            lineNo: 1,
-            grossCents: 12000,
-            netCents: 10000,
-            taxCents: 2000,
-            recognitionKind: 'expense',
-          ),
-        ],
-      ),
-    ],
-    memberNames: const {'m1': 'Ana'},
-    sequences: _sequences,
-    auditEvents: buildAuditEvents(
+  return buildGobdPackage(
+    GobdRequest(
+      supplierName: 'Cowork',
+      supplierLocation: 'Leopoldstraße 1, 80802 München',
+      from: _from,
+      to: _to,
       invoices: invoices,
       matches: SeededExportYear.acceptanceMatches,
+      instalments: {
+        SeededExportYear.inv2.id: [
+          TaxPointPayment(DateTime(2026, 4, 20), 12000),
+        ],
+      },
       ledger: SeededExportYear.ledger,
+      purchases: [
+        (
+          id: 'B-1',
+          kind: 'bill',
+          currency: 'EUR',
+          dated: DateTime(2026, 3, 10),
+          lines: const [
+            (
+              lineNo: 1,
+              grossCents: 12000,
+              netCents: 10000,
+              taxCents: 2000,
+              recognitionKind: 'expense',
+            ),
+          ],
+        ),
+      ],
+      memberNames: const {'m1': 'Ana'},
+      sequences: _sequences,
+      auditEvents: buildAuditEvents(
+        invoices: invoices,
+        matches: SeededExportYear.acceptanceMatches,
+        ledger: SeededExportYear.ledger,
+      ),
+      taxRates: [
+        for (final row in ActiveTaxReference.current.where(TaxDomain.rate))
+          if (row.country == 'DE') row,
+      ],
+      vouchers: {
+        for (final i in invoices)
+          i.id: {
+            'belege/${i.id}.xml': utf8.encode(
+              buildInvoiceCii(
+                EInvoiceInput(
+                  invoice: i,
+                  seller: seededCompany,
+                  buyer: const InvoiceParty(name: 'Ana', country: 'FR'),
+                  lineText: (line) => invoiceLineText(words, line),
+                ),
+              ),
+            ),
+          },
+      },
+      procedure: {gobdProcedureFileName: utf8.encode(_procedure(_de))},
     ),
-    taxRates: [
-      for (final row in ActiveTaxReference.current.where(TaxDomain.rate))
-        if (row.country == 'DE') row,
-    ],
-    vouchers: {
-      for (final i in invoices)
-        i.id: {
-          'belege/${i.id}.xml': utf8.encode(buildInvoiceCii(EInvoiceInput(
-            invoice: i,
-            seller: seededCompany,
-            buyer: const InvoiceParty(name: 'Ana', country: 'FR'),
-            lineText: (line) => invoiceLineText(words, line),
-          ))),
-        },
-    },
-    procedure: {gobdProcedureFileName: utf8.encode(_procedure(_de))},
-  ));
+  );
 }
 
 /// A table as the index declares it.
@@ -188,10 +196,7 @@ void main() {
   final fixture = File('test/fixtures/gobd/gdpdu-01-08-2002.dtd');
 
   test('the package ships the published DTD verbatim', () {
-    expect(
-      gobdDtd,
-      fixture.readAsStringSync().replaceAll('\r\n', '\n'),
-    );
+    expect(gobdDtd, fixture.readAsStringSync().replaceAll('\r\n', '\n'));
   });
 
   test('index.xml is valid against gdpdu-01-08-2002.dtd and names it', () {
@@ -227,7 +232,10 @@ void main() {
     final files = _package();
     final tables = _tables(utf8.decode(files['index.xml']!));
     expect(
-      {for (final p in files.keys) if (p.endsWith('.csv')) p},
+      {
+        for (final p in files.keys)
+          if (p.endsWith('.csv')) p,
+      },
       {for (final t in tables) t.url},
     );
     for (final t in tables) {
@@ -244,7 +252,11 @@ void main() {
       for (final t in _tables(utf8.decode(files['index.xml']!)))
         t.url.replaceAll('.csv', ''): t,
     };
-    for (final child in ['rechnungspositionen', 'steuerbetraege', 'zahlungen']) {
+    for (final child in [
+      'rechnungspositionen',
+      'steuerbetraege',
+      'zahlungen',
+    ]) {
       expect(
         [for (final (c, t) in tables[child]!.joins) '${c.join(',')}->$t'],
         ['rechnung_id->rechnungen'],
@@ -253,21 +265,22 @@ void main() {
     // Each table's key, as values, and each join's values resolve.
     Set<String> keysOf(String table) {
       final t = tables[table]!;
-      return {
-        for (final r in _rows(files[t.url]!)) r.take(t.keys).join('|'),
-      };
+      return {for (final r in _rows(files[t.url]!)) r.take(t.keys).join('|')};
     }
 
     for (final t in tables.values) {
       // A key is unique.
       final rows = _rows(files[t.url]!);
-      expect(keysOf(t.url.replaceAll('.csv', '')), hasLength(rows.length),
-          reason: t.url);
+      expect(
+        keysOf(t.url.replaceAll('.csv', '')),
+        hasLength(rows.length),
+        reason: t.url,
+      );
       for (final (columns, target) in t.joins) {
         final targetKeys = keysOf(target);
         for (final r in rows) {
-          final value =
-              [for (final c in columns) r[t.columns.indexOf(c)]].join('|');
+          final value = [for (final c in columns) r[t.columns.indexOf(c)]]
+              .join('|');
           expect(targetKeys, contains(value), reason: '${t.url} -> $target');
         }
       }

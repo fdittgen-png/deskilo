@@ -97,11 +97,13 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
     memberNumbers: p.memberNumbers,
     memberNames: p.memberNames,
   );
-  final detailed = r.withDetail(DatevDetail(
-    debtors: debtors.accounts,
-    defaultCostCentre: p.defaultCostCentre,
-    voucherLinks: p.voucherLinks,
-  ));
+  final detailed = r.withDetail(
+    DatevDetail(
+      debtors: debtors.accounts,
+      defaultCostCentre: p.defaultCostCentre,
+      voucherLinks: p.voucherLinks,
+    ),
+  );
   final writer = datevWriterOf(detailed);
   final problems = [
     ..._numberProblems(r),
@@ -109,11 +111,10 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
     ..._taxProblems(r),
     // A member without a Debitor is named above; the collective account
     // their rows fell back to is not a second problem.
-    ..._accountProblems(
-      writer.bookings,
-      {...debtors.accounts.values, r.accounts.customers},
-      r.accountLength,
-    ),
+    ..._accountProblems(writer.bookings, {
+      ...debtors.accounts.values,
+      r.accounts.customers,
+    }, r.accountLength),
   ];
   if (problems.isNotEmpty) return DatevPackage._(problems: problems);
 
@@ -137,7 +138,8 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
     final start =
         datevProfileFiscalStart(p.bookProfiles, from, to) ?? DateTime(year);
     firstStart ??= start;
-    final parts = (counts[(year, month, journal)]! + p.rowsPerBatch - 1) ~/
+    final parts =
+        (counts[(year, month, journal)]! + p.rowsPerBatch - 1) ~/
         p.rowsPerBatch;
     for (var part = 0; part < parts; part++) {
       final slice = DatevSlice(
@@ -148,11 +150,13 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
         rowsPerPart: p.rowsPerBatch,
         locked: p.closed(from, to),
       );
-      files[datevBatchFileName(slice)] = buildDatevFile(detailed.withSlice(
-        slice,
-        accounts: r.accounts.withFiscalYearStart(start),
-        batchName: _batchName(journal, r.batchName),
-      ));
+      files[datevBatchFileName(slice)] = buildDatevFile(
+        detailed.withSlice(
+          slice,
+          accounts: r.accounts.withFiscalYearStart(start),
+          batchName: _batchName(journal, r.batchName),
+        ),
+      );
     }
   }
   final used = {
@@ -173,9 +177,7 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
       skr: r.accounts.skr,
     ),
   );
-  final linked = {
-    for (final b in writer.bookings) ?b.invoice,
-  };
+  final linked = {for (final b in writer.bookings) ?b.invoice};
   return DatevPackage._(
     files: files,
     vouchers: p.voucherLinks ? linked.toList() : const [],

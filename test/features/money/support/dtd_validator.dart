@@ -12,9 +12,9 @@ import 'package:xml/xml.dart';
 /// The ways [document] breaks [dtd]; empty when it is valid.
 List<String> dtdViolations(String dtd, String document) {
   final declarations = <String, String>{
-    for (final m in RegExp(r'<!ELEMENT\s+(\w+)\s+([^>]+)>').allMatches(
-      dtd.replaceAll(RegExp(r'<!--.*?-->', dotAll: true), ''),
-    ))
+    for (final m in RegExp(
+      r'<!ELEMENT\s+(\w+)\s+([^>]+)>',
+    ).allMatches(dtd.replaceAll(RegExp(r'<!--.*?-->', dotAll: true), '')))
       m.group(1)!: m.group(2)!.trim(),
   };
   final doc = XmlDocument.parse(document);
@@ -46,8 +46,10 @@ List<String> dtdViolations(String dtd, String document) {
       if (text.isNotEmpty) out.add('$here holds text');
       final names = children.map((c) => '<${c.name.local}>').join();
       if (!RegExp('^${_pattern(model)}\$').hasMatch(names)) {
-        out.add('$here: ${children.map((c) => c.name.local).join(', ')} '
-            'does not match $model');
+        out.add(
+          '$here: ${children.map((c) => c.name.local).join(', ')} '
+          'does not match $model',
+        );
       }
     }
     for (final c in children) {
@@ -62,9 +64,9 @@ List<String> dtdViolations(String dtd, String document) {
 /// The content model [model] as a regular expression over `<name>` tokens.
 String _pattern(String model) {
   final b = StringBuffer();
-  for (final m in RegExp(r'(\w+)|([(),|?*+])').allMatches(
-    model.replaceAll(RegExp(r'\s+'), ''),
-  )) {
+  for (final m in RegExp(
+    r'(\w+)|([(),|?*+])',
+  ).allMatches(model.replaceAll(RegExp(r'\s+'), ''))) {
     final word = m.group(1);
     if (word != null) {
       b.write('(?:<$word>)');
