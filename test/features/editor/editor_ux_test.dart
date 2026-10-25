@@ -8,7 +8,7 @@
 // now — it is what the canvas does when nothing is armed — and Erase is
 // not a tool either, because a destructive MODE deletes whatever your
 // finger lands on next rather than a thing you chose and can see.
-import 'package:deskilo/features/editor/presentation/screens/editor_tool.dart';
+import 'package:deskilo/features/editor/domain/editor_tool.dart';
 import 'package:deskilo/features/editor/presentation/widgets/editor_selection_bar.dart';
 import 'package:deskilo/features/editor/presentation/widgets/editor_toolbar.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
