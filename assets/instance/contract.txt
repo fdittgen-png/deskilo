@@ -3106,6 +3106,7 @@ trigger public_workspace_cards.zz_system_columns_stamp CREATE TRIGGER zz_system_
 trigger purchase_commitment_matches.purchase_commitment_matches_guard CREATE TRIGGER purchase_commitment_matches_guard BEFORE DELETE OR UPDATE ON public.purchase_commitment_matches FOR EACH ROW EXECUTE FUNCTION purchase_commitment_matches_guard()
 trigger purchase_commitment_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_commitment_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger purchase_documents.purchase_documents_guard CREATE TRIGGER purchase_documents_guard BEFORE UPDATE ON public.purchase_documents FOR EACH ROW EXECUTE FUNCTION purchase_documents_guard()
+trigger purchase_documents.purchase_rate_required CREATE TRIGGER purchase_rate_required BEFORE UPDATE OF state ON public.purchase_documents FOR EACH ROW EXECUTE FUNCTION purchase_rate_required()
 trigger purchase_documents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_documents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger purchase_lines.purchase_lines_guard CREATE TRIGGER purchase_lines_guard BEFORE INSERT OR DELETE OR UPDATE ON public.purchase_lines FOR EACH ROW EXECUTE FUNCTION purchase_lines_guard()
 trigger purchase_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.purchase_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
