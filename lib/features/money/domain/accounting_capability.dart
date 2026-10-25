@@ -149,13 +149,50 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     // #2370 — DesKilo defines this file; its definition is the spec.
     specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
   ),
+  // #2376 — the books printed from the postings; DesKilo defines them.
+  'general_ledger': AccountingCapability(
+    formatId: 'general_ledger',
+    state: QualificationState.implemented,
+    obligations: {},
+    specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
+  ),
+  'trial_balance': AccountingCapability(
+    formatId: 'trial_balance',
+    state: QualificationState.implemented,
+    obligations: {},
+    specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
+  ),
+  'journals': AccountingCapability(
+    formatId: 'journals',
+    state: QualificationState.implemented,
+    obligations: {},
+    specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
+  ),
+  // #2376 — the adapter maps the documents and delivers them once, read
+  // back by external reference; no live exchange has happened (no sandbox
+  // account yet) and the connection store is #2370's.
+  'pennylane_api': AccountingCapability(
+    formatId: 'pennylane_api',
+    state: QualificationState.implemented,
+    specification: 'Pennylane API v2, customer_invoices import and ledger_entries',
+  ),
+  // The FEC is their working route today; their own formats need a spec.
+  'cegid_quadra_ascii': AccountingCapability(
+    formatId: 'cegid_quadra_ascii',
+    state: QualificationState.specificationNeeded,
+  ),
+  'ebp_import': AccountingCapability(
+    formatId: 'ebp_import',
+    state: QualificationState.specificationNeeded,
+  ),
 };
 
 /// The decision for [format]; a format nobody reviewed is `unsupported`
 /// and blocked, never silently allowed.
 AccountingCapability capabilityOf(AccountingFormat format) =>
-    accountingCapabilities[format.id] ??
-    AccountingCapability(
-      formatId: format.id,
-      state: QualificationState.unsupported,
-    );
+    capabilityOfTarget(format.id);
+
+/// The decision for the target [id] (a format id, or an API target's).
+AccountingCapability capabilityOfTarget(String id) =>
+    accountingCapabilities[id] ??
+    AccountingCapability(formatId: id, state: QualificationState.unsupported);

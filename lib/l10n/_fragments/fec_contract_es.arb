@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "journalFecPartyCode": "El FEC necesita un código de cliente para cada tercero, de hasta 13 letras y cifras: asigne primero un número de miembro o de proveedor a: {names}",
+  "journalFecMissingRate": "Estos documentos están en otra moneda que la contabilidad y no tienen un tipo de cambio registrado; el FEC no se ha generado: {documents}",
+  "fecContractFailed": "El FEC incumple el contrato de importación ({rules}) y no se ha guardado.",
+  "fecProvisional": "Este ejercicio no está cerrado: el FEC es provisional y el archivo lo conserva como tal.",
+  "fecArchiveChanged": "El FEC del ejercicio cerrado ya no coincide con el registrado el {date}; el archivo no se ha creado.",
+  "invoiceExportGeneralLedger": "Libro mayor (PDF, desde la contabilidad)",
+  "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
+  "invoiceExportJournals": "Diarios y diario resumen (PDF, desde la contabilidad)"
+}

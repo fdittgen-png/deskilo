@@ -1,0 +1,55 @@
+{
+  "@@locale": "en",
+  "journalFecPartyCode": "The FEC needs a client code for each third party, up to 13 letters and digits: give these a member or supplier number first: {names}",
+  "@journalFecPartyCode": {
+    "description": "FEC export (#2376): parties without a usable auxiliary account",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "journalFecMissingRate": "These documents are in another currency than the book's and no exchange rate is recorded for them, so the FEC was not written: {documents}",
+  "@journalFecMissingRate": {
+    "description": "FEC export (#2376): foreign-currency documents without a recorded rate",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      }
+    }
+  },
+  "fecContractFailed": "The FEC breaks the import contract ({rules}) and was not saved.",
+  "@fecContractFailed": {
+    "description": "FEC export (#2376): import-contract rules the file breaks",
+    "placeholders": {
+      "rules": {
+        "type": "String"
+      }
+    }
+  },
+  "fecProvisional": "This fiscal year is not closed: the FEC is provisional and the archive keeps it as such.",
+  "@fecProvisional": {
+    "description": "FEC export (#2376): the year is not closed, the file is provisional"
+  },
+  "fecArchiveChanged": "The closed year's FEC no longer matches the one logged on {date}; the archive was not built.",
+  "@fecArchiveChanged": {
+    "description": "Archive (#2376): the final FEC changed since it was logged",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceExportGeneralLedger": "General ledger (PDF, from the book)",
+  "@invoiceExportGeneralLedger": {
+    "description": "Accounting export sheet (#2376): the general ledger report"
+  },
+  "invoiceExportTrialBalance": "Trial balance, general and auxiliary (PDF, from the book)",
+  "@invoiceExportTrialBalance": {
+    "description": "Accounting export sheet (#2376): the trial balance report"
+  },
+  "invoiceExportJournals": "Journals and their summary (PDF, from the book)",
+  "@invoiceExportJournals": {
+    "description": "Accounting export sheet (#2376): the journals report"
+  }
+}

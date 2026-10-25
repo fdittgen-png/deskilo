@@ -91,6 +91,13 @@ const List<ReportKind> fixedReportKinds = [
   ReportKind(id: 'vat_declaration', slot: ReportDocSlot('vat_declaration')),
   // #822 — the three structural documents.
   ReportKind(id: 'coa', slot: ReportDocSlot('coa')),
+  // #2376 — the books as an accountant reads them, from the FEC's postings.
+  ReportKind(id: 'general_ledger', slot: ReportDocSlot('general_ledger'),
+      numbersFirstPage: true),
+  ReportKind(id: 'trial_balance', slot: ReportDocSlot('trial_balance'),
+      numbersFirstPage: true),
+  ReportKind(id: 'journals', slot: ReportDocSlot('journals'),
+      numbersFirstPage: true),
   ReportKind(id: 'badges', slot: ReportDocSlot('badges')),
   ReportKind(id: 'space_codes', slot: ReportDocSlot('space_codes')),
 ];

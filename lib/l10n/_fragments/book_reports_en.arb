@@ -1,0 +1,100 @@
+{
+  "@@locale": "en",
+  "reportDocGeneralLedger": "General ledger",
+  "@reportDocGeneralLedger": {
+    "description": "Report kind (#2376): the general ledger"
+  },
+  "reportDocTrialBalance": "Trial balance",
+  "@reportDocTrialBalance": {
+    "description": "Report kind (#2376): the trial balance with its auxiliary balance"
+  },
+  "reportDocJournals": "Journals",
+  "@reportDocJournals": {
+    "description": "Report kind (#2376): the journals and their summary"
+  },
+  "bookReportTotal": "Total",
+  "@bookReportTotal": {
+    "description": "Book reports (#2376): an account's or a journal's total row"
+  },
+  "bookReportGrandTotal": "Grand total",
+  "@bookReportGrandTotal": {
+    "description": "Book reports (#2376): the grand total row"
+  },
+  "bookReportAuxiliary": "Auxiliary balance",
+  "@bookReportAuxiliary": {
+    "description": "Book reports (#2376): heading of the third parties' balance"
+  },
+  "bookReportSummary": "Summary of the journals",
+  "@bookReportSummary": {
+    "description": "Book reports (#2376): heading of the journals' summary"
+  },
+  "bookReportDebitSide": "Dr",
+  "@bookReportDebitSide": {
+    "description": "Book reports (#2376): marks a debit balance"
+  },
+  "bookReportCreditSide": "Cr",
+  "@bookReportCreditSide": {
+    "description": "Book reports (#2376): marks a credit balance"
+  },
+  "bookReportJournalSales": "Sales",
+  "@bookReportJournalSales": {
+    "description": "Book reports (#2376): the sales journal"
+  },
+  "bookReportJournalBank": "Bank",
+  "@bookReportJournalBank": {
+    "description": "Book reports (#2376): the bank journal"
+  },
+  "bookReportJournalPurchases": "Purchases",
+  "@bookReportJournalPurchases": {
+    "description": "Book reports (#2376): the purchases journal"
+  },
+  "bookReportJournalOther": "Miscellaneous",
+  "@bookReportJournalOther": {
+    "description": "Book reports (#2376): the miscellaneous journal"
+  },
+  "bookReportEntry": "Entry",
+  "@bookReportEntry": {
+    "description": "Book reports (#2376): column heading"
+  },
+  "bookReportDebit": "Debit",
+  "@bookReportDebit": {
+    "description": "Book reports (#2376): column heading"
+  },
+  "bookReportCredit": "Credit",
+  "@bookReportCredit": {
+    "description": "Book reports (#2376): column heading"
+  },
+  "bookReportBalance": "Balance",
+  "@bookReportBalance": {
+    "description": "Book reports (#2376): column heading"
+  },
+  "bookReportFooter": "Read from the postings of the book: the same entries, accounts and third parties as the FEC of the period.",
+  "@bookReportFooter": {
+    "description": "Book reports (#2376): footer stating the source"
+  },
+  "bookReportMissingRate": "These documents are in another currency than the book's and no exchange rate is recorded for them, so the report was not printed: {documents}",
+  "@bookReportMissingRate": {
+    "description": "Book reports (#2376): foreign-currency documents without a rate",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      }
+    }
+  },
+  "reportFieldMeaningBookPeriod": "The fiscal year the book report covers",
+  "@reportFieldMeaningBookPeriod": {
+    "description": "#2376 report guide: meaning of book_period"
+  },
+  "reportFieldMeaningBookRows": "The rows of a book report: headings, lines and totals with debit, credit and balance",
+  "@reportFieldMeaningBookRows": {
+    "description": "#2376 report guide: meaning of book_rows"
+  },
+  "reportFieldMeaningBookTotalDebit": "The total of the debits in a book report",
+  "@reportFieldMeaningBookTotalDebit": {
+    "description": "#2376 report guide: meaning of book_total_debit"
+  },
+  "reportFieldMeaningBookTotalCredit": "The total of the credits in a book report",
+  "@reportFieldMeaningBookTotalCredit": {
+    "description": "#2376 report guide: meaning of book_total_credit"
+  }
+}

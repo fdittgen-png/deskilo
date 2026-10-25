@@ -62,8 +62,8 @@ void main() {
   test('only a French workspace archive carries a FEC', () {
     for (final (country, has) in [('FR', true), ('fr', true), ('DE', false)]) {
       final files = <String, List<int>>{};
-      addArchiveFec(files, country, 'JournalCode');
-      expect(files.containsKey('fec.txt'), has, reason: country);
+      addArchiveFec(files, country, {'1FEC20261231.txt': textBytes('JournalCode')});
+      expect(files.containsKey('1FEC20261231.txt'), has, reason: country);
     }
   });
 }

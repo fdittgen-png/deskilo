@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../domain/book_period.dart';
+import '../domain/fiscal_year.dart';
 
 /// #2365 — what is sent for the book periods. A command sends nothing when
 /// the entry cannot be right (the server decides again on every write); null
@@ -26,15 +27,17 @@ class BookPeriodCommands {
     return _repository.close(workspaceId, from, to);
   }
 
-  /// Logs a file already handed out for the calendar year [year]: format,
-  /// size and sha256. The file is the accountant's already, so a failed log is
-  /// traced and never turns the export into a failure.
+  /// Logs a file already handed out for the calendar year [year], or for
+  /// [period] when given (#2376: a FEC covers its fiscal year):
+  /// format, size and sha256. The file is the accountant's already, so a
+  /// failed log is traced and never turns the export into a failure.
   Future<void> logExport(
     String workspaceId, {
     required String formatId,
     required int year,
     required String content,
     required int documents,
+    FiscalYear? period,
   }) async {
     final bytes = utf8.encode(content);
     try {
@@ -42,8 +45,8 @@ class BookPeriodCommands {
         workspaceId,
         BookExportRecord(
           formatId: formatId,
-          from: DateTime(year),
-          to: DateTime(year, 12, 31),
+          from: period?.from ?? DateTime(year),
+          to: period?.to ?? DateTime(year, 12, 31),
           sha256: sha256.convert(bytes).toString(),
           bytes: bytes.length,
           rows: const LineSplitter().convert(content).length,

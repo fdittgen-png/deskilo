@@ -20,3 +20,7 @@ bool featureOn(Set<String>? keys, String key, {required bool byDefault}) =>
 /// The keys core asks about by name. A test pins each to its feature.
 const String formHelpHintsKey = 'formHelpHints';
 const String recordingPrivacyKey = 'recordingPrivacy';
+
+/// #2376 — the money feature offers the books printed from the postings
+/// only where the space keeps a book.
+const String accountingBookKey = 'accountingBook';

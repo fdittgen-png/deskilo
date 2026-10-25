@@ -99,9 +99,6 @@ class AccountingTarget {
   /// `unsupported` and blocked, never silently allowed.
   AccountingCapability get capability => switch (format) {
     final f? => capabilityOf(f),
-    null => AccountingCapability(
-      formatId: id,
-      state: QualificationState.unsupported,
-    ),
+    null => capabilityOfTarget(id),
   };
 }

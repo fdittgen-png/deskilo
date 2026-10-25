@@ -28,12 +28,14 @@ import '../domain/document_numbering.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/export_year.dart';
 import '../domain/fec.dart';
+import '../domain/fiscal_year.dart';
 import '../domain/fr_ereporting.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/posting.dart';
+import '../domain/report_data.dart';
 import '../domain/report_strings.dart';
 import '../domain/saf_t.dart';
 import '../domain/sage.dart';
@@ -42,6 +44,7 @@ import '../domain/vat_tax_point.dart';
 import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
+import 'accounting_export_fec.dart';
 import 'accounting_export_journal.dart';
 import 'datev_profile.dart';
 import 'e_invoice_identity.dart';
@@ -117,7 +120,7 @@ class AccountingExportRun {
 
   final chosen = await showAccountingExportSheet(
     context,
-    formats: formatsFor(country),
+    formats: exportFormatsOf(ref, country),
   );
   if (chosen == null || !context.mounted) return;
   format = chosen;
@@ -135,8 +138,6 @@ class AccountingExportRun {
   }
 
   now = ref.read(clockProvider).now();
-  // The fiscal year closes on 31 December of the latest invoiced year —
-  // the only close date the app can know.
   // #936 — the purchases side travels with the sales side, and a
   // development workspace's books are marked as such.
   development = workspace.environment != 'prod';
@@ -186,28 +187,33 @@ class AccountingExportRun {
         await _frEReporting();
       case 'audit_trail':
         await _auditTrail();
+      case 'general_ledger':
+      case 'trial_balance':
+      case 'journals':
+        await fecActions.bookReport(format.id, posted, letterhead: {'workspace': workspace.name,
+            'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace)});
       case 'generic_journal_csv':
         await exportGenericJournal(context, () async => writtenWith(posted!, journalCsvOf),
             save: (content) => save(content, named('journal')));
     }
   }
 
-  Future<void> save(String content, String fileName) async {
+  Future<void> save(String content, String fileName, [FiscalYear? period]) async {
     final bytes = Uint8List.fromList(utf8.encode(content));
     if (!context.mounted) return;
     await savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName);
     await ref.read(bookPeriodCommandProvider).logExport(workspace.id, formatId: format.id,
-        year: year, content: content, documents: exported.length);
+        year: year, content: content, documents: exported.length, period: period);
   }
+
+  FecExportActions get fecActions =>
+      FecExportActions(context, ref, (workspaceId: workspace.id, legalId: company.legalId, development: development));
 
   String named(String stem) => '${safeFileSlug('$stem ${workspace.name} $label')}.${format.extension}';
 
   Future<void> _fec() async {
     // #2365 — a local book's FEC is its postings, on its own chart.
-    if (posted case final journal?) {
-      return exportGenericJournal(context, () async => writtenWith(journal, postedFecOf), save: (content) =>
-          save(content, fecFileName(company.legalId, DateTime(year, 12, 31), development: development)));
-    }
+    if (posted case final journal?) return fecActions.exportPosted(journal, save: save);
     // The owner's own VAT account (0072) if they set one — the dialog
     // is where it can still be corrected.
     final accounts = await showFecAccountsDialog(
@@ -458,7 +464,6 @@ class AccountingExportRun {
         // #2365 — a local book's archive carries its posted FEC, the one
         // the FEC export writes; a role left unmapped stops the archive.
         if (posted case JournalBlocked(:final roles)) return AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
-        final local = switch (posted) { final JournalPosted p => p, _ => null };
         final yearInvoices = exported;
         // #1154 — the signature checks are independent server calls:
         // all of them in flight at once, not one round-trip per invoice.
@@ -495,20 +500,21 @@ class AccountingExportRun {
           workspaceName: workspace.name,
           source: books.revisions,
         ));
-        addArchiveFec(files, country, local != null ? postedFecOf(local) : buildFecFile(FecRequest(
+        final fecAccounts = workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount);
+        if (!context.mounted || !await fecActions.addYearFec(files, country: country, posted: posted, year: year,
+            documents: (thirdParties: {fecAccounts.customers}, fec: () => buildFecFile(FecRequest(
           invoices: yearInvoices,
           matches: matches,
           company: company,
-          accounts: workspace.vatAccount.isEmpty
-              ? const FecAccounts()
-              : FecAccounts(vat: workspace.vatAccount),
+          accounts: fecAccounts,
           lineText: (line) => invoiceLineText(words, line, association: association),
           ledger: ledger,
           memberNames: memberNames,
           repartitions: repartitions,
           taxPoints: taxPoints,
-        )));
-        if (!context.mounted) return;
+        )))) || !context.mounted) {
+          return;
+        }
         await savePdfToDownloads(
           context,
           ref,

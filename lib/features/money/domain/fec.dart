@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:meta/meta.dart';
 
 import '../../../core/time/date_text.dart';
 import '../../../core/time/workspace_time.dart';
@@ -16,8 +15,8 @@ export 'fec_accounts.dart';
 
 /// The 18 columns of the FEC, in the order the arrêté du 29 juillet 2013
 /// fixes them (BIC/IS variant). Order is not negotiable: the DGFiP's own
-/// reader positions by column.
-@visibleForTesting
+/// reader positions by column; the import contract checks a file against
+/// them.
 const List<String> fecColumns = [
   'JournalCode',
   'JournalLib',

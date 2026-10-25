@@ -300,8 +300,8 @@ class InvoicePdfTemplate {
     // #1002 — the period's month name and year, so a designed label can
     // read « Septembre 100 % » without the engine deciding the wording;
     // each line of `lines` also carries `kind`, `pct` and `month`.
-    'period_month',
-    'period_year',
+    'period_month', 'period_year',
+    'book_period', 'book_rows', 'book_total_debit', 'book_total_credit', // #2376
   ];
 
   /// #875 — the VALUE an absent placeholder takes.
@@ -326,7 +326,7 @@ class InvoicePdfTemplate {
   ];
 
   static const List<String> _listPlaceholders = [
-    'lines', 'vat', 'usage_records', 'vat_form_boxes', 'configuration_rows', 'vat_positions', 'vat_rate_totals',
+    'lines', 'vat', 'usage_records', 'vat_form_boxes', 'configuration_rows', 'vat_positions', 'vat_rate_totals', 'book_rows',
   ];
 
   static Map<String, Object?> get placeholderDefaults => {

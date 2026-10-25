@@ -37,6 +37,45 @@ authority. Widening one needs the authority's own spec in hand.
 | Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
 | Archive bundle | exchange | everywhere | a fiscal year as one zip |
 
+## The FEC as an import contract (#2376)
+
+French importers (Pennylane, Sage 100, Cegid, EBP) take over a client's
+entries from a FEC, so a local book's FEC is written for import as well as
+for the audit:
+
+- **Fiscal year.** The FEC covers the fiscal year of the book profile that
+  holds the export's latest document (start month and day from the
+  profile), and is named `<SIREN>FEC<closing day>.txt`. A year whose days
+  are not all inside closed book periods is **provisional**: the person is
+  told, and the archive names it `PROVISOIRE-…`. The FEC itself never
+  carries a comment: its first record is the 18 field names.
+- **Auxiliary accounts.** A customers or suppliers line keeps the collective
+  in `CompteNum` and names its party in `CompAuxNum` / `CompAuxLib`: the
+  collective's root and the member's or supplier's number in capitals
+  (`411M0001`, `40117`), at most 13 characters after the root (the `fec`
+  target's customer id rule). A party without a usable number stops the
+  file and is named.
+- **Currency.** An entry in another currency than the book's would be
+  written in the book's currency at the document's recorded rate, the
+  original in `Montantdevise` / `Idevise`. No rate is recorded with a
+  document yet, so such an entry stops the file and is named.
+- **Contract check.** Before the file is saved, `fec_import_contract.dart`
+  checks its bytes: UTF-8 without BOM, the header first, 18 tab-separated
+  fields, `0,00` amounts with one side per line, every entry balanced, one
+  date and piece per entry number, dates inside the year, `ValidDate` not
+  after the closing day, an auxiliary account on every third-party line,
+  `EcritureLet` with `DateLet` and each letter balanced on its third-party
+  account, `Montantdevise` with `Idevise`, accounts known to the chart. A
+  file that breaks it is not saved, and the rule is named.
+- **Archive.** A French archive carries the year's FEC under its own name
+  and `fec-manifest.txt` (status, fiscal year, sha256, the contract result
+  and the scope: the entries DesKilo posts, not the company FEC while other
+  books live elsewhere). A closed year's FEC is logged once in the export
+  log; a later archive must carry the same bytes, or it is not made.
+- **Books in the app.** The general ledger, the trial balance (general and
+  auxiliary) and the journals with their summary print from the same
+  postings, as report kinds of the designer.
+
 ## The target registry
 
 Every file and connection target is a descriptor in `accounting_format.dart`
@@ -56,8 +95,14 @@ reached and how far it is qualified. The table below is generated from it;
 | `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |
 | `accountant_csv` | DesKilo · Accountant CSV · format 2 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `generic_journal_csv` | DesKilo · Generic journal CSV · compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `general_ledger` | DesKilo · General ledger · PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `trial_balance` | DesKilo · Trial balance · general and auxiliary, PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `journals` | DesKilo · Journals · per journal and summary, PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `audit_trail` | DesKilo · Audit trail · CSV | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `bundle` | DesKilo · Fiscal-year archive · PDF/A-3 bundle | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `pennylane_api` | Pennylane · Pennylane · API v2 | api | documents | FR | implemented | Pennylane API v2, customer_invoices import and ledger_entries |
+| `cegid_quadra_ascii` | Cegid · Quadra · ASCII import | file | journal | FR | specificationNeeded | not named yet |
+| `ebp_import` | EBP · Comptabilité · import of entries | file | journal | FR | specificationNeeded | not named yet |
 <!-- END GENERATED TARGETS -->
 
 Write-offs are posted **gross**, as a loss, on the day they were given up:

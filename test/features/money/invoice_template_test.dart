@@ -156,6 +156,8 @@ void main() {
         'special_mentions',
         // #1002 — the month name and the year of the period.
         'period_month', 'period_year', //
+        // #2376 — the book reports.
+        'book_period', 'book_rows', 'book_total_debit', 'book_total_credit',
       ]);
     });
 

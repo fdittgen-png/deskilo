@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "journalFecPartyCode": "Le FEC exige un code client pour chaque tiers, jusqu'à 13 lettres et chiffres : attribuez d'abord un numéro de membre ou de fournisseur à : {names}",
+  "journalFecMissingRate": "Ces documents sont dans une autre devise que celle de la comptabilité et aucun taux de change n'est enregistré pour eux ; le FEC n'a pas été écrit : {documents}",
+  "fecContractFailed": "Le FEC ne respecte pas le contrat d'import ({rules}) et n'a pas été enregistré.",
+  "fecProvisional": "Cet exercice n'est pas clôturé : le FEC est provisoire et l'archive le conserve comme tel.",
+  "fecArchiveChanged": "Le FEC de l'exercice clôturé ne correspond plus à celui journalisé le {date} ; l'archive n'a pas été créée.",
+  "invoiceExportGeneralLedger": "Grand-livre (PDF, depuis la comptabilité)",
+  "invoiceExportTrialBalance": "Balance générale et auxiliaire (PDF, depuis la comptabilité)",
+  "invoiceExportJournals": "Journaux et journal centralisateur (PDF, depuis la comptabilité)"
+}
