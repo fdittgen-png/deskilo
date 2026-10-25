@@ -183,16 +183,12 @@ class _WorkspaceSettingsScreenState
       _countryCode = workspace.countryCode;
       _currency.text = workspace.currencyCode;
       _timezone.text = workspace.timezone;
-      // #486 — one draft per language; a workspace still on the legacy
-      // single template (0049) sees it in every language until it saves.
-      final legacy = workspace.invitationTemplate.trim();
-      final hasPerLocale = workspace.invitationTemplates.values
-          .any((t) => (t as String? ?? '').trim().isNotEmpty);
-      for (final lang in _languages.keys) {
-        _templateDrafts[lang] = hasPerLocale
-            ? ((workspace.invitationTemplates[lang] as String?) ?? '')
-            : legacy;
-      }
+      // #486 — one draft per language (invitationDraftsOf).
+      _templateDrafts.addAll(invitationDraftsOf(
+        workspace.invitationTemplates,
+        legacy: workspace.invitationTemplate,
+        languages: _languages.keys,
+      ));
       _defaultLocale = workspace.defaultLocale;
       _templateLang = _languages.containsKey(_defaultLocale)
           ? _defaultLocale
