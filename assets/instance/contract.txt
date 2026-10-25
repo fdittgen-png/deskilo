@@ -2476,7 +2476,7 @@ routine public.purchase_commitment_page_v1(p_workspace_id uuid, p_lease_id uuid,
 routine public.purchase_credit_paid(p_credit_id uuid) -> bigint | function | definer | stable | exec:service_role | body:a4613107ec97
 routine public.purchase_detail_v1(p_workspace_id uuid, p_purchase_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:38a877e212e3
 routine public.purchase_documents_guard() -> trigger | function | invoker | volatile | exec:service_role | body:ec4ccc997aab
-routine public.purchase_exchange_rate_write(p_workspace_id uuid, p_purchase_id uuid, p_member_id uuid, p_rate jsonb) -> document_exchange_rates | function | definer | volatile | exec:service_role | body:e46c56d24f3f
+routine public.purchase_exchange_rate_write(p_workspace_id uuid, p_purchase_id uuid, p_member_id uuid, p_rate jsonb) -> document_exchange_rates | function | definer | volatile | exec:service_role | body:8c9331e67a32
 routine public.purchase_expense_event_bridge() -> trigger | function | definer | volatile | exec:service_role | body:09e3276249cb
 routine public.purchase_expense_event_stamp() -> trigger | function | invoker | volatile | exec:service_role | body:10b0109747a5
 routine public.purchase_expense_event_state() -> trigger | function | definer | volatile | exec:service_role | body:f22428af16bf
@@ -2489,7 +2489,7 @@ routine public.purchase_obligation_sync(p_purchase_id uuid) -> void | function |
 routine public.purchase_obligations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:964677fdeeaa
 routine public.purchase_payables_page_v1(p_workspace_id uuid, p_creditor_kind text, p_limit integer, p_after_created timestamp with time zone, p_after_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e2856f7dc52f
 routine public.purchase_place_name(p_line purchase_lines) -> text | function | definer | stable | exec:service_role | body:9648f5134ef4
-routine public.purchase_rate_required() -> trigger | function | definer | volatile | exec:service_role | body:a6d5dce1a32d
+routine public.purchase_rate_required() -> trigger | function | definer | volatile | exec:service_role | body:362845d01e60
 routine public.purchase_request_begin(p_workspace_id uuid, p_request_id uuid, p_operation text, p_digest text) -> jsonb | function | definer | volatile | exec:service_role | body:e7187ea83fc1
 routine public.purchase_request_end(p_workspace_id uuid, p_request_id uuid, p_operation text, p_digest text, p_result jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d966beee0b55
 routine public.purchase_resource_site(p_workspace_id uuid, p_kind text, p_id uuid) -> TABLE(found boolean, site_id uuid) | function | definer | stable | exec:service_role | body:da2892f9638b
@@ -2626,7 +2626,7 @@ routine public.save_book_profile(p_workspace_id uuid, p_issuer_site_id uuid, p_a
 routine public.save_cost_allocation_rule_v1(p_workspace_id uuid, p_rule_id uuid, p_expected_revision integer, p_rule jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9938c7e70922
 routine public.save_mcp_policy(p_workspace_id uuid, p_expected_revision integer, p_mutation_id uuid, p_enabled boolean, p_operations text[], p_target_ceiling text, p_allowed_clients text[], p_optional_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:119eebad959d
 routine public.save_premises_lease_v1(p_workspace_id uuid, p_lease_id uuid, p_revision integer, p_payload jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:61eb984039bb
-routine public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1a5d54eda098
+routine public.save_purchase_draft_v1(p_workspace_id uuid, p_request_id uuid, p_expected_revision integer, p_payload jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:68d6e1c38dc4
 routine public.save_room_rental_v1(p_workspace_id uuid, p_office_id uuid, p_supplier_id uuid, p_available_from date, p_available_until date, p_cost_kind text, p_cost_cents bigint, p_period text, p_status text, p_document_id uuid, p_revision integer, p_audience_all boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:558593482042
 routine public.save_setup_journey(p_workspace_id uuid, p_answers jsonb, p_levels jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3ea7b7ed1f4c
 routine public.save_setup_step_draft(p_workspace_id uuid, p_step text, p_payload jsonb, p_expected_version integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fdb127d50874
@@ -2735,7 +2735,7 @@ routine public.setup_closure_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | 
 routine public.setup_current_levels(p_flags jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:b6d27e138549
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:370af23cd60d
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:2d492dc6410d
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e6938ac89e2d
 routine public.setup_numbering_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c64909ab9fba
