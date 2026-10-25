@@ -80,4 +80,4 @@ $fn$;
 revoke execute on function public.payment_test_check(uuid) from public, anon;
 grant execute on function public.payment_test_check(uuid) to authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(580);
