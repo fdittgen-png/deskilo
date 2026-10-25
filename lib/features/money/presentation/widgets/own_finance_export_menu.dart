@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2557 C3 — Me › Finances: one export entry per workspace my documents
-// come from. Each entry writes that workspace's documents, as the overview
+// or my payments come from. Each entry writes that workspace's documents, as the overview
 // read them on its host, and (C7) all its payments to one CSV file, and
 // hands it to the platform's truthful delivery. A file is never a payment or a delivery confirmation,
 // and no document is changed by exporting it.
@@ -12,8 +12,10 @@ import '../../../../core/files/file_delivery.dart';
 import '../../../../core/files/file_delivery_notice.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
+import '../../domain/account_activity.dart';
 import '../../domain/finance_overview.dart';
 import '../../domain/own_finance_csv.dart';
+import '../../providers/account_activity_providers.dart';
 import '../../providers/finance_overview_provider.dart';
 
 class OwnFinanceExportMenu extends ConsumerWidget {
@@ -62,7 +64,12 @@ class OwnFinanceExportMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspaces = overview.workspaces;
+    // A workspace I only paid in (no invoice) has its entry too: its
+    // payments on a connected host, or on the personal home.
+    final home = ref
+        .watch(accountActivityProvider(AccountActivityKind.payments))
+        .value;
+    final workspaces = overview.workspacesWith(home ?? const []);
     if (workspaces.isEmpty) return const SizedBox.shrink();
     return PopupMenuButton<(String, String)>(
       key: const ValueKey('my-finances-export'),

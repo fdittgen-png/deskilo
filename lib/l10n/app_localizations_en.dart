@@ -7827,6 +7827,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesPayments => 'Payments';
 
   @override
+  String financesPaymentsMoreFailed(String host) {
+    return '$host did not answer for more payments. Tap to try again.';
+  }
+
+  @override
+  String financesPaymentsMoreFrom(String host) {
+    return 'More payments from $host';
+  }
+
+  @override
   String get financesPeriodAll => 'All periods';
 
   @override
@@ -13012,9 +13022,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meDataWorkspacesTitle => 'Your records in each workspace';
 
   @override
-  String meFinanceGlanceOwed(String amount) {
-    return 'To pay: $amount';
-  }
+  String get meFinanceGlanceOwed => 'To pay:';
 
   @override
   String get meFindSpace => 'Find a space';

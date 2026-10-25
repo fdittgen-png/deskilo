@@ -298,11 +298,8 @@ class FinanceGlance extends ConsumerWidget {
     final now = ref.watch(clockProvider).now();
     final overdue = data.outstanding.where((i) => i.overdueAt(now)).length;
     final scheme = Theme.of(context).colorScheme;
-    final amount = [
-      for (final e in data.owedByCurrency.entries)
-        moneyFormat(e.key).formatMinor(e.value),
-    ].join(' · ');
     final tone = overdue > 0 ? scheme.error : scheme.primary;
+    final strong = Theme.of(context).textTheme.titleSmall?.strong;
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.md),
       child: Material(
@@ -326,9 +323,28 @@ class FinanceGlance extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        l10n.meFinanceGlanceOwed(amount),
-                        style: Theme.of(context).textTheme.titleSmall?.strong,
+                      // #2552: each amount is private, masked until
+                      // revealed, as on the Overview and Finances.
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: AppSpacing.xs,
+                        children: [
+                          Text(l10n.meFinanceGlanceOwed, style: strong),
+                          for (final e in data.owedByCurrency.entries)
+                            PrivateValue(
+                              revealKey: ValueKey(
+                                'me-home-finance-glance-amount-${e.key}',
+                              ),
+                              maskedText: l10n.financesAmountMasked(e.key),
+                              hiddenLabel: l10n.financesAmountHidden,
+                              showLabel: l10n.financesShowAmount,
+                              hideLabel: l10n.financesHideAmount,
+                              child: Text(
+                                moneyFormat(e.key).formatMinor(e.value),
+                                style: strong,
+                              ),
+                            ),
+                        ],
                       ),
                       if (overdue > 0)
                         Text(

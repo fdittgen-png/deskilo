@@ -7882,6 +7882,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesPayments => 'Pagos';
 
   @override
+  String financesPaymentsMoreFailed(String host) {
+    return '$host no respondió con más pagos. Toque para volver a intentarlo.';
+  }
+
+  @override
+  String financesPaymentsMoreFrom(String host) {
+    return 'Más pagos de $host';
+  }
+
+  @override
   String get financesPeriodAll => 'Todos los periodos';
 
   @override
@@ -13101,9 +13111,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meDataWorkspacesTitle => 'Sus datos en cada espacio';
 
   @override
-  String meFinanceGlanceOwed(String amount) {
-    return 'A pagar: $amount';
-  }
+  String get meFinanceGlanceOwed => 'A pagar:';
 
   @override
   String get meFindSpace => 'Buscar un espacio';

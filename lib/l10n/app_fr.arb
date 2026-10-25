@@ -5537,6 +5537,22 @@
   "@financesPayments": {
     "description": "Me › Finances"
   },
+  "financesPaymentsMoreFailed": "{host} n’a pas répondu pour d’autres paiements. Touchez pour réessayer.",
+  "@financesPaymentsMoreFailed": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaymentsMoreFrom": "Plus de paiements de {host}",
+  "@financesPaymentsMoreFrom": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "financesPeriodAll": "Toutes les périodes",
   "financesRemindedTimes": "Relancée ×{count}",
   "@financesRemindedTimes": {
@@ -8713,13 +8729,9 @@
   "meDataWorkspacesFailed": "Les espaces de votre compte n’ont pas pu être lus. Rien n’a été exporté.",
   "meDataWorkspacesScope": "Chaque espace exporte ce qu’il détient sur vous — adhésion, réservations, compte et factures — depuis son propre serveur, un fichier par espace. La part de votre compte personnel est la carte ci-dessus.",
   "meDataWorkspacesTitle": "Vos données dans chaque espace",
-  "meFinanceGlanceOwed": "À payer : {amount}",
+  "meFinanceGlanceOwed": "À payer :",
   "@meFinanceGlanceOwed": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
+    "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
   "meFindSpace": "Trouver un espace",
   "meGroupAdd": "Nouveau groupe",

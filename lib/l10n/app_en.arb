@@ -8990,6 +8990,24 @@
   "@financesPayments": {
     "description": "Me › Finances"
   },
+  "financesPaymentsMoreFailed": "{host} did not answer for more payments. Tap to try again.",
+  "@financesPaymentsMoreFailed": {
+    "description": "#2557 C7 Me › Finances › Payments: the next page of one host did not answer; the rows shown stay",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaymentsMoreFrom": "More payments from {host}",
+  "@financesPaymentsMoreFrom": {
+    "description": "#2557 C7 Me › Finances › Payments: a connected host whose first page was full offers its next page",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "financesPeriodAll": "All periods",
   "@financesPeriodAll": {
     "description": "#2557 C4 Me › Finances: the period filter, every year."
@@ -15168,13 +15186,9 @@
   "@meDataWorkspacesTitle": {
     "description": "#2557 C3 the per-workspace export card title."
   },
-  "meFinanceGlanceOwed": "To pay: {amount}",
+  "meFinanceGlanceOwed": "To pay:",
   "@meFinanceGlanceOwed": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
+    "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
   "meFindSpace": "Find a space",
   "@meFindSpace": {

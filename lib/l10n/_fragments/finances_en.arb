@@ -116,5 +116,23 @@
         "type": "String"
       }
     }
+  },
+  "financesPaymentsMoreFrom": "More payments from {host}",
+  "@financesPaymentsMoreFrom": {
+    "description": "#2557 C7 Me › Finances › Payments: a connected host whose first page was full offers its next page",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaymentsMoreFailed": "{host} did not answer for more payments. Tap to try again.",
+  "@financesPaymentsMoreFailed": {
+    "description": "#2557 C7 Me › Finances › Payments: the next page of one host did not answer; the rows shown stay",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
   }
 }

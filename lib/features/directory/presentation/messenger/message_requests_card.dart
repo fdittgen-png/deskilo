@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/private_value.dart';
 import '../../providers/blocks_providers.dart';
 import '../../providers/messenger_providers.dart';
 import 'block_person.dart';
@@ -58,7 +59,16 @@ class MessageRequestsCard extends ConsumerWidget {
                 r.name.isEmpty ? r.userId : r.name,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              Text(r.body, maxLines: 3, overflow: TextOverflow.ellipsis),
+              // #2552: the request's words are private, as in the inbox.
+              PrivateValue(
+                onlyWhereOffered: true,
+                revealKey: ValueKey('request-body-reveal-${r.conversationId}'),
+                child: Text(
+                  r.body,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               Wrap(
                 spacing: 8,
                 children: [

@@ -32,7 +32,14 @@ void main() {
       find.byKey(const ValueKey('me-home-finance-glance')),
       findsOneWidget,
     );
+    // #2552: the amount is private, masked until revealed.
+    expect(find.textContaining('150'), findsNothing);
+    await tester.tap(
+      find.byKey(const ValueKey('me-home-finance-glance-amount-EUR')),
+    );
+    await tester.pumpAndSettle();
     expect(find.textContaining('150'), findsOneWidget, reason: '120 + 30');
+    expect(router.state.uri.path, '/me', reason: 'revealing is not opening');
     expect(find.text('1 overdue'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('me-home-finance-glance')));
     await tester.pumpAndSettle();

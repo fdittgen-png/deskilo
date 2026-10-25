@@ -12,6 +12,7 @@ import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/privacy/private_values.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/presentation/messenger/inbox_header.dart';
+import 'package:deskilo/features/directory/presentation/messenger/message_requests_card.dart';
 import 'package:deskilo/features/me/domain/visibility.dart';
 import 'package:deskilo/features/me/presentation/visibility_preview.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -156,7 +157,134 @@ Future<void> _pumpOverview(
   await goTo(tester, router, '/me');
 }
 
+Future<void> _pumpRequests(
+  WidgetTester tester, {
+  PrivateValuesPolicy? policy,
+  String? device,
+}) async {
+  final messenger = FakeMessengerRepository()
+    ..requests.add(
+      const MessageRequest(
+        conversationId: 'c1',
+        userId: 'u1',
+        name: 'Ana',
+        body: 'Hello $_sentinel',
+      ),
+    );
+  await pumpApp(
+    tester,
+    const Scaffold(body: SingleChildScrollView(child: MessageRequestsCard())),
+    overrides: [
+      ...standardTestOverrides(messenger: messenger),
+      ..._privacy(policy, device: device),
+    ],
+  );
+  await tester.pumpAndSettle();
+}
+
+/// The legacy home (personal shell off) with an amount owed in two
+/// currencies.
+Future<void> _pumpGlance(
+  WidgetTester tester, {
+  PrivateValuesPolicy? policy,
+  String? device,
+}) async {
+  final documents = FakeAccountActivityRepository()
+    ..financeOverview = FinanceOverview(
+      invoices: [
+        invoice('eur', total: 471100, due: DateTime(2999)),
+        invoice('chf', ws: 'Two', currency: 'CHF', total: 120000,
+            due: DateTime(2999)),
+      ],
+    );
+  final router = await pumpMeApp(
+    tester,
+    workspace: twoSpaces(),
+    accountActivity: documents,
+    size: const Size(420, 2600),
+    extraOverrides: [
+      personalShellEnabledProvider.overrideWithValue(false),
+      ..._privacy(policy, device: device),
+    ],
+  );
+  await goTo(tester, router, '/me');
+}
+
 void main() {
+  group('the message request text', () {
+    testWidgets('offered and no choice yet: masked, absent from text and '
+        'semantics; the reveal shows it; the sender stays', (tester) async {
+      final semantics = tester.ensureSemantics();
+      await _pumpRequests(tester, policy: _offered);
+      expect(_key('message-requests'), findsOneWidget);
+      expect(find.text('Ana'), findsOneWidget, reason: 'a name is not masked');
+      expect(_key('request-accept-c1'), findsOneWidget);
+      await _maskedThenRevealed(
+        tester,
+        needle: _sentinel,
+        reveal: 'request-body-reveal-c1',
+        hiddenLabel: 'Hidden',
+      );
+      semantics.dispose();
+    });
+
+    testWidgets('the choice to show is followed: plain, no reveal', (
+      tester,
+    ) async {
+      await _pumpRequests(
+        tester,
+        policy: _offered,
+        device: PrivateValuesChoice.shown,
+      );
+      expect(find.text('Hello $_sentinel'), findsOneWidget);
+      expect(_key('request-body-reveal-c1'), findsNothing);
+    });
+
+    testWidgets('not offered: the text reads as before', (tester) async {
+      await _pumpRequests(tester);
+      expect(find.text('Hello $_sentinel'), findsOneWidget);
+      expect(_key('request-body-reveal-c1'), findsNothing);
+    });
+  });
+
+  group('the legacy home line of what I owe', () {
+    testWidgets('masked even where the choice is not offered, one per '
+        'currency, absent from text and semantics; each reveal shows its '
+        'own', (tester) async {
+      final semantics = tester.ensureSemantics();
+      await _pumpGlance(tester);
+      expect(_key('me-home-tab-finance-glance-owed'), findsOneWidget);
+      expect(find.text('To pay:'), findsOneWidget);
+      expect(find.text('EUR ••••'), findsOneWidget);
+      expect(find.text('CHF ••••'), findsOneWidget);
+      expect(find.textContaining('1,200'), findsNothing);
+      await _maskedThenRevealed(
+        tester,
+        needle: '4,711',
+        reveal: 'me-home-finance-glance-amount-EUR',
+        hiddenLabel: 'Amount hidden',
+      );
+      expect(find.textContaining('1,200'), findsNothing);
+      await _maskedThenRevealed(
+        tester,
+        needle: '1,200',
+        reveal: 'me-home-finance-glance-amount-CHF',
+        hiddenLabel: 'Amount hidden',
+      );
+      semantics.dispose();
+    });
+
+    testWidgets('the choice to show is followed', (tester) async {
+      await _pumpGlance(
+        tester,
+        policy: _offered,
+        device: PrivateValuesChoice.shown,
+      );
+      expect(find.textContaining('4,711'), findsOneWidget);
+      expect(_key('me-home-finance-glance-amount-EUR'), findsNothing);
+    });
+  });
+
   group('the inbox preview', () {
     testWidgets('offered and no choice yet: masked, absent from text and '
         'semantics; the reveal shows it', (tester) async {
