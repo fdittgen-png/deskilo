@@ -12,8 +12,10 @@
 // keeps working), and every other personal-shell address leads to the legacy
 // screen that holds the same thing. The flag is WATCHED here: the router is
 // rebuilt when it flips, which is the one way a route table changes.
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/auth/providers/auth_providers.dart';
 import '../../features/directory/domain/conversation_link.dart';
 import '../../features/directory/presentation/account_messenger_screen.dart';
 import '../../features/directory/presentation/connections_screen.dart';
@@ -23,8 +25,10 @@ import '../../features/me/presentation/me_home_tab.dart';
 import '../../features/me/presentation/me_messages_tab.dart';
 import '../../features/me/presentation/me_personal_shell.dart';
 import '../../features/me/presentation/me_shell.dart';
+import '../../features/me/presentation/personal_branch_storage.dart';
 import '../../features/me/presentation/personal_spaces_view.dart';
 import '../../features/me/presentation/public_person_screen.dart';
+import '../../features/me/providers/personal_return_providers.dart';
 import '../../features/me/providers/personal_shell_providers.dart';
 import '../../features/money/presentation/screens/my_finances_screen.dart';
 import '../../features/profile/presentation/screens/profiles_screen.dart';
@@ -35,7 +39,7 @@ import 'me_adapters.dart';
 /// Routes of the me feature.
 List<RouteBase> meRoutes(RouteEnv env) => [
       if (env.ref.watch(personalShellEnabledProvider))
-        _personalShell()
+        _personalShell(env)
       else
         ..._legacyMe(),
       GoRoute(
@@ -99,9 +103,25 @@ List<RouteBase> _legacyMe() => [
       ),
     ];
 
+/// A destination's page, keeping its scroll offsets beyond the shell.
+PersonalBranchStorage _kept(MeTab tab, Widget page) =>
+    PersonalBranchStorage(branch: tab.wire, child: page);
+
+/// Me's bare home, reached again after a stay in a space, lands where the
+/// person entered the space from (personal_return_providers.dart).
+String? _resume(RouteEnv env, GoRouterState state) {
+  final uri = state.uri;
+  if (!env.mounted) return null;
+  if (uri.path != MeTab.home.path || uri.query.isNotEmpty) return null;
+  return env.ref
+      .read(personalReturnProvider)
+      .resumeFor(env.ref.read(authStateProvider).value);
+}
+
 /// The personal shell: five branches, the account utility under Overview,
 /// the conversation pages under Messages.
-StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
+StatefulShellRoute _personalShell(RouteEnv env) =>
+    StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) => MePersonalShell(
         navigationShell: navigationShell,
         path: state.uri.path,
@@ -111,9 +131,12 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
           routes: [
             GoRoute(
               path: MeTab.home.path,
-              // A legacy `tab` names its destination.
-              redirect: (context, state) => personalShellAddressOf(state.uri),
-              builder: (context, state) => const MeHomeTab(),
+              // A legacy `tab` names its destination; a return from a space
+              // the place it was entered from.
+              redirect: (context, state) =>
+                  personalShellAddressOf(state.uri) ?? _resume(env, state),
+              builder: (context, state) =>
+                  _kept(MeTab.home, const MeHomeTab()),
               routes: [
                 GoRoute(
                   path: 'account',
@@ -134,7 +157,8 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
             GoRoute(
               path: MeTab.spaces.path,
               // #2554 — every space my account names, by its host.
-              builder: (context, state) => const PersonalSpacesView(),
+              builder: (context, state) =>
+                  _kept(MeTab.spaces, const PersonalSpacesView()),
               routes: [
                 // This server's spaces to manage: default, home site,
                 // environments, the platform tools.
@@ -150,8 +174,8 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
           routes: [
             GoRoute(
               path: MeTab.discover.path,
-              builder: (context, state) =>
-                  const DirectoryScreen(embedded: true),
+              builder: (context, state) => _kept(
+                  MeTab.discover, const DirectoryScreen(embedded: true)),
             ),
           ],
         ),
@@ -161,8 +185,11 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
               path: MeTab.messages.path,
               // #2556 — `?conversation=` selects one once its source says
               // it is this person's (ConversationLink).
-              builder: (context, state) => MeMessagesTab(
-                link: state.uri.queryParameters[ConversationLink.parameter],
+              builder: (context, state) => _kept(
+                MeTab.messages,
+                MeMessagesTab(
+                  link: state.uri.queryParameters[ConversationLink.parameter],
+                ),
               ),
               routes: [
                 // `/me/messages/thread`, `/inquiries`, `/starred` and
@@ -194,12 +221,15 @@ StatefulShellRoute _personalShell() => StatefulShellRoute.indexedStack(
           routes: [
             GoRoute(
               path: MeTab.data.path,
-              builder: (context, state) => MeDataTab(
-                view: MeDataView.fromQuery(state.uri.queryParameters['view']),
-                workspaceId: state.uri.queryParameters['workspace'],
-                finances: MyFinancesScreen(
-                    workspaceId: state.uri.queryParameters['workspace']),
-                reservations: const MyReservationsBody(),
+              builder: (context, state) => _kept(
+                MeTab.data,
+                MeDataTab(
+                  view: MeDataView.fromQuery(state.uri.queryParameters['view']),
+                  workspaceId: state.uri.queryParameters['workspace'],
+                  finances: MyFinancesScreen(
+                      workspaceId: state.uri.queryParameters['workspace']),
+                  reservations: const MyReservationsBody(),
+                ),
               ),
             ),
           ],

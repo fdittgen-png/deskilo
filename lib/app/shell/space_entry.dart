@@ -24,6 +24,8 @@ import 'package:go_router/go_router.dart';
 import '../../core/motion/motion.dart';
 import '../../core/theme/app_radius.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../features/auth/providers/auth_providers.dart';
+import '../../features/me/providers/personal_return_providers.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/domain/workspace_branding.dart';
 import '../../features/workspace/presentation/widgets/brand_swatch.dart';
@@ -51,6 +53,10 @@ Future<void> enterSpace(
   final logo = !connected && brandingOn(space)
       ? ref.read(workspaceEmblemOfProvider(space.id)).value
       : null;
+  // The personal place this space is entered from is where Me resumes.
+  ref
+      .read(personalReturnProvider)
+      .leave(ref.read(authStateProvider).value, router.state.uri);
   if (!connected) {
     await ref.read(activeWorkspaceIdProvider.notifier).select(space.id);
   }
