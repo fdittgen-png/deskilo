@@ -68,4 +68,4 @@ grant execute on function public.set_expense_schedule_supplier(uuid, uuid) to au
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(585);
