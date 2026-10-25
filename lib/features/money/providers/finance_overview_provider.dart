@@ -11,6 +11,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../domain/account_activity.dart';
 import '../domain/finance_hosts.dart';
 import '../domain/finance_overview.dart';
+import '../domain/finance_sources.dart';
 import 'account_activity_providers.dart';
 import 'finance_host_providers.dart';
 
@@ -29,7 +30,8 @@ part 'finance_overview_provider.g.dart';
 /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
 /// C6: each host answers for my payments and reminders as well as my
 /// invoices; the selected workspace's host retries alone; a refresh waits
-/// for every host ([settled]).
+/// for every host ([settled]). C7: a file of one workspace reads every page
+/// of its payments on that workspace's own source ([paymentsOf]).
 @Riverpod(name: 'financeOverviewProvider')
 class FinanceOverviewComposer extends _$FinanceOverviewComposer {
   int _generation = 0;
@@ -242,6 +244,64 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
           ? overview.hostSettled(host, FinanceHostStatus.failed)
           : overview.hostSettled(host, FinanceHostStatus.answered, answer),
     );
+  }
+
+  /// C7 — every payment of [workspaceId], every page, read again on the
+  /// source that answered its documents in this view: the personal home,
+  /// its connected host (bounded and timed like its overview) or the
+  /// selected workspace's host. A source that cannot answer is named
+  /// ([OwnPayments.unavailable]); null when the account changed or the view
+  /// was rebuilt meanwhile, so nothing read for one account is written to
+  /// a file under another.
+  Future<OwnPayments?> paymentsOf(String workspaceId) async {
+    final generation = _generation;
+    final overview = state.value;
+    if (overview == null) return null;
+    final source = overview.sourceOf(workspaceId);
+    final page = _pageOf(source);
+    List<AccountActivity>? rows;
+    try {
+      if (page != null) rows = await everyActivityPage(page);
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn(
+        'money',
+        'my payments of one workspace could not be read for a file',
+        error: e,
+        stackTrace: st,
+      );
+    }
+    if (!_current(generation)) return null;
+    return rows == null
+        ? OwnPayments.unavailable(source)
+        : OwnPayments(source, [
+            for (final p in rows)
+              if (p.workspaceId == workspaceId) p,
+          ]);
+  }
+
+  /// How one page of my payments is read on [source] in this build; null
+  /// when there is nothing to read it with (its client refused, the limits
+  /// unread).
+  Future<List<AccountActivity>> Function(ActivityCursor?)? _pageOf(
+    FinanceSource source,
+  ) {
+    const kind = AccountActivityKind.payments;
+    switch (source) {
+      case HomeFinanceSource():
+        final home = ref.read(accountActivityRepositoryProvider);
+        return (before) => home.list(kind, before: before);
+      case HostFinanceSource(:final host):
+        final reads = _reads;
+        if (reads == null) return null;
+        final reader = ref.read(financeHostReaderProvider);
+        return (before) => reads.run(
+          () => reader.activity(host, kind, before: before).timeout(_timeout),
+        );
+      case SelectedFinanceSource(:final origin):
+        final selected = _selectedRepo;
+        if (origin != _selectedSource || selected == null) return null;
+        return (before) => selected.list(kind, before: before);
+    }
   }
 
   /// Reads the connected host [installationId] again, when it failed; the

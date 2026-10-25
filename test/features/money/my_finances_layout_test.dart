@@ -163,7 +163,7 @@ void main() {
       );
       expect(rows, hasLength(3));
       expect(rows[1], startsWith('"INV-1"'));
-      expect(rows[2], '"# unavailable_source","two.example",,,,,,,,,');
+      expect(rows[2], '"# unavailable_source","two.example",,,,,,,,,,,,,,');
     });
 
     test('every host answered: no note row', () {

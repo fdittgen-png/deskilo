@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #1791: history shows every owned workspace and original currency; retry,
 // pagination and logout must not lose records or expose another account's view.
-import 'package:deskilo/core/backend/backend_settings.dart';
-import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/personal_preferences_repository.dart';
 import 'package:deskilo/features/money/domain/account_activity.dart';
+import 'package:deskilo/features/money/domain/finance_hosts.dart';
+import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/presentation/screens/account_activity_screen.dart';
-import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/features/money/providers/finance_host_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -25,6 +25,26 @@ AccountActivity entry(int number, {String currency = 'EUR'}) => AccountActivity(
   status: 'issued',
   amountCents: 1200,
 );
+
+/// Connected hosts answering their history pages; one not in [rows] is
+/// down.
+class _Hosts implements FinanceHostReader {
+  _Hosts(this.rows);
+
+  final Map<String, List<AccountActivity>> rows;
+
+  @override
+  Future<FinanceOverview> overview(FinanceHost host) async =>
+      const FinanceOverview();
+
+  @override
+  Future<List<AccountActivity>> activity(
+    FinanceHost host,
+    AccountActivityKind kind, {
+    ActivityCursor? before,
+  }) async =>
+      rows[host.installationId] ?? (throw StateError('offline'));
+}
 
 Future<void> showHistory(
   WidgetTester tester,
@@ -52,26 +72,30 @@ void main() {
               auth: auth,
               accountActivity: FakeAccountActivityRepository()
                 ..unavailable = true,
-              connectedSources: [
-                for (final host in ['one', 'two'])
-                  ConnectedInstallation(
-                    endpoint: BackendEndpoint(
-                      'https://$host.example',
-                      'sb_publishable_fixture',
-                    ),
-                    account: host,
-                    installationId: host,
-                  ),
+            ),
+            financeHostsProvider.overrideWith(
+              (ref) async => const [
+                FinanceHost(
+                  installationId: 'one',
+                  workspaceIds: ['w1'],
+                  labels: ['one.example'],
+                ),
+                FinanceHost(
+                  installationId: 'two',
+                  workspaceIds: ['w2'],
+                  labels: ['two.example'],
+                ),
               ],
             ),
-            connectedAccountActivityProvider(
-              'https://one.example',
-              AccountActivityKind.invoices,
-            ).overrideWith((ref) async => [entry(99, currency: 'USD')]),
-            connectedAccountActivityProvider(
-              'https://two.example',
-              AccountActivityKind.invoices,
-            ).overrideWith((ref) async => throw StateError('offline')),
+            financeHostReaderProvider.overrideWithValue(
+              _Hosts({'one': [entry(99, currency: 'USD')]}),
+            ),
+            financeReadLimitsProvider.overrideWith(
+              (ref) async => const FinanceReadLimits(
+                concurrency: 2,
+                timeout: Duration(seconds: 5),
+              ),
+            ),
         ],
       );
       await tester.pumpAndSettle();

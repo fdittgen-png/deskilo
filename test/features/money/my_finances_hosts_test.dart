@@ -67,6 +67,13 @@ class _Reader implements FinanceHostReader {
       running--;
     }
   }
+
+  @override
+  Future<List<AccountActivity>> activity(
+    FinanceHost host,
+    AccountActivityKind kind, {
+    ActivityCursor? before,
+  }) async => const [];
 }
 
 const _here = FinanceHost(
@@ -178,7 +185,7 @@ void main() {
     );
     expect(
       ownFinanceCsvLines(container.read(financeOverviewProvider).value!),
-      contains('"# unavailable_source","Nice",,,,,,,,,'),
+      contains('"# unavailable_source","Nice",,,,,,,,,,,,,,'),
       reason: 'the file says which host it lacks',
     );
 
