@@ -167,5 +167,13 @@
   "supplierFieldEdited": "Editado por usted",
   "@supplierFieldEdited": {
     "description": "#2863 supplier lookup"
-  }
+  },
+  "supplierNameMissing": "Un proveedor necesita un nombre.",
+  "supplierSaving": "Guardando el proveedor…",
+  "supplierSimilarName": "Ya existe un proveedor con el mismo nombre: {supplier}. Compruebe que no se trata de la misma empresa; aun así puede guardar.",
+  "suppliersSavedOpen": "Abrir",
+  "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Espera de la búsqueda de proveedores (segundos)",
+  "settingHintPurchaseSupplierLookupTimeoutSeconds": "Cuánto espera el servidor al registro de empresas (VIES) antes de que una búsqueda de proveedor se considere agotada. Se conserva lo que usted escribió y puede volver a intentarlo o continuar a mano.",
+  "settingLabelPurchaseSupplierLookupPerMinute": "Búsquedas de proveedores por persona y minuto",
+  "settingHintPurchaseSupplierLookupPerMinute": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor. Por encima, no se envía nada al registro y la búsqueda se responde como ocupada."
 }

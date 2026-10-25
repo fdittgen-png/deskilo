@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,6 +13,7 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/supplier.dart';
 import '../../providers/supplier_providers.dart';
+import 'supplier_bank_dialog.dart';
 import 'supplier_dialogs.dart';
 
 /// #2567 — opens the suppliers of [workspaceId]. The caller decides when to
@@ -52,32 +55,46 @@ class SuppliersView extends ConsumerWidget {
     WidgetRef ref,
     Supplier? supplier,
   ) async {
+    final command = ref.read(supplierCommandProvider);
     final result = await showSupplierDialog(
       context,
       supplier,
       lookupWorkspaceId: lookupOn ? workspaceId : null,
       existing: ref.read(suppliersProvider(workspaceId)).value ?? const [],
+      onSave: (draft) => command.save(workspaceId, draft),
     );
     if (result == null || !context.mounted) return;
-    // The lookup met a supplier already there: edit that one, create none.
-    if (result is SupplierDialogOpenExisting) {
-      return _edit(context, ref, result.supplier);
+    switch (result) {
+      // The lookup or the form met a supplier already there: edit that
+      // one, create none.
+      case SupplierDialogOpenExisting(:final supplier):
+        return _edit(context, ref, supplier);
+      case SupplierDialogSaved(:final id):
+        _refresh(ref);
+        final l10n = context.l10n;
+        AppSnack.success(
+          context,
+          l10n.suppliersSaved,
+          action: SnackBarAction(
+            key: const ValueKey('supplier-saved-open'),
+            label: l10n.suppliersSavedOpen,
+            onPressed: () => unawaited(_openSaved(context, ref, id)),
+          ),
+        );
     }
-    final draft = (result as SupplierDialogSave).draft;
-    final l10n = context.l10n;
-    String? saved;
-    final ok = await runGuarded(
-      context,
-      domain: 'money',
-      message: 'supplier save failed',
-      errorText: l10n.suppliersRefused,
-      action: () async => saved = await ref
-          .read(supplierCommandProvider)
-          .save(workspaceId, draft),
-    );
-    if (!ok || saved == null || !context.mounted) return;
-    _refresh(ref);
-    AppSnack.success(context, l10n.suppliersSaved);
+  }
+
+  /// Back to the supplier just saved, from the success notice.
+  Future<void> _openSaved(
+    BuildContext context,
+    WidgetRef ref,
+    String id,
+  ) async {
+    final suppliers = await ref.read(suppliersProvider(workspaceId).future);
+    if (!context.mounted) return;
+    for (final s in suppliers) {
+      if (s.id == id) return _edit(context, ref, s);
+    }
   }
 
   Future<void> _archive(BuildContext context, WidgetRef ref, Supplier s) async {

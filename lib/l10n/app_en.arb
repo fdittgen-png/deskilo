@@ -23188,6 +23188,14 @@
   "@settingHintPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingHintPurchaseSupplierLookupPerMinute": "The most supplier lookups one person may make per minute on this server. Over the limit nothing is sent to the registry and the lookup is answered as busy.",
+  "@settingHintPurchaseSupplierLookupPerMinute": {
+    "description": "#2863 supplier lookup"
+  },
+  "settingHintPurchaseSupplierLookupTimeoutSeconds": "How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.",
+  "@settingHintPurchaseSupplierLookupTimeoutSeconds": {
+    "description": "#2863 supplier lookup"
+  },
   "settingHintReadinessRecentExportDays": "Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -23375,6 +23383,14 @@
   "settingLabelPurchaseSingleApproval": "Bills one person may approve below (currency units)",
   "@settingLabelPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
+  },
+  "settingLabelPurchaseSupplierLookupPerMinute": "Supplier lookups per person per minute",
+  "@settingLabelPurchaseSupplierLookupPerMinute": {
+    "description": "#2863 supplier lookup"
+  },
+  "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Supplier lookup wait (seconds)",
+  "@settingLabelPurchaseSupplierLookupTimeoutSeconds": {
+    "description": "#2863 supplier lookup"
   },
   "settingLabelReadinessRecentExportDays": "Recent export window",
   "@settingLabelReadinessRecentExportDays": {
@@ -25786,6 +25802,23 @@
       }
     }
   },
+  "supplierNameMissing": "A supplier needs a name.",
+  "@supplierNameMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierSaving": "Saving the supplier…",
+  "@supplierSaving": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierSimilarName": "A supplier with the same name exists: {supplier}. Check it is not the same company; you can still save.",
+  "@supplierSimilarName": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersAdd": "Add supplier",
   "@suppliersAdd": {
     "description": "#2567 suppliers"
@@ -25972,6 +26005,10 @@
   "suppliersSaved": "Supplier saved.",
   "@suppliersSaved": {
     "description": "#2567 suppliers"
+  },
+  "suppliersSavedOpen": "Open",
+  "@suppliersSavedOpen": {
+    "description": "#2863 supplier lookup"
   },
   "suppliersTaxUnverified": "Tax identifier not verified",
   "@suppliersTaxUnverified": {

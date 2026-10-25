@@ -709,5 +709,10 @@
  "fedRetention": "Conservación de los intercambios entre servidores",
  "fedRetentionHint": "Cuánto tiempo un servidor guarda los acuses de recibo de los mensajes firmados entre servidores, y un hogar personal las huellas de las membresías terminadas, antes de la limpieza horaria. Nunca menos que la validez del estado de identidad más dos veces el desfase de reloj. Se ajusta en la configuración de la app.",
  "fedAnswerWait": "Espera de respuesta entre servidores",
- "fedAnswerWaitHint": "Cuánto tiempo espera un servidor la respuesta a un mensaje firmado enviado a otro servidor (un estado de identidad, una membresía) antes de volver a enviar el mismo mensaje. Al menos 30 segundos; manténgala por debajo de la validez del estado de identidad. Se ajusta en la configuración de la app."
+ "fedAnswerWaitHint": "Cuánto tiempo espera un servidor la respuesta a un mensaje firmado enviado a otro servidor (un estado de identidad, una membresía) antes de volver a enviar el mismo mensaje. Al menos 30 segundos; manténgala por debajo de la validez del estado de identidad. Se ajusta en la configuración de la app.",
+ "supLookupWait": "Espera de la búsqueda de proveedores",
+ "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
+ "supLookupRate": "Búsquedas de proveedores por minuto",
+ "supLookupRateHint": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor; las demás se responden como ocupadas y no se envía nada al registro. Se ajusta en la configuración de la app.",
+ "optPerMinute": "{n} por minuto"
 }

@@ -231,6 +231,8 @@ const DEFAULTS={
  // #2556 — the inbox's page per source, read at the personal home and at
  // each workspace server (platform setting messaging.inbox_page_size).
  inbox:{pageSize:'50'},
+ // #2863 — supplier lookup wait and quota (platform settings purchase.supplier_lookup_*).
+ supplierLookup:{timeout:'15',perMinute:'20'},
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',

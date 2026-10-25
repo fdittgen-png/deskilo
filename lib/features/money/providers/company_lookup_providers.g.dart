@@ -57,17 +57,20 @@ final class CompanyLookupRepositoryProvider
 String _$companyLookupRepositoryHash() =>
     r'202ee121cff254d83381d2fff24a7599f2bb16ea';
 
-/// Asking a registry now (the decision the supplier form asks for).
+/// Asking a registry now (the decision the supplier form asks for), waited
+/// for the server's own registry wait plus the round trip.
 
 @ProviderFor(lookupCompany)
 final lookupCompanyProvider = LookupCompanyProvider._();
 
-/// Asking a registry now (the decision the supplier form asks for).
+/// Asking a registry now (the decision the supplier form asks for), waited
+/// for the server's own registry wait plus the round trip.
 
 final class LookupCompanyProvider
     extends $FunctionalProvider<LookupCompany, LookupCompany, LookupCompany>
     with $Provider<LookupCompany> {
-  /// Asking a registry now (the decision the supplier form asks for).
+  /// Asking a registry now (the decision the supplier form asks for), waited
+  /// for the server's own registry wait plus the round trip.
   LookupCompanyProvider._()
     : super(
         from: null,
@@ -101,4 +104,4 @@ final class LookupCompanyProvider
   }
 }
 
-String _$lookupCompanyHash() => r'f3f8f4687d7ec71bf1e340c7c08fa24934f26216';
+String _$lookupCompanyHash() => r'1bf194499d31feeda7af887d7c5c9fd62a73fe0e';

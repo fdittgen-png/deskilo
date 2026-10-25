@@ -16,23 +16,20 @@ class SupabaseCompanyLookupRepository implements CompanyLookupRepository {
 
   final SupabaseClient _client;
 
-  /// How long the app waits for the function, which itself gives the
-  /// registry less, before the question counts as timed out.
-  static const Duration _clientTimeout = Duration(seconds: 25);
-
   @override
   Future<CompanyLookupResult> lookup(
     String workspaceId,
     String providerId,
-    CompanyLookupRequest request,
-  ) async {
+    CompanyLookupRequest request, {
+    required Duration wait,
+  }) async {
     try {
       final response = await _client.functions
           .invoke(
             'supplier-lookup',
             body: {'workspace_id': workspaceId, ...request.toWire(providerId)},
           )
-          .timeout(_clientTimeout);
+          .timeout(wait);
       final Object? data = response.data;
       if (data is! Map) {
         return CompanyLookupResult.failure(

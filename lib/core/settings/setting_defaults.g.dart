@@ -84,6 +84,10 @@ abstract final class SettingDefaults {
   static const int purchasePaymentCheckerFromUnits = 0;
   /// `purchase.single_approval_below_units`
   static const int purchaseSingleApprovalBelowUnits = 0;
+  /// `purchase.supplier_lookup_per_minute`
+  static const int purchaseSupplierLookupPerMinute = 20;
+  /// `purchase.supplier_lookup_timeout_seconds`
+  static const int purchaseSupplierLookupTimeoutSeconds = 15;
   /// `readiness.recent_export_days`
   static const int readinessRecentExportDays = 90;
   /// `retention.us_years`

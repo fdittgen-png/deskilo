@@ -1,50 +1,58 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// The supplier form: the fields, Find company details beside them, and the
+// save step (supplier_save_step.dart), which saves while the form is open.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/semantics.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/company_lookup.dart';
 import '../../domain/supplier.dart';
 import '../../domain/supplier_prefill.dart';
-import '../../providers/supplier_providers.dart';
 import 'supplier_lookup_dialog.dart';
+import 'supplier_save_step.dart';
 
 /// What the supplier form was closed with.
 sealed class SupplierDialogResult {
   const SupplierDialogResult();
 }
 
-/// Save this draft.
-class SupplierDialogSave extends SupplierDialogResult {
-  const SupplierDialogSave(this.draft);
+/// The supplier was saved under [id].
+class SupplierDialogSaved extends SupplierDialogResult {
+  const SupplierDialogSaved(this.id);
 
-  final SupplierDraft draft;
+  final String id;
 }
 
-/// The lookup found the supplier already there: open that one instead.
+/// A supplier already there (by identifier, or chosen from the caution
+/// about a same name): open that one instead.
 class SupplierDialogOpenExisting extends SupplierDialogResult {
   const SupplierDialogOpenExisting(this.supplier);
 
   final Supplier supplier;
 }
 
-/// Asks for a supplier's master data; null when cancelled. With
+/// Asks for a supplier's master data and saves it with [onSave] (the id
+/// saved, or null when nothing was sent); null when cancelled. With
 /// [lookupWorkspaceId] the form offers Find company details, which fills
 /// the fields from a registry for review; [existing] is what the duplicate
-/// check reads.
+/// checks read.
 Future<SupplierDialogResult?> showSupplierDialog(
   BuildContext context,
   Supplier? supplier, {
+  required Future<String?> Function(SupplierDraft draft) onSave,
   String? lookupWorkspaceId,
   List<Supplier> existing = const [],
 }) => showDialog<SupplierDialogResult>(
   context: context,
   builder: (_) => _SupplierDialog(
     supplier: supplier,
+    onSave: onSave,
     lookupWorkspaceId: lookupWorkspaceId,
     existing: existing,
   ),
@@ -66,11 +74,13 @@ const _widgetKeys = {
 class _SupplierDialog extends StatefulWidget {
   const _SupplierDialog({
     required this.supplier,
+    required this.onSave,
     required this.lookupWorkspaceId,
     required this.existing,
   });
 
   final Supplier? supplier;
+  final Future<String?> Function(SupplierDraft draft) onSave;
   final String? lookupWorkspaceId;
   final List<Supplier> existing;
 
@@ -103,21 +113,35 @@ class _SupplierDialogState extends State<_SupplierDialog> {
   Map<String, FieldProvenance> _provenance = const {};
   Map<String, String> _filled = const {};
 
+  /// What the save step says, and whether it is under way.
+  late final SupplierSaveStep _step = SupplierSaveStep(
+    existing: widget.existing,
+    onSave: widget.onSave,
+  );
+
+  /// Where the save step's words are, scrolled into view when they change.
+  final _statusKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
     for (final key in _widgetKeys.keys) {
       _fields[key].addListener(_onEdited);
     }
+    _step.addListener(_onStep);
   }
+
+  void _onStep() => setState(() {});
 
   @override
   void dispose() {
     _fields.dispose();
+    _step.dispose();
     super.dispose();
   }
 
   void _onEdited() {
+    _step.edited(_draft());
     final prefill = _prefill;
     if (prefill == null) return;
     final next = <String, FieldProvenance>{};
@@ -208,9 +232,43 @@ class _SupplierDialogState extends State<_SupplierDialog> {
     controller: _fields[key],
     label: label,
     helper: _helper(l10n, key, otherwise: helper),
+    error: key == 'name' ? _step.value.nameError : null,
     autofocus: autofocus,
+    enabled: !_step.value.busy,
     maxLength: maxLength,
   );
+
+  /// Says [text] to a screen reader and brings the save step's words into
+  /// view, which sit under the last field of a form that may be scrolled.
+  void _announce(String text) {
+    if (!mounted) return;
+    unawaited(
+      SemanticsService.sendAnnouncement(
+        View.of(context),
+        text,
+        Directionality.of(context),
+      ),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final shown = _statusKey.currentContext;
+      if (shown != null && shown.mounted) {
+        unawaited(Scrollable.ensureVisible(shown));
+      }
+    });
+  }
+
+  Future<void> _submit() async {
+    final id = await _step.submit(
+      _draft(),
+      context.l10n,
+      announce: _announce,
+    );
+    if (!mounted || id == null) return;
+    Navigator.of(context).pop(SupplierDialogSaved(id));
+  }
+
+  void _open(Supplier supplier) =>
+      Navigator.of(context).pop(SupplierDialogOpenExisting(supplier));
 
   /// The lookup's verdict, source and time, read as one announcement.
   Widget _reviewHeader(BuildContext context, SupplierPrefill prefill) {
@@ -321,149 +379,25 @@ class _SupplierDialogState extends State<_SupplierDialog> {
               maxLength: 2,
             ),
             _field(l10n, 'contact', l10n.suppliersFieldContact, maxLength: 300),
+            SupplierSaveStatus(
+              key: _statusKey,
+              state: _step.value,
+              onOpen: _open,
+            ),
           ],
         ),
       ),
       actions: [
         TextButton(
           key: const ValueKey('supplier-cancel'),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: _step.value.busy
+              ? null
+              : () => Navigator.of(context).pop(),
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
         ),
         FilledButton(
           key: const ValueKey('supplier-save'),
-          onPressed: () =>
-              Navigator.of(context).pop(SupplierDialogSave(_draft())),
-          child: Text(MaterialLocalizations.of(context).saveButtonLabel),
-        ),
-      ],
-    );
-  }
-}
-
-/// What a person typed as bank details.
-class SupplierBankInput {
-  const SupplierBankInput({
-    required this.accountHolder,
-    required this.iban,
-    required this.bic,
-  });
-
-  final String accountHolder;
-  final String iban;
-  final String bic;
-}
-
-/// The bank-detail revisions of [supplier] and the form for the next one;
-/// null when cancelled.
-Future<SupplierBankInput?> showSupplierBankDialog(
-  BuildContext context,
-  String workspaceId,
-  Supplier supplier,
-) => showDialog<SupplierBankInput>(
-  context: context,
-  builder: (_) =>
-      _SupplierBankDialog(workspaceId: workspaceId, supplier: supplier),
-);
-
-class _SupplierBankDialog extends ConsumerStatefulWidget {
-  const _SupplierBankDialog({required this.workspaceId, required this.supplier});
-
-  final String workspaceId;
-  final Supplier supplier;
-
-  @override
-  ConsumerState<_SupplierBankDialog> createState() =>
-      _SupplierBankDialogState();
-}
-
-class _SupplierBankDialogState extends ConsumerState<_SupplierBankDialog> {
-  final _holder = TextEditingController();
-  final _iban = TextEditingController();
-  final _bic = TextEditingController();
-
-  @override
-  void dispose() {
-    _holder.dispose();
-    _iban.dispose();
-    _bic.dispose();
-    super.dispose();
-  }
-
-  String _outcome(BuildContext context, BankValidation v) {
-    final l10n = context.l10n;
-    return switch (v) {
-      BankValidation.valid => l10n.suppliersBankValid,
-      BankValidation.invalid => l10n.suppliersBankInvalid,
-      BankValidation.cleared => l10n.suppliersBankCleared,
-    };
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final history =
-        ref
-            .watch(
-              supplierBankHistoryProvider((
-                workspaceId: widget.workspaceId,
-                supplierId: widget.supplier.id,
-              )),
-            )
-            .value ??
-        const <SupplierBankRevision>[];
-    return AlertDialog(
-      title: Text('${l10n.suppliersBank} · ${widget.supplier.name}'),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.suppliersBankHistory),
-            if (history.isEmpty) Text(l10n.suppliersBankNone),
-            for (final r in history)
-              Text(
-                key: ValueKey('supplier-bank-rev-${r.revision}'),
-                '${l10n.suppliersBankRevision(r.revision.toString(), _outcome(context, r.validation))}'
-                '${r.iban.isEmpty ? '' : ' · ${r.iban}'}',
-              ),
-            const SizedBox(height: AppSpacing.md),
-            AppTextField(
-              key: const ValueKey('supplier-bank-holder'),
-              controller: _holder,
-              label: l10n.suppliersBankHolder,
-              maxLength: 200,
-            ),
-            AppTextField(
-              key: const ValueKey('supplier-bank-iban'),
-              controller: _iban,
-              label: l10n.suppliersBankIban,
-              maxLength: 40,
-            ),
-            AppTextField(
-              key: const ValueKey('supplier-bank-bic'),
-              controller: _bic,
-              label: l10n.suppliersBankBic,
-              maxLength: 20,
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('supplier-bank-cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-        ),
-        FilledButton(
-          key: const ValueKey('supplier-bank-save'),
-          onPressed: () => Navigator.of(context).pop(
-            SupplierBankInput(
-              accountHolder: _holder.text,
-              iban: _iban.text,
-              bic: _bic.text,
-            ),
-          ),
+          onPressed: _step.value.busy ? null : _submit,
           child: Text(MaterialLocalizations.of(context).saveButtonLabel),
         ),
       ],
