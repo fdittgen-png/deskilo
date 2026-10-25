@@ -66,5 +66,47 @@
   "biViewUnsupported": "Questo report non può essere salvato qui: l'editor di report è disattivato, oppure una versione più vecchia dell'app cancellerebbe ciò che non sa leggere.",
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
+  },
+  "biReportConflict": "Qualcuno ha salvato questo report da quando Lei l'ha aperto. Le Sue modifiche sono ancora qui: le salvi sopra la versione più recente oppure le scarti per vedere quella salvata.",
+  "@biReportConflict": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictOverwrite": "Salvi le mie sopra",
+  "@biReportConflictOverwrite": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictDiscard": "Scarti le mie",
+  "@biReportConflictDiscard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportSaveFailed": "Non è stato possibile salvare il report: non è arrivata alcuna risposta. Le Sue modifiche restano; riprovando invia lo stesso salvataggio, che non viene mai applicato due volte.",
+  "@biReportSaveFailed": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRetry": "Riprovi",
+  "@biReportRetry": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportAddPage": "Aggiunga una pagina con…",
+  "@biReportAddPage": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportPageNumbered": "Pagina {number}",
+  "@biReportPageNumbered": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "biViewWithheld": "{count} cifre di questa vista non sono mostrate: Lei non ha il permesso di leggerle.",
+  "@biViewWithheld": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

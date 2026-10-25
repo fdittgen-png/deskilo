@@ -127,5 +127,41 @@
   "settingUnitRequests": "Anfragen",
   "@settingUnitRequests": {
     "description": "#2578 BI settings"
+  },
+  "settingLabelBiReportMaxPages": "Seiten je Bericht",
+  "@settingLabelBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxPages": "Die meisten Seiten, die ein gespeicherter Bericht haben darf. Die Plattform speichert nie mehr als 4; ein Bericht über der Grenze wird beim Speichern abgelehnt, nie gekürzt.",
+  "@settingHintBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxVisuals": "Karten je Bericht",
+  "@settingLabelBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxVisuals": "Die meisten Karten, die ein gespeicherter Bericht über alle Seiten haben darf. Die Plattform speichert nie mehr als 24; ein Bericht über der Grenze wird beim Speichern abgelehnt, nie gekürzt.",
+  "@settingHintBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxBytes": "Größe einer Berichtsdefinition",
+  "@settingLabelBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxBytes": "Die größte gespeicherte Berichtsdefinition in Bytes ihres gespeicherten Textes. Die Plattform speichert nie mehr als 65536; eine Definition enthält Fragen, nie Zahlen.",
+  "@settingHintBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitPages": "Seiten",
+  "@settingUnitPages": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitCards": "Karten",
+  "@settingUnitCards": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitBytes": "Bytes",
+  "@settingUnitBytes": {
+    "description": "#2579 report limits"
   }
 }

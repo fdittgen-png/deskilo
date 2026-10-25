@@ -25,6 +25,7 @@ import '../domain/kpi_contract.dart';
 import 'bi_cost_allocation_reader.dart';
 import 'bi_overview_reader.dart';
 import 'bi_purchase_reader.dart';
+import 'bi_view_actions.dart';
 import 'kpi_providers.dart';
 import 'operation_context_providers.dart';
 
@@ -427,57 +428,6 @@ BiViewRepository biViewRepository(Ref ref) =>
 @riverpod
 Future<List<BiSavedView>> biViews(Ref ref, String workspaceId) =>
     ref.watch(biViewRepositoryProvider).list(workspaceId);
-
-/// The writes a views bar makes; each re-reads the list afterwards, so
-/// what is shown is what the server holds.
-class BiViewActions {
-  BiViewActions(this._ref);
-
-  final Ref _ref;
-
-  BiViewRepository get _repo => _ref.read(biViewRepositoryProvider);
-
-  Future<BiSavedView> save(
-    String workspaceId, {
-    BiSavedView? over,
-    required BiViewScope scope,
-    required String name,
-    required BiViewDefinition definition,
-  }) async {
-    try {
-      return await _repo.save(
-        workspaceId,
-        id: over?.id,
-        scope: scope,
-        name: name,
-        definition: definition,
-        expectedRevision: over?.revision ?? 0,
-      );
-    } finally {
-      _ref.invalidate(biViewsProvider(workspaceId));
-    }
-  }
-
-  Future<void> delete(String workspaceId, BiSavedView view) async {
-    try {
-      await _repo.delete(workspaceId, view.id, view.revision);
-    } finally {
-      _ref.invalidate(biViewsProvider(workspaceId));
-    }
-  }
-
-  Future<void> setDefault(
-    String workspaceId,
-    BiViewScope scope,
-    String? id,
-  ) async {
-    try {
-      await _repo.setDefault(workspaceId, scope, id);
-    } finally {
-      _ref.invalidate(biViewsProvider(workspaceId));
-    }
-  }
-}
 
 @Riverpod(keepAlive: true)
 BiViewActions biViewActions(Ref ref) => BiViewActions(ref);

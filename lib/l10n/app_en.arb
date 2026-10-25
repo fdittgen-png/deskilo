@@ -2135,6 +2135,22 @@
   "@biReportAddCard": {
     "description": "#2579 analytical reports"
   },
+  "biReportAddPage": "Add a page with…",
+  "@biReportAddPage": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflict": "Someone saved this report since you opened it. Your changes are still here: save them over the newer version, or discard them and see the saved one.",
+  "@biReportConflict": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictDiscard": "Discard mine",
+  "@biReportConflictDiscard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictOverwrite": "Save mine over it",
+  "@biReportConflictOverwrite": {
+    "description": "#2579 analytical reports"
+  },
   "biReportCopyName": "{name} (report)",
   "@biReportCopyName": {
     "description": "#2579 analytical reports",
@@ -2174,6 +2190,15 @@
   "@biReportNoCards": {
     "description": "#2579 analytical reports"
   },
+  "biReportPageNumbered": "Page {number}",
+  "@biReportPageNumbered": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "biReportPageTitle": "Page 1",
   "@biReportPageTitle": {
     "description": "#2579 analytical reports"
@@ -2186,6 +2211,14 @@
         "type": "String"
       }
     }
+  },
+  "biReportRetry": "Retry",
+  "@biReportRetry": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportSaveFailed": "The report could not be saved: no answer came back. Your changes are kept; retrying sends the same save again, it is never applied twice.",
+  "@biReportSaveFailed": {
+    "description": "#2579 analytical reports"
   },
   "biReset": "Show the standard view",
   "@biReset": {
@@ -2407,6 +2440,15 @@
   "biViewUnsupported": "This report cannot be saved here: the report designer is off, or an older version of the app would erase what it does not read.",
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
+  },
+  "biViewWithheld": "{count} figures of this view are not shown: you may not read them.",
+  "@biViewWithheld": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   },
   "biViews": "Views",
   "@biViews": {
@@ -23121,6 +23163,18 @@
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingHintBiReportMaxBytes": "The largest saved report definition, in bytes of its stored text. The platform never stores more than 65536; a definition holds questions, never figures.",
+  "@settingHintBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxPages": "The most pages one saved report may hold. The platform never stores more than 4; a report over the limit is refused when it is saved, never cut.",
+  "@settingHintBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxVisuals": "The most cards one saved report may hold over all its pages. The platform never stores more than 24; a report over the limit is refused when it is saved, never cut.",
+  "@settingHintBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
   "settingHintBillingMaxAdvanceDays": "Fixed: the longest lead, in days, of a subscription invoice before the month starts.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -23316,6 +23370,18 @@
   "settingLabelBiBatchMaxRequests": "Figures per report read",
   "@settingLabelBiBatchMaxRequests": {
     "description": "#2578 BI settings"
+  },
+  "settingLabelBiReportMaxBytes": "Size of a report definition",
+  "@settingLabelBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxPages": "Pages per report",
+  "@settingLabelBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxVisuals": "Cards per report",
+  "@settingLabelBiReportMaxVisuals": {
+    "description": "#2579 report limits"
   },
   "settingLabelBillingMaxAdvanceDays": "Subscription invoice lead",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -23588,6 +23654,14 @@
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitBytes": "bytes",
+  "@settingUnitBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitCards": "cards",
+  "@settingUnitCards": {
+    "description": "#2579 report limits"
+  },
   "settingUnitCharacters": "characters",
   "@settingUnitCharacters": {
     "description": "#2472 personal directory: Unit of a setting counted in characters."
@@ -23615,6 +23689,10 @@
   "settingUnitMonths": "months",
   "@settingUnitMonths": {
     "description": "#2487 settings: Unit."
+  },
+  "settingUnitPages": "pages",
+  "@settingUnitPages": {
+    "description": "#2579 report limits"
   },
   "settingUnitPerDay": "per day",
   "@settingUnitPerDay": {

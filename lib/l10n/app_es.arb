@@ -1088,6 +1088,22 @@
   "@biReportAddCard": {
     "description": "#2579 analytical reports"
   },
+  "biReportAddPage": "Añadir una página con…",
+  "@biReportAddPage": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflict": "Alguien guardó este informe desde que usted lo abrió. Sus cambios siguen aquí: guárdelos sobre la versión más reciente o descártelos para ver la guardada.",
+  "@biReportConflict": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictDiscard": "Descartar las mías",
+  "@biReportConflictDiscard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictOverwrite": "Guardar las mías encima",
+  "@biReportConflictOverwrite": {
+    "description": "#2579 analytical reports"
+  },
   "biReportCopyName": "{name} (informe)",
   "@biReportCopyName": {
     "description": "#2579 analytical reports",
@@ -1127,6 +1143,15 @@
   "@biReportNoCards": {
     "description": "#2579 analytical reports"
   },
+  "biReportPageNumbered": "Página {number}",
+  "@biReportPageNumbered": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "biReportPageTitle": "Página 1",
   "@biReportPageTitle": {
     "description": "#2579 analytical reports"
@@ -1139,6 +1164,14 @@
         "type": "String"
       }
     }
+  },
+  "biReportRetry": "Reintentar",
+  "@biReportRetry": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportSaveFailed": "No se pudo guardar el informe: no llegó ninguna respuesta. Sus cambios se conservan; reintentar envía el mismo guardado, que nunca se aplica dos veces.",
+  "@biReportSaveFailed": {
+    "description": "#2579 analytical reports"
   },
   "biReset": "Mostrar la vista estándar",
   "biRunRate": "Al ritmo actual, este periodo terminaría en torno a {value}.",
@@ -1235,6 +1268,15 @@
   "biViewUnsupported": "Este informe no se puede guardar aquí: el diseñador de informes está desactivado, o una versión más antigua de la aplicación borraría lo que no sabe leer.",
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
+  },
+  "biViewWithheld": "{count} cifras de esta vista no se muestran: usted no tiene permiso para leerlas.",
+  "@biViewWithheld": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   },
   "biViews": "Vistas",
   "biViewsMine": "Mis vistas",
@@ -13727,6 +13769,18 @@
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingHintBiReportMaxBytes": "La mayor definición de informe guardada, en bytes de su texto almacenado. La plataforma nunca guarda más de 65536; una definición contiene preguntas, nunca cifras.",
+  "@settingHintBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxPages": "El máximo de páginas de un informe guardado. La plataforma nunca guarda más de 4; un informe por encima del límite se rechaza al guardarlo, nunca se recorta.",
+  "@settingHintBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxVisuals": "El máximo de tarjetas de un informe guardado en todas sus páginas. La plataforma nunca guarda más de 24; un informe por encima del límite se rechaza al guardarlo, nunca se recorta.",
+  "@settingHintBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
   "settingHintBillingMaxAdvanceDays": "Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13877,6 +13931,18 @@
   "settingLabelBiBatchMaxRequests": "Cifras por lectura de informe",
   "@settingLabelBiBatchMaxRequests": {
     "description": "#2578 BI settings"
+  },
+  "settingLabelBiReportMaxBytes": "Tamaño de una definición de informe",
+  "@settingLabelBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxPages": "Páginas por informe",
+  "@settingLabelBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxVisuals": "Tarjetas por informe",
+  "@settingLabelBiReportMaxVisuals": {
+    "description": "#2579 report limits"
   },
   "settingLabelBillingMaxAdvanceDays": "Antelación de la factura de suscripción",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -14104,6 +14170,14 @@
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitBytes": "bytes",
+  "@settingUnitBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitCards": "tarjetas",
+  "@settingUnitCards": {
+    "description": "#2579 report limits"
+  },
   "settingUnitCharacters": "caracteres",
   "settingUnitCurrencyUnits": "unidades monetarias",
   "@settingUnitCurrencyUnits": {
@@ -14128,6 +14202,10 @@
   "settingUnitMonths": "meses",
   "@settingUnitMonths": {
     "description": "#2487 settings: Unit."
+  },
+  "settingUnitPages": "páginas",
+  "@settingUnitPages": {
+    "description": "#2579 report limits"
   },
   "settingUnitPerDay": "por día",
   "@settingUnitPerDay": {

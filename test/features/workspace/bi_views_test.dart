@@ -261,15 +261,20 @@ void main() {
   testWidgets('a view whose analyses are gone names what it leaves out; an '
       'unreadable one opens nothing', (tester) async {
     final views = InMemoryBiViewRepository();
-    final partial = await views.save(
-      'ws-1',
+    // Stored before the metric was retired or moved on: today's writer
+    // would refuse it, so it is placed as the server holds it.
+    const partial = BiSavedView(
+      id: 'view-partial',
       scope: BiViewScope.private,
       name: 'Partial',
-      definition: const BiViewDefinition(
+      definition: BiViewDefinition(
         cards: ['finance.retired', 'capacity.seat_utilisation'],
       ),
-      expectedRevision: 0,
+      isDefault: false,
+      revision: 1,
+      mine: true,
     );
+    views.addStored('ws-1', partial);
     await _pump(tester, views);
     await _open(tester, '/bi?saved=standard');
     await _menu(tester, 'bi-views-open-${partial.id}');
@@ -306,26 +311,36 @@ void main() {
     tester,
   ) async {
     final views = InMemoryBiViewRepository();
-    final mixed = await views.save(
-      'ws-1',
+    // Stored before the metric was retired or moved on: today's writer
+    // would refuse it, so it is placed as the server holds it.
+    const mixed = BiSavedView(
+      id: 'view-mixed',
       scope: BiViewScope.private,
       name: 'Mixed',
-      definition: const BiViewDefinition(
+      definition: BiViewDefinition(
         cards: ['capacity.seat_utilisation', 'finance.invoiced'],
         metricVersions: {'finance.invoiced': 2},
       ),
-      expectedRevision: 0,
+      isDefault: false,
+      revision: 1,
+      mine: true,
     );
-    final later = await views.save(
-      'ws-1',
+    views.addStored('ws-1', mixed);
+    // Stored before the metric was retired or moved on: today's writer
+    // would refuse it, so it is placed as the server holds it.
+    const later = BiSavedView(
+      id: 'view-later',
       scope: BiViewScope.private,
       name: 'Later',
-      definition: const BiViewDefinition(
+      definition: BiViewDefinition(
         cards: ['capacity.seat_utilisation'],
         metricVersions: {'capacity.seat_utilisation': 2},
       ),
-      expectedRevision: 0,
+      isDefault: false,
+      revision: 1,
+      mine: true,
     );
+    views.addStored('ws-1', later);
     await _pump(
       tester,
       views,

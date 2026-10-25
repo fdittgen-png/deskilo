@@ -66,6 +66,14 @@ String _federationSettingLabel(AppLocalizations l10n, String key) => switch (key
       'identity.clock_skew_seconds' => l10n.settingLabelIdentityClockSkewSeconds,
       'federation.retention_hours' => l10n.settingLabelFederationRetentionHours,
       'federation.answer_wait_seconds' => l10n.settingLabelFederationAnswerWaitSeconds,
+      _ => _biReportSettingLabel(l10n, key),
+    };
+
+/// #2579 -- the bounds of a saved report.
+String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'bi.report_max_pages' => l10n.settingLabelBiReportMaxPages,
+      'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
+      'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
       _ => key,
     };
 
@@ -126,6 +134,14 @@ String? _federationSettingHint(AppLocalizations l10n, String key) => switch (key
       'identity.clock_skew_seconds' => l10n.settingHintIdentityClockSkewSeconds,
       'federation.retention_hours' => l10n.settingHintFederationRetentionHours,
       'federation.answer_wait_seconds' => l10n.settingHintFederationAnswerWaitSeconds,
+      _ => _biReportSettingHint(l10n, key),
+    };
+
+/// #2579 -- the bounds of a saved report.
+String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'bi.report_max_pages' => l10n.settingHintBiReportMaxPages,
+      'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
+      'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
       _ => null,
     };
 
@@ -159,6 +175,9 @@ String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'per day' => l10n.settingUnitPerDay,
       'entries' => l10n.settingUnitEntries,
       'characters' => l10n.settingUnitCharacters,
+      'pages' => l10n.settingUnitPages,
+      'cards' => l10n.settingUnitCards,
+      'bytes' => l10n.settingUnitBytes,
       _ => unit,
     };
 

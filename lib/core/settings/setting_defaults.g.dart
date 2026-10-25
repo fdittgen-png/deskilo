@@ -10,6 +10,12 @@ abstract final class SettingDefaults {
   static const int assetsValuationMaxRows = 2000;
   /// `bi.batch_max_requests`
   static const int biBatchMaxRequests = 60;
+  /// `bi.report_max_bytes`
+  static const int biReportMaxBytes = 65536;
+  /// `bi.report_max_pages`
+  static const int biReportMaxPages = 4;
+  /// `bi.report_max_visuals`
+  static const int biReportMaxVisuals = 24;
   /// `billing.max_advance_days`
   static const int billingMaxAdvanceDays = 28;
   /// `booking.check_in_leeway_minutes`

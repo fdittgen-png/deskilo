@@ -77,9 +77,7 @@ class BiScreen extends ConsumerWidget {
       final views = ref.watch(biViewsProvider(workspaceId));
       if (views.isLoading) return const Scaffold(body: LoadingView());
       final chosen = defaultView(views.value ?? const []);
-      final check = chosen == null
-          ? null
-          : checkView(chosen.definition, visibleIds).query;
+      final check = chosen?.check(visibleIds).query;
       if (chosen != null && check != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (context.mounted) go(check, chosen.id);

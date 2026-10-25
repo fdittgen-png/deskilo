@@ -66,5 +66,47 @@
   "biViewUnsupported": "Este informe no se puede guardar aquí: el diseñador de informes está desactivado, o una versión más antigua de la aplicación borraría lo que no sabe leer.",
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
+  },
+  "biReportConflict": "Alguien guardó este informe desde que usted lo abrió. Sus cambios siguen aquí: guárdelos sobre la versión más reciente o descártelos para ver la guardada.",
+  "@biReportConflict": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictOverwrite": "Guardar las mías encima",
+  "@biReportConflictOverwrite": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictDiscard": "Descartar las mías",
+  "@biReportConflictDiscard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportSaveFailed": "No se pudo guardar el informe: no llegó ninguna respuesta. Sus cambios se conservan; reintentar envía el mismo guardado, que nunca se aplica dos veces.",
+  "@biReportSaveFailed": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRetry": "Reintentar",
+  "@biReportRetry": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportAddPage": "Añadir una página con…",
+  "@biReportAddPage": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportPageNumbered": "Página {number}",
+  "@biReportPageNumbered": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "biViewWithheld": "{count} cifras de esta vista no se muestran: usted no tiene permiso para leerlas.",
+  "@biViewWithheld": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

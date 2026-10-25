@@ -1873,6 +1873,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biReportAddCard => 'Karte hinzufügen';
 
   @override
+  String get biReportAddPage => 'Seite hinzufügen mit…';
+
+  @override
+  String get biReportConflict =>
+      'Jemand hat diesen Bericht gespeichert, seit Sie ihn geöffnet haben. Ihre Änderungen sind noch da: Speichern Sie sie über die neuere Fassung oder verwerfen Sie sie und sehen Sie die gespeicherte an.';
+
+  @override
+  String get biReportConflictDiscard => 'Meine verwerfen';
+
+  @override
+  String get biReportConflictOverwrite => 'Meine darüber speichern';
+
+  @override
   String biReportCopyName(String name) {
     return '$name (Bericht)';
   }
@@ -1898,12 +1911,24 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Bericht hat noch keine Karte. Fügen Sie eine hinzu.';
 
   @override
+  String biReportPageNumbered(String number) {
+    return 'Seite $number';
+  }
+
+  @override
   String get biReportPageTitle => 'Seite 1';
 
   @override
   String biReportRemove(String card) {
     return '$card entfernen';
   }
+
+  @override
+  String get biReportRetry => 'Erneut versuchen';
+
+  @override
+  String get biReportSaveFailed =>
+      'Der Bericht konnte nicht gespeichert werden: Es kam keine Antwort. Ihre Änderungen bleiben erhalten; ein erneuter Versuch sendet dieselbe Speicherung, die nie zweimal angewendet wird.';
 
   @override
   String get biReset => 'Standardansicht zeigen';
@@ -2065,6 +2090,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get biViewUnsupported =>
       'Dieser Bericht kann hier nicht gespeichert werden: Der Berichtsdesigner ist aus, oder eine ältere App-Version würde löschen, was sie nicht lesen kann.';
+
+  @override
+  String biViewWithheld(String count) {
+    return '$count Kennzahlen dieser Ansicht werden nicht angezeigt: Sie dürfen sie nicht lesen.';
+  }
 
   @override
   String get biViews => 'Ansichten';
@@ -20034,6 +20064,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die höchste Zahl von Kennzahlen, die eine Berichtsseite in einem Abruf anfordern darf. Braucht eine Seite mehr, wird sie auf mehrere Abrufe verteilt; ein größerer Stapel wird ganz abgelehnt.';
 
   @override
+  String get settingHintBiReportMaxBytes =>
+      'Die größte gespeicherte Berichtsdefinition in Bytes ihres gespeicherten Textes. Die Plattform speichert nie mehr als 65536; eine Definition enthält Fragen, nie Zahlen.';
+
+  @override
+  String get settingHintBiReportMaxPages =>
+      'Die meisten Seiten, die ein gespeicherter Bericht haben darf. Die Plattform speichert nie mehr als 4; ein Bericht über der Grenze wird beim Speichern abgelehnt, nie gekürzt.';
+
+  @override
+  String get settingHintBiReportMaxVisuals =>
+      'Die meisten Karten, die ein gespeicherter Bericht über alle Seiten haben darf. Die Plattform speichert nie mehr als 24; ein Bericht über der Grenze wird beim Speichern abgelehnt, nie gekürzt.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.';
 
@@ -20225,6 +20267,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Kennzahlen je Berichtsabruf';
+
+  @override
+  String get settingLabelBiReportMaxBytes => 'Größe einer Berichtsdefinition';
+
+  @override
+  String get settingLabelBiReportMaxPages => 'Seiten je Bericht';
+
+  @override
+  String get settingLabelBiReportMaxVisuals => 'Karten je Bericht';
 
   @override
   String get settingLabelBillingMaxAdvanceDays => 'Vorlauf der Abo-Rechnung';
@@ -20450,6 +20501,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingUnitAttempts => 'Versuche';
 
   @override
+  String get settingUnitBytes => 'Bytes';
+
+  @override
+  String get settingUnitCards => 'Karten';
+
+  @override
   String get settingUnitCharacters => 'Zeichen';
 
   @override
@@ -20469,6 +20526,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingUnitMonths => 'Monate';
+
+  @override
+  String get settingUnitPages => 'Seiten';
 
   @override
   String get settingUnitPerDay => 'pro Tag';

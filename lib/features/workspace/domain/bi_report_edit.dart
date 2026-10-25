@@ -36,11 +36,17 @@ List<BiReportVisual> biRenumber(List<BiReportVisual> visuals) => [
 ];
 
 /// An id of the form `v<n>` that none of [taken] uses.
-String biNextVisualId(Iterable<String> taken) {
+String biNextVisualId(Iterable<String> taken) => _nextId('v', taken);
+
+/// A page id of the form `p<n>` that none of [taken] uses (ids are unique
+/// over pages and visuals together).
+String biNextPageId(Iterable<String> taken) => _nextId('p', taken);
+
+String _nextId(String prefix, Iterable<String> taken) {
   final used = taken.toSet();
   var n = 1;
-  while (used.contains('v$n')) {
+  while (used.contains('$prefix$n')) {
     n++;
   }
-  return 'v$n';
+  return '$prefix$n';
 }

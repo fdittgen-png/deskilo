@@ -2,7 +2,8 @@
 //
 // #1923 C — saved Web-BI views through their definer RPCs. The server
 // checks viewAnalytics, ownership, workspaceSettings for team views and
-// the revision; this class only asks and types the refusals.
+// the revision; this class only asks and types the refusals. A save names
+// its request, so a retry after a lost answer is answered once (#2579).
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/bi_saved_view.dart';
@@ -48,6 +49,7 @@ class SupabaseBiViewRepository implements BiViewRepository {
     required String name,
     required BiViewDefinition definition,
     required int expectedRevision,
+    String? requestId,
   }) async {
     final row = await _call('bi_view_save', {
       'p_workspace_id': workspaceId,
@@ -56,6 +58,7 @@ class SupabaseBiViewRepository implements BiViewRepository {
       'p_name': name,
       'p_definition': definition.toJson(),
       'p_expected_revision': expectedRevision,
+      'p_request_id': ?requestId,
     });
     final view = row is Map
         ? BiSavedView.fromJson(Map<String, dynamic>.from(row))

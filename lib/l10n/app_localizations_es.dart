@@ -1868,6 +1868,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biReportAddCard => 'Añadir una tarjeta';
 
   @override
+  String get biReportAddPage => 'Añadir una página con…';
+
+  @override
+  String get biReportConflict =>
+      'Alguien guardó este informe desde que usted lo abrió. Sus cambios siguen aquí: guárdelos sobre la versión más reciente o descártelos para ver la guardada.';
+
+  @override
+  String get biReportConflictDiscard => 'Descartar las mías';
+
+  @override
+  String get biReportConflictOverwrite => 'Guardar las mías encima';
+
+  @override
   String biReportCopyName(String name) {
     return '$name (informe)';
   }
@@ -1893,12 +1906,24 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este informe aún no tiene tarjetas. Añada una.';
 
   @override
+  String biReportPageNumbered(String number) {
+    return 'Página $number';
+  }
+
+  @override
   String get biReportPageTitle => 'Página 1';
 
   @override
   String biReportRemove(String card) {
     return 'Quitar $card';
   }
+
+  @override
+  String get biReportRetry => 'Reintentar';
+
+  @override
+  String get biReportSaveFailed =>
+      'No se pudo guardar el informe: no llegó ninguna respuesta. Sus cambios se conservan; reintentar envía el mismo guardado, que nunca se aplica dos veces.';
 
   @override
   String get biReset => 'Mostrar la vista estándar';
@@ -2059,6 +2084,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get biViewUnsupported =>
       'Este informe no se puede guardar aquí: el diseñador de informes está desactivado, o una versión más antigua de la aplicación borraría lo que no sabe leer.';
+
+  @override
+  String biViewWithheld(String count) {
+    return '$count cifras de esta vista no se muestran: usted no tiene permiso para leerlas.';
+  }
 
   @override
   String get biViews => 'Vistas';
@@ -19989,6 +20019,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'El mayor número de cifras que una página de informe puede pedir en una sola lectura. Una página que necesita más se divide en varias lecturas; un lote mayor se rechaza entero.';
 
   @override
+  String get settingHintBiReportMaxBytes =>
+      'La mayor definición de informe guardada, en bytes de su texto almacenado. La plataforma nunca guarda más de 65536; una definición contiene preguntas, nunca cifras.';
+
+  @override
+  String get settingHintBiReportMaxPages =>
+      'El máximo de páginas de un informe guardado. La plataforma nunca guarda más de 4; un informe por encima del límite se rechaza al guardarlo, nunca se recorta.';
+
+  @override
+  String get settingHintBiReportMaxVisuals =>
+      'El máximo de tarjetas de un informe guardado en todas sus páginas. La plataforma nunca guarda más de 24; un informe por encima del límite se rechaza al guardarlo, nunca se recorta.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.';
 
@@ -20181,6 +20223,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Cifras por lectura de informe';
+
+  @override
+  String get settingLabelBiReportMaxBytes =>
+      'Tamaño de una definición de informe';
+
+  @override
+  String get settingLabelBiReportMaxPages => 'Páginas por informe';
+
+  @override
+  String get settingLabelBiReportMaxVisuals => 'Tarjetas por informe';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -20411,6 +20463,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingUnitAttempts => 'intentos';
 
   @override
+  String get settingUnitBytes => 'bytes';
+
+  @override
+  String get settingUnitCards => 'tarjetas';
+
+  @override
   String get settingUnitCharacters => 'caracteres';
 
   @override
@@ -20430,6 +20488,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingUnitMonths => 'meses';
+
+  @override
+  String get settingUnitPages => 'páginas';
 
   @override
   String get settingUnitPerDay => 'por día';

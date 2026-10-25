@@ -127,5 +127,41 @@
   "settingUnitRequests": "requests",
   "@settingUnitRequests": {
     "description": "#2578 BI settings"
+  },
+  "settingLabelBiReportMaxPages": "Pages per report",
+  "@settingLabelBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxPages": "The most pages one saved report may hold. The platform never stores more than 4; a report over the limit is refused when it is saved, never cut.",
+  "@settingHintBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxVisuals": "Cards per report",
+  "@settingLabelBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxVisuals": "The most cards one saved report may hold over all its pages. The platform never stores more than 24; a report over the limit is refused when it is saved, never cut.",
+  "@settingHintBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxBytes": "Size of a report definition",
+  "@settingLabelBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxBytes": "The largest saved report definition, in bytes of its stored text. The platform never stores more than 65536; a definition holds questions, never figures.",
+  "@settingHintBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitPages": "pages",
+  "@settingUnitPages": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitCards": "cards",
+  "@settingUnitCards": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitBytes": "bytes",
+  "@settingUnitBytes": {
+    "description": "#2579 report limits"
   }
 }

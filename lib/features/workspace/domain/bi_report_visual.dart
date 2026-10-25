@@ -9,6 +9,7 @@
 library;
 
 import '../../../core/data/json_reader.dart';
+import 'bi_modules.dart';
 import 'kpi_contract.dart';
 
 /// The visual kinds a report may hold.
@@ -22,6 +23,30 @@ enum BiVisualType {
 
   static BiVisualType? fromWire(Object? v) =>
       values.where((t) => t.name == v).firstOrNull;
+}
+
+/// The dimensions a report filter or a visual's grouping may name: those the
+/// registered metrics declare. A name, never an id. `bi_report_dimensions()`
+/// is the server's copy.
+Set<String> get _reportDimensions => {
+  for (final m in biModules) ...m.metric.dimensions,
+};
+
+/// Whether every filter in [lower] only narrows [higher]. Filters are
+/// conjunctive, so a lower level can never widen a higher one; a positive
+/// filter (`eq`, `in`) that names a value a higher filter of the same
+/// dimension does not admit could only mean "instead of", and is refused
+/// rather than read as an override.
+bool biFiltersNarrow(List<BiReportFilter> higher, List<BiReportFilter> lower) {
+  for (final l in lower.where((f) => f.positive)) {
+    for (final h in higher.where((h) => h.dimension == l.dimension)) {
+      final admits = h.positive
+          ? h.values.containsAll(l.values)
+          : !l.values.contains(h.value);
+      if (!admits) return false;
+    }
+  }
+  return true;
 }
 
 /// A registered name: a metric, dimension or drill target.
@@ -67,6 +92,12 @@ class BiReportFilter {
   static const operators = {'eq', 'neq', 'in'};
   static const maxPerLevel = 12;
 
+  /// `eq` and `in` admit only their values; `neq` admits all but its one.
+  bool get positive => operator != 'neq';
+
+  /// The values named: an `in` lists them separated by commas.
+  Set<String> get values => operator == 'in' ? value.split(',').toSet() : {value};
+
   Map<String, Object> toJson() => {
     'dimension': dimension,
     'operator': operator,
@@ -79,7 +110,7 @@ class BiReportFilter {
       return null;
     }
     final d = r.raw('dimension'), o = r.raw('operator'), v = r.raw('value');
-    if (d is! String || !_reportName.hasMatch(d) || d.length > 64) return null;
+    if (d is! String || !_reportDimensions.contains(d)) return null;
     if (o is! String || !operators.contains(o)) return null;
     if (v is! String || v.length > 64) return null;
     return BiReportFilter(d, o, v);
@@ -258,7 +289,7 @@ class BiReportVisual {
   static bool _bound(BiVisualType t, Object? metric, Object? dim, Object? drill) =>
       (t == BiVisualType.text) == (metric == null) &&
       _name(metric) &&
-      _name(dim) &&
+      (dim == null || _reportDimensions.contains(dim)) &&
       _name(drill);
 
   /// Plain content, and only on a text visual.
