@@ -5,7 +5,9 @@ import 'purchase_receipt_line.dart';
 /// Purchase documents in memory. The server derives the totals and files a
 /// member's expense as a receipt through the same bridge; the demo only keeps
 /// what the dialog saved, replaying a request id as the server does.
-class FakePurchaseRepository with NoFiledPurchases implements PurchaseRepository {
+class FakePurchaseRepository
+    with NoFiledPurchases, DemoPurchasePlaces
+    implements PurchaseRepository {
   FakePurchaseRepository();
 
   /// The demo space: two approved claims of the demo members, one untouched
@@ -310,15 +312,18 @@ class FakePurchaseRepository with NoFiledPurchases implements PurchaseRepository
     int revision,
     String requestId,
   ) async {
+    // The same request answers what it answered (a lost reply retried).
+    if (_requests[requestId] == purchaseId) return PurchaseState.pending;
     final i = _doc(purchaseId);
     if (i < 0) throw StateError('unknown purchase');
     final d = _documents[i];
-    if (d.summary.kind != PurchaseKind.bill ||
+    if (d.summary.kind == PurchaseKind.creditNote ||
         d.summary.state != PurchaseState.draft ||
         d.revision != revision) {
-      throw StateError('only a draft bill can be submitted');
+      throw StateError('only a draft bill or receipt can be submitted');
     }
     _documents[i] = _inState(d, PurchaseState.pending);
+    _requests[requestId] = purchaseId;
     return PurchaseState.pending;
   }
 
@@ -460,35 +465,12 @@ class FakePurchaseRepository with NoFiledPurchases implements PurchaseRepository
   Future<String> saveDraft(
     String workspaceId,
     String requestId,
-    PurchaseBillDraft draft,
+    PurchaseDraft draft,
   ) async {
     final replay = _requests[requestId];
     if (replay != null) return replay;
     final id = draft.purchaseId ?? 'demo-purchase-${_documents.length + 1}';
-    final tax = draft.taxCents;
-    final detail = PurchaseDetail(
-      summary: PurchaseSummary(
-        id: id,
-        kind: PurchaseKind.bill,
-        state: PurchaseState.draft,
-        category: '',
-        reference: draft.reference,
-        currency: '',
-        receivedOn: draft.originalDate,
-      ),
-      revision: draft.expectedRevision + 1,
-      lines: [
-        PurchaseLine(
-          lineNo: 1,
-          description: draft.description,
-          grossCents: draft.grossCents,
-          netCents: tax == null ? null : draft.grossCents - tax,
-          taxCents: tax, recognitionKind: draft.recognitionKind,
-        ),
-      ],
-      sources: const [],
-      dueOn: draft.dueOn,
-    );
+    final detail = demoDraftDetail(id, draft);
     final i = _documents.indexWhere((d) => d.summary.id == id);
     if (i < 0) {
       _documents.add(detail);

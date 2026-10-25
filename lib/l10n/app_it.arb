@@ -10796,6 +10796,15 @@
   "purchaseLinkInboxTitle": "Fatture ricevute",
   "purchaseNeedsReview": "Da rivedere",
   "purchaseQualified": "Contabilità qualificata",
+  "purchaseReceiptAdd": "Ricevuta con più righe",
+  "purchaseReceiptAddLine": "Aggiungere una riga",
+  "purchaseReceiptAmount": "Inserisca un importo positivo su ogni riga.",
+  "purchaseReceiptDeductible": "La quota detraibile di ogni riga tassata è compresa tra 0 e 100 %.",
+  "purchaseReceiptIntro": "Per una ricevuta con più aliquote IVA, o un'attrezzatura accanto ad altri articoli: una riga ciascuno. Viene presentata come un'unica spesa dell'importo totale, che Lei ha pagato.",
+  "purchaseReceiptLine": "Riga {number}",
+  "purchaseReceiptRemoveLine": "Togliere questa riga",
+  "purchaseReceiptSubmit": "Presentare la ricevuta",
+  "purchaseReceiptSubmitted": "Ricevuta presentata: è in attesa di approvazione.",
   "purchaseSettlementNothingOwed": "Nulla di dovuto",
   "purchaseSettlementPartly": "Saldato in parte",
   "purchaseSettlementSettled": "Saldato",
@@ -11094,6 +11103,8 @@
   "@purchasesPickDate": {
     "description": "#2573 purchases"
   },
+  "purchasesPlace": "Dove si imputa il costo",
+  "purchasesPlaceNone": "Nessun luogo preciso",
   "purchasesPurpose": "A cosa serve?",
   "@purchasesPurpose": {
     "description": "#2576 equipment register: what a purchase line is for"

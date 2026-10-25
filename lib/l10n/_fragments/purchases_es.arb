@@ -181,5 +181,16 @@
   "purchaseEntryUnpaid": "Aún sin pagar",
   "purchaseEntryUnpaidHint": "Una factura de proveedor que el espacio aún debe pagar.",
   "purchaseEntryPaid": "El espacio ya pagó",
-  "purchaseEntryPaidHint": "Registre la factura; una vez aprobada, registre su pago desde «Por pagar»."
+  "purchaseEntryPaidHint": "Registre la factura; una vez aprobada, registre su pago desde «Por pagar».",
+  "purchasesPlace": "Dónde se imputa el coste",
+  "purchasesPlaceNone": "Ningún lugar concreto",
+  "purchaseReceiptAdd": "Justificante con varias líneas",
+  "purchaseReceiptIntro": "Para un justificante con varios tipos de IVA, o un equipo junto a otros artículos: una línea cada uno. Se presenta como un único gasto por el importe total, que usted pagó.",
+  "purchaseReceiptLine": "Línea {number}",
+  "purchaseReceiptAddLine": "Añadir una línea",
+  "purchaseReceiptRemoveLine": "Quitar esta línea",
+  "purchaseReceiptSubmit": "Presentar el justificante",
+  "purchaseReceiptAmount": "Introduzca un importe positivo en cada línea.",
+  "purchaseReceiptDeductible": "La parte deducible de cada línea gravada está entre 0 y 100 %.",
+  "purchaseReceiptSubmitted": "Justificante presentado: espera su aprobación."
 }

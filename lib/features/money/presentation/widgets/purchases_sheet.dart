@@ -17,6 +17,7 @@ import 'purchase_dialogs.dart';
 import 'purchase_labels.dart';
 import 'purchase_link_inbox.dart';
 import 'purchase_payables.dart';
+import 'purchase_receipt_sheet.dart';
 import 'purchase_status_chips.dart';
 
 /// Opens the purchase documents of [workspaceId]. The caller decides when to
@@ -89,6 +90,13 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
     AppSnack.success(context, context.l10n.purchasesSaved);
   }
 
+  Future<void> _addReceipt(BuildContext context) async {
+    final submitted = await showPurchaseReceiptSheet(context, workspaceId);
+    if (!submitted || !context.mounted) return;
+    ref.invalidate(purchasesProvider(workspaceId));
+    AppSnack.success(context, context.l10n.purchaseReceiptSubmitted);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -137,6 +145,14 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
               label: Text(l10n.purchasesAddBill),
             ),
           ],
+          // #2573 — anyone who paid: a receipt of several rates or classes.
+          const SizedBox(height: AppSpacing.sm),
+          OutlinedButton.icon(
+            key: const ValueKey('purchase-add-receipt'),
+            onPressed: () => _addReceipt(context),
+            icon: const Icon(Icons.receipt_outlined),
+            label: Text(l10n.purchaseReceiptAdd),
+          ),
           const SizedBox(height: AppSpacing.lg),
           if (purchases.isEmpty) Text(l10n.purchasesEmpty),
           ..._documents(context, purchases),
@@ -281,9 +297,15 @@ class _PurchaseDetailView extends ConsumerWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(line.description),
             subtitle: Text(
-              line.taxStated
-                  ? money.formatMinor(line.taxCents!)
-                  : l10n.purchasesTaxNotStated,
+              [
+                if (line.taxStated)
+                  money.formatMinor(line.taxCents!)
+                else
+                  l10n.purchasesTaxNotStated,
+                // #2573 — what it is for and where its cost belongs.
+                purchasePurposeLabel(l10n, line.recognitionKind),
+                if (line.placeName.isNotEmpty) line.placeName,
+              ].join(' · '),
             ),
             trailing: Text(money.formatMinor(line.grossCents)),
           ),

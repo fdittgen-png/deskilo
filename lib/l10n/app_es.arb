@@ -10796,6 +10796,15 @@
   "purchaseLinkInboxTitle": "Facturas recibidas",
   "purchaseNeedsReview": "Por revisar",
   "purchaseQualified": "Contabilidad cualificada",
+  "purchaseReceiptAdd": "Justificante con varias líneas",
+  "purchaseReceiptAddLine": "Añadir una línea",
+  "purchaseReceiptAmount": "Introduzca un importe positivo en cada línea.",
+  "purchaseReceiptDeductible": "La parte deducible de cada línea gravada está entre 0 y 100 %.",
+  "purchaseReceiptIntro": "Para un justificante con varios tipos de IVA, o un equipo junto a otros artículos: una línea cada uno. Se presenta como un único gasto por el importe total, que usted pagó.",
+  "purchaseReceiptLine": "Línea {number}",
+  "purchaseReceiptRemoveLine": "Quitar esta línea",
+  "purchaseReceiptSubmit": "Presentar el justificante",
+  "purchaseReceiptSubmitted": "Justificante presentado: espera su aprobación.",
   "purchaseSettlementNothingOwed": "Nada adeudado",
   "purchaseSettlementPartly": "Saldado en parte",
   "purchaseSettlementSettled": "Saldado",
@@ -11094,6 +11103,8 @@
   "@purchasesPickDate": {
     "description": "#2573 purchases"
   },
+  "purchasesPlace": "Dónde se imputa el coste",
+  "purchasesPlaceNone": "Ningún lugar concreto",
   "purchasesPurpose": "¿Para qué es?",
   "@purchasesPurpose": {
     "description": "#2576 equipment register: what a purchase line is for"

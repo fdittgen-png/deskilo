@@ -28140,6 +28140,60 @@ abstract class AppLocalizations {
   /// **'Accounting qualified'**
   String get purchaseQualified;
 
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt with several lines'**
+  String get purchaseReceiptAdd;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Add a line'**
+  String get purchaseReceiptAddLine;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a positive amount on every line.'**
+  String get purchaseReceiptAmount;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'The deductible share of every taxed line lies between 0 and 100 %.'**
+  String get purchaseReceiptDeductible;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'For a receipt with several VAT rates, or equipment beside other items: one line each. It is submitted as one expense of the whole amount, which you paid.'**
+  String get purchaseReceiptIntro;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Line {number}'**
+  String purchaseReceiptLine(int number);
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this line'**
+  String get purchaseReceiptRemoveLine;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Submit receipt'**
+  String get purchaseReceiptSubmit;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt submitted: it awaits approval.'**
+  String get purchaseReceiptSubmitted;
+
   /// #2577 the three status chips of a purchase document
   ///
   /// In en, this message translates to:
@@ -28535,6 +28589,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a date'**
   String get purchasesPickDate;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Where the cost belongs'**
+  String get purchasesPlace;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'No particular place'**
+  String get purchasesPlaceNone;
 
   /// #2576 equipment register: what a purchase line is for
   ///

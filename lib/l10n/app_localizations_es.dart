@@ -16870,6 +16870,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchaseQualified => 'Contabilidad cualificada';
 
   @override
+  String get purchaseReceiptAdd => 'Justificante con varias líneas';
+
+  @override
+  String get purchaseReceiptAddLine => 'Añadir una línea';
+
+  @override
+  String get purchaseReceiptAmount =>
+      'Introduzca un importe positivo en cada línea.';
+
+  @override
+  String get purchaseReceiptDeductible =>
+      'La parte deducible de cada línea gravada está entre 0 y 100 %.';
+
+  @override
+  String get purchaseReceiptIntro =>
+      'Para un justificante con varios tipos de IVA, o un equipo junto a otros artículos: una línea cada uno. Se presenta como un único gasto por el importe total, que usted pagó.';
+
+  @override
+  String purchaseReceiptLine(int number) {
+    return 'Línea $number';
+  }
+
+  @override
+  String get purchaseReceiptRemoveLine => 'Quitar esta línea';
+
+  @override
+  String get purchaseReceiptSubmit => 'Presentar el justificante';
+
+  @override
+  String get purchaseReceiptSubmitted =>
+      'Justificante presentado: espera su aprobación.';
+
+  @override
   String get purchaseSettlementNothingOwed => 'Nada adeudado';
 
   @override
@@ -17095,6 +17128,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get purchasesPickDate => 'Elegir una fecha';
+
+  @override
+  String get purchasesPlace => 'Dónde se imputa el coste';
+
+  @override
+  String get purchasesPlaceNone => 'Ningún lugar concreto';
 
   @override
   String get purchasesPurpose => '¿Para qué es?';

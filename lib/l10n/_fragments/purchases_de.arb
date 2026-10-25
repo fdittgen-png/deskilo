@@ -181,5 +181,16 @@
   "purchaseEntryUnpaid": "Noch nicht bezahlt",
   "purchaseEntryUnpaidHint": "Eine Lieferantenrechnung, die der Raum noch bezahlen muss.",
   "purchaseEntryPaid": "Der Raum hat schon bezahlt",
-  "purchaseEntryPaidHint": "Erfassen Sie die Rechnung; nach der Genehmigung buchen Sie die Zahlung unter „Zu zahlen“."
+  "purchaseEntryPaidHint": "Erfassen Sie die Rechnung; nach der Genehmigung buchen Sie die Zahlung unter „Zu zahlen“.",
+  "purchasesPlace": "Wo die Kosten anfallen",
+  "purchasesPlaceNone": "Kein bestimmter Ort",
+  "purchaseReceiptAdd": "Beleg mit mehreren Positionen",
+  "purchaseReceiptIntro": "Für einen Beleg mit mehreren MwSt.-Sätzen oder Ausstattung neben anderen Artikeln: je eine Position. Er wird als eine Ausgabe über den Gesamtbetrag eingereicht, den Sie bezahlt haben.",
+  "purchaseReceiptLine": "Position {number}",
+  "purchaseReceiptAddLine": "Position hinzufügen",
+  "purchaseReceiptRemoveLine": "Diese Position entfernen",
+  "purchaseReceiptSubmit": "Beleg einreichen",
+  "purchaseReceiptAmount": "Geben Sie auf jeder Position einen positiven Betrag ein.",
+  "purchaseReceiptDeductible": "Der abziehbare Anteil jeder besteuerten Position liegt zwischen 0 und 100 %.",
+  "purchaseReceiptSubmitted": "Beleg eingereicht: Er wartet auf die Genehmigung."
 }

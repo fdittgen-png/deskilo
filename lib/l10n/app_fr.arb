@@ -10796,6 +10796,15 @@
   "purchaseLinkInboxTitle": "Factures reçues",
   "purchaseNeedsReview": "À revoir",
   "purchaseQualified": "Comptabilité qualifiée",
+  "purchaseReceiptAdd": "Justificatif à plusieurs lignes",
+  "purchaseReceiptAddLine": "Ajouter une ligne",
+  "purchaseReceiptAmount": "Saisissez un montant positif sur chaque ligne.",
+  "purchaseReceiptDeductible": "La part déductible de chaque ligne taxée est comprise entre 0 et 100 %.",
+  "purchaseReceiptIntro": "Pour un justificatif à plusieurs taux de TVA, ou un équipement à côté d'autres articles : une ligne chacun. Il est soumis comme une seule dépense du montant total, que vous avez payé.",
+  "purchaseReceiptLine": "Ligne {number}",
+  "purchaseReceiptRemoveLine": "Retirer cette ligne",
+  "purchaseReceiptSubmit": "Soumettre le justificatif",
+  "purchaseReceiptSubmitted": "Justificatif soumis : il attend son approbation.",
   "purchaseSettlementNothingOwed": "Rien de dû",
   "purchaseSettlementPartly": "Réglé en partie",
   "purchaseSettlementSettled": "Réglé",
@@ -11094,6 +11103,8 @@
   "@purchasesPickDate": {
     "description": "#2573 purchases"
   },
+  "purchasesPlace": "Où imputer le coût",
+  "purchasesPlaceNone": "Aucun lieu précis",
   "purchasesPurpose": "À quoi cela sert-il ?",
   "@purchasesPurpose": {
     "description": "#2576 equipment register: what a purchase line is for"

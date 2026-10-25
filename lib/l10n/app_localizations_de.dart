@@ -16916,6 +16916,39 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchaseQualified => 'Buchhaltung qualifiziert';
 
   @override
+  String get purchaseReceiptAdd => 'Beleg mit mehreren Positionen';
+
+  @override
+  String get purchaseReceiptAddLine => 'Position hinzufügen';
+
+  @override
+  String get purchaseReceiptAmount =>
+      'Geben Sie auf jeder Position einen positiven Betrag ein.';
+
+  @override
+  String get purchaseReceiptDeductible =>
+      'Der abziehbare Anteil jeder besteuerten Position liegt zwischen 0 und 100 %.';
+
+  @override
+  String get purchaseReceiptIntro =>
+      'Für einen Beleg mit mehreren MwSt.-Sätzen oder Ausstattung neben anderen Artikeln: je eine Position. Er wird als eine Ausgabe über den Gesamtbetrag eingereicht, den Sie bezahlt haben.';
+
+  @override
+  String purchaseReceiptLine(int number) {
+    return 'Position $number';
+  }
+
+  @override
+  String get purchaseReceiptRemoveLine => 'Diese Position entfernen';
+
+  @override
+  String get purchaseReceiptSubmit => 'Beleg einreichen';
+
+  @override
+  String get purchaseReceiptSubmitted =>
+      'Beleg eingereicht: Er wartet auf die Genehmigung.';
+
+  @override
   String get purchaseSettlementNothingOwed => 'Nichts geschuldet';
 
   @override
@@ -17141,6 +17174,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesPickDate => 'Datum wählen';
+
+  @override
+  String get purchasesPlace => 'Wo die Kosten anfallen';
+
+  @override
+  String get purchasesPlaceNone => 'Kein bestimmter Ort';
 
   @override
   String get purchasesPurpose => 'Wofür ist es?';

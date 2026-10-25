@@ -34,7 +34,7 @@ class _FlakyRepository extends FakePurchaseRepository {
   Future<String> saveDraft(
     String workspaceId,
     String requestId,
-    PurchaseBillDraft draft,
+    PurchaseDraft draft,
   ) async {
     requestIds.add(requestId);
     if (!_failed) {
@@ -178,7 +178,7 @@ void main() {
     await tester.tap(find.byKey(ValueKey('purchase-$id')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('purchase-state')), findsOneWidget);
-    expect(find.text('Tax not stated'), findsOneWidget);
+    expect(find.textContaining('Tax not stated'), findsOneWidget);
   });
 
   testWidgets('a member sees no capture door', (tester) async {

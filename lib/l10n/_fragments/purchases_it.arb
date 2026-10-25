@@ -181,5 +181,16 @@
   "purchaseEntryUnpaid": "Non ancora pagato",
   "purchaseEntryUnpaidHint": "Una fattura fornitore che lo spazio deve ancora pagare.",
   "purchaseEntryPaid": "Lo spazio ha già pagato",
-  "purchaseEntryPaidHint": "Registri la fattura; una volta approvata, registri il pagamento da «Da pagare»."
+  "purchaseEntryPaidHint": "Registri la fattura; una volta approvata, registri il pagamento da «Da pagare».",
+  "purchasesPlace": "Dove si imputa il costo",
+  "purchasesPlaceNone": "Nessun luogo preciso",
+  "purchaseReceiptAdd": "Ricevuta con più righe",
+  "purchaseReceiptIntro": "Per una ricevuta con più aliquote IVA, o un'attrezzatura accanto ad altri articoli: una riga ciascuno. Viene presentata come un'unica spesa dell'importo totale, che Lei ha pagato.",
+  "purchaseReceiptLine": "Riga {number}",
+  "purchaseReceiptAddLine": "Aggiungere una riga",
+  "purchaseReceiptRemoveLine": "Togliere questa riga",
+  "purchaseReceiptSubmit": "Presentare la ricevuta",
+  "purchaseReceiptAmount": "Inserisca un importo positivo su ogni riga.",
+  "purchaseReceiptDeductible": "La quota detraibile di ogni riga tassata è compresa tra 0 e 100 %.",
+  "purchaseReceiptSubmitted": "Ricevuta presentata: è in attesa di approvazione."
 }

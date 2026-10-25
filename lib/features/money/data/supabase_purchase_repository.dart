@@ -257,7 +257,7 @@ class SupabasePurchaseRepository implements PurchaseRepository {
   Future<String> saveDraft(
     String workspaceId,
     String requestId,
-    PurchaseBillDraft draft,
+    PurchaseDraft draft,
   ) async {
     final json = await _client.rpc<Object?>(
       'save_purchase_draft_v1',
@@ -272,5 +272,35 @@ class SupabasePurchaseRepository implements PurchaseRepository {
       json,
       context: 'save_purchase_draft_v1',
     ).string('purchase_id');
+  }
+
+  /// Read under the tables' own policies: a member sees the space's plan.
+  @override
+  Future<List<PurchasePlace>> fetchPlaces(String workspaceId) async {
+    final sites = await _client
+        .from('sites')
+        .select('id, name')
+        .eq('workspace_id', workspaceId)
+        .order('sort_order')
+        .order('name');
+    final levels = await _client
+        .from('levels')
+        .select('id, name, offices(id, name)')
+        .eq('workspace_id', workspaceId)
+        .order('sort_order')
+        .order('name');
+    PurchasePlace place(String kind, Object? row) {
+      final r = JsonReader.of(row, context: kind);
+      return PurchasePlace(kind: kind, id: r.string('id'), name: r.string('name'));
+    }
+
+    return [
+      for (final s in sites) place('site', s),
+      for (final l in levels) ...[
+        place('level', l),
+        for (final o in JsonReader.of(l, context: 'level').listOrAbsent('offices'))
+          place('office', o),
+      ],
+    ];
   }
 }

@@ -298,7 +298,7 @@ select set_config('t.pm', (pg_temp.as_json(pg_temp.u(3), format(
     jsonb_build_object('gross_cents', 12000, 'net_cents', 10000, 'tax_cents', 2000, 'tax_rate_percent', 20, 'recoverable_tax_cents', 2000),
     jsonb_build_object('gross_cents', 1100, 'net_cents', 1000, 'tax_cents', 100, 'tax_rate_percent', 10, 'recoverable_tax_cents', 100)))::text)) ->> 'purchase_id'), true);
 select ok((pg_temp.as_json(pg_temp.u(3), format(
-  'select public.submit_purchase_v1(%L, %L, 1, %L)', current_setting('t.a'), current_setting('t.pm'), 'a0000000-0000-4000-8000-000000000015'))::text) like '%several tax rates%', 'F: a receipt with several rates is refused until the posting model, its lines kept exactly');
+  'select public.submit_purchase_v1(%L, %L, 1, %L)', current_setting('t.a'), current_setting('t.pm'), 'a0000000-0000-4000-8000-000000000015')) ->> 'state') = 'pending', 'F: a receipt with several rates goes to approval (9999), its lines kept exactly');
 select is((select sum(gross_cents)::int || '/' || count(*)::int from public.purchase_lines where purchase_id = current_setting('t.pm')::uuid), '13100/2',
   'F: a mixed-rate draft is stored line by line, summing exactly');
 select ok((pg_temp.as_json(pg_temp.u(3), format(
