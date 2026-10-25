@@ -156,6 +156,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<String> createExpenseSchedule({required String workspaceId, required String title, required int amountCents, required DateTime startsOn, required ScheduleUnit unit, int every = 1, int? repeatCount, DateTime? endsOn, String description = ''}) => _expenses.createExpenseSchedule(workspaceId: workspaceId, title: title, amountCents: amountCents, startsOn: startsOn, unit: unit, every: every, repeatCount: repeatCount, endsOn: endsOn, description: description);
   @override Future<void> cancelExpenseSchedule(String scheduleId) => _expenses.cancelExpenseSchedule(scheduleId);
   @override Future<void> setExpenseScheduleVat(String scheduleId, Map<String, Object?>? vat) => _expenses.setExpenseScheduleVat(scheduleId, vat);
+  @override Future<void> setExpenseScheduleSupplier(String scheduleId, String? supplierId) => _expenses.setExpenseScheduleSupplier(scheduleId, supplierId);
   @override Future<int> sweepExpenseSchedules(String workspaceId) => _expenses.sweepExpenseSchedules(workspaceId);
   @override Future<List<ExpenseOccurrence>> fetchExpenseOccurrences(String workspaceId) => _expenses.fetchExpenseOccurrences(workspaceId);
   @override Future<void> confirmExpenseOccurrence({required String occurrenceId, required int amountCents, String reason = '', String? note}) => _expenses.confirmExpenseOccurrence(occurrenceId: occurrenceId, amountCents: amountCents, reason: reason, note: note);

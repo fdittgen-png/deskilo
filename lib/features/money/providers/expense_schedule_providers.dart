@@ -6,9 +6,11 @@ import '../../../core/trace/traced.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/expense_schedule.dart';
+import '../domain/supplier.dart';
 import '../presentation/purchase_source_opener.dart';
 import 'money_providers.dart';
 import 'purchase_providers.dart';
+import 'supplier_providers.dart';
 
 part 'expense_schedule_providers.g.dart';
 
@@ -17,6 +19,18 @@ part 'expense_schedule_providers.g.dart';
 @riverpod
 Future<List<ExpenseSchedule>> expenseSchedules(Ref ref, String workspaceId) =>
     ref.watch(expenseRepositoryProvider).fetchExpenseSchedules(workspaceId);
+
+/// The suppliers a new schedule may name: the workspace's ACTIVE ones while
+/// the suppliers are switched on, none otherwise.
+@riverpod
+Future<List<Supplier>> scheduleSuppliers(Ref ref, String workspaceId) async {
+  final on = ref
+      .watch(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.supplyExpenses);
+  if (!on) return const [];
+  final all = await ref.watch(suppliersProvider(workspaceId).future);
+  return [for (final s in all) if (s.isActive) s];
+}
 
 /// The member's materialised occurrences — the awaiting and rejected
 /// ones are what the Payments face presents for confirmation.

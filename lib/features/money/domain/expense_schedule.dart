@@ -60,6 +60,7 @@ class ExpenseSchedule implements SystemStamped {
     this.status = ScheduleStatus.pending,
     this.occurrencesDone = 0,
     this.nextDue,
+    this.supplierId,
     this.system = SystemColumns.none,
   });
 
@@ -85,6 +86,10 @@ class ExpenseSchedule implements SystemStamped {
   final int occurrencesDone;
   final DateTime? nextDue;
 
+  /// The supplier the schedule pays, when one was named; null for an
+  /// outlay to no one in particular.
+  final String? supplierId;
+
   factory ExpenseSchedule.fromDb(Map<String, dynamic> row) => ExpenseSchedule(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,
@@ -105,6 +110,7 @@ class ExpenseSchedule implements SystemStamped {
         nextDue: row['next_due'] == null
             ? null
             : DateTime.parse(row['next_due'] as String),
+        supplierId: row['supplier_id'] as String?,
       );
 }
 

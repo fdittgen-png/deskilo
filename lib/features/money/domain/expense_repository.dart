@@ -52,6 +52,14 @@ abstract interface class ExpenseRepository {
     Map<String, Object?>? vat,
   );
 
+  /// The supplier a member's schedule pays (an ACTIVE supplier of the
+  /// same workspace); null clears it. A contract's schedule takes its
+  /// supplier from its contract and is refused here.
+  Future<void> setExpenseScheduleSupplier(
+    String scheduleId,
+    String? supplierId,
+  );
+
   /// Materialises every due occurrence (any active member; the morning
   /// cron is the other clock). Returns how many it created.
   Future<int> sweepExpenseSchedules(String workspaceId);

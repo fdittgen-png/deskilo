@@ -178,6 +178,12 @@ class _Expenses implements ExpenseRepository {
   ) => throw UnimplementedError();
 
   @override
+  Future<void> setExpenseScheduleSupplier(
+    String scheduleId,
+    String? supplierId,
+  ) => throw UnimplementedError();
+
+  @override
   Future<int> sweepExpenseSchedules(String workspaceId) =>
       throw UnimplementedError();
 

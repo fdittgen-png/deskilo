@@ -158,7 +158,25 @@ extension _FakeMoneyRepositoryPart4 on FakeMoneyRepository {
       title: s.title, description: s.description, amountCents: s.amountCents,
       startsOn: s.startsOn, endsOn: s.endsOn, unit: s.unit, every: s.every,
       repeatCount: s.repeatCount, status: ScheduleStatus.ended,
-      occurrencesDone: s.occurrencesDone,
+      occurrencesDone: s.occurrencesDone, supplierId: s.supplierId,
+    );
+  }
+
+  Future<void> _setExpenseScheduleSupplierImpl(
+    String scheduleId,
+    String? supplierId,
+  ) async {
+    final i = expenseSchedules.indexWhere((s) => s.id == scheduleId);
+    if (i < 0) throw StateError('unknown schedule');
+    final s = expenseSchedules[i];
+    expenseScheduleSuppliers[scheduleId] = supplierId;
+    expenseSchedules[i] = ExpenseSchedule(
+      id: s.id, workspaceId: s.workspaceId, memberId: s.memberId,
+      title: s.title, description: s.description, amountCents: s.amountCents,
+      startsOn: s.startsOn, endsOn: s.endsOn, unit: s.unit, every: s.every,
+      repeatCount: s.repeatCount, status: s.status,
+      occurrencesDone: s.occurrencesDone, nextDue: s.nextDue,
+      supplierId: supplierId,
     );
   }
 
