@@ -90,6 +90,10 @@ reached and how far it is qualified. The table below is generated from it;
 | `fr_ereporting` | DGFiP · e-reporting · flows 10.1-10.4 | file | documents | FR | implemented | DGFiP e-reporting flows 10.1-10.4 (structure only) |
 | `saft_pt` | Autoridade Tributária · SAF-T (PT) · 1.04_01, TaxAccountingBasis F | file | documents | PT | locallyValidated | SAF-T PT, TaxAccountingBasis F |
 | `datev` | DATEV · Rechnungswesen · EXTF 700 Buchungsstapel | file | journal | AT, DE | locallyValidated | not named yet |
+| `gobd` | BMF · GoBD Datenträgerüberlassung (Z3) · Beschreibungsstandard, gdpdu-01-08-2002.dtd | file | documents | DE | locallyValidated | GDPdU Beschreibungsstandard 1.1, gdpdu-01-08-2002.dtd |
+| `datev_buchungsdatenservice` | DATEV · Buchungsdatenservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | journal | AT, DE | specificationNeeded | not named yet |
+| `datev_rechnungsdatenservice` | DATEV · Rechnungsdatenservice 1.0 · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
+| `datev_belegbilderservice` | DATEV · Belegbilderservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
 | `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
 | `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV, Ziffer per row | file | journal | CH | implemented | not named yet |
 | `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |

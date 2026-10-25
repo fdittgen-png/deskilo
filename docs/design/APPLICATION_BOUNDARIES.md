@@ -130,6 +130,8 @@ The budget line of `test/lint/file_length_test.dart`. A file here is not necessa
 - `lib/features/calendar/presentation/screens/calendar_hub_screen.dart`
 - `lib/features/directory/presentation/messenger/context_thread_screen.dart`
 - `lib/features/members/presentation/widgets/member_page_cards.dart`
+- `lib/features/money/domain/gobd_package.dart`
+- `lib/features/money/presentation/accounting_export_run.dart`
 - `lib/features/money/presentation/report_defaults.dart`
 - `lib/features/plan/data/supabase_floor_plan_repository.dart`
 - `lib/features/reservations/presentation/reserve_seat_actions.dart`
