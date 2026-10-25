@@ -98,7 +98,8 @@ void main() {
       expect(
         rows.first,
         'number,workspace,issued_at,due_on,state,currency,total,paid,'
-        'remaining,reminders,invoice_id',
+        'remaining,reminders,invoice_id,record,source,paid_at,payment_id,'
+        'description',
       );
       expect(rows, hasLength(5));
       // Same issue day: the id breaks the tie.

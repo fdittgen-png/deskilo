@@ -12,7 +12,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/account_activity.dart';
 import '../../providers/account_activity_providers.dart';
-import '../widgets/connected_activity.dart';
+import '../widgets/host_activity.dart';
 import '../widgets/personal_payment_provider.dart';
 
 /// Personal history is independent of whichever workspace happens to be open.
@@ -94,7 +94,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                         padding: AppSpacing.mdAll,
                         physics: const AlwaysScrollableScrollPhysics(),
                         children: [
-                          ConnectedActivity(
+                          HostActivity(
                             key: ValueKey(account),
                             kind: _kind,
                           ),
@@ -152,7 +152,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                                 key: const ValueKey('account-activity-chevron-right'),
                                 tooltip: MaterialLocalizations.of(context)
                                     .nextPageTooltip,
-                                onPressed: entries.length < 50
+                                onPressed: entries.length < activityPageSize
                                     ? null
                                     : () => setState(
                                         () => _pages.add(entries.last.cursor),
@@ -166,7 +166,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                     ),
                     AsyncError() => ListView(
                       children: [
-                        ConnectedActivity(key: ValueKey(account), kind: _kind),
+                        HostActivity(key: ValueKey(account), kind: _kind),
                         TextButton(
                           key: const ValueKey('account-activity-failed'),
                           onPressed: () => ref.invalidate(provider),
@@ -178,7 +178,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                     ),
                     _ => ListView(
                       children: [
-                        ConnectedActivity(key: ValueKey(account), kind: _kind),
+                        HostActivity(key: ValueKey(account), kind: _kind),
                         const LoadingView(),
                       ],
                     ),
