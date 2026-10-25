@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3031 (migration 9999): a recorded exchange rate per foreign-currency
+-- #3031 (migrations 0589, 0590): a recorded exchange rate per foreign-currency
 -- purchase, read by the books. Real roles (definer RPCs and the RLS reads run
 -- as `authenticated`), a readback after every refusal:
 --   F the registries: the flag under purchases, off; the rate sources; the
@@ -25,7 +25,7 @@
 -- workspaces switch on the flags the RPCs gate on and their parents:
 -- foreignCurrencyPurchases under purchases under moneyTab (B: off).
 begin;
-select plan(38);
+select plan(40);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -270,6 +270,12 @@ select is(pg_temp.posted('CH-1', 'supplier_payment'), '401:D26909,512:C26909',
 
 -- An approved bill in francs without a rate (a space whose currency moved):
 -- set up as postgres, the guard held aside for the seed only.
+select is(pg_temp.as_text(pg_temp.u(3), 'select count(*)::text from public.document_exchange_rates'), '0',
+  'S11c the owner of another space reads none');
+select throws_like(format($$update public.purchase_documents set state = 'approved', decided_at = now(),
+    decided_by_member_id = (select m.id from public.members m where m.workspace_id = %L and m.user_id = %L)
+  where id = %L$$, current_setting('t.a'), pg_temp.u(4), pg_temp.doc('CH-3')),
+  '%has no recorded exchange rate%', 'T1 the guard refuses a direct approval without the rate, named');
 alter table public.purchase_documents disable trigger purchase_rate_required;
 -- purchase_documents_approval_check (0468): an approved bill names who decided it.
 update public.purchase_documents

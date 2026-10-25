@@ -1603,7 +1603,8 @@ window.SETUP_LEVELS={
       "purchases",
       "premisesLease",
       "assetRegister",
-      "purchaseAnalytics"
+      "purchaseAnalytics",
+      "foreignCurrencyPurchases"
      ],
      "needs": {
       "money": "invoices"

@@ -164,7 +164,8 @@ declare
   v_row public.document_exchange_rates;
 begin
   select * into v_doc from public.purchase_documents
-   where id = p_purchase_id and workspace_id = p_workspace_id;
+   where id = p_purchase_id and workspace_id = p_workspace_id
+   for update;
   if v_doc.id is null then raise exception 'unknown purchase'; end if;
   select w.currency_code into v_space from public.workspaces w where w.id = p_workspace_id;
   if v_doc.currency = v_space then
@@ -176,7 +177,7 @@ begin
   exception when others then
     raise exception 'a rate is a positive number with its date' using errcode = '22023';
   end;
-  if v_rate is null or v_rate <= 0 or scale(v_rate) > 10 or v_day is null then
+  if v_rate is null or v_rate <= 0 or v_rate >= 100000000 or scale(v_rate) > 10 or v_day is null then
     raise exception 'a rate is a positive number with its date' using errcode = '22023';
   end if;
   if not exists (select 1 from public.exchange_rate_sources s where s.code = v_source and s.active) then
@@ -253,7 +254,8 @@ begin
     if new.currency <> v_space and not exists (
          select 1 from public.document_exchange_rates x
           where x.workspace_id = new.workspace_id and x.document_kind = 'purchase'
-            and x.document_id = new.id) then
+            and x.document_id = new.id
+            and x.currency = new.currency and x.functional_currency = v_space) then
       raise exception 'the purchase % in % has no recorded exchange rate',
         coalesce(nullif(new.original_reference, ''), new.id::text), new.currency
         using errcode = '22023';
@@ -399,6 +401,10 @@ begin
      where x.workspace_id = p_workspace_id and x.document_kind = 'purchase' and x.document_id = v_doc.id;
   elsif jsonb_typeof(p_payload -> 'exchange_rate') = 'object' then
     perform public.purchase_exchange_rate_write(p_workspace_id, v_doc.id, v_me, p_payload -> 'exchange_rate');
+  else
+    delete from public.document_exchange_rates x
+     where x.workspace_id = p_workspace_id and x.document_kind = 'purchase'
+       and x.document_id = v_doc.id and x.currency <> v_currency;
   end if;
   v_result := jsonb_build_object('purchase_id', v_doc.id, 'revision', v_doc.revision,
                                  'state', v_doc.state);

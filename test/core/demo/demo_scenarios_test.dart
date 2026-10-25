@@ -18,6 +18,7 @@ import 'dart:async';
 
 import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
+import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
 import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
@@ -31,13 +32,16 @@ import 'package:deskilo/core/demo/seed/demo_flags.dart';
 import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_setup_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_valuation_seed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/asset_valuation.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
+import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
@@ -1015,5 +1019,70 @@ void main() {
         expect(await s.check(world), isTrue);
       });
     }
+  });
+
+  // #3031 — the demo's books read the licence billed in francs at its
+  // recorded rate once approved: 480.00 CHF × 1.0657 = 511.54 EUR.
+  test('the approved CHF licence posts in euros at its rate', () async {
+    final f = DemoFixture.build();
+    final purchasing = seedDemoPurchasing(f.seededAt, money: f.money);
+    await purchasing.purchases.decideBill(
+      'ws-1',
+      'demo-bill-licence-chf',
+      1,
+      approve: true,
+      reason: '',
+      requestId: 'r-chf',
+    );
+    final profile = demoBookProfile(f.seededAt);
+    final books = FakeBookProfileRepository(
+      money: f.money,
+      purchases: purchasing.purchases,
+    );
+    for (final (role, code, type) in [
+      (BookRole.expenses, '606', AccountType.expense),
+      (BookRole.suppliers, '401', AccountType.liability),
+    ]) {
+      books
+        ..accounts.add(
+          BookAccount(
+            id: 'acc-$code',
+            workspaceId: 'ws-1',
+            issuerSiteId: profile.issuerSiteId,
+            code: code,
+            name: code,
+            type: type,
+            isPosting: true,
+            origin: AccountOrigin.manual,
+            revision: 1,
+          ),
+        )
+        ..mappings.add(
+          BookMapping(
+            id: role.wire,
+            workspaceId: 'ws-1',
+            issuerSiteId: profile.issuerSiteId,
+            role: role,
+            accountId: 'acc-$code',
+            effectiveFrom: DateTime(2020),
+            revision: 1,
+          ),
+        );
+    }
+    final set = await books.fetchPostings(
+      'ws-1',
+      profile.issuerSiteId,
+      f.seededAt.subtract(const Duration(days: 60)),
+      f.seededAt,
+    );
+    final bill = set.postings.singleWhere(
+      (p) =>
+          p.documentId == 'demo-bill-licence-chf' &&
+          p.kind == PostingKind.supplierBill,
+    );
+    expect(
+      bill.lines.map((l) => (l.debit.currency, l.credit.minor)).toList(),
+      [('EUR', 0), ('EUR', 51154)],
+    );
   });
 }

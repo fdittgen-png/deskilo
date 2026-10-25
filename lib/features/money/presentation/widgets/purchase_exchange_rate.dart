@@ -177,19 +177,23 @@ class _ExchangeRateFieldsState extends ConsumerState<_ExchangeRateFields> {
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           onChanged: (_) => _emit(),
         ),
-        DropdownButtonFormField<String>(
-          key: const ValueKey('purchase-fx-source'),
-          initialValue: sources.contains(_source) ? _source : null,
-          isExpanded: true,
-          decoration: InputDecoration(labelText: l10n.purchasesFxSource),
-          items: [
-            for (final s in sources)
-              DropdownMenuItem(value: s, child: Text(_sourceLabel(l10n, s))),
-          ],
-          onChanged: (v) {
-            setState(() => _source = v);
-            _emit();
-          },
+        // Rebuilt when the sources arrive, so a held source is shown.
+        KeyedSubtree(
+          key: ValueKey(sources.length),
+          child: DropdownButtonFormField<String>(
+            key: const ValueKey('purchase-fx-source'),
+            initialValue: sources.contains(_source) ? _source : null,
+            isExpanded: true,
+            decoration: InputDecoration(labelText: l10n.purchasesFxSource),
+            items: [
+              for (final s in sources)
+                DropdownMenuItem(value: s, child: Text(_sourceLabel(l10n, s))),
+            ],
+            onChanged: (v) {
+              setState(() => _source = v);
+              _emit();
+            },
+          ),
         ),
         const FormGap.small(),
         OutlinedButton(
