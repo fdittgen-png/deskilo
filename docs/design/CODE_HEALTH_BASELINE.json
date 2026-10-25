@@ -1,8 +1,8 @@
 {
-  "recordedSha": "0e69e07a58c737923879b46651640972a74381bb",
+  "recordedSha": "71a21409decba356637df596b782d5833854012a",
   "recordedDate": "2026-10-25",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2109,"functions":11833,"cyclomatic>=9":1180,"cyclomatic>=25":94,"cognitive>=15":465,"cognitive>=30":82,"length>=150":64,"parameters>=5":524,"parameters>=7":148,"partOfFiles":31},
+  "totals": {"files":2109,"functions":11839,"cyclomatic>=9":1183,"cyclomatic>=25":93,"cognitive>=15":464,"cognitive>=30":80,"length>=150":63,"parameters>=5":524,"parameters>=7":148,"partOfFiles":31},
   "budgets": {
     "partOfFiles": 31,
     "fileLength": {
@@ -1500,7 +1500,7 @@
     {"p":"lib/features/members/presentation/widgets/managed_access_editor.dart","loc":89,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":6,"cyc":9,"len":78,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/widgets/member_contact_card.dart","loc":97,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":12,"cyc":16,"len":71,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/widgets/member_money_card.dart","loc":199,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":26,"cyc":28,"len":149,"params":2,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
-    {"p":"lib/features/members/presentation/widgets/member_page_cards.dart","loc":796,"part":true,"setState":0,"repositoryReads":1,"fn":12,"cog":37,"cyc":47,"len":157,"params":3,"nest":4,"over":{"cog":2,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/members/presentation/widgets/member_page_cards.dart","loc":792,"part":true,"setState":0,"repositoryReads":1,"fn":18,"cog":21,"cyc":21,"len":145,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/providers/directory_providers.dart","loc":23,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":5,"len":31,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/providers/realtime_invalidations.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/accounting_export_source.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":7,"len":48,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2876,8 +2876,6 @@
     {"id":"lib/features/members/presentation/screens/directory_screen_part2.dart#showMemberProfileSheet(BuildContext context,{required Member member,required String name,required bool isSelf,required Profile? profile,required DirectoryPresence presence,required ReservationInfo? reservationInfo,required List<Reservation> memberReservations,required Map<String, String> targetNames,required DateTime now,required void Function(Uri uri) onWhatsapp,required void Function(Reservation reservation) onOpenReservation,VoidCallback? onNotify})","cog":20,"cyc":12,"len":184,"params":13},
     {"id":"lib/features/members/presentation/screens/directory_screen_part3.dart#_MemberRow.build(BuildContext context)","cog":15,"cyc":15,"len":199,"params":1},
     {"id":"lib/features/members/presentation/widgets/member_money_card.dart#MemberMoneyCard.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":28,"len":149,"params":2},
-    {"id":"lib/features/members/presentation/widgets/member_page_cards.dart#_membershipTiles(_PageCtx c)","cog":37,"cyc":47,"len":157,"params":1},
-    {"id":"lib/features/members/presentation/widgets/member_page_cards.dart#_bookingTiles(_PageCtx c)","cog":31,"cyc":22,"len":109,"params":1},
     {"id":"lib/features/money/application/book_repartition.dart#Repartitions.book({required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":0,"cyc":1,"len":20,"params":7},
     {"id":"lib/features/money/application/book_repartition.dart#bookRepartition(MoneyRepository repository,{required String workspaceId,required String title,required int amountCents,required String period,required RepartitionRule rule,required List<RepartitionShare> shares,bool remember})","cog":3,"cyc":3,"len":32,"params":8},
     {"id":"lib/features/money/application/declare_vat.dart#VatDeclarations.report({required String workspaceId,required Iterable<Invoice> invoices,required Map<String, InvoiceMatch> matches,required DateTime start,required DateTime end,required String zeroCategory,required VatTaxPointBasis basis})","cog":1,"cyc":2,"len":22,"params":7},
