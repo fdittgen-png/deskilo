@@ -6,7 +6,9 @@
 // connected as the online-payments screen reads them (secrets only by
 // name, never by value), and opens that screen. The preview is the
 // checkout a member reaches on an unpaid statement: with the "Pay online"
-// button once a provider is connected, without it before.
+// button once a provider is connected, without it before. Below the
+// providers, the test payment says what that checkout would do with the
+// keys held, without paying (setup_test_payment.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,15 +21,20 @@ import '../../../../core/ui/setup_step_layout.dart';
 import '../../domain/payment_provider.dart';
 import '../../providers/payment_gateway_providers.dart';
 import '../payment_provider_labels.dart';
+import 'setup_test_payment.dart';
 
 class SetupOnlinePaymentsStep extends ConsumerWidget {
   const SetupOnlinePaymentsStep({
     super.key,
     required this.workspaceId,
     required this.checkout,
+    required this.testOffered,
   });
 
   final String workspaceId;
+
+  /// Whether the test payment is offered: online payments are on.
+  final bool testOffered;
 
   /// The checkout a member sees, with or without online payment.
   final Widget Function({required bool payOnline}) checkout;
@@ -36,7 +43,11 @@ class SetupOnlinePaymentsStep extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) =>
       switch (ref.watch(paymentGatewayStatusProvider(workspaceId))) {
         AsyncData(value: final status) => SetupStepLayout(
-          form: _OnlineForm(status: status),
+          form: _OnlineForm(
+            workspaceId: workspaceId,
+            status: status,
+            testOffered: testOffered,
+          ),
           preview: _OnlinePreview(
             connected: status.values.any((s) => s.configured),
             checkout: checkout,
@@ -55,7 +66,13 @@ class SetupOnlinePaymentsStep extends ConsumerWidget {
 }
 
 class _OnlineForm extends StatelessWidget {
-  const _OnlineForm({required this.status});
+  const _OnlineForm({
+    required this.workspaceId,
+    required this.status,
+    required this.testOffered,
+  });
+  final String workspaceId;
+  final bool testOffered;
   final Map<PaymentProvider, PaymentProviderStatus> status;
 
   @override
@@ -90,6 +107,10 @@ class _OnlineForm extends StatelessWidget {
                   : l10n.payConfigNotConfigured,
             ),
           ),
+        if (testOffered) ...[
+          const SizedBox(height: AppSpacing.md),
+          SetupPaymentTest(workspaceId: workspaceId),
+        ],
         const SizedBox(height: AppSpacing.sm),
         Align(
           alignment: AlignmentDirectional.centerStart,
