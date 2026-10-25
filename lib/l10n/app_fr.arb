@@ -10553,6 +10553,11 @@
   "@privacyWhoCanSeeHint": {
     "description": "#719 - privacy & data"
   },
+  "privateValueHidden": "Masqué",
+  "privateValueHide": "Masquer",
+  "privateValueShow": "Afficher",
+  "privateValuesHint": "Les montants et les aperçus restent masqués jusqu’à ce que vous les affichiez. Enregistré sur cet appareil et sur votre compte.",
+  "privateValuesTitle": "Masquer les valeurs privées",
   "processAlsoNeeds": "Tout activer nécessite aussi : {features}",
   "processApplied": "{count} fonctionnalités modifiées.",
   "processBillingPayments": "Facturation et paiements",

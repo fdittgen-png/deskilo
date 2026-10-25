@@ -1,0 +1,8 @@
+{
+  "@@locale": "it",
+  "privateValueHidden": "Nascosto",
+  "privateValueShow": "Mostra",
+  "privateValueHide": "Nascondi",
+  "privateValuesTitle": "Nascondi i valori privati",
+  "privateValuesHint": "Importi e anteprime restano nascosti finché Lei non li mostra. Salvato su questo dispositivo e sul Suo account."
+}

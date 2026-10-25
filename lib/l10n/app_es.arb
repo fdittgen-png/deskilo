@@ -10553,6 +10553,11 @@
   "@privacyWhoCanSeeHint": {
     "description": "#719 - privacy & data"
   },
+  "privateValueHidden": "Oculto",
+  "privateValueHide": "Ocultar",
+  "privateValueShow": "Mostrar",
+  "privateValuesHint": "Los importes y las vistas previas permanecen ocultos hasta que usted los muestre. Se guarda en este dispositivo y en su cuenta.",
+  "privateValuesTitle": "Ocultar valores privados",
   "processAlsoNeeds": "Activarlo todo también necesita: {features}",
   "processApplied": "{count} funcionalidades cambiadas.",
   "processBillingPayments": "Facturación y pagos",

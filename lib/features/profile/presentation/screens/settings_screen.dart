@@ -45,6 +45,7 @@ import '../../providers/personal_preferences_providers.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/member_avatar.dart';
 import '../widgets/preference_scope_controls.dart';
+import '../widgets/private_values_tile.dart';
 import '../widgets/regional_formats_section.dart';
 import '../widgets/settings_about_section.dart';
 import '../widgets/settings_advanced_section.dart';
