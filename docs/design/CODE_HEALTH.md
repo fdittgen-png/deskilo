@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `ccf14ce321af8b1fdb69084185fa3ad3877af80b` on 2026-10-25.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `62c1adb2649c28ab9530999bb8b05315f4b9568d` on 2026-10-25.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,29 +10,27 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2105 |
-| functions | 11804 |
-| cyclomatic>=9 | 1183 |
-| cyclomatic>=25 | 97 |
+| files | 2106 |
+| functions | 11828 |
+| cyclomatic>=9 | 1182 |
+| cyclomatic>=25 | 94 |
 | cognitive>=15 | 466 |
-| cognitive>=30 | 86 |
-| length>=150 | 67 |
-| parameters>=5 | 521 |
-| parameters>=7 | 150 |
-| partOfFiles | 35 |
+| cognitive>=30 | 82 |
+| length>=150 | 64 |
+| parameters>=5 | 523 |
+| parameters>=7 | 148 |
+| partOfFiles | 31 |
 
 ## Worst functions by cognitive complexity (baseline)
 
 | cognitive | cyclomatic | lines | parameters | function |
 |---|---|---|---|---|
-| 68 | 21 | 136 | 13 | `lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState._wholeSection` |
 | 53 | 37 | 181 | 2 | `lib/features/workspace/presentation/screens/members_screen.dart#MembersScreen.build` |
 | 52 | 32 | 261 | 1 | `lib/features/money/presentation/screens/vat_screen.dart#_VatScreenState.build` |
 | 51 | 54 | 105 | 4 | `lib/core/public_network/public_network_codec.dart#_decodeValue` |
 | 51 | 26 | 130 | 1 | `lib/features/workspace/domain/bi_report_pdf.dart#_evolution` |
 | 51 | 39 | 254 | 1 | `lib/features/workspace/presentation/screens/workspace_settings_screen_part2.dart#_WorkspaceSettingsScreenStatePart2._importXml` |
 | 51 | 19 | 111 | 1 | `lib/features/workspace/presentation/widgets/template_apply_sheet.dart#_TemplateApplySheetState.build` |
-| 50 | 46 | 342 | 6 | `lib/features/reservations/presentation/reserve_seat_actions.dart#ReserveSeatActions.bookingSheet` |
 | 49 | 27 | 129 | 1 | `lib/features/directory/presentation/public_page_editor.dart#_EditorState.build` |
 | 49 | 28 | 298 | 2 | `lib/features/money/presentation/widgets/open_invoices_tab.dart#OpenInvoicesTab.build` |
 | 48 | 40 | 134 | 3 | `lib/features/task_recorder/data/recorder_store.dart#recoverRecordingLog` |
@@ -41,7 +39,6 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 47 | 29 | 76 | 3 | `lib/features/workspace/domain/feature_lifecycle.dart#validateFeatureAssessments` |
 | 46 | 21 | 246 | 5 | `lib/features/editor/presentation/widgets/seat_properties_sheet.dart#showSeatPropertiesSheet` |
 | 46 | 20 | 87 | 2 | `lib/features/workspace/presentation/screens/sites_screen.dart#SitesScreen.build` |
-| 45 | 33 | 199 | 3 | `lib/features/calendar/presentation/widgets/day_timeline_part1.dart#_DayTimelineStatePart1._grid` |
 | 45 | 39 | 198 | 6 | `lib/features/mcp/application/connect_checklist.dart#ConnectChecklist.new.derive` |
 | 45 | 36 | 170 | 2 | `lib/features/workspace/presentation/widgets/workspace_readiness_card.dart#WorkspaceReadinessCard.build` |
 | 44 | 50 | 140 | 3 | `lib/features/task_recorder/guide/guide_codec.dart#_GuideDecoder._step` |
@@ -50,4 +47,7 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 43 | 31 | 71 | 5 | `lib/features/workspace/presentation/onboarding_handoff.dart#runOnboardingAction` |
 | 43 | 26 | 161 | 1 | `lib/features/workspace/presentation/widgets/save_template_sheet.dart#_SaveTemplateSheetState.build` |
 | 42 | 37 | 175 | 3 | `lib/features/workspace/presentation/widgets/note_record_choices.dart#noteRecordChoices` |
+| 41 | 25 | 58 | 6 | `lib/features/money/domain/vat_tax_point.dart#_portions` |
+| 41 | 35 | 126 | 1 | `lib/features/workspace/presentation/screens/message_search_screen.dart#_MessageSearchScreenState.build` |
+| 40 | 48 | 141 | 2 | `lib/app/route_policy.dart#resolveDestination` |
 

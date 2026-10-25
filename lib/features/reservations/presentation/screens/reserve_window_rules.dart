@@ -153,6 +153,10 @@ class ReserveWindowRules {
   /// (the whole day for a member whose default period is the day, #586), the
   /// working day under the full-day and hourly grids, the default stay on a
   /// minute grid — and the slot itself for a resource with its own.
+  ///
+  /// Without this, walking up in a half-day workspace booked the member's
+  /// default period from NOW — a morning that started at 11:00 and ran to
+  /// midnight.
   DateTime walkUpEnd(
     HalfDayWindow window, {
     required DefaultBookingPeriod? period,
@@ -170,6 +174,43 @@ class ReserveWindowRules {
         walkUpWindow(granularity, window.start).end,
       _ => defaultEndFor(window.start),
     };
+  }
+
+  /// The end the booking sheet opens with, and whether the next booking on
+  /// the seat ([nextStart]) cut it short: a walk-up ends at [walkUpEnd], a
+  /// reservation with [booked], and either stops where the next booking
+  /// starts. With [offerWalkUp] it also gives the walk-up the sheet may
+  /// switch to (#2016), capped the same way.
+  static ({
+    DateTime end,
+    bool capped,
+    ({DateTime start, DateTime end, DateTime? cap, bool capped})? walkUpOption,
+  }) sheetEnd(
+    HalfDayWindow booked, {
+    required DateTime walkUpEnd,
+    required DateTime? nextStart,
+    required bool walkUp,
+    required bool offerWalkUp,
+  }) {
+    var end = walkUp ? walkUpEnd : booked.end;
+    var capped = false;
+    if (nextStart != null && nextStart.isBefore(end)) {
+      end = nextStart;
+      capped = true;
+    }
+    final walkUpCapped = nextStart != null && nextStart.isBefore(walkUpEnd);
+    return (
+      end: end,
+      capped: capped,
+      walkUpOption: offerWalkUp
+          ? (
+              start: booked.start,
+              end: walkUpCapped ? nextStart : walkUpEnd,
+              cap: nextStart,
+              capped: walkUpCapped,
+            )
+          : null,
+    );
   }
 
   /// A hand-picked [window] on [fromDay], re-mapped onto [toDay]: the
