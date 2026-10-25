@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -17,7 +16,7 @@ import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
-import '../vat_price_label.dart';
+import '../widgets/billing_editor_sections.dart';
 import '../widgets/carnets_editor.dart';
 import '../widgets/vat_rate_field.dart';
 
@@ -462,48 +461,24 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    final chargesVat = workspace?.vatRegime == 'vat_registered';
+    final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Row(
-          children: [
-            Text(
-              l10n.billingFeeBands,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            HelpDot(
-              l10n.helpTopicBilling,
-              anchor: HelpAnchor.billingFeeBands,
-            ),
-          ],
+        BillingSectionHeader(
+          title: l10n.billingFeeBands,
+          anchor: HelpAnchor.billingFeeBands,
         ),
         // #537 — the one VAT fact this whole page's prices share: they
         // are GROSS, taxed at the tariff's rate (#542: configurable,
         // default = the workspace default).
-        Builder(builder: (context) {
-          final chargesVat =
-              ref.watch(currentWorkspaceProvider).value?.vatRegime ==
-                  'vat_registered';
-          final tariffRateId = _tariffVatRateId;
-          final rate = vatRateSuffix(
-            chargesVat: chargesVat,
-            rates: ref.watch(vatRatesProvider).value ?? const [],
-            vatRateId: tariffRateId,
-          );
-          if (rate == null) return const SizedBox.shrink();
-          return Padding(
-            padding: const EdgeInsets.only(top: 2, bottom: 4),
-            child: Text(
-              tariffRateId.isEmpty
-                  ? (l10n.billingPricesVatHint(rate))
-                  : (l10n.billingTariffVatHint(rate)),
-              key: const ValueKey('billing-vat-hint'),
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-            ),
-          );
-        }),
+        BillingVatHint(
+          chargesVat: chargesVat,
+          rates: rates,
+          tariffRateId: _tariffVatRateId,
+        ),
         for (var i = 0; i < _bands.length; i++) _bandRow(l10n, i),
         if (_bandsInvalid)
           Padding(
@@ -517,7 +492,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         // pick, like a toggle (the bands' Save covers the bands only).
         VatRateField(
           dropdownKey: const ValueKey('billing-tariff-vat'),
-          rates: ref.watch(vatRatesProvider).value ?? const [],
+          rates: rates,
           value: _tariffVatRateId,
           onChanged: _saveTariffVat,
         ),
@@ -538,64 +513,25 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           ],
         ),
         const Divider(height: 32),
-        Row(
-          children: [
-            Text(
-              l10n.billingLevels,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            HelpDot(
-              l10n.helpTopicBilling,
-              anchor: HelpAnchor.billingLevels,
-            ),
-          ],
+        BillingSectionHeader(
+          title: l10n.billingLevels,
+          anchor: HelpAnchor.billingLevels,
         ),
         const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 4,
-          children: [
-            for (final preset in SubscriptionLevels.presets)
-              FilterChip(
-                key: ValueKey('billing-percent-value-$preset'),
-                label: Text(l10n.percentValue(preset)),
-                selected: _enabledPresets.contains(preset),
-                onSelected: (selected) => setState(() {
-                  if (selected) {
-                    _enabledPresets.add(preset);
-                  } else {
-                    _enabledPresets.remove(preset);
-                  }
-                }),
-              ),
-            for (final level in _extraLevels)
-              InputChip(
-                label: Text(l10n.percentValue(level)),
-                onDeleted: () => setState(() => _extraLevels.remove(level)),
-              ),
-          ],
+        BillingLevelChips(
+          enabledPresets: _enabledPresets,
+          extraLevels: _extraLevels,
+          onPresetSelected: (preset, {required selected}) => setState(() {
+            if (selected) {
+              _enabledPresets.add(preset);
+            } else {
+              _enabledPresets.remove(preset);
+            }
+          }),
+          onExtraDeleted: (level) =>
+              setState(() => _extraLevels.remove(level)),
         ),
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                key: const ValueKey('billing-level-value'),
-                controller: _newLevel,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: l10n.billingLevelValue,
-                ),
-                onSubmitted: (_) => _addLevel(),
-              ),
-            ),
-            IconButton(
-              key: const ValueKey('billing-add-level'),
-              icon: const Icon(Icons.add),
-              tooltip: l10n.billingAddLevel,
-              onPressed: _addLevel,
-            ),
-          ],
-        ),
+        BillingNewLevelRow(controller: _newLevel, onAdd: _addLevel),
         SwitchListTile(
           key: const ValueKey('billing-allow-custom'),
           contentPadding: EdgeInsets.zero,
@@ -612,17 +548,9 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           ),
         ),
         const Divider(height: 32),
-        Row(
-          children: [
-            Text(
-              l10n.billingPackages,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            HelpDot(
-              l10n.helpTopicBilling,
-              anchor: HelpAnchor.billingPackages,
-            ),
-          ],
+        BillingSectionHeader(
+          title: l10n.billingPackages,
+          anchor: HelpAnchor.billingPackages,
         ),
         Text(
           l10n.billingPackagesHint,
@@ -630,101 +558,29 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         ),
         const SizedBox(height: 8),
         for (final package in widget.packages)
-          ListTile(
-            key: ValueKey('package-${package.id}'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(package.name),
-            // #537 — currency + the pack's own VAT rate on the row:
-            // "2 days · 200.00 EUR · incl. VAT 20 %".
-            subtitle: Builder(builder: (context) {
-              final currencyCode = ref
-                      .watch(currentWorkspaceProvider)
-                      .value
-                      ?.currencyCode ??
-                  '';
-              final price =
-                  '${centsToMajor(package.priceCents)} $currencyCode'
-                      .trim();
-              final summary =
-                  l10n.billingPackageSummary(package.days, price);
-              final rate = vatRateSuffix(
-                chargesVat: ref
-                        .watch(currentWorkspaceProvider)
-                        .value
-                        ?.vatRegime ==
-                    'vat_registered',
-                rates: ref.watch(vatRatesProvider).value ?? const [],
-                vatRateId: package.vatRateId,
-              );
-              final vatLabel = rate == null
-                  ? null
-                  : (l10n.priceVatIncluded(rate));
-              return Text(
-                  vatLabel == null ? summary : '$summary · $vatLabel');
-            }),
-            trailing: Switch(
-              key: ValueKey('billing-switch-${package.id}'),
-              value: package.active,
-              onChanged: (_) => _togglePackage(package),
-            ),
+          // #537 — currency + the pack's own VAT rate on the row.
+          BillingPackageTile(
+            package: package,
+            currencyCode: workspace?.currencyCode ?? '',
+            chargesVat: chargesVat,
+            rates: rates,
+            onToggle: () => _togglePackage(package),
           ),
         const SizedBox(height: 8),
-        Row(
-          children: [
-            Text(
-              l10n.billingNewPackage,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            HelpDot(
-              l10n.helpTopicBilling,
-              anchor: HelpAnchor.billingPackageNew,
-            ),
-          ],
+        BillingSectionHeader(
+          title: l10n.billingNewPackage,
+          anchor: HelpAnchor.billingPackageNew,
+          small: true,
         ),
-        Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: TextField(
-                controller: _pkgName,
-                decoration: InputDecoration(
-                  labelText: l10n.billingPackageName,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: TextField(
-                controller: _pkgDays,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: l10n.billingPackageDays,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              flex: 2,
-              child: TextField(
-                controller: _pkgPrice,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(
-                  labelText: l10n.billingPackagePrice,
-                ),
-              ),
-            ),
-            IconButton(
-              key: const ValueKey('billing-add-package'),
-              icon: const Icon(Icons.add_circle_outline),
-              tooltip: l10n.billingAddPackage,
-              onPressed: _addPackage,
-            ),
-          ],
+        BillingNewPackageRow(
+          name: _pkgName,
+          days: _pkgDays,
+          price: _pkgPrice,
+          onAdd: _addPackage,
         ),
         VatRateField(
           key: const ValueKey('billing-vat-rate-field'),
-          rates: ref.watch(vatRatesProvider).value ?? const [],
+          rates: rates,
           value: _pkgVatRateId,
           onChanged: (id) => setState(() => _pkgVatRateId = id),
         ),

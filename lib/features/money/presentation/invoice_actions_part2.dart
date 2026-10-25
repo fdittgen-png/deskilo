@@ -81,39 +81,79 @@ Future<void> _exportEInvoice(
   Invoice invoice, {
   required String countryCode,
 }) async {
-  final association = ref.read(sellerIsAssociationProvider);
   final route = eInvoiceRouteFor(countryCode);
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (route == null || workspace == null) return;
   // The invoice's own snapshot, or the live workspace identity for
   // pre-0069 documents (see sellerOf).
-  final seller = sellerOf(invoice, workspace);
-  final buyer = buyerOf(invoice, workspace);
-  final readiness = checkEInvoiceReadiness(
+  final subject = (
     invoice: invoice,
-    seller: seller,
-    buyer: buyer,
-    // #922 — the sheet's default leg is the government platform; the
-    // public-sector references are asked for there, as a warning.
-    destination: 'government',
+    seller: sellerOf(invoice, workspace),
+    buyer: buyerOf(invoice, workspace),
+    liveSeller: workspaceParty(workspace),
+    iban: workspaceIban(workspace),
+    workspaceId: workspace.id,
   );
-  // The same judgement against the LIVE identity: if that one passes, the
-  // owner is not missing anything — the document is simply older than the
-  // identity, and only a replacement can carry the new one.
-  final identityFixedSince =
-      invoice.sellerParty != null &&
-      !readiness.ready &&
-      checkEInvoiceReadiness(
-        invoice: invoice,
-        seller: workspaceParty(workspace),
-        buyer: buyer,
-      ).ready;
+  final roles = _eInvoiceRoles(ref);
+  final gateway = await _probeEInvoiceGateway(ref);
+  if (!context.mounted) return;
+  final run = _EInvoiceExportRun(context, ref, subject);
+  final export = await run.ask(
+    route: route,
+    gateway: gateway,
+    roles: roles,
+  );
+  if (export == null || !context.mounted) return;
+  if (export == EInvoiceExport.fixIdentity) {
+    unawaited(context.push('/legal-identity'));
+    return;
+  }
+  if (export == EInvoiceExport.send || export == EInvoiceExport.sendCustomer) {
+    await run.send(
+      gateway: gateway,
+      toCustomer: export == EInvoiceExport.sendCustomer,
+    );
+    return;
+  }
+  if (export == EInvoiceExport.facturXDownload ||
+      export == EInvoiceExport.facturXShare) {
+    await run.facturX(share: export == EInvoiceExport.facturXShare);
+    return;
+  }
+  await run.ublXml(share: export == EInvoiceExport.share);
+}
+
+/// One invoice on its way out as an e-invoice: the parties it names (its
+/// own snapshot), the LIVE seller identity, and the workspace's IBAN.
+typedef _EInvoiceSubject = ({
+  Invoice invoice,
+  InvoiceParty seller,
+  InvoiceParty buyer,
+  InvoiceParty liveSeller,
+  String iban,
+  String workspaceId,
+});
+
+/// Who may fix the identity (the owner) and who may send (#2137:
+/// whoever holds issueInvoices).
+({bool owner, bool issuer}) _eInvoiceRoles(WidgetRef ref) {
   final me = ref.read(myMemberProvider).value;
-  // AWAIT the probe: a cached `.value` is null on the first open, which
-  // would hide the Send button exactly when it is most wanted.
-  EInvoiceGatewayConfig gateway;
+  return (
+    owner: me?.actsAsOwner ?? false,
+    issuer: me?.actsAsOwner == true ||
+        me?.canAdminister == true ||
+        ref
+            .read(myPermissionsProvider)
+            .contains(WorkspacePermission.issueInvoices),
+  );
+}
+
+/// AWAITS the probe: a cached `.value` is null on the first open, which
+/// would hide the Send button exactly when it is most wanted. A failed
+/// probe reads as "not configured".
+Future<EInvoiceGatewayConfig> _probeEInvoiceGateway(WidgetRef ref) async {
   try {
-    gateway = await ref.read(eInvoiceGatewayProvider.future);
+    return await ref.read(eInvoiceGatewayProvider.future);
   } on Object catch (e, st) {
     TraceLogger.instance.warn(
       'money',
@@ -121,63 +161,89 @@ Future<void> _exportEInvoice(
       error: e,
       stackTrace: st,
     );
-    gateway = EInvoiceGatewayConfig.notConfigured;
+    return EInvoiceGatewayConfig.notConfigured;
   }
-  if (!context.mounted) return;
-  // #2137 — send-e-invoice accepts whoever holds issueInvoices.
-  final isIssuer = me?.actsAsOwner == true ||
-      me?.canAdminister == true ||
-      ref.read(myPermissionsProvider).contains(WorkspacePermission.issueInvoices);
-  // #2358 — what the configured channel receives, what it still needs,
-  // and which official validator that format passes.
-  final sendFormat = eInvoiceFormatFor(
-    provider: gateway.provider,
-    destination: 'government',
-    buyerEndpointScheme: buyer.endpointScheme,
-  );
-  final sendGaps = gateway.configured
-      ? channelGaps(
-          sendFormat,
-          seller: seller,
-          buyer: buyer,
-          iban: workspaceIban(workspace),
-        )
-      : const <ChannelGap>[];
-  final export = await showEInvoiceSheet(
-    context,
-    route: route,
-    readiness: readiness,
-    validator: eInvoiceValidators[
-            gateway.configured ? sendFormat : EInvoiceFormat.en16931Ubl] ??
-        '',
-    sendChannel: route.businessChannel,
-    sendGaps: sendGaps,
-    mandates: mandateWarnings(seller.country, ref.read(clockProvider).now()),
-    today: ref.read(clockProvider).now(),
-    canFixIdentity: me?.actsAsOwner ?? false,
-    identityFixedSince: identityFixedSince,
-    // Only an issuer sends, and only when a platform is configured.
-    canSend: gateway.configured && isIssuer && sendGaps.isEmpty,
-    // The customer leg (#568): its own endpoint, its own flag, the same
-    // issuer gate.
-    canSendCustomer:
-        gateway.customerConfigured &&
-        isIssuer &&
-        ref
-            .read(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.einvoiceCustomerDelivery),
-  );
-  if (export == null || !context.mounted) return;
-  if (export == EInvoiceExport.fixIdentity) {
-    unawaited(context.push('/legal-identity'));
-    return;
+}
+
+/// The steps of one e-invoice export, over the invoice it sends and the
+/// context and ref the export started from.
+class _EInvoiceExportRun {
+  _EInvoiceExportRun(this.context, this.ref, this.s);
+
+  final BuildContext context;
+  final WidgetRef ref;
+  final _EInvoiceSubject s;
+
+  /// The sheet: the route, the readiness verdict, what the configured
+  /// channel still needs, and which legs this member may send on.
+  Future<EInvoiceExport?> ask({
+    required EInvoiceRoute route,
+    required EInvoiceGatewayConfig gateway,
+    required ({bool owner, bool issuer}) roles,
+  }) {
+    final readiness = checkEInvoiceReadiness(
+      invoice: s.invoice,
+      seller: s.seller,
+      buyer: s.buyer,
+      // #922 — the sheet's default leg is the government platform; the
+      // public-sector references are asked for there, as a warning.
+      destination: 'government',
+    );
+    // The same judgement against the LIVE identity: if that one passes, the
+    // owner is not missing anything — the document is simply older than the
+    // identity, and only a replacement can carry the new one.
+    final identityFixedSince =
+        s.invoice.sellerParty != null &&
+        !readiness.ready &&
+        checkEInvoiceReadiness(
+          invoice: s.invoice,
+          seller: s.liveSeller,
+          buyer: s.buyer,
+        ).ready;
+    // #2358 — what the configured channel receives, what it still needs,
+    // and which official validator that format passes.
+    final sendFormat = eInvoiceFormatFor(
+      provider: gateway.provider,
+      destination: 'government',
+      buyerEndpointScheme: s.buyer.endpointScheme,
+    );
+    final sendGaps = gateway.configured
+        ? channelGaps(sendFormat, seller: s.seller, buyer: s.buyer, iban: s.iban)
+        : const <ChannelGap>[];
+    return showEInvoiceSheet(
+      context,
+      route: route,
+      readiness: readiness,
+      validator: eInvoiceValidators[
+              gateway.configured ? sendFormat : EInvoiceFormat.en16931Ubl] ??
+          '',
+      sendChannel: route.businessChannel,
+      sendGaps: sendGaps,
+      mandates: mandateWarnings(s.seller.country, ref.read(clockProvider).now()),
+      today: ref.read(clockProvider).now(),
+      canFixIdentity: roles.owner,
+      identityFixedSince: identityFixedSince,
+      // Only an issuer sends, and only when a platform is configured.
+      canSend: gateway.configured && roles.issuer && sendGaps.isEmpty,
+      // The customer leg (#568): its own endpoint, its own flag, the same
+      // issuer gate.
+      canSendCustomer:
+          gateway.customerConfigured &&
+          roles.issuer &&
+          ref
+              .read(enabledFeaturesSyncProvider)
+              .contains(WorkspaceFeature.einvoiceCustomerDelivery),
+    );
   }
-  final l10nForFile = context.l10n;
-  if (export == EInvoiceExport.send || export == EInvoiceExport.sendCustomer) {
-    final toCustomer = export == EInvoiceExport.sendCustomer;
-    // Dev mode + a configured test platform → choose the target (#393);
-    // anyone else goes straight to production, no extra tap. The picker
-    // judges the DESTINATION's environments (#568).
+
+  /// Posts the document to the government platform or the customer leg.
+  /// Dev mode + a configured test platform → choose the target (#393);
+  /// anyone else goes straight to production, no extra tap. The picker
+  /// judges the DESTINATION's environments (#568).
+  Future<void> send({
+    required EInvoiceGatewayConfig gateway,
+    required bool toCustomer,
+  }) async {
     final envGateway = toCustomer
         ? EInvoiceGatewayConfig(
             configured: true,
@@ -194,84 +260,82 @@ Future<void> _exportEInvoice(
     await sendEInvoice(
       context,
       ref,
-      invoice,
-      seller: seller,
-      buyer: buyer,
-      iban: workspaceIban(workspace),
-      workspaceId: workspace.id,
+      s.invoice,
+      seller: s.seller,
+      buyer: s.buyer,
+      iban: s.iban,
+      workspaceId: s.workspaceId,
       environment: environment,
       destination: toCustomer ? 'customer' : 'government',
       provider: gateway.provider,
     );
-    return;
   }
-  if (export == EInvoiceExport.facturXDownload ||
-      export == EInvoiceExport.facturXShare) {
-    await runGuarded(
-      context,
-      domain: 'money',
-      message: 'factur-x export failed',
-      errorText:
-          l10nForFile.workspaceGenericError,
-      action: () async {
-        final file = await buildFacturXFile(
-          context,
-          ref,
-          invoice,
-          seller: seller,
-          buyer: buyer,
-          iban: workspaceIban(workspace),
-        );
-        if (file.fileName.isEmpty) return;
-        final bytes = Uint8List.fromList(file.bytes);
-        if (export == EInvoiceExport.facturXShare) {
-          await ref.read(fileSharerProvider)(
-            bytes: bytes,
-            fileName: file.fileName,
-            mimeType: 'application/pdf',
-          );
-          return;
-        }
-        if (!context.mounted) return;
-        await savePdfToDownloads(
-          context,
-          ref,
-          bytes: bytes,
-          fileName: file.fileName,
-        );
-      },
-    );
-    return;
-  }
-  final l10n = context.l10n;
-  final words = reportStringsOf(l10n);
-  await runGuarded(
+
+  /// The hybrid Factur-X PDF (the XML inside) to the share sheet or
+  /// Downloads.
+  Future<void> facturX({required bool share}) => runGuarded(
     context,
     domain: 'money',
-    message: 'e-invoice export failed',
-    errorText:
-        l10n.workspaceGenericError,
+    message: 'factur-x export failed',
+    errorText: context.l10n.workspaceGenericError,
     action: () async {
-      final xml = buildInvoiceUbl(EInvoiceInput(invoice: invoice,
-        seller: seller,
-        buyer: buyer,
-        iban: workspaceIban(workspace),
-        lineText: (line) => invoiceLineText(words, line,
-            association: association, period: invoice.period)));
-      final bytes = Uint8List.fromList(utf8.encode(xml));
-      final fileName = '${safeFileSlug(invoice.number)}.xml';
-      if (export == EInvoiceExport.share) {
+      final file = await buildFacturXFile(
+        context,
+        ref,
+        s.invoice,
+        seller: s.seller,
+        buyer: s.buyer,
+        iban: s.iban,
+      );
+      if (file.fileName.isEmpty) return;
+      final bytes = Uint8List.fromList(file.bytes);
+      if (share) {
         await ref.read(fileSharerProvider)(
           bytes: bytes,
-          fileName: fileName,
-          mimeType: 'application/xml',
+          fileName: file.fileName,
+          mimeType: 'application/pdf',
         );
         return;
       }
       if (!context.mounted) return;
-      await savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName);
+      await savePdfToDownloads(context, ref, bytes: bytes, fileName: file.fileName);
     },
   );
+
+  /// The UBL 2.1 XML to the share sheet or Downloads.
+  Future<void> ublXml({required bool share}) {
+    final association = ref.read(sellerIsAssociationProvider);
+    final l10n = context.l10n;
+    final words = reportStringsOf(l10n);
+    return runGuarded(
+      context,
+      domain: 'money',
+      message: 'e-invoice export failed',
+      errorText: l10n.workspaceGenericError,
+      action: () async {
+        final xml = buildInvoiceUbl(EInvoiceInput(
+          invoice: s.invoice,
+          seller: s.seller,
+          buyer: s.buyer,
+          iban: s.iban,
+          lineText: (line) => invoiceLineText(words, line,
+              association: association, period: s.invoice.period),
+        ));
+        final bytes = Uint8List.fromList(utf8.encode(xml));
+        final fileName = '${safeFileSlug(s.invoice.number)}.xml';
+        if (share) {
+          await ref.read(fileSharerProvider)(
+            bytes: bytes,
+            fileName: fileName,
+            mimeType: 'application/xml',
+          );
+          return;
+        }
+        if (!context.mounted) return;
+        await savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName);
+      },
+    );
+  }
 }
 
 /// Matches an open invoice to its payment (0067) — the only way an invoice
@@ -366,107 +430,4 @@ Future<void> matchInvoiceToPayment(
   invalidateBookingData(ref);
   if (!context.mounted) return;
   AppSnack.success(context, l10n.invoiceMatched);
-}
-
-/// One tap invoices every listed member for [period] — behind a confirm
-/// naming what is about to become N immutable documents. Per-member
-/// guarded, so one failing statement neither stops the sweep nor hides
-/// itself: the snack reports what did NOT go through.
-Future<void> issueInvoicesForAll(
-  BuildContext context,
-  WidgetRef ref,
-  List<ToInvoiceEntry> entries,
-  String period,
-  MoneyFormat currency,
-) async {
-  final l10n = context.l10n;
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  if (workspace == null || entries.isEmpty) return;
-  final total = entries.fold(0, (sum, e) => sum + e.totalCents);
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(l10n.invoiceIssueAll),
-      content: Text(
-        l10n.invoiceIssueAllConfirm(
-              entries.length,
-              monthLabel(context, period),
-              currency.formatMinor(total),
-            ),
-      ),
-      actions: [
-        TextButton(
-          key: ValueKey('invoice-actions-cancel-4-$period'),
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n.commonCancel),
-        ),
-        FilledButton(
-          key: const ValueKey('invoice-issue-all-confirm'),
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(l10n.invoiceIssueAll),
-        ),
-      ],
-    ),
-  );
-  if (confirmed != true || !context.mounted) return;
-
-  // #2585 C2 — each entry is sent ONCE under its own request id. An entry
-  // whose answer was lost is looked up by that id afterwards, never sent
-  // again, so it can neither double nor be reported as a plain failure.
-  final issuance = InvoiceIssuance(
-    ref.read(invoiceCommandsProvider),
-    ref.read(invoiceQueriesProvider),
-    ref.read(invoiceActionCommandsProvider),
-  );
-  var issued = 0;
-  final lost = <InvoiceIssueUnknown>[];
-  for (final entry in entries) {
-    final outcome = await issuance.issue(
-      InvoiceIssueAttempt(
-        workspaceId: workspace.id,
-        memberId: entry.memberId,
-        period: period,
-        requestId: newRequestId(),
-        direct: true,
-      ),
-    );
-    switch (outcome) {
-      case InvoiceIssued():
-        issued++;
-      case InvoiceIssueUnknown():
-        lost.add(outcome);
-      case InvoiceIssueHeld() || InvoiceIssueRefused():
-        break;
-    }
-  }
-  for (var unknown in lost) {
-    if (!context.mounted) break;
-    final resolved = await showCommandUnknownDialog<InvoiceIssueOutcome>(
-      context,
-      body: l10n.invoiceIssueUnknownBody,
-      check: () async {
-        final looked = await issuance.look(unknown);
-        if (looked is InvoiceIssueUnknown) {
-          unknown = looked;
-          return null;
-        }
-        return looked;
-      },
-    );
-    if (resolved is InvoiceIssued) issued++;
-  }
-  ref.invalidate(invoicesProvider);
-  if (!context.mounted) return;
-  final failed = entries.length - issued;
-  if (failed > 0) {
-    AppSnack.error(
-      context,
-      l10n.invoiceIssuedPartial(issued, failed),
-    );
-    return;
-  }
-  AppSnack.success(
-    context,
-    l10n.invoiceIssuedCount(issued),
-  );
 }
