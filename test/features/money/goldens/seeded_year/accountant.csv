@@ -1,0 +1,11 @@
+# DesKilo accounting export — Cowork
+# generated 2027-01-05T09:07:03.000Z
+# 6 invoice(s); amounts in the invoice currency, VAT-exclusive net and tax shown separately
+# NOT a journal: no account numbers, no double entry. These are the documents as issued.
+invoice_number,issued_on,period,customer,customer_id,title,currency,net,vat,gross,vat_rates,status,voided_on,voided_by,replaces,paid,paid_on,payment_status,payment_note
+"INV-1",2026-03-05,"2026-02","Ana","m1","T INV-1","EUR",200.00,25.50,225.50,"20.00% 5.50%",issued,,,,155.50,2026-03-20,"confirmed",
+"INV-2",2026-04-05,"2026-02","Ana","m1","T INV-2","EUR",166.67,33.33,200.00,"20.00%",issued,,,,120.00,2026-04-20,"confirmed",
+"INV-3",2026-05-05,"2026-02","Ana","m1","T INV-3","EUR",83.33,16.67,100.00,"20.00%",issued,,,,60.00,2026-05-20,"confirmed",
+"CN-1",2026-06-05,"2026-02","Ana","m1","T CN-1","EUR",-41.67,-8.33,-50.00,"20.00%",issued,,,"INV-2",50.00,2026-06-10,"confirmed",
+"INV-4",2026-07-06,"2026-02","Ana","m1","T INV-4","EUR",100.00,20.00,120.00,"20.00%",issued,,,,120.00,2026-08-10,"confirmed","via S-1"
+"INV-5",2026-07-13,"2026-02","Ana","m1","T INV-5","EUR",40.00,2.20,42.20,"5.50%",issued,,,,42.20,2026-08-10,"confirmed","via S-1"
