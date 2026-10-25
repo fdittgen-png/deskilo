@@ -71,7 +71,6 @@ Future<void> pickMemberOveragePolicy(
         for (final (policy, label) in options)
           SimpleDialogOption(
             key: ValueKey('overage-policy-${policy.name}'),
-            // #1279 — pay-as-you-go without a subscription is booking free.
             onPressed: overagePolicyOffered(member, policy)
                 ? () => Navigator.of(context).pop(policy)
                 : null,

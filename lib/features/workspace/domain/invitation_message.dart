@@ -61,7 +61,7 @@ String fillInvitationTemplate(String template, Map<String, String> values) {
 /// workspace still on the legacy single template (0049) sees [legacy],
 /// trimmed, in every language until it saves.
 Map<String, String> invitationDraftsOf(
-  Map<String, dynamic> templates, {
+  Map<String, Object?> templates, {
   required String legacy,
   required Iterable<String> languages,
 }) {
