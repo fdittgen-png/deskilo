@@ -6,6 +6,7 @@ import 'package:deskilo/features/money/domain/export_year.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/datev_collective.dart';
 import 'support/seeded_export_year.dart';
 
 void main() {
@@ -36,7 +37,7 @@ void main() {
       ledger: SeededExportYear.ledger,
       repartitions: SeededExportYear.repartitions,
     );
-    final file = buildDatevFile(DatevRequest(
+    final file = buildDatevFile(DatevRequest(detail: datevCollective, 
       invoices: scope.invoices,
       matches: SeededExportYear.matches,
       accounts: const DatevAccounts(),

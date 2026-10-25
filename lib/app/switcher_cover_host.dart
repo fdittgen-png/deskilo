@@ -55,9 +55,8 @@ DisplayFrame displayFrameOf({
   // The same split as the layer chrome: a route that needs no membership
   // is the person's own; anything else (unknown included) is a space's.
   final me = switch (classifyRoute(path)) {
-    RouteClass.publicEntry ||
-    RouteClass.nativeAccount ||
-    RouteClass.operator => true,
+    RouteClass.nativeAccount => !workspaceChromeAccountRoutes.contains(path),
+    RouteClass.publicEntry || RouteClass.operator => true,
     RouteClass.workspace || RouteClass.unknown => false,
   };
   if (me) {

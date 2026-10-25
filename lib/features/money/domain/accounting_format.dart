@@ -37,6 +37,7 @@ library;
 import 'package:meta/meta.dart';
 
 import 'accounting_target.dart';
+import 'accounting_targets_de.dart';
 
 export 'accounting_target.dart';
 
@@ -129,10 +130,13 @@ const fecFormat = AccountingFormat(
 /// DATEV EXTF Buchungsstapel — what a German or Austrian Steuerberater
 /// imports. Switzerland is NOT here: DATEV is a German-market product
 /// and a Swiss fiduciary does not run it.
+///
+/// The export is a zip: one Buchungsstapel per month and journal, the
+/// Debitoren-Stammdaten, and the vouchers the rows link.
 const _datevFormat = AccountingFormat(
   id: 'datev',
   claim: FormatClaim.exchange,
-  extension: 'csv',
+  extension: 'zip',
   needsAccounts: true,
 );
 
@@ -310,8 +314,8 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
     taxCodeModel: TaxCodeModel.perRate,
     format: _datevFormat,
-    customerIdRule: CustomerIdRule(maxLength: 9, numericRange: (10000, 699999999)),
   ),
+  ...germanAccountingTargets,
   AccountingTarget(
     id: 'sage50',
     vendor: 'Sage',

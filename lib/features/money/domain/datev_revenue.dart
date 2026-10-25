@@ -40,34 +40,65 @@ String? datevChartAccount(
   return (row?.value as AccountMapValue?)?.account;
 }
 
-/// #2365 — [cents] of [invoice] per automatic revenue account of its rates:
-/// the positions of the document's sign summed per account, the last
-/// account taking what the sum leaves so the parts add up to [cents]. One
-/// account, one part: the document as before.
-List<(String, int)> datevRevenueParts(
+/// The automatic revenue account of the rate group [group] in [chart]: the
+/// chart's own revenue account [standard] for the standard rate (and for a
+/// rate the reference puts in no group), the chart's `revenue:<group>` row
+/// otherwise; null where the chart names none.
+String? datevAutomaticRevenue(
+  TaxReferenceSet reference,
+  String chart,
+  String group,
+  String standard,
+) => group.isEmpty || group == 'standard'
+    ? standard
+    : datevChartAccount(reference, chart, 'revenue:$group');
+
+/// The BU-Schlüssel of the rate group [group]: the `datev/tax:<group>` row's
+/// tax code; null where the reference holds none.
+String? datevGroupTaxKey(TaxReferenceSet reference, String group) {
+  final row = reference
+      .resolved(null)
+      .lookup(TaxDomain.accountMap, 'DE', 'datev/tax:$group');
+  final code = (row?.value as AccountMapValue?)?.taxCode ?? '';
+  return code.isEmpty ? null : code;
+}
+
+/// Where one position of a rate is booked: the revenue account and the
+/// BU-Schlüssel the row carries ('' on an automatic account).
+typedef DatevRevenueTarget = ({String account, String taxKey});
+
+/// One part of a document's sale: [cents] on [account] with [taxKey].
+typedef DatevRevenuePart = ({String account, String taxKey, int cents});
+
+/// #2365 — [cents] of [invoice] per revenue account and BU-Schlüssel of its
+/// rates: the positions of the document's sign summed per target, the last
+/// target taking what the sum leaves so the parts add up to [cents]. One
+/// target, one part: the document as before.
+List<DatevRevenuePart> datevRevenueParts(
   Invoice invoice,
   int cents,
-  String Function(double percent) revenueAt,
+  DatevRevenueTarget Function(double percent) targetAt,
 ) {
-  final parts = <String, int>{};
+  final parts = <DatevRevenueTarget, int>{};
   for (final line in invoice.lines) {
     // A credit note's positions are negative, an invoice's charges positive.
     final ofSign = invoice.isCreditNote
         ? line.amountCents < 0
         : line.amountCents > 0;
     if (!ofSign) continue;
-    final account = revenueAt(line.vatPercent);
-    parts[account] = (parts[account] ?? 0) + line.amountCents.abs();
+    final target = targetAt(line.vatPercent);
+    parts[target] = (parts[target] ?? 0) + line.amountCents.abs();
   }
   if (parts.length <= 1) {
-    return [(parts.keys.firstOrNull ?? revenueAt(0), cents)];
+    final only = parts.keys.firstOrNull ?? targetAt(0);
+    return [(account: only.account, taxKey: only.taxKey, cents: cents)];
   }
-  final out = <(String, int)>[];
+  final out = <DatevRevenuePart>[];
   var left = cents;
-  for (final (k, MapEntry(key: account, value: part))
+  for (final (k, MapEntry(key: target, value: part))
       in parts.entries.indexed) {
     final take = k == parts.length - 1 ? left : part;
-    out.add((account, take));
+    out.add((account: target.account, taxKey: target.taxKey, cents: take));
     left -= take;
   }
   return out;

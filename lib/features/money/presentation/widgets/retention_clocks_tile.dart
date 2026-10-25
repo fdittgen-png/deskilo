@@ -6,14 +6,16 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/vat/retention.dart';
 import '../../../../l10n/app_localizations.dart';
 
-String _className(AppLocalizations l10n, String docClass) => switch (docClass) {
+/// The name of the document class [docClass] a retention rule is kept for.
+String retentionClassName(AppLocalizations l10n, String docClass) => switch (docClass) {
   'invoice' => l10n.retentionClassInvoice,
   'books' => l10n.retentionClassBooks,
   'correspondence' => l10n.retentionClassCorrespondence,
   _ => l10n.retentionClassVoucher,
 };
 
-String _ruleText(AppLocalizations l10n, RetentionRule r) => r.from == 'document_date'
+/// How long [r] keeps a record and from when, in words.
+String retentionRuleText(AppLocalizations l10n, RetentionRule r) => r.from == 'document_date'
     ? l10n.retentionFromDocument(r.years)
     : l10n.retentionFromYearEnd(r.years);
 
@@ -39,7 +41,7 @@ class RetentionClocksTile extends StatelessWidget {
       leading: const Icon(Icons.history_toggle_off_outlined),
       title: Text(l10n.retentionTitle),
       subtitle: Text(
-        [for (final r in rules) '${_className(l10n, r.docClass)}: ${r.years}'].join(' · '),
+        [for (final r in rules) '${retentionClassName(l10n, r.docClass)}: ${r.years}'].join(' · '),
       ),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => showDialog<void>(
@@ -56,7 +58,7 @@ class RetentionClocksTile extends StatelessWidget {
                 const SizedBox(height: AppSpacing.md),
                 for (final r in rules) ...[
                   Text(
-                    '${_className(l10n, r.docClass)} — ${_ruleText(l10n, r)}',
+                    '${retentionClassName(l10n, r.docClass)} — ${retentionRuleText(l10n, r)}',
                     key: ValueKey('retention-rule-${r.docClass}'),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),

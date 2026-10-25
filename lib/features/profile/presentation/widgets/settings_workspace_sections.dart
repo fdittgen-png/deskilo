@@ -51,7 +51,7 @@ List<Widget> workspaceSettingsTiles(
         title: Text(l10n.availabilityTitle),
         onTap: () => context.push('/availability'),
       ),
-    if (perms.contains(WorkspacePermission.manageBilling))
+    if (_moneyMay(perms, features, WorkspacePermission.manageBilling))
       ListTile(
         key: const ValueKey('settings-workspace-sections-billing-title'),
         leading: const Icon(Icons.payments_outlined),
@@ -100,7 +100,7 @@ List<Widget> workspaceSettingsTiles(
         onTap: () => context.push('/settings/number-sequences'),
       ),
     // #486 — the manual payment methods members see on an unpaid statement.
-    if (perms.contains(WorkspacePermission.manageIntegrations))
+    if (_moneyMay(perms, features, WorkspacePermission.manageIntegrations))
       ListTile(
         key: const ValueKey('settings-payment-methods'),
         leading: const Icon(Icons.account_balance_wallet_outlined),
@@ -209,3 +209,11 @@ List<Widget> workspaceSettingsTiles(
     ...section('governance', l10n.settingsSectionGovernance, governance),
   ];
 }
+
+/// A money tile: its permission held, and the money feature on, as its
+/// route asks.
+bool _moneyMay(
+  Set<WorkspacePermission> perms,
+  Set<WorkspaceFeature> features,
+  WorkspacePermission permission,
+) => perms.contains(permission) && features.contains(WorkspaceFeature.moneyTab);

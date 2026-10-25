@@ -4402,6 +4402,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dataReportYes => 'Ja';
 
   @override
+  String get datevAccountLength => 'Sachkontenlänge';
+
+  @override
   String get datevAccountsIntro =>
       'Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.';
 
@@ -4409,10 +4412,80 @@ class AppLocalizationsDe extends AppLocalizations {
   String get datevAccountsTitle => 'DATEV-Export';
 
   @override
+  String datevBlocked(String problems) {
+    return 'Der DATEV-Export wurde nicht geschrieben: $problems';
+  }
+
+  @override
   String get datevClientNumber => 'Mandantennummer';
 
   @override
   String get datevConsultantNumber => 'Beraternummer';
+
+  @override
+  String get datevCostCentre =>
+      'Kostenstelle (KOST1), wenn ein Beleg keinen Standort nennt';
+
+  @override
+  String get datevDebtorBase => 'Debitor zu Mitgliedsnummer 0';
+
+  @override
+  String datevProblemAccountLength(String account, String length) {
+    return 'Konto $account hat nicht $length Stellen';
+  }
+
+  @override
+  String datevProblemAutomatic(String percent, String account) {
+    return '$percent % würde auf $account gebucht, das Automatikkonto eines anderen Satzes';
+  }
+
+  @override
+  String datevProblemClient(String number) {
+    return 'Mandantennummer „$number“ ist keine Zahl von 1 bis 99999';
+  }
+
+  @override
+  String datevProblemConsultant(String number) {
+    return 'Beraternummer „$number“ ist keine Zahl von 1001 bis 9999999';
+  }
+
+  @override
+  String datevProblemCurrency(String currency) {
+    return 'die Beträge lauten auf $currency; die DATEV-Datei wird in Euro geschrieben';
+  }
+
+  @override
+  String datevProblemDebtorClash(String members, String account) {
+    return '$members hätten denselben Debitor $account';
+  }
+
+  @override
+  String get datevProblemFiscalYearStarts =>
+      'die Buchungsprofile der Standorte beginnen das Wirtschaftsjahr an verschiedenen Tagen';
+
+  @override
+  String datevProblemMemberNumber(String member, String number) {
+    return '$member hat keine Mitgliedsnummer, aus der ein Debitor wird („$number“): zuerst eine Nummer vergeben';
+  }
+
+  @override
+  String datevProblemReferenceTooLong(String field, String value) {
+    return '$field „$value“ ist länger, als DATEV übernimmt, und würde gekürzt';
+  }
+
+  @override
+  String datevProblemSachkontenlaenge(String length) {
+    return 'die Sachkontenlänge $length liegt nicht zwischen 4 und 8';
+  }
+
+  @override
+  String datevProblemTaxKey(String percent, String account) {
+    return 'für $percent % auf Konto $account ist kein BU-Schlüssel hinterlegt';
+  }
+
+  @override
+  String get datevVoucherLinks =>
+      'Rechnungs-PDFs beilegen und aus jeder Buchung verlinken (Beleglink)';
 
   @override
   String get decisionSurfaceEmpty => 'Nichts wartet auf Sie';
@@ -8430,6 +8503,66 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get gobdProcedureExportsBody =>
+      'Jeder Buchhaltungsexport wird mit Zeitraum, Größe und SHA-256-Prüfsumme im Exportprotokoll festgehalten; ein Export eines abgeschlossenen Zeitraums ergibt wieder dieselben Bytes.';
+
+  @override
+  String get gobdProcedureExportsHeading => 'Exporte';
+
+  @override
+  String gobdProcedureGenerated(String date, String from, String to) {
+    return 'Erstellt am $date für den Zeitraum $from bis $to.';
+  }
+
+  @override
+  String get gobdProcedureHandoverBody =>
+      'Dieses Paket folgt dem Beschreibungsstandard: index.xml beschreibt jede Tabelle, ihre Spalten, Schlüssel und Verknüpfungen und nennt die mitgelieferte DTD gdpdu-01-08-2002.dtd. Jede Tabelle ist eine UTF-8-CSV-Datei ohne Kopfzeile. Der Ordner belege enthält zu jeder Rechnung die strukturierte E-Rechnung und, wo sie erzeugt wurde, das PDF/A-3 mit eingebettetem XML.';
+
+  @override
+  String get gobdProcedureHandoverHeading => 'Datenüberlassung (Z3)';
+
+  @override
+  String get gobdProcedureImmutableBody =>
+      'Eine ausgestellte Rechnung oder Gutschrift kann weder geändert noch gelöscht werden: die Datenbank verweigert es. Jeder Beleg wird mit seinem Vorgänger in eine Kette signiert. Eine Korrektur ist ein neuer Beleg (Gutschrift oder Ersatzrechnung), der den korrigierten nennt. Ein abgeschlossener Zeitraum verweigert Stornierungen und Zahlungen, die in ihm datiert sind.';
+
+  @override
+  String get gobdProcedureImmutableHeading => 'Unveränderbarkeit';
+
+  @override
+  String gobdProcedureRetentionUntil(String date) {
+    return 'ein Beleg vom Ende dieses Zeitraums darf ab $date gelöscht werden';
+  }
+
+  @override
+  String gobdProcedureSchemaApp(String version) {
+    return 'Schemaversion, für die diese App gebaut ist: $version';
+  }
+
+  @override
+  String gobdProcedureSchemaLive(String version) {
+    return 'Datenbankschema dieser Installation: Version $version';
+  }
+
+  @override
+  String get gobdProcedureSchemaUnknown =>
+      'Datenbankschema dieser Installation: bei der Erstellung nicht lesbar';
+
+  @override
+  String get gobdProcedureSystemBody =>
+      'DesKilo führt die Rechnungen, Gutschriften, Zahlungen, Mitgliederkonten, umgelegten Kosten und genehmigten Eingangsbelege dieses Space. Es ist ein Nebenbuch: Hauptbuch und Jahresabschluss führt die Steuerberatung in ihrem eigenen System, das den DATEV-Export importiert.';
+
+  @override
+  String get gobdProcedureSystemHeading => 'System und Umfang';
+
+  @override
+  String gobdProcedureTitle(String workspace) {
+    return 'Verfahrensdokumentation — $workspace';
+  }
+
+  @override
+  String get gobdProcedureVersionHeading => 'Softwarestand';
+
+  @override
   String get groupAnnounceOnly => 'Nur Admins dürfen schreiben';
 
   @override
@@ -10237,6 +10370,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceExportGenericJournal =>
       'Journal (CSV, für jede Buchhaltungssoftware)';
+
+  @override
+  String get invoiceExportGobd => 'GoBD-Datenüberlassung (Z3)';
 
   @override
   String get invoiceExportJournals =>

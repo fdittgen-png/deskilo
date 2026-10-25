@@ -4403,6 +4403,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dataReportYes => 'Oui';
 
   @override
+  String get datevAccountLength => 'Longueur des comptes (Sachkontenlänge)';
+
+  @override
   String get datevAccountsIntro =>
       'Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.';
 
@@ -4410,10 +4413,80 @@ class AppLocalizationsFr extends AppLocalizations {
   String get datevAccountsTitle => 'Export DATEV';
 
   @override
+  String datevBlocked(String problems) {
+    return 'L\'export DATEV n\'a pas été écrit : $problems';
+  }
+
+  @override
   String get datevClientNumber => 'Mandantennummer (numéro de dossier)';
 
   @override
   String get datevConsultantNumber => 'Beraternummer (numéro de conseil)';
+
+  @override
+  String get datevCostCentre =>
+      'Centre de coûts (KOST1) quand un document ne nomme aucun site';
+
+  @override
+  String get datevDebtorBase => 'Compte Debitor du membre n° 0';
+
+  @override
+  String datevProblemAccountLength(String account, String length) {
+    return 'le compte $account n\'a pas $length chiffres';
+  }
+
+  @override
+  String datevProblemAutomatic(String percent, String account) {
+    return '$percent % serait comptabilisé sur $account, le compte automatique d\'un autre taux';
+  }
+
+  @override
+  String datevProblemClient(String number) {
+    return 'Mandantennummer « $number » n\'est pas un nombre de 1 à 99999';
+  }
+
+  @override
+  String datevProblemConsultant(String number) {
+    return 'Beraternummer « $number » n\'est pas un nombre de 1001 à 9999999';
+  }
+
+  @override
+  String datevProblemCurrency(String currency) {
+    return 'les montants sont en $currency ; le fichier DATEV est écrit en euros';
+  }
+
+  @override
+  String datevProblemDebtorClash(String members, String account) {
+    return '$members partageraient le compte Debitor $account';
+  }
+
+  @override
+  String get datevProblemFiscalYearStarts =>
+      'les profils comptables des sites commencent l\'exercice à des dates différentes';
+
+  @override
+  String datevProblemMemberNumber(String member, String number) {
+    return '$member n\'a pas de numéro de membre qui donne un compte Debitor (« $number ») : attribuez-lui d\'abord un numéro';
+  }
+
+  @override
+  String datevProblemReferenceTooLong(String field, String value) {
+    return '$field « $value » dépasse la longueur que DATEV accepte et serait tronqué';
+  }
+
+  @override
+  String datevProblemSachkontenlaenge(String length) {
+    return 'la longueur de compte $length n\'est pas comprise entre 4 et 8';
+  }
+
+  @override
+  String datevProblemTaxKey(String percent, String account) {
+    return 'aucun BU-Schlüssel n\'est enregistré pour $percent % sur le compte $account';
+  }
+
+  @override
+  String get datevVoucherLinks =>
+      'Joindre les PDF des factures et les lier depuis chaque ligne (Beleglink)';
 
   @override
   String get decisionSurfaceEmpty => 'Rien ne vous attend';
@@ -8447,6 +8520,66 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get gobdProcedureExportsBody =>
+      'Chaque export comptable est consigné dans le journal des exports avec sa période, sa taille et son empreinte SHA-256 ; l\'export d\'une période clôturée redonne les mêmes octets.';
+
+  @override
+  String get gobdProcedureExportsHeading => 'Exports';
+
+  @override
+  String gobdProcedureGenerated(String date, String from, String to) {
+    return 'Établie le $date pour la période du $from au $to.';
+  }
+
+  @override
+  String get gobdProcedureHandoverBody =>
+      'Ce paquet suit le Beschreibungsstandard : index.xml décrit chaque table, ses colonnes, clés et jointures, et nomme la DTD gdpdu-01-08-2002.dtd fournie à côté. Chaque table est un fichier CSV UTF-8 sans ligne d\'en-tête. Le dossier belege contient la facture électronique structurée de chaque facture et, lorsqu\'il a été produit, son PDF/A-3 avec ce XML intégré.';
+
+  @override
+  String get gobdProcedureHandoverHeading => 'Remise des données (Z3)';
+
+  @override
+  String get gobdProcedureImmutableBody =>
+      'Une facture ou un avoir émis ne peut être ni modifié ni supprimé : la base de données le refuse. Chaque document est signé dans une chaîne avec le précédent. Une correction est un nouveau document (avoir ou facture de remplacement) qui cite celui qu\'il corrige. Une période clôturée refuse les annulations et les paiements datés en son sein.';
+
+  @override
+  String get gobdProcedureImmutableHeading => 'Inaltérabilité';
+
+  @override
+  String gobdProcedureRetentionUntil(String date) {
+    return 'un document daté de la fin de cette période peut être effacé à partir du $date';
+  }
+
+  @override
+  String gobdProcedureSchemaApp(String version) {
+    return 'Version de schéma pour laquelle cette application est construite : $version';
+  }
+
+  @override
+  String gobdProcedureSchemaLive(String version) {
+    return 'Version du schéma de base de données de cette installation : $version';
+  }
+
+  @override
+  String get gobdProcedureSchemaUnknown =>
+      'Version du schéma de base de données de cette installation : illisible au moment de l\'établissement';
+
+  @override
+  String get gobdProcedureSystemBody =>
+      'DesKilo tient les factures, avoirs, paiements, comptes des membres, frais partagés et pièces d\'achat approuvées de cet espace. C\'est un livre auxiliaire : le grand livre et les comptes annuels sont tenus par le comptable dans son propre système, qui importe l\'export DATEV.';
+
+  @override
+  String get gobdProcedureSystemHeading => 'Système et périmètre';
+
+  @override
+  String gobdProcedureTitle(String workspace) {
+    return 'Documentation des procédures (Verfahrensdokumentation) — $workspace';
+  }
+
+  @override
+  String get gobdProcedureVersionHeading => 'Version du logiciel';
+
+  @override
   String get groupAnnounceOnly => 'Seuls les admins peuvent écrire';
 
   @override
@@ -10247,6 +10380,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceExportGenericJournal =>
       'Journal (CSV, pour tout logiciel comptable)';
+
+  @override
+  String get invoiceExportGobd => 'Accès aux données GoBD (Z3)';
 
   @override
   String get invoiceExportJournals =>

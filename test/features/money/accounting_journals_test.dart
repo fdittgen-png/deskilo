@@ -10,6 +10,7 @@ import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'support/datev_collective.dart';
 
 const _company = InvoiceParty(
   name: 'pezenas1', street: '2 Place du Marché', city: 'Pézenas',
@@ -112,7 +113,7 @@ void main() {
   });
 
   group('DATEV', () {
-    String build({List<Invoice>? invoices, bool development = false}) => buildDatevFile(DatevRequest(
+    String build({List<Invoice>? invoices, bool development = false}) => buildDatevFile(DatevRequest(detail: datevCollective, 
           invoices: invoices ?? [_invoice()], matches: const {},
           accounts: const DatevAccounts(), from: DateTime(2026), to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 9, 6, 10), consultantNumber: '1', clientNumber: '2',

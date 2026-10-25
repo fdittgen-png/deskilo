@@ -69,10 +69,8 @@ Map<String, Object?> _capture() {
       fec.vatPending,
     ],
     'datev': [
-      datev.customers,
       datev.revenue,
       datev.bank,
-      datev.vat,
       datev.chart,
       datev.expenses,
     ],

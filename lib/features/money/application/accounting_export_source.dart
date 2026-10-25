@@ -63,6 +63,7 @@ Future<ExportSourceBooks?> exportYearBooks(
     repartitions: books.repartitions,
     bookProfiles: books.bookProfiles,
     revisions: books.revisions,
+    purchases: books.purchases,
   );
 }
 

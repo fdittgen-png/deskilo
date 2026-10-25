@@ -207,7 +207,7 @@ class WizardCloseStep extends ConsumerWidget {
       children: [
         WizardHint(l10n.wizardCloseHint),
         for (final group in plan.groups) ...[
-          if (group.canSettle)
+          if (wiz.settlementEnabled && group.canSettle)
             Card(
               key: ValueKey('wizard-settle-row-${group.memberId}'),
               child: ListTile(

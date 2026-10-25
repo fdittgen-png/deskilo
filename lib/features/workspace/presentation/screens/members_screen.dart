@@ -235,7 +235,7 @@ class MembersScreen extends ConsumerWidget {
               tooltip: l10n.membersInvite,
               onPressed: () => context.push('/workspace-code'),
             ),
-          if (isOwner)
+          if (isOwner && features.contains(WorkspaceFeature.moneyTab))
           IconButton(
             key: const ValueKey('members-billing-title'),
             icon: const Icon(Icons.tune),

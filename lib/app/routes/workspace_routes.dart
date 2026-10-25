@@ -247,6 +247,7 @@ List<RouteBase> _configurationRoutes(RouteEnv env) {
       redirect: env.guard(
         const RouteAccess(
           permission: WorkspacePermission.manageIntegrations,
+          features: [WorkspaceFeature.moneyTab],
           to: '/money',
         ),
       ),
