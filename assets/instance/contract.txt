@@ -163,7 +163,7 @@ constraint book_mappings.book_mappings_issuer_role_version UNIQUE (issuer_site_i
 constraint book_mappings.book_mappings_issuer_site_id_fkey FOREIGN KEY (issuer_site_id) REFERENCES sites(id) ON DELETE RESTRICT
 constraint book_mappings.book_mappings_pkey PRIMARY KEY (id)
 constraint book_mappings.book_mappings_revision_check CHECK ((revision >= 1))
-constraint book_mappings.book_mappings_role_check CHECK ((role ~ '^(customers|suppliers|revenue|bank|vat_output|vat_input|vat_pending|expenses|write_off|cash_discount|clearing|fees)(:[A-Za-z0-9_.-]{1,40})?$'::text))
+constraint book_mappings.book_mappings_role_check CHECK ((role ~ '^(customers|suppliers|revenue|bank|vat_output|vat_input|vat_pending|expenses|write_off|cash_discount|clearing|fees|fixed_assets|stock|prepayments|deposits)(:[A-Za-z0-9_.-]{1,40})?$'::text))
 constraint book_mappings.book_mappings_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint book_mappings.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint book_mappings.system_company_present CHECK ((company_id IS NOT NULL))
@@ -1080,6 +1080,7 @@ constraint purchase_lines.purchase_lines_check CHECK (((net_cents IS NULL) = (ta
 constraint purchase_lines.purchase_lines_check1 CHECK (((net_cents IS NULL) OR ((net_cents + tax_cents) = gross_cents)))
 constraint purchase_lines.purchase_lines_check2 CHECK (((recoverable_tax_cents IS NULL) = (nonrecoverable_tax_cents IS NULL)))
 constraint purchase_lines.purchase_lines_check3 CHECK (((recoverable_tax_cents IS NULL) OR ((tax_cents IS NOT NULL) AND ((recoverable_tax_cents + nonrecoverable_tax_cents) = tax_cents))))
+constraint purchase_lines.purchase_lines_cost_site_fkey FOREIGN KEY (workspace_id, cost_site_id) REFERENCES sites(workspace_id, id)
 constraint purchase_lines.purchase_lines_description_check CHECK ((char_length(description) <= 500))
 constraint purchase_lines.purchase_lines_gross_cents_check CHECK ((gross_cents >= 0))
 constraint purchase_lines.purchase_lines_line_no_check CHECK ((line_no >= 1))
@@ -1090,6 +1091,8 @@ constraint purchase_lines.purchase_lines_purchase_id_line_no_key UNIQUE (purchas
 constraint purchase_lines.purchase_lines_quantity_check CHECK ((quantity > (0)::numeric))
 constraint purchase_lines.purchase_lines_recognition_kind_check CHECK ((recognition_kind = ANY (ARRAY['operating'::text, 'asset'::text, 'stock'::text, 'prepayment'::text, 'deposit'::text, 'unresolved'::text])))
 constraint purchase_lines.purchase_lines_recoverable_tax_cents_check CHECK (((recoverable_tax_cents IS NULL) OR (recoverable_tax_cents >= 0)))
+constraint purchase_lines.purchase_lines_resource_kind_check CHECK (((resource_kind IS NULL) OR (resource_kind = ANY (ARRAY['level'::text, 'office'::text, 'desk'::text, 'seat'::text]))))
+constraint purchase_lines.purchase_lines_resource_pair CHECK (((resource_kind IS NULL) = (resource_id IS NULL)))
 constraint purchase_lines.purchase_lines_tax_cents_check CHECK (((tax_cents IS NULL) OR (tax_cents >= 0)))
 constraint purchase_lines.purchase_lines_tax_rate_percent_check CHECK (((tax_rate_percent IS NULL) OR ((tax_rate_percent >= (0)::numeric) AND (tax_rate_percent <= (100)::numeric))))
 constraint purchase_lines.purchase_lines_unit_check CHECK ((char_length(unit) <= 20))
