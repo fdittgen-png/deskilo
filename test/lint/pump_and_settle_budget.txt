@@ -91,7 +91,7 @@
 15 test/features/reservations/getting_started_card_test.dart
 17 test/features/reservations/plan_double_tap_test.dart
 15 test/features/reservations/reservation_edit_test.dart
-59 test/features/reservations/reserve_hub_test.dart
+55 test/features/reservations/reserve_hub_test.dart
 11 test/features/reservations/seat_list_booking_actions_test.dart
 30 test/features/reservations/space_scan_test.dart
 10 test/features/task_recorder/admin_journey_test.dart

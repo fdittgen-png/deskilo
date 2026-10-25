@@ -121,7 +121,7 @@ class WindowControls extends StatelessWidget {
         if (granularity.offersDayWindows) ...[
           // Full-day granularity (0032) books whole days only — the
           // half chips exist under half-day and hours granularity.
-          if (granularity != BookingGranularity.fullDay) ...[
+          if (granularity.offersHalfDayChips) ...[
             chip(
               'am-chip',
               (am: true, pm: false),
@@ -142,7 +142,7 @@ class WindowControls extends StatelessWidget {
             HalfDayWindows.fullDay,
           ),
         ],
-        if (!granularity.isDayBased) ...[
+        if (granularity.offersClockRange) ...[
           Tooltip(
             message: lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel),
             child: TextButton(

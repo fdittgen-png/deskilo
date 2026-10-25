@@ -21,6 +21,7 @@ import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../domain/half_slot_occupancy.dart';
 import '../../domain/reservation.dart';
 import '../../providers/browsed_level.dart';
 import '../../providers/reservation_providers.dart';
@@ -299,31 +300,23 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     final half = morning
         ? HalfDayWindows.displayMorning(day)
         : HalfDayWindows.displayAfternoon(day);
-    var occupied = false;
-    var mine = false;
-    for (final r in items) {
-      if (!r.holdsRange(half.start, half.end)) continue;
-      occupied = true;
-      if (r.memberId == widget.myMemberId) {
-        mine = true;
-        break;
-      }
-    }
+    final occupancy = halfSlotOccupancy(items,
+        start: half.start, end: half.end, myMemberId: widget.myMemberId);
+    final covering = occupancy.covering;
     Color? fill;
     String? occupantInitial;
-    if (occupied) {
+    if (covering != null) {
       // The timeline's block tones (#187): mine vs reserved-by-others.
       fill = SeatStateColors.of(
-        mine ? SeatState.mine : SeatState.reserved,
+        occupancy.holder == HalfSlotHolder.mine
+            ? SeatState.mine
+            : SeatState.reserved,
         brightness: brightness,
       );
       if (widget.everyone) {
         // WHO at a glance (needs analysis: availability + by whom): the
         // covering occupant's initial, mirroring the plan's seat avatars.
         final names = ref.watch(memberNamesProvider).value ?? const {};
-        final covering = items.firstWhere(
-          (r) => r.holdsRange(half.start, half.end),
-        );
         final name = names[covering.memberId] ?? '';
         if (name.trim().isNotEmpty) {
           occupantInitial = name.trim().characters.first.toUpperCase();

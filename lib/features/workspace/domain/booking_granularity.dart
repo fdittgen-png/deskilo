@@ -75,6 +75,15 @@ enum BookingGranularity {
   /// NEXT TO free from→to times (#446).
   bool get offersDayWindows => isDayBased || this == hours;
 
+  /// Whether the window chips include Morning and Afternoon beside Full day:
+  /// every mode that offers day windows except [fullDay], which books whole
+  /// days only (0032).
+  bool get offersHalfDayChips => offersDayWindows && this != fullDay;
+
+  /// Whether the reserve UI offers free from→to clock times: every mode
+  /// that does not book whole day windows.
+  bool get offersClockRange => !isDayBased;
+
   /// The granularity a resource with its own slot (#2631, `seats.slot_minutes`)
   /// is booked under: null keeps the [workspace] value (every existing
   /// resource); 5/15/30/60 is that minute grid; 1440 the full working day.

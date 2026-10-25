@@ -120,8 +120,7 @@ class ReserveHubHeader extends ConsumerWidget {
             workspaceId: workspace?.id ?? '')
         : null;
     final facts = _gettingStartedFacts(ref, availability);
-    final timeViews = host.view != ReserveView.week &&
-        host.view != ReserveView.month;
+    final timeViews = host.view.showsWindowControls;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -137,9 +136,7 @@ class ReserveHubHeader extends ConsumerWidget {
               timezone: workspace?.timezone),
         if (gateOn)
           SeatLegend(
-            showClosed: host.view == ReserveView.week ||
-                host.view == ReserveView.month ||
-                host.view == ReserveView.day,
+            showClosed: host.view.legendShowsClosed,
           ),
         // #1853 A — ONE help slot: the Get started next step (#1654), or
         // else the hub's tip carousel (#606); each gated inside.
@@ -202,7 +199,7 @@ class ReserveHubHeader extends ConsumerWidget {
       // presentations of the same one. A second two-segment toggle would
       // have shown two map icons in one row; this shows one, and never the
       // one you are already looking at.
-      if (host.view == ReserveView.plan || host.view == ReserveView.list)
+      if (host.view.showsSeatViewSwitch)
         IconButton(
           key: const ValueKey('reserve-seat-view-switch'),
           tooltip: seatList ? l10n.planMapViewTooltip : l10n.planListViewTooltip,
