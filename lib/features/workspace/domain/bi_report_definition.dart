@@ -202,9 +202,8 @@ class BiReportDefinition {
         title: pageTitle,
         visuals: [
           for (final (i, c) in cards.indexed)
-            BiReportVisual(
+            BiReportVisual.kpi(
               id: 'v${i + 1}',
-              type: BiVisualType.kpi,
               metricId: c,
               layout: BiVisualLayout(order: i),
             ),

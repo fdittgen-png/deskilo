@@ -20,6 +20,8 @@ const _operatingCostsKpi = KpiDefinition(
       'the document\'s date, whole months [from, to] on the workspace '
       'calendar: approved purchase lines classified operating, net plus the '
       'tax that cannot be recovered; a supplier credit note subtracts',
+  dateBasis: KpiDateBasis.documentDate,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'operating_costs_minor',
   denominator: '',
@@ -37,6 +39,8 @@ const _acquisitionsKpi = KpiDefinition(
   timeBasis:
       'the document\'s date, whole months [from, to]: the equipment decided '
       'capitalise, at its cost; never a cost, never a depreciation',
+  dateBasis: KpiDateBasis.documentDate,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'acquisitions_minor',
   denominator: '',
@@ -59,6 +63,8 @@ const _contributionKpi = KpiDefinition(
       'the invoices\' months [from, to], net of their tax, less the operating '
       'costs of the same months: invoiced less recorded operating costs, '
       'never a profit',
+  dateBasis: KpiDateBasis.invoiceMonth,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'contribution_minor',
   denominator: '',
@@ -77,6 +83,8 @@ const _bookDepreciationKpi = KpiDefinition(
       'the confirmed book values (#2576) whose periods tile [from, to] '
       'exactly, complete and in the workspace currency; tax-only, partial or '
       'overlapping values are unknown, never 0',
+  dateBasis: KpiDateBasis.bookValuePeriod,
+  coverage: KpiCoverage.confirmedValues,
   dimensions: [],
   numerator: 'book_depreciation_minor',
   denominator: '',
@@ -98,6 +106,8 @@ const _afterDepreciationKpi = KpiDefinition(
   timeBasis:
       'invoiced less recorded operating costs of [from, to], less the book '
       'depreciation of the same months; unknown while that depreciation is',
+  dateBasis: KpiDateBasis.invoiceMonth,
+  coverage: KpiCoverage.confirmedValues,
   dimensions: [],
   numerator: 'after_depreciation_minor',
   denominator: '',
@@ -121,6 +131,8 @@ const _unbilledCommitmentsKpi = KpiDefinition(
       'the contract occurrences due in [from, to] (#2575), those not yet '
       'generated projected from their schedule, less the bills matched to '
       'them; overdue and not yet due apart',
+  dateBasis: KpiDateBasis.occurrenceDue,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'unbilled_minor',
   denominator: '',
@@ -139,6 +151,8 @@ const _costAllocationKpi = KpiDefinition(
       'the operating costs of [from, to] by the document\'s date, spread over '
       'levels, offices, desks and seats by the rule revision in force that '
       'day; direct, shared and unallocated add up to the operating costs',
+  dateBasis: KpiDateBasis.documentDate,
+  coverage: KpiCoverage.currentRecords,
   dimensions: ['resource'],
   numerator: 'shared_minor',
   denominator: '',
@@ -157,6 +171,8 @@ const _forecastOutflowsKpi = KpiDefinition(
       'what is owed to suppliers at the end of [from, to] plus what the '
       'contracts still expect in those months; a bill matched to a contract '
       'counts once',
+  dateBasis: KpiDateBasis.periodEnd,
+  coverage: KpiCoverage.currentRecords,
   dimensions: [],
   numerator: 'forecast_minor',
   denominator: '',

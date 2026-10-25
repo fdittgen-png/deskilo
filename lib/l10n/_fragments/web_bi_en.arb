@@ -459,5 +459,18 @@
         "type": "String"
       }
     }
+  },
+  "biIncompatible": "The server now defines this figure differently from what this version of the app knows: update the app to see it.",
+  "@biIncompatible": {
+    "description": "#2578 a batched figure answered for another version, unit, date basis or coverage of its metric"
+  },
+  "biViewCardsIncompatible": "{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.",
+  "@biViewCardsIncompatible": {
+    "description": "#2578 saved-view cards saved for another metric version",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

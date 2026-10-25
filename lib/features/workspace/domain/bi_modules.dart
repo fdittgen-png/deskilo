@@ -34,7 +34,6 @@ class BiModule {
     required this.area,
     required this.feature,
     required this.permissions,
-    required this.aggregation,
     this.grains = const {BiGrain.month, BiGrain.quarter, BiGrain.year},
     this.comparisons = const {
       BiComparison.none,
@@ -54,8 +53,13 @@ class BiModule {
   /// Every right the module needs (mirrors the KPI registry, #1921).
   final Set<WorkspacePermission> permissions;
 
+  /// The metric shown: its version, unit, aggregation, date basis
+  /// and coverage come from the one catalogue the server registry copies,
+  /// so the module never states them a second time.
+  KpiDefinition get metric => kpiDefinitionOf(id)!;
+
   /// How the figure combines over groups and time (#1918, B).
-  final KpiAggregation aggregation;
+  KpiAggregation get aggregation => metric.aggregation;
 
   /// What the shared toolbar may ask of this module (#1923 B). An
   /// option outside these is refused with its reason, never ignored.
@@ -119,7 +123,6 @@ const biModules = <BiModule>[
     area: BiArea.capacity,
     feature: WorkspaceFeature.capacityKpi,
     permissions: {WorkspacePermission.viewAnalytics},
-    aggregation: KpiAggregation.ratioOfSums,
     groupings: {'level'},
     // Offered seat time is made of the opening hours and closures set
     // there; that screen is where the denominator comes from.
@@ -141,7 +144,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
     drill: BiDrill(
       route: '/money/status',
       permission: WorkspacePermission.viewFinances,
@@ -156,7 +158,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
     drill: BiDrill(
       route: '/money/status',
       permission: WorkspacePermission.viewFinances,
@@ -173,7 +174,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.lastAtCutoff,
     // #2577 — the purchases page: the documents behind the figure.
     drill: BiDrill(
       route: '/money/purchases',
@@ -188,7 +188,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.lastAtCutoff,
     // #2577 — the purchases page: the documents behind the figure.
     drill: BiDrill(
       route: '/money/purchases',
@@ -203,7 +202,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.lastAtCutoff,
     // #2577 — the purchases page: the documents behind the figure.
     drill: BiDrill(
       route: '/money/purchases',
@@ -218,7 +216,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
     // #2577 — the purchases page: the documents behind the figure.
     drill: BiDrill(
       route: '/money/purchases',
@@ -235,7 +232,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
     // #2577 — the purchases page: the documents behind the figure.
     drill: BiDrill(
       route: '/money/purchases',
@@ -250,7 +246,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
     // #2577 — the purchases page: the documents behind the figure.
     drill: BiDrill(
       route: '/money/purchases',
@@ -265,7 +260,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
   ),
   // #2582 C2 — book depreciation (unknown unless confirmed book values cover
   // the period) and what the contracts still expect to be billed.
@@ -277,7 +271,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
   ),
   BiModule(
     id: 'finance.contribution_after_depreciation',
@@ -287,7 +280,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
   ),
   BiModule(
     id: 'purchases.unbilled_commitments',
@@ -297,7 +289,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
     // #2577 — the purchases page: the documents behind the figure.
     drill: BiDrill(
       route: '/money/purchases',
@@ -313,7 +304,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.lastAtCutoff,
     // #2577 — the purchases page: the documents behind the figure.
     drill: BiDrill(
       route: '/money/purchases',
@@ -329,7 +319,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.sum,
   ),
   // #2583 — the overview's own figures: today's memberships and what is
   // overdue, read now (0536).
@@ -338,7 +327,6 @@ const biModules = <BiModule>[
     area: BiArea.people,
     feature: WorkspaceFeature.workspaceOverview,
     permissions: {WorkspacePermission.viewAnalytics},
-    aggregation: KpiAggregation.lastAtCutoff,
   ),
   BiModule(
     id: 'sales.overdue_receivables',
@@ -348,7 +336,6 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
-    aggregation: KpiAggregation.lastAtCutoff,
   ),
 ];
 
