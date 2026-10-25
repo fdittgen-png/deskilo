@@ -3,28 +3,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/presence/presence_rules.dart';
 import '../../../../core/settings/directory_windows.dart';
-import '../../../../core/theme/app_elevation.dart';
-import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../profile/domain/profile.dart';
-import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -32,16 +21,11 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/presentation/widgets/open_conversation.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/directory_card.dart';
 import '../../domain/directory_status.dart';
 import '../../providers/directory_providers.dart';
 import '../member_profile_link.dart';
-import '../widgets/member_contact_card.dart';
-import '../widgets/member_money_card.dart';
-import 'member_page.dart';
-
-
-part 'directory_screen_part2.dart';
-part 'directory_screen_part3.dart';
+import '../widgets/directory_member_row.dart';
 
 
 /// Member directory (#224, epic #222): every member sees the workspace's
@@ -155,7 +139,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
               physics: const AlwaysScrollableScrollPhysics(),
               children: [
                 if (groupUri != null)
-                  _GroupTile(onOpen: () => _openLink(context, ref, groupUri)),
+                  DirectoryGroupTile(onOpen: () => _openLink(context, ref, groupUri)),
                 if (active.isEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 48),
@@ -166,33 +150,35 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
                   )
                 else
                   for (final member in active)
-                    _MemberRow(
-                      member: member,
-                      name: names[member.id] ?? '',
-                      email: emails[member.id] ?? '',
-                      isSelf: member.id == myMemberId,
-                      profile: profiles[member.userId],
-                      presence: resolveDirectoryPresence(
-                        lastSeenAt: profiles[member.userId]?.lastSeenAt,
-                        now: now,
+                    DirectoryMemberRow(
+                      card: DirectoryCard(
+                        member: member,
+                        name: names[member.id] ?? '',
+                        email: emails[member.id] ?? '',
                         isSelf: member.id == myMemberId,
-                        onlineWindow: windows.onlineWindow,
-                      ),
-                      reservationInfo: resolveReservationInfo(
-                        memberId: member.id,
-                        reservations: reservationsByMember[member.id] ??
-                            const <Reservation>[],
+                        profile: profiles[member.userId],
+                        presence: resolveDirectoryPresence(
+                          lastSeenAt: profiles[member.userId]?.lastSeenAt,
+                          now: now,
+                          isSelf: member.id == myMemberId,
+                          onlineWindow: windows.onlineWindow,
+                        ),
+                        reservationInfo: resolveReservationInfo(
+                          memberId: member.id,
+                          reservations: reservationsByMember[member.id] ??
+                              const <Reservation>[],
+                          now: now,
+                          upcomingWindow: windows.upcomingWindow,
+                        ),
+                        memberReservations: upcomingReservationsFor(
+                          member.id,
+                          reservationsByMember[member.id] ??
+                              const <Reservation>[],
+                          now,
+                        ),
+                        targetNames: targets,
                         now: now,
-                        upcomingWindow: windows.upcomingWindow,
                       ),
-                      memberReservations: upcomingReservationsFor(
-                        member.id,
-                        reservationsByMember[member.id] ??
-                            const <Reservation>[],
-                        now,
-                      ),
-                      targetNames: targets,
-                      now: now,
                       onWhatsapp: (uri) => _openLink(context, ref, uri),
                       onOpenReservation: (reservation) =>
                           _openReservation(context, reservation),

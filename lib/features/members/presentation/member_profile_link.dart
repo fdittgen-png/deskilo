@@ -15,10 +15,11 @@ import '../../reservations/presentation/widgets/reservation_detail_sheet.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/directory_card.dart';
 import '../domain/directory_status.dart';
 import '../providers/directory_providers.dart';
-import 'screens/directory_screen.dart';
 import 'screens/member_page.dart';
+import 'widgets/member_profile_sheet.dart';
 
 /// Opens a member's profile from ANYWHERE, resolving what the sheet
 /// needs from providers (#695).
@@ -51,31 +52,33 @@ Future<void> openMemberProfile(
   if (!context.mounted) return;
   await showMemberProfileSheet(
     context,
-    member: member,
-    name: names[memberId] ?? '',
-    isSelf: ref.read(myMemberProvider).value?.id == memberId,
-    profile: profiles[member.userId],
-    presence: resolveDirectoryPresence(
-      lastSeenAt: profiles[member.userId]?.lastSeenAt,
-      now: now,
+    card: DirectoryCard(
+      member: member,
+      name: names[memberId] ?? '',
       isSelf: ref.read(myMemberProvider).value?.id == memberId,
-      onlineWindow: ref.read(directoryWindowsProvider).onlineWindow,
-    ),
-    reservationInfo: resolveReservationInfo(
-      memberId: memberId,
-      reservations: reservations,
+      profile: profiles[member.userId],
+      presence: resolveDirectoryPresence(
+        lastSeenAt: profiles[member.userId]?.lastSeenAt,
+        now: now,
+        isSelf: ref.read(myMemberProvider).value?.id == memberId,
+        onlineWindow: ref.read(directoryWindowsProvider).onlineWindow,
+      ),
+      reservationInfo: resolveReservationInfo(
+        memberId: memberId,
+        reservations: reservations,
+        now: now,
+        upcomingWindow: ref.read(directoryWindowsProvider).upcomingWindow,
+      ),
+      // The member's own bookings, upcoming first — the same slice the
+      // directory row shows, computed here because the screen's private
+      // filter is not reachable and is two lines anyway.
+      memberReservations: [
+        for (final r in reservations)
+          if (r.memberId == memberId && r.endsAt.isAfter(now)) r,
+      ]..sort((a, b) => a.startsAt.compareTo(b.startsAt)),
+      targetNames: ref.read(targetNamesProvider).value ?? const {},
       now: now,
-      upcomingWindow: ref.read(directoryWindowsProvider).upcomingWindow,
     ),
-    // The member's own bookings, upcoming first — the same slice the
-    // directory row shows, computed here because the screen's private
-    // filter is not reachable and is two lines anyway.
-    memberReservations: [
-      for (final r in reservations)
-        if (r.memberId == memberId && r.endsAt.isAfter(now)) r,
-    ]..sort((a, b) => a.startsAt.compareTo(b.startsAt)),
-    targetNames: ref.read(targetNamesProvider).value ?? const {},
-    now: now,
     onWhatsapp: (uri) => _launchLink(context, ref, uri),
     // Through the shared helper (#422): opening the sheet directly here
     // discards the popped target, and "Show on plan" then silently does
