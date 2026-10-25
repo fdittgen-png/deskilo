@@ -10,6 +10,7 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:deskilo_document_pdf/report_flow_page.dart';
+import 'package:deskilo_document_pdf/report_style.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -18,6 +19,8 @@ import '../../money/domain/invoice_report.dart';
 import '../../money/domain/report_block_widgets.dart';
 import 'bi_analysis.dart';
 import 'bi_report_content.dart';
+import 'bi_report_definition.dart';
+import 'bi_report_print.dart';
 
 /// The report: a header, one section per analysis, a closing note.
 Future<Uint8List> buildBiReportPdf({
@@ -359,3 +362,128 @@ List<pw.Widget> _composition(BiCompositionContent comp) {
       ),
   ];
 }
+
+/// The page margin of each named margin, in points (a layout size).
+const biPrintMargins = {'narrow': 28.0, 'normal': 48.0, 'wide': 72.0};
+
+/// The sheet of [style]: its paper, turned for landscape.
+PdfPageFormat biPrintFormat(BiPrintStyle style) {
+  final paper = style.paper == 'Letter' ? PdfPageFormat.letter : PdfPageFormat.a4;
+  return style.landscape ? paper.landscape : paper.portrait;
+}
+
+/// The PDF of [doc]. [letterhead] is the workspace's own header and footer
+/// of the analytics report (its body is not used: the figures are the
+/// document's).
+Future<Uint8List> buildBiPrintPdf(
+  BiPrintDocument doc, {
+  required ({pw.Font base, pw.Font bold}) fonts,
+  required String pageLabel,
+  InvoiceReport? letterhead,
+  Map<String, Uint8List> images = const {},
+  String watermark = '',
+}) async {
+  final margin = biPrintMargins[doc.style.margin] ?? biPrintMargins['normal']!;
+  final document = pw.Document(title: doc.title);
+  final header = doc.style.header;
+  final footer = doc.style.footer;
+  pw.Widget small(String text) => pw.Text(
+    text,
+    style: const pw.TextStyle(fontSize: reportSmallSize, color: reportMuted),
+  );
+  pw.Widget heading(String text, double size) =>
+      pw.Text(text, style: pw.TextStyle(fontSize: size, fontWeight: pw.FontWeight.bold));
+  document.addPage(
+    reportFlowPage(
+      pageTheme: pw.PageTheme(
+        pageFormat: biPrintFormat(doc.style),
+        margin: pw.EdgeInsets.all(margin),
+        theme: pw.ThemeData.withFont(base: fonts.base, bold: fonts.bold),
+        buildForeground: watermarkForeground(watermark),
+      ),
+      documentTitle: doc.title,
+      pageLabel: pageLabel,
+      numberFirstPage: true,
+      firstHeader: (context) => [
+        ...reportBlockWidgets(letterhead?.header ?? const [], images: images),
+        if (header.isNotEmpty) small(header),
+        heading(doc.title, 16),
+        pw.SizedBox(height: 6),
+      ],
+      continuation: (context) => [
+        if (header.isNotEmpty) small(header),
+        heading(doc.title, 10),
+        pw.Divider(color: reportHairline),
+      ],
+      footer: (context) => [
+        if (footer.isNotEmpty) small(footer),
+        small(doc.sourceLine),
+        ...reportBlockWidgets(letterhead?.footer ?? const [], images: images),
+      ],
+      body: (context) => [
+        ..._printProvenance(doc, small),
+        for (final section in doc.sections) ..._printSection(section, heading, small),
+      ],
+    ),
+  );
+  return document.save();
+}
+
+List<pw.Widget> _printProvenance(BiPrintDocument doc, pw.Widget Function(String) small) => [
+  pw.Table(
+    columnWidths: const {0: pw.IntrinsicColumnWidth(), 1: pw.FlexColumnWidth()},
+    children: [
+      for (final line in doc.provenance)
+        pw.TableRow(
+          children: [
+            pw.Padding(
+              padding: const pw.EdgeInsets.only(right: 8, bottom: 2),
+              child: pw.Text(line.label, style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold)),
+            ),
+            pw.Text(line.value, style: const pw.TextStyle(fontSize: 9)),
+          ],
+        ),
+    ],
+  ),
+  pw.SizedBox(height: 4),
+  pw.Text(doc.qualification, style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold)),
+  if (doc.management != null) pw.Text(doc.management!, style: const pw.TextStyle(fontSize: 9)),
+  for (final line in doc.sources) small(line),
+  pw.SizedBox(height: 10),
+];
+
+List<pw.Widget> _printSection(
+  BiPrintSection section,
+  pw.Widget Function(String, double) heading,
+  pw.Widget Function(String) small,
+) => [
+  if (section.newSheet) pw.NewPage(),
+  heading(section.title, 13),
+  pw.SizedBox(height: 4),
+  for (final block in section.blocks) ...switch (block) {
+    BiPrintFigure() => [
+      pw.Text(block.title, style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+      pw.Text(block.value, style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
+      if (block.note.isNotEmpty) small(block.note),
+      pw.SizedBox(height: 8),
+    ],
+    BiPrintTable() => [
+      pw.Text(block.title, style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold)),
+      pw.SizedBox(height: 2),
+      pw.TableHelper.fromTextArray(
+        headers: block.headings,
+        data: block.rows,
+        headerStyle: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold),
+        cellStyle: const pw.TextStyle(fontSize: 9),
+        headerDecoration: const pw.BoxDecoration(color: PdfColors.grey200),
+        cellAlignments: const {1: pw.Alignment.centerRight, 2: pw.Alignment.centerRight},
+        border: pw.TableBorder.all(color: reportHairline, width: 0.5),
+      ),
+      pw.SizedBox(height: 8),
+    ],
+    BiPrintText() => [
+      pw.Text(block.text, style: const pw.TextStyle(fontSize: 10)),
+      pw.SizedBox(height: 8),
+    ],
+  },
+];

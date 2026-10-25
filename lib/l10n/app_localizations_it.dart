@@ -1420,6 +1420,33 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il registro delle attrezzature è disattivato: nessuna immobilizzazione è nota.';
 
   @override
+  String get biBasisBookValuePeriod => 'periodo dei valori contabili';
+
+  @override
+  String get biBasisCurrentState => 'com’è oggi';
+
+  @override
+  String get biBasisDocumentDate => 'data del documento';
+
+  @override
+  String get biBasisInvoiceMonth => 'mese della fattura';
+
+  @override
+  String get biBasisOccurrenceDue => 'data di scadenza';
+
+  @override
+  String get biBasisPaymentMatchedAt => 'data dell’abbinamento del pagamento';
+
+  @override
+  String get biBasisPaymentReportedPaid => 'data dichiarata come pagata';
+
+  @override
+  String get biBasisPeriodEnd => 'fine del periodo';
+
+  @override
+  String get biBasisReservationTime => 'tempo prenotato';
+
+  @override
   String get biBookingBasis =>
       'La capacità prenotata misura le prenotazioni, non la presenza effettiva.';
 
@@ -1571,6 +1598,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get biCoverageConfirmedValues => 'solo valori confermati';
+
+  @override
+  String get biCoverageCurrentRecords => 'registrazioni attuali';
+
+  @override
+  String get biCoverageCurrentStateOnly => 'solo oggi';
+
+  @override
+  String get biCoverageRecordedHistory => 'storico registrato';
+
+  @override
   String get biCurrentBasis =>
       'È incluso l’intero periodo. Il confronto con un periodo concluso non ha una base equivalente.';
 
@@ -1613,7 +1652,86 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biEvolutionTitle => 'Evoluzione';
 
   @override
+  String get biExportAction => 'Esporta il report';
+
+  @override
+  String biExportComputedAt(String time) {
+    return 'Cifre calcolate il $time. Questa esportazione le legge da sé: se i dati sono cambiati da quando è stata mostrata la dashboard, ne differiscono.';
+  }
+
+  @override
+  String biExportDigest(String hash) {
+    return 'Impronta $hash';
+  }
+
+  @override
+  String get biExportFailedEmpty =>
+      'Niente in questo report può ancora essere esportato.';
+
+  @override
+  String get biExportFailedForbidden =>
+      'Non può esportare queste cifre: servono il diritto di esportare i dati e quello di leggere ogni cifra del report.';
+
+  @override
+  String get biExportFailedInvalid =>
+      'Non è stato possibile fare l’esportazione da questo report.';
+
+  @override
+  String get biExportFailedOff =>
+      'L’esportazione di questo tipo di file è disattivata in questo spazio.';
+
+  @override
+  String get biExportFailedStale =>
+      'Il report è cambiato da quando l’ha aperto. Lo riapra, poi esporti.';
+
+  @override
+  String get biExportFailedTooLarge =>
+      'Questo report chiede più cifre di quante un’esportazione possa contenerne. Lo restringa: meno pagine, schede o periodi.';
+
+  @override
+  String get biExportFailedUnavailable =>
+      'Il server non ha risposto. Non è stato esportato nulla; riprovi.';
+
+  @override
+  String get biExportFormatCsv => 'CSV (dati)';
+
+  @override
+  String get biExportFormatPdf => 'PDF';
+
+  @override
+  String get biExportFormatXlsx => 'Cartella di lavoro (XLSX)';
+
+  @override
+  String biExportLeftOut(String count) {
+    return '$count schede non sono in questa esportazione: la loro cifra, i loro filtri o il loro raggruppamento non sono ancora esportabili.';
+  }
+
+  @override
   String get biExportPdf => 'Esporta in PDF';
+
+  @override
+  String get biExportPreview => 'Leggi le cifre';
+
+  @override
+  String get biExportRecallNote =>
+      'Un file salvato è una copia di queste cifre: non può essere richiamato in seguito, anche se i Suoi diritti cambiano.';
+
+  @override
+  String get biExportRefresh => 'Rileggi';
+
+  @override
+  String biExportRefreshedAt(String time) {
+    return 'Riletto il $time: nuove cifre e una nuova impronta.';
+  }
+
+  @override
+  String get biExportSave => 'Salva il file';
+
+  @override
+  String get biExportTaking => 'Lettura delle cifre per questa esportazione…';
+
+  @override
+  String get biExportTitle => 'Esporta il report';
 
   @override
   String get biExposureDiffers =>
@@ -1773,6 +1891,142 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biPdfTitle => 'Analisi dell\'attività';
+
+  @override
+  String get biPrintColBasis => 'Composto da';
+
+  @override
+  String get biPrintColPeriod => 'Periodo';
+
+  @override
+  String get biPrintColStatus => 'Stato';
+
+  @override
+  String get biPrintColValue => 'Valore';
+
+  @override
+  String get biPrintComplete =>
+      'Ogni cifra di questa copia è nota e copre tutto il suo periodo.';
+
+  @override
+  String get biPrintComputed => 'Calcolato';
+
+  @override
+  String get biPrintCurrency => 'Valuta';
+
+  @override
+  String get biPrintDateBasis => 'Base della data';
+
+  @override
+  String get biPrintFailed => 'senza risposta';
+
+  @override
+  String get biPrintFilters => 'Filtri';
+
+  @override
+  String get biPrintFooter => 'Riga a piè di pagina';
+
+  @override
+  String get biPrintHeader => 'Riga di intestazione';
+
+  @override
+  String get biPrintLandscape => 'Orizzontale';
+
+  @override
+  String get biPrintLayoutAction => 'Layout di stampa';
+
+  @override
+  String get biPrintLayoutApply => 'Usa questo layout';
+
+  @override
+  String get biPrintLayoutTitle => 'Layout di stampa del report';
+
+  @override
+  String get biPrintLeftOut => 'non in questa esportazione';
+
+  @override
+  String get biPrintLineHelper => 'Testo semplice, stampato su ogni foglio.';
+
+  @override
+  String get biPrintLineInvalid =>
+      'Solo testo semplice: niente a capo né caratteri di controllo.';
+
+  @override
+  String get biPrintManagement =>
+      'Informazione gestionale, non conti di legge.';
+
+  @override
+  String get biPrintMarginNarrow => 'Stretti';
+
+  @override
+  String get biPrintMarginNormal => 'Normali';
+
+  @override
+  String get biPrintMarginWide => 'Ampi';
+
+  @override
+  String get biPrintMargins => 'Margini';
+
+  @override
+  String get biPrintNoFilters => 'nessuno';
+
+  @override
+  String get biPrintOrientation => 'Orientamento';
+
+  @override
+  String get biPrintPageBreaks => 'Ogni pagina del report su un nuovo foglio';
+
+  @override
+  String get biPrintPaper => 'Carta';
+
+  @override
+  String get biPrintPaperA4 => 'A4';
+
+  @override
+  String get biPrintPaperLetter => 'Lettera USA';
+
+  @override
+  String get biPrintPartial =>
+      'Copia parziale: alcune cifre sono sconosciute, coprono solo parte del loro periodo o non sono in questa esportazione.';
+
+  @override
+  String get biPrintPeriod => 'Periodo';
+
+  @override
+  String get biPrintPortrait => 'Verticale';
+
+  @override
+  String get biPrintProvenanceNote =>
+      'Lo spazio, il report e la sua revisione, il periodo, la base della data, le valute, i filtri, quando sono state calcolate le cifre e se sono complete vengono sempre stampati.';
+
+  @override
+  String get biPrintQualified => 'parziale';
+
+  @override
+  String get biPrintReport => 'Report';
+
+  @override
+  String biPrintRevision(String revision) {
+    return 'revisione $revision';
+  }
+
+  @override
+  String get biPrintSheetPreview => 'Anteprima del foglio';
+
+  @override
+  String get biPrintShowSources => 'Indicare la fonte di ogni cifra';
+
+  @override
+  String get biPrintSnapshot => 'Impronta';
+
+  @override
+  String get biPrintUnknown => 'sconosciuto';
+
+  @override
+  String get biPrintUnsaved => 'non salvato';
+
+  @override
+  String get biPrintWorkspace => 'Spazio';
 
   @override
   String biProjectionBasis(int count) {

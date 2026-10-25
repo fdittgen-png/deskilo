@@ -22,7 +22,7 @@ import '../../domain/bi_query.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
-import '../widgets/bi_export.dart';
+import '../widgets/bi_export_sheet.dart';
 import '../widgets/bi_module_section.dart';
 import '../widgets/bi_report_section.dart';
 import '../widgets/bi_toolbar.dart';
@@ -98,19 +98,11 @@ class BiScreen extends ConsumerWidget {
         title: Text(l10n.biTitle),
         actions: [
           if (query != null && workspaceId != null && shown.isNotEmpty)
-            IconButton(
-              key: const ValueKey('bi-export-pdf'),
-              tooltip: l10n.biExportPdf,
-              icon: const Icon(Icons.picture_as_pdf_outlined),
-              onPressed: () => exportBiPdf(
-                context,
-                ref,
-                workspaceId: workspaceId,
-                workspaceName:
-                    ref.read(currentWorkspaceProvider).value?.name ?? 'DesKilo',
-                modules: shown,
-                query: query,
-              ),
+            BiExportActions(
+              workspaceId: workspaceId,
+              openId: saved,
+              query: query,
+              modules: shown,
             ),
         ],
         // Opened from an address (or after a toolbar change) there is no

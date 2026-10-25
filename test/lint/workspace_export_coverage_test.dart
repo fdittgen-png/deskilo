@@ -102,6 +102,7 @@ const Map<String, String> _notExported = {
   'mcp_action_confirmations': 'a person\'s pending confirmation of an assistant request, never portable (#1619)',
   'mcp_usage': 'the audit of MCP calls and the count the limits read, operational state only (#1630)',
   'bi_views': 'saved Web-BI views (#1923 C) are questions a reader asked of this installation\'s analytics, kept under its rights; a private one travels in its author\'s access export, and none is portable configuration',
+  'bi_export_evidence': 'the record that an analytics export was taken (#2581): a digest of figures of this server, never the figures; a copy would claim exports the copy never made',
   'workspace_recovery_evidence': 'the record that an export was taken; a copy of it would claim a backup the copy never had (#1636)',
   'readiness_acknowledgements': 'a person\'s own "later" on a setup section, per installation; a copy must re-ask (#1636)',
   'sample_data_batches': 'which sample data this test space generated (#2872); it names rows of this server, and the sample rows themselves are exported like any other until they are cleared',
