@@ -8,6 +8,7 @@
 // No format reads anything else for the period: what the file says, it
 // says about one moment.
 import '../../../core/trace/trace_logger.dart';
+import '../domain/accounting_format.dart';
 import '../domain/accounting_source_queries.dart';
 import '../domain/accounting_source_snapshot.dart';
 import '../domain/accounting_view.dart';
@@ -75,12 +76,28 @@ typedef AccountingExportInput = ({
 /// The formats written from the posting engine when the issuer keeps a
 /// local book (the archive for its FEC); the generic journal has no other
 /// source.
-const Set<String> _postedWhenLocalBook = {'fec', 'saft', 'bundle'};
+const Set<String> _postedWhenLocalBook = {
+  'fec',
+  'saft',
+  'bundle',
+  ...bookReportFormats,
+};
 
-/// The posted formats that write the FEC, with its account names and
-/// parties.
-const Set<String> _postedFec = {'fec', 'bundle'};
+/// The posted formats that name the accounts and the parties: the FEC,
+/// and #2376 the books printed from the postings.
+const Set<String> _postedFec = {'fec', 'bundle', ...bookReportFormats};
 const String _postedOnlyFormat = 'generic_journal_csv';
+
+/// #2376 — the day of the latest document the person exports, on the same
+/// clock the export year is taken from: the posted formats read the fiscal
+/// year that holds it.
+DateTime? _latestDay(List<Invoice> invoices) {
+  if (invoices.isEmpty) return null;
+  final last = invoices
+      .map((i) => i.issuedAt)
+      .reduce((a, b) => a.isAfter(b) ? a : b);
+  return DateTime(last.year, last.month, last.day);
+}
 
 class AccountingExportSource {
   const AccountingExportSource(this._source, this._journal);
@@ -122,6 +139,7 @@ class AccountingExportSource {
               books.bookProfiles,
               year,
               named: _postedFec.contains(formatId),
+              asOf: _latestDay(invoices),
             )
           : null,
     );

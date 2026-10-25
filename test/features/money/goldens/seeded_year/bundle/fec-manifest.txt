@@ -1,0 +1,6 @@
+file: 812345678FEC20261231.txt
+fiscal_year: 2026-01-01..2026-12-31
+status: final
+sha256: 303b3abc707a462b13329affa293b03c210470efdbbfbeabc51175722e6ef9ea
+import_contract: failed (lettering), 38 records
+scope: the entries DesKilo posts for this issuer; the company FEC also needs every entry kept in other books

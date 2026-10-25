@@ -89,7 +89,10 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'vat_total' ||
       'refund_total' ||
       'pending_payments_total' ||
-      'pending_expenses_total' =>
+      'pending_expenses_total' ||
+      'book_period' ||
+      'book_total_debit' ||
+      'book_total_credit' =>
         ReportFieldGroup.money,
       'iban' ||
       'bic' ||
@@ -124,6 +127,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'vat_form_boxes' ||
       'vat_positions' ||
       'vat_rate_totals' ||
+      'book_rows' ||
       'status_members' =>
         ReportFieldGroup.loops,
       _ => ReportFieldGroup.legal,
@@ -225,7 +229,7 @@ String reportFieldMeaning(String field, AppLocalizations l10n) =>
       'escompte' => l10n.reportFieldMeaningEscompte,
       'insurance' => l10n.reportFieldMeaningInsurance,
       'special_mentions' => l10n.reportFieldMeaningSpecialMentions,
-      _ => field,
+      _ => _bookFieldMeaning(field, l10n),
     };
 
 @visibleForTesting
@@ -250,6 +254,16 @@ String reportFieldGroupName(ReportFieldGroup group, AppLocalizations l10n) =>
         l10n.reportFieldGroupStatus,
     };
 
+/// #2376 — the book reports' fields; any other field reads as itself.
+String _bookFieldMeaning(String field, AppLocalizations l10n) =>
+    switch (field) {
+      'book_period' => l10n.reportFieldMeaningBookPeriod,
+      'book_rows' => l10n.reportFieldMeaningBookRows,
+      'book_total_debit' => l10n.reportFieldMeaningBookTotalDebit,
+      'book_total_credit' => l10n.reportFieldMeaningBookTotalCredit,
+      _ => field,
+    };
+
 /// What a field inserts: a token, or for the two loops the scaffold
 /// that iterates them — one table row per item, ready to edit.
 @visibleForTesting
@@ -270,6 +284,8 @@ String reportFieldMarkup(String field) => switch (field) {
         '{% for p in vat_positions %}{{ p.number }} | {{ p.rate }} | {{ p.net }} | {{ p.vat }} | {{ p.gross }}{% endfor %}',
       'vat_rate_totals' =>
         '{% for t in vat_rate_totals %}{{ t.rate }} | {{ t.net }} | {{ t.vat }} | {{ t.gross }}{% endfor %}',
+      'book_rows' =>
+        '{% for row in book_rows %}{{ row.label }} | {{ row.debit }} | {{ row.credit }} | {{ row.balance }}{% endfor %}',
       _ => '{{ $field }}',
     };
 

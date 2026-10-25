@@ -14,6 +14,7 @@ import 'professional_report_bands.dart';
 // in their own file; they are re-exported so every caller keeps
 // resolving document defaults from one import.
 import 'report_defaults_batch.dart';
+import 'report_defaults_books.dart';
 import 'vat_declaration_report_defaults.dart';
 
 export 'report_defaults_batch.dart';
@@ -621,6 +622,8 @@ ReportBands _completeBandsForDoc(String docId, AppLocalizations l10n) =>
       ReportDocSlot(key: 'vat_declaration') => vatDeclarationBandsOf(l10n),
       ReportDocSlot(key: 'vat') => defaultVatBands(l10n),
       ReportDocSlot(key: 'coa') => defaultCoaBands(l10n),
+      ReportDocSlot(key: 'general_ledger' || 'trial_balance' || 'journals') =>
+        bookReportBands(l10n, docId),
       ReportDocSlot(key: 'badges') => defaultBadgeSheetBands(l10n),
       ReportDocSlot(key: 'space_codes') => defaultSpaceCodesBands(l10n),
       // A doc the registry knows but this ladder does not is a bug to

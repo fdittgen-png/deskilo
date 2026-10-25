@@ -29,7 +29,19 @@ const _ws = 'ws-1';
 
 /// The formats written from the posting engine when the issuer keeps a
 /// local book; the generic journal has no other source.
-const _postedWhenLocalBook = {'fec', 'saft', 'bundle', 'generic_journal_csv'};
+const _postedWhenLocalBook = {
+  'fec',
+  'saft',
+  'bundle',
+  'generic_journal_csv',
+  // #2376 — the books printed from the postings.
+  'general_ledger',
+  'trial_balance',
+  'journals',
+};
+
+/// The posted formats that also read the chart's names and the parties.
+const _named = {'fec', 'bundle', 'general_ledger', 'trial_balance', 'journals'};
 
 BookProfile _localBook() => BookProfile(
   id: 'p',
@@ -133,7 +145,9 @@ String _source(String path) => File(path).readAsStringSync();
 
 void main() {
   final held = SeededExportYear.invoices;
-  final formats = {for (final t in accountingTargets) t.id};
+  // The formats the run writes: an API target or one awaiting its
+  // specification has no file.
+  final formats = {for (final t in accountingTargets) ?t.format?.id};
 
   test('the registry is the run\'s dispatch: no format escapes the table', () {
     final dispatched = {
@@ -180,7 +194,7 @@ void main() {
         final posted = local && _postedWhenLocalBook.contains(id);
         expect(reads.counts['snapshot'], 1);
         expect(reads.counts['postings'] ?? 0, posted ? 1 : 0);
-        final fec = posted && (id == 'fec' || id == 'bundle');
+        final fec = posted && _named.contains(id);
         expect(reads.counts['chart'] ?? 0, fec ? 1 : 0);
         expect(reads.counts['parties'] ?? 0, fec ? 1 : 0);
 
@@ -243,9 +257,12 @@ void main() {
     final journal = _source(
       'lib/features/money/presentation/accounting_export_journal.dart',
     );
+    final fec = _source(
+      'lib/features/money/presentation/accounting_export_fec.dart',
+    );
     // The one reader, once.
     expect('accountingExportSourceProvider'.allMatches(run), hasLength(1));
-    for (final text in [run, journal]) {
+    for (final text in [run, journal, fec]) {
       for (final forbidden in [
         'invoiceMatchesProvider',
         'accountingSourceQueriesProvider',

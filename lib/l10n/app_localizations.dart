@@ -4225,6 +4225,102 @@ abstract class AppLocalizations {
   /// **'Map these accounts before a local book starts: {roles}.'**
   String bookProblemUnmapped(String roles);
 
+  /// Book reports (#2376): heading of the third parties' balance
+  ///
+  /// In en, this message translates to:
+  /// **'Auxiliary balance'**
+  String get bookReportAuxiliary;
+
+  /// Book reports (#2376): column heading
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get bookReportBalance;
+
+  /// Book reports (#2376): column heading
+  ///
+  /// In en, this message translates to:
+  /// **'Credit'**
+  String get bookReportCredit;
+
+  /// Book reports (#2376): marks a credit balance
+  ///
+  /// In en, this message translates to:
+  /// **'Cr'**
+  String get bookReportCreditSide;
+
+  /// Book reports (#2376): column heading
+  ///
+  /// In en, this message translates to:
+  /// **'Debit'**
+  String get bookReportDebit;
+
+  /// Book reports (#2376): marks a debit balance
+  ///
+  /// In en, this message translates to:
+  /// **'Dr'**
+  String get bookReportDebitSide;
+
+  /// Book reports (#2376): column heading
+  ///
+  /// In en, this message translates to:
+  /// **'Entry'**
+  String get bookReportEntry;
+
+  /// Book reports (#2376): footer stating the source
+  ///
+  /// In en, this message translates to:
+  /// **'Read from the postings of the book: the same entries, accounts and third parties as the FEC of the period.'**
+  String get bookReportFooter;
+
+  /// Book reports (#2376): the grand total row
+  ///
+  /// In en, this message translates to:
+  /// **'Grand total'**
+  String get bookReportGrandTotal;
+
+  /// Book reports (#2376): the bank journal
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get bookReportJournalBank;
+
+  /// Book reports (#2376): the miscellaneous journal
+  ///
+  /// In en, this message translates to:
+  /// **'Miscellaneous'**
+  String get bookReportJournalOther;
+
+  /// Book reports (#2376): the purchases journal
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get bookReportJournalPurchases;
+
+  /// Book reports (#2376): the sales journal
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get bookReportJournalSales;
+
+  /// Book reports (#2376): foreign-currency documents without a rate
+  ///
+  /// In en, this message translates to:
+  /// **'These documents are in another currency than the book\'s and no exchange rate is recorded for them, so the report was not printed: {documents}'**
+  String bookReportMissingRate(String documents);
+
+  /// Book reports (#2376): heading of the journals' summary
+  ///
+  /// In en, this message translates to:
+  /// **'Summary of the journals'**
+  String get bookReportSummary;
+
+  /// Book reports (#2376): an account's or a journal's total row
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get bookReportTotal;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
@@ -12503,11 +12599,29 @@ abstract class AppLocalizations {
   /// **'Accounts to book'**
   String get fecAccountsTitle;
 
+  /// Archive (#2376): the final FEC changed since it was logged
+  ///
+  /// In en, this message translates to:
+  /// **'The closed year\'s FEC no longer matches the one logged on {date}; the archive was not built.'**
+  String fecArchiveChanged(String date);
+
+  /// FEC export (#2376): import-contract rules the file breaks
+  ///
+  /// In en, this message translates to:
+  /// **'The FEC breaks the import contract ({rules}) and was not saved.'**
+  String fecContractFailed(String rules);
+
   /// Refusal: the FEC file name is built from the SIREN, which is not set
   ///
   /// In en, this message translates to:
   /// **'The FEC is named after your registration number — fill it in under Legal identity first.'**
   String get fecMissingSiren;
+
+  /// FEC export (#2376): the year is not closed, the file is provisional
+  ///
+  /// In en, this message translates to:
+  /// **'This fiscal year is not closed: the FEC is provisional and the archive keeps it as such.'**
+  String get fecProvisional;
 
   /// #1648 Next action when the Deskilo account matches an unlinked existing account: sign in to that account first.
   ///
@@ -16247,11 +16361,23 @@ abstract class AppLocalizations {
   /// **'France e-reporting (B2C, international, payments)'**
   String get invoiceExportFrEReporting;
 
+  /// Accounting export sheet (#2376): the general ledger report
+  ///
+  /// In en, this message translates to:
+  /// **'General ledger (PDF, from the book)'**
+  String get invoiceExportGeneralLedger;
+
   /// No description provided for @invoiceExportGenericJournal.
   ///
   /// In en, this message translates to:
   /// **'Journal (CSV, for any accounting system)'**
   String get invoiceExportGenericJournal;
+
+  /// Accounting export sheet (#2376): the journals report
+  ///
+  /// In en, this message translates to:
+  /// **'Journals and their summary (PDF, from the book)'**
+  String get invoiceExportJournals;
 
   /// Export chooser: the OECD audit file (0074)
   ///
@@ -16276,6 +16402,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swiss booking journal (CSV, KMU accounts)'**
   String get invoiceExportSwissKmu;
+
+  /// Accounting export sheet (#2376): the trial balance report
+  ///
+  /// In en, this message translates to:
+  /// **'Trial balance, general and auxiliary (PDF, from the book)'**
+  String get invoiceExportTrialBalance;
 
   /// No description provided for @invoiceExternalIssuingTitle.
   ///
@@ -17698,6 +17830,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Map these roles in the book chart first: {roles}'**
   String journalBlocked(String roles);
+
+  /// FEC export (#2376): foreign-currency documents without a recorded rate
+  ///
+  /// In en, this message translates to:
+  /// **'These documents are in another currency than the book\'s and no exchange rate is recorded for them, so the FEC was not written: {documents}'**
+  String journalFecMissingRate(String documents);
+
+  /// FEC export (#2376): parties without a usable auxiliary account
+  ///
+  /// In en, this message translates to:
+  /// **'The FEC needs a client code for each third party, up to 13 letters and digits: give these a member or supplier number first: {names}'**
+  String journalFecPartyCode(String names);
 
   /// No description provided for @journalNeedsLocalBook.
   ///
@@ -30630,6 +30774,18 @@ abstract class AppLocalizations {
   /// **'Chart of accounts'**
   String get reportDocCoa;
 
+  /// Report kind (#2376): the general ledger
+  ///
+  /// In en, this message translates to:
+  /// **'General ledger'**
+  String get reportDocGeneralLedger;
+
+  /// Report kind (#2376): the journals and their summary
+  ///
+  /// In en, this message translates to:
+  /// **'Journals'**
+  String get reportDocJournals;
+
   /// Report suite: agreement/payments/workspace docs (#494)
   ///
   /// In en, this message translates to:
@@ -30647,6 +30803,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace status'**
   String get reportDocStatus;
+
+  /// Report kind (#2376): the trial balance with its auxiliary balance
+  ///
+  /// In en, this message translates to:
+  /// **'Trial balance'**
+  String get reportDocTrialBalance;
 
   /// #873 consumption report: reportDocUsage
   ///
@@ -30791,6 +30953,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The bank\'s BIC'**
   String get reportFieldMeaningBic;
+
+  /// #2376 report guide: meaning of book_period
+  ///
+  /// In en, this message translates to:
+  /// **'The fiscal year the book report covers'**
+  String get reportFieldMeaningBookPeriod;
+
+  /// #2376 report guide: meaning of book_rows
+  ///
+  /// In en, this message translates to:
+  /// **'The rows of a book report: headings, lines and totals with debit, credit and balance'**
+  String get reportFieldMeaningBookRows;
+
+  /// #2376 report guide: meaning of book_total_credit
+  ///
+  /// In en, this message translates to:
+  /// **'The total of the credits in a book report'**
+  String get reportFieldMeaningBookTotalCredit;
+
+  /// #2376 report guide: meaning of book_total_debit
+  ///
+  /// In en, this message translates to:
+  /// **'The total of the debits in a book report'**
+  String get reportFieldMeaningBookTotalDebit;
 
   /// #966 report guide: meaning of buyer_reference
   ///

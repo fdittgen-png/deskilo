@@ -75,13 +75,14 @@ List<int> textBytes(String text) => utf8.encode(text);
 /// archive carries one.
 bool archiveCarriesFec(String countryCode) => countryCode.toUpperCase() == 'FR';
 
-/// Adds [fec] to [files] when the archive of [countryCode] carries one.
+/// Adds the FEC [members] (the file under its own name and its manifest,
+/// #2376) to [files] when the archive of [countryCode] carries a FEC.
 void addArchiveFec(
   Map<String, List<int>> files,
   String countryCode,
-  String fec,
+  Map<String, List<int>> members,
 ) {
-  if (archiveCarriesFec(countryCode)) files['fec.txt'] = textBytes(fec);
+  if (archiveCarriesFec(countryCode)) files.addAll(members);
 }
 
 /// #2571 — the bundle with its retention notice: how long the country makes

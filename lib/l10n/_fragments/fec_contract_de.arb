@@ -1,0 +1,11 @@
+{
+  "@@locale": "de",
+  "journalFecPartyCode": "Der FEC braucht für jeden Geschäftspartner einen Kundencode aus bis zu 13 Buchstaben und Ziffern: Vergeben Sie zuerst eine Mitglieds- oder Lieferantennummer an: {names}",
+  "journalFecMissingRate": "Diese Belege lauten auf eine andere Währung als die Buchführung, und für sie ist kein Wechselkurs erfasst; der FEC wurde nicht erstellt: {documents}",
+  "fecContractFailed": "Der FEC verletzt den Importvertrag ({rules}) und wurde nicht gespeichert.",
+  "fecProvisional": "Dieses Geschäftsjahr ist nicht abgeschlossen: Der FEC ist vorläufig, und das Archiv bewahrt ihn als vorläufig auf.",
+  "fecArchiveChanged": "Der FEC des abgeschlossenen Jahres stimmt nicht mehr mit dem am {date} protokollierten überein; das Archiv wurde nicht erstellt.",
+  "invoiceExportGeneralLedger": "Hauptbuch (PDF, aus der Buchführung)",
+  "invoiceExportTrialBalance": "Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)",
+  "invoiceExportJournals": "Journale mit Sammeljournal (PDF, aus der Buchführung)"
+}

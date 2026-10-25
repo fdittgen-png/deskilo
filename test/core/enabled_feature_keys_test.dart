@@ -16,6 +16,7 @@ void main() {
   test('the keys core asks about are the features\' own', () {
     expect(formHelpHintsKey, WorkspaceFeature.formHelpHints.dbKey);
     expect(recordingPrivacyKey, WorkspaceFeature.recordingPrivacy.dbKey);
+    expect(accountingBookKey, WorkspaceFeature.accountingBook.dbKey);
   });
 
   test('unwired, a question is answered with the registry default', () {
@@ -27,6 +28,10 @@ void main() {
     expect(
       featureOn(null, recordingPrivacyKey, byDefault: false),
       defaults.contains(WorkspaceFeature.recordingPrivacy),
+    );
+    expect(
+      featureOn(null, accountingBookKey, byDefault: false),
+      defaults.contains(WorkspaceFeature.accountingBook),
     );
   });
 

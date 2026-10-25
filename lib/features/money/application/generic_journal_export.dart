@@ -5,9 +5,15 @@
 // line, or (#2365) as the FEC of that book. No local book, no journal:
 // nothing is derived around the engine. A role the engine could not resolve
 // stops the file and is named.
+import 'dart:convert';
+
+import '../domain/accounting_format.dart';
+import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
+import '../domain/fec_import_contract.dart';
 import '../domain/fec_postings.dart';
+import '../domain/fiscal_year.dart';
 import '../domain/generic_journal_csv.dart';
 import '../domain/posting.dart';
 
@@ -33,6 +39,13 @@ final class JournalBlocked extends GenericJournal {
   final List<String> roles;
 }
 
+/// #2376 — the FEC of the postings was refused: these parties have no
+/// usable auxiliary account, or these documents no recorded rate.
+final class JournalRefused extends GenericJournal {
+  const JournalRefused(this.blockers);
+  final List<FecBlocker> blockers;
+}
+
 /// The latest local-book profile of [profiles] in force in [year]; null
 /// when no issuer keeps a local book then.
 BookProfile? localBookOf(List<BookProfile> profiles, int year) => ([
@@ -48,12 +61,28 @@ BookProfile? localBookOf(List<BookProfile> profiles, int year) => ([
 final class JournalPosted extends GenericJournal {
   const JournalPosted(
     this.postings, {
+    required this.year,
     this.accountNames = const {},
     this.parties = const {},
+    this.functionalCurrency,
   });
   final List<Posting> postings;
+
+  /// #2376 — the fiscal year the postings were read for, on the book
+  /// profile's start day: the FEC's period and its closing date.
+  final FiscalYear year;
   final Map<String, String> accountNames;
   final Map<String, PostingParty> parties;
+
+  /// The book's currency; an entry in another one needs a recorded rate.
+  final String? functionalCurrency;
+}
+
+/// #2376 — the posted FEC was written but breaks the import contract a
+/// French importer applies; it is not saved.
+final class JournalContractBroken extends GenericJournal {
+  const JournalContractBroken(this.report);
+  final FecContractReport report;
 }
 
 /// [read] written by [write]; no local book or a blocked role passes through.
@@ -66,48 +95,91 @@ GenericJournal writtenWith(
 String journalCsvOf(JournalPosted books) =>
     buildGenericJournalCsv(books.postings);
 
-/// #2365 — the FEC of the postings, on the book's own chart.
-String postedFecOf(JournalPosted books) => buildFecFromPostings(
-  books.postings,
-  accountNames: books.accountNames,
-  parties: books.parties,
-);
+/// The FEC target's rule for a party's client code.
+final CustomerIdRule _fecPartyRule = accountingTargets
+    .firstWhere((t) => t.id == 'fec')
+    .customerIdRule;
+
+/// #2365 — the FEC of the postings, on the book's own chart; #2376 the
+/// auxiliary accounts and the book's currency, or why it was refused.
+/// No exchange rate is recorded with a document yet, so an entry in
+/// another currency than the book's is refused rather than written in it.
+GenericJournal postedFecOf(JournalPosted books) {
+  final fec = buildFecFromPostings(
+    books.postings,
+    accountNames: books.accountNames,
+    parties: books.parties,
+    partyRule: _fecPartyRule,
+    functionalCurrency: books.functionalCurrency,
+  );
+  if (fec.blockers.isNotEmpty) return JournalRefused(fec.blockers);
+  final contract = checkFecImportContract(
+    utf8.encode(fec.file),
+    year: books.year,
+    thirdPartyAccounts: thirdPartyAccountsOf(books),
+    knownAccounts: books.accountNames.isEmpty
+        ? null
+        : books.accountNames.keys.toSet(),
+  );
+  return contract.passed
+      ? JournalFile(fec.file)
+      : JournalContractBroken(contract);
+}
+
+/// The collective accounts of [books] whose lines name a third party: the
+/// accounts its customers and suppliers lines are booked on.
+Set<String> thirdPartyAccountsOf(JournalPosted books) => {
+  for (final p in books.postings)
+    for (final l in p.lines)
+      if (l.role == BookRole.customers || l.role == BookRole.suppliers)
+        l.accountCode,
+};
+
+/// [read]'s posted FEC: the file, or why there is none.
+GenericJournal postedFecFileOf(GenericJournal read) =>
+    read is JournalPosted ? postedFecOf(read) : read;
 
 class GenericJournalExport {
   const GenericJournalExport(this._books);
 
   final BookProfileRepository _books;
 
-  /// The postings of [year] in [workspaceId] (`compute_postings`), from the
-  /// latest local-book profile of [profiles] in force in that year: ONE read
-  /// for the period. [named] adds the chart's account names and the
-  /// documents' parties, which the FEC writes beside each line.
+  /// The postings of the fiscal year holding [asOf] (the export's latest
+  /// document; 31 December of [year] when there is none) in [workspaceId]
+  /// (`compute_postings`), from the latest local-book profile of
+  /// [profiles] in force in [year]: ONE read for the period, cut on the
+  /// profile's fiscal year (#2376). [named] adds the chart's account names
+  /// and the documents' parties, which the FEC writes beside each line.
   Future<GenericJournal> read(
     String workspaceId,
     List<BookProfile> profiles,
     int year, {
     bool named = false,
+    DateTime? asOf,
   }) async {
     final local = localBookOf(profiles, year);
     if (local == null) return const JournalNeedsLocalBook();
+    final period = bookYearOf(local, asOf ?? DateTime(year, 12, 31));
     final set = await _books.fetchPostings(
       workspaceId,
       local.issuerSiteId,
-      DateTime(year),
-      DateTime(year, 12, 31),
+      period.from,
+      period.to,
     );
     if (set.blockers.isNotEmpty) {
       return JournalBlocked([
         ...{for (final b in set.blockers) b.subject},
       ]);
     }
-    if (!named) return JournalPosted(set.postings);
+    if (!named) return JournalPosted(set.postings, year: period);
     final chart = await _books.fetchBookChart(workspaceId);
     final parties = await _books.fetchPostingParties(workspaceId, [
       ...{for (final p in set.postings) p.documentId},
     ]);
     return JournalPosted(
       set.postings,
+      year: period,
+      functionalCurrency: local.functionalCurrency,
       accountNames: {
         for (final a in chart.accounts)
           if (a.issuerSiteId == local.issuerSiteId) a.code: a.name,

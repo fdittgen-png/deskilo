@@ -152,4 +152,9 @@ Map<String, Object?> sampleReportData(AppLocalizations l10n) => {
       'escompte': l10n.invoiceLegalEscompteDefault,
       'insurance': '',
       'special_mentions': '',
+      'book_period': '1 oct. 2025 – 30 sept. 2026', 'book_total_debit': '600,00 €', 'book_total_credit': '600,00 €',
+      'book_rows': [
+        {'heading': true, 'strong': false, 'label': '411000 Clients', 'detail': '', 'debit': '', 'credit': '', 'balance': ''},
+        {'heading': false, 'strong': true, 'label': 'Total 411000', 'detail': '', 'debit': '600,00 €', 'credit': '0,00 €', 'balance': '600,00 € D'},
+      ],
     };

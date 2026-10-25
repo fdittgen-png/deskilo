@@ -2472,6 +2472,57 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get bookReportAuxiliary => 'Saldenliste der Personenkonten';
+
+  @override
+  String get bookReportBalance => 'Saldo';
+
+  @override
+  String get bookReportCredit => 'Haben';
+
+  @override
+  String get bookReportCreditSide => 'H';
+
+  @override
+  String get bookReportDebit => 'Soll';
+
+  @override
+  String get bookReportDebitSide => 'S';
+
+  @override
+  String get bookReportEntry => 'Buchung';
+
+  @override
+  String get bookReportFooter =>
+      'Aus den Buchungen der Buchführung erstellt: dieselben Buchungen, Konten und Geschäftspartner wie der FEC des Zeitraums.';
+
+  @override
+  String get bookReportGrandTotal => 'Gesamtsumme';
+
+  @override
+  String get bookReportJournalBank => 'Bank';
+
+  @override
+  String get bookReportJournalOther => 'Sonstige Buchungen';
+
+  @override
+  String get bookReportJournalPurchases => 'Einkauf';
+
+  @override
+  String get bookReportJournalSales => 'Verkauf';
+
+  @override
+  String bookReportMissingRate(String documents) {
+    return 'Diese Belege lauten auf eine andere Währung als die Buchführung, und für sie ist kein Wechselkurs erfasst; der Bericht wurde nicht gedruckt: $documents';
+  }
+
+  @override
+  String get bookReportSummary => 'Sammeljournal';
+
+  @override
+  String get bookReportTotal => 'Summe';
+
+  @override
   String get bookRoleBank => 'Bank';
 
   @override
@@ -7599,8 +7650,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get fecAccountsTitle => 'Zu buchende Konten';
 
   @override
+  String fecArchiveChanged(String date) {
+    return 'Der FEC des abgeschlossenen Jahres stimmt nicht mehr mit dem am $date protokollierten überein; das Archiv wurde nicht erstellt.';
+  }
+
+  @override
+  String fecContractFailed(String rules) {
+    return 'Der FEC verletzt den Importvertrag ($rules) und wurde nicht gespeichert.';
+  }
+
+  @override
   String get fecMissingSiren =>
       'Der FEC-Dateiname enthält die Registernummer — tragen Sie sie zuerst unter Rechtliche Identität ein.';
+
+  @override
+  String get fecProvisional =>
+      'Dieses Geschäftsjahr ist nicht abgeschlossen: Der FEC ist vorläufig, und das Archiv bewahrt ihn als vorläufig auf.';
 
   @override
   String get federationActionExistingAccount =>
@@ -9873,8 +9938,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'E-Reporting Frankreich (B2C, International, Zahlungen)';
 
   @override
+  String get invoiceExportGeneralLedger =>
+      'Hauptbuch (PDF, aus der Buchführung)';
+
+  @override
   String get invoiceExportGenericJournal =>
       'Journal (CSV, für jede Buchhaltungssoftware)';
+
+  @override
+  String get invoiceExportJournals =>
+      'Journale mit Sammeljournal (PDF, aus der Buchführung)';
 
   @override
   String get invoiceExportSafT => 'SAF-T (XML, international)';
@@ -9888,6 +9961,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceExportSwissKmu =>
       'Schweizer Buchungsjournal (CSV, KMU-Konten)';
+
+  @override
+  String get invoiceExportTrialBalance =>
+      'Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)';
 
   @override
   String get invoiceExternalIssuingTitle =>
@@ -10715,6 +10792,16 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String journalBlocked(String roles) {
     return 'Ordnen Sie zuerst diese Rollen im Kontenplan zu: $roles';
+  }
+
+  @override
+  String journalFecMissingRate(String documents) {
+    return 'Diese Belege lauten auf eine andere Währung als die Buchführung, und für sie ist kein Wechselkurs erfasst; der FEC wurde nicht erstellt: $documents';
+  }
+
+  @override
+  String journalFecPartyCode(String names) {
+    return 'Der FEC braucht für jeden Geschäftspartner einen Kundencode aus bis zu 13 Buchstaben und Ziffern: Vergeben Sie zuerst eine Mitglieds- oder Lieferantennummer an: $names';
   }
 
   @override
@@ -18329,6 +18416,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportDocCoa => 'Kontenrahmen';
 
   @override
+  String get reportDocGeneralLedger => 'Hauptbuch';
+
+  @override
+  String get reportDocJournals => 'Journale';
+
+  @override
   String get reportDocPayments => 'Zahlungsbericht';
 
   @override
@@ -18336,6 +18429,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportDocStatus => 'Lage des Arbeitsbereichs';
+
+  @override
+  String get reportDocTrialBalance => 'Summen- und Saldenliste';
 
   @override
   String get reportDocUsage => 'Verbrauchsbericht';
@@ -18409,6 +18505,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportFieldMeaningBic => 'Die BIC der Bank';
+
+  @override
+  String get reportFieldMeaningBookPeriod =>
+      'Das Geschäftsjahr, das der Buchhaltungsbericht abdeckt';
+
+  @override
+  String get reportFieldMeaningBookRows =>
+      'Die Zeilen eines Buchhaltungsberichts: Überschriften, Zeilen und Summen mit Soll, Haben und Saldo';
+
+  @override
+  String get reportFieldMeaningBookTotalCredit =>
+      'Die Summe der Habenbuchungen eines Buchhaltungsberichts';
+
+  @override
+  String get reportFieldMeaningBookTotalDebit =>
+      'Die Summe der Sollbuchungen eines Buchhaltungsberichts';
 
   @override
   String get reportFieldMeaningBuyerReference =>

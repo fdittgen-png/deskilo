@@ -8,6 +8,7 @@ import '../../../../core/time/date_text.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/report_data.dart';
 import '../../domain/report_data_letters.dart';
+import '../../domain/report_kind.dart';
 import '../../providers/money_providers.dart';
 import '../report_facts_of.dart';
 import '../report_strings_l10n.dart';
@@ -71,14 +72,18 @@ Map<String, Object?>? liveReportData(
           workspaceFactsOf(ref, context.l10n));
     case 'status':
       return null; // #934 — sample data; the live view prints from its screen.
-    case 'coa':
-    case 'badges':
-    case 'space_codes':
-      return null;
     default:
-      if (invoices.isEmpty) return null;
+      if (!_previewsReminder(doc, invoices)) return null;
       return reminderReportData(
           reportStringsFor(context), reminderFactsOf(ref, invoices.first),
           invoices.first, level: int.tryParse(doc.substring(1)) ?? 1);
   }
 }
+
+/// Only a reminder level previews against an invoice; every other kind
+/// (the CoA, the badge and code sheets, #2376 the book reports printed
+/// from the accounting export) previews the sample data.
+bool _previewsReminder(String doc, List<Object?> invoices) =>
+    invoices.isNotEmpty &&
+    reportKindById(doc, reminderLevels: kMaxReminderLevels)?.slot
+        is ReportReminderSlot;

@@ -9,9 +9,10 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
+import '../domain/fec_postings.dart';
 
 export '../application/generic_journal_export.dart'
-    show GenericJournal, JournalBlocked, JournalPosted, journalCsvOf, postedFecOf, writtenWith;
+    show GenericJournal, JournalBlocked, JournalPosted, journalCsvOf, writtenWith;
 
 /// Builds a posted file through [build] (the generic journal, or #2365 the
 /// FEC of a local book) and hands it to [save].
@@ -36,6 +37,22 @@ Future<void> exportGenericJournal(
       AppSnack.error(context, l10n.journalNeedsLocalBook);
     case JournalBlocked(:final roles):
       AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
+    case JournalRefused(:final blockers):
+      String named(FecBlock block) => [
+        for (final b in blockers)
+          if (b.block == block) b.subject,
+      ].join(', ');
+      AppSnack.error(
+        context,
+        blockers.any((b) => b.block == FecBlock.partyCode)
+            ? l10n.journalFecPartyCode(named(FecBlock.partyCode))
+            : l10n.journalFecMissingRate(named(FecBlock.missingRate)),
+      );
+    case JournalContractBroken(:final report):
+      AppSnack.error(
+        context,
+        l10n.fecContractFailed(report.failedRules.map((r) => r.name).join(', ')),
+      );
     // A journal not yet written is not a file; never saved as one.
     case JournalPosted() || null:
       return;

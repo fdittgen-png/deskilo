@@ -2,6 +2,7 @@
 // Professional variants keep the kind's full data sections. Presentation
 // never manufactures tax, settlement or contractual facts.
 import '../../../l10n/app_localizations.dart';
+import '../domain/book_reports.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/report_kind.dart';
 import 'report_kind_labels.dart';
@@ -16,7 +17,8 @@ ReportBands professionalReportBands({
   if (kind.slot is ReportRootSlot ||
       kind.slot is ReportProformaSlot ||
       kind.isReminder || kind.id == 'vat_declaration' ||
-      kind.id == 'bi_analytics' || kind.id == 'workspace_configuration') {
+      kind.id == 'bi_analytics' || kind.id == 'workspace_configuration' ||
+      bookReportKinds.contains(kind.id)) {
     return content;
   }
   final title = reportKindLabel(l10n, kind);

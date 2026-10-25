@@ -212,6 +212,35 @@ const archiveBundleFormat = AccountingFormat(
 /// and the payment data of the month's last invoiced period, in the
 /// structure of the DGFiP flows 10.1-10.4. The plateforme agréée maps it;
 /// the file is never presented as the filing itself.
+/// #2376 — the books as the accountant reads them, printed from the same
+/// postings as the FEC: the general ledger, the trial balance (general and
+/// auxiliary) and the journals with their summary. Report kinds of the
+/// designer, written as PDF.
+const _generalLedgerFormat = AccountingFormat(
+  id: 'general_ledger',
+  claim: FormatClaim.exchange,
+  extension: 'pdf',
+);
+
+const _trialBalanceFormat = AccountingFormat(
+  id: 'trial_balance',
+  claim: FormatClaim.exchange,
+  extension: 'pdf',
+);
+
+const _journalsFormat = AccountingFormat(
+  id: 'journals',
+  claim: FormatClaim.exchange,
+  extension: 'pdf',
+);
+
+/// #2376 — the report formats printed from a local book's postings.
+const Set<String> bookReportFormats = {
+  'general_ledger',
+  'trial_balance',
+  'journals',
+};
+
 const _frEReportingFormat = AccountingFormat(
   id: 'fr_ereporting',
   claim: FormatClaim.subset,
@@ -241,6 +270,10 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
     taxCodeModel: TaxCodeModel.none,
     format: fecFormat,
+    // #2376 — the client code of an auxiliary account: the plan
+    // comptable's practice of up to 13 capitals and digits after the
+    // collective's root (411DUPONT01).
+    customerIdRule: CustomerIdRule(maxLength: 13, charset: r'[A-Z0-9]+'),
   ),
   AccountingTarget(
     id: 'fr_ereporting',
@@ -341,6 +374,42 @@ const List<AccountingTarget> accountingTargets = [
     format: _genericJournalFormat,
   ),
   AccountingTarget(
+    id: 'general_ledger',
+    vendor: 'DesKilo',
+    product: 'General ledger',
+    edition: 'PDF from compute_postings',
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.none,
+    format: _generalLedgerFormat,
+  ),
+  AccountingTarget(
+    id: 'trial_balance',
+    vendor: 'DesKilo',
+    product: 'Trial balance',
+    edition: 'general and auxiliary, PDF from compute_postings',
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.none,
+    format: _trialBalanceFormat,
+  ),
+  AccountingTarget(
+    id: 'journals',
+    vendor: 'DesKilo',
+    product: 'Journals',
+    edition: 'per journal and summary, PDF from compute_postings',
+    countries: <String>{},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.none,
+    format: _journalsFormat,
+  ),
+  AccountingTarget(
     id: 'audit_trail',
     vendor: 'DesKilo',
     product: 'Audit trail',
@@ -363,6 +432,46 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.attachment},
     taxCodeModel: TaxCodeModel.none,
     format: archiveBundleFormat,
+  ),
+  // #2376 — the French platforms. Pennylane takes the documents through
+  // its API (customer invoices created as issued, with the PDF/A-3 and the
+  // legal number; payments and write-offs as ledger entries), its adapter
+  // under supabase/functions/_accounting-pennylane. Cegid Quadra and EBP
+  // import the FEC today; their own import formats wait for a reviewed
+  // specification.
+  AccountingTarget(
+    id: 'pennylane_api',
+    vendor: 'Pennylane',
+    product: 'Pennylane',
+    edition: 'API v2',
+    countries: {'FR'},
+    transport: AccountingTransport.api,
+    payload: AccountingPayload.documents,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.attachment},
+    taxCodeModel: TaxCodeModel.perRate,
+    customerIdRule: CustomerIdRule(maxLength: 13, charset: r'[A-Z0-9]+'),
+  ),
+  AccountingTarget(
+    id: 'cegid_quadra_ascii',
+    vendor: 'Cegid',
+    product: 'Quadra',
+    edition: 'ASCII import',
+    countries: {'FR'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.none,
+  ),
+  AccountingTarget(
+    id: 'ebp_import',
+    vendor: 'EBP',
+    product: 'Comptabilité',
+    edition: 'import of entries',
+    countries: {'FR'},
+    transport: AccountingTransport.file,
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
+    taxCodeModel: TaxCodeModel.none,
   ),
 ];
 

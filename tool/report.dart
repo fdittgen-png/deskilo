@@ -314,6 +314,7 @@ PLACEHOLDERS
   ${InvoicePdfTemplate.placeholders.join(', ')}
   text.<key>   the owner's texts (#880): the file's <texts> element, or "text" in --data
   lines        each row: label, kind, pct, month, qty, unit_price, net, vat_rate, amount, negative (#1002)
+  book_rows    each row: label, detail, debit, credit, balance, heading, strong (#2376 book reports)
   configuration_rows  each row: label, value, detail, heading, strong, image — a level heading's
                plan picture (#2898), printed by `![{{ row.image }}|xl|center]`; see sample --kind workspace_configuration
 ''');

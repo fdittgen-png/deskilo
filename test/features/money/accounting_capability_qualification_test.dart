@@ -13,7 +13,7 @@ void main() {
   test('every offered format has one reviewed decision, and no stray ones', () {
     expect(
       accountingCapabilities.keys.toSet(),
-      accountingTargets.map((t) => t.format).nonNulls.map((f) => f.id).toSet(),
+      accountingTargets.map((t) => t.id).toSet(),
     );
     for (final f in accountingTargets.map((t) => t.format).nonNulls) {
       expect(capabilityOf(f).producible, isTrue, reason: f.id);
@@ -74,6 +74,10 @@ void main() {
       'saft',
       'accountant_csv',
       'generic_journal_csv',
+      // #2376 — the books printed from a local book's postings.
+      'general_ledger',
+      'trial_balance',
+      'journals',
       'audit_trail',
       'bundle',
     });

@@ -1533,6 +1533,22 @@
   "bookProblemExternal": "Indique el sistema externo que lleva los libros oficiales.",
   "bookProblemFiscal": "Un ejercicio empieza un día que tiene todo año (nunca el 29 de febrero).",
   "bookProblemUnmapped": "Asigne estas cuentas antes de iniciar un libro local: {roles}.",
+  "bookReportAuxiliary": "Balance auxiliar",
+  "bookReportBalance": "Saldo",
+  "bookReportCredit": "Haber",
+  "bookReportCreditSide": "H",
+  "bookReportDebit": "Debe",
+  "bookReportDebitSide": "D",
+  "bookReportEntry": "Asiento",
+  "bookReportFooter": "Elaborado a partir de los asientos de la contabilidad: los mismos asientos, cuentas y terceros que el FEC del periodo.",
+  "bookReportGrandTotal": "Total general",
+  "bookReportJournalBank": "Banco",
+  "bookReportJournalOther": "Operaciones diversas",
+  "bookReportJournalPurchases": "Compras",
+  "bookReportJournalSales": "Ventas",
+  "bookReportMissingRate": "Estos documentos están en otra moneda que la contabilidad y no tienen un tipo de cambio registrado; el informe no se ha impreso: {documents}",
+  "bookReportSummary": "Diario resumen",
+  "bookReportTotal": "Total",
   "bookRoleBank": "Banco",
   "bookRoleCashDiscount": "Descuentos concedidos",
   "bookRoleClearing": "Proveedor de pagos (en tránsito)",
@@ -5266,7 +5282,10 @@
   },
   "fecAccountsIntro": "Un FEC está hecho de asientos contables, así que necesita números de cuenta. Estas son las cuentas del plan contable francés — cámbielas por las de su asesoría.",
   "fecAccountsTitle": "Cuentas a utilizar",
+  "fecArchiveChanged": "El FEC del ejercicio cerrado ya no coincide con el registrado el {date}; el archivo no se ha creado.",
+  "fecContractFailed": "El FEC incumple el contrato de importación ({rules}) y no se ha guardado.",
   "fecMissingSiren": "El FEC se nombra con su número de registro — rellénelo primero en Identidad legal.",
+  "fecProvisional": "Este ejercicio no está cerrado: el FEC es provisional y el archivo lo conserva como tal.",
   "federationActionExistingAccount": "Iniciar sesión en mi cuenta existente",
   "federationActionReviewServer": "Revisar el servidor",
   "federationCancel": "Cancelar",
@@ -6553,7 +6572,9 @@
   },
   "invoiceExportFec": "FEC (Francia, exigido en una inspección)",
   "invoiceExportFrEReporting": "E-reporting Francia (B2C, internacional, pagos)",
+  "invoiceExportGeneralLedger": "Libro mayor (PDF, desde la contabilidad)",
   "invoiceExportGenericJournal": "Diario (CSV, para cualquier programa contable)",
+  "invoiceExportJournals": "Diarios y diario resumen (PDF, desde la contabilidad)",
   "invoiceExportSafT": "SAF-T (XML, internacional)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
   "@invoiceExportSafTPt": {
@@ -6567,6 +6588,7 @@
   "@invoiceExportSwissKmu": {
     "description": "#2360: invoiceExportSwissKmu"
   },
+  "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
   "invoiceExternalIssuingTitle": "Emita esta factura fuera de la aplicación",
   "invoiceFacturXDownload": "Descargar Factur-X (PDF)",
   "invoiceFacturXExplain": "Un solo archivo: la factura que lee una persona, con el XML legible por máquina dentro. Es lo que esperan la mayoría de las plataformas.",
@@ -7235,6 +7257,8 @@
     "description": "invoicing hub vs my finances"
   },
   "journalBlocked": "Asigne primero estos roles en el plan de cuentas: {roles}",
+  "journalFecMissingRate": "Estos documentos están en otra moneda que la contabilidad y no tienen un tipo de cambio registrado; el FEC no se ha generado: {documents}",
+  "journalFecPartyCode": "El FEC necesita un código de cliente para cada tercero, de hasta 13 letras y cifras: asigne primero un número de miembro o de proveedor a: {names}",
   "journalNeedsLocalBook": "El diario sale de una contabilidad llevada aquí: configure primero el plan de cuentas del emisor.",
   "journeyClosedPaid": "Pagada el {date} — cerrada",
   "@journeyClosedPaid": {
@@ -11999,6 +12023,8 @@
   },
   "reportDocBadges": "Tarjetas de socios",
   "reportDocCoa": "Plan de cuentas",
+  "reportDocGeneralLedger": "Libro mayor",
+  "reportDocJournals": "Diarios",
   "reportDocPayments": "Informe de pagos",
   "@reportDocPayments": {
     "description": "Report suite: agreement/payments/workspace docs (#494)"
@@ -12008,6 +12034,7 @@
   "@reportDocStatus": {
     "description": "#934 workspace status / repartition wizard: reportDocStatus"
   },
+  "reportDocTrialBalance": "Balance de sumas y saldos",
   "reportDocUsage": "Informe de consumo",
   "@reportDocUsage": {
     "description": "#873 consumption report: reportDocUsage"
@@ -12086,6 +12113,10 @@
   "@reportFieldMeaningBic": {
     "description": "#966 report guide: meaning of bic"
   },
+  "reportFieldMeaningBookPeriod": "El ejercicio que cubre el informe contable",
+  "reportFieldMeaningBookRows": "Las filas de un informe contable: títulos, líneas y totales con debe, haber y saldo",
+  "reportFieldMeaningBookTotalCredit": "El total del haber de un informe contable",
+  "reportFieldMeaningBookTotalDebit": "El total del debe de un informe contable",
   "reportFieldMeaningBuyerReference": "La referencia propia del comprador (sector público)",
   "@reportFieldMeaningBuyerReference": {
     "description": "#966 report guide: meaning of buyer_reference"

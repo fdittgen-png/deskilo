@@ -39,12 +39,15 @@ import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
+import 'package:deskilo/features/money/domain/archive_fec.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/fec_import_contract.dart';
+import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/fr_ereporting.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
@@ -90,10 +93,12 @@ final _localBook = BookProfile(
   authority: BookAuthority.localBook,
   externalSystem: '',
   functionalCurrency: 'EUR',
-  fiscalYearStartMonth: 1,
+  // #2376 — the seeded fiscal year starts on 1 October: the year's
+  // documents (March to August 2026) close on 30 September 2026.
+  fiscalYearStartMonth: 10,
   fiscalYearStartDay: 1,
   basis: AccountingBasis.accrual,
-  effectiveFrom: DateTime(2026),
+  effectiveFrom: DateTime(2025, 10),
   revision: 1,
 );
 
@@ -153,6 +158,9 @@ List<BookMapping> _mappings() => [
       revision: 1,
     ),
 ];
+
+/// The member's number, as `members.member_number` writes it.
+const _memberNumber = 'M-0001';
 
 /// The year's one source answer, as the server cuts it on the workspace
 /// calendar: the 2024 expense credit and the 2025 repartition are not in
@@ -240,9 +248,16 @@ class _Books implements BookProfileRepository {
       if (documentIds.contains(i.id))
         i.id: PostingParty(
           kind: 'member',
-          number: i.memberId,
+          number: _memberNumber,
           name: i.memberName,
         ),
+    // #2376 — the supplier of B-1, by its supplier number.
+    if (documentIds.contains(SeededExportYear.supplierBill.summary.id))
+      SeededExportYear.supplierBill.summary.id: const PostingParty(
+        kind: 'supplier',
+        number: '17',
+        name: 'Nettoyage Pézenas',
+      ),
   };
 
   @override
@@ -281,6 +296,13 @@ List<VatTaxPointAmount> _taxPoints(AccountingExportInput input) =>
       instalments: input.books.instalments,
       basis: workspaceTaxPointBasis(_invoiceLegal, 'FR'),
     );
+
+/// The posted FEC's file, as the run saves it.
+String _postedFec(AccountingExportInput input) =>
+    switch (postedFecOf(_posted(input))) {
+      JournalFile(:final content) => content,
+      final other => fail('expected the FEC, got $other'),
+    };
 
 JournalPosted _posted(AccountingExportInput input) => switch (input.posted) {
   final JournalPosted p => p,
@@ -414,22 +436,42 @@ Future<Map<String, String>> _bundle({required bool local}) async {
       ),
     ),
   };
-  addArchiveFec(files, 'FR', local ? postedFecOf(_posted(input)) : _fec(input));
+  final fec = local
+      ? (postedFecOf(_posted(input)) as JournalFile).content
+      : _fec(input);
+  final year = local ? _posted(input).year : FiscalYear.calendar(_year);
+  final plan =
+      archiveFecPlan(
+            fec: fec,
+            fileName: fecFileName(seededCompany.legalId, year.to),
+            year: year,
+            closed: true,
+            exports: const [],
+            contract: checkFecImportContract(
+              textBytes(fec),
+              year: year,
+              thirdPartyAccounts: local
+                  ? thirdPartyAccountsOf(_posted(input))
+                  : {const FecAccounts().customers},
+            ),
+          )
+          as ArchiveFecWrite;
+  addArchiveFec(files, 'FR', plan.members);
   return {
     for (final MapEntry(:key, :value) in withRetentionNotice(
       files,
       'FR',
       _year,
     ).entries)
-      key: utf8.decode(value),
+      // The FEC under its own name is the golden `fec.txt`.
+      (key.contains('FEC') ? 'fec.txt' : key): utf8.decode(value),
   };
 }
 
 /// Every golden, by file name, written through its format's one read.
 final Map<String, Future<String> Function()> _files = {
   'fec.txt': () async => _fec(await _read('fec')),
-  'fec_local_book.txt': () async =>
-      postedFecOf(_posted(await _read('fec', local: true))),
+  'fec_local_book.txt': () async => _postedFec(await _read('fec', local: true)),
   'datev_skr03.csv': () => _datev(null),
   'datev_skr04.csv': () => _datev('SKR04'),
   'sage50.csv': () async {
@@ -514,6 +556,7 @@ final Map<String, Future<String> Function()> _files = {
     'register.csv',
     'audit-trail.csv',
     'fec.txt',
+    'fec-manifest.txt',
     'retention.txt',
   ])
     'bundle/$name': () async => (await _bundle(local: false))[name]!,
@@ -683,5 +726,96 @@ void main() {
     expect(collected, due);
     // INV-3's open 40.00 at 20 %: 6.66 of tax given back.
     expect(regularised, -666);
+  });
+
+  // #2376 — the FEC as an import contract, over the seeded fiscal year
+  // that starts on 1 October.
+  test('the posted FEC covers the fiscal year and is named after its '
+      'closing day', () async {
+    final books = _posted(await _read('fec', local: true));
+    expect(books.year, FiscalYear(DateTime(2025, 10), DateTime(2026, 9, 30)));
+    expect(
+      fecFileName(seededCompany.legalId, books.year.to),
+      '812345678FEC20260930.txt',
+    );
+    for (final r in _fecRows(await _files['fec_local_book.txt']!())) {
+      expect(
+        r['ValidDate']!.compareTo('20260930') <= 0 &&
+            r['EcritureDate']!.compareTo('20251001') >= 0,
+        isTrue,
+        reason: r['EcritureNum'],
+      );
+    }
+  });
+
+  test('every receivable and payable line names its auxiliary account',
+      () async {
+    final rows = _fecRows(await _files['fec_local_book.txt']!());
+    final third = rows.where(
+      (r) => r['CompteNum'] == '411000' || r['CompteNum'] == '401000',
+    );
+    expect(third, isNotEmpty);
+    for (final r in third) {
+      expect(
+        (r['CompAuxNum'], r['CompAuxLib']!.isNotEmpty),
+        (r['CompteNum'] == '411000' ? '411M0001' : '40117', true),
+        reason: r['EcritureNum'],
+      );
+    }
+    // Every other line leaves the auxiliary columns empty.
+    expect(
+      rows
+          .where((r) => !third.contains(r))
+          .every((r) => r['CompAuxNum']!.isEmpty && r['CompAuxLib']!.isEmpty),
+      isTrue,
+    );
+  });
+
+  test('the posted and the archived FEC keep the import contract', () async {
+    final books = _posted(await _read('fec', local: true));
+    final report = checkFecImportContract(
+      utf8.encode(await _files['fec_local_book.txt']!()),
+      year: books.year,
+      thirdPartyAccounts: thirdPartyAccountsOf(books),
+      knownAccounts: books.accountNames.keys.toSet(),
+    );
+    expect(report.findings, isEmpty);
+    expect(report.records, greaterThan(0));
+    // The archive's manifest quotes the contract: passed for the posted
+    // FEC, its open letters for the one written from the documents.
+    final posted = await _bundle(local: true);
+    expect(posted['fec-manifest.txt'], contains('import_contract: passed'));
+    expect(posted['fec-manifest.txt'], contains('status: final'));
+    expect(
+      posted['fec-manifest.txt'],
+      contains('file: 812345678FEC20260930.txt'),
+    );
+    expect(posted['fec.txt'], await _files['fec_local_book.txt']!());
+    expect(
+      await _files['bundle/fec-manifest.txt']!(),
+      contains('import_contract: failed (lettering)'),
+    );
+  });
+
+  test('a party without a client code stops the posted FEC, named', () async {
+    final books = _posted(await _read('fec', local: true));
+    final refused = postedFecOf(
+      JournalPosted(
+        books.postings,
+        year: books.year,
+        accountNames: books.accountNames,
+        parties: {
+          for (final MapEntry(:key, :value) in books.parties.entries)
+            key: value.kind == 'supplier'
+                ? PostingParty(kind: value.kind, number: '', name: value.name)
+                : value,
+        },
+        functionalCurrency: 'EUR',
+      ),
+    );
+    expect(refused, isA<JournalRefused>());
+    expect((refused as JournalRefused).blockers.map((b) => b.subject).toSet(), {
+      'Nettoyage Pézenas ()',
+    });
   });
 }
