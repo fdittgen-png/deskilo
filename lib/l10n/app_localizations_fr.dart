@@ -2481,13 +2481,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookRoleCustomers => 'Clients (créances)';
 
   @override
+  String get bookRoleDeposits => 'Dépôts et cautionnements versés';
+
+  @override
   String get bookRoleExpenses => 'Charges';
 
   @override
   String get bookRoleFees => 'Frais du prestataire de paiement';
 
   @override
+  String get bookRoleFixedAssets => 'Immobilisations (équipements)';
+
+  @override
+  String get bookRolePrepayments => 'Charges constatées d\'avance';
+
+  @override
   String get bookRoleRevenue => 'Produits';
+
+  @override
+  String get bookRoleStock => 'Stocks (marchandises)';
 
   @override
   String get bookRoleSuppliers => 'Fournisseurs';
@@ -16934,6 +16946,39 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchaseQualified => 'Comptabilité qualifiée';
 
   @override
+  String get purchaseReceiptAdd => 'Justificatif à plusieurs lignes';
+
+  @override
+  String get purchaseReceiptAddLine => 'Ajouter une ligne';
+
+  @override
+  String get purchaseReceiptAmount =>
+      'Saisissez un montant positif sur chaque ligne.';
+
+  @override
+  String get purchaseReceiptDeductible =>
+      'La part déductible de chaque ligne taxée est comprise entre 0 et 100 %.';
+
+  @override
+  String get purchaseReceiptIntro =>
+      'Pour un justificatif à plusieurs taux de TVA, ou un équipement à côté d\'autres articles : une ligne chacun. Il est soumis comme une seule dépense du montant total, que vous avez payé.';
+
+  @override
+  String purchaseReceiptLine(int number) {
+    return 'Ligne $number';
+  }
+
+  @override
+  String get purchaseReceiptRemoveLine => 'Retirer cette ligne';
+
+  @override
+  String get purchaseReceiptSubmit => 'Soumettre le justificatif';
+
+  @override
+  String get purchaseReceiptSubmitted =>
+      'Justificatif soumis : il attend son approbation.';
+
+  @override
   String get purchaseSettlementNothingOwed => 'Rien de dû';
 
   @override
@@ -17159,6 +17204,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesPickDate => 'Choisir une date';
+
+  @override
+  String get purchasesPlace => 'Où imputer le coût';
+
+  @override
+  String get purchasesPlaceNone => 'Aucun lieu précis';
 
   @override
   String get purchasesPurpose => 'À quoi cela sert-il ?';

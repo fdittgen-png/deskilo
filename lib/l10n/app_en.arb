@@ -2956,14 +2956,30 @@
   "@bookRoleCustomers": {
     "description": "#1869 B chart of accounts"
   },
+  "bookRoleDeposits": "Deposits paid",
+  "@bookRoleDeposits": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
   "bookRoleExpenses": "Expenses",
   "@bookRoleExpenses": {
     "description": "#1869 B chart of accounts"
   },
   "bookRoleFees": "Payment provider fees",
+  "bookRoleFixedAssets": "Fixed assets (equipment)",
+  "@bookRoleFixedAssets": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
+  "bookRolePrepayments": "Prepaid expenses",
+  "@bookRolePrepayments": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
+  },
   "bookRoleRevenue": "Revenue",
   "@bookRoleRevenue": {
     "description": "#1869 B chart of accounts"
+  },
+  "bookRoleStock": "Stock (goods for resale)",
+  "@bookRoleStock": {
+    "description": "#2573 posting role of a purchase line that is not an operating cost"
   },
   "bookRoleSuppliers": "Suppliers",
   "bookRoleVatInput": "Input VAT",
@@ -19571,6 +19587,47 @@
   "@purchaseQualified": {
     "description": "#2577 the three status chips of a purchase document"
   },
+  "purchaseReceiptAdd": "Receipt with several lines",
+  "@purchaseReceiptAdd": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptAddLine": "Add a line",
+  "@purchaseReceiptAddLine": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptAmount": "Enter a positive amount on every line.",
+  "@purchaseReceiptAmount": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptDeductible": "The deductible share of every taxed line lies between 0 and 100 %.",
+  "@purchaseReceiptDeductible": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptIntro": "For a receipt with several VAT rates, or equipment beside other items: one line each. It is submitted as one expense of the whole amount, which you paid.",
+  "@purchaseReceiptIntro": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptLine": "Line {number}",
+  "@purchaseReceiptLine": {
+    "description": "#2573 purchase lines: place and several-line receipts",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "purchaseReceiptRemoveLine": "Remove this line",
+  "@purchaseReceiptRemoveLine": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptSubmit": "Submit receipt",
+  "@purchaseReceiptSubmit": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptSubmitted": "Receipt submitted: it awaits approval.",
+  "@purchaseReceiptSubmitted": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
   "purchaseSettlementNothingOwed": "Nothing owed",
   "@purchaseSettlementNothingOwed": {
     "description": "#2577 the three status chips of a purchase document"
@@ -19886,6 +19943,14 @@
   "purchasesPickDate": "Choose a date",
   "@purchasesPickDate": {
     "description": "#2573 purchases"
+  },
+  "purchasesPlace": "Where the cost belongs",
+  "@purchasesPlace": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchasesPlaceNone": "No particular place",
+  "@purchasesPlaceNone": {
+    "description": "#2573 purchase lines: place and several-line receipts"
   },
   "purchasesPurpose": "What is it for?",
   "@purchasesPurpose": {

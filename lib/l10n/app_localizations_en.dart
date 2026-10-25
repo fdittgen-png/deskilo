@@ -2460,13 +2460,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookRoleCustomers => 'Customers (receivable)';
 
   @override
+  String get bookRoleDeposits => 'Deposits paid';
+
+  @override
   String get bookRoleExpenses => 'Expenses';
 
   @override
   String get bookRoleFees => 'Payment provider fees';
 
   @override
+  String get bookRoleFixedAssets => 'Fixed assets (equipment)';
+
+  @override
+  String get bookRolePrepayments => 'Prepaid expenses';
+
+  @override
   String get bookRoleRevenue => 'Revenue';
+
+  @override
+  String get bookRoleStock => 'Stock (goods for resale)';
 
   @override
   String get bookRoleSuppliers => 'Suppliers';
@@ -16766,6 +16778,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseQualified => 'Accounting qualified';
 
   @override
+  String get purchaseReceiptAdd => 'Receipt with several lines';
+
+  @override
+  String get purchaseReceiptAddLine => 'Add a line';
+
+  @override
+  String get purchaseReceiptAmount => 'Enter a positive amount on every line.';
+
+  @override
+  String get purchaseReceiptDeductible =>
+      'The deductible share of every taxed line lies between 0 and 100 %.';
+
+  @override
+  String get purchaseReceiptIntro =>
+      'For a receipt with several VAT rates, or equipment beside other items: one line each. It is submitted as one expense of the whole amount, which you paid.';
+
+  @override
+  String purchaseReceiptLine(int number) {
+    return 'Line $number';
+  }
+
+  @override
+  String get purchaseReceiptRemoveLine => 'Remove this line';
+
+  @override
+  String get purchaseReceiptSubmit => 'Submit receipt';
+
+  @override
+  String get purchaseReceiptSubmitted =>
+      'Receipt submitted: it awaits approval.';
+
+  @override
   String get purchaseSettlementNothingOwed => 'Nothing owed';
 
   @override
@@ -16991,6 +17035,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesPickDate => 'Choose a date';
+
+  @override
+  String get purchasesPlace => 'Where the cost belongs';
+
+  @override
+  String get purchasesPlaceNone => 'No particular place';
 
   @override
   String get purchasesPurpose => 'What is it for?';

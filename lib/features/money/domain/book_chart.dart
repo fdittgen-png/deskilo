@@ -44,7 +44,15 @@ enum BookRole {
   writeOff('write_off', AccountType.expense),
   cashDiscount('cash_discount', AccountType.expense),
   clearing('clearing', AccountType.asset),
-  fees('fees', AccountType.expense);
+  fees('fees', AccountType.expense),
+
+  /// #2573 — what a purchase line bought when it is not an operating cost:
+  /// long-lasting equipment, goods for resale, a prepayment, a refundable
+  /// deposit. Unmapped, the purchase blocks instead of booking an expense.
+  fixedAssets('fixed_assets', AccountType.asset),
+  stock('stock', AccountType.asset),
+  prepayments('prepayments', AccountType.asset),
+  deposits('deposits', AccountType.asset);
 
   const BookRole(this.wire, this.type);
   final String wire;

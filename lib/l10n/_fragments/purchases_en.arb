@@ -241,5 +241,54 @@
   "purchaseEntryPaidHint": "Capture the bill; once it is approved, record its payment from To pay.",
   "@purchaseEntryPaidHint": {
     "description": "#2577 the guided purchase / expense entry"
+  },
+  "purchasesPlace": "Where the cost belongs",
+  "@purchasesPlace": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchasesPlaceNone": "No particular place",
+  "@purchasesPlaceNone": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptAdd": "Receipt with several lines",
+  "@purchaseReceiptAdd": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptIntro": "For a receipt with several VAT rates, or equipment beside other items: one line each. It is submitted as one expense of the whole amount, which you paid.",
+  "@purchaseReceiptIntro": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptLine": "Line {number}",
+  "@purchaseReceiptLine": {
+    "description": "#2573 purchase lines: place and several-line receipts",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "purchaseReceiptAddLine": "Add a line",
+  "@purchaseReceiptAddLine": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptRemoveLine": "Remove this line",
+  "@purchaseReceiptRemoveLine": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptSubmit": "Submit receipt",
+  "@purchaseReceiptSubmit": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptAmount": "Enter a positive amount on every line.",
+  "@purchaseReceiptAmount": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptDeductible": "The deductible share of every taxed line lies between 0 and 100 %.",
+  "@purchaseReceiptDeductible": {
+    "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseReceiptSubmitted": "Receipt submitted: it awaits approval.",
+  "@purchaseReceiptSubmitted": {
+    "description": "#2573 purchase lines: place and several-line receipts"
   }
 }

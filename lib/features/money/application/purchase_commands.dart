@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// The one door for capturing a supplier bill. The server derives the actor,
-// the state and the totals and decides who may (managePurchases, purchases
-// on); this refuses only what cannot be a bill at all.
+// The one door for capturing a supplier bill or a member's receipt. The
+// server derives the actor, the state and the totals and decides who may
+// (managePurchases for a bill, purchases on); this refuses only what cannot
+// be a document at all.
 import '../domain/purchase.dart';
 
 class PurchaseCommands {
@@ -23,6 +24,32 @@ class PurchaseCommands {
     if (tax != null && (tax < 0 || tax > draft.grossCents)) return null;
     return _repository.saveDraft(workspaceId, requestId, draft);
   }
+
+  /// #2573 — saves a member's receipt of several lines as a draft under
+  /// [requestId] (the same id retries the same save). Null, nothing sent,
+  /// without a category, a line, or a positive amount on every line.
+  Future<String?> saveReceipt(
+    String workspaceId,
+    String requestId,
+    PurchaseReceiptDraft draft,
+  ) async {
+    if (draft.category.trim().isEmpty ||
+        draft.lines.isEmpty ||
+        draft.lines.any((l) => l.grossCents <= 0)) {
+      return null;
+    }
+    return _repository.saveDraft(workspaceId, requestId, draft);
+  }
+
+  /// #2573 — sends a saved receipt at [revision] to the expense validation:
+  /// it files ONE expense of the whole amount. A refusal (a line without
+  /// its tax, an unqualified share, a stale revision) propagates.
+  Future<PurchaseState> submitReceipt(
+    String workspaceId,
+    String purchaseId,
+    int revision,
+    String requestId,
+  ) => _repository.submitBill(workspaceId, purchaseId, revision, requestId);
 
   /// #2573 — links the received invoice [documentId] to [purchase] as its
   /// evidence. A refusal (stale revision, a rejected invoice, no right)

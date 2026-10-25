@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -16,6 +17,17 @@ import '../../application/submit_expense.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 import 'expense_vat_fields.dart';
+
+/// The categories an expense is filed under, in the order the form offers
+/// them; a receipt of several lines (#2573) offers the same.
+const expenseCategories = ['coffee', 'supplies', 'equipment', 'other'];
+
+String expenseCategoryLabel(AppLocalizations l10n, String key) => switch (key) {
+  'coffee' => l10n.expenseCategoryCoffee,
+  'supplies' => l10n.expenseCategorySupplies,
+  'equipment' => l10n.expenseCategoryEquipment,
+  _ => l10n.expenseCategoryOther,
+};
 
 Future<void> showExpenseSheet(
   BuildContext context,
@@ -26,13 +38,8 @@ Future<void> showExpenseSheet(
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
 
-  const categories = ['coffee', 'supplies', 'equipment', 'other'];
-  String categoryLabel(String key) => switch (key) {
-    'coffee' => l10n.expenseCategoryCoffee,
-    'supplies' => l10n.expenseCategorySupplies,
-    'equipment' => l10n.expenseCategoryEquipment,
-    _ => l10n.expenseCategoryOther,
-  };
+  const categories = expenseCategories;
+  String categoryLabel(String key) => expenseCategoryLabel(l10n, key);
 
   // The form's text, created on demand and disposed with the sheet.
   final fields = FormControllers({'supplyQuantity': '1', 'deductible': '100'});

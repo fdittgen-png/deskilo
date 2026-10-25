@@ -12,9 +12,12 @@ import '../../../features/money/domain/supplier.dart';
 import '../../../features/money/domain/vat_rate.dart';
 import '../../time/date_text.dart';
 import '../data/einvoice_inbox_repository.dart';
+import '../data/floor_plan_repository.dart';
 import '../data/money_repository.dart';
+import '../data/purchase_receipt_line.dart';
 import '../data/purchase_repository.dart';
 import '../data/supplier_repository.dart';
+import '../data/workspace_repository.dart';
 
 /// The three in-memory repositories of the purchase side, seeded.
 class DemoPurchasing {
@@ -29,10 +32,18 @@ class DemoPurchasing {
   final FakePurchaseRepository purchases;
 }
 
-DemoPurchasing seedDemoPurchasing(DateTime now, {FakeMoneyRepository? money}) {
+DemoPurchasing seedDemoPurchasing(
+  DateTime now, {
+  FakeMoneyRepository? money,
+  (FakeWorkspaceRepository, FakeFloorPlanRepository)? plan,
+}) {
   final suppliers = FakeSupplierRepository()..suppliers.addAll(_suppliers);
   final inbox = FakeEInvoiceInboxRepository();
   final purchases = FakePurchaseRepository.demo();
+  // #2573 — a line names the demo space's own sites, levels and offices.
+  if (plan != null) {
+    purchases.placesOf = (ws) => demoPurchasePlaces(plan.$1, plan.$2, ws);
+  }
   final today = DateTime(now.year, now.month, now.day);
   if (money != null) {
     purchases.onOffset = (invoiceId, cents) =>

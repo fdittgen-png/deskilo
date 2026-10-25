@@ -10,7 +10,7 @@ final purchaseRepositoryProvider = Provider<PurchaseRepository>(
   (ref) => SupabasePurchaseRepository(ref.watch(moneyClientProvider)),
 );
 
-/// Capturing a supplier bill.
+/// Capturing a supplier bill or a member's receipt.
 final purchaseCommandProvider = Provider<PurchaseCommands>(
   (ref) => PurchaseCommands(ref.watch(purchaseRepositoryProvider)),
 );
@@ -36,4 +36,11 @@ final payablesProvider = FutureProvider.autoDispose
     .family<List<PayableRow>, String>(
       (ref, workspaceId) =>
           ref.watch(purchaseRepositoryProvider).fetchPayables(workspaceId),
+    );
+
+/// #2573 — the sites, levels and offices a purchase line can name.
+final purchasePlacesProvider = FutureProvider.autoDispose
+    .family<List<PurchasePlace>, String>(
+      (ref, workspaceId) =>
+          ref.watch(purchaseRepositoryProvider).fetchPlaces(workspaceId),
     );

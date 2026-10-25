@@ -17,3 +17,24 @@ String purchaseStateLabel(AppLocalizations l10n, PurchaseState state) =>
       PurchaseState.rejected => l10n.purchasesStateRejected,
       PurchaseState.cancelled => l10n.purchasesStateCancelled,
     };
+
+/// #2576 — what a purchase line is for, in the server's words, in the order
+/// the forms offer it; `unresolved` asks for a review.
+const purchasePurposes = [
+  'operating',
+  'stock',
+  'asset',
+  'prepayment',
+  'deposit',
+  'unresolved',
+];
+
+String purchasePurposeLabel(AppLocalizations l10n, String purpose) =>
+    switch (purpose) {
+      'operating' => l10n.purchasesPurposeOperating,
+      'stock' => l10n.purchasesPurposeStock,
+      'asset' => l10n.purchasesPurposeAsset,
+      'prepayment' => l10n.purchasesPurposePrepayment,
+      'deposit' => l10n.purchasesPurposeDeposit,
+      _ => l10n.purchasesPurposeReview,
+    };

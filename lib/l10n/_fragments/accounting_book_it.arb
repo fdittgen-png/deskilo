@@ -42,5 +42,9 @@
   "bookRoleWriteOff": "Perdite su crediti",
   "bookRoleCashDiscount": "Sconti concessi",
   "bookRoleClearing": "Fornitore di pagamenti (in transito)",
-  "bookRoleFees": "Commissioni del fornitore di pagamenti"
+  "bookRoleFees": "Commissioni del fornitore di pagamenti",
+  "bookRoleFixedAssets": "Immobilizzazioni (attrezzature)",
+  "bookRoleStock": "Rimanenze (merci)",
+  "bookRolePrepayments": "Risconti attivi",
+  "bookRoleDeposits": "Depositi cauzionali versati"
 }

@@ -4249,6 +4249,12 @@ abstract class AppLocalizations {
   /// **'Customers (receivable)'**
   String get bookRoleCustomers;
 
+  /// #2573 posting role of a purchase line that is not an operating cost
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits paid'**
+  String get bookRoleDeposits;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
@@ -4261,11 +4267,29 @@ abstract class AppLocalizations {
   /// **'Payment provider fees'**
   String get bookRoleFees;
 
+  /// #2573 posting role of a purchase line that is not an operating cost
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed assets (equipment)'**
+  String get bookRoleFixedAssets;
+
+  /// #2573 posting role of a purchase line that is not an operating cost
+  ///
+  /// In en, this message translates to:
+  /// **'Prepaid expenses'**
+  String get bookRolePrepayments;
+
   /// #1869 B chart of accounts
   ///
   /// In en, this message translates to:
   /// **'Revenue'**
   String get bookRoleRevenue;
+
+  /// #2573 posting role of a purchase line that is not an operating cost
+  ///
+  /// In en, this message translates to:
+  /// **'Stock (goods for resale)'**
+  String get bookRoleStock;
 
   /// No description provided for @bookRoleSuppliers.
   ///
@@ -28152,6 +28176,60 @@ abstract class AppLocalizations {
   /// **'Accounting qualified'**
   String get purchaseQualified;
 
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt with several lines'**
+  String get purchaseReceiptAdd;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Add a line'**
+  String get purchaseReceiptAddLine;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a positive amount on every line.'**
+  String get purchaseReceiptAmount;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'The deductible share of every taxed line lies between 0 and 100 %.'**
+  String get purchaseReceiptDeductible;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'For a receipt with several VAT rates, or equipment beside other items: one line each. It is submitted as one expense of the whole amount, which you paid.'**
+  String get purchaseReceiptIntro;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Line {number}'**
+  String purchaseReceiptLine(int number);
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this line'**
+  String get purchaseReceiptRemoveLine;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Submit receipt'**
+  String get purchaseReceiptSubmit;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt submitted: it awaits approval.'**
+  String get purchaseReceiptSubmitted;
+
   /// #2577 the three status chips of a purchase document
   ///
   /// In en, this message translates to:
@@ -28547,6 +28625,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a date'**
   String get purchasesPickDate;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'Where the cost belongs'**
+  String get purchasesPlace;
+
+  /// #2573 purchase lines: place and several-line receipts
+  ///
+  /// In en, this message translates to:
+  /// **'No particular place'**
+  String get purchasesPlaceNone;
 
   /// #2576 equipment register: what a purchase line is for
   ///
