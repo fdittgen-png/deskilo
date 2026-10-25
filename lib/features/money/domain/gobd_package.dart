@@ -13,7 +13,6 @@
 // complete general ledger.
 import 'dart:convert';
 
-import '../../../core/money/money_text.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
 import 'accounting_source_snapshot.dart';
@@ -144,8 +143,14 @@ String _cell(Object? value, GobdType type) {
   };
 }
 
-/// An amount in cents as a comma decimal with two places, '-' when negative.
-String _cents(int cents) => minorToText(cents, 'EUR', decimalSeparator: ',');
+/// An amount in cents as a comma decimal with two places, '-' when
+/// negative: the index declares every amount column with Accuracy 2,
+/// whatever the document's currency.
+String _cents(int cents) {
+  final sign = cents < 0 ? '-' : '';
+  final abs = cents.abs();
+  return '$sign${abs ~/ 100},${(abs % 100).toString().padLeft(2, '0')}';
+}
 
 /// A rate in percent with two places, as the column declares.
 String _rate(double p) => _cents((p * 100).round());
