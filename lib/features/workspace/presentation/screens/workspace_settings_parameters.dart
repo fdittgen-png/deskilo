@@ -1,30 +1,85 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'workspace_settings_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-// #2386 — part 3 of _WorkspaceSettingsScreenState, split out of workspace_settings_screen.dart so no
-// file holds the whole class.
-extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
+import '../../../../core/country/country_catalog.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/country_names.dart';
+import '../../../../core/i18n/workspace_locale_fields.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/settings.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../money/presentation/widgets/billing_rules_dialog.dart';
+import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
+import '../../domain/invitation_message.dart';
+import '../../domain/workspace.dart';
+import '../../domain/workspace_feature.dart';
+import '../../providers/workspace_providers.dart';
+import '../widgets/new_member_defaults_tiles.dart';
+import '../widgets/settings_editor.dart';
+import '../widgets/workspace_form_group.dart';
+import '../widgets/workspace_own_screens.dart';
+import 'workspace_settings_form.dart';
+import 'workspace_settings_host.dart';
 
-  /// #1154 — the workspace's identity and parameters — name, country, currency, zone, hours, policies, invitation. One of the three slices of a this.build() that was 577
-  /// lines long; the tiles are unchanged, only the list is cut.
-  List<Widget> _parametersTiles(
-    BuildContext context, {
-    required AppLocalizations l10n,
-    required Workspace workspace,
-    required String helpTopic,
-  }) =>
-      [
+/// #1154 / #2494 — the workspace's identity and parameters — name,
+/// country, currency, zone, hours, policies, invitation: the first slice
+/// of the settings form, one group per method. Everything typed rides
+/// the screen's Save button through [form].
+class WorkspaceParameterTiles {
+  WorkspaceParameterTiles(
+    this.host,
+    this.form,
+    this._update, {
+    required this.helpTopic,
+    required this.onCountryPicked,
+    required this.onTemplateLang,
+  });
+
+  final WorkspaceSettingsHost host;
+  final WorkspaceSettingsForm form;
+
+  /// The screen's setState: an edit here rebuilds the form.
+  final void Function(VoidCallback fn) _update;
+  final String helpTopic;
+
+  /// #2454 — a picked country is confirmed by the screen first.
+  final ValueChanged<String?> onCountryPicked;
+
+  /// Pages the invitation draft to another language.
+  final ValueChanged<String> onTemplateLang;
+
+  BuildContext get context => host.context;
+  WidgetRef get ref => host.ref;
+  bool get busy => host.busy;
+
+  /// The tiles, in the order the form shows them.
+  List<Widget> tiles(Workspace workspace) {
+    final l10n = context.l10n;
+    return [
                   Text(
                     workspace.name,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 16),
+                  _general(l10n),
+                  _payments(l10n),
+                  _community(l10n),
+                  _appearance(l10n),
+                  _membership(l10n),
+    ];
+  }
+
+  /// The identity basics: country, currency and zone, language, address.
+  Widget _general(AppLocalizations l10n) =>
                   WorkspaceFormGroup(id: 'general', title: l10n.uxWorkspaceGeneral, icon: Icons.location_on_outlined, initiallyExpanded: true, children: [
                   _withDot(
                     DropdownButtonFormField<String>(
                       key: const Key('workspaceSettingsCountry'),
                       isExpanded: true,
-                      initialValue: _countryCode,
+                      initialValue: form.countryCode,
                       decoration: InputDecoration(
                         labelText: l10n.workspaceCountryLabel,
                       ),
@@ -36,7 +91,7 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                                 localizedCountryName(l10n, country.code)),
                           ),
                       ],
-                      onChanged: _busy ? null : _confirmCountryPick,
+                      onChanged: busy ? null : onCountryPicked,
                     ),
                     helpTopic,
                     anchor: HelpAnchor.workspaceCountry,
@@ -46,11 +101,11 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                   // core/i18n so the onboarding form can reuse them.
                   _withDot(
                     WorkspaceLocaleFields(
-                      currency: _currency,
-                      timezone: _timezone,
-                      enabled: !_busy,
+                      currency: form.currency,
+                      timezone: form.timezone,
+                      enabled: !busy,
                       onTimezonePicked: (zone) =>
-                          _update(() => _timezone.text = zone),
+                          _update(() => form.timezone.text = zone),
                     ),
                     helpTopic,
                     anchor: HelpAnchor.workspaceCurrencyTimezone,
@@ -62,7 +117,7 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                     DropdownButtonFormField<String>(
                       key: const Key('workspaceSettingsLanguage'),
                       isExpanded: true,
-                      initialValue: _defaultLocale,
+                      initialValue: form.defaultLocale,
                       decoration: InputDecoration(
                         labelText: l10n.workspaceLanguageLabel,
                         helperMaxLines: 3,
@@ -73,16 +128,16 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                           value: '',
                           child: Text(l10n.workspaceLanguageUnset),
                         ),
-                        for (final entry in _WorkspaceSettingsScreenState._languages.entries)
+                        for (final entry in WorkspaceSettingsForm.languages.entries)
                           DropdownMenuItem(
                             value: entry.key,
                             child: Text(entry.value),
                           ),
                       ],
-                      onChanged: _busy
+                      onChanged: busy
                           ? null
                           : (value) => _update(
-                              () => _defaultLocale = value ?? ''),
+                              () => form.defaultLocale = value ?? ''),
                     ),
                     helpTopic,
                     anchor: HelpAnchor.workspaceLanguage,
@@ -92,8 +147,8 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                   // letterhead. Lives with the other identity basics.
                   TextFormField(
                     key: const Key('workspaceSettingsAddress'),
-                    controller: _workspaceAddress,
-                    enabled: !_busy,
+                    controller: form.workspaceAddress,
+                    enabled: !busy,
                     maxLines: 2,
                     decoration: InputDecoration(
                       labelText: l10n.workspaceAddressLabel,
@@ -103,7 +158,10 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  ]),
+                  ]);
+
+  /// Payments and billing: methods, legal identity, reports and the billing tools.
+  Widget _payments(AppLocalizations l10n) =>
                   WorkspaceFormGroup(id: 'payments', title: l10n.workspacePaymentsBillingTitle, icon: Icons.account_balance_wallet_outlined, children: [
                   ListTile(
                     key: const Key('workspaceSettingsPaymentMethods'),
@@ -127,9 +185,12 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => context.push('/legal-identity'),
                   ),
-                  ..._billingTools(context, l10n: l10n, helpTopic: helpTopic),
+                  ..._billingTools(l10n),
                   const SizedBox(height: 24),
-                  ]),
+                  ]);
+
+  /// The community: the WhatsApp group and the invitation message.
+  Widget _community(AppLocalizations l10n) =>
                   WorkspaceFormGroup(id: 'community', title: l10n.uxWorkspaceCommunity, icon: Icons.forum_outlined, children: [
                   // #231 — the community's WhatsApp group; the link is
                   // shown to members in the directory (#232).
@@ -145,8 +206,8 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                   const SizedBox(height: 12),
                   TextFormField(
                     key: const Key('workspaceSettingsWhatsappGroup'),
-                    controller: _whatsappGroup,
-                    enabled: !_busy,
+                    controller: form.whatsappGroup,
+                    enabled: !busy,
                     keyboardType: TextInputType.url,
                     decoration: InputDecoration(
                       labelText: l10n.workspaceWhatsappGroupLabel,
@@ -198,15 +259,15 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                   Wrap(
                     spacing: 6,
                     children: [
-                      for (final entry in _WorkspaceSettingsScreenState._languages.entries)
+                      for (final entry in WorkspaceSettingsForm.languages.entries)
                         ChoiceChip(
                           key: ValueKey(
                               'workspace-invitation-lang-${entry.key}'),
                           label: Text(entry.value),
-                          selected: _templateLang == entry.key,
-                          onSelected: _busy
+                          selected: form.templateLang == entry.key,
+                          onSelected: busy
                               ? null
-                              : (_) => _switchTemplateLang(entry.key),
+                              : (_) => onTemplateLang(entry.key),
                         ),
                     ],
                   ),
@@ -219,10 +280,10 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                         ActionChip(
                           key: ValueKey('invitation-tag-$tag'),
                           label: Text(tag),
-                          onPressed: _busy
+                          onPressed: busy
                               ? null
                               : () {
-                                  final t = _invitationTemplate;
+                                  final t = form.invitationTemplate;
                                   final sel = t.selection.isValid
                                       ? t.selection.start
                                       : t.text.length;
@@ -239,8 +300,8 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                   const SizedBox(height: 12),
                   TextFormField(
                     key: const Key('workspaceSettingsInvitationTemplate'),
-                    controller: _invitationTemplate,
-                    enabled: !_busy,
+                    controller: form.invitationTemplate,
+                    enabled: !busy,
                     minLines: 3,
                     maxLines: 8,
                     maxLength: invitationTemplateMaxLength,
@@ -250,7 +311,10 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  ]),
+                  ]);
+
+  /// Appearance: the rows with a screen of their own, and desk transparency.
+  Widget _appearance(AppLocalizations l10n) =>
                   WorkspaceFormGroup(id: 'appearance', title: l10n.uxWorkspaceAppearance, icon: Icons.palette_outlined, children: [
                   // #1277 / #1289 — the rows that open a screen of their
                   // own: neither rides the Save button below.
@@ -276,37 +340,37 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                     min: 20,
                     max: 100,
                     divisions: 16,
-                    value: _deskOpacity.toDouble(),
-                    label: l10n.workspaceDeskOpacityValue(_deskOpacity),
-                    onChanged: _busy
+                    value: form.deskOpacity.toDouble(),
+                    label: l10n.workspaceDeskOpacityValue(form.deskOpacity),
+                    onChanged: busy
                         ? null
-                        : (v) => _update(() => _deskOpacity = v.round()),
+                        : (v) => _update(() => form.deskOpacity = v.round()),
                   ),
                   Text(
-                    l10n.workspaceDeskOpacityValue(_deskOpacity),
+                    l10n.workspaceDeskOpacityValue(form.deskOpacity),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 24),
-                  ]),
+                  ]);
+
+  /// What a newly joining member starts with (#1294).
+  Widget _membership(AppLocalizations l10n) =>
                   WorkspaceFormGroup(id: 'membership', title: l10n.newMemberDefaultsTitle, icon: Icons.person_add_outlined, children: [
                   NewMemberDefaultsTiles(
-                    defaults: _newMemberDefaults,
-                    enabled: !_busy,
+                    defaults: form.newMemberDefaults,
+                    enabled: !busy,
                     failed: ref.watch(newMemberDefaultsProvider).hasError,
                     onRetry: () => ref.invalidate(newMemberDefaultsProvider),
                     onSubscriptionChanged: (pct) => _update(() =>
-                        _newMemberDefaults = _newMemberDefaults?.copyWith(subscriptionPct: pct)),
+                        form.newMemberDefaults = form.newMemberDefaults?.copyWith(subscriptionPct: pct)),
                     onOveragePolicyChanged: (policy) => _update(() =>
-                        _newMemberDefaults = _newMemberDefaults?.copyWith(overagePolicy: policy)),
+                        form.newMemberDefaults = form.newMemberDefaults?.copyWith(overagePolicy: policy)),
                   ),
                   const SizedBox(height: 24),
-                  ]),
+                  ]);
 
-      ];
-
-  List<Widget> _billingTools(BuildContext context, {
-    required AppLocalizations l10n, required String helpTopic,
-  }) => [
+  /// The billing tools beside the payment rows.
+  List<Widget> _billingTools(AppLocalizations l10n) => [
                   ListTile(key: const Key('workspaceSettingsReports'),
                     leading: const Icon(Icons.summarize_outlined),
                     title: Text(l10n.uxReportsTitle),
@@ -372,110 +436,12 @@ extension _WorkspaceSettingsScreenStatePart3 on _WorkspaceSettingsScreenState {
                     ),
       ];
 
-  /// #2862 — the same rows as the workbook, as a readable report, under
-  /// the export it reads and the same permission.
-  List<Widget> _dataReportTiles(AppLocalizations l10n, Workspace workspace) => [
-        if (ref
-                .watch(enabledFeaturesSyncProvider)
-                .contains(WorkspaceFeature.dataReport) &&
-            ref
-                .watch(myPermissionsProvider)
-                .contains(WorkspacePermission.exportData))
-          ListTile(
-            key: const Key('workspaceSettingsDataReport'),
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.picture_as_pdf_outlined),
-            title: Text(l10n.featureDataReportTitle),
-            subtitle: Text(l10n.dataReportSubtitle),
-            enabled: !_busy,
-            onTap: () => _exportDataReport(workspace),
-          ),
-      ];
-
-  /// The workspace data report: the workbook's rows as a readable PDF,
-  /// with the plan of each level drawn as the app draws it.
-  Future<void> _exportDataReport(Workspace workspace) async {
-    final l10n = context.l10n;
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
-    final watermark = developmentMark(context, ref);
-    await _whileBusy(() => runGuarded(
-      context,
-      domain: 'workspace',
-      message: 'workspace data report failed',
-      errorText: l10n.dataReportFailed,
-      action: () async {
-        final details = await _dataReportDetails(workspace);
-        final buying = await readDataReportPurchasing(ref, workspace.id);
-        final report = buildWorkspaceDataReport(details,
-            purchases: buying.purchases, suppliers: buying.suppliers);
-        final colors = DeskiloTheme.light().colorScheme;
-        // #2898 — each level's photo under its plan, read as the editor
-        // reads it; one that fails prints the plan without it.
-        final images = await reportPlanPngs(details.plansByLevel,
-            colors: colors,
-            photoLevels: {
-              for (final level in details.levels)
-                if (level.hasBackground) level.id,
-            },
-            background: (id) => ref.read(levelBackgroundProvider(id).future));
-        final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
-        final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
-        final pdf = await buildWorkspaceDataReportPdf(
-          WorkspaceDataReportPdfRequest(
-            report: report,
-            strings: workspaceDataReportStrings(l10n,
-                currency: workspace.currencyCode, locale: locale),
-            generatedAt: WorkspaceTime.wall(ref.read(clockProvider).now()),
-            baseFont: pw.Font.ttf(regular),
-            boldFont: pw.Font.ttf(bold),
-            planImages: images,
-            watermark: watermark,
-          ),
-        );
-        if (!mounted) return;
-        final path = await ref.read(fileSaverProvider)(
-          bytes: pdf,
-          fileName: '${safeFileSlug(workspace.name)}-data-report.pdf',
-        );
-        if (!mounted) return;
-        _announceSaved(l10n, path);
-      },
-    ));
-  }
-
-  /// Runs [action] with the screen's tools disabled until it ends.
-  Future<void> _whileBusy(Future<void> Function() action) async {
-    _update(() => _busy = true);
-    try {
-      await action();
-    } finally {
-      if (mounted) _update(() => _busy = false);
-    }
-  }
-
-  /// The rows the workbook's sheets are written from.
-  Future<WorkspaceExportDetails> _dataReportDetails(Workspace workspace) async {
-    final levels = await ref.read(levelsProvider.future);
-    final invoices = ref.read(invoiceQueriesProvider);
-    return WorkspaceExportDetails(
-      workspace: workspace,
-      levels: levels,
-      plansByLevel: {
-        for (final level in levels)
-          level.id: await ref.read(floorPlanProvider(level.id).future),
-      },
-      memberName: await ref.read(memberNamesProvider.future),
-      ledger: await ref
-          .read(memberAccountQueriesProvider)
-          .fetchWorkspaceLedger(workspace.id),
-      events: const [],
-      decisions: const {},
-      invoices: await invoices.fetchInvoices(workspace.id),
-      members: await ref.read(workspaceMembersProvider.future),
-      reservations: await ref
-          .read(reservationRepositoryProvider)
-          .fetchAllForExport(workspace.id),
-      invoiceMatches: await invoices.fetchInvoiceMatches(workspace.id),
-    );
-  }
+  /// #763 — a control with no free suffix slot gets the ? at its side.
+  Widget _withDot(Widget field, String topic, {required String anchor}) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: field),
+          HelpDot(topic, anchor: anchor),
+        ],
+      );
 }

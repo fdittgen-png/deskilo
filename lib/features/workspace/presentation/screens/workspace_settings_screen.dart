@@ -1,103 +1,40 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:convert';
-
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../../app/theme.dart';
-import '../../../../core/country/country_catalog.dart';
-import '../../../../core/files/file_names.dart';
-import '../../../../core/files/file_picker.dart';
-import '../../../../core/files/file_saver.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
-import '../../../../core/i18n/country_names.dart';
-import '../../../../core/i18n/money_format.dart';
-import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/l10n/lexicon.dart';
-import '../../../../core/locale/report_language.dart';
-import '../../../../core/settings/settings.dart';
-import '../../../../core/share/file_sharer.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../directory/presentation/admin_visibility_tile.dart';
-import '../../../events/providers/event_providers.dart';
-import '../../../money/domain/report_data_letters.dart';
-import '../../../money/presentation/batch_cover.dart';
-import '../../../money/presentation/invoice_documents.dart';
-import '../../../money/presentation/report_facts_of.dart';
-import '../../../money/presentation/report_layout_actions.dart';
-import '../../../money/presentation/report_strings_l10n.dart';
-import '../../../money/presentation/widgets/billing_rules_dialog.dart';
-import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
-import '../../../money/providers/money_providers.dart';
-import '../../../plan/domain/floor_plan.dart';
-import '../../../plan/domain/level.dart';
-import '../../../plan/presentation/plan_png.dart';
-import '../../../plan/providers/accessory_providers.dart';
-import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../application/apply_brand_seed.dart';
-import '../../application/setup_journey_save.dart';
-import '../../application/toggle_workspace_feature.dart';
-import '../../domain/booking_granularity.dart';
-import '../../domain/invitation_message.dart';
-import '../../domain/launch_review.dart';
-import '../../domain/member.dart';
-import '../../domain/new_member_defaults.dart';
-import '../../domain/overage_policy.dart';
 import '../../domain/payment_instructions.dart';
-import '../../domain/space_code_entries.dart';
-import '../../domain/space_codes_pdf.dart';
 import '../../domain/workspace.dart';
-import '../../domain/workspace_config_report.dart';
-import '../../domain/workspace_data_report_builder.dart';
-import '../../domain/workspace_data_report_pdf.dart';
-import '../../domain/workspace_excel.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_import.dart';
 import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_settings_save.dart';
 import '../../domain/workspace_xml.dart';
-import '../../domain/workspace_xml_configuration.dart';
-import '../../providers/data_report_sources.dart';
-import '../../providers/local_setup_providers.dart';
-import '../../providers/workspace_import_providers.dart';
 import '../../providers/workspace_providers.dart';
-import '../config_feature_groups.dart';
-import '../config_pdf_lines.dart';
 import '../country_change_confirm.dart';
 import '../excel_export.dart';
-import '../launch_report.dart';
-import '../member_labels.dart';
-import '../widgets/configuration_transfer_prompt.dart';
 import '../widgets/local_setup_views.dart';
-import '../widgets/new_member_defaults_tiles.dart';
-import '../widgets/reset_confirm_dialog.dart';
-import '../widgets/settings_editor.dart';
-import '../widgets/space_codes_options_dialog.dart';
 import '../widgets/workspace_form_group.dart';
-import '../widgets/workspace_own_screens.dart';
 import '../widgets/workspace_reports.dart';
-import '../workspace_configuration_report_strings.dart';
-import '../workspace_data_report_strings.dart';
-
-part 'workspace_settings_screen_part1.dart';
-part 'workspace_settings_screen_part2.dart';
-part 'workspace_settings_screen_part3.dart';
+import 'workspace_settings_backup.dart';
+import 'workspace_settings_form.dart';
+import 'workspace_settings_host.dart';
+import 'workspace_settings_parameters.dart';
+import 'workspace_settings_reports.dart';
+import 'workspace_settings_restore.dart';
 
 /// Owner-only workspace settings: identity (country/currency/time zone,
 /// #153 — a country pick re-defaults both from [CountryCatalog], a
@@ -118,50 +55,23 @@ class WorkspaceSettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _WorkspaceSettingsScreenState
-    extends ConsumerState<WorkspaceSettingsScreen> {
+    extends ConsumerState<WorkspaceSettingsScreen>
+    implements WorkspaceSettingsHost {
   final _formKey = GlobalKey<FormState>();
-  final _currency = TextEditingController();
-  final _timezone = TextEditingController();
-  // #231 — the community's WhatsApp group invite link (directory, #232).
-  final _whatsappGroup = TextEditingController();
-  final _workspaceAddress = TextEditingController();
-  final _invitationTemplate = TextEditingController();
-  // 0040 — desk fill opacity percentage (20..100); rides the Save button.
-  int _deskOpacity = 100;
-  // #1294 — what a newly joining member starts with; rides the Save too.
-  // #1563 — null until the separate read lands: never send a fallback.
-  NewMemberDefaults? _newMemberDefaults;
-  String? _countryCode;
-  // #486 — the workspace's own language ('' = sender's app language)
-  // and the per-language invitation drafts the chips page through.
-  String _defaultLocale = '';
-  String _templateLang = 'en';
-  final Map<String, String> _templateDrafts = {};
+  final _form = WorkspaceSettingsForm();
   bool _busy = false;
 
-  static const Map<String, String> _languages = {
-    'en': 'English',
-    'fr': 'Français',
-    'de': 'Deutsch',
-    'es': 'Español',
-    'it': 'Italiano',
-  };
+  // #2494 — the tools, each in its own library.
+  late final _reports = WorkspaceSettingsReports(this);
+  late final _backup = WorkspaceSettingsBackup(this);
+  late final _restore = WorkspaceSettingsRestore(this);
 
-  /// Seed the form ONCE from the loaded workspace; later rebuilds must
-  /// not clobber the owner's in-progress edits.
-  bool _seeded = false;
-
-  /// #1451 — the workspace row's version when the form was filled.
-  DateTime? _openedAt;
-  bool _seededDefaults = false;
+  @override
+  bool get busy => _busy;
 
   @override
   void dispose() {
-    _currency.dispose();
-    _timezone.dispose();
-    _whatsappGroup.dispose();
-    _workspaceAddress.dispose();
-    _invitationTemplate.dispose();
+    _form.dispose();
     super.dispose();
   }
 
@@ -178,35 +88,11 @@ class _WorkspaceSettingsScreenState
         initialSection: widget.reportSection,
         documents: ref.watch(myPermissionsProvider).contains(WorkspacePermission.workspaceSettings)
           ? _toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic, reports: true) : const [])); }
-    if (workspace != null && !_seeded) {
-      _seeded = true;
-      _countryCode = workspace.countryCode;
-      _currency.text = workspace.currencyCode;
-      _timezone.text = workspace.timezone;
-      // #486 — one draft per language (invitationDraftsOf).
-      _templateDrafts.addAll(invitationDraftsOf(
-        workspace.invitationTemplates,
-        legacy: workspace.invitationTemplate,
-        languages: _languages.keys,
-      ));
-      _defaultLocale = workspace.defaultLocale;
-      _templateLang = _languages.containsKey(_defaultLocale)
-          ? _defaultLocale
-          : 'en';
-      _whatsappGroup.text = workspace.whatsappGroup;
-      _workspaceAddress.text = workspace.address;
-      _invitationTemplate.text = _templateDrafts[_templateLang] ?? '';
-      _deskOpacity = workspace.deskOpacity;
-      _openedAt = workspace.system.modifiedAt;
-    }
+    if (workspace != null) _form.seedOnce(workspace);
     // #1294 — read separately: it lives in billing_rules, not on the
     // workspace row the screen already holds. Seeded once, like the rest —
     // and #1563: until it lands there is nothing to save, so Save omits it.
-    final loadedDefaults = ref.watch(newMemberDefaultsProvider).value;
-    if (loadedDefaults != null && !_seededDefaults) {
-      _seededDefaults = true;
-      _newMemberDefaults = loadedDefaults;
-    }
+    _form.seedDefaultsOnce(ref.watch(newMemberDefaultsProvider).value);
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.workspaceSettingsTitle),
@@ -221,7 +107,10 @@ class _WorkspaceSettingsScreenState
                   const AdminVisibilityTile(),
                   if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
-                  ..._parametersTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic),
+                  ...WorkspaceParameterTiles(this, _form, _update,
+                      helpTopic: helpTopic,
+                      onCountryPicked: _confirmCountryPick,
+                      onTemplateLang: _switchTemplateLang).tiles(workspace),
                   WorkspaceFormGroup(id: 'tools', title: labels.uxWorkspaceTools, icon: Icons.import_export,
                     children: _toolsTiles(context, l10n: l10n, workspace: workspace, helpTopic: helpTopic)),
                   WorkspaceFormGroup(id: 'danger', title: labels.workspaceDangerZone, icon: Icons.warning_amber, destructive: true,
@@ -232,8 +121,31 @@ class _WorkspaceSettingsScreenState
     );
   }
 
-  /// Lets the section extensions rebuild (setState is protected).
+  /// Lets the section libraries rebuild (setState is protected).
   void _update(VoidCallback fn) => setState(fn);
+
+  @override
+  Future<void> whileBusy(Future<void> Function() action) async {
+    _update(() => _busy = true);
+    try {
+      await action();
+    } finally {
+      if (mounted) _update(() => _busy = false);
+    }
+  }
+
+  @override
+  Future<void> runTool(String message, Future<void> Function() action) =>
+      whileBusy(() => runGuarded(
+            context,
+            domain: 'workspace',
+            message: message,
+            errorText: context.l10n.workspaceGenericError,
+            action: action,
+          ));
+
+  @override
+  void reseed() => _update(_form.reseed);
 
   List<Widget> _toolsTiles(BuildContext context, {
     required AppLocalizations l10n, required Workspace workspace,
@@ -267,7 +179,7 @@ class _WorkspaceSettingsScreenState
                       l10n.workspaceXmlExportSubtitle,
                     ),
                     enabled: !_busy,
-                    onTap: () => _exportXml(workspace),
+                    onTap: () => _backup.exportXml(workspace),
                   ),
                   ],
                   if (reports) ...[
@@ -286,7 +198,7 @@ class _WorkspaceSettingsScreenState
                       l10n.workspaceConfigPdfExportSubtitle,
                     ),
                     enabled: !_busy,
-                    onTap: () => _exportConfigPdf(workspace),
+                    onTap: () => _reports.exportConfigPdf(workspace),
                   ),
                   // #494 — the workspace report through the REPORT
                   // engine: templated, translated, image-capable.
@@ -321,7 +233,7 @@ class _WorkspaceSettingsScreenState
                       l10n.spaceCodesDesc,
                     ),
                     enabled: !_busy,
-                    onTap: () => _exportSpaceCodes(workspace),
+                    onTap: () => _backup.exportSpaceCodes(workspace),
                   ),
                   // #395 — the full data workbook. The tile is the ONLY
                   // surface, so the flag gate lives here (no route to
@@ -348,10 +260,10 @@ class _WorkspaceSettingsScreenState
                       l10n.workspaceExcelExportSubtitle,
                     ),
                     enabled: !_busy,
-                    onTap: () => _whileBusy(
+                    onTap: () => whileBusy(
                         () => exportWorkspaceExcel(context, ref, workspace)),
                   ),
-                  ..._dataReportTiles(l10n, workspace),
+                  ..._reports.dataReportTiles(l10n, workspace),
                   ],
                   if (!reports)
                   // #165 — restore from an exported file. Replaces the
@@ -396,9 +308,139 @@ class _WorkspaceSettingsScreenState
                       l10n.workspaceResetSubtitle,
                     ),
                     enabled: !_busy,
-                    onTap: () => _resetWorkspace(workspace),
+                    onTap: () => _restore.resetWorkspace(workspace),
                   ),
       ];
+
+  /// #494 — the engine-based workspace report, saved to the device.
+  Future<void> _exportWorkspaceReport() => _reports.exportWorkspaceReport();
+
+  /// Stash the visible template into its language's draft, then show
+  /// [lang]'s draft.
+  void _switchTemplateLang(String lang) =>
+      _update(() => _form.switchTemplateLang(lang));
+
+  /// #2454 — a country that does not offer a feature that is on names what
+  /// would switch off, and asks first (the stored switches are kept).
+  Future<void> _confirmCountryPick(String? code) async {
+    if (code == null) return;
+    final lost = featuresLostInCountry(
+      ref.read(enabledFeaturesSyncProvider),
+      code,
+    );
+    if (lost.isNotEmpty && !await confirmCountryChange(context, code, lost)) {
+      return;
+    }
+    _update(() => _form.pickCountry(code));
+  }
+
+  Future<void> _save(String workspaceId) async {
+    if (!WorkspaceFormGroup.validate(_formKey.currentState)) return;
+    final code = _form.countryCode;
+    if (code == null) return;
+    final l10n = context.l10n;
+    await runTool('update workspace locale failed', () async {
+          // #1451 — ONE command, one transaction, against the version the
+          // form was opened on.
+          try {
+            final saved =
+                await ref.read(workspaceRepositoryProvider).saveWorkspaceSettings(
+                  workspaceId,
+                  _form.toSave(code),
+                );
+            // The next Save compares against what was just committed.
+            _form.openedAt = saved.system.modifiedAt;
+          } on WorkspaceSettingsConflict {
+            // Nothing was written; everything typed stays on screen.
+            if (mounted) {
+              AppSnack.error(
+                context,
+                l10n.workspaceSettingsConflict,
+              );
+            }
+            return;
+          }
+          ref
+            ..invalidate(newMemberDefaultsProvider)
+          // Every money surface watches the workspace chain — invalidating it
+          // re-renders all amounts in the new currency immediately.
+            ..invalidate(myWorkspacesProvider);
+          if (!mounted) return;
+          AppSnack.success(
+            context,
+            l10n.workspaceSettingsSaved,
+          );
+    });
+  }
+
+  /// Owner-only XML import (#165); the steps are [WorkspaceSettingsRestore]'s,
+  /// a failure is told here.
+  Future<void> _importXml(Workspace workspace) async {
+    // #1532 — how far the import got, so a stop partway is not reported
+    // as if nothing had happened.
+    final progress = XmlImportProgress();
+    await whileBusy(() async {
+      try {
+        await _restore.importXml(workspace, progress);
+      } on Object catch (e, st) {
+        debugPrint('workspace XML import failed: $e\n$st');
+        TraceLogger.instance.error('workspace', 'workspace XML import failed',
+            error: e, stackTrace: st);
+        if (!mounted) return;
+        final l10n = context.l10n;
+        AppSnack.error(
+          context,
+          e is PostgrestException &&
+                  e.message.contains(kWorkspaceHasReservationsError)
+              ? (l10n.workspaceXmlImportReservationsError)
+              : (l10n.workspaceGenericError),
+        );
+        if (progress.anythingApplied) _sayPartial(context, l10n);
+      }
+    });
+  }
+
+  @override
+  Future<String> applyImportedSettings(
+    Workspace workspace,
+    WorkspaceXmlData data,
+    XmlImportProgress progress, {
+    required bool switchTransferOn,
+  }) async {
+    // Settings ride the EXISTING owner writers (#153/#155/#146). The
+    // workspace NAME has no update path yet and is deliberately skipped.
+    final repository = ref.read(workspaceRepositoryProvider);
+    await repository.updateWorkspaceLocale(
+      workspace.id,
+      countryCode: data.settings.countryCode,
+      currencyCode: data.settings.currencyCode,
+      timezone: data.settings.timezone,
+    );
+    await repository.setPaymentInstructions(
+      workspace.id,
+      PaymentInstructions.fromDb(data.settings.paymentInstructions),
+    );
+    progress.anythingApplied = true;
+    // #2331 — the file's own flags must not switch back off what the
+    // owner just switched on for this import.
+    await repository.setFeatureFlags(workspace.id, {
+      ...data.settings.featureFlags,
+      if (switchTransferOn)
+        for (final e in featureFlagsToggleDelta(
+                feature: WorkspaceFeature.configurationTransfer, value: true)
+            .entries)
+          e.key.dbKey: e.value,
+    });
+    // #1289 — a brand seed the document carries is measured before it
+    // is written; refused, the rest of the import still applies.
+    return applyImportedBrandSeed(
+      repository,
+      workspace.id,
+      data.settings.brandColor,
+      check: (argb) =>
+          [for (final f in DeskiloTheme.refusals(Color(argb))) f.pair],
+    );
+  }
 }
 
 

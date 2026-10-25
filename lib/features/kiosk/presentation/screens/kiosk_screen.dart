@@ -25,8 +25,8 @@ import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../events/providers/event_providers.dart';
+import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
-import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/seat_occupancy.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
@@ -106,9 +106,6 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       ref.read(closureDaysProvider).value ?? const [],
     );
   }
-
-  Future<void> _onSeatTap(Seat seat) =>
-      _act(title: seat.name, seatId: seat.id);
 
   /// Whole-level path (0050): the same one-sheet flow, with the level
   /// as the booking target.
@@ -324,9 +321,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     return name.isEmpty ? null : name;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
+  /// What a shell would arm, armed here; the badge flow's inputs kept warm.
+  void _watchAmbient() {
     // #430: no shell on kiosk devices — arm realtime here.
     ref.watch(realtimeInvalidatorProvider(RealtimeTarget.workspace));
     // #446: same out-of-shell rule for the ambient working day — the
@@ -345,6 +341,12 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     // (and flips at midnight with the minute tick).
       ..watch(openWeekdaysProvider)
       ..watch(closureDaysProvider);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    _watchAmbient();
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final levels = ref.watch(levelsProvider).value;
     if (levels == null) {
@@ -354,30 +356,14 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       return Scaffold(
         body: EmptyState(
           icon: Icons.map_outlined,
-          title:
-              l10n.planNoLevels,
+          title: l10n.planNoLevels,
         ),
       );
     }
     final level =
         levels.where((l) => l.id == _levelId).firstOrNull ?? levels.first;
     final planAsync = ref.watch(floorPlanProvider(level.id));
-    final now = ref.read(clockProvider).now();
-    final reservations =
-        ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ??
-            const [];
-    final names = ref.watch(memberNamesProvider).value ?? const {};
-    // #618 — occupant profile photos on the wall plan, same toggle as
-    // the receipt photo.
-    final photosOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.kioskMemberPhotos);
-    final memberUserIds = {
-      for (final m in ref.watch(workspaceMembersProvider).value ?? <Member>[])
-        m.id: m.userId,
-    };
-    final memberProfiles =
-        ref.watch(memberProfilesProvider).value ?? const <String, Profile>{};
+    final wall = _wallInputs();
 
     // canPop:false — the back button/gesture never leaves kiosk mode.
     return PopScope(
@@ -386,17 +372,46 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
         body: SafeArea(
           child: Column(
           children: [
-            // ONE header row (field report: three stacked rows — title,
-            // level chips, "This level" — ate a third of a small wall
-            // tablet). Title, chips, the level button and the hint share
-            // a single 48dp line; the plan gets the rest.
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.lg,
-                AppSpacing.sm,
-                AppSpacing.lg,
-                0,
+            _header(workspace?.name ?? '', levels, level),
+            // Closed today (open weekdays / closure days): say it UP
+            // FRONT — the settings gate the whole kiosk, not the last
+            // step of a finished flow.
+            if (_closedToday())
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
+                ),
+                child: InlineBanner(
+                  key: const ValueKey('kiosk-closed-banner'),
+                  icon: Icons.event_busy_outlined,
+                  text: l10n.kioskClosedToday,
+                ),
               ),
+            Expanded(
+              child: switch (planAsync) {
+                AsyncData(value: final plan) =>
+                  _planView(plan, level, workspace?.deskOpacity, wall),
+                AsyncError() =>
+                  Center(child: Text(l10n.workspaceGenericError)),
+                _ => const LoadingView(),
+              },
+            ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// ONE header row (field report: three stacked rows — title, level
+  /// chips, "This level" — ate a third of a small wall tablet). Title,
+  /// chips, the level button and the hint share a single 48dp line; the
+  /// plan gets the rest.
+  Widget _header(String workspaceName, List<Level> levels, Level level) {
+    final l10n = context.l10n;
+    return Padding(
+              padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, 0),
               child: Row(
                 children: [
                   Icon(
@@ -406,7 +421,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                   const SizedBox(width: AppSpacing.sm),
                   Flexible(
                     child: Text(
-                      workspace?.name ?? '',
+                      workspaceName,
                       key: const ValueKey('kiosk-title'),
                       style: Theme.of(context).textTheme.titleLarge,
                       overflow: TextOverflow.ellipsis,
@@ -431,15 +446,12 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                           .watch(enabledFeaturesSyncProvider)
                           .contains(WorkspaceFeature.levelBooking))
                     Padding(
-                      padding:
-                          const EdgeInsets.only(right: AppSpacing.md),
+                      padding: const EdgeInsets.only(right: AppSpacing.md),
                       child: OutlinedButton.icon(
                         key: const ValueKey('kiosk-level-button'),
                         onPressed: () => _onLevelTap(level),
                         icon: const Icon(Icons.layers_outlined),
-                        label: Text(
-                          l10n.kioskLevelButton,
-                        ),
+                        label: Text(l10n.kioskLevelButton),
                       ),
                     ),
                   Flexible(
@@ -452,41 +464,52 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                   ),
                 ],
               ),
-            ),
-            // Closed today (open weekdays / closure days): say it UP
-            // FRONT — the settings gate the whole kiosk, not the last
-            // step of a finished flow.
-            if (_closedToday())
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.lg,
-                ),
-                child: InlineBanner(
-                  key: const ValueKey('kiosk-closed-banner'),
-                  icon: Icons.event_busy_outlined,
-                  text: l10n.kioskClosedToday,
-                ),
-              ),
-            Expanded(
-              child: switch (planAsync) {
-                AsyncData(value: final plan) => SeatPhotoLoader(
-                  seatUserIds: !photosOn
-                      ? const {}
-                      : {
-                          for (final seat in plan.seats)
-                            if (occupantOnSeat(
-                                  plan: plan,
-                                  seat: seat,
-                                  reservations: reservations,
-                                  from: now,
-                                )?.memberId
-                                case final memberId?)
-                              if (memberUserIds[memberId]
-                                  case final userId?)
-                                if (memberProfiles[userId]?.hasAvatar ??
-                                    false)
-                                  seat.id: userId,
-                        },
+            );
+  }
+
+  /// The wall plan's other inputs; (#618) photos follow the receipt's toggle.
+  _WallInputs _wallInputs() {
+    final now = ref.read(clockProvider).now();
+    return (
+      now: now,
+      reservations:
+          ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ??
+              const <Reservation>[],
+      names: ref.watch(memberNamesProvider).value ?? const {},
+      photosOn: ref
+          .watch(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.kioskMemberPhotos),
+      memberUserIds: {
+        for (final m in ref.watch(workspaceMembersProvider).value ?? <Member>[])
+          m.id: m.userId,
+      },
+      memberProfiles:
+          ref.watch(memberProfilesProvider).value ?? const <String, Profile>{},
+    );
+  }
+
+  /// #618 — the seats whose current occupant shows a profile photo.
+  Map<String, String> _seatUserIds(FloorPlan plan, _WallInputs wall) => {
+        for (final seat in plan.seats)
+          if (occupantOnSeat(
+                plan: plan,
+                seat: seat,
+                reservations: wall.reservations,
+                from: wall.now,
+              )?.memberId
+              case final memberId?)
+            if (wall.memberUserIds[memberId] case final userId?)
+              if (wall.memberProfiles[userId]?.hasAvatar ?? false)
+                seat.id: userId,
+      };
+
+  /// The live wall plan of [level].
+  Widget _planView(
+      FloorPlan plan, Level level, int? deskOpacity, _WallInputs wall) {
+    final (now, reservations, names) = (wall.now, wall.reservations, wall.names);
+    return SeatPhotoLoader(
+                  seatUserIds:
+                      !wall.photosOn ? const {} : _seatUserIds(plan, wall),
                   builder: (context, seatPhotos) => PlanCanvas(
                     officePalette: ref.watch(workspaceOfficePaletteProvider),
                     seatPhotos: seatPhotos,
@@ -536,8 +559,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                       window: (from: now, to: null, now: now),
                       onlineWindow: ref.watch(directoryWindowsProvider).onlineWindow,
                     ),
-                    deskOpacity:
-                        (workspace?.deskOpacity ?? 100) / 100,
+                    deskOpacity: (deskOpacity ?? 100) / 100,
                     background:
                         ref.watch(levelBackgroundProvider(level.id)).value,
                     images: {
@@ -546,21 +568,17 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                         // subscribed twice per image on every rebuild.
                         image.id: ?ref.watch(planImageProvider(image.id)).value,
                     },
-                    onSeatTap: _onSeatTap,
+                    onSeatTap: (s) => _act(title: s.name, seatId: s.id),
                   ),
-                ),
-                AsyncError() => Center(
-                    child: Text(
-                      l10n.workspaceGenericError,
-                    ),
-                  ),
-                _ => const LoadingView(),
-              },
-            ),
-            ],
-          ),
-        ),
-      ),
-    );
+                );
   }
 }
+
+typedef _WallInputs = ({
+  DateTime now,
+  List<Reservation> reservations,
+  Map<String, String> names,
+  bool photosOn,
+  Map<String, String> memberUserIds,
+  Map<String, Profile> memberProfiles,
+});

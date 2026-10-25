@@ -493,163 +493,176 @@ List<Widget> _quickActions(_PageCtx c) {
   ];
 }
 
-List<Widget> _membershipTiles(_PageCtx c) {
+List<Widget> _membershipTiles(_PageCtx c) => <Widget>[
+    ..._joinTiles(c),
+    ..._managedTiles(c),
+    ..._standingTiles(c),
+    ..._coOwnerTiles(c),
+    ..._kioskTiles(c),
+  ];
+
+/// A pending join request: the administrator approves or rejects it.
+List<Widget> _joinTiles(_PageCtx c) => <Widget>[
+    if (c.pending && !c.isSelf && c.canAdmin) ...[
+      _ManageTile(
+        tileKey: const ValueKey('member-page-approve'),
+        icon: Icons.how_to_reg_outlined,
+        title: c.l10n.memberApprove,
+        onTap: () =>
+            decideMemberJoin(c.context, c.ref, c.member, approve: true),
+      ),
+      _ManageTile(
+        tileKey: const ValueKey('member-page-reject'),
+        icon: Icons.person_off_outlined,
+        title: c.l10n.memberRejectJoin,
+        onTap: () =>
+            decideMemberJoin(c.context, c.ref, c.member, approve: false),
+      ),
+    ],
+  ];
+
+/// #887 — the admin runs a managed member's identity and hands the
+/// profile over with a bound invitation.
+List<Widget> _managedTiles(_PageCtx c) {
+  // Watched whether or not the tiles show, as the group always did.
   final workspace = c.ref.watch(currentWorkspaceProvider).value;
   final context = c.context;
   final ref = c.ref;
   final member = c.member;
   final l10n = c.l10n;
-  final perms = c.perms;
-  final isSelf = c.isSelf;
-  final active = c.active;
-  final pending = c.pending;
-  final canAdmin = c.canAdmin;
-  final isOwner = c.isOwner;
-  final kioskOn = c.kioskOn;
-  final coOwnerOn = c.coOwnerOn;
-  final rolesOn = c.rolesOn;
+  if (!(member.isManaged && c.canAdmin)) return <Widget>[];
+  final identity =
+      ref.watch(managedIdentityProvider(member.id)).value?.identity ??
+      PersonalInfo.empty;
   return <Widget>[
-    if (pending && !isSelf && canAdmin) ...[
+    _ManageTile(
+      tileKey: const ValueKey('member-page-managed-edit'),
+      icon: Icons.contact_mail_outlined,
+      title: l10n.managedProfileEdit,
+      // #915 — the address comes from BEHIND the rule, and asking
+      // for it is written down. An admin the rule does not name sees
+      // the name on the tile and nothing under it.
+      subtitle: identity
+          .postalBlock(
+            workspaceCountry: workspace?.countryCode ?? '',
+            // #912 — the title the person asked for, in the reader's
+            // language, exactly as the document will print it.
+            courtesyWord: courtesyWord(l10n, identity.courtesy),
+          )
+          .replaceAll('\n', ', '),
+      onTap: () => context.push('/members/managed?member=${member.id}'),
+    ),
+    if (workspace != null)
       _ManageTile(
-        tileKey: const ValueKey('member-page-approve'),
-        icon: Icons.how_to_reg_outlined,
-        title: l10n.memberApprove,
-        onTap: () => decideMemberJoin(context, ref, member, approve: true),
-      ),
-      _ManageTile(
-        tileKey: const ValueKey('member-page-reject'),
-        icon: Icons.person_off_outlined,
-        title: l10n.memberRejectJoin,
-        onTap: () => decideMemberJoin(context, ref, member, approve: false),
-      ),
-    ],
-    // #887 — the admin runs a managed member's identity and hands
-    // the profile over with a bound invitation.
-    if (member.isManaged && canAdmin) ...[
-      _ManageTile(
-        tileKey: const ValueKey('member-page-managed-edit'),
-        icon: Icons.contact_mail_outlined,
-        title: l10n.managedProfileEdit,
-        // #915 — the address comes from BEHIND the rule, and asking
-        // for it is written down. An admin the rule does not name sees
-        // the name on the tile and nothing under it.
-        subtitle:
-            (ref.watch(managedIdentityProvider(member.id)).value?.identity ??
-                    PersonalInfo.empty)
-                .postalBlock(
-                  workspaceCountry: workspace?.countryCode ?? '',
-                  // #912 — the title the person asked for, in the reader's
-                  // language, exactly as the document will print it.
-                  courtesyWord: courtesyWord(
-                    l10n,
-                    (ref
-                                .watch(managedIdentityProvider(member.id))
-                                .value
-                                ?.identity ??
-                            PersonalInfo.empty)
-                        .courtesy,
-                  ),
-                )
-                .replaceAll('\n', ', '),
-        onTap: () => context.push('/members/managed?member=${member.id}'),
-      ),
-      if (workspace != null)
-        _ManageTile(
-          tileKey: const ValueKey('member-page-hand-over'),
-          icon: Icons.qr_code_2_outlined,
-          title: l10n.managedProfileHandOver,
-          subtitle: l10n.managedProfileHandOverHint,
-          onTap: () => showInviteSheet(
-            context,
-            workspace: workspace,
-            role: InviteRole.user,
-            memberId: member.id,
-            identity: member.managedIdentity,
-          ),
+        tileKey: const ValueKey('member-page-hand-over'),
+        icon: Icons.qr_code_2_outlined,
+        title: l10n.managedProfileHandOver,
+        subtitle: l10n.managedProfileHandOverHint,
+        onTap: () => showInviteSheet(
+          context,
+          workspace: workspace,
+          role: InviteRole.user,
+          memberId: member.id,
+          identity: member.managedIdentity,
         ),
-      _ManageTile(
-        tileKey: const ValueKey('member-page-revoke-handover'),
-        icon: Icons.link_off_outlined,
-        title: l10n.managedProfileRevoke,
-        onTap: () => _revokeHandover(context, ref, member),
       ),
-    ],
-    if (isOwner && member.status != MemberStatus.exited)
+    _ManageTile(
+      tileKey: const ValueKey('member-page-revoke-handover'),
+      icon: Icons.link_off_outlined,
+      title: l10n.managedProfileRevoke,
+      onTap: () => _revokeHandover(context, ref, member),
+    ),
+  ];
+}
+
+/// The owner pauses or reactivates the member and, without role
+/// assignment, makes them an administrator or a member again.
+List<Widget> _standingTiles(_PageCtx c) {
+  final paused = c.member.status == MemberStatus.paused;
+  return <Widget>[
+    if (c.isOwner && c.member.status != MemberStatus.exited)
       _ManageTile(
         tileKey: const ValueKey('member-page-pause'),
-        icon: member.status == MemberStatus.paused
-            ? Icons.play_circle_outline
-            : Icons.pause_circle_outline,
-        title: member.status == MemberStatus.paused
-            ? (l10n.memberReactivate)
-            : (l10n.memberPause),
-        subtitle: memberStatusLabel(l10n, member.status),
-        onTap: () => toggleMemberPaused(context, ref, member),
+        icon: paused ? Icons.play_circle_outline : Icons.pause_circle_outline,
+        title: paused ? (c.l10n.memberReactivate) : (c.l10n.memberPause),
+        subtitle: memberStatusLabel(c.l10n, c.member.status),
+        onTap: () => toggleMemberPaused(c.context, c.ref, c.member),
       ),
     // #2085 — with roleAssignment the Roles card gives this one too.
-    if (isOwner && !member.isOwner && !member.isKiosk && active && !rolesOn)
+    if (c.isOwner &&
+        !c.member.isOwner &&
+        !c.member.isKiosk &&
+        c.active &&
+        !c.rolesOn)
       _ManageTile(
         tileKey: const ValueKey('member-page-role'),
-        icon: member.isAdmin
+        icon: c.member.isAdmin
             ? Icons.remove_moderator_outlined
             : Icons.add_moderator_outlined,
-        title: member.isAdmin
-            ? (l10n.memberMakeMember)
-            : (l10n.memberMakeAdmin),
-        subtitle: member.isAdmin
-            ? (l10n.memberRoleAdmin)
-            : (l10n.memberRoleMember),
-        onTap: () => requestMemberRoleChange(context, ref, member),
+        title: c.member.isAdmin
+            ? (c.l10n.memberMakeMember)
+            : (c.l10n.memberMakeAdmin),
+        subtitle: c.member.isAdmin
+            ? (c.l10n.memberRoleAdmin)
+            : (c.l10n.memberRoleMember),
+        onTap: () => requestMemberRoleChange(c.context, c.ref, c.member),
       ),
-    if (isOwner &&
-        coOwnerOn &&
-        !member.isOwner &&
-        !member.isKiosk &&
-        !isSelf &&
-        active)
+  ];
+}
+
+/// The owner names or activates a co-owner.
+List<Widget> _coOwnerTiles(_PageCtx c) {
+  if (!(c.isOwner && c.coOwnerOn && c.active)) return <Widget>[];
+  return <Widget>[
+    if (!c.member.isOwner && !c.member.isKiosk && !c.isSelf)
       _ManageTile(
         tileKey: const ValueKey('member-page-coowner'),
-        icon: switch (member.coOwner) {
+        icon: switch (c.member.coOwner) {
           CoOwnerStatus.active => Icons.workspace_premium,
           CoOwnerStatus.passive => Icons.workspace_premium_outlined,
           CoOwnerStatus.none => Icons.badge_outlined,
         },
-        title: l10n.coOwnerAction,
-        subtitle: switch (member.coOwner) {
-          CoOwnerStatus.active => l10n.memberCoOwnerChip,
-          CoOwnerStatus.passive => l10n.memberCoOwnerPassiveChip,
-          CoOwnerStatus.none => l10n.memberPageNone,
+        title: c.l10n.coOwnerAction,
+        subtitle: switch (c.member.coOwner) {
+          CoOwnerStatus.active => c.l10n.memberCoOwnerChip,
+          CoOwnerStatus.passive => c.l10n.memberCoOwnerPassiveChip,
+          CoOwnerStatus.none => c.l10n.memberPageNone,
         },
-        onTap: () => pickMemberCoOwner(context, ref, member),
+        onTap: () => pickMemberCoOwner(c.context, c.ref, c.member),
       ),
-    if (isOwner && coOwnerOn && member.coOwner != CoOwnerStatus.none && active)
+    if (c.member.coOwner != CoOwnerStatus.none)
       _ManageTile(
         tileKey: const ValueKey('member-page-coowner-activate'),
         icon: Icons.military_tech_outlined,
-        title: l10n.coOwnerActivate,
-        onTap: () => activateMemberCoOwner(context, ref, member),
-      ),
-    if (perms.contains(WorkspacePermission.operateKiosk) &&
-        !member.isOwner &&
-        active &&
-        (member.isKiosk || kioskOn))
-      _ManageTile(
-        tileKey: const ValueKey('member-page-kiosk'),
-        icon: member.isKiosk ? Icons.tablet_mac : Icons.tablet_mac_outlined,
-        title: member.isKiosk
-            ? (l10n.memberUnmakeKiosk)
-            : (l10n.memberMakeKiosk),
-        onTap: () => toggleMemberKiosk(context, ref, member),
-      ),
-    if (isSelf && member.isKiosk)
-      _ManageTile(
-        tileKey: const ValueKey('member-page-kiosk-self'),
-        icon: Icons.tablet_mac,
-        title: l10n.memberUnmakeKiosk,
-        onTap: () => revertMyKiosk(context, ref, member),
+        title: c.l10n.coOwnerActivate,
+        onTap: () => activateMemberCoOwner(c.context, c.ref, c.member),
       ),
   ];
 }
+
+/// The member as a kiosk: an operator makes or unmakes one, and a kiosk
+/// reverts itself.
+List<Widget> _kioskTiles(_PageCtx c) => <Widget>[
+    if (c.perms.contains(WorkspacePermission.operateKiosk) &&
+        !c.member.isOwner &&
+        c.active &&
+        (c.member.isKiosk || c.kioskOn))
+      _ManageTile(
+        tileKey: const ValueKey('member-page-kiosk'),
+        icon: c.member.isKiosk ? Icons.tablet_mac : Icons.tablet_mac_outlined,
+        title: c.member.isKiosk
+            ? (c.l10n.memberUnmakeKiosk)
+            : (c.l10n.memberMakeKiosk),
+        onTap: () => toggleMemberKiosk(c.context, c.ref, c.member),
+      ),
+    if (c.isSelf && c.member.isKiosk)
+      _ManageTile(
+        tileKey: const ValueKey('member-page-kiosk-self'),
+        icon: Icons.tablet_mac,
+        title: c.l10n.memberUnmakeKiosk,
+        onTap: () => revertMyKiosk(c.context, c.ref, c.member),
+      ),
+  ];
 
 List<Widget> _bookingTiles(_PageCtx c) {
   final context = c.context;
@@ -688,60 +701,7 @@ List<Widget> _bookingTiles(_PageCtx c) {
             : '${member.maxSimultaneousReservations}',
         onTap: () => pickMemberSimultaneousLimit(context, ref, member),
       ),
-      // #985 — who this member is for VAT.
-      if (canAdmin &&
-          ref
-              .watch(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.vatCounterparty))
-        _ManageTile(
-          tileKey: const ValueKey('member-page-vat-treatment'),
-          icon: Icons.account_balance_outlined,
-          title: l10n.memberVatTreatmentLabel,
-          subtitle: vatTreatmentName(
-            l10n,
-            VatTreatment.fromWire(member.vatTreatment),
-          ),
-          onTap: () => pickMemberVatTreatment(context, ref, member),
-        ),
-      // #1916 — whether this customer acts as a business or a consumer.
-      if (perms.contains(WorkspacePermission.issueInvoices) &&
-          ref
-              .watch(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.invoicing))
-        _ManageTile(
-          tileKey: const ValueKey('member-page-customer-capacity'),
-          icon: Icons.storefront_outlined,
-          title: l10n.customerCapacityLabel,
-          subtitle: customerCapacityName(l10n, member.customerCapacity),
-          onTap: () => pickMemberCustomerCapacity(context, ref, member),
-        ),
-      // #2358 — where this customer receives e-invoices.
-      if (perms.contains(WorkspacePermission.issueInvoices) &&
-          ref
-              .watch(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.invoicing))
-        MemberEInvoiceAddressTile(member: member),
-      // #945 — the site whose address this member's documents carry.
-      if (canAdmin &&
-          ref
-              .watch(enabledFeaturesSyncProvider)
-              .contains(WorkspaceFeature.multiSite))
-        _ManageTile(
-          tileKey: const ValueKey('member-page-home-site'),
-          icon: Icons.location_city_outlined,
-          title: l10n.memberHomeSiteLabel,
-          subtitle:
-              (ref.watch(sitesProvider).value ?? const <Site>[])
-                  .where(
-                    (s) => member.homeSiteId == null
-                        ? s.isDefault
-                        : s.id == member.homeSiteId,
-                  )
-                  .map((s) => s.name)
-                  .firstOrNull ??
-              (l10n.memberHomeSiteDefault),
-          onTap: () => pickMemberHomeSite(context, ref, member),
-        ),
+      ..._customerTiles(c),
       if (levelOn)
         SwitchListTile(
           key: const ValueKey('member-page-level'),
@@ -758,6 +718,57 @@ List<Widget> _bookingTiles(_PageCtx c) {
           onChanged: (_) => toggleMemberLevelPermission(context, ref, member),
         ),
     ],
+  ];
+}
+
+/// Who the member is as a customer: VAT treatment, business or consumer,
+/// e-invoice address and the site their documents carry.
+List<Widget> _customerTiles(_PageCtx c) {
+  final invoicer = c.perms.contains(WorkspacePermission.issueInvoices) &&
+      c.features.contains(WorkspaceFeature.invoicing);
+  return <Widget>[
+    // #985 — who this member is for VAT.
+    if (c.canAdmin && c.features.contains(WorkspaceFeature.vatCounterparty))
+      _ManageTile(
+        tileKey: const ValueKey('member-page-vat-treatment'),
+        icon: Icons.account_balance_outlined,
+        title: c.l10n.memberVatTreatmentLabel,
+        subtitle: vatTreatmentName(
+          c.l10n,
+          VatTreatment.fromWire(c.member.vatTreatment),
+        ),
+        onTap: () => pickMemberVatTreatment(c.context, c.ref, c.member),
+      ),
+    // #1916 — whether this customer acts as a business or a consumer.
+    if (invoicer)
+      _ManageTile(
+        tileKey: const ValueKey('member-page-customer-capacity'),
+        icon: Icons.storefront_outlined,
+        title: c.l10n.customerCapacityLabel,
+        subtitle: customerCapacityName(c.l10n, c.member.customerCapacity),
+        onTap: () => pickMemberCustomerCapacity(c.context, c.ref, c.member),
+      ),
+    // #2358 — where this customer receives e-invoices.
+    if (invoicer)
+      MemberEInvoiceAddressTile(member: c.member),
+    // #945 — the site whose address this member's documents carry.
+    if (c.canAdmin && c.features.contains(WorkspaceFeature.multiSite))
+      _ManageTile(
+        tileKey: const ValueKey('member-page-home-site'),
+        icon: Icons.location_city_outlined,
+        title: c.l10n.memberHomeSiteLabel,
+        subtitle:
+            (c.ref.watch(sitesProvider).value ?? const <Site>[])
+                .where(
+                  (s) => c.member.homeSiteId == null
+                      ? s.isDefault
+                      : s.id == c.member.homeSiteId,
+                )
+                .map((s) => s.name)
+                .firstOrNull ??
+            (c.l10n.memberHomeSiteDefault),
+        onTap: () => pickMemberHomeSite(c.context, c.ref, c.member),
+      ),
   ];
 }
 
