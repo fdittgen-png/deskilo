@@ -254,6 +254,40 @@ The one shared reference for issues, PRs and agents (canonical wording and the c
 
 **Glossary:** *Checkpoint* — a reviewable slice with its own consumer and tests. *Release gate* — evidence required before a capability is switched on. *Installation* — one verified backend identity; *workspace* — a business scope inside it. *Public / participant / management* — API surfaces (anonymous / authenticated / internal); distinct from the social / community / operational data purposes.
 
+## Decide, commit, never park (owner, 2026-10-25)
+
+Binding for every session and every agent.
+
+- **Owner-review gates are yours to decide.** An issue may say it waits for the owner's review of an audit, a table, a proposal or a structural list. If you produced it, review it yourself as the top priority: take the decision with a short reason per item, and post it on the issue as "taken on the owner's behalf". Then implement and commit in the same flow. Ask the owner only for:
+  - external accounts or credentials;
+  - legal or real-money actions;
+  - production deploys or releases.
+- **Never leave useful work uncommitted.** Code that helps an issue's acceptance is always committed on the issue's branch and pushed through a PR. That includes a stopped agent's partial work, an earlier session's leftovers and a crash.
+  - Before you report a worktree as "left alone" or remove it, diff its uncommitted changes against `origin/master`.
+  - If they help, commit them and finish them.
+  - Remove a worktree only when its diff is already on master or is superseded, and say which.
+- **Worktree hygiene.**
+  - Cut every worktree from a freshly fetched `origin/master`.
+  - Remove it, and its branch, as soon as its PR is MERGED or CLOSED. Judge this by PR state, because squash merges defeat `merge-base`.
+  - Keep at most ten worktrees, and more than 10 GB free on the disk.
+  - A full disk makes every command fail. Stop the running agents first, then remove merged worktrees, then `git checkout docs/design` in any worktree that was mid-baseline.
+- **Before cutting branch N+1 while PR N is open:**
+  - if both add a migration, wait;
+  - if both add a `WorkspaceFeature`, registry, permission, event or route-class line, wait, or stack deliberately and merge in order;
+  - anything else, go.
+- **Merge master into a PR branch only when:**
+  - the PR is DIRTY;
+  - it is a migration branch and master gained a migration;
+  - master changed a generated `.g.dart`, a count pin or a registry line the branch also changes.
+
+  Otherwise never: branch protection is not strict, and a mergeable PR needs no update.
+- **Conflict recipe:**
+  - For generated paths (l10n outputs, `assets/instance/*`, `docs/design/CODE_HEALTH*`, `*.g.dart`, `APPLIED.sha256`, `contract.txt`), take master's copy, then run only the implicated generator.
+  - For hand-written appenders, keep both sides; for a line changed on both sides, choose one, then look for duplicated declarations.
+  - Before committing, both `git grep -l '^<<<<<<<'` and `git diff --name-only --diff-filter=U` must be empty. Never `git add -A`.
+- **A migration file stays under 110 000 bytes.** The instance installer passes each file as one psql argument, capped at 120 000 bytes. Split a larger change into consecutive migrations before it reaches master.
+- **One `WorkspaceFeature` value per line.** The scale tool reads the enum as text, line by line.
+
 ## Git rules
 
 - Branch off `master`; conventional commits; PRs < 400 lines (excluding generated); squash-merge; `Refs #NN` for a partial PR, `Closes #NN` only when the whole acceptance is met (see [Ready, Done and closure](#ready-done-and-closure)).
