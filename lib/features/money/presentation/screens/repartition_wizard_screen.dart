@@ -18,6 +18,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/book_repartition.dart';
@@ -166,135 +167,9 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
 
     final summary = '${currency.formatMinor(_cents ?? 0)} · $_period · ${rule.method.name}';
     final Widget body = switch (_step) {
-      0 => ListView(
-          padding: AppSpacing.lgAll,
-          children: [
-            TextField(
-              key: const ValueKey('wizard-title'),
-              controller: _title,
-              onChanged: (_) => setState(() {}),
-              decoration: InputDecoration(labelText: l10n.repartitionTitleLabel),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            TextField(
-              key: const ValueKey('wizard-amount'),
-              controller: _amount,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (_) => setState(() {}),
-              decoration: InputDecoration(labelText: l10n.repartitionAmountLabel),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Row(
-              children: [
-                IconButton(
-                  tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
-                  key: const ValueKey('wizard-period-prev'),
-                  icon: const Icon(Icons.chevron_left),
-                  onPressed: () => setState(() => _period = _shift(_period, -1)),
-                ),
-                Expanded(child: Center(child: Text(_period, style: theme.textTheme.titleMedium))),
-                IconButton(
-                  tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
-                  key: const ValueKey('wizard-period-next'),
-                  icon: const Icon(Icons.chevron_right),
-                  onPressed: () => setState(() => _period = _shift(_period, 1)),
-                ),
-              ],
-            ),
-          ],
-        ),
-      1 => ListView(
-          padding: AppSpacing.lgAll,
-          children: [
-            Text(l10n.repartitionRuleHint),
-            const SizedBox(height: AppSpacing.md),
-            DropdownButtonFormField<RepartitionMethod>(
-              key: const ValueKey('wizard-method'),
-              initialValue: rule.method,
-              items: [
-                for (final m in const [RepartitionMethod.subscription, RepartitionMethod.equal, RepartitionMethod.custom])
-                  DropdownMenuItem(value: m, child: Text(m.name)),
-              ],
-              onChanged: (m) => setState(() => _rule = rule.copyWith(method: m)),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            for (final m in (ref.watch(workspaceMembersProvider).value ?? const []).where((m) => m.status == MemberStatus.active && !m.isKiosk))
-              Builder(builder: (context) {
-                final names = ref.watch(memberNamesProvider).value ?? const {};
-                final share = shares.where((s) => s.memberId == m.id).firstOrNull;
-                final excluded = rule.excluded.contains(m.id);
-                final pctLabel = '${m.subscriptionPct} %';
-                final weight = _weights.putIfAbsent(
-                  m.id,
-                  () => TextEditingController(text: (rule.weights[m.id] ?? m.subscriptionPct).toString()),
-                );
-                return CheckboxListTile(
-                  key: ValueKey('wizard-member-${m.id}'),
-                  contentPadding: EdgeInsets.zero,
-                  value: !excluded,
-                  onChanged: (on) => setState(() {
-                    final ex = {...rule.excluded};
-                    if (on ?? false) {
-                      ex.remove(m.id);
-                    } else {
-                      ex.add(m.id);
-                    }
-                    _rule = rule.copyWith(excluded: ex);
-                  }),
-                  title: Text(names[m.id] ?? ''),
-                  subtitle: Row(
-                    children: [
-                      Text(pctLabel),
-                      if (rule.method == RepartitionMethod.custom) ...[
-                        const SizedBox(width: AppSpacing.md),
-                        SizedBox(
-                          width: 72,
-                          child: TextField(
-                            key: ValueKey('wizard-weight-${m.id}'),
-                            controller: weight,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(labelText: l10n.repartitionWizardWeight, isDense: true),
-                            onChanged: (v) => setState(() => _rule = rule.copyWith(
-                                weights: {...rule.weights, m.id: num.tryParse(v.trim()) ?? 0})),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                  secondary: Text(
-                    share == null ? '—' : currency.formatMinor(share.amountCents),
-                    key: ValueKey('wizard-share-${m.id}'),
-                    style: theme.textTheme.bodyLarge?.copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
-                  ),
-                );
-              }),
-            const Divider(),
-            ListTile(
-              key: const ValueKey('wizard-shares-total'),
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.repartitionSharesTotal),
-              trailing: Text(currency.formatMinor(total)),
-            ),
-          ],
-        ),
-      _ => ListView(
-          padding: AppSpacing.lgAll,
-          children: [
-            Text(_title.text.trim(), style: theme.textTheme.titleMedium),
-            Text(summary),
-            const SizedBox(height: AppSpacing.md),
-            for (final s in shares)
-              ListTile(dense: true, contentPadding: EdgeInsets.zero, title: Text(s.memberName), trailing: Text(currency.formatMinor(s.amountCents))),
-            const Divider(),
-            SwitchListTile(
-              key: const ValueKey('wizard-remember'),
-              contentPadding: EdgeInsets.zero,
-              value: _remember,
-              onChanged: (v) => setState(() => _remember = v),
-              title: Text(l10n.repartitionRememberRule),
-            ),
-          ],
-        ),
+      0 => _costStep(l10n, theme),
+      1 => _ruleStep(l10n, theme, rule: rule, shares: shares, currency: currency, total: total),
+      _ => _bookStep(l10n, theme, summary: summary, shares: shares, currency: currency),
     };
     return WizardScaffold(
       title: l10n.repartitionWizardTitle,
@@ -307,6 +182,168 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
       onFinish: _step == 2 && !_busy && shares.isNotEmpty ? _book : null,
       finishKey: const ValueKey('wizard-book'),
       finishEnabled: !_busy && shares.isNotEmpty,
+    );
+  }
+
+  Widget _costStep(AppLocalizations l10n, ThemeData theme) {
+    return ListView(
+      padding: AppSpacing.lgAll,
+      children: [
+        TextField(
+          key: const ValueKey('wizard-title'),
+          controller: _title,
+          onChanged: (_) => setState(() {}),
+          decoration: InputDecoration(labelText: l10n.repartitionTitleLabel),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('wizard-amount'),
+          controller: _amount,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onChanged: (_) => setState(() {}),
+          decoration: InputDecoration(labelText: l10n.repartitionAmountLabel),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Row(
+          children: [
+            IconButton(
+              tooltip: MaterialLocalizations.of(context).previousMonthTooltip,
+              key: const ValueKey('wizard-period-prev'),
+              icon: const Icon(Icons.chevron_left),
+              onPressed: () => setState(() => _period = _shift(_period, -1)),
+            ),
+            Expanded(child: Center(child: Text(_period, style: theme.textTheme.titleMedium))),
+            IconButton(
+              tooltip: MaterialLocalizations.of(context).nextMonthTooltip,
+              key: const ValueKey('wizard-period-next'),
+              icon: const Icon(Icons.chevron_right),
+              onPressed: () => setState(() => _period = _shift(_period, 1)),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _ruleStep(
+    AppLocalizations l10n,
+    ThemeData theme, {
+    required RepartitionRule rule,
+    required List<RepartitionShare> shares,
+    required MoneyFormat currency,
+    required int total,
+  }) {
+    return ListView(
+      padding: AppSpacing.lgAll,
+      children: [
+        Text(l10n.repartitionRuleHint),
+        const SizedBox(height: AppSpacing.md),
+        DropdownButtonFormField<RepartitionMethod>(
+          key: const ValueKey('wizard-method'),
+          initialValue: rule.method,
+          items: [
+            for (final m in const [RepartitionMethod.subscription, RepartitionMethod.equal, RepartitionMethod.custom])
+              DropdownMenuItem(value: m, child: Text(m.name)),
+          ],
+          onChanged: (m) => setState(() => _rule = rule.copyWith(method: m)),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        for (final m in (ref.watch(workspaceMembersProvider).value ?? const []).where((m) => m.status == MemberStatus.active && !m.isKiosk))
+          Builder(builder: (context) => _memberTile(l10n, theme, m, rule: rule, shares: shares, currency: currency)),
+        const Divider(),
+        ListTile(
+          key: const ValueKey('wizard-shares-total'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l10n.repartitionSharesTotal),
+          trailing: Text(currency.formatMinor(total)),
+        ),
+      ],
+    );
+  }
+
+  /// One active member: included or not, weighted under the custom
+  /// method, and the share the current rule gives them.
+  Widget _memberTile(
+    AppLocalizations l10n,
+    ThemeData theme,
+    Member m, {
+    required RepartitionRule rule,
+    required List<RepartitionShare> shares,
+    required MoneyFormat currency,
+  }) {
+    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final share = shares.where((s) => s.memberId == m.id).firstOrNull;
+    final excluded = rule.excluded.contains(m.id);
+    final pctLabel = '${m.subscriptionPct} %';
+    final weight = _weights.putIfAbsent(
+      m.id,
+      () => TextEditingController(text: (rule.weights[m.id] ?? m.subscriptionPct).toString()),
+    );
+    return CheckboxListTile(
+      key: ValueKey('wizard-member-${m.id}'),
+      contentPadding: EdgeInsets.zero,
+      value: !excluded,
+      onChanged: (on) => setState(() {
+        final ex = {...rule.excluded};
+        if (on ?? false) {
+          ex.remove(m.id);
+        } else {
+          ex.add(m.id);
+        }
+        _rule = rule.copyWith(excluded: ex);
+      }),
+      title: Text(names[m.id] ?? ''),
+      subtitle: Row(
+        children: [
+          Text(pctLabel),
+          if (rule.method == RepartitionMethod.custom) ...[
+            const SizedBox(width: AppSpacing.md),
+            SizedBox(
+              width: 72,
+              child: TextField(
+                key: ValueKey('wizard-weight-${m.id}'),
+                controller: weight,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: l10n.repartitionWizardWeight, isDense: true),
+                onChanged: (v) => setState(() => _rule = rule.copyWith(
+                    weights: {...rule.weights, m.id: num.tryParse(v.trim()) ?? 0})),
+              ),
+            ),
+          ],
+        ],
+      ),
+      secondary: Text(
+        share == null ? '—' : currency.formatMinor(share.amountCents),
+        key: ValueKey('wizard-share-${m.id}'),
+        style: theme.textTheme.bodyLarge?.copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
+      ),
+    );
+  }
+
+  Widget _bookStep(
+    AppLocalizations l10n,
+    ThemeData theme, {
+    required String summary,
+    required List<RepartitionShare> shares,
+    required MoneyFormat currency,
+  }) {
+    return ListView(
+      padding: AppSpacing.lgAll,
+      children: [
+        Text(_title.text.trim(), style: theme.textTheme.titleMedium),
+        Text(summary),
+        const SizedBox(height: AppSpacing.md),
+        for (final s in shares)
+          ListTile(dense: true, contentPadding: EdgeInsets.zero, title: Text(s.memberName), trailing: Text(currency.formatMinor(s.amountCents))),
+        const Divider(),
+        SwitchListTile(
+          key: const ValueKey('wizard-remember'),
+          contentPadding: EdgeInsets.zero,
+          value: _remember,
+          onChanged: (v) => setState(() => _remember = v),
+          title: Text(l10n.repartitionRememberRule),
+        ),
+      ],
     );
   }
 
