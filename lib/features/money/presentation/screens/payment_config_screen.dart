@@ -54,7 +54,7 @@ class _PaymentConfigScreenState extends ConsumerState<PaymentConfigScreen> {
       errorText: context.l10n.workspaceGenericError,
       action: () async {
         status = await ref
-            .read(moneyRepositoryProvider)
+            .read(paymentGatewayRepositoryProvider)
             .fetchPaymentGatewayStatus(workspace.id);
       },
     )) {
@@ -168,7 +168,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
       domain: 'payments',
       message: 'payment config save failed',
       errorText: l10n.workspaceGenericError,
-      action: () => ref.read(moneyRepositoryProvider).setPaymentCredentials(
+      action: () => ref.read(paymentGatewayRepositoryProvider).setPaymentCredentials(
             workspace.id,
             widget.provider,
             config,
@@ -195,7 +195,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
       message: 'payment config clear failed',
       errorText: l10n.workspaceGenericError,
       action: () => ref
-          .read(moneyRepositoryProvider)
+          .read(paymentGatewayRepositoryProvider)
           .clearPaymentProvider(workspace.id, widget.provider),
     )) {
       return;

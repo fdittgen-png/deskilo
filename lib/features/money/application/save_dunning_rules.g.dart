@@ -57,4 +57,4 @@ final class SaveDunningRulesProvider
   }
 }
 
-String _$saveDunningRulesHash() => r'f1c6acb6e4b5e4c642a9d160357567f3c3908c40';
+String _$saveDunningRulesHash() => r'3c9081d9aea07ed327aa1691023e2272b367a6cd';

@@ -25,6 +25,7 @@ import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/book_profile.dart';
 import '../domain/datev.dart';
+import '../domain/document_numbering.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/export_year.dart';
 import '../domain/fec.dart';
@@ -33,7 +34,6 @@ import '../domain/invoice.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/ledger_entry.dart';
-import '../domain/money_repository.dart';
 import '../domain/posting.dart';
 import '../domain/report_strings.dart';
 import '../domain/saf_t.dart';
@@ -97,7 +97,7 @@ class AccountingExportRun {
   List<ExpenseRepartition> get repartitions => books.repartitions;
   List<BookProfile> get bookProfiles => books.bookProfiles;
   InvoiceQueries get invoiceQueries => ref.read(invoiceQueriesProvider);
-  MoneyRepository get repo => ref.read(moneyRepositoryProvider);
+  DocumentNumbering get repo => ref.read(documentNumberingProvider);
 
   /// Gathers the books, asks which format and for its details, and
   /// exports.

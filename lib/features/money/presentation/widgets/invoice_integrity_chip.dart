@@ -19,7 +19,7 @@ class InvoiceIntegrityChip extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     return FutureBuilder<String>(
-      future: ref.read(moneyRepositoryProvider).verifyInvoiceSignature(invoiceId),
+      future: ref.read(documentNumberingProvider).verifyInvoiceSignature(invoiceId),
       builder: (context, snapshot) {
         final status = snapshot.data;
         if (status == null) return const SizedBox.shrink();

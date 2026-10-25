@@ -7,14 +7,14 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../domain/dunning.dart';
-import '../domain/money_repository.dart';
+import '../domain/dunning_repository.dart';
 import '../providers/money_providers.dart';
 
 part 'save_dunning_rules.g.dart';
 
 class SaveDunningRules {
   const SaveDunningRules(this._repository);
-  final MoneyRepository _repository;
+  final DunningRepository _repository;
 
   /// Stores [rules] as [workspaceId]'s policy. Throws whatever the
   /// repository throws.
@@ -25,4 +25,4 @@ class SaveDunningRules {
 /// The dunning policy's one write.
 @riverpod
 SaveDunningRules saveDunningRules(Ref ref) =>
-    SaveDunningRules(ref.watch(moneyRepositoryProvider));
+    SaveDunningRules(ref.watch(dunningRepositoryProvider));

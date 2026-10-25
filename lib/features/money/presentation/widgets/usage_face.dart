@@ -252,7 +252,7 @@ class UsageRecordCard extends ConsumerWidget {
     if (asked != true || !context.mounted) return;
     try {
       await ref
-          .read(moneyRepositoryProvider)
+          .read(memberAccountCommandsProvider)
           .requestUsageCorrection(record.id, reason: controller.text.trim());
       invalidateUsage(ref);
       invalidateBookingData(ref);
@@ -271,7 +271,7 @@ class UsageRecordCard extends ConsumerWidget {
   Future<void> _remove(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
     try {
-      await ref.read(moneyRepositoryProvider).requestUsageRecordDelete(record.id);
+      await ref.read(memberAccountCommandsProvider).requestUsageRecordDelete(record.id);
       invalidateUsage(ref);
       if (!context.mounted) return;
       AppSnack.success(

@@ -623,6 +623,12 @@ List<Override> _moneyOverrides(MoneyRepository money) => [
       taxReportingRepositoryProvider.overrideWithValue(money),
       commercialTermsProvider.overrideWithValue(money),
       expenseRepositoryProvider.overrideWithValue(money),
+      memberAccountCommandsProvider.overrideWithValue(money),
+      dunningRepositoryProvider.overrideWithValue(money),
+      billingRulesRepositoryProvider.overrideWithValue(money),
+      documentNumberingProvider.overrideWithValue(money),
+      paymentGatewayRepositoryProvider.overrideWithValue(money),
+      eInvoiceTransmissionsProvider.overrideWithValue(money),
       accountingSourceQueriesProvider.overrideWithValue(
         money is AccountingSourceQueries ? money as AccountingSourceQueries : FakeMoneyRepository(),
       ),

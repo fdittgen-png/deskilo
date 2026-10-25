@@ -53,14 +53,25 @@ part 'money_providers.g.dart';
 MoneyRepository moneyRepository(Ref ref) => SupabaseMoneyRepository(
       ref.watch(moneyClientProvider),
       invoices: ref.watch(invoiceQueriesProvider),
-      accounts: ref.watch(memberAccountQueriesProvider));
+      accounts: ref.watch(memberAccountQueriesProvider),
+      templates: ref.watch(reportTemplateRepositoryProvider),
+      commands: ref.watch(invoiceCommandsProvider),
+      tax: ref.watch(taxReportingRepositoryProvider),
+      terms: ref.watch(commercialTermsProvider),
+      expenses: ref.watch(expenseRepositoryProvider),
+      dunning: ref.watch(dunningRepositoryProvider),
+      billing: ref.watch(billingRulesRepositoryProvider),
+      numbering: ref.watch(documentNumberingProvider),
+      accountCommands: ref.watch(memberAccountCommandsProvider),
+      payments: ref.watch(paymentGatewayRepositoryProvider),
+      eInvoices: ref.watch(eInvoiceTransmissionsProvider));
 
 /// The signed-in member's statement for a period ('yyyy-MM').
 /// #1449 — the decision behind Register payment: the sheet says what was
 /// chosen, this says which month it belongs to and whether there is
 /// enough to send.
 @riverpod
-Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
+Payments payments(Ref ref) => Payments(ref.watch(memberAccountCommandsProvider));
 
 /// #1449 — the decision behind the legal-identity Save: which of the two
 /// aggregates is written first, and therefore which one can be left
@@ -73,6 +84,7 @@ Payments payments(Ref ref) => Payments(ref.watch(moneyRepositoryProvider));
 Settlements settlements(Ref ref) => Settlements(
     ref.watch(invoiceActionCommandsProvider), ref.watch(invoiceQueriesProvider));
 
+/// #2591 — the facade's one reader: a rule (billing) and money (expenses).
 @riverpod
 Repartitions repartitions(Ref ref) =>
     Repartitions(ref.watch(moneyRepositoryProvider));
@@ -93,7 +105,7 @@ ExpenseSchedules expenseScheduleCommand(Ref ref) =>
 /// which month's bill it lands on.
 @riverpod
 Consumptions consumptions(Ref ref) =>
-    Consumptions(ref.watch(moneyRepositoryProvider));
+    Consumptions(ref.watch(memberAccountCommandsProvider));
 
 /// #1449 — an expense, and whether it may be filed as typed.
 @riverpod
@@ -134,7 +146,7 @@ Future<List<LedgerEntry>> myLedger(Ref ref) async {
 /// showing them under the next one.
 @riverpod
 Future<List<PaymentIntent>> myPaymentIntents(Ref ref) async {
-  final repository = ref.watch(moneyRepositoryProvider);
+  final repository = ref.watch(paymentGatewayRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   final member = await ref.watch(myMemberProvider.future);
   if (workspace == null || member == null) return const [];
@@ -332,7 +344,7 @@ Future<DunningRules> dunningRules(Ref ref) async {
       );
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return DunningRules.defaults;
-  final rules = await ref.watch(moneyRepositoryProvider).fetchDunningRules(workspace.id);
+  final rules = await ref.watch(dunningRepositoryProvider).fetchDunningRules(workspace.id);
   return rules.withSettings(await settings);
 }
 
@@ -342,7 +354,7 @@ Future<DunningRules> dunningRules(Ref ref) async {
 Future<BillingRules> billingRules(Ref ref) async {
   // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
   // after an await throws if the provider was disposed while in flight.
-  final repository = ref.watch(moneyRepositoryProvider);
+  final repository = ref.watch(billingRulesRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return BillingRules.defaults;
   return repository.fetchBillingRules(workspace.id);
@@ -368,7 +380,7 @@ Future<MemberAccount> myAccount(Ref ref) async {
 Future<Map<String, String>> dunningHolds(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const {};
-  return ref.read(moneyRepositoryProvider).fetchDunningHolds(workspace.id);
+  return ref.read(dunningRepositoryProvider).fetchDunningHolds(workspace.id);
 }
 
 /// invoiceId → its payment match (0067) — the invoice lifecycle state.
@@ -398,7 +410,7 @@ Future<EInvoiceGatewayConfig> eInvoiceGateway(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return EInvoiceGatewayConfig.notConfigured;
   return ref
-      .read(moneyRepositoryProvider)
+      .read(eInvoiceTransmissionsProvider)
       .fetchEInvoiceGateway(workspace.id);
 }
 
@@ -410,7 +422,7 @@ Future<EInvoiceProviderStatus> eInvoiceStatus(Ref ref) async {
   if (workspace == null) {
     return const EInvoiceProviderStatus(configured: false);
   }
-  return ref.read(moneyRepositoryProvider).fetchEInvoiceStatus(workspace.id);
+  return ref.read(eInvoiceTransmissionsProvider).fetchEInvoiceStatus(workspace.id);
 }
 
 /// invoiceId → its latest transmission (0071), for the detail sheet's
@@ -420,7 +432,7 @@ Future<Map<String, InvoiceTransmission>> invoiceTransmissions(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const {};
   return ref
-      .read(moneyRepositoryProvider)
+      .read(eInvoiceTransmissionsProvider)
       .fetchInvoiceTransmissions(workspace.id);
 }
 
@@ -470,7 +482,7 @@ Future<InvoicingOverview> invoicingOverview(Ref ref) async {
       open: const <OpenInvoiceEntry>[],
     );
   }
-  final repo = ref.read(moneyRepositoryProvider);
+  final repo = ref.read(invoiceQueriesProvider);
   final period = previousPeriodOf(ref.read(clockProvider).now());
   final members = (await ref.watch(workspaceMembersProvider.future))
       .where((m) => m.status == MemberStatus.active && !m.isKiosk)
@@ -559,7 +571,7 @@ bool sellerIsAssociation(Ref ref) => InvoiceLegal.fromJson(
 Future<List<NumberSequence>> numberSequences(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
-  return ref.read(moneyRepositoryProvider).fetchNumberSequences(workspace.id);
+  return ref.read(documentNumberingProvider).fetchNumberSequences(workspace.id);
 }
 
 /// #934 — the workspace's status over a range of months.
@@ -570,7 +582,7 @@ Future<WorkspaceStatus> workspaceStatus(Ref ref, String from, String to) async {
     return WorkspaceStatus(from: from, to: to, currency: 'EUR');
   }
   return ref
-      .read(moneyRepositoryProvider)
+      .read(billingRulesRepositoryProvider)
       .fetchWorkspaceStatus(workspace.id, from, to);
 }
 
@@ -579,7 +591,7 @@ Future<WorkspaceStatus> workspaceStatus(Ref ref, String from, String to) async {
 Future<RepartitionRule> repartitionRule(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const RepartitionRule();
-  return ref.read(moneyRepositoryProvider).fetchRepartitionRule(workspace.id);
+  return ref.read(billingRulesRepositoryProvider).fetchRepartitionRule(workspace.id);
 }
 
 /// member id -> name, for the lists that name a member (the To-pay claims).

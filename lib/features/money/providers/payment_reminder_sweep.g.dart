@@ -78,7 +78,7 @@ final class PaymentReminderSweepProvider
 }
 
 String _$paymentReminderSweepHash() =>
-    r'c66d1e9f2c6959259276b0e887ae45ff0964eff5';
+    r'01eea627e2ea5368175ef26ca72bd71d43fc009e';
 
 /// #726 — the client-side clock for automatic payment reminders: the
 /// first admin who opens Finances in a session runs the sweep for the
