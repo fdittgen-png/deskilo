@@ -1,34 +1,69 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'space_scan.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// #2386 — part 1 of _SpaceSheetState, split out of space_scan.dart so no
-// file holds the whole class.
-extension _SpaceSheetStatePart1 on _SpaceSheetState {
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/time/clock.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../../events/providers/event_providers.dart';
+import '../../../workspace/domain/booking_granularity.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/booking_error_text.dart';
+import '../../domain/reservation_repository.dart';
+import '../../domain/series_preview.dart';
+import '../../domain/space_bookability.dart';
+import '../../providers/reservation_providers.dart';
+import 'booking_sheet.dart';
+import 'series_preview_dialog.dart';
+import 'series_result_dialog.dart';
 
-  List<Reservation> _reservations(({DateTime start, DateTime end}) window) =>
-      reservationsAcrossWindow(ref, window.start, window.end);
+/// #2494 — the space sheet's NEW whole-space bookings: check in now,
+/// reserve a period (with repetition), or assign the space to another
+/// member. The sheet owns the busy flag and the repository; this class
+/// owns the routine around each write — busy-guard, call, report what the
+/// server said, close, refresh.
+class SpaceSheetBooking {
+  const SpaceSheetBooking({
+    required this.context,
+    required this.ref,
+    required this.repository,
+    required this.isBusy,
+    required this.setBusy,
+    required this.window,
+  });
 
-  Future<void> _create({
-    String? seatId,
-    String? deskId,
-    String? officeId,
-    String? levelId,
+  /// The sheet's own context: a success closes the sheet.
+  final BuildContext context;
+  final WidgetRef ref;
+  final ReservationRepository repository;
+  final bool Function() isBusy;
+  final ValueSetter<bool> setBusy;
+
+  /// The walk-up window, read when a booking starts.
+  final ({DateTime start, DateTime end}) Function() window;
+
+  /// Books [ids] for myself — checked in now when [checkIn], else for
+  /// [startsAt]..[endsAt] (the walk-up window by default).
+  Future<void> create(
+    WholeSpaceIds ids, {
     required bool checkIn,
     DateTime? startsAt,
     DateTime? endsAt,
   }) async {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null || _busy) return;
-    _update(() => _busy = true);
-    final window = _window;
+    if (workspace == null || isBusy()) return;
+    setBusy(true);
+    final window = this.window();
     try {
-      await ref.read(reservationRepositoryProvider).create(
+      await repository.create(
             workspaceId: workspace.id,
-            seatId: seatId,
-            deskId: deskId,
-            officeId: officeId,
-            levelId: levelId,
+            deskId: ids.deskId,
+            officeId: ids.officeId,
+            levelId: ids.levelId,
             startsAt: startsAt ?? window.start,
             endsAt: endsAt ?? window.end,
             checkIn: checkIn,
@@ -38,8 +73,8 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
       TraceLogger.instance
           .error('reservations', 'space booking failed',
               error: e, stackTrace: st);
-      if (!mounted) return;
-      _update(() => _busy = false);
+      if (!context.mounted) return;
+      setBusy(false);
       // Shared mapper (maintainability audit): one switch for every
       // booking surface instead of a drifting paste per screen.
       AppSnack.error(
@@ -53,7 +88,7 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
       );
       return;
     }
-    if (!mounted) return;
+    if (!context.mounted) return;
     Navigator.of(context).pop();
     AppSnack.success(
       context,
@@ -75,13 +110,13 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
   }) async {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null || _busy) return;
-    _update(() => _busy = true);
+    if (workspace == null || isBusy()) return;
+    setBusy(true);
     final who =
         (ref.read(memberNamesProvider).value ?? const {})[subjectMemberId] ??
             '';
     try {
-      await ref.read(reservationRepositoryProvider).createFor(
+      await repository.createFor(
             workspaceId: workspace.id,
             subjectMemberId: subjectMemberId,
             levelId: levelId,
@@ -93,8 +128,8 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
       TraceLogger.instance.error(
           'reservations', 'space booking for member failed',
           error: e, stackTrace: st);
-      if (!mounted) return;
-      _update(() => _busy = false);
+      if (!context.mounted) return;
+      setBusy(false);
       AppSnack.error(
         context,
         bookingErrorText(
@@ -106,7 +141,7 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
       );
       return;
     }
-    if (!mounted) return;
+    if (!context.mounted) return;
     Navigator.of(context).pop();
     AppSnack.success(
       context,
@@ -116,85 +151,23 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
     invalidateBookingData(ref);
   }
 
-  /// Checks in to MY existing reservation of this space (field
-  /// request: an already-reserved table/room must check in, not sit
-  /// behind a disabled "conflict" button — my own reservation IS the
-  /// conflict).
-  /// Checking IN to a booking of mine, and checking OUT of it, are the
-  /// same routine with a different verb — busy-guard, call, report what
-  /// the server said, close, refresh. They were written twice; one of
-  /// the two would eventually stop reporting refusals the way the other
-  /// does, which on this sheet reads as "nothing happened".
-  Future<void> _actOnExisting(
-    Reservation reservation, {
-    required Future<void> Function(String id) act,
-    required String what,
-  }) async {
-    final l10n = context.l10n;
-    if (_busy) return;
-    _update(() => _busy = true);
-    try {
-      await act(reservation.id);
-    } on Object catch (e, st) {
-      TraceLogger.instance
-          .error('reservations', 'space $what failed', error: e, stackTrace: st);
-      if (!mounted) return;
-      _update(() => _busy = false);
-      AppSnack.error(
-        context,
-        // Every rule about whether this is legal lives on the server
-        // (0116); a refusal must say WHY rather than merely fail.
-        bookingErrorText(
-          l10n,
-          e,
-          l10n.workspaceGenericError,
-        ),
-        replace: true,
-      );
-      return;
-    }
-    if (!mounted) return;
-    Navigator.of(context).pop();
-    AppSnack.success(
-      context,
-      l10n.kioskDone,
-      replace: true,
-    );
-    // The plan behind this sheet is now stale.
-    invalidateBookingData(ref);
-  }
-
-  Future<void> _checkInExisting(Reservation reservation) => _actOnExisting(
-        reservation,
-        act: (id) => ref.read(reservationRepositoryProvider).checkIn(id),
-        what: 'check-in',
-      );
-
-  /// Ending a live whole-space check-in from the same sheet that started
-  /// it — the affordance whose absence made this sheet a dead end.
-  Future<void> _checkOutExisting(Reservation reservation) => _actOnExisting(
-        reservation,
-        act: (id) => ref.read(reservationRepositoryProvider).checkOut(id),
-        what: 'check-out',
-      );
-
   /// Whole-space RESERVE (0065, field request): the same
   /// granularity-aware period picker and repetition the seat sheet
   /// offers — the configuration decides which picker shows. The
   /// server re-checks conflicts for whatever window is chosen. Since
   /// #638 the SAME sheet also carries the "For the member" selector the
-  /// level rail's own sheet used to own alone.
-  Future<void> _reserveSpace({
-    String? deskId,
-    String? officeId,
-    String? levelId,
+  /// level rail's own sheet used to own alone ([subjects]; empty for a
+  /// plain member). [initial] seeds the picker.
+  Future<void> reserve(
+    WholeSpaceIds ids, {
     required String name,
-    required bool granted,
     String? knownPrice,
+    String? levelName,
+    required List<({String id, String name})> subjects,
+    required ({DateTime start, DateTime end}) initial,
   }) async {
-    final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null || _busy) return;
+    if (workspace == null || isBusy()) return;
     final granularity =
         ref.read(bookingGranularityProvider).value ??
             BookingGranularity.flexible;
@@ -202,8 +175,6 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
     final allowSeries = ref
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.seriesBooking);
-    final initial = widget.initialWindow ?? _window;
-    final subjects = _subjectOptions(l10n, granted: granted);
 
     final choice = await showAppSheet<BookingChoice>(
       context: context,
@@ -213,7 +184,7 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
         now: ref.read(clockProvider).now(),
         timezone: workspace.timezone,
         resourcePriceLabel: knownPrice,
-        resourceContext: [workspace.name, ?widget.level?.name],
+        resourceContext: [workspace.name, ?levelName],
         start: initial.start,
         initialEnd: initial.end,
         cap: null,
@@ -226,7 +197,7 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
         allowSeries: allowSeries,
       ),
     );
-    if (choice == null || !mounted) return;
+    if (choice == null || !context.mounted) return;
 
     // Assigned to somebody else: the 0079 admin path — their own
     // confirmation flow applies (#106), so no series, no check-in.
@@ -234,7 +205,7 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
     if (subjectId != null && subjectId != me?.id) {
       await _createFor(
         subjectMemberId: subjectId,
-        levelId: levelId,
+        levelId: ids.levelId,
         startsAt: choice.start,
         endsAt: choice.end,
       );
@@ -242,40 +213,48 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
     }
 
     if (choice.pattern == null) {
-      await _create(
-        deskId: deskId,
-        officeId: officeId,
-        levelId: levelId,
+      await create(
+        ids,
         checkIn: false,
         startsAt: choice.start,
         endsAt: choice.end,
       );
       return;
     }
-    // #2575 — the dates that would fail are named before anything books.
+    await _series(ids, workspace.id, choice);
+  }
+
+  /// A repeated reservation: #2575 — the dates that would fail are named
+  /// before anything books.
+  Future<void> _series(
+    WholeSpaceIds ids,
+    String workspaceId,
+    BookingChoice choice,
+  ) async {
+    final l10n = context.l10n;
     final book = await confirmSeriesPreview(
       context,
       () => ref.read(seriesPreviewerProvider),
       SeriesAsk(
-        workspaceId: workspace.id,
-        deskId: deskId,
-        officeId: officeId,
-        levelId: levelId,
+        workspaceId: workspaceId,
+        deskId: ids.deskId,
+        officeId: ids.officeId,
+        levelId: ids.levelId,
         firstStart: choice.start,
         firstEnd: choice.end,
         pattern: choice.pattern!,
         until: choice.until!,
       ),
     );
-    if (!book || !mounted) return;
-    _update(() => _busy = true);
+    if (!book || !context.mounted) return;
+    setBusy(true);
     final SeriesResult result;
     try {
-      result = await ref.read(reservationRepositoryProvider).createSeries(
-            workspaceId: workspace.id,
-            deskId: deskId,
-            officeId: officeId,
-            levelId: levelId,
+      result = await repository.createSeries(
+            workspaceId: workspaceId,
+            deskId: ids.deskId,
+            officeId: ids.officeId,
+            levelId: ids.levelId,
             firstStart: choice.start,
             firstEnd: choice.end,
             pattern: choice.pattern!,
@@ -284,8 +263,8 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
     } on Object catch (e, st) {
       TraceLogger.instance.error('reservations', 'space series failed',
           error: e, stackTrace: st);
-      if (!mounted) return;
-      _update(() => _busy = false);
+      if (!context.mounted) return;
+      setBusy(false);
       AppSnack.error(
         context,
         bookingErrorText(
@@ -297,20 +276,9 @@ extension _SpaceSheetStatePart1 on _SpaceSheetState {
       );
       return;
     }
-    if (!mounted) return;
+    if (!context.mounted) return;
     Navigator.of(context).pop();
     invalidateBookingData(ref);
     await showSeriesResultDialog(context, result);
   }
-
-  /// Reserve-or-check-in for one free seat — since #622 the SHARED
-  /// kiosk one-sheet core (action + derived period), authenticated:
-  /// the member confirms instead of presenting a badge.
-  Future<void> _seatActions(Seat seat) =>
-      showSpaceActSheet(
-        context,
-        seat: seat,
-        plan: widget.plan,
-        title: seat.name,
-      );
 }

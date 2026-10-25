@@ -184,8 +184,7 @@ class ReservePlanView extends ConsumerWidget {
     unawaited(showSpaceSheet(
       context,
       kind: SpaceKind.level,
-      level: level,
-      plan: plan,
+      space: (level: level, office: null, desk: null, seat: null, plan: plan),
       initialWindow: (start: window.start, end: window.end),
       // #687 — the level button is the OWNER's assignment path (#638). With
       // no roster it silently degraded to "book this floor for myself".

@@ -128,14 +128,12 @@ class ReserveCanvas extends ConsumerWidget {
                     : office != null
                     ? SpaceKind.office
                     : SpaceKind.level,
-                level: level,
-                office:
-                    office ??
-                    plan.offices
-                        .where((o) => o.id == desk?.officeId)
-                        .firstOrNull,
-                desk: desk,
-                plan: plan,
+                space: (level: level, desk: desk, seat: null, plan: plan,
+                  office:
+                      office ??
+                      plan.offices
+                          .where((o) => o.id == desk?.officeId)
+                          .firstOrNull),
                 // Seed the reserve picker with the hub's
                 // selected day + period (0065).
                 initialWindow: (start: window.start, end: window.end),

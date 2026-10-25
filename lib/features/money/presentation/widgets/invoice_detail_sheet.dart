@@ -9,7 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/billing_rules.dart';
+import '../../application/invoice_detail_facts.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../domain/invoice.dart';
 import '../../providers/money_providers.dart';
@@ -167,39 +167,37 @@ class _InvoiceDetailBody extends ConsumerWidget {
           ];
   }
 
+  /// #812 — the action the journey expects from an issuer, if any.
+  InvoiceAction get _expected => !canIssue
+      ? InvoiceAction.downloadPdf
+      : switch (journey?.move) {
+          InvoiceMove.issuerMatchesPayment => InvoiceAction.markPaid,
+          InvoiceMove.issuerReplaces => InvoiceAction.replace,
+          InvoiceMove.memberPays ||
+          InvoiceMove.memberPaysRemainder
+              when journey?.reminderDue != null =>
+            InvoiceAction.remind,
+          _ => InvoiceAction.downloadPdf,
+        };
+
+  Widget _line(BuildContext context, String text) => Padding(
+        padding: const EdgeInsets.only(top: AppSpacing.xs),
+        child: Text(text, style: Theme.of(context).textTheme.bodySmall?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        )),
+      );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final association = ref.watch(sellerIsAssociationProvider);
     // #1913 — an active dunning hold, for whoever issues invoices.
     final holds = canIssue ? ref.watch(dunningHoldsProvider).value : null;
     final heldReason = holds == null ? null : holds[invoice.id];
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final muted = theme.colorScheme.onSurfaceVariant;
-    final dateFormat = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final facts = InvoiceDetailFacts.of(invoice, match,
+        canIssue: canIssue,
+        showMemberName: showMemberName,
+        heldReason: heldReason);
     final status = invoiceLifecycleOf(invoice, match);
-    final standingMatch = match != null && !match!.pending ? match : null;
-    // #812 — the action the journey expects from an issuer, if any.
-    final expected = !canIssue
-        ? InvoiceAction.downloadPdf
-        : switch (journey?.move) {
-            InvoiceMove.issuerMatchesPayment => InvoiceAction.markPaid,
-            InvoiceMove.issuerReplaces => InvoiceAction.replace,
-            InvoiceMove.memberPays ||
-            InvoiceMove.memberPaysRemainder
-                when journey?.reminderDue != null =>
-              InvoiceAction.remind,
-            _ => InvoiceAction.downloadPdf,
-          };
-
-    Widget line(String text) => Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.xs),
-          child: Text(text, style: theme.textTheme.bodySmall?.copyWith(
-            color: muted,
-          )),
-        );
 
     final sections = InvoiceDetailSections(
       invoice: invoice,
@@ -225,68 +223,9 @@ class _InvoiceDetailBody extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Header — number, month, status.
-              Row(children: [
-                Expanded(
-                  child: Text(
-                    invoice.number,
-                    key: const ValueKey('invoice-detail-number'),
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      decoration: invoice.isVoided
-                          ? TextDecoration.lineThrough
-                          : null,
-                    ),
-                  ),
-                ),
-                InvoiceStatusChip(status: status),
-              ]),
-              // #802/#804 — WHAT this document is. A subscription invoice
-              // dated before the month it charges looks like a mistake
-              // unless it says so; a settlement is meaningless without
-              // the list of what it replaced.
-              if (invoice.kind != InvoiceKind.full) sections.kindRow(context),
-              line([
-                invoicePeriodLabel(context, invoice),
-                if (showMemberName && invoice.clientName.isNotEmpty)
-                  invoice.clientName,
-              ].join(' · ')),
-              // #812 — the journey first: the four steps, then the move.
-              if (journey case final journey?) ...[
-                const SizedBox(height: AppSpacing.md),
-                InvoiceJourneyBar(journey: journey),
-                const SizedBox(height: AppSpacing.sm),
-                InvoiceMoveLine(
-                  journey: journey,
-                  invoice: invoice,
-                  match: match,
-                  issuer: canIssue,
-                ),
-              ],
+              ..._header(context, status, facts, sections),
               const Divider(height: AppSpacing.xl),
-
-              // The SNAPSHOT — what the document itself says, never the
-              // live profile (0060).
-              line('${l10n.invoicePdfIssuedOn} '
-                  '${dateFormat.format(invoice.issuedAt)}'
-                  '${invoice.issuerName.isEmpty ? '' : ' · '
-                      '${l10n.invoicePdfIssuedBy} '
-                      '${invoice.issuerName}'}'),
-              // #910 — "Billed to: , SASU KaloA, …": the name was empty
-              // and its comma stayed behind. Build the parts, then join.
-              // #1913 — why reminders stop, and a due date nobody agreed
-              // to, said where the issuer decides.
-              if (canIssue && heldReason != null)
-                line(l10n.invoiceHeldNote(
-                        dunningHoldReasonLabel(l10n, heldReason))),
-              if (canIssue &&
-                  invoice.maturityBasis != null &&
-                  invoice.maturityBasis != 'document_term')
-                line(l10n.invoiceMaturityReview),
-              line('${l10n.invoicePdfBilledTo}: '
-                  '${[
-                    invoice.clientName,
-                    ...invoice.memberAddress.split('\n'),
-                  ].map((p) => p.trim()).where((p) => p.isNotEmpty).join(', ')}'),
+              ..._snapshot(context, facts),
               const Divider(height: AppSpacing.xl),
 
               ReminderEvidenceList(invoiceId: invoice.id),
@@ -296,30 +235,11 @@ class _InvoiceDetailBody extends ConsumerWidget {
               // every invoice inside it AND their positions; a settled
               // invoice names the document that now carries its balance,
               // because otherwise it just looks unpaid and unchased.
-              if (invoice.settles.isNotEmpty)
+              if (facts.showSettlementTrail)
                 ...sections.settlementTrail(context, association: association),
-              if (invoice.settledByInvoiceId != null)
-                Container(
-                  key: const ValueKey('invoice-detail-folded'),
-                  margin: const EdgeInsets.only(top: AppSpacing.sm),
-                  padding: AppSpacing.mdAll,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceContainerHighest,
-                    borderRadius: AppRadius.mdAll,
-                  ),
-                  child: Text(
-                    [
-                      if (settledByNumber.isNotEmpty)
-                        l10n.settlementFoldedIn(settledByNumber)
-                      else
-                        l10n.settlementSettledBy,
-                      l10n.settlementDocumentationOnly,
-                    ].join(' '),
-                    style: theme.textTheme.bodySmall,
-                  ),
-                ),
+              if (facts.showFolded) _folded(context),
 
-              ...sections.timeline(context, standingMatch),
+              ...sections.timeline(context, facts.standingMatch),
               // #841 — who released this document, in what order, and
               // when. Silent when no rule ever governed the match.
               if (match?.eventId case final eventId?)
@@ -329,10 +249,102 @@ class _InvoiceDetailBody extends ConsumerWidget {
               // Every permitted action, spelled out. #812 — the one the
               // journey expects from the issuer comes FIRST and filled;
               // otherwise the PDF keeps its historical place.
-              ..._actions(context, status, expected, heldReason),
+              ..._actions(context, status, _expected, heldReason),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  /// Number, status, what the document is, its month, and the journey.
+  List<Widget> _header(BuildContext context, InvoiceLifecycle status,
+      InvoiceDetailFacts facts, InvoiceDetailSections sections) {
+    final theme = Theme.of(context);
+    return [
+      // Header — number, month, status.
+      Row(children: [
+        Expanded(
+          child: Text(
+            invoice.number,
+            key: const ValueKey('invoice-detail-number'),
+            style: theme.textTheme.titleMedium?.copyWith(
+              decoration: invoice.isVoided
+                  ? TextDecoration.lineThrough
+                  : null,
+            ),
+          ),
+        ),
+        InvoiceStatusChip(status: status),
+      ]),
+      // #802/#804 — WHAT this document is. A subscription invoice
+      // dated before the month it charges looks like a mistake
+      // unless it says so; a settlement is meaningless without
+      // the list of what it replaced.
+      if (facts.showKindRow) sections.kindRow(context),
+      _line(context, [
+        invoicePeriodLabel(context, invoice),
+        ?facts.client,
+      ].join(' · ')),
+      // #812 — the journey first: the four steps, then the move.
+      if (journey case final journey?) ...[
+        const SizedBox(height: AppSpacing.md),
+        InvoiceJourneyBar(journey: journey),
+        const SizedBox(height: AppSpacing.sm),
+        InvoiceMoveLine(
+          journey: journey,
+          invoice: invoice,
+          match: match,
+          issuer: canIssue,
+        ),
+      ],
+    ];
+  }
+
+  /// The SNAPSHOT — what the document itself says, never the live
+  /// profile (0060) — and the issuer's notes on it.
+  List<Widget> _snapshot(BuildContext context, InvoiceDetailFacts facts) {
+    final l10n = context.l10n;
+    final dateFormat = DateFormat.yMMMd(
+      Localizations.maybeLocaleOf(context)?.toString(),
+    );
+    return [
+      _line(context, '${l10n.invoicePdfIssuedOn} '
+          '${dateFormat.format(invoice.issuedAt)}'
+          '${invoice.issuerName.isEmpty ? '' : ' · '
+              '${l10n.invoicePdfIssuedBy} '
+              '${invoice.issuerName}'}'),
+      // #1913 — why reminders stop, and a due date nobody agreed
+      // to, said where the issuer decides.
+      if (facts.heldReason case final reason?)
+        _line(context,
+            l10n.invoiceHeldNote(dunningHoldReasonLabel(l10n, reason))),
+      if (facts.showMaturityReview) _line(context, l10n.invoiceMaturityReview),
+      _line(context, '${l10n.invoicePdfBilledTo}: ${facts.billedTo}'),
+    ];
+  }
+
+  /// A settled invoice names the settlement that carries its balance.
+  Widget _folded(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    return Container(
+      key: const ValueKey('invoice-detail-folded'),
+      margin: const EdgeInsets.only(top: AppSpacing.sm),
+      padding: AppSpacing.mdAll,
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHighest,
+        borderRadius: AppRadius.mdAll,
+      ),
+      child: Text(
+        [
+          if (settledByNumber.isNotEmpty)
+            l10n.settlementFoldedIn(settledByNumber)
+          else
+            l10n.settlementSettledBy,
+          l10n.settlementDocumentationOnly,
+        ].join(' '),
+        style: theme.textTheme.bodySmall,
       ),
     );
   }
