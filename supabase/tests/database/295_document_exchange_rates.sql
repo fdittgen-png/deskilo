@@ -298,7 +298,7 @@ select ok(not has_function_privilege('anon', 'public.record_purchase_exchange_ra
           and not has_function_privilege('authenticated', 'public.posting_at_rate(jsonb, text, numeric, date, text)', 'execute')
           and not has_function_privilege('authenticated', 'public.purchase_exchange_rate_write(uuid, uuid, uuid, jsonb)', 'execute'),
   'G1 the RPC for signed-in callers only; the converter and the writer for nobody');
-select like(pg_temp.as_text(pg_temp.u(1), format(
+select alike(pg_temp.as_text(pg_temp.u(1), format(
     'insert into public.document_exchange_rates (workspace_id, document_kind, document_id, currency, functional_currency, rate, rate_date, source) values (%L, ''purchase'', %L, ''CHF'', ''EUR'', 2, current_date, ''bank'') returning id::text',
     current_setting('t.a'), pg_temp.doc('CH-1'))), 'error: permission denied%'::text,
   'G2 a client never writes a rate by hand'::text);
