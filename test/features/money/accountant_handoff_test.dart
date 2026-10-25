@@ -136,7 +136,7 @@ void main() {
         'Evil, =1+1\n"quoted";more',
       );
       final rows = _cells(out.csv);
-      expect(rows.single.length, accountantCsvColumns.length);
+      expect(rows.single.length, out.report.columns.length);
       expect(rows.single[3], 'A B =cmd');
       expect(rows.single[5], 'x,"y";z');
       final preamble = out.csv.split('\n').first;
@@ -311,7 +311,8 @@ void main() {
       final out = _export([_inv(id: '1')]);
       final json = jsonDecode(out.report.toPrettyJson()) as Map;
       expect(json['format_version'], accountantCsvFormatVersion);
-      expect(json['columns'], accountantCsvColumns);
+      expect(json['columns'], out.report.columns);
+      expect(out.report.columns.take(accountantCsvColumns.length), accountantCsvColumns);
       expect((json['file'] as Map)['sha256'], out.report.csvSha256);
       expect(json['clean'], isTrue);
     });

@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
 import 'package:meta/meta.dart';
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import 'billing_rules.dart';
 import 'invoice.dart';
+import 'vat_components.dart';
+import 'vat_rate.dart';
 
 /// A plain, self-describing CSV of the period's invoices and settlements
 /// (#669) — for the ten supported countries that mandate no particular
@@ -28,7 +32,9 @@ import 'invoice.dart';
 
 /// #1640 — bumped when a column, the encoding or the text policy
 /// changes; the handoff report quotes it.
-const int accountantCsvFormatVersion = 2;
+/// #2378 — 3: the `tax_components` column, and one column per tax key
+/// of the period in place of the fixed GST/HST, QST and PST columns.
+const int accountantCsvFormatVersion = 3;
 
 /// #1640 — the longest text a cell carries; longer is cut with an
 /// ellipsis, so a pasted essay cannot turn one row into a page.
@@ -57,19 +63,72 @@ int accountantGrossCents(Invoice invoice) => invoice.isCreditNote
     ? invoice.lines.fold(0, (sum, line) => sum + line.amountCents)
     : invoice.chargesCents;
 
-/// The columns, in order — the handoff report quotes them.
-const List<String> accountantCsvColumns = _columns;
 
-/// #2361 — appended, for a file that holds an invoice with its taxes apart
-/// (Canada): the GST/HST, the QST and the PST of each invoice in their own
-/// column. A file without such an invoice keeps the columns it always had.
-const List<String> _taxColumns = [
-  'vat_gst_hst',
-  'vat_qst',
-  'vat_pst',
-];
+/// #2378 — the key of one tax a total is made of, which names its column:
+/// the scheme of a Canadian tax (`GST`, `HST`, `QST`, `PST`), the level of
+/// a US sales tax (`state_tax`, every other level `local_tax`), and for a
+/// total stored without components, `VAT` and its rate (`VAT 20`).
+@visibleForTesting
+String accountantTaxKey(InvoiceVatTotal total, [VatComponent? component]) {
+  final key = switch (component) {
+    null => 'VAT ${_rateText(total.percent)}',
+    VatComponent(level: '', :final scheme) => scheme,
+    VatComponent(level: _stateLevel) => 'state_tax',
+    _ => 'local_tax',
+  };
+  // A header cell is never quoted: only what a column name may hold.
+  return key.replaceAll(RegExp(r'[^A-Za-z0-9_ .]'), '_');
+}
 
-const _columns = [
+/// #2362 — the level of a US sales tax levied by the state itself.
+const _stateLevel = 'state';
+
+/// #2378 — the tax of [invoice] per key, in the order the keys appear.
+/// A total with no tax (zero-rated, exempt) adds no key.
+Map<String, int> _taxesOf(Invoice invoice) {
+  final taxes = <String, int>{};
+  void add(String key, int cents) =>
+      taxes.update(key, (sum) => sum + cents, ifAbsent: () => cents);
+  for (final total in invoice.vatTotals) {
+    if (total.components.isEmpty) {
+      if (total.vatCents != 0) add(accountantTaxKey(total), total.vatCents);
+      continue;
+    }
+    for (final c in total.components) {
+      if (c.taxCents != 0) add(accountantTaxKey(total, c), c.taxCents);
+    }
+  }
+  return taxes;
+}
+
+/// #2378 — every tax of [invoice] as frozen at issue, one object per
+/// component, amounts in integer minor units. A total stored without
+/// components is one object marked `"split": false`: it is not presented
+/// as a breakdown it never had.
+String _taxComponentsJson(Invoice invoice) => jsonEncode([
+  for (final total in invoice.vatTotals)
+    if (total.components.isEmpty)
+      {
+        'key': accountantTaxKey(total),
+        'category': total.category,
+        'percent': total.percent,
+        'base_cents': total.netCents,
+        'tax_cents': total.vatCents,
+        'split': false,
+      }
+    else
+      for (final c in total.components)
+        {
+          'key': accountantTaxKey(total, c),
+          'category': total.category,
+          ...c.toJson(),
+          if (total.jurisdiction.isNotEmpty) 'jurisdiction': total.jurisdiction,
+        },
+]);
+
+/// The fixed columns, in order; the tax key columns of the period follow.
+@visibleForTesting
+const List<String> accountantCsvColumns = [
   'invoice_number',
   'issued_on',
   'period',
@@ -89,6 +148,7 @@ const _columns = [
   'paid_on',
   'payment_status',
   'payment_note',
+  'tax_components',
 ];
 
 /// Builds the CSV. [generatedAt] and the period bounds go in a `#`
@@ -115,11 +175,10 @@ String buildAccountantCsv({
     });
   final rows = ordered.where((i) => i.kind != InvoiceKind.settlement);
 
-  // #2361 — the taxes apart, only when an invoice states them.
-  final withTaxes = rows.any(
-    (i) => i.vatTotals.any((t) => t.components.isNotEmpty),
-  );
-  final columns = [..._columns, if (withTaxes) ..._taxColumns];
+  // #2378 — one column per tax key of the period, in order of appearance.
+  final taxes = {for (final i in rows) i.id: _taxesOf(i)};
+  final taxKeys = <String>{for (final t in taxes.values) ...t.keys};
+  final columns = [...accountantCsvColumns, ...taxKeys];
 
   final buffer = StringBuffer()
     ..writeln('# DesKilo accounting export — ${_inertPreamble(workspaceName)}')
@@ -176,27 +235,13 @@ String buildAccountantCsv({
       // looking unpaid when someone is mid-validation on it.
       _accountantCsvText(match?.status),
       _accountantCsvText(match?.note),
-      if (withTaxes)
-        for (final schemes in const [
-          {'GST', 'HST'},
-          {'QST'},
-          {'PST'},
-        ])
-          minorToText(_taxOf(invoice, schemes), invoice.currency),
+      _accountantCsvText(_taxComponentsJson(invoice)),
+      for (final key in taxKeys)
+        minorToText(taxes[invoice.id]![key] ?? 0, invoice.currency),
     ].join(','));
   }
   return buffer.toString();
 }
-
-/// The tax of [invoice] in the given schemes, from the components it froze.
-int _taxOf(Invoice invoice, Set<String> schemes) => invoice.vatTotals.fold(
-  0,
-  (sum, t) =>
-      sum +
-      t.components
-          .where((c) => schemes.contains(c.scheme))
-          .fold(0, (a, c) => a + c.taxCents),
-);
 
 /// 5 -> 5, 9.975 -> 9.975.
 String _rateText(double value) => value == value.roundToDouble()

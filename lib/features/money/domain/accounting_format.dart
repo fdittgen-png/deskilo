@@ -272,7 +272,7 @@ const List<AccountingTarget> accountingTargets = [
     transport: AccountingTransport.file,
     payload: AccountingPayload.journal,
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
-    taxCodeModel: TaxCodeModel.none,
+    taxCodeModel: TaxCodeModel.perComponent,
     format: fecFormat,
     // #2376 — the client code of an auxiliary account: the plan
     // comptable's practice of up to 13 capitals and digits after the
