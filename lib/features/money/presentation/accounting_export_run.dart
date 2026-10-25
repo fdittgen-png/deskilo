@@ -97,6 +97,12 @@ class AccountingExportRun {
   List<LedgerEntry> get ledger => books.ledger;
   List<ExpenseRepartition> get repartitions => books.repartitions;
   List<BookProfile> get bookProfiles => books.bookProfiles;
+  /// The member numbers held today, by member id: a document issued
+  /// before numbers were frozen carries none.
+  Map<String, String> get memberNumbers => {
+    for (final m in [...?ref.read(workspaceMembersProvider).value])
+      m.id: m.memberNumber,
+  };
   InvoiceQueries get invoiceQueries => ref.read(invoiceQueriesProvider);
   DocumentNumbering get repo => ref.read(documentNumberingProvider);
 

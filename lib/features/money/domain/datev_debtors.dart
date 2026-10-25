@@ -5,6 +5,8 @@
 // `member`), never invented. DATEV keeps open items per Debitor; one
 // collective account would leave the accountant to split every customer
 // by hand.
+import 'package:meta/meta.dart';
+
 import 'datev_problem.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
@@ -15,6 +17,7 @@ import 'ledger_entry.dart';
 /// A number that already is a Debitor (all digits, one longer than the
 /// Sachkonten, in range) is taken as it is; any other number is the
 /// counter it carries added to the first Debitor, so `M-0007` is 10007.
+@visibleForTesting
 String? datevDebtorOf(String number, int accountLength) {
   final digits = number.replaceAll(RegExp('[^0-9]'), '');
   if (digits.isEmpty) return null;

@@ -85,7 +85,7 @@ abstract final class _Lengths {
 const String _noType = '0';
 const String _company = '2';
 
-String _q(String text, int max) =>
+String _text(String text, int max) =>
     csvCell(datevClip(text, max), dialect: CsvDialect.datev, quoteEmpty: true);
 
 /// The Stammdaten of [parties] (party by Debitor), with the BOM: one row per
@@ -142,23 +142,23 @@ String _row(String account, InvoiceParty p) {
   final company = p.company.isNotEmpty;
   fields[0] = account;
   if (company) {
-    fields[1] = _q(p.company, _Lengths.name);
+    fields[1] = _text(p.company, _Lengths.name);
   } else {
-    fields[5] = _q(p.name, _Lengths.name);
+    fields[5] = _text(p.name, _Lengths.name);
   }
   fields[6] = company ? _company : _noType;
-  fields[7] = _q(p.memberNumber, _Lengths.shortName);
+  fields[7] = _text(p.memberNumber, _Lengths.shortName);
   final vat = p.vatId.replaceAll(' ', '');
   final prefix = RegExp('^[A-Z]{2}').firstMatch(vat)?.group(0);
   if (prefix != null) {
-    fields[8] = _q(prefix, _Lengths.country);
-    fields[9] = _q(vat.substring(prefix.length), _Lengths.vatId);
+    fields[8] = _text(prefix, _Lengths.country);
+    fields[9] = _text(vat.substring(prefix.length), _Lengths.vatId);
   }
-  fields[15] = _q(p.street, _Lengths.street);
-  fields[17] = _q(p.postalCode, _Lengths.postalCode);
-  fields[18] = _q(p.city, _Lengths.city);
-  fields[19] = _q(p.country, _Lengths.country);
-  fields[28] = _q(p.phone, _Lengths.phone);
-  fields[32] = _q(p.email, _Lengths.email);
+  fields[15] = _text(p.street, _Lengths.street);
+  fields[17] = _text(p.postalCode, _Lengths.postalCode);
+  fields[18] = _text(p.city, _Lengths.city);
+  fields[19] = _text(p.country, _Lengths.country);
+  fields[28] = _text(p.phone, _Lengths.phone);
+  fields[32] = _text(p.email, _Lengths.email);
   return fields.join(';');
 }

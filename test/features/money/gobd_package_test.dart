@@ -48,6 +48,7 @@ final _sequences = [
 String _procedure(AppLocalizations l10n) => buildGobdProcedureDocument(l10n, (
   workspace: 'Cowork',
   country: 'DE',
+  reference: ActiveTaxReference.current,
   from: _from,
   to: _to,
   generatedAt: DateTime(2027, 1, 5),

@@ -13,6 +13,7 @@
 // complete general ledger.
 import 'dart:convert';
 
+import '../../../core/money/money_text.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
 import 'accounting_source_snapshot.dart';
@@ -24,6 +25,41 @@ import 'invoice.dart';
 import 'ledger_entry.dart';
 import 'number_sequence.dart';
 import 'vat_tax_point.dart';
+
+/// How a column is typed in the index.
+enum GobdType { text, amount, number, percent, date }
+
+/// One described column; the key columns of a table come first.
+class GobdColumn {
+  const GobdColumn(this.name, this.description, this.type, {this.key = false});
+
+  final String name;
+  final String description;
+  final GobdType type;
+  final bool key;
+}
+
+/// One table of the package: its file, what it holds, its columns, its rows
+/// (cells already written in the column's type) and its joins.
+class GobdTable {
+  const GobdTable({
+    required this.url,
+    required this.name,
+    required this.description,
+    required this.columns,
+    required this.rows,
+    this.foreignKeys = const [],
+  });
+
+  final String url;
+  final String name;
+  final String description;
+  final List<GobdColumn> columns;
+  final List<List<Object?>> rows;
+
+  /// Each join: the columns of this table and the table they reference.
+  final List<(List<String>, String)> foreignKeys;
+}
 
 /// What one fiscal year's package is built from: the books of the one
 /// export snapshot and the reads beside it.
@@ -103,19 +139,16 @@ String _cell(Object? value, GobdType type) {
       '"${'$value'.replaceAll(RegExp(r'[\x00-\x1F\x7F]+'), ' ').replaceAll('"', '""')}"',
     GobdType.amount => _cents(value as int),
     GobdType.number => '$value',
-    GobdType.percent => _percent(value as double),
+    GobdType.percent => _rate(value as double),
     GobdType.date => _day(value as DateTime),
   };
 }
 
-String _cents(int cents) {
-  final sign = cents < 0 ? '-' : '';
-  final abs = cents.abs();
-  return '$sign${abs ~/ 100},${(abs % 100).toString().padLeft(2, '0')}';
-}
+/// An amount in cents as a comma decimal with two places, '-' when negative.
+String _cents(int cents) => minorToText(cents, 'EUR', decimalSeparator: ',');
 
-/// A rate with two decimals, as the column declares.
-String _percent(double p) => _cents((p * 100).round());
+/// A rate in percent with two places, as the column declares.
+String _rate(double p) => _cents((p * 100).round());
 
 /// [t]'s rows, `;`-separated and CRLF-terminated, as the index declares.
 String _gobdCsv(GobdTable t) => [

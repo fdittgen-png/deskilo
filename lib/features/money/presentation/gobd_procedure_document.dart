@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/instance/schema_compatibility.dart';
 import '../../../core/vat/retention.dart';
+import '../../../core/vat/tax_reference.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/datev_problem.dart';
 import '../domain/number_sequence.dart';
@@ -21,6 +22,9 @@ const String gobdProcedureFileName = 'verfahrensdokumentation.md';
 typedef GobdProcedureFacts = ({
   String workspace,
   String country,
+
+  /// The tax reference of the workspace's installation: its retention rows.
+  TaxReferenceSet reference,
   DateTime from,
   DateTime to,
   DateTime generatedAt,
@@ -65,7 +69,7 @@ String buildGobdProcedureDocument(AppLocalizations l10n, GobdProcedureFacts f) {
     '',
     '## ${l10n.retentionTitle}',
     '',
-    for (final r in retentionRules(f.country))
+    for (final r in retentionRules(f.country, reference: f.reference))
       '- ${retentionClassName(l10n, r.docClass)}: '
           '${retentionRuleText(l10n, r)}; '
           '${l10n.gobdProcedureRetentionUntil(day.format(retentionRuleUntil(r, f.to, fiscalYearStart: f.fiscalYearStart)))}'

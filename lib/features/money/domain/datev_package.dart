@@ -75,7 +75,7 @@ class DatevPackage {
 }
 
 /// `EXTF_Buchungsstapel_<yyyymm>_<journal>[_<part>].csv`.
-String datevBatchFileName(DatevSlice slice) {
+String _batchFileName(DatevSlice slice) {
   final part = slice.part == 0 ? '' : '_${slice.part + 1}';
   return 'EXTF_Buchungsstapel_'
       '${yearMonth(slice.from.year, slice.from.month, separator: '')}'
@@ -150,7 +150,7 @@ DatevPackage buildDatevPackage(DatevPackageRequest p) {
         rowsPerPart: p.rowsPerBatch,
         locked: p.closed(from, to),
       );
-      files[datevBatchFileName(slice)] = buildDatevFile(
+      files[_batchFileName(slice)] = buildDatevFile(
         detailed.withSlice(
           slice,
           accounts: r.accounts.withFiscalYearStart(start),

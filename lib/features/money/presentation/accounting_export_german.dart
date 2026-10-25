@@ -9,9 +9,6 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/vat/tax_reference.dart';
-import '../../../core/vat/tax_reference_active.dart';
-import '../../workspace/domain/member.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/book_period.dart';
@@ -42,7 +39,6 @@ extension GermanAccountingExports on AccountingExportRun {
       context,
       domain: 'money',
       message: 'DATEV export failed',
-      errorText: l10n.workspaceGenericError,
       action: () async {
         // Unreadable periods count as open: a Stapel is never made final
         // by mistake.
@@ -78,12 +74,7 @@ extension GermanAccountingExports on AccountingExportRun {
             bookProfiles: bookProfiles,
             closed: (from, to) => periods.closedOn(from)?.contains(to) ?? false,
             defaultCostCentre: workspace.name,
-            memberNumbers: {
-              for (final m
-                  in ref.read(workspaceMembersProvider).value ??
-                      const <Member>[])
-                m.id: m.memberNumber,
-            },
+            memberNumbers: memberNumbers,
             memberNames: memberNames,
             voucherLinks: true,
           ),
@@ -118,8 +109,11 @@ extension GermanAccountingExports on AccountingExportRun {
       context,
       domain: 'money',
       message: 'GoBD export failed',
-      errorText: l10n.workspaceGenericError,
       action: () async {
+        // The rates and clocks of this workspace's own installation; an
+        // export never states another's.
+        final reference = workspaceTaxReference(ref);
+        if (reference == null) throw StateError('workspace context not ready');
         final sequences = await repo.fetchNumberSequences(workspace.id);
         int? schema;
         try {
@@ -173,9 +167,7 @@ extension GermanAccountingExports on AccountingExportRun {
               ledger: ledger,
             ),
             taxRates: [
-              for (final row in ActiveTaxReference.current.where(
-                TaxDomain.rate,
-              ))
+              for (final row in reference.where(TaxDomain.rate))
                 if (row.country == country) row,
             ],
             vouchers: vouchers,
@@ -184,6 +176,7 @@ extension GermanAccountingExports on AccountingExportRun {
                 buildGobdProcedureDocument(l10n, (
                   workspace: workspace.name,
                   country: country,
+                  reference: reference,
                   from: from,
                   to: to,
                   generatedAt: now,
