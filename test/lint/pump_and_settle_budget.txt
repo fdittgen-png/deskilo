@@ -41,7 +41,7 @@
 12 test/features/members/directory_screen_test.dart
 15 test/features/members/managed_profile_test.dart
 22 test/features/members/member_page_test.dart
-63 test/features/members/members_screen_test.dart
+59 test/features/members/members_screen_test.dart
 10 test/features/money/account_activity_test.dart
 11 test/features/money/accountant_handoff_flow_test.dart
 11 test/features/money/asset_register_test.dart
@@ -110,7 +110,6 @@
 10 test/features/workspace/colours_screen_test.dart
 23 test/features/workspace/deployment_screen_test.dart
 10 test/features/workspace/environment_banner_test.dart
-12 test/features/workspace/features_screen_test.dart
 14 test/features/workspace/holiday_import_flow_test.dart
 17 test/features/workspace/invitation_journey_test.dart
 14 test/features/workspace/invitation_test.dart
@@ -129,7 +128,7 @@
 15 test/features/workspace/workspace_code_test.dart
 34 test/features/workspace/workspace_library_test.dart
 12 test/features/workspace/workspace_readiness_test.dart
-52 test/features/workspace/workspace_settings_screen_test.dart
+48 test/features/workspace/workspace_settings_screen_test.dart
 10 test/features/workspace/workspace_xml_export_test.dart
 10 test/features/workspace/workspace_xml_import_screen_test.dart
 11 test/ux/journey_contracts_test.dart

@@ -73,6 +73,12 @@ void main() {
 
     final banner = find.byKey(const ValueKey('invoice-missing-essentials'));
     expect(banner, findsOneWidget);
+    expect(
+        find.descendant(
+            of: banner,
+            matching: find.textContaining('Complete these details before issuing')),
+        findsOneWidget,
+        reason: 'the banner titles the block the readiness decision names');
     expect(find.descendant(of: banner, matching: find.textContaining('postal address')),
         findsWidgets);
     expect(find.descendant(of: banner, matching: find.textContaining('name or company')),

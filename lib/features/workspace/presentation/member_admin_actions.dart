@@ -16,6 +16,7 @@ import '../../money/presentation/invoice_documents.dart';
 import '../../money/presentation/report_facts_of.dart';
 import '../../money/presentation/report_layout_actions.dart';
 import '../../money/presentation/report_strings_l10n.dart';
+import '../application/set_member_subscription.dart';
 import '../domain/member.dart';
 import '../domain/overage_policy.dart';
 import '../domain/site.dart';
@@ -69,10 +70,9 @@ Future<void> pickMemberOveragePolicy(
         for (final (policy, label) in options)
           SimpleDialogOption(
             key: ValueKey('overage-policy-${policy.name}'),
-            // #1279 — pay-as-you-go without a subscription is booking free.
-            onPressed: policy == OveragePolicy.payg && member.subscriptionPct == 0
-                ? null
-                : () => Navigator.of(context).pop(policy),
+            onPressed: overagePolicyOffered(member, policy)
+                ? () => Navigator.of(context).pop(policy)
+                : null,
             child: Row(
               children: [
                 Icon(
