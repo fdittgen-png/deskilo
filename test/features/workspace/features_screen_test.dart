@@ -101,39 +101,6 @@ void main() {
     expect(switchTitled(tester, 'Money tab').value, isTrue);
   });
 
-  testWidgets(
-      '#963 — switching a child on writes its parent chain with it and '
-      'nothing else', (tester) async {
-    final workspace = await pumpFeatures(tester);
-
-    await tester.tap(find.text('Sites on documents'));
-    await acceptOptInIfAsked(tester);
-    await tester.pumpAndSettle();
-
-    expect(workspace.flagWrites.last,
-        {'siteDocuments': true, 'multiSite': true});
-    expect(switchTitled(tester, 'Sites on documents').value, isTrue);
-    expect(switchTitled(tester, 'Sites').value, isTrue);
-  });
-
-  testWidgets(
-      'the owner activates accessory supplements (#170): the flag '
-      'persists true', (tester) async {
-    final workspace = await pumpFeatures(tester);
-
-    await tester.tap(find.text('Accessory supplements'));
-    await acceptOptInIfAsked(tester);
-    await tester.pumpAndSettle();
-
-    final flags = workspace.workspaces.single.featureFlags;
-    expect(flags['accessorySupplements'], isTrue);
-    expect(switchTitled(tester, 'Accessory supplements').value, isTrue);
-    // The other default-OFF feature is not even written (#963) and
-    // stays off.
-    expect(flags.containsKey('adminSeatBlocking'), isFalse);
-    expect(switchTitled(tester, 'Admins can block seats').value, isFalse);
-  });
-
   testWidgets('stored overrides seed the switches', (tester) async {
     await pumpFeatures(
       tester,
@@ -224,7 +191,11 @@ void main() {
   // eight per screen, so thirteen screens of scrolling. An owner
   // looking for "the VAT one" scrolled and hoped.
   group('#1190 — finding one switch among a hundred', () {
-    testWidgets('typing a name narrows the list to it', (tester) async {
+    // The rows themselves are feature_switch_rows_test's table; these
+    // prove the screen hands it the field and each row's words.
+    testWidgets('typing narrows the list by name, by what a feature DOES and '
+        'by what it requires; a heading over nothing is not shown',
+        (tester) async {
       await pumpFeatures(tester);
       expect(find.byKey(const ValueKey('feature-badgeSignIn')),
           findsOneWidget);
@@ -238,48 +209,37 @@ void main() {
       expect(find.byKey(const ValueKey('feature-calendarTab')), findsNothing,
           reason: 'everything that does not match is gone, not merely '
               'scrolled past');
-    });
-
-    testWidgets('and so does typing what a feature DOES, for an owner '
-        'who does not know its name', (tester) async {
-      await pumpFeatures(tester);
-      await tester.enterText(
-          find.byKey(const ValueKey('features-search')), 'closed days');
-      await tester.pumpAndSettle();
-
-      expect(find.byKey(const ValueKey('feature-calendarTab')),
-          findsOneWidget,
-          reason: 'the word is in the DESCRIPTION, not the name');
-    });
-
-    testWidgets('a heading over nothing is not shown', (tester) async {
-      await pumpFeatures(tester);
-      await tester.enterText(
-          find.byKey(const ValueKey('features-search')), 'sign in with');
-      await tester.pumpAndSettle();
-
       expect(find.byKey(const ValueKey('feature-tier-core')), findsNothing,
           reason: 'no core feature matched, so the Core heading has '
               'nothing under it');
+
+      await tester.enterText(
+          find.byKey(const ValueKey('features-search')), 'closed days');
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('feature-calendarTab')),
+          findsOneWidget,
+          reason: 'the word is in the DESCRIPTION, not the name');
+
+      await tester.enterText(
+          find.byKey(const ValueKey('features-search')), 'requires rfid');
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('feature-badgeSignIn')),
+          findsOneWidget,
+          reason: 'the words are on its Requires line only');
+      expect(find.byKey(const ValueKey('feature-calendarTab')), findsNothing);
     });
 
-    testWidgets('nothing matching says so instead of showing an empty '
-        'page', (tester) async {
+    testWidgets('nothing matching says so instead of showing an empty page, '
+        'and clearing the field brings the whole list back', (tester) async {
       await pumpFeatures(tester);
       await tester.enterText(
           find.byKey(const ValueKey('features-search')), 'zzzznope');
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('features-no-match')), findsOneWidget);
-    });
 
-    testWidgets('clearing the field brings the whole list back',
-        (tester) async {
-      await pumpFeatures(tester);
-      await tester.enterText(
-          find.byKey(const ValueKey('features-search')), 'sign in with');
-      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('features-search-clear')));
       await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('features-no-match')), findsNothing);
       expect(find.byKey(const ValueKey('feature-calendarTab')),
           findsOneWidget);
     });

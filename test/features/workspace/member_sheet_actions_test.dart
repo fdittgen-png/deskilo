@@ -146,6 +146,46 @@ void main() {
     ]);
   });
 
+  test('the whole-level right needs the flag and another member', () {
+    expect(
+      memberSheetActions(_facts(_member(), staff: true, level: true)),
+      contains(MemberSheetAction.levelPermission),
+    );
+    expect(
+      memberSheetActions(_facts(_member(), staff: true)),
+      isNot(contains(MemberSheetAction.levelPermission)),
+      reason: 'levelBooking off',
+    );
+    expect(
+      memberSheetActions(
+        _facts(_member(), staff: true, level: true, self: true),
+      ),
+      isNot(contains(MemberSheetAction.levelPermission)),
+      reason: 'never for oneself',
+    );
+  });
+
+  test("the owner's own row offers no role toggle and no badges", () {
+    expect(
+      memberSheetActions(
+        _facts(
+          _member(owner: true),
+          owner: true,
+          self: true,
+          staff: true,
+          level: true,
+        ),
+      ),
+      [
+        MemberSheetAction.employment,
+        MemberSheetAction.subscription,
+        MemberSheetAction.negotiation,
+        MemberSheetAction.overagePolicy,
+        MemberSheetAction.pauseOrReactivate,
+      ],
+    );
+  });
+
   test('a kiosk has its own few rows, and reverts itself', () {
     final kiosk = _member(kiosk: true);
     expect(

@@ -20,10 +20,22 @@ enum KioskAction {
   final String wireName;
 }
 
+/// What the receipt names as done: a reservation that started checked in
+/// says both.
+enum KioskReceipt { checkIn, reserve, reserveAndCheckIn, checkOut }
+
+/// What one badge does: the action sent, whether it books a window, and
+/// what the receipt names.
+typedef KioskActPlan = ({
+  KioskAction action,
+  bool booksWindow,
+  KioskReceipt receipt,
+});
+
 /// What is sent for [asked]: a reservation made standing at the kiosk can
 /// start checked in (one badge covers both), and only a check-out books no
 /// window.
-({KioskAction action, bool booksWindow}) kioskActPlan(
+KioskActPlan kioskActPlan(
   KioskAction asked, {
   required bool checkInNow,
 }) => (
@@ -31,6 +43,12 @@ enum KioskAction {
       ? KioskAction.checkIn
       : asked,
   booksWindow: asked != KioskAction.checkOut,
+  receipt: switch (asked) {
+    KioskAction.checkIn => KioskReceipt.checkIn,
+    KioskAction.reserve =>
+      checkInNow ? KioskReceipt.reserveAndCheckIn : KioskReceipt.reserve,
+    KioskAction.checkOut => KioskReceipt.checkOut,
+  },
 );
 
 /// How the kiosk words a refusal of kiosk_act (migration 0043).

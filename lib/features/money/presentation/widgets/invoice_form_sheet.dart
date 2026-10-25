@@ -23,6 +23,7 @@ import '../../domain/invoice_issue_readiness.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../domain/vat_rate.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_issue_block_text.dart';
 import '../report_strings_l10n.dart';
 import 'invoice_correction_reason_field.dart';
 import 'invoice_issue_runner.dart';
@@ -410,11 +411,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     return InlineBanner(
             key: const ValueKey('invoice-missing-essentials'),
             icon: Icons.rule_folder_outlined,
-            text: '${switch (block) {
-              InvoiceIssueBlock.disabled => l10n.invoiceIssuingUnavailable,
-              InvoiceIssueBlock.external => l10n.invoiceExternalIssuingTitle,
-              _ => l10n.invoiceMissingTitle,
-            }}:\n'
+            text: '${invoiceIssueBlockTitle(l10n, block)}:\n'
                 '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
           );
   }

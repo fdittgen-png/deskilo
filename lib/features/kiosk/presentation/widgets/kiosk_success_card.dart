@@ -89,6 +89,7 @@ class KioskSuccessCardState extends State<KioskSuccessCard> {
             const SizedBox(height: 4),
             Text(
               rangeText,
+              key: const ValueKey('kiosk-summary-range'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],

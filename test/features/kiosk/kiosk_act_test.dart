@@ -26,39 +26,55 @@ Reservation _r(
 );
 
 void main() {
-  group('the action sent for a badge', () {
-    final table = <String, (KioskAction, bool, KioskAction, bool)>{
-      'a check-in is a check-in': (
-        KioskAction.checkIn,
-        false,
-        KioskAction.checkIn,
-        true,
-      ),
-      'a reservation stays one': (
-        KioskAction.reserve,
-        false,
-        KioskAction.reserve,
-        true,
-      ),
-      'a reservation that starts now checks in at once': (
-        KioskAction.reserve,
-        true,
-        KioskAction.checkIn,
-        true,
-      ),
-      'a check-out books no window': (
-        KioskAction.checkOut,
-        true,
-        KioskAction.checkOut,
-        false,
-      ),
-    };
-    for (final MapEntry(key: name, value: (asked, now, sent, window))
+  group('the action sent for a badge, and what its receipt names', () {
+    final table =
+        <String, (KioskAction, bool, KioskAction, bool, KioskReceipt)>{
+          'a check-in is a check-in': (
+            KioskAction.checkIn,
+            false,
+            KioskAction.checkIn,
+            true,
+            KioskReceipt.checkIn,
+          ),
+          'a check-in ignores the reserve-only switch': (
+            KioskAction.checkIn,
+            true,
+            KioskAction.checkIn,
+            true,
+            KioskReceipt.checkIn,
+          ),
+          'a reservation stays one': (
+            KioskAction.reserve,
+            false,
+            KioskAction.reserve,
+            true,
+            KioskReceipt.reserve,
+          ),
+          'a reservation that starts now checks in at once, and says both': (
+            KioskAction.reserve,
+            true,
+            KioskAction.checkIn,
+            true,
+            KioskReceipt.reserveAndCheckIn,
+          ),
+          'a check-out books no window': (
+            KioskAction.checkOut,
+            true,
+            KioskAction.checkOut,
+            false,
+            KioskReceipt.checkOut,
+          ),
+        };
+    for (final MapEntry(
+          key: name,
+          value: (asked, now, sent, window, receipt),
+        )
         in table.entries) {
       test(name, () {
         final plan = kioskActPlan(asked, checkInNow: now);
         expect(plan.action, sent);
         expect(plan.booksWindow, window);
+        expect(plan.receipt, receipt);
       });
     }
   });

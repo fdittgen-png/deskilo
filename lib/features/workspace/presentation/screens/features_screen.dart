@@ -7,6 +7,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/feature_lifecycle.dart';
+import '../../domain/feature_switch_rows.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../feature_copy.dart';
@@ -54,20 +55,6 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
     super.dispose();
   }
 
-  /// Does this row answer what the owner typed?
-  ///
-  /// Name AND description, because an owner who does not know a
-  /// feature's name searches for what it does — "reminder" finds
-  /// *Payment reminders*, and "VAT" finds the four that mention it.
-  bool _matches(String name, String description, String? requires) {
-    if (_query.isEmpty) return true;
-    final needle = _query.toLowerCase();
-    return name.toLowerCase().contains(needle) ||
-        description.toLowerCase().contains(needle) ||
-        (requires ?? '').toLowerCase().contains(needle);
-  }
-
-
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -81,28 +68,23 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
 
     // #1190 — one row per feature, already filtered, so the tier
     // headings and the empty state can both ask "did anything survive".
-    final rows = <FeatureManifestEntry>[];
-    var changedCount = 0;
-    for (final entry in featureManifest.values) {
-      if (raw.contains(entry.feature) != entry.defaultOn) changedCount++;
-      final requires = entry.requires == null
-          ? null
-          : (l10n.featureRequires(featureName(l10n, entry.requires!)));
-      if (_changedOnly && raw.contains(entry.feature) == entry.defaultOn) {
-        continue;
-      }
-      final assessment = featureAssessmentOf(entry.feature,
-          assessments: widget.assessments);
-      if (!featureMaturityFilterMatches(_maturity, assessment)) continue;
-      if (!_matches(
-        featureName(l10n, entry.feature),
-        featureDescription(l10n, entry.feature),
-        requires,
-      )) {
-        continue;
-      }
-      rows.add(entry);
-    }
+    final (:rows, :changedCount) = featureSwitchRows(
+      featureManifest.values,
+      raw: raw,
+      query: _query,
+      changedOnly: _changedOnly,
+      maturityMatches: (entry) => featureMaturityFilterMatches(
+        _maturity,
+        featureAssessmentOf(entry.feature, assessments: widget.assessments),
+      ),
+      textOf: (entry) => (
+        name: featureName(l10n, entry.feature),
+        description: featureDescription(l10n, entry.feature),
+        requires: entry.requires == null
+            ? null
+            : l10n.featureRequires(featureName(l10n, entry.requires!)),
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(

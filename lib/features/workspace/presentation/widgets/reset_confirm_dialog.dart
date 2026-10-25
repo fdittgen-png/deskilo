@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../domain/workspace_reset.dart';
 
 /// Destructive reset confirmation (0039): the confirm button unlocks only
 /// once the owner types [phrase] exactly (case-insensitive). Owns its text
@@ -29,8 +30,7 @@ class ResetConfirmDialogState extends State<ResetConfirmDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final matches = _controller.text.trim().toLowerCase() ==
-        widget.phrase.toLowerCase();
+    final matches = resetPhraseMatches(_controller.text, widget.phrase);
     return AlertDialog(scrollable: true,
       title:
           Text(l10n.workspaceResetDialogTitle),

@@ -10,7 +10,6 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show LogicalKeyboardKey;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -125,6 +124,9 @@ void main() {
     final workspace = await pumpMembers(tester);
 
     await openSheet(tester, 'Ana');
+    // levelBooking is off by default: the sheet offers no level right.
+    expect(find.text('May not reserve a whole desk, office or level'),
+        findsNothing);
     await tester.tap(find.text('Subscription'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('50%').last);
@@ -175,6 +177,8 @@ void main() {
   testWidgets('#1279 — a pay-as-you-go member is not offered No subscription',
       (tester) async {
     final workspace = await pumpMembers(tester);
+    // 0041 — the owner switches a blocked member to pay-as-you-go.
+    expect(workspace.otherMembers.single.overagePolicy, OveragePolicy.blocked);
     await openSheet(tester, 'Ana');
     await tester.tap(find.text('When days run out'));
     await tester.pumpAndSettle();
@@ -207,21 +211,6 @@ void main() {
     expect(recorded.subjectMemberId, 'member-2');
     expect(recorded.serviceId, 'service-coffee');
     expect(recorded.quantity, 1);
-  });
-
-  testWidgets('the owner switches a member to pay-as-you-go overage (0041)',
-      (tester) async {
-    final workspace = await pumpMembers(tester);
-
-    expect(workspace.otherMembers.single.overagePolicy, OveragePolicy.blocked);
-
-    await openSheet(tester, 'Ana');
-    await tester.tap(find.text('When days run out'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Charge overage (pay-as-you-go)'));
-    await tester.pumpAndSettle();
-
-    expect(workspace.otherMembers.single.overagePolicy, OveragePolicy.payg);
   });
 
   testWidgets('the owner flags a member as a kiosk device (0043): row shows '
@@ -568,7 +557,7 @@ void main() {
     );
   });
 
-  testWidgets('an admin can be demoted; the owner sheet has no role toggle',
+  testWidgets('an admin is demoted through validation (0035)',
       (tester) async {
     final workspace = FakeWorkspaceRepository.withWorkspace(
       // #825 — these tests drive the legacy sheets; the page has its own.
@@ -600,14 +589,8 @@ void main() {
     await tester.tap(find.text('Members & plans'));
     await tester.pumpAndSettle();
 
-    // The owner's OWN sheet offers no role toggle…
-    await openSheet(tester, 'Flo');
-    expect(find.text('Give the Administrator role'), findsNothing);
-    expect(find.text('Take back the Administrator role'), findsNothing);
-    await tester.sendKeyEvent(LogicalKeyboardKey.escape); // dismiss
-    await tester.pumpAndSettle();
-
-    // …the admin's sheet offers demotion.
+    // The admin's sheet offers demotion (the owner's own row offers no
+    // role toggle: member_sheet_actions_test).
     await openSheet(tester, 'Ana');
     await tester.tap(find.text('Take back the Administrator role'));
     await tester.pumpAndSettle();
@@ -631,25 +614,5 @@ void main() {
     await tester.tap(find.text('May reserve a whole desk, office or level'));
     await tester.pumpAndSettle();
     expect(workspace.levelPermissions['member-2'], isFalse);
-  });
-
-  testWidgets(
-      'no level-permission tile for oneself, nor when the feature is off '
-      '(0050)', (tester) async {
-    await pumpMembers(tester, featureFlags: const {'levelBooking': true});
-    await openSheet(tester, 'Flo');
-    expect(find.textContaining('whole level'), findsNothing);
-    await tester.sendKeyEvent(LogicalKeyboardKey.escape); // close the sheet
-    await tester.pumpAndSettle();
-
-    await openSheet(tester, 'Ana');
-    // Feature ON + other member → the tile exists…
-    expect(find.text('May not reserve a whole desk, office or level'), findsOneWidget);
-  });
-
-  testWidgets('feature off (default): no level tile at all', (tester) async {
-    await pumpMembers(tester);
-    await openSheet(tester, 'Ana');
-    expect(find.textContaining('whole level'), findsNothing);
   });
 }

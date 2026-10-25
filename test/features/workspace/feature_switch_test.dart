@@ -74,6 +74,39 @@ void main() {
       expect(plan.expected, {_parent.dbKey: true, _child.dbKey: true});
     });
 
+    // #963 -- on a fresh space's defaults, a switch writes its own key and,
+    // switching on, the prerequisites that are off; nothing else.
+    final defaults = resolveEnabledFeatures(const {});
+    final deltas = <String, (WorkspaceFeature, bool, Map<String, bool>)>{
+      'a default-on feature switched off writes its key': (
+        WorkspaceFeature.moneyTab,
+        false,
+        {'moneyTab': false},
+      ),
+      'a default-off feature switched on writes only its key': (
+        WorkspaceFeature.accessorySupplements,
+        true,
+        {'accessorySupplements': true},
+      ),
+      'a child switched on writes its parent with it': (
+        WorkspaceFeature.siteDocuments,
+        true,
+        {'siteDocuments': true, 'multiSite': true},
+      ),
+    };
+    for (final MapEntry(key: name, value: (feature, value, flags))
+        in deltas.entries) {
+      test(name, () {
+        final plan = planFeatureSwitch(
+          raw: defaults,
+          feature: feature,
+          value: value,
+          needsOptIn: (_) => false,
+        );
+        expect(plan.flags, flags);
+      });
+    }
+
     test('a switch already where it is asked writes nothing', () {
       final plan = planFeatureSwitch(
         raw: const {_parent},
