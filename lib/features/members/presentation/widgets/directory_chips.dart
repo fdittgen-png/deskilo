@@ -14,7 +14,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../application/directory_card.dart';
 import '../../domain/directory_status.dart';
-import '../screens/member_page.dart' show relativeLastSeen;
+import '../last_seen_label.dart';
 
 /// The presence chip for [card] — unchanged rendering from #224 — or
 /// null when the member was never seen (offline without a heartbeat
@@ -31,14 +31,14 @@ Widget? directoryPresenceChip(
   final theme = Theme.of(context);
   final key = ValueKey('$keyPrefix-${card.member.id}');
   if (card.online) {
-    return DirectoryStatusChip(
+    return _DirectoryStatusChip(
       chipKey: key,
       label: l10n.directoryOnline,
       foreground: AppStatusColors.successOf(theme.brightness),
       outlined: true,
     );
   }
-  return DirectoryStatusChip(
+  return _DirectoryStatusChip(
     chipKey: key,
     label: relativeLastSeen(l10n, card.now, card.presence.lastSeenAt!),
     foreground: theme.colorScheme.onSurfaceVariant,
@@ -49,7 +49,7 @@ Widget? directoryPresenceChip(
 /// day and start time in the calendar's house style ([DateFormat.E] /
 /// [DateFormat.d] / [DateFormat.Hm]) plus the seat name when the plan
 /// knows one — "Tue 21 · 09:00 · A1".
-String directoryUpcomingLabel(
+String _directoryUpcomingLabel(
     AppFormat format, Reservation reservation, String seatName) {
   final local = reservation.startsAt.toLocal();
   final day =
@@ -76,7 +76,7 @@ Widget? directoryReservationChip(
   final seatName = card.seatName;
   final key = ValueKey('$keyPrefix-${card.member.id}');
   return switch (info) {
-    CheckedInNow() => DirectoryStatusChip(
+    CheckedInNow() => _DirectoryStatusChip(
       chipKey: key,
       label: seatName.isEmpty
           ? (l10n.directoryCheckedIn)
@@ -84,7 +84,7 @@ Widget? directoryReservationChip(
       foreground: AppStatusColors.onSuccessOf(brightness),
       background: AppStatusColors.successOf(brightness),
     ),
-    ReservedNow() => DirectoryStatusChip(
+    ReservedNow() => _DirectoryStatusChip(
       chipKey: key,
       label: seatName.isEmpty
           ? (l10n.directoryReservedNow)
@@ -92,9 +92,9 @@ Widget? directoryReservationChip(
       foreground: theme.colorScheme.primary,
       outlined: true,
     ),
-    UpcomingReservation() => DirectoryStatusChip(
+    UpcomingReservation() => _DirectoryStatusChip(
       chipKey: key,
-      label: directoryUpcomingLabel(
+      label: _directoryUpcomingLabel(
           appFormatOf(context), info.reservation, seatName),
       foreground: theme.colorScheme.onSurfaceVariant,
       outlined: true,
@@ -114,13 +114,13 @@ Widget? directoryRoleBadge(
   final theme = Theme.of(context);
   final key = ValueKey('directory-role-${card.member.id}');
   final chip = switch (card.role) {
-    DirectoryRole.owner => DirectoryStatusChip(
+    DirectoryRole.owner => _DirectoryStatusChip(
       chipKey: key,
       label: l10n.memberRoleOwner,
       foreground: theme.colorScheme.onPrimary,
       background: theme.colorScheme.primary,
     ),
-    DirectoryRole.admin => DirectoryStatusChip(
+    DirectoryRole.admin => _DirectoryStatusChip(
       chipKey: key,
       label: l10n.memberRoleAdmin,
       foreground: theme.colorScheme.primary,
@@ -136,7 +136,7 @@ Widget? directoryRoleBadge(
 }
 
 /// One tappable reservation in the member detail sheet: weekday + day,
-/// start time and seat/office name (the [directoryUpcomingLabel] house
+/// start time and seat/office name (the [_directoryUpcomingLabel] house
 /// style), with a filled marker when the member is already checked in.
 /// Tapping opens the full reservation detail sheet for that booking.
 class DirectoryReservationTile extends StatelessWidget {
@@ -173,7 +173,7 @@ class DirectoryReservationTile extends StatelessWidget {
             const SizedBox(width: AppSpacing.md),
             Expanded(
               child: Text(
-                directoryUpcomingLabel(
+                _directoryUpcomingLabel(
                     appFormatOf(context), reservation, seatName),
                 style: theme.textTheme.bodyMedium,
               ),
@@ -193,9 +193,8 @@ class DirectoryReservationTile extends StatelessWidget {
 /// Small pill chip: filled ([background] set), outlined, or bare muted
 /// text — state is never conveyed by color alone (spec §11), the label
 /// always spells it out.
-class DirectoryStatusChip extends StatelessWidget {
-  const DirectoryStatusChip({
-    super.key,
+class _DirectoryStatusChip extends StatelessWidget {
+  const _DirectoryStatusChip({
     required this.chipKey,
     required this.label,
     required this.foreground,

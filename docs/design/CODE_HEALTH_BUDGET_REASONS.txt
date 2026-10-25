@@ -28,7 +28,6 @@ fileLength lib/features/money/domain/invoice_pdf_template.dart // #2386 within t
 fileLength lib/features/money/presentation/invoice_documents.dart // 628→607
 fileLength lib/features/money/presentation/report_defaults.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.
 fileLength lib/features/money/presentation/screens/billing_screen.dart // #2386 within the former 600-line budget; split when next changed
-fileLength lib/features/money/presentation/screens/vat_declarations_screen.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/money/presentation/screens/vat_screen.dart // #2360: a decided change of rate comes prefilled in Change by law.
 fileLength lib/features/money/presentation/widgets/expense_schedule_sheet.dart // #2357 the schedule asks the VAT its occurrences carry (expense_vat_fields.dart, shared with the expense sheet).
 fileLength lib/features/money/presentation/widgets/invoice_form_sheet.dart // #2361: the Canadian BN and QST number refusals have their messages.
@@ -72,7 +71,7 @@ pairBudget kiosk -> reservations // #1234 — `SpaceAction`/`SpaceActChoice` mov
 pairBudget me -> money // ADR 0035: the home's finance summary reads the overview and opens the finances route
 pairBudget me -> task_recorder // task wizard: the Me menu and the account tab both open /task-wizard (a route constant)
 pairBudget members -> money // #1279 the member page hosts the carnet tile 8→9
-pairBudget members -> workspace // #2358 the member page states the customer's e-invoicing address through workspace/presentation/member_einvoice_address_tile.dart.
+pairBudget members -> workspace // #2358 the member page states the customer's e-invoicing address through workspace/presentation/member_einvoice_address_tile.dart.; 2026-10-25 #2494 +1: the directory (one library with two parts that counted as one) became a screen, a member row, chips and a profile sheet, each importing what it uses; same workspace files, no new dependency
 pairBudget money -> events // #2494 the money screen became eleven libraries (was one plus three parts that counted as one), each importing what it uses; no new dependency.
 pairBudget money -> profile // #1791: payment choice reads and edits existing personal defaults; checkout consumes that same preference.
 pairBudget money -> workspace // #2494 the money screen became eleven libraries (was one plus three parts that counted as one), each importing what it uses; coupling unchanged.
@@ -80,9 +79,9 @@ pairBudget plan -> reservations // #2494 the floor-plan painter's furniture laye
 pairBudget plan -> workspace // the plan focus starts over when the active workspace changes
 pairBudget profile -> auth // #2495 the presence heartbeat's wiring moved from core/presence into profile (a downward import, unavoidable: it reads the session); core-to-feature imports fell by 2.
 pairBudget profile -> workspace // #2495 country_names moved to core/i18n (two imports gone).
-pairBudget reservations -> plan // #2494 the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no n
+pairBudget reservations -> plan // #2494 the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no n; 2026-10-25 #2494 +3: the space sheet (one library with two parts) became the sheet, its booking, whole-space section and tile libraries, each importing the plan types it uses; same plan files, no new dependency
 pairBudget reservations -> task_recorder // #2495 +1: the booking feature maps its own outcome to the recorder's registered outcomes, so the recorder imports no booking type and reservations <-> task_recorder is no longer a pair.
-pairBudget reservations -> workspace // #2495 +3 downward: the period list, the week grid and the conflict actions read the member names from the workspace, where they moved (in the same change cross-feature imports fell from 1054 to 1009); #2494 the Reserve hub screen became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses.
+pairBudget reservations -> workspace // #2495 +3 downward: the period list, the week grid and the conflict actions read the member names from the workspace, where they moved (in the same change cross-feature imports fell from 1054 to 1009); #2494 the Reserve hub screen became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses.; 2026-10-25 #2494 +3: the space sheet (one library with two parts) became four libraries, each importing what it uses; same workspace files, no new dependency
 pairBudget task_recorder -> events // #1884 B — the event type and its label, for a rule.
 pairBudget task_recorder -> workspace // #1884 B +2: a permission and its label
 pairBudget workspace -> auth // #2484 the settings snapshot is re-read for a different signed-in person.
@@ -93,10 +92,16 @@ pairBudget workspace -> profile // #2495 +2 downward: the members' profiles of a
 pairBudget workspace -> reservations // #2383 the legacy new-conversation sheet left lib/
 pairBudget workspace -> task_recorder // #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
 fileLength lib/features/members/presentation/widgets/member_page_cards.dart // #2494 the member page's tile groups moved here from build (cognitive 116 to the groups); the part file goes when the cards become widgets
-fileLength lib/features/reservations/presentation/widgets/space_scan.dart // #2494 the sheet's sections moved out of build (cognitive 128 to 101, still over); the length returns when the part files and the whole-space section become widgets
 fileLength lib/features/money/domain/fec_writer.dart // #2494 buildFecFile (cognitive 109, 480 lines) became FecWriter, moved whole from fec.dart (547 lines there); the length falls when the invoice, expense and repartition books split into their own files
 fileLength lib/features/money/presentation/accounting_export_run.dart // #2494 exportAccountingFile (cognitive 94) became AccountingExportRun, one method per format, moved whole from accounting_export.dart (505 lines there); the length falls when the bundle and SAF-T methods get their own files
 fontWeight lib/features/money/presentation/widgets/open_invoice_subtitle.dart // #2494 the open-invoice subtitle moved whole from invoicing_dashboard_part1.dart; the weight goes with the line it styles
 fontSize lib/features/money/presentation/widgets/report_visual_line.dart // #2494 the report line styles moved whole from report_visual_editor_part3.dart
 fontWeight lib/features/money/presentation/widgets/invoicing_summary_bar.dart // #2494 moved whole from invoicing_dashboard_part2.dart
 fontWeight lib/features/money/presentation/widgets/open_invoices_tab.dart // #2494 moved whole from invoicing_dashboard_part3.dart
+pairBudget editor -> plan // 2026-10-25 #2494 +22: the level canvas (one library with two parts that counted as one) became a screen, pure rules, edits, flows, a canvas view and three small widgets, each importing the plan types it uses; the plan files are the same plus the floor-plan repository interface whose provider the screen already read (the edits take it as a parameter)
+pairBudget editor -> workspace // 2026-10-25 #2494 +2: the level canvas flows and canvas view read the current workspace the screen read before (one library became several); no new dependency
+pairBudget members -> profile // 2026-10-25 #2494 +1: the directory (one library with two parts) became several libraries; the profile sheet and the row import the profile types the parts used; no new dependency
+pairBudget members -> reservations // 2026-10-25 #2494 +4: the directory (one library with two parts) became several libraries; the row, the profile sheet and DirectoryCard import the reservation types the parts used; no new dependency
+pairBudget reservations -> events // 2026-10-25 #2494 +1: the space sheet (one library with two parts) became several libraries; the booking library imports the event type the parts used; no new dependency
+genericError lib/features/reservations/presentation/widgets/space_sheet_booking.dart // #2494 the space sheet's bookings moved here unchanged from space_scan_part1.dart; each refusal falls back to the same generic text
+fontWeight lib/features/members/presentation/widgets/directory_member_row.dart // #2494 the directory row moved whole from directory_screen_part3.dart; the weight goes with the name it styles
