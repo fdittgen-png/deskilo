@@ -62,8 +62,8 @@ enum BiEditorSave {
 
 /// One step of the history: what Undo returns to.
 @immutable
-class BiEditorStep {
-  const BiEditorStep(this.report, this.page, this.selected);
+class _Step {
+  const _Step(this.report, this.page, this.selected);
 
   final BiReportDefinition report;
   final int page;
@@ -78,8 +78,6 @@ class BiEditorState {
     required this.name,
     this.page = 0,
     this.selected,
-    this.past = const [],
-    this.future = const [],
     this.save = BiEditorSave.idle,
     this.failure,
     this.requestId,
@@ -88,7 +86,8 @@ class BiEditorState {
     this.coalesce,
     this.selection,
     this.preview = false,
-  });
+  }) : _past = const [],
+       _future = const [];
 
   /// The editor on [view] as read: the draft is the stored report.
   factory BiEditorState.of(BiSavedView view) => BiEditorState(
@@ -107,8 +106,8 @@ class BiEditorState {
 
   /// The visual whose properties are shown, and which keyboard moves act on.
   final String? selected;
-  final List<BiEditorStep> past;
-  final List<BiEditorStep> future;
+  final List<_Step> _past;
+  final List<_Step> _future;
   final BiEditorSave save;
   final BiViewFailure? failure;
 
@@ -136,8 +135,8 @@ class BiEditorState {
       ? null
       : currentPage.visuals.where((v) => v.id == selected).firstOrNull;
 
-  bool get canUndo => past.isNotEmpty;
-  bool get canRedo => future.isNotEmpty;
+  bool get canUndo => _past.isNotEmpty;
+  bool get canRedo => _future.isNotEmpty;
 
   /// Whether the draft or its name differ from what was read.
   bool get dirty =>
@@ -145,7 +144,7 @@ class BiEditorState {
       jsonEncode(report.toJson()) !=
           jsonEncode(base.definition?.report?.toJson());
 
-  BiEditorStep get _step => BiEditorStep(report, page, selected);
+  _Step get _step => _Step(report, page, selected);
 
   /// The state after [edit]: a new step in the history (or, with the same
   /// [coalesceKey] as the last change, the same step updated), or the reason
@@ -160,7 +159,7 @@ class BiEditorState {
       );
     }
     final merge = coalesceKey != null && coalesceKey == coalesce;
-    final history = merge ? past : [...past, _step];
+    final history = merge ? _past : [..._past, _step];
     return BiEditorState._from(
       this,
       report: next,
@@ -181,28 +180,28 @@ class BiEditorState {
 
   BiEditorState undone() {
     if (!canUndo) return this;
-    final last = past.last;
+    final last = _past.last;
     return BiEditorState._from(
       this,
       report: last.report,
       page: last.page.clamp(0, last.report.pages.length - 1),
       selected: last.selected,
-      past: past.sublist(0, past.length - 1),
-      future: [_step, ...future],
+      past: _past.sublist(0, _past.length - 1),
+      future: [_step, ..._future],
       clearRequest: true,
     );
   }
 
   BiEditorState redone() {
     if (!canRedo) return this;
-    final next = future.first;
+    final next = _future.first;
     return BiEditorState._from(
       this,
       report: next.report,
       page: next.page.clamp(0, next.report.pages.length - 1),
       selected: next.selected,
-      past: [...past, _step],
-      future: future.sublist(1),
+      past: [..._past, _step],
+      future: _future.sublist(1),
       clearRequest: true,
     );
   }
@@ -241,21 +240,33 @@ class BiEditorState {
     BiViewFailure? failure,
     String? requestId,
     BiSavedView? base,
-  }) => BiEditorState(
-    base: base ?? this.base,
-    report: report,
-    name: name,
-    page: page,
-    selected: selected,
-    past: past,
-    future: future,
+  }) => BiEditorState._saved(
+    this,
     save: save,
     failure: failure,
     requestId: requestId,
-    coalesce: coalesce,
-    selection: selection,
-    preview: preview,
+    base: base,
   );
+
+  /// [o] after a save answered [save]: the history and the draft stay.
+  BiEditorState._saved(
+    BiEditorState o, {
+    required this.save,
+    this.failure,
+    this.requestId,
+    BiSavedView? base,
+  }) : base = base ?? o.base,
+       report = o.report,
+       name = o.name,
+       page = o.page,
+       selected = o.selected,
+       _past = o._past,
+       _future = o._future,
+       refusal = null,
+       binding = null,
+       coalesce = o.coalesce,
+       selection = o.selection,
+       preview = o.preview;
 
   /// [o] with the parts named replaced; a `clear…` flag empties its part,
   /// and the one-shot refusal, binding and coalescing key are not carried.
@@ -266,8 +277,8 @@ class BiEditorState {
     int? page,
     String? selected,
     bool clearSelected = false,
-    List<BiEditorStep>? past,
-    List<BiEditorStep>? future,
+    List<_Step>? past,
+    List<_Step>? future,
     BiEditorSave? save,
     this.refusal,
     this.binding,
@@ -281,8 +292,8 @@ class BiEditorState {
        name = name ?? o.name,
        page = page ?? o.page,
        selected = clearSelected ? null : selected ?? o.selected,
-       past = past ?? o.past,
-       future = future ?? o.future,
+       _past = past ?? o._past,
+       _future = future ?? o._future,
        save = save ?? o.save,
        failure = o.failure,
        requestId = clearRequest ? null : o.requestId,

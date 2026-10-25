@@ -140,7 +140,12 @@ class BiBars extends StatelessWidget {
           InkWell(
             key: ValueKey('bi-bar-${visual.id}-${r.key}'),
             onTap: onPick == null ? null : () => onPick!(r),
-            child: Padding(
+            child: Container(
+              // A pickable row is a full touch target.
+              constraints: const BoxConstraints(
+                minHeight: kMinInteractiveDimension,
+              ),
+              alignment: AlignmentDirectional.centerStart,
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +194,10 @@ class _Legend extends StatelessWidget {
   Widget build(BuildContext context) => InkWell(
     key: ValueKey('${(key as ValueKey<String>?)?.value}-pick'),
     onTap: onTap,
-    child: Padding(
+    child: Container(
+      // A pickable row is a full touch target.
+      constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
+      alignment: AlignmentDirectional.centerStart,
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         children: [

@@ -6,6 +6,8 @@
 // Cancel saves nothing; a layout changed elsewhere is reported, never
 // overwritten; a report's layout is copied in; an unknown figure still reads
 // "Not available"; without the report designer there is no Customize button.
+import 'dart:async';
+
 import 'package:deskilo/features/workspace/domain/bi_overview_layout.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
@@ -72,6 +74,51 @@ class _Overview implements OverviewKpiRepository {
     'reasons': const <String>[],
     'computed_at': '2026-05-02T10:00:00Z',
   });
+}
+
+/// The store, whose next answer can be lost after the write landed.
+class _Flaky implements BiViewRepository {
+  _Flaky(this.inner);
+
+  final InMemoryBiViewRepository inner;
+  bool loseNext = false;
+
+  @override
+  Future<List<BiSavedView>> list(String workspaceId) => inner.list(workspaceId);
+
+  @override
+  Future<BiSavedView> save(
+    String workspaceId, {
+    String? id,
+    required BiViewScope scope,
+    required String name,
+    required BiViewDefinition definition,
+    required int expectedRevision,
+    String? requestId,
+  }) async {
+    final saved = await inner.save(
+      workspaceId,
+      id: id,
+      scope: scope,
+      name: name,
+      definition: definition,
+      expectedRevision: expectedRevision,
+      requestId: requestId,
+    );
+    if (loseNext) {
+      loseNext = false;
+      throw TimeoutException('the answer was lost');
+    }
+    return saved;
+  }
+
+  @override
+  Future<void> delete(String workspaceId, String id, int expectedRevision) =>
+      inner.delete(workspaceId, id, expectedRevision);
+
+  @override
+  Future<void> setDefault(String workspaceId, BiViewScope scope, String? id) =>
+      inner.setDefault(workspaceId, scope, id);
 }
 
 List<Override> _overrides(BiViewRepository views, {bool designer = true}) => [
@@ -316,6 +363,45 @@ void main() {
   ) async {
     await _pump(tester, InMemoryBiViewRepository(), designer: false);
     expect(find.byKey(const ValueKey('overview-customize')), findsNothing);
+    expect(find.byKey(const ValueKey('overview-group-sales')), findsOneWidget);
+  });
+
+  testWidgets('a lost answer is retried as the same request: one layout, '
+      'one revision', (tester) async {
+    final inner = InMemoryBiViewRepository();
+    final views = _Flaky(inner);
+    await _pump(tester, views);
+    await _tap(tester, 'overview-customize');
+    for (final id in _drafted(tester)) {
+      if (id != _members) await _tap(tester, 'overview-unpin-$id');
+    }
+    views.loseNext = true;
+    await _tap(tester, 'overview-layout-save');
+    expect(find.byKey(const ValueKey('overview-layout-lost')), findsOneWidget);
+    expect(_drafted(tester), [_members], reason: 'the draft is kept');
+
+    await _tap(tester, 'overview-layout-retry');
+    expect(find.byKey(const ValueKey('overview-layout-editor')), findsNothing);
+    final all = await inner.list('ws-1');
+    expect(all, hasLength(1));
+    expect(all.single.revision, 1, reason: 'the retry was answered once');
+    expect(await _saved(inner), [_members]);
+  });
+
+  testWidgets('with the designer off, a saved layout gives way to the '
+      'registry\'s groups', (tester) async {
+    final views = InMemoryBiViewRepository();
+    await views.save(
+      'ws-1',
+      scope: BiViewScope.private,
+      name: 'My overview',
+      definition: BiViewDefinition.ofReport(
+        biOverviewReport([_members], title: 'Overview'),
+      ),
+      expectedRevision: 0,
+    );
+    await _pump(tester, views, designer: false);
+    expect(find.byKey(const ValueKey('overview-pinned')), findsNothing);
     expect(find.byKey(const ValueKey('overview-group-sales')), findsOneWidget);
   });
 }

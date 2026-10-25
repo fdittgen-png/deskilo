@@ -53,7 +53,7 @@ BiReportDefinition biOverviewReport(
           BiReportVisual.kpi(
             id: 'v${i + 1}',
             metricId: t,
-            layout: BiVisualLayout(order: i, span: 3, height: 1),
+            layout: BiVisualLayout.defaultFor(BiVisualType.kpi, i),
           ),
       ],
     ),

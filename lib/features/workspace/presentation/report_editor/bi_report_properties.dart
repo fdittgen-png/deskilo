@@ -24,6 +24,7 @@ import '../../application/report_editor/bi_report_editor.dart';
 import '../../domain/bi_report_definition.dart';
 import '../../domain/bi_report_limits.dart';
 import '../../domain/bi_report_rules.dart';
+import '../../domain/bi_saved_view.dart';
 import '../widgets/bi_toolbar.dart' show biDimensionName;
 import 'bi_report_canvas.dart' show biVisualTitle;
 import 'bi_report_fields.dart';
@@ -79,14 +80,14 @@ class _ReportProperties extends ConsumerWidget {
           key: const ValueKey('bi-prop-report-name'),
           value: s.name,
           label: l10n.biViewName,
-          maxLength: 80,
+          maxLength: BiSavedView.maxName,
           onChanged: editor.rename,
         ),
         BiSyncedField(
           key: ValueKey('bi-prop-page-title-${page.id}'),
           value: page.title,
           label: l10n.biEditorPageTitle,
-          maxLength: 80,
+          maxLength: BiReportPage.maxTitle,
           onChanged: (t) {
             editor.run(
               (r, p) => biRenamePage(r, p, t),

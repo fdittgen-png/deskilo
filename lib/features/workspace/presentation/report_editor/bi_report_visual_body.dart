@@ -283,7 +283,12 @@ class _Rows extends StatelessWidget {
           onTap: onPick == null || r.isTotal || r.isRemainder
               ? null
               : () => onPick!(r),
-          child: Padding(
+          child: Container(
+            // A pickable row is a full touch target.
+            constraints: const BoxConstraints(
+              minHeight: kMinInteractiveDimension,
+            ),
+            alignment: AlignmentDirectional.centerStart,
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
             child: Row(
               children: [

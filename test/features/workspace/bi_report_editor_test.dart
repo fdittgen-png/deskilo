@@ -71,6 +71,10 @@ class _Flaky implements BiViewRepository {
   final InMemoryBiViewRepository inner;
   bool loseNext = false;
 
+  /// Refuses every save from now on, as the server does once a right is
+  /// revoked.
+  BiViewFailure? refuse;
+
   @override
   Future<List<BiSavedView>> list(String workspaceId) => inner.list(workspaceId);
 
@@ -84,6 +88,7 @@ class _Flaky implements BiViewRepository {
     required int expectedRevision,
     String? requestId,
   }) async {
+    if (refuse case final failure?) throw BiViewRefused(failure);
     final saved = await inner.save(
       workspaceId,
       id: id,
@@ -456,5 +461,25 @@ void main() {
     await _open(tester, '/bi/report/$id');
     expect(find.byKey(const ValueKey('bi-editor-canvas')), findsNothing);
     expect(find.byKey(const ValueKey('bi-editor-not-editable')), findsNothing);
+  });
+
+  testWidgets('a right revoked mid-edit: the save is refused, the draft '
+      'kept, nothing written', (tester) async {
+    final inner = InMemoryBiViewRepository();
+    final views = _Flaky(inner);
+    final id = await _seed(views);
+    await _pump(tester, views);
+    await _open(tester, '/bi/report/$id');
+    await _tap(tester, 'bi-visual-select-v1');
+    await _tap(tester, 'bi-prop-delete-v1');
+
+    views.refuse = BiViewFailure.forbidden;
+    await _tap(tester, 'bi-editor-save');
+    expect(find.byKey(const ValueKey('bi-editor-refused')), findsOneWidget);
+    expect(find.byKey(const ValueKey('bi-editor-lost')), findsNothing);
+    expect(_outline(tester), ['v2'], reason: 'the draft is kept');
+    final stored = (await inner.list('ws-1')).single;
+    expect(stored.revision, 1);
+    expect(_savedIds(stored, 0), ['v1', 'v2']);
   });
 }

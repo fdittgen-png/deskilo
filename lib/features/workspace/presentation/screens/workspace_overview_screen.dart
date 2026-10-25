@@ -196,7 +196,9 @@ class _WorkspaceOverviewScreenState
           ],
           onClose: () => _setCustomizing(on: false),
         )
-      else if (report != null)
+      // The person's own layout needs the designer: with it off, the
+      // registry's layout returns (and nothing is left nobody can change).
+      else if (canCustomize && report != null)
         _Pinned(
           workspaceId: workspaceId,
           modules: [

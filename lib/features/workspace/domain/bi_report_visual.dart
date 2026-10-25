@@ -130,6 +130,20 @@ class BiVisualLayout {
   static const maxHeight = 12;
   static const maxOrder = 255;
 
+  /// Where a new visual of [type] sits at [order]: a figure is a quarter of
+  /// the wide grid on one row, a text a whole row, a chart or a table half
+  /// of it on three rows.
+  factory BiVisualLayout.defaultFor(BiVisualType type, int order) =>
+      switch (type) {
+        BiVisualType.kpi => BiVisualLayout(order: order, span: 3, height: 1),
+        BiVisualType.text => BiVisualLayout(
+          order: order,
+          span: maxSpan,
+          height: 1,
+        ),
+        _ => BiVisualLayout(order: order, height: 3),
+      };
+
   BiVisualLayout copyWith({int? order, int? span, int? height}) =>
       BiVisualLayout(
         order: order ?? this.order,

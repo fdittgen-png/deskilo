@@ -64,6 +64,10 @@ class OverviewLayoutEditor extends ConsumerStatefulWidget {
 
 class _OverviewLayoutEditorState extends ConsumerState<OverviewLayoutEditor> {
   late List<String> _tiles;
+
+  /// The layout as it was read: every save names its revision, and a retry
+  /// resends exactly that write even after the list was read again.
+  late final BiSavedView? _base = widget.layout;
   var _status = _Status.idle;
   BiViewFailure? _refused;
   String? _requestId;
@@ -74,7 +78,7 @@ class _OverviewLayoutEditorState extends ConsumerState<OverviewLayoutEditor> {
   @override
   void initState() {
     super.initState();
-    final report = widget.layout?.definition?.report;
+    final report = _base?.definition?.report;
     _tiles = report == null
         ? [for (final m in widget.modules) m.id]
         : [
@@ -129,7 +133,7 @@ class _OverviewLayoutEditorState extends ConsumerState<OverviewLayoutEditor> {
           .read(biViewActionsProvider)
           .save(
             widget.workspaceId,
-            over: widget.layout,
+            over: _base,
             scope: BiViewScope.private,
             name: l10n.overviewLayoutName,
             definition: BiViewDefinition.ofReport(

@@ -93,14 +93,6 @@ BiReportDefinition _withPages(
   printStyle: r.printStyle,
 );
 
-/// The default place of a new visual of [type]: a figure is a quarter of the
-/// wide grid, a text a whole row, a chart or a table half of it.
-BiVisualLayout _layoutFor(BiVisualType type, int order) => switch (type) {
-  BiVisualType.kpi => BiVisualLayout(order: order, span: 3, height: 1),
-  BiVisualType.text => BiVisualLayout(order: order, span: 12, height: 1),
-  _ => BiVisualLayout(order: order, height: 3),
-};
-
 /// Adds a visual of [type] for [metricId] (or the plain [text]) at the end of
 /// page [page].
 BiEdit biAddVisual(
@@ -116,7 +108,7 @@ BiEdit biAddVisual(
   }
   final p = report.pages[page];
   final id = biNextVisualId(_ids(report));
-  final layout = _layoutFor(type, p.visuals.length);
+  final layout = BiVisualLayout.defaultFor(type, p.visuals.length);
   final BiReportVisual visual;
   if (type == BiVisualType.text) {
     final t = text?.trim() ?? '';
@@ -305,7 +297,7 @@ BiEdit biAddPage(
 
 bool _validTitle(String title) {
   final t = title.trim();
-  return t.isNotEmpty && t.length <= 80;
+  return t.isNotEmpty && t.length <= BiReportPage.maxTitle;
 }
 
 /// Page [page] titled [title].
