@@ -227,8 +227,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         ],
       );
 
-  Widget _form(AppLocalizations l10n) {
-    return Form(
+  Widget _form(AppLocalizations l10n) => Form(
       key: _formKey,
       child: AutofillGroup(
         child: Column(
@@ -245,6 +244,34 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
+            ..._credentialFields(l10n),
+            const SizedBox(height: 24),
+            ..._outcomeAndSubmit(l10n),
+            const SizedBox(height: 12),
+            AuthSocialSection(
+              busy: _busy,
+              onProvider: _social,
+              onUseExistingAccount: _useExistingAccount,
+            ),
+            ..._badgeEntry(l10n),
+            const SizedBox(height: 12),
+            // #1379 — no account is needed to look around, so the
+            // offer sits beside the two that do need one.
+            const DemoEntryButton(),
+            ..._modeToggle(l10n),
+            AuthSecondaryLinks(
+              busy: _busy,
+              joining: _joining,
+              onJoin: _joinByInvitation,
+            ),
+          ],
+        ),
+      ),
+    );
+
+  /// The name (sign-up only), the address and the password, then the
+  /// forgotten-password link on the sign-in form.
+  List<Widget> _credentialFields(AppLocalizations l10n) => [
             if (_isSignUp) ...[
               TextFormField(
                 controller: _displayName,
@@ -323,10 +350,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   ),
                 ),
               ),
-            const SizedBox(height: 24),
-            // The last answer stays in the form (#1649): six
-            // different sentences for six different outcomes, and
-            // never the server's own words.
+      ];
+
+  /// The last answer stays in the form (#1649): six different sentences
+  /// for six different outcomes, never the server's own words; then submit.
+  List<Widget> _outcomeAndSubmit(AppLocalizations l10n) => [
             if (_lastResult case final result?
                 when authOutcomeText(result, l10n) != null) ...[
               InlineBanner(
@@ -357,12 +385,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                           : (l10n.authSignInButton),
                     ),
             ),
-            const SizedBox(height: 12),
-            AuthSocialSection(
-              busy: _busy,
-              onProvider: _social,
-              onUseExistingAccount: _useExistingAccount,
-            ),
+      ];
+
+  List<Widget> _badgeEntry(AppLocalizations l10n) => [
             // #662 — badge sign-in, offered only when this device
             // can actually read one, and never while creating an
             // account (a brand-new member holds no badge).
@@ -398,10 +423,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                           )
                         : const SizedBox.shrink(),
               ),
-            const SizedBox(height: 12),
-            // #1379 — no account is needed to look around, so the
-            // offer sits beside the two that do need one.
-            const DemoEntryButton(),
+      ];
+
+  List<Widget> _modeToggle(AppLocalizations l10n) => [
             if (!(ref.watch(availableSocialProvidersProvider).value ?? const <SocialProvider>[]).contains(SocialProvider.deskilo))
             TextButton(
               // The e-mail and the name follow across the switch;
@@ -420,16 +444,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     : (l10n.authToggleToSignUp),
               ),
             ),
-            AuthSecondaryLinks(
-              busy: _busy,
-              joining: _joining,
-              onJoin: _joinByInvitation,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+      ];
 
   /// #1648 — the Deskilo identity matches an account here that is not
   /// linked yet: that account signs in with its own proof first. The
