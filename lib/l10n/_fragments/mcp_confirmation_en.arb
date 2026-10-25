@@ -129,5 +129,29 @@
   "mcpConfirmStepLater": "It will be set aside for later.",
   "@mcpConfirmStepLater": {
     "description": "#2873 mcp_confirmation"
+  },
+  "mcpConfirmFieldChange": "{field}: {from} → {to}",
+  "@mcpConfirmFieldChange": {
+    "description": "#2873 mcp_confirmation: one setting an assistant's setup change sets, from its current value to the new one",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmClosureReason": "Reason: {reason}",
+  "@mcpConfirmClosureReason": {
+    "description": "#2873 mcp_confirmation: the reason given for closure days an assistant adds",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -85,9 +85,13 @@
                           "deskilo_respond_to_validation",
                           "deskilo_get_setup_status",
                           "deskilo_list_setup_levels",
+                          "deskilo_explain_setup_step",
                           "deskilo_preview_setup_levels",
                           "deskilo_apply_setup_levels",
-                          "deskilo_mark_setup_step"
+                          "deskilo_mark_setup_step",
+                          "deskilo_set_opening_hours",
+                          "deskilo_add_closure_days",
+                          "deskilo_set_number_sequence"
                         ]
                       },
                       "arguments": {
@@ -1211,9 +1215,13 @@
               "respond_to_validation",
               "get_setup_status",
               "list_setup_levels",
+              "explain_setup_step",
               "preview_setup_levels",
               "apply_setup_levels",
-              "mark_setup_step"
+              "mark_setup_step",
+              "set_opening_hours",
+              "add_closure_days",
+              "set_number_sequence"
             ]
           },
           "workspace_id": {
@@ -2436,6 +2444,64 @@
         "x-rpc": null,
         "x-handler": true
       },
+      "ExplainSetupStepInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "step": {
+            "type": "string",
+            "enum": [
+              "basics",
+              "hours",
+              "places",
+              "member_rights",
+              "invite",
+              "pricing",
+              "services",
+              "payment_methods",
+              "online_payments",
+              "approvals",
+              "new_members",
+              "notifications",
+              "limits",
+              "kiosk",
+              "purchases",
+              "lease",
+              "assets",
+              "look",
+              "public_page",
+              "legal_identity",
+              "vat",
+              "numbering",
+              "documents",
+              "einvoicing",
+              "accounting",
+              "reminders",
+              "first_booking",
+              "recovery",
+              "assistant"
+            ],
+            "description": "The step id, from deskilo_get_setup_status; leave it out for every step.",
+            "examples": [
+              "hours"
+            ]
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "x-operation": "explain_setup_step",
+        "x-rpc": null,
+        "x-handler": true
+      },
       "PreviewSetupLevelsInput": {
         "type": "object",
         "additionalProperties": false,
@@ -2717,6 +2783,218 @@
         ],
         "x-operation": "mark_setup_step",
         "x-rpc": "acknowledge_setup_step",
+        "x-handler": true
+      },
+      "SetOpeningHoursInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "open_weekdays": {
+            "type": "string",
+            "maxLength": 20,
+            "description": "The open weekdays as ISO numbers separated by commas, 1 = Monday to 7 = Sunday, e.g. \"1,2,3,4,5\".",
+            "examples": [
+              "1,2,3,4,5"
+            ]
+          },
+          "work_start_minutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1440,
+            "description": "When the working day starts, in minutes after midnight (08:00 = 480).",
+            "examples": [
+              480
+            ]
+          },
+          "half_boundary_minutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1440,
+            "description": "Where the morning ends and the afternoon starts, in minutes after midnight (12:00 = 720).",
+            "examples": [
+              720
+            ]
+          },
+          "work_end_minutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1440,
+            "description": "When the working day ends, in minutes after midnight (17:00 = 1020).",
+            "examples": [
+              1020
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id"
+        ],
+        "x-operation": "set_opening_hours",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "AddClosureDaysInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "days": {
+            "type": "string",
+            "maxLength": 400,
+            "description": "The days to close, YYYY-MM-DD separated by commas, e.g. \"2026-12-24,2026-12-31\".",
+            "examples": [
+              "2026-12-24,2026-12-31"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Optional: why the space is closed, shown beside the days.",
+            "examples": [
+              "Christmas"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "days"
+        ],
+        "x-operation": "add_closure_days",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "SetNumberSequenceInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "journal": {
+            "type": "string",
+            "enum": [
+              "invoice",
+              "credit_note",
+              "vat_declaration",
+              "member",
+              "payment"
+            ],
+            "description": "The series to change.",
+            "examples": [
+              "invoice"
+            ]
+          },
+          "prefix": {
+            "type": "string",
+            "maxLength": 16,
+            "description": "Printed before the number, e.g. \"INV-\".",
+            "examples": [
+              "INV-"
+            ]
+          },
+          "suffix": {
+            "type": "string",
+            "maxLength": 16,
+            "description": "Printed after the number.",
+            "examples": [
+              ""
+            ]
+          },
+          "date_part": {
+            "type": "string",
+            "enum": [
+              "none",
+              "year",
+              "year_month"
+            ],
+            "description": "Which part of the date the number prints.",
+            "examples": [
+              "year"
+            ]
+          },
+          "digits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9,
+            "description": "How many digits the counter prints, padded with zeros.",
+            "examples": [
+              4
+            ]
+          },
+          "reset": {
+            "type": "string",
+            "enum": [
+              "never",
+              "yearly",
+              "monthly"
+            ],
+            "description": "When the counter starts again at 1.",
+            "examples": [
+              "yearly"
+            ]
+          },
+          "next_value": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 999999999,
+            "description": "The next number to issue; never below the current one.",
+            "examples": [
+              1
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "journal"
+        ],
+        "x-operation": "set_number_sequence",
+        "x-rpc": null,
         "x-handler": true
       }
     }

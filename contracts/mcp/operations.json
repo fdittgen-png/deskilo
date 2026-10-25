@@ -144,6 +144,14 @@
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
+  "day": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "days": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "decision_recorded": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -159,6 +167,10 @@
   "default_overage_fee_cents": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "depends_on": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "desk_id": {
    "class": "operational",
@@ -212,6 +224,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "feature": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "features": {
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
@@ -219,6 +235,10 @@
   "fee_cents": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "field": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "free": {
    "class": "operational",
@@ -279,6 +299,10 @@
   "items": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "journal": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "kind": {
    "class": "operational",
@@ -429,6 +453,10 @@
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
+  "preview": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "process": {
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
@@ -537,6 +565,10 @@
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
+  "takes_credentials": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
   "target_ceiling": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -560,6 +592,10 @@
   "unchanged": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "unlocks": {
+   "class": "operational",
+   "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
   "used_half_days": {
    "class": "operational",
@@ -2580,6 +2616,103 @@
    }
   },
   {
+   "id": "explain_setup_step",
+   "handler": true,
+   "dispatch": true,
+   "title": "What a setup step is",
+   "description": "For someone who configures the workspace: one setup step (or, without step, every step in the guide's order) as the guide defines it: its group, milestone, the app screen that sets it up (`route`), whether it is required, the steps it waits for (`depends_on`) and the steps that wait for it (`unlocks`), the feature it belongs to, who does it (`actor`), how long it takes, whether it takes credentials (`takes_credentials`: then only the person enters them, in the app), its state now and what an assistant may do about it (`assistant`, as in deskilo_get_setup_status). Read only.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageConfiguration"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "step": {
+     "type": "enum",
+     "required": false,
+     "values": [
+      "basics",
+      "hours",
+      "places",
+      "member_rights",
+      "invite",
+      "pricing",
+      "services",
+      "payment_methods",
+      "online_payments",
+      "approvals",
+      "new_members",
+      "notifications",
+      "limits",
+      "kiosk",
+      "purchases",
+      "lease",
+      "assets",
+      "look",
+      "public_page",
+      "legal_identity",
+      "vat",
+      "numbering",
+      "documents",
+      "einvoicing",
+      "accounting",
+      "reminders",
+      "first_booking",
+      "recovery",
+      "assistant"
+     ],
+     "description": "The step id, from deskilo_get_setup_status; leave it out for every step.",
+     "examples": [
+      "hours"
+     ]
+    }
+   },
+   "output": [
+    "steps",
+    "step",
+    "group",
+    "milestone",
+    "route",
+    "required",
+    "depends_on",
+    "unlocks",
+    "feature",
+    "actor",
+    "estimate_minutes",
+    "takes_credentials",
+    "state",
+    "reason",
+    "blocked_by",
+    "manual",
+    "assistant"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupStepExplain",
+    "en": "Explain a setup step",
+    "fr": "Expliquer une \u00e9tape de la mise en place",
+    "de": "Einen Einrichtungsschritt erkl\u00e4ren",
+    "es": "Explicar un paso de la configuraci\u00f3n",
+    "it": "Spiegare un passo della configurazione"
+   }
+  },
+  {
    "id": "preview_setup_levels",
    "handler": true,
    "dispatch": true,
@@ -2946,6 +3079,294 @@
     "de": "Einen Einrichtungsschritt als erledigt oder f\u00fcr sp\u00e4ter markieren",
     "es": "Marcar un paso como hecho o para m\u00e1s tarde",
     "it": "Segnare un passo come fatto o per dopo"
+   }
+  },
+  {
+   "id": "set_opening_hours",
+   "handler": true,
+   "dispatch": true,
+   "title": "Set the opening days and hours",
+   "description": "The setup step 'hours', as its screen does it: the weekdays members can book and the working day (start, half-day boundary, end, in minutes after midnight on the workspace clock: 08:00 = 480). Give only what changes; the result must keep at least one open weekday and start < boundary < end. The half-day and full-day booking periods follow these hours. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows exactly what changes; then call again with the same request_id and arguments. A change made in the meantime makes the proposal stale: preview again with a new request_id.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "workspaceSettings"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": false,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "open_weekdays": {
+     "type": "text",
+     "maxLength": 20,
+     "description": "The open weekdays as ISO numbers separated by commas, 1 = Monday to 7 = Sunday, e.g. \"1,2,3,4,5\".",
+     "examples": [
+      "1,2,3,4,5"
+     ]
+    },
+    "work_start_minutes": {
+     "type": "integer",
+     "min": 0,
+     "max": 1440,
+     "description": "When the working day starts, in minutes after midnight (08:00 = 480).",
+     "examples": [
+      480
+     ]
+    },
+    "half_boundary_minutes": {
+     "type": "integer",
+     "min": 0,
+     "max": 1440,
+     "description": "Where the morning ends and the afternoon starts, in minutes after midnight (12:00 = 720).",
+     "examples": [
+      720
+     ]
+    },
+    "work_end_minutes": {
+     "type": "integer",
+     "min": 0,
+     "max": 1440,
+     "description": "When the working day ends, in minutes after midnight (17:00 = 1020).",
+     "examples": [
+      1020
+     ]
+    }
+   },
+   "output": [
+    "changes",
+    "field",
+    "from",
+    "to"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupHours",
+    "en": "Set the opening days and hours",
+    "fr": "D\u00e9finir les jours et heures d'ouverture",
+    "de": "\u00d6ffnungstage und -zeiten festlegen",
+    "es": "Fijar los d\u00edas y horarios de apertura",
+    "it": "Impostare i giorni e gli orari di apertura"
+   }
+  },
+  {
+   "id": "add_closure_days",
+   "handler": true,
+   "dispatch": true,
+   "title": "Add closure days",
+   "description": "Closure days (holidays, a closed week) on which nothing can be booked, as the hours step adds them: dates on the workspace calendar, YYYY-MM-DD separated by commas, with one optional reason. A day already closed is left as it is; removing a closure stays in the app. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows exactly what changes; then call again with the same request_id and arguments. A change made in the meantime makes the proposal stale: preview again with a new request_id.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "workspaceSettings"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": false,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "days": {
+     "type": "text",
+     "required": true,
+     "maxLength": 400,
+     "description": "The days to close, YYYY-MM-DD separated by commas, e.g. \"2026-12-24,2026-12-31\".",
+     "examples": [
+      "2026-12-24,2026-12-31"
+     ]
+    },
+    "reason": {
+     "type": "text",
+     "maxLength": 200,
+     "description": "Optional: why the space is closed, shown beside the days.",
+     "examples": [
+      "Christmas"
+     ]
+    }
+   },
+   "output": [
+    "days",
+    "day",
+    "reason"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupClosures",
+    "en": "Add closure days",
+    "fr": "Ajouter des jours de fermeture",
+    "de": "Schlie\u00dftage hinzuf\u00fcgen",
+    "es": "A\u00f1adir d\u00edas de cierre",
+    "it": "Aggiungere giorni di chiusura"
+   }
+  },
+  {
+   "id": "set_number_sequence",
+   "handler": true,
+   "dispatch": true,
+   "title": "Set how documents are numbered",
+   "description": "The setup step 'numbering', as the number series editor does it, for one journal: prefix, suffix, which part of the date the number prints, its digits, when it restarts, and the next number. Give only what changes. A number restarts at most as often as it prints its date (none: never; year: never or yearly; year_month: any), a series never goes backwards, and a series that already issued numbers cannot drop its date unless the prefix or suffix changes too. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows exactly what changes; then call again with the same request_id and arguments. A change made in the meantime makes the proposal stale: preview again with a new request_id.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageBilling"
+   },
+   "features": [
+    "mcpAccess",
+    "setupGuide"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": false,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "journal": {
+     "type": "enum",
+     "required": true,
+     "values": [
+      "invoice",
+      "credit_note",
+      "vat_declaration",
+      "member",
+      "payment"
+     ],
+     "description": "The series to change.",
+     "examples": [
+      "invoice"
+     ]
+    },
+    "prefix": {
+     "type": "text",
+     "maxLength": 16,
+     "description": "Printed before the number, e.g. \"INV-\".",
+     "examples": [
+      "INV-"
+     ]
+    },
+    "suffix": {
+     "type": "text",
+     "maxLength": 16,
+     "description": "Printed after the number.",
+     "examples": [
+      ""
+     ]
+    },
+    "date_part": {
+     "type": "enum",
+     "values": [
+      "none",
+      "year",
+      "year_month"
+     ],
+     "description": "Which part of the date the number prints.",
+     "examples": [
+      "year"
+     ]
+    },
+    "digits": {
+     "type": "integer",
+     "min": 1,
+     "max": 9,
+     "description": "How many digits the counter prints, padded with zeros.",
+     "examples": [
+      4
+     ]
+    },
+    "reset": {
+     "type": "enum",
+     "values": [
+      "never",
+      "yearly",
+      "monthly"
+     ],
+     "description": "When the counter starts again at 1.",
+     "examples": [
+      "yearly"
+     ]
+    },
+    "next_value": {
+     "type": "integer",
+     "min": 1,
+     "max": 999999999,
+     "description": "The next number to issue; never below the current one.",
+     "examples": [
+      1
+     ]
+    }
+   },
+   "output": [
+    "journal",
+    "changes",
+    "field",
+    "from",
+    "to",
+    "preview"
+   ],
+   "group": "setup",
+   "label": {
+    "key": "mcpOpSetupNumbering",
+    "en": "Set how documents are numbered",
+    "fr": "D\u00e9finir la num\u00e9rotation des documents",
+    "de": "Die Nummerierung der Belege festlegen",
+    "es": "Fijar la numeraci\u00f3n de los documentos",
+    "it": "Impostare la numerazione dei documenti"
    }
   }
  ],

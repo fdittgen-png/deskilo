@@ -658,6 +658,31 @@ Deno.test("#2873 the setup prompt follows the setup operations, and a credential
   }
 });
 
+Deno.test("#2873 the step catalogue is a resource, read through explain_setup_step and projected", async () => {
+  discoveredWorkspaces = [{ workspace_id: AVAILABILITY.workspace_id, name: "Main", operations: ["get_setup_status", "explain_setup_step"] }];
+  try {
+    const listed = await rpc(ALICE, "resources/list");
+    assertEquals(listed.json.result.resources.map((r: { uri: string }) => r.uri), [
+      `deskilo://workspace/${AVAILABILITY.workspace_id}/setup-status`,
+      `deskilo://workspace/${AVAILABILITY.workspace_id}/setup-steps`,
+    ]);
+    envelope = { schema_version: 1, status: "completed",
+      data: { steps: [{ step: "hours", route: "/setup/step/hours", unlocks: ["first_booking"], takes_credentials: false, private_note: "hidden" }] } };
+    const read = await rpc(ALICE, "resources/read", { uri: `deskilo://workspace/${AVAILABILITY.workspace_id}/setup-steps` });
+    const text = read.json.result.contents[0].text as string;
+    assertEquals(JSON.parse(text).steps[0].unlocks, ["first_booking"]);
+    assert(!text.includes("hidden"), "only the contract's fields leave");
+    const sent = calls.findLast((c) => c.path === "/rest/v1/rpc/mcp_execute_v1")!.body as Record<string, unknown>;
+    assertEquals([sent.p_operation, sent.p_workspace_id], ["explain_setup_step", AVAILABILITY.workspace_id], "through the facade, its own operation");
+    envelope = { schema_version: 1, status: "denied", error: { code: "forbidden" } };
+    assert((await rpc(ALICE, "resources/read", { uri: `deskilo://workspace/${AVAILABILITY.workspace_id}/setup-steps` })).json.error,
+      "a refused read is an error, never data");
+  } finally {
+    discoveredWorkspaces = [];
+    envelope = { schema_version: 1, status: "completed", data: {} };
+  }
+});
+
 Deno.test("#2393 the SDK is the version the conformance tests ran against, in every import", async () => {
   const source = await Deno.readTextFile(new URL("./index.ts", import.meta.url));
   const versions = [...source.matchAll(/npm:@modelcontextprotocol\/sdk@([0-9.]+)\//g)].map((m) => m[1]);

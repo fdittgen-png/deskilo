@@ -15,6 +15,7 @@ import '../../workspace/presentation/feature_names.dart';
 import '../domain/action_confirmation.dart';
 import '../providers/mcp_providers.dart';
 import 'mcp_operation_labels.dart';
+import 'mcp_setup_change_text.dart';
 
 /// #1619 — the one place a person confirms a high-impact action an
 /// assistant asked for: which workspace, which assistant, exactly what,
@@ -174,6 +175,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
     final format = ref.watch(appFormatProvider);
     final target = c.target;
     final args = c.arguments;
+    final setup = McpSetupChangeText(l10n, format);
     String? amount() => target['total_cents'] is int
         ? format.money(
             target['total_cents']! as int,
@@ -188,7 +190,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
       ].where((s) => s.isNotEmpty).join(' · '),
       'member' => '${target['name'] ?? ''}',
       'event' => '${target['type'] ?? ''}',
-      _ => _setupSubject(l10n, target),
+      _ => setup.subject(target) ?? _setupSubject(l10n, target),
     };
     final change = switch (McpOperationId.of(c.operation)) {
       McpOperationId.requestMemberStatusChange =>
@@ -201,7 +203,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
             : l10n.mcpConfirmRefuse,
       McpOperationId.requestInvoiceIssue =>
         l10n.mcpConfirmPeriod('${args['period']}'),
-      _ => _setupChange(l10n, c.operation, target),
+      _ => setup.change(target) ?? _setupChange(l10n, c.operation, target),
     };
     ListTile row(Key key, IconData icon, String title, String subtitle) =>
         ListTile(

@@ -13914,6 +13914,15 @@
       }
     }
   },
+  "mcpConfirmClosureReason": "Reason: {reason}",
+  "@mcpConfirmClosureReason": {
+    "description": "#2873 mcp_confirmation: the reason given for closure days an assistant adds",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "mcpConfirmConsequence": "Confirming lets the assistant send this exact request once. The workspace's own validation rules still apply.",
   "@mcpConfirmConsequence": {
     "description": "#1619 mcp_confirmation"
@@ -13933,6 +13942,21 @@
   "mcpConfirmExpired": "This request expired. Ask the assistant to send it again.",
   "@mcpConfirmExpired": {
     "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmFieldChange": "{field}: {from} → {to}",
+  "@mcpConfirmFieldChange": {
+    "description": "#2873 mcp_confirmation: one setting an assistant's setup change sets, from its current value to the new one",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
   },
   "mcpConfirmLevel": "{process}: {level}",
   "@mcpConfirmLevel": {
@@ -14741,6 +14765,14 @@
   "@mcpOpSetFavorite": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_favorite)"
   },
+  "mcpOpSetupClosures": "Add closure days",
+  "@mcpOpSetupClosures": {
+    "description": "#2394 generated from contracts/mcp/operations.json (add_closure_days)"
+  },
+  "mcpOpSetupHours": "Set the opening days and hours",
+  "@mcpOpSetupHours": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_opening_hours)"
+  },
   "mcpOpSetupLevels": "See the setup levels",
   "@mcpOpSetupLevels": {
     "description": "#2394 generated from contracts/mcp/operations.json (list_setup_levels)"
@@ -14753,9 +14785,17 @@
   "@mcpOpSetupLevelsPreview": {
     "description": "#2394 generated from contracts/mcp/operations.json (preview_setup_levels)"
   },
+  "mcpOpSetupNumbering": "Set how documents are numbered",
+  "@mcpOpSetupNumbering": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_number_sequence)"
+  },
   "mcpOpSetupStatus": "See how far the setup is",
   "@mcpOpSetupStatus": {
     "description": "#2394 generated from contracts/mcp/operations.json (get_setup_status)"
+  },
+  "mcpOpSetupStepExplain": "Explain a setup step",
+  "@mcpOpSetupStepExplain": {
+    "description": "#2394 generated from contracts/mcp/operations.json (explain_setup_step)"
   },
   "mcpOpSetupStepMark": "Mark a setup step done or for later",
   "@mcpOpSetupStepMark": {
