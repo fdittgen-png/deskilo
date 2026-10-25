@@ -6,6 +6,7 @@
 // own currency — pages and currencies are never summed together.
 
 import '../../../core/data/json_reader.dart';
+import 'account_activity.dart';
 import 'finance_hosts.dart';
 
 /// Where one of MY invoices stands (the 0067/0068 lifecycle, as the server
@@ -93,9 +94,27 @@ class FinanceReminder {
     required this.sentAt,
     required this.level,
     required this.automatic,
+    this.workspaceId,
   });
 
   final String id, invoiceId, invoiceNumber, workspaceName;
+
+  /// The workspace of the invoice this reminder is about: with [id], its
+  /// identity across hosts. Null until the reminder is qualified by its
+  /// invoice ([FinanceOverview.qualified]).
+  final String? workspaceId;
+
+  /// This reminder, in [workspaceId].
+  FinanceReminder inWorkspace(String workspaceId) => FinanceReminder(
+        id: id,
+        invoiceId: invoiceId,
+        invoiceNumber: invoiceNumber,
+        workspaceName: workspaceName,
+        sentAt: sentAt,
+        level: level,
+        automatic: automatic,
+        workspaceId: workspaceId,
+      );
   final DateTime sentAt;
   final int level;
   final bool automatic;
@@ -110,6 +129,7 @@ class FinanceReminder {
       sentAt: r.dateTime('sent_at'),
       level: r.intOrNull('level') ?? 1,
       automatic: r.boolOr('automatic', fallback: false),
+      workspaceId: r.stringOrNull('workspace_id'),
     );
   }
 }
@@ -134,10 +154,16 @@ class FinanceOverview {
     this.unavailableSources = const [],
     this.answered = const [],
     this.hosts = const [],
+    this.payments = const [],
   });
 
   final List<FinanceInvoice> invoices;
   final List<FinanceReminder> reminders;
+
+  /// My payments read on the connected hosts (`my_financial_activity`,
+  /// kind payments, its first page), each identified by workspace and id.
+  /// The personal home's own payments are its activity page's.
+  final List<AccountActivity> payments;
 
   /// The hosts that answered this time, in the order they were read: the
   /// coverage shown above the results, beside [unavailableSources].
@@ -166,18 +192,26 @@ class FinanceOverview {
   /// document, and the first reading stays. Two hosts' equal local ids in
   /// different workspaces are two documents.
   FinanceOverview merge(FinanceOverview other) {
-    final ids = {for (final i in invoices) (i.workspaceId, i.id)};
-    final reminderIds = {for (final r in reminders) (r.workspaceName, r.id)};
+    final mine = qualified();
+    final theirs = other.qualified();
+    final ids = {for (final i in mine.invoices) (i.workspaceId, i.id)};
+    final reminderIds = {for (final r in mine.reminders) _reminderKey(r)};
+    final paymentIds = {for (final p in payments) (p.workspaceId, p.id)};
     return FinanceOverview(
       invoices: [
-        ...invoices,
-        for (final i in other.invoices)
+        ...mine.invoices,
+        for (final i in theirs.invoices)
           if (!ids.contains((i.workspaceId, i.id))) i,
       ],
       reminders: [
-        ...reminders,
-        for (final r in other.reminders)
-          if (!reminderIds.contains((r.workspaceName, r.id))) r,
+        ...mine.reminders,
+        for (final r in theirs.reminders)
+          if (!reminderIds.contains(_reminderKey(r))) r,
+      ],
+      payments: [
+        ...payments,
+        for (final p in other.payments)
+          if (!paymentIds.contains((p.workspaceId, p.id))) p,
       ],
       unavailableSources: [...unavailableSources, ...other.unavailableSources],
       answered: [...answered, ...other.answered],
@@ -185,13 +219,72 @@ class FinanceOverview {
     );
   }
 
+  /// A reminder's identity: its invoice's workspace and its id (the
+  /// workspace's name only while it is not qualified yet).
+  static (String, String) _reminderKey(FinanceReminder r) =>
+      (r.workspaceId ?? r.workspaceName, r.id);
+
+  /// The same documents, each reminder qualified with the workspace of its
+  /// invoice in THIS answer: one answer comes from one installation, where
+  /// an invoice id is one invoice. A reminder whose invoice is not here
+  /// stays as it was.
+  FinanceOverview qualified() {
+    if (reminders.every((r) => r.workspaceId != null)) return this;
+    final workspaceOf = {for (final i in invoices) i.id: i.workspaceId};
+    return _with(
+      reminders: [
+        for (final r in reminders)
+          if (r.workspaceId == null && workspaceOf[r.invoiceId] != null)
+            r.inWorkspace(workspaceOf[r.invoiceId]!)
+          else
+            r,
+      ],
+    );
+  }
+
+  /// These documents with some parts replaced.
+  FinanceOverview _with({
+    List<FinanceInvoice>? invoices,
+    List<FinanceReminder>? reminders,
+    List<AccountActivity>? payments,
+    List<String>? unavailableSources,
+    List<FinanceSourceRead>? answered,
+    List<FinanceHostRead>? hosts,
+  }) =>
+      FinanceOverview(
+        invoices: invoices ?? this.invoices,
+        reminders: reminders ?? this.reminders,
+        payments: payments ?? this.payments,
+        unavailableSources: unavailableSources ?? this.unavailableSources,
+        answered: answered ?? this.answered,
+        hosts: hosts ?? this.hosts,
+      );
+
+  /// The same documents, with [payments] among them.
+  FinanceOverview withPayments(List<AccountActivity> payments) =>
+      _with(payments: payments);
+
+  /// The same documents, with [source] no longer recorded as a host that
+  /// did not answer: it is being read again.
+  FinanceOverview withoutUnavailable(String source) => _with(
+        unavailableSources: [
+          for (final s in unavailableSources)
+            if (s != source) s,
+        ],
+      );
+
+  /// [payments], newest first, the qualified id breaking a tie.
+  static List<AccountActivity> newestFirst(Iterable<AccountActivity> payments) =>
+      [...payments]..sort((a, b) {
+          final time = b.occurredAt.compareTo(a.occurredAt);
+          if (time != 0) return time;
+          final ws = a.workspaceId.compareTo(b.workspaceId);
+          return ws != 0 ? ws : a.id.compareTo(b.id);
+        });
+
   /// The same documents, with [reading] recorded as connected hosts being
   /// read.
-  FinanceOverview reading(Iterable<FinanceHost> reading) => FinanceOverview(
-    invoices: invoices,
-    reminders: reminders,
-    unavailableSources: unavailableSources,
-    answered: answered,
+  FinanceOverview reading(Iterable<FinanceHost> reading) => _with(
     hosts: [
       ...hosts,
       for (final h in reading) FinanceHostRead(h, FinanceHostStatus.reading),
@@ -213,11 +306,7 @@ class FinanceOverview {
           i.workspaceId,
       },
     );
-    final next = FinanceOverview(
-      invoices: invoices,
-      reminders: reminders,
-      unavailableSources: unavailableSources,
-      answered: answered,
+    final next = _with(
       hosts: [
         for (final h in hosts)
           if (h.host.installationId == host.installationId) read else h,
@@ -226,17 +315,17 @@ class FinanceOverview {
     return answer == null
         ? next
         : next.merge(
-            FinanceOverview(invoices: answer.invoices, reminders: answer.reminders),
+            FinanceOverview(
+              invoices: answer.invoices,
+              reminders: answer.reminders,
+              payments: answer.payments,
+            ),
           );
   }
 
   /// The same documents, recorded as read from [origin] (null: the
   /// personal home), with the workspaces they belong to.
-  FinanceOverview answeredBy(String? origin) => FinanceOverview(
-        invoices: invoices,
-        reminders: reminders,
-        unavailableSources: unavailableSources,
-        hosts: hosts,
+  FinanceOverview answeredBy(String? origin) => _with(
         answered: [
           ...answered,
           FinanceSourceRead(
@@ -248,13 +337,8 @@ class FinanceOverview {
 
   /// The same documents, with [source] recorded as a host that did not
   /// answer.
-  FinanceOverview withUnavailable(String source) => FinanceOverview(
-        invoices: invoices,
-        reminders: reminders,
-        unavailableSources: [...unavailableSources, source],
-        answered: answered,
-        hosts: hosts,
-      );
+  FinanceOverview withUnavailable(String source) =>
+      _with(unavailableSources: [...unavailableSources, source]);
 
   /// The workspaces my documents come from, as (id, name), by name.
   List<(String, String)> get workspaces {
@@ -272,16 +356,23 @@ class FinanceOverview {
       ? this
       : where((i) => i.workspaceId == workspaceId);
 
-  /// The invoices [keep] accepts, and the reminders of those invoices.
+  /// The invoices [keep] accepts, and the reminders of those invoices: a
+  /// reminder follows its invoice by workspace and id, so an equal local
+  /// invoice id on another host never carries it along. The payments stay;
+  /// their own face narrows them.
   FinanceOverview where(bool Function(FinanceInvoice) keep) {
     final mine = [for (final i in invoices) if (keep(i)) i];
-    final ids = {for (final i in mine) i.id};
-    return FinanceOverview(
+    final ids = {for (final i in mine) (i.workspaceId, i.id)};
+    final local = {for (final i in mine) i.id};
+    return _with(
       invoices: mine,
-      reminders: [for (final r in reminders) if (ids.contains(r.invoiceId)) r],
-      unavailableSources: unavailableSources,
-      answered: answered,
-      hosts: hosts,
+      reminders: [
+        for (final r in qualified().reminders)
+          if (r.workspaceId == null
+              ? local.contains(r.invoiceId)
+              : ids.contains((r.workspaceId!, r.invoiceId)))
+            r,
+      ],
     );
   }
 
@@ -319,6 +410,6 @@ class FinanceOverview {
       invoices: r.objects('invoices', (row) => FinanceInvoice.fromJson(row.json)),
       reminders:
           r.objects('reminders', (row) => FinanceReminder.fromJson(row.json)),
-    );
+    ).qualified();
   }
 }

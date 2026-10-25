@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -28,6 +27,9 @@ part 'finance_overview_provider.g.dart';
 /// others on screen and is named, with its own Try again, rather than
 /// hiding them or posing as empty. An answer that arrives after the
 /// signed-in account changed, or for a view rebuilt meanwhile, is dropped.
+/// C6: each host answers for my payments and reminders as well as my
+/// invoices; the selected workspace's host retries alone; a refresh waits
+/// for every host ([settled]).
 @Riverpod(name: 'financeOverviewProvider')
 class FinanceOverviewComposer extends _$FinanceOverviewComposer {
   int _generation = 0;
@@ -35,14 +37,28 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
   BoundedReads? _reads;
   Duration _timeout = Duration.zero;
 
+  /// The selected workspace's host read in this build, by origin, and its
+  /// repository (null while its client is refused).
+  String? _selectedSource;
+  AccountActivityRepository? _selectedRepo;
+
+  /// The reads this build started that may still change the view.
+  List<Future<void>> _inFlight = [];
+  final Set<String> _retrying = {};
+
   @override
   Future<FinanceOverview> build() async {
     final generation = ++_generation;
     _reads = null;
+    _inFlight = [];
+    _retrying.clear();
+    _selectedSource = null;
+    _selectedRepo = null;
     if (ref.watch(authStateProvider).value == null) {
       return const FinanceOverview();
     }
     final principal = ref.watch(sessionStateProvider.select((s) => s.value));
+    _principal = principal;
     final home = ref.watch(accountActivityRepositoryProvider);
     final split = ref.watch(selectedWorkspaceHostProvider);
     // Watched before the first await; a failure of one while another is
@@ -50,6 +66,8 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
     final hostsAnswer = ref.watch(financeHostsProvider.future)..ignore();
     final limitsAnswer = ref.watch(financeReadLimitsProvider.future)..ignore();
     final selected = split == null ? null : _selectedRepository(ref);
+    _selectedSource = split?.source;
+    _selectedRepo = selected;
     final hosts = await _away(hostsAnswer);
     // A selected workspace on a host read below is answered there, once.
     final covered = split != null &&
@@ -81,14 +99,17 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
     if (!ref.mounted || generation != _generation) return mine.reading(hosts);
     final reads = BoundedReads(limits.concurrency);
     ref.onDispose(reads.close);
-    _principal = principal;
     _reads = reads;
     _timeout = limits.timeout;
     for (final host in hosts) {
-      unawaited(_read(generation, host));
+      _inFlight.add(_read(generation, host));
     }
     return mine.reading(hosts);
   }
+
+  /// Completes once every host read this view started has settled, each
+  /// bounded by its own timeout: what a pull-to-refresh waits for.
+  Future<void> settled() => Future.wait([..._inFlight]);
 
   /// The connected hosts to read: those my account names that are not the
   /// personal home's own installation (its read already answers for them).
@@ -113,7 +134,7 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
   ) async {
     if (selected == null) return mine.withUnavailable(source);
     try {
-      return mine.merge((await selected.overview()).answeredBy(source));
+      return mine.merge((await _readSelected(selected)).answeredBy(source));
     } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'money',
@@ -123,6 +144,64 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
       );
       return mine.withUnavailable(source);
     }
+  }
+
+  /// My documents and my payments on the selected workspace's host: it
+  /// answers for both or is named as not answering.
+  static Future<FinanceOverview> _readSelected(
+    AccountActivityRepository selected,
+  ) async {
+    final overview = await selected.overview();
+    return overview.withPayments(
+      await selected.list(AccountActivityKind.payments),
+    );
+  }
+
+  /// Reads the selected workspace's host [source] again, when it did not
+  /// answer; the personal home and the other hosts stay as they are. While
+  /// its client is refused there is nothing to read it with but a new
+  /// build.
+  Future<void> retrySource(String source) async {
+    final overview = state.value;
+    if (overview == null || !overview.unavailableSources.contains(source)) {
+      return;
+    }
+    final selected = _selectedRepo;
+    if (source != _selectedSource || selected == null) {
+      ref.invalidateSelf();
+      return;
+    }
+    if (!_retrying.add(source)) return;
+    final read = _retrySelected(_generation, selected, source);
+    _inFlight.add(read);
+    await read;
+  }
+
+  Future<void> _retrySelected(
+    int generation,
+    AccountActivityRepository selected,
+    String source,
+  ) async {
+    FinanceOverview? answer;
+    try {
+      answer = await _readSelected(selected);
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn(
+        'money',
+        'own documents of the selected workspace unavailable again',
+        error: e,
+        stackTrace: st,
+      );
+    } finally {
+      if (generation == _generation) _retrying.remove(source);
+    }
+    // A failed retry leaves the host named, with its Try again.
+    if (answer == null || !_current(generation)) return;
+    final now = state.value;
+    if (now == null || !now.unavailableSources.contains(source)) return;
+    state = AsyncData(
+      now.withoutUnavailable(source).merge(answer.answeredBy(source)),
+    );
   }
 
   /// Whether a read started in [generation] may still change the view: the
@@ -183,10 +262,18 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
       state = AsyncData(
         overview.hostSettled(h.host, FinanceHostStatus.reading),
       );
-      unawaited(_read(_generation, h.host));
+      _inFlight.add(_read(_generation, h.host));
       return;
     }
   }
+}
+
+/// Pull-to-refresh of Me › Finances: everything read again, done only once
+/// every connected host has answered or run out of its own time.
+Future<void> refreshMyFinances(WidgetRef ref) async {
+  ref.invalidate(financeOverviewProvider);
+  await ref.read(financeOverviewProvider.future);
+  await ref.read(financeOverviewProvider.notifier).settled();
 }
 
 /// The selected workspace's repository — or null while its client is

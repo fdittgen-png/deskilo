@@ -13,6 +13,7 @@ import 'dart:math' as math;
 
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/session/session_source.dart';
+import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/domain/finance_hosts.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/domain/own_finance_csv.dart';
@@ -423,7 +424,213 @@ void main() {
     expect(workspaces, ['Lyon', 'Office A'],
         reason: 'ws-Lyon sorts before ws-Office A on the same day');
   });
+
+  group('C6 — payments and reminders on every host', () {
+    testWidgets('a connected host adds its own payments and reminders, '
+        'beside the home\'s', (tester) async {
+      final home = _homeWith([invoice('p1')])
+        ..records[AccountActivityKind.payments] = [_payment('pay-home')];
+      final reader = _hosts()
+        ..answers['inst-b'] = FinanceOverview(
+          invoices: [invoice('b1', ws: 'Lyon')],
+          reminders: [_reminder('r-b', 'b1')],
+          payments: [_payment('pay-b', ws: 'Lyon')],
+        );
+      await _pump(tester, home, reader);
+
+      await _tab(tester, 'finances-tab-payments');
+      expect(_key('finances-payment-pay-home'), findsOneWidget);
+      expect(_key('finances-payment-pay-b'), findsOneWidget);
+
+      await _tab(tester, 'finances-tab-reminders');
+      expect(_key('finances-reminder-r-b'), findsOneWidget);
+    });
+
+    testWidgets('a host that does not answer adds no payments and is named; '
+        'its Try again brings them', (tester) async {
+      final home = _homeWith([invoice('p1')])
+        ..records[AccountActivityKind.payments] = [_payment('pay-home')];
+      final reader = _hosts()
+        ..answers['inst-c'] = FinanceOverview(
+          invoices: [invoice('c1', ws: 'Nice')],
+          payments: [_payment('pay-c', ws: 'Nice')],
+        )
+        ..down.add('inst-c');
+      await _pump(tester, home, reader);
+      await _tab(tester, 'finances-tab-payments');
+      expect(_key('finances-payment-pay-home'), findsOneWidget);
+      expect(_key('finances-payment-pay-c'), findsNothing);
+      final banner = _key('finances-source-unavailable-inst-c');
+      expect(banner, findsOneWidget);
+
+      reader.down.clear();
+      await tester.tap(
+        find.descendant(of: banner, matching: find.text('Try again')),
+      );
+      await tester.pumpAndSettle();
+      expect(_key('finances-payment-pay-c'), findsOneWidget);
+      expect(reader.reads, {'inst-b': 1, 'inst-c': 2});
+    });
+
+    test('a reminder follows its invoice by workspace and id: an equal '
+        'local id on another host is another reminder', () {
+      final merged = FinanceOverview(
+        invoices: [invoice('1')],
+        reminders: [_reminder('r1', '1', ws: 'Office A')],
+        payments: [_payment('p')],
+      ).merge(
+        FinanceOverview(
+          invoices: [invoice('1', ws: 'Lyon')],
+          reminders: [_reminder('r1', '1', ws: 'Office A')],
+          payments: [_payment('p', ws: 'Lyon'), _payment('p')],
+        ),
+      );
+      expect(
+        merged.reminders.map((r) => '${r.workspaceId}:${r.id}'),
+        ['ws-Office A:r1', 'ws-Lyon:r1'],
+      );
+      expect(
+        merged.inWorkspace('ws-Lyon').reminders.map((r) => r.workspaceId),
+        ['ws-Lyon'],
+        reason: 'Office A\'s reminder of its own invoice 1 stays there',
+      );
+      expect(
+        merged.payments.map((p) => '${p.workspaceId}:${p.id}'),
+        ['ws-Office A:p', 'ws-Lyon:p'],
+      );
+    });
+
+    test('payments that arrive after the account changed never land', () async {
+      final session = StreamController<String?>.broadcast();
+      addTearDown(session.close);
+      final reader = _Reader();
+      final stale = reader.hold('inst-b');
+      final container = ProviderContainer(
+        overrides: [
+          ..._overrides(_homeWith(const []), reader),
+          sessionStateProvider.overrideWith((ref) => session.stream),
+        ],
+      );
+      addTearDown(container.dispose);
+      final sub = container.listen(financeOverviewProvider, (_, _) {});
+      addTearDown(sub.close);
+      session.add('person-1');
+      await pumpEventQueue();
+      await container.read(financeOverviewProvider.future);
+      await pumpEventQueue();
+      final fresh = reader.hold('inst-b');
+      session.add('person-2');
+      await pumpEventQueue();
+      await container.read(financeOverviewProvider.future);
+      await pumpEventQueue();
+
+      stale.complete(
+        FinanceOverview(
+          payments: [_payment('old', ws: 'Lyon')],
+          reminders: [_reminder('r-old', 'x')],
+        ),
+      );
+      await pumpEventQueue();
+      var now = container.read(financeOverviewProvider).value!;
+      expect(now.payments, isEmpty);
+      expect(now.reminders, isEmpty);
+
+      fresh.complete(FinanceOverview(payments: [_payment('new', ws: 'Lyon')]));
+      await pumpEventQueue();
+      now = container.read(financeOverviewProvider).value!;
+      expect(now.payments.map((p) => p.id), ['new']);
+    });
+  });
+
+  group('C6 — a pull-to-refresh waits for every host', () {
+    /// Pulls the list; [onEnd] runs once the refresh has ended.
+    Future<void> pull(WidgetTester tester, void Function() onEnd) async {
+      final indicator = tester.state<RefreshIndicatorState>(
+        find.byType(RefreshIndicator).first,
+      );
+      unawaited(indicator.show().then((_) => onEnd()));
+      await tester.pump();
+    }
+
+    testWidgets('it ends once the held host has answered, with that host\'s '
+        'documents', (tester) async {
+      final reader = _hosts()..down.add('inst-c');
+      await _pump(tester, _homeWith([invoice('p1')]), reader);
+      expect(_key('finances-source-unavailable-inst-c'), findsOneWidget);
+
+      reader.down.clear();
+      final lyon = reader.hold('inst-b');
+      var ended = false;
+      await pull(tester, () => ended = true);
+      for (var i = 0; i < 5; i++) {
+        await tester.pump(const Duration(milliseconds: 200));
+      }
+      expect(ended, isFalse, reason: 'Lyon is still being read');
+
+      lyon.complete(FinanceOverview(invoices: [invoice('b2', ws: 'Lyon')]));
+      await tester.pumpAndSettle();
+      expect(ended, isTrue);
+      expect(_key('finances-invoice-b2'), findsOneWidget);
+      expect(_key('finances-invoice-c1'), findsOneWidget,
+          reason: 'the host that failed before answers on the refresh');
+      expect(_key('finances-source-unavailable-inst-c'), findsNothing);
+    });
+
+    testWidgets('a host that never answers ends it at its own timeout, '
+        'named', (tester) async {
+      final reader = _hosts();
+      await _pump(
+        tester,
+        _homeWith([invoice('p1')]),
+        reader,
+        timeout: const Duration(seconds: 3),
+      );
+      reader.hold('inst-b');
+      var ended = false;
+      await pull(tester, () => ended = true);
+      await tester.pump(const Duration(seconds: 1));
+      expect(ended, isFalse);
+      await tester.pump(const Duration(seconds: 3));
+      await tester.pumpAndSettle();
+      expect(ended, isTrue);
+      expect(_key('finances-source-unavailable-inst-b'), findsOneWidget);
+      expect(_key('finances-invoice-c1'), findsOneWidget);
+    });
+  });
 }
+
+/// Opens the tab [key]: its slide is done within a second.
+Future<void> _tab(WidgetTester tester, String key) async {
+  await tester.tap(_key(key));
+  await tester.pump();
+  await tester.pump(const Duration(seconds: 1));
+  // The tab's own read answers; its rows are the next frame.
+  await tester.pump();
+}
+
+AccountActivity _payment(String id, {String ws = 'Office A'}) =>
+    AccountActivity(
+      id: id,
+      workspaceId: 'ws-$ws',
+      workspaceName: ws,
+      occurredAt: DateTime.utc(2026, 9, 3),
+      reference: 'R-$id',
+      description: 'Card',
+      currency: 'EUR',
+      status: 'succeeded',
+      amountCents: 1000,
+    );
+
+FinanceReminder _reminder(String id, String invoiceId, {String ws = 'Lyon'}) =>
+    FinanceReminder(
+      id: id,
+      invoiceId: invoiceId,
+      invoiceNumber: 'INV-$invoiceId',
+      workspaceName: ws,
+      sentAt: DateTime.utc(2026, 9, 2),
+      level: 1,
+      automatic: false,
+    );
 
 /// The CSV of [overview], line by line.
 List<String> ownFinanceCsvLines(FinanceOverview overview) =>

@@ -49,13 +49,44 @@ class _Resolver implements WorkspaceHostResolver {
   }
 }
 
-/// A host answering `my_finance_overview` with one CHF invoice, recording
-/// what it was asked.
-SupabaseClient _host(List<String> requests) => SupabaseClient(
+/// A host answering `my_finance_overview` with one CHF invoice and one
+/// reminder, and `my_financial_activity` with one payment (or refusing it
+/// when [paymentsDown]), recording what it was asked.
+SupabaseClient _host(List<String> requests, {bool paymentsDown = false}) =>
+    SupabaseClient(
   'https://w-b.test',
   'sb_publishable_b',
   httpClient: MockClient((request) async {
     requests.add('${request.url.host}${request.url.path}');
+    if (request.url.path.endsWith('my_financial_activity')) {
+      if (paymentsDown) {
+        return http.Response(
+          jsonEncode({'message': 'down', 'code': 'XX000'}),
+          500,
+          headers: {'content-type': 'application/json'},
+          request: request,
+        );
+      }
+      final params = jsonDecode(request.body) as Map<String, dynamic>;
+      return http.Response(
+        jsonEncode([
+          {
+            'id': 'pay-b',
+            'workspace_id': 'ws-9',
+            'workspace_name': 'Lyon',
+            'occurred_at': '2026-09-03T00:00:00Z',
+            'reference': 'R-${params['p_kind']}',
+            'description': 'Card',
+            'currency': 'CHF',
+            'status': 'succeeded',
+            'amount_cents': 8000,
+          },
+        ]),
+        200,
+        headers: {'content-type': 'application/json'},
+        request: request,
+      );
+    }
     return http.Response(
       jsonEncode({
         'invoices': [
@@ -71,7 +102,17 @@ SupabaseClient _host(List<String> requests) => SupabaseClient(
             'state': 'open',
           },
         ],
-        'reminders': <Object>[],
+        'reminders': [
+          {
+            'id': 'r-b',
+            'invoice_id': 'b1',
+            'invoice_number': 'L-1',
+            'workspace_name': 'Lyon',
+            'sent_at': '2026-09-02T00:00:00Z',
+            'level': 1,
+            'automatic': true,
+          },
+        ],
       }),
       200,
       headers: {'content-type': 'application/json'},
@@ -120,9 +161,35 @@ void main() {
       final overview = await reader.overview(_far);
       expect(origins, ['https://w-b.test']);
       expect(resolver.asked, ['ws-9']);
-      expect(requests, ['w-b.test/rest/v1/rpc/my_finance_overview']);
+      expect(requests, [
+        'w-b.test/rest/v1/rpc/my_finance_overview',
+        'w-b.test/rest/v1/rpc/my_financial_activity',
+      ]);
       expect(overview.invoices.single.currency, 'CHF');
       expect(overview.invoices.single.totalCents, 8000);
+      // C6 — the host's payments and reminders come with its invoices, each
+      // identified by workspace and id.
+      final payment = overview.payments.single;
+      expect((payment.workspaceId, payment.id), ('ws-9', 'pay-b'));
+      expect(payment.reference, 'R-payments');
+      final reminder = overview.reminders.single;
+      expect((reminder.workspaceId, reminder.id), ('ws-9', 'r-b'));
+    });
+
+    test('a host that refuses my payments fails as a whole: no invoices '
+        'without their payments', () async {
+      final requests = <String>[];
+      final client = _host(requests, paymentsDown: true);
+      addTearDown(client.dispose);
+      final reader = HostFinanceReader(
+        hostOf: (_) async => ResolvedWorkspaceHost(
+          installationId: 'inst-w-b',
+          client: client,
+          localUserId: 'local-b',
+        ),
+      );
+      await expectLater(reader.overview(_far), throwsA(anything));
+      expect(requests.last, 'w-b.test/rest/v1/rpc/my_financial_activity');
     });
 
     test('a host not connected here is refused, no resolver asked', () async {
