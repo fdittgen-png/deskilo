@@ -104,6 +104,9 @@ class AccountingExportRun {
     for (final m in await ref.read(workspaceMembersProvider.future))
       m.id: m.memberNumber,
   };
+  /// The workspace's calendar day of an instant.
+  DateTime Function(DateTime instant) get workspaceDayOf =>
+      WorkspaceTime.dateOf;
   InvoiceQueries get invoiceQueries => ref.read(invoiceQueriesProvider);
   DocumentNumbering get repo => ref.read(documentNumberingProvider);
 

@@ -63,6 +63,7 @@ Map<String, List<int>> _package() {
   return buildGobdPackage(
     GobdRequest(
       supplierName: 'Cowork',
+    dayOf: WorkspaceTime.dateOf,
       supplierLocation: 'Leopoldstraße 1, 80802 München',
       from: _from,
       to: _to,

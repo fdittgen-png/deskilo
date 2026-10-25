@@ -169,13 +169,17 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
   final kost = TextEditingController(text: costCentre);
   final links = ValueNotifier(true);
 
-  Widget field(String key, TextEditingController controller, String label) =>
-      TextField(
-        key: ValueKey(key),
-        controller: controller,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(labelText: label),
-      );
+  Widget field(
+    String key,
+    TextEditingController controller,
+    String label, {
+    TextInputType keyboardType = TextInputType.number,
+  }) => TextField(
+    key: ValueKey(key),
+    controller: controller,
+    keyboardType: keyboardType,
+    decoration: InputDecoration(labelText: label),
+  );
 
   return showDialog<DatevExportSettings>(
     context: context,
@@ -201,11 +205,8 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
           field('datev-account-expenses', expenses,
               l10n.fecAccountExpenses),
           field('datev-debtor-base', debtorBase, l10n.datevDebtorBase),
-          TextField(
-            key: const ValueKey('datev-cost-centre'),
-            controller: kost,
-            decoration: InputDecoration(labelText: l10n.datevCostCentre),
-          ),
+          field('datev-cost-centre', kost, l10n.datevCostCentre,
+              keyboardType: TextInputType.text),
           ValueListenableBuilder<bool>(
             valueListenable: links,
             builder: (context, on, _) => SwitchListTile(

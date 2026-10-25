@@ -14,7 +14,6 @@
 import 'dart:convert';
 
 import '../../../core/time/date_text.dart';
-import '../../../core/time/workspace_time.dart';
 import '../../../core/vat/tax_reference.dart';
 import 'accounting_source_snapshot.dart';
 import 'audit_trail.dart';
@@ -66,6 +65,7 @@ class GobdTable {
 class GobdRequest {
   const GobdRequest({
     required this.supplierName,
+    required this.dayOf,
     required this.supplierLocation,
     required this.from,
     required this.to,
@@ -81,7 +81,6 @@ class GobdRequest {
     this.taxRates = const [],
     this.vouchers = const {},
     this.procedure = const {},
-    this.dayOf = WorkspaceTime.dateOf,
   });
 
   final String supplierName;

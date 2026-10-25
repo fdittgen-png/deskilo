@@ -167,6 +167,7 @@ extension GermanAccountingExports on AccountingExportRun {
         final files = buildGobdPackage(
           GobdRequest(
             supplierName: company.name,
+            dayOf: workspaceDayOf,
             supplierLocation: workspace.address,
             from: from,
             to: to,
