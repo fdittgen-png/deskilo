@@ -8441,11 +8441,13 @@
   "mcpConfirmAccept": "Confirmer",
   "mcpConfirmApprove": "Votre réponse : approuver",
   "mcpConfirmClient": "Demandé par : {client}",
+  "mcpConfirmClosureReason": "Motif : {reason}",
   "mcpConfirmConsequence": "Confirmer permet à l'assistant d'envoyer cette demande exacte une seule fois. Les règles de validation de l'espace s'appliquent toujours.",
   "mcpConfirmDecline": "Refuser",
   "mcpConfirmDeclined": "Refusé. Rien n'a été fait.",
   "mcpConfirmDone": "Confirmé. L'assistant peut maintenant envoyer la demande.",
   "mcpConfirmExpired": "Cette demande a expiré. Demandez à l'assistant de la renvoyer.",
+  "mcpConfirmFieldChange": "{field} : {from} → {to}",
   "mcpConfirmLevel": "{process} : {level}",
   "mcpConfirmNewShare": "Nouvelle part d'abonnement : {pct} %",
   "mcpConfirmNewStatus": "Nouveau statut : {status}",
@@ -8623,10 +8625,14 @@
   "mcpOpReservationDeletion": "Demander la suppression d'une réservation commencée",
   "mcpOpRespond": "Répondre à une demande de validation",
   "mcpOpSetFavorite": "Marquer des lieux en favoris",
+  "mcpOpSetupClosures": "Ajouter des jours de fermeture",
+  "mcpOpSetupHours": "Définir les jours et heures d'ouverture",
   "mcpOpSetupLevels": "Voir les niveaux de mise en place",
   "mcpOpSetupLevelsApply": "Changer les niveaux de mise en place",
   "mcpOpSetupLevelsPreview": "Prévisualiser un changement de niveaux",
+  "mcpOpSetupNumbering": "Définir la numérotation des documents",
   "mcpOpSetupStatus": "Voir où en est la mise en place",
+  "mcpOpSetupStepExplain": "Expliquer une étape de la mise en place",
   "mcpOpSetupStepMark": "Marquer une étape comme faite ou pour plus tard",
   "mcpOpSubscription": "Modifier la part d'abonnement d'un membre",
   "mcpOpUpdateReservation": "Modifier vos réservations",
@@ -13813,6 +13819,8 @@
   "@settingHintPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingHintPurchaseSupplierLookupPerMinute": "Le nombre maximal de recherches fournisseur qu’une personne peut faire par minute sur ce serveur. Au-delà, rien n’est envoyé au registre et la recherche est signalée comme occupée.",
+  "settingHintPurchaseSupplierLookupTimeoutSeconds": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) avant qu’une recherche fournisseur soit considérée comme expirée. La personne garde ce qu’elle a saisi et peut réessayer ou continuer à la main.",
   "settingHintReadinessRecentExportDays": "Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -13962,6 +13970,8 @@
   "@settingLabelPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingLabelPurchaseSupplierLookupPerMinute": "Recherches fournisseur par personne et par minute",
+  "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Attente de la recherche fournisseur (secondes)",
   "settingLabelReadinessRecentExportDays": "Fenêtre d’export récent",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
@@ -15061,6 +15071,9 @@
       }
     }
   },
+  "supplierNameMissing": "Un fournisseur a besoin d’un nom.",
+  "supplierSaving": "Enregistrement du fournisseur…",
+  "supplierSimilarName": "Un fournisseur porte déjà ce nom : {supplier}. Vérifiez qu’il ne s’agit pas de la même société ; vous pouvez tout de même enregistrer.",
   "suppliersAdd": "Ajouter un fournisseur",
   "@suppliersAdd": {
     "description": "#2567 suppliers"
@@ -15248,6 +15261,7 @@
   "@suppliersSaved": {
     "description": "#2567 suppliers"
   },
+  "suppliersSavedOpen": "Ouvrir",
   "suppliersTaxUnverified": "Identifiant fiscal non vérifié",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

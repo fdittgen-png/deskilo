@@ -26,7 +26,11 @@
   "mcpOpRespond": "Rispondere a una richiesta di validazione",
   "mcpOpSetupStatus": "Vedere a che punto è la configurazione",
   "mcpOpSetupLevels": "Vedere i livelli di configurazione",
+  "mcpOpSetupStepExplain": "Spiegare un passo della configurazione",
   "mcpOpSetupLevelsPreview": "Visualizzare in anteprima un cambio di livelli",
   "mcpOpSetupLevelsApply": "Cambiare i livelli di configurazione",
-  "mcpOpSetupStepMark": "Segnare un passo come fatto o per dopo"
+  "mcpOpSetupStepMark": "Segnare un passo come fatto o per dopo",
+  "mcpOpSetupHours": "Impostare i giorni e gli orari di apertura",
+  "mcpOpSetupClosures": "Aggiungere giorni di chiusura",
+  "mcpOpSetupNumbering": "Impostare la numerazione dei documenti"
 }

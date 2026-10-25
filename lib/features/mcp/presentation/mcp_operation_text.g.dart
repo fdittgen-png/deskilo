@@ -63,11 +63,19 @@ String mcpOperationLabel(AppLocalizations l10n, String op) =>
         l10n.mcpOpSetupStatus,
       McpOperationId.listSetupLevels =>
         l10n.mcpOpSetupLevels,
+      McpOperationId.explainSetupStep =>
+        l10n.mcpOpSetupStepExplain,
       McpOperationId.previewSetupLevels =>
         l10n.mcpOpSetupLevelsPreview,
       McpOperationId.applySetupLevels =>
         l10n.mcpOpSetupLevelsApply,
       McpOperationId.markSetupStep =>
         l10n.mcpOpSetupStepMark,
+      McpOperationId.setOpeningHours =>
+        l10n.mcpOpSetupHours,
+      McpOperationId.addClosureDays =>
+        l10n.mcpOpSetupClosures,
+      McpOperationId.setNumberSequence =>
+        l10n.mcpOpSetupNumbering,
       null => op,
     };

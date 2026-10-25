@@ -13914,6 +13914,15 @@
       }
     }
   },
+  "mcpConfirmClosureReason": "Reason: {reason}",
+  "@mcpConfirmClosureReason": {
+    "description": "#2873 mcp_confirmation: the reason given for closure days an assistant adds",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "mcpConfirmConsequence": "Confirming lets the assistant send this exact request once. The workspace's own validation rules still apply.",
   "@mcpConfirmConsequence": {
     "description": "#1619 mcp_confirmation"
@@ -13933,6 +13942,21 @@
   "mcpConfirmExpired": "This request expired. Ask the assistant to send it again.",
   "@mcpConfirmExpired": {
     "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmFieldChange": "{field}: {from} → {to}",
+  "@mcpConfirmFieldChange": {
+    "description": "#2873 mcp_confirmation: one setting an assistant's setup change sets, from its current value to the new one",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
   },
   "mcpConfirmLevel": "{process}: {level}",
   "@mcpConfirmLevel": {
@@ -14741,6 +14765,14 @@
   "@mcpOpSetFavorite": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_favorite)"
   },
+  "mcpOpSetupClosures": "Add closure days",
+  "@mcpOpSetupClosures": {
+    "description": "#2394 generated from contracts/mcp/operations.json (add_closure_days)"
+  },
+  "mcpOpSetupHours": "Set the opening days and hours",
+  "@mcpOpSetupHours": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_opening_hours)"
+  },
   "mcpOpSetupLevels": "See the setup levels",
   "@mcpOpSetupLevels": {
     "description": "#2394 generated from contracts/mcp/operations.json (list_setup_levels)"
@@ -14753,9 +14785,17 @@
   "@mcpOpSetupLevelsPreview": {
     "description": "#2394 generated from contracts/mcp/operations.json (preview_setup_levels)"
   },
+  "mcpOpSetupNumbering": "Set how documents are numbered",
+  "@mcpOpSetupNumbering": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_number_sequence)"
+  },
   "mcpOpSetupStatus": "See how far the setup is",
   "@mcpOpSetupStatus": {
     "description": "#2394 generated from contracts/mcp/operations.json (get_setup_status)"
+  },
+  "mcpOpSetupStepExplain": "Explain a setup step",
+  "@mcpOpSetupStepExplain": {
+    "description": "#2394 generated from contracts/mcp/operations.json (explain_setup_step)"
   },
   "mcpOpSetupStepMark": "Mark a setup step done or for later",
   "@mcpOpSetupStepMark": {
@@ -23151,6 +23191,14 @@
   "@settingHintPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
   },
+  "settingHintPurchaseSupplierLookupPerMinute": "The most supplier lookups one person may make per minute on this server. Over the limit nothing is sent to the registry and the lookup is answered as busy.",
+  "@settingHintPurchaseSupplierLookupPerMinute": {
+    "description": "#2863 supplier lookup"
+  },
+  "settingHintPurchaseSupplierLookupTimeoutSeconds": "How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.",
+  "@settingHintPurchaseSupplierLookupTimeoutSeconds": {
+    "description": "#2863 supplier lookup"
+  },
   "settingHintReadinessRecentExportDays": "Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -23338,6 +23386,14 @@
   "settingLabelPurchaseSingleApproval": "Bills one person may approve below (currency units)",
   "@settingLabelPurchaseSingleApproval": {
     "description": "#2574 maker-checker settings"
+  },
+  "settingLabelPurchaseSupplierLookupPerMinute": "Supplier lookups per person per minute",
+  "@settingLabelPurchaseSupplierLookupPerMinute": {
+    "description": "#2863 supplier lookup"
+  },
+  "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Supplier lookup wait (seconds)",
+  "@settingLabelPurchaseSupplierLookupTimeoutSeconds": {
+    "description": "#2863 supplier lookup"
   },
   "settingLabelReadinessRecentExportDays": "Recent export window",
   "@settingLabelReadinessRecentExportDays": {
@@ -25749,6 +25805,23 @@
       }
     }
   },
+  "supplierNameMissing": "A supplier needs a name.",
+  "@supplierNameMissing": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierSaving": "Saving the supplier…",
+  "@supplierSaving": {
+    "description": "#2863 supplier lookup"
+  },
+  "supplierSimilarName": "A supplier with the same name exists: {supplier}. Check it is not the same company; you can still save.",
+  "@supplierSimilarName": {
+    "description": "#2863 supplier lookup",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersAdd": "Add supplier",
   "@suppliersAdd": {
     "description": "#2567 suppliers"
@@ -25935,6 +26008,10 @@
   "suppliersSaved": "Supplier saved.",
   "@suppliersSaved": {
     "description": "#2567 suppliers"
+  },
+  "suppliersSavedOpen": "Open",
+  "@suppliersSavedOpen": {
+    "description": "#2863 supplier lookup"
   },
   "suppliersTaxUnverified": "Tax identifier not verified",
   "@suppliersTaxUnverified": {

@@ -709,5 +709,10 @@
  "fedRetention": "Backchannel retention",
  "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings.",
  "fedAnswerWait": "Backchannel answer wait",
- "fedAnswerWaitHint": "How long a server waits for the answer to a signed message it sent to another server (an identity status, a membership) before it sends the same message again. At least 30 seconds; keep it below the identity status lifetime. Set in the app's settings."
+ "fedAnswerWaitHint": "How long a server waits for the answer to a signed message it sent to another server (an identity status, a membership) before it sends the same message again. At least 30 seconds; keep it below the identity status lifetime. Set in the app's settings.",
+ "supLookupWait": "Supplier lookup wait",
+ "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
+ "supLookupRate": "Supplier lookups per minute",
+ "supLookupRateHint": "The most supplier lookups one person may make per minute on this server; more are answered as busy and nothing is sent to the registry. Set in the app's settings.",
+ "optPerMinute": "{n} per minute"
 }

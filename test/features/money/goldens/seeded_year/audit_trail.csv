@@ -1,0 +1,21 @@
+# DesKilo audit trail — Cowork
+# generated 2027-01-05T09:07:03.000Z
+# 15 event(s), oldest first
+# made with: settings in-memory; tax reference in-memory; book profile in-memory; calendar in-memory
+# This is the evidence behind the numbers, not a regulated audit file. Nothing is filtered: voided documents, pending settlements and reversals are all included.
+happened_on,kind,reference,relates_to,description,amount,counterparty,actor,status
+2026-02-10,expense,"L-exp-2026",,"d L-exp-2026",30.00,"m1",,"credit"
+2026-02-12,payment,"L-pay-2026",,"d L-pay-2026",40.00,"m1",,"credit"
+2026-03-05,invoice,"INV-1",,"T INV-1",225.50,"Ana","Flo","issued"
+2026-03-20,payment,"INV-1","INV-1","Payment",155.50,"Ana",,"confirmed"
+2026-04-05,invoice,"INV-2",,"T INV-2",200.00,"Ana","Flo","issued"
+2026-04-20,payment,"INV-2","INV-2","Payment",120.00,"Ana",,"confirmed"
+2026-05-05,invoice,"INV-3",,"T INV-3",100.00,"Ana","Flo","issued"
+2026-05-20,payment,"INV-3","INV-3","Payment",60.00,"Ana",,"confirmed"
+2026-05-25,writeoff,"INV-3","INV-3","Written off",-40.00,"Ana",,"confirmed"
+2026-06-05,invoice,"CN-1","INV-2","T CN-1",-50.00,"Ana","Flo","issued"
+2026-06-10,payment,"CN-1","CN-1","Payment",50.00,"Ana",,"confirmed"
+2026-07-06,invoice,"INV-4",,"T INV-4",120.00,"Ana","Flo","issued"
+2026-07-13,invoice,"INV-5",,"T INV-5",42.20,"Ana","Flo","issued"
+2026-08-10,payment,"INV-4","INV-4","via S-1",120.00,"Ana",,"confirmed"
+2026-08-10,payment,"INV-5","INV-5","via S-1",42.20,"Ana",,"confirmed"

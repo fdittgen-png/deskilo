@@ -19984,6 +19984,12 @@ abstract class AppLocalizations {
   /// **'Asked by: {client}'**
   String mcpConfirmClient(String client);
 
+  /// #2873 mcp_confirmation: the reason given for closure days an assistant adds
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String mcpConfirmClosureReason(String reason);
+
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -20013,6 +20019,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This request expired. Ask the assistant to send it again.'**
   String get mcpConfirmExpired;
+
+  /// #2873 mcp_confirmation: one setting an assistant's setup change sets, from its current value to the new one
+  ///
+  /// In en, this message translates to:
+  /// **'{field}: {from} → {to}'**
+  String mcpConfirmFieldChange(String field, String from, String to);
 
   /// #2873 mcp_confirmation
   ///
@@ -21076,6 +21088,18 @@ abstract class AppLocalizations {
   /// **'Mark places as favourites'**
   String get mcpOpSetFavorite;
 
+  /// #2394 generated from contracts/mcp/operations.json (add_closure_days)
+  ///
+  /// In en, this message translates to:
+  /// **'Add closure days'**
+  String get mcpOpSetupClosures;
+
+  /// #2394 generated from contracts/mcp/operations.json (set_opening_hours)
+  ///
+  /// In en, this message translates to:
+  /// **'Set the opening days and hours'**
+  String get mcpOpSetupHours;
+
   /// #2394 generated from contracts/mcp/operations.json (list_setup_levels)
   ///
   /// In en, this message translates to:
@@ -21094,11 +21118,23 @@ abstract class AppLocalizations {
   /// **'Preview a change of levels'**
   String get mcpOpSetupLevelsPreview;
 
+  /// #2394 generated from contracts/mcp/operations.json (set_number_sequence)
+  ///
+  /// In en, this message translates to:
+  /// **'Set how documents are numbered'**
+  String get mcpOpSetupNumbering;
+
   /// #2394 generated from contracts/mcp/operations.json (get_setup_status)
   ///
   /// In en, this message translates to:
   /// **'See how far the setup is'**
   String get mcpOpSetupStatus;
+
+  /// #2394 generated from contracts/mcp/operations.json (explain_setup_step)
+  ///
+  /// In en, this message translates to:
+  /// **'Explain a setup step'**
+  String get mcpOpSetupStepExplain;
 
   /// #2394 generated from contracts/mcp/operations.json (mark_setup_step)
   ///
@@ -33690,6 +33726,18 @@ abstract class AppLocalizations {
   /// **'Bills of the space\'s supplier below this amount may be approved by the person who drafted or sent them, if that person may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.'**
   String get settingHintPurchaseSingleApproval;
 
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'The most supplier lookups one person may make per minute on this server. Over the limit nothing is sent to the registry and the lookup is answered as busy.'**
+  String get settingHintPurchaseSupplierLookupPerMinute;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.'**
+  String get settingHintPurchaseSupplierLookupTimeoutSeconds;
+
   /// #2487 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -33971,6 +34019,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bills one person may approve below (currency units)'**
   String get settingLabelPurchaseSingleApproval;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier lookups per person per minute'**
+  String get settingLabelPurchaseSupplierLookupPerMinute;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier lookup wait (seconds)'**
+  String get settingLabelPurchaseSupplierLookupTimeoutSeconds;
 
   /// #2487 settings: Setting label.
   ///
@@ -37055,6 +37115,24 @@ abstract class AppLocalizations {
   /// **'No registry answers for {country} yet. You can enter the details yourself.'**
   String supplierLookupUnsupported(String country);
 
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier needs a name.'**
+  String get supplierNameMissing;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Saving the supplier…'**
+  String get supplierSaving;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier with the same name exists: {supplier}. Check it is not the same company; you can still save.'**
+  String supplierSimilarName(String supplier);
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
@@ -37276,6 +37354,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplier saved.'**
   String get suppliersSaved;
+
+  /// #2863 supplier lookup
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get suppliersSavedOpen;
 
   /// #2567 suppliers
   ///

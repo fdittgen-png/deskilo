@@ -34,9 +34,13 @@ enum McpOperationId {
   respondToValidation('respond_to_validation'),
   getSetupStatus('get_setup_status'),
   listSetupLevels('list_setup_levels'),
+  explainSetupStep('explain_setup_step'),
   previewSetupLevels('preview_setup_levels'),
   applySetupLevels('apply_setup_levels'),
   markSetupStep('mark_setup_step'),
+  setOpeningHours('set_opening_hours'),
+  addClosureDays('add_closure_days'),
+  setNumberSequence('set_number_sequence'),
   ;
 
   const McpOperationId(this.id);

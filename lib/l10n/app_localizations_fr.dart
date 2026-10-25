@@ -12110,6 +12110,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String mcpConfirmClosureReason(String reason) {
+    return 'Motif : $reason';
+  }
+
+  @override
   String get mcpConfirmConsequence =>
       'Confirmer permet à l\'assistant d\'envoyer cette demande exacte une seule fois. Les règles de validation de l\'espace s\'appliquent toujours.';
 
@@ -12126,6 +12131,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mcpConfirmExpired =>
       'Cette demande a expiré. Demandez à l\'assistant de la renvoyer.';
+
+  @override
+  String mcpConfirmFieldChange(String field, String from, String to) {
+    return '$field : $from → $to';
+  }
 
   @override
   String mcpConfirmLevel(String process, String level) {
@@ -12788,6 +12798,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpOpSetFavorite => 'Marquer des lieux en favoris';
 
   @override
+  String get mcpOpSetupClosures => 'Ajouter des jours de fermeture';
+
+  @override
+  String get mcpOpSetupHours => 'Définir les jours et heures d\'ouverture';
+
+  @override
   String get mcpOpSetupLevels => 'Voir les niveaux de mise en place';
 
   @override
@@ -12798,7 +12814,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Prévisualiser un changement de niveaux';
 
   @override
+  String get mcpOpSetupNumbering => 'Définir la numérotation des documents';
+
+  @override
   String get mcpOpSetupStatus => 'Voir où en est la mise en place';
+
+  @override
+  String get mcpOpSetupStepExplain => 'Expliquer une étape de la mise en place';
 
   @override
   String get mcpOpSetupStepMark =>
@@ -20117,6 +20139,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une facture fournisseur inférieure à ce montant peut être approuvée par la personne qui l\'a saisie ou envoyée, si elle peut approuver les dépenses. 0 conserve la règle selon laquelle une autre personne approuve chaque facture. Refuser demande toujours une autre personne.';
 
   @override
+  String get settingHintPurchaseSupplierLookupPerMinute =>
+      'Le nombre maximal de recherches fournisseur qu’une personne peut faire par minute sur ce serveur. Au-delà, rien n’est envoyé au registre et la recherche est signalée comme occupée.';
+
+  @override
+  String get settingHintPurchaseSupplierLookupTimeoutSeconds =>
+      'Durée pendant laquelle le serveur attend le registre des sociétés (VIES) avant qu’une recherche fournisseur soit considérée comme expirée. La personne garde ce qu’elle a saisi et peut réessayer ou continuer à la main.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.';
 
@@ -20294,6 +20324,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelPurchaseSingleApproval =>
       'Factures qu\'une seule personne peut approuver en dessous de (unités monétaires)';
+
+  @override
+  String get settingLabelPurchaseSupplierLookupPerMinute =>
+      'Recherches fournisseur par personne et par minute';
+
+  @override
+  String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
+      'Attente de la recherche fournisseur (secondes)';
 
   @override
   String get settingLabelReadinessRecentExportDays => 'Fenêtre d’export récent';
@@ -22528,6 +22566,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get supplierNameMissing => 'Un fournisseur a besoin d’un nom.';
+
+  @override
+  String get supplierSaving => 'Enregistrement du fournisseur…';
+
+  @override
+  String supplierSimilarName(String supplier) {
+    return 'Un fournisseur porte déjà ce nom : $supplier. Vérifiez qu’il ne s’agit pas de la même société ; vous pouvez tout de même enregistrer.';
+  }
+
+  @override
   String get suppliersAdd => 'Ajouter un fournisseur';
 
   @override
@@ -22653,6 +22702,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get suppliersSaved => 'Fournisseur enregistré.';
+
+  @override
+  String get suppliersSavedOpen => 'Ouvrir';
 
   @override
   String get suppliersTaxUnverified => 'Identifiant fiscal non vérifié';

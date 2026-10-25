@@ -709,5 +709,10 @@
  "fedRetention": "Conservazione degli scambi tra server",
  "fedRetentionHint": "Per quanto tempo un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima della pulizia oraria. Mai meno della validità dello stato di identità più due volte lo scarto d'orologio. Si imposta nelle impostazioni dell'app.",
  "fedAnswerWait": "Attesa della risposta tra server",
- "fedAnswerWaitHint": "Per quanto tempo un server attende la risposta a un messaggio firmato inviato a un altro server (uno stato di identità, un'iscrizione) prima di inviare di nuovo lo stesso messaggio. Almeno 30 secondi; tenerla sotto la validità dello stato di identità. Si imposta nelle impostazioni dell'app."
+ "fedAnswerWaitHint": "Per quanto tempo un server attende la risposta a un messaggio firmato inviato a un altro server (uno stato di identità, un'iscrizione) prima di inviare di nuovo lo stesso messaggio. Almeno 30 secondi; tenerla sotto la validità dello stato di identità. Si imposta nelle impostazioni dell'app.",
+ "supLookupWait": "Attesa della ricerca fornitore",
+ "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
+ "supLookupRate": "Ricerche fornitore al minuto",
+ "supLookupRateHint": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server; le altre risultano occupate e non viene inviato nulla al registro. Si imposta nelle impostazioni dell'app.",
+ "optPerMinute": "{n} al minuto"
 }
