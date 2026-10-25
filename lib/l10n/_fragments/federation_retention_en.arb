@@ -7,5 +7,13 @@
   "settingHintFederationRetentionHours": "Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.",
   "@settingHintFederationRetentionHours": {
     "description": "#2563 C2 retention: settingHintFederationRetentionHours"
+  },
+  "settingLabelFederationAnswerWaitSeconds": "Backchannel answer wait",
+  "@settingLabelFederationAnswerWaitSeconds": {
+    "description": "#2563 C2 answer wait: settingLabelFederationAnswerWaitSeconds"
+  },
+  "settingHintFederationAnswerWaitSeconds": "Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.",
+  "@settingHintFederationAnswerWaitSeconds": {
+    "description": "#2563 C2 answer wait: settingHintFederationAnswerWaitSeconds"
   }
 }

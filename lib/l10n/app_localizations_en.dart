@@ -19778,6 +19778,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days after issue before a first reminder is suggested, and before an invoice falls due when no payment term was set.';
 
   @override
+  String get settingHintFederationAnswerWaitSeconds =>
+      'Seconds a server waits for the answer to a signed message it sent to another server before it sends the same message again. At least 30; keep it below the status lifetime.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Hours a server keeps the receipts of signed messages between servers, and a personal home the tombstones of ended memberships, before the hourly cleanup removes them. Never shorter than the longest status lifetime plus twice the clock difference.';
 
@@ -19952,6 +19956,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Days before a first reminder';
+
+  @override
+  String get settingLabelFederationAnswerWaitSeconds =>
+      'Backchannel answer wait';
 
   @override
   String get settingLabelFederationRetentionHours => 'Backchannel retention';

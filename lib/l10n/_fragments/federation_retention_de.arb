@@ -1,5 +1,7 @@
 {
   "@@locale": "de",
   "settingLabelFederationRetentionHours": "Aufbewahrung des Server-Austauschs",
-  "settingHintFederationRetentionHours": "Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung."
+  "settingHintFederationRetentionHours": "Stunden, die ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die längste Statusgültigkeit plus die doppelte Uhrabweichung.",
+  "settingLabelFederationAnswerWaitSeconds": "Wartezeit auf Antwort im Server-Austausch",
+  "settingHintFederationAnswerWaitSeconds": "Sekunden, die ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30; unter der Statusgültigkeit halten."
 }

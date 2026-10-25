@@ -57,12 +57,13 @@ String _rangeSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       _ => _federationSettingLabel(l10n, key),
     };
 
-/// #2562/#2563 -- the identity freshness and the backchannel retention.
+/// #2562/#2563 -- the identity freshness, the backchannel retention and answer wait.
 String _federationSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'identity.status_assertion_lifetime_seconds' => l10n.settingLabelIdentityStatusAssertionLifetimeSeconds,
       'identity.status_reconcile_seconds' => l10n.settingLabelIdentityStatusReconcileSeconds,
       'identity.clock_skew_seconds' => l10n.settingLabelIdentityClockSkewSeconds,
       'federation.retention_hours' => l10n.settingLabelFederationRetentionHours,
+      'federation.answer_wait_seconds' => l10n.settingLabelFederationAnswerWaitSeconds,
       _ => key,
     };
 
@@ -114,12 +115,13 @@ String? _rangeSettingHint(AppLocalizations l10n, String key) => switch (key) {
       _ => _federationSettingHint(l10n, key),
     };
 
-/// #2562/#2563 -- the identity freshness and the backchannel retention.
+/// #2562/#2563 -- the identity freshness, the backchannel retention and answer wait.
 String? _federationSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'identity.status_assertion_lifetime_seconds' => l10n.settingHintIdentityStatusAssertionLifetimeSeconds,
       'identity.status_reconcile_seconds' => l10n.settingHintIdentityStatusReconcileSeconds,
       'identity.clock_skew_seconds' => l10n.settingHintIdentityClockSkewSeconds,
       'federation.retention_hours' => l10n.settingHintFederationRetentionHours,
+      'federation.answer_wait_seconds' => l10n.settingHintFederationAnswerWaitSeconds,
       _ => null,
     };
 

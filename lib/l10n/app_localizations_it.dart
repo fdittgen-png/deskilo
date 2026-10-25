@@ -19950,6 +19950,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Giorni dopo l\'emissione prima che venga proposto un primo sollecito e prima della scadenza di una fattura senza termine di pagamento.';
 
   @override
+  String get settingHintFederationAnswerWaitSeconds =>
+      'Secondi per cui un server attende la risposta a un messaggio firmato inviato a un altro server prima di inviare di nuovo lo stesso messaggio. Almeno 30; tenerla sotto la validità dello stato.';
+
+  @override
   String get settingHintFederationRetentionHours =>
       'Ore per cui un server conserva le ricevute dei messaggi firmati tra server, e una casa personale le tracce delle iscrizioni terminate, prima che la pulizia oraria le rimuova. Mai meno della validità di stato più lunga più due volte lo scarto d\'orologio.';
 
@@ -20128,6 +20132,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelDunningFirstAfterDays =>
       'Giorni prima di un primo sollecito';
+
+  @override
+  String get settingLabelFederationAnswerWaitSeconds =>
+      'Attesa della risposta tra server';
 
   @override
   String get settingLabelFederationRetentionHours =>

@@ -12,7 +12,9 @@
 // No key, no decision and no secret lives here. The answer's HTTP status
 // tells the sender what to do: 2xx done (applied, a retry, or superseded),
 // 401 retry later (a key not configured or rotated here yet), any other 4xx
-// refused for good, 5xx retry.
+// refused for good, 5xx retry. A `duplicate` (the same event again) also
+// carries `first_outcome`, what the first delivery decided: the sender books
+// a retry of a refused event as refused, never as delivered (#2563).
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 
@@ -72,8 +74,9 @@ const defaultDeps: Deps = {
     ),
 };
 
-function answer(status: number, outcome: string): Response {
-  return new Response(JSON.stringify({ outcome }), {
+function answer(status: number, outcome: string, firstOutcome?: string): Response {
+  const body = firstOutcome === undefined ? { outcome } : { outcome, first_outcome: firstOutcome };
+  return new Response(JSON.stringify(body), {
     status,
     headers: { "Content-Type": "application/json" },
   });
@@ -112,11 +115,16 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     console.error("federation inbox unavailable", error.message);
     return answer(500, "unavailable");
   }
-  const outcome = String((data as { outcome?: unknown } | null)?.outcome ?? "");
+  const result = data as { outcome?: unknown; first_outcome?: unknown } | null;
+  const outcome = String(result?.outcome ?? "");
   const status = STATUS[outcome];
   if (status === undefined) {
     console.error("federation inbox gave no known outcome");
     return answer(500, "unavailable");
+  }
+  const first = result?.first_outcome;
+  if (outcome === "duplicate" && typeof first === "string" && first !== "") {
+    return answer(status, outcome, first);
   }
   return answer(status, outcome);
 }

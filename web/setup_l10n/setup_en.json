@@ -707,5 +707,7 @@
  "inboxPageSize": "Inbox: conversations per page",
  "inboxPageSizeHint": "How many conversations the personal home and each workspace server return at a time in a member's inbox; older ones come with Show older conversations. Set in the app's settings.",
  "fedRetention": "Backchannel retention",
- "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings."
+ "fedRetentionHint": "How long a server keeps the receipts of signed messages between servers, and a personal home the traces of ended memberships, before the hourly cleanup removes them. Never shorter than the identity status lifetime plus twice the clock difference. Set in the app's settings.",
+ "fedAnswerWait": "Backchannel answer wait",
+ "fedAnswerWaitHint": "How long a server waits for the answer to a signed message it sent to another server (an identity status, a membership) before it sends the same message again. At least 30 seconds; keep it below the identity status lifetime. Set in the app's settings."
 }

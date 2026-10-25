@@ -869,6 +869,25 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       note: 'Hours a server keeps the receipt of a signed backchannel message, and a personal home the tombstone of an ended membership, before the hourly cleanup removes them. Never shorter than the longest assertion lifetime plus twice the clock skew, so a replayed or late message still finds what refuses it.',
     ),
   ),
+  (
+    since: 'fact_delivery_fixes',
+    row: (
+      key: 'federation.answer_wait_seconds',
+      type: 'duration',
+      defaultValue: 120,
+      min: 30,
+      max: 600,
+      unit: 'seconds',
+      group: 'security',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: 30,
+      editable: true,
+      choices: null,
+      source: 'backchannel drains (#2563)',
+      note: 'Seconds a server waits for the answer to a signed backchannel message (identity status, membership fact, membership snapshot) before it sends the same message again. At least 30: one attempt times out after 10 seconds. Keep it below the assertion lifetime, or a message lapses before its retry.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";
