@@ -36,6 +36,8 @@ Map<String, Object?> _capture() {
     'PT',
     'CH',
     'GB',
+    'IE',
+    'CA',
     'XX',
     'fr',
     'us',
