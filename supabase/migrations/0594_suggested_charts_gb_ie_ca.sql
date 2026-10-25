@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2378) -- the suggested charts of a British, Irish and Canadian
+-- 0594 (#2378) -- the suggested charts of a British, Irish and Canadian
 -- space: the Sage 50 Accounts nominal codes (GB, IE) and the Sage 50 Canada
 -- default chart (CA), as `account_map` `coa/NN-<role>` rows of the tax
 -- reference store, UNCONFIRMED until an accountant has checked them. Until
@@ -42,4 +42,4 @@ values
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(594);
