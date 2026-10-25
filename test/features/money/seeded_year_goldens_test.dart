@@ -625,26 +625,27 @@ void main() {
     },
   );
 
-  // The posting engine books a refunded credit note (0436: `refunded`, the
-  // positive amount paid out) as a receipt: Dr bank / Cr customers, the
-  // `m.paid < 0` test of compute_postings (0526) and of `_settled`
-  // (posting_rules.dart) never fires for it. The document-based files
-  // book it right (DATEV `Erstattung`, Sage SP). Unskip with the fix, and
-  // regenerate the three posted goldens.
-  test(
-    'the posted books pay a refunded credit note OUT',
-    () async {
-      final rows = _fecRows(await _files['fec_local_book.txt']!())
-          .where((r) => r['EcritureNum'] == 'BQ-CN-1')
-          .toList();
-      final byAccount = {for (final r in rows) r['CompteNum']!: r};
-      expect(_cents(byAccount['411000']!['Debit']!), 5000);
-      expect(_cents(byAccount['512000']!['Credit']!), 5000);
-    },
-    skip:
-        'compute_postings and posting_rules.dart book a refunded credit '
-        'note as a receipt (#2365)',
-  );
+  // A refunded credit note's match holds the amount paid OUT, positive
+  // (0436): the posted books pay it back to the member, as the
+  // document-based files do (DATEV `Erstattung`, Sage SP). 9999 /
+  // `_settled` (posting_rules.dart); before them it posted as a receipt.
+  test('the posted books pay a refunded credit note OUT', () async {
+    final postings = _posted(await _read('generic_journal_csv', local: true))
+        .postings
+        .where((p) => p.documentNumber == 'CN-1')
+        .toList();
+    expect(postings.map((p) => p.kind), [
+      PostingKind.creditNote,
+      PostingKind.refund,
+    ]);
+    final rows = _fecRows(await _files['fec_local_book.txt']!())
+        .where((r) => r['EcritureNum'] == 'BQ-CN-1')
+        .toList();
+    final byAccount = {for (final r in rows) r['CompteNum']!: r};
+    expect(_cents(byAccount['411000']!['Debit']!), 5000);
+    expect(_cents(byAccount['512000']!['Credit']!), 5000);
+    expect(_cents(byAccount['411000']!['Credit']!), 0);
+  });
 
   test('the document-based files pay the refund out', () async {
     final datev = (await _datev(null)).split('\r\n');

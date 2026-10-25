@@ -336,21 +336,21 @@
         <TransactionID>BQ-CN-1</TransactionID>
         <Period>6</Period>
         <TransactionDate>2026-06-10</TransactionDate>
-        <Description>receipt CN-1</Description>
-        <DebitLine>
+        <Description>refund CN-1</Description>
+        <CreditLine>
           <RecordID>31</RecordID>
           <AccountID>512000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>bank</Description>
-          <DebitAmount>50.00</DebitAmount>
-        </DebitLine>
-        <CreditLine>
+          <CreditAmount>50.00</CreditAmount>
+        </CreditLine>
+        <DebitLine>
           <RecordID>32</RecordID>
           <AccountID>411000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>customers</Description>
-          <CreditAmount>50.00</CreditAmount>
-        </CreditLine>
+          <DebitAmount>50.00</DebitAmount>
+        </DebitLine>
       </Transaction>
       <Transaction>
         <TransactionID>BQ-INV-4</TransactionID>
