@@ -12,7 +12,6 @@ import '../../../core/ui/app_snack.dart';
 import '../../plan/providers/floor_plan_providers.dart';
 import '../../reservations/domain/reservation.dart';
 import '../../reservations/presentation/widgets/reservation_detail_sheet.dart';
-import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';

@@ -23,7 +23,7 @@
       "outcome": "A membership plan grants an allowance per month; a booking beyond it spends a carnet or is refused, and a member without a subscription never books for free.",
       "status": "shipped",
       "features": ["carnets", "usageRecords"],
-      "component": ["lib/features/members/", "lib/features/money/domain/quota_rules.dart", "lib/features/money/domain/billing_rules.dart"],
+      "component": ["lib/features/members/", "lib/features/reservations/domain/quota_rules.dart", "lib/features/money/domain/billing_rules.dart"],
       "prerequisites": "Membership plans configured; an allowance per plan.",
       "limitations": "Allowances are counted per calendar month in the workspace clock; no pro-rata on a mid-month join.",
       "evidence": [

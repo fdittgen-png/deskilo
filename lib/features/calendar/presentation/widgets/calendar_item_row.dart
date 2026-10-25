@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
+import '../../../../core/calendar/calendar_kind_labels.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -11,22 +12,6 @@ import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/event_labels.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import 'calendar_booking_title.dart';
-
-IconData calendarKindIcon(CalendarKind kind) => switch (kind) {
-      CalendarKind.reservation => Icons.event_seat_outlined,
-      CalendarKind.checkIn => Icons.login_outlined,
-      CalendarKind.checkOut => Icons.logout_outlined,
-      CalendarKind.event => Icons.notifications_outlined,
-      CalendarKind.message => Icons.forum_outlined,
-      CalendarKind.invoice => Icons.receipt_long_outlined,
-      CalendarKind.payment => Icons.payments_outlined,
-      CalendarKind.consumption => Icons.local_cafe_outlined,
-      CalendarKind.reminder => Icons.alarm_outlined,
-      CalendarKind.due => Icons.event_available_outlined,
-      CalendarKind.validation => Icons.how_to_reg_outlined,
-      CalendarKind.scheduled => Icons.event_repeat_outlined,
-      CalendarKind.lease => Icons.vpn_key_outlined,
-    };
 
 /// #818 — the group's colour, the same on the grid marker and the row.
 Color calendarGroupColor(ColorScheme scheme, CalendarGroup group) =>
@@ -45,24 +30,6 @@ String calendarGroupLabel(AppLocalizations l10n, CalendarGroup group) =>
       CalendarGroup.money => l10n.calendarGroupMoney,
     };
 
-String calendarKindLabel(AppLocalizations l10n, CalendarKind kind) =>
-    switch (kind) {
-      CalendarKind.reservation => l10n.calendarKindReservation,
-      CalendarKind.checkIn => l10n.calendarKindCheckIn,
-      CalendarKind.checkOut => l10n.calendarKindCheckOut,
-      CalendarKind.event => l10n.calendarKindEvent,
-      CalendarKind.message => l10n.calendarKindMessage,
-      CalendarKind.invoice => l10n.calendarKindInvoice,
-      CalendarKind.payment => l10n.calendarKindPayment,
-      CalendarKind.consumption => l10n.calendarKindConsumption,
-      CalendarKind.reminder => l10n.calendarKindReminder,
-      CalendarKind.due => l10n.calendarKindDue,
-      CalendarKind.scheduled =>
-        l10n.calendarKindScheduled,
-      CalendarKind.lease => l10n.calendarKindLease,
-      CalendarKind.validation =>
-        l10n.calendarKindValidation,
-    };
 
 /// One row of the hub's feed (#718): kind icon, what, who, when, and a
 /// chevron — because every row leads somewhere.

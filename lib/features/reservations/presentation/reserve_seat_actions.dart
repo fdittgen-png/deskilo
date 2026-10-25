@@ -32,6 +32,7 @@ import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/book_seat.dart';
+import '../application/booking_outcome_observation.dart';
 import '../application/booking_recovery.dart';
 import '../domain/booking_error_text.dart';
 import '../domain/own_booking_removal.dart';

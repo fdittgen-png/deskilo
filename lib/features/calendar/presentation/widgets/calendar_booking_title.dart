@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
+import '../../../../core/calendar/calendar_kind_labels.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../plan/providers/seat_context_providers.dart';
 import '../../../reservations/providers/reservation_providers.dart';
-import 'calendar_item_row.dart';
 
 /// Uses the same authorized reservation and location reads as booking details.
 /// Missing or unreadable sources retain the feed's supplied label or a neutral

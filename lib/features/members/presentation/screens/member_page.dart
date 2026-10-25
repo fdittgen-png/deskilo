@@ -32,7 +32,6 @@ import '../../../profile/presentation/courtesy_words.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_policies.dart';
 import '../../../workspace/domain/invite_uri.dart';
 import '../../../workspace/domain/member.dart';

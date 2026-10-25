@@ -14,6 +14,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
 

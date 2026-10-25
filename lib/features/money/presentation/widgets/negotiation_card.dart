@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/feature_sheets.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -188,7 +188,8 @@ class NegotiationCard extends ConsumerWidget {
               alignment: Alignment.centerRight,
               child: TextButton.icon(
                 key: const ValueKey('negotiation-who-can-see'),
-                onPressed: () => showAccessSheet(context, ref),
+                onPressed: () =>
+                    openFeatureSheet(context, ref, FeatureSheet.dataAccess),
                 icon: const Icon(Icons.shield_outlined, size: 18),
                 label: Text(l10n.negotiationWhoCanSee),
               ),

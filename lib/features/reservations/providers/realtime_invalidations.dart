@@ -16,8 +16,4 @@ final reservationsInvalidations = [
       myUpcomingReservationsProvider,
     ],
   ),
-  InvalidationContribution(
-    const ['members', 'profiles'],
-    [memberNamesProvider],
-  ),
 ];

@@ -4,12 +4,12 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../members/domain/membership_errors.dart';
-import '../../money/domain/quota_rules.dart';
 import '../../workspace/domain/booking_granularity.dart';
 import '../../workspace/domain/booking_policies.dart';
 import '../../workspace/domain/workspace_availability.dart';
 import 'booking_gate.dart';
+import 'membership_errors.dart';
+import 'quota_rules.dart';
 
 /// THE booking-failure → user-message mapper (maintainability audit:
 /// this switch was pasted, and drifting, across four screens). Maps the
