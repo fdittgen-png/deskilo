@@ -452,6 +452,7 @@ void main() {
         'directory': 'app',
         'federation': 'app',
         'inbox': 'app',
+        'supplierLookup': 'app',
         'members': 'app',
         'einvoice': 'file',
       });
