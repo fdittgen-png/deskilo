@@ -586,6 +586,10 @@ window.SETUP_REGISTRY={
   [
    "personalShell",
    false
+  ],
+  [
+   "foreignCurrencyPurchases",
+   false
   ]
  ],
  "requires": {
@@ -668,7 +672,8 @@ window.SETUP_REGISTRY={
   "externalRooms": "levelBooking",
   "accountingPeriods": "accountingBook",
   "purchaseAnalytics": "purchases",
-  "dataReport": "dataExport"
+  "dataReport": "dataExport",
+  "foreignCurrencyPurchases": "purchases"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1239,7 +1244,8 @@ window.SETUP_PROCESSES=[
      "purchases",
      "premisesLease",
      "assetRegister",
-     "purchaseAnalytics"
+     "purchaseAnalytics",
+     "foreignCurrencyPurchases"
     ]
    },
    {

@@ -25,6 +25,23 @@ class PurchaseCommands {
     return _repository.saveDraft(workspaceId, requestId, draft);
   }
 
+  /// Records [entry] as the exchange rate of [purchase], a document in
+  /// another currency than the space's, or corrects it while the purchase
+  /// awaits its approval. Null, nothing sent, for a document in the space's
+  /// own currency ([spaceCurrency]). A refusal (an approved purchase whose
+  /// rate is recorded, an unknown source, no right) propagates.
+  Future<DocumentExchangeRate?> recordExchangeRate(
+    String workspaceId,
+    PurchaseSummary purchase,
+    ExchangeRateEntry entry, {
+    required String spaceCurrency,
+  }) async {
+    if (purchase.currency.isEmpty || purchase.currency == spaceCurrency) {
+      return null;
+    }
+    return _repository.recordExchangeRate(workspaceId, purchase.id, entry);
+  }
+
   /// #2573 — saves a member's receipt of several lines as a draft under
   /// [requestId] (the same id retries the same save). Null, nothing sent,
   /// without a category, a line, or a positive amount on every line.

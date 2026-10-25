@@ -701,6 +701,16 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
           batches.any((b) => b.status == ValuationStatus.confirmed);
     },
   ),
+  WorkspaceFeature.foreignCurrencyPurchases: _state(
+    _owner,
+    'a licence billed in Swiss francs waits with its rate',
+    (w) async =>
+        (await w.purchasing.purchases.fetchExchangeRate(
+          'ws-1',
+          'demo-bill-licence-chf',
+        ))?.currency ==
+        'CHF',
+  ),
   WorkspaceFeature.purchaseAnalytics: _state(
     _owner,
     'what is owed to '

@@ -6753,6 +6753,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureFinanceFacesTitle => 'Finanze in quattro viste';
 
   @override
+  String get featureForeignCurrencyPurchasesDesc =>
+      'Una fattura fornitore in una valuta diversa da quella dello spazio, con il tasso di cambio registrato su di essa. La contabilità e il FEC la leggono nella valuta dello spazio a quel tasso e conservano accanto l\'importo originale; una fattura senza il suo tasso viene rifiutata.';
+
+  @override
+  String get featureForeignCurrencyPurchasesTitle => 'Acquisti in altra valuta';
+
+  @override
   String get featureFormHelpHintsDesc =>
       'Un carosello di suggerimenti richiudibile su ogni schermata principale, e un piccolo ? accanto a ogni parametro e campo — un tocco apre la guida alla sezione giusta. Ripristinabile dalle impostazioni.';
 
@@ -10822,6 +10829,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get journalNeedsLocalBook =>
       'Il giornale nasce da una contabilità tenuta qui: configura prima il piano dei conti dell\'emittente.';
+
+  @override
+  String journalNeedsRates(String documents) {
+    return 'Questi acquisti sono in una valuta diversa da quella dello spazio e non hanno un tasso di cambio registrato; non è stato scritto nulla. Registri prima il tasso di ciascuno: $documents';
+  }
 
   @override
   String journeyClosedPaid(String date) {
@@ -17157,6 +17169,66 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get purchasesEvidence => 'Giustificativi';
+
+  @override
+  String get purchasesFxCurrency => 'Valuta';
+
+  @override
+  String get purchasesFxEnter => 'Inserisca o corregga il tasso';
+
+  @override
+  String get purchasesFxInvalid =>
+      'Un tasso è un numero positivo con al massimo 10 decimali, con la sua data e la sua fonte.';
+
+  @override
+  String get purchasesFxMissing =>
+      'Nessun tasso di cambio registrato: la contabilità rifiuta questo acquisto finché non lo è.';
+
+  @override
+  String purchasesFxRate(String currency, String spaceCurrency) {
+    return 'Tasso di cambio: 1 $currency in $spaceCurrency';
+  }
+
+  @override
+  String get purchasesFxRateDate => 'Data del tasso';
+
+  @override
+  String purchasesFxRecorded(
+    String currency,
+    String rate,
+    String spaceCurrency,
+    String date,
+    String source,
+  ) {
+    return '1 $currency = $rate $spaceCurrency il $date · $source';
+  }
+
+  @override
+  String get purchasesFxRefused => 'Il tasso di cambio non è stato registrato.';
+
+  @override
+  String get purchasesFxSaved => 'Il tasso di cambio è registrato.';
+
+  @override
+  String get purchasesFxSource => 'Fonte del tasso';
+
+  @override
+  String get purchasesFxSourceBank => 'Applicato dalla banca';
+
+  @override
+  String get purchasesFxSourceManual => 'Inserito a mano';
+
+  @override
+  String get purchasesFxSourceTaxAuthority =>
+      'Pubblicato dall’amministrazione fiscale per il momento impositivo';
+
+  @override
+  String purchasesFxSpaceCurrency(String currency) {
+    return '$currency (valuta dello spazio)';
+  }
+
+  @override
+  String get purchasesFxTitle => 'Tasso di cambio';
 
   @override
   String get purchasesGross => 'Totale imposte incluse';

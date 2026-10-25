@@ -17,6 +17,10 @@ void main() {
     expect(formHelpHintsKey, WorkspaceFeature.formHelpHints.dbKey);
     expect(recordingPrivacyKey, WorkspaceFeature.recordingPrivacy.dbKey);
     expect(accountingBookKey, WorkspaceFeature.accountingBook.dbKey);
+    expect(
+      foreignCurrencyPurchasesKey,
+      WorkspaceFeature.foreignCurrencyPurchases.dbKey,
+    );
   });
 
   test('unwired, a question is answered with the registry default', () {

@@ -4747,6 +4747,8 @@
   },
   "featureFinanceFacesDesc": "L'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
   "featureFinanceFacesTitle": "Finances en quatre volets",
+  "featureForeignCurrencyPurchasesDesc": "Une facture fournisseur dans une autre devise que celle de l’espace, avec le taux de change enregistré sur elle. La comptabilité et le FEC la lisent dans la devise de l’espace à ce taux et gardent le montant d’origine à côté ; une facture sans son taux est refusée.",
+  "featureForeignCurrencyPurchasesTitle": "Achats dans une autre devise",
   "featureFormHelpHintsDesc": "Un carrousel d'astuces masquable sur chaque écran principal, et un petit ? à côté de chaque paramètre et champ de saisie — un geste ouvre le guide à la bonne section. Réactivable dans les réglages.",
   "featureFormHelpHintsTitle": "Astuces d'aide",
   "featureGuestParticipationDesc": "Permet à une personne qui n'est pas membre de demander à visiter cet espace, et à quelqu'un qui gère les réservations de l'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n'est admis ici.",
@@ -7302,6 +7304,7 @@
   "journalFecMissingRate": "Ces documents sont dans une autre devise que celle de la comptabilité et aucun taux de change n'est enregistré pour eux ; le FEC n'a pas été écrit : {documents}",
   "journalFecPartyCode": "Le FEC exige un code client pour chaque tiers, jusqu'à 13 lettres et chiffres : attribuez d'abord un numéro de membre ou de fournisseur à : {names}",
   "journalNeedsLocalBook": "Le journal est tiré d'une comptabilité tenue ici : configurez d'abord le plan de comptes de l'émetteur.",
+  "journalNeedsRates": "Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : {documents}",
   "journeyClosedPaid": "Payée le {date} — close",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -10995,6 +10998,21 @@
   "@purchasesEvidence": {
     "description": "#2573 purchases"
   },
+  "purchasesFxCurrency": "Devise",
+  "purchasesFxEnter": "Saisir ou corriger le taux",
+  "purchasesFxInvalid": "Un taux est un nombre positif d’au plus 10 décimales, avec sa date et sa source.",
+  "purchasesFxMissing": "Aucun taux de change n’est enregistré : la comptabilité refuse cet achat tant qu’il ne l’est pas.",
+  "purchasesFxRate": "Taux de change : 1 {currency} en {spaceCurrency}",
+  "purchasesFxRateDate": "Date du taux",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} au {date} · {source}",
+  "purchasesFxRefused": "Le taux de change n’a pas été enregistré.",
+  "purchasesFxSaved": "Le taux de change est enregistré.",
+  "purchasesFxSource": "Source du taux",
+  "purchasesFxSourceBank": "Appliqué par la banque",
+  "purchasesFxSourceManual": "Saisi à la main",
+  "purchasesFxSourceTaxAuthority": "Publié par l’administration fiscale pour le fait générateur",
+  "purchasesFxSpaceCurrency": "{currency} (devise de l’espace)",
+  "purchasesFxTitle": "Taux de change",
   "purchasesGross": "Total TTC",
   "@purchasesGross": {
     "description": "#2573 purchases"

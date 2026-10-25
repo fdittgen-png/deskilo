@@ -4747,6 +4747,8 @@
   },
   "featureFinanceFacesDesc": "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
   "featureFinanceFacesTitle": "Finanzen in vier Ansichten",
+  "featureForeignCurrencyPurchasesDesc": "Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt.",
+  "featureForeignCurrencyPurchasesTitle": "Einkäufe in anderer Währung",
   "featureFormHelpHintsDesc": "Ein ausblendbares Tipp-Karussell auf jedem Hauptbildschirm und ein kleines ? neben jedem Parameter und Eingabefeld — ein Tipp öffnet das Handbuch am richtigen Abschnitt. In den Einstellungen wiederherstellbar.",
   "featureFormHelpHintsTitle": "Hilfe-Hinweise",
   "featureGuestParticipationDesc": "Erlaubt einer Person, die kein Mitglied ist, um einen Besuch dieses Spaces zu bitten, und jemandem, der Reservierungen verwaltet, sie zuzulassen oder abzulehnen. Ein Besuch erzeugt weder Mitgliedschaft noch Abonnement noch Rolle. Aus: niemand fragt an oder wird hier zugelassen.",
@@ -7302,6 +7304,7 @@
   "journalFecMissingRate": "Diese Belege lauten auf eine andere Währung als die Buchführung, und für sie ist kein Wechselkurs erfasst; der FEC wurde nicht erstellt: {documents}",
   "journalFecPartyCode": "Der FEC braucht für jeden Geschäftspartner einen Kundencode aus bis zu 13 Buchstaben und Ziffern: Vergeben Sie zuerst eine Mitglieds- oder Lieferantennummer an: {names}",
   "journalNeedsLocalBook": "Das Journal stammt aus einer hier geführten Buchhaltung: richten Sie zuerst den Kontenplan des Ausstellers ein.",
+  "journalNeedsRates": "Diese Einkäufe sind in einer anderen Währung als der des Space und haben keinen erfassten Wechselkurs; es wurde nichts geschrieben. Erfassen Sie zuerst den Kurs jedes einzelnen: {documents}",
   "journeyClosedPaid": "Bezahlt am {date} — abgeschlossen",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -10995,6 +10998,21 @@
   "@purchasesEvidence": {
     "description": "#2573 purchases"
   },
+  "purchasesFxCurrency": "Währung",
+  "purchasesFxEnter": "Kurs erfassen oder korrigieren",
+  "purchasesFxInvalid": "Ein Kurs ist eine positive Zahl mit höchstens 10 Nachkommastellen, mit Datum und Quelle.",
+  "purchasesFxMissing": "Es ist kein Wechselkurs erfasst: Die Buchhaltung lehnt diesen Einkauf ab, bis er erfasst ist.",
+  "purchasesFxRate": "Wechselkurs: 1 {currency} in {spaceCurrency}",
+  "purchasesFxRateDate": "Kursdatum",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} am {date} · {source}",
+  "purchasesFxRefused": "Der Wechselkurs wurde nicht erfasst.",
+  "purchasesFxSaved": "Der Wechselkurs ist erfasst.",
+  "purchasesFxSource": "Quelle des Kurses",
+  "purchasesFxSourceBank": "Von der Bank angewandt",
+  "purchasesFxSourceManual": "Von Hand erfasst",
+  "purchasesFxSourceTaxAuthority": "Von der Steuerverwaltung für den Steuerzeitpunkt veröffentlicht",
+  "purchasesFxSpaceCurrency": "{currency} (Währung des Space)",
+  "purchasesFxTitle": "Wechselkurs",
   "purchasesGross": "Gesamtbetrag inkl. Steuer",
   "@purchasesGross": {
     "description": "#2573 purchases"

@@ -1,0 +1,21 @@
+{
+  "@@locale": "es",
+  "featureForeignCurrencyPurchasesTitle": "Compras en otra moneda",
+  "featureForeignCurrencyPurchasesDesc": "Una factura de proveedor en otra moneda distinta de la del espacio, con el tipo de cambio registrado en ella. La contabilidad y el FEC la leen en la moneda del espacio a ese tipo y conservan el importe original al lado; una factura sin su tipo se rechaza.",
+  "purchasesFxCurrency": "Moneda",
+  "purchasesFxSpaceCurrency": "{currency} (moneda del espacio)",
+  "purchasesFxRate": "Tipo de cambio: 1 {currency} en {spaceCurrency}",
+  "purchasesFxRateDate": "Fecha del tipo",
+  "purchasesFxSource": "Origen del tipo",
+  "purchasesFxSourceTaxAuthority": "Publicado por la administración tributaria para el devengo",
+  "purchasesFxSourceBank": "Aplicado por el banco",
+  "purchasesFxSourceManual": "Introducido a mano",
+  "purchasesFxTitle": "Tipo de cambio",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} el {date} · {source}",
+  "purchasesFxMissing": "No hay ningún tipo de cambio registrado: la contabilidad rechaza esta compra hasta que lo esté.",
+  "purchasesFxEnter": "Introduzca o corrija el tipo",
+  "purchasesFxInvalid": "Un tipo es un número positivo de 10 decimales como máximo, con su fecha y su origen.",
+  "purchasesFxSaved": "El tipo de cambio está registrado.",
+  "purchasesFxRefused": "El tipo de cambio no se ha registrado.",
+  "journalNeedsRates": "Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: {documents}"
+}

@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/money/domain/purchase.dart';
+import 'purchase_exchange_rates.dart';
 import 'purchase_receipt_line.dart';
 
 /// Purchase documents in memory. The server derives the totals and files a
 /// member's expense as a receipt through the same bridge; the demo only keeps
 /// what the dialog saved, replaying a request id as the server does.
 class FakePurchaseRepository
-    with NoFiledPurchases, DemoPurchasePlaces
+    with NoFiledPurchases, DemoPurchasePlaces, DemoPurchaseExchangeRates
     implements PurchaseRepository {
   FakePurchaseRepository();
 
@@ -476,6 +477,9 @@ class FakePurchaseRepository
       _documents.add(detail);
     } else {
       _documents[i] = detail;
+    }
+    if (draft case PurchaseBillDraft(:final exchangeRate?)) {
+      rememberRate(detail.summary, exchangeRate);
     }
     return _requests[requestId] = id;
   }

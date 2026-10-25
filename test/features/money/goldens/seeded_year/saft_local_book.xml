@@ -46,9 +46,9 @@
     </TaxTable>
   </MasterFiles>
   <GeneralLedgerEntries>
-    <NumberOfEntries>16</NumberOfEntries>
-    <TotalDebit>1605.40</TotalDebit>
-    <TotalCredit>1605.40</TotalCredit>
+    <NumberOfEntries>18</NumberOfEntries>
+    <TotalDebit>2143.58</TotalDebit>
+    <TotalCredit>2143.58</TotalCredit>
     <Journal>
       <JournalID>VE</JournalID>
       <Description>Sales</Description>
@@ -313,19 +313,39 @@
         </CreditLine>
       </Transaction>
       <Transaction>
+        <TransactionID>BQ-B-2</TransactionID>
+        <Period>5</Period>
+        <TransactionDate>2026-05-20</TransactionDate>
+        <Description>supplier_payment B-2</Description>
+        <DebitLine>
+          <RecordID>29</RecordID>
+          <AccountID>401000</AccountID>
+          <SystemEntryDate>2027-01-05</SystemEntryDate>
+          <Description>suppliers</Description>
+          <DebitAmount>269.09</DebitAmount>
+        </DebitLine>
+        <CreditLine>
+          <RecordID>30</RecordID>
+          <AccountID>512000</AccountID>
+          <SystemEntryDate>2027-01-05</SystemEntryDate>
+          <Description>bank</Description>
+          <CreditAmount>269.09</CreditAmount>
+        </CreditLine>
+      </Transaction>
+      <Transaction>
         <TransactionID>BQ-INV-3</TransactionID>
         <Period>5</Period>
         <TransactionDate>2026-05-20</TransactionDate>
         <Description>receipt INV-3</Description>
         <DebitLine>
-          <RecordID>29</RecordID>
+          <RecordID>31</RecordID>
           <AccountID>512000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>bank</Description>
           <DebitAmount>60.00</DebitAmount>
         </DebitLine>
         <CreditLine>
-          <RecordID>30</RecordID>
+          <RecordID>32</RecordID>
           <AccountID>411000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>customers</Description>
@@ -338,14 +358,14 @@
         <TransactionDate>2026-06-10</TransactionDate>
         <Description>refund CN-1</Description>
         <CreditLine>
-          <RecordID>31</RecordID>
+          <RecordID>33</RecordID>
           <AccountID>512000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>bank</Description>
           <CreditAmount>50.00</CreditAmount>
         </CreditLine>
         <DebitLine>
-          <RecordID>32</RecordID>
+          <RecordID>34</RecordID>
           <AccountID>411000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>customers</Description>
@@ -358,14 +378,14 @@
         <TransactionDate>2026-08-10</TransactionDate>
         <Description>receipt INV-4</Description>
         <DebitLine>
-          <RecordID>33</RecordID>
+          <RecordID>35</RecordID>
           <AccountID>512000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>bank</Description>
           <DebitAmount>120.00</DebitAmount>
         </DebitLine>
         <CreditLine>
-          <RecordID>34</RecordID>
+          <RecordID>36</RecordID>
           <AccountID>411000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>customers</Description>
@@ -378,14 +398,14 @@
         <TransactionDate>2026-08-10</TransactionDate>
         <Description>receipt INV-5</Description>
         <DebitLine>
-          <RecordID>35</RecordID>
+          <RecordID>37</RecordID>
           <AccountID>512000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>bank</Description>
           <DebitAmount>42.20</DebitAmount>
         </DebitLine>
         <CreditLine>
-          <RecordID>36</RecordID>
+          <RecordID>38</RecordID>
           <AccountID>411000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>customers</Description>
@@ -402,25 +422,52 @@
         <TransactionDate>2026-03-10</TransactionDate>
         <Description>supplier_bill B-1</Description>
         <DebitLine>
-          <RecordID>37</RecordID>
+          <RecordID>39</RecordID>
           <AccountID>606000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>expenses</Description>
           <DebitAmount>100.00</DebitAmount>
         </DebitLine>
         <DebitLine>
-          <RecordID>38</RecordID>
+          <RecordID>40</RecordID>
           <AccountID>445660</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>vat_input</Description>
           <DebitAmount>20.00</DebitAmount>
         </DebitLine>
         <CreditLine>
-          <RecordID>39</RecordID>
+          <RecordID>41</RecordID>
           <AccountID>401000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>suppliers</Description>
           <CreditAmount>120.00</CreditAmount>
+        </CreditLine>
+      </Transaction>
+      <Transaction>
+        <TransactionID>HA-B-2</TransactionID>
+        <Period>5</Period>
+        <TransactionDate>2026-05-12</TransactionDate>
+        <Description>supplier_bill B-2</Description>
+        <DebitLine>
+          <RecordID>42</RecordID>
+          <AccountID>606000</AccountID>
+          <SystemEntryDate>2027-01-05</SystemEntryDate>
+          <Description>expenses</Description>
+          <DebitAmount>255.77</DebitAmount>
+        </DebitLine>
+        <DebitLine>
+          <RecordID>43</RecordID>
+          <AccountID>606000</AccountID>
+          <SystemEntryDate>2027-01-05</SystemEntryDate>
+          <Description>expenses</Description>
+          <DebitAmount>13.32</DebitAmount>
+        </DebitLine>
+        <CreditLine>
+          <RecordID>44</RecordID>
+          <AccountID>401000</AccountID>
+          <SystemEntryDate>2027-01-05</SystemEntryDate>
+          <Description>suppliers</Description>
+          <CreditAmount>269.09</CreditAmount>
         </CreditLine>
       </Transaction>
     </Journal>
@@ -433,21 +480,21 @@
         <TransactionDate>2026-05-25</TransactionDate>
         <Description>write_off INV-3</Description>
         <DebitLine>
-          <RecordID>40</RecordID>
+          <RecordID>45</RecordID>
           <AccountID>654000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>write_off</Description>
           <DebitAmount>33.34</DebitAmount>
         </DebitLine>
         <DebitLine>
-          <RecordID>41</RecordID>
+          <RecordID>46</RecordID>
           <AccountID>445711</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>vat_output</Description>
           <DebitAmount>6.66</DebitAmount>
         </DebitLine>
         <CreditLine>
-          <RecordID>42</RecordID>
+          <RecordID>47</RecordID>
           <AccountID>411000</AccountID>
           <SystemEntryDate>2027-01-05</SystemEntryDate>
           <Description>customers</Description>

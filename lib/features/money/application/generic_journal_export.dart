@@ -39,6 +39,13 @@ final class JournalBlocked extends GenericJournal {
   final List<String> roles;
 }
 
+/// Documents in another currency than the space's that have no recorded
+/// exchange rate (`reference (currency)`); nothing was written.
+final class JournalNeedsRates extends GenericJournal {
+  const JournalNeedsRates(this.documents);
+  final List<String> documents;
+}
+
 /// #2376 — the FEC of the postings was refused: these parties have no
 /// usable auxiliary account, or these documents no recorded rate.
 final class JournalRefused extends GenericJournal {
@@ -101,9 +108,10 @@ final CustomerIdRule _fecPartyRule = accountingTargets
     .customerIdRule;
 
 /// #2365 — the FEC of the postings, on the book's own chart; #2376 the
-/// auxiliary accounts and the book's currency, or why it was refused.
-/// No exchange rate is recorded with a document yet, so an entry in
-/// another currency than the book's is refused rather than written in it.
+/// auxiliary accounts and the book's currency, or why it was refused. An
+/// entry the engine converted at its document's recorded rate carries its
+/// original amount (Montantdevise / Idevise); an entry still in another
+/// currency than the book's is refused rather than written in it.
 GenericJournal postedFecOf(JournalPosted books) {
   final fec = buildFecFromPostings(
     books.postings,
@@ -167,9 +175,13 @@ class GenericJournalExport {
       period.to,
     );
     if (set.blockers.isNotEmpty) {
-      return JournalBlocked([
-        ...{for (final b in set.blockers) b.subject},
-      ]);
+      final roles = {
+        for (final b in set.blockers)
+          if (b.block != PostingBlock.missingRate) b.subject,
+      };
+      return roles.isNotEmpty
+          ? JournalBlocked([...roles])
+          : JournalNeedsRates([for (final b in set.blockers) b.subject]);
     }
     if (!named) return JournalPosted(set.postings, year: period);
     final chart = await _books.fetchBookChart(workspaceId);

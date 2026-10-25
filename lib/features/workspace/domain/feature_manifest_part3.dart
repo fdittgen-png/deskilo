@@ -365,4 +365,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     defaultOn: false,
   ),
+  // A supplier's bill in another currency than the space's: the rate is
+  // recorded with the document, and the books read the space's currency.
+  WorkspaceFeature.foreignCurrencyPurchases: FeatureManifestEntry(
+    feature: WorkspaceFeature.foreignCurrencyPurchases,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.purchases,
+    defaultOn: false,
+  ),
 };

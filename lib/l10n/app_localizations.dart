@@ -11093,6 +11093,18 @@ abstract class AppLocalizations {
   /// **'Finances in four faces'**
   String get featureFinanceFacesTitle;
 
+  /// #3031 Features screen: what bills in another currency change.
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier\'s bill in another currency than the space\'s, with the exchange rate recorded on it. The books and the FEC read it in the space\'s currency at that rate and keep the original amount beside it; a bill without its rate is refused.'**
+  String get featureForeignCurrencyPurchasesDesc;
+
+  /// #3031 Features screen: supplier bills in another currency, a platform flag.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases in another currency'**
+  String get featureForeignCurrencyPurchasesTitle;
+
   /// No description provided for @featureFormHelpHintsDesc.
   ///
   /// In en, this message translates to:
@@ -17896,6 +17908,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The journal is posted from a local book: set up the issuer\'s book chart first.'**
   String get journalNeedsLocalBook;
+
+  /// #3031 Posted export: purchases in another currency without a recorded rate.
+  ///
+  /// In en, this message translates to:
+  /// **'These purchases are in another currency than the space\'s and have no recorded exchange rate, so nothing was written; record each one\'s rate first: {documents}'**
+  String journalNeedsRates(String documents);
 
   /// No description provided for @journeyClosedPaid.
   ///
@@ -28583,6 +28601,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Evidence'**
   String get purchasesEvidence;
+
+  /// #3031 Bill dialog: the currency the bill is in.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get purchasesFxCurrency;
+
+  /// #3031 Purchase detail: the button that enters or corrects the rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter or correct the rate'**
+  String get purchasesFxEnter;
+
+  /// #3031 Exchange rate dialog: what a valid entry is.
+  ///
+  /// In en, this message translates to:
+  /// **'A rate is a positive number with at most 10 decimals, with its date and its source.'**
+  String get purchasesFxInvalid;
+
+  /// #3031 Purchase detail: a document in another currency without a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'No exchange rate is recorded: the books refuse this purchase until it is.'**
+  String get purchasesFxMissing;
+
+  /// #3031 Exchange rate field: the value of one unit of the document currency in the space currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange rate: 1 {currency} in {spaceCurrency}'**
+  String purchasesFxRate(String currency, String spaceCurrency);
+
+  /// #3031 Exchange rate: the day the rate applies to.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate date'**
+  String get purchasesFxRateDate;
+
+  /// #3031 Purchase detail: the recorded rate.
+  ///
+  /// In en, this message translates to:
+  /// **'1 {currency} = {rate} {spaceCurrency} on {date} · {source}'**
+  String purchasesFxRecorded(
+    String currency,
+    String rate,
+    String spaceCurrency,
+    String date,
+    String source,
+  );
+
+  /// #3031 Exchange rate dialog: the server refused the rate.
+  ///
+  /// In en, this message translates to:
+  /// **'The exchange rate was not recorded.'**
+  String get purchasesFxRefused;
+
+  /// #3031 Exchange rate dialog: success.
+  ///
+  /// In en, this message translates to:
+  /// **'The exchange rate is recorded.'**
+  String get purchasesFxSaved;
+
+  /// #3031 Exchange rate: where the figure comes from.
+  ///
+  /// In en, this message translates to:
+  /// **'Source of the rate'**
+  String get purchasesFxSource;
+
+  /// #3031 Rate source: the rate the bank applied.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied by the bank'**
+  String get purchasesFxSourceBank;
+
+  /// #3031 Rate source: entered by a person.
+  ///
+  /// In en, this message translates to:
+  /// **'Entered by hand'**
+  String get purchasesFxSourceManual;
+
+  /// #3031 Rate source: the rate the tax authority publishes for the tax point.
+  ///
+  /// In en, this message translates to:
+  /// **'Published by the tax authority for the tax point'**
+  String get purchasesFxSourceTaxAuthority;
+
+  /// #3031 Bill dialog: the default choice, the space's own currency.
+  ///
+  /// In en, this message translates to:
+  /// **'{currency} (the space\'s currency)'**
+  String purchasesFxSpaceCurrency(String currency);
+
+  /// #3031 Purchase detail: the exchange rate of a document in another currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange rate'**
+  String get purchasesFxTitle;
 
   /// #2573 purchases
   ///

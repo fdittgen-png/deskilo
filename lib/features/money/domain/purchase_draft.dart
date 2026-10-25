@@ -159,6 +159,8 @@ class PurchaseBillDraft implements PurchaseDraft {
     this.taxCents,
     this.recognitionKind = 'unresolved',
     this.place,
+    this.currency,
+    this.exchangeRate,
   });
 
   @override
@@ -186,6 +188,12 @@ class PurchaseBillDraft implements PurchaseDraft {
   /// #2573 — where its cost belongs; null names no place.
   final PurchasePlace? place;
 
+  /// The bill's currency when it is not the space's; null is the space's.
+  final String? currency;
+
+  /// The rate recorded with a bill in another currency.
+  final ExchangeRateEntry? exchangeRate;
+
   @override
   PurchaseKind get kind => PurchaseKind.bill;
 
@@ -212,6 +220,8 @@ class PurchaseBillDraft implements PurchaseDraft {
     'original_date': _day(originalDate),
     'due_on': _day(dueOn),
     'lines': [for (final l in lines) l.toJson()],
+    'currency': ?currency,
+    'exchange_rate': ?exchangeRate?.toJson(),
   };
 }
 

@@ -33,6 +33,7 @@ import 'book_chart.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';
 import 'posting.dart';
+import 'posting_fx.dart';
 
 const _journalLabels = {
   PostingJournal.sales: 'Ventes',
@@ -263,9 +264,9 @@ class _PostedFec {
 
 /// The lines of [p] in [functional] currency, each with its original
 /// amount when it was converted (null when the entry is already in the
-/// book's currency); null when it needs a [rate] and has none. The entry
-/// stays balanced: the cents left by converting line by line go to the
-/// largest line of the side that is short.
+/// book's currency); null when it needs a [rate] and has none. An entry the
+/// engine already converted at its document's recorded rate carries its
+/// originals on its lines. The entry stays balanced (`postingAtRate`).
 List<(PostingLine, AccountingAmount?)>? inBookCurrency(
   Posting p,
   String? functional,
@@ -273,59 +274,12 @@ List<(PostingLine, AccountingAmount?)>? inBookCurrency(
 ) {
   final currency = p.lines.isEmpty ? null : p.lines.first.debit.currency;
   if (functional == null || currency == null || currency == functional) {
-    return [for (final l in p.lines) (l, null)];
+    return [for (final l in p.lines) (l, l.original)];
   }
   if (rate == null ||
       rate.base.toUpperCase() != currency ||
       rate.quote.toUpperCase() != functional) {
     return null;
   }
-  final converted = [
-    for (final l in p.lines)
-      _line(
-        l,
-        convert(l.debit, rate, RoundingPolicy.halfUp),
-        convert(l.credit, rate, RoundingPolicy.halfUp),
-      ),
-  ];
-  _balance(converted, functional);
-  return [
-    for (var i = 0; i < p.lines.length; i++)
-      (
-        converted[i],
-        p.lines[i].debit.minor != 0 ? p.lines[i].debit : p.lines[i].credit,
-      ),
-  ];
-}
-
-PostingLine _line(PostingLine l, AccountingAmount debit, AccountingAmount credit) =>
-    PostingLine(
-      role: l.role,
-      qualifier: l.qualifier,
-      accountCode: l.accountCode,
-      debit: debit,
-      credit: credit,
-    );
-
-/// Gives the rounding gap of [lines] to the largest line of the short side.
-void _balance(List<PostingLine> lines, String currency) {
-  var gap = 0;
-  for (final l in lines) {
-    gap += l.debit.minor - l.credit.minor;
-  }
-  if (gap == 0) return;
-  // Debits ahead: the largest credit takes the cents; credits ahead: the
-  // largest debit does.
-  final toCredit = gap > 0;
-  int side(PostingLine l) => toCredit ? l.credit.minor : l.debit.minor;
-  var best = -1;
-  for (var i = 0; i < lines.length; i++) {
-    if (side(lines[i]) == 0) continue;
-    if (best < 0 || side(lines[i]) > side(lines[best])) best = i;
-  }
-  final l = lines[best];
-  final cents = AccountingAmount(currency, gap.abs());
-  lines[best] = toCredit
-      ? _line(l, l.debit, l.credit + cents)
-      : _line(l, l.debit + cents, l.credit);
+  return [for (final l in postingAtRate(p, rate).lines) (l, l.original)];
 }

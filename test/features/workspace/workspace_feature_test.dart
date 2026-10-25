@@ -53,6 +53,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.workspaceOverview,
   // #2552 — the person's layer is the installation's decision, never assumed.
   WorkspaceFeature.personalShell,
+  WorkspaceFeature.foreignCurrencyPurchases,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -211,6 +212,7 @@ void main() {
       'purchaseAnalytics': true,
       'workspaceOverview': true,
       'personalShell': true,
+      'foreignCurrencyPurchases': true,
       'guestParticipation': true,
     });
 
