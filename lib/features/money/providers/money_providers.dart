@@ -8,7 +8,6 @@ import '../../../core/time/clock.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/trace/traced.dart';
-import '../../reservations/providers/reservation_providers.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/settings_providers.dart';

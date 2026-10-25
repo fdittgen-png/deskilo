@@ -10,7 +10,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../../workspace/providers/workspace_providers.dart';

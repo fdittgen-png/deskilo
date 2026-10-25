@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/settings/directory_windows.dart';
 import '../../../../core/time/clock.dart';
-import '../../../members/providers/directory_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
@@ -19,7 +18,6 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../domain/space_code.dart';
-import '../../providers/reservation_providers.dart';
 import '../space_subjects.dart';
 import 'space_scan.dart';
 

@@ -1,47 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/privacy/recording_privacy.dart';
-import '../../../core/privacy/recording_providers.dart';
 import '../../../core/settings/directory_windows.dart';
 import '../../../core/time/clock.dart';
-import '../../profile/domain/profile.dart';
-import '../../profile/providers/profile_providers.dart';
 import '../../reservations/domain/reservation.dart';
 import '../../reservations/providers/reservation_providers.dart';
-import '../../workspace/domain/member.dart';
-import '../../workspace/providers/workspace_providers.dart';
 
 part 'directory_providers.g.dart';
-
-/// user id → profile for the active workspace's members (#224): the
-/// directory derives statuses from `last_seen_at` and shows the WhatsApp
-/// button for shared numbers. #1833: each profile is the projection the
-/// caller may read in this space — the community fields for a space
-/// mate, the printed identity only with `viewPersonalData` or
-/// `issueInvoices` (invoices, letters, the Excel export).
-@riverpod
-Future<Map<String, Profile>> memberProfiles(Ref ref) async {
-  // #1514 — the seam. The directory is the densest personal page in the
-  // app: names, status lines, WhatsApp numbers and photographs, all at
-  // once. Watched BEFORE the gap (#1218).
-  final recording = ref.watch(recordingPrivacyProvider);
-  final members = await ref.watch(workspaceMembersProvider.future);
-  // A managed member (#962) has no account and therefore no profile;
-  // its empty user id must never reach the query, where PostgREST
-  // rejects the whole request over one malformed uuid.
-  final ids = accountIdsOf(members);
-  if (ids.isEmpty) return const {};
-  // #1833 — asked as members of the space these ids came from: what the
-  // caller may read of a person depends on their rights in THAT space.
-  final profiles = await ref
-      .watch(memberProfileRepositoryProvider)
-      .fetchProfiles(members.first.workspaceId, ids);
-  // Filming mode replaces the people and keeps the page.
-  return {
-    for (final p in profiles) p.id: recording ? recordingProfile(p) : p,
-  };
-}
 
 /// All reservations feeding the directory's reservation chips (#237):
 /// the month windows covering now through

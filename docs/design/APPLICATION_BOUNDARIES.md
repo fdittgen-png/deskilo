@@ -41,13 +41,11 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `editor -> workspace`
 - `events -> money`
 - `events -> plan`
-- `events -> reservations`
 - `events -> task_recorder`
 - `events -> workspace`
 - `help -> auth`
 - `help -> workspace`
 - `kiosk -> events`
-- `kiosk -> members`
 - `kiosk -> plan`
 - `kiosk -> profile`
 - `kiosk -> reservations`
@@ -69,15 +67,10 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `members -> reservations`
 - `members -> workspace`
 - `money -> auth`
-- `money -> calendar`
 - `money -> events`
-- `money -> members`
 - `money -> plan`
 - `money -> profile`
-- `money -> reservations`
 - `money -> workspace`
-- `plan -> events`
-- `plan -> members`
 - `plan -> money`
 - `plan -> profile`
 - `plan -> reservations`
@@ -86,28 +79,21 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 - `profile -> calendar`
 - `profile -> directory`
 - `profile -> mcp`
-- `profile -> members`
-- `profile -> money`
 - `profile -> reservations`
 - `profile -> workspace`
 - `reservations -> calendar`
 - `reservations -> events`
-- `reservations -> members`
-- `reservations -> money`
 - `reservations -> plan`
 - `reservations -> profile`
 - `reservations -> task_recorder`
 - `reservations -> visits`
 - `reservations -> workspace`
-- `task_recorder -> calendar`
 - `task_recorder -> events`
-- `task_recorder -> reservations`
 - `task_recorder -> workspace`
 - `visits -> auth`
 - `workspace -> auth`
 - `workspace -> directory`
 - `workspace -> events`
-- `workspace -> members`
 - `workspace -> money`
 - `workspace -> plan`
 - `workspace -> profile`
@@ -116,29 +102,17 @@ The direction is the dependency: `a -> b` means files in `a` import `b`. A pair 
 
 Reciprocal:
 
-- `calendar <-> money`
 - `calendar <-> reservations`
-- `calendar <-> task_recorder`
 - `directory <-> workspace`
 - `events <-> money`
-- `events <-> plan`
-- `events <-> reservations`
 - `events <-> task_recorder`
 - `events <-> workspace`
-- `members <-> money`
-- `members <-> plan`
-- `members <-> profile`
-- `members <-> reservations`
-- `members <-> workspace`
 - `money <-> plan`
-- `money <-> profile`
-- `money <-> reservations`
 - `money <-> workspace`
 - `plan <-> reservations`
 - `plan <-> workspace`
 - `profile <-> reservations`
 - `profile <-> workspace`
-- `reservations <-> task_recorder`
 - `reservations <-> workspace`
 - `task_recorder <-> workspace`
 
@@ -146,7 +120,7 @@ Reciprocal:
 
 Mutual pairs are only the shortest cycles; a component is a set of features that can all reach each other through imports. The architecture is acyclic only when this list is empty.
 
-- `calendar`, `directory`, `events`, `mcp`, `members`, `money`, `plan`, `profile`, `reservations`, `task_recorder`, `workspace` — e.g. `calendar -> money -> calendar`
+- `calendar`, `directory`, `events`, `mcp`, `money`, `plan`, `profile`, `reservations`, `task_recorder`, `workspace` — e.g. `calendar -> reservations -> calendar`
 
 ## Hand-written files over 600 lines
 

@@ -4,6 +4,8 @@
 // entries span workspaces (the person's list, memberships, default
 // workspace, the messenger); a workspace target never applies them.
 // Composed in lib/app/realtime_invalidations.dart.
+import '../../../core/realtime/invalidation_map.dart'
+    show kProfilePresenceSignal;
 import '../../../core/realtime/invalidation_registry.dart';
 import 'conversation_providers.dart';
 import 'workspace_providers.dart';
@@ -17,6 +19,17 @@ final workspaceInvalidations = [
     const ['members'],
     [myMembershipsProvider],
     scope: InvalidationScope.account,
+  ),
+  // The names every feature prints (#2495: moved from reservations).
+  InvalidationContribution(
+    const ['members', 'profiles'],
+    [memberNamesProvider],
+  ),
+  // The presence signal refreshes the directory's profiles and nothing else
+  // (#2495: moved from members).
+  InvalidationContribution(
+    const ['profiles', kProfilePresenceSignal],
+    [memberProfilesProvider],
   ),
   // Flags, granularity, rules and the availability config all derive from
   // the workspace row. #2561 L4: the open days and the working day are the

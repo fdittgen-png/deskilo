@@ -6,7 +6,6 @@
 import 'package:deskilo/app/realtime_invalidations.dart';
 import 'package:deskilo/core/realtime/invalidation_map.dart';
 import 'package:deskilo/core/realtime/profile_change_classifier.dart';
-import 'package:deskilo/features/members/providers/directory_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

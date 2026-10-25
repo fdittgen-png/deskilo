@@ -8,7 +8,7 @@
 // mapping when the server rejects a beyond-quota reservation.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
-import 'package:deskilo/features/money/domain/quota_rules.dart';
+import 'package:deskilo/features/reservations/domain/quota_rules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

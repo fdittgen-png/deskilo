@@ -25,7 +25,6 @@ import '../../../money/presentation/widgets/invoice_detail_sheet.dart';
 import '../../../money/providers/money_face_controller.dart';
 import '../../../money/providers/money_focus_controller.dart';
 import '../../../money/providers/money_providers.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../../task_recorder/application/booking_observation.dart'
     show dateRelation;
 import '../../../task_recorder/application/calendar_observation.dart';

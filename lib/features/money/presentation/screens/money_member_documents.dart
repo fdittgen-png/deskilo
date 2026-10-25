@@ -17,7 +17,6 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../profile/providers/profile_providers.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';

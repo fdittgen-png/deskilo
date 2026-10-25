@@ -10,8 +10,6 @@ import '../../../core/backend/context_client_providers.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/instance/schema_compatibility.dart';
-import '../../../core/privacy/recording_privacy.dart';
-import '../../../core/privacy/recording_providers.dart';
 import '../../../core/roles/audience_roles.dart';
 import '../../../core/storage/booking_intent_store.dart';
 import '../../../core/time/clock.dart';
@@ -119,24 +117,6 @@ Future<List<Reservation>> myUpcomingReservations(Ref ref) async {
           r.status == ReservationStatus.reserved &&
           r.startsAt.isAfter(now))
       .toList();
-}
-
-/// member id → display name for the active workspace.
-@Riverpod(keepAlive: true)
-Future<Map<String, String>> memberNames(Ref ref) async {
-  // #1514 — the seam. Every name the plan, the calendar, the week grid
-  // and the kiosk print comes through here, so while filming mode is on
-  // none of them can print a real one. Watched BEFORE the gap (#1218).
-  final recording = ref.watch(recordingPrivacyProvider);
-  final workspace = await ref.watch(currentWorkspaceProvider.future);
-  if (workspace == null) return const {};
-  final names =
-      await ref.watch(workspaceRepositoryProvider).fetchMemberNames(workspace.id);
-  if (!recording) return names;
-  return {
-    for (final entry in names.entries)
-      entry.key: recordingName(entry.key, entry.value),
-  };
 }
 
 /// Reservations of the active workspace intersecting the given LOCAL

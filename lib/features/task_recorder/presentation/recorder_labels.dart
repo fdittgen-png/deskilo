@@ -7,9 +7,8 @@
 // as if the recorder had observed it.
 
 import '../../../core/calendar/calendar_item.dart';
+import '../../../core/calendar/calendar_kind_labels.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../calendar/presentation/widgets/calendar_item_row.dart'
-    show calendarKindLabel;
 import '../../events/domain/workspace_event.dart';
 import '../../events/presentation/event_labels.dart' show eventTypeLabel;
 import '../../workspace/domain/workspace_feature.dart';

@@ -9,6 +9,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:deskilo/features/reservations/application/book_seat.dart';
+import 'package:deskilo/features/reservations/application/booking_outcome_observation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/task_recorder/application/booking_observation.dart';
 import 'package:deskilo/features/task_recorder/domain/action_registry.dart';

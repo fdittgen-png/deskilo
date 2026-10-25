@@ -65,9 +65,10 @@ pairBudget calendar -> events // #1306 S2 — the calendar carries the pending d
 pairBudget calendar -> plan // #2276: feed rows reuse authorized location providers.
 pairBudget calendar -> reservations // #2276: feed rows reuse the month reservation cache.
 pairBudget calendar -> task_recorder // #1881 B — the calendar's seams (hub and classic), the decision seam, and the recorder's calendar-kind label.
+pairBudget calendar -> workspace // #2495 +1 downward: the day timeline reads the member names from the workspace, where they moved from reservations (in the same change cross-feature imports fell from 1054 to 1009 and mutual pairs from 25 to 13).
 pairBudget events -> plan // #1306 — +1 each on plan, reservations and workspace: the pending-decisions section left events_screen.dart so the calendar can carry it when the bell is off, and names, targets and
 pairBudget events -> task_recorder // #1884 B +2: the validation rules
-pairBudget events -> workspace // #2295: remove the obsolete inbox-tab visibility dependency.
+pairBudget events -> workspace // #2495 +1 downward: the validation trail reads the member names from the workspace, where they moved from reservations; events <-> reservations is no longer a pair.
 pairBudget kiosk -> reservations // #1234 — `SpaceAction`/`SpaceActChoice` moved from `presentation/widgets/space_act_form.dart` to `domain/space_act.dart` so the application layer could name them without importing a
 pairBudget me -> money // ADR 0035: the home's finance summary reads the overview and opens the finances route
 pairBudget me -> task_recorder // task wizard: the Me menu and the account tab both open /task-wizard (a route constant)
@@ -81,15 +82,15 @@ pairBudget plan -> workspace // the plan focus starts over when the active works
 pairBudget profile -> auth // #2495 the presence heartbeat's wiring moved from core/presence into profile (a downward import, unavoidable: it reads the session); core-to-feature imports fell by 2.
 pairBudget profile -> workspace // #2495 country_names moved to core/i18n (two imports gone).
 pairBudget reservations -> plan // #2494 the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no n
-pairBudget reservations -> task_recorder // #1865 — the task recorder's seam and adapter (see the pairs above).
-pairBudget reservations -> workspace // #2494 the Reserve hub screen (one library with three parts) became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses; no n
+pairBudget reservations -> task_recorder // #2495 +1: the booking feature maps its own outcome to the recorder's registered outcomes, so the recorder imports no booking type and reservations <-> task_recorder is no longer a pair.
+pairBudget reservations -> workspace // #2495 +3 downward: the period list, the week grid and the conflict actions read the member names from the workspace, where they moved (in the same change cross-feature imports fell from 1054 to 1009); #2494 the Reserve hub screen became a screen, a header, a views file, a host seam, a recorder and the window rules, each importing what it uses.
 pairBudget task_recorder -> events // #1884 B — the event type and its label, for a rule.
 pairBudget task_recorder -> workspace // #1884 B +2: a permission and its label
 pairBudget workspace -> auth // #2484 the settings snapshot is re-read for a different signed-in person.
 pairBudget workspace -> events // #1657 widgets/local_setup_views.dart names a validation policy by its event-type label (the domain enum and its label), for the named-validators slot and the apply sheet's note
 pairBudget workspace -> money // the reference picker derives an invoice's standing (open / paid / cancelled) from the one lifecycle the archive and the open cards use; #2003 badge/QR covers and BI exports reuse r
 pairBudget workspace -> plan // #1923 the Web-BI query groups capacity by the workspace's levels (levelsProvider), the one level seam.
-pairBudget workspace -> profile // #1652 the invitation review names who is joining (my profile's e-mail).
+pairBudget workspace -> profile // #2495 +2 downward: the members' profiles of a space (with the names) moved from the members feature to the workspace and read the profile repository and type; four mutual pairs with members went. #1652 the invitation review names who is joining.
 pairBudget workspace -> reservations // #2383 the legacy new-conversation sheet left lib/
 pairBudget workspace -> task_recorder // #1884 — the seam moved with the switch into feature_switch_flow.dart (+errorObservation); B +6: the role matrix, the space's roles, their holders
 fileLength lib/features/members/presentation/widgets/member_page_cards.dart // #2494 the member page's tile groups moved here from build (cognitive 116 to the groups); the part file goes when the cards become widgets

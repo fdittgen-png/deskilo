@@ -4,7 +4,6 @@
 // A managed member's user id is the empty string; sent along, PostgREST
 // refused the whole request (`invalid input syntax for type uuid: ""`)
 // and the directory lost every status and WhatsApp button.
-import 'package:deskilo/features/members/providers/directory_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

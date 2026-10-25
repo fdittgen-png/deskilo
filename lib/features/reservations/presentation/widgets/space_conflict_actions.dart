@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
-import '../../providers/reservation_providers.dart';
 import 'message_reserver.dart';
 import 'reservation_detail_sheet.dart';
 
