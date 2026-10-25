@@ -3208,6 +3208,30 @@ abstract class AppLocalizations {
   /// #2579 analytical reports
   ///
   /// In en, this message translates to:
+  /// **'Add a page with…'**
+  String get biReportAddPage;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Someone saved this report since you opened it. Your changes are still here: save them over the newer version, or discard them and see the saved one.'**
+  String get biReportConflict;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Discard mine'**
+  String get biReportConflictDiscard;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Save mine over it'**
+  String get biReportConflictOverwrite;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
   /// **'{name} (report)'**
   String biReportCopyName(String name);
 
@@ -3244,6 +3268,12 @@ abstract class AppLocalizations {
   /// #2579 analytical reports
   ///
   /// In en, this message translates to:
+  /// **'Page {number}'**
+  String biReportPageNumbered(String number);
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
   /// **'Page 1'**
   String get biReportPageTitle;
 
@@ -3252,6 +3282,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove {card}'**
   String biReportRemove(String card);
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get biReportRetry;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'The report could not be saved: no answer came back. Your changes are kept; retrying sends the same save again, it is never applied twice.'**
+  String get biReportSaveFailed;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -3534,6 +3576,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This report cannot be saved here: the report designer is off, or an older version of the app would erase what it does not read.'**
   String get biViewUnsupported;
+
+  /// #2579 analytical reports
+  ///
+  /// In en, this message translates to:
+  /// **'{count} figures of this view are not shown: you may not read them.'**
+  String biViewWithheld(String count);
 
   /// #1923 C Web-BI saved views
   ///
@@ -33792,6 +33840,24 @@ abstract class AppLocalizations {
   /// **'The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.'**
   String get settingHintBiBatchMaxRequests;
 
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'The largest saved report definition, in bytes of its stored text. The platform never stores more than 65536; a definition holds questions, never figures.'**
+  String get settingHintBiReportMaxBytes;
+
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'The most pages one saved report may hold. The platform never stores more than 4; a report over the limit is refused when it is saved, never cut.'**
+  String get settingHintBiReportMaxPages;
+
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'The most cards one saved report may hold over all its pages. The platform never stores more than 24; a report over the limit is refused when it is saved, never cut.'**
+  String get settingHintBiReportMaxVisuals;
+
   /// #2486 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -34085,6 +34151,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Figures per report read'**
   String get settingLabelBiBatchMaxRequests;
+
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'Size of a report definition'**
+  String get settingLabelBiReportMaxBytes;
+
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'Pages per report'**
+  String get settingLabelBiReportMaxPages;
+
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'Cards per report'**
+  String get settingLabelBiReportMaxVisuals;
 
   /// #2486 settings: Setting label.
   ///
@@ -34452,6 +34536,18 @@ abstract class AppLocalizations {
   /// **'attempts'**
   String get settingUnitAttempts;
 
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'bytes'**
+  String get settingUnitBytes;
+
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'cards'**
+  String get settingUnitCards;
+
   /// #2472 personal directory: Unit of a setting counted in characters.
   ///
   /// In en, this message translates to:
@@ -34493,6 +34589,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'months'**
   String get settingUnitMonths;
+
+  /// #2579 report limits
+  ///
+  /// In en, this message translates to:
+  /// **'pages'**
+  String get settingUnitPages;
 
   /// #2485 settings: Unit.
   ///

@@ -18,6 +18,7 @@ import '../../domain/bi_query.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/bi_providers.dart';
+import '../../providers/bi_view_actions.dart';
 import '../../providers/workspace_providers.dart';
 import 'bi_view_dialogs.dart';
 import 'bi_view_failure_text.dart';
@@ -52,13 +53,9 @@ class BiViewsBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final views = ref.watch(biViewsProvider(workspaceId)).value ?? const [];
-    final canManage = ref
-        .watch(myPermissionsProvider)
-        .contains(WorkspacePermission.workspaceSettings);
+    final canManage = biCanShareViews(ref.watch(myPermissionsProvider));
     final open = views.where((v) => v.id == openId).firstOrNull;
-    final opened = open == null
-        ? null
-        : checkView(open.definition, visibleModules).query;
+    final opened = open?.check(visibleModules).query;
     final modified = open != null && opened != query;
     final menu = _ViewsMenu(
       context: context,
@@ -215,7 +212,7 @@ class _ViewsMenu {
       PopupMenuItem(
         key: ValueKey('bi-views-open-${v.id}'),
         value: () {
-          final check = checkView(v.definition, visibleModules);
+          final check = v.check(visibleModules);
           if (check.query == null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(l10n.biViewUnreadable)),
@@ -223,6 +220,11 @@ class _ViewsMenu {
             return;
           }
           onOpen(v, check.query!);
+          if (v.withheld > 0) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(l10n.biViewWithheld('${v.withheld}'))),
+            );
+          }
           if (check.incompatibleCards.isNotEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -283,11 +285,13 @@ class _ViewsMenu {
     PopupMenuItem(
       key: const ValueKey('bi-views-duplicate'),
       value: () => run(() async {
+        // A copy is the reader's own private one, never a shared
+        // overwrite; a report stays the report it is.
         final copy = await actions.save(
           workspaceId,
           scope: BiViewScope.private,
           name: l10n.biViewCopyName(open.name),
-          definition: BiViewDefinition.of(query),
+          definition: biSavedDefinition(open, query),
         );
         onOpen(copy, query);
       }),
@@ -359,3 +363,10 @@ class _ViewsMenu {
     child: Text(l10n.biViewDelete),
   );
 }
+
+/// Whether a reader holding [permissions] writes team views and the team
+/// default: viewAnalytics (the page itself) and either workspaceSettings or
+/// designDocuments. The server checks it again on every write.
+bool biCanShareViews(Set<WorkspacePermission> permissions) =>
+    permissions.contains(WorkspacePermission.workspaceSettings) ||
+    permissions.contains(WorkspacePermission.designDocuments);

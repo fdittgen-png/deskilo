@@ -1856,6 +1856,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biReportAddCard => 'Add a card';
 
   @override
+  String get biReportAddPage => 'Add a page with…';
+
+  @override
+  String get biReportConflict =>
+      'Someone saved this report since you opened it. Your changes are still here: save them over the newer version, or discard them and see the saved one.';
+
+  @override
+  String get biReportConflictDiscard => 'Discard mine';
+
+  @override
+  String get biReportConflictOverwrite => 'Save mine over it';
+
+  @override
   String biReportCopyName(String name) {
     return '$name (report)';
   }
@@ -1880,12 +1893,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biReportNoCards => 'This report has no card yet. Add one.';
 
   @override
+  String biReportPageNumbered(String number) {
+    return 'Page $number';
+  }
+
+  @override
   String get biReportPageTitle => 'Page 1';
 
   @override
   String biReportRemove(String card) {
     return 'Remove $card';
   }
+
+  @override
+  String get biReportRetry => 'Retry';
+
+  @override
+  String get biReportSaveFailed =>
+      'The report could not be saved: no answer came back. Your changes are kept; retrying sends the same save again, it is never applied twice.';
 
   @override
   String get biReset => 'Show the standard view';
@@ -2045,6 +2070,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get biViewUnsupported =>
       'This report cannot be saved here: the report designer is off, or an older version of the app would erase what it does not read.';
+
+  @override
+  String biViewWithheld(String count) {
+    return '$count figures of this view are not shown: you may not read them.';
+  }
 
   @override
   String get biViews => 'Views';
@@ -19950,6 +19980,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.';
 
   @override
+  String get settingHintBiReportMaxBytes =>
+      'The largest saved report definition, in bytes of its stored text. The platform never stores more than 65536; a definition holds questions, never figures.';
+
+  @override
+  String get settingHintBiReportMaxPages =>
+      'The most pages one saved report may hold. The platform never stores more than 4; a report over the limit is refused when it is saved, never cut.';
+
+  @override
+  String get settingHintBiReportMaxVisuals =>
+      'The most cards one saved report may hold over all its pages. The platform never stores more than 24; a report over the limit is refused when it is saved, never cut.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fixed: the longest lead, in days, of a subscription invoice before the month starts.';
 
@@ -20140,6 +20182,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Figures per report read';
+
+  @override
+  String get settingLabelBiReportMaxBytes => 'Size of a report definition';
+
+  @override
+  String get settingLabelBiReportMaxPages => 'Pages per report';
+
+  @override
+  String get settingLabelBiReportMaxVisuals => 'Cards per report';
 
   @override
   String get settingLabelBillingMaxAdvanceDays => 'Subscription invoice lead';
@@ -20353,6 +20404,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingUnitAttempts => 'attempts';
 
   @override
+  String get settingUnitBytes => 'bytes';
+
+  @override
+  String get settingUnitCards => 'cards';
+
+  @override
   String get settingUnitCharacters => 'characters';
 
   @override
@@ -20372,6 +20429,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitMonths => 'months';
+
+  @override
+  String get settingUnitPages => 'pages';
 
   @override
   String get settingUnitPerDay => 'per day';

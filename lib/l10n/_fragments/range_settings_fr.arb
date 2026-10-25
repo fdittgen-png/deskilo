@@ -127,5 +127,41 @@
   "settingUnitRequests": "requêtes",
   "@settingUnitRequests": {
     "description": "#2578 BI settings"
+  },
+  "settingLabelBiReportMaxPages": "Pages par rapport",
+  "@settingLabelBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxPages": "Le nombre maximal de pages d'un rapport enregistré. La plateforme n'en stocke jamais plus de 4 ; un rapport au-delà est refusé à l'enregistrement, jamais tronqué.",
+  "@settingHintBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxVisuals": "Cartes par rapport",
+  "@settingLabelBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxVisuals": "Le nombre maximal de cartes d'un rapport enregistré, toutes pages confondues. La plateforme n'en stocke jamais plus de 24 ; un rapport au-delà est refusé à l'enregistrement, jamais tronqué.",
+  "@settingHintBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxBytes": "Taille d'une définition de rapport",
+  "@settingLabelBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxBytes": "La plus grande définition de rapport enregistrée, en octets de son texte stocké. La plateforme n'en stocke jamais plus de 65536 ; une définition contient des questions, jamais des chiffres.",
+  "@settingHintBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitPages": "pages",
+  "@settingUnitPages": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitCards": "cartes",
+  "@settingUnitCards": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitBytes": "octets",
+  "@settingUnitBytes": {
+    "description": "#2579 report limits"
   }
 }

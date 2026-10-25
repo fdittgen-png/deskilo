@@ -1088,6 +1088,22 @@
   "@biReportAddCard": {
     "description": "#2579 analytical reports"
   },
+  "biReportAddPage": "Seite hinzufügen mit…",
+  "@biReportAddPage": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflict": "Jemand hat diesen Bericht gespeichert, seit Sie ihn geöffnet haben. Ihre Änderungen sind noch da: Speichern Sie sie über die neuere Fassung oder verwerfen Sie sie und sehen Sie die gespeicherte an.",
+  "@biReportConflict": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictDiscard": "Meine verwerfen",
+  "@biReportConflictDiscard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictOverwrite": "Meine darüber speichern",
+  "@biReportConflictOverwrite": {
+    "description": "#2579 analytical reports"
+  },
   "biReportCopyName": "{name} (Bericht)",
   "@biReportCopyName": {
     "description": "#2579 analytical reports",
@@ -1127,6 +1143,15 @@
   "@biReportNoCards": {
     "description": "#2579 analytical reports"
   },
+  "biReportPageNumbered": "Seite {number}",
+  "@biReportPageNumbered": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "biReportPageTitle": "Seite 1",
   "@biReportPageTitle": {
     "description": "#2579 analytical reports"
@@ -1139,6 +1164,14 @@
         "type": "String"
       }
     }
+  },
+  "biReportRetry": "Erneut versuchen",
+  "@biReportRetry": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportSaveFailed": "Der Bericht konnte nicht gespeichert werden: Es kam keine Antwort. Ihre Änderungen bleiben erhalten; ein erneuter Versuch sendet dieselbe Speicherung, die nie zweimal angewendet wird.",
+  "@biReportSaveFailed": {
+    "description": "#2579 analytical reports"
   },
   "biReset": "Standardansicht zeigen",
   "biRunRate": "Im bisherigen Tempo würde diese Periode bei etwa {value} enden.",
@@ -1235,6 +1268,15 @@
   "biViewUnsupported": "Dieser Bericht kann hier nicht gespeichert werden: Der Berichtsdesigner ist aus, oder eine ältere App-Version würde löschen, was sie nicht lesen kann.",
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
+  },
+  "biViewWithheld": "{count} Kennzahlen dieser Ansicht werden nicht angezeigt: Sie dürfen sie nicht lesen.",
+  "@biViewWithheld": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   },
   "biViews": "Ansichten",
   "biViewsMine": "Meine Ansichten",
@@ -13758,6 +13800,18 @@
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingHintBiReportMaxBytes": "Die größte gespeicherte Berichtsdefinition in Bytes ihres gespeicherten Textes. Die Plattform speichert nie mehr als 65536; eine Definition enthält Fragen, nie Zahlen.",
+  "@settingHintBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxPages": "Die meisten Seiten, die ein gespeicherter Bericht haben darf. Die Plattform speichert nie mehr als 4; ein Bericht über der Grenze wird beim Speichern abgelehnt, nie gekürzt.",
+  "@settingHintBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxVisuals": "Die meisten Karten, die ein gespeicherter Bericht über alle Seiten haben darf. Die Plattform speichert nie mehr als 24; ein Bericht über der Grenze wird beim Speichern abgelehnt, nie gekürzt.",
+  "@settingHintBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
   "settingHintBillingMaxAdvanceDays": "Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -13908,6 +13962,18 @@
   "settingLabelBiBatchMaxRequests": "Kennzahlen je Berichtsabruf",
   "@settingLabelBiBatchMaxRequests": {
     "description": "#2578 BI settings"
+  },
+  "settingLabelBiReportMaxBytes": "Größe einer Berichtsdefinition",
+  "@settingLabelBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxPages": "Seiten je Bericht",
+  "@settingLabelBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxVisuals": "Karten je Bericht",
+  "@settingLabelBiReportMaxVisuals": {
+    "description": "#2579 report limits"
   },
   "settingLabelBillingMaxAdvanceDays": "Vorlauf der Abo-Rechnung",
   "@settingLabelBillingMaxAdvanceDays": {
@@ -14135,6 +14201,14 @@
   "@settingUnitAttempts": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitBytes": "Bytes",
+  "@settingUnitBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitCards": "Karten",
+  "@settingUnitCards": {
+    "description": "#2579 report limits"
+  },
   "settingUnitCharacters": "Zeichen",
   "settingUnitCurrencyUnits": "Währungseinheiten",
   "@settingUnitCurrencyUnits": {
@@ -14159,6 +14233,10 @@
   "settingUnitMonths": "Monate",
   "@settingUnitMonths": {
     "description": "#2487 settings: Unit."
+  },
+  "settingUnitPages": "Seiten",
+  "@settingUnitPages": {
+    "description": "#2579 report limits"
   },
   "settingUnitPerDay": "pro Tag",
   "@settingUnitPerDay": {

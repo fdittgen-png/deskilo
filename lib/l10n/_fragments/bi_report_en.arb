@@ -66,5 +66,47 @@
   "biViewUnsupported": "This report cannot be saved here: the report designer is off, or an older version of the app would erase what it does not read.",
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
+  },
+  "biReportConflict": "Someone saved this report since you opened it. Your changes are still here: save them over the newer version, or discard them and see the saved one.",
+  "@biReportConflict": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictOverwrite": "Save mine over it",
+  "@biReportConflictOverwrite": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictDiscard": "Discard mine",
+  "@biReportConflictDiscard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportSaveFailed": "The report could not be saved: no answer came back. Your changes are kept; retrying sends the same save again, it is never applied twice.",
+  "@biReportSaveFailed": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRetry": "Retry",
+  "@biReportRetry": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportAddPage": "Add a page with…",
+  "@biReportAddPage": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportPageNumbered": "Page {number}",
+  "@biReportPageNumbered": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "biViewWithheld": "{count} figures of this view are not shown: you may not read them.",
+  "@biViewWithheld": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

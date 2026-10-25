@@ -127,5 +127,41 @@
   "settingUnitRequests": "richieste",
   "@settingUnitRequests": {
     "description": "#2578 BI settings"
+  },
+  "settingLabelBiReportMaxPages": "Pagine per report",
+  "@settingLabelBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxPages": "Il numero massimo di pagine di un report salvato. La piattaforma non ne conserva mai più di 4; un report oltre il limite viene rifiutato al salvataggio, mai tagliato.",
+  "@settingHintBiReportMaxPages": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxVisuals": "Schede per report",
+  "@settingLabelBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxVisuals": "Il numero massimo di schede di un report salvato su tutte le pagine. La piattaforma non ne conserva mai più di 24; un report oltre il limite viene rifiutato al salvataggio, mai tagliato.",
+  "@settingHintBiReportMaxVisuals": {
+    "description": "#2579 report limits"
+  },
+  "settingLabelBiReportMaxBytes": "Dimensione di una definizione di report",
+  "@settingLabelBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingHintBiReportMaxBytes": "La più grande definizione di report salvata, in byte del suo testo memorizzato. La piattaforma non ne conserva mai più di 65536; una definizione contiene domande, mai cifre.",
+  "@settingHintBiReportMaxBytes": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitPages": "pagine",
+  "@settingUnitPages": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitCards": "schede",
+  "@settingUnitCards": {
+    "description": "#2579 report limits"
+  },
+  "settingUnitBytes": "byte",
+  "@settingUnitBytes": {
+    "description": "#2579 report limits"
   }
 }

@@ -66,5 +66,47 @@
   "biViewUnsupported": "Ce rapport ne peut pas être enregistré ici : le concepteur de rapports est désactivé, ou une version plus ancienne de l'application effacerait ce qu'elle ne sait pas lire.",
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
+  },
+  "biReportConflict": "Quelqu'un a enregistré ce rapport depuis que vous l'avez ouvert. Vos modifications sont toujours là : enregistrez-les par-dessus la version plus récente, ou abandonnez-les pour voir la version enregistrée.",
+  "@biReportConflict": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictOverwrite": "Enregistrer les miennes par-dessus",
+  "@biReportConflictOverwrite": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportConflictDiscard": "Abandonner les miennes",
+  "@biReportConflictDiscard": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportSaveFailed": "Le rapport n'a pas pu être enregistré : aucune réponse n'est revenue. Vos modifications sont conservées ; réessayer renvoie le même enregistrement, qui n'est jamais appliqué deux fois.",
+  "@biReportSaveFailed": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportRetry": "Réessayer",
+  "@biReportRetry": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportAddPage": "Ajouter une page avec…",
+  "@biReportAddPage": {
+    "description": "#2579 analytical reports"
+  },
+  "biReportPageNumbered": "Page {number}",
+  "@biReportPageNumbered": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "biViewWithheld": "{count} chiffres de cette vue ne sont pas affichés : vous n'avez pas le droit de les lire.",
+  "@biViewWithheld": {
+    "description": "#2579 analytical reports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

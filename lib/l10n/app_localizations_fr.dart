@@ -1873,6 +1873,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biReportAddCard => 'Ajouter une carte';
 
   @override
+  String get biReportAddPage => 'Ajouter une page avec…';
+
+  @override
+  String get biReportConflict =>
+      'Quelqu\'un a enregistré ce rapport depuis que vous l\'avez ouvert. Vos modifications sont toujours là : enregistrez-les par-dessus la version plus récente, ou abandonnez-les pour voir la version enregistrée.';
+
+  @override
+  String get biReportConflictDiscard => 'Abandonner les miennes';
+
+  @override
+  String get biReportConflictOverwrite => 'Enregistrer les miennes par-dessus';
+
+  @override
   String biReportCopyName(String name) {
     return '$name (rapport)';
   }
@@ -1898,12 +1911,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce rapport n\'a pas encore de carte. Ajoutez-en une.';
 
   @override
+  String biReportPageNumbered(String number) {
+    return 'Page $number';
+  }
+
+  @override
   String get biReportPageTitle => 'Page 1';
 
   @override
   String biReportRemove(String card) {
     return 'Retirer $card';
   }
+
+  @override
+  String get biReportRetry => 'Réessayer';
+
+  @override
+  String get biReportSaveFailed =>
+      'Le rapport n\'a pas pu être enregistré : aucune réponse n\'est revenue. Vos modifications sont conservées ; réessayer renvoie le même enregistrement, qui n\'est jamais appliqué deux fois.';
 
   @override
   String get biReset => 'Afficher la vue standard';
@@ -2064,6 +2089,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get biViewUnsupported =>
       'Ce rapport ne peut pas être enregistré ici : le concepteur de rapports est désactivé, ou une version plus ancienne de l\'application effacerait ce qu\'elle ne sait pas lire.';
+
+  @override
+  String biViewWithheld(String count) {
+    return '$count chiffres de cette vue ne sont pas affichés : vous n\'avez pas le droit de les lire.';
+  }
 
   @override
   String get biViews => 'Vues';
@@ -20163,6 +20193,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plus grand nombre de chiffres qu\'une page de rapport peut demander en une seule lecture. Une page qui en demande plus est scindée en plusieurs lectures ; un lot au-delà est refusé en entier.';
 
   @override
+  String get settingHintBiReportMaxBytes =>
+      'La plus grande définition de rapport enregistrée, en octets de son texte stocké. La plateforme n\'en stocke jamais plus de 65536 ; une définition contient des questions, jamais des chiffres.';
+
+  @override
+  String get settingHintBiReportMaxPages =>
+      'Le nombre maximal de pages d\'un rapport enregistré. La plateforme n\'en stocke jamais plus de 4 ; un rapport au-delà est refusé à l\'enregistrement, jamais tronqué.';
+
+  @override
+  String get settingHintBiReportMaxVisuals =>
+      'Le nombre maximal de cartes d\'un rapport enregistré, toutes pages confondues. La plateforme n\'en stocke jamais plus de 24 ; un rapport au-delà est refusé à l\'enregistrement, jamais tronqué.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fixe : l\'avance maximale, en jours, d\'une facture d\'abonnement avant le début du mois.';
 
@@ -20356,6 +20398,16 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelBiBatchMaxRequests =>
       'Chiffres par lecture de rapport';
+
+  @override
+  String get settingLabelBiReportMaxBytes =>
+      'Taille d\'une définition de rapport';
+
+  @override
+  String get settingLabelBiReportMaxPages => 'Pages par rapport';
+
+  @override
+  String get settingLabelBiReportMaxVisuals => 'Cartes par rapport';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -20583,6 +20635,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingUnitAttempts => 'essais';
 
   @override
+  String get settingUnitBytes => 'octets';
+
+  @override
+  String get settingUnitCards => 'cartes';
+
+  @override
   String get settingUnitCharacters => 'caractères';
 
   @override
@@ -20602,6 +20660,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitMonths => 'mois';
+
+  @override
+  String get settingUnitPages => 'pages';
 
   @override
   String get settingUnitPerDay => 'par jour';

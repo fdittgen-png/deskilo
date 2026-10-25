@@ -1865,6 +1865,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biReportAddCard => 'Aggiungi una scheda';
 
   @override
+  String get biReportAddPage => 'Aggiunga una pagina con…';
+
+  @override
+  String get biReportConflict =>
+      'Qualcuno ha salvato questo report da quando Lei l\'ha aperto. Le Sue modifiche sono ancora qui: le salvi sopra la versione più recente oppure le scarti per vedere quella salvata.';
+
+  @override
+  String get biReportConflictDiscard => 'Scarti le mie';
+
+  @override
+  String get biReportConflictOverwrite => 'Salvi le mie sopra';
+
+  @override
   String biReportCopyName(String name) {
     return '$name (report)';
   }
@@ -1890,12 +1903,24 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo report non ha ancora schede. Aggiungine una.';
 
   @override
+  String biReportPageNumbered(String number) {
+    return 'Pagina $number';
+  }
+
+  @override
   String get biReportPageTitle => 'Pagina 1';
 
   @override
   String biReportRemove(String card) {
     return 'Rimuovi $card';
   }
+
+  @override
+  String get biReportRetry => 'Riprovi';
+
+  @override
+  String get biReportSaveFailed =>
+      'Non è stato possibile salvare il report: non è arrivata alcuna risposta. Le Sue modifiche restano; riprovando invia lo stesso salvataggio, che non viene mai applicato due volte.';
 
   @override
   String get biReset => 'Mostra la vista standard';
@@ -2056,6 +2081,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get biViewUnsupported =>
       'Questo report non può essere salvato qui: l\'editor di report è disattivato, oppure una versione più vecchia dell\'app cancellerebbe ciò che non sa leggere.';
+
+  @override
+  String biViewWithheld(String count) {
+    return '$count cifre di questa vista non sono mostrate: Lei non ha il permesso di leggerle.';
+  }
 
   @override
   String get biViews => 'Viste';
@@ -20123,6 +20153,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero massimo di cifre che una pagina di report può chiedere in una sola lettura. Una pagina che ne richiede di più viene divisa in più letture; un lotto più grande è rifiutato per intero.';
 
   @override
+  String get settingHintBiReportMaxBytes =>
+      'La più grande definizione di report salvata, in byte del suo testo memorizzato. La piattaforma non ne conserva mai più di 65536; una definizione contiene domande, mai cifre.';
+
+  @override
+  String get settingHintBiReportMaxPages =>
+      'Il numero massimo di pagine di un report salvato. La piattaforma non ne conserva mai più di 4; un report oltre il limite viene rifiutato al salvataggio, mai tagliato.';
+
+  @override
+  String get settingHintBiReportMaxVisuals =>
+      'Il numero massimo di schede di un report salvato su tutte le pagine. La piattaforma non ne conserva mai più di 24; un report oltre il limite viene rifiutato al salvataggio, mai tagliato.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fisso: l\'anticipo massimo, in giorni, di una fattura d\'abbonamento prima dell\'inizio del mese.';
 
@@ -20315,6 +20357,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Cifre per lettura di report';
+
+  @override
+  String get settingLabelBiReportMaxBytes =>
+      'Dimensione di una definizione di report';
+
+  @override
+  String get settingLabelBiReportMaxPages => 'Pagine per report';
+
+  @override
+  String get settingLabelBiReportMaxVisuals => 'Schede per report';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -20546,6 +20598,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingUnitAttempts => 'tentativi';
 
   @override
+  String get settingUnitBytes => 'byte';
+
+  @override
+  String get settingUnitCards => 'schede';
+
+  @override
   String get settingUnitCharacters => 'caratteri';
 
   @override
@@ -20565,6 +20623,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitMonths => 'mesi';
+
+  @override
+  String get settingUnitPages => 'pagine';
 
   @override
   String get settingUnitPerDay => 'al giorno';

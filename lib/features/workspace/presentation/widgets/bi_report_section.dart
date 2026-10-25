@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2579 C1 — the report designer on the Web-BI page: "Duplicate as report"
-// (the analysis on screen, or the open report, becomes a private report) and,
-// for an open report the reader may change, its editor. Both exist only while
-// `biReportDesigner` is on; reading a saved report never needs it.
+// #2579 — the report designer on the Web-BI page: "Duplicate as report"
+// (the analysis on screen, or the open report, becomes a private report)
+// and, for an open report the reader may change, its editor. Both exist only
+// while `biReportDesigner` is on; reading a saved report — its pages among
+// them — never needs it. A team report is changed by someone who may share
+// views (workspaceSettings or designDocuments); a report holding figures this
+// reader may not read is never edited by them (the server withheld those
+// figures), only copied.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,12 +19,12 @@ import '../../domain/bi_query.dart';
 import '../../domain/bi_report_definition.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../domain/workspace_feature.dart';
-import '../../domain/workspace_permission.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'bi_report_panel.dart';
+import 'bi_report_parts.dart';
 import 'bi_view_failure_text.dart';
-import 'bi_views_bar.dart' show BiOpenView;
+import 'bi_views_bar.dart' show BiOpenView, biCanShareViews;
 
 class BiReportSection extends ConsumerWidget {
   const BiReportSection({
@@ -44,45 +48,77 @@ class BiReportSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (visibleModules.isEmpty) return const SizedBox.shrink();
     final on = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.biReportDesigner);
-    if (!on || visibleModules.isEmpty) return const SizedBox.shrink();
     final views = ref.watch(biViewsProvider(workspaceId)).value ?? const [];
     final open = views.where((v) => v.id == openId).firstOrNull;
-    final canManage = ref
-        .watch(myPermissionsProvider)
-        .contains(WorkspacePermission.workspaceSettings);
+    final report = open?.definition?.report;
+    final canShare = biCanShareViews(ref.watch(myPermissionsProvider));
     final editing =
-        open != null &&
-            open.definition?.report != null &&
-            (open.scope == BiViewScope.private ? open.mine : canManage)
+        on &&
+            open != null &&
+            report != null &&
+            open.withheld == 0 &&
+            (open.scope == BiViewScope.private ? open.mine : canShare)
         ? open
         : null;
+    final page = report == null ? 0 : _pageOf(report);
+    void openPage(BiSavedView view, int index) {
+      final q = view.definition?.report?.queryOfPage(index);
+      if (q != null) onOpen(view, q);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-          child: TextButton.icon(
-            key: const ValueKey('bi-views-duplicate-report'),
-            icon: const Icon(Icons.dashboard_customize_outlined),
-            label: Text(context.l10n.biReportDuplicate),
-            onPressed: () => _duplicate(context, ref, open),
+        if (on)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+            child: TextButton.icon(
+              key: const ValueKey('bi-views-duplicate-report'),
+              icon: const Icon(Icons.dashboard_customize_outlined),
+              label: Text(context.l10n.biReportDuplicate),
+              onPressed: () => _duplicate(context, ref, open),
+            ),
           ),
-        ),
         if (editing != null)
           BiReportPanel(
+            key: ValueKey('bi-report-panel-${editing.id}'),
             workspaceId: workspaceId,
             view: editing,
+            pageIndex: page,
             visibleModules: visibleModules,
+            onPage: openPage,
+          )
+        else if (open != null && report != null && report.pages.length > 1)
+          BiReportPages(
+            key: const ValueKey('bi-report-pages'),
+            report: report,
+            selected: page,
+            visibleModules: visibleModules,
+            onSelected: (i) => openPage(open, i),
           ),
       ],
     );
   }
 
-  /// A report copies as it is; a question becomes one page of cards, in the
-  /// order it shows them.
+  /// The page the address shows: the first whose cards are the query's.
+  int _pageOf(BiReportDefinition report) {
+    for (final (i, p) in report.pages.indexed) {
+      final cards = BiReportDefinition.cardsOf(p);
+      if (cards.length == query.cards.length &&
+          cards.indexed.every((e) => query.cards[e.$1] == e.$2)) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
+  /// A report copies as it is, as the reader's own private report (never a
+  /// shared overwrite); a question becomes one page of cards, in the order
+  /// it shows them.
   Future<void> _duplicate(
     BuildContext context,
     WidgetRef ref,

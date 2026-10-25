@@ -1,23 +1,34 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2579 C1 — the editor of a saved report (a v2 view): rename it, add,
-// remove and reorder the cards of its first page, save. The draft is local;
-// a refused save (someone saved first, the designer went off) keeps it and
-// says why. The cards below the panel are the SAVED first page, rendered by
-// the same module widgets as any view, under the reader's current rights.
+// #2579 — the editor of a saved report (a v2 view): rename it, add, remove
+// and reorder the cards of the page on screen, add a page, save. The draft
+// is local and is never rebased silently onto someone else's save:
+//   * a save that lost the race (someone saved since this draft was read)
+//     keeps the draft and says so; the person then saves theirs over the
+//     newer version or discards it — both explicit;
+//   * a save whose answer was lost keeps the draft and offers Retry, which
+//     resends the SAME request, so the server answers it once;
+//   * the space's report limits (`bi.report_max_*`) stop the editor from
+//     offering a card or a page beyond them; the server refuses them anyway.
+// The cards below the panel are the SAVED page, rendered by the same module
+// widgets as any view, under the reader's current rights.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/active_settings.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_report_definition.dart';
 import '../../domain/bi_report_edit.dart';
+import '../../domain/bi_report_limits.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../providers/bi_providers.dart';
 import 'bi_module_section.dart' show biModuleViews;
+import 'bi_report_parts.dart';
 import 'bi_view_failure_text.dart';
 
 class BiReportPanel extends ConsumerStatefulWidget {
@@ -25,7 +36,9 @@ class BiReportPanel extends ConsumerStatefulWidget {
     super.key,
     required this.workspaceId,
     required this.view,
+    required this.pageIndex,
     required this.visibleModules,
+    required this.onPage,
   });
 
   final String workspaceId;
@@ -33,8 +46,14 @@ class BiReportPanel extends ConsumerStatefulWidget {
   /// A view whose definition is a report.
   final BiSavedView view;
 
+  /// The page on screen.
+  final int pageIndex;
+
   /// The module ids this reader may see now.
   final Set<String> visibleModules;
+
+  /// Opens page `index` of a (just saved) view.
+  final void Function(BiSavedView view, int index) onPage;
 
   @override
   ConsumerState<BiReportPanel> createState() => _BiReportPanelState();
@@ -46,7 +65,20 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
   late int _revision;
   var _dirty = false;
 
+  /// The revision this draft was read at moved on: someone else saved.
+  var _conflict = false;
+
+  /// The last save's answer was lost; Retry resends [_requestId].
+  var _failed = false;
+  String? _requestId;
+
   BiReportDefinition get _stored => widget.view.definition!.report!;
+  int get _page => widget.pageIndex.clamp(0, _stored.pages.length - 1);
+
+  BiReportDefinition get _draft => _stored.withPage(
+    _page,
+    _stored.pages[_page].withVisuals(biRenumber(_visuals)),
+  );
 
   @override
   void initState() {
@@ -57,21 +89,24 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
 
   void _reset() {
     _name.text = widget.view.name;
-    _visuals = biVisualsInOrder(_stored.pages.first.visuals);
+    _visuals = biVisualsInOrder(_stored.pages[_page].visuals);
     _revision = widget.view.revision;
     _dirty = false;
+    _conflict = false;
+    _failed = false;
+    _requestId = null;
   }
 
   @override
   void didUpdateWidget(BiReportPanel old) {
     super.didUpdateWidget(old);
-    final other = old.view.id != widget.view.id;
-    // A newer revision replaces a draft nobody touched; a touched draft is
-    // kept and only rebased, so the next save is the person's explicit one.
-    if (other || (!_dirty && old.view.revision != widget.view.revision)) {
+    // A newer revision replaces a draft nobody touched. A touched draft
+    // keeps the revision it was read at: the next save then meets the
+    // conflict and the person decides, never a silent overwrite.
+    if (old.view.id != widget.view.id ||
+        old.pageIndex != widget.pageIndex ||
+        (!_dirty && old.view.revision != widget.view.revision)) {
       _reset();
-    } else {
-      _revision = widget.view.revision;
     }
   }
 
@@ -84,33 +119,77 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
   void _change(List<BiReportVisual> next) => setState(() {
     _visuals = next;
     _dirty = true;
+    _failed = false;
+    _requestId = null;
   });
 
-  Future<void> _save() async {
-    final l10n = context.l10n;
-    final messenger = ScaffoldMessenger.of(context);
+  /// Saves the draft at the revision it was read at, or — [overwrite], the
+  /// person's explicit choice after a conflict — over the newest one.
+  Future<void> _save({bool overwrite = false}) async {
     final name = _name.text.trim();
-    if (name.isEmpty) return;
-    final page = _stored.pages.first.withVisuals(biRenumber(_visuals));
-    try {
-      await ref
+    if (name.isEmpty || _visuals.isEmpty) return;
+    if (overwrite) _requestId = null;
+    final requestId = _requestId ??= newRequestId();
+    final revision = overwrite ? widget.view.revision : _revision;
+    await _write(
+      () => ref
           .read(biViewActionsProvider)
           .save(
             widget.workspaceId,
-            over: BiSavedView(
-              id: widget.view.id,
-              scope: widget.view.scope,
-              name: widget.view.name,
-              definition: widget.view.definition,
-              isDefault: widget.view.isDefault,
-              revision: _revision,
-              mine: widget.view.mine,
-            ),
+            over: widget.view.atRevision(revision),
             scope: widget.view.scope,
             name: name,
-            definition: BiViewDefinition.ofReport(_stored.withFirstPage(page)),
-          );
-      if (mounted) setState(() => _dirty = false);
+            definition: BiViewDefinition.ofReport(_draft),
+            requestId: requestId,
+          ),
+    );
+  }
+
+  /// A new page holding the card [metricId], saved at once, then opened.
+  Future<void> _addPage(String metricId) async {
+    final ids = [
+      for (final p in _stored.pages) ...[p.id, ...p.visuals.map((v) => v.id)],
+    ];
+    final number = _stored.pages.length + 1;
+    final page = BiReportPage(
+      id: biNextPageId(ids),
+      title: context.l10n.biReportPageNumbered('$number'),
+      visuals: [
+        BiReportVisual.kpi(
+          id: biNextVisualId(ids),
+          metricId: metricId,
+          layout: const BiVisualLayout(order: 0),
+        ),
+      ],
+    );
+    final saved = await _write(
+      () => ref
+          .read(biViewActionsProvider)
+          .save(
+            widget.workspaceId,
+            over: widget.view,
+            scope: widget.view.scope,
+            name: widget.view.name,
+            definition: BiViewDefinition.ofReport(
+              _stored.withPage(_stored.pages.length, page),
+            ),
+          ),
+    );
+    if (saved != null) widget.onPage(saved, number - 1);
+  }
+
+  /// Runs [write] and keeps what its outcome means for the draft: saved
+  /// (clean), refused (finished: another attempt is another request; a
+  /// stale one is the conflict the person decides), or not answered (the
+  /// same request may be resent).
+  Future<BiSavedView?> _write(Future<BiSavedView> Function() write) async {
+    final l10n = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    BiSavedView? saved;
+    BiViewFailure? refused;
+    var lost = false;
+    try {
+      saved = await write();
     } on BiViewRefused catch (e, st) {
       TraceLogger.instance.warn(
         'bi',
@@ -118,22 +197,44 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
         error: e,
         stackTrace: st,
       );
+      refused = e.failure;
+    } on Exception catch (e, st) {
+      TraceLogger.instance.warn(
+        'bi',
+        'report save not answered',
+        error: e,
+        stackTrace: st,
+      );
+      lost = true;
+    }
+    if (!mounted) return null;
+    setState(() {
+      _failed = lost;
+      _conflict = refused == BiViewFailure.stale;
+      if (!lost) _requestId = null;
+      if (saved != null) _dirty = false;
+    });
+    if (refused != null && refused != BiViewFailure.stale) {
       messenger.showSnackBar(
-        SnackBar(content: Text(biViewFailureText(l10n, e.failure))),
+        SnackBar(content: Text(biViewFailureText(l10n, refused))),
       );
     }
+    return saved;
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
+    final limits = BiReportLimits.fromSettings(
+      ref.watch(activeSettingsProvider),
+    );
     String title(String id) => biModuleViews[id]?.title(l10n) ?? id;
     final used = {for (final v in _visuals) v.metricId};
     final addable = [
       for (final m in biModules)
-        if (widget.visibleModules.contains(m.id) && !used.contains(m.id)) m,
+        if (widget.visibleModules.contains(m.id)) m,
     ];
+    final canAddCard = limits.canAddVisual(_draft);
     return Card(
       key: const ValueKey('bi-report-panel'),
       margin: AppSpacing.mdAll,
@@ -142,14 +243,55 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(l10n.biReportEditorTitle, style: theme.textTheme.titleSmall),
+            Text(
+              l10n.biReportEditorTitle,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            if (_stored.pages.length > 1)
+              BiReportPages(
+                key: const ValueKey('bi-report-pages-edit'),
+                report: _stored,
+                selected: _page,
+                visibleModules: widget.visibleModules,
+                enabled: !_dirty,
+                onSelected: (i) => widget.onPage(widget.view, i),
+              ),
             AppTextField(
               key: const ValueKey('bi-report-name'),
               controller: _name,
               label: l10n.biViewName,
               maxLength: 80,
-              onChanged: (_) => setState(() => _dirty = true),
+              onChanged: (_) => _change(_visuals),
             ),
+            if (_conflict)
+              BiReportNotice(
+                key: const ValueKey('bi-report-conflict'),
+                text: l10n.biReportConflict,
+                actions: [
+                  TextButton(
+                    key: const ValueKey('bi-report-overwrite'),
+                    onPressed: () => _save(overwrite: true),
+                    child: Text(l10n.biReportConflictOverwrite),
+                  ),
+                  TextButton(
+                    key: const ValueKey('bi-report-discard'),
+                    onPressed: () => setState(_reset),
+                    child: Text(l10n.biReportConflictDiscard),
+                  ),
+                ],
+              ),
+            if (_failed)
+              BiReportNotice(
+                key: const ValueKey('bi-report-failed'),
+                text: l10n.biReportSaveFailed,
+                actions: [
+                  TextButton(
+                    key: const ValueKey('bi-report-retry'),
+                    onPressed: _save,
+                    child: Text(l10n.biReportRetry),
+                  ),
+                ],
+              ),
             if (_visuals.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
@@ -159,48 +301,31 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
                 ),
               ),
             for (final (i, v) in _visuals.indexed)
-              ListTile(
-                key: ValueKey('bi-report-card-${v.id}'),
-                contentPadding: EdgeInsets.zero,
-                title: Text(title(v.metricId ?? v.id)),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      key: ValueKey('bi-report-up-${v.id}'),
-                      tooltip: l10n.biReportMoveUp(title(v.metricId ?? v.id)),
-                      icon: const Icon(Icons.arrow_upward),
-                      onPressed: i == 0
-                          ? null
-                          : () => _change(biMoveVisual(_visuals, i, -1)),
-                    ),
-                    IconButton(
-                      key: ValueKey('bi-report-down-${v.id}'),
-                      tooltip: l10n.biReportMoveDown(title(v.metricId ?? v.id)),
-                      icon: const Icon(Icons.arrow_downward),
-                      onPressed: i == _visuals.length - 1
-                          ? null
-                          : () => _change(biMoveVisual(_visuals, i, 1)),
-                    ),
-                    IconButton(
-                      key: ValueKey('bi-report-remove-${v.id}'),
-                      tooltip: l10n.biReportRemove(title(v.metricId ?? v.id)),
-                      icon: const Icon(Icons.close),
-                      onPressed: () => _change([
-                        for (final x in _visuals)
-                          if (x.id != v.id) x,
-                      ]),
-                    ),
-                  ],
-                ),
+              BiReportCardRow(
+                visual: v,
+                title: title(v.metricId ?? v.id),
+                first: i == 0,
+                last: i == _visuals.length - 1,
+                onMove: (delta) => _change(biMoveVisual(_visuals, i, delta)),
+                onRemove: () => _change([
+                  for (final x in _visuals)
+                    if (x.id != v.id) x,
+                ]),
               ),
             Wrap(
               spacing: AppSpacing.sm,
               children: [
-                PopupMenuButton<String>(
+                BiReportAddMenu(
                   key: const ValueKey('bi-report-add'),
-                  enabled: addable.isNotEmpty,
-                  tooltip: l10n.biReportAddCard,
+                  keyPrefix: 'bi-report-add',
+                  label: l10n.biReportAddCard,
+                  icon: Icons.add,
+                  modules: [
+                    for (final m in addable)
+                      if (!used.contains(m.id)) m.id,
+                  ],
+                  enabled: canAddCard,
+                  title: title,
                   onSelected: (id) => _change([
                     ..._visuals,
                     BiReportVisual.kpi(
@@ -214,22 +339,23 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
                       layout: BiVisualLayout(order: _visuals.length),
                     ),
                   ]),
-                  itemBuilder: (_) => [
-                    for (final m in addable)
-                      PopupMenuItem(
-                        key: ValueKey('bi-report-add-${m.id}'),
-                        value: m.id,
-                        child: Text(title(m.id)),
-                      ),
-                  ],
-                  child: Chip(
-                    avatar: const Icon(Icons.add),
-                    label: Text(l10n.biReportAddCard),
-                  ),
+                ),
+                BiReportAddMenu(
+                  key: const ValueKey('bi-report-add-page'),
+                  keyPrefix: 'bi-report-add-page',
+                  label: l10n.biReportAddPage,
+                  icon: Icons.note_add_outlined,
+                  modules: [for (final m in addable) m.id],
+                  enabled:
+                      !_dirty && canAddCard && limits.canAddPage(_stored),
+                  title: title,
+                  onSelected: _addPage,
                 ),
                 FilledButton(
                   key: const ValueKey('bi-report-save'),
-                  onPressed: _dirty ? _save : null,
+                  onPressed: _dirty && _visuals.isNotEmpty && !_conflict
+                      ? _save
+                      : null,
                   child: Text(l10n.biViewSave),
                 ),
               ],

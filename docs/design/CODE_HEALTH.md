@@ -2,7 +2,7 @@
 
 # Code health baseline
 
-Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `7804a50c6f01bb2763206f18587a762103eb80b1` on 2026-10-25.
+Checkpoint C1 of #2490 / #2491. Measured with `dart run tool/code_health.dart`: a syntactic AST pass over `lib/` (no type resolution), so cyclomatic and cognitive complexity are this tool's own approximations — a ranking and a trend. Recorded at `a8e44c037b10a2e684f56e4ef2201ac41f4f1d2e` on 2026-10-25.
 
 A function is held by `test/lint/code_health_test.dart` when it reaches a limit: cognitive 30, cyclomatic 25, length 150 lines, parameters 7. Its entry in `CODE_HEALTH_BASELINE.json` may only fall; any other function must stay under every limit or sit in `test/lint/code_health_exceptions.txt`.
 
@@ -10,15 +10,15 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 
 | measure | count |
 |---|---|
-| files | 2130 |
-| functions | 12018 |
-| cyclomatic>=9 | 1180 |
+| files | 2134 |
+| functions | 12056 |
+| cyclomatic>=9 | 1181 |
 | cyclomatic>=25 | 81 |
-| cognitive>=15 | 441 |
+| cognitive>=15 | 444 |
 | cognitive>=30 | 72 |
 | length>=150 | 45 |
 | parameters>=5 | 527 |
-| parameters>=7 | 143 |
+| parameters>=7 | 145 |
 | partOfFiles | 22 |
 
 ## Worst functions by cognitive complexity (baseline)
@@ -49,5 +49,5 @@ A function is held by `test/lint/code_health_test.dart` when it reaches a limit:
 | 40 | 19 | 55 | 2 | `lib/features/money/domain/vat_forms.dart#fillVatForm` |
 | 40 | 38 | 143 | 3 | `lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body` |
 | 39 | 24 | 144 | 1 | `lib/features/mcp/presentation/mcp_consent_screen.dart#_McpConsentScreenState.build` |
-| 39 | 32 | 147 | 2 | `lib/features/workspace/presentation/screens/bi_screen.dart#BiScreen.build` |
+| 38 | 26 | 123 | 2 | `lib/features/reservations/presentation/widgets/month_grid.dart#MonthGrid.build` |
 

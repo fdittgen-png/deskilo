@@ -94,6 +94,12 @@ class BiReportPeriod {
       'at': '$offset',
   };
 
+  /// The period this report reads on the workspace date [today]: a relative
+  /// one moves with the workspace clock, a fixed one never moves.
+  BiPeriod? resolve(DateTime today) => at != null
+      ? BiPeriod.parse(grain, at!)
+      : BiPeriod.containing(grain, today).shift(offset!);
+
   static BiReportPeriod of(BiQueryContext q) {
     final fixed = q.period.fixed;
     return fixed != null
@@ -213,21 +219,53 @@ class BiReportDefinition {
   );
 
   /// The module ids of the first page, in reading order.
-  List<String> get firstPageCards => [
-    for (final v in pages.first.visuals.toList()..sort(_byOrder)) ?v.metricId,
-  ];
+  List<String> get firstPageCards => cardsOf(pages.first);
 
   /// The address parameters of the report's period and first page.
-  BiQueryContext? get query => BiQueryContext.tryParse(
-    period.toQuery(),
-  )?.copyWith(cards: firstPageCards);
+  BiQueryContext? get query => queryOfPage(0);
 
-  BiReportDefinition withFirstPage(BiReportPage page) => BiReportDefinition(
-    period: period,
-    pages: [page, ...pages.skip(1)],
-    filters: filters,
-    printStyle: printStyle,
-  );
+  /// The address parameters of the report's period and page [index].
+  BiQueryContext? queryOfPage(int index) => BiQueryContext.tryParse(
+    period.toQuery(),
+  )?.copyWith(cards: cardsOf(pages[index]));
+
+  BiReportDefinition withFirstPage(BiReportPage page) => withPage(0, page);
+
+  /// The report with page [index] replaced by [page] (or appended when
+  /// [index] is the page count).
+  BiReportDefinition withPage(int index, BiReportPage page) =>
+      BiReportDefinition(
+        period: period,
+        pages: [
+          for (final (i, p) in pages.indexed)
+            if (i == index) page else p,
+          if (index == pages.length) page,
+        ],
+        filters: filters,
+        printStyle: printStyle,
+      );
+
+  /// The scope [visual] of [page] answers: the reader's rights (applied by
+  /// the server to every read) ∩ the report's filters ∩ the page's ∩ the
+  /// visual's ∩ the temporary [selection]. Null when a lower level would
+  /// widen a higher one: refused, never read as an override.
+  List<BiReportFilter>? scopeOf(
+    BiReportPage page,
+    BiReportVisual visual, {
+    List<BiReportFilter> selection = const [],
+  }) {
+    var scope = filters;
+    for (final level in [page.filters, visual.filters, selection]) {
+      if (!biFiltersNarrow(scope, level)) return null;
+      scope = [...scope, ...level];
+    }
+    return scope;
+  }
+
+  /// The module ids of [page], in reading order.
+  static List<String> cardsOf(BiReportPage page) => [
+    for (final v in page.visuals.toList()..sort(_byOrder)) ?v.metricId,
+  ];
 
   Map<String, Object> toJson() => {
     'v': version,
@@ -259,6 +297,14 @@ class BiReportDefinition {
       pages.add(page);
     }
     if (!_unique(pages)) return null;
+    for (final p in pages) {
+      if (!biFiltersNarrow(filters, p.filters)) return null;
+      for (final v in p.visuals) {
+        if (!biFiltersNarrow([...filters, ...p.filters], v.filters)) {
+          return null;
+        }
+      }
+    }
     final report = BiReportDefinition(
       period: period,
       pages: pages,

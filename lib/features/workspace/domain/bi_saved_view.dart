@@ -10,9 +10,13 @@
 // Pure Dart.
 library;
 
+import 'package:meta/meta.dart';
+
 import 'bi_query.dart';
 import 'bi_report_definition.dart';
 import 'kpi_contract.dart';
+
+export 'bi_view_memory.dart';
 
 enum BiViewScope {
   private,
@@ -150,6 +154,7 @@ class BiSavedView {
     required this.isDefault,
     required this.revision,
     required this.mine,
+    this.withheld = 0,
   });
 
   final String id;
@@ -164,12 +169,35 @@ class BiSavedView {
   /// Saved by the reader.
   final bool mine;
 
+  /// How many of the saved figures the server left out of [definition]
+  /// because this reader may not read them now: their ids never reach this
+  /// device, and a view left with none of its figures is not "every card".
+  final int withheld;
+
+  /// Opening this view for a reader who may see [visible] now.
+  BiViewCheck check(Set<String> visible) =>
+      checkView(definition, visible, withheld: withheld);
+
+  /// The same view at another [revision] (an explicit save over a newer one).
+  BiSavedView atRevision(int revision) => BiSavedView(
+    id: id,
+    scope: scope,
+    name: name,
+    definition: definition,
+    isDefault: isDefault,
+    revision: revision,
+    mine: mine,
+    withheld: withheld,
+  );
+
   static BiSavedView? fromJson(Map<String, dynamic> json) {
     final scope = BiViewScope.fromWire(json['scope']);
     final id = json['id'], name = json['name'], revision = json['revision'];
+    final withheld = biReportReader(json)?.raw('withheld') ?? 0;
     if (scope == null || id is! String || name is! String || revision is! num) {
       return null;
     }
+    if (withheld is! num || withheld < 0) return null;
     return BiSavedView(
       id: id,
       scope: scope,
@@ -178,6 +206,7 @@ class BiSavedView {
       isDefault: json['is_default'] == true,
       revision: revision.toInt(),
       mine: json['mine'] == true,
+      withheld: withheld.toInt(),
     );
   }
 }
@@ -224,7 +253,15 @@ class BiViewCheck {
 }
 
 /// Checks [definition] against the modules [visible] to this reader now.
-BiViewCheck checkView(BiViewDefinition? definition, Set<String> visible) {
+/// Callers open a stored view through [BiSavedView.check].
+/// [withheld] figures the server already left out count as unavailable: a
+/// view left with no card of its own is refused, never widened to "all".
+@visibleForTesting
+BiViewCheck checkView(
+  BiViewDefinition? definition,
+  Set<String> visible, {
+  int withheld = 0,
+}) {
   if (definition == null) {
     return const BiViewCheck(
       query: null,
@@ -238,8 +275,13 @@ BiViewCheck checkView(BiViewDefinition? definition, Set<String> visible) {
     for (final c in definition.cards)
       if (visible.contains(c) && current(c)) c,
   ];
-  // Every card gone is not "all cards": the view is then refused below.
-  final query = definition.cards.isNotEmpty && kept.isEmpty
+  // Every card gone is not "all cards": the view is then refused below. A
+  // report's page names its cards; one with none is never every card.
+  final query =
+      (definition.cards.isNotEmpty ||
+              withheld > 0 ||
+              definition.report != null) &&
+          kept.isEmpty
       ? null
       : BiQueryContext.tryParse(definition.query)?.copyWith(cards: kept);
   return BiViewCheck(
@@ -261,7 +303,8 @@ enum BiViewFailure {
   /// Someone saved the view since it was read (40001).
   stale,
 
-  /// Not the reader's to change, or a team view without the right.
+  /// Not the reader's to change, a team view without the right, or a view
+  /// holding figures this reader may not read (save a copy instead).
   forbidden,
 
   /// Another view of the same scope has that name.
@@ -289,7 +332,10 @@ abstract interface class BiViewRepository {
   /// The reader's private views and the workspace's team views.
   Future<List<BiSavedView>> list(String workspaceId);
 
-  /// Creates ([id] null, [expectedRevision] 0) or updates a view.
+  /// Creates ([id] null, [expectedRevision] 0) or updates a view. The same
+  /// [requestId] with the same write answers that write again (a retry after
+  /// a lost answer is not a second revision); with another write it is
+  /// refused ([BiViewFailure.invalid]).
   Future<BiSavedView> save(
     String workspaceId, {
     String? id,
@@ -297,6 +343,7 @@ abstract interface class BiViewRepository {
     required String name,
     required BiViewDefinition definition,
     required int expectedRevision,
+    String? requestId,
   });
 
   Future<void> delete(String workspaceId, String id, int expectedRevision);
@@ -304,134 +351,4 @@ abstract interface class BiViewRepository {
   /// The reader's own default ([BiViewScope.private]) or the team default
   /// ([BiViewScope.workspace]); null clears it.
   Future<void> setDefault(String workspaceId, BiViewScope scope, String? id);
-}
-
-/// The views in memory, under the server's rules (demonstration, tests).
-class InMemoryBiViewRepository implements BiViewRepository {
-  InMemoryBiViewRepository({this.canManage = true, this.reportsEnabled = true});
-
-  /// Whether the reader holds workspaceSettings (team views).
-  bool canManage;
-
-  /// Whether the report designer is on (the server's `biReportDesigner` gate).
-  bool reportsEnabled;
-  final _views = <({String workspaceId, BiSavedView view})>[];
-  var _next = 1;
-
-  @override
-  Future<List<BiSavedView>> list(String workspaceId) async => [
-    for (final e in _views)
-      if (e.workspaceId == workspaceId) e.view,
-  ];
-
-  @override
-  Future<BiSavedView> save(
-    String workspaceId, {
-    String? id,
-    required BiViewScope scope,
-    required String name,
-    required BiViewDefinition definition,
-    required int expectedRevision,
-  }) async {
-    final trimmed = name.trim();
-    if (trimmed.isEmpty || trimmed.length > 80) {
-      throw const BiViewRefused(BiViewFailure.invalid);
-    }
-    if (scope == BiViewScope.workspace && !canManage) {
-      throw const BiViewRefused(BiViewFailure.forbidden);
-    }
-    final i = id == null ? -1 : _views.indexWhere((e) => e.view.id == id);
-    if (id != null && i < 0) throw const BiViewRefused(BiViewFailure.forbidden);
-    final old = i < 0 ? null : _views[i].view;
-    if (old != null && old.scope != scope) {
-      throw const BiViewRefused(BiViewFailure.invalid);
-    }
-    if (expectedRevision != (old?.revision ?? 0)) {
-      throw const BiViewRefused(BiViewFailure.stale);
-    }
-    _checkReport(old, definition);
-    if (_views.any(
-      (e) =>
-          e.workspaceId == workspaceId &&
-          e.view.scope == scope &&
-          e.view.id != id &&
-          e.view.name.toLowerCase() == trimmed.toLowerCase(),
-    )) {
-      throw const BiViewRefused(BiViewFailure.nameTaken);
-    }
-    final view = BiSavedView(
-      id: id ?? 'view-${_next++}',
-      scope: scope,
-      name: trimmed,
-      definition: definition,
-      isDefault: old?.isDefault ?? false,
-      revision: (old?.revision ?? 0) + 1,
-      mine: true,
-    );
-    final entry = (workspaceId: workspaceId, view: view);
-    if (i < 0) {
-      _views.add(entry);
-    } else {
-      _views[i] = entry;
-    }
-    return view;
-  }
-
-  /// A report is written only with the designer on, and a v1 writer never
-  /// overwrites a report: it would erase what it cannot read.
-  void _checkReport(BiSavedView? old, BiViewDefinition definition) {
-    if ((definition.report != null && !reportsEnabled) ||
-        (old?.definition?.report != null && definition.report == null)) {
-      throw const BiViewRefused(BiViewFailure.unsupported);
-    }
-  }
-
-  @override
-  Future<void> delete(
-    String workspaceId,
-    String id,
-    int expectedRevision,
-  ) async {
-    final i = _views.indexWhere((e) => e.view.id == id);
-    if (i < 0) throw const BiViewRefused(BiViewFailure.forbidden);
-    final v = _views[i].view;
-    if (v.scope == BiViewScope.workspace && !canManage) {
-      throw const BiViewRefused(BiViewFailure.forbidden);
-    }
-    if (v.revision != expectedRevision) {
-      throw const BiViewRefused(BiViewFailure.stale);
-    }
-    _views.removeAt(i);
-  }
-
-  @override
-  Future<void> setDefault(
-    String workspaceId,
-    BiViewScope scope,
-    String? id,
-  ) async {
-    if (scope == BiViewScope.workspace && !canManage) {
-      throw const BiViewRefused(BiViewFailure.forbidden);
-    }
-    if (id != null &&
-        !_views.any((e) => e.view.id == id && e.view.scope == scope)) {
-      throw const BiViewRefused(BiViewFailure.forbidden);
-    }
-    for (final (i, e) in _views.indexed) {
-      if (e.workspaceId != workspaceId || e.view.scope != scope) continue;
-      final v = e.view;
-      _views[i] = (
-        workspaceId: e.workspaceId,
-        view: BiSavedView(
-          id: v.id,
-          scope: v.scope,
-          name: v.name,
-          definition: v.definition,
-          isDefault: v.id == id,
-          revision: v.revision,
-          mine: v.mine,
-        ),
-      );
-    }
-  }
 }
