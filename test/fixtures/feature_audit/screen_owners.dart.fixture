@@ -1,0 +1,118 @@
+// Synthetic sources for tool/feature_audit.dart's screenGates: not compiled.
+// Each `// ==> path` line starts the file at that path.
+// ==> lib/app/routes/fixture_routes.dart
+import '../../features/x/presentation/host_screen.dart';
+import '../../features/x/presentation/open_screen.dart';
+import '../../features/x/presentation/thread.dart';
+
+List<RouteBase> fixtureRoutes(RouteEnv env) => [
+  GoRoute(
+    path: '/owned',
+    redirect: env.guard(
+      const RouteAccess(features: [WorkspaceFeature.host], to: '/open'),
+    ),
+    builder: (context, state) => const HostScreen(),
+    routes: [
+      // No guard of its own: the parent's redirect runs for it too.
+      GoRoute(path: 'detail', builder: (context, state) => DetailScreen()),
+    ],
+  ),
+  GoRoute(path: '/open', builder: (context, state) => const OpenScreen()),
+  GoRoute(
+    path: '/thread',
+    redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.host])),
+    builder: (context, state) => const ThreadPage(),
+  ),
+  GoRoute(
+    path: '/door',
+    redirect: (context, state) {
+      if (!env.featureEnabled(WorkspaceFeature.door)) return '/open';
+      return null;
+    },
+    builder: (context, state) => const DoorScreen(),
+  ),
+  // An account route: its guard owns nothing inside a workspace.
+  GoRoute(
+    path: '/account',
+    redirect: env.guard(const RouteAccess(features: [WorkspaceFeature.acct])),
+    builder: (context, state) => const AccountScreen(),
+  ),
+];
+// ==> lib/app/route_classes.dart
+const List<RouteRule> routeRules = [
+  RouteRule('/owned', RouteClass.workspace),
+  RouteRule('/owned/detail', RouteClass.workspace),
+  RouteRule('/open', RouteClass.workspace),
+  RouteRule('/thread', RouteClass.workspace),
+  RouteRule('/door', RouteClass.workspace),
+  RouteRule('/account', RouteClass.nativeAccount),
+];
+// ==> lib/features/x/presentation/host_screen.dart
+import 'widgets/panel.dart';
+part 'host_screen_part.dart';
+
+class HostScreen extends StatelessWidget {
+  Widget build(BuildContext context, Set<WorkspaceFeature> features) {
+    // Its own page gates on nav: reached only through /owned.
+    if (features.contains(WorkspaceFeature.nav)) return const Panel();
+    // child requires host: inside host's screen, as it should be.
+    return HelpTip(feature: WorkspaceFeature.child);
+  }
+}
+// ==> lib/features/x/presentation/host_screen_part.dart
+part of 'host_screen.dart';
+
+class DetailScreen extends StatelessWidget {
+  Widget build(Set<WorkspaceFeature> features) =>
+      features.contains(WorkspaceFeature.inPart) ? a : b;
+}
+// ==> lib/features/x/presentation/widgets/panel.dart
+class Panel extends StatelessWidget {
+  Widget build(Set<WorkspaceFeature> features) {
+    // guest: its only surface is inside host's screens - a candidate.
+    if (features.contains(WorkspaceFeature.guest)) return a;
+    // shared: also gated on the open screen - not a candidate.
+    if (features.contains(WorkspaceFeature.shared)) return b;
+    return c;
+  }
+}
+// ==> lib/features/x/domain/catalogue.dart
+// A catalogue in domain/ names guest; it shows nothing, so guest stays a
+// candidate.
+const levels = [Level(features: [WorkspaceFeature.guest])];
+// ==> lib/features/x/presentation/open_screen.dart
+import 'host_screen.dart';
+import 'thread.dart';
+
+class OpenScreen extends StatelessWidget {
+  Widget build(Set<WorkspaceFeature> features) {
+    if (features.contains(WorkspaceFeature.shared)) return a;
+    // Only names the page: a way there, so host_screen.dart stays host's.
+    return TextButton(onPressed: () => push(const HostScreen()));
+  }
+
+  // Uses the sheet thread.dart holds beside its page: thread is embedded
+  // here, so sheetOnly has a surface outside host.
+  void open() => showThread();
+}
+// ==> lib/features/x/presentation/thread.dart
+class ThreadPage extends StatelessWidget {
+  Widget build(Set<WorkspaceFeature> features) => const Thread();
+}
+
+void showThread() {}
+
+class Thread extends StatelessWidget {
+  Widget build(Set<WorkspaceFeature> features) =>
+      features.contains(WorkspaceFeature.sheetOnly) ? a : b;
+}
+// ==> lib/features/x/presentation/door_screen.dart
+class DoorScreen extends StatelessWidget {
+  Widget build(Set<WorkspaceFeature> features) =>
+      features.contains(WorkspaceFeature.knob) ? a : b;
+}
+// ==> lib/features/x/presentation/account_screen.dart
+class AccountScreen extends StatelessWidget {
+  Widget build(Set<WorkspaceFeature> features) =>
+      features.contains(WorkspaceFeature.acctTip) ? a : b;
+}
