@@ -16418,6 +16418,22 @@ class AppLocalizationsFr extends AppLocalizations {
       'La règle par catégorie, les personnes qu\'elle désigne aujourd\'hui, et qui a réellement consulté.';
 
   @override
+  String get privateValueHidden => 'Masqué';
+
+  @override
+  String get privateValueHide => 'Masquer';
+
+  @override
+  String get privateValueShow => 'Afficher';
+
+  @override
+  String get privateValuesHint =>
+      'Les montants et les aperçus restent masqués jusqu’à ce que vous les affichiez. Enregistré sur cet appareil et sur votre compte.';
+
+  @override
+  String get privateValuesTitle => 'Masquer les valeurs privées';
+
+  @override
   String processAlsoNeeds(String features) {
     return 'Tout activer nécessite aussi : $features';
   }
