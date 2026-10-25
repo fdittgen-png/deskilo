@@ -47,14 +47,18 @@ export type LookupResult = {
   detail: string;
 };
 
+/** How one question is asked: the wait comes from the server's setting
+ * `purchase.supplier_lookup_timeout_seconds`, never from the adapter. */
+export type LookupOptions = {
+  timeoutMs: number;
+  fetcher?: typeof fetch;
+  now?: () => Date;
+};
+
 /** One registry. A national register joins by implementing this. */
 export type Adapter = {
   id: string;
   kinds: LookupRequest["kind"][];
   modes: LookupRequest["mode"][];
-  lookup: (
-    request: LookupRequest,
-    fetcher?: typeof fetch,
-    now?: () => Date,
-  ) => Promise<LookupResult>;
+  lookup: (request: LookupRequest, options: LookupOptions) => Promise<LookupResult>;
 };

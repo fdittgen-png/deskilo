@@ -9,15 +9,13 @@
 // public, and the requester is never named, so no consultation number is
 // asked for (that is the invoice flow's job, vies-check).
 
-import type { Adapter, LookupRequest, LookupResult } from "./contract.ts";
+import type { Adapter, LookupOptions, LookupRequest, LookupResult } from "./contract.ts";
 
 const VIES_URL =
   "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number";
 
-/** How long VIES gets before the question counts as timed out. */
-export const VIES_TIMEOUT_MS = 15000;
-
-/** The most of VIES's answer that is read; a longer body is malformed. */
+/** The most of VIES's answer that is read; a longer body is malformed. A
+ * protocol bound on one JSON answer (a name and an address), not a choice. */
 export const VIES_MAX_RESPONSE_BYTES = 64 * 1024;
 
 /** What a member state writes when it discloses nothing. */
@@ -81,11 +79,11 @@ async function readBounded(
   return text.length > limit ? null : text;
 }
 
-/** One VIES question; never throws — an outage is an outcome. */
+/** One VIES question, waited for `options.timeoutMs`; never throws — an
+ * outage is an outcome. */
 export async function askVies(
   request: LookupRequest,
-  fetcher: typeof fetch = fetch,
-  now: () => Date = () => new Date(),
+  { timeoutMs, fetcher = fetch, now = () => new Date() }: LookupOptions,
 ): Promise<LookupResult> {
   const lookedUpAt = now().toISOString();
   const base = { provider: "vies", looked_up_at: lookedUpAt };
@@ -101,7 +99,7 @@ export async function askVies(
     detail,
   });
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), VIES_TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetcher(VIES_URL, {
       method: "POST",

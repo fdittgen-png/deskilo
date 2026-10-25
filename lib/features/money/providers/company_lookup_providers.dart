@@ -3,6 +3,8 @@
 // #2863 — looking a supplier up in a company registry.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/settings/active_settings.dart';
+
 import '../application/lookup_company.dart';
 import '../data/supabase_company_lookup_repository.dart';
 import '../domain/company_lookup.dart';
@@ -14,7 +16,10 @@ part 'company_lookup_providers.g.dart';
 CompanyLookupRepository companyLookupRepository(Ref ref) =>
     SupabaseCompanyLookupRepository(ref.watch(moneyClientProvider));
 
-/// Asking a registry now (the decision the supplier form asks for).
+/// Asking a registry now (the decision the supplier form asks for), waited
+/// for the server's own registry wait plus the round trip.
 @riverpod
-LookupCompany lookupCompany(Ref ref) =>
-    LookupCompany(ref.watch(companyLookupRepositoryProvider));
+LookupCompany lookupCompany(Ref ref) => LookupCompany(
+  ref.watch(companyLookupRepositoryProvider),
+  wait: supplierLookupWait(ref.watch(activeSettingsProvider)),
+);

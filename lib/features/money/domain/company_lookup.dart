@@ -412,14 +412,16 @@ CompanyLookupCapability? selectCompanyLookupProvider(
 /// guard as saving a supplier, plus the verification flag) and talks to
 /// the registry; nothing is stored by a lookup.
 abstract interface class CompanyLookupRepository {
-  /// Asks [providerId] about [request] on behalf of [workspaceId]. What the
-  /// registry answered — an outage included — is a result; only the
-  /// server's refusal of the caller is thrown, as [CompanyLookupRefused].
+  /// Asks [providerId] about [request] on behalf of [workspaceId], waiting
+  /// at most [wait] for the server's answer. What the registry answered —
+  /// an outage included — is a result; only the server's refusal of the
+  /// caller is thrown, as [CompanyLookupRefused].
   Future<CompanyLookupResult> lookup(
     String workspaceId,
     String providerId,
-    CompanyLookupRequest request,
-  );
+    CompanyLookupRequest request, {
+    required Duration wait,
+  });
 }
 
 /// The server refused the caller: no permission, or the flag is off.

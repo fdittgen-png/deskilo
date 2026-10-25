@@ -709,5 +709,10 @@
  "fedRetention": "Aufbewahrung des Server-Austauschs",
  "fedRetentionHint": "Wie lange ein Server die Empfangsbelege signierter Nachrichten zwischen Servern und ein persönliches Zuhause die Spuren beendeter Mitgliedschaften aufbewahrt, bevor die stündliche Bereinigung sie entfernt. Nie kürzer als die Gültigkeit des Identitätsstatus plus die doppelte Uhrabweichung. Wird in den Einstellungen der App festgelegt.",
  "fedAnswerWait": "Wartezeit auf Antwort im Server-Austausch",
- "fedAnswerWaitHint": "Wie lange ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server (einen Identitätsstatus, eine Mitgliedschaft) wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30 Sekunden; unter der Gültigkeit des Identitätsstatus halten. Wird in den Einstellungen der App festgelegt."
+ "fedAnswerWaitHint": "Wie lange ein Server auf die Antwort auf eine signierte Nachricht an einen anderen Server (einen Identitätsstatus, eine Mitgliedschaft) wartet, bevor er dieselbe Nachricht erneut sendet. Mindestens 30 Sekunden; unter der Gültigkeit des Identitätsstatus halten. Wird in den Einstellungen der App festgelegt.",
+ "supLookupWait": "Wartezeit der Lieferantensuche",
+ "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
+ "supLookupRate": "Lieferantensuchen pro Minute",
+ "supLookupRateHint": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf; weitere werden als ausgelastet beantwortet und nicht an das Register gesendet. Wird in den Einstellungen der App festgelegt.",
+ "optPerMinute": "{n} pro Minute"
 }

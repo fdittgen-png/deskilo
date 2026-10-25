@@ -19916,6 +19916,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Bills of the space\'s supplier below this amount may be approved by the person who drafted or sent them, if that person may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.';
 
   @override
+  String get settingHintPurchaseSupplierLookupPerMinute =>
+      'The most supplier lookups one person may make per minute on this server. Over the limit nothing is sent to the registry and the lookup is answered as busy.';
+
+  @override
+  String get settingHintPurchaseSupplierLookupTimeoutSeconds =>
+      'How long the server waits for the company registry (VIES) before a supplier lookup counts as timed out. The person keeps what they typed and may retry or go on by hand.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.';
 
@@ -20079,6 +20087,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelPurchaseSingleApproval =>
       'Bills one person may approve below (currency units)';
+
+  @override
+  String get settingLabelPurchaseSupplierLookupPerMinute =>
+      'Supplier lookups per person per minute';
+
+  @override
+  String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
+      'Supplier lookup wait (seconds)';
 
   @override
   String get settingLabelReadinessRecentExportDays => 'Recent export window';
@@ -22288,6 +22304,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get supplierNameMissing => 'A supplier needs a name.';
+
+  @override
+  String get supplierSaving => 'Saving the supplier…';
+
+  @override
+  String supplierSimilarName(String supplier) {
+    return 'A supplier with the same name exists: $supplier. Check it is not the same company; you can still save.';
+  }
+
+  @override
   String get suppliersAdd => 'Add supplier';
 
   @override
@@ -22413,6 +22440,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suppliersSaved => 'Supplier saved.';
+
+  @override
+  String get suppliersSavedOpen => 'Open';
 
   @override
   String get suppliersTaxUnverified => 'Tax identifier not verified';
