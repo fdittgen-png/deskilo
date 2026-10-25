@@ -10,12 +10,8 @@
       }
     }
   },
-  "meFinanceGlanceOwed": "Da pagare: {amount}",
+  "meFinanceGlanceOwed": "Da pagare:",
   "@meFinanceGlanceOwed": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
+    "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   }
 }

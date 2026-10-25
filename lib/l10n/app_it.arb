@@ -8713,13 +8713,9 @@
   "meDataWorkspacesFailed": "Non è stato possibile leggere gli spazi del Suo account. Non è stato esportato nulla.",
   "meDataWorkspacesScope": "Ogni spazio esporta ciò che conserva su di Lei — iscrizione, prenotazioni, conto e fatture — dal proprio server, un file per spazio. La parte del Suo account personale è la scheda qui sopra.",
   "meDataWorkspacesTitle": "I Suoi dati in ogni spazio",
-  "meFinanceGlanceOwed": "Da pagare: {amount}",
+  "meFinanceGlanceOwed": "Da pagare:",
   "@meFinanceGlanceOwed": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
+    "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
   "meFindSpace": "Trova uno spazio",
   "meGroupAdd": "Nuovo gruppo",

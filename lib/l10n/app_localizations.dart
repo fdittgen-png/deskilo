@@ -21700,11 +21700,11 @@ abstract class AppLocalizations {
   /// **'Your records in each workspace'**
   String get meDataWorkspacesTitle;
 
-  /// No description provided for @meFinanceGlanceOwed.
+  /// The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)
   ///
   /// In en, this message translates to:
-  /// **'To pay: {amount}'**
-  String meFinanceGlanceOwed(String amount);
+  /// **'To pay:'**
+  String get meFinanceGlanceOwed;
 
   /// Button on the Me home: open Discover.
   ///

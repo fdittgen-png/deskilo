@@ -13012,9 +13012,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meDataWorkspacesTitle => 'Your records in each workspace';
 
   @override
-  String meFinanceGlanceOwed(String amount) {
-    return 'To pay: $amount';
-  }
+  String get meFinanceGlanceOwed => 'To pay:';
 
   @override
   String get meFindSpace => 'Find a space';

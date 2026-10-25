@@ -13118,9 +13118,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meDataWorkspacesTitle => 'I Suoi dati in ogni spazio';
 
   @override
-  String meFinanceGlanceOwed(String amount) {
-    return 'Da pagare: $amount';
-  }
+  String get meFinanceGlanceOwed => 'Da pagare:';
 
   @override
   String get meFindSpace => 'Trova uno spazio';
