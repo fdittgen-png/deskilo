@@ -1,8 +1,13 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2581) -- a report is printed and exported from one authorised
+-- 0591 (#2581) -- a report is printed and exported from one authorised
 -- snapshot.
+--
+--   Binding. A snapshot is bound to the report's metric set only: a caller
+--       may ask any period or level of report R's metrics and the evidence
+--       row names R and its revision. Rights hold per metric, so nothing
+--       leaks beyond what the caller may already read.
 --
 --   Print layout. bi_report_valid (restated whole from 0588) accepts the
 --       saved print layout of a report: paper, orientation, margins
@@ -192,7 +197,7 @@ create index if not exists bi_export_evidence_workspace_idx
   on public.bi_export_evidence (workspace_id, computed_at desc);
 create index if not exists bi_export_evidence_user_idx on public.bi_export_evidence (user_id);
 alter table public.bi_export_evidence enable row level security;
-revoke all on table public.bi_export_evidence from anon, authenticated;
+revoke all on table public.bi_export_evidence from public, anon, authenticated;
 drop policy if exists mcp_delegated_deny on public.bi_export_evidence;
 create policy mcp_delegated_deny on public.bi_export_evidence
   as restrictive for all to authenticated
