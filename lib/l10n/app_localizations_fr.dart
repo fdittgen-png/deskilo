@@ -21409,6 +21409,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLevelsSeeDemo => 'Le voir dans la démo';
 
   @override
+  String setupLevelsStepsFollow(String steps) {
+    return 'À régler ensuite dans le guide : $steps';
+  }
+
+  @override
   String setupLevelsSwitchOff(String features) {
     return 'Désactive : $features';
   }

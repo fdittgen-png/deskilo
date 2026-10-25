@@ -14523,6 +14523,7 @@
   "setupLevelsPresets": "Avvio rapido",
   "setupLevelsQuestions": "Sul suo spazio",
   "setupLevelsSeeDemo": "Vederlo nella demo",
+  "setupLevelsStepsFollow": "Le configuri poi nella guida: {steps}",
   "setupLevelsSwitchOff": "Disattiva: {features}",
   "setupLevelsSwitchOn": "Attiva: {features}",
   "setupLevelsTitle": "Che cosa fa il suo spazio",

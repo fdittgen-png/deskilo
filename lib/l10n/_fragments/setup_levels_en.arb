@@ -130,5 +130,14 @@
   "setupLevelsSeeDemo": "See it in the demo",
   "@setupLevelsSeeDemo": {
     "description": "#2868 setup levels: opens the demo at the screen that shows this process at this level"
+  },
+  "setupLevelsStepsFollow": "Then set them up in the guide: {steps}",
+  "@setupLevelsStepsFollow": {
+    "description": "#2871 setup levels: the guide steps that set up the features the choice switches on, by their titles, in guide order",
+    "placeholders": {
+      "steps": {
+        "type": "String"
+      }
+    }
   }
 }
