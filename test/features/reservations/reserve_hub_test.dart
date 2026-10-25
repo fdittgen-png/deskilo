@@ -23,6 +23,7 @@ import 'package:deskilo/features/reservations/presentation/screens/reserve_hub_m
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/month_grid.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/week_grid.dart';
+import 'package:deskilo/features/reservations/presentation/widgets/week_grid_cells.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

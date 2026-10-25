@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/capture/capture_shield.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/feature_sheets.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -21,8 +22,6 @@ import '../../../directory/presentation/messenger/message_actions_sheet.dart';
 import '../../../directory/presentation/messenger/message_marks.dart';
 import '../../../directory/providers/message_marks_providers.dart';
 import '../../../directory/providers/messenger_providers.dart';
-import '../../../members/presentation/member_profile_link.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/conversation.dart';
 import '../../domain/member_note.dart';
 import '../../domain/member_note_refs.dart';

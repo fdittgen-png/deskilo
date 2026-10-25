@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../events/providers/event_providers.dart';
 import '../../../reservations/domain/booking_error_text.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/message_reserver.dart';
@@ -17,6 +16,10 @@ import 'check_in_sheets.dart';
 /// (length budget): the sheet (check in while present, #408; overrule —
 /// remove with notification, #412) plus the repository calls and error
 /// mapping. The server re-checks authorization, window and state.
+///
+/// [afterWrite] runs once a check-in, check-out or removal succeeded: the
+/// caller refreshes what shows bookings (#2495: so the plan does not
+/// import the events feature for it).
 Future<void> runAdminSeatActions(
   BuildContext context,
   WidgetRef ref, {
@@ -27,6 +30,7 @@ Future<void> runAdminSeatActions(
   required int? stepMinutes,
   bool offerMessage = false,
   bool offerCheckOut = false,
+  required void Function() afterWrite,
 }) async {
   final l10n = context.l10n;
   final action = await showCheckInOtherSheet(
@@ -88,5 +92,5 @@ Future<void> runAdminSeatActions(
       replace: true,
     );
   }
-  invalidateBookingData(ref);
+  afterWrite();
 }

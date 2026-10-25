@@ -16,7 +16,6 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../directory/presentation/member_employment_tile.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/member.dart';
 import '../../domain/member_sheet_actions.dart';

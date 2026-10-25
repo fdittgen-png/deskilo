@@ -6,7 +6,6 @@
 // duplicated between plan_screen and reserve_screen ("same rule as the
 // Plan tab").
 import '../../../core/presence/presence_rules.dart';
-import '../../members/domain/directory_status.dart';
 import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
 import '../../reservations/domain/seat_state_logic.dart';
@@ -182,12 +181,13 @@ Set<String> onlineSeatIdsFor({
   bool online(String memberId) {
     final uid = userIdOf[memberId];
     final profile = uid == null ? null : profiles[uid];
-    return resolveDirectoryPresence(
+    // The directory's rule for a member who is not the reader (#223).
+    return resolvePresence(
           lastSeenAt: profile?.lastSeenAt,
           now: window.now,
           onlineWindow: onlineWindow,
-        ).kind ==
-        DirectoryPresenceKind.online;
+        ) ==
+        PresenceStatus.online;
   }
 
   return {

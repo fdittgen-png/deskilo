@@ -60,6 +60,13 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('setup-levels-on')), findsOneWidget);
+    // #2871: the preview names the guide's steps that set those features up.
+    expect(
+      tester
+          .widget<Text>(find.byKey(const ValueKey('setup-levels-steps')))
+          .data,
+      startsWith('Then set them up in the guide: '),
+    );
     await tester.tap(find.byKey(const ValueKey('setup-levels-apply')));
     await tester.pumpAndSettle();
     if (expected.switchOff.isNotEmpty) {

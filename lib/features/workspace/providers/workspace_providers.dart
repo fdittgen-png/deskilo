@@ -46,6 +46,7 @@ import 'workspace_host_providers.dart';
 import 'workspace_roles_providers.dart';
 
 export 'active_workspace_providers.dart';
+export 'member_display_providers.dart' show memberNamesProvider, memberProfilesProvider;
 export 'operation_context_providers.dart'; // #2561 C1: the contexts
 
 part 'workspace_providers.g.dart';
@@ -207,11 +208,10 @@ Future<List<Member>> workspaceMembers(Ref ref) async {
   return [for (final member in members) recordingMember(member)];
 }
 
-/// #1514 — whether the active workspace is showing invented people.
-///
-/// Read inline rather than through `recordingPrivacyProvider`: that
-/// provider is built ON this file, and a file cannot import the library
-/// that imports it without a cycle. The condition is the same one.
+/// #1514 — whether the active workspace is showing invented people, read
+/// inline rather than through `recordingPrivacyProvider`: that provider is
+/// built ON this file, and a file cannot import the library that imports
+/// it without a cycle. The condition is the same one.
 bool _recordingOn(Ref ref) => ref
     .watch(enabledFeaturesSyncProvider)
     .contains(WorkspaceFeature.recordingPrivacy);

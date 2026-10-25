@@ -15,7 +15,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../domain/access_summary.dart';
 import '../../domain/member.dart';
 import '../../domain/workspace_permission.dart';

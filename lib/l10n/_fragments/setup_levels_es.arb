@@ -19,5 +19,6 @@
   "setupGuideLevelsLink": "Elegir lo que hace su espacio",
   "setupLevelsBecause": "Porque {reason}",
   "setupLevelsGap": "{level} necesita {needed}",
-  "setupLevelsSeeDemo": "Verlo en la demo"
+  "setupLevelsSeeDemo": "Verlo en la demo",
+  "setupLevelsStepsFollow": "Configúrelas después en la guía: {steps}"
 }

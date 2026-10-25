@@ -1,10 +1,10 @@
 {
-  "recordedSha": "55b1d51574ccd619f4f4eca2640b3ece0d65485b",
+  "recordedSha": "3607509790b3412dd6a56673d7aa458dd46db4b3",
   "recordedDate": "2026-10-25",
   "thresholds": {"cognitive":30,"cyclomatic":25,"length":150,"parameters":7},
-  "totals": {"files":2100,"functions":11765,"cyclomatic>=9":1180,"cyclomatic>=25":102,"cognitive>=15":468,"cognitive>=30":91,"length>=150":74,"parameters>=5":520,"parameters>=7":151,"partOfFiles":35},
+  "totals": {"files":2107,"functions":11792,"cyclomatic>=9":1179,"cyclomatic>=25":99,"cognitive>=15":468,"cognitive>=30":87,"length>=150":71,"parameters>=5":522,"parameters>=7":149,"partOfFiles":31},
   "budgets": {
-    "partOfFiles": 35,
+    "partOfFiles": 31,
     "fileLength": {
       "lib/core/backend/backend_settings.dart": 572,
 
@@ -40,7 +40,7 @@
 
       "lib/features/directory/presentation/messenger/context_thread_screen.dart": 631,
 
-      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 587,
+      "lib/features/kiosk/presentation/screens/kiosk_screen.dart": 586,
 
       "lib/features/members/presentation/widgets/member_page_cards.dart": 863,
 
@@ -52,7 +52,7 @@
 
       "lib/features/money/presentation/accounting_export_run.dart": 585,
 
-      "lib/features/money/presentation/invoice_documents.dart": 577,
+      "lib/features/money/presentation/invoice_documents.dart": 575,
 
       "lib/features/money/presentation/report_defaults.dart": 637,
 
@@ -96,7 +96,7 @@
 
       "lib/features/workspace/presentation/member_admin_actions.dart": 697,
 
-      "lib/features/workspace/presentation/screens/members_screen.dart": 541,
+      "lib/features/workspace/presentation/screens/members_screen.dart": 540,
 
       "lib/features/workspace/presentation/screens/onboarding_screen.dart": 637,
 
@@ -247,11 +247,11 @@
 
       "calendar -> plan": 8,
 
-      "calendar -> reservations": 9,
+      "calendar -> reservations": 6,
 
       "calendar -> task_recorder": 8,
 
-      "calendar -> workspace": 15,
+      "calendar -> workspace": 16,
 
       "editor -> plan": 20,
 
@@ -261,15 +261,11 @@
 
       "events -> plan": 2,
 
-      "events -> reservations": 4,
-
       "events -> task_recorder": 4,
 
-      "events -> workspace": 21,
+      "events -> workspace": 22,
 
       "kiosk -> events": 1,
-
-      "kiosk -> members": 1,
 
       "kiosk -> plan": 7,
 
@@ -287,29 +283,19 @@
 
       "members -> plan": 3,
 
-      "members -> profile": 9,
+      "members -> profile": 7,
 
-      "members -> reservations": 14,
+      "members -> reservations": 10,
 
-      "members -> workspace": 37,
-
-      "money -> calendar": 1,
+      "members -> workspace": 35,
 
       "money -> events": 35,
-
-      "money -> members": 2,
 
       "money -> plan": 14,
 
       "money -> profile": 8,
 
-      "money -> reservations": 13,
-
       "money -> workspace": 139,
-
-      "plan -> events": 1,
-
-      "plan -> members": 1,
 
       "plan -> money": 4,
 
@@ -323,9 +309,7 @@
 
       "profile -> calendar": 2,
 
-      "profile -> members": 1,
-
-      "profile -> reservations": 5,
+      "profile -> reservations": 4,
 
       "profile -> workspace": 43,
 
@@ -333,23 +317,15 @@
 
       "reservations -> events": 5,
 
-      "reservations -> members": 2,
-
-      "reservations -> money": 1,
-
       "reservations -> plan": 83,
 
       "reservations -> profile": 1,
 
-      "reservations -> task_recorder": 8,
+      "reservations -> task_recorder": 9,
 
-      "reservations -> workspace": 73,
-
-      "task_recorder -> calendar": 1,
+      "reservations -> workspace": 76,
 
       "task_recorder -> events": 2,
-
-      "task_recorder -> reservations": 1,
 
       "task_recorder -> workspace": 6,
 
@@ -357,15 +333,13 @@
 
       "workspace -> events": 15,
 
-      "workspace -> members": 4,
-
       "workspace -> money": 45,
 
       "workspace -> plan": 26,
 
-      "workspace -> profile": 11,
+      "workspace -> profile": 13,
 
-      "workspace -> reservations": 17,
+      "workspace -> reservations": 10,
 
       "workspace -> task_recorder": 9
     },
@@ -492,7 +466,7 @@
 
       "lib/features/reservations/presentation/screens/reserve_hub_views.dart": 1,
 
-      "lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart": 1,
+      "lib/features/reservations/presentation/widgets/reservation_detail_actions.dart": 1,
 
       "lib/features/reservations/presentation/widgets/space_act_sheet.dart": 1,
 
@@ -545,7 +519,7 @@
       "lib/features/workspace/presentation/widgets/public_holidays_sheet.dart": 2
     },
     "fontSize": {
-      "lib/features/calendar/presentation/widgets/day_timeline.dart": 1,
+      "lib/features/calendar/presentation/widgets/day_timeline_cells.dart": 1,
 
       "lib/features/money/presentation/widgets/report_field_picker.dart": 1,
 
@@ -589,7 +563,7 @@
     "fontWeight": {
       "lib/features/calendar/presentation/screens/calendar_screen.dart": 1,
 
-      "lib/features/calendar/presentation/widgets/day_timeline.dart": 1,
+      "lib/features/calendar/presentation/widgets/day_timeline_cells.dart": 1,
 
       "lib/features/events/presentation/screens/events_screen.dart": 1,
 
@@ -601,7 +575,9 @@
 
       "lib/features/money/presentation/widgets/account_card.dart": 1,
 
-      "lib/features/money/presentation/widgets/bill_view.dart": 3,
+      "lib/features/money/presentation/widgets/bill_view.dart": 1,
+
+      "lib/features/money/presentation/widgets/bill_view_cards.dart": 2,
 
       "lib/features/money/presentation/widgets/invoice_archive_tab.dart": 1,
 
@@ -718,6 +694,7 @@
     {"p":"lib/app/entry_intent.dart","loc":106,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":19,"cyc":19,"len":39,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/entry_intents.dart","loc":157,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":17,"cyc":26,"len":58,"params":1,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/app/entry_resumption.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":6,"len":19,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/app/feature_sheets_wiring.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/finance_hosts_wiring.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/notification_tap_routing.dart","loc":93,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":3,"cyc":6,"len":26,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/app/oauth_consent_route.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":4,"len":9,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -827,6 +804,7 @@
     {"p":"lib/core/cache/stale_reads.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":6,"cyc":5,"len":11,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/cache/target_cache_store.dart","loc":16,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":0,"cyc":1,"len":3,"params":3,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/calendar/calendar_item.dart","loc":171,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":3,"cyc":8,"len":20,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/calendar/calendar_kind_labels.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":14,"len":16,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/capture/capture_protection.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":4,"cyc":5,"len":23,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/capture/capture_providers.dart","loc":7,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":4,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/capture/capture_shield.dart","loc":148,"part":false,"setState":2,"repositoryReads":0,"fn":7,"cog":8,"cyc":6,"len":71,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -934,7 +912,7 @@
     {"p":"lib/core/demo/demo_link.dart","loc":79,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":2,"cyc":5,"len":13,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_outward_edges.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":1,"cyc":5,"len":11,"params":4,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_persona.dart","loc":18,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":5,"len":7,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/demo/demo_scope.dart","loc":368,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":3,"len":177,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
+    {"p":"lib/core/demo/demo_scope.dart","loc":368,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":3,"len":176,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/core/demo/demo_second_space.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":5,"len":35,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_session.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":16,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/demo/demo_space_routing.dart","loc":145,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":2,"len":115,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -989,7 +967,7 @@
     {"p":"lib/core/help/help_dot.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":27,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/help/help_hint.dart","loc":218,"part":false,"setState":1,"repositoryReads":0,"fn":8,"cog":19,"cyc":17,"len":202,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/core/help/help_hint_providers.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":0,"cyc":2,"len":7,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/core/help/help_tips.dart","loc":332,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":1,"cyc":19,"len":200,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
+    {"p":"lib/core/help/help_tips.dart","loc":331,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":1,"cyc":19,"len":200,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/core/i18n/app_format.dart","loc":106,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":3,"cyc":5,"len":13,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/i18n/country_names.dart","loc":62,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":37,"len":43,"params":2,"nest":1,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/core/i18n/currencies.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":4,"len":7,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1039,6 +1017,7 @@
     {"p":"lib/core/money/money_text.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":4,"len":26,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/motion/motion.dart","loc":92,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":3,"cyc":4,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/navigation/event_sources.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/core/navigation/feature_sheets.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":9,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/navigation/navigation_style.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":4,"cyc":5,"len":14,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/navigation/page_spec.dart","loc":58,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":3,"len":13,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/core/nfc/nfc_uid_reader.dart","loc":91,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":7,"cyc":9,"len":32,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1211,18 +1190,19 @@
     {"p":"lib/features/calendar/domain/calendar_repository.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":9,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/calendar_view.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":1,"cyc":5,"len":17,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/screens/calendar_branch.dart","loc":16,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":7,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/calendar/presentation/screens/calendar_hub_screen.dart","loc":561,"part":false,"setState":15,"repositoryReads":0,"fn":23,"cog":29,"cyc":28,"len":153,"params":3,"nest":4,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/calendar/presentation/screens/calendar_hub_screen.dart","loc":560,"part":false,"setState":15,"repositoryReads":0,"fn":23,"cog":29,"cyc":28,"len":153,"params":3,"nest":4,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/calendar/presentation/screens/calendar_screen.dart","loc":487,"part":false,"setState":4,"repositoryReads":1,"fn":12,"cog":27,"cyc":19,"len":265,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
-    {"p":"lib/features/calendar/presentation/widgets/access_sheet.dart","loc":156,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":17,"cyc":20,"len":141,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/calendar/presentation/widgets/access_sheet.dart","loc":155,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":17,"cyc":20,"len":141,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/calendar_booking_title.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":10,"len":33,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/calendar/presentation/widgets/calendar_feed.dart","loc":202,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":25,"cyc":25,"len":130,"params":3,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
-    {"p":"lib/features/calendar/presentation/widgets/calendar_item_row.dart","loc":185,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":18,"cyc":22,"len":66,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/calendar/presentation/widgets/calendar_feed.dart","loc":203,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":25,"cyc":25,"len":130,"params":3,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
+    {"p":"lib/features/calendar/presentation/widgets/calendar_item_row.dart","loc":153,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":18,"cyc":22,"len":66,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/calendar_kind_chips.dart","loc":82,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":9,"cyc":8,"len":57,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/calendar_month_grid.dart","loc":185,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":18,"cyc":14,"len":73,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/calendar_view_bar.dart","loc":100,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":19,"cyc":9,"len":83,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/calendar_week_strip.dart","loc":124,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":33,"cyc":15,"len":95,"params":1,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/calendar/presentation/widgets/day_timeline.dart","loc":314,"part":false,"setState":1,"repositoryReads":0,"fn":14,"cog":10,"cyc":10,"len":85,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/calendar/presentation/widgets/day_timeline_part1.dart","loc":348,"part":true,"setState":1,"repositoryReads":0,"fn":11,"cog":45,"cyc":33,"len":199,"params":3,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/calendar/presentation/widgets/day_timeline.dart","loc":360,"part":false,"setState":2,"repositoryReads":0,"fn":21,"cog":23,"cyc":22,"len":91,"params":5,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/calendar/presentation/widgets/day_timeline_axis.dart","loc":150,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":3,"cyc":3,"len":67,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/calendar/presentation/widgets/day_timeline_cells.dart","loc":300,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":8,"cyc":7,"len":72,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/presentation/widgets/month_day_picker.dart","loc":155,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":15,"cyc":12,"len":58,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/providers/calendar_providers.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":2,"len":14,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/calendar/providers/calendar_view_request.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":2,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1349,14 +1329,14 @@
     {"p":"lib/features/events/presentation/event_labels.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":27,"len":51,"params":2,"nest":1,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/events/presentation/event_lines.dart","loc":225,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":30,"cyc":60,"len":156,"params":5,"nest":3,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/events/presentation/feed_notes.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":19,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/events/presentation/screens/events_screen.dart","loc":378,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":38,"cyc":28,"len":167,"params":9,"nest":5,"over":{"cog":1,"cyc":2,"len":1,"params":1}},
-    {"p":"lib/features/events/presentation/screens/validation_settings_screen.dart","loc":246,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":18,"cyc":26,"len":91,"params":4,"nest":5,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
+    {"p":"lib/features/events/presentation/screens/events_screen.dart","loc":377,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":38,"cyc":28,"len":167,"params":9,"nest":5,"over":{"cog":1,"cyc":2,"len":1,"params":1}},
+    {"p":"lib/features/events/presentation/screens/validation_settings_screen.dart","loc":245,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":18,"cyc":26,"len":91,"params":4,"nest":5,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/events/presentation/validation_workflow.dart","loc":77,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":4,"cyc":7,"len":28,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/events/presentation/widgets/calendar_decisions.dart","loc":25,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":4,"len":14,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/events/presentation/widgets/event_validation_trail.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":7,"cyc":9,"len":32,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/events/presentation/widgets/events_filter_bar.dart","loc":167,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":14,"cyc":9,"len":142,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/events/presentation/widgets/note_row.dart","loc":140,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":29,"cyc":24,"len":128,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/events/presentation/widgets/pending_decisions_section.dart","loc":171,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":12,"len":131,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/events/presentation/widgets/pending_decisions_section.dart","loc":170,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":12,"len":131,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/events/presentation/widgets/policy_editor_sheet.dart","loc":362,"part":false,"setState":13,"repositoryReads":0,"fn":6,"cog":28,"cyc":17,"len":269,"params":1,"nest":5,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/events/presentation/widgets/setup_approvals_flow.dart","loc":110,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":0,"cyc":1,"len":35,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/events/presentation/widgets/setup_approvals_own_rules.dart","loc":80,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":4,"len":32,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1374,7 +1354,7 @@
     {"p":"lib/features/kiosk/device_pin.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":1,"cyc":2,"len":9,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/domain/kiosk_act.dart","loc":36,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":7,"len":18,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/presentation/screens/kiosk_gate_screen.dart","loc":75,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":2,"len":66,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/kiosk/presentation/screens/kiosk_screen.dart","loc":467,"part":false,"setState":2,"repositoryReads":1,"fn":11,"cog":33,"cyc":27,"len":239,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/kiosk/presentation/screens/kiosk_screen.dart","loc":466,"part":false,"setState":2,"repositoryReads":1,"fn":11,"cog":33,"cyc":27,"len":239,"params":5,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/kiosk/presentation/widgets/kiosk_act_sheet.dart","loc":308,"part":false,"setState":6,"repositoryReads":0,"fn":11,"cog":10,"cyc":16,"len":101,"params":10,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/kiosk/presentation/widgets/kiosk_greeting.dart","loc":38,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":31,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/kiosk/presentation/widgets/kiosk_success_card.dart","loc":81,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":2,"cyc":3,"len":46,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1512,19 +1492,18 @@
     {"p":"lib/features/me/providers/visibility_epoch_provider.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/domain/directory_status.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":12,"cyc":11,"len":44,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/domain/member_page_sections.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":11,"cyc":19,"len":21,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/domain/membership_errors.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/presentation/member_profile_link.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":13,"len":63,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/member_profile_link.dart","loc":97,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":13,"len":63,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/screens/directory_screen.dart","loc":217,"part":false,"setState":1,"repositoryReads":0,"fn":9,"cog":26,"cyc":24,"len":131,"params":3,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/screens/directory_screen_part2.dart","loc":288,"part":true,"setState":0,"repositoryReads":0,"fn":6,"cog":20,"cyc":12,"len":184,"params":13,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":1}},
     {"p":"lib/features/members/presentation/screens/directory_screen_part3.dart","loc":300,"part":true,"setState":0,"repositoryReads":0,"fn":3,"cog":15,"cyc":15,"len":199,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
-    {"p":"lib/features/members/presentation/screens/managed_profile_screen.dart","loc":141,"part":false,"setState":2,"repositoryReads":1,"fn":4,"cog":11,"cyc":12,"len":62,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/presentation/screens/member_page.dart","loc":409,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":21,"cyc":23,"len":219,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
-    {"p":"lib/features/members/presentation/widgets/managed_access_editor.dart","loc":90,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":6,"cyc":9,"len":78,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/presentation/widgets/member_contact_card.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":12,"cyc":16,"len":71,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/screens/managed_profile_screen.dart","loc":140,"part":false,"setState":2,"repositoryReads":1,"fn":4,"cog":11,"cyc":12,"len":62,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/screens/member_page.dart","loc":408,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":21,"cyc":23,"len":219,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
+    {"p":"lib/features/members/presentation/widgets/managed_access_editor.dart","loc":89,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":6,"cyc":9,"len":78,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/presentation/widgets/member_contact_card.dart","loc":97,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":12,"cyc":16,"len":71,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/widgets/member_money_card.dart","loc":199,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":26,"cyc":28,"len":149,"params":2,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/members/presentation/widgets/member_page_cards.dart","loc":796,"part":true,"setState":0,"repositoryReads":1,"fn":12,"cog":37,"cyc":47,"len":157,"params":3,"nest":4,"over":{"cog":2,"cyc":1,"len":1,"params":0}},
-    {"p":"lib/features/members/providers/directory_providers.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":7,"cyc":5,"len":31,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/members/providers/realtime_invalidations.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/providers/directory_providers.dart","loc":23,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":5,"len":31,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/members/providers/realtime_invalidations.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/accounting_export_source.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":7,"len":48,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/add_service.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":3,"len":15,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/application/asset_commands.dart","loc":34,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":8,"len":17,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1724,7 +1703,6 @@
     {"p":"lib/features/money/domain/purchase_draft.dart","loc":225,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":8,"cyc":8,"len":34,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/purchase_obligation.dart","loc":214,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":2,"cyc":7,"len":26,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/purchase_status.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":18,"cyc":17,"len":38,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/domain/quota_rules.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/recapitulative_statement.dart","loc":107,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":18,"cyc":15,"len":48,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/reminder_evidence.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":14,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/domain/report_block_widgets.dart","loc":109,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":27,"cyc":21,"len":102,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1804,7 +1782,7 @@
     {"p":"lib/features/money/domain/workspace_status.dart","loc":158,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":5,"cyc":7,"len":34,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/accounting_export.dart","loc":10,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":22,"params":4,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/accounting_export_journal.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":7,"len":28,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/accounting_export_run.dart","loc":483,"part":false,"setState":0,"repositoryReads":0,"fn":19,"cog":20,"cyc":12,"len":73,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/accounting_export_run.dart","loc":482,"part":false,"setState":0,"repositoryReads":0,"fn":19,"cog":20,"cyc":12,"len":73,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/batch_cover.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":30,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/datev_profile.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":16,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/dunning_hold_actions.dart","loc":141,"part":false,"setState":1,"repositoryReads":0,"fn":5,"cog":9,"cyc":8,"len":56,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1813,11 +1791,11 @@
     {"p":"lib/features/money/presentation/invoice_actions.dart","loc":230,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":3,"cyc":14,"len":81,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/invoice_actions_part1.dart","loc":362,"part":true,"setState":0,"repositoryReads":1,"fn":7,"cog":15,"cyc":12,"len":104,"params":10,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/invoice_actions_part2.dart","loc":410,"part":true,"setState":0,"repositoryReads":0,"fn":4,"cog":37,"cyc":34,"len":201,"params":5,"nest":3,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
-    {"p":"lib/features/money/presentation/invoice_documents.dart","loc":432,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":13,"cyc":14,"len":108,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/invoice_documents.dart","loc":430,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":13,"cyc":14,"len":108,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/invoice_issue_block_text.dart","loc":9,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":9,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/invoice_journey.dart","loc":288,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":22,"cyc":18,"len":66,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/invoice_pdf_file_parts.dart","loc":80,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":5,"len":51,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/invoice_proforma.dart","loc":145,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":13,"cyc":18,"len":79,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/invoice_proforma.dart","loc":143,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":13,"cyc":18,"len":79,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/invoice_status.dart","loc":148,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":10,"cyc":14,"len":59,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/letter_doc_pdf.dart","loc":81,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":4,"len":56,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/my_finances_route.dart","loc":4,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":6,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1852,7 +1830,7 @@
     {"p":"lib/features/money/presentation/screens/money_body.dart","loc":129,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":6,"len":57,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_face_content.dart","loc":208,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":13,"cyc":15,"len":65,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_hubs_screen.dart","loc":82,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":27,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/screens/money_member_documents.dart","loc":253,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":9,"cyc":14,"len":67,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/screens/money_member_documents.dart","loc":252,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":9,"cyc":14,"len":67,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_online_payment.dart","loc":232,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":11,"cyc":13,"len":68,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_payment_forms.dart","loc":231,"part":false,"setState":4,"repositoryReads":0,"fn":12,"cog":5,"cyc":3,"len":39,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/money_payment_sheets.dart","loc":144,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":9,"cyc":10,"len":57,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1864,7 +1842,7 @@
     {"p":"lib/features/money/presentation/screens/my_payment_terms_screen.dart","loc":36,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":25,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/number_sequences_screen.dart","loc":293,"part":false,"setState":7,"repositoryReads":0,"fn":5,"cog":19,"cyc":23,"len":208,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/screens/payment_config_screen.dart","loc":280,"part":false,"setState":1,"repositoryReads":1,"fn":11,"cog":17,"cyc":12,"len":106,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/screens/repartition_wizard_screen.dart","loc":289,"part":false,"setState":12,"repositoryReads":0,"fn":10,"cog":30,"cyc":27,"len":168,"params":2,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/money/presentation/screens/repartition_wizard_screen.dart","loc":288,"part":false,"setState":12,"repositoryReads":0,"fn":10,"cog":30,"cyc":27,"len":168,"params":2,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/screens/report_editor_screen.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":4,"len":23,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/services_screen.dart","loc":293,"part":false,"setState":3,"repositoryReads":0,"fn":7,"cog":28,"cyc":15,"len":86,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/screens/tax_reference_screen.dart","loc":150,"part":false,"setState":2,"repositoryReads":0,"fn":7,"cog":21,"cyc":10,"len":82,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1887,8 +1865,8 @@
     {"p":"lib/features/money/presentation/widgets/asset_valuation_dialogs.dart","loc":363,"part":false,"setState":2,"repositoryReads":0,"fn":15,"cog":10,"cyc":13,"len":114,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/asset_valuation_manual.dart","loc":135,"part":false,"setState":2,"repositoryReads":0,"fn":7,"cog":2,"cyc":4,"len":82,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/asset_valuations_sheet.dart","loc":294,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":25,"cyc":8,"len":83,"params":3,"nest":8,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/bill_view.dart","loc":382,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":27,"cyc":29,"len":66,"params":2,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/bill_view_part1.dart","loc":361,"part":true,"setState":0,"repositoryReads":0,"fn":5,"cog":12,"cyc":11,"len":99,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/bill_view.dart","loc":340,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":27,"cyc":29,"len":66,"params":2,"nest":3,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/bill_view_cards.dart","loc":327,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":12,"cyc":11,"len":97,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/billing_rules_dialog.dart","loc":183,"part":false,"setState":6,"repositoryReads":1,"fn":5,"cog":7,"cyc":7,"len":112,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/book_chart_sheet.dart","loc":317,"part":false,"setState":8,"repositoryReads":0,"fn":12,"cog":29,"cyc":18,"len":154,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/book_periods_sheet.dart","loc":335,"part":false,"setState":2,"repositoryReads":0,"fn":14,"cog":23,"cyc":11,"len":92,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1908,7 +1886,7 @@
     {"p":"lib/features/money/presentation/widgets/einvoice_receipt_line.dart","loc":77,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":6,"len":33,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/equipment_dialogs.dart","loc":298,"part":false,"setState":5,"repositoryReads":0,"fn":12,"cog":22,"cyc":8,"len":88,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/equipment_sheet.dart","loc":177,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":12,"cyc":7,"len":50,"params":4,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/expense_repartition_sheet.dart","loc":343,"part":false,"setState":12,"repositoryReads":0,"fn":11,"cog":25,"cyc":21,"len":207,"params":2,"nest":5,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/expense_repartition_sheet.dart","loc":342,"part":false,"setState":12,"repositoryReads":0,"fn":11,"cog":25,"cyc":21,"len":207,"params":2,"nest":5,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/expense_schedule_sheet.dart","loc":530,"part":false,"setState":1,"repositoryReads":0,"fn":11,"cog":33,"cyc":16,"len":194,"params":3,"nest":6,"over":{"cog":1,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/expense_sheet.dart","loc":253,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":35,"cyc":32,"len":241,"params":3,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/expense_vat_fields.dart","loc":149,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":7,"cyc":7,"len":57,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
@@ -1917,12 +1895,12 @@
     {"p":"lib/features/money/presentation/widgets/focused_invoice.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":6,"len":26,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/host_activity.dart","loc":136,"part":false,"setState":2,"repositoryReads":0,"fn":4,"cog":9,"cyc":9,"len":70,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/host_payment_pages.dart","loc":76,"part":false,"setState":1,"repositoryReads":0,"fn":3,"cog":7,"cyc":7,"len":45,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/how_to_pay_tiles.dart","loc":87,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":6,"len":50,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/how_to_pay_tiles.dart","loc":181,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":7,"len":99,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_archive_tab.dart","loc":394,"part":false,"setState":5,"repositoryReads":0,"fn":8,"cog":40,"cyc":38,"len":143,"params":7,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/widgets/invoice_correction_reason_field.dart","loc":39,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":7,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sections.dart","loc":285,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":18,"cyc":24,"len":88,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_detail_sheet.dart","loc":261,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":22,"cyc":25,"len":169,"params":12,"nest":2,"over":{"cog":0,"cyc":1,"len":1,"params":1}},
-    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":467,"part":false,"setState":7,"repositoryReads":0,"fn":14,"cog":31,"cyc":14,"len":103,"params":5,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/invoice_form_sheet.dart","loc":466,"part":false,"setState":7,"repositoryReads":0,"fn":14,"cog":31,"cyc":14,"len":103,"params":5,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_integrity_chip.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":6,"len":22,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_issue_runner.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":10,"len":41,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/invoice_journey_view.dart","loc":312,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":21,"cyc":22,"len":58,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1949,7 +1927,7 @@
     {"p":"lib/features/money/presentation/widgets/my_finances_link_card.dart","loc":66,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":3,"len":53,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/my_finances_parts.dart","loc":286,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":11,"cyc":15,"len":78,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/my_invoices_list.dart","loc":206,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":14,"cyc":14,"len":112,"params":9,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
-    {"p":"lib/features/money/presentation/widgets/negotiation_card.dart","loc":471,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":47,"cyc":33,"len":238,"params":6,"nest":5,"over":{"cog":1,"cyc":1,"len":2,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/negotiation_card.dart","loc":472,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":47,"cyc":33,"len":238,"params":6,"nest":5,"over":{"cog":1,"cyc":1,"len":2,"params":0}},
     {"p":"lib/features/money/presentation/widgets/online_payment_status_card.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":7,"cyc":5,"len":30,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/open_invoice_card.dart","loc":417,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":28,"cyc":32,"len":253,"params":2,"nest":4,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/money/presentation/widgets/open_invoice_subtitle.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":40,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -1976,7 +1954,7 @@
     {"p":"lib/features/money/presentation/widgets/purchase_status_chips.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":5,"len":33,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/purchases_sheet.dart","loc":315,"part":false,"setState":1,"repositoryReads":0,"fn":10,"cog":23,"cyc":20,"len":112,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/money/presentation/widgets/recapitulative_notice.dart","loc":43,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":4,"len":31,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/register_payment_sheet.dart","loc":191,"part":false,"setState":6,"repositoryReads":0,"fn":6,"cog":7,"cyc":13,"len":105,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/register_payment_sheet.dart","loc":190,"part":false,"setState":6,"repositoryReads":0,"fn":6,"cog":7,"cyc":13,"len":105,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/reminder_evidence_list.dart","loc":77,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":8,"len":44,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/rented_room_dialog.dart","loc":302,"part":false,"setState":1,"repositoryReads":0,"fn":11,"cog":13,"cyc":15,"len":122,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/rented_rooms_sheet.dart","loc":237,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":19,"cyc":16,"len":75,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2001,7 +1979,7 @@
     {"p":"lib/features/money/presentation/widgets/room_audience_fees.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":11,"len":33,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/room_audience_pickers.dart","loc":104,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":17,"cyc":12,"len":75,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/schedule_supplier_field.dart","loc":98,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":5,"len":28,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/settlement_sheet.dart","loc":238,"part":false,"setState":7,"repositoryReads":0,"fn":6,"cog":34,"cyc":23,"len":116,"params":3,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/settlement_sheet.dart","loc":237,"part":false,"setState":7,"repositoryReads":0,"fn":6,"cog":34,"cyc":23,"len":116,"params":3,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/setup_accounting_step.dart","loc":186,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":7,"cyc":7,"len":51,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/setup_documents_step.dart","loc":179,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":21,"cyc":10,"len":94,"params":2,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/setup_einvoicing_step.dart","loc":198,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":6,"cyc":6,"len":51,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2029,15 +2007,15 @@
     {"p":"lib/features/money/presentation/widgets/tax_reference_labels.dart","loc":42,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":19,"len":20,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/tax_reference_sales_fields.dart","loc":36,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":9,"cyc":9,"len":21,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/tax_reference_sheets.dart","loc":461,"part":false,"setState":0,"repositoryReads":0,"fn":17,"cog":24,"cyc":23,"len":87,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/template_live_data.dart","loc":78,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":14,"cyc":26,"len":70,"params":3,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/template_live_data.dart","loc":77,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":14,"cyc":26,"len":70,"params":3,"nest":2,"over":{"cog":0,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/uk_land_taxation_fields.dart","loc":96,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":2,"cyc":5,"len":50,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/usage_face.dart","loc":305,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":10,"cyc":14,"len":108,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/usage_face.dart","loc":304,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":10,"cyc":14,"len":108,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_declaration_period_field.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":4,"len":31,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_mark_filed_dialog.dart","loc":55,"part":false,"setState":1,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":37,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_rate_field.dart","loc":106,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":5,"cyc":7,"len":41,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_tax_point_field.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":3,"len":26,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/vat_tax_point_notice.dart","loc":44,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":2,"cyc":4,"len":24,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/presentation/widgets/wizard_context.dart","loc":212,"part":false,"setState":0,"repositoryReads":0,"fn":14,"cog":4,"cyc":15,"len":42,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/presentation/widgets/wizard_context.dart","loc":211,"part":false,"setState":0,"repositoryReads":0,"fn":14,"cog":4,"cyc":15,"len":42,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/wizard_scaffold.dart","loc":1,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/wizard_steps_issue.dart","loc":362,"part":false,"setState":5,"repositoryReads":0,"fn":9,"cog":27,"cyc":16,"len":72,"params":2,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/presentation/widgets/wizard_steps_payments.dart","loc":350,"part":false,"setState":0,"repositoryReads":1,"fn":5,"cog":21,"cyc":14,"len":101,"params":4,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2057,7 +2035,7 @@
     {"p":"lib/features/money/providers/invoicing_wizard_providers.dart","loc":58,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":9,"cyc":6,"len":29,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/providers/money_face_controller.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":6,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/providers/money_focus_controller.dart","loc":13,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":6,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/money/providers/money_providers.dart","loc":405,"part":false,"setState":0,"repositoryReads":0,"fn":44,"cog":21,"cyc":20,"len":86,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/money/providers/money_providers.dart","loc":404,"part":false,"setState":0,"repositoryReads":0,"fn":44,"cog":21,"cyc":20,"len":86,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/providers/money_queries_providers.dart","loc":88,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":0,"cyc":1,"len":7,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/providers/payment_gateway_providers.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":8,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/money/providers/payment_reminder_sweep.dart","loc":18,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":18,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2100,8 +2078,8 @@
     {"p":"lib/features/plan/domain/seat_context.dart","loc":29,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":6,"len":8,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/plan/presentation/plan_png.dart","loc":106,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":5,"cyc":5,"len":49,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/plan/presentation/screens/accessories_screen.dart","loc":272,"part":false,"setState":2,"repositoryReads":1,"fn":7,"cog":19,"cyc":14,"len":84,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/plan/presentation/seat_occupancy.dart","loc":186,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":29,"cyc":17,"len":46,"params":6,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/plan/presentation/widgets/admin_seat_actions.dart","loc":80,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":9,"cyc":11,"len":77,"params":9,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/plan/presentation/seat_occupancy.dart","loc":185,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":29,"cyc":17,"len":46,"params":6,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/plan/presentation/widgets/admin_seat_actions.dart","loc":80,"part":false,"setState":0,"repositoryReads":1,"fn":1,"cog":9,"cyc":11,"len":82,"params":10,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/plan/presentation/widgets/check_in_sheets.dart","loc":167,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":22,"cyc":10,"len":109,"params":7,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":2}},
     {"p":"lib/features/plan/presentation/widgets/drop_target_paint.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":9,"cyc":8,"len":55,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/plan/presentation/widgets/floor_plan_chrome_layers.dart","loc":138,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":7,"cyc":6,"len":39,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2149,7 +2127,7 @@
     {"p":"lib/features/profile/presentation/screens/profiles_screen.dart","loc":290,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":17,"cyc":14,"len":104,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/screens/schema_update_screen.dart","loc":59,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":49,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/screens/server_choice_screen.dart","loc":103,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":2,"len":85,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/profile/presentation/screens/settings_screen.dart","loc":403,"part":false,"setState":3,"repositoryReads":1,"fn":9,"cog":18,"cyc":22,"len":173,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
+    {"p":"lib/features/profile/presentation/screens/settings_screen.dart","loc":402,"part":false,"setState":3,"repositoryReads":1,"fn":9,"cog":18,"cyc":22,"len":173,"params":6,"nest":5,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/profile/presentation/widgets/account_settings_dialogs.dart","loc":258,"part":true,"setState":3,"repositoryReads":0,"fn":9,"cog":10,"cyc":7,"len":67,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/widgets/account_settings_tiles.dart","loc":359,"part":true,"setState":0,"repositoryReads":0,"fn":9,"cog":31,"cyc":31,"len":139,"params":3,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/widgets/backend_candidate_form.dart","loc":412,"part":false,"setState":6,"repositoryReads":0,"fn":18,"cog":10,"cyc":10,"len":73,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
@@ -2167,7 +2145,7 @@
     {"p":"lib/features/profile/presentation/widgets/pair_card.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":15,"cyc":11,"len":50,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/widgets/personal_avatar.dart","loc":38,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":6,"len":32,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/widgets/personal_info_form.dart","loc":304,"part":false,"setState":3,"repositoryReads":0,"fn":8,"cog":8,"cyc":11,"len":180,"params":7,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":1}},
-    {"p":"lib/features/profile/presentation/widgets/platform_tools_entries.dart","loc":36,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":27,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/profile/presentation/widgets/platform_tools_entries.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":31,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/widgets/preference_scope_controls.dart","loc":64,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":4,"cyc":8,"len":29,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/widgets/privacy_choice_tiles.dart","loc":119,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":6,"cyc":6,"len":54,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/presentation/widgets/privacy_notice_view.dart","loc":69,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":6,"cyc":5,"len":51,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2187,9 +2165,10 @@
     {"p":"lib/features/profile/providers/personal_appearance_providers.dart","loc":23,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":5,"len":10,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/providers/personal_preferences_providers.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":6,"cyc":9,"len":13,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/profile/providers/presence_providers.dart","loc":27,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":35,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/profile/providers/profile_providers.dart","loc":92,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":5,"cyc":8,"len":26,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/profile/providers/profile_providers.dart","loc":91,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":5,"cyc":8,"len":26,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/application/act_on_space.dart","loc":119,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":8,"cyc":8,"len":71,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/application/book_seat.dart","loc":85,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":66,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/application/booking_outcome_observation.dart","loc":22,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":6,"len":21,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/application/booking_recovery.dart","loc":241,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":5,"cyc":8,"len":53,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/application/change_reservation.dart","loc":93,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":3,"len":41,"params":6,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/application/getting_started_hint.dart","loc":193,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":16,"cyc":20,"len":91,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2210,12 +2189,14 @@
     {"p":"lib/features/reservations/domain/check_in_reminders.dart","loc":36,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":10,"cyc":7,"len":31,"params":8,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/domain/default_booking_period.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":4,"len":11,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/half_slot_occupancy.dart","loc":29,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":6,"len":28,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/domain/membership_errors.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/my_guest_visits.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":8,"cyc":7,"len":24,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/my_reservations.dart","loc":325,"part":false,"setState":0,"repositoryReads":0,"fn":22,"cog":7,"cyc":8,"len":34,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/my_reservations_composition.dart","loc":315,"part":false,"setState":0,"repositoryReads":0,"fn":30,"cog":14,"cyc":10,"len":25,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/own_booking_removal.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":5,"len":22,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/picked_time.dart","loc":3,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":16,"params":3,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/place_feedback.dart","loc":63,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":5,"len":10,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/domain/quota_rules.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/reservation.dart","loc":90,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":5,"cyc":7,"len":20,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/reservation_calendar_file.dart","loc":151,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":13,"cyc":8,"len":35,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/reservation_export.dart","loc":77,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":4,"cyc":5,"len":54,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2228,15 +2209,15 @@
     {"p":"lib/features/reservations/domain/space_code.dart","loc":37,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":9,"len":20,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/walk_up_window.dart","loc":32,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":10,"cyc":8,"len":43,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/domain/week_tap_window.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":5,"len":50,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/domain/whole_space_blocking.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":30,"cyc":29,"len":73,"params":8,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":1}},
+    {"p":"lib/features/reservations/domain/whole_space_blocking.dart","loc":92,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":30,"cyc":29,"len":73,"params":8,"nest":4,"over":{"cog":1,"cyc":1,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/booking_feedback.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":2,"len":41,"params":8,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/booking_gate_scope.dart","loc":64,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":10,"cyc":14,"len":56,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/booking_trace_points.dart","loc":143,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":3,"cyc":7,"len":28,"params":8,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/getting_started_copy.dart","loc":53,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":4,"cyc":10,"len":26,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/getting_started_facts.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":5,"cyc":7,"len":8,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/others_booking_tap.dart","loc":63,"part":true,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":13,"len":78,"params":8,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
-    {"p":"lib/features/reservations/presentation/reserve_seat_actions.dart","loc":634,"part":false,"setState":0,"repositoryReads":1,"fn":12,"cog":50,"cyc":46,"len":342,"params":6,"nest":3,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
-    {"p":"lib/features/reservations/presentation/screens/period_reservations_screen.dart","loc":84,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":16,"len":64,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/others_booking_tap.dart","loc":64,"part":true,"setState":0,"repositoryReads":0,"fn":1,"cog":7,"cyc":13,"len":79,"params":8,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
+    {"p":"lib/features/reservations/presentation/reserve_seat_actions.dart","loc":634,"part":false,"setState":0,"repositoryReads":1,"fn":15,"cog":22,"cyc":18,"len":142,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/screens/period_reservations_screen.dart","loc":85,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":16,"len":64,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reference_link_screen.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":4,"cyc":4,"len":11,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reserve_hub_header.dart","loc":302,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":11,"cyc":9,"len":50,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reserve_hub_host.dart","loc":36,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2244,8 +2225,8 @@
     {"p":"lib/features/reservations/presentation/screens/reserve_hub_recorder.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":0,"cyc":1,"len":9,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reserve_hub_views.dart","loc":349,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":11,"cyc":9,"len":61,"params":6,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/screens/reserve_screen.dart","loc":337,"part":false,"setState":10,"repositoryReads":0,"fn":28,"cog":8,"cyc":9,"len":43,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/screens/reserve_window_rules.dart","loc":157,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":12,"cyc":12,"len":34,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/space_subjects.dart","loc":20,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":10,"len":30,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/screens/reserve_window_rules.dart","loc":188,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":12,"cyc":12,"len":36,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/space_subjects.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":6,"cyc":10,"len":30,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/booking_controls.dart","loc":253,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":7,"cyc":6,"len":115,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/booking_range_text.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":8,"len":35,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/booking_recovery_sheet.dart","loc":214,"part":false,"setState":5,"repositoryReads":0,"fn":13,"cog":13,"cyc":11,"len":76,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2264,11 +2245,11 @@
     {"p":"lib/features/reservations/presentation/widgets/pending_booking_banner.dart","loc":30,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":3,"len":20,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/place_feedback_bar.dart","loc":172,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":15,"cyc":12,"len":91,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reference_open.dart","loc":119,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":13,"cyc":13,"len":55,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart","loc":346,"part":false,"setState":0,"repositoryReads":1,"fn":4,"cog":40,"cyc":39,"len":235,"params":3,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet_part1.dart","loc":352,"part":true,"setState":0,"repositoryReads":1,"fn":11,"cog":15,"cyc":16,"len":98,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_actions.dart","loc":392,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":15,"cyc":15,"len":93,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart","loc":370,"part":false,"setState":0,"repositoryReads":1,"fn":6,"cog":21,"cyc":18,"len":122,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reservation_status_note.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":6,"len":40,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reservation_time_picker.dart","loc":40,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":5,"len":42,"params":5,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/reserve_canvas.dart","loc":178,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":33,"cyc":21,"len":146,"params":2,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/reserve_canvas.dart","loc":176,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":33,"cyc":21,"len":146,"params":2,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reserve_hub_layout.dart","loc":47,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":6,"len":40,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/reserve_view_menu.dart","loc":109,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":12,"cyc":10,"len":82,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/resource_row_info.dart","loc":55,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":11,"cyc":9,"len":19,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2281,20 +2262,20 @@
     {"p":"lib/features/reservations/presentation/widgets/space_act_sheet.dart","loc":301,"part":false,"setState":4,"repositoryReads":1,"fn":10,"cog":12,"cyc":14,"len":111,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_conflict_actions.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":7,"len":41,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_price_line.dart","loc":69,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":9,"cyc":8,"len":47,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/space_scan.dart","loc":441,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":68,"cyc":21,"len":136,"params":13,"nest":6,"over":{"cog":1,"cyc":0,"len":0,"params":2}},
+    {"p":"lib/features/reservations/presentation/widgets/space_scan.dart","loc":447,"part":false,"setState":0,"repositoryReads":0,"fn":16,"cog":15,"cyc":19,"len":128,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/space_scan_part1.dart","loc":269,"part":true,"setState":8,"repositoryReads":1,"fn":8,"cog":13,"cyc":15,"len":124,"params":7,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/widgets/space_scan_part2.dart","loc":117,"part":true,"setState":0,"repositoryReads":1,"fn":3,"cog":18,"cyc":15,"len":93,"params":9,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
     {"p":"lib/features/reservations/presentation/widgets/space_scan_sheet.dart","loc":155,"part":false,"setState":2,"repositoryReads":0,"fn":6,"cog":6,"cyc":7,"len":79,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/presentation/widgets/stale_availability_banner.dart","loc":35,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":2,"cyc":2,"len":25,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/week_grid.dart","loc":310,"part":false,"setState":0,"repositoryReads":0,"fn":15,"cog":18,"cyc":15,"len":78,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/presentation/widgets/week_grid_part1.dart","loc":332,"part":true,"setState":0,"repositoryReads":0,"fn":11,"cog":28,"cyc":11,"len":126,"params":6,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/week_grid.dart","loc":361,"part":false,"setState":0,"repositoryReads":0,"fn":21,"cog":15,"cyc":11,"len":71,"params":6,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/presentation/widgets/week_grid_cells.dart","loc":366,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":7,"cyc":6,"len":59,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/providers/browsed_level.dart","loc":14,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":9,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/providers/default_period_controller.dart","loc":71,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":3,"cyc":5,"len":26,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/providers/my_reservations_providers.dart","loc":272,"part":false,"setState":0,"repositoryReads":0,"fn":24,"cog":7,"cyc":8,"len":40,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/reservations/providers/place_feedback_providers.dart","loc":93,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":5,"cyc":6,"len":16,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/providers/realtime_invalidations.dart","loc":16,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/reservations/providers/reservation_providers.dart","loc":222,"part":false,"setState":0,"repositoryReads":0,"fn":19,"cog":3,"cyc":5,"len":28,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/task_recorder/application/booking_observation.dart","loc":133,"part":false,"setState":0,"repositoryReads":0,"fn":12,"cog":5,"cyc":6,"len":33,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/providers/realtime_invalidations.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/reservations/providers/reservation_providers.dart","loc":207,"part":false,"setState":0,"repositoryReads":0,"fn":18,"cog":3,"cyc":5,"len":28,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/task_recorder/application/booking_observation.dart","loc":113,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":5,"cyc":6,"len":33,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/application/calendar_observation.dart","loc":26,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":5,"cyc":7,"len":18,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/application/recorder_controller.dart","loc":435,"part":false,"setState":0,"repositoryReads":0,"fn":29,"cog":26,"cyc":21,"len":63,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/application/recorder_persistence.dart","loc":90,"part":true,"setState":0,"repositoryReads":0,"fn":4,"cog":20,"cyc":11,"len":43,"params":1,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2348,7 +2329,7 @@
     {"p":"lib/features/task_recorder/presentation/guide_host/guide_pane.dart","loc":357,"part":true,"setState":0,"repositoryReads":0,"fn":6,"cog":26,"cyc":24,"len":116,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/guide_host/guide_step_text.dart","loc":135,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":12,"cyc":17,"len":37,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/guided_command.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/task_recorder/presentation/recorder_labels.dart","loc":365,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":15,"cyc":57,"len":75,"params":3,"nest":3,"over":{"cog":0,"cyc":2,"len":0,"params":0}},
+    {"p":"lib/features/task_recorder/presentation/recorder_labels.dart","loc":364,"part":false,"setState":0,"repositoryReads":0,"fn":11,"cog":15,"cyc":57,"len":75,"params":3,"nest":3,"over":{"cog":0,"cyc":2,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/recorder_pages.dart","loc":21,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":1,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/recorder_seam.dart","loc":132,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":5,"cyc":6,"len":36,"params":6,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/task_recorder/presentation/recording_export.dart","loc":106,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":9,"cyc":13,"len":50,"params":5,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2527,6 +2508,7 @@
     {"p":"lib/features/workspace/domain/setup_recommendation.dart","loc":150,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":1,"cyc":14,"len":20,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/setup_status.dart","loc":173,"part":false,"setState":0,"repositoryReads":0,"fn":21,"cog":6,"cyc":8,"len":14,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/setup_step_draft.dart","loc":45,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":3,"len":11,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/domain/setup_step_reach.dart","loc":83,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":5,"cyc":6,"len":11,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/setup_step_timing.dart","loc":29,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":9,"len":17,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/setup_steps.dart","loc":323,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":13,"params":0,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/domain/site.dart","loc":79,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":1,"cyc":12,"len":25,"params":9,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":1}},
@@ -2592,7 +2574,7 @@
     {"p":"lib/features/workspace/presentation/feature_names.dart","loc":281,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":1,"cyc":125,"len":250,"params":2,"nest":1,"over":{"cog":0,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/feature_surface_labels.dart","loc":56,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":2,"cyc":11,"len":25,"params":3,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/launch_report.dart","loc":31,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":3,"cyc":3,"len":13,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/member_admin_actions.dart","loc":628,"part":false,"setState":0,"repositoryReads":1,"fn":16,"cog":20,"cyc":10,"len":98,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/member_admin_actions.dart","loc":627,"part":false,"setState":0,"repositoryReads":1,"fn":16,"cog":20,"cyc":10,"len":98,"params":4,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/member_customer_capacity.dart","loc":83,"part":false,"setState":1,"repositoryReads":0,"fn":2,"cog":11,"cyc":8,"len":71,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/member_einvoice_address_tile.dart","loc":108,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":4,"len":79,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/member_labels.dart","loc":24,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":3,"cyc":6,"len":12,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2614,8 +2596,8 @@
     {"p":"lib/features/workspace/presentation/screens/documents_screen.dart","loc":346,"part":false,"setState":3,"repositoryReads":1,"fn":7,"cog":35,"cyc":12,"len":177,"params":3,"nest":7,"over":{"cog":1,"cyc":0,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/features_screen.dart","loc":124,"part":false,"setState":5,"repositoryReads":0,"fn":4,"cog":7,"cyc":7,"len":93,"params":1,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/inbox_screen.dart","loc":112,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":3,"cyc":5,"len":32,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/screens/members_screen.dart","loc":450,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":53,"cyc":37,"len":184,"params":11,"nest":4,"over":{"cog":1,"cyc":2,"len":2,"params":2}},
-    {"p":"lib/features/workspace/presentation/screens/message_search_screen.dart","loc":185,"part":false,"setState":2,"repositoryReads":1,"fn":7,"cog":41,"cyc":35,"len":126,"params":1,"nest":5,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/screens/members_screen.dart","loc":449,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":53,"cyc":37,"len":184,"params":11,"nest":4,"over":{"cog":1,"cyc":2,"len":2,"params":2}},
+    {"p":"lib/features/workspace/presentation/screens/message_search_screen.dart","loc":184,"part":false,"setState":2,"repositoryReads":1,"fn":7,"cog":41,"cyc":35,"len":126,"params":1,"nest":5,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/nfc_config_screen.dart","loc":117,"part":false,"setState":1,"repositoryReads":1,"fn":5,"cog":4,"cyc":8,"len":68,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/onboarding_screen.dart","loc":565,"part":false,"setState":16,"repositoryReads":0,"fn":28,"cog":30,"cyc":23,"len":84,"params":2,"nest":5,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/payment_methods_screen.dart","loc":102,"part":false,"setState":2,"repositoryReads":0,"fn":4,"cog":3,"cyc":3,"len":51,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2627,12 +2609,12 @@
     {"p":"lib/features/workspace/presentation/screens/scan_join_screen.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":2,"cyc":3,"len":37,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/setup_guide_screen.dart","loc":396,"part":false,"setState":0,"repositoryReads":0,"fn":13,"cog":16,"cyc":12,"len":89,"params":3,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/setup_launch_screen.dart","loc":282,"part":false,"setState":0,"repositoryReads":0,"fn":10,"cog":8,"cyc":7,"len":52,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/screens/setup_levels_screen.dart","loc":324,"part":false,"setState":5,"repositoryReads":0,"fn":12,"cog":11,"cyc":12,"len":77,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/screens/setup_levels_screen.dart","loc":335,"part":false,"setState":5,"repositoryReads":0,"fn":12,"cog":11,"cyc":12,"len":77,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/setup_step_screen.dart","loc":150,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":4,"cyc":15,"len":21,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/sites_screen.dart","loc":206,"part":false,"setState":0,"repositoryReads":1,"fn":2,"cog":46,"cyc":26,"len":107,"params":3,"nest":6,"over":{"cog":1,"cyc":1,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/template_compare_screen.dart","loc":297,"part":false,"setState":6,"repositoryReads":0,"fn":7,"cog":25,"cyc":18,"len":134,"params":4,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/template_detail_screen.dart","loc":131,"part":false,"setState":1,"repositoryReads":0,"fn":4,"cog":13,"cyc":7,"len":85,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/screens/what_you_can_do_screen.dart","loc":127,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":22,"cyc":21,"len":100,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/screens/what_you_can_do_screen.dart","loc":126,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":22,"cyc":21,"len":100,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/wording_screen.dart","loc":268,"part":false,"setState":3,"repositoryReads":0,"fn":9,"cog":27,"cyc":15,"len":89,"params":4,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/workspace_applications_screen.dart","loc":134,"part":false,"setState":2,"repositoryReads":0,"fn":2,"cog":29,"cyc":13,"len":113,"params":1,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/screens/workspace_code_screen.dart","loc":328,"part":false,"setState":3,"repositoryReads":1,"fn":5,"cog":29,"cyc":19,"len":211,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":1,"params":0}},
@@ -2668,10 +2650,10 @@
     {"p":"lib/features/workspace/presentation/widgets/capacity_kpi_card.dart","loc":249,"part":false,"setState":1,"repositoryReads":0,"fn":10,"cog":12,"cyc":10,"len":67,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/composer_frame.dart","loc":10,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/configuration_transfer_prompt.dart","loc":41,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":4,"cyc":3,"len":43,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/conversation_avatar.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":6,"len":29,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/conversation_avatar.dart","loc":67,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":3,"cyc":6,"len":29,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/conversation_bubble.dart","loc":289,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":30,"cyc":19,"len":142,"params":4,"nest":4,"over":{"cog":1,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/conversation_header.dart","loc":111,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":9,"cyc":12,"len":94,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/conversation_thread.dart","loc":526,"part":false,"setState":6,"repositoryReads":1,"fn":22,"cog":58,"cyc":47,"len":174,"params":4,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/conversation_thread.dart","loc":525,"part":false,"setState":6,"repositoryReads":1,"fn":22,"cog":58,"cyc":47,"len":174,"params":4,"nest":5,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/cost_allocation_editor.dart","loc":381,"part":false,"setState":5,"repositoryReads":0,"fn":12,"cog":16,"cyc":11,"len":106,"params":2,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/emblem_editor.dart","loc":124,"part":false,"setState":4,"repositoryReads":0,"fn":5,"cog":6,"cyc":10,"len":42,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/environment_tile.dart","loc":129,"part":false,"setState":0,"repositoryReads":1,"fn":3,"cog":14,"cyc":11,"len":50,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2683,7 +2665,7 @@
     {"p":"lib/features/workspace/presentation/widgets/feature_tile.dart","loc":222,"part":false,"setState":1,"repositoryReads":0,"fn":5,"cog":18,"cyc":20,"len":95,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/features_filter_bar.dart","loc":85,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":3,"cyc":4,"len":64,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/features_view_switch.dart","loc":50,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":38,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/group_info_sheet.dart","loc":437,"part":false,"setState":0,"repositoryReads":1,"fn":11,"cog":34,"cyc":33,"len":185,"params":6,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/group_info_sheet.dart","loc":436,"part":false,"setState":0,"repositoryReads":1,"fn":11,"cog":34,"cyc":33,"len":185,"params":6,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/holiday_import_sheet.dart","loc":352,"part":false,"setState":10,"repositoryReads":0,"fn":16,"cog":25,"cyc":18,"len":126,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/instance_owner_tile.dart","loc":307,"part":false,"setState":5,"repositoryReads":0,"fn":12,"cog":27,"cyc":17,"len":135,"params":3,"nest":5,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/invitation_join_panel.dart","loc":384,"part":false,"setState":9,"repositoryReads":0,"fn":17,"cog":10,"cyc":17,"len":98,"params":3,"nest":4,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2702,7 +2684,7 @@
     {"p":"lib/features/workspace/presentation/widgets/new_member_defaults_tiles.dart","loc":126,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":21,"cyc":14,"len":92,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/nfc_tap_dialog.dart","loc":66,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":6,"cyc":4,"len":28,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/note_check.dart","loc":20,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":1,"cyc":3,"len":12,"params":1,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/note_record_choices.dart","loc":186,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":42,"cyc":37,"len":175,"params":3,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/note_record_choices.dart","loc":185,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":42,"cyc":37,"len":175,"params":3,"nest":4,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/note_record_open.dart","loc":86,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":5,"cyc":10,"len":49,"params":4,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/office_palette_editor.dart","loc":166,"part":false,"setState":2,"repositoryReads":0,"fn":5,"cog":10,"cyc":10,"len":57,"params":1,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/onboarding_creation.dart","loc":234,"part":false,"setState":0,"repositoryReads":0,"fn":6,"cog":5,"cyc":8,"len":46,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2721,7 +2703,7 @@
     {"p":"lib/features/workspace/presentation/widgets/ref_picker_sheet.dart","loc":444,"part":false,"setState":6,"repositoryReads":0,"fn":11,"cog":38,"cyc":23,"len":199,"params":8,"nest":4,"over":{"cog":1,"cyc":0,"len":1,"params":1}},
     {"p":"lib/features/workspace/presentation/widgets/reset_confirm_dialog.dart","loc":66,"part":false,"setState":1,"repositoryReads":0,"fn":3,"cog":1,"cyc":2,"len":48,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/role_editor_sheet.dart","loc":171,"part":false,"setState":4,"repositoryReads":0,"fn":9,"cog":20,"cyc":11,"len":102,"params":1,"nest":6,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/presentation/widgets/role_holders_section.dart","loc":149,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":15,"cyc":20,"len":71,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/presentation/widgets/role_holders_section.dart","loc":148,"part":false,"setState":0,"repositoryReads":0,"fn":4,"cog":15,"cyc":20,"len":71,"params":4,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/sample_data_card.dart","loc":153,"part":false,"setState":3,"repositoryReads":0,"fn":7,"cog":11,"cyc":10,"len":50,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/save_template_sheet.dart","loc":259,"part":false,"setState":6,"repositoryReads":0,"fn":6,"cog":43,"cyc":26,"len":161,"params":3,"nest":6,"over":{"cog":1,"cyc":1,"len":1,"params":0}},
     {"p":"lib/features/workspace/presentation/widgets/settings_editor.dart","loc":242,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":21,"cyc":13,"len":64,"params":5,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2793,9 +2775,10 @@
     {"p":"lib/features/workspace/providers/instance_providers.dart","loc":15,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":5,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/kpi_providers.dart","loc":79,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":2,"cyc":3,"len":27,"params":4,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/local_setup_providers.dart","loc":57,"part":false,"setState":0,"repositoryReads":0,"fn":8,"cog":8,"cyc":6,"len":18,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/providers/member_display_providers.dart","loc":33,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":4,"cyc":4,"len":26,"params":1,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/operation_context_providers.dart","loc":155,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":9,"cyc":7,"len":74,"params":3,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/overview_kpi_providers.dart","loc":19,"part":false,"setState":0,"repositoryReads":0,"fn":2,"cog":0,"cyc":1,"len":11,"params":5,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/providers/realtime_invalidations.dart","loc":44,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/providers/realtime_invalidations.dart","loc":54,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/sample_data_providers.dart","loc":12,"part":false,"setState":0,"repositoryReads":0,"fn":3,"cog":0,"cyc":1,"len":4,"params":2,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/settings_providers.dart","loc":89,"part":false,"setState":0,"repositoryReads":0,"fn":7,"cog":5,"cyc":4,"len":33,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/template_search_providers.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":4,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
@@ -2805,10 +2788,10 @@
     {"p":"lib/features/workspace/providers/workspace_files_providers.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":4,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/workspace_host_providers.dart","loc":51,"part":false,"setState":0,"repositoryReads":0,"fn":9,"cog":2,"cyc":3,"len":9,"params":2,"nest":1,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/workspace_import_providers.dart","loc":8,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":0,"cyc":1,"len":5,"params":1,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/features/workspace/providers/workspace_providers.dart","loc":425,"part":false,"setState":0,"repositoryReads":0,"fn":51,"cog":8,"cyc":6,"len":33,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
+    {"p":"lib/features/workspace/providers/workspace_providers.dart","loc":426,"part":false,"setState":0,"repositoryReads":0,"fn":51,"cog":8,"cyc":6,"len":33,"params":2,"nest":3,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/workspace_roles_providers.dart","loc":68,"part":false,"setState":0,"repositoryReads":0,"fn":5,"cog":7,"cyc":7,"len":27,"params":2,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
     {"p":"lib/features/workspace/providers/workspace_symbol_provider.dart","loc":6,"part":false,"setState":0,"repositoryReads":0,"fn":0,"cog":0,"cyc":0,"len":0,"params":0,"nest":0,"over":{"cog":0,"cyc":0,"len":0,"params":0}},
-    {"p":"lib/main.dart","loc":118,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":6,"len":118,"params":0,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}}
+    {"p":"lib/main.dart","loc":120,"part":false,"setState":0,"repositoryReads":0,"fn":1,"cog":8,"cyc":6,"len":119,"params":0,"nest":2,"over":{"cog":0,"cyc":0,"len":0,"params":0}}
   ],
   "functions": [
     {"id":"lib/app/entry_intents.dart#EntryIntentDraft.decode(String raw)","cog":17,"cyc":26,"len":58,"params":1},
@@ -2846,7 +2829,7 @@
     {"id":"lib/core/demo/data/workspace_repository_part2.dart#_FakeWorkspaceRepositoryPart2._setLegalIdentityImpl(String workspaceId,{required String vatRegime,required String vatId,required String legalId,required String taxExemptionReason,required String street,required String city,required String postalCode,required String vatAccount,required Map<String, Object?> invoiceLegal})","cog":1,"cyc":2,"len":29,"params":10},
     {"id":"lib/core/demo/data/workspace_repository_part4.dart#_FakeWorkspaceRepositoryPart4._saveWorkspaceAsTemplateImpl(String workspaceId,{required String key,required String name,String description,TemplateVisibility visibility,List<String> tags,List<String>? groups,String? requestId})","cog":10,"cyc":8,"len":37,"params":8},
     {"id":"lib/core/demo/demo_dataset.dart#_demoInvoice({required String id,required String memberId,required String memberName,required String number,required DateTime issuedAt,required String period,required int totalCents})","cog":0,"cyc":1,"len":32,"params":7},
-    {"id":"lib/core/demo/demo_scope.dart#demoOverrides(DemoFixture fixture)","cog":3,"cyc":3,"len":177,"params":1},
+    {"id":"lib/core/demo/demo_scope.dart#demoOverrides(DemoFixture fixture)","cog":3,"cyc":3,"len":176,"params":1},
     {"id":"lib/core/demo/seed/demo_decision_seed.dart#seedDemoDecisions(FakeEventRepository events,DateTime now)","cog":2,"cyc":3,"len":150,"params":2},
     {"id":"lib/core/demo/seed/demo_money_seed.dart#seedDemoMoneyStory(FakeMoneyRepository money,DateTime now,List<Reservation> bookings)","cog":6,"cyc":6,"len":265,"params":3},
     {"id":"lib/core/diagnostics/support_bundle.dart#SupportBundle.new({required DateTime from,required DateTime until,required SupportMode mode,required SupportPlatform platform,SupportEvidence? evidence,String appVersion,int? schemaVersion,Map<SupportCheck, SupportStatus> checks,Map<SupportSeverity, int>? eventCounts})","cog":11,"cyc":14,"len":61,"params":9},
@@ -2870,7 +2853,6 @@
     {"id":"lib/features/calendar/presentation/screens/calendar_screen.dart#_CalendarScreenState.build(BuildContext context)","cog":27,"cyc":19,"len":265,"params":1},
     {"id":"lib/features/calendar/presentation/widgets/calendar_feed.dart#CalendarFeed.build(BuildContext context,WidgetRef ref)","cog":25,"cyc":25,"len":130,"params":2},
     {"id":"lib/features/calendar/presentation/widgets/calendar_week_strip.dart#CalendarWeekStrip.build(BuildContext context)","cog":33,"cyc":15,"len":95,"params":1},
-    {"id":"lib/features/calendar/presentation/widgets/day_timeline_part1.dart#_DayTimelineStatePart1._grid(BuildContext context,List<(Level?, FloorPlan)> plans,Map<String, String> names)","cog":45,"cyc":33,"len":199,"params":3},
     {"id":"lib/features/directory/presentation/messenger/account_group_sheet.dart#_GroupSheet.build(BuildContext context,WidgetRef ref)","cog":37,"cyc":31,"len":164,"params":2},
     {"id":"lib/features/directory/presentation/messenger/context_bubble.dart#ContextBubble.build(BuildContext context,WidgetRef ref)","cog":26,"cyc":22,"len":151,"params":2},
     {"id":"lib/features/directory/presentation/messenger/message_actions_sheet.dart#showMessageActions(BuildContext context,WidgetRef ref,MessageRef message,{bool forwarding,Future<void> Function()? onDelete,VoidCallback? onChanged,VoidCallback? onInfo})","cog":2,"cyc":3,"len":39,"params":7},
@@ -2989,7 +2971,7 @@
     {"id":"lib/features/money/presentation/widgets/invoice_sheet_actions.dart#InvoiceSheetActions._button(BuildContext context,{required String key,required IconData icon,required String label,required InvoiceAction action,bool primary,bool danger})","cog":5,"cyc":6,"len":46,"params":7},
     {"id":"lib/features/money/presentation/widgets/invoice_template_sheet.dart#_ReportTemplateEditorState._buildImpl(BuildContext context)","cog":26,"cyc":21,"len":196,"params":1},
     {"id":"lib/features/money/presentation/widgets/my_invoices_list.dart#MyInvoicesList._row(BuildContext context,WidgetRef ref,AppLocalizations l10n,ThemeData theme,Invoice invoice,InvoiceMatch? match,({int count, DateTime last})? reminder,DateFormat dateFormat,DateTime now)","cog":14,"cyc":14,"len":112,"params":9},
-    {"id":"lib/features/money/presentation/widgets/negotiation_card.dart#NegotiationCard.build(BuildContext context,WidgetRef ref)","cog":29,"cyc":24,"len":167,"params":2},
+    {"id":"lib/features/money/presentation/widgets/negotiation_card.dart#NegotiationCard.build(BuildContext context,WidgetRef ref)","cog":29,"cyc":24,"len":168,"params":2},
     {"id":"lib/features/money/presentation/widgets/negotiation_card.dart#showPriceNegotiationSheet(BuildContext context,WidgetRef ref,{required String memberId,required String memberName,required MoneyFormat currency,bool readOnly})","cog":47,"cyc":33,"len":238,"params":6},
     {"id":"lib/features/money/presentation/widgets/open_invoice_card.dart#OpenInvoiceCard.build(BuildContext context)","cog":28,"cyc":32,"len":253,"params":1},
     {"id":"lib/features/money/presentation/widgets/open_invoices_tab.dart#OpenInvoicesTab.build(BuildContext context,WidgetRef ref)","cog":49,"cyc":28,"len":298,"params":2},
@@ -2998,7 +2980,7 @@
     {"id":"lib/features/money/presentation/widgets/report_layout_preview.dart#LayoutPageView.build(BuildContext context)","cog":16,"cyc":25,"len":113,"params":1},
     {"id":"lib/features/money/presentation/widgets/settlement_sheet.dart#_SettlementWizardState.build(BuildContext context)","cog":34,"cyc":23,"len":116,"params":1},
     {"id":"lib/features/money/presentation/widgets/template_live_data.dart#liveReportData(BuildContext context,WidgetRef ref,String doc)","cog":14,"cyc":26,"len":70,"params":3},
-    {"id":"lib/features/plan/presentation/widgets/admin_seat_actions.dart#runAdminSeatActions(BuildContext context,WidgetRef ref,{required Seat seat,required Reservation other,required String name,required bool offerCheckIn,required int? stepMinutes,bool offerMessage,bool offerCheckOut})","cog":9,"cyc":11,"len":77,"params":9},
+    {"id":"lib/features/plan/presentation/widgets/admin_seat_actions.dart#runAdminSeatActions(BuildContext context,WidgetRef ref,{required Seat seat,required Reservation other,required String name,required bool offerCheckIn,required int? stepMinutes,bool offerMessage,bool offerCheckOut,required void Function() afterWrite})","cog":9,"cyc":11,"len":82,"params":10},
     {"id":"lib/features/plan/presentation/widgets/check_in_sheets.dart#showMySeatSheet(BuildContext context,{required Seat seat,required Reservation mine,required DateTime now,required bool cancellable,required bool deletionRequestable,BookingGranularity? granularity})","cog":22,"cyc":10,"len":109,"params":7},
     {"id":"lib/features/plan/presentation/widgets/check_in_sheets.dart#showCheckInOtherSheet(BuildContext context,{required Seat seat,required Reservation other,required String name,required bool offerCheckIn,bool offerMessage,bool offerCheckOut})","cog":8,"cyc":5,"len":81,"params":7},
     {"id":"lib/features/profile/domain/personal_info.dart#PersonalInfo.copyWith({Courtesy? courtesy,String? firstName,String? lastName,String? company,String? street,String? postalCode,String? city,String? countryCode,String? phone,String? email,String? vatId,String? legalId})","cog":0,"cyc":13,"len":27,"params":12},
@@ -3020,13 +3002,11 @@
     {"id":"lib/features/reservations/domain/whole_space_blocking.dart#wholeSpaceBlocking({required SpaceKind kind,required FloorPlan? plan,required Iterable<Reservation> reservations,required DateTime from,required DateTime to,String? deskId,String? officeId,String? levelId})","cog":30,"cyc":29,"len":73,"params":8},
     {"id":"lib/features/reservations/presentation/booking_feedback.dart#announceBooking(BuildContext context,AppLocalizations l10n,{required bool checkedIn,required DateTime start,required DateTime end,String? spaceName,DateTime? now,VoidCallback? onOpen})","cog":1,"cyc":2,"len":41,"params":8},
     {"id":"lib/features/reservations/presentation/booking_trace_points.dart#traceBookingFailed({required Object error,required StackTrace stackTrace,required Seat seat,required DateTime start,required DateTime end,required bool checkIn,required bool series,required String? member})","cog":0,"cyc":1,"len":28,"params":8},
-    {"id":"lib/features/reservations/presentation/others_booking_tap.dart#_openOthersBooking(BuildContext context,WidgetRef ref,{required Seat seat,required Reservation other,required SeatState state,required bool isLive,required bool canCheckInForOthers,required BookingGranularity granularity})","cog":7,"cyc":13,"len":78,"params":8},
-    {"id":"lib/features/reservations/presentation/reserve_seat_actions.dart#ReserveSeatActions.bookingSheet(Seat seat,List<Reservation> reservations,HalfDayWindow window,{FloorPlan? plan,bool walkUp,bool offerWalkUp})","cog":50,"cyc":46,"len":342,"params":6},
+    {"id":"lib/features/reservations/presentation/others_booking_tap.dart#_openOthersBooking(BuildContext context,WidgetRef ref,{required Seat seat,required Reservation other,required SeatState state,required bool isLive,required bool canCheckInForOthers,required BookingGranularity granularity})","cog":7,"cyc":13,"len":79,"params":8},
     {"id":"lib/features/reservations/presentation/widgets/booking_sheet.dart#_BookingSheetState.build(BuildContext context)","cog":49,"cyc":48,"len":203,"params":1},
     {"id":"lib/features/reservations/presentation/widgets/getting_started_card.dart#GettingStartedCard.build(BuildContext context,WidgetRef ref)","cog":10,"cyc":14,"len":157,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/message_reserver.dart#showBlockedSpaceSheet(BuildContext context,WidgetRef ref,{required String title,required String infoLine,required Reservation blocking,required String name,required String spaceName})","cog":6,"cyc":5,"len":44,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/month_grid.dart#MonthGrid.build(BuildContext context,WidgetRef ref)","cog":38,"cyc":26,"len":123,"params":2},
-    {"id":"lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart#ReservationDetailSheet.build(BuildContext context,WidgetRef ref)","cog":40,"cyc":39,"len":235,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/reserve_canvas.dart#ReserveCanvas.build(BuildContext context,WidgetRef ref)","cog":33,"cyc":21,"len":146,"params":2},
     {"id":"lib/features/reservations/presentation/widgets/seat_day_sheet.dart#showSeatDaySheet(BuildContext context,{required Seat seat,required List<SeatDaySegment> segments,required Map<String, String> names,required DateTime dayStart,required DateTime dayEnd,required DateTime now})","cog":0,"cyc":1,"len":23,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._header(BuildContext context,IconData icon,String name,double indent,{required String key,VoidCallback? onTap,String? subtitle})","cog":4,"cyc":5,"len":27,"params":7},
@@ -3034,8 +3014,6 @@
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._officeRows(BuildContext context,WidgetRef ref,String officeId,{required String? levelName,required bool byLevel,required String? wholeLevelName,required String currency,required Set<String> placed})","cog":19,"cyc":15,"len":79,"params":8},
     {"id":"lib/features/reservations/presentation/widgets/seat_list_view.dart#SeatListView._seatRow(BuildContext context,WidgetRef ref,Seat seat,double indent,String place)","cog":20,"cyc":29,"len":147,"params":5},
     {"id":"lib/features/reservations/presentation/widgets/space_act_form.dart#SpaceActFormState.build(BuildContext context)","cog":20,"cyc":12,"len":159,"params":1},
-    {"id":"lib/features/reservations/presentation/widgets/space_scan.dart#_SpaceSheetState._wholeSection(BuildContext context,{required ({bool bookable, int priceCents}) target,required String title,required String? priceLine,required String? myId,required Reservation? myWholeReservation,required bool allowed,required bool granted,required bool featureOn,required Reservation? blocking,required Desk? desk,required Office? office,required Level? level})","cog":68,"cyc":21,"len":136,"params":13},
-    {"id":"lib/features/reservations/presentation/widgets/space_scan.dart#_myLiveWholeReservation(SpaceKind kind,List<Reservation> reservations,String myMemberId,({DateTime start, DateTime end}) window,{String? deskId,String? officeId,String? levelId})","cog":4,"cyc":9,"len":28,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/space_scan_part1.dart#_SpaceSheetStatePart1._create({String? seatId,String? deskId,String? officeId,String? levelId,required bool checkIn,DateTime? startsAt,DateTime? endsAt})","cog":6,"cyc":8,"len":54,"params":7},
     {"id":"lib/features/reservations/presentation/widgets/space_scan_part2.dart#showSpaceSheet(BuildContext context,{required SpaceKind kind,Level? level,Office? office,Desk? desk,Seat? seat,FloorPlan? plan,({DateTime start, DateTime end})? initialWindow,List<({String id, String name})> members})","cog":0,"cyc":1,"len":32,"params":9},
     {"id":"lib/features/task_recorder/data/recorder_store.dart#recoverRecordingLog(String id,String text,{RecordingLimits limits})","cog":48,"cyc":40,"len":134,"params":3},

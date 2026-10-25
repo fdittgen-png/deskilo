@@ -363,52 +363,6 @@ final class MyUpcomingReservationsProvider
 String _$myUpcomingReservationsHash() =>
     r'510da65c16d475b12fe5f5f80a6845ebd939512b';
 
-/// member id → display name for the active workspace.
-
-@ProviderFor(memberNames)
-final memberNamesProvider = MemberNamesProvider._();
-
-/// member id → display name for the active workspace.
-
-final class MemberNamesProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<Map<String, String>>,
-          Map<String, String>,
-          FutureOr<Map<String, String>>
-        >
-    with
-        $FutureModifier<Map<String, String>>,
-        $FutureProvider<Map<String, String>> {
-  /// member id → display name for the active workspace.
-  MemberNamesProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'memberNamesProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$memberNamesHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<Map<String, String>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<Map<String, String>> create(Ref ref) {
-    return memberNames(ref);
-  }
-}
-
-String _$memberNamesHash() => r'004c24caf27181af8978ae9eade5c76d7b3a50e3';
-
 /// Reservations of the active workspace intersecting the given LOCAL
 /// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):
 /// a UTC key turned the July calendar into a June query east of UTC.

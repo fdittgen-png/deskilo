@@ -5,14 +5,10 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/time/date_text.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_sheet.dart';
-import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -21,48 +17,12 @@ import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/half_slot_occupancy.dart';
 import '../../domain/reservation.dart';
 import '../../providers/browsed_level.dart';
-import '../../providers/reservation_providers.dart';
 import 'booking_range_text.dart';
-
-part 'week_grid_part1.dart';
-
-/// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
-/// these as part of the visual contract, not free-floating magic numbers.
-@visibleForTesting
-abstract final class WeekGridMetrics {
-  /// Columns of the grid: the ISO week, Monday through Sunday.
-  static const int daysPerWeek = 7;
-
-  /// Fixed width of the leading seat-name column (timeline parity:
-  /// `TimelineAxis.leadingWidth` is the same 112, kept as an own constant
-  /// so the reservations feature never imports the calendar widget).
-  static const double leadingWidth = 112;
-
-  /// Height of the tappable day-header row ("Mon 13" pills).
-  static const double headerHeight = 40;
-
-  /// Height of one seat row of split day cells.
-  static const double rowHeight = 36;
-
-  /// Height of an `office · desk` group header row.
-  static const double groupHeaderRowHeight = 28;
-
-  /// Height of a level-name header row in all-levels mode.
-  static const double levelHeaderRowHeight = 32;
-
-  /// Narrowest day column; when seven of these don't fit next to the
-  /// leading column, the day area scrolls horizontally instead.
-  static const double minDayWidth = 44;
-
-  /// Padding around the two half-slots inside a day cell.
-  static const double cellInset = 3;
-
-  /// Gap between the morning and afternoon half-slots of one cell.
-  static const double halfSlotGap = 2;
-}
+import 'week_grid_cells.dart';
 
 /// Seat × day occupancy grid of one ISO week (#236): rows are seats
 /// grouped under `office · desk` headers (level chips with the same
@@ -187,7 +147,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       return const LoadingView();
     }
     if (levels.isEmpty) {
-      return _emptyHint(l10n);
+      return const WeekGridEmptyHint();
     }
     // Default stays the FIRST real level; "All levels" is opt-in per view.
     final browsed = ref.watch(browsedLevelProvider);
@@ -222,15 +182,178 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     );
   }
 
+  /// Blocked for maintenance at some point during `[from, to)` — the
+  /// timeline's day rule (#161 blocks are half-open ranges) applied to an
+  /// arbitrary window: blocked when the window starts, or the block begins
+  /// later within it.
+  bool _blockedDuring(Seat seat, DateTime from, DateTime to) {
+    if (seat.isBlockedAt(from)) return true;
+    final blockedFrom = seat.blockedFrom;
+    return blockedFrom != null &&
+        !blockedFrom.isBefore(from) &&
+        blockedFrom.isBefore(to);
+  }
+
+  bool _dayOpen(DateTime day) => widget.isDayOpen?.call(day) ?? true;
+
+  Widget _singleLevelBody(BuildContext context, Level level) {
+    final planAsync = ref.watch(floorPlanProvider(level.id));
+    return switch (planAsync) {
+      AsyncData(value: final plan) => _grid(context, [(null, plan)]),
+      AsyncError() => const WeekGridEmptyHint(),
+      _ => const LoadingView(),
+    };
+  }
+
+  /// All-levels mode loads WAIT-ALL like the timeline (#221): every
+  /// level's plan is watched up front (they fetch in parallel) and nothing
+  /// renders until each one resolved — a single consistent layout instead
+  /// of rows reflowing as plans stream in. A level whose plan errored is
+  /// skipped like an empty level.
+  Widget _allLevelsBody(BuildContext context, List<Level> levels) {
+    final entries = <(Level, AsyncValue<FloorPlan>)>[
+      for (final l in levels) (l, ref.watch(floorPlanProvider(l.id))),
+    ];
+    final plans = <(Level?, FloorPlan)>[];
+    for (final (level, planAsync) in entries) {
+      switch (planAsync) {
+        case AsyncData(value: final plan):
+          plans.add((level, plan));
+        case AsyncError():
+          break; // Skipped, like a level with nothing to show.
+        default:
+          return const LoadingView();
+      }
+    }
+    return _grid(context, plans);
+  }
+
+  /// Renders the given plans stacked in one grid. Single-level mode passes
+  /// one `(null, plan)` entry (no level-header row); all-levels mode
+  /// passes every level's plan in [levelsProvider]'s sortOrder.
+  Widget _grid(BuildContext context, List<(Level?, FloorPlan)> plans) {
+    if (!plans.any((e) => e.$2.seats.isNotEmpty)) {
+      return const WeekGridEmptyHint();
+    }
+    final days = _days;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Seven equal columns fitted to the phone width; below the minimum
+        // the day area keeps the minimum and scrolls horizontally.
+        final available =
+            constraints.maxWidth - WeekGridMetrics.leadingWidth;
+        final fitted = available / WeekGridMetrics.daysPerWeek;
+        final dayWidth = fitted < WeekGridMetrics.minDayWidth
+            ? WeekGridMetrics.minDayWidth
+            : fitted;
+
+        final leadingCells = <Widget>[
+          const SizedBox(height: WeekGridMetrics.headerHeight),
+        ];
+        final gridRows = <Widget>[
+          WeekGridDayHeaders(
+            days: days,
+            dayWidth: dayWidth,
+            selectedDay: widget.selectedDay,
+            dayOpen: _dayOpen,
+            onDaySelected: widget.onDaySelected,
+          ),
+        ];
+        for (final (level, plan) in plans) {
+          _addLevel(leadingCells, gridRows, level, plan, days, dayWidth);
+        }
+
+        return WeekGridBody(
+          leading: leadingCells,
+          rows: gridRows,
+          gridWidth: dayWidth * WeekGridMetrics.daysPerWeek,
+        );
+      },
+    );
+  }
+
+  /// One level's rows: its header in all-levels mode, then every desk's
+  /// `office · desk` header and seat rows.
+  void _addLevel(
+    List<Widget> leadingCells,
+    List<Widget> gridRows,
+    Level? level,
+    FloorPlan plan,
+    List<DateTime> days,
+    double dayWidth,
+  ) {
+    if (plan.seats.isEmpty) return;
+    final weekStart = days.first;
+    final weekEnd = DateTime(
+      weekStart.year,
+      weekStart.month,
+      weekStart.day + WeekGridMetrics.daysPerWeek,
+    );
+    // Whole-level reservations (#452) occupy every seat row of
+    // the level, like whole-office and whole-desk ones below.
+    final levelReservations = widget.reservations
+        .where((r) => r.levelId == plan.levelId)
+        .toList();
+    if (level != null) {
+      leadingCells.add(WeekGridLevelHeader(levelId: level.id, name: level.name));
+      gridRows.add(const SizedBox(
+        height: WeekGridMetrics.levelHeaderRowHeight,
+      ));
+    }
+    // #1273 — a level's only room is named by the level.
+    final byLevel = namesSingleRoomsByLevel(ref);
+    final levelName = level?.name ?? levelNameOf(ref, plan.levelId);
+    for (final office in plan.offices) {
+      final officeReservations = widget.reservations
+          .where((r) => r.officeId == office.id)
+          .toList();
+      for (final desk in plan.desksOf(office.id)) {
+        final seats = plan.seatsOf(desk.id);
+        if (seats.isEmpty) continue;
+        // Whole-desk reservations (0059) occupy every seat row of
+        // the desk, like whole-office ones.
+        final deskReservations = widget.reservations
+            .where((r) => r.deskId == desk.id)
+            .toList();
+        leadingCells.add(
+          WeekGridGroupHeader(
+            label:
+                '${plan.officeContextName(office, levelName: levelName, byLevel: byLevel)} · ${desk.name}',
+          ),
+        );
+        gridRows.add(const SizedBox(
+          height: WeekGridMetrics.groupHeaderRowHeight,
+        ));
+        for (final Seat seat in seats) {
+          final rowReservations = <Reservation>[
+            ...levelReservations,
+            ...officeReservations,
+            ...deskReservations,
+            ...widget.reservations.where((r) => r.seatId == seat.id),
+          ];
+          leadingCells.add(WeekGridSeatCell(
+            name: seat.name,
+            blockedDuringWeek: _blockedDuring(seat, weekStart, weekEnd),
+          ));
+          gridRows.add(WeekGridSeatRow(cells: [
+            for (final day in days)
+              _dayCell(context, seat, rowReservations, day, dayWidth),
+          ]));
+        }
+      }
+    }
+  }
+
   Widget _dayCell(
     BuildContext context,
     Seat seat,
     List<Reservation> rowReservations,
     DateTime day,
     double dayWidth,
-    Brightness brightness,
   ) {
     final scheme = Theme.of(context).colorScheme;
+    final brightness = Theme.of(context).brightness;
     // The cell IS the workspace-local CALENDAR day (midnight to
     // midnight — the display halves, #446), same clock as the
     // half-slot windows below, whatever zone the device is in. The
@@ -256,25 +379,11 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
           child: Row(
             children: [
               Expanded(
-                child: _halfSlot(
-                  context,
-                  seat,
-                  day,
-                  items,
-                  brightness,
-                  morning: true,
-                ),
+                child: _halfSlot(context, seat, day, items, morning: true),
               ),
               const SizedBox(width: WeekGridMetrics.halfSlotGap),
               Expanded(
-                child: _halfSlot(
-                  context,
-                  seat,
-                  day,
-                  items,
-                  brightness,
-                  morning: false,
-                ),
+                child: _halfSlot(context, seat, day, items, morning: false),
               ),
             ],
           ),
@@ -290,11 +399,11 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     BuildContext context,
     Seat seat,
     DateTime day,
-    List<Reservation> items,
-    Brightness brightness, {
+    List<Reservation> items, {
     required bool morning,
   }) {
     final scheme = Theme.of(context).colorScheme;
+    final brightness = Theme.of(context).brightness;
     // Display halves, not booking windows (#446): a booking outside
     // the working hours still occupies the seat that half of the day.
     final half = morning
@@ -329,36 +438,16 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       // #814 — a closed day is not free: nothing to tap, nothing to book.
       fill = scheme.surfaceContainerHighest;
     }
-    final free = fill == null;
-    return DecoratedBox(
-      key: WeekGrid.cellKey(seat.id, day, morning: morning),
-      decoration: BoxDecoration(
-        color: fill,
-        borderRadius: AppRadius.smAll,
-        border: free
-            ? Border.all(color: scheme.outlineVariant.withValues(alpha: 0.6))
-            : null,
-      ),
-      // A free half-slot is a booking affordance, not dead space.
-      child: free && widget.onFreeSlotTap != null
-          ? InkWell(
-              key: ValueKey(
-                'week-free-${seat.id}-${WeekGrid.dayStampOf(day)}-'
-                '${morning ? 'am' : 'pm'}',
-              ),
-              borderRadius: AppRadius.smAll,
-              onTap: () =>
-                  widget.onFreeSlotTap!(seat, day, morning: morning),
-            )
-          : occupantInitial == null
-              ? null
-              : Center(
-                  child: Text(
-                    occupantInitial,
-                    style: Theme.of(context).textTheme.labelSmall
-                        ?.emphasised.copyWith(color: Colors.white),
-                  ),
-                ),
+    final onFreeSlotTap = widget.onFreeSlotTap;
+    return WeekGridHalfSlot(
+      seatId: seat.id,
+      day: day,
+      morning: morning,
+      fill: fill,
+      occupantInitial: occupantInitial,
+      onFreeTap: onFreeSlotTap == null
+          ? null
+          : () => onFreeSlotTap(seat, day, morning: morning),
     );
   }
 
@@ -376,44 +465,11 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
     final picked = await showAppSheet<Reservation>(
       context: context,
-      builder: (context) => SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.xl,
-                  AppSpacing.lg,
-                  AppSpacing.xl,
-                  AppSpacing.xs,
-                ),
-                child: Text(
-                  '${seat.name} · ${DateFormat.MMMEd().format(day)}',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ),
-              for (final r in sorted)
-                ListTile(
-                  key: WeekGrid.sheetItemKey(r.id),
-                  leading: Icon(
-                    r.memberId == widget.myMemberId
-                        ? Icons.event_seat
-                        : Icons.person_outline,
-                  ),
-                  title: Text(_occupantLine(r, names, l10n)),
-                  trailing: r.memberId == widget.myMemberId
-                      ? const Icon(Icons.chevron_right)
-                      : null,
-                  onTap: r.memberId == widget.myMemberId
-                      ? () => Navigator.of(context).pop(r)
-                      : null,
-                ),
-              const SizedBox(height: AppSpacing.sm),
-            ],
-          ),
-        ),
+      builder: (context) => WeekGridCellSheet(
+        title: '${seat.name} · ${DateFormat.MMMEd().format(day)}',
+        items: sorted,
+        myMemberId: widget.myMemberId,
+        lineOf: (r) => _occupantLine(r, names, l10n),
       ),
     );
     if (picked == null || !mounted) return;

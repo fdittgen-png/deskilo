@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import '../../features/directory/presentation/setup_public_page_step.dart';
 import '../../features/events/presentation/widgets/setup_approvals_step.dart';
 import '../../features/kiosk/presentation/widgets/kiosk_greeting.dart';
-import '../../features/money/presentation/widgets/bill_view.dart';
+import '../../features/money/presentation/widgets/how_to_pay_tiles.dart';
 import '../../features/money/presentation/widgets/setup_online_payments_step.dart';
 import '../../features/money/presentation/widgets/setup_pricing_step.dart';
 import '../../features/money/presentation/widgets/setup_purchase_side_step.dart';

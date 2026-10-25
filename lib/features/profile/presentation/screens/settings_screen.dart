@@ -28,7 +28,6 @@ import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/widgets/badge_pin_tile.dart';
 import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
-import '../../../members/providers/directory_providers.dart';
 import '../../../reservations/domain/default_booking_period.dart';
 import '../../../reservations/providers/default_period_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';

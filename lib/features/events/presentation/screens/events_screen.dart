@@ -17,7 +17,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/payment_method.dart';
 import '../../../money/presentation/payment_method_labels.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/event_decision.dart';

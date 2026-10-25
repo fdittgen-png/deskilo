@@ -19,5 +19,6 @@
   "setupGuideLevelsLink": "Wählen, was Ihr Raum tut",
   "setupLevelsBecause": "Weil {reason}",
   "setupLevelsGap": "{level} braucht {needed}",
-  "setupLevelsSeeDemo": "In der Demo ansehen"
+  "setupLevelsSeeDemo": "In der Demo ansehen",
+  "setupLevelsStepsFollow": "Danach im Assistenten einrichten: {steps}"
 }

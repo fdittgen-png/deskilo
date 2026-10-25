@@ -4,16 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/height_probe.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/domain/seat.dart';
@@ -21,60 +16,10 @@ import '../../../plan/presentation/widgets/level_chip_row.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/providers/browsed_level.dart';
-import '../../../reservations/providers/reservation_providers.dart';
+import '../../../workspace/providers/workspace_providers.dart';
+import 'day_timeline_axis.dart';
+import 'day_timeline_cells.dart';
 
-part 'day_timeline_part1.dart';
-
-/// Geometry of the 24h timeline axis (#187). Pinned by test — treat these
-/// as part of the visual contract, not free-floating magic numbers.
-@visibleForTesting
-abstract final class TimelineAxis {
-  /// Horizontal pixels per hour on the track.
-  static const double hourWidth = 48;
-
-  /// Hours drawn on the axis (one local calendar day).
-  static const int hoursPerDay = 24;
-
-  /// Total scrollable track width.
-  static const double trackWidth = hourWidth * hoursPerDay;
-
-  /// An hour label (and grid line) every this many hours.
-  static const int labelStepHours = 2;
-
-  /// Height of one seat row / its track.
-  static const double rowHeight = 36;
-
-  /// A seat row grows to use a tall viewport (a few seats must not leave
-  /// the lower part of the screen empty), but never beyond this.
-  static const double maxRowHeight = 96;
-
-  /// Height of an `office · desk` group header row.
-  static const double headerRowHeight = 28;
-
-  /// Height of a level-name header row in all-levels mode (#221).
-  static const double levelHeaderRowHeight = 32;
-
-  /// Height of the hour ruler above the tracks.
-  static const double rulerHeight = 24;
-
-  /// Fixed width of the leading seat-name column.
-  static const double leadingWidth = 112;
-
-  /// Where the axis auto-scrolls to when the day has no reservation.
-  static const int defaultStartHour = 8;
-
-  /// Lead-in (hours) kept visible left of the auto-scroll target.
-  static const double autoScrollLeadHours = 0.5;
-
-  /// Vertical inset of a reservation block inside its row.
-  static const double blockInset = 4;
-
-  /// Minimum rendered block width so tiny bookings stay visible.
-  static const double blockMinWidth = 2;
-
-  /// Width of the "now" indicator line.
-  static const double nowLineWidth = 2;
-}
 
 /// Visual timeline of the selected calendar day (#187): one row per seat,
 /// grouped under compact `office · desk` headers, blocks placed on a
@@ -194,7 +139,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
       return const LoadingView();
     }
     if (levels.isEmpty) {
-      return _emptyHint(l10n, allLevels: false);
+      return const TimelineEmptyHint(allLevels: false);
     }
     // Default stays the FIRST real level; "All levels" is opt-in.
     final browsed = ref.watch(browsedLevelProvider);
@@ -246,48 +191,16 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     );
   }
 
-  /// Lets the section extensions rebuild (setState is protected).
-  void _update(VoidCallback fn) => setState(fn);
-
-  Widget _seatCell(
-    BuildContext context,
-    Seat seat,
-    Brightness brightness,
-    double rowHeight,
-  ) {
-    final blocked = _blockedDuring(seat);
-    return SizedBox(
-      height: rowHeight,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: AppSpacing.lg,
-          right: AppSpacing.xs,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                seat.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ),
-            // Never state by color alone (spec §11): blocked seats get an
-            // icon next to the muted track tint.
-            if (blocked)
-              Icon(
-                Icons.block,
-                size: 14,
-                color: SeatStateColors.of(
-                  SeatState.blocked,
-                  brightness: brightness,
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
+  /// Horizontal offset of [at] on the track, clamped to the day.
+  ///
+  /// #490 — anchored to the WORKSPACE wall clock, not the device's: a
+  /// browser in another timezone otherwise paints every block shifted
+  /// by the tz delta.
+  double _offsetOf(DateTime at) {
+    final minutes =
+        WorkspaceTime.wall(at).difference(_dayStart).inMinutes;
+    final raw = minutes / 60.0 * TimelineAxis.hourWidth;
+    return raw.clamp(0.0, TimelineAxis.trackWidth).toDouble();
   }
 
   /// The instant [dx] pixels along the track (the inverse of `_offsetOf`).
@@ -297,139 +210,286 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
         minutes ~/ 60, minutes % 60);
   }
 
-  Widget _track(
+  /// Blocked for maintenance at some point during the day (#161 blocks are
+  /// half-open ranges): blocked when the day starts, or the block begins
+  /// later within this day.
+  bool _blockedDuring(Seat seat) {
+    if (seat.isBlockedAt(_dayStartInstant)) return true;
+    final from = seat.blockedFrom;
+    return from != null &&
+        !from.isBefore(_dayStartInstant) &&
+        from.isBefore(_dayEndInstant);
+  }
+
+  void _onBlockTap(Reservation reservation) {
+    if (reservation.memberId == widget.myMemberId) {
+      widget.onReservationTap(reservation);
+      return;
+    }
+    final l10n = context.l10n;
+    final names = ref.read(memberNamesProvider).value ?? const {};
+    final name = names[reservation.memberId] ?? '';
+    final until =
+        ref.watch(appFormatProvider).time(reservation.endsAt);
+    final message = '${l10n.planOccupiedBy(name)} · '
+        '${l10n.planUntil(until)}';
+    AppSnack.info(context, message, replace: true);
+  }
+
+  /// A level header's tap: collapse its rows, or open them again.
+  void _toggleLevel(String levelId) => setState(() {
+        if (!_collapsedLevels.remove(levelId)) {
+          _collapsedLevels.add(levelId);
+        }
+      });
+
+  /// One initial jump per selected day: to just before the first
+  /// reservation, or to the working-day start when the day is empty.
+  void _scheduleAutoScroll(List<Reservation> dayReservations) {
+    if (_autoScrolledDay != null &&
+        DateUtils.isSameDay(_autoScrolledDay, widget.day)) {
+      return;
+    }
+    final day = widget.day;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_axisController.hasClients) return;
+      if (!DateUtils.isSameDay(day, widget.day)) return;
+      _autoScrolledDay = day;
+      // [dayReservations] is sorted by start, so the first one is the
+      // earliest; a start before midnight clamps to hour 0.
+      final startHour = dayReservations.isEmpty
+          ? TimelineAxis.defaultStartHour.toDouble()
+          : _offsetOf(dayReservations.first.startsAt) /
+              TimelineAxis.hourWidth;
+      final target = ((startHour - TimelineAxis.autoScrollLeadHours) *
+              TimelineAxis.hourWidth)
+          .clamp(0.0, _axisController.position.maxScrollExtent)
+          .toDouble();
+      _axisController.jumpTo(target);
+    });
+  }
+
+  Widget _singleLevelBody(
     BuildContext context,
-    Seat seat,
-    List<Reservation> blocks,
+    Level level,
     Map<String, String> names,
-    Brightness brightness,
-    double rowHeight,
   ) {
-    final scheme = Theme.of(context).colorScheme;
-    final blocked = _blockedDuring(seat) || !widget.dayOpen;
-    final blockedTint = SeatStateColors.of(
-      SeatState.blocked,
-      brightness: brightness,
-    ).withValues(alpha: 0.15);
-    return Container(
-      key: DayTimeline.trackKey(seat.id),
-      height: rowHeight,
-      width: TimelineAxis.trackWidth,
-      decoration: BoxDecoration(
-        color: blocked ? blockedTint : null,
-        border: Border(
-          bottom: BorderSide(
-            color: scheme.outlineVariant.withValues(alpha: 0.4),
-          ),
-        ),
+    final planAsync = ref.watch(floorPlanProvider(level.id));
+    return switch (planAsync) {
+      AsyncData(value: final plan) => _grid(context, [(null, plan)], names),
+      AsyncError() => const TimelineEmptyHint(allLevels: false),
+      _ => const LoadingView(),
+    };
+  }
+
+  /// All-levels mode loads WAIT-ALL: every level's plan is watched up
+  /// front (they fetch in parallel) and nothing renders until each one
+  /// resolved — a single consistent layout instead of rows reflowing as
+  /// plans stream in. A level whose plan errored is skipped like an empty
+  /// level.
+  Widget _allLevelsBody(
+    BuildContext context,
+    List<Level> levels,
+    Map<String, String> names,
+  ) {
+    // levelsProvider returns the levels sorted by sortOrder — the stacking
+    // order below is that same order.
+    final entries = <(Level, AsyncValue<FloorPlan>)>[
+      for (final l in levels) (l, ref.watch(floorPlanProvider(l.id))),
+    ];
+    final plans = <(Level?, FloorPlan)>[];
+    for (final (level, planAsync) in entries) {
+      switch (planAsync) {
+        case AsyncData(value: final plan):
+          plans.add((level, plan));
+        case AsyncError():
+          break; // Skipped, like a level with nothing to show.
+        default:
+          return const LoadingView();
+      }
+    }
+    return _grid(context, plans, names);
+  }
+
+  /// Renders the given plans stacked on one shared axis. Single-level mode
+  /// passes one `(null, plan)` entry (no level-header row); all-levels mode
+  /// passes every level's plan in [levelsProvider]'s sortOrder.
+  Widget _grid(
+    BuildContext context,
+    List<(Level?, FloorPlan)> plans,
+    Map<String, String> names,
+  ) {
+    final allLevels = plans.any((e) => e.$1 != null);
+
+    final dayReservations = widget.reservations
+        .where((r) => r.holdsRange(_dayStartInstant, _dayEndInstant))
+        .toList()
+      ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+
+    // Built lazily: how tall a seat row is depends on how many there are.
+    final rows = TimelineRows(
+      ruler: TimelineRuler(
+        format: ref.watch(appFormatProvider), // #1150
+        dayStart: _dayStart,
       ),
-      child: Stack(
-        children: [
-          // Free-area tap books this seat (hub); the blocks above keep
-          // their own handlers and win hit-testing.
-          if ((widget.onFreeSeatTap != null || widget.onFreeSeatTapAt != null) &&
-              !blocked)
-            Positioned.fill(
-              child: InkWell(
-                key: ValueKey('timeline-free-${seat.id}'),
-                onTap: widget.onFreeSeatTapAt == null
-                    ? () => widget.onFreeSeatTap!(seat)
-                    : null,
-                onTapUp: widget.onFreeSeatTapAt == null
-                    ? null
-                    : (d) => widget.onFreeSeatTapAt!(
-                        seat, _instantAt(d.localPosition.dx)),
-              ),
-            ),
-          for (final r in blocks) _block(context, r, names, brightness),
-        ],
-      ),
+    );
+    final visibleReservations = <Reservation>[];
+    for (final (level, plan) in plans) {
+      visibleReservations.addAll(
+          _addLevel(rows, level, plan, dayReservations, names));
+    }
+
+    // Free mode keeps rows even when nothing is booked — the hint only
+    // fires when there are NO rows at all (no seats anywhere).
+    if (visibleReservations.isEmpty &&
+        (!widget.showFreeSeats || rows.tracks.length <= 1)) {
+      return TimelineEmptyHint(allLevels: allLevels);
+    }
+    // Concatenating per-level lists loses the global start order the
+    // auto-scroll relies on — restore it.
+    visibleReservations.sort((a, b) => a.startsAt.compareTo(b.startsAt));
+    if (visibleReservations.isNotEmpty) {
+      _scheduleAutoScroll(visibleReservations);
+    }
+
+    final now = ref.watch(clockProvider).now();
+    final isToday = DateUtils.isSameDay(now, widget.day);
+    final rowHeight = rows.rowHeightFor(_viewportHeight);
+
+    return TimelineAxisView(
+      controller: _axisController,
+      leading: [for (final b in rows.leadingCells) b(rowHeight)],
+      tracks: [for (final b in rows.tracks) b(rowHeight)],
+      nowOffset: isToday ? _offsetOf(now) : null,
     );
   }
 
-  Widget _block(
-    BuildContext context,
-    Reservation reservation,
+  /// One level's rows: its header in all-levels mode, then every desk's
+  /// `office · desk` header and seat rows. Returns the level's
+  /// reservations that day, or none when the level shows nothing.
+  List<Reservation> _addLevel(
+    TimelineRows rows,
+    Level? level,
+    FloorPlan plan,
+    List<Reservation> dayReservations,
     Map<String, String> names,
-    Brightness brightness,
   ) {
-    final own = reservation.memberId == widget.myMemberId;
-    final base = SeatStateColors.of(
-      own ? SeatState.mine : SeatState.reserved,
-      brightness: brightness,
+    // Only what lives on this level — incl. whole-desk and
+    // whole-level rows (#452), which were silently dropped before.
+    final seatIds = {for (final s in plan.seats) s.id};
+    final deskIds = {for (final d in plan.desks) d.id};
+    final officeIds = {for (final o in plan.offices) o.id};
+    final levelReservations = dayReservations
+        .where((r) =>
+            (r.seatId != null && seatIds.contains(r.seatId)) ||
+            (r.deskId != null && deskIds.contains(r.deskId)) ||
+            (r.officeId != null && officeIds.contains(r.officeId)) ||
+            (r.levelId != null && r.levelId == plan.levelId))
+        .toList();
+
+    // Same per-level rule as single-level mode: nothing to show without
+    // seats or without a visible reservation that day. In all-levels
+    // mode such a level is skipped entirely (#221); the overall empty
+    // hint below fires only when EVERY level came up empty.
+    if (plan.seats.isEmpty ||
+        (!widget.showFreeSeats && levelReservations.isEmpty)) {
+      return const [];
+    }
+
+    final collapsed = level != null && _collapsedLevels.contains(level.id);
+    if (level != null) {
+      rows.addHeader(
+        TimelineLevelHeader(
+          levelId: level.id,
+          name: level.name,
+          collapsed: collapsed,
+          onToggle: () => _toggleLevel(level.id),
+        ),
+        TimelineAxis.levelHeaderRowHeight,
+      );
+    }
+    // Collapsed: the header stays (a tap re-opens it) but its office /
+    // desk / seat rows are skipped entirely.
+    if (collapsed) return levelReservations;
+    // Whole-level rows lane onto every seat of the level (#452).
+    final wholeLevelReservations = levelReservations
+        .where((r) => r.levelId == plan.levelId)
+        .toList();
+    // #1273 — a level's only room is named by the level.
+    final byLevel = namesSingleRoomsByLevel(ref);
+    final levelName = level?.name ?? levelNameOf(ref, plan.levelId);
+    for (final office in plan.offices) {
+      final officeReservations = levelReservations
+          .where((r) => r.officeId == office.id)
+          .toList();
+      for (final desk in plan.desksOf(office.id)) {
+        final seats = plan.seatsOf(desk.id);
+        if (seats.isEmpty) continue;
+        final header =
+            '${plan.officeContextName(office, levelName: levelName, byLevel: byLevel)} · ${desk.name}';
+        rows.addHeader(
+          TimelineGroupHeader(label: header),
+          TimelineAxis.headerRowHeight,
+        );
+        // Whole-desk rows lane onto this desk's seats (#452).
+        final deskReservations = levelReservations
+            .where((r) => r.deskId == desk.id)
+            .toList();
+        for (final Seat seat in seats) {
+          final blocks = <Reservation>[
+            ...wholeLevelReservations,
+            ...officeReservations,
+            ...deskReservations,
+            ...levelReservations.where((r) => r.seatId == seat.id),
+          ];
+          rows.addSeat(
+            (h) => TimelineSeatCell(
+              name: seat.name,
+              blocked: _blockedDuring(seat),
+              height: h,
+            ),
+            (h) => _track(seat, blocks, names, h),
+          );
+        }
+      }
+    }
+    return levelReservations;
+  }
+
+  Widget _track(
+    Seat seat,
+    List<Reservation> blocks,
+    Map<String, String> names,
+    double rowHeight,
+  ) {
+    final onFreeSeatTap = widget.onFreeSeatTap;
+    final onFreeSeatTapAt = widget.onFreeSeatTapAt;
+    return TimelineTrack(
+      seatId: seat.id,
+      height: rowHeight,
+      blocked: _blockedDuring(seat) || !widget.dayOpen,
+      onFreeTap: onFreeSeatTap == null ? null : () => onFreeSeatTap(seat),
+      onFreeTapAt: onFreeSeatTapAt == null
+          ? null
+          : (dx) => onFreeSeatTapAt(seat, _instantAt(dx)),
+      blocks: [for (final r in blocks) _block(r, names)],
     );
-    // MY bookings carry the full tone; everyone else's step back a
-    // notch, so 'when did I reserve what' reads before any label does.
-    final color = own ? base : base.withValues(alpha: 0.78);
-    final onColor =
-        ThemeData.estimateBrightnessForColor(base) == Brightness.dark
-            ? Colors.white
-            : Colors.black87;
+  }
+
+  Widget _block(Reservation reservation, Map<String, String> names) {
     final left = _offsetOf(reservation.startsAt);
     final right = _offsetOf(reservation.endsAt);
     final width = (right - left) < TimelineAxis.blockMinWidth
         ? TimelineAxis.blockMinWidth
         : right - left;
-    final occupant = names[reservation.memberId] ?? '';
-    final initial = occupant.trim().isEmpty
-        ? ''
-        : occupant.trim().characters.first.toUpperCase();
-    return Positioned(
+    return TimelineBlock(
+      reservationId: reservation.id,
       left: left,
       width: width,
-      top: TimelineAxis.blockInset,
-      bottom: TimelineAxis.blockInset,
-      child: Material(
-        color: color,
-        borderRadius: AppRadius.mdAll,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          key: DayTimeline.blockKey(reservation.id),
-          onTap: () => _onBlockTap(reservation),
-          child: widget.everyone && width > 40
-              ? Padding(
-                  padding: AppSpacing.xsH,
-                  child: Row(
-                    children: [
-                      if (initial.isNotEmpty) ...[
-                        // The same avatar language as the plan's seat
-                        // tiles and the week grid's cells.
-                        Container(
-                          width: 16,
-                          height: 16,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: onColor.withValues(alpha: 0.22),
-                          ),
-                          child: Text(
-                            initial,
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                              color: onColor,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.xs),
-                      ],
-                      Expanded(
-                        child: Text(
-                          occupant,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(color: onColor),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox.expand(),
-        ),
-      ),
+      own: reservation.memberId == widget.myMemberId,
+      occupant: names[reservation.memberId] ?? '',
+      showOccupant: widget.everyone && width > 40,
+      onOpen: () => _onBlockTap(reservation),
     );
   }
 }

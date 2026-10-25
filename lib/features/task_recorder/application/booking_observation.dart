@@ -2,8 +2,10 @@
 //
 // #1865 — the booking adapter: what the recorder may say about a
 // booking, derived from what the member asked for and from what the
-// booking command (reservations/application/book_seat.dart) actually
-// returned or threw. Pure: no provider, no widget, no clock.
+// booking command actually threw. Pure: no provider, no widget, no clock.
+// What it returned is read by the booking feature itself
+// (reservations/application/booking_outcome_observation.dart, #2495): the
+// recorder names no booking type.
 //
 // Only categories leave here. Whom a booking is for becomes "self" or
 // "another member", never the member; a refusal becomes "a conflict" or
@@ -15,7 +17,6 @@ import 'package:meta/meta.dart';
 
 import '../../../core/time/date_text.dart';
 import '../../../core/trace/trace_logger.dart' show isTransientNetworkFailure;
-import '../../reservations/application/book_seat.dart';
 import '../domain/action_registry.dart';
 import '../domain/step_values.dart';
 
@@ -62,27 +63,6 @@ StepValues periodValues(DateTime start, DateTime end) => StepValues.of({
 /// A resource chosen, by its name.
 StepValues resourceValues(String name) =>
     name.isEmpty ? StepValues.none : StepValues.of({'resource': TextValue(name)});
-
-/// What a returned [BookingOutcome] says.
-Observation bookingOutcomeObservation(BookingOutcome outcome) =>
-    switch (outcome) {
-      Booked(:final checkedIn) => (
-        outcome: RecorderOutcomes.bookingConfirmed,
-        payload: {'check_in': checkedIn ? 'yes' : 'no'},
-      ),
-      SentForConfirmation() => (
-        outcome: RecorderOutcomes.bookingRequested,
-        payload: const <String, Object?>{},
-      ),
-      SeriesBooked(:final result) => (
-        outcome: RecorderOutcomes.seriesBooked,
-        payload: {
-          'series_result': result.skipped.isEmpty
-              ? 'all_booked'
-              : 'partially_booked',
-        },
-      ),
-    };
 
 /// What a thrown error says. A lost connection or a timeout is an
 /// outcome nobody can vouch for: the booking may or may not exist. Any

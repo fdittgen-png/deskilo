@@ -23,7 +23,6 @@ const Set<String> _component = {
   'directory',
   'events',
   'mcp',
-  'members',
   'money',
   'plan',
   'profile',
@@ -32,32 +31,21 @@ const Set<String> _component = {
   'workspace',
 };
 
-/// Mutual pairs today (24 at the time of the issue plus the count of the
-/// generated map). A pair leaves this set when its last reverse import goes.
+/// Mutual pairs today (25 when the ratchet landed; 13 since the shared
+/// names, profiles, sheets and labels moved to their owners, #2495). A
+/// pair leaves this set when its last reverse import goes.
 const Set<String> _mutualPairs = {
-  'calendar <-> money',
   'calendar <-> reservations',
-  'calendar <-> task_recorder',
   'directory <-> workspace',
   'events <-> money',
-  'events <-> plan',
-  'events <-> reservations',
   'events <-> task_recorder',
   'events <-> workspace',
-  'members <-> money',
-  'members <-> plan',
-  'members <-> profile',
-  'members <-> reservations',
-  'members <-> workspace',
   'money <-> plan',
-  'money <-> profile',
-  'money <-> reservations',
   'money <-> workspace',
   'plan <-> reservations',
   'plan <-> workspace',
   'profile <-> reservations',
   'profile <-> workspace',
-  'reservations <-> task_recorder',
   'reservations <-> workspace',
   'task_recorder <-> workspace',
 };
@@ -68,23 +56,20 @@ const Map<String, int> _upwardImports = {
   'profile -> calendar': 2,
   'profile -> directory': 1,
   'profile -> mcp': 1,
-  'profile -> members': 1,
-  'profile -> money': 1,
-  'profile -> reservations': 5,
+  'profile -> reservations': 4,
   'profile -> workspace': 43,
   'workspace -> directory': 21,
   'workspace -> events': 15,
-  'workspace -> members': 4,
   'workspace -> money': 45,
   'workspace -> plan': 26,
-  'workspace -> reservations': 17,
+  'workspace -> reservations': 10,
   'workspace -> task_recorder': 9,
 };
 
 /// Imports from `lib/core` into a feature, per core area (the real
 /// inversions; `core/demo` mirrors the features by design).
 const Map<String, int> _coreToFeature = {
-  'core/help': 1,
+  'core/help': 0,
   'core/i18n': 4,
   'core/privacy': 3,
   'core/push': 2,

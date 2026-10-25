@@ -10,15 +10,11 @@ import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
-import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../events/providers/event_providers.dart';
-import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -27,22 +23,15 @@ import '../../../plan/providers/seat_context_providers.dart';
 import '../../../task_recorder/domain/action_registry.dart'
     show RecorderActions;
 import '../../../task_recorder/presentation/recorder_seam.dart';
-import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../application/change_reservation.dart';
-import '../../domain/booking_error_text.dart';
 import '../../domain/own_booking_removal.dart';
 import '../../domain/reservation.dart';
-import '../../domain/reservation_repository.dart';
 import '../../providers/reservation_providers.dart';
 import 'booking_range_text.dart';
 import 'calendar_file_button.dart';
+import 'reservation_detail_actions.dart';
 import 'reservation_status_note.dart';
-import 'reservation_time_picker.dart';
-import 'series_result_dialog.dart';
-
-part 'reservation_detail_sheet_part1.dart';
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
 /// pass) Time range and status icon, the resolved location chain, the
@@ -77,6 +66,15 @@ class ReservationDetailSheet extends ConsumerWidget {
     final target = targetAsync.value;
 
     final myMemberId = ref.watch(myMemberProvider).value?.id;
+    final actions = ReservationDetailActions(
+      r,
+      readGranularity: () => ref.read(bookingGranularityProvider).value,
+      seriesAllowed: () => ref
+          .read(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.seriesBooking),
+      refresh: () => invalidateBookingData(ref),
+      repository: () => ref.read(reservationRepositoryProvider),
+    );
     // The actions belong to the owner of a still-upcoming booking; a
     // PAST or already CHECKED-IN one is never deleted directly (#492) —
     // deleting it becomes a REQUEST an owner/admin validates (was the
@@ -92,7 +90,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     final extendable = mine &&
         r.status == ReservationStatus.checkedIn &&
         r.endsAt.isAfter(now) &&
-        _laterEndFor(ref, r) != null;
+        actions.laterEndFor(r) != null;
     // #638 — and a RUNNING booking may also SHRINK: `update_reservation`
     // v2 accepts an earlier canonical end ahead of now, but the client
     // only ever offered "later", so "cancel the rest of the day" was
@@ -100,7 +98,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     final endEarlyable = mine &&
         r.status == ReservationStatus.checkedIn &&
         r.endsAt.isAfter(now) &&
-        _earlierEndFor(ref, r, now) != null;
+        actions.earlierEndFor(r, now) != null;
     final deletionRequestable =
         mine && removal == OwnBookingRemoval.requestDeletion;
     // #1643 — MY booking, in my own calendar: any state, since a
@@ -139,7 +137,46 @@ class ReservationDetailSheet extends ConsumerWidget {
                 '${DateFormat.MMMEd().format(WorkspaceTime.display(r.startsAt))}'
                 ' · ${bookingRangeText(context, appFormatOf(context), l10n, r.startsAt, r.endsAt)}',
               ),
-              subtitle: target == null &&
+              subtitle: _subtitle(context, r, target),
+            ),
+            ReservationStatusNote(reservation: r, now: now),
+            if (seatId != null) SeatAccessoryRow(seatId: seatId),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              key: const ValueKey('reservation-detail-sheet-calendar-show-on-plan'),
+              icon: const Icon(Icons.map_outlined),
+              onPressed: target == null
+                  ? null
+                  : () => Navigator.of(context).pop(target),
+              label: Text(l10n.calendarShowOnPlan),
+            ),
+            ..._ownActions(context, ref, actions, (
+              editable: editable,
+              extendable: extendable,
+              endEarlyable: endEarlyable,
+              deletionRequestable: deletionRequestable,
+            )),
+            if (calendarFile) ...[
+              const SizedBox(height: 8),
+              CalendarFileButton(reservation: r),
+            ],
+            // #841 — the booking says who decided about it. A deletion
+            // request travels in the payload, not on events.reservation_id
+            // (0097 keeps that column free so a reject does not cancel
+            // the booking), so both links are followed.
+            if (reservationEventId(ref, reservation.id) case final eventId?)
+              EventValidationTrail(eventId: eventId),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Where the booking is: the seat's location, the substitution text of a
+  /// deleted target, the whole desk or level, and the repetition.
+  Widget? _subtitle(BuildContext context, Reservation r, SeatContext? target) {
+    final l10n = context.l10n;
+    return target == null &&
                       r.seriesId == null &&
                       r.levelId == null &&
                       r.deskId == null &&
@@ -200,20 +237,24 @@ class ReservationDetailSheet extends ConsumerWidget {
                             key: const ValueKey('reservation-repeat'),
                           ),
                       ],
-                    ),
-            ),
-            ReservationStatusNote(reservation: r, now: now),
-            if (seatId != null) SeatAccessoryRow(seatId: seatId),
-            const SizedBox(height: 16),
-            FilledButton.icon(
-              key: const ValueKey('reservation-detail-sheet-calendar-show-on-plan'),
-              icon: const Icon(Icons.map_outlined),
-              onPressed: target == null
-                  ? null
-                  : () => Navigator.of(context).pop(target),
-              label: Text(l10n.calendarShowOnPlan),
-            ),
-            if (editable) ...[
+                    );
+  }
+
+  /// What I may still do with my own booking (the sheet's build decides).
+  List<Widget> _ownActions(
+    BuildContext context,
+    WidgetRef ref,
+    ReservationDetailActions actions,
+    ({
+      bool editable,
+      bool extendable,
+      bool endEarlyable,
+      bool deletionRequestable,
+    }) offered,
+  ) {
+    final l10n = context.l10n;
+    return [
+            if (offered.editable) ...[
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -221,7 +262,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                     child: OutlinedButton.icon(
                       key: const ValueKey('reservation-edit'),
                       icon: const Icon(Icons.edit_calendar_outlined),
-                      onPressed: () => _editTimes(context, ref),
+                      onPressed: () => actions.editTimes(context, ref),
                       label: Text(
                         l10n.reservationEditTimes,
                       ),
@@ -236,7 +277,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                             Theme.of(context).colorScheme.error,
                       ),
                       icon: const Icon(Icons.event_busy_outlined),
-                      onPressed: () => _cancel(context, ref),
+                      onPressed: () => actions.cancel(context, ref),
                       label: Text(
                         l10n.planCancelReservationButton,
                       ),
@@ -245,29 +286,29 @@ class ReservationDetailSheet extends ConsumerWidget {
                 ],
               ),
             ],
-            if (extendable) ...[
+            if (offered.extendable) ...[
               const SizedBox(height: 8),
               OutlinedButton.icon(
                 key: const ValueKey('reservation-extend'),
                 icon: const Icon(Icons.more_time_outlined),
-                onPressed: () => _extendEnd(context, ref),
+                onPressed: () => actions.extendEnd(context, ref),
                 label: Text(
                   l10n.reservationExtendButton,
                 ),
               ),
             ],
-            if (endEarlyable) ...[
+            if (offered.endEarlyable) ...[
               const SizedBox(height: 8),
               OutlinedButton.icon(
                 key: const ValueKey('reservation-end-early'),
                 icon: const Icon(Icons.timelapse_outlined),
-                onPressed: () => _endEarly(context, ref),
+                onPressed: () => actions.endEarly(context, ref),
                 label: Text(
                   l10n.reservationEndEarlyButton,
                 ),
               ),
             ],
-            if (deletionRequestable) ...[
+            if (offered.deletionRequestable) ...[
               const SizedBox(height: 8),
               OutlinedButton.icon(
                 key: const ValueKey('reservation-delete-request'),
@@ -275,25 +316,12 @@ class ReservationDetailSheet extends ConsumerWidget {
                   foregroundColor: Theme.of(context).colorScheme.error,
                 ),
                 icon: const Icon(Icons.delete_outline),
-                onPressed: () => _requestDeletion(context, ref),
+                onPressed: () => actions.requestDeletion(context, ref),
                 // The label says REQUEST — nothing is deleted here.
                 label: Text(l10n.reservationDeleteRequestButton),
               ),
             ],
-            if (calendarFile) ...[
-              const SizedBox(height: 8),
-              CalendarFileButton(reservation: r),
-            ],
-            // #841 — the booking says who decided about it. A deletion
-            // request travels in the payload, not on events.reservation_id
-            // (0097 keeps that column free so a reject does not cancel
-            // the booking), so both links are followed.
-            if (reservationEventId(ref, reservation.id) case final eventId?)
-              EventValidationTrail(eventId: eventId),
-          ],
-        ),
-      ),
-    );
+    ];
   }
 
 }
