@@ -57,6 +57,19 @@ DateTime retentionUntil(
   return DateTime.utc(year, base.month, base.day > last ? last : base.day);
 }
 
+/// The first day a document dated [documentDate] may go under [rule], the
+/// fiscal year opening on [fiscalYearStart]'s month and day.
+DateTime retentionRuleUntil(
+  RetentionRule rule,
+  DateTime documentDate, {
+  DateTime? fiscalYearStart,
+}) => retentionUntil(
+  RetentionValue(years: rule.years, from: rule.from),
+  documentDate,
+  fiscalYearStartMonth: fiscalYearStart?.month ?? 1,
+  fiscalYearStartDay: fiscalYearStart?.day ?? 1,
+);
+
 /// #2571 — one rule of [country] as the tax reference holds it.
 typedef RetentionRule = ({
   String docClass,

@@ -11,6 +11,7 @@
 // and paid through it, CN-1 refunded to the member, and B-1 a supplier bill
 // with recoverable input VAT, paid. The members above are unchanged, so the
 // hand-worked tests over them keep their figures.
+import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
@@ -337,5 +338,62 @@ class SeededExportYear {
         ],
       ),
     ],
+  );
+
+  /// B-2, a Swiss supplier's bill of CHF 252.50 (a licence and its
+  /// set-up, no recoverable tax), dated 12 May and paid on 20 May, booked at
+  /// the rate recorded with it: 1 CHF = 1.0657 EUR.
+  static PurchaseDetail get francBill => PurchaseDetail(
+    summary: PurchaseSummary(
+      id: 'B-2',
+      kind: PurchaseKind.bill,
+      state: PurchaseState.approved,
+      category: 'software',
+      reference: 'B-2',
+      currency: 'CHF',
+      originalDate: DateTime(2026, 5, 12),
+    ),
+    revision: 1,
+    lines: const [
+      PurchaseLine(
+        lineNo: 1,
+        description: 'Booking software licence',
+        grossCents: 24000,
+      ),
+      PurchaseLine(lineNo: 2, description: 'Set-up', grossCents: 1250),
+    ],
+    sources: const [],
+    obligations: [
+      PurchaseObligation(
+        id: 'o-B-2',
+        purchaseId: 'B-2',
+        creditorKind: CreditorKind.supplier,
+        creditorId: 'supplier-2',
+        amountCents: 25250,
+        currency: 'CHF',
+        appliedCents: 25250,
+        remainingCents: 0,
+        allocations: [
+          SettlementAllocation(
+            id: 'pay-B-2',
+            isReversal: false,
+            amountCents: 25250,
+            method: 'transfer',
+            reference: 'SWIFT',
+            paidOn: DateTime(2026, 5, 20),
+          ),
+        ],
+      ),
+    ],
+  );
+
+  /// The rate recorded with B-2.
+  static final francRate = FxRate(
+    base: 'CHF',
+    quote: 'EUR',
+    rate: ExactDecimal.parse('1.0657'),
+    source: 'tax_authority',
+    date: DateTime(2026, 5, 12),
+    version: '1',
   );
 }

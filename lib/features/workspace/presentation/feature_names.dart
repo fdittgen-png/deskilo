@@ -295,5 +295,7 @@ String _lateName(AppLocalizations l10n, WorkspaceFeature feature) =>
 String _latestName(AppLocalizations l10n, WorkspaceFeature feature) =>
     switch (feature) {
       WorkspaceFeature.personalShell => l10n.featurePersonalShellTitle,
+      WorkspaceFeature.foreignCurrencyPurchases =>
+        l10n.featureForeignCurrencyPurchasesTitle,
       _ => feature.name,
     };

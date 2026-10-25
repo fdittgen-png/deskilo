@@ -5,6 +5,7 @@
 // receipts members paid out of pocket -- approved, waiting and refused -- with
 // the claims they leave and a payment already made. Dates follow the seeded
 // instant; a bill is due before the end of the year.
+import '../../../features/money/domain/accounting_amount.dart';
 import '../../../features/money/domain/einvoice_inbox.dart';
 import '../../../features/money/domain/invoice.dart';
 import '../../../features/money/domain/purchase.dart';
@@ -14,6 +15,7 @@ import '../../time/date_text.dart';
 import '../data/einvoice_inbox_repository.dart';
 import '../data/floor_plan_repository.dart';
 import '../data/money_repository.dart';
+import '../data/purchase_exchange_rates.dart';
 import '../data/purchase_receipt_line.dart';
 import '../data/purchase_repository.dart';
 import '../data/supplier_repository.dart';
@@ -51,6 +53,7 @@ DemoPurchasing seedDemoPurchasing(
   }
   _seedInbox(inbox, today);
   _seedBills(purchases, today);
+  _seedForeignBill(purchases, today);
   _seedReimbursedReceipt(purchases, today);
   return DemoPurchasing(
     suppliers: suppliers,
@@ -207,15 +210,16 @@ PurchaseDetail _document(
   PurchaseKind kind,
   PurchaseState state,
   _Meta meta,
-  List<PurchaseLine> lines,
-) => PurchaseDetail(
+  List<PurchaseLine> lines, {
+  String currency = DemoPurchaseExchangeRates.spaceCurrency,
+}) => PurchaseDetail(
   summary: PurchaseSummary(
     id: id,
     kind: kind,
     state: state,
     category: lines.first.description,
     reference: meta.reference,
-    currency: 'EUR',
+    currency: currency,
     grossCents: lines.fold(0, (s, l) => s + l.grossCents),
     receivedOn: meta.received,
   ),
@@ -370,6 +374,30 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
         [_bought(1, 'Catering, open evening', 22000, 10)],
       ),
     );
+}
+
+/// A yearly software licence billed in Swiss francs, sent for approval
+/// with the rate it was entered at: the approver confirms the rate.
+void _seedForeignBill(FakePurchaseRepository purchases, DateTime today) {
+  final received = today.subtract(const Duration(days: 5));
+  final licence = _document(
+    'demo-bill-licence-chf',
+    PurchaseKind.bill,
+    PurchaseState.draft,
+    _meta('CH-2026-118', received, dueOn: today.add(const Duration(days: 25))),
+    [_bought(1, 'Booking software, yearly licence', 48000, null)],
+    currency: 'CHF',
+  );
+  purchases
+    ..rememberRate(
+      licence.summary,
+      ExchangeRateEntry(
+        rate: ExactDecimal.parse('1.0657'),
+        rateDate: received,
+        source: 'tax_authority',
+      ),
+    )
+    ..addPendingBill(licence);
 }
 
 /// A receipt Chiara paid out of pocket, approved and reimbursed in full:

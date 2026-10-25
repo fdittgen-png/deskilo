@@ -748,7 +748,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "PDF export",
-    "Export the monthly bill as a PDF."
+    "Export the monthly bill and the analytics reports as a PDF."
    ],
    "seriesBooking": [
     "Series booking",
@@ -812,7 +812,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Data export (Excel)",
-    "Download all workspace data as an Excel workbook."
+    "Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook."
    ],
    "workingHours": [
     "Working hours",
@@ -1305,6 +1305,10 @@ window.SETUP_L10N={
    "personalShell": [
     "Personal shell (five destinations)",
     "Me as five destinations: Overview, My spaces, Discover, Messages and My data, with a sidebar on a wide window, a rail on a medium one and a bar on a phone. Off, Me keeps its four tabs."
+   ],
+   "foreignCurrencyPurchases": [
+    "Purchases in another currency",
+    "A supplier's bill in another currency than the space's, with the exchange rate recorded on it. The books and the FEC read it in the space's currency at that rate and keep the original amount beside it; a bill without its rate is refused."
    ]
   },
   "process": {
@@ -2383,7 +2387,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Export PDF",
-    "Exporter la facture mensuelle en PDF."
+    "Exporter la facture mensuelle et les rapports d’analyse en PDF."
    ],
    "seriesBooking": [
     "Réservation en série",
@@ -2447,7 +2451,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Export des données (Excel)",
-    "Télécharger toutes les données de l’espace dans un classeur Excel."
+    "Télécharger toutes les données de l’espace dans un classeur Excel, et les rapports d’analyse en fichier CSV ou en classeur."
    ],
    "workingHours": [
     "Horaires de travail",
@@ -2940,6 +2944,10 @@ window.SETUP_L10N={
    "personalShell": [
     "Interface personnelle (cinq destinations)",
     "Moi en cinq destinations : Vue d’ensemble, Mes espaces, Découvrir, Messages et Mes données, avec une barre latérale sur une fenêtre large, un rail sur une fenêtre moyenne et une barre sur un téléphone. Désactivée, Moi garde ses quatre onglets."
+   ],
+   "foreignCurrencyPurchases": [
+    "Achats dans une autre devise",
+    "Une facture fournisseur dans une autre devise que celle de l’espace, avec le taux de change enregistré sur elle. La comptabilité et le FEC la lisent dans la devise de l’espace à ce taux et gardent le montant d’origine à côté ; une facture sans son taux est refusée."
    ]
   },
   "process": {
@@ -4018,7 +4026,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "PDF-Export",
-    "Die Monatsrechnung als PDF exportieren."
+    "Die Monatsrechnung und die Analyseberichte als PDF exportieren."
    ],
    "seriesBooking": [
     "Serienbuchung",
@@ -4082,7 +4090,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Datenexport (Excel)",
-    "Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen."
+    "Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen, und die Analyseberichte als CSV-Datei oder Arbeitsmappe."
    ],
    "workingHours": [
     "Arbeitszeiten",
@@ -4575,6 +4583,10 @@ window.SETUP_L10N={
    "personalShell": [
     "Persönliche Oberfläche (fünf Ziele)",
     "Ich als fünf Ziele: Überblick, Meine Spaces, Entdecken, Nachrichten und Meine Daten, mit einer Seitenleiste in einem breiten Fenster, einer schmalen Leiste in einem mittleren und einer Leiste unten auf dem Telefon. Ausgeschaltet behält Ich seine vier Tabs."
+   ],
+   "foreignCurrencyPurchases": [
+    "Einkäufe in anderer Währung",
+    "Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt."
    ]
   },
   "process": {
@@ -5653,7 +5665,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Exportar PDF",
-    "Exportar la factura mensual como PDF."
+    "Exporte la factura mensual y los informes de análisis como PDF."
    ],
    "seriesBooking": [
     "Reserva en serie",
@@ -5717,7 +5729,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Exportación de datos (Excel)",
-    "Descargar todos los datos del espacio en un libro de Excel."
+    "Descargue todos los datos del espacio en un libro de Excel, y los informes de análisis como archivo CSV o libro."
    ],
    "workingHours": [
     "Horario laboral",
@@ -6210,6 +6222,10 @@ window.SETUP_L10N={
    "personalShell": [
     "Interfaz personal (cinco destinos)",
     "Yo en cinco destinos: Resumen, Mis espacios, Descubrir, Mensajes y Mis datos, con una barra lateral en una ventana ancha, un riel en una mediana y una barra en el teléfono. Desactivada, Yo conserva sus cuatro pestañas."
+   ],
+   "foreignCurrencyPurchases": [
+    "Compras en otra moneda",
+    "Una factura de proveedor en otra moneda distinta de la del espacio, con el tipo de cambio registrado en ella. La contabilidad y el FEC la leen en la moneda del espacio a ese tipo y conservan el importe original al lado; una factura sin su tipo se rechaza."
    ]
   },
   "process": {
@@ -7288,7 +7304,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Esportazione PDF",
-    "Esporti la fattura mensile come PDF."
+    "Esporti la fattura mensile e i report di analisi come PDF."
    ],
    "seriesBooking": [
     "Prenotazione in serie",
@@ -7352,7 +7368,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Esportazione dati (Excel)",
-    "Scaricare tutti i dati dello spazio in una cartella Excel."
+    "Scarichi tutti i dati dello spazio in una cartella Excel, e i report di analisi come file CSV o cartella di lavoro."
    ],
    "workingHours": [
     "Orario di lavoro",
@@ -7845,6 +7861,10 @@ window.SETUP_L10N={
    "personalShell": [
     "Interfaccia personale (cinque destinazioni)",
     "Io in cinque destinazioni: Panoramica, I miei spazi, Scopri, Messaggi e I miei dati, con una barra laterale in una finestra ampia, una barra verticale in una media e una barra in basso sul telefono. Disattivata, Io mantiene le sue quattro schede."
+   ],
+   "foreignCurrencyPurchases": [
+    "Acquisti in altra valuta",
+    "Una fattura fornitore in una valuta diversa da quella dello spazio, con il tasso di cambio registrato su di essa. La contabilità e il FEC la leggono nella valuta dello spazio a quel tasso e conservano accanto l'importo originale; una fattura senza il suo tasso viene rifiutata."
    ]
   },
   "process": {

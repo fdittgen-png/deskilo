@@ -39,6 +39,13 @@ final class JournalBlocked extends GenericJournal {
   final List<String> roles;
 }
 
+/// Documents in another currency than the space's that have no recorded
+/// exchange rate (`reference (currency)`); nothing was written.
+final class JournalNeedsRates extends GenericJournal {
+  const JournalNeedsRates(this.documents);
+  final List<String> documents;
+}
+
 /// #2376 — the FEC of the postings was refused: these parties have no
 /// usable auxiliary account, or these documents no recorded rate.
 final class JournalRefused extends GenericJournal {
@@ -101,9 +108,10 @@ final CustomerIdRule _fecPartyRule = accountingTargets
     .customerIdRule;
 
 /// #2365 — the FEC of the postings, on the book's own chart; #2376 the
-/// auxiliary accounts and the book's currency, or why it was refused.
-/// No exchange rate is recorded with a document yet, so an entry in
-/// another currency than the book's is refused rather than written in it.
+/// auxiliary accounts and the book's currency, or why it was refused. An
+/// entry the engine converted at its document's recorded rate carries its
+/// original amount (Montantdevise / Idevise); an entry still in another
+/// currency than the book's is refused rather than written in it.
 GenericJournal postedFecOf(JournalPosted books) {
   final fec = buildFecFromPostings(
     books.postings,
@@ -159,23 +167,97 @@ class GenericJournalExport {
   }) async {
     final local = localBookOf(profiles, year);
     if (local == null) return const JournalNeedsLocalBook();
-    final period = bookYearOf(local, asOf ?? DateTime(year, 12, 31));
-    final set = await _books.fetchPostings(
-      workspaceId,
-      local.issuerSiteId,
-      period.from,
-      period.to,
-    );
+    final journals = await _readYears(workspaceId, local, [
+      bookYearOf(local, asOf ?? DateTime(year, 12, 31)),
+    ], named: named);
+    return journals.single;
+  }
+
+  /// The year archive's books: the postings of every fiscal year the
+  /// calendar [year] overlaps up to [asOf] (the export's latest document),
+  /// oldest first. With a fiscal year that is not the calendar one, the
+  /// year that closes inside [year] travels beside the one still running,
+  /// so the archive of [year] holds every entry its register lists. Each
+  /// year is read exactly as [read] reads it, so its FEC is byte for byte
+  /// the one the FEC export writes and logs; the chart and the parties are
+  /// read once for all of them.
+  Future<List<GenericJournal>> readArchiveYears(
+    String workspaceId,
+    List<BookProfile> profiles,
+    int year, {
+    DateTime? asOf,
+  }) async {
+    final local = localBookOf(profiles, year);
+    if (local == null) return const [JournalNeedsLocalBook()];
+    final periods = {
+      bookYearOf(local, DateTime(year)),
+      bookYearOf(local, asOf ?? DateTime(year, 12, 31)),
+    }.toList()..sort((a, b) => a.from.compareTo(b.from));
+    return _readYears(workspaceId, local, periods, named: true);
+  }
+
+  /// One postings read per period of [periods]; a period whose engine
+  /// blocked is named, the others are posted.
+  Future<List<GenericJournal>> _readYears(
+    String workspaceId,
+    BookProfile local,
+    List<FiscalYear> periods, {
+    required bool named,
+  }) async {
+    final sets = [
+      for (final period in periods)
+        await _books.fetchPostings(
+          workspaceId,
+          local.issuerSiteId,
+          period.from,
+          period.to,
+        ),
+    ];
+    final posted = [
+      for (final set in sets)
+        if (set.blockers.isEmpty) set,
+    ];
+    final chart = named && posted.isNotEmpty
+        ? await _books.fetchBookChart(workspaceId)
+        : null;
+    final parties = named && posted.isNotEmpty
+        ? await _books.fetchPostingParties(workspaceId, [
+            ...{
+              for (final set in posted)
+                for (final p in set.postings) p.documentId,
+            },
+          ])
+        : const <String, PostingParty>{};
+    return [
+      for (var i = 0; i < periods.length; i++)
+        _journalOf(
+          sets[i],
+          periods[i],
+          local,
+          chart: chart,
+          parties: parties,
+        ),
+    ];
+  }
+
+  GenericJournal _journalOf(
+    PostingSet set,
+    FiscalYear period,
+    BookProfile local, {
+    required ({List<BookAccount> accounts, List<BookMapping> mappings})? chart,
+    required Map<String, PostingParty> parties,
+  }) {
     if (set.blockers.isNotEmpty) {
-      return JournalBlocked([
-        ...{for (final b in set.blockers) b.subject},
-      ]);
+      final roles = {
+        for (final b in set.blockers)
+          if (b.block != PostingBlock.missingRate) b.subject,
+      };
+      return roles.isNotEmpty
+          ? JournalBlocked([...roles])
+          : JournalNeedsRates([for (final b in set.blockers) b.subject]);
     }
-    if (!named) return JournalPosted(set.postings, year: period);
-    final chart = await _books.fetchBookChart(workspaceId);
-    final parties = await _books.fetchPostingParties(workspaceId, [
-      ...{for (final p in set.postings) p.documentId},
-    ]);
+    if (chart == null) return JournalPosted(set.postings, year: period);
+    final documents = {for (final p in set.postings) p.documentId};
     return JournalPosted(
       set.postings,
       year: period,
@@ -184,7 +266,10 @@ class GenericJournalExport {
         for (final a in chart.accounts)
           if (a.issuerSiteId == local.issuerSiteId) a.code: a.name,
       },
-      parties: parties,
+      parties: {
+        for (final e in parties.entries)
+          if (documents.contains(e.key)) e.key: e.value,
+      },
     );
   }
 }

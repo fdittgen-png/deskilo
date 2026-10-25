@@ -303,4 +303,59 @@ class SupabasePurchaseRepository implements PurchaseRepository {
       ],
     ];
   }
+
+  @override
+  Future<DocumentExchangeRate?> fetchExchangeRate(
+    String workspaceId,
+    String purchaseId,
+  ) async {
+    final row = await _client
+        .from('document_exchange_rates')
+        .select(_rateColumns)
+        .eq('workspace_id', workspaceId)
+        .eq('document_kind', 'purchase')
+        .eq('document_id', purchaseId)
+        .maybeSingle();
+    return row == null ? null : DocumentExchangeRate.fromRow(row);
+  }
+
+  /// The rate as text: a numeric read as a JSON number would pass through a
+  /// double.
+  static const _rateColumns =
+      'document_id, currency, functional_currency, rate::text, rate_date, '
+      'source, revision';
+
+  @override
+  Future<DocumentExchangeRate> recordExchangeRate(
+    String workspaceId,
+    String purchaseId,
+    ExchangeRateEntry entry,
+  ) async {
+    final json = await _client.rpc<Object?>(
+      'record_purchase_exchange_rate_v1',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_purchase_id': purchaseId,
+        'p_rate': entry.rate.toString(),
+        'p_rate_date': isoDay(entry.rateDate),
+        'p_source': entry.source,
+      },
+    );
+    return DocumentExchangeRate.fromRow(
+      JsonReader.of(json, context: 'record_purchase_exchange_rate_v1').json,
+    );
+  }
+
+  @override
+  Future<List<String>> fetchExchangeRateSources() async {
+    final rows = await _client
+        .from('exchange_rate_sources')
+        .select('code')
+        .eq('active', true)
+        .order('sort_order');
+    return [
+      for (final r in rows)
+        JsonReader(r, context: 'exchange_rate_sources').string('code'),
+    ];
+  }
 }

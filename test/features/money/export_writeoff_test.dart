@@ -12,6 +12,7 @@ import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/datev_collective.dart';
 import 'support/seeded_export_year.dart';
 
 int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
@@ -83,7 +84,7 @@ void main() {
   });
 
   group('DATEV', () {
-    List<String> datev({Map<String, InvoiceMatch>? matches}) => buildDatevFile(DatevRequest(
+    List<String> datev({Map<String, InvoiceMatch>? matches}) => buildDatevFile(DatevRequest(detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: matches ?? SeededExportYear.matches,
       accounts: const DatevAccounts(),

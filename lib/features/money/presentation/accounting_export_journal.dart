@@ -12,7 +12,13 @@ import '../application/generic_journal_export.dart';
 import '../domain/fec_postings.dart';
 
 export '../application/generic_journal_export.dart'
-    show GenericJournal, JournalBlocked, JournalPosted, journalCsvOf, writtenWith;
+    show
+        GenericJournal,
+        JournalBlocked,
+        JournalNeedsRates,
+        JournalPosted,
+        journalCsvOf,
+        writtenWith;
 
 /// Builds a posted file through [build] (the generic journal, or #2365 the
 /// FEC of a local book) and hands it to [save].
@@ -37,6 +43,8 @@ Future<void> exportGenericJournal(
       AppSnack.error(context, l10n.journalNeedsLocalBook);
     case JournalBlocked(:final roles):
       AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
+    case JournalNeedsRates(:final documents):
+      AppSnack.error(context, l10n.journalNeedsRates(documents.join(', ')));
     case JournalRefused(:final blockers):
       String named(FecBlock block) => [
         for (final b in blockers)

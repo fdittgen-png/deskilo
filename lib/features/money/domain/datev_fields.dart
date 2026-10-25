@@ -28,8 +28,18 @@ DateTime _fiscalYearStart(int month, int day, DateTime from) {
 
 /// The fiscal-year start the book profiles agree on for the period
 /// [from]..[to]: each issuer's latest version in force at [to]; null when
-/// there is none or the issuers disagree (the header then says 1 January).
+/// there is none or the issuers disagree ([datevProfileFiscalStarts]).
 DateTime? datevProfileFiscalStart(
+  List<BookProfile> profiles,
+  DateTime from,
+  DateTime to,
+) {
+  final starts = datevProfileFiscalStarts(profiles, from, to);
+  return starts.length == 1 ? starts.single : null;
+}
+
+/// The fiscal-year starts of the issuers' latest profiles in force at [to].
+Set<DateTime> datevProfileFiscalStarts(
   List<BookProfile> profiles,
   DateTime from,
   DateTime to,
@@ -42,11 +52,10 @@ DateTime? datevProfileFiscalStart(
       latest[p.issuerSiteId] = p;
     }
   }
-  final starts = {
+  return {
     for (final p in latest.values)
       _fiscalYearStart(p.fiscalYearStartMonth, p.fiscalYearStartDay, from),
   };
-  return starts.length == 1 ? starts.single : null;
 }
 
 /// One booking line of the Buchungsstapel: amount (always positive), the
@@ -61,7 +70,22 @@ class DatevBooking {
     required this.documentRef,
     required this.text,
     this.taxPeriodDate,
+    this.taxKey = '',
+    this.invoice,
   });
+
+  /// This booking dated [day].
+  DatevBooking on(DateTime day) => DatevBooking(
+    cents: cents,
+    debit: debit,
+    credit: credit,
+    date: day,
+    documentRef: documentRef,
+    text: text,
+    taxPeriodDate: taxPeriodDate,
+    taxKey: taxKey,
+    invoice: invoice,
+  );
 
   final int cents;
   final String debit;
@@ -70,6 +94,13 @@ class DatevBooking {
   final String documentRef;
   final String text;
   final DateTime? taxPeriodDate;
+
+  /// The BU-Schlüssel; '' on an automatic account and where none applies.
+  final String taxKey;
+
+  /// The document the row books, when it books one: its site, number,
+  /// dates and voucher travel with the row.
+  final Invoice? invoice;
 }
 
 /// Where the builder's bookings go.
@@ -91,5 +122,69 @@ void bookDatevWriteOff(
   book(DatevBooking(
     cents: owed, debit: lossAccount, credit: customersAccount, date: day,
     documentRef: invoice.number, text: 'Forderungsverlust ${invoice.number}',
+    invoice: invoice,
   ));
 }
+
+/// Fields 21 to 125 of the EXTF Buchungsstapel (format 700, category 21),
+/// in DATEV's order: the importer reads by position, so field 116,
+/// `Datum Zuord. Steuerperiode`, needs every field before it (#2355).
+final List<String> datevColumns21To125 = List.unmodifiable([
+  for (var i = 1; i <= 8; i++) ...[
+    'Beleginfo - Art $i',
+    'Beleginfo - Inhalt $i',
+  ],
+  'KOST1 - Kostenstelle',
+  'KOST2 - Kostenstelle',
+  'Kost-Menge',
+  'EU-Land u. UStID (Bestimmung)',
+  'EU-Steuersatz (Bestimmung)',
+  'Abw. Versteuerungsart',
+  'Sachverhalt L+L',
+  'Funktionsergänzung L+L',
+  'BU 49 Hauptfunktionstyp',
+  'BU 49 Hauptfunktionsnummer',
+  'BU 49 Funktionsergänzung',
+  for (var i = 1; i <= 20; i++) ...[
+    'Zusatzinformation - Art $i',
+    'Zusatzinformation - Inhalt $i',
+  ],
+  'Stück',
+  'Gewicht',
+  'Zahlweise',
+  'Forderungsart',
+  'Veranlagungsjahr',
+  'Zugeordnete Fälligkeit',
+  'Skontotyp',
+  'Auftragsnummer',
+  'Buchungstyp',
+  'USt-Schlüssel (Anzahlungen)',
+  'EU-Mitgliedstaat (Anzahlungen)',
+  'Sachverhalt L+L (Anzahlungen)',
+  'EU-Steuersatz (Anzahlungen)',
+  'Erlöskonto (Anzahlungen)',
+  'Herkunft-Kz',
+  'Buchungs GUID',
+  'KOST-Datum',
+  'SEPA-Mandatsreferenz',
+  'Skontosperre',
+  'Gesellschaftername',
+  'Beteiligtennummer',
+  'Identifikationsnummer',
+  'Zeichnernummer',
+  'Postensperre bis',
+  'Bezeichnung SoBil-Sachverhalt',
+  'Kennzeichen SoBil-Buchung',
+  'Festschreibung',
+  'Leistungsdatum',
+  'Datum Zuord. Steuerperiode',
+  'Fälligkeit',
+  'Generalumkehr (GU)',
+  'Steuersatz',
+  'Land',
+  'Abrechnungsreferenz',
+  'BVV-Position (Betriebsvermögensvergleich)',
+  'EU-Land u. UStID (Ursprung)',
+  'EU-Steuersatz (Ursprung)',
+  'Abw. Skontokonto',
+]);

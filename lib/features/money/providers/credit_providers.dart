@@ -34,3 +34,9 @@ Future<List<CreditProduct>> creditProducts(Ref ref) async {
 @riverpod
 Future<int> memberCreditBalance(Ref ref, String memberId) =>
     ref.watch(creditRepositoryProvider).memberCreditBalance(memberId);
+
+/// The space's currency, which its books are kept in; null until the space
+/// is read.
+final spaceCurrencyProvider = Provider.autoDispose<String?>(
+  (ref) => ref.watch(currentWorkspaceProvider).value?.currencyCode,
+);

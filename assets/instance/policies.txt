@@ -45,6 +45,7 @@ public.badge_auth_attempts.mcp_delegated_deny
 public.badge_auth_attempts.personal_native_session
 public.bi_cost_allocation_rules.bi_cost_allocation_rules_select
 public.bi_cost_allocation_rules.mcp_delegated_deny
+public.bi_export_evidence.mcp_delegated_deny
 public.bi_views.mcp_delegated_deny
 public.book_accounts.mcp_delegated_deny
 public.book_exports.book_exports_select
@@ -87,6 +88,8 @@ public.desks.desks_write_sites
 public.desks.mcp_delegated_deny
 public.directory_people.mcp_delegated_deny
 public.directory_people.personal_native_session
+public.document_exchange_rates.document_exchange_rates_select
+public.document_exchange_rates.mcp_delegated_deny
 public.einvoice_credentials.mcp_delegated_deny
 public.einvoice_inbox.einvoice_inbox_select
 public.einvoice_inbox.mcp_delegated_deny
@@ -97,6 +100,9 @@ public.event_decisions.mcp_delegated_deny
 public.event_decisions.personal_native_session
 public.events.events_select
 public.events.mcp_delegated_deny
+public.exchange_rate_sources.exchange_rate_sources_read
+public.exchange_rate_sources.mcp_delegated_deny
+public.exchange_rate_sources.personal_native_session
 public.expense_occurrences.expense_occurrences_select
 public.expense_occurrences.mcp_delegated_deny
 public.expense_repartitions.expense_repartitions_select

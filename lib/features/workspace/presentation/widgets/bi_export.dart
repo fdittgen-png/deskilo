@@ -4,6 +4,10 @@
 // analyses the page is showing, the same content the dashboards render,
 // and lays it out as a report. A section whose analysis cannot be read is
 // left out of the report and said — never printed with a made-up figure.
+//
+// [BiSnapshotPrinter] prints an exported report's snapshot instead: its own
+// print layout, inside the workspace's positioned analytics layout when one
+// is designed, else inside its analytics header and footer bands.
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -25,9 +29,12 @@ import '../../../money/presentation/report_layout_actions.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/bi_query.dart';
 import '../../domain/bi_report_pdf.dart';
+import '../../domain/bi_report_print.dart';
+import '../../domain/bi_report_snapshot.dart';
 import '../../domain/bi_result.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../bi_print_strings_l10n.dart';
 import 'bi_dashboard_content.dart';
 import 'bi_module_section.dart' show biModuleViews;
 import 'bi_toolbar.dart' show biPeriodLabel;
@@ -181,5 +188,62 @@ Future<void> exportBiPdf(
         l10n.biPdfFailed,
       );
     }
+  }
+}
+
+/// Prints an exported report's snapshot inside the workspace's analytics
+/// header and footer: the document the preview shows, from the same
+/// values. Rendering only — it writes nothing and asks the server nothing.
+class BiSnapshotPrinter {
+  const BiSnapshotPrinter(this.context, this.ref);
+
+  final BuildContext context;
+  final WidgetRef ref;
+
+  /// A positioned `bi_analytics` layout wins over the bands, as for every
+  /// printed document; the bands are the fallback.
+  Future<Uint8List> pdf(BiReportSnapshot snapshot) async {
+    final l10n = context.l10n;
+    final locale = Localizations.localeOf(context).toString();
+    final strings = biPrintStringsFor(context, ref);
+    final document = biPrintDocument(snapshot, strings);
+    final regular = await rootBundle.load('assets/fonts/Roboto-Regular.ttf');
+    final bold = await rootBundle.load('assets/fonts/Roboto-Bold.ttf');
+    await warmLetterDocProviders(ref, 'bi_analytics');
+    if (!context.mounted) throw const BiExportRefused(BiExportFailure.stale);
+    final data = withOwnerTexts(
+      <String, Object?>{
+        'workspace': snapshot.source.workspaceName,
+        'period': biPeriodLabel(snapshot.period, l10n, locale),
+        'issued': strings.formats.dateTime(snapshot.computedAt),
+      },
+      invoicePdfTemplateFor(ref).texts,
+    );
+    final mark = developmentMark(context, ref);
+    final layout = letterLayoutXml(ref, docId: 'bi_analytics', l10n: l10n);
+    if (layout != null) {
+      final bytes = await tryLayoutPdf(
+        layoutXml: layout,
+        data: data,
+        what: document.title,
+        documentTitle: document.title,
+        pageLabel: l10n.invoicePdfPage,
+        watermark: mark,
+        font: (asset) async => pw.Font.ttf(asset.contains('Bold') ? bold : regular),
+        image: (name) => layoutImage(ref, name),
+        additionalBody: biPrintBodyWidgets(document, title: true),
+      );
+      if (bytes != null) return bytes;
+    }
+    if (!context.mounted) throw const BiExportRefused(BiExportFailure.stale);
+    final letterhead = renderLetterDoc(context, ref, docId: 'bi_analytics', data: data);
+    return buildBiPrintPdf(
+      document,
+      fonts: (base: pw.Font.ttf(regular), bold: pw.Font.ttf(bold)),
+      pageLabel: l10n.invoicePdfPage,
+      letterhead: letterhead,
+      images: await resolveReportImages(ref, letterhead, strict: true),
+      watermark: mark,
+    );
   }
 }

@@ -1425,6 +1425,33 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Ausstattungsregister ist aus: Kein Anlagenzugang ist bekannt.';
 
   @override
+  String get biBasisBookValuePeriod => 'Zeitraum der Buchwerte';
+
+  @override
+  String get biBasisCurrentState => 'Stand heute';
+
+  @override
+  String get biBasisDocumentDate => 'Datum des Belegs';
+
+  @override
+  String get biBasisInvoiceMonth => 'Monat der Rechnung';
+
+  @override
+  String get biBasisOccurrenceDue => 'Fälligkeitsdatum';
+
+  @override
+  String get biBasisPaymentMatchedAt => 'Datum der Zuordnung der Zahlung';
+
+  @override
+  String get biBasisPaymentReportedPaid => 'als bezahlt gemeldetes Datum';
+
+  @override
+  String get biBasisPeriodEnd => 'Ende des Zeitraums';
+
+  @override
+  String get biBasisReservationTime => 'gebuchte Zeit';
+
+  @override
   String get biBookingBasis =>
       'Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.';
 
@@ -1575,6 +1602,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String biCostsUnresolved(String count) {
     return '$count nicht eingestufte Positionen bleiben außen vor.';
   }
+
+  @override
+  String get biCoverageConfirmedValues => 'nur bestätigte Werte';
+
+  @override
+  String get biCoverageCurrentRecords => 'aktuelle Datensätze';
+
+  @override
+  String get biCoverageCurrentStateOnly => 'nur heute';
+
+  @override
+  String get biCoverageRecordedHistory => 'aufgezeichnete Historie';
 
   @override
   String get biCurrentBasis =>
@@ -2080,7 +2119,86 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biEvolutionTitle => 'Entwicklung';
 
   @override
+  String get biExportAction => 'Bericht exportieren';
+
+  @override
+  String biExportComputedAt(String time) {
+    return 'Zahlen berechnet am $time. Dieser Export liest sie selbst: Haben sich die Daten seit der Anzeige des Dashboards geändert, weichen sie davon ab.';
+  }
+
+  @override
+  String biExportDigest(String hash) {
+    return 'Prüfwert $hash';
+  }
+
+  @override
+  String get biExportFailedEmpty =>
+      'In diesem Bericht lässt sich noch nichts exportieren.';
+
+  @override
+  String get biExportFailedForbidden =>
+      'Sie dürfen diese Zahlen nicht exportieren: Dafür braucht es das Recht, Daten zu exportieren, und das Recht, jede Zahl des Berichts zu lesen.';
+
+  @override
+  String get biExportFailedInvalid =>
+      'Aus diesem Bericht konnte kein Export erstellt werden.';
+
+  @override
+  String get biExportFailedOff =>
+      'Der Export dieser Dateiart ist in diesem Arbeitsbereich ausgeschaltet.';
+
+  @override
+  String get biExportFailedStale =>
+      'Der Bericht hat sich geändert, seit Sie ihn geöffnet haben. Öffnen Sie ihn erneut und exportieren Sie dann.';
+
+  @override
+  String get biExportFailedTooLarge =>
+      'Dieser Bericht verlangt mehr Zahlen, als ein Export tragen darf. Grenzen Sie ihn ein: weniger Seiten, Karten oder Zeiträume.';
+
+  @override
+  String get biExportFailedUnavailable =>
+      'Der Server hat nicht geantwortet. Es wurde nichts exportiert; versuchen Sie es erneut.';
+
+  @override
+  String get biExportFormatCsv => 'CSV (Daten)';
+
+  @override
+  String get biExportFormatPdf => 'PDF';
+
+  @override
+  String get biExportFormatXlsx => 'Arbeitsmappe (XLSX)';
+
+  @override
+  String biExportLeftOut(String count) {
+    return '$count Karten sind nicht in diesem Export: Ihre Zahl, ihre Filter oder ihre Gruppierung kann ein Export noch nicht beantworten.';
+  }
+
+  @override
   String get biExportPdf => 'Als PDF exportieren';
+
+  @override
+  String get biExportPreview => 'Zahlen lesen';
+
+  @override
+  String get biExportRecallNote =>
+      'Eine gespeicherte Datei ist eine Kopie dieser Zahlen: Sie kann später nicht zurückgeholt werden, auch wenn sich Ihre Rechte ändern.';
+
+  @override
+  String get biExportRefresh => 'Erneut lesen';
+
+  @override
+  String biExportRefreshedAt(String time) {
+    return 'Erneut gelesen am $time: neue Zahlen und ein neuer Prüfwert.';
+  }
+
+  @override
+  String get biExportSave => 'Datei speichern';
+
+  @override
+  String get biExportTaking => 'Die Zahlen für diesen Export werden gelesen …';
+
+  @override
+  String get biExportTitle => 'Bericht exportieren';
 
   @override
   String get biExposureDiffers =>
@@ -2241,6 +2359,142 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biPdfTitle => 'Geschäftsanalyse';
+
+  @override
+  String get biPrintColBasis => 'Zusammengesetzt aus';
+
+  @override
+  String get biPrintColPeriod => 'Zeitraum';
+
+  @override
+  String get biPrintColStatus => 'Status';
+
+  @override
+  String get biPrintColValue => 'Wert';
+
+  @override
+  String get biPrintComplete =>
+      'Jede Zahl dieser Kopie ist bekannt und deckt ihren ganzen Zeitraum ab.';
+
+  @override
+  String get biPrintComputed => 'Berechnet';
+
+  @override
+  String get biPrintCurrency => 'Währung';
+
+  @override
+  String get biPrintDateBasis => 'Datumsbasis';
+
+  @override
+  String get biPrintFailed => 'nicht beantwortet';
+
+  @override
+  String get biPrintFilters => 'Filter';
+
+  @override
+  String get biPrintFooter => 'Fußzeile';
+
+  @override
+  String get biPrintHeader => 'Kopfzeile';
+
+  @override
+  String get biPrintLandscape => 'Querformat';
+
+  @override
+  String get biPrintLayoutAction => 'Drucklayout';
+
+  @override
+  String get biPrintLayoutApply => 'Dieses Layout verwenden';
+
+  @override
+  String get biPrintLayoutTitle => 'Drucklayout des Berichts';
+
+  @override
+  String get biPrintLeftOut => 'nicht in diesem Export';
+
+  @override
+  String get biPrintLineHelper => 'Reiner Text, auf jedem Blatt gedruckt.';
+
+  @override
+  String get biPrintLineInvalid =>
+      'Nur reiner Text: keine Zeilenumbrüche oder Steuerzeichen.';
+
+  @override
+  String get biPrintManagement =>
+      'Managementinformation, kein gesetzlicher Abschluss.';
+
+  @override
+  String get biPrintMarginNarrow => 'Schmal';
+
+  @override
+  String get biPrintMarginNormal => 'Normal';
+
+  @override
+  String get biPrintMarginWide => 'Breit';
+
+  @override
+  String get biPrintMargins => 'Ränder';
+
+  @override
+  String get biPrintNoFilters => 'keine';
+
+  @override
+  String get biPrintOrientation => 'Ausrichtung';
+
+  @override
+  String get biPrintPageBreaks => 'Jede Berichtsseite auf einem neuen Blatt';
+
+  @override
+  String get biPrintPaper => 'Papier';
+
+  @override
+  String get biPrintPaperA4 => 'A4';
+
+  @override
+  String get biPrintPaperLetter => 'US Letter';
+
+  @override
+  String get biPrintPartial =>
+      'Teilweise Kopie: Einige Zahlen sind unbekannt, decken nur einen Teil ihres Zeitraums ab oder sind nicht in diesem Export.';
+
+  @override
+  String get biPrintPeriod => 'Zeitraum';
+
+  @override
+  String get biPrintPortrait => 'Hochformat';
+
+  @override
+  String get biPrintProvenanceNote =>
+      'Arbeitsbereich, Bericht und Revision, Zeitraum, Datumsbasis, Währungen, Filter, der Zeitpunkt der Berechnung und ob die Zahlen vollständig sind, werden immer gedruckt.';
+
+  @override
+  String get biPrintQualified => 'teilweise';
+
+  @override
+  String get biPrintReport => 'Bericht';
+
+  @override
+  String biPrintRevision(String revision) {
+    return 'Revision $revision';
+  }
+
+  @override
+  String get biPrintSheetPreview => 'Blattvorschau';
+
+  @override
+  String get biPrintShowSources => 'Die Quelle jeder Zahl angeben';
+
+  @override
+  String get biPrintSnapshot => 'Prüfwert';
+
+  @override
+  String get biPrintUnknown => 'unbekannt';
+
+  @override
+  String get biPrintUnsaved => 'nicht gespeichert';
+
+  @override
+  String get biPrintWorkspace => 'Arbeitsbereich';
 
   @override
   String biProjectionBasis(int count) {
@@ -4609,6 +4863,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dataReportYes => 'Ja';
 
   @override
+  String get datevAccountLength => 'Sachkontenlänge';
+
+  @override
   String get datevAccountsIntro =>
       'Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.';
 
@@ -4616,10 +4873,80 @@ class AppLocalizationsDe extends AppLocalizations {
   String get datevAccountsTitle => 'DATEV-Export';
 
   @override
+  String datevBlocked(String problems) {
+    return 'Der DATEV-Export wurde nicht geschrieben: $problems';
+  }
+
+  @override
   String get datevClientNumber => 'Mandantennummer';
 
   @override
   String get datevConsultantNumber => 'Beraternummer';
+
+  @override
+  String get datevCostCentre =>
+      'Kostenstelle (KOST1), wenn ein Beleg keinen Standort nennt';
+
+  @override
+  String get datevDebtorBase => 'Debitor zu Mitgliedsnummer 0';
+
+  @override
+  String datevProblemAccountLength(String account, String length) {
+    return 'Konto $account hat nicht $length Stellen';
+  }
+
+  @override
+  String datevProblemAutomatic(String percent, String account) {
+    return '$percent % würde auf $account gebucht, das Automatikkonto eines anderen Satzes';
+  }
+
+  @override
+  String datevProblemClient(String number) {
+    return 'Mandantennummer „$number“ ist keine Zahl von 1 bis 99999';
+  }
+
+  @override
+  String datevProblemConsultant(String number) {
+    return 'Beraternummer „$number“ ist keine Zahl von 1001 bis 9999999';
+  }
+
+  @override
+  String datevProblemCurrency(String currency) {
+    return 'die Beträge lauten auf $currency; die DATEV-Datei wird in Euro geschrieben';
+  }
+
+  @override
+  String datevProblemDebtorClash(String members, String account) {
+    return '$members hätten denselben Debitor $account';
+  }
+
+  @override
+  String get datevProblemFiscalYearStarts =>
+      'die Buchungsprofile der Standorte beginnen das Wirtschaftsjahr an verschiedenen Tagen';
+
+  @override
+  String datevProblemMemberNumber(String member, String number) {
+    return '$member hat keine Mitgliedsnummer, aus der ein Debitor wird („$number“): zuerst eine Nummer vergeben';
+  }
+
+  @override
+  String datevProblemReferenceTooLong(String field, String value) {
+    return '$field „$value“ ist länger, als DATEV übernimmt, und würde gekürzt';
+  }
+
+  @override
+  String datevProblemSachkontenlaenge(String length) {
+    return 'die Sachkontenlänge $length liegt nicht zwischen 4 und 8';
+  }
+
+  @override
+  String datevProblemTaxKey(String percent, String account) {
+    return 'für $percent % auf Konto $account ist kein BU-Schlüssel hinterlegt';
+  }
+
+  @override
+  String get datevVoucherLinks =>
+      'Rechnungs-PDFs beilegen und aus jeder Buchung verlinken (Beleglink)';
 
   @override
   String get decisionSurfaceEmpty => 'Nichts wartet auf Sie';
@@ -7079,7 +7406,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureDataExportDesc =>
-      'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen.';
+      'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen, und die Analyseberichte als CSV-Datei oder Arbeitsmappe.';
 
   @override
   String get featureDataReportDesc =>
@@ -7221,6 +7548,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureFinanceFacesTitle => 'Finanzen in vier Ansichten';
+
+  @override
+  String get featureForeignCurrencyPurchasesDesc =>
+      'Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt.';
+
+  @override
+  String get featureForeignCurrencyPurchasesTitle =>
+      'Einkäufe in anderer Währung';
 
   @override
   String get featureFormHelpHintsDesc =>
@@ -7608,7 +7943,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featurePdfExport => 'PDF-Export';
 
   @override
-  String get featurePdfExportDesc => 'Die Monatsrechnung als PDF exportieren.';
+  String get featurePdfExportDesc =>
+      'Die Monatsrechnung und die Analyseberichte als PDF exportieren.';
 
   @override
   String get featurePersonalInfo => 'Persönliche Angaben';
@@ -8626,6 +8962,66 @@ class AppLocalizationsDe extends AppLocalizations {
   String gettingStartedTitle(String workspace) {
     return 'Erste Schritte in $workspace';
   }
+
+  @override
+  String get gobdProcedureExportsBody =>
+      'Jeder Buchhaltungsexport wird mit Zeitraum, Größe und SHA-256-Prüfsumme im Exportprotokoll festgehalten; ein Export eines abgeschlossenen Zeitraums ergibt wieder dieselben Bytes.';
+
+  @override
+  String get gobdProcedureExportsHeading => 'Exporte';
+
+  @override
+  String gobdProcedureGenerated(String date, String from, String to) {
+    return 'Erstellt am $date für den Zeitraum $from bis $to.';
+  }
+
+  @override
+  String get gobdProcedureHandoverBody =>
+      'Dieses Paket folgt dem Beschreibungsstandard: index.xml beschreibt jede Tabelle, ihre Spalten, Schlüssel und Verknüpfungen und nennt die mitgelieferte DTD gdpdu-01-08-2002.dtd. Jede Tabelle ist eine UTF-8-CSV-Datei ohne Kopfzeile. Der Ordner belege enthält zu jeder Rechnung die strukturierte E-Rechnung und, wo sie erzeugt wurde, das PDF/A-3 mit eingebettetem XML.';
+
+  @override
+  String get gobdProcedureHandoverHeading => 'Datenüberlassung (Z3)';
+
+  @override
+  String get gobdProcedureImmutableBody =>
+      'Eine ausgestellte Rechnung oder Gutschrift kann weder geändert noch gelöscht werden: die Datenbank verweigert es. Jeder Beleg wird mit seinem Vorgänger in eine Kette signiert. Eine Korrektur ist ein neuer Beleg (Gutschrift oder Ersatzrechnung), der den korrigierten nennt. Ein abgeschlossener Zeitraum verweigert Stornierungen und Zahlungen, die in ihm datiert sind.';
+
+  @override
+  String get gobdProcedureImmutableHeading => 'Unveränderbarkeit';
+
+  @override
+  String gobdProcedureRetentionUntil(String date) {
+    return 'ein Beleg vom Ende dieses Zeitraums darf ab $date gelöscht werden';
+  }
+
+  @override
+  String gobdProcedureSchemaApp(String version) {
+    return 'Schemaversion, für die diese App gebaut ist: $version';
+  }
+
+  @override
+  String gobdProcedureSchemaLive(String version) {
+    return 'Datenbankschema dieser Installation: Version $version';
+  }
+
+  @override
+  String get gobdProcedureSchemaUnknown =>
+      'Datenbankschema dieser Installation: bei der Erstellung nicht lesbar';
+
+  @override
+  String get gobdProcedureSystemBody =>
+      'DesKilo führt die Rechnungen, Gutschriften, Zahlungen, Mitgliederkonten, umgelegten Kosten und genehmigten Eingangsbelege dieses Space. Es ist ein Nebenbuch: Hauptbuch und Jahresabschluss führt die Steuerberatung in ihrem eigenen System, das den DATEV-Export importiert.';
+
+  @override
+  String get gobdProcedureSystemHeading => 'System und Umfang';
+
+  @override
+  String gobdProcedureTitle(String workspace) {
+    return 'Verfahrensdokumentation — $workspace';
+  }
+
+  @override
+  String get gobdProcedureVersionHeading => 'Softwarestand';
 
   @override
   String get groupAnnounceOnly => 'Nur Admins dürfen schreiben';
@@ -10437,6 +10833,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Journal (CSV, für jede Buchhaltungssoftware)';
 
   @override
+  String get invoiceExportGobd => 'GoBD-Datenüberlassung (Z3)';
+
+  @override
   String get invoiceExportJournals =>
       'Journale mit Sammeljournal (PDF, aus der Buchführung)';
 
@@ -11298,6 +11697,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get journalNeedsLocalBook =>
       'Das Journal stammt aus einer hier geführten Buchhaltung: richten Sie zuerst den Kontenplan des Ausstellers ein.';
+
+  @override
+  String journalNeedsRates(String documents) {
+    return 'Diese Einkäufe sind in einer anderen Währung als der des Space und haben keinen erfassten Wechselkurs; es wurde nichts geschrieben. Erfassen Sie zuerst den Kurs jedes einzelnen: $documents';
+  }
 
   @override
   String journeyClosedPaid(String date) {
@@ -17706,6 +18110,66 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesEvidence => 'Nachweise';
+
+  @override
+  String get purchasesFxCurrency => 'Währung';
+
+  @override
+  String get purchasesFxEnter => 'Kurs erfassen oder korrigieren';
+
+  @override
+  String get purchasesFxInvalid =>
+      'Ein Kurs ist eine positive Zahl mit höchstens 10 Nachkommastellen, mit Datum und Quelle.';
+
+  @override
+  String get purchasesFxMissing =>
+      'Es ist kein Wechselkurs erfasst: Die Buchhaltung lehnt diesen Einkauf ab, bis er erfasst ist.';
+
+  @override
+  String purchasesFxRate(String currency, String spaceCurrency) {
+    return 'Wechselkurs: 1 $currency in $spaceCurrency';
+  }
+
+  @override
+  String get purchasesFxRateDate => 'Kursdatum';
+
+  @override
+  String purchasesFxRecorded(
+    String currency,
+    String rate,
+    String spaceCurrency,
+    String date,
+    String source,
+  ) {
+    return '1 $currency = $rate $spaceCurrency am $date · $source';
+  }
+
+  @override
+  String get purchasesFxRefused => 'Der Wechselkurs wurde nicht erfasst.';
+
+  @override
+  String get purchasesFxSaved => 'Der Wechselkurs ist erfasst.';
+
+  @override
+  String get purchasesFxSource => 'Quelle des Kurses';
+
+  @override
+  String get purchasesFxSourceBank => 'Von der Bank angewandt';
+
+  @override
+  String get purchasesFxSourceManual => 'Von Hand erfasst';
+
+  @override
+  String get purchasesFxSourceTaxAuthority =>
+      'Von der Steuerverwaltung für den Steuerzeitpunkt veröffentlicht';
+
+  @override
+  String purchasesFxSpaceCurrency(String currency) {
+    return '$currency (Währung des Space)';
+  }
+
+  @override
+  String get purchasesFxTitle => 'Wechselkurs';
 
   @override
   String get purchasesGross => 'Gesamtbetrag inkl. Steuer';

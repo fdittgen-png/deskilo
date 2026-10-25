@@ -2479,6 +2479,60 @@ abstract class AppLocalizations {
   /// **'The equipment register is off: no capital addition is known.'**
   String get biAssetsRegisterOff;
 
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'period of the book values'**
+  String get biBasisBookValuePeriod;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'as it stands today'**
+  String get biBasisCurrentState;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'date of the document'**
+  String get biBasisDocumentDate;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'month of the invoice'**
+  String get biBasisInvoiceMonth;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'due date'**
+  String get biBasisOccurrenceDue;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'date the payment was matched'**
+  String get biBasisPaymentMatchedAt;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'date reported paid'**
+  String get biBasisPaymentReportedPaid;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'end of the period'**
+  String get biBasisPeriodEnd;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'booked time'**
+  String get biBasisReservationTime;
+
   /// No description provided for @biBookingBasis.
   ///
   /// In en, this message translates to:
@@ -2718,6 +2772,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} lines nobody classified are left out.'**
   String biCostsUnresolved(String count);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'confirmed values only'**
+  String get biCoverageConfirmedValues;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'current records'**
+  String get biCoverageCurrentRecords;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'today only'**
+  String get biCoverageCurrentStateOnly;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'recorded history'**
+  String get biCoverageRecordedHistory;
 
   /// No description provided for @biCurrentBasis.
   ///
@@ -3601,11 +3679,137 @@ abstract class AppLocalizations {
   /// **'Evolution'**
   String get biEvolutionTitle;
 
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Export the report'**
+  String get biExportAction;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Figures computed on {time}. This export reads them itself: if the data changed since the dashboard was shown, they differ from it.'**
+  String biExportComputedAt(String time);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Digest {hash}'**
+  String biExportDigest(String hash);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in this report can be exported yet.'**
+  String get biExportFailedEmpty;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'You may not export these figures: exporting needs the right to export data and the right to read every figure of the report.'**
+  String get biExportFailedForbidden;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'The export could not be made from this report.'**
+  String get biExportFailedInvalid;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting this kind of file is switched off in this workspace.'**
+  String get biExportFailedOff;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'The report changed since you opened it. Open it again, then export.'**
+  String get biExportFailedStale;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'This report asks for more figures than one export may carry. Narrow it: fewer pages, cards or periods.'**
+  String get biExportFailedTooLarge;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not answer. Nothing was exported; try again.'**
+  String get biExportFailedUnavailable;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'CSV (data)'**
+  String get biExportFormatCsv;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get biExportFormatPdf;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Workbook (XLSX)'**
+  String get biExportFormatXlsx;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.'**
+  String biExportLeftOut(String count);
+
   /// Business analytics dashboard: biExportPdf
   ///
   /// In en, this message translates to:
   /// **'Export as PDF'**
   String get biExportPdf;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Read the figures'**
+  String get biExportPreview;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'A saved file is a copy of these figures: it cannot be recalled later, even if your rights change.'**
+  String get biExportRecallNote;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Read again'**
+  String get biExportRefresh;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Read again on {time}: new figures and a new digest.'**
+  String biExportRefreshedAt(String time);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Save the file'**
+  String get biExportSave;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Reading the figures for this export…'**
+  String get biExportTaking;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Export the report'**
+  String get biExportTitle;
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -3864,6 +4068,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Business analytics'**
   String get biPdfTitle;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Made of'**
+  String get biPrintColBasis;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get biPrintColPeriod;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get biPrintColStatus;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get biPrintColValue;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Every figure of this copy is known and covers its whole period.'**
+  String get biPrintComplete;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Computed'**
+  String get biPrintComputed;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get biPrintCurrency;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Date basis'**
+  String get biPrintDateBasis;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'not answered'**
+  String get biPrintFailed;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get biPrintFilters;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Footer line'**
+  String get biPrintFooter;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Header line'**
+  String get biPrintHeader;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Landscape'**
+  String get biPrintLandscape;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Print layout'**
+  String get biPrintLayoutAction;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Use this layout'**
+  String get biPrintLayoutApply;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Print layout of the report'**
+  String get biPrintLayoutTitle;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'not in this export'**
+  String get biPrintLeftOut;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Plain text, printed on every sheet.'**
+  String get biPrintLineHelper;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Plain text only: no line breaks or control characters.'**
+  String get biPrintLineInvalid;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Management information, not statutory accounts.'**
+  String get biPrintManagement;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow'**
+  String get biPrintMarginNarrow;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get biPrintMarginNormal;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Wide'**
+  String get biPrintMarginWide;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Margins'**
+  String get biPrintMargins;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'none'**
+  String get biPrintNoFilters;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Orientation'**
+  String get biPrintOrientation;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Each report page on a new sheet'**
+  String get biPrintPageBreaks;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Paper'**
+  String get biPrintPaper;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'A4'**
+  String get biPrintPaperA4;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'US Letter'**
+  String get biPrintPaperLetter;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Partial copy: some figures are unknown, cover only part of their period or are not in this export.'**
+  String get biPrintPartial;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get biPrintPeriod;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Portrait'**
+  String get biPrintPortrait;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace, the report and its revision, the period, the date basis, the currencies, the filters, when the figures were computed and whether they are complete are always printed.'**
+  String get biPrintProvenanceNote;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'partial'**
+  String get biPrintQualified;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get biPrintReport;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'revision {revision}'**
+  String biPrintRevision(String revision);
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Sheet preview'**
+  String get biPrintSheetPreview;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'List the source of every figure'**
+  String get biPrintShowSources;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Digest'**
+  String get biPrintSnapshot;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'unknown'**
+  String get biPrintUnknown;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'not saved'**
+  String get biPrintUnsaved;
+
+  /// #2581 analytical report print layout and exports
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace'**
+  String get biPrintWorkspace;
 
   /// Business analytics dashboard: biProjectionBasis
   ///
@@ -7861,6 +8323,12 @@ abstract class AppLocalizations {
   /// **'Yes'**
   String get dataReportYes;
 
+  /// DATEV export dialog (#2375): the Sachkontenlänge of the chart
+  ///
+  /// In en, this message translates to:
+  /// **'Account length (Sachkontenlänge)'**
+  String get datevAccountLength;
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -7873,6 +8341,12 @@ abstract class AppLocalizations {
   /// **'DATEV export'**
   String get datevAccountsTitle;
 
+  /// DATEV export (#2375): the export was refused, with the reasons
+  ///
+  /// In en, this message translates to:
+  /// **'The DATEV export was not written: {problems}'**
+  String datevBlocked(String problems);
+
   /// #669 - accounting export formats
   ///
   /// In en, this message translates to:
@@ -7884,6 +8358,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Beraternummer'**
   String get datevConsultantNumber;
+
+  /// DATEV export dialog (#2375): KOST1 when the document names no site
+  ///
+  /// In en, this message translates to:
+  /// **'Cost centre (KOST1) when a document names no site'**
+  String get datevCostCentre;
+
+  /// DATEV export dialog (#2375): the Debitor account of member counter 0
+  ///
+  /// In en, this message translates to:
+  /// **'Debitor of member number 0'**
+  String get datevDebtorBase;
+
+  /// DATEV export (#2375): an account does not have the declared length
+  ///
+  /// In en, this message translates to:
+  /// **'account {account} does not have {length} digits'**
+  String datevProblemAccountLength(String account, String length);
+
+  /// DATEV export (#2375): a rate is booked to the automatic account of another rate
+  ///
+  /// In en, this message translates to:
+  /// **'{percent} % would be booked to {account}, the automatic account of another rate'**
+  String datevProblemAutomatic(String percent, String account);
+
+  /// DATEV export (#2375): the client number is out of range
+  ///
+  /// In en, this message translates to:
+  /// **'Mandantennummer \"{number}\" is not a number from 1 to 99999'**
+  String datevProblemClient(String number);
+
+  /// DATEV export (#2375): the consultant number is out of range
+  ///
+  /// In en, this message translates to:
+  /// **'Beraternummer \"{number}\" is not a number from 1001 to 9999999'**
+  String datevProblemConsultant(String number);
+
+  /// DATEV export (#2375): the workspace currency is not the one DATEV is written in
+  ///
+  /// In en, this message translates to:
+  /// **'the amounts are in {currency}; the DATEV file is written in euros'**
+  String datevProblemCurrency(String currency);
+
+  /// DATEV export (#2375): two members would share one Debitor account
+  ///
+  /// In en, this message translates to:
+  /// **'{members} would share Debitor {account}'**
+  String datevProblemDebtorClash(String members, String account);
+
+  /// DATEV export (#2375): the issuers' book profiles start the fiscal year on different days
+  ///
+  /// In en, this message translates to:
+  /// **'the book profiles of the sites start the fiscal year on different days'**
+  String get datevProblemFiscalYearStarts;
+
+  /// DATEV export (#2375): a member number gives no Debitor account
+  ///
+  /// In en, this message translates to:
+  /// **'{member} has no member number that gives a Debitor (\"{number}\"): give them a number first'**
+  String datevProblemMemberNumber(String member, String number);
+
+  /// DATEV export (#2375): a Belegfeld 1 or KOST1 longer than its field
+  ///
+  /// In en, this message translates to:
+  /// **'{field} \"{value}\" is longer than DATEV takes and would be cut'**
+  String datevProblemReferenceTooLong(String field, String value);
+
+  /// DATEV export (#2375): the account length is not one DATEV knows
+  ///
+  /// In en, this message translates to:
+  /// **'the account length {length} is not 4 to 8'**
+  String datevProblemSachkontenlaenge(String length);
+
+  /// DATEV export (#2375): no BU key for a rate booked to a non-automatic account
+  ///
+  /// In en, this message translates to:
+  /// **'no BU-Schlüssel is recorded for {percent} % on account {account}'**
+  String datevProblemTaxKey(String percent, String account);
+
+  /// DATEV export dialog (#2375): include the invoice PDFs, linked from each row
+  ///
+  /// In en, this message translates to:
+  /// **'Include the invoice PDFs and link them from each row (Beleglink)'**
+  String get datevVoucherLinks;
 
   /// #1247: decisionSurfaceEmpty
   ///
@@ -11654,7 +12212,7 @@ abstract class AppLocalizations {
   /// Description under the data-export feature toggle (#395).
   ///
   /// In en, this message translates to:
-  /// **'Download all workspace data as an Excel workbook.'**
+  /// **'Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook.'**
   String get featureDataExportDesc;
 
   /// #2862 data report feature description
@@ -11896,6 +12454,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finances in four faces'**
   String get featureFinanceFacesTitle;
+
+  /// #3031 Features screen: what bills in another currency change.
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier\'s bill in another currency than the space\'s, with the exchange rate recorded on it. The books and the FEC read it in the space\'s currency at that rate and keep the original amount beside it; a bill without its rate is refused.'**
+  String get featureForeignCurrencyPurchasesDesc;
+
+  /// #3031 Features screen: supplier bills in another currency, a platform flag.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases in another currency'**
+  String get featureForeignCurrencyPurchasesTitle;
 
   /// No description provided for @featureFormHelpHintsDesc.
   ///
@@ -12542,7 +13112,7 @@ abstract class AppLocalizations {
   /// One-line description under the PDF export switch
   ///
   /// In en, this message translates to:
-  /// **'Export the monthly bill as a PDF.'**
+  /// **'Export the monthly bill and the analytics reports as a PDF.'**
   String get featurePdfExportDesc;
 
   /// #886 personal-information form / feature: featurePersonalInfo
@@ -14224,6 +14794,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get started in {workspace}'**
   String gettingStartedTitle(String workspace);
+
+  /// Procedure documentation (#2375): the export log
+  ///
+  /// In en, this message translates to:
+  /// **'Every accounting export is recorded in the export log with its period, size and SHA-256 digest; an export of a closed period gives the same bytes again.'**
+  String get gobdProcedureExportsBody;
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'Exports'**
+  String get gobdProcedureExportsHeading;
+
+  /// Procedure documentation (#2375): when and for which period
+  ///
+  /// In en, this message translates to:
+  /// **'Made on {date} for the period {from} to {to}.'**
+  String gobdProcedureGenerated(String date, String from, String to);
+
+  /// Procedure documentation (#2375): what the package holds
+  ///
+  /// In en, this message translates to:
+  /// **'This package follows the Beschreibungsstandard: index.xml describes every table, its columns, keys and joins, and names the DTD gdpdu-01-08-2002.dtd delivered beside it. Each table is a UTF-8 CSV file without a header line. The folder belege holds each invoice\'s structured e-invoice and, where it was rendered, its PDF/A-3 with that XML embedded.'**
+  String get gobdProcedureHandoverBody;
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'Data handover (Z3)'**
+  String get gobdProcedureHandoverHeading;
+
+  /// Procedure documentation (#2375): how issued documents are protected
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice or credit note cannot be changed or deleted: the database refuses it. Each document is signed into a chain with the one before it. A correction is a new document (a credit note or a replacement) that names the one it corrects. A closed period refuses cancellations and payments dated inside it.'**
+  String get gobdProcedureImmutableBody;
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'Unalterability'**
+  String get gobdProcedureImmutableHeading;
+
+  /// Procedure documentation (#2375): the first day a document of the period may be erased
+  ///
+  /// In en, this message translates to:
+  /// **'a document dated at the end of this period may be erased from {date}'**
+  String gobdProcedureRetentionUntil(String date);
+
+  /// Procedure documentation (#2375): the schema version the app was built for
+  ///
+  /// In en, this message translates to:
+  /// **'Schema version this app was built for: {version}'**
+  String gobdProcedureSchemaApp(String version);
+
+  /// Procedure documentation (#2375): the database schema version read from the server
+  ///
+  /// In en, this message translates to:
+  /// **'Database schema version of this installation: {version}'**
+  String gobdProcedureSchemaLive(String version);
+
+  /// Procedure documentation (#2375): the schema version could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Database schema version of this installation: it could not be read when this document was made'**
+  String get gobdProcedureSchemaUnknown;
+
+  /// Procedure documentation (#2375): what the system keeps
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo keeps this space\'s invoices, credit notes, payments, member accounts, shared costs and approved purchase documents. It is a sub-ledger: the general ledger and the annual accounts are kept by the accountant in their own system, which imports the DATEV export.'**
+  String get gobdProcedureSystemBody;
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'System and scope'**
+  String get gobdProcedureSystemHeading;
+
+  /// Procedure documentation (#2375): title
+  ///
+  /// In en, this message translates to:
+  /// **'Procedure documentation (Verfahrensdokumentation) — {workspace}'**
+  String gobdProcedureTitle(String workspace);
+
+  /// Procedure documentation (#2375): heading
+  ///
+  /// In en, this message translates to:
+  /// **'Software version'**
+  String get gobdProcedureVersionHeading;
 
   /// workspace groups: rename, description, admins, info
   ///
@@ -17225,6 +17885,12 @@ abstract class AppLocalizations {
   /// **'Journal (CSV, for any accounting system)'**
   String get invoiceExportGenericJournal;
 
+  /// Accounting export sheet (#2375): the GoBD data handover package
+  ///
+  /// In en, this message translates to:
+  /// **'GoBD data access (Z3)'**
+  String get invoiceExportGobd;
+
   /// Accounting export sheet (#2376): the journals report
   ///
   /// In en, this message translates to:
@@ -18700,6 +19366,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The journal is posted from a local book: set up the issuer\'s book chart first.'**
   String get journalNeedsLocalBook;
+
+  /// #3031 Posted export: purchases in another currency without a recorded rate.
+  ///
+  /// In en, this message translates to:
+  /// **'These purchases are in another currency than the space\'s and have no recorded exchange rate, so nothing was written; record each one\'s rate first: {documents}'**
+  String journalNeedsRates(String documents);
 
   /// No description provided for @journeyClosedPaid.
   ///
@@ -29489,6 +30161,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Evidence'**
   String get purchasesEvidence;
+
+  /// #3031 Bill dialog: the currency the bill is in.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get purchasesFxCurrency;
+
+  /// #3031 Purchase detail: the button that enters or corrects the rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter or correct the rate'**
+  String get purchasesFxEnter;
+
+  /// #3031 Exchange rate dialog: what a valid entry is.
+  ///
+  /// In en, this message translates to:
+  /// **'A rate is a positive number with at most 10 decimals, with its date and its source.'**
+  String get purchasesFxInvalid;
+
+  /// #3031 Purchase detail: a document in another currency without a rate.
+  ///
+  /// In en, this message translates to:
+  /// **'No exchange rate is recorded: the books refuse this purchase until it is.'**
+  String get purchasesFxMissing;
+
+  /// #3031 Exchange rate field: the value of one unit of the document currency in the space currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange rate: 1 {currency} in {spaceCurrency}'**
+  String purchasesFxRate(String currency, String spaceCurrency);
+
+  /// #3031 Exchange rate: the day the rate applies to.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate date'**
+  String get purchasesFxRateDate;
+
+  /// #3031 Purchase detail: the recorded rate.
+  ///
+  /// In en, this message translates to:
+  /// **'1 {currency} = {rate} {spaceCurrency} on {date} · {source}'**
+  String purchasesFxRecorded(
+    String currency,
+    String rate,
+    String spaceCurrency,
+    String date,
+    String source,
+  );
+
+  /// #3031 Exchange rate dialog: the server refused the rate.
+  ///
+  /// In en, this message translates to:
+  /// **'The exchange rate was not recorded.'**
+  String get purchasesFxRefused;
+
+  /// #3031 Exchange rate dialog: success.
+  ///
+  /// In en, this message translates to:
+  /// **'The exchange rate is recorded.'**
+  String get purchasesFxSaved;
+
+  /// #3031 Exchange rate: where the figure comes from.
+  ///
+  /// In en, this message translates to:
+  /// **'Source of the rate'**
+  String get purchasesFxSource;
+
+  /// #3031 Rate source: the rate the bank applied.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied by the bank'**
+  String get purchasesFxSourceBank;
+
+  /// #3031 Rate source: entered by a person.
+  ///
+  /// In en, this message translates to:
+  /// **'Entered by hand'**
+  String get purchasesFxSourceManual;
+
+  /// #3031 Rate source: the rate the tax authority publishes for the tax point.
+  ///
+  /// In en, this message translates to:
+  /// **'Published by the tax authority for the tax point'**
+  String get purchasesFxSourceTaxAuthority;
+
+  /// #3031 Bill dialog: the default choice, the space's own currency.
+  ///
+  /// In en, this message translates to:
+  /// **'{currency} (the space\'s currency)'**
+  String purchasesFxSpaceCurrency(String currency);
+
+  /// #3031 Purchase detail: the exchange rate of a document in another currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange rate'**
+  String get purchasesFxTitle;
 
   /// #2573 purchases
   ///

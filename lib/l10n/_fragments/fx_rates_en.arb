@@ -1,0 +1,110 @@
+{
+  "@@locale": "en",
+  "featureForeignCurrencyPurchasesTitle": "Purchases in another currency",
+  "@featureForeignCurrencyPurchasesTitle": {
+    "description": "#3031 Features screen: supplier bills in another currency, a platform flag."
+  },
+  "featureForeignCurrencyPurchasesDesc": "A supplier's bill in another currency than the space's, with the exchange rate recorded on it. The books and the FEC read it in the space's currency at that rate and keep the original amount beside it; a bill without its rate is refused.",
+  "@featureForeignCurrencyPurchasesDesc": {
+    "description": "#3031 Features screen: what bills in another currency change."
+  },
+  "purchasesFxCurrency": "Currency",
+  "@purchasesFxCurrency": {
+    "description": "#3031 Bill dialog: the currency the bill is in."
+  },
+  "purchasesFxSpaceCurrency": "{currency} (the space's currency)",
+  "@purchasesFxSpaceCurrency": {
+    "description": "#3031 Bill dialog: the default choice, the space's own currency.",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesFxRate": "Exchange rate: 1 {currency} in {spaceCurrency}",
+  "@purchasesFxRate": {
+    "description": "#3031 Exchange rate field: the value of one unit of the document currency in the space currency.",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      },
+      "spaceCurrency": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesFxRateDate": "Rate date",
+  "@purchasesFxRateDate": {
+    "description": "#3031 Exchange rate: the day the rate applies to."
+  },
+  "purchasesFxSource": "Source of the rate",
+  "@purchasesFxSource": {
+    "description": "#3031 Exchange rate: where the figure comes from."
+  },
+  "purchasesFxSourceTaxAuthority": "Published by the tax authority for the tax point",
+  "@purchasesFxSourceTaxAuthority": {
+    "description": "#3031 Rate source: the rate the tax authority publishes for the tax point."
+  },
+  "purchasesFxSourceBank": "Applied by the bank",
+  "@purchasesFxSourceBank": {
+    "description": "#3031 Rate source: the rate the bank applied."
+  },
+  "purchasesFxSourceManual": "Entered by hand",
+  "@purchasesFxSourceManual": {
+    "description": "#3031 Rate source: entered by a person."
+  },
+  "purchasesFxTitle": "Exchange rate",
+  "@purchasesFxTitle": {
+    "description": "#3031 Purchase detail: the exchange rate of a document in another currency."
+  },
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} on {date} · {source}",
+  "@purchasesFxRecorded": {
+    "description": "#3031 Purchase detail: the recorded rate.",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "spaceCurrency": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "purchasesFxMissing": "No exchange rate is recorded: the books refuse this purchase until it is.",
+  "@purchasesFxMissing": {
+    "description": "#3031 Purchase detail: a document in another currency without a rate."
+  },
+  "purchasesFxEnter": "Enter or correct the rate",
+  "@purchasesFxEnter": {
+    "description": "#3031 Purchase detail: the button that enters or corrects the rate."
+  },
+  "purchasesFxInvalid": "A rate is a positive number with at most 10 decimals, with its date and its source.",
+  "@purchasesFxInvalid": {
+    "description": "#3031 Exchange rate dialog: what a valid entry is."
+  },
+  "purchasesFxSaved": "The exchange rate is recorded.",
+  "@purchasesFxSaved": {
+    "description": "#3031 Exchange rate dialog: success."
+  },
+  "purchasesFxRefused": "The exchange rate was not recorded.",
+  "@purchasesFxRefused": {
+    "description": "#3031 Exchange rate dialog: the server refused the rate."
+  },
+  "journalNeedsRates": "These purchases are in another currency than the space's and have no recorded exchange rate, so nothing was written; record each one's rate first: {documents}",
+  "@journalNeedsRates": {
+    "description": "#3031 Posted export: purchases in another currency without a recorded rate.",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      }
+    }
+  }
+}

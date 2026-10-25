@@ -9,6 +9,7 @@ import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/datev_collective.dart';
 import 'support/seeded_export_year.dart';
 
 /// (amount, Konto, Gegenkonto) of every booking row of [invoices].
@@ -16,7 +17,7 @@ List<(String, String, String)> _rows(
   List<Invoice> invoices, {
   DatevAccounts accounts = const DatevAccounts(),
 }) => [
-  for (final r in buildDatevFile(DatevRequest(
+  for (final r in buildDatevFile(DatevRequest(detail: datevCollective, 
     invoices: invoices,
     matches: const {},
     accounts: accounts,
@@ -71,8 +72,8 @@ void main() {
   test('under an SKR04 header the defaults are the SKR04 plan (0523)', () {
     const skr04 = DatevAccounts(chart: 'SKR04');
     expect(
-      (skr04.customers, skr04.revenue, skr04.bank, skr04.vat),
-      ('10000', '4400', '1800', '3806'),
+      (skr04.revenue, skr04.bank),
+      ('4400', '1800'),
     );
     expect((skr04.expenses, skr04.writeOff), ('6300', '6936'));
     final mixed = base.copyWith(

@@ -763,6 +763,42 @@
   "@biAssetsRegisterOff": {
     "description": "#2582 cost figures"
   },
+  "biBasisBookValuePeriod": "période des valeurs comptables",
+  "@biBasisBookValuePeriod": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisCurrentState": "tel qu’aujourd’hui",
+  "@biBasisCurrentState": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisDocumentDate": "date du document",
+  "@biBasisDocumentDate": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisInvoiceMonth": "mois de la facture",
+  "@biBasisInvoiceMonth": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisOccurrenceDue": "date d’échéance",
+  "@biBasisOccurrenceDue": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisPaymentMatchedAt": "date du rapprochement du paiement",
+  "@biBasisPaymentMatchedAt": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisPaymentReportedPaid": "date déclarée payée",
+  "@biBasisPaymentReportedPaid": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisPeriodEnd": "fin de la période",
+  "@biBasisPeriodEnd": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisReservationTime": "temps réservé",
+  "@biBasisReservationTime": {
+    "description": "#2581 analytical report print layout and exports"
+  },
   "biBookingBasis": "La capacité réservée mesure les réservations, pas la présence réelle.",
   "biCardDown": "Descendre",
   "biCardUp": "Monter",
@@ -875,6 +911,22 @@
         "type": "String"
       }
     }
+  },
+  "biCoverageConfirmedValues": "valeurs confirmées seulement",
+  "@biCoverageConfirmedValues": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biCoverageCurrentRecords": "enregistrements actuels",
+  "@biCoverageCurrentRecords": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biCoverageCurrentStateOnly": "aujourd’hui seulement",
+  "@biCoverageCurrentStateOnly": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biCoverageRecordedHistory": "historique enregistré",
+  "@biCoverageRecordedHistory": {
+    "description": "#2581 analytical report print layout and exports"
   },
   "biCurrentBasis": "La période entière est incluse. La comparaison avec une période terminée ne porte pas sur une base équivalente.",
   "biDataNotApplicable": "Aucune capacité applicable",
@@ -1532,9 +1584,113 @@
   "@biEvolutionTitle": {
     "description": "Business analytics dashboard: biEvolutionTitle"
   },
+  "biExportAction": "Exporter le rapport",
+  "@biExportAction": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportComputedAt": "Chiffres calculés le {time}. Cet export les lit lui-même : si les données ont changé depuis l’affichage du tableau de bord, ils en diffèrent.",
+  "@biExportComputedAt": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "biExportDigest": "Empreinte {hash}",
+  "@biExportDigest": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "biExportFailedEmpty": "Rien dans ce rapport ne peut encore être exporté.",
+  "@biExportFailedEmpty": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedForbidden": "Vous ne pouvez pas exporter ces chiffres : il faut le droit d’exporter les données et celui de lire chaque chiffre du rapport.",
+  "@biExportFailedForbidden": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedInvalid": "L’export n’a pas pu être fait à partir de ce rapport.",
+  "@biExportFailedInvalid": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedOff": "L’export de ce type de fichier est désactivé dans cet espace.",
+  "@biExportFailedOff": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedStale": "Le rapport a changé depuis que vous l’avez ouvert. Rouvrez-le, puis exportez.",
+  "@biExportFailedStale": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedTooLarge": "Ce rapport demande plus de chiffres qu’un export ne peut en porter. Réduisez-le : moins de pages, de cartes ou de périodes.",
+  "@biExportFailedTooLarge": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedUnavailable": "Le serveur n’a pas répondu. Rien n’a été exporté ; réessayez.",
+  "@biExportFailedUnavailable": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFormatCsv": "CSV (données)",
+  "@biExportFormatCsv": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFormatPdf": "PDF",
+  "@biExportFormatPdf": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFormatXlsx": "Classeur (XLSX)",
+  "@biExportFormatXlsx": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportLeftOut": "{count} cartes ne sont pas dans cet export : leur chiffre, leurs filtres ou leur regroupement ne sont pas encore exportables.",
+  "@biExportLeftOut": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
   "biExportPdf": "Exporter en PDF",
   "@biExportPdf": {
     "description": "Business analytics dashboard: biExportPdf"
+  },
+  "biExportPreview": "Lire les chiffres",
+  "@biExportPreview": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportRecallNote": "Un fichier enregistré est une copie de ces chiffres : il ne peut pas être repris plus tard, même si vos droits changent.",
+  "@biExportRecallNote": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportRefresh": "Relire",
+  "@biExportRefresh": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportRefreshedAt": "Relu le {time} : nouveaux chiffres et nouvelle empreinte.",
+  "@biExportRefreshedAt": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "biExportSave": "Enregistrer le fichier",
+  "@biExportSave": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportTaking": "Lecture des chiffres pour cet export…",
+  "@biExportTaking": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportTitle": "Exporter le rapport",
+  "@biExportTitle": {
+    "description": "#2581 analytical report print layout and exports"
   },
   "biExposureDiffers": "Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.",
   "biFinanceCollected": "Encaissé",
@@ -1640,6 +1796,183 @@
   "biPdfTitle": "Analyse d'activité",
   "@biPdfTitle": {
     "description": "Business analytics dashboard: biPdfTitle"
+  },
+  "biPrintColBasis": "Composé de",
+  "@biPrintColBasis": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintColPeriod": "Période",
+  "@biPrintColPeriod": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintColStatus": "Statut",
+  "@biPrintColStatus": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintColValue": "Valeur",
+  "@biPrintColValue": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintComplete": "Chaque chiffre de cette copie est connu et couvre toute sa période.",
+  "@biPrintComplete": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintComputed": "Calculé",
+  "@biPrintComputed": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintCurrency": "Devise",
+  "@biPrintCurrency": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintDateBasis": "Base de date",
+  "@biPrintDateBasis": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFailed": "sans réponse",
+  "@biPrintFailed": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFilters": "Filtres",
+  "@biPrintFilters": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFooter": "Ligne de pied de page",
+  "@biPrintFooter": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintHeader": "Ligne d’en-tête",
+  "@biPrintHeader": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLandscape": "Paysage",
+  "@biPrintLandscape": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLayoutAction": "Mise en page",
+  "@biPrintLayoutAction": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLayoutApply": "Utiliser cette mise en page",
+  "@biPrintLayoutApply": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLayoutTitle": "Mise en page du rapport",
+  "@biPrintLayoutTitle": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLeftOut": "pas dans cet export",
+  "@biPrintLeftOut": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLineHelper": "Texte simple, imprimé sur chaque feuille.",
+  "@biPrintLineHelper": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLineInvalid": "Texte simple uniquement : ni saut de ligne ni caractère de contrôle.",
+  "@biPrintLineInvalid": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintManagement": "Information de gestion, pas des comptes légaux.",
+  "@biPrintManagement": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintMarginNarrow": "Étroites",
+  "@biPrintMarginNarrow": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintMarginNormal": "Normales",
+  "@biPrintMarginNormal": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintMarginWide": "Larges",
+  "@biPrintMarginWide": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintMargins": "Marges",
+  "@biPrintMargins": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintNoFilters": "aucun",
+  "@biPrintNoFilters": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintOrientation": "Orientation",
+  "@biPrintOrientation": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPageBreaks": "Chaque page du rapport sur une nouvelle feuille",
+  "@biPrintPageBreaks": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPaper": "Papier",
+  "@biPrintPaper": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPaperA4": "A4",
+  "@biPrintPaperA4": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPaperLetter": "Lettre US",
+  "@biPrintPaperLetter": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPartial": "Copie partielle : certains chiffres sont inconnus, ne couvrent qu’une partie de leur période ou ne sont pas dans cet export.",
+  "@biPrintPartial": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPeriod": "Période",
+  "@biPrintPeriod": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPortrait": "Portrait",
+  "@biPrintPortrait": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintProvenanceNote": "L’espace, le rapport et sa révision, la période, la base de date, les devises, les filtres, le moment du calcul des chiffres et leur complétude sont toujours imprimés.",
+  "@biPrintProvenanceNote": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintQualified": "partiel",
+  "@biPrintQualified": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintReport": "Rapport",
+  "@biPrintReport": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintRevision": "révision {revision}",
+  "@biPrintRevision": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "biPrintSheetPreview": "Aperçu de la feuille",
+  "@biPrintSheetPreview": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintShowSources": "Indiquer la source de chaque chiffre",
+  "@biPrintShowSources": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintSnapshot": "Empreinte",
+  "@biPrintSnapshot": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintUnknown": "inconnu",
+  "@biPrintUnknown": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintUnsaved": "non enregistré",
+  "@biPrintUnsaved": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintWorkspace": "Espace",
+  "@biPrintWorkspace": {
+    "description": "#2581 analytical report print layout and exports"
   },
   "biProjectionBasis": "Une droite tracée sur les {count} dernières périodes complètes, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.",
   "@biProjectionBasis": {
@@ -3378,6 +3711,7 @@
   "dataReportSubtitle": "Membres, réservations, factures, paiements, achats et le plan avec ses prix, avec les totaux, à lire ou à imprimer.",
   "dataReportTitle": "Rapport de données de l’espace",
   "dataReportYes": "Oui",
+  "datevAccountLength": "Longueur des comptes (Sachkontenlänge)",
   "datevAccountsIntro": "Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.",
   "@datevAccountsIntro": {
     "description": "#669 - accounting export formats"
@@ -3386,6 +3720,7 @@
   "@datevAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
+  "datevBlocked": "L'export DATEV n'a pas été écrit : {problems}",
   "datevClientNumber": "Mandantennummer (numéro de dossier)",
   "@datevClientNumber": {
     "description": "#669 - accounting export formats"
@@ -3394,6 +3729,20 @@
   "@datevConsultantNumber": {
     "description": "#669 - accounting export formats"
   },
+  "datevCostCentre": "Centre de coûts (KOST1) quand un document ne nomme aucun site",
+  "datevDebtorBase": "Compte Debitor du membre n° 0",
+  "datevProblemAccountLength": "le compte {account} n'a pas {length} chiffres",
+  "datevProblemAutomatic": "{percent} % serait comptabilisé sur {account}, le compte automatique d'un autre taux",
+  "datevProblemClient": "Mandantennummer « {number} » n'est pas un nombre de 1 à 99999",
+  "datevProblemConsultant": "Beraternummer « {number} » n'est pas un nombre de 1001 à 9999999",
+  "datevProblemCurrency": "les montants sont en {currency} ; le fichier DATEV est écrit en euros",
+  "datevProblemDebtorClash": "{members} partageraient le compte Debitor {account}",
+  "datevProblemFiscalYearStarts": "les profils comptables des sites commencent l'exercice à des dates différentes",
+  "datevProblemMemberNumber": "{member} n'a pas de numéro de membre qui donne un compte Debitor (« {number} ») : attribuez-lui d'abord un numéro",
+  "datevProblemReferenceTooLong": "{field} « {value} » dépasse la longueur que DATEV accepte et serait tronqué",
+  "datevProblemSachkontenlaenge": "la longueur de compte {length} n'est pas comprise entre 4 et 8",
+  "datevProblemTaxKey": "aucun BU-Schlüssel n'est enregistré pour {percent} % sur le compte {account}",
+  "datevVoucherLinks": "Joindre les PDF des factures et les lier depuis chaque ligne (Beleglink)",
   "decisionSurfaceEmpty": "Rien ne vous attend",
   "@decisionSurfaceEmpty": {
     "description": "#1247: decisionSurfaceEmpty"
@@ -5283,7 +5632,7 @@
     "description": "#718/#719"
   },
   "featureDataExport": "Export des données (Excel)",
-  "featureDataExportDesc": "Télécharger toutes les données de l’espace dans un classeur Excel.",
+  "featureDataExportDesc": "Télécharger toutes les données de l’espace dans un classeur Excel, et les rapports d’analyse en fichier CSV ou en classeur.",
   "featureDataReportDesc": "Les données de l’espace dans un PDF lisible : membres, réservations par mois, registre des factures, paiements et soldes, achats et fournisseurs, et le plan avec ses prix. Les mêmes lignes que le classeur Excel, avec les totaux.",
   "featureDataReportTitle": "Rapport de données (PDF)",
   "featureDecisionSurfaceDesc": "Un seul endroit qui répond à « est-ce que quelque chose m'attend ? », classé par ce que coûte le retard — l'argent qui part d'abord, puis quelqu'un qui attend une réponse. Une ligne n'apparaît que si une personne doit décider ou agir ; un chiffre sur lequel personne ne peut agir reste sur l'écran qui le porte.",
@@ -5384,6 +5733,8 @@
   },
   "featureFinanceFacesDesc": "L'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.",
   "featureFinanceFacesTitle": "Finances en quatre volets",
+  "featureForeignCurrencyPurchasesDesc": "Une facture fournisseur dans une autre devise que celle de l’espace, avec le taux de change enregistré sur elle. La comptabilité et le FEC la lisent dans la devise de l’espace à ce taux et gardent le montant d’origine à côté ; une facture sans son taux est refusée.",
+  "featureForeignCurrencyPurchasesTitle": "Achats dans une autre devise",
   "featureFormHelpHintsDesc": "Un carrousel d'astuces masquable sur chaque écran principal, et un petit ? à côté de chaque paramètre et champ de saisie — un geste ouvre le guide à la bonne section. Réactivable dans les réglages.",
   "featureFormHelpHintsTitle": "Astuces d'aide",
   "featureGuestParticipationDesc": "Permet à une personne qui n'est pas membre de demander à visiter cet espace, et à quelqu'un qui gère les réservations de l'admettre ou de refuser. Une visite ne crée ni adhésion, ni abonnement, ni rôle. Désactivé : personne ne demande ni n'est admis ici.",
@@ -5623,7 +5974,7 @@
   "featurePaymentRemindersDesc": "Les factures ouvertes au-delà du délai configuré reçoivent leurs niveaux de relance automatiquement — une alerte dans le fil du membre et une notification, une fois par jour. Désactivé : la relance reste un geste manuel.",
   "featurePaymentRemindersTitle": "Relances de paiement automatiques",
   "featurePdfExport": "Export PDF",
-  "featurePdfExportDesc": "Exporter la facture mensuelle en PDF.",
+  "featurePdfExportDesc": "Exporter la facture mensuelle et les rapports d’analyse en PDF.",
   "featurePersonalInfo": "Informations personnelles",
   "@featurePersonalInfo": {
     "description": "#886 personal-information form / feature: featurePersonalInfo"
@@ -6341,6 +6692,21 @@
   "gettingStartedStateReleased": "libérée",
   "gettingStartedStateReserved": "réservée",
   "gettingStartedTitle": "Premiers pas dans {workspace}",
+  "gobdProcedureExportsBody": "Chaque export comptable est consigné dans le journal des exports avec sa période, sa taille et son empreinte SHA-256 ; l'export d'une période clôturée redonne les mêmes octets.",
+  "gobdProcedureExportsHeading": "Exports",
+  "gobdProcedureGenerated": "Établie le {date} pour la période du {from} au {to}.",
+  "gobdProcedureHandoverBody": "Ce paquet suit le Beschreibungsstandard : index.xml décrit chaque table, ses colonnes, clés et jointures, et nomme la DTD gdpdu-01-08-2002.dtd fournie à côté. Chaque table est un fichier CSV UTF-8 sans ligne d'en-tête. Le dossier belege contient la facture électronique structurée de chaque facture et, lorsqu'il a été produit, son PDF/A-3 avec ce XML intégré.",
+  "gobdProcedureHandoverHeading": "Remise des données (Z3)",
+  "gobdProcedureImmutableBody": "Une facture ou un avoir émis ne peut être ni modifié ni supprimé : la base de données le refuse. Chaque document est signé dans une chaîne avec le précédent. Une correction est un nouveau document (avoir ou facture de remplacement) qui cite celui qu'il corrige. Une période clôturée refuse les annulations et les paiements datés en son sein.",
+  "gobdProcedureImmutableHeading": "Inaltérabilité",
+  "gobdProcedureRetentionUntil": "un document daté de la fin de cette période peut être effacé à partir du {date}",
+  "gobdProcedureSchemaApp": "Version de schéma pour laquelle cette application est construite : {version}",
+  "gobdProcedureSchemaLive": "Version du schéma de base de données de cette installation : {version}",
+  "gobdProcedureSchemaUnknown": "Version du schéma de base de données de cette installation : illisible au moment de l'établissement",
+  "gobdProcedureSystemBody": "DesKilo tient les factures, avoirs, paiements, comptes des membres, frais partagés et pièces d'achat approuvées de cet espace. C'est un livre auxiliaire : le grand livre et les comptes annuels sont tenus par le comptable dans son propre système, qui importe l'export DATEV.",
+  "gobdProcedureSystemHeading": "Système et périmètre",
+  "gobdProcedureTitle": "Documentation des procédures (Verfahrensdokumentation) — {workspace}",
+  "gobdProcedureVersionHeading": "Version du logiciel",
   "groupAnnounceOnly": "Seuls les admins peuvent écrire",
   "@groupAnnounceOnly": {
     "description": "workspace groups: rename, description, admins, info"
@@ -7253,6 +7619,7 @@
   "invoiceExportFrEReporting": "E-reporting (ventes aux particuliers, international, encaissements)",
   "invoiceExportGeneralLedger": "Grand-livre (PDF, depuis la comptabilité)",
   "invoiceExportGenericJournal": "Journal (CSV, pour tout logiciel comptable)",
+  "invoiceExportGobd": "Accès aux données GoBD (Z3)",
   "invoiceExportJournals": "Journaux et journal centralisateur (PDF, depuis la comptabilité)",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
@@ -7939,6 +8306,7 @@
   "journalFecMissingRate": "Ces documents sont dans une autre devise que celle de la comptabilité et aucun taux de change n'est enregistré pour eux ; le FEC n'a pas été écrit : {documents}",
   "journalFecPartyCode": "Le FEC exige un code client pour chaque tiers, jusqu'à 13 lettres et chiffres : attribuez d'abord un numéro de membre ou de fournisseur à : {names}",
   "journalNeedsLocalBook": "Le journal est tiré d'une comptabilité tenue ici : configurez d'abord le plan de comptes de l'émetteur.",
+  "journalNeedsRates": "Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : {documents}",
   "journeyClosedPaid": "Payée le {date} — close",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -11731,6 +12099,21 @@
   "@purchasesEvidence": {
     "description": "#2573 purchases"
   },
+  "purchasesFxCurrency": "Devise",
+  "purchasesFxEnter": "Saisir ou corriger le taux",
+  "purchasesFxInvalid": "Un taux est un nombre positif d’au plus 10 décimales, avec sa date et sa source.",
+  "purchasesFxMissing": "Aucun taux de change n’est enregistré : la comptabilité refuse cet achat tant qu’il ne l’est pas.",
+  "purchasesFxRate": "Taux de change : 1 {currency} en {spaceCurrency}",
+  "purchasesFxRateDate": "Date du taux",
+  "purchasesFxRecorded": "1 {currency} = {rate} {spaceCurrency} au {date} · {source}",
+  "purchasesFxRefused": "Le taux de change n’a pas été enregistré.",
+  "purchasesFxSaved": "Le taux de change est enregistré.",
+  "purchasesFxSource": "Source du taux",
+  "purchasesFxSourceBank": "Appliqué par la banque",
+  "purchasesFxSourceManual": "Saisi à la main",
+  "purchasesFxSourceTaxAuthority": "Publié par l’administration fiscale pour le fait générateur",
+  "purchasesFxSpaceCurrency": "{currency} (devise de l’espace)",
+  "purchasesFxTitle": "Taux de change",
   "purchasesGross": "Total TTC",
   "@purchasesGross": {
     "description": "#2573 purchases"

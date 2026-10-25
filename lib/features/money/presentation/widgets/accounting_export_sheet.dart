@@ -133,7 +133,7 @@ class _FormatTile extends StatelessWidget {
         'fec' || 'datev' || 'sage50' || 'ch_kmu' => Icons.table_chart_outlined,
         'saft' || 'saft_pt' => Icons.code_outlined,
         'audit_trail' => Icons.fact_check_outlined,
-        'bundle' => Icons.archive_outlined,
+        'bundle' || 'gobd' => Icons.archive_outlined,
         _ => Icons.description_outlined,
       };
 
@@ -150,6 +150,7 @@ class _FormatTile extends StatelessWidget {
         'audit_trail' => l10n.invoiceExportAuditTrail,
         'fr_ereporting' => l10n.invoiceExportFrEReporting,
         'bundle' => l10n.invoiceExportBundle,
+        'gobd' => l10n.invoiceExportGobd,
         _ => format.id,
       };
 

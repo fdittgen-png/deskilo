@@ -1,0 +1,235 @@
+{
+  "@@locale": "en",
+  "invoiceExportGobd": "GoBD data access (Z3)",
+  "@invoiceExportGobd": {
+    "description": "Accounting export sheet (#2375): the GoBD data handover package"
+  },
+  "datevBlocked": "The DATEV export was not written: {problems}",
+  "@datevBlocked": {
+    "description": "DATEV export (#2375): the export was refused, with the reasons",
+    "placeholders": {
+      "problems": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemConsultant": "Beraternummer \"{number}\" is not a number from 1001 to 9999999",
+  "@datevProblemConsultant": {
+    "description": "DATEV export (#2375): the consultant number is out of range",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemClient": "Mandantennummer \"{number}\" is not a number from 1 to 99999",
+  "@datevProblemClient": {
+    "description": "DATEV export (#2375): the client number is out of range",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemAccountLength": "account {account} does not have {length} digits",
+  "@datevProblemAccountLength": {
+    "description": "DATEV export (#2375): an account does not have the declared length",
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "length": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemMemberNumber": "{member} has no member number that gives a Debitor (\"{number}\"): give them a number first",
+  "@datevProblemMemberNumber": {
+    "description": "DATEV export (#2375): a member number gives no Debitor account",
+    "placeholders": {
+      "member": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemDebtorClash": "{members} would share Debitor {account}",
+  "@datevProblemDebtorClash": {
+    "description": "DATEV export (#2375): two members would share one Debitor account",
+    "placeholders": {
+      "members": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemTaxKey": "no BU-Schlüssel is recorded for {percent} % on account {account}",
+  "@datevProblemTaxKey": {
+    "description": "DATEV export (#2375): no BU key for a rate booked to a non-automatic account",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemAutomatic": "{percent} % would be booked to {account}, the automatic account of another rate",
+  "@datevProblemAutomatic": {
+    "description": "DATEV export (#2375): a rate is booked to the automatic account of another rate",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureTitle": "Procedure documentation (Verfahrensdokumentation) — {workspace}",
+  "@gobdProcedureTitle": {
+    "description": "Procedure documentation (#2375): title",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureGenerated": "Made on {date} for the period {from} to {to}.",
+  "@gobdProcedureGenerated": {
+    "description": "Procedure documentation (#2375): when and for which period",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureSystemHeading": "System and scope",
+  "@gobdProcedureSystemHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureSystemBody": "DesKilo keeps this space's invoices, credit notes, payments, member accounts, shared costs and approved purchase documents. It is a sub-ledger: the general ledger and the annual accounts are kept by the accountant in their own system, which imports the DATEV export.",
+  "@gobdProcedureSystemBody": {
+    "description": "Procedure documentation (#2375): what the system keeps"
+  },
+  "gobdProcedureVersionHeading": "Software version",
+  "@gobdProcedureVersionHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureSchemaLive": "Database schema version of this installation: {version}",
+  "@gobdProcedureSchemaLive": {
+    "description": "Procedure documentation (#2375): the database schema version read from the server",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureSchemaUnknown": "Database schema version of this installation: it could not be read when this document was made",
+  "@gobdProcedureSchemaUnknown": {
+    "description": "Procedure documentation (#2375): the schema version could not be read"
+  },
+  "gobdProcedureSchemaApp": "Schema version this app was built for: {version}",
+  "@gobdProcedureSchemaApp": {
+    "description": "Procedure documentation (#2375): the schema version the app was built for",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureImmutableHeading": "Unalterability",
+  "@gobdProcedureImmutableHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureImmutableBody": "An issued invoice or credit note cannot be changed or deleted: the database refuses it. Each document is signed into a chain with the one before it. A correction is a new document (a credit note or a replacement) that names the one it corrects. A closed period refuses cancellations and payments dated inside it.",
+  "@gobdProcedureImmutableBody": {
+    "description": "Procedure documentation (#2375): how issued documents are protected"
+  },
+  "gobdProcedureRetentionUntil": "a document dated at the end of this period may be erased from {date}",
+  "@gobdProcedureRetentionUntil": {
+    "description": "Procedure documentation (#2375): the first day a document of the period may be erased",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureHandoverHeading": "Data handover (Z3)",
+  "@gobdProcedureHandoverHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureHandoverBody": "This package follows the Beschreibungsstandard: index.xml describes every table, its columns, keys and joins, and names the DTD gdpdu-01-08-2002.dtd delivered beside it. Each table is a UTF-8 CSV file without a header line. The folder belege holds each invoice's structured e-invoice and, where it was rendered, its PDF/A-3 with that XML embedded.",
+  "@gobdProcedureHandoverBody": {
+    "description": "Procedure documentation (#2375): what the package holds"
+  },
+  "gobdProcedureExportsHeading": "Exports",
+  "@gobdProcedureExportsHeading": {
+    "description": "Procedure documentation (#2375): heading"
+  },
+  "gobdProcedureExportsBody": "Every accounting export is recorded in the export log with its period, size and SHA-256 digest; an export of a closed period gives the same bytes again.",
+  "@gobdProcedureExportsBody": {
+    "description": "Procedure documentation (#2375): the export log"
+  },
+  "datevAccountLength": "Account length (Sachkontenlänge)",
+  "@datevAccountLength": {
+    "description": "DATEV export dialog (#2375): the Sachkontenlänge of the chart"
+  },
+  "datevDebtorBase": "Debitor of member number 0",
+  "@datevDebtorBase": {
+    "description": "DATEV export dialog (#2375): the Debitor account of member counter 0"
+  },
+  "datevCostCentre": "Cost centre (KOST1) when a document names no site",
+  "@datevCostCentre": {
+    "description": "DATEV export dialog (#2375): KOST1 when the document names no site"
+  },
+  "datevVoucherLinks": "Include the invoice PDFs and link them from each row (Beleglink)",
+  "@datevVoucherLinks": {
+    "description": "DATEV export dialog (#2375): include the invoice PDFs, linked from each row"
+  },
+  "datevProblemSachkontenlaenge": "the account length {length} is not 4 to 8",
+  "@datevProblemSachkontenlaenge": {
+    "description": "DATEV export (#2375): the account length is not one DATEV knows",
+    "placeholders": {
+      "length": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemCurrency": "the amounts are in {currency}; the DATEV file is written in euros",
+  "@datevProblemCurrency": {
+    "description": "DATEV export (#2375): the workspace currency is not the one DATEV is written in",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemReferenceTooLong": "{field} \"{value}\" is longer than DATEV takes and would be cut",
+  "@datevProblemReferenceTooLong": {
+    "description": "DATEV export (#2375): a Belegfeld 1 or KOST1 longer than its field",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "datevProblemFiscalYearStarts": "the book profiles of the sites start the fiscal year on different days",
+  "@datevProblemFiscalYearStarts": {
+    "description": "DATEV export (#2375): the issuers' book profiles start the fiscal year on different days"
+  }
+}

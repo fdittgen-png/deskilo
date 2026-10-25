@@ -10,6 +10,7 @@
 // cannot quietly add a read of its own (matches, instalments, ledger).
 import 'dart:io';
 
+import 'package:deskilo/core/time/date_text.dart';
 import 'package:deskilo/features/money/application/accounting_export_source.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
@@ -43,26 +44,30 @@ const _postedWhenLocalBook = {
 /// The posted formats that also read the chart's names and the parties.
 const _named = {'fec', 'bundle', 'general_ledger', 'trial_balance', 'journals'};
 
-BookProfile _localBook() => BookProfile(
+BookProfile _localBook({int startMonth = 1}) => BookProfile(
   id: 'p',
   workspaceId: _ws,
   issuerSiteId: 'site',
   authority: BookAuthority.localBook,
   externalSystem: '',
   functionalCurrency: 'EUR',
-  fiscalYearStartMonth: 1,
+  fiscalYearStartMonth: startMonth,
   fiscalYearStartDay: 1,
   basis: AccountingBasis.accrual,
   effectiveFrom: DateTime(2026),
   revision: 1,
 );
 
-/// Counts every read; a second read of the same kind fails the test.
+/// Counts every read; a second read of the same kind for the same
+/// [period] fails the test.
 class _Reads {
   final counts = <String, int>{};
-  void once(String what) {
+  final _seen = <String>{};
+  void once(String what, [String period = '']) {
     counts[what] = (counts[what] ?? 0) + 1;
-    if (counts[what]! > 1) fail('a second $what read for the same period');
+    if (!_seen.add('$what $period')) {
+      fail('a second $what read for the same period');
+    }
   }
 }
 
@@ -115,7 +120,7 @@ class _Books implements BookProfileRepository {
     DateTime f,
     DateTime t,
   ) async {
-    reads.once('postings');
+    reads.once('postings', '${isoDay(f)}..${isoDay(t)}');
     return const PostingSet([], []);
   }
 
@@ -213,6 +218,11 @@ void main() {
               ? isA<JournalNeedsLocalBook>()
               : isNull,
         );
+        // Only the archive holds its fiscal years, the posted one last.
+        expect(
+          input.archiveYears,
+          id == 'bundle' && posted ? [same(input.posted)] : isEmpty,
+        );
       });
     }
   }
@@ -236,6 +246,37 @@ void main() {
       expect(input!.posted, isNull);
     },
   );
+
+  test('the archive of a calendar year reads every fiscal year it overlaps, '
+      'once each, and the chart and the parties once', () async {
+    final reads = _Reads();
+    final years = await GenericJournalExport(_Books(reads)).readArchiveYears(
+      _ws,
+      [_localBook(startMonth: 10)],
+      2026,
+      asOf: DateTime(2026, 11, 5),
+    );
+    expect(
+      [for (final y in years) (y as JournalPosted).year.toString()],
+      [
+        'FiscalYear(2025-10-01..2026-09-30)',
+        'FiscalYear(2026-10-01..2027-09-30)',
+      ],
+    );
+    expect(reads.counts, {'postings': 2, 'chart': 1, 'parties': 1});
+
+    // Before the next fiscal year has a document, only the one that opens
+    // the calendar year is read.
+    final early = _Reads();
+    final one = await GenericJournalExport(_Books(early)).readArchiveYears(
+      _ws,
+      [_localBook(startMonth: 10)],
+      2026,
+      asOf: DateTime(2026, 8, 10),
+    );
+    expect(one, hasLength(1));
+    expect(early.counts['postings'], 1);
+  });
 
   test(
     'the counting fake does fail on a second read (the guard can fire)',

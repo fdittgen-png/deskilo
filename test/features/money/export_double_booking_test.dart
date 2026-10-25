@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/datev_collective.dart';
 import 'support/seeded_export_year.dart';
 
 int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
@@ -38,7 +39,7 @@ void main() {
   });
 
   test('DATEV: the netted expense is no Zahlung', () {
-    final file = buildDatevFile(DatevRequest(
+    final file = buildDatevFile(DatevRequest(detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       accounts: const DatevAccounts(),

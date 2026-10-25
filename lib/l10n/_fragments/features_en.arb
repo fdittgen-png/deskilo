@@ -108,7 +108,7 @@
   "@featurePdfExport": {
     "description": "Feature switch: bill PDF export"
   },
-  "featurePdfExportDesc": "Export the monthly bill as a PDF.",
+  "featurePdfExportDesc": "Export the monthly bill and the analytics reports as a PDF.",
   "@featurePdfExportDesc": {
     "description": "One-line description under the PDF export switch"
   },
@@ -233,7 +233,7 @@
   "@featureAutoCheckInOutDesc": {
     "description": "Description under the auto check-in/out feature toggle (#396)."
   },
-  "featureDataExportDesc": "Download all workspace data as an Excel workbook.",
+  "featureDataExportDesc": "Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook.",
   "@featureDataExportDesc": {
     "description": "Description under the data-export feature toggle (#395)."
   },

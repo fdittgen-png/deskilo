@@ -17,6 +17,7 @@ import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'support/datev_collective.dart';
 
 DateTime _on(int year, int month, int day) =>
     WorkspaceTime.at(year, month, day, 12).toUtc();
@@ -184,7 +185,7 @@ void main() {
         l.split(';'),
     ];
     String datev(List<Invoice> invoices, List<VatTaxPointAmount>? points) =>
-        buildDatevFile(DatevRequest(
+        buildDatevFile(DatevRequest(detail: datevCollective, 
           invoices: invoices,
           matches: const {},
           accounts: const DatevAccounts(),

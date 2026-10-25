@@ -23,7 +23,6 @@ import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/book_profile.dart';
-import '../domain/datev.dart';
 import '../domain/document_numbering.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/export_year.dart';
@@ -45,8 +44,8 @@ import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
 import 'accounting_export_fec.dart';
+import 'accounting_export_german.dart';
 import 'accounting_export_journal.dart';
-import 'datev_profile.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
 import 'invoice_actions.dart';
@@ -91,6 +90,7 @@ class AccountingExportRun {
 
   /// The posted journal of a posted format, read with [books] (#2365).
   late final GenericJournal? posted;
+  late final List<GenericJournal> archiveYears; // the archive's, one per fiscal year
   late final List<VatTaxPointAmount> taxPoints;
   late final Map<String, String> memberNames;
 
@@ -98,6 +98,16 @@ class AccountingExportRun {
   List<LedgerEntry> get ledger => books.ledger;
   List<ExpenseRepartition> get repartitions => books.repartitions;
   List<BookProfile> get bookProfiles => books.bookProfiles;
+  /// The member numbers held today, by member id: a document issued
+  /// before numbers were frozen carries none. Awaited, never the list of
+  /// whatever moment the provider was last read in.
+  Future<Map<String, String>> memberNumbers() async => {
+    for (final m in await ref.read(workspaceMembersProvider.future))
+      m.id: m.memberNumber,
+  };
+  /// The workspace's calendar day of an instant.
+  DateTime Function(DateTime instant) get workspaceDayOf =>
+      WorkspaceTime.dateOf;
   InvoiceQueries get invoiceQueries => ref.read(invoiceQueriesProvider);
   DocumentNumbering get repo => ref.read(documentNumberingProvider);
 
@@ -148,7 +158,7 @@ class AccountingExportRun {
       formatId: format.id, workspaceId: workspace.id, country: country, year: year, invoices: invoices));
   if (read == null || !context.mounted) return;
   books = read.books;
-  posted = read.posted;
+  posted = read.posted; archiveYears = read.archiveYears;
   matches = books.matches;
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
@@ -171,7 +181,7 @@ class AccountingExportRun {
       case 'fec':
         await _fec();
       case 'datev':
-        await _datev();
+        await datevExport();
       case 'sage50':
         await _sage();
       case 'ch_kmu':
@@ -183,6 +193,8 @@ class AccountingExportRun {
         await _accountantCsv();
       case 'bundle':
         await _bundle();
+      case 'gobd':
+        await gobdExport();
       case 'fr_ereporting':
         await _frEReporting();
       case 'audit_trail':
@@ -249,40 +261,6 @@ class AccountingExportRun {
         )),
         fecFileName(company.legalId, DateTime(year, 12, 31),
             development: development),
-      ),
-    );
-  }
-
-  Future<void> _datev() async {
-    // Beraternummer and Mandantennummer come from the accountant.
-    // DATEV refuses an import whose numbers do not match the target
-    // client, and that is a GOOD refusal: it stops a file landing in
-    // the wrong company's books.
-    final datev = await showDatevAccountsDialog(context);
-    if (datev == null || !context.mounted) return;
-    await runGuarded(
-      context,
-      domain: 'money',
-      message: 'DATEV export failed',
-      errorText: l10n.workspaceGenericError,
-      action: () async => save(
-        buildDatevFile(DatevRequest(
-          invoices: exported,
-          matches: matches,
-          accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
-          from: DateTime(year),
-          to: DateTime(year, 12, 31),
-          generatedAt: now,
-          consultantNumber: datev.consultantNumber,
-          clientNumber: datev.clientNumber,
-          ledger: ledger,
-          repartitions: repartitions,
-          development: development,
-          currency: workspace.currencyCode,
-          batchName: workspace.name,
-          taxPoints: taxPoints,
-        )),
-        datevFileName(year, invoices.last.issuedAt.month),
       ),
     );
   }
@@ -463,7 +441,7 @@ class AccountingExportRun {
       action: () async {
         // #2365 — a local book's archive carries its posted FEC, the one
         // the FEC export writes; a role left unmapped stops the archive.
-        if (posted case JournalBlocked(:final roles)) return AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
+        if (fecActions.archiveYearBlocked(archiveYears)) return;
         final yearInvoices = exported;
         // #1154 — the signature checks are independent server calls:
         // all of them in flight at once, not one round-trip per invoice.
@@ -501,7 +479,7 @@ class AccountingExportRun {
           source: books.revisions,
         ));
         final fecAccounts = workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount);
-        if (!context.mounted || !await fecActions.addYearFec(files, country: country, posted: posted, year: year,
+        if (!context.mounted || !await fecActions.addYearFec(files, country: country, years: archiveYears, year: year,
             documents: (thirdParties: {fecAccounts.customers}, fec: () => buildFecFile(FecRequest(
           invoices: yearInvoices,
           matches: matches,

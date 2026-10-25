@@ -135,43 +135,96 @@ class BiReportPeriod {
   }
 }
 
+/// The one saved print layout of a report (#2581): paper, orientation,
+/// margins, a typed header and footer line, whether each report page starts
+/// a new sheet, and whether the sources of every figure are listed. Plain
+/// text only; the provenance and the qualification of the figures are
+/// printed whatever it says.
 class BiPrintStyle {
   const BiPrintStyle({
     this.paper = 'A4',
     this.orientation = 'portrait',
     this.showSources = true,
+    this.margin = 'normal',
+    this.header = '',
+    this.footer = '',
+    this.pageBreaks = true,
   });
 
   final String paper;
   final String orientation;
   final bool showSources;
+  final String margin;
+  final String header;
+  final String footer;
+  final bool pageBreaks;
 
   static const papers = {'A4', 'Letter'};
   static const orientations = {'portrait', 'landscape'};
+  static const margins = {'narrow', 'normal', 'wide'};
 
+  /// The longest typed header or footer line.
+  static const maxLine = 120;
+  static const _keys = {
+    'paper',
+    'orientation',
+    'showSources',
+    'margin',
+    'header',
+    'footer',
+    'pageBreaks',
+  };
+
+  bool get landscape => orientation == 'landscape';
+
+  /// This layout with its [key] set to [value]; itself when that would
+  /// not be a valid layout.
+  BiPrintStyle withValue(String key, Object value) =>
+      fromJson({...toJson(), key: value}) ?? this;
+
+  /// The stored form: a key left at its default is not written, so a
+  /// layout nobody changed is stored as it always was.
   Map<String, Object> toJson() => {
     'paper': paper,
     'orientation': orientation,
     'showSources': showSources,
+    if (margin != 'normal') 'margin': margin,
+    if (header.isNotEmpty) 'header': header,
+    if (footer.isNotEmpty) 'footer': footer,
+    if (!pageBreaks) 'pageBreaks': false,
   };
+
+  /// Whether [v] may be a header or footer line: plain text on one line,
+  /// at most [maxLine] characters.
+  static bool validLine(Object? v) =>
+      v is String && v.length <= maxLine && !_control.hasMatch(v);
+  static final _control = RegExp(r'[\x00-\x1F\x7F]');
 
   static BiPrintStyle? fromJson(Object? raw) {
     if (raw == null) return const BiPrintStyle();
     final r = biReportReader(raw);
-    if (r == null ||
-        !biReportOnly(r, const {'paper', 'orientation', 'showSources'})) {
-      return null;
-    }
+    if (r == null || !biReportOnly(r, _keys)) return null;
     final p = r.raw('paper') ?? 'A4';
     final o = r.raw('orientation') ?? 'portrait';
     final s = r.raw('showSources') ?? true;
+    final m = r.raw('margin') ?? 'normal';
+    final h = r.raw('header') ?? '';
+    final f = r.raw('footer') ?? '';
+    final b = r.raw('pageBreaks') ?? true;
     if (!papers.contains(p) || !orientations.contains(o) || s is! bool) {
+      return null;
+    }
+    if (!margins.contains(m) || !validLine(h) || !validLine(f) || b is! bool) {
       return null;
     }
     return BiPrintStyle(
       paper: p as String,
       orientation: o as String,
       showSources: s,
+      margin: m as String,
+      header: h as String,
+      footer: f as String,
+      pageBreaks: b,
     );
   }
 }
@@ -247,6 +300,14 @@ class BiReportDefinition {
         filters: filters,
         printStyle: printStyle,
       );
+
+  /// The report with [style] as its print layout; pages and filters stay.
+  BiReportDefinition withPrintStyle(BiPrintStyle style) => BiReportDefinition(
+    period: period,
+    pages: pages,
+    filters: filters,
+    printStyle: style,
+  );
 
   /// The scope [visual] of [page] answers: the reader's rights (applied by
   /// the server to every read) ∩ the report's filters ∩ the page's ∩ the

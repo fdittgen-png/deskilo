@@ -13,6 +13,7 @@ import '../../domain/purchase.dart';
 import '../../domain/supplier.dart';
 import '../../providers/purchase_providers.dart';
 import '../../providers/supplier_providers.dart';
+import 'purchase_exchange_rate.dart';
 import 'purchase_labels.dart';
 import 'purchase_place_field.dart';
 
@@ -44,6 +45,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   String? _supplierId;
   var _purpose = 'unresolved';
   PurchasePlace? _place;
+  PurchaseCurrencyChoice _money = (currency: null, rate: null);
   DateTime? _invoiceDate;
   DateTime? _dueDate;
   bool _invalid = false;
@@ -66,6 +68,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
     final tax = taxText.isEmpty ? null : parseCentsInput(taxText);
     if (gross == null || gross <= 0) return null;
     if (taxText.isNotEmpty && (tax == null || tax > gross)) return null;
+    // Another currency than the space's is captured with its rate.
+    if (_money.currency != null && _money.rate == null) return null;
     return PurchaseBillDraft(
       grossCents: gross,
       supplierId: _supplierId,
@@ -76,6 +80,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       taxCents: tax,
       recognitionKind: _purpose,
       place: _place,
+      currency: _money.currency,
+      exchangeRate: _money.rate,
     );
   }
 
@@ -116,6 +122,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       a.originalDate == b.originalDate &&
       a.recognitionKind == b.recognitionKind &&
       a.place == b.place &&
+      a.currency == b.currency &&
+      a.exchangeRate == b.exchangeRate &&
       a.dueOn == b.dueOn;
 
   Future<DateTime?> _pick(DateTime? current) => showDatePicker(
@@ -190,6 +198,11 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               controller: _description,
               label: l10n.purchasesDescription,
               maxLength: 500,
+            ),
+            // A bill in another currency, with its rate (when switched on).
+            PurchaseCurrencyFields(
+              // recorder-key-exempt: a data callback; the fields are keyed.
+              onChanged: (m) => _money = m,
             ),
             AppTextField(
               key: const ValueKey('purchase-gross'),

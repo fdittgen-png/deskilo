@@ -29,6 +29,9 @@ typedef ExportSourceBooks = ({
   List<ExpenseRepartition> repartitions,
   List<BookProfile> bookProfiles,
   AccountingSourceRevisions revisions,
+
+  /// The approved purchase documents of the same snapshot (#2587).
+  List<SourcePurchase> purchases,
 });
 
 ExportYearBooks exportYearScope(

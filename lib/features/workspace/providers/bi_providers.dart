@@ -19,6 +19,7 @@ import '../domain/bi_analysis.dart';
 import '../domain/bi_batch.dart';
 import '../domain/bi_modules.dart';
 import '../domain/bi_query.dart';
+import '../domain/bi_report_snapshot.dart' show biPeriodMonths;
 import '../domain/bi_result.dart';
 import '../domain/bi_saved_view.dart';
 import '../domain/kpi_contract.dart';
@@ -266,33 +267,15 @@ Future<BiSeries> _financeSeries(
 }
 
 /// The whole months of [p], `YYYY-MM` first and last (#1924).
-({String from, String to}) biMonths(BiPeriod p) {
-  String m(int month) => '${p.year}-${month.toString().padLeft(2, '0')}';
-  return (from: m(p.startMonth), to: m(p.startMonth + p.grain.months - 1));
-}
+({String from, String to}) biMonths(BiPeriod p) => biPeriodMonths(p);
 
-/// One finance figure of [k]; a missing amount is unknown, never 0.
+/// One finance figure of [k] (see [biFinanceMeasure]).
 @visibleForTesting
 BiMeasure financeMeasure(
   FinanceSummaryKpi k,
   String moduleId, {
   bool currencyCompatible = true,
-}) {
-  final minor = moduleId == 'finance.invoiced'
-      ? k.invoicedMinor
-      : k.collectedMinor;
-  final quality = {
-    ...k.quality,
-    if (minor == null || !currencyCompatible) KpiQuality.unavailable,
-  };
-  final unknown = quality.contains(KpiQuality.unavailable);
-  return BiMeasure(
-    numerator: minor ?? 0,
-    quality: {...quality, if (!unknown && minor == 0) KpiQuality.knownZero},
-    reasons: [...k.reasons, if (!currencyCompatible) 'currency_mix'],
-    detail: k,
-  );
-}
+}) => biFinanceMeasure(k, moduleId, currencyCompatible: currencyCompatible);
 
 Future<BiResult> _finance(
   Ref ref,
@@ -332,14 +315,7 @@ Future<BiResult> _finance(
   );
 }
 
-BiMeasure _seatMeasure(SeatCapacityKpi k) => BiMeasure(
-  numerator: k.reservedSeatHours,
-  denominator: k.offeredSeatHours,
-  quality: k.quality,
-  reasons: k.reasons,
-  historySince: k.historySince,
-  detail: k,
-);
+BiMeasure _seatMeasure(SeatCapacityKpi k) => biSeatMeasure(k);
 
 /// The seat figure of [entry], or the failure the single read would have
 /// thrown: a figure never turns into a zero.

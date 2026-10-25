@@ -23,6 +23,10 @@ import '../../features/money/presentation/screens/services_screen.dart';
 import '../../features/money/presentation/screens/vat_declarations_screen.dart';
 import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
+import '../../features/money/presentation/widgets/expense_repartition_sheet.dart'
+    show expenseRepartitionPage;
+import '../../features/money/presentation/widgets/settlement_sheet.dart'
+    show settlementPage;
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../route_access.dart';
@@ -49,8 +53,12 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
     ),
     GoRoute(
       path: '/billing',
+      // Fee bands and subscription levels are money functionality.
       redirect: env.guard(
-        const RouteAccess(permission: WorkspacePermission.manageBilling),
+        const RouteAccess(
+          permission: WorkspacePermission.manageBilling,
+          features: [WorkspaceFeature.moneyTab],
+        ),
       ),
       builder: (context, state) => const BillingScreen(),
     ),
@@ -172,6 +180,24 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
       builder: (context, state) => WorkspaceStatusScreen(
         from: state.uri.queryParameters['from'],
         to: state.uri.queryParameters['to'],
+      ),
+    ),
+    // The two assistants the invoices screen opens over itself:
+    // a typed link opens them only while their feature is on.
+    expenseRepartitionPage.route(
+      guard: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.expenseRepartition],
+          to: '/money',
+        ),
+      ),
+    ),
+    settlementPage.route(
+      guard: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.invoiceSettlement],
+          to: '/money',
+        ),
       ),
     ),
     GoRoute(

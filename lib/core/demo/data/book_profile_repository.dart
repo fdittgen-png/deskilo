@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../features/money/domain/accounting_amount.dart';
 import '../../../features/money/domain/book_chart.dart';
 import '../../../features/money/domain/book_profile.dart';
 import '../../../features/money/domain/book_profile_repository.dart';
@@ -8,6 +9,7 @@ import '../../../features/money/domain/posting_rules_purchases.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../vat/tax_reference_active.dart';
 import 'money_repository.dart';
+import 'purchase_exchange_rates.dart';
 
 /// #1869 — book profiles in memory, with the server's revision rule:
 /// a save names the revision it read (0 for a new version).
@@ -162,23 +164,30 @@ class FakeBookProfileRepository implements BookProfileRepository {
     );
     bool inPeriod(DateTime day) => !day.isBefore(from) && !day.isAfter(to);
     final p = purchases;
-    final bought = p == null
-        ? const <Posting>[]
+    final details = p == null
+        ? const <PurchaseDetail>[]
         : [
-            for (final x in purchasePostingsOf(
-              purchases: [
-                for (final s in await p.fetchPurchases(workspaceId))
-                  await p.fetchDetail(workspaceId, s.id),
-              ],
-              book: book,
-              groupOf: (percent) => ActiveTaxReference.current.groupOfRate(
-                country,
-                percent,
-                'S',
-              ),
-            ))
-              if (inPeriod(x.date)) x,
+            for (final s in await p.fetchPurchases(workspaceId))
+              await p.fetchDetail(workspaceId, s.id),
           ];
+    // A purchase in another currency is booked at its recorded rate, as the
+    // server books it.
+    final rates = <String, FxRate>{
+      for (final d in details)
+        if (await p!.fetchExchangeRate(workspaceId, d.summary.id) case final r?)
+          d.summary.id: r.fxRate,
+    };
+    final bought = [
+      for (final x in purchasePostingsOf(
+        purchases: details,
+        book: book,
+        groupOf: (percent) =>
+            ActiveTaxReference.current.groupOfRate(country, percent, 'S'),
+        functional: DemoPurchaseExchangeRates.spaceCurrency,
+        rates: rates,
+      ))
+        if (inPeriod(x.date)) x,
+    ];
     final sold = postingsOf(
       invoices: [
         for (final i in await m.fetchInvoices(workspaceId))
