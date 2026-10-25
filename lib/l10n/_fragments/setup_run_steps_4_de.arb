@@ -1,0 +1,20 @@
+{
+  "setupOnlineTestTitle": "Testzahlung",
+  "setupOnlineTestBody": "Dieser Test prüft, was die Zahlung eines Mitglieds mit den Schlüsseln dieses Bereichs tun würde. Es wird nichts bezahlt und keine Rechnung oder Abrechnungszeile geschrieben.",
+  "setupOnlineTestRun": "Schlüssel testen",
+  "setupOnlineTestNoProvider": "Noch kein Anbieter verbunden: Es gibt nichts zu testen.",
+  "setupOnlineTestTestKeys": "Testschlüssel: Die Zahlung eines Mitglieds bewegt kein echtes Geld.",
+  "setupOnlineTestLiveKeys": "Live-Schlüssel: Die Zahlung eines Mitglieds belastet eine echte Karte.",
+  "setupOnlineTestUnverified": "Diese Schlüssel zeigen nicht, ob es Test- oder Live-Schlüssel sind. Prüfen Sie sie im Dashboard des Anbieters.",
+  "setupOnlineTestRehearsal": "Dies ist ein Probebereich: Seine Zahlung eröffnet nie eine Transaktion, gleich welche Schlüssel.",
+  "setupOnlineTestLimits": "Was dieser Test nicht sieht: ob der Anbieter die Schlüssel annimmt und DesKilo meldet, dass eine Zahlung eingegangen ist. Das beweist nur eine erste Zahlung mit Testschlüsseln im Produktionsbereich; der Betreiber, der die Schlüssel hält, führt sie aus.",
+  "setupOnlineKeyTest": "Testschlüssel",
+  "setupOnlineKeyLive": "Live-Schlüssel",
+  "setupOnlineKeyUnknown": "Ein Schlüssel unbekannter Art",
+  "setupOnlineKeyInstallation": "Von der Installation festgelegt, die dieser Test nicht lesen kann",
+  "setupApprovalsOwnRulesTitle": "Eigene Regeln",
+  "setupApprovalsOwnRulesNone": "Jede Anfrage folgt der Standardregel oben.",
+  "setupApprovalsOwnRulesShort": "{count, plural, =1{Eine Regel verlangt mehr Freigaben, als Personen sie geben können: Ihre Anfragen werden nie entschieden. Ändern Sie sie in den Freigaberegeln.} other{{count} Regeln verlangen mehr Freigaben, als Personen sie geben können: Ihre Anfragen werden nie entschieden. Ändern Sie sie in den Freigaberegeln.}}",
+  "setupApprovalsRuleReach": "{required, plural, =1{1 Freigabe} other{{required} Freigaben}}, {people, plural, =1{1 Person kann freigeben} other{{people} Personen können freigeben}}",
+  "setupApprovalsRuleShort": "{required, plural, =1{1 Freigabe} other{{required} Freigaben}}, aber {people, plural, =0{niemand kann freigeben} =1{nur 1 Person kann freigeben} other{nur {people} Personen können freigeben}}"
+}

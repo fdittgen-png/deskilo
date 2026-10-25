@@ -20537,6 +20537,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupApprovalsOpenRules => 'Reglas por tipo de solicitud';
 
   @override
+  String get setupApprovalsOwnRulesNone =>
+      'Cada solicitud sigue la regla por defecto de arriba.';
+
+  @override
+  String setupApprovalsOwnRulesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count reglas piden más aprobaciones de las que pueden dar las personas: sus solicitudes nunca se deciden. Cámbielas en las reglas de aprobación.',
+      one: 'Una regla pide más aprobaciones de las que pueden dar las personas: sus solicitudes nunca se deciden. Cámbiela en las reglas de aprobación.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupApprovalsOwnRulesTitle => 'Reglas propias';
+
+  @override
   String setupApprovalsPeople(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -20567,6 +20586,41 @@ class AppLocalizationsEs extends AppLocalizations {
       one: 'A la espera de 1 aprobación',
     );
     return '$_temp0';
+  }
+
+  @override
+  String setupApprovalsRuleReach(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required aprobaciones',
+      one: '1 aprobación',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: '$people personas pueden aprobar',
+      one: '1 persona puede aprobar',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String setupApprovalsRuleShort(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required aprobaciones',
+      one: '1 aprobación',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: 'solo $people personas pueden aprobar',
+      one: 'solo 1 persona puede aprobar',
+      zero: 'nadie puede aprobar',
+    );
+    return '$_temp0, pero $_temp1';
   }
 
   @override
@@ -21392,6 +21446,19 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get setupOnlineKeyInstallation =>
+      'Definida por la instalación, que esta prueba no puede leer';
+
+  @override
+  String get setupOnlineKeyLive => 'Clave real';
+
+  @override
+  String get setupOnlineKeyTest => 'Clave de prueba';
+
+  @override
+  String get setupOnlineKeyUnknown => 'Una clave de tipo desconocido';
+
+  @override
   String get setupOnlineOpenConfig => 'Ajustes de pago en línea';
 
   @override
@@ -21405,6 +21472,40 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupOnlinePreviewOn =>
       'Hay un proveedor conectado: los miembros pueden pagar su extracto en línea.';
+
+  @override
+  String get setupOnlineTestBody =>
+      'Esta prueba comprueba qué haría el pago de un miembro con las claves de este espacio. No se paga nada y no se escribe ninguna factura ni línea de extracto.';
+
+  @override
+  String get setupOnlineTestLimits =>
+      'Lo que esta prueba no ve: si el proveedor acepta las claves y avisa a DesKilo de que ha llegado un pago. Solo un primer pago hecho con claves de prueba en el espacio de producción lo demuestra; lo hace el operador que tiene las claves.';
+
+  @override
+  String get setupOnlineTestLiveKeys =>
+      'Claves reales: el pago de un miembro carga una tarjeta real.';
+
+  @override
+  String get setupOnlineTestNoProvider =>
+      'Todavía no hay ningún proveedor conectado: no hay nada que probar.';
+
+  @override
+  String get setupOnlineTestRehearsal =>
+      'Este es un espacio de ensayo: su pago nunca abre una transacción, sean cuales sean las claves.';
+
+  @override
+  String get setupOnlineTestRun => 'Probar las claves';
+
+  @override
+  String get setupOnlineTestTestKeys =>
+      'Claves de prueba: el pago de un miembro no mueve dinero real.';
+
+  @override
+  String get setupOnlineTestTitle => 'Pago de prueba';
+
+  @override
+  String get setupOnlineTestUnverified =>
+      'Estas claves no indican si son de prueba o reales. Compruébelas en el panel del proveedor.';
 
   @override
   String get setupPaymentsPreviewEmpty =>

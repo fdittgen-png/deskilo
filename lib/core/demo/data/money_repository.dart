@@ -23,6 +23,7 @@ import 'package:deskilo/features/money/domain/package.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
+import 'package:deskilo/features/money/domain/payment_test_check.dart';
 import 'package:deskilo/features/money/domain/price_negotiation.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
@@ -372,14 +373,12 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
 
   /// Per-provider server config the owner UI reads back.
   final Map<PaymentProvider, PaymentProviderStatus> paymentStatus = {};
-
   /// (provider, config) of setPaymentCredentials calls.
   final savedPaymentConfigs = <(PaymentProvider, Map<String, String>)>[];
   final clearedProviders = <PaymentProvider>[];
 
   /// What [recordServiceCharge] and [buyPackage] stamp when the item has no
-  /// rate of its own — the fake's stand-in for
-  /// `workspace_default_vat_percent`.
+  /// rate of its own — the fake's `workspace_default_vat_percent`.
   double get _defaultVatPercent => vatRates
       .where((r) => r.active && r.isDefault)
       .map((r) => r.percent)
@@ -474,6 +473,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<String> buyPackage(String workspaceId, String packageId) => _buyPackageImpl(workspaceId, packageId);
   @override Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) => _fetchPaymentConfigImpl(workspaceId);
   @override Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(String workspaceId) => _fetchPaymentGatewayStatusImpl(workspaceId);
+  @override Future<PaymentTestCheck> testPaymentKeys(String workspaceId) => _testPaymentKeysImpl(workspaceId);
   @override Future<void> setPaymentCredentials(String workspaceId, PaymentProvider provider, Map<String, String> config) => _setPaymentCredentialsImpl(workspaceId, provider, config);
   @override Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider) => _clearPaymentProviderImpl(workspaceId, provider);
   @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => _createPaymentOrderImpl(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);

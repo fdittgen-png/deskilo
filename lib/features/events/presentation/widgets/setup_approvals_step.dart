@@ -7,6 +7,9 @@
 // number of people who can approve; a number above them is refused with
 // the reason, because such a rule holds its requests forever. The preview
 // is what a member reads once a request is sent, and follows the count.
+// The rules a request type has of its own are listed below, each with
+// whether it can be satisfied, and are changed in the rule editor: a
+// short one keeps the step open on the server until it is fixed there.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,9 +23,11 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../application/apply_approvals_preset.dart';
 import '../../domain/approvals_preset.dart';
+import '../../domain/rule_reach.dart';
 import '../../domain/validation_policy.dart';
 import '../../providers/event_providers.dart';
 import 'setup_approvals_flow.dart';
+import 'setup_approvals_own_rules.dart';
 
 /// The most approvals the step offers, as the rule editor does.
 const int _maxRequired = 10;
@@ -31,23 +36,29 @@ class SetupApprovalsStep extends ConsumerWidget {
   const SetupApprovalsStep({
     super.key,
     required this.workspaceId,
-    required this.owners,
-    required this.admins,
+    required this.members,
   });
 
   final String workspaceId;
 
-  /// Active owners, and active administrators who are not owners.
-  final int owners;
-  final int admins;
+  /// The active members.
+  final List<Decider> members;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) =>
       switch (ref.watch(validationPoliciesProvider)) {
         AsyncValue(hasValue: true, :final value) => _ApprovalsPage(
           workspaceId: workspaceId,
-          preset: ApprovalsPreset(owners: owners, admins: admins),
+          preset: ApprovalsPreset(
+            owners: members.where((m) => m.isOwner).length,
+            admins: members.where((m) => m.isAdmin && !m.isOwner).length,
+          ),
           stored: value?.where((p) => p.eventType == null).firstOrNull,
+          ownRules: [
+            for (final p in value ?? const <ValidationPolicy>[])
+              if (p.eventType != null) p,
+          ],
+          members: members,
         ),
         AsyncError() => Padding(
           padding: AppSpacing.lgAll,
@@ -66,6 +77,8 @@ class _ApprovalsPage extends ConsumerStatefulWidget {
     required this.workspaceId,
     required this.preset,
     required this.stored,
+    required this.ownRules,
+    required this.members,
   });
 
   final String workspaceId;
@@ -73,6 +86,10 @@ class _ApprovalsPage extends ConsumerStatefulWidget {
 
   /// The stored default rule; null while the built-in one applies.
   final ValidationPolicy? stored;
+
+  /// The stored rules of a request type of their own.
+  final List<ValidationPolicy> ownRules;
+  final List<Decider> members;
 
   @override
   ConsumerState<_ApprovalsPage> createState() => _ApprovalsPageState();
@@ -163,6 +180,11 @@ class _ApprovalsPageState extends ConsumerState<_ApprovalsPage> {
                   onPressed: reachable && !_busy.value ? _apply : null,
                   child: Text(l10n.setupApprovalsApply),
                 ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              SetupApprovalsOwnRules(
+                rules: widget.ownRules,
+                members: widget.members,
               ),
               Align(
                 alignment: AlignmentDirectional.centerStart,

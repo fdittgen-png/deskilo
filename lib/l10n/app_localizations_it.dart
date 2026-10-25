@@ -20560,6 +20560,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupApprovalsOpenRules => 'Regole per tipo di richiesta';
 
   @override
+  String get setupApprovalsOwnRulesNone =>
+      'Ogni richiesta segue la regola predefinita qui sopra.';
+
+  @override
+  String setupApprovalsOwnRulesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count regole chiedono più approvazioni di quante le persone possano darne: le loro richieste non vengono mai decise. Le modifichi nelle regole di approvazione.',
+      one: 'Una regola chiede più approvazioni di quante le persone possano darne: le sue richieste non vengono mai decise. La modifichi nelle regole di approvazione.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupApprovalsOwnRulesTitle => 'Regole proprie';
+
+  @override
   String setupApprovalsPeople(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -20590,6 +20609,41 @@ class AppLocalizationsIt extends AppLocalizations {
       one: 'In attesa di 1 approvazione',
     );
     return '$_temp0';
+  }
+
+  @override
+  String setupApprovalsRuleReach(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required approvazioni',
+      one: '1 approvazione',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: '$people persone possono approvare',
+      one: '1 persona può approvare',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
+  String setupApprovalsRuleShort(int required, int people) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required approvazioni',
+      one: '1 approvazione',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      people,
+      locale: localeName,
+      other: 'solo $people persone possono approvare',
+      one: 'solo 1 persona può approvare',
+      zero: 'nessuno può approvare',
+    );
+    return '$_temp0, ma $_temp1';
   }
 
   @override
@@ -21415,6 +21469,19 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get setupOnlineKeyInstallation =>
+      'Impostata dall’installazione, che questa prova non può leggere';
+
+  @override
+  String get setupOnlineKeyLive => 'Chiave reale';
+
+  @override
+  String get setupOnlineKeyTest => 'Chiave di prova';
+
+  @override
+  String get setupOnlineKeyUnknown => 'Una chiave di tipo sconosciuto';
+
+  @override
   String get setupOnlineOpenConfig => 'Impostazioni dei pagamenti online';
 
   @override
@@ -21428,6 +21495,40 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupOnlinePreviewOn =>
       'Un fornitore è collegato: i membri possono pagare l\'estratto online.';
+
+  @override
+  String get setupOnlineTestBody =>
+      'Questa prova verifica che cosa farebbe il pagamento di un membro con le chiavi di questo spazio. Non viene pagato nulla e non viene scritta alcuna fattura né riga di estratto.';
+
+  @override
+  String get setupOnlineTestLimits =>
+      'Ciò che questa prova non vede: se il fornitore accetta le chiavi e segnala a DesKilo che un pagamento è arrivato. Lo dimostra solo un primo pagamento fatto con chiavi di prova nello spazio di produzione; lo esegue l’operatore che detiene le chiavi.';
+
+  @override
+  String get setupOnlineTestLiveKeys =>
+      'Chiavi reali: il pagamento di un membro addebita una carta vera.';
+
+  @override
+  String get setupOnlineTestNoProvider =>
+      'Nessun fornitore è ancora collegato: non c’è nulla da provare.';
+
+  @override
+  String get setupOnlineTestRehearsal =>
+      'Questo è uno spazio di prova generale: il suo pagamento non apre mai una transazione, qualunque siano le chiavi.';
+
+  @override
+  String get setupOnlineTestRun => 'Provi le chiavi';
+
+  @override
+  String get setupOnlineTestTestKeys =>
+      'Chiavi di prova: il pagamento di un membro non muove denaro reale.';
+
+  @override
+  String get setupOnlineTestTitle => 'Pagamento di prova';
+
+  @override
+  String get setupOnlineTestUnverified =>
+      'Queste chiavi non indicano se sono di prova o reali. Le verifichi nel pannello del fornitore.';
 
   @override
   String get setupPaymentsPreviewEmpty =>

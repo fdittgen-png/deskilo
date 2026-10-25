@@ -34440,6 +34440,24 @@ abstract class AppLocalizations {
   /// **'Rules for each kind of request'**
   String get setupApprovalsOpenRules;
 
+  /// #2871 setup run steps: setupApprovalsOwnRulesNone
+  ///
+  /// In en, this message translates to:
+  /// **'Every request follows the default rule above.'**
+  String get setupApprovalsOwnRulesNone;
+
+  /// #2871 setup run steps: setupApprovalsOwnRulesShort
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.} other{{count} rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.}}'**
+  String setupApprovalsOwnRulesShort(int count);
+
+  /// #2871 setup run steps: setupApprovalsOwnRulesTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Rules of their own'**
+  String get setupApprovalsOwnRulesTitle;
+
   /// #2871 setup run steps: setupApprovalsPeople
   ///
   /// In en, this message translates to:
@@ -34469,6 +34487,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{required, plural, =1{Waiting for 1 approval} other{Waiting for {required} approvals}}'**
   String setupApprovalsPreviewWaiting(int required);
+
+  /// #2871 setup run steps: setupApprovalsRuleReach
+  ///
+  /// In en, this message translates to:
+  /// **'{required, plural, =1{1 approval} other{{required} approvals}}, {people, plural, =1{1 person can approve} other{{people} people can approve}}'**
+  String setupApprovalsRuleReach(int required, int people);
+
+  /// #2871 setup run steps: setupApprovalsRuleShort
+  ///
+  /// In en, this message translates to:
+  /// **'{required, plural, =1{1 approval} other{{required} approvals}}, but {people, plural, =0{nobody can approve} =1{only 1 person can approve} other{only {people} people can approve}}'**
+  String setupApprovalsRuleShort(int required, int people);
 
   /// #2871 setup run steps: setupApprovalsTooMany
   ///
@@ -35615,6 +35645,30 @@ abstract class AppLocalizations {
   /// **'What the law asks in {country}'**
   String setupObligationsTitle(String country);
 
+  /// #2871 setup run steps: setupOnlineKeyInstallation
+  ///
+  /// In en, this message translates to:
+  /// **'Set by the installation, which this test cannot read'**
+  String get setupOnlineKeyInstallation;
+
+  /// #2871 setup run steps: setupOnlineKeyLive
+  ///
+  /// In en, this message translates to:
+  /// **'Live key'**
+  String get setupOnlineKeyLive;
+
+  /// #2871 setup run steps: setupOnlineKeyTest
+  ///
+  /// In en, this message translates to:
+  /// **'Test key'**
+  String get setupOnlineKeyTest;
+
+  /// #2871 setup run steps: setupOnlineKeyUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'A key of unknown kind'**
+  String get setupOnlineKeyUnknown;
+
   /// #2871 setup run steps: setupOnlineOpenConfig
   ///
   /// In en, this message translates to:
@@ -35638,6 +35692,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A provider is connected: members can pay their statement online.'**
   String get setupOnlinePreviewOn;
+
+  /// #2871 setup run steps: setupOnlineTestBody
+  ///
+  /// In en, this message translates to:
+  /// **'This test checks what a member\'s checkout would do with the keys this space holds. Nothing is paid, and no invoice or statement line is written.'**
+  String get setupOnlineTestBody;
+
+  /// #2871 setup run steps: setupOnlineTestLimits
+  ///
+  /// In en, this message translates to:
+  /// **'What this test cannot see: whether the provider accepts the keys and tells DesKilo that a payment arrived. Only a first payment made with test keys in the production space proves that; the operator who holds the keys makes it.'**
+  String get setupOnlineTestLimits;
+
+  /// #2871 setup run steps: setupOnlineTestLiveKeys
+  ///
+  /// In en, this message translates to:
+  /// **'Live keys: a member\'s checkout charges a real card.'**
+  String get setupOnlineTestLiveKeys;
+
+  /// #2871 setup run steps: setupOnlineTestNoProvider
+  ///
+  /// In en, this message translates to:
+  /// **'No provider is connected yet: there is nothing to test.'**
+  String get setupOnlineTestNoProvider;
+
+  /// #2871 setup run steps: setupOnlineTestRehearsal
+  ///
+  /// In en, this message translates to:
+  /// **'This is a rehearsal space: its checkout never opens a payment, whatever the keys.'**
+  String get setupOnlineTestRehearsal;
+
+  /// #2871 setup run steps: setupOnlineTestRun
+  ///
+  /// In en, this message translates to:
+  /// **'Test the keys'**
+  String get setupOnlineTestRun;
+
+  /// #2871 setup run steps: setupOnlineTestTestKeys
+  ///
+  /// In en, this message translates to:
+  /// **'Test keys: a member\'s checkout takes no real money.'**
+  String get setupOnlineTestTestKeys;
+
+  /// #2871 setup run steps: setupOnlineTestTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Test payment'**
+  String get setupOnlineTestTitle;
+
+  /// #2871 setup run steps: setupOnlineTestUnverified
+  ///
+  /// In en, this message translates to:
+  /// **'These keys do not show whether they are test or live keys. Check them in the provider\'s dashboard.'**
+  String get setupOnlineTestUnverified;
 
   /// #2871 setup run steps: setupPaymentsPreviewEmpty
   ///
