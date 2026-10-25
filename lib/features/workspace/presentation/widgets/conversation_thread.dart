@@ -4,12 +4,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/capture/capture_shield.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/feature_sheets.dart';
-import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -23,6 +21,7 @@ import '../../../directory/presentation/messenger/message_marks.dart';
 import '../../../directory/providers/message_marks_providers.dart';
 import '../../../directory/providers/messenger_providers.dart';
 import '../../domain/conversation.dart';
+import '../../domain/member.dart';
 import '../../domain/member_note.dart';
 import '../../domain/member_note_refs.dart';
 import '../../domain/workspace_feature.dart';
@@ -30,6 +29,7 @@ import '../../providers/conversation_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'composer_frame.dart';
 import 'conversation_bubble.dart';
+import 'conversation_day_separator.dart';
 import 'conversation_header.dart';
 import 'group_info_sheet.dart';
 import 'member_note_composer.dart';
@@ -378,69 +378,25 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
     if (!next.isLoading) ref.invalidate(messageMarksProvider(_marksKey));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // A message arriving brings the reactions with it.
-    ref.listen(conversationMessagesProvider(widget.conversationId), _marksFollow);
-    final conversationId = widget.conversationId;
+  String _title(Conversation? conversation, Map<String, String> names) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final me = ref.watch(myMemberProvider).value;
-    final names = ref.watch(memberNamesProvider).value ?? const {};
-    final newest =
-        ref.watch(conversationMessagesProvider(conversationId)).value ??
-            const <MemberNote>[];
+    if (conversation == null) return '';
+    return conversation.isGroup
+        ? (conversation.title ?? (l10n.conversationGroup))
+        : (names[conversation.otherMemberId] ??
+            (l10n.conversationUnknownMember));
+  }
+
+  Widget _bubble(
+    MemberNote note,
+    Member? me,
+    Map<String, String> names,
+    Conversation? conversation,
+  ) {
     final hub = _hub;
-    _markReadAsMessagesLand(conversationId);
-    final conversation = (ref.watch(conversationsProvider).value ?? const [])
-        .where((c) => c.id == conversationId)
-        .firstOrNull;
-
-    final title = conversation == null
-        ? ''
-        : conversation.isGroup
-            ? (conversation.title ?? (l10n.conversationGroup))
-            : (names[conversation.otherMemberId] ??
-                (l10n.conversationUnknownMember));
-    final messages = [..._earlier, ...newest];
-    final canLoadEarlier = hub &&
-        !_noMoreEarlier &&
-        newest.length >= 200 - 1 &&
-        !_loadingEarlier;
-
-    final header = ConversationHeader(
-      title: title,
-      conversation: conversation,
-      asPage: widget.asPage, onBack: _back,
-      onOpen: _openFromHeader(conversation),
-    );
-
-    final list = messages.isEmpty
-        ? Center(
-            child: Text(
-              l10n.conversationEmpty,
-              style: theme.textTheme.bodySmall,
-            ),
-          )
-        : ListView.builder(
-            // Reversed so the newest message is in view and stays there
-            // when the keyboard opens.
-            reverse: true,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg,
-              vertical: AppSpacing.sm,
-            ),
-            itemCount: messages.length + (canLoadEarlier || _loadingEarlier ? 1 : 0),
-            itemBuilder: (context, index) {
-              if (index == messages.length) {
-                return _earlierRow(newest);
-              }
-              final i = messages.length - 1 - index;
-              final note = messages[i];
-              final previous = i > 0 ? messages[i - 1] : null;
-              // #1824 — a forward or a screenshot is a system line of the
-              // thread, never a bubble anybody could act on.
-              final bubble = note.notice != null
+    // #1824 — a forward or a screenshot is a system line of the
+    // thread, never a bubble anybody could act on.
+    return note.notice != null
                   ? MessageNoticeLine(
                       key: ValueKey('notice-${note.id}'),
                       notice: note.notice!,
@@ -478,23 +434,72 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
                     ? names[note.fromMemberId]
                     : null,
               );
-              // #821 — a date separator where the day changes, so the
-              // bubbles can carry the time alone.
-              if (!hub || (previous != null && _sameDay(previous, note))) {
-                return bubble;
-              }
-              return Column(children: [
-                _DaySeparator(
-                  day: note.createdAt.toLocal(),
-                  today: ref.read(clockProvider).now(),
-                ),
-                bubble,
-              ]);
+  }
+
+  /// The message at [i] (oldest first), behind a date separator where
+  /// the day changes, so the bubbles can carry the time alone (#821).
+  Widget _messageAt(
+    List<MemberNote> messages,
+    int i,
+    Widget bubble,
+  ) {
+    final note = messages[i];
+    final previous = i > 0 ? messages[i - 1] : null;
+    if (!_hub || (previous != null && sameLocalDay(previous.createdAt, note.createdAt))) {
+      return bubble;
+    }
+    return Column(children: [
+      ConversationDaySeparator(
+        day: note.createdAt.toLocal(),
+        today: ref.read(clockProvider).now(),
+      ),
+      bubble,
+    ]);
+  }
+
+  Widget _messageList(
+    List<MemberNote> newest,
+    Member? me,
+    Map<String, String> names,
+    Conversation? conversation,
+  ) {
+    final messages = [..._earlier, ...newest];
+    final canLoadEarlier = _hub &&
+        !_noMoreEarlier &&
+        newest.length >= 200 - 1 &&
+        !_loadingEarlier;
+    return messages.isEmpty
+        ? Center(
+            child: Text(
+              context.l10n.conversationEmpty,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          )
+        : ListView.builder(
+            // Reversed so the newest message is in view and stays there
+            // when the keyboard opens.
+            reverse: true,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg,
+              vertical: AppSpacing.sm,
+            ),
+            itemCount: messages.length + (canLoadEarlier || _loadingEarlier ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == messages.length) return _earlierRow(newest);
+              final i = messages.length - 1 - index;
+              return _messageAt(
+                  messages, i, _bubble(messages[i], me, names, conversation));
             },
           );
+  }
 
-    // A group: its roster (for @mentions and who may post) and whether only
-    // admins post (0383).
+  /// A group: its roster (for @mentions and who may post) and whether only
+  /// admins post (0383); a direct conversation is always open to both.
+  Widget _composerFor(
+    Conversation? conversation,
+    Member? me,
+    Map<String, String> names,
+  ) {
     final isGroup = conversation?.isGroup ?? false;
     final roster = isGroup
         ? (ref.watch(conversationParticipantsProvider(widget.conversationId))
@@ -508,17 +513,39 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
         : ConversationDetails.none;
     final iAmGroupAdmin = roster
         .any((p) => p.memberId == me?.id && p.isAdmin && p.isActive);
-    final postingClosed = isGroup && groupDetails.announceOnly && !iAmGroupAdmin;
-    final mentionNames = [
-      for (final p in roster)
-        if (p.isActive && p.memberId != me?.id && (names[p.memberId] ?? '').isNotEmpty)
-          (id: p.memberId, name: names[p.memberId]!),
-    ];
-
-    final composer = _composer(
-      postingClosed: postingClosed,
-      mentionNames: mentionNames,
+    return _composer(
+      postingClosed: isGroup && groupDetails.announceOnly && !iAmGroupAdmin,
+      mentionNames: [
+        for (final p in roster)
+          if (p.isActive && p.memberId != me?.id && (names[p.memberId] ?? '').isNotEmpty)
+            (id: p.memberId, name: names[p.memberId]!),
+      ],
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // A message arriving brings the reactions with it.
+    ref.listen(conversationMessagesProvider(widget.conversationId), _marksFollow);
+    final conversationId = widget.conversationId;
+    final me = ref.watch(myMemberProvider).value;
+    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final newest =
+        ref.watch(conversationMessagesProvider(conversationId)).value ??
+            const <MemberNote>[];
+    _markReadAsMessagesLand(conversationId);
+    final conversation = (ref.watch(conversationsProvider).value ?? const [])
+        .where((c) => c.id == conversationId)
+        .firstOrNull;
+
+    final header = ConversationHeader(
+      title: _title(conversation, names),
+      conversation: conversation,
+      asPage: widget.asPage, onBack: _back,
+      onOpen: _openFromHeader(conversation),
+    );
+    final list = _messageList(newest, me, names, conversation);
+    final composer = _composerFor(conversation, me, names);
 
     // #1824 — the thread is capture-protected while it is on screen,
     // unless the workspace switched `captureProtection` off.
@@ -553,11 +580,6 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
     );
   }
 
-  bool _sameDay(MemberNote a, MemberNote b) {
-    final x = a.createdAt.toLocal();
-    final y = b.createdAt.toLocal();
-    return x.year == y.year && x.month == y.month && x.day == y.day;
-  }
 
   Future<bool> _send(BuildContext context, WidgetRef ref, String body) async {
     final conversationId = widget.conversationId;
@@ -580,43 +602,5 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
       ..invalidate(conversationMessagesProvider(conversationId))
       ..invalidate(conversationsProvider);
     return true;
-  }
-}
-
-/// #821 — "Today", "Yesterday" or the date, centred between the days.
-class _DaySeparator extends StatelessWidget {
-  const _DaySeparator({required this.day, required this.today});
-
-  final DateTime day;
-  final DateTime today;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final d = DateTime(day.year, day.month, day.day);
-    final t = DateTime(today.year, today.month, today.day);
-    final diff = d.difference(t).inDays;
-    final label = diff == 0
-        ? (l10n.conversationToday)
-        : diff == -1
-            ? (l10n.conversationYesterday)
-            : DateFormat.yMMMEd(Localizations.maybeLocaleOf(context)?.toString())
-                .format(day);
-    return Center(
-      child: Container(
-        key: ValueKey('conversation-day-${d.year}-${d.month}-${d.day}'),
-        margin: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: 2,
-        ),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainerHighest,
-          borderRadius: AppRadius.xlAll,
-        ),
-        child: Text(label, style: theme.textTheme.labelSmall),
-      ),
-    );
   }
 }
