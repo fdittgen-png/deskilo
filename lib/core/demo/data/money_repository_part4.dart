@@ -245,6 +245,20 @@ extension _FakeMoneyRepositoryPart4 on FakeMoneyRepository {
       _fetchPaymentGatewayStatusImpl(String workspaceId) async =>
           Map.of(paymentStatus);
 
+  /// The demo is a rehearsal: it opens no payment, and its keys are the
+  /// installation's, which the test cannot read.
+  Future<PaymentTestCheck> _testPaymentKeysImpl(String workspaceId) async =>
+      PaymentTestCheck(
+        verdict: paymentStatus.isEmpty
+            ? PaymentTestVerdict.noProvider
+            : PaymentTestVerdict.unverified,
+        takesPayments: false,
+        modes: {
+          for (final provider in paymentStatus.keys)
+            provider: PaymentKeyMode.installation,
+        },
+      );
+
   Future<void> _setPaymentCredentialsImpl(
     String workspaceId,
     PaymentProvider provider,
