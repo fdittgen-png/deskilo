@@ -130,9 +130,6 @@ class BiEditorState {
   /// The report as its readers see it: no selection frame, no properties.
   final bool preview;
 
-  /// The history keeps this many steps; older ones are forgotten.
-  static const historyDepth = 100;
-
   BiReportPage get currentPage => report.pages[page];
 
   BiReportVisual? get selectedVisual => selected == null
@@ -169,9 +166,9 @@ class BiEditorState {
       report: next,
       page: edit.page ?? page,
       selected: edit.selected ?? selected,
-      past: history.length > historyDepth
-          ? history.sublist(history.length - historyDepth)
-          : history,
+      // The whole session's history: each step is a bounded report (the
+      // space's byte limit), and a run of typing is one step.
+      past: history,
       future: const [],
       coalesce: coalesceKey,
       // A conflict stays until the person resolves it; an edit is not that.
