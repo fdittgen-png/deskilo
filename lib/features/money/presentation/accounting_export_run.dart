@@ -86,6 +86,9 @@ class AccountingExportRun {
   late final DateTime now;
   late final bool development;
   late final ExportSourceBooks books;
+
+  /// The posted journal of a posted format, read with [books] (#2365).
+  late final GenericJournal? posted;
   late final List<VatTaxPointAmount> taxPoints;
   late final Map<String, String> memberNames;
 
@@ -107,14 +110,9 @@ class AccountingExportRun {
     );
     return;
   }
-  // #831 — the accountant's view: settlements are transparent, their
-  // payment allocated to the invoices they regroup.
-  final view = accountingView(
-      invoices, ref.read(invoiceMatchesProvider).value ?? const {});
   year = invoices
       .map((invoice) => invoice.issuedAt.year)
       .reduce((a, b) => a > b ? a : b);
-  matches = view.matches;
   company = sellerOf(invoices.last, workspace);
   country = workspace.countryCode.toUpperCase();
 
@@ -143,24 +141,22 @@ class AccountingExportRun {
   // #936 — the purchases side travels with the sales side, and a
   // development workspace's books are marked as such.
   development = workspace.environment != 'prod';
-  // #2365 — the books of the export year only.
-  final read = await exportYearBooksOrSay(
-    context,
-    ref.read(accountingSourceQueriesProvider),
-    workspace.id,
-    year,
-    view.invoices,
-    loaded: invoices,
-  );
-  if (read == null) return;
-  books = read;
+  // #2365 — the books of the export year only, read once: the one source
+  // response (#831: settlements transparent in its matches), and for a
+  // posted format its postings. Nothing below reads the period again.
+  final read = await exportInputOrSay(context, () => ref.read(accountingExportSourceProvider).read(
+      formatId: format.id, workspaceId: workspace.id, country: country, year: year, invoices: invoices));
+  if (read == null || !context.mounted) return;
+  books = read.books;
+  posted = read.posted;
+  matches = books.matches;
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
   // then agree with the return and the VAT report.
   taxPoints = vatTaxPointLedger(
     exported,
     matches: matches,
-    instalments: await invoiceQueries.fetchInvoiceInstalments(workspace.id),
+    instalments: books.instalments,
     basis: workspaceTaxPointBasis(workspace.invoiceLegal, workspace.countryCode),
   );
   memberNames =
@@ -192,8 +188,7 @@ class AccountingExportRun {
       case 'audit_trail':
         await _auditTrail();
       case 'generic_journal_csv':
-        final books = ref.read(genericJournalExportProvider);
-        await exportGenericJournal(context, () => books.of(workspace.id, bookProfiles, year),
+        await exportGenericJournal(context, () async => writtenWith(posted!, journalCsvOf),
             save: (content) => save(content, named('journal')));
     }
   }
@@ -210,9 +205,8 @@ class AccountingExportRun {
 
   Future<void> _fec() async {
     // #2365 — a local book's FEC is its postings, on its own chart.
-    if (localBookOf(bookProfiles, year) != null) {
-      final books = ref.read(genericJournalExportProvider);
-      return exportGenericJournal(context, () => books.fecOf(workspace.id, bookProfiles, year), save: (content) =>
+    if (posted case final journal?) {
+      return exportGenericJournal(context, () async => writtenWith(journal, postedFecOf), save: (content) =>
           save(content, fecFileName(company.legalId, DateTime(year, 12, 31), development: development)));
     }
     // The owner's own VAT account (0072) if they set one — the dialog
@@ -352,10 +346,9 @@ class AccountingExportRun {
           profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
           ledgerAccounts: accounts, bookPostings: posted));
     // #2365 — a local book's ledger is its postings; no mapping is asked.
-    if (!portugal && localBookOf(bookProfiles, year) != null) {
-      final books = ref.read(genericJournalExportProvider);
+    if (posted case final journal?) {
       return exportGenericJournal(context,
-          () => books.postedFile(workspace.id, bookProfiles, year, (p) => file(posted: p)),
+          () async => writtenWith(journal, (b) => file(posted: b.postings)),
           save: (content) => save(content, named('saf-t')));
     }
     SafTLedgerAccounts? postings;
@@ -417,6 +410,8 @@ class AccountingExportRun {
         // #1640 — a bounded recheck: the same documents read again from
         // the server must give the same fingerprint, in the same space,
         // or the reviewed file no longer describes the books.
+        // #2365 — both sides cut to the file's documents: the export's
+        // matches are its source's, not every year's.
         final ids = {for (final i in invoices) i.id};
         final fresh = accountingView(
           [
@@ -426,9 +421,10 @@ class AccountingExportRun {
           await invoiceQueries.fetchInvoiceMatches(workspace.id),
         );
         if (!context.mounted) return;
+        final kept = {for (final i in exported) i.id};
         if (ref.read(currentWorkspaceProvider).value?.id != workspace.id ||
-            accountantSourceDigest(fresh.invoices, fresh.matches) !=
-                accountantSourceDigest(exported, matches)) {
+            accountantScopeDigest(fresh.invoices, fresh.matches, kept) !=
+                accountantScopeDigest(exported, matches, kept)) {
           AppSnack.error(
             context,
             l10n.handoffChanged,
@@ -460,6 +456,10 @@ class AccountingExportRun {
       message: 'archive bundle failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
+        // #2365 — a local book's archive carries its posted FEC, the one
+        // the FEC export writes; a role left unmapped stops the archive.
+        if (posted case JournalBlocked(:final roles)) return AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
+        final local = switch (posted) { final JournalPosted p => p, _ => null };
         final yearInvoices = exported;
         // #1154 — the signature checks are independent server calls:
         // all of them in flight at once, not one round-trip per invoice.
@@ -496,7 +496,7 @@ class AccountingExportRun {
           workspaceName: workspace.name,
           source: books.revisions,
         ));
-        addArchiveFec(files, country, buildFecFile(FecRequest(
+        addArchiveFec(files, country, local != null ? postedFecOf(local) : buildFecFile(FecRequest(
           invoices: yearInvoices,
           matches: matches,
           company: company,
@@ -538,7 +538,7 @@ class AccountingExportRun {
           start: DateTime(month.year, month.month),
           end: DateTime(month.year, month.month + 1, 0),
           matches: matches,
-          instalments: await invoiceQueries.fetchInvoiceInstalments(workspace.id),
+          instalments: books.instalments,
           onReceipts: workspaceTaxPointBasis(
             workspace.invoiceLegal,
             workspace.countryCode,

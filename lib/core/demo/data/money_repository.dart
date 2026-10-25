@@ -479,22 +479,5 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => _createPaymentOrderImpl(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);
 
   @override
-  Future<AccountingSourceSnapshot> fetchAccountingSource({
-    required String workspaceId,
-    required int year,
-  }) async => AccountingSourceSnapshot.demo(
-    invoices: [
-      for (final i in invoices)
-        if (i.issuedAt.year == year)
-          (id: i.id, number: i.number, totalCents: i.totalCents),
-    ],
-    ledger: [
-      for (final e in ledger)
-        if (e.on.year == year) e,
-    ],
-    repartitions: [
-      for (final r in repartitions)
-        if ((r.appliedAt ?? r.createdAt).year == year) r,
-    ],
-  );
+  Future<AccountingSourceSnapshot> fetchAccountingSource({required String workspaceId, required int year}) async => _accountingSourceImpl(year);
 }
