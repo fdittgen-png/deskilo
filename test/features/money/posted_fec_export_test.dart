@@ -6,6 +6,8 @@
 // file breaks the import contract; and in the year archive, logged once
 // when the year is closed, carried again with the same bytes, refused when
 // the closed year's books changed since.
+import 'dart:convert';
+
 import 'package:deskilo/features/money/application/book_period_commands.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
@@ -34,8 +36,16 @@ PostingLine _line(BookRole role, String account, int debit, int credit) =>
       credit: _eur(credit),
     );
 
-/// INV-1 of 120.00, paid on 20 March: two balanced entries.
-JournalPosted _books({String number = 'M-0001', DateTime? sold}) =>
+/// The fiscal year after [_year], still running.
+final _nextYear = FiscalYear(DateTime(2026, 10), DateTime(2027, 9, 30));
+
+/// INV-1 of 120.00, paid on 20 March: two balanced entries, in [year].
+JournalPosted _books({
+  String number = 'M-0001',
+  DateTime? sold,
+  DateTime? paid,
+  FiscalYear? year,
+}) =>
     JournalPosted(
       [
         Posting(
@@ -52,7 +62,7 @@ JournalPosted _books({String number = 'M-0001', DateTime? sold}) =>
         ),
         Posting(
           journal: PostingJournal.bank,
-          date: DateTime(2026, 3, 20),
+          date: paid ?? DateTime(2026, 3, 20),
           kind: PostingKind.receipt,
           documentId: 'inv-1',
           documentNumber: 'INV-1',
@@ -62,7 +72,7 @@ JournalPosted _books({String number = 'M-0001', DateTime? sold}) =>
           ],
         ),
       ],
-      year: _year,
+      year: year ?? _year,
       accountNames: const {
         '411000': 'Clients',
         '706000': 'Prestations',
@@ -204,6 +214,7 @@ void main() {
       required BookPeriodsOverview periods,
       required _Log log,
       String country = 'FR',
+      List<GenericJournal>? years,
     }) async {
       late bool made;
       final files = <String, List<int>>{};
@@ -215,7 +226,7 @@ void main() {
             made = await FecExportActions(context, ref, _scope).addYearFec(
               files,
               country: country,
-              posted: _books(),
+              years: years ?? [_books()],
               year: 2026,
               documents: (
                 fec: () => fail('the posted FEC is the archive\'s'),
@@ -314,6 +325,112 @@ void main() {
       );
       expect(madeDe, isTrue);
       expect(filesDe, isEmpty);
+    });
+
+    // A fiscal year from 1 October: the archive of 2026 holds the year that
+    // closed on 30 September and the one running since 1 October.
+    final straddling = [
+      _books(),
+      _books(
+        sold: DateTime(2026, 11, 5),
+        paid: DateTime(2026, 11, 20),
+        year: _nextYear,
+      ),
+    ];
+
+    testWidgets('the archive of a calendar year carries every fiscal year it '
+        'overlaps: the closed one final and logged, the running one '
+        'provisional', (tester) async {
+      final log = _Log();
+      final (made, files) = await archive(
+        tester,
+        periods: _closed(),
+        log: log,
+        years: straddling,
+      );
+      expect(made, isTrue);
+      expect(files.keys, {
+        '812345678FEC20260930.txt',
+        'PROVISOIRE-812345678FEC20270930.txt',
+        'fec-manifest.txt',
+      });
+      final record = log.records.single;
+      expect((record.from, record.to), (_year.from, _year.to));
+      final manifest = utf8.decode(files['fec-manifest.txt']!);
+      expect(
+        RegExp('^fiscal_year: (.*)\$', multiLine: true)
+            .allMatches(manifest.replaceAll('\r', ''))
+            .map((m) => m.group(1)),
+        ['2025-10-01..2026-09-30', '2026-10-01..2027-09-30'],
+      );
+      expect(
+        RegExp('^status: (.*)\$', multiLine: true)
+            .allMatches(manifest.replaceAll('\r', ''))
+            .map((m) => m.group(1)),
+        ['final', 'provisional'],
+      );
+    });
+
+    testWidgets('a fiscal year the engine could not post stops the archive, '
+        'named; posted years pass', (tester) async {
+      final blocked = <bool>[];
+      await _run(tester, (context, ref) async {
+        final actions = FecExportActions(context, ref, _scope);
+        blocked
+          ..add(actions.archiveYearBlocked(straddling))
+          ..add(
+            actions.archiveYearBlocked([
+              const JournalNeedsRates(['B-2 (CHF)']),
+              _books(),
+            ]),
+          );
+      });
+      expect(blocked, [false, true]);
+      expect(find.text(l10n.journalNeedsRates('B-2 (CHF)')), findsOneWidget);
+    });
+
+    testWidgets('a changed closed year stops the whole archive, and nothing '
+        'is logged', (tester) async {
+      final log = _Log();
+      final (made, files) = await archive(
+        tester,
+        periods: BookPeriodsOverview(
+          periods: [
+            BookPeriod(
+              id: 'p',
+              from: _year.from,
+              to: _year.to,
+              reason: BookPeriodReason.owner,
+            ),
+            BookPeriod(
+              id: 'q',
+              from: _nextYear.from,
+              to: _nextYear.to,
+              reason: BookPeriodReason.owner,
+            ),
+          ],
+          exports: [
+            BookExport(
+              id: 'e',
+              formatId: archiveFecFormatId,
+              from: _nextYear.from,
+              to: _nextYear.to,
+              sha256: '0' * 64,
+              byteCount: 1,
+              rowCount: 1,
+              documentCount: 0,
+              closedPeriod: true,
+              exportedAt: DateTime.utc(2027, 10, 15),
+            ),
+          ],
+        ),
+        log: log,
+        years: straddling,
+      );
+      expect(made, isFalse);
+      expect(files, isEmpty);
+      expect(log.records, isEmpty);
+      expect(find.text(l10n.fecArchiveChanged('2027-10-15')), findsOneWidget);
     });
   });
 }

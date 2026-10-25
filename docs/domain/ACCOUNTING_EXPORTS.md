@@ -73,6 +73,12 @@ for the audit:
   and the scope: the entries DesKilo posts, not the company FEC while other
   books live elsewhere). A closed year's FEC is logged once in the export
   log; a later archive must carry the same bytes, or it is not made.
+  The archive of a calendar year carries the FEC of every fiscal year it
+  overlaps up to its latest document: with a year from 1 October, the
+  2026 archive holds the year closed on 30 September 2026 (final) and the
+  one running since 1 October (provisional), so every entry its register
+  lists is in one of its FECs; the manifest qualifies each, oldest first.
+  One changed closed year stops the archive, and nothing is logged.
 - **Books in the app.** The general ledger, the trial balance (general and
   auxiliary) and the journals with their summary print from the same
   postings, as report kinds of the designer.
