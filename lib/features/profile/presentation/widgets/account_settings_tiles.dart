@@ -213,9 +213,9 @@ List<Widget> accountSettingsTiles(
         ),
         onTap: () => _photoSheet(context, ref, myProfile),
       ),
-    // In-app language (#147) and theme (#160) overrides: the defaults.
+    // In-app language (#147), theme (#160) defaults; private values (#2552).
     if (account) _languageTile(context, ref, defaultsOnly: true),
-    if (account) _themeTile(context, ref, defaultsOnly: true),
+    if (account) ...[_themeTile(context, ref, defaultsOnly: true), const PrivateValuesTile()],
     // #2504 — an assistant built into this browser may use the page's
     // tools only when the person turns this on, here, on this device.
     if (account && kIsWeb && features.contains(WorkspaceFeature.webMcp))

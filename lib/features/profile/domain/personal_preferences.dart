@@ -11,7 +11,9 @@ abstract final class PersonalPreference {
   static const uiLocale = 'ui_locale';
   static const theme = 'theme';
   static const paymentProvider = 'payment_provider';
-  static const keys = {formatLocale, clock, timeZoneMode, documentLocale, uiLocale, theme, paymentProvider};
+  /// #2552 XPRIV-01 — 'masked' or 'shown'; a personal default only.
+  static const privateValues = 'private_values';
+  static const keys = {formatLocale, clock, timeZoneMode, documentLocale, uiLocale, theme, paymentProvider, privateValues};
 }
 
 class PersonalPreferences {

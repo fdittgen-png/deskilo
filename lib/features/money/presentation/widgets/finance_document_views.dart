@@ -20,6 +20,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/ui/private_value.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/finance_overview.dart';
 import 'dev_label.dart';
@@ -293,7 +294,7 @@ class _FinanceDocument extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
-                  _MaskedAmount(invoice.id, invoice.currency, amount),
+                  _CardAmount(invoice, amount),
                   export,
                 ],
               ),
@@ -333,41 +334,24 @@ class _StateChip extends StatelessWidget {
       Chip(label: Text(label), visualDensity: VisualDensity.compact);
 }
 
-/// #2557 C5 — a compact card's amount, hidden until asked: a phone is read
-/// where others can see it. The action shows this card's amount alone, and
-/// hides it again.
-class _MaskedAmount extends StatefulWidget {
-  const _MaskedAmount(this.invoiceId, this.currency, this.amount);
+/// #2557 C5 / #2552 XPRIV-01 — a phone is read where others can see it: a
+/// compact card's amount waits to be revealed (the currency stays).
+class _CardAmount extends StatelessWidget {
+  const _CardAmount(this.invoice, this.amount);
 
-  final String invoiceId;
-  final String currency;
+  final FinanceInvoice invoice;
   final Widget amount;
-
-  @override
-  State<_MaskedAmount> createState() => _MaskedAmountState();
-}
-
-class _MaskedAmountState extends State<_MaskedAmount> {
-  bool _shown = false;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return Tooltip(
-      message: _shown ? l10n.financesHideAmount : l10n.financesShowAmount,
-      child: TextButton(
-        key: ValueKey('finances-amount-${widget.invoiceId}'),
-        style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
-        onPressed: () => setState(() => _shown = !_shown),
-        child: _shown
-            ? widget.amount
-            : Semantics(
-                label: l10n.financesAmountHidden,
-                child: ExcludeSemantics(
-                  child: Text(l10n.financesAmountMasked(widget.currency)),
-                ),
-              ),
-      ),
+    return PrivateValue(
+      revealKey: ValueKey('finances-amount-${invoice.id}'),
+      maskedText: l10n.financesAmountMasked(invoice.currency),
+      hiddenLabel: l10n.financesAmountHidden,
+      showLabel: l10n.financesShowAmount,
+      hideLabel: l10n.financesHideAmount,
+      child: amount,
     );
   }
 }

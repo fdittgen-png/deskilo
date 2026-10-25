@@ -1,0 +1,8 @@
+{
+  "@@locale": "de",
+  "privateValueHidden": "Verborgen",
+  "privateValueShow": "Anzeigen",
+  "privateValueHide": "Verbergen",
+  "privateValuesTitle": "Private Werte verbergen",
+  "privateValuesHint": "Beträge und Vorschauen bleiben verborgen, bis Sie sie anzeigen. Gespeichert auf diesem Gerät und in Ihrem Konto."
+}
