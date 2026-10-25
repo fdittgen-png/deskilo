@@ -110,7 +110,6 @@
 10 test/features/workspace/colours_screen_test.dart
 23 test/features/workspace/deployment_screen_test.dart
 10 test/features/workspace/environment_banner_test.dart
-12 test/features/workspace/features_screen_test.dart
 14 test/features/workspace/holiday_import_flow_test.dart
 17 test/features/workspace/invitation_journey_test.dart
 14 test/features/workspace/invitation_test.dart
