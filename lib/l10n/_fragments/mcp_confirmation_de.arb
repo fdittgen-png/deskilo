@@ -20,5 +20,7 @@
   "mcpConfirmSwitchOn": "Schaltet ein: {features}",
   "mcpConfirmSwitchOff": "Schaltet aus: {features}. Ihre Daten bleiben erhalten.",
   "mcpConfirmStepDone": "Er wird als erledigt markiert.",
-  "mcpConfirmStepLater": "Er wird für später zurückgestellt."
+  "mcpConfirmStepLater": "Er wird für später zurückgestellt.",
+  "mcpConfirmFieldChange": "{field}: {from} → {to}",
+  "mcpConfirmClosureReason": "Grund: {reason}"
 }

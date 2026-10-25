@@ -12084,6 +12084,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String mcpConfirmClosureReason(String reason) {
+    return 'Motivo: $reason';
+  }
+
+  @override
   String get mcpConfirmConsequence =>
       'Confermando, l\'assistente può inviare questa esatta richiesta una sola volta. Le regole di validazione dello spazio restano valide.';
 
@@ -12100,6 +12105,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get mcpConfirmExpired =>
       'Questa richiesta è scaduta. Chieda all\'assistente di inviarla di nuovo.';
+
+  @override
+  String mcpConfirmFieldChange(String field, String from, String to) {
+    return '$field: $from → $to';
+  }
 
   @override
   String mcpConfirmLevel(String process, String level) {
@@ -12762,6 +12772,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get mcpOpSetFavorite => 'Segnare posti come preferiti';
 
   @override
+  String get mcpOpSetupClosures => 'Aggiungere giorni di chiusura';
+
+  @override
+  String get mcpOpSetupHours => 'Impostare i giorni e gli orari di apertura';
+
+  @override
   String get mcpOpSetupLevels => 'Vedere i livelli di configurazione';
 
   @override
@@ -12772,7 +12788,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Visualizzare in anteprima un cambio di livelli';
 
   @override
+  String get mcpOpSetupNumbering => 'Impostare la numerazione dei documenti';
+
+  @override
   String get mcpOpSetupStatus => 'Vedere a che punto è la configurazione';
+
+  @override
+  String get mcpOpSetupStepExplain => 'Spiegare un passo della configurazione';
 
   @override
   String get mcpOpSetupStepMark => 'Segnare un passo come fatto o per dopo';

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/json_reader.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../domain/billing_rules.dart';
 import '../domain/command_receipt.dart';
 import '../domain/invoice.dart';
+import '../domain/invoice_match_row.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/reminder_evidence.dart';
 import '../domain/vat_tax_point.dart';
@@ -107,20 +109,8 @@ class SupabaseInvoiceQueries implements InvoiceQueries {
     );
     return {
       for (final row in rows)
-        row['invoice_id'] as String: InvoiceMatch(
-          invoiceId: row['invoice_id'] as String,
-          paidCents: (row['paid_cents'] as num).toInt(),
-          resolution: row['resolution'] as String,
-          note: row['note'] as String? ?? '',
-          status: row['status'] as String? ?? 'confirmed',
-          paymentLedgerId: row['payment_ledger_id'] as String?,
-          matchedAt: DateTime.parse(row['matched_at'] as String).toLocal(),
-          byName: row['by_name'] as String? ?? '',
-          writeoffAt: row['writeoff_at'] == null
-              ? null
-              : DateTime.parse(row['writeoff_at'] as String).toLocal(),
-          // #841 — who released it, reachable from the document.
-          eventId: row['event_id'] as String?,
+        row['invoice_id'] as String: invoiceMatchOf(
+          JsonReader(row, context: 'invoice_matches'),
         ),
     };
   }
@@ -139,18 +129,10 @@ class SupabaseInvoiceQueries implements InvoiceQueries {
           .eq('workspace_id', workspaceId)
           .order('id', ascending: true),
     );
-    final out = <String, List<TaxPointPayment>>{};
-    for (final row in rows) {
-      out
-          .putIfAbsent(row['invoice_id'] as String, () => [])
-          .add(
-            TaxPointPayment(
-              DateTime.parse(row['matched_at'] as String).toLocal(),
-              (row['amount_cents'] as num).toInt(),
-            ),
-          );
-    }
-    return out;
+    return instalmentsByInvoice([
+      for (final row in rows)
+        invoiceInstalmentOf(JsonReader(row, context: 'invoice_match_payments')),
+    ]);
   }
 
   @override

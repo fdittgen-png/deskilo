@@ -2867,6 +2867,126 @@
       }
     },
     {
+      "name": "deskilo_explain_setup_step",
+      "title": "What a setup step is",
+      "description": "For someone who configures the workspace: one setup step (or, without step, every step in the guide's order) as the guide defines it: its group, milestone, the app screen that sets it up (`route`), whether it is required, the steps it waits for (`depends_on`) and the steps that wait for it (`unlocks`), the feature it belongs to, who does it (`actor`), how long it takes, whether it takes credentials (`takes_credentials`: then only the person enters them, in the app), its state now and what an assistant may do about it (`assistant`, as in deskilo_get_setup_status). Read only.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "step": {
+            "type": "string",
+            "enum": [
+              "basics",
+              "hours",
+              "places",
+              "member_rights",
+              "invite",
+              "pricing",
+              "services",
+              "payment_methods",
+              "online_payments",
+              "approvals",
+              "new_members",
+              "notifications",
+              "limits",
+              "kiosk",
+              "purchases",
+              "lease",
+              "assets",
+              "look",
+              "public_page",
+              "legal_identity",
+              "vat",
+              "numbering",
+              "documents",
+              "einvoicing",
+              "accounting",
+              "reminders",
+              "first_booking",
+              "recovery",
+              "assistant"
+            ],
+            "description": "The step id, from deskilo_get_setup_status; leave it out for every step.",
+            "examples": [
+              "hours"
+            ]
+          }
+        },
+        "required": [
+          "workspace_id"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "explain_setup_step"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "annotations": {
+        "title": "What a setup step is",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
       "name": "deskilo_preview_setup_levels",
       "title": "Preview a change of levels",
       "description": "What choosing levels would change, without changing anything: per process `changes` (from, to), the features switched on and off, and `gaps` (a chosen level that needs a higher level of another process: raise that one too). Name a preset, single processes, or both; a process left out keeps its level. Show the person this answer, in words, before deskilo_apply_setup_levels with the same choice. ready_to_apply is false when there is a gap or nothing changes.",
@@ -3333,6 +3453,410 @@
       },
       "annotations": {
         "title": "Mark a setup step done or for later",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "deskilo_set_opening_hours",
+      "title": "Set the opening days and hours",
+      "description": "The setup step 'hours', as its screen does it: the weekdays members can book and the working day (start, half-day boundary, end, in minutes after midnight on the workspace clock: 08:00 = 480). Give only what changes; the result must keep at least one open weekday and start < boundary < end. The half-day and full-day booking periods follow these hours. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows exactly what changes; then call again with the same request_id and arguments. A change made in the meantime makes the proposal stale: preview again with a new request_id.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "open_weekdays": {
+            "type": "string",
+            "maxLength": 20,
+            "description": "The open weekdays as ISO numbers separated by commas, 1 = Monday to 7 = Sunday, e.g. \"1,2,3,4,5\".",
+            "examples": [
+              "1,2,3,4,5"
+            ]
+          },
+          "work_start_minutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1440,
+            "description": "When the working day starts, in minutes after midnight (08:00 = 480).",
+            "examples": [
+              480
+            ]
+          },
+          "half_boundary_minutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1440,
+            "description": "Where the morning ends and the afternoon starts, in minutes after midnight (12:00 = 720).",
+            "examples": [
+              720
+            ]
+          },
+          "work_end_minutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1440,
+            "description": "When the working day ends, in minutes after midnight (17:00 = 1020).",
+            "examples": [
+              1020
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "set_opening_hours"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "annotations": {
+        "title": "Set the opening days and hours",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "deskilo_add_closure_days",
+      "title": "Add closure days",
+      "description": "Closure days (holidays, a closed week) on which nothing can be booked, as the hours step adds them: dates on the workspace calendar, YYYY-MM-DD separated by commas, with one optional reason. A day already closed is left as it is; removing a closure stays in the app. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows exactly what changes; then call again with the same request_id and arguments. A change made in the meantime makes the proposal stale: preview again with a new request_id.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "days": {
+            "type": "string",
+            "maxLength": 400,
+            "description": "The days to close, YYYY-MM-DD separated by commas, e.g. \"2026-12-24,2026-12-31\".",
+            "examples": [
+              "2026-12-24,2026-12-31"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Optional: why the space is closed, shown beside the days.",
+            "examples": [
+              "Christmas"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "days"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "add_closure_days"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "annotations": {
+        "title": "Add closure days",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "deskilo_set_number_sequence",
+      "title": "Set how documents are numbered",
+      "description": "The setup step 'numbering', as the number series editor does it, for one journal: prefix, suffix, which part of the date the number prints, its digits, when it restarts, and the next number. Give only what changes. A number restarts at most as often as it prints its date (none: never; year: never or yearly; year_month: any), a series never goes backwards, and a series that already issued numbers cannot drop its date unless the prefix or suffix changes too. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows exactly what changes; then call again with the same request_id and arguments. A change made in the meantime makes the proposal stale: preview again with a new request_id.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "journal": {
+            "type": "string",
+            "enum": [
+              "invoice",
+              "credit_note",
+              "vat_declaration",
+              "member",
+              "payment"
+            ],
+            "description": "The series to change.",
+            "examples": [
+              "invoice"
+            ]
+          },
+          "prefix": {
+            "type": "string",
+            "maxLength": 16,
+            "description": "Printed before the number, e.g. \"INV-\".",
+            "examples": [
+              "INV-"
+            ]
+          },
+          "suffix": {
+            "type": "string",
+            "maxLength": 16,
+            "description": "Printed after the number.",
+            "examples": [
+              ""
+            ]
+          },
+          "date_part": {
+            "type": "string",
+            "enum": [
+              "none",
+              "year",
+              "year_month"
+            ],
+            "description": "Which part of the date the number prints.",
+            "examples": [
+              "year"
+            ]
+          },
+          "digits": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9,
+            "description": "How many digits the counter prints, padded with zeros.",
+            "examples": [
+              4
+            ]
+          },
+          "reset": {
+            "type": "string",
+            "enum": [
+              "never",
+              "yearly",
+              "monthly"
+            ],
+            "description": "When the counter starts again at 1.",
+            "examples": [
+              "yearly"
+            ]
+          },
+          "next_value": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 999999999,
+            "description": "The next number to issue; never below the current one.",
+            "examples": [
+              1
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "journal"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "set_number_sequence"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "annotations": {
+        "title": "Set how documents are numbered",
         "readOnlyHint": false,
         "destructiveHint": false,
         "idempotentHint": true,

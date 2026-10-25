@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../workspace/providers/workspace_providers.dart';
+import '../application/accounting_export_source.dart';
 import '../application/generic_journal_export.dart';
 import '../application/save_book_profile.dart';
 import '../data/supabase_book_profile_repository.dart';
@@ -10,6 +11,7 @@ import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
 import 'credit_providers.dart';
+import 'money_queries_providers.dart';
 
 part 'book_profile_providers.g.dart';
 
@@ -47,7 +49,11 @@ Future<({List<BookAccount> accounts, List<BookMapping> mappings})> bookChart(
   return repository.fetchBookChart(workspace.id);
 }
 
-/// #2370 / #2365 — the generic journal of a year, from the posting engine.
-final genericJournalExportProvider = Provider<GenericJournalExport>(
-  (ref) => GenericJournalExport(ref.watch(bookProfileRepositoryProvider)),
+/// #2365 — what one accounting export reads: the one source response of the
+/// year, and for a posted format the postings of the posting engine.
+final accountingExportSourceProvider = Provider<AccountingExportSource>(
+  (ref) => AccountingExportSource(
+    ref.watch(accountingSourceQueriesProvider),
+    () => GenericJournalExport(ref.read(bookProfileRepositoryProvider)),
+  ),
 );

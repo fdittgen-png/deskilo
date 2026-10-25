@@ -2,81 +2,32 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/trace/trace_logger.dart';
+import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
-import '../domain/accounting_source_queries.dart';
-import '../domain/accounting_source_snapshot.dart';
-import '../domain/export_year.dart';
-import '../domain/invoice.dart';
+import '../application/accounting_export_source.dart';
 
-/// The books of one fiscal year as the accounting export holds them: the
-/// ledger and repartitions come from ONE server response for the year
-/// (#2365, `accounting_source_snapshot_v1`), cut on the workspace's own
-/// calendar, so a 2026 file carries no 2024 expense and no row from a
-/// second read. [loaded] is the invoice list the person exports from; the
-/// source must agree with it, otherwise the export stops (null) instead of
-/// mixing two moments, and the caller says so to the person.
-@visibleForTesting
-Future<ExportSourceBooks?> exportYearBooks(
-  AccountingSourceQueries source,
-  String workspaceId,
-  int year,
-  List<Invoice> invoices, {
-  required List<Invoice> loaded,
-}) async {
-  final AccountingSourceSnapshot books;
-  try {
-    books = (await source.fetchAccountingSource(
-      workspaceId: workspaceId,
-      year: year,
-    ))
-      ..requireInvoicesHeld([
-        for (final i in loaded)
-          (id: i.id, number: i.number, totalCents: i.totalCents),
-      ]);
-  } on AccountingSourceException catch (e, st) {
-    TraceLogger.instance.warn('money', 'accounting source refused: $e\n$st');
-    return null;
-  }
-  // The invoices are the person's own list, cut here; the ledger and the
-  // repartitions are already cut by the server on the workspace calendar and
-  // are not cut a second time on the device's.
-  final cut = exportYearScope(
-    year,
-    invoices: invoices,
-    ledger: const [],
-    repartitions: const [],
-  );
-  return (
-    invoices: cut.invoices,
-    ledger: books.ledger,
-    repartitions: books.repartitions,
-    bookProfiles: books.bookProfiles,
-    revisions: books.revisions,
-  );
-}
+export '../application/accounting_export_source.dart' show exportYearBooks;
 
-/// [exportYearBooks] for the export screen: a refused source is said to the
-/// person here, after the await, and nothing is exported.
-Future<ExportSourceBooks?> exportYearBooksOrSay(
+/// [AccountingExportSource.read] for the export screen (#2365): the one
+/// source of the run, read once by [read]. A refused source is said to the
+/// person here, after the await, and nothing is exported; a failed read is
+/// reported like any other guarded action.
+Future<AccountingExportInput?> exportInputOrSay(
   BuildContext context,
-  AccountingSourceQueries source,
-  String workspaceId,
-  int year,
-  List<Invoice> invoices, {
-  required List<Invoice> loaded,
-}) async {
-  final books = await exportYearBooks(
-    source,
-    workspaceId,
-    year,
-    invoices,
-    loaded: loaded,
+  Future<AccountingExportInput?> Function() read,
+) async {
+  AccountingExportInput? input;
+  final done = await runGuarded(
+    context,
+    domain: 'money',
+    message: 'accounting source failed',
+    errorText: context.l10n.commonSaveFailed,
+    action: () async => input = await read(),
   );
-  if (books == null && context.mounted) {
+  if (done && input == null && context.mounted) {
     AppSnack.error(context, context.l10n.accountingSourceRefused);
   }
-  return books;
+  return done ? input : null;
 }
 
 /// A development workspace's books are marked as such (#936).

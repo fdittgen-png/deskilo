@@ -19984,6 +19984,12 @@ abstract class AppLocalizations {
   /// **'Asked by: {client}'**
   String mcpConfirmClient(String client);
 
+  /// #2873 mcp_confirmation: the reason given for closure days an assistant adds
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String mcpConfirmClosureReason(String reason);
+
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -20013,6 +20019,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This request expired. Ask the assistant to send it again.'**
   String get mcpConfirmExpired;
+
+  /// #2873 mcp_confirmation: one setting an assistant's setup change sets, from its current value to the new one
+  ///
+  /// In en, this message translates to:
+  /// **'{field}: {from} → {to}'**
+  String mcpConfirmFieldChange(String field, String from, String to);
 
   /// #2873 mcp_confirmation
   ///
@@ -21076,6 +21088,18 @@ abstract class AppLocalizations {
   /// **'Mark places as favourites'**
   String get mcpOpSetFavorite;
 
+  /// #2394 generated from contracts/mcp/operations.json (add_closure_days)
+  ///
+  /// In en, this message translates to:
+  /// **'Add closure days'**
+  String get mcpOpSetupClosures;
+
+  /// #2394 generated from contracts/mcp/operations.json (set_opening_hours)
+  ///
+  /// In en, this message translates to:
+  /// **'Set the opening days and hours'**
+  String get mcpOpSetupHours;
+
   /// #2394 generated from contracts/mcp/operations.json (list_setup_levels)
   ///
   /// In en, this message translates to:
@@ -21094,11 +21118,23 @@ abstract class AppLocalizations {
   /// **'Preview a change of levels'**
   String get mcpOpSetupLevelsPreview;
 
+  /// #2394 generated from contracts/mcp/operations.json (set_number_sequence)
+  ///
+  /// In en, this message translates to:
+  /// **'Set how documents are numbered'**
+  String get mcpOpSetupNumbering;
+
   /// #2394 generated from contracts/mcp/operations.json (get_setup_status)
   ///
   /// In en, this message translates to:
   /// **'See how far the setup is'**
   String get mcpOpSetupStatus;
+
+  /// #2394 generated from contracts/mcp/operations.json (explain_setup_step)
+  ///
+  /// In en, this message translates to:
+  /// **'Explain a setup step'**
+  String get mcpOpSetupStepExplain;
 
   /// #2394 generated from contracts/mcp/operations.json (mark_setup_step)
   ///

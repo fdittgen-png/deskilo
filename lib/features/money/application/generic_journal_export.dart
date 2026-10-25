@@ -42,70 +42,52 @@ BookProfile? localBookOf(List<BookProfile> profiles, int year) => ([
       p,
 ]..sort((a, b) => b.effectiveFrom.compareTo(a.effectiveFrom))).firstOrNull;
 
+/// #2365 — the postings of a year, read ONCE, before any file is written:
+/// with, for the FEC, the book chart's account names and the third parties
+/// of its documents. Every posted format is written from this one answer.
+final class JournalPosted extends GenericJournal {
+  const JournalPosted(
+    this.postings, {
+    this.accountNames = const {},
+    this.parties = const {},
+  });
+  final List<Posting> postings;
+  final Map<String, String> accountNames;
+  final Map<String, PostingParty> parties;
+}
+
+/// [read] written by [write]; no local book or a blocked role passes through.
+GenericJournal writtenWith(
+  GenericJournal read,
+  String Function(JournalPosted books) write,
+) => read is JournalPosted ? JournalFile(write(read)) : read;
+
+/// The generic journal CSV, one row per posting line.
+String journalCsvOf(JournalPosted books) =>
+    buildGenericJournalCsv(books.postings);
+
+/// #2365 — the FEC of the postings, on the book's own chart.
+String postedFecOf(JournalPosted books) => buildFecFromPostings(
+  books.postings,
+  accountNames: books.accountNames,
+  parties: books.parties,
+);
+
 class GenericJournalExport {
   const GenericJournalExport(this._books);
 
   final BookProfileRepository _books;
 
-  /// The journal of [year] in [workspaceId], from the latest local-book
-  /// profile of [profiles] in force in that year.
-  Future<GenericJournal> of(
+  /// The postings of [year] in [workspaceId] (`compute_postings`), from the
+  /// latest local-book profile of [profiles] in force in that year: ONE read
+  /// for the period. [named] adds the chart's account names and the
+  /// documents' parties, which the FEC writes beside each line.
+  Future<GenericJournal> read(
     String workspaceId,
     List<BookProfile> profiles,
-    int year,
-  ) => _posted(
-    workspaceId,
-    profiles,
-    year,
-    (set, _) async => buildGenericJournalCsv(set.postings),
-  );
-
-  /// #2365 — the FEC of [year] from the same postings, on the book's own
-  /// chart (its account names).
-  Future<GenericJournal> fecOf(
-    String workspaceId,
-    List<BookProfile> profiles,
-    int year,
-  ) => _posted(
-    workspaceId,
-    profiles,
-    year,
-    (set, issuer) async {
-      final chart = await _books.fetchBookChart(workspaceId);
-      final parties = await _books.fetchPostingParties(workspaceId, [
-        ...{for (final p in set.postings) p.documentId},
-      ]);
-      return buildFecFromPostings(
-        set.postings,
-        accountNames: {
-          for (final a in chart.accounts)
-            if (a.issuerSiteId == issuer) a.code: a.name,
-        },
-        parties: parties,
-      );
-    },
-  );
-
-  /// #2365 — any file written from [year]'s postings of the local book
-  /// (the SAF-T ledger section).
-  Future<GenericJournal> postedFile(
-    String workspaceId,
-    List<BookProfile> profiles,
-    int year,
-    String Function(List<Posting> postings) write,
-  ) => _posted(
-    workspaceId,
-    profiles,
-    year,
-    (set, _) async => write(set.postings),
-  );
-
-  Future<GenericJournal> _posted(
-    String workspaceId,
-    List<BookProfile> profiles,
-    int year,
-    Future<String> Function(PostingSet set, String issuerSiteId) write,
-  ) async {
+    int year, {
+    bool named = false,
+  }) async {
     final local = localBookOf(profiles, year);
     if (local == null) return const JournalNeedsLocalBook();
     final set = await _books.fetchPostings(
@@ -119,6 +101,18 @@ class GenericJournalExport {
         ...{for (final b in set.blockers) b.subject},
       ]);
     }
-    return JournalFile(await write(set, local.issuerSiteId));
+    if (!named) return JournalPosted(set.postings);
+    final chart = await _books.fetchBookChart(workspaceId);
+    final parties = await _books.fetchPostingParties(workspaceId, [
+      ...{for (final p in set.postings) p.documentId},
+    ]);
+    return JournalPosted(
+      set.postings,
+      accountNames: {
+        for (final a in chart.accounts)
+          if (a.issuerSiteId == local.issuerSiteId) a.code: a.name,
+      },
+      parties: parties,
+    );
   }
 }
