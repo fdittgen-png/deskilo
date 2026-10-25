@@ -82,3 +82,31 @@ Reservation? wholeSpaceBlocking({
           .firstOrNull,
   };
 }
+
+/// My own live booking of exactly this space in the window. Both states, and
+/// that is the fix for a field report: with `reserved` alone, a level you had
+/// CHECKED INTO fell through to the conflict branch and the sheet became a
+/// dead end -- it stated that the space was taken, by you, and offered
+/// nothing. There was no check out anywhere on it. [spaceId] is the desk's,
+/// office's or level's id, by [kind].
+Reservation? myLiveWholeReservation(
+  SpaceKind kind,
+  List<Reservation> reservations,
+  String myMemberId,
+  ({DateTime start, DateTime end}) window, {
+  String? spaceId,
+}) => reservations
+    .where(
+      (r) =>
+          r.memberId == myMemberId &&
+          (r.status == ReservationStatus.reserved ||
+              r.status == ReservationStatus.checkedIn) &&
+          r.coversRange(window.start, window.end) &&
+          switch (kind) {
+            SpaceKind.desk => r.deskId == spaceId,
+            SpaceKind.office => r.officeId == spaceId,
+            SpaceKind.level => r.levelId == spaceId,
+            SpaceKind.seat => false,
+          },
+    )
+    .firstOrNull;

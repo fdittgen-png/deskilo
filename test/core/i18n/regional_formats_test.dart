@@ -7,7 +7,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/core/i18n/app_format.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
-import 'package:deskilo/features/money/presentation/widgets/bill_view.dart';
+import 'package:deskilo/features/money/presentation/widgets/how_to_pay_tiles.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

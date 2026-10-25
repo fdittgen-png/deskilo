@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/links/link_launcher.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -99,6 +100,122 @@ class CopyTile extends StatelessWidget {
         if (!context.mounted) return;
         AppSnack.success(context, copiedMessage);
       },
+    );
+  }
+}
+
+
+/// The workspace's payment instructions (#155): IBAN copies to the
+/// clipboard, the PayPal.me link opens externally, the reference hint is
+/// plain text. Purely informational — recording a payment stays the
+/// separate spec §8 confirmation flow.
+/// Public since #711 so the bank-scheme labelling can be tested on its
+/// own; the bill composes it, nothing else constructs it.
+class HowToPayCard extends ConsumerWidget {
+  const HowToPayCard({super.key, required this.instructions, this.onPayOnline});
+
+  final PaymentInstructions instructions;
+
+  /// When non-null, a "Pay online" button heads the card (0043).
+  final VoidCallback? onPayOnline;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final paypalUri = instructions.paypalMeUri;
+    // (field, icon, brand label) of the #192 copy-to-clipboard methods —
+    // one data row per method instead of three pasted tiles.
+    final copyMethods = [
+      (
+        'Wero',
+        instructions.wero.trim(),
+        Icons.smartphone_outlined,
+        l10n.paymentMethodWero,
+      ),
+      (
+        'Lydia',
+        instructions.lydia.trim(),
+        Icons.smartphone_outlined,
+        l10n.paymentMethodLydia,
+      ),
+      (
+        'Wise',
+        instructions.wise.trim(),
+        Icons.alternate_email,
+        l10n.paymentMethodWise,
+      ),
+    ];
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: Text(
+                l10n.paymentInstructionsTitle,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            if (onPayOnline != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: FilledButton.icon(
+                  key: const Key('pay-online-button'),
+                  onPressed: onPayOnline,
+                  icon: const Icon(Icons.account_balance_wallet_outlined),
+                  label: Text(l10n.payOnlineButton),
+                ),
+              ),
+            // #711 — bank details for countries without IBAN, labelled
+            // by the workspace's banking scheme.
+            BankDetailTiles(instructions: instructions),
+            if (instructions.iban.trim().isNotEmpty)
+              CopyTile(
+                key: const Key('howToPayIban'),
+                icon: Icons.account_balance_outlined,
+                // IBAN is a language-neutral banking acronym — the key
+                // carries it verbatim in every locale.
+                title: l10n.paymentInstructionsIbanTitle,
+                value: instructions.iban.trim(),
+                copiedMessage:
+                    l10n.paymentInstructionsIbanCopied,
+              ),
+            if (paypalUri != null)
+              ListTile(
+                key: const Key('howToPayPaypal'),
+                leading: const Icon(Icons.open_in_new),
+                // Brand name — reuses the #154 method label key.
+                title: Text(l10n.paymentMethodPaypal),
+                subtitle: Text(paypalUri.toString()),
+                // Launch failures are traced inside the shared link seam.
+                onTap: () => ref.read(linkLauncherProvider)(paypalUri),
+              ),
+            // #192 — Wero / Lydia / Wise: phone number, phone/username,
+            // Wisetag or link. All copy to the clipboard like the IBAN;
+            // the titles reuse the #154 method labels (brand names).
+            for (final (keySuffix, value, icon, title) in copyMethods)
+              if (value.isNotEmpty)
+                CopyTile(
+                  key: Key('howToPay$keySuffix'),
+                  icon: icon,
+                  title: title,
+                  value: value,
+                  copiedMessage: l10n.paymentInstructionsValueCopied,
+                ),
+            if (instructions.reference.trim().isNotEmpty)
+              ListTile(
+                key: const Key('howToPayReference'),
+                leading: const Icon(Icons.tag_outlined),
+                title: Text(
+                  l10n.paymentInstructionsReferenceLabel,
+                ),
+                subtitle: Text(instructions.reference.trim()),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }
