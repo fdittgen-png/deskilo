@@ -11,11 +11,14 @@ class SupabaseRetentionHoldRepository implements RetentionHoldRepository {
 
   @override
   Future<List<RetentionHold>> fetchHolds(String workspaceId) async {
-    final rows = await _client.rpc<dynamic>(
+    final rows = await _client.rpc<Object?>(
       'retention_holds',
       params: {'p_workspace_id': workspaceId},
     );
-    return [for (final row in (rows as List? ?? const [])) RetentionHold.fromJson(row)];
+    return [
+      for (final row in (rows as List? ?? const []))
+        RetentionHold.fromJson(row),
+    ];
   }
 
   @override
@@ -25,7 +28,7 @@ class SupabaseRetentionHoldRepository implements RetentionHoldRepository {
     String? docClass,
     required String reason,
   }) async => RetentionHold.fromJson(
-    await _client.rpc<dynamic>(
+    await _client.rpc<Object?>(
       'place_retention_hold',
       params: {
         'p_workspace_id': workspaceId,
@@ -37,10 +40,11 @@ class SupabaseRetentionHoldRepository implements RetentionHoldRepository {
   );
 
   @override
-  Future<RetentionHold> releaseHold(String holdId, String reason) async => RetentionHold.fromJson(
-    await _client.rpc<dynamic>(
-      'release_retention_hold',
-      params: {'p_hold_id': holdId, 'p_reason': reason},
-    ),
-  );
+  Future<RetentionHold> releaseHold(String holdId, String reason) async =>
+      RetentionHold.fromJson(
+        await _client.rpc<Object?>(
+          'release_retention_hold',
+          params: {'p_hold_id': holdId, 'p_reason': reason},
+        ),
+      );
 }

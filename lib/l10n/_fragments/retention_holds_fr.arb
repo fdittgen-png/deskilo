@@ -22,5 +22,6 @@
   "retentionKeptReviewEnded": "Conservé jusqu’à ce qu’une personne vérifie la règle de conservation ; sa durée a pris fin le {date}",
   "retentionPeriodEnded": "La durée de conservation a pris fin : l’espace peut examiner l’effacement",
   "retentionResetRefused": "Rien n’a été supprimé : la comptabilité doit encore être conservée. {why}",
-  "retentionExtendedBySetting": "{years} ans à partir de la date du document (réglage propre à cet espace)"
+  "retentionExtendedBySetting": "{years} ans à partir de la date du document (réglage propre à cet espace)",
+  "retentionHoldSaveFailed": "La conservation n'a pas pu être enregistrée. Rien n'a changé."
 }

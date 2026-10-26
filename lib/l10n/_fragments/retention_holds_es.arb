@@ -22,5 +22,6 @@
   "retentionKeptReviewEnded": "Se conserva hasta que una persona revise la regla de conservación; su plazo terminó el {date}",
   "retentionPeriodEnded": "El plazo de conservación ha terminado: el espacio puede revisar el borrado",
   "retentionResetRefused": "No se ha borrado nada: la contabilidad aún debe conservarse. {why}",
-  "retentionExtendedBySetting": "{years} años desde la fecha del documento (ajuste propio de este espacio)"
+  "retentionExtendedBySetting": "{years} años desde la fecha del documento (ajuste propio de este espacio)",
+  "retentionHoldSaveFailed": "No se ha podido guardar la retención. No ha cambiado nada."
 }

@@ -47,7 +47,9 @@ class RetentionAssessment {
   static RetentionAssessment? fromJson(Object? raw) {
     if (raw == null) return null;
     final r = JsonReader.of(raw, context: 'retention');
-    final disposition = RetentionDisposition.fromWire(r.stringOrNull('disposition'));
+    final disposition = RetentionDisposition.fromWire(
+      r.stringOrNull('disposition'),
+    );
     if (disposition == null) return null;
     return RetentionAssessment(
       disposition: disposition,
@@ -55,7 +57,10 @@ class RetentionAssessment {
       indefinite: r.isTrue('indefinite'),
       ruleSource: r.objectOrNull('rule')?.stringOrNull('source'),
       holdReasons: [
-        for (final reason in r.objects('holds', (h) => h.stringOrNull('reason')))
+        for (final reason in r.objects(
+          'holds',
+          (h) => h.stringOrNull('reason'),
+        ))
           ?reason,
       ],
       reasons: r.strings('reasons'),
@@ -79,15 +84,19 @@ class RetentionAssessment {
 
   /// The stricter of [a] and [b]: a hold over a clock over a review over an
   /// ended period, the later end between equals.
-  static RetentionAssessment? strictest(RetentionAssessment? a, RetentionAssessment? b) {
+  static RetentionAssessment? strictest(
+    RetentionAssessment? a,
+    RetentionAssessment? b,
+  ) {
     if (a == null) return b;
     if (b == null) return a;
-    int rank(RetentionAssessment x) =>
-        x.indefinite ? 3 : switch (x.disposition) {
-          RetentionDisposition.retain => 2,
-          RetentionDisposition.reviewRequired => 1,
-          RetentionDisposition.eligible => 0,
-        };
+    int rank(RetentionAssessment x) => x.indefinite
+        ? 3
+        : switch (x.disposition) {
+            RetentionDisposition.retain => 2,
+            RetentionDisposition.reviewRequired => 1,
+            RetentionDisposition.eligible => 0,
+          };
     if (rank(a) != rank(b)) return rank(a) > rank(b) ? a : b;
     final ua = a.retainUntil, ub = b.retainUntil;
     if (ua == null) return b;

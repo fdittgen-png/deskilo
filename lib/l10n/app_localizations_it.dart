@@ -20942,6 +20942,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get retentionHoldReleased => 'Il blocco è revocato.';
 
   @override
+  String get retentionHoldSaveFailed =>
+      'Non è stato possibile salvare il blocco. Non è cambiato nulla.';
+
+  @override
   String retentionHoldSince(String what, String issuer, String date) {
     return '$what · $issuer · dal $date';
   }

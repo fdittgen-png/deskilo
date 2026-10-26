@@ -14301,6 +14301,7 @@
   "retentionHoldReleaseReason": "Por qué termina la retención",
   "retentionHoldReleaseTitle": "¿Levantar esta retención?",
   "retentionHoldReleased": "La retención se ha levantado.",
+  "retentionHoldSaveFailed": "No se ha podido guardar la retención. No ha cambiado nada.",
   "retentionHoldSince": "{what} · {issuer} · desde el {date}",
   "retentionHoldsEmpty": "No hay ninguna retención. Una retención conserva los registros más allá de su plazo, para una auditoría o un litigio.",
   "retentionHoldsTitle": "Retenciones legales",

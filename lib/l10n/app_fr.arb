@@ -14301,6 +14301,7 @@
   "retentionHoldReleaseReason": "Pourquoi la conservation prend fin",
   "retentionHoldReleaseTitle": "Lever cette conservation ?",
   "retentionHoldReleased": "La conservation est levée.",
+  "retentionHoldSaveFailed": "La conservation n'a pas pu être enregistrée. Rien n'a changé.",
   "retentionHoldSince": "{what} · {issuer} · depuis le {date}",
   "retentionHoldsEmpty": "Aucune conservation imposée. Elle garde des pièces au-delà de leur durée de conservation, pour un contrôle ou un litige.",
   "retentionHoldsTitle": "Conservations imposées",

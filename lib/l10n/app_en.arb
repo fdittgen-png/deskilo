@@ -24660,6 +24660,10 @@
   "@retentionHoldReleased": {
     "description": "#2571 retention holds and dispositions"
   },
+  "retentionHoldSaveFailed": "The hold could not be saved. Nothing changed.",
+  "@retentionHoldSaveFailed": {
+    "description": "#2571 retention holds and dispositions"
+  },
   "retentionHoldSince": "{what} · {issuer} · since {date}",
   "@retentionHoldSince": {
     "description": "#2571 retention holds and dispositions",

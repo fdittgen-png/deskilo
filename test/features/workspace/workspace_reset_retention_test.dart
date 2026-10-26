@@ -10,7 +10,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/mock_providers.dart';
-import '../../helpers/screens/workspace_settings_screen.dart' show pumpWorkspaceSettings;
+import '../../helpers/screens/workspace_settings_screen.dart'
+    show pumpWorkspaceSettings;
 
 class _RetainedBooks extends FakeWorkspaceRepository {
   _RetainedBooks(this.assessment) : super.withWorkspace();
@@ -28,13 +29,19 @@ class _RetainedBooks extends FakeWorkspaceRepository {
   }
 }
 
-Future<void> _reset(WidgetTester tester, FakeWorkspaceRepository repository) async {
+Future<void> _reset(
+  WidgetTester tester,
+  FakeWorkspaceRepository repository,
+) async {
   await pumpWorkspaceSettings(tester, repository: repository);
   final resetTile = find.byKey(const Key('workspaceSettingsReset'));
   await tester.ensureVisible(resetTile);
   await tester.tap(resetTile);
   await tester.pumpAndSettle();
-  await tester.enterText(find.byKey(const Key('workspaceResetConfirmField')), 'I AGREE');
+  await tester.enterText(
+    find.byKey(const Key('workspaceResetConfirmField')),
+    'I AGREE',
+  );
   await tester.pump();
   await tester.tap(find.byKey(const Key('workspaceResetConfirm')));
   await tester.pumpAndSettle();
@@ -54,8 +61,10 @@ void main() {
     await _reset(tester, repository);
     expect(repository.resetWorkspaceCalls, ['ws-1']);
     expect(
-      find.text('Nothing was deleted: the books must still be kept. '
-          'Kept until Dec 31, 2036 under Abgabenordnung §147'),
+      find.text(
+        'Nothing was deleted: the books must still be kept. '
+        'Kept until Dec 31, 2036 under Abgabenordnung §147',
+      ),
       findsOneWidget,
     );
     expect(find.text('Workspace reset.'), findsNothing);
@@ -76,8 +85,10 @@ void main() {
       }),
     );
     expect(
-      find.text('Nothing was deleted: the books must still be kept. '
-          'Kept under a legal hold: tax audit 2026'),
+      find.text(
+        'Nothing was deleted: the books must still be kept. '
+        'Kept under a legal hold: tax audit 2026',
+      ),
       findsOneWidget,
     );
   });

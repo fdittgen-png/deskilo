@@ -21,7 +21,12 @@ RetentionAssessment? retentionRefusalOf(Object error) {
   try {
     return RetentionAssessment.fromJson(jsonDecode(details));
   } on Exception catch (e, st) {
-    TraceLogger.instance.warn('retention', 'unreadable retention refusal', error: e, stackTrace: st);
+    TraceLogger.instance.warn(
+      'retention',
+      'unreadable retention refusal',
+      error: e,
+      stackTrace: st,
+    );
     return null;
   }
 }
@@ -29,14 +34,24 @@ RetentionAssessment? retentionRefusalOf(Object error) {
 /// What [a] says about the records it covers, in the reader's language:
 /// the hold, the day the rule ends, the review a person owes, or that the
 /// period has ended.
-String retentionAssessmentText(AppLocalizations l10n, RetentionAssessment a, String locale) {
-  final until = a.retainUntil == null ? null : DateFormat.yMMMd(locale).format(a.retainUntil!);
+String retentionAssessmentText(
+  AppLocalizations l10n,
+  RetentionAssessment a,
+  String locale,
+) {
+  final until = a.retainUntil == null
+      ? null
+      : DateFormat.yMMMd(locale).format(a.retainUntil!);
   if (a.indefinite) return l10n.retentionKeptHold(a.holdReasons.join(' · '));
   return switch (a.disposition) {
-    RetentionDisposition.retain when until != null =>
-      l10n.retentionKeptUntil(until, a.ruleSource ?? l10n.retentionTitle),
+    RetentionDisposition.retain when until != null => l10n.retentionKeptUntil(
+      until,
+      a.ruleSource ?? l10n.retentionTitle,
+    ),
     RetentionDisposition.retain || RetentionDisposition.reviewRequired =>
-      until == null ? l10n.retentionKeptReview : l10n.retentionKeptReviewEnded(until),
+      until == null
+          ? l10n.retentionKeptReview
+          : l10n.retentionKeptReviewEnded(until),
     RetentionDisposition.eligible => l10n.retentionPeriodEnded,
   };
 }

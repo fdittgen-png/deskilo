@@ -22,5 +22,6 @@
   "retentionKeptReviewEnded": "Aufbewahrt, bis eine Person die Aufbewahrungsregel prüft; ihre Frist endete am {date}",
   "retentionPeriodEnded": "Die Aufbewahrungsfrist ist abgelaufen: der Space kann die Löschung prüfen",
   "retentionResetRefused": "Nichts wurde gelöscht: die Buchhaltung muss noch aufbewahrt werden. {why}",
-  "retentionExtendedBySetting": "{years} Jahre ab dem Belegdatum (eigene Einstellung dieses Space)"
+  "retentionExtendedBySetting": "{years} Jahre ab dem Belegdatum (eigene Einstellung dieses Space)",
+  "retentionHoldSaveFailed": "Die Sperre konnte nicht gespeichert werden. Nichts wurde geändert."
 }

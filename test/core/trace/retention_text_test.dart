@@ -24,24 +24,49 @@ void main() {
 
   test('the refusal carries the assessment; other errors are not one', () {
     final kept = retentionRefusalOf(
-      PostgrestException(message: 'retention: ...', code: 'DKE01', details: jsonEncode(review)),
+      PostgrestException(
+        message: 'retention: ...',
+        code: 'DKE01',
+        details: jsonEncode(review),
+      ),
     );
     expect(kept?.disposition, RetentionDisposition.reviewRequired);
     expect(kept?.retainUntil, DateTime(2012, 12, 31));
     expect(kept?.reasons, ['fiscal_calendar_assumed', 'unconfirmed']);
-    expect(retentionRefusalOf(const PostgrestException(message: 'x', code: '42501')), isNull);
-    expect(retentionRefusalOf(const PostgrestException(message: 'x', code: 'DKE01', details: 'not json')),
-        isNull);
+    expect(
+      retentionRefusalOf(const PostgrestException(message: 'x', code: '42501')),
+      isNull,
+    );
+    expect(
+      retentionRefusalOf(
+        const PostgrestException(
+          message: 'x',
+          code: 'DKE01',
+          details: 'not json',
+        ),
+      ),
+      isNull,
+    );
     expect(retentionRefusalOf(StateError('x')), isNull);
   });
 
   test('no disposition is nothing to keep', () {
-    expect(RetentionAssessment.fromJson({'disposition': null, 'issuers': <Object?>[]}), isNull);
+    expect(
+      RetentionAssessment.fromJson({
+        'disposition': null,
+        'issuers': <Object?>[],
+      }),
+      isNull,
+    );
     expect(RetentionAssessment.fromJson(null), isNull);
   });
 
   test('the stricter of two: a hold, then a running clock, then a review, then the later end', () {
-    RetentionAssessment a(RetentionDisposition d, String? until, {bool hold = false}) => RetentionAssessment(
+    RetentionAssessment a(
+      RetentionDisposition d,
+      String? until, {
+      bool hold = false,
+    }) => RetentionAssessment(
       disposition: d,
       retainUntil: until == null ? null : DateTime.parse(until),
       indefinite: hold,
@@ -65,16 +90,32 @@ void main() {
       final tag = locale.toLanguageTag();
       for (final kept in [
         RetentionAssessment.fromJson(review)!,
-        RetentionAssessment(disposition: RetentionDisposition.retain, retainUntil: DateTime(2036, 12, 31), ruleSource: 'R'),
-        const RetentionAssessment(disposition: RetentionDisposition.retain, indefinite: true, holdReasons: ['audit']),
+        RetentionAssessment(
+          disposition: RetentionDisposition.retain,
+          retainUntil: DateTime(2036, 12, 31),
+          ruleSource: 'R',
+        ),
+        const RetentionAssessment(
+          disposition: RetentionDisposition.retain,
+          indefinite: true,
+          holdReasons: ['audit'],
+        ),
         const RetentionAssessment(disposition: RetentionDisposition.eligible),
       ]) {
-        expect(retentionAssessmentText(l10n, kept, tag), isNotEmpty, reason: '$locale');
+        expect(
+          retentionAssessmentText(l10n, kept, tag),
+          isNotEmpty,
+          reason: '$locale',
+        );
       }
     }
     final en = lookupAppLocalizations(const Locale('en'));
     expect(
-      retentionAssessmentText(en, const RetentionAssessment(disposition: RetentionDisposition.eligible), 'en'),
+      retentionAssessmentText(
+        en,
+        const RetentionAssessment(disposition: RetentionDisposition.eligible),
+        'en',
+      ),
       'The retention period has ended: the space may review the erasure',
     );
   });

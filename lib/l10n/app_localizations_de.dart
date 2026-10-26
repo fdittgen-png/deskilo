@@ -20968,6 +20968,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get retentionHoldReleased => 'Die Sperre ist aufgehoben.';
 
   @override
+  String get retentionHoldSaveFailed =>
+      'Die Sperre konnte nicht gespeichert werden. Nichts wurde geändert.';
+
+  @override
   String retentionHoldSince(String what, String issuer, String date) {
     return '$what · $issuer · seit $date';
   }

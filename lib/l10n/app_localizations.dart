@@ -35067,6 +35067,12 @@ abstract class AppLocalizations {
   /// #2571 retention holds and dispositions
   ///
   /// In en, this message translates to:
+  /// **'The hold could not be saved. Nothing changed.'**
+  String get retentionHoldSaveFailed;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
   /// **'{what} · {issuer} · since {date}'**
   String retentionHoldSince(String what, String issuer, String date);
 

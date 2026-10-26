@@ -22,7 +22,9 @@ class RetentionHolds {
     String? docClass,
     required String reason,
   }) async {
-    if (!retentionHoldReasonValid(reason)) return RetentionHoldOutcome.reasonInvalid;
+    if (!retentionHoldReasonValid(reason)) {
+      return RetentionHoldOutcome.reasonInvalid;
+    }
     await _repository.placeHold(
       workspaceId: workspaceId,
       issuerSiteId: issuerSiteId,
@@ -34,7 +36,9 @@ class RetentionHolds {
 
   /// Throws whatever the repository throws; the caller reports it.
   Future<RetentionHoldOutcome> release(String holdId, String reason) async {
-    if (!retentionHoldReasonValid(reason)) return RetentionHoldOutcome.reasonInvalid;
+    if (!retentionHoldReasonValid(reason)) {
+      return RetentionHoldOutcome.reasonInvalid;
+    }
     await _repository.releaseHold(holdId, reason.trim());
     return RetentionHoldOutcome.done;
   }

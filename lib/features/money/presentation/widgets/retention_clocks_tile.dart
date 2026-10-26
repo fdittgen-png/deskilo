@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/active_settings.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/vat/retention.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/settings_providers.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import 'retention_holds_section.dart';
 
 /// The name of the document class [docClass] a retention rule is kept for.
@@ -32,21 +31,23 @@ String retentionRuleText(AppLocalizations l10n, RetentionRule r) => r.bySetting
 /// rule, and the legal holds that keep records past every clock. The rules
 /// are reference data; only the holds are changed here.
 class RetentionClocksTile extends ConsumerWidget {
-  const RetentionClocksTile({required this.country, super.key});
+  const RetentionClocksTile({required this.country, this.workspaceId, super.key});
 
   /// The workspace's country code; null while it is not known.
   final String? country;
+
+  /// The workspace whose holds the dialog lists; null: the rules only.
+  final String? workspaceId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final country = this.country;
     if (country == null) return const SizedBox.shrink();
-    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    final usYears = workspaceId == null || !retentionExtendsBySetting(country)
-        ? SettingDefaults.retentionUsYears
-        : ref.watch(settingsSetProvider(workspaceId)).value?.read<int>('retention.us_years') ??
-              SettingDefaults.retentionUsYears;
+    final workspaceId = this.workspaceId;
+    final usYears = retentionExtendsBySetting(country)
+        ? ref.watch(activeSettingsProvider)?.read<int>('retention.us_years') ?? SettingDefaults.retentionUsYears
+        : SettingDefaults.retentionUsYears;
     final rules = retentionRules(country, usYears: usYears);
     if (rules.isEmpty) return const SizedBox.shrink();
     return ListTile(
@@ -82,7 +83,7 @@ class RetentionClocksTile extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                 ],
-                if (workspaceId != null) const RetentionHoldsSection(),
+                if (workspaceId != null) RetentionHoldsSection(workspaceId: workspaceId),
               ],
             ),
           ),

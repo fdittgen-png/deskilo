@@ -20982,6 +20982,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get retentionHoldReleased => 'La conservation est levée.';
 
   @override
+  String get retentionHoldSaveFailed =>
+      'La conservation n\'a pas pu être enregistrée. Rien n\'a changé.';
+
+  @override
   String retentionHoldSince(String what, String issuer, String date) {
     return '$what · $issuer · depuis le $date';
   }

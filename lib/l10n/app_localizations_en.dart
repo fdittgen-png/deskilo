@@ -20775,6 +20775,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retentionHoldReleased => 'The hold is released.';
 
   @override
+  String get retentionHoldSaveFailed =>
+      'The hold could not be saved. Nothing changed.';
+
+  @override
   String retentionHoldSince(String what, String issuer, String date) {
     return '$what · $issuer · since $date';
   }

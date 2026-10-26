@@ -84,6 +84,7 @@ const Map<String, String> _notExported = {
   'opening_hours_history': 'analytics evidence written by triggers on this installation (#1920); the booking rules it describes are exported',
   'reservation_origins': 'which assistant created a booking, audit evidence of this installation\'s MCP channel (#2145); the reservations it describes are exported',
   'reservation_target_history': 'analytics evidence written by triggers on this installation (#1920); the reservations it describes are exported',
+  'retention_holds': 'a legal hold guards this installation\'s own records (#2571): the records it keeps are exported, and the hold itself, its reason and its release, is read in the accounting settings of the space that placed it',
   'retired_invite_codes': 'withdrawn invitation secrets of this installation, kept only to answer "revoked"; never portable configuration (#1652)',
   'workspace_licences': 'the platform\'s licence record (non-profit verification, negotiated plan, billing reference) is not the space\'s data to export or import (0367)',
   'workspace_public_pages': 'publication consent is installation-specific; importing a workspace must not publish it (#1791)',
