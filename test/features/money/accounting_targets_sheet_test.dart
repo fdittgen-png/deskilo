@@ -66,10 +66,21 @@ FakeAccountingConnectionRepository _empty() =>
 
 const _card = 'pennylane_api-demo-site-studio';
 
-/// Taps the control keyed [key] and lets the sheet settle.
+/// A route or a sheet opening or closing, and the dropdown menu: longer
+/// than the Material transitions they run (300 ms at most).
+const _transition = Duration(milliseconds: 400);
+
+/// Taps the control keyed [key], then lets the fake repository answer and
+/// the transition it starts finish: explicit frames, never a settle loop.
 Future<void> _tap(WidgetTester tester, String key) async {
   await tester.tap(find.byKey(ValueKey(key)));
-  await tester.pumpAndSettle();
+  await _frames(tester);
+}
+
+Future<void> _frames(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump(_transition);
+  await tester.pump();
 }
 
 void main() {
@@ -95,7 +106,7 @@ void main() {
     await _tap(tester, 'acct-map-add');
     await _tap(tester, 'acct-map-kind');
     await tester.tap(find.text('Tax code').last);
-    await tester.pumpAndSettle();
+    await _frames(tester);
     await tester.enterText(find.byKey(const ValueKey('acct-map-tax')), 'VAT|FR|5.5');
     await tester.enterText(find.byKey(const ValueKey('acct-map-code')), 'FR_55');
     await _tap(tester, 'acct-map-save');
@@ -105,7 +116,7 @@ void main() {
     expect(repo.connections.single.maps.single.key, 'VAT|FR|taxed|5.5|2014');
     expect(find.text('VAT|FR|taxed|5.5|2014 → FR_55'), findsOneWidget);
     await tester.tapAt(const Offset(10, 10));
-    await tester.pumpAndSettle();
+    await _frames(tester);
 
     await _tap(tester, 'acct-revoke-$_card');
     await _tap(tester, 'acct-revoke-confirm');
