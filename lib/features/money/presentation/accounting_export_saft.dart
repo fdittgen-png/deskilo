@@ -21,7 +21,7 @@ extension SafTFinancialExports on AccountingExportRun {
     await exportGenericJournal(
       context,
       () async => switch (posted) {
-        final JournalPosted books => _written(books, contact, await _parties()),
+        final JournalPosted books => _written(books, contact, await _parties(books)),
         final other? => other,
         null => const JournalNeedsLocalBook(),
       },
@@ -29,33 +29,15 @@ extension SafTFinancialExports on AccountingExportRun {
     );
   }
 
-  /// The address and tax number of every party the year's documents name:
-  /// a member as the documents froze them, a supplier as registered.
-  Future<Map<String, SafTParty>> _parties() async {
-    final suppliers = await ref.read(suppliersProvider(workspace.id).future);
-    return {
-      for (final i in exported)
-        if (i.buyerParty case final buyer? when buyer.memberNumber.isNotEmpty)
-          safTPartyKey('member', buyer.memberNumber): SafTParty(
-            name: buyer.name,
-            street: buyer.street,
-            city: buyer.city,
-            postalCode: buyer.postalCode,
-            country: buyer.country,
-            vatId: buyer.vatId,
-          ),
-      for (final s in suppliers)
-        if (s.number.isNotEmpty)
-          safTPartyKey('supplier', s.number): SafTParty(
-            name: s.name,
-            street: s.street,
-            city: s.city,
-            postalCode: s.postalCode,
-            country: s.countryCode,
-            vatId: s.taxIdentifier,
-          ),
-    };
-  }
+  /// The parties of the posted documents, the opening period's included,
+  /// with their addresses: a member's from the document itself (read by id,
+  /// whatever calendar year it was issued in), a supplier's as registered.
+  Future<Map<String, SafTParty>> _parties(JournalPosted books) async =>
+      safTPartyDetails(
+        parties: books.parties,
+        invoices: await invoiceQueries.fetchInvoices(workspace.id),
+        suppliers: await ref.read(suppliersProvider(workspace.id).future),
+      );
 
   Future<GenericJournal> _written(
     JournalPosted books,

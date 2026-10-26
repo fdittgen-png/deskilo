@@ -54,6 +54,15 @@ final class JournalRefused extends GenericJournal {
   final List<FecBlocker> blockers;
 }
 
+/// #2379 — the postings before the fiscal year (the opening balances) could
+/// not be posted: the roles to map or the documents without a rate, for the
+/// [period] named.
+final class JournalOpeningRefused extends GenericJournal {
+  const JournalOpeningRefused(this.period, this.subjects);
+  final FiscalYear period;
+  final List<String> subjects;
+}
+
 /// #2379 — the SAF-T Financial file was refused: each missing fact named.
 final class JournalSafTRefused extends GenericJournal {
   const JournalSafTRefused(this.gaps);
@@ -194,24 +203,37 @@ class GenericJournalExport {
     if (!withOpening || journal is! JournalPosted) return journal;
     final start = _bookStart(profiles, local);
     if (!start.isBefore(period.from)) return journal;
-    final opening = await _readYears(workspaceId, local, [
-      FiscalYear(
-        start,
-        DateTime(period.from.year, period.from.month, period.from.day - 1),
-      ),
-    ], named: named);
-    return switch (opening.single) {
-      final JournalPosted before => JournalPosted(
-        journal.postings,
-        year: journal.year,
-        accountNames: journal.accountNames,
-        parties: {...before.parties, ...journal.parties},
-        functionalCurrency: journal.functionalCurrency,
-        opening: before.postings,
-        accountTypes: journal.accountTypes,
-      ),
-      final refused => refused,
-    };
+    final eve = DateTime(
+      period.from.year,
+      period.from.month,
+      period.from.day - 1,
+    );
+    // The opening period needs its postings and its parties, not the chart
+    // a second time.
+    final opening = (await _readYears(workspaceId, local, [
+      FiscalYear(start, eve),
+    ], named: false)).single;
+    if (opening is! JournalPosted) {
+      return JournalOpeningRefused(FiscalYear(start, eve), switch (opening) {
+        JournalBlocked(:final roles) => roles,
+        JournalNeedsRates(:final documents) => documents,
+        _ => const <String>[],
+      });
+    }
+    final parties = named && opening.postings.isNotEmpty
+        ? await _books.fetchPostingParties(workspaceId, [
+            ...{for (final p in opening.postings) p.documentId},
+          ])
+        : const <String, PostingParty>{};
+    return JournalPosted(
+      journal.postings,
+      year: journal.year,
+      accountNames: journal.accountNames,
+      parties: {...parties, ...journal.parties},
+      functionalCurrency: journal.functionalCurrency,
+      opening: opening.postings,
+      accountTypes: journal.accountTypes,
+    );
   }
 
   /// The first day the issuer of [local] kept a local book: the earliest of

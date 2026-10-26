@@ -139,7 +139,7 @@ class AccountingExportRun {
   final chosen = await showAccountingExportSheet(
     context,
     formats: exportFormatsOf(ref, country),
-    notices: [if (needsRegisteredSystem(country)) l10n.exportDenmarkRegisteredSystem],
+    notices: [if (registeredSystemsFor(country) case final s when s.isNotEmpty) l10n.exportDenmarkRegisteredSystem(s.join(', '))],
   );
   if (chosen == null || !context.mounted) return;
   format = chosen;

@@ -8506,9 +8506,14 @@
       }
     }
   },
-  "exportDenmarkRegisteredSystem": "Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system (e-conomic, Dinero, Billy) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.",
+  "exportDenmarkRegisteredSystem": "Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system ({systems}) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.",
   "@exportDenmarkRegisteredSystem": {
-    "description": "Accounting export sheet (#2379): the Danish registered-system duty and its two routes"
+    "description": "Accounting export sheet (#2379): the Danish registered-system duty and its two routes; systems = the registered systems of the registry",
+    "placeholders": {
+      "systems": {
+        "type": "String"
+      }
+    }
   },
   "exportLocalBookOnly": "Written from your local book's postings: your complete books only if every operation of the business passes through DesKilo.",
   "@exportLocalBookOnly": {
@@ -13692,6 +13697,21 @@
     "description": "#3031 Posted export: purchases in another currency without a recorded rate.",
     "placeholders": {
       "documents": {
+        "type": "String"
+      }
+    }
+  },
+  "journalOpeningRefused": "The opening balances ({from} to {to}) could not be posted: {reason}",
+  "@journalOpeningRefused": {
+    "description": "SAF-T Financial export (#2379): the postings before the fiscal year could not be read, with the period and the reason",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "reason": {
         "type": "String"
       }
     }
@@ -29960,6 +29980,10 @@
   "taxRefRole": "Role",
   "@taxRefRole": {
     "description": "#2481 tax reference: Field: the role of an account row."
+  },
+  "taxRefSafTKeys": "SAF-T Financial (format saf_t): key saf_t/<role> maps a posting role's accounts, with the standard code as account (Norway: the GroupingCode, with its GroupingCategory as label; Luxembourg: the StandardAccountID); key saf_t/tax:<output|input>:<group> gives a rate group's standard VAT code as tax code (Norway).",
+  "@taxRefSafTKeys": {
+    "description": "Tax reference editor (#2379): the key convention of the SAF-T Financial account_map rows"
   },
   "taxRefSave": "Save version",
   "@taxRefSave": {

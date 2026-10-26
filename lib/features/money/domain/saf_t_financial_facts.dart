@@ -19,6 +19,36 @@ const int _longIdLength = 70;
 /// The schemas' long text (SAFlongtextType): a description is cut to it.
 const int _textLength = 256;
 
+/// Norway 1.30's lengths of the fields [SafTFinancialFacts.fits] checks.
+const _norwayLengths = {
+  'Name': _textLength,
+  'StreetName': _textLength,
+  'City': _textLength,
+  'PostalCode': _longIdLength,
+  'Telephone': 18,
+  'FirstName': _shortIdLength,
+  'LastName': _longIdLength,
+  'RegistrationNumber': _shortIdLength,
+  'TaxRegistrationNumber': _shortIdLength,
+  'StandardCode': _shortIdLength,
+  'GroupingCategory': _textLength,
+};
+
+/// The FAIA 2.01's, tighter (FAIAmiddle2 70, FAIAmiddle1 35, shorttext 18).
+const _faiaLengths = {
+  'Name': _longIdLength,
+  'StreetName': _longIdLength,
+  'City': _shortIdLength,
+  'PostalCode': 18,
+  'Telephone': 18,
+  'FirstName': _shortIdLength,
+  'LastName': _longIdLength,
+  'RegistrationNumber': _shortIdLength,
+  'TaxRegistrationNumber': _shortIdLength,
+  'StandardCode': _shortIdLength,
+  'GroupingCategory': _shortIdLength,
+};
+
 enum SafTTaxDirection { output, input }
 
 /// One tax code of the table: a direction, a rate group and the version of
@@ -44,7 +74,6 @@ class SafTFinancialFacts {
 
   SafTFinancialProfile get profile => r.profile;
   bool get norway => profile == SafTFinancialProfile.norway;
-  bool get luxembourg => profile == SafTFinancialProfile.luxembourg;
 
   late final TaxReferenceSet rows = r.reference.resolved(isoDay(r.period.to));
   late final String taxCountry = r.company.country.trim().toUpperCase();
@@ -267,28 +296,76 @@ class SafTFinancialFacts {
         (l.role == BookRole.customers || l.role == BookRole.suppliers),
   );
 
+  /// The FAIA tree (Luxembourg, and the OECD file read against it) requires
+  /// postal addresses and the contact's telephone; Norway does not.
+  bool get faiaShape => profile != SafTFinancialProfile.norway;
+
+  /// The schema's length of each party and company field the file writes;
+  /// a longer value is refused ([SafTGapKind.tooLong]), never cut.
+  int lengthOf(String field) =>
+      (faiaShape ? _faiaLengths : _norwayLengths)[field]!;
+
+  void fits(String field, String value) {
+    if (value.length > lengthOf(field)) {
+      gap(SafTGapKind.tooLong, '$field: $value');
+    }
+  }
+
+  /// A street as the file writes it: one line.
+  static String streetLine(String street) => street.replaceAll('\n', ', ');
+
+  void _address(
+    String street,
+    String city,
+    String postalCode, {
+    required void Function() missing,
+  }) {
+    if (faiaShape && (city.trim().isEmpty || postalCode.trim().isEmpty)) {
+      missing();
+    }
+    fits('StreetName', streetLine(street));
+    fits('City', city);
+    fits('PostalCode', postalCode);
+  }
+
   void check() {
     final company = r.company;
     if (company.legalId.trim().isEmpty) {
       gap(SafTGapKind.company, 'RegistrationNumber');
     }
     if (company.name.trim().isEmpty) gap(SafTGapKind.company, 'Name');
+    // The file states the company's own taxes; a seller of another country
+    // than the profile's is not the declaration it makes.
+    if (profile.country.isNotEmpty && taxCountry != profile.country) {
+      gap(SafTGapKind.company, 'Country');
+    }
+    fits('RegistrationNumber', company.legalId);
+    fits('Name', company.name);
+    fits('TaxRegistrationNumber', company.vatId);
+    _address(
+      company.street,
+      company.city,
+      company.postalCode,
+      missing: () => gap(SafTGapKind.company, 'Address'),
+    );
     if (r.contact.firstName.trim().isEmpty ||
         r.contact.lastName.trim().isEmpty) {
       gap(SafTGapKind.contact, 'ContactPerson');
     }
-    if (luxembourg) {
-      if (company.city.trim().isEmpty || company.postalCode.trim().isEmpty) {
-        gap(SafTGapKind.company, 'Address');
-      }
-      if (r.contact.phone.trim().isEmpty) {
-        gap(SafTGapKind.contact, 'Telephone');
-      }
+    if (faiaShape && r.contact.phone.trim().isEmpty) {
+      gap(SafTGapKind.contact, 'Telephone');
     }
+    fits('FirstName', r.contact.firstName);
+    fits('LastName', r.contact.lastName);
+    fits('Telephone', r.contact.phone);
     for (final a in accounts) {
       id(a, _longIdLength);
       if (profile.country.isNotEmpty && standards[a] == null) {
         gap(SafTGapKind.standardAccount, '$a ${accountName(a)}');
+      }
+      if (standards[a] case final standard?) {
+        fits('StandardCode', standard.account);
+        if (norway) fits('GroupingCategory', standard.label);
       }
     }
     taxCodes = _collectTaxCodes();
@@ -303,12 +380,14 @@ class SafTFinancialFacts {
           gap(SafTGapKind.party, '${e.key} AccountID');
         }
         final details = r.partyDetails[safTPartyKey(kind, e.key)];
-        if (luxembourg &&
-            (details == null ||
-                details.city.trim().isEmpty ||
-                details.postalCode.trim().isEmpty)) {
-          gap(SafTGapKind.party, '${e.key} Address');
-        }
+        fits('Name', partyName(e.key, e.value.party, details));
+        fits('TaxRegistrationNumber', details?.vatId ?? '');
+        _address(
+          details?.street ?? '',
+          details?.city ?? '',
+          details?.postalCode ?? '',
+          missing: () => gap(SafTGapKind.party, '${e.key} Address'),
+        );
       }
     }
     for (final p in r.postings) {
@@ -316,6 +395,15 @@ class SafTFinancialFacts {
       id(p.documentNumber, _shortIdLength);
     }
   }
+
+  /// The name a party is written under: its posted name, the registered
+  /// one, its number.
+  String partyName(String number, PostingParty party, SafTParty? details) =>
+      party.name.isNotEmpty
+      ? party.name
+      : (details?.name ?? '').isNotEmpty
+      ? details!.name
+      : number;
 
   // ── Transaction ids: the journal and the document, `-2` for a second ──
 

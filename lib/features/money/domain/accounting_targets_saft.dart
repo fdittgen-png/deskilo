@@ -144,8 +144,20 @@ const List<AccountingTarget> safTFinancialTargets = [
   ),
 ];
 
-/// #2379 — whether the law of [country] asks for a registered bookkeeping
-/// system rather than a file (Denmark): the export sheet says so first.
-bool needsRegisteredSystem(String country) => safTFinancialTargets.any(
-  (t) => t.id == 'denmark_registered_system' && t.offeredIn(country),
-);
+/// #2379 — the registered bookkeeping systems a space of [country] may
+/// deliver to, by product name, when its law asks for a registered system
+/// rather than a file (Denmark); empty everywhere else. The export sheet
+/// says so first.
+List<String> registeredSystemsFor(String country) =>
+    safTFinancialTargets.any(
+      (t) => t.id == 'denmark_registered_system' && t.offeredIn(country),
+    )
+    ? [
+        for (final t in safTFinancialTargets)
+          if (_registeredSystems.contains(t.id) && t.offeredIn(country))
+            t.product,
+      ]
+    : const [];
+
+/// The registered systems among the targets.
+const _registeredSystems = {'economic_api', 'dinero_api', 'billy_api'};

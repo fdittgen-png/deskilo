@@ -6977,8 +6977,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get exportDenmarkRegisteredSystem =>
-      'Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system (e-conomic, Dinero, Billy) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.';
+  String exportDenmarkRegisteredSystem(String systems) {
+    return 'Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system ($systems) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.';
+  }
 
   @override
   String get exportLocalBookOnly =>
@@ -11621,6 +11622,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'These purchases are in another currency than the space\'s and have no recorded exchange rate, so nothing was written; record each one\'s rate first: $documents';
+  }
+
+  @override
+  String journalOpeningRefused(String from, String to, String reason) {
+    return 'The opening balances ($from to $to) could not be posted: $reason';
   }
 
   @override
@@ -25436,6 +25442,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefRole => 'Role';
+
+  @override
+  String get taxRefSafTKeys =>
+      'SAF-T Financial (format saf_t): key saf_t/<role> maps a posting role\'s accounts, with the standard code as account (Norway: the GroupingCode, with its GroupingCategory as label; Luxembourg: the StandardAccountID); key saf_t/tax:<output|input>:<group> gives a rate group\'s standard VAT code as tax code (Norway).';
 
   @override
   String get taxRefSave => 'Save version';

@@ -4,9 +4,11 @@
   "invoiceExportFaiaLu": "FAIA (Lussemburgo)",
   "invoiceExportSafTFull": "SAF-T con il libro mastro (XML, internazionale)",
   "exportLocalBookOnly": "Redatto dalle scritture della sua contabilità locale: la sua contabilità completa solo se ogni operazione dell’impresa passa da DesKilo.",
-  "exportDenmarkRegisteredSystem": "Danimarca: la legge richiede un sistema di contabilità digitale registrato, e DesKilo non lo è. Trasmetta le sue fatture a un sistema registrato (e-conomic, Dinero, Billy) o consegni al suo commercialista l’esportazione standard SAF-T DK che esso produce. Nessun file qui adempie da solo a questo obbligo.",
+  "exportDenmarkRegisteredSystem": "Danimarca: la legge richiede un sistema di contabilità digitale registrato, e DesKilo non lo è. Trasmetta le sue fatture a un sistema registrato ({systems}) o consegni al suo commercialista l’esportazione standard SAF-T DK che esso produce. Nessun file qui adempie da solo a questo obbligo.",
   "journalSafTRefused": "Il file SAF-T non è stato redatto: {gaps}",
   "saftGap": "{kind, select, standardAccount{nessun conto standard per {subject}} standardTaxCode{nessun codice IVA standard per {subject}} taxRate{nessuna aliquota IVA per {subject}} company{manca il campo {subject} dell’impresa} contact{il campo {subject} della persona di contatto} party{manca {subject} per un cliente o fornitore} tooLong{{subject} supera la lunghezza ammessa dal file} other{{subject}}}",
   "saftContactTitle": "Contatto per questo file",
-  "saftContactIntro": "Il file dell’amministrazione indica una persona di contatto, e quello del Lussemburgo anche un telefono. Viene scritta solo in questo file."
+  "saftContactIntro": "Il file dell’amministrazione indica una persona di contatto, e quello del Lussemburgo anche un telefono. Viene scritta solo in questo file.",
+  "taxRefSafTKeys": "SAF-T Financial (formato saf_t): la chiave saf_t/<ruolo> associa i conti di un ruolo contabile al loro codice standard, inserito come conto (Norvegia: il GroupingCode, con la sua GroupingCategory come etichetta; Lussemburgo: lo StandardAccountID); la chiave saf_t/tax:<output|input>:<gruppo> indica il codice IVA standard di un gruppo di aliquote come codice d’imposta (Norvegia).",
+  "journalOpeningRefused": "I saldi di apertura (dal {from} al {to}) non sono stati contabilizzati: {reason}"
 }

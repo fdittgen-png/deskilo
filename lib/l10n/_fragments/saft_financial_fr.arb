@@ -4,9 +4,11 @@
   "invoiceExportFaiaLu": "FAIA (Luxembourg)",
   "invoiceExportSafTFull": "SAF-T avec le grand livre (XML, international)",
   "exportLocalBookOnly": "Établi à partir des écritures de votre comptabilité locale : votre comptabilité complète seulement si toutes les opérations de l’entreprise passent par DesKilo.",
-  "exportDenmarkRegisteredSystem": "Danemark : la loi impose un système de comptabilité numérique enregistré, et DesKilo n’en est pas un. Transmettez vos factures à un système enregistré (e-conomic, Dinero, Billy) ou remettez à votre comptable l’export standard SAF-T DK qu’il produit. Aucun fichier ici ne remplit cette obligation à lui seul.",
+  "exportDenmarkRegisteredSystem": "Danemark : la loi impose un système de comptabilité numérique enregistré, et DesKilo n’en est pas un. Transmettez vos factures à un système enregistré ({systems}) ou remettez à votre comptable l’export standard SAF-T DK qu’il produit. Aucun fichier ici ne remplit cette obligation à lui seul.",
   "journalSafTRefused": "Le fichier SAF-T n’a pas été établi : {gaps}",
   "saftGap": "{kind, select, standardAccount{aucun compte standard pour {subject}} standardTaxCode{aucun code de TVA standard pour {subject}} taxRate{aucun taux de TVA pour {subject}} company{le champ {subject} de l’entreprise manque} contact{le champ {subject} de la personne de contact} party{{subject} manque pour un client ou un fournisseur} tooLong{{subject} dépasse la longueur admise par le fichier} other{{subject}}}",
   "saftContactTitle": "Contact pour ce fichier",
-  "saftContactIntro": "Le fichier de l’administration nomme une personne de contact, et celui du Luxembourg aussi un téléphone. Elle n’est écrite que dans ce fichier."
+  "saftContactIntro": "Le fichier de l’administration nomme une personne de contact, et celui du Luxembourg aussi un téléphone. Elle n’est écrite que dans ce fichier.",
+  "taxRefSafTKeys": "SAF-T Financial (format saf_t) : la clé saf_t/<rôle> associe les comptes d’un rôle d’écriture à leur code standard, saisi comme compte (Norvège : le GroupingCode, avec sa GroupingCategory comme libellé ; Luxembourg : le StandardAccountID) ; la clé saf_t/tax:<output|input>:<groupe> donne le code de TVA standard d’un groupe de taux comme code de taxe (Norvège).",
+  "journalOpeningRefused": "Les soldes d’ouverture (du {from} au {to}) n’ont pas pu être comptabilisés : {reason}"
 }

@@ -7020,8 +7020,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get exportDenmarkRegisteredSystem =>
-      'Danimarca: la legge richiede un sistema di contabilità digitale registrato, e DesKilo non lo è. Trasmetta le sue fatture a un sistema registrato (e-conomic, Dinero, Billy) o consegni al suo commercialista l’esportazione standard SAF-T DK che esso produce. Nessun file qui adempie da solo a questo obbligo.';
+  String exportDenmarkRegisteredSystem(String systems) {
+    return 'Danimarca: la legge richiede un sistema di contabilità digitale registrato, e DesKilo non lo è. Trasmetta le sue fatture a un sistema registrato ($systems) o consegni al suo commercialista l’esportazione standard SAF-T DK che esso produce. Nessun file qui adempie da solo a questo obbligo.';
+  }
 
   @override
   String get exportLocalBookOnly =>
@@ -11701,6 +11702,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Questi acquisti sono in una valuta diversa da quella dello spazio e non hanno un tasso di cambio registrato; non è stato scritto nulla. Registri prima il tasso di ciascuno: $documents';
+  }
+
+  @override
+  String journalOpeningRefused(String from, String to, String reason) {
+    return 'I saldi di apertura (dal $from al $to) non sono stati contabilizzati: $reason';
   }
 
   @override
@@ -25672,6 +25678,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefRole => 'Ruolo';
+
+  @override
+  String get taxRefSafTKeys =>
+      'SAF-T Financial (formato saf_t): la chiave saf_t/<ruolo> associa i conti di un ruolo contabile al loro codice standard, inserito come conto (Norvegia: il GroupingCode, con la sua GroupingCategory come etichetta; Lussemburgo: lo StandardAccountID); la chiave saf_t/tax:<output|input>:<gruppo> indica il codice IVA standard di un gruppo di aliquote come codice d’imposta (Norvegia).';
 
   @override
   String get taxRefSave => 'Salva la versione';

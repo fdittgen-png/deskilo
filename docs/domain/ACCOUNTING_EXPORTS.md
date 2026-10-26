@@ -41,6 +41,27 @@ authority. Widening one needs the authority's own spec in hand.
 | Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
 | Archive bundle | exchange | everywhere | a fiscal year as one zip; `vat-account.csv` (#2378, the VAT account of UK VAT Regulations 1995 reg. 32) when the year has prepared or filed returns: per period output and input tax, corrections of earlier periods apart, payable = box 1 and allowable = box 4 of the return |
 
+## The SAF-T Financial chart map (#2379)
+
+The national codes a SAF-T Financial file states are `account_map` rows of
+the tax reference store, format `saf_t`, edited on the tax reference screen:
+
+| key | country | field | meaning |
+|---|---|---|---|
+| `saf_t/<role>` (or `saf_t/<role>:<qualifier>`, which wins) | NO | `account`, `label` | the GroupingCode and its GroupingCategory (næringsspesifikasjon) of the accounts that role books to |
+| `saf_t/tax:<output\|input>:<group>` | NO | `tax_code` | the StandardTaxCode of that rate group, output or input |
+| `saf_t/<role>` | LU | `account` | the StandardAccountID (PCN 2020) |
+
+Migration 9999 (renumbered at push) seeds them unconfirmed, with their
+source: Norway for every posting role and the three rate groups, Luxembourg
+for the customers, suppliers, bank, revenue, VAT and expenses roles. A role
+or rate group without its row refuses the file and is named; an accountant
+corrects a row on the screen, never in the file. The FAIA shape (Luxembourg,
+and the OECD file read against the FAIA schema) also requires the postal
+address of the company and of every party, and the contact's telephone;
+every field is checked against its schema length and refused, never cut,
+when longer.
+
 ## The FEC as an import contract (#2376)
 
 French importers (Pennylane, Sage 100, Cegid, EBP) take over a client's

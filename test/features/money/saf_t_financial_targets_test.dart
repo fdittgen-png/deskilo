@@ -11,7 +11,10 @@ import 'package:deskilo/features/money/domain/accounting_targets_saft.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
+import 'package:deskilo/features/money/domain/fiscal_year.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo/features/money/domain/saf_t_financial.dart';
+import 'package:deskilo/features/money/presentation/accounting_export_journal.dart';
 import 'package:deskilo/features/money/presentation/widgets/accounting_export_sheet.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +46,13 @@ Posting _posting(String doc, DateTime date) => Posting(
 /// The book: one sale in the year before, one in the year; every read is
 /// recorded.
 class _Books implements BookProfileRepository {
+  _Books({this.blockBefore});
+
+  /// Postings before this day block on an unmapped role.
+  final DateTime? blockBefore;
   final reads = <(DateTime, DateTime)>[];
   final partyReads = <List<String>>[];
+  int chartReads = 0;
 
   @override
   Future<PostingSet> fetchPostings(
@@ -54,6 +62,11 @@ class _Books implements BookProfileRepository {
     DateTime to,
   ) async {
     reads.add((from, to));
+    if (blockBefore case final day? when from.isBefore(day)) {
+      return const PostingSet([], [
+        PostingBlocker(PostingBlock.unmappedRole, 'write_off'),
+      ]);
+    }
     return PostingSet([
       for (final p in [
         _posting('F-1', DateTime(2025, 11, 3)),
@@ -65,26 +78,29 @@ class _Books implements BookProfileRepository {
 
   @override
   Future<({List<BookAccount> accounts, List<BookMapping> mappings})>
-  fetchBookChart(String workspaceId) async => (
-    accounts: [
-      for (final (code, type) in const [
-        ('1500', AccountType.asset),
-        ('3000', AccountType.income),
-      ])
-        BookAccount(
-          id: code,
-          workspaceId: workspaceId,
-          issuerSiteId: 'site',
-          code: code,
-          name: 'Account $code',
-          type: type,
-          isPosting: true,
-          origin: AccountOrigin.manual,
-          revision: 1,
-        ),
-    ],
-    mappings: const <BookMapping>[],
-  );
+  fetchBookChart(String workspaceId) async {
+    chartReads++;
+    return (
+      accounts: [
+        for (final (code, type) in const [
+          ('1500', AccountType.asset),
+          ('3000', AccountType.income),
+        ])
+          BookAccount(
+            id: code,
+            workspaceId: workspaceId,
+            issuerSiteId: 'site',
+            code: code,
+            name: 'Account $code',
+            type: type,
+            isPosting: true,
+            origin: AccountOrigin.manual,
+            revision: 1,
+          ),
+      ],
+      mappings: const <BookMapping>[],
+    );
+  }
 
   @override
   Future<Map<String, PostingParty>> fetchPostingParties(
@@ -140,8 +156,8 @@ void main() {
 
   test('Denmark is told about the registered system, and no Danish file '
       'claims to meet it', () {
-    expect(needsRegisteredSystem('DK'), isTrue);
-    expect(needsRegisteredSystem('NO'), isFalse);
+    expect(registeredSystemsFor('DK'), ['e-conomic', 'Dinero', 'Billy']);
+    expect(registeredSystemsFor('NO'), isEmpty);
     expect(
       formatsFor('DK').where((f) => f.claim == FormatClaim.regulatory),
       isEmpty,
@@ -174,7 +190,7 @@ void main() {
               onPressed: () => showAccountingExportSheet(
                 context,
                 formats: formatsFor('NO'),
-                notices: [l10n.exportDenmarkRegisteredSystem],
+                notices: [l10n.exportDenmarkRegisteredSystem('e-conomic')],
               ),
               child: const Text('open'),
             ),
@@ -184,7 +200,10 @@ void main() {
     );
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
-    expect(find.text(l10n.exportDenmarkRegisteredSystem), findsOneWidget);
+    expect(
+      find.text(l10n.exportDenmarkRegisteredSystem('e-conomic')),
+      findsOneWidget,
+    );
     expect(find.text(l10n.invoiceExportSafTNo), findsOneWidget);
     expect(find.text(l10n.exportLocalBookOnly), findsOneWidget);
     expect(find.text(l10n.exportNoCompleteBooks), findsNothing);
@@ -208,6 +227,12 @@ void main() {
     ]);
     expect(posted.postings.map((p) => p.documentNumber), ['F-2']);
     expect(posted.opening.map((p) => p.documentNumber), ['F-1']);
+    // The chart once; the parties of each period once.
+    expect(books.chartReads, 1);
+    expect(books.partyReads, [
+      ['id-F-2'],
+      ['id-F-1'],
+    ]);
     expect(posted.parties.keys, containsAll(['id-F-1', 'id-F-2']));
     expect(posted.accountTypes, {
       '1500': AccountType.asset,
@@ -228,4 +253,76 @@ void main() {
     expect(books.reads, [(DateTime(2025, 4), DateTime(2026, 3, 31))]);
     expect((read as JournalPosted).opening, isEmpty);
   });
+
+  test(
+    'an opening period the engine cannot post is named with its period',
+    () async {
+      final read =
+          await GenericJournalExport(_Books(blockBefore: DateTime(2026, 4)))
+              .read(
+                'ws',
+                [_profile],
+                2026,
+                named: true,
+                withOpening: true,
+                asOf: DateTime(2026, 6, 30),
+              );
+      final refused = read as JournalOpeningRefused;
+      expect(refused.period.from, DateTime(2025, 10));
+      expect(refused.period.to, DateTime(2026, 3, 31));
+      expect(refused.subjects, ['write_off']);
+    },
+  );
+
+  for (final (name, journal, expected) in [
+    (
+      'the SAF-T refusal names each gap',
+      const JournalSafTRefused([
+        SafTGap(SafTGapKind.standardAccount, '6300 Leie lokale'),
+        SafTGap(SafTGapKind.contact, 'Telephone'),
+      ]),
+      (AppLocalizations l) => l.journalSafTRefused(
+        '${l.saftGap('standardAccount', '6300 Leie lokale')}; '
+        '${l.saftGap('contact', 'Telephone')}',
+      ),
+    ),
+    (
+      'the opening refusal names its roles',
+      JournalOpeningRefused(
+        FiscalYear(DateTime(2025, 10), DateTime(2026, 3, 31)),
+        const ['write_off'],
+      ),
+      // The days in the locale's medium format; the rest verbatim.
+      (AppLocalizations l) =>
+          l.journalOpeningRefused('', '', 'write_off').split(': ').last,
+    ),
+  ]) {
+    testWidgets(name, (tester) async {
+      final l10n = lookupAppLocalizations(const Locale('en'));
+      var saved = false;
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Builder(
+              builder: (context) => TextButton(
+                onPressed: () => exportGenericJournal(
+                  context,
+                  () async => journal,
+                  save: (_) async => saved = true,
+                ),
+                child: const Text('export'),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('export'));
+      await tester.pump();
+      await tester.pump();
+      expect(find.textContaining(expected(l10n)), findsOneWidget);
+      expect(saved, isFalse);
+    });
+  }
 }

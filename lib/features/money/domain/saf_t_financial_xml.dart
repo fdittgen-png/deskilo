@@ -52,7 +52,7 @@ class SafTFinancialXml extends SafTFinancialFacts {
       'Address',
       nest: () {
         if (street.isNotEmpty) {
-          tag('StreetName', text(street.replaceAll('\n', ', ')));
+          tag('StreetName', SafTFinancialFacts.streetLine(street));
         }
         if (city.isNotEmpty) tag('City', city);
         if (postalCode.isNotEmpty) tag('PostalCode', postalCode);
@@ -87,7 +87,7 @@ class SafTFinancialXml extends SafTFinancialFacts {
           'Company',
           nest: () {
             tag('RegistrationNumber', c.legalId);
-            tag('Name', text(c.name));
+            tag('Name', c.name);
             if (hasAddress(c.city, c.postalCode)) {
               address(c.street, c.city, c.postalCode, c.country);
             }
@@ -211,16 +211,13 @@ class SafTFinancialXml extends SafTFinancialFacts {
     ({PostingParty party, Set<String> accounts}) entry,
   ) {
     final details = r.partyDetails[safTPartyKey(kind, number)];
-    final name = entry.party.name.isNotEmpty
-        ? entry.party.name
-        : details?.name ?? number;
     final accounts = entry.accounts.toList()..sort();
     int netOf(Iterable<Posting> postings, String account) =>
         partyNet(postings, kind, number, account);
     builder.element(
       element,
       nest: () {
-        tag('Name', text(name.isEmpty ? number : name));
+        tag('Name', partyName(number, entry.party, details));
         if (details != null && hasAddress(details.city, details.postalCode)) {
           address(
             details.street,

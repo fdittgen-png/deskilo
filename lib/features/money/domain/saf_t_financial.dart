@@ -25,6 +25,7 @@ import 'fiscal_year.dart';
 import 'invoice.dart';
 import 'posting.dart';
 import 'saf_t_financial_xml.dart';
+import 'supplier.dart';
 
 /// Which SAF-T Financial declaration the file makes about itself.
 enum SafTFinancialProfile {
@@ -136,6 +137,46 @@ class SafTParty {
 
 /// The key of a party in [SafTFinancialRequest.partyDetails].
 String safTPartyKey(String kind, String number) => '$kind:$number';
+
+/// The address and tax number of every party [parties] names (the posted
+/// documents of the fiscal year AND of the opening period, by document id):
+/// a member as the document froze it, found among [invoices] by the
+/// document's id; a supplier as [suppliers] registers it.
+Map<String, SafTParty> safTPartyDetails({
+  required Map<String, PostingParty> parties,
+  required Iterable<Invoice> invoices,
+  required Iterable<Supplier> suppliers,
+}) {
+  final byId = {for (final i in invoices) i.id: i};
+  final registered = {for (final s in suppliers) s.number: s};
+  final details = <String, SafTParty>{};
+  for (final MapEntry(key: documentId, value: party) in parties.entries) {
+    if (party.number.isEmpty) continue;
+    final key = safTPartyKey(party.kind, party.number);
+    if (party.kind == 'member') {
+      if (byId[documentId]?.buyerParty case final buyer?) {
+        details[key] = SafTParty(
+          name: buyer.name,
+          street: buyer.street,
+          city: buyer.city,
+          postalCode: buyer.postalCode,
+          country: buyer.country,
+          vatId: buyer.vatId,
+        );
+      }
+    } else if (registered[party.number] case final s?) {
+      details[key] = SafTParty(
+        name: s.name,
+        street: s.street,
+        city: s.city,
+        postalCode: s.postalCode,
+        country: s.countryCode,
+        vatId: s.taxIdentifier,
+      );
+    }
+  }
+  return details;
+}
 
 /// What one SAF-T Financial file is built from.
 class SafTFinancialRequest {

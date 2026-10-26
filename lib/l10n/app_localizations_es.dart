@@ -7020,8 +7020,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get exportDenmarkRegisteredSystem =>
-      'Dinamarca: la ley exige un sistema de contabilidad digital registrado, y DesKilo no lo es. Envíe sus facturas a un sistema registrado (e-conomic, Dinero, Billy) o entregue a su asesor la exportación estándar SAF-T DK que este genera. Ningún archivo de aquí cumple esa obligación por sí solo.';
+  String exportDenmarkRegisteredSystem(String systems) {
+    return 'Dinamarca: la ley exige un sistema de contabilidad digital registrado, y DesKilo no lo es. Envíe sus facturas a un sistema registrado ($systems) o entregue a su asesor la exportación estándar SAF-T DK que este genera. Ningún archivo de aquí cumple esa obligación por sí solo.';
+  }
 
   @override
   String get exportLocalBookOnly =>
@@ -11695,6 +11696,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: $documents';
+  }
+
+  @override
+  String journalOpeningRefused(String from, String to, String reason) {
+    return 'Los saldos de apertura (del $from al $to) no se han podido contabilizar: $reason';
   }
 
   @override
@@ -25640,6 +25646,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxRefRole => 'Función';
+
+  @override
+  String get taxRefSafTKeys =>
+      'SAF-T Financial (formato saf_t): la clave saf_t/<rol> asigna las cuentas de un rol contable a su código estándar, introducido como cuenta (Noruega: el GroupingCode, con su GroupingCategory como etiqueta; Luxemburgo: el StandardAccountID); la clave saf_t/tax:<output|input>:<grupo> indica el código de IVA estándar de un grupo de tipos como código de impuesto (Noruega).';
 
   @override
   String get taxRefSave => 'Guardar la versión';

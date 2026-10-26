@@ -151,8 +151,13 @@ final _maps = <TaxReferenceRow>[
     _row('LU', 'saf_t/$role', {'account': code}),
 ];
 
-TaxReferenceSet _reference({List<TaxReferenceRow>? maps}) =>
-    TaxReferenceSet([...ActiveTaxReference.current.rows, ...maps ?? _maps]);
+/// The bundled reference without its own `saf_t/` rows, so each test
+/// states the map it means; [maps] (the fixture by default) on top.
+TaxReferenceSet _reference({List<TaxReferenceRow>? maps}) => TaxReferenceSet([
+  for (final r in ActiveTaxReference.current.rows)
+    if (!(r.domain == TaxDomain.accountMap && r.key.startsWith('saf_t/'))) r,
+  ...maps ?? _maps,
+]);
 
 InvoiceParty _company(String country) => InvoiceParty(
   name: 'Cowork',
@@ -175,6 +180,7 @@ SafTFinancialRequest _request(
     phone: '+352 621 000 000',
   ),
   Map<String, SafTParty>? partyDetails,
+  InvoiceParty? company,
 }) => SafTFinancialRequest(
   profile: profile,
   period: _period,
@@ -206,7 +212,7 @@ SafTFinancialRequest _request(
           country: 'FR',
         ),
       },
-  company: _company(country),
+  company: company ?? _company(country),
   contact: contact,
   currency: 'EUR',
   softwareVersion: '1.0.3',
@@ -463,17 +469,26 @@ void main() {
     ]);
   });
 
-  test('the contact person is required everywhere, a telephone in '
-      'Luxembourg', () {
+  test('the contact person is required everywhere, a telephone in the '
+      'FAIA shape', () {
+    expect(
+      _gaps(
+        _request(
+          SafTFinancialProfile.norway,
+          contact: const SafTContact(firstName: '', lastName: 'Dittgen'),
+        ),
+      ),
+      [const SafTGap(SafTGapKind.contact, 'ContactPerson')],
+    );
     expect(
       _gaps(
         _request(
           SafTFinancialProfile.oecd,
           country: 'FR',
-          contact: const SafTContact(firstName: '', lastName: 'Dittgen'),
+          contact: const SafTContact(firstName: 'Flo', lastName: 'Dittgen'),
         ),
       ),
-      [const SafTGap(SafTGapKind.contact, 'ContactPerson')],
+      [const SafTGap(SafTGapKind.contact, 'Telephone')],
     );
     expect(
       _gaps(
@@ -512,5 +527,136 @@ void main() {
     );
     expect(gaps.map((g) => g.kind).toSet(), {SafTGapKind.party});
     expect(gaps.map((g) => g.subject), contains('B-1'));
+  });
+
+  test('the company: its registration number, and the country the profile '
+      'declares', () {
+    final norwegian = _company('NO');
+    expect(
+      _gaps(
+        _request(
+          SafTFinancialProfile.norway,
+          company: norwegian.copyWith(legalId: ''),
+        ),
+      ),
+      [const SafTGap(SafTGapKind.company, 'RegistrationNumber')],
+    );
+    expect(
+      _gaps(
+        _request(
+          SafTFinancialProfile.norway,
+          company: norwegian.copyWith(country: 'SE'),
+        ),
+      ).map((g) => (g.kind, g.subject)),
+      contains((SafTGapKind.company, 'Country')),
+    );
+    expect(
+      _gaps(
+        _request(
+          SafTFinancialProfile.oecd,
+          country: 'FR',
+          company: _company('FR').copyWith(city: ''),
+        ),
+      ),
+      [const SafTGap(SafTGapKind.company, 'Address')],
+    );
+  });
+
+  test("a field longer than the profile's schema allows is refused, never "
+      'cut', () {
+    final long = 'N' * 71;
+    final lu = _company('LU').copyWith(name: long);
+    expect(
+      _gaps(
+        _request(SafTFinancialProfile.luxembourg, country: 'LU', company: lu),
+      ),
+      [SafTGap(SafTGapKind.tooLong, 'Name: $long')],
+    );
+    // Norway's Name takes 256.
+    expect(
+      buildSafTFinancial(
+        _request(
+          SafTFinancialProfile.norway,
+          company: _company('NO').copyWith(name: long),
+        ),
+      ),
+      isA<SafTFinancialFile>(),
+    );
+    expect(
+      _gaps(
+        _request(
+          SafTFinancialProfile.luxembourg,
+          country: 'LU',
+          company: _company('LU').copyWith(postalCode: '1' * 19),
+        ),
+      ),
+      [SafTGap(SafTGapKind.tooLong, 'PostalCode: ${'1' * 19}')],
+    );
+  });
+
+  test('a tax line whose group has no rate in the country is named', () {
+    final reference = TaxReferenceSet([
+      for (final r in _reference().rows)
+        if (!(r.domain == TaxDomain.rate &&
+            r.country == 'NO' &&
+            r.key == 'reduced'))
+          r,
+    ]);
+    expect(_gaps(_request(SafTFinancialProfile.norway, reference: reference)), [
+      const SafTGap(SafTGapKind.taxRate, 'reduced'),
+    ]);
+  });
+
+  test('party details come from the posted documents of the fiscal year and '
+      'the opening, whatever calendar year they were issued in', () {
+    Invoice issued(String id, DateTime at, String city) =>
+        SeededExportYear.inv1.copyWith(
+          id: id,
+          issuedAt: at,
+          buyerParty: InvoiceParty(
+            name: 'Member $id',
+            city: city,
+            postalCode: '1',
+          ),
+        );
+    final details = safTPartyDetails(
+      parties: const {
+        // Opening (March 2026), and February of the next calendar year.
+        'march': PostingParty(kind: 'member', number: 'M-1', name: 'A'),
+        'february': PostingParty(kind: 'member', number: 'M-2', name: 'B'),
+        'bill': PostingParty(kind: 'supplier', number: '17', name: 'C'),
+      },
+      invoices: [
+        issued('march', DateTime(2026, 3, 5), 'Oslo'),
+        issued('february', DateTime(2027, 2, 5), 'Bergen'),
+        issued('unposted', DateTime(2026, 6, 5), 'Tromsø'),
+      ],
+      suppliers: const [],
+    );
+    expect(details.keys, {'member:M-1', 'member:M-2'});
+    expect(details['member:M-2']!.city, 'Bergen');
+  });
+
+  test("the shipped rows map the seeded chart for Norway; Luxembourg's name "
+      'the role they do not cover', () {
+    expect(
+      buildSafTFinancial(
+        _request(
+          SafTFinancialProfile.norway,
+          reference: ActiveTaxReference.current,
+        ),
+      ),
+      isA<SafTFinancialFile>(),
+    );
+    expect(
+      _gaps(
+        _request(
+          SafTFinancialProfile.luxembourg,
+          country: 'LU',
+          reference: ActiveTaxReference.current,
+        ),
+      ),
+      [const SafTGap(SafTGapKind.standardAccount, '7830 Tap på fordringer')],
+    );
   });
 }
