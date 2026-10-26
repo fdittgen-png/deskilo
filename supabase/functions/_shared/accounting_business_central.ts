@@ -103,11 +103,11 @@ const LOGIN_BASE_ENV = "ACCOUNTING_BUSINESS_CENTRAL_LOGIN_BASE";
  * the Entra tenant (its id or a verified domain), the environment's name and
  * the company's id. The app composes it (business_central_connection.dart;
  * the pattern is pinned by accounting_targets_business_central_test). */
-export const COMPANY_ADDRESS = /^([A-Za-z0-9][A-Za-z0-9.-]{0,99})\/([A-Za-z0-9][A-Za-z0-9_-]{0,29})\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;
+const COMPANY_ADDRESS = /^([A-Za-z0-9][A-Za-z0-9.-]{0,99})\/([A-Za-z0-9][A-Za-z0-9_-]{0,29})\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;
 
 /** What separates the application's client id from its secret in the
  * credential the connection keeps: a client id is a GUID, never this. */
-export const CREDENTIAL_SEPARATOR = ":";
+const CREDENTIAL_SEPARATOR = ":";
 
 /** The longest `externalDocumentNumber` (Code[35]) and customer or vendor
  * `number` (Code[20]) Business Central keeps: a longer one is refused,
@@ -132,7 +132,7 @@ const MAX_PAGES = 50;
  * `companyInformation.countryRegionCode` reads it: the app descriptor's
  * (`accounting_targets_business_central.dart`; pinned by
  * accounting_targets_business_central_test). */
-export const COMPANY_COUNTRIES: Record<string, string> = {
+const COMPANY_COUNTRIES: Record<string, string> = {
   business_central_de: "DE",
   business_central_fr: "FR",
   business_central_ch: "CH",
@@ -148,7 +148,7 @@ const SALES_TAX_COUNTRIES = new Set(["US", "CA"]);
 /** The code of the Business Central journal each posting journal goes to:
  * the app's journal codes (posting.dart `PostingJournal`; pinned by
  * accounting_targets_business_central_test). */
-export const JOURNAL_CODES: Record<string, string> = {
+const JOURNAL_CODES: Record<string, string> = {
   sales: "VE",
   bank: "BQ",
   purchases: "HA",

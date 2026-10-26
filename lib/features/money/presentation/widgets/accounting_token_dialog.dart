@@ -184,7 +184,7 @@ class _TokenDialogState extends ConsumerState<_TokenDialog> {
               // the server only, and a revoke must leave no copy behind.
               obscureText: true,
               keyboardType: TextInputType.visiblePassword,
-              maxLength: accountingTokenLength.max,
+              maxLength: _entra ? entraSecretMaxLength : accountingTokenLength.max,
               error: _tooShort
                   ? l10n.acctTokenTooShort
                   : invalid(EntraField.secret),

@@ -10,6 +10,8 @@
 // accounting_targets_business_central_test).
 //
 // Pure Dart.
+import 'package:meta/meta.dart';
+
 import 'accounting_connection.dart' show accountingTokenLength;
 
 /// A field of the Business Central connection form.
@@ -42,15 +44,18 @@ const _environment = '[A-Za-z0-9][A-Za-z0-9_-]{0,${_environmentLength - 1}}';
 
 /// The tenant, the environment's name and the company's id, as one remote
 /// company: the adapter's `COMPANY_ADDRESS`.
+@visibleForTesting
 const entraCompanyAddressPattern = '^($_tenant)\\/($_environment)\\/($_guid)\$';
 
 /// What separates the client id from the secret in the kept credential:
 /// the adapter's `CREDENTIAL_SEPARATOR`.
+@visibleForTesting
 const entraCredentialSeparator = ':';
 
 final _guidOnly = RegExp('^$_guid\$');
 final _tenantOnly = RegExp('^$_tenant\$');
 final _environmentOnly = RegExp('^$_environment\$');
+final _address = RegExp(entraCompanyAddressPattern);
 
 /// The longest secret a connection keeps: the token's bound
 /// (`accountingTokenLength.max`) less a client id and the separator.
@@ -81,19 +86,19 @@ sealed class EntraConnection {
     if (tenant == null || environment == null || company == null) {
       return EntraValid('$id$entraCredentialSeparator$value', null);
     }
+    final address = '${tenant.trim()}/${environment.trim()}/${company.trim()}';
+    if (_address.hasMatch(address)) {
+      return EntraValid('$id$entraCredentialSeparator$value', address);
+    }
+    // The address the adapter reads does not form: the first field that
+    // does not have its own form is named.
     if (!_tenantOnly.hasMatch(tenant.trim())) {
       return const EntraInvalid(EntraField.tenant);
     }
     if (!_environmentOnly.hasMatch(environment.trim())) {
       return const EntraInvalid(EntraField.environment);
     }
-    if (!_guidOnly.hasMatch(company.trim())) {
-      return const EntraInvalid(EntraField.company);
-    }
-    return EntraValid(
-      '$id$entraCredentialSeparator$value',
-      '${tenant.trim()}/${environment.trim()}/${company.trim()}',
-    );
+    return const EntraInvalid(EntraField.company);
   }
 }
 
