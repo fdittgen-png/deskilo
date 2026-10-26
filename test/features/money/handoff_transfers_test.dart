@@ -61,14 +61,24 @@ final _transfers = AccountingTransfers.fromJson({
       'exported_at': '2026-04-02T08:00:00Z',
       'exported_by_member_id': 'm-owner',
       'deliveries': [
-        _delivery(id: 'd-1', target: 'sage50', sha: _docSha, bookExport: 'exp-1',
-            status: 'generated'),
+        _delivery(
+          id: 'd-1',
+          target: 'sage50',
+          sha: _docSha,
+          bookExport: 'exp-1',
+          status: 'generated',
+        ),
       ],
     },
   ],
   'deliveries': [
-    _delivery(id: 'd-2', target: 'xero', sha: _xeroSha, connection: 'c-1',
-        remoteNumber: 'INV-0042'),
+    _delivery(
+      id: 'd-2',
+      target: 'xero',
+      sha: _xeroSha,
+      connection: 'c-1',
+      remoteNumber: 'INV-0042',
+    ),
   ],
 });
 
@@ -113,7 +123,8 @@ Map<String, Object?> _json(AccountantHandoff r) =>
 
 void main() {
   test('the report quotes the Sage file with its digest and documents', () {
-    final transfers = _json(_report(transfers: _transfers))['transfers']! as Map;
+    final transfers =
+        _json(_report(transfers: _transfers))['transfers']! as Map;
     expect(transfers['files'], [
       {
         'format_id': 'sage50',
@@ -135,7 +146,8 @@ void main() {
   });
 
   test('the report quotes the Xero delivery of the same month', () {
-    final transfers = _json(_report(transfers: _transfers))['transfers']! as Map;
+    final transfers =
+        _json(_report(transfers: _transfers))['transfers']! as Map;
     expect(transfers['deliveries'], [
       {
         'target_id': 'xero',
@@ -153,8 +165,14 @@ void main() {
     final reversed = AccountingTransfers(
       files: _transfers.files.reversed.toList(),
       deliveries: [
-        AccountingDelivery.fromJson(_delivery(
-            id: 'd-3', target: 'xero', sha: _xeroSha, connection: 'c-1')),
+        AccountingDelivery.fromJson(
+          _delivery(
+            id: 'd-3',
+            target: 'xero',
+            sha: _xeroSha,
+            connection: 'c-1',
+          ),
+        ),
         ..._transfers.deliveries,
       ],
     );
@@ -162,42 +180,57 @@ void main() {
       files: _transfers.files,
       deliveries: [
         ..._transfers.deliveries,
-        AccountingDelivery.fromJson(_delivery(
-            id: 'd-3', target: 'xero', sha: _xeroSha, connection: 'c-1')),
+        AccountingDelivery.fromJson(
+          _delivery(
+            id: 'd-3',
+            target: 'xero',
+            sha: _xeroSha,
+            connection: 'c-1',
+          ),
+        ),
       ],
     );
-    expect(_report(transfers: reversed).toPrettyJson(),
-        _report(transfers: forward).toPrettyJson());
+    expect(
+      _report(transfers: reversed).toPrettyJson(),
+      _report(transfers: forward).toPrettyJson(),
+    );
   });
 
   test('without a Transfers list the report quotes none', () {
     expect(_json(_report()).containsKey('transfers'), isFalse);
   });
 
-  Future<void> openPreflight(WidgetTester tester, AccountantHandoff report) async {
-    await tester.pumpWidget(MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: Builder(
-        builder: (context) => TextButton(
-          onPressed: () => showAccountantHandoffPreflight(context, report),
-          child: const Text('open'),
+  Future<void> openPreflight(
+    WidgetTester tester,
+    AccountantHandoff report,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Builder(
+          builder: (context) => TextButton(
+            onPressed: () => showAccountantHandoffPreflight(context, report),
+            child: const Text('open'),
+          ),
         ),
       ),
-    ));
+    );
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
   }
 
-  testWidgets('the preflight says the report quotes the transfers',
-      (tester) async {
+  testWidgets('the preflight says the report quotes the transfers', (
+    tester,
+  ) async {
     await openPreflight(tester, _report(transfers: _transfers));
     final l10n = await AppLocalizations.delegate.load(const Locale('en'));
     expect(find.text(l10n.handoffTransfersQuoted('1', '1')), findsOneWidget);
   });
 
-  testWidgets('without a Transfers list the preflight says nothing of it',
-      (tester) async {
+  testWidgets('without a Transfers list the preflight says nothing of it', (
+    tester,
+  ) async {
     await openPreflight(tester, _report());
     expect(find.byKey(const ValueKey('handoff-preflight')), findsOneWidget);
     expect(find.byKey(const ValueKey('handoff-transfers')), findsNothing);

@@ -50,6 +50,7 @@ import '../providers/money_providers.dart';
 import '../providers/vat_declaration_providers.dart';
 import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
+import 'accounting_export_handover.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_saft.dart';
 import 'accounting_export_sage.dart';
@@ -450,6 +451,7 @@ class AccountingExportRun {
           for (var i = 0; i < yearInvoices.length; i++)
             yearInvoices[i].id: verdicts[i],
         };
+        final vouchers = <String, Map<String, List<int>>>{};
         for (final invoice in yearInvoices) {
           final pdf = await buildFacturXFile(
             context,
@@ -463,11 +465,14 @@ class AccountingExportRun {
           // archive missing an invoice must never be saved as complete.
           if (pdf.bytes.isEmpty) return;
           files['invoices/${pdf.fileName}'] = pdf.bytes;
+          vouchers[invoice.id] = {'invoices/${pdf.fileName}': pdf.bytes};
         }
         files['register.csv'] = textBytes(buildInvoiceRegisterCsv(yearInvoices, integrity: integrity));
+        final events = buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger,
+            exports: exports, memberNames: memberNames);
+        files.addAll(await readableHandover(vouchers: vouchers, auditEvents: events));
         files['audit-trail.csv'] = textBytes(buildAuditTrailCsv(
-          events: buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger,
-              exports: exports, memberNames: memberNames),
+          events: events,
           generatedAt: now,
           workspaceName: workspace.name,
           source: books.revisions,

@@ -122,7 +122,7 @@ Map<String, List<int>> buildGobdPackage(GobdRequest r) {
   return {
     _gobdIndexFileName: utf8.encode(_gobdIndexXml(r, tables)),
     gobdDtdFileName: utf8.encode(gobdDtd),
-    for (final t in tables) t.url: utf8.encode(_gobdCsv(t, r.dayOf)),
+    for (final t in tables) t.url: utf8.encode(gobdTableCsv(t, r.dayOf)),
     for (final files in r.vouchers.values) ...files,
     ...r.procedure,
   };
@@ -160,7 +160,7 @@ String _cents(int cents) {
 String _rate(double p) => _cents((p * 100).round());
 
 /// [t]'s rows, `;`-separated and CRLF-terminated, as the index declares.
-String _gobdCsv(GobdTable t, DateTime Function(DateTime) dayOf) => [
+String gobdTableCsv(GobdTable t, DateTime Function(DateTime) dayOf) => [
   for (final row in t.rows)
     '${[for (final (i, c) in t.columns.indexed) _cell(row[i], c.type, dayOf)].join(';')}\r\n',
 ].join();

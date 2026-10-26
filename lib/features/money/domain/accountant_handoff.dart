@@ -19,8 +19,8 @@ import 'package:meta/meta.dart';
 
 import '../../../core/time/date_text.dart';
 import 'accountant_csv.dart';
-import 'accounting_connection.dart';
 import 'accounting_amount.dart';
+import 'accounting_connection.dart';
 import 'archive_bundle.dart' show kZipEntryTime;
 import 'billing_rules.dart';
 import 'invoice.dart';
