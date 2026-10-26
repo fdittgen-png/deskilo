@@ -48,6 +48,11 @@ class VatDeclarationLine {
   /// The acquisition tax owed on purchases from abroad, not a sale.
   bool get isAcquisition => category == vatAcquisitionCategory;
 
+  /// Whether the line names what it is beside its rate (deductible VAT, the
+  /// acquisition tax, a correction): the screen and the printed return
+  /// alike; the period's own sales do not.
+  bool get namedBesideRate => isCorrection || isInput || isAcquisition;
+
   /// #2480 -- the fiscal group (`VatGroup.wire`) the rate this line was taxed
   /// at belongs to, read from the country's rate rows when a return form is
   /// filled; '' where the rate is in none of them. Never stored.

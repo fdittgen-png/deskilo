@@ -6,6 +6,7 @@
 // name, so nothing overflows; on a roomy bar the ring stays.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/workspace_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -51,6 +52,10 @@ Future<void> _pump(
 
 Finder get _ring => find.byKey(const ValueKey('space-chip-brand'));
 Finder get _name => find.byKey(const ValueKey('space-chip-name'));
+Finder get _avatar => find.descendant(
+  of: find.byKey(const ValueKey('space-chip')),
+  matching: find.byType(WorkspaceAvatar),
+);
 
 void main() {
   for (final branded in [false, true]) {
@@ -60,6 +65,7 @@ void main() {
       await _pump(tester, width: 360, textScale: 2, branded: branded);
       expect(tester.takeException(), isNull, reason: 'nothing overflows');
       expect(_name, findsOneWidget);
+      expect(_avatar, findsNothing, reason: 'no room for the avatar');
       expect(_ring, findsNothing);
     });
   }
@@ -68,6 +74,7 @@ void main() {
     await _pump(tester, width: 1024, textScale: 1, branded: true);
     expect(tester.takeException(), isNull);
     expect(_ring, findsOneWidget);
+    expect(_avatar, findsOneWidget);
     expect(_name, findsOneWidget);
   });
 }

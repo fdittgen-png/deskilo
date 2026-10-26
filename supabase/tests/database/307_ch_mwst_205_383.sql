@@ -6,7 +6,8 @@
 -- line (10 000.00 of its 11 000.00 is the letting), a package and a bare
 -- letting that was not opted; and three expenses: two services bought
 -- abroad (100.00 and 20.00 at 8.1 %, the second half deductible) and an
--- ordinary one. The expense keeps `acquisition`; the return files the tax
+-- ordinary one. The expense keeps `acquisition`; a German space, whose
+-- return has no acquisition box, refuses it; the return files the tax
 -- owed among the output, its deductible share among the input; the stored
 -- taxed line states its opted part; the turnover and the document count
 -- are the sales'. With input VAT off nothing of the expenses is declared;
@@ -14,13 +15,13 @@
 -- plain member reads no return. The split's figures are pinned in Dart by
 -- test/features/money/vat_return_parity_test.dart. Rolled back.
 begin;
-select plan(17);
+select plan(18);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
   u_o uuid := '00000000-0000-4000-8000-000000236001';
   u_m uuid := '00000000-0000-4000-8000-000000236002';
-  ws uuid; mo uuid;
+  ws uuid; ws_de uuid; mo uuid;
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                           email_confirmed_at, created_at, updated_at)
@@ -36,6 +37,14 @@ begin
   values (ws, u_o, true, true) returning id into mo;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
   values (ws, u_m, false, false);
+  -- A German space of the same owner: its return has no acquisition box.
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by,
+                                 vat_regime, feature_flags)
+  values ('Bezug DE', 'DE', 'EUR', 'Europe/Berlin', u_o, 'vat_registered',
+          '{"moneyTab": true, "invoicing": true, "vatManagement": true, "vatDeclarations": true, "inputVat": true}')
+  returning id into ws_de;
+  insert into public.members (workspace_id, user_id, is_owner, is_admin)
+  values (ws_de, u_o, true, true);
 
   -- Issued on 5 September, due then (the agreed consideration).
   insert into public.invoices (workspace_id, member_id, issuer_member_id, number, title, lines,
@@ -78,6 +87,7 @@ begin
   perform set_config('ch.ws', ws::text, false);
   perform set_config('ch.owner', u_o::text, false);
   perform set_config('ch.member', u_m::text, false);
+  perform set_config('ch.ws_de', ws_de::text, false);
 end
 $seed$;
 
@@ -133,6 +143,11 @@ select is(
   (select payload -> 'vat' from public.events where id = current_setting('ch.e2')::uuid),
   '{"percent": 8.1, "deductible_pct": 100}'::jsonb,
   'an ordinary one carries no flag');
+select throws_like(
+  $$ select public.submit_expense(current_setting('ch.ws_de')::uuid, 5000, 'other', '', null,
+                                  '{"percent": 19, "acquisition": true}') $$,
+  '%no acquisition tax box%',
+  'a space whose return has no acquisition box refuses the flag: no box would declare the tax');
 select set_config('request.jwt.claims', '', true);
 select pg_temp.flag(false);
 select pg_temp.act_as('owner');

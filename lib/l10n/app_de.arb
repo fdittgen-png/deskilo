@@ -17436,6 +17436,7 @@
   "@taxRefCashOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
   },
+  "taxRefCategories": "Weitere Zeilenkategorien, die sie zusammenzählt (durch Komma getrennt, z. B. acquisition)",
   "taxRefCategory": "EN-16931-Kategorie",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."

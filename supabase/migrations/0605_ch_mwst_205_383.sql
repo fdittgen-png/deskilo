@@ -1,8 +1,9 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
--- (expense_vat_payload, vat_input_amounts, vat_return_lines and
--- vat_return_summary restated whole; one function and two rows of the tax
--- reference store added; no table, no policy; a filed return is untouched)
+-- (tax_reference_valid, expense_vat_payload, vat_input_amounts,
+-- vat_return_lines and vat_return_summary restated whole; one function and
+-- two rows of the tax reference store added; no table, no policy; a filed
+-- return is untouched)
 --
 -- 0605 (#2360) -- the two Ziffern of the Swiss MWST return the lines did not
 -- carry yet:
@@ -23,7 +24,12 @@
 --     `acquisition`, which `vat_return_lines` (0413) files among the tax
 --     due. The summary's turnover and document count leave it out: it is
 --     tax owed on a purchase, not a sale.
---   * the `form_box` rows of both boxes (unconfirmed, with their source).
+--   * the `form_box` rows of both boxes (unconfirmed, with their source);
+--     a `form_box` row learns `categories`, the lines a box adds beyond the
+--     rated sales (`tax_reference_valid`, 0600, restated whole). The 383
+--     row carries `acquisition`, and `expense_vat_payload` refuses the flag
+--     in a space whose country has no such row in force: no other return
+--     declares the tax it would owe.
 --
 -- Not here: a purchase document (a member's receipt, a supplier bill) does
 -- not say it was bought abroad -- a supplier bill reaches no return yet; the
@@ -51,6 +57,15 @@ begin
   end if;
   if v_share < 0 or v_share > 100 then
     raise exception 'the deductible share lies between 0 and 100';
+  end if;
+  if coalesce((p_vat ->> 'acquisition')::boolean, false) and not exists (
+       select 1 from public.workspaces w
+        cross join lateral (select (now() at time zone coalesce(nullif(w.timezone, ''), 'UTC'))::date as d) today
+        join public.tax_reference r
+          on r.domain = 'form_box' and r.country = upper(btrim(coalesce(w.country_code, '')))
+         and r.valid_from <= today.d and (r.valid_to is null or r.valid_to > today.d)
+        where w.id = p_workspace_id and coalesce(r.value -> 'categories' ? 'acquisition', false)) then
+    raise exception 'this space''s return has no acquisition tax box';
   end if;
   return jsonb_build_object('percent', trim_scale(v_percent),
                             'deductible_pct', trim_scale(v_share))
@@ -360,12 +375,236 @@ $fn$;
 revoke execute on function public.vat_return_summary(uuid, date, date) from public, anon;
 
 -- ── the boxes ──────────────────────────────────────────────────────────
+-- 0600's shapes; a return box may name the line categories it adds.
+create or replace function public.tax_reference_valid(p_domain text, p_value jsonb)
+returns boolean language plpgsql immutable set search_path = public as $fn$
+declare
+  v_allowed text[];
+begin
+  -- A missing key makes a comparison NULL, and a CHECK passes on NULL: every
+  -- answer is coalesced to false (the shapes of 0427 and 0430 had the hole).
+  if p_value is null or jsonb_typeof(p_value) <> 'object' then return false; end if;
+  case p_domain
+    when 'rate' then
+      v_allowed := array['label', 'percent', 'group', 'category', 'exemption_reason', 'position'];
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> all (v_allowed)) then return false; end if;
+      if jsonb_typeof(p_value -> 'label') is distinct from 'string'
+         or btrim(p_value ->> 'label') = '' then return false; end if;
+      if jsonb_typeof(p_value -> 'percent') is distinct from 'number' then return false; end if;
+      if (p_value ->> 'percent')::numeric < 0 or (p_value ->> 'percent')::numeric > 99.999 then return false; end if;
+      if jsonb_typeof(p_value -> 'group') is distinct from 'string'
+         or (p_value ->> 'group') <> all (array['standard', 'intermediate', 'reduced', 'super_reduced',
+                                               'zero', 'exempt', 'not_subject', 'deposit', 'excise']) then
+        return false;
+      end if;
+      if jsonb_typeof(p_value -> 'category') is distinct from 'string'
+         or (p_value ->> 'category') <> all (array['S', 'Z', 'E', 'O']) then return false; end if;
+      if p_value ? 'exemption_reason' and jsonb_typeof(p_value -> 'exemption_reason') <> 'string' then return false; end if;
+      if p_value ? 'position' and (jsonb_typeof(p_value -> 'position') <> 'number'
+                                   or (p_value ->> 'position') !~ '^[0-9]+$') then return false; end if;
+      return true;
+    when 'eu_member' then
+      -- A member state ({}), or another spelling of one ({alias_of}).
+      return coalesce(p_value = '{}'::jsonb
+          or (p_value ? 'alias_of'
+              and not exists (select 1 from jsonb_object_keys(p_value) k where k <> 'alias_of')
+              and jsonb_typeof(p_value -> 'alias_of') = 'string'
+              and (p_value ->> 'alias_of') ~ '^[A-Z]{2}$'), false);
+    when 'catalogue_note' then
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> 'text') then return false; end if;
+      return coalesce(jsonb_typeof(p_value -> 'text') = 'string' and btrim(p_value ->> 'text') <> '', false);
+    when 'group_example' then
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> all (array['group', 'text', 'position'])) then return false; end if;
+      if jsonb_typeof(p_value -> 'group') is distinct from 'string'
+         or (p_value ->> 'group') <> all (array['standard', 'intermediate', 'reduced', 'super_reduced',
+                                               'zero', 'exempt', 'not_subject', 'deposit', 'excise']) then
+        return false;
+      end if;
+      if p_value ? 'position' and (jsonb_typeof(p_value -> 'position') <> 'number'
+                                   or (p_value ->> 'position') !~ '^[0-9]+$') then return false; end if;
+      return coalesce(jsonb_typeof(p_value -> 'text') = 'string' and btrim(p_value ->> 'text') <> '', false);
+    when 'threshold' then
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> all (array['cents', 'effect', 'currency', 'charge_cents'])) then return false; end if;
+      return coalesce(jsonb_typeof(p_value -> 'cents') = 'number' and (p_value ->> 'cents') ~ '^[1-9][0-9]*$'
+         and (p_value ->> 'effect') = any (array['next_year', 'immediate', 'annual_operations', 'simplified_invoice', 'stamp_duty'])
+         and jsonb_typeof(p_value -> 'currency') = 'string' and (p_value ->> 'currency') ~ '^[A-Z]{3}$'
+         and (not p_value ? 'charge_cents'
+              or (jsonb_typeof(p_value -> 'charge_cents') = 'number'
+                  and (p_value ->> 'charge_cents') ~ '^[1-9][0-9]*$')), false);
+    when 'tax_point' then
+      if exists (select 1 from jsonb_object_keys(p_value) k
+                  where k <> all (array['standard', 'invoice_option', 'cash_option', 'cash_backstop'])) then return false; end if;
+      return coalesce((p_value ->> 'standard') = any (array['invoice', 'receipt', 'service_period', 'earlier_of'])
+         and jsonb_typeof(p_value -> 'invoice_option') = 'boolean'
+         and jsonb_typeof(p_value -> 'cash_option') = 'boolean'
+         and (p_value ->> 'cash_backstop') = any (array['none', 'end_of_following_year', 'one_year_after_issue']), false);
+    when 'mandate' then
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> all (array['duty', 'from'])) then return false; end if;
+      if (p_value ->> 'duty') <> all (array['receive_all', 'issue_large', 'issue_all', 'e_reporting', 'invoice_records'])
+         or (p_value ->> 'duty') is null then return false; end if;
+      begin
+        return coalesce(jsonb_typeof(p_value -> 'from') = 'string'
+           and to_char((p_value ->> 'from')::date, 'YYYY-MM-DD') = (p_value ->> 'from'), false);
+      exception when others then
+        return false;
+      end;
+    when 'issuing_gate' then
+      if exists (select 1 from jsonb_object_keys(p_value) k
+                  where k <> all (array['supported', 'requires_tax_number', 'national_channel_required', 'currency', 'tax_system',
+                           'outside_vat_postal_codes'])) then return false; end if;
+      return coalesce(jsonb_typeof(p_value -> 'supported') = 'boolean'
+         and jsonb_typeof(p_value -> 'requires_tax_number') = 'boolean'
+         and jsonb_typeof(p_value -> 'national_channel_required') = 'boolean'
+         and (not p_value ? 'currency'
+              or (jsonb_typeof(p_value -> 'currency') = 'string' and (p_value ->> 'currency') ~ '^[A-Z]{3}$'))
+         and (not p_value ? 'tax_system'
+              or (jsonb_typeof(p_value -> 'tax_system') = 'string'
+                  and (p_value ->> 'tax_system') = any (array['vat', 'sales_tax'])))
+         and (not p_value ? 'outside_vat_postal_codes'
+              or (jsonb_typeof(p_value -> 'outside_vat_postal_codes') = 'array'
+                  and not exists (select 1 from jsonb_array_elements(p_value -> 'outside_vat_postal_codes') e
+                                   where jsonb_typeof(e) <> 'string'
+                                      or (e #>> '{}') !~ '^[0-9A-Z]{1,5}$'))), false);
+    when 'exemption_text' then
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> all (array['regime', 'text'])) then return false; end if;
+      return coalesce(jsonb_typeof(p_value -> 'regime') = 'string' and btrim(p_value ->> 'regime') <> ''
+         and jsonb_typeof(p_value -> 'text') = 'string' and btrim(p_value ->> 'text') <> '', false);
+    when 'vat_id_pattern' then
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> 'pattern') then return false; end if;
+      if jsonb_typeof(p_value -> 'pattern') is distinct from 'string' or btrim(p_value ->> 'pattern') = '' then return false; end if;
+      -- A pattern the database cannot compile is not a pattern.
+      begin
+        perform '' ~ (p_value ->> 'pattern');
+      exception when others then
+        return false;
+      end;
+      return true;
+    when 'form_box' then
+      -- A rated box of a return form: the wording it prints and the fiscal
+      -- groups it adds up (or, for a catch-all box, every group but these).
+      if exists (select 1 from jsonb_object_keys(p_value) k
+                  where k <> all (array['label', 'groups', 'exclude_groups', 'categories'])) then return false; end if;
+      -- The line categories a box adds beyond the rated sales (CH 383: the
+      -- acquisition tax), each one the return lines know.
+      if p_value ? 'categories' and (
+           jsonb_typeof(p_value -> 'categories') <> 'array'
+           or jsonb_array_length(p_value -> 'categories') = 0
+           or exists (select 1 from jsonb_array_elements(p_value -> 'categories') e
+                       where jsonb_typeof(e) <> 'string'
+                          or (e #>> '{}') <> all (array['S', 'Z', 'E', 'O', 'AE', 'G', 'asset', 'acquisition']))) then
+        return false;
+      end if;
+      if jsonb_typeof(p_value -> 'label') is distinct from 'string'
+         or btrim(p_value ->> 'label') = '' then return false; end if;
+      declare
+        v_known text[] := array['standard', 'intermediate', 'reduced', 'super_reduced',
+                                'zero', 'exempt', 'not_subject', 'deposit', 'excise'];
+        v_take text[] := '{}';
+        v_left text[] := '{}';
+      begin
+        if p_value ? 'groups' then
+          if jsonb_typeof(p_value -> 'groups') <> 'array'
+             or exists (select 1 from jsonb_array_elements(p_value -> 'groups') e
+                         where jsonb_typeof(e) <> 'string') then return false; end if;
+          select coalesce(array_agg(e #>> '{}'), '{}') into v_take
+            from jsonb_array_elements(p_value -> 'groups') e;
+        end if;
+        if p_value ? 'exclude_groups' then
+          if jsonb_typeof(p_value -> 'exclude_groups') <> 'array'
+             or exists (select 1 from jsonb_array_elements(p_value -> 'exclude_groups') e
+                         where jsonb_typeof(e) <> 'string') then return false; end if;
+          select coalesce(array_agg(e #>> '{}'), '{}') into v_left
+            from jsonb_array_elements(p_value -> 'exclude_groups') e;
+        end if;
+        -- A box that selects nothing, a group nobody knows, or a group both
+        -- taken and excluded is not a selector.
+        return cardinality(v_take) + cardinality(v_left) > 0
+           and v_take <@ v_known and v_left <@ v_known
+           and not v_take && v_left;
+      end;
+    when 'account_map' then
+      -- A default an accounting export or the chart preview proposes: an
+      -- account number (or a chart's code) and/or the export's tax code.
+      if exists (select 1 from jsonb_object_keys(p_value) k
+                  where k <> all (array['format', 'role', 'account', 'tax_code', 'label'])) then return false; end if;
+      if (p_value ->> 'format') is null
+         or (p_value ->> 'format') <> all (array['coa', 'fec', 'datev', 'sage', 'saf_t', 'ch_kmu']) then return false; end if;
+      if jsonb_typeof(p_value -> 'role') is distinct from 'string'
+         or btrim(p_value ->> 'role') = '' then return false; end if;
+      if p_value ? 'label' and jsonb_typeof(p_value -> 'label') <> 'string' then return false; end if;
+      if p_value ? 'account' and (jsonb_typeof(p_value -> 'account') <> 'string'
+                                  or btrim(p_value ->> 'account') = '') then return false; end if;
+      if p_value ? 'tax_code' and (jsonb_typeof(p_value -> 'tax_code') <> 'string'
+                                   or btrim(p_value ->> 'tax_code') = '') then return false; end if;
+      return p_value ? 'account' or p_value ? 'tax_code';
+    when 'sales_tax' then
+      -- The tax a postal code carries, one component per jurisdiction.
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> all (array['state', 'components'])) then return false; end if;
+      if jsonb_typeof(p_value -> 'state') is distinct from 'string'
+         or (p_value ->> 'state') !~ '^[A-Z]{2}$' then return false; end if;
+      if jsonb_typeof(p_value -> 'components') is distinct from 'array'
+         or jsonb_array_length(p_value -> 'components') = 0 then return false; end if;
+      if exists (select 1 from jsonb_array_elements(p_value -> 'components') c
+                  where jsonb_typeof(c) <> 'object') then return false; end if;
+      if exists (select 1 from jsonb_array_elements(p_value -> 'components') c
+                  where exists (select 1 from jsonb_object_keys(c) k
+                                 where k <> all (array['level', 'label', 'percent']))) then return false; end if;
+      if exists (select 1 from jsonb_array_elements(p_value -> 'components') c
+                  where jsonb_typeof(c -> 'level') is distinct from 'string'
+                     or (c ->> 'level') <> all (array['state', 'county', 'city', 'district'])
+                     or jsonb_typeof(c -> 'label') is distinct from 'string'
+                     or btrim(c ->> 'label') = ''
+                     or jsonb_typeof(c -> 'percent') is distinct from 'number') then return false; end if;
+      return not exists (select 1 from jsonb_array_elements(p_value -> 'components') c
+                          where (c ->> 'percent')::numeric < 0 or (c ->> 'percent')::numeric > 20);
+    when 'retention' then
+      -- How long a kind of record is kept, and from when the clock runs.
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> all (array['years', 'from'])) then return false; end if;
+      if jsonb_typeof(p_value -> 'years') is distinct from 'number'
+         or (p_value ->> 'years') !~ '^[0-9]+$' then return false; end if;
+      if (p_value ->> 'years')::int < 1 or (p_value ->> 'years')::int > 100 then return false; end if;
+      return jsonb_typeof(p_value -> 'from') = 'string'
+         and (p_value ->> 'from') = any (array['fiscal_year_end', 'document_date']);
+    when 'rate_component' then
+      -- The taxes inside a combined rate: they add up to the rate.
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> all (array['percent', 'components'])) then return false; end if;
+      if jsonb_typeof(p_value -> 'percent') is distinct from 'number' then return false; end if;
+      if (p_value ->> 'percent')::numeric <= 0 or (p_value ->> 'percent')::numeric > 99.999 then return false; end if;
+      if jsonb_typeof(p_value -> 'components') is distinct from 'array'
+         or jsonb_array_length(p_value -> 'components') = 0 then return false; end if;
+      if exists (select 1 from jsonb_array_elements(p_value -> 'components') c
+                  where jsonb_typeof(c) <> 'object') then return false; end if;
+      if exists (select 1 from jsonb_array_elements(p_value -> 'components') c
+                  where exists (select 1 from jsonb_object_keys(c) k
+                                 where k <> all (array['scheme', 'authority', 'percent']))) then return false; end if;
+      if exists (select 1 from jsonb_array_elements(p_value -> 'components') c
+                  where jsonb_typeof(c -> 'scheme') is distinct from 'string'
+                     or btrim(c ->> 'scheme') = ''
+                     or jsonb_typeof(c -> 'authority') is distinct from 'string'
+                     or btrim(c ->> 'authority') = ''
+                     or jsonb_typeof(c -> 'percent') is distinct from 'number') then return false; end if;
+      if exists (select 1 from jsonb_array_elements(p_value -> 'components') c
+                  where (c ->> 'percent')::numeric <= 0) then return false; end if;
+      return (select abs(sum((c ->> 'percent')::numeric) - (p_value ->> 'percent')::numeric) < 0.0000001
+                from jsonb_array_elements(p_value -> 'components') c);
+    when 'taxability' then
+      -- Whether a kind of line is taxed in a state.
+      if exists (select 1 from jsonb_object_keys(p_value) k where k <> 'status') then return false; end if;
+      return coalesce(jsonb_typeof(p_value -> 'status') = 'string'
+         and (p_value ->> 'status') = any (array['taxable', 'exempt', 'not_applicable']), false);
+    else
+      return false;
+  end case;
+end;
+$fn$;
+revoke execute on function public.tax_reference_valid(text, jsonb) from public, anon, authenticated;
+
 -- BEGIN GENERATED SEED (dart run tool/build_tax_reference_seed.dart)
 insert into public.tax_reference
   (domain, country, key, valid_from, value, source, confirmed)
 values
 ('form_box', 'CH', 'mwst/205', '2024-01-01', '{"label":"In Ziffer 200 enthaltene Entgelte aus nach Art. 21 von der Steuer ausgenommenen Leistungen, für welche nach Art. 22 optiert wird","groups":["standard","reduced","intermediate"]}'::jsonb, 'ESTV MWST-Abrechnung (effektive Methode, ab 2024), Ziffer 205: in Ziffer 200 enthaltene Entgelte aus nach Art. 21 MWSTG von der Steuer ausgenommenen Leistungen, für welche nach Art. 22 MWSTG optiert wird; eCH-0217 v2 element `opted` (#2360). The groups are every rate the option taxes at. Wording not yet re-verified against the printed form', false),
-('form_box', 'CH', 'mwst/383', '2024-01-01', '{"label":"Bezugsteuer (Art. 45-49)","groups":["standard","reduced","intermediate"]}'::jsonb, 'ESTV MWST-Abrechnung (effektive Methode, ab 2024), Ziffer 383: Bezugsteuer (Art. 45-49 MWSTG) auf Leistungen von Unternehmen mit Sitz im Ausland, ab 1.1.2024 (382 holds the amounts up to 2023); eCH-0217 v2 element `acquisitionTax`, per rate (#2360). The groups are every rate an acquisition is taxed at. Wording not yet re-verified against the printed form', false)
+('form_box', 'CH', 'mwst/383', '2024-01-01', '{"label":"Bezugsteuer (Art. 45-49)","groups":["standard","reduced","intermediate"],"categories":["acquisition"]}'::jsonb, 'ESTV MWST-Abrechnung (effektive Methode, ab 2024), Ziffer 383: Bezugsteuer (Art. 45-49 MWSTG) auf Leistungen von Unternehmen mit Sitz im Ausland, ab 1.1.2024 (382 holds the amounts up to 2023); eCH-0217 v2 element `acquisitionTax`, per rate (#2360). The groups are every rate an acquisition is taxed at; the category `acquisition` is the tax owed on services bought from abroad, which only a country with this box lets an expense carry. Wording not yet re-verified against the printed form', false)
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 

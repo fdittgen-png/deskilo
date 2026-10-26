@@ -32,6 +32,7 @@
 // year's [VatFormSpec.validFrom]; `vatFormSpecFor` picks by period.
 import 'package:meta/meta.dart';
 
+import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
 import 'vat_declaration.dart';
@@ -106,19 +107,16 @@ VatFormSpec? vatFormSpecFor(
   );
 }
 
-/// Whether the return [country] files for a period ending [on] has a box for
-/// the acquisition tax on services bought from abroad (CH 383): only there
-/// may an expense say it was bought so, since no other form would declare
-/// the tax it owes.
-bool vatFormTaxesAcquisitions(String country, DateTime on) {
-  final form = vatFormSpecFor(country, on);
-  if (form == null) return false;
-  return form.boxes.any(
-    (box) => [...box.base, ...box.tax].any(
-      (term) => term.selector?.categories?.contains(vatAcquisitionCategory) ?? false,
-    ),
-  );
-}
+/// Whether the return [country] files on [on] has a box for the acquisition
+/// tax on services bought from abroad (CH 383): a `form_box` row in force
+/// that carries the category. Only there may an expense say it was bought
+/// so, since no other form declares the tax it owes; the server refuses the
+/// flag by the same rows (`expense_vat_payload`).
+bool vatFormTaxesAcquisitions(String country, DateTime on) => ActiveTaxReference
+    .current
+    .on(isoDay(on))
+    .where(TaxDomain.formBox, country: country.trim().toUpperCase())
+    .any((r) => (r.value as FormBoxValue).categories.contains(vatAcquisitionCategory));
 
 /// A country without a form in the catalogue: one box per rate of the
 /// sales, and the deductible VAT.

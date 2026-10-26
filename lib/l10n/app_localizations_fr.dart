@@ -26468,6 +26468,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefCashOption => 'Option pour les encaissements';
 
   @override
+  String get taxRefCategories =>
+      'Autres catégories de lignes qu\'elle additionne (séparées par des virgules, p. ex. acquisition)';
+
+  @override
   String get taxRefCategory => 'Catégorie EN 16931';
 
   @override

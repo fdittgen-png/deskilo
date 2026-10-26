@@ -26447,6 +26447,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefCashOption => 'Option für die Ist-Versteuerung';
 
   @override
+  String get taxRefCategories =>
+      'Weitere Zeilenkategorien, die sie zusammenzählt (durch Komma getrennt, z. B. acquisition)';
+
+  @override
   String get taxRefCategory => 'EN-16931-Kategorie';
 
   @override

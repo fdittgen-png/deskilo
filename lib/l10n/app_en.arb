@@ -30984,6 +30984,10 @@
   "@taxRefCashOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
   },
+  "taxRefCategories": "Other line categories it adds (comma separated, e.g. acquisition)",
+  "@taxRefCategories": {
+    "description": "#2360 tax reference: the line categories a return box adds beyond the sales (acquisition for the Swiss 383)"
+  },
   "taxRefCategory": "EN 16931 category",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."

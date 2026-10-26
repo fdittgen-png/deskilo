@@ -7613,7 +7613,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get expenseVatAcquisitionHint =>
-      'La fattura non riporta l\'imposta di questo paese: l\'importo è la base, lo spazio deve su di esso l\'imposta sull\'acquisto e ne detrae la quota. Lo indichi qui.';
+      'La fattura non riporta l\'imposta di questo paese: l\'importo è la base, lo spazio deve su di esso l\'imposta sull\'acquisto e ne detrae la quota.';
 
   @override
   String get expenseVatAsset => 'Un bene strumentale';
@@ -26415,6 +26415,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get taxRefCashOption => 'Opzione per cassa';
+
+  @override
+  String get taxRefCategories =>
+      'Altre categorie di righe che somma (separate da virgole, ad es. acquisition)';
 
   @override
   String get taxRefCategory => 'Categoria EN 16931';

@@ -66,7 +66,7 @@
     "description": "#2357 input VAT: scheduleVatInvalid"
   },
   "expenseVatAcquisition": "Comprado a un proveedor en el extranjero",
-  "expenseVatAcquisitionHint": "La factura no lleva el impuesto de este país: el importe es la base, el espacio adeuda sobre él el impuesto por adquisición y deduce su parte. Indíquelo usted aquí.",
+  "expenseVatAcquisitionHint": "La factura no lleva el impuesto de este país: el importe es la base, el espacio adeuda sobre él el impuesto por adquisición y deduce su parte.",
   "expenseVatAcquisitionAmount": "Impuesto por adquisición adeudado: {tax} · deducible: {deductible}",
   "vatDeclAcquisitionTax": "Impuesto por adquisición"
 }

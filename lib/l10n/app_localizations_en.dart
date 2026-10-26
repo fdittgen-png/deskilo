@@ -26176,6 +26176,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefCashOption => 'Option for cash accounting';
 
   @override
+  String get taxRefCategories =>
+      'Other line categories it adds (comma separated, e.g. acquisition)';
+
+  @override
   String get taxRefCategory => 'EN 16931 category';
 
   @override

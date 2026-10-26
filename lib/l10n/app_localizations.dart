@@ -43595,6 +43595,12 @@ abstract class AppLocalizations {
   /// **'Option for cash accounting'**
   String get taxRefCashOption;
 
+  /// #2360 tax reference: the line categories a return box adds beyond the sales (acquisition for the Swiss 383)
+  ///
+  /// In en, this message translates to:
+  /// **'Other line categories it adds (comma separated, e.g. acquisition)'**
+  String get taxRefCategories;
+
   /// #2477 tax reference: Field: VAT category code of a rate.
   ///
   /// In en, this message translates to:

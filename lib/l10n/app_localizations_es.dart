@@ -7614,7 +7614,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get expenseVatAcquisitionHint =>
-      'La factura no lleva el impuesto de este país: el importe es la base, el espacio adeuda sobre él el impuesto por adquisición y deduce su parte. Indíquelo usted aquí.';
+      'La factura no lleva el impuesto de este país: el importe es la base, el espacio adeuda sobre él el impuesto por adquisición y deduce su parte.';
 
   @override
   String get expenseVatAsset => 'Un bien de inversión';
@@ -26382,6 +26382,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxRefCashOption => 'Opción por el criterio de caja';
+
+  @override
+  String get taxRefCategories =>
+      'Otras categorías de líneas que suma (separadas por comas, p. ej. acquisition)';
 
   @override
   String get taxRefCategory => 'Categoría EN 16931';

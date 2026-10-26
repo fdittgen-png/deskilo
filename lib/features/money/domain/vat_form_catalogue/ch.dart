@@ -16,6 +16,10 @@ import '../vat_forms.dart';
 // (miscellaneous), 382 (the acquisition tax at the rates before 2024), 410
 // (Einlageentsteuerung), 415/420 (corrections and reductions of input
 // tax). The net-tax-rate method (Saldosteuersatz) is another form.
+// A period from 2028 is filed on this layout too: the ESTV has not
+// published the Ziffern for the rates of 2028 (8.5 % / 4.0 %, subject to
+// the vote of 29 Nov 2026); once it does, a second spec with
+// `validFrom: DateTime(2028)` and its `form_box` rows takes over (#2360).
 final chMwstSpec = VatFormSpec(
   country: 'CH',
   name: 'MWST-Abrechnung (effektive Methode)',
