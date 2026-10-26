@@ -23503,6 +23503,10 @@
   "@recordsLocationCraNotice": {
     "description": "#2378 records location"
   },
+  "recordsLocationCraOutside": "A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). This installation is declared outside Canada.",
+  "@recordsLocationCraOutside": {
+    "description": "#2378 the accounting settings: a Canadian space whose installation is declared in another country"
+  },
   "recordsLocationCraReference": "CRA authorisation: {reference}",
   "@recordsLocationCraReference": {
     "description": "#2378 records location",

@@ -13043,6 +13043,7 @@
   },
   "recordsLocationCraNone": "Keine CRA-Genehmigung erfasst. Eine Person mit Abrechnungsrechten erfasst sie in den Einstellungen des Bereichs.",
   "recordsLocationCraNotice": "Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Nichts erklärt diese Installation als in Kanada.",
+  "recordsLocationCraOutside": "Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Diese Installation ist außerhalb Kanadas erklärt.",
   "recordsLocationCraReference": "CRA-Genehmigung: {reference}",
   "recordsLocationHosted": "Gehostet in {country}, wie der Betreiber dieser Installation es erklärt",
   "recordsLocationTitle": "Wo die Aufzeichnungen aufbewahrt werden",

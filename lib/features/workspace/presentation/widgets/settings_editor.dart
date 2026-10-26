@@ -225,6 +225,7 @@ class _SettingTile extends ConsumerWidget {
             label: l10n.settingValueField,
             suffixText: settingUnitLabel(l10n, d.unit),
             keyboardType: TextInputType.text,
+            maxLength: d.type == SettingType.text ? d.max?.toInt() : null,
             helper: settingRangeLabel(l10n, d),
           ),
           const FormGap(),

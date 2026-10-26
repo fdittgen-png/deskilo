@@ -33,7 +33,11 @@ class RecordsLocationTile extends ConsumerWidget {
         null => l10n.recordsLocationUndeclared,
       },
       if (location.craNotice) ...[
-        l10n.recordsLocationCraNotice,
+        // The README's split: declared elsewhere, or nothing declared.
+        if (location.hostingCountry == null)
+          l10n.recordsLocationCraNotice
+        else
+          l10n.recordsLocationCraOutside,
         if (location.craReference.isEmpty)
           l10n.recordsLocationCraNone
         else

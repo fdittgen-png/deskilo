@@ -32880,6 +32880,12 @@ abstract class AppLocalizations {
   /// **'A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). Nothing declares this installation in Canada.'**
   String get recordsLocationCraNotice;
 
+  /// #2378 the accounting settings: a Canadian space whose installation is declared in another country
+  ///
+  /// In en, this message translates to:
+  /// **'A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). This installation is declared outside Canada.'**
+  String get recordsLocationCraOutside;
+
   /// #2378 records location
   ///
   /// In en, this message translates to:

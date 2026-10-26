@@ -151,6 +151,7 @@ class SettingDefinition {
         if (value is! bool) return SettingProblem.wrongType;
       case SettingType.text:
         if (value is! String) return SettingProblem.wrongType;
+        if (max != null && value.length > max!) return SettingProblem.aboveMax;
       case SettingType.choice:
         if (value is! String || !choices.contains(value)) {
           return SettingProblem.notAChoice;

@@ -5,10 +5,12 @@
 -- records.cra_authorisation_reference. Their registry rows, what a member
 -- resolves (nothing declared, then the platform's value), who may write
 -- each (a billing manager the reference, the platform owner alone the
--- country) and the refusal of a value that is not text. Real roles,
--- readbacks.
+-- country), the refusal of a value that is not text, of a reference longer
+-- than its bound and of a country that is not one of the choices. A
+-- reference recorded on a non-Canadian space is kept and ignored, never
+-- refused: the notice is the Canadian issuer's alone. Real roles, readbacks.
 begin;
-select plan(8);
+select plan(10);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -63,15 +65,15 @@ values (current_setting('t.a')::uuid, pg_temp.u(1), true, true, 'active'),
        (current_setting('t.a')::uuid, pg_temp.u(2), false, false, 'active');
 
 select is(
-  (select jsonb_build_array(type, default_value, scopes, editable)
+  (select jsonb_build_array(type, default_value, scopes, editable, choices ? '', choices ? 'CA', choices ? 'Germany')
      from public.setting_definitions where key = 'records.hosting_country'),
-  '["text", "", ["platform"], true]'::jsonb,
-  'R1 the hosting country is a platform text, empty: not declared');
+  '["enum", "", ["platform"], true, true, true, false]'::jsonb,
+  'R1 the hosting country is a platform choice over the known countries and empty: not declared');
 select is(
-  (select jsonb_build_array(type, default_value, scopes, edit_permission)
+  (select jsonb_build_array(type, default_value, scopes, edit_permission, max_value)
      from public.setting_definitions where key = 'records.cra_authorisation_reference'),
-  '["text", "", ["workspace"], "manageBilling"]'::jsonb,
-  'R2 the CRA reference is a workspace text a billing manager writes');
+  '["text", "", ["workspace"], "manageBilling", 64]'::jsonb,
+  'R2 the CRA reference is a workspace text of at most 64 characters a billing manager writes');
 
 -- Nothing stored for either key yet, whatever the dev data holds.
 delete from public.setting_values
@@ -104,6 +106,17 @@ select ok(pg_temp.set_as(pg_temp.u(1), current_setting('t.a')::uuid,
 select ok(pg_temp.set_as(pg_temp.u(1), null, 'records.hosting_country', '"CA"'::jsonb)
           like 'ERROR: %platform owners only%',
   'R8 a space''s owner cannot declare the installation''s country');
+
+select ok(pg_temp.set_as(pg_temp.u(1), current_setting('t.a')::uuid,
+                         'records.cra_authorisation_reference', to_jsonb(repeat('X', 65)))
+          like 'ERROR: %longer than 64 characters%',
+  'R9 a reference of 65 characters is refused by its bound');
+
+select is(
+  (select public.setting_value_problem(type, '"Germany"'::jsonb, min_value, max_value, floor_value, choices)
+     from public.setting_definitions where key = 'records.hosting_country'),
+  'not one of the choices',
+  'R10 a country that is not a code is not one of the choices');
 
 select * from finish();
 rollback;

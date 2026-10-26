@@ -19802,6 +19802,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l\'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Rien ne déclare cette installation au Canada.';
 
   @override
+  String get recordsLocationCraOutside =>
+      'Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l\'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Cette installation est déclarée hors du Canada.';
+
+  @override
   String recordsLocationCraReference(String reference) {
     return 'Autorisation de l\'ARC : $reference';
   }

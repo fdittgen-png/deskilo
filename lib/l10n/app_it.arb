@@ -13043,6 +13043,7 @@
   },
   "recordsLocationCraNone": "Nessuna autorizzazione della CRA è registrata. Un responsabile della fatturazione la registra nelle impostazioni dello spazio.",
   "recordsLocationCraNotice": "Un'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Nulla dichiara questa installazione in Canada.",
+  "recordsLocationCraOutside": "Un'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Questa installazione è dichiarata fuori dal Canada.",
   "recordsLocationCraReference": "Autorizzazione della CRA: {reference}",
   "recordsLocationHosted": "Ospitato in {country}, come dichiara il gestore di questa installazione",
   "recordsLocationTitle": "Dove sono conservate le scritture",

@@ -8,6 +8,7 @@
   "recordsLocationHosted": "Hébergé en {country}, selon la déclaration de l'exploitant de cette installation",
   "recordsLocationUndeclared": "Non déclaré par l'exploitant de cette installation : l'application n'indique aucun lieu",
   "recordsLocationCraNotice": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Rien ne déclare cette installation au Canada.",
+  "recordsLocationCraOutside": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Cette installation est déclarée hors du Canada.",
   "recordsLocationCraReference": "Autorisation de l'ARC : {reference}",
   "recordsLocationCraNone": "Aucune autorisation de l'ARC n'est enregistrée. Un gestionnaire de facturation l'enregistre dans les paramètres de l'espace."
 }

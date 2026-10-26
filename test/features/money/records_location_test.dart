@@ -131,6 +131,18 @@ void main() {
         final text = await shown(tester, 'CA', {_hosting: 'DE'});
         expect(text.split('\n'), [
           l10n.recordsLocationHosted('DE'),
+          l10n.recordsLocationCraOutside,
+          l10n.recordsLocationCraNone,
+        ]);
+      },
+    );
+
+    testWidgets(
+      'a Canadian space on an installation that declared nothing says so',
+      (tester) async {
+        final text = await shown(tester, 'CA');
+        expect(text.split('\n'), [
+          l10n.recordsLocationUndeclared,
           l10n.recordsLocationCraNotice,
           l10n.recordsLocationCraNone,
         ]);

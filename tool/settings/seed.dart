@@ -11,6 +11,8 @@
 // This file is the only place outside the database where a default lives.
 import 'dart:convert';
 
+import 'package:deskilo/core/country/country_catalog.dart';
+
 /// One registry row, as the tool declares it.
 typedef SettingSeed = ({
   String key,
@@ -31,7 +33,7 @@ typedef SettingSeed = ({
 
 /// Every registry row, sorted by key. `since` names the migration that
 /// created a row, so a later migration's block holds only its own rows.
-const List<({SettingSeed row, String since})> settingSeeds = [
+final List<({SettingSeed row, String since})> settingSeeds = [
   (
     since: 'settings_registry',
     row: (
@@ -1047,7 +1049,7 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       type: 'text',
       defaultValue: '',
       min: null,
-      max: null,
+      max: 64,
       unit: '',
       group: 'records',
       scopes: ['workspace'],
@@ -1063,7 +1065,7 @@ const List<({SettingSeed row, String since})> settingSeeds = [
     since: 'records_location',
     row: (
       key: 'records.hosting_country',
-      type: 'text',
+      type: 'enum',
       defaultValue: '',
       min: null,
       max: null,
@@ -1073,9 +1075,9 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       editPermission: 'workspaceSettings',
       floor: null,
       editable: true,
-      choices: null,
+      choices: ['', for (final c in CountryCatalog.countries) c.code],
       source: 'records location (#2378): the operator\'s declaration',
-      note: 'The country (ISO 3166-1 alpha-2, e.g. CA or DE) where this installation keeps its database and backups, as its operator declares it from the hosting contract. Empty, or anything that is not a two-letter code, means not declared: the app then states no location.',
+      note: 'The country (ISO 3166-1 alpha-2) where this installation keeps its database and backups, as its operator declares it from the hosting contract: one of the countries the app knows, or empty. Empty means not declared: the app then states no location.',
     ),
   ),
 ];

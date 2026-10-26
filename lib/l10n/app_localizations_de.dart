@@ -19791,6 +19791,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Nichts erklärt diese Installation als in Kanada.';
 
   @override
+  String get recordsLocationCraOutside =>
+      'Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Diese Installation ist außerhalb Kanadas erklärt.';
+
+  @override
   String recordsLocationCraReference(String reference) {
     return 'CRA-Genehmigung: $reference';
   }
