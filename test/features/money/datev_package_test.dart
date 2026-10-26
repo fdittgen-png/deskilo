@@ -428,27 +428,18 @@ void main() {
     });
   });
 
-  group('the BU-Schlüssel of a non-automatic account (#2365 hand-off)', () {
+  group('the BU-Schlüssel of a non-automatic account (#2365 hand-off, '
+      '#2375 keys)', () {
     late TaxReferenceSet installed;
     setUp(() => installed = ActiveTaxReference.current);
     tearDown(() => ActiveTaxReference.install(installed));
 
-    void withKeys() => ActiveTaxReference.install(
+    // The bundled reference holds the keys (`datev/tax:<group>`); this
+    // removes them, as an installation that never received them.
+    void withoutKeys() => ActiveTaxReference.install(
       TaxReferenceSet([
-        ...installed.rows,
-        for (final (group, key) in [('standard', '3'), ('reduced', '2')])
-          TaxReferenceRow(
-            country: 'DE',
-            key: 'datev/tax:$group',
-            validFrom: '1900-01-01',
-            value: AccountMapValue(
-              format: 'datev',
-              role: 'tax:$group',
-              taxCode: key,
-            ),
-            source: 'test',
-            confirmed: true,
-          ),
+        for (final row in installed.rows)
+          if (!row.key.startsWith('datev/tax:')) row,
       ]),
     );
 
@@ -460,9 +451,8 @@ void main() {
             (r[0], r[7], r[8]),
     ];
 
-    test('19 % on the owner\'s revenue account carries key 3; 7 % stays on '
-        'its automatic account without one', () {
-      withKeys();
+    test('19 % on the owner\'s revenue account carries the bundled key 3; '
+        '7 % stays on its automatic account without one', () {
       final p = _package(
         request: _request(accounts: const DatevAccounts(revenue: '8000')),
       );
@@ -474,12 +464,31 @@ void main() {
       ]);
     });
 
+    test('7 % on a non-automatic account carries the bundled key 2', () {
+      // A reference with no automatic account for the reduced rate books it
+      // to the owner's revenue account, which then needs the rate's key.
+      ActiveTaxReference.install(
+        TaxReferenceSet([
+          for (final row in installed.rows)
+            if (!row.key.startsWith('datev/revenue:reduced')) row,
+        ]),
+      );
+      final p = _package(
+        request: _request(accounts: const DatevAccounts(revenue: '8000')),
+      );
+      expect(p.problems, isEmpty);
+      expect(revenueRows(p).map((r) => (r.$2, r.$3)).toSet(), {
+        ('8000', '3'),
+        ('8000', '2'),
+      });
+    });
+
     test('an automatic account carries no key', () {
-      withKeys();
       expect(revenueRows(_package()).map((r) => r.$3).toSet(), {''});
     });
 
     test('without the reference key the export stops, the rate named', () {
+      withoutKeys();
       final p = _package(
         request: _request(accounts: const DatevAccounts(revenue: '8000')),
       );
@@ -489,7 +498,6 @@ void main() {
     });
 
     test('a rate on the automatic account of another rate stops it', () {
-      withKeys();
       final p = _package(
         request: _request(accounts: const DatevAccounts(revenue: '8300')),
       );

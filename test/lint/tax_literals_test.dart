@@ -145,14 +145,15 @@ void main() {
   });
 
   test('the ratchet counts what it claims to', () {
-    final probe = File('${Directory.systemTemp.path}/tax_literals_probe.dart')
+    final dir = Directory.systemTemp.createTempSync('tax_literals_');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final probe = File('${dir.path}/tax_literals_probe.dart')
       ..writeAsStringSync("""
 const a = {'AT', 'BE', 'BG'};
 final b = switch (c) { 'FR' || 'DE' => 1, _ => 0 };
 const d = (percent: 19);
 // 'IT' => commented out, percent: 7
 """);
-    addTearDown(probe.deleteSync);
     final n = countLiterals([probe], _kinds);
     expect(total(n['country lists']!), 1);
     expect(total(n['country-keyed branches']!), 1);
