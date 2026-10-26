@@ -85,5 +85,22 @@
   "overviewCurrentState": "Today's figure: no history of it is kept for a past period.",
   "@overviewCurrentState": {
     "description": "#2583 the overview's own figures"
+  },
+  "overviewPendingActions": "Waiting for a decision",
+  "@overviewPendingActions": {
+    "description": "#2580 overview figure: what waits on a decision of the space now"
+  },
+  "overviewPendingActionsDefinition": "The requests the space's validators have not decided yet and the people asking to join, today.",
+  "@overviewPendingActionsDefinition": {
+    "description": "#2580 overview figure definition"
+  },
+  "overviewPendingInSpace": "{count, plural, =0{Nothing waits on a decision in the space.} =1{1 request waits on a decision in the space.} other{{count} requests wait on a decision in the space.}}",
+  "@overviewPendingInSpace": {
+    "description": "#2580 overview: how many requests wait in the whole space, beside the list of what waits on this person",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

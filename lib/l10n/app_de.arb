@@ -10906,6 +10906,9 @@
   "overviewOverdueBasis": "{count} Rechnungen überfällig; {unknown} ohne belegte Fälligkeit und {held} angehalten, gesondert",
   "overviewOverdueDefinition": "Was Mitglieder auf ausgestellte Rechnungen nach ihrer belegten Fälligkeit noch schulden, nach Gutschriften, Teilzahlungen und Abschreibungen, nach den Mahnregeln. Eine Rechnung ohne belegte Fälligkeit oder mit Mahnsperre wird gesondert gezählt und ist nicht im Betrag.",
   "overviewOverdueTitle": "Überfällige Forderungen",
+  "overviewPendingActions": "Wartet auf eine Entscheidung",
+  "overviewPendingActionsDefinition": "Die Anträge, über die die Prüfer des Raums noch nicht entschieden haben, und die Personen, die beitreten möchten, heute.",
+  "overviewPendingInSpace": "{count, plural, =0{Im Raum wartet nichts auf eine Entscheidung.} =1{Im Raum wartet 1 Anfrage auf eine Entscheidung.} other{Im Raum warten {count} Anfragen auf eine Entscheidung.}}",
   "overviewPinned": "Ihre angehefteten Kacheln",
   "@overviewPinned": {
     "description": "#2583 C2 overview layout"

@@ -350,6 +350,18 @@ const biModules = <BiModule>[
       WorkspacePermission.viewFinances,
     },
   ),
+  // #2580 — what waits on a decision of the space, read now: people waiting
+  // on an answer; its source is the requests themselves.
+  BiModule(
+    id: 'operations.pending_actions_current',
+    area: BiArea.people,
+    feature: WorkspaceFeature.workspaceOverview,
+    permissions: {WorkspacePermission.viewAnalytics},
+    drill: BiDrill(
+      route: '/events',
+      permission: WorkspacePermission.viewAnalytics,
+    ),
+  ),
 ];
 
 /// The modules [features] and [permissions] allow, in registry order.

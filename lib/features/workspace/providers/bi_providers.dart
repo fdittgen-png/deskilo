@@ -108,7 +108,8 @@ Future<BiResult> biModuleResult(
       compared,
     ),
     'people.active_memberships_current' ||
-    'sales.overdue_receivables' => biOverviewResult(
+    'sales.overdue_receivables' ||
+    'operations.pending_actions_current' => biOverviewResult(
       ref,
       workspaceId,
       moduleId,

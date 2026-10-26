@@ -16104,6 +16104,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get overviewOverdueTitle => 'Overdue receivables';
 
   @override
+  String get overviewPendingActions => 'Waiting for a decision';
+
+  @override
+  String get overviewPendingActionsDefinition =>
+      'The requests the space\'s validators have not decided yet and the people asking to join, today.';
+
+  @override
+  String overviewPendingInSpace(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count requests wait on a decision in the space.',
+      one: '1 request waits on a decision in the space.',
+      zero: 'Nothing waits on a decision in the space.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get overviewPinned => 'Your pinned tiles';
 
   @override

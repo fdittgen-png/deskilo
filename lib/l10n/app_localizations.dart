@@ -26998,6 +26998,24 @@ abstract class AppLocalizations {
   /// **'Overdue receivables'**
   String get overviewOverdueTitle;
 
+  /// #2580 overview figure: what waits on a decision of the space now
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a decision'**
+  String get overviewPendingActions;
+
+  /// #2580 overview figure definition
+  ///
+  /// In en, this message translates to:
+  /// **'The requests the space\'s validators have not decided yet and the people asking to join, today.'**
+  String get overviewPendingActionsDefinition;
+
+  /// #2580 overview: how many requests wait in the whole space, beside the list of what waits on this person
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nothing waits on a decision in the space.} =1{1 request waits on a decision in the space.} other{{count} requests wait on a decision in the space.}}'**
+  String overviewPendingInSpace(int count);
+
   /// #2583 C2 overview layout
   ///
   /// In en, this message translates to:

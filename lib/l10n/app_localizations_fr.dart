@@ -16253,6 +16253,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get overviewOverdueTitle => 'Créances échues';
 
   @override
+  String get overviewPendingActions => 'En attente d\'une décision';
+
+  @override
+  String get overviewPendingActionsDefinition =>
+      'Les demandes que les validateurs de l\'espace n\'ont pas encore tranchées et les personnes qui demandent à rejoindre, aujourd\'hui.';
+
+  @override
+  String overviewPendingInSpace(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count demandes attendent une décision dans l\'espace.',
+      one: '1 demande attend une décision dans l\'espace.',
+      zero: 'Rien n\'attend de décision dans l\'espace.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get overviewPinned => 'Vos tuiles épinglées';
 
   @override

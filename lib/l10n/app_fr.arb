@@ -10906,6 +10906,9 @@
   "overviewOverdueBasis": "{count} factures échues ; {unknown} sans échéance prouvée et {held} suspendues, à part",
   "overviewOverdueDefinition": "Ce que les membres doivent encore sur les factures émises dont l'échéance prouvée est dépassée, après avoirs, paiements partiels et pertes, selon les règles de relance. Une facture sans échéance prouvée, ou suspendue, est comptée à part et n'entre pas dans le montant.",
   "overviewOverdueTitle": "Créances échues",
+  "overviewPendingActions": "En attente d'une décision",
+  "overviewPendingActionsDefinition": "Les demandes que les validateurs de l'espace n'ont pas encore tranchées et les personnes qui demandent à rejoindre, aujourd'hui.",
+  "overviewPendingInSpace": "{count, plural, =0{Rien n'attend de décision dans l'espace.} =1{1 demande attend une décision dans l'espace.} other{{count} demandes attendent une décision dans l'espace.}}",
   "overviewPinned": "Vos tuiles épinglées",
   "@overviewPinned": {
     "description": "#2583 C2 overview layout"

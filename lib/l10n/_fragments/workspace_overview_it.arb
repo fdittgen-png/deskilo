@@ -17,5 +17,8 @@
   "overviewOverdueBasis": "{count} fatture scadute; {unknown} senza scadenza provata e {held} sospese, a parte",
   "overviewOverdueDefinition": "Ciò che i membri devono ancora su fatture emesse oltre la scadenza provata, dopo note di credito, pagamenti parziali e perdite, secondo le regole di sollecito. Una fattura senza scadenza provata, o sospesa, è contata a parte e non rientra nell'importo.",
   "overviewMembershipsDefinition": "Le iscrizioni dello spazio attive oggi, tutti i ruoli inclusi: iscrizioni, non persone distinte.",
-  "overviewCurrentState": "Cifra di oggi: per un periodo passato non ne è conservata la storia."
+  "overviewCurrentState": "Cifra di oggi: per un periodo passato non ne è conservata la storia.",
+  "overviewPendingActions": "In attesa di una decisione",
+  "overviewPendingActionsDefinition": "Le richieste che i validatori dello spazio non hanno ancora deciso e le persone che chiedono di entrare, oggi.",
+  "overviewPendingInSpace": "{count, plural, =0{Nulla attende una decisione nello spazio.} =1{1 richiesta attende una decisione nello spazio.} other{{count} richieste attendono una decisione nello spazio.}}"
 }
