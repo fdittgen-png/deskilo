@@ -17,9 +17,12 @@
 //      matching remote document acknowledges it; a remote document that
 //      disagrees, or more than one, is a conflict for a person to resolve.
 //      Only when nothing is found is the document created again.
-//   4. The create: an answer acknowledges (with the remote id), a refusal
-//      fails (with the target's words), no answer is a conflict, resolved
-//      on the next run by step 3 and never by a second create.
+//   4. The create: an answer acknowledges (with the remote id), unless the
+//      target made the document something else (its own tax, its own
+//      total) or reports a document this one collides with: both are a
+//      conflict. A refusal fails (with the target's words); no answer is a
+//      conflict, resolved on the next run by step 3 and never by a second
+//      create.
 //
 // Pure: the store and the adapter are parameters (accounting_delivery_test.ts).
 
@@ -69,6 +72,8 @@ export interface RemoteDocument {
   state?: "draft" | "posted";
   /** Whether the remote content is the payload's (amount, number, lines). */
   matches: boolean;
+  /** How it differs when it does not match, in the target's terms. */
+  difference?: string;
 }
 
 /** The delivery row as `record_accounting_delivery` answers it. */
@@ -90,7 +95,14 @@ export interface DeliveryStore {
 
 export type CreateOutcome =
   | { ok: true; remote: RemoteDocument }
-  | { ok: false; unknown: boolean; detail: string };
+  | {
+    ok: false;
+    unknown: boolean;
+    detail: string;
+    /** The target holds something this delivery would collide with: a
+     * person resolves it, nothing is created. */
+    conflict?: boolean;
+  };
 
 export interface RemoteAdapter {
   /** The remote documents that carry [idempotencyKey] (or the target's
@@ -161,16 +173,35 @@ export async function deliver(
         undefined,
         found.length > 1
           ? `the target holds ${found.length} documents for this delivery`
-          : `the target's document ${found[0].id} differs from this one`,
+          : `the target's document ${found[0].id} differs from this one${
+            found[0].difference ? `: ${found[0].difference}` : ""
+          }`,
       );
       return { status: "conflict", row };
     }
   }
   await store.record(job, "sent");
   const created = await adapter.create(key, job, maps);
+  if (created.ok && !created.remote.matches) {
+    // Created, but the target made it something else (its own tax, its own
+    // total): never acknowledged, a person compares the two.
+    const row = await store.record(
+      job,
+      "conflict",
+      undefined,
+      `the target's document ${created.remote.id} differs from this one${
+        created.remote.difference ? `: ${created.remote.difference}` : ""
+      }`,
+    );
+    return { status: "conflict", row };
+  }
   if (created.ok) {
     const row = await store.record(job, "acknowledged", created.remote);
     return { status: row.status === "conflict" ? "conflict" : "acknowledged", row };
+  }
+  if (created.conflict) {
+    const row = await store.record(job, "conflict", undefined, created.detail);
+    return { status: "conflict", row };
   }
   if (created.unknown) {
     const row = await store.record(job, "conflict", undefined, `no answer after send: ${created.detail}`);

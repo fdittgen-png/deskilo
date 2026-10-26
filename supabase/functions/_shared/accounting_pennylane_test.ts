@@ -14,7 +14,7 @@ import {
   PayloadRefusal,
   PennylaneDocument,
   requiredFields,
-} from "./adapter.ts";
+} from "./accounting_pennylane.ts";
 
 const config = {
   base_url: "https://pl.test/api/external/v2",

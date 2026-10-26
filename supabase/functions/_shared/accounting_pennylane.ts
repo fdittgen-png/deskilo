@@ -15,18 +15,25 @@
 // already holds is reported `exists`, never created twice.
 //
 // The adapter is pure and takes `fetch` as a parameter, so the tests play
-// Pennylane and no request leaves a test run (adapter_test.ts). The live
-// exchange is NOT RUN: it needs a Pennylane sandbox company the owner
-// opens, and the connection and credential store it plugs into (OAuth
-// tokens, their refresh, the delivery log) is the adapter kit of #2370,
-// not yet on master. The directory has no index.ts on purpose: it is a
-// module for that kit, not an Edge function of its own.
+// Pennylane and no request leaves a test run (accounting_pennylane_test.ts).
+// The live exchange is NOT RUN: it needs a Pennylane sandbox company the
+// owner opens. It sits flat in `_shared/` because only that directory is
+// deployed beside a function; `accounting-connect` runs it through the
+// delivery kit (`pennylaneLedger` below: the postings of a period as
+// ledger entries, read back by their idempotency key).
 //
 // Every field name follows the Pennylane API v2 reference as far as it
 // could be read without an account; a mapping not yet verified against
 // the live API says so in a `// spec:` comment naming where to check.
 
-import { exponentOf, toMajor } from "../_shared/money.ts";
+import { exponentOf, toMajor } from "./money.ts";
+import {
+  accountNeeds,
+  type AdapterContext,
+  mapped,
+  type PostingAdapter,
+  roleKey,
+} from "./accounting_postings.ts";
 
 export type Config = Record<string, string>;
 export type Fetch = typeof fetch;
@@ -288,6 +295,8 @@ async function failureOf(res: Response): Promise<Failure> {
 type Call = { ok: true; body: Record<string, unknown> } | {
   ok: false;
   failure: Failure;
+  /** The HTTP status, absent when nothing answered. */
+  status?: number;
 };
 
 async function call(
@@ -312,7 +321,9 @@ async function call(
       failure: { reason: "unreachable", detail: String(error).slice(0, 500) },
     };
   }
-  if (!res.ok) return { ok: false, failure: await failureOf(res) };
+  if (!res.ok) {
+    return { ok: false, failure: await failureOf(res), status: res.status };
+  }
   const text = await res.text();
   try {
     const body = text ? JSON.parse(text) : {};
@@ -453,4 +464,150 @@ export async function deliver(
   const out: Delivery[] = [];
   for (const doc of docs) out.push(await deliverOne(doc, fetchImpl, config));
   return out;
+}
+
+// ── the delivery kit: postings as ledger entries ──────────────────────────
+
+/** The usual code of each journal of the posting engine, the code a
+ * French chart's journal carries (PostingJournal in posting.dart; pinned to
+ * it by test/features/money/accounting_targets_test.dart). A Pennylane
+ * company's journal is found by it. */
+export const JOURNAL_CODES: Record<string, string> = {
+  sales: "VE",
+  bank: "BQ",
+  purchases: "HA",
+  other: "OD",
+};
+
+/** The journals of the company by code, every page of them.
+ * spec: API v2 "List journals" — items with id and code; cursor pagination
+ * (`has_more`, `next_cursor`). */
+async function journalIds(
+  fetchImpl: Fetch,
+  cfg: Config,
+): Promise<{ ids: Record<string, number> } | { failure: Failure }> {
+  const ids: Record<string, number> = {};
+  let path = "journals";
+  for (;;) {
+    const page = await call(fetchImpl, cfg, path);
+    if (!page.ok) return { failure: page.failure };
+    const items = Array.isArray(page.body.items) ? page.body.items : [];
+    for (const j of items as Record<string, unknown>[]) {
+      if (typeof j.code === "string") ids[j.code] = Number(j.id);
+    }
+    const next = page.body.next_cursor;
+    if (page.body.has_more !== true || typeof next !== "string" || !next) {
+      return { ids };
+    }
+    path = `journals?cursor=${encodeURIComponent(next)}`;
+  }
+}
+
+/** Whether a send that got [status] (none: no answer) may have created. */
+const outcomeUnknown = (status?: number): boolean =>
+  status === undefined || status >= 500;
+
+/** The Pennylane adapter of the delivery kit: every posting of a period a
+ * balanced ledger entry in the journal of its code, each line on the
+ * Pennylane ledger account its role is mapped to (`account` mappings,
+ * remote id = the ledger account's id), the entry's external reference the
+ * delivery's idempotency key, so a readback finds exactly this delivery. */
+export function pennylaneLedger(ctx: AdapterContext): PostingAdapter {
+  const cfg: Config = {
+    base_url: SANDBOX.base_url,
+    access_token: ctx.secrets.access_token ?? "",
+  };
+  let journals: Record<string, number> = {};
+  return {
+    async prepare() {
+      if (!cfg.access_token) return "the connection holds no token";
+      const found = await journalIds(ctx.fetch, cfg);
+      if ("failure" in found) return found.failure.detail;
+      journals = found.ids;
+      return null;
+    },
+    needs: accountNeeds,
+    remote(posting, party, maps) {
+      return {
+        async readback(key) {
+          // spec: "List ledger entries" — external_reference filterable.
+          const found = await call(
+            ctx.fetch,
+            cfg,
+            `ledger_entries?${byField("external_reference", key)}`,
+          );
+          if (!found.ok) return found.failure.detail;
+          const items = Array.isArray(found.body.items) ? found.body.items : [];
+          return (items as Record<string, unknown>[]).map((e) => ({
+            id: String(e.id),
+            number: typeof e.piece_number === "string" ? e.piece_number : "",
+            state: "posted" as const,
+            matches: e.date === posting.date,
+            difference: e.date === posting.date ? undefined : `dated ${e.date}`,
+          }));
+        },
+        async create(key) {
+          const code = JOURNAL_CODES[posting.journal] ?? "";
+          const journalId = journals[code];
+          if (journalId === undefined) {
+            return {
+              ok: false,
+              unknown: false,
+              detail: `the journal ${code || posting.journal} is not in this Pennylane company`,
+            };
+          }
+          const accountIds: Record<string, number> = {};
+          for (const need of accountNeeds(posting)) {
+            const id = Number(mapped(maps, "account", need.key));
+            if (!Number.isSafeInteger(id) || id <= 0) {
+              return {
+                ok: false,
+                unknown: false,
+                detail: `account ${need.key}: name the Pennylane ledger account by its id`,
+              };
+            }
+            accountIds[need.key] = id;
+          }
+          let body: Record<string, unknown>;
+          try {
+            body = journalEntryPayload({
+              id: key,
+              date: posting.date,
+              journalCode: code,
+              label: [posting.documentNumber, party?.name ?? ""].filter(Boolean).join(" "),
+              documentReference: posting.documentNumber,
+              currency: posting.currency,
+              lines: posting.lines.map((l) => ({
+                account: roleKey(l),
+                debitMinor: l.debitCents,
+                creditMinor: l.creditCents,
+              })),
+            }, accountIds, journalId);
+          } catch (error) {
+            if (error instanceof PayloadRefusal) {
+              return { ok: false, unknown: false, detail: error.failure.detail };
+            }
+            throw error;
+          }
+          const sent = await call(ctx.fetch, cfg, "ledger_entries", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          if (!sent.ok) {
+            return { ok: false, unknown: outcomeUnknown(sent.status), detail: sent.failure.detail };
+          }
+          return {
+            ok: true,
+            remote: {
+              id: String(sent.body.id),
+              number: posting.documentNumber,
+              state: "posted",
+              matches: true,
+            },
+          };
+        },
+      };
+    },
+  };
 }
