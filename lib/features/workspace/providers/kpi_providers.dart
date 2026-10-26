@@ -14,6 +14,14 @@ import 'workspace_providers.dart';
 
 part 'kpi_providers.g.dart';
 
+/// Makes [ref] depend on the reader's current features and rights: a right
+/// revoked or a feature switched off asks the figure again, and the
+/// server's answer under the new rights replaces the one read before — a
+/// figure is never kept past the right that let it be read.
+void watchReaderRights(Ref ref) => ref
+  ..watch(enabledFeaturesSyncProvider)
+  ..watch(myPermissionsProvider);
+
 @Riverpod(keepAlive: true)
 KpiRepository kpiRepository(Ref ref) =>
     SupabaseKpiRepository(ref.watch(selectedWorkspaceClientProvider));
@@ -43,9 +51,12 @@ Future<FinanceSummaryKpi> financeSummary(
   String workspaceId,
   String fromMonth,
   String toMonth,
-) => ref
-    .watch(financeKpiRepositoryProvider)
-    .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+) {
+  watchReaderRights(ref);
+  return ref
+      .watch(financeKpiRepositoryProvider)
+      .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+}
 
 /// #2582 — the purchase figures.
 @Riverpod(keepAlive: true)
@@ -59,9 +70,12 @@ Future<PurchaseSummaryKpi> purchaseSummary(
   String workspaceId,
   String fromMonth,
   String toMonth,
-) => ref
-    .watch(purchaseKpiRepositoryProvider)
-    .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+) {
+  watchReaderRights(ref);
+  return ref
+      .watch(purchaseKpiRepositoryProvider)
+      .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+}
 
 /// #2582 C2 — the cost figures.
 @Riverpod(keepAlive: true)
@@ -75,9 +89,12 @@ Future<CostSummaryKpi> costSummary(
   String workspaceId,
   String fromMonth,
   String toMonth,
-) => ref
-    .watch(costKpiRepositoryProvider)
-    .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+) {
+  watchReaderRights(ref);
+  return ref
+      .watch(costKpiRepositoryProvider)
+      .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+}
 
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.
@@ -92,6 +109,7 @@ Future<SeatCapacityKpi> seatCapacityMonth(
   int year,
   int month,
 ) async {
+  watchReaderRights(ref);
   final repository = ref.watch(kpiRepositoryProvider);
   final context = await ref.watch(workspaceContextProvider.future);
   if (context == null || context.target.workspaceId != workspaceId) {
