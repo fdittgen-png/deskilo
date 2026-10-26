@@ -12140,6 +12140,18 @@
   "@handoffTitle": {
     "description": "#1640 accountant_handoff"
   },
+  "handoffTransfersQuoted": "The report quotes the Transfers list of the year: {files} file(s) handed out and {deliveries} document(s) delivered to a connection, each with its SHA-256",
+  "@handoffTransfersQuoted": {
+    "description": "#2378 accountant_handoff",
+    "placeholders": {
+      "files": {
+        "type": "String"
+      },
+      "deliveries": {
+        "type": "String"
+      }
+    }
+  },
   "handoffUnsupportedCurrency": "{number}: its currency has no reviewed number of decimals",
   "@handoffUnsupportedCurrency": {
     "description": "#1870 accountant handoff blocking finding",

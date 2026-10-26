@@ -7101,6 +7101,7 @@
   "handoffRowMismatch": "Le righe del file non corrispondono ai documenti ({detail})",
   "handoffSave": "Salva file e rapporto",
   "handoffTitle": "Prima di salvare",
+  "handoffTransfersQuoted": "Il rapporto riporta l'elenco dei trasferimenti dell'anno: {files} file consegnato/i e {deliveries} documento/i inviato/i a una connessione, ciascuno con il suo SHA-256",
   "handoffUnsupportedCurrency": "{number}: la sua valuta non ha un numero di decimali verificato",
   "handoffVoided": "Annullate",
   "helpContents": "Indice",

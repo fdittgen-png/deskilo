@@ -8,6 +8,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
@@ -18,6 +19,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
+import '../domain/accounting_connection.dart';
 import '../domain/accounting_format.dart';
 import '../domain/accounting_targets_saft.dart';
 import '../domain/accounting_view.dart';
@@ -41,6 +43,7 @@ import '../domain/saf_t.dart';
 import '../domain/swiss_kmu.dart';
 import '../domain/vat_account.dart';
 import '../domain/vat_tax_point.dart';
+import '../providers/accounting_connection_providers.dart';
 import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
@@ -113,6 +116,16 @@ class AccountingExportRun {
   /// period ends in [year] (reg. 32), when the space prepared any.
   Future<Map<String, List<int>>> vatAccountFiles() async =>
       archiveVatAccount(await ref.read(vatDeclarationsProvider.future), year);
+  /// #2378 — the Transfers list of the export year, which the handoff
+  /// report quotes; null while the accounting systems are off, since the
+  /// space then keeps no such list.
+  Future<AccountingTransfers?> yearTransfers() async =>
+      featureOn(ref.read(enabledFeatureKeysProvider), accountingConnectorsKey,
+              byDefault: false)
+          ? ref
+              .read(accountingConnectionRepositoryProvider)
+              .fetchTransfers(workspace.id, DateTime(year), DateTime(year, 12, 31))
+          : null;
   /// The workspace's calendar day of an instant.
   DateTime Function(DateTime instant) get workspaceDayOf =>
       WorkspaceTime.dateOf;
@@ -361,7 +374,9 @@ class AccountingExportRun {
           matches: matches,
           csv: csv,
           generatedAt: now,
+          transfers: await yearTransfers(),
         );
+        if (!context.mounted) return;
         if (!await showAccountantHandoffPreflight(context, report)) return;
         // #1640 — a bounded recheck: the same documents read again from
         // the server must give the same fingerprint, in the same space,

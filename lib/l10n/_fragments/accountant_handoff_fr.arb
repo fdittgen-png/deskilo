@@ -14,5 +14,6 @@
   "handoffSave": "Enregistrer le fichier et le rapport",
   "handoffChanged": "Les factures ont changé pendant votre relecture. Exportez à nouveau pour voir les comptes actuels.",
   "handoffUnsupportedCurrency": "{number} : sa devise n’a pas de nombre de décimales vérifié",
-  "handoffAmountOutOfRange": "{number} : un total trop grand pour être transmis exactement"
+  "handoffAmountOutOfRange": "{number} : un total trop grand pour être transmis exactement",
+  "handoffTransfersQuoted": "Le rapport reprend la liste des transferts de l'année : {files} fichier(s) remis et {deliveries} document(s) transmis à une connexion, chacun avec son SHA-256"
 }

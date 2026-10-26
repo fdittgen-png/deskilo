@@ -10166,6 +10166,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get handoffTitle => 'Vor dem Speichern';
 
   @override
+  String handoffTransfersQuoted(String files, String deliveries) {
+    return 'Der Bericht zitiert die Übertragungsliste des Jahres: $files ausgegebene Datei(en) und $deliveries an eine Verbindung übermittelte(s) Dokument(e), jeweils mit SHA-256';
+  }
+
+  @override
   String handoffUnsupportedCurrency(String number) {
     return '$number: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt';
   }

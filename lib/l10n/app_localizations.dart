@@ -16655,6 +16655,12 @@ abstract class AppLocalizations {
   /// **'Before you save'**
   String get handoffTitle;
 
+  /// #2378 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'The report quotes the Transfers list of the year: {files} file(s) handed out and {deliveries} document(s) delivered to a connection, each with its SHA-256'**
+  String handoffTransfersQuoted(String files, String deliveries);
+
   /// #1870 accountant handoff blocking finding
   ///
   /// In en, this message translates to:

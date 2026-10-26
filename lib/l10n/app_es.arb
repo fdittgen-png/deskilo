@@ -7101,6 +7101,7 @@
   "handoffRowMismatch": "Las filas del archivo no coinciden con los documentos ({detail})",
   "handoffSave": "Guardar archivo e informe",
   "handoffTitle": "Antes de guardar",
+  "handoffTransfersQuoted": "El informe cita la lista de transferencias del año: {files} archivo(s) entregado(s) y {deliveries} documento(s) enviado(s) a una conexión, cada uno con su SHA-256",
   "handoffUnsupportedCurrency": "{number}: su moneda no tiene un número de decimales verificado",
   "handoffVoided": "Anuladas",
   "helpContents": "Índice",

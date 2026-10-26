@@ -17,7 +17,9 @@ import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/time/date_text.dart';
 import 'accountant_csv.dart';
+import 'accounting_connection.dart';
 import 'accounting_amount.dart';
 import 'archive_bundle.dart' show kZipEntryTime;
 import 'billing_rules.dart';
@@ -109,6 +111,7 @@ class AccountantHandoff {
     required this.csvBytes,
     required this.csvRows,
     required this.columns,
+    required this.transfers,
   });
 
   final DateTime generatedAt;
@@ -135,6 +138,12 @@ class AccountantHandoff {
   /// #2378 — the header of the emitted file: the fixed columns and the tax
   /// key columns of the period, as written.
   final List<String> columns;
+
+  /// #2378 — what the Transfers list holds for the period: every file handed
+  /// out with its digest and the documents it carried, and every document
+  /// delivered to a connection. Null when the space keeps no Transfers list
+  /// (the accounting systems are off); the report then quotes none.
+  final AccountingTransfers? transfers;
 
   /// Nothing blocking: the file may be handed over as it is.
   bool get clean => !findings.any((f) => f.blocking);
@@ -163,6 +172,7 @@ class AccountantHandoff {
     'findings': [for (final f in findings) f.toJson()],
     'clean': clean,
     'file': {'sha256': csvSha256, 'bytes': csvBytes, 'rows': csvRows},
+    if (transfers case final t?) 'transfers': _transfersJson(t),
     'note':
         'Documents as issued; not a journal, no account mapping, no '
         'opening balance. Totals are per currency and never added across '
@@ -170,6 +180,55 @@ class AccountantHandoff {
   };
 
   String toPrettyJson() => const JsonEncoder.withIndent('  ').convert(toJson());
+}
+
+/// One document event as the report quotes it.
+Map<String, Object> _deliveryJson(AccountingDelivery d) => {
+  'document_kind': d.documentKind,
+  'document_number': d.documentNumber,
+  'event_date': isoDay(d.eventDate),
+  'sha256': d.payloadSha256,
+};
+
+/// [t] in a fixed order, so the same transfers give the same bytes: files
+/// by when they were made, deliveries by day and document.
+Map<String, Object> _transfersJson(AccountingTransfers t) {
+  int byDocument(AccountingDelivery a, AccountingDelivery b) {
+    final day = a.eventDate.compareTo(b.eventDate);
+    if (day != 0) return day;
+    final number = a.documentNumber.compareTo(b.documentNumber);
+    return number != 0 ? number : a.id.compareTo(b.id);
+  }
+
+  final files = [...t.files]..sort((a, b) {
+    final at = a.exportedAt.compareTo(b.exportedAt);
+    return at != 0 ? at : a.id.compareTo(b.id);
+  });
+  return {
+    'files': [
+      for (final f in files)
+        {
+          'format_id': f.formatId,
+          'period_from': isoDay(f.from),
+          'period_to': isoDay(f.to),
+          'exported_at': f.exportedAt.toUtc().toIso8601String(),
+          'sha256': f.sha256,
+          'document_count': f.documentCount,
+          'documents': [
+            for (final d in [...f.deliveries]..sort(byDocument)) _deliveryJson(d),
+          ],
+        },
+    ],
+    'deliveries': [
+      for (final d in [...t.deliveries]..sort(byDocument))
+        {
+          'target_id': d.targetId,
+          ..._deliveryJson(d),
+          'status': d.status.wire,
+          'remote_number': d.remoteNumber.isNotEmpty ? d.remoteNumber : d.remoteId,
+        },
+    ],
+  };
 }
 
 /// The data rows of an emitted accountant CSV: `#` preamble lines and
@@ -215,12 +274,14 @@ List<List<String>> _parseAccountantCsvRows(String csv) {
 }
 
 /// The report for [csv], which [buildAccountantCsv] made from the same
-/// [invoices] and [matches].
+/// [invoices] and [matches]; it quotes [transfers] when the space keeps a
+/// Transfers list.
 AccountantHandoff buildAccountantHandoff({
   required List<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
   required String csv,
   required DateTime generatedAt,
+  AccountingTransfers? transfers,
 }) {
   final findings = <HandoffFinding>[];
   final excluded = <String, int>{};
@@ -337,6 +398,7 @@ AccountantHandoff buildAccountantHandoff({
     csvBytes: bytes.length,
     csvRows: rows,
     columns: _accountantCsvHeader(csv),
+    transfers: transfers,
   );
 }
 
