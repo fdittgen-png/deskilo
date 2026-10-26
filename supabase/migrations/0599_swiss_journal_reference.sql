@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2377, the Swiss journal) -- two kinds of `account_map` rows of the
+-- 0599 (#2377, the Swiss journal) -- two kinds of `account_map` rows of the
 -- tax reference store, CH, all UNCONFIRMED until a fiduciary has checked
 -- them:
 --
@@ -51,7 +51,7 @@ begin
     $a$array['coa', 'fec', 'datev', 'sage', 'saf_t']$a$,
     $a$array['coa', 'fec', 'datev', 'sage', 'saf_t', 'ch_kmu']$a$);
   if v_def is null or position($a$'saf_t', 'ch_kmu'$a$ in v_def) = 0 then
-    raise exception '9999: tax_reference_valid account_map format anchor missing';
+    raise exception '0599: tax_reference_valid account_map format anchor missing';
   end if;
   execute v_def;
 end
@@ -80,4 +80,4 @@ values
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(599);

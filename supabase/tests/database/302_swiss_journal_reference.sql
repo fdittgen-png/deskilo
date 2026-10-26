@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2377 / 9999: the Swiss journal's reference rows. Every taxed Swiss rate
+-- #2377 / 0599: the Swiss journal's reference rows. Every taxed Swiss rate
 -- group in force has its MWST code for output tax, input tax and the input
 -- tax of an investment; the shape check knows the `ch_kmu` format and still
 -- refuses one it does not know; the KMU chart names the accounts the
