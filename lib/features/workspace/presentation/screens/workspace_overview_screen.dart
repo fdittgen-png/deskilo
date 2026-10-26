@@ -131,6 +131,9 @@ class _WorkspaceOverviewScreenState
         children: [
           ?setup,
           heading(l10n.overviewNeedsAttention, 'overview-attention'),
+          if (workspace != null &&
+              modules.any((m) => m.id == _pendingActions))
+            _SpacePending(workspaceId: workspace.id),
           if (attention.isEmpty)
             Text(
               l10n.decisionSurfaceEmpty,
@@ -281,6 +284,42 @@ class _Pinned extends StatelessWidget {
 }
 
 /// One module's current-month figure, in the module's own words.
+/// The space's registered count of what waits on a decision.
+const _pendingActions = 'operations.pending_actions_current';
+
+/// How many requests and join requests wait in the whole space, from the
+/// registered figure: the list above it is only what waits on this person.
+/// Said only when the figure is known; nothing is guessed.
+class _SpacePending extends ConsumerWidget {
+  const _SpacePending({required this.workspaceId});
+
+  final String workspaceId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final result = ref.watch(
+      biModuleResultProvider(
+        workspaceId,
+        _pendingActions,
+        const BiQueryContext(),
+      ),
+    );
+    final total = result.asData?.value.total.current;
+    final count = total == null || total.unknown
+        ? null
+        : total.value(KpiAggregation.lastAtCutoff);
+    if (count == null) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Text(
+        context.l10n.overviewPendingInSpace(count.round()),
+        key: const ValueKey('overview-attention-space'),
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
+    );
+  }
+}
+
 class _IndicatorTile extends ConsumerWidget {
   const _IndicatorTile({
     super.key,

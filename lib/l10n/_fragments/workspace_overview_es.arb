@@ -17,5 +17,8 @@
   "overviewOverdueBasis": "{count} facturas vencidas; {unknown} sin vencimiento probado y {held} en suspenso, aparte",
   "overviewOverdueDefinition": "Lo que los miembros aún deben de facturas emitidas pasado su vencimiento probado, tras abonos, pagos parciales y pérdidas, según las reglas de recordatorio. Una factura sin vencimiento probado, o en suspenso, se cuenta aparte y no entra en el importe.",
   "overviewMembershipsDefinition": "Las membresías del espacio activas hoy, todos los roles incluidos: membresías, no personas distintas.",
-  "overviewCurrentState": "Cifra de hoy: no se guarda historial para un periodo pasado."
+  "overviewCurrentState": "Cifra de hoy: no se guarda historial para un periodo pasado.",
+  "overviewPendingActions": "En espera de una decisión",
+  "overviewPendingActionsDefinition": "Las solicitudes que los validadores del espacio aún no han decidido y las personas que piden unirse, hoy.",
+  "overviewPendingInSpace": "{count, plural, =0{Nada espera una decisión en el espacio.} =1{1 solicitud espera una decisión en el espacio.} other{{count} solicitudes esperan una decisión en el espacio.}}"
 }

@@ -14,6 +14,7 @@ class SupabaseOverviewKpiRepository implements OverviewKpiRepository {
   static const _functions = {
     'people.active_memberships_current': 'kpi_memberships_current',
     'sales.overdue_receivables': 'kpi_overdue_receivables',
+    'operations.pending_actions_current': 'kpi_pending_actions_current',
   };
 
   @override

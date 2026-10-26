@@ -29,6 +29,22 @@ final overviewModuleViews = <String, BiModuleView>{
         ),
     ],
   ),
+  'operations.pending_actions_current': BiModuleView(
+    title: (l10n) => l10n.overviewPendingActions,
+    value: (v, locale, currency) =>
+        v == null ? '—' : NumberFormat.decimalPattern(locale).format(v),
+    basis: (m, l10n, locale) => '',
+    notes: (m, l10n, locale) => [
+      if (m.reasons.contains('current_state')) l10n.overviewCurrentState,
+    ],
+    details: (m, l10n, locale) => [
+      l10n.overviewPendingActionsDefinition,
+      if (_figure(m) case final f?)
+        l10n.biFinanceComputed(
+          DateFormat.yMd(locale).format(WorkspaceTime.wall(f.computedAt)),
+        ),
+    ],
+  ),
   'sales.overdue_receivables': BiModuleView(
     title: (l10n) => l10n.overviewOverdueTitle,
     value: biMoneyCell,

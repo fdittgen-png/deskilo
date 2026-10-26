@@ -19,6 +19,7 @@ import 'package:deskilo/features/workspace/providers/cost_allocation_providers.d
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/overview_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
@@ -119,6 +120,47 @@ void main() {
     expect(
       overviewGroupOf(byId('capacity.seat_utilisation')),
       OverviewGroup.capacity,
+    );
+  });
+
+  testWidgets('#2580 beside what waits on me, the registered figure says how '
+      'much waits on a decision in the whole space; without the analytics '
+      'right it is not read', (tester) async {
+    await pumpApp(
+      tester,
+      const WorkspaceOverviewScreen(),
+      overrides: _overrides(
+        features: const {WorkspaceFeature.workspaceOverview},
+        rights: const {WorkspacePermission.viewAnalytics},
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<Text>(find.byKey(const ValueKey('overview-attention-space')))
+          .data,
+      AppLocalizationsEn().overviewPendingInSpace(5),
+    );
+    expect(
+      find.byKey(
+        const ValueKey('overview-value-operations.pending_actions_current'),
+      ),
+      findsOneWidget,
+      reason: 'it is an indicator of its own too',
+    );
+
+    await pumpApp(
+      tester,
+      const WorkspaceOverviewScreen(),
+      overrides: _overrides(
+        features: const {WorkspaceFeature.workspaceOverview},
+        rights: const {},
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('overview-attention-space')),
+      findsNothing,
     );
   });
 
