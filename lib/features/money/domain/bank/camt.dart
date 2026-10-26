@@ -208,7 +208,13 @@ BankLine _detailLine(
       ? text
       : [structured.first.trim(), text].where((t) => t.isNotEmpty).join(' ');
   final endToEnd = _text(tx, ['Refs', 'EndToEndId']);
-  final ownRef = _text(tx, ['Refs', 'AcctSvcrRef']);
+  // The bank's own id first; else the payment's unique end-to-end UETR or
+  // its transaction id, which name one movement as surely.
+  final ownRef = [
+    _text(tx, ['Refs', 'AcctSvcrRef']),
+    _text(tx, ['Refs', 'UETR']),
+    _text(tx, ['Refs', 'TxId']),
+  ].firstWhere((r) => r.isNotEmpty, orElse: () => '');
   return BankLine(
     position: position,
     bookingDate: booking,

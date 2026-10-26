@@ -14,27 +14,32 @@
 -- else may move to reconciled. A file over the line bound and one mixing
 -- currencies are refused whole. A plain member, a stranger, a space with
 -- the flag off and an assistant's delegated token are refused; under the
--- authenticated role a plain member reads no statement and the owner does.
+-- authenticated role a plain member reads no statement and the owner does,
+-- and a stranger reads no movement. Another space's invoice or reported
+-- payment is not found; a biller (issueInvoices alone) sees no payment made
+-- and may not reconcile. The refusals the screen explains carry DKB01
+-- (decided meanwhile), DKB02 (does not go together), DKB03 (file refused).
 -- Positive cases beside every refusal.
 begin;
-select plan(40);
+select plan(45);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
   u_o uuid := '00000000-0000-4000-8000-0000023800c1';
   u_m uuid := '00000000-0000-4000-8000-0000023800c2';
   u_x uuid := '00000000-0000-4000-8000-0000023800c3';
-  ws uuid; ws2 uuid; m_o uuid; m_m uuid; m_x uuid; ia uuid; ib uuid; ie uuid;
+  u_b uuid := '00000000-0000-4000-8000-0000023800c4';
+  ws uuid; ws2 uuid; m_o uuid; m_m uuid; m_x uuid; m_b uuid; ia uuid; ib uuid; ie uuid; ix uuid; r_b uuid;
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                           email_confirmed_at, created_at, updated_at)
   select u, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
          'bank-' || u || '@deskilo.test', '', now(), now(), now()
-    from unnest(array[u_o, u_m, u_x]) u;
+    from unnest(array[u_o, u_m, u_x, u_b]) u;
   -- The flag and every parent on (moneyTab > invoicing > bankImport).
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)
   values ('Bank books', 'CH', 'CHF', 'Europe/Zurich', u_o,
-          '{"moneyTab": true, "invoicing": true, "bankImport": true}'::jsonb)
+          '{"moneyTab": true, "invoicing": true, "bankImport": true, "customRoles": true}'::jsonb)
   returning id into ws;
   -- Another space with the flag off.
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)
@@ -42,10 +47,23 @@ begin
           '{"moneyTab": true, "invoicing": true, "bankImport": false}'::jsonb)
   returning id into ws2;
   insert into public.members (workspace_id, user_id, is_owner, is_admin)
-  values (ws, u_o, true, true), (ws, u_m, false, false), (ws2, u_x, true, true);
+  values (ws, u_o, true, true), (ws, u_m, false, false), (ws, u_b, false, false), (ws2, u_x, true, true);
   select id into m_o from public.members where workspace_id = ws and user_id = u_o;
   select id into m_m from public.members where workspace_id = ws and user_id = u_m;
   select id into m_x from public.members where workspace_id = ws2 and user_id = u_x;
+  select id into m_b from public.members where workspace_id = ws and user_id = u_b;
+  -- A biller matches money in and may not reconcile money out.
+  insert into public.workspace_roles (workspace_id, key, permissions)
+  values (ws, 'biller', array['issueInvoices']) returning id into r_b;
+  insert into public.workspace_role_members (workspace_id, role_id, member_id) values (ws, r_b, m_b);
+  -- Another space's invoice and reported payment, of the same amounts.
+  insert into public.invoices (workspace_id, member_id, issuer_member_id, number, title, lines,
+                               total_cents, currency, member_name, workspace_name, issuer_name, signature)
+  values (ws2, m_x, m_x, 'X-1', 'X', '[]'::jsonb, 12000, 'CHF', 'X', 'Paper bank', 'X', 's') returning id into ix;
+  insert into public.outgoing_payments (workspace_id, payee_kind, payee_member_id, currency, amount_cents,
+                                        method, reported_paid_on, state, actor_member_id, request_id)
+  values (ws2, 'member', m_x, 'CHF', 5000, 'bank_transfer', date '2026-10-19', 'reported', m_x,
+          '00000000-0000-4000-8000-0000023800f3');
   insert into public.invoices (workspace_id, member_id, issuer_member_id, number, title, lines,
                                total_cents, currency, member_name, workspace_name, issuer_name, signature)
   values (ws, m_m, m_o, 'B-1', 'A', '[]'::jsonb, 12000, 'CHF', 'M', 'Bank books', 'O', 's') returning id into ia;
@@ -66,6 +84,8 @@ begin
   perform set_config('bk.ia', ia::text, false);
   perform set_config('bk.ib', ib::text, false);
   perform set_config('bk.ie', ie::text, false);
+  perform set_config('bk.ix', ix::text, false);
+  perform set_config('bk.biller', u_b::text, false);
   perform set_config('bk.member_m', m_m::text, false);
   perform set_config('bk.owner', u_o::text, false);
   perform set_config('bk.member', u_m::text, false);
@@ -186,10 +206,10 @@ select is(pg_temp.as_delegated('owner', format('select public.import_bank_statem
           '42501', 'an assistant''s delegated token is refused');
 select is(pg_temp.import('owner', 'a',
             (select jsonb_agg(pg_temp.mv(n, 100, '', 'M' || n)) from generate_series(1, 5001) n)) ->> 'refused',
-          '22023', 'a file over the line bound is refused');
+          'DKB03', 'a file over the line bound is refused');
 select is(pg_temp.import('owner', 'a', jsonb_build_array(pg_temp.mv(1, 100, '', 'Z1'),
             pg_temp.mv(2, 100, '', 'Z2', 'EUR'))) ->> 'refused',
-          '22023', 'a file mixing currencies is refused');
+          'DKB03', 'a file mixing currencies is refused');
 select is((select count(*)::int from public.bank_statements), 0, 'and nothing of them was stored');
 
 -- ── the first import ─────────────────────────────────────────────────
@@ -231,19 +251,22 @@ select is((select paid_cents from public.invoice_matches where invoice_id = pg_t
           12000, 'and an invoice match');
 select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
             pg_temp.line('T1'), pg_temp.v('ib'))) ->> 'refused',
-          '22023', 'a movement already settling an invoice is refused');
+          'DKB01', 'a movement already settling an invoice is refused');
 select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
             pg_temp.line('T5'), pg_temp.v('ia'))) ->> 'refused',
           'P0001', 'a second movement against the settled invoice is refused by the match');
 select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
             pg_temp.line('T5'), pg_temp.v('ie'))) ->> 'refused',
-          '22023', 'an invoice in another currency is refused');
+          'DKB02', 'an invoice in another currency is refused');
+select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
+            pg_temp.line('T5'), pg_temp.v('ix'))) ->> 'refused',
+          'DKB02', 'another space''s invoice is not found, nothing is locked there');
 select is(pg_temp.as_json('member', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
             pg_temp.line('T2'), pg_temp.v('ib'))) ->> 'refused',
           '42501', 'a plain member may not match');
 select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
             pg_temp.line('T9'), pg_temp.v('ib'))) ->> 'refused',
-          '22023', 'money out settles no invoice');
+          'DKB02', 'money out settles no invoice');
 select is((select count(*)::int from public.ledger_entries where category = 'payment'
             and workspace_id = pg_temp.v('ws')::uuid),
           1, 'the refusals created no payment');
@@ -269,29 +292,47 @@ select is((select count(*)::int from public.ledger_entries where category = 'pay
 -- ── a review ─────────────────────────────────────────────────────────
 select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
             (select id from public.bank_statement_lines where state = 'review'), pg_temp.v('ib'))) ->> 'refused',
-          '22023', 'a movement waiting for its review settles nothing');
+          'DKB02', 'a movement waiting for its review settles nothing');
 select is(pg_temp.as_json('owner', format('select public.review_bank_line_v1(%L, true)',
             (select id from public.bank_statement_lines where state = 'review'))) ->> 'status',
           'duplicate', 'the review declares it a duplicate');
 select is(pg_temp.as_json('owner', format('select public.review_bank_line_v1(%L, false)',
             (select id from public.bank_statement_lines where state = 'duplicate'))) ->> 'refused',
-          '22023', 'a decided review is not decided again');
+          'DKB01', 'a decided review is not decided again');
 
 -- ── money out reconciled ─────────────────────────────────────────────
+select is(pg_temp.as_json('biller', format('select public.bank_statement_lines_v1(%L)',
+            (select statement_id from public.bank_statement_lines where transaction_id = 'T9')))
+            @> jsonb_build_array(jsonb_build_object('transaction_id', 'T9', 'outgoing_candidates', '[]'::jsonb)),
+          true, 'a biller who may not read the payments made sees no candidate for money out');
+select is(pg_temp.as_json('biller', format('select public.reconcile_bank_line_out_v1(%L, %L)',
+            pg_temp.line('T9'),
+            (select id from public.outgoing_payments where amount_cents = 5000
+                and workspace_id = pg_temp.v('ws')::uuid))) ->> 'refused',
+          '42501', 'reconciling needs recordOutgoingPayments');
+select is(pg_temp.as_json('owner', format('select public.reconcile_bank_line_out_v1(%L, %L)',
+            pg_temp.line('T9'),
+            (select id from public.outgoing_payments where workspace_id = pg_temp.v('ws2')::uuid))) ->> 'refused',
+          'DKB02', 'another space''s payment is not found');
 select is(pg_temp.as_json('owner', format('select public.reconcile_bank_line_out_v1(%L, %L)',
             pg_temp.line('T9'),
             (select id from public.outgoing_payments where amount_cents = 7000))) ->> 'refused',
-          '22023', 'a payment of another amount is refused');
+          'DKB02', 'a payment of another amount is refused');
 select is(pg_temp.as_json('owner', format('select public.reconcile_bank_line_out_v1(%L, %L)',
             pg_temp.line('T9'),
-            (select id from public.outgoing_payments where amount_cents = 5000))) ->> 'status',
+            (select id from public.outgoing_payments where amount_cents = 5000
+                and workspace_id = pg_temp.v('ws')::uuid))) ->> 'status',
           'reconciled', 'money out reconciles the reported payment of its amount');
-select is((select state || '/' || booking_date::text from public.outgoing_payments where amount_cents = 5000),
+select is((select state || '/' || booking_date::text from public.outgoing_payments
+            where amount_cents = 5000 and workspace_id = pg_temp.v('ws')::uuid),
           'reconciled/2026-10-20', 'the payment is reconciled on the bank''s day; nothing else is created');
 select throws_ok($t$update public.outgoing_payments set state = 'reconciled' where amount_cents = 7000$t$,
           'P0001', null, 'no bank line, no reconciliation');
 
 -- ── who reads ────────────────────────────────────────────────────────
+select is(pg_temp.as_role('stranger', format('select public.bank_statement_lines_v1(%L)::text',
+            (select statement_id from public.bank_statement_lines where transaction_id = 'T1'))),
+          '42501', 'a stranger reads no movement of the space, under the authenticated role');
 select is(pg_temp.as_role('member', 'select count(*) from public.bank_statements'), '0',
           'a plain member reads no statement');
 select is(pg_temp.as_role('owner', 'select count(*) from public.bank_statements'), '2',

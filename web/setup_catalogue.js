@@ -1240,7 +1240,6 @@ window.SETUP_PROCESSES=[
     "key": "collection",
     "features": [
      "onlinePayments",
-     "bankImport",
      "dunning",
      "paymentReminders"
     ]
@@ -1265,6 +1264,7 @@ window.SETUP_PROCESSES=[
      "accountingBook",
      "accountingPeriods",
      "accountingConnectors",
+     "bankImport",
      "vatManagement",
      "vatDeclarations",
      "vatGroups",

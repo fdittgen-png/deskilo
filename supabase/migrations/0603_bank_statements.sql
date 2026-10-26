@@ -43,7 +43,13 @@
 -- Every client entry point needs the bankImport flag (child of invoicing),
 -- refuses an assistant's delegated token, and asks the permission matrix:
 -- issueInvoices to import and match, recordOutgoingPayments to reconcile,
--- viewFinances or issueInvoices to read.
+-- viewFinances or issueInvoices to read; the reported outgoing payments a
+-- movement out may reconcile are shown only to viewFinances or
+-- recordOutgoingPayments, as outgoing_payments_select shows them. A refusal
+-- the screen explains carries its own code: DKB01 the movement was decided
+-- meanwhile, DKB02 the movement and what it was confirmed against do not go
+-- together, DKB03 the statement file is refused whole. An unknown line or
+-- statement reads as a refusal (42501): a uuid tells nobody it exists.
 
 -- ── the feature registry knows it (dart run tool/build_feature_registry_sql.dart) ──
 create or replace function public.feature_registry()
@@ -386,18 +392,23 @@ declare
 begin
   v_me := public.bank_import_actor(p_workspace_id, 'issueInvoices');
   if jsonb_typeof(p_lines) is distinct from 'array' then
-    raise exception 'the statement has no movements' using errcode = '22023';
+    raise exception 'the statement has no movements' using errcode = 'DKB03';
   end if;
   v_n := jsonb_array_length(p_lines);
   v_max := (public.setting_value(p_workspace_id, 'bank.import_max_lines') #>> '{}')::int;
-  if v_n = 0 then raise exception 'the statement has no movements' using errcode = '22023'; end if;
+  -- The payload is bounded as the file was: by the same setting, on what
+  -- reaches the server.
+  if pg_column_size(p_lines) > (public.setting_value(p_workspace_id, 'bank.import_max_bytes') #>> '{}')::bigint then
+    raise exception 'the statement is larger than this server imports' using errcode = 'DKB03';
+  end if;
+  if v_n = 0 then raise exception 'the statement has no movements' using errcode = 'DKB03'; end if;
   if v_n > v_max then
     raise exception 'the statement has % movements, more than the % one import takes', v_n, v_max
-      using errcode = '22023';
+      using errcode = 'DKB03';
   end if;
-  if v_sha !~ '^[0-9a-f]{64}$' then raise exception 'the file digest is not a sha256' using errcode = '22023'; end if;
-  if v_currency !~ '^[A-Z]{3}$' then raise exception 'the statement names no currency' using errcode = '22023'; end if;
-  if v_account = '' then raise exception 'the statement names no account' using errcode = '22023'; end if;
+  if v_sha !~ '^[0-9a-f]{64}$' then raise exception 'the file digest is not a sha256' using errcode = 'DKB03'; end if;
+  if v_currency !~ '^[A-Z]{3}$' then raise exception 'the statement names no currency' using errcode = 'DKB03'; end if;
+  if v_account = '' then raise exception 'the statement names no account' using errcode = 'DKB03'; end if;
 
   -- One import per account at a time: the bank ids and the resemblances are
   -- read and written under the same lock.
@@ -424,7 +435,7 @@ begin
   for v_line in select value from jsonb_array_elements(p_lines) loop
     v_pos := v_pos + 1;
     if coalesce(v_line ->> 'currency', '') <> v_currency then
-      raise exception 'movement % is in another currency than its statement', v_pos using errcode = '22023';
+      raise exception 'movement % is in another currency than its statement', v_pos using errcode = 'DKB03';
     end if;
     v_booking := (v_line ->> 'booking_date')::date;
     v_value := coalesce((v_line ->> 'value_date')::date, v_booking);
@@ -512,11 +523,19 @@ grant execute on function public.bank_statements_v1(uuid) to authenticated;
 create or replace function public.bank_statement_lines_v1(p_statement_id uuid)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
+  v_sees_payments boolean;
   v_ws uuid;
 begin
   select s.workspace_id into v_ws from public.bank_statements s where s.id = p_statement_id;
-  if v_ws is null then raise exception 'unknown statement' using errcode = '22023'; end if;
+  -- An unknown statement reads as one the caller may not read: a uuid
+  -- tells nobody whether it exists.
+  if v_ws is null then raise exception 'you may not read the bank statements' using errcode = '42501'; end if;
   perform public.bank_import_actor(v_ws, 'read');
+  -- The payments reported as made are read by those who read them
+  -- anywhere (outgoing_payments_select): the finances or their recorder.
+  v_sees_payments := public.is_owner_of(v_ws)
+    or public.has_permission(v_ws, 'viewFinances')
+    or public.has_permission(v_ws, 'recordOutgoingPayments');
   return coalesce((
     select jsonb_agg(jsonb_build_object(
       'id', l.id, 'position', l.position, 'booking_date', l.booking_date,
@@ -529,7 +548,8 @@ begin
       'invoice_id', l.invoice_id,
       'invoice_number', (select i.number from public.invoices i where i.id = l.invoice_id),
       'outgoing_candidates', case
-        when l.amount_cents < 0 and l.outgoing_payment_id is null and l.state = 'open' then
+        when l.amount_cents < 0 and l.outgoing_payment_id is null and l.state = 'open'
+             and v_sees_payments then
           coalesce((select jsonb_agg(jsonb_build_object(
                      'id', p.id, 'amount_cents', p.amount_cents, 'paid_on', p.reported_paid_on,
                      'reference', p.reference,
@@ -556,14 +576,18 @@ grant execute on function public.bank_statement_lines_v1(uuid) to authenticated;
 create or replace function public.review_bank_line_v1(p_line_id uuid, p_duplicate boolean)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
+  v_ws uuid;
   v_line public.bank_statement_lines;
   v_me uuid;
 begin
+  -- Authorised first, locked after: an unknown line reads as one the
+  -- caller may not act on.
+  select workspace_id into v_ws from public.bank_statement_lines where id = p_line_id;
+  if v_ws is null then raise exception 'you may not do this for the bank statements' using errcode = '42501'; end if;
+  v_me := public.bank_import_actor(v_ws, 'issueInvoices');
   select * into v_line from public.bank_statement_lines where id = p_line_id for update;
-  if v_line.id is null then raise exception 'unknown bank line' using errcode = '22023'; end if;
-  v_me := public.bank_import_actor(v_line.workspace_id, 'issueInvoices');
   if v_line.state <> 'review' then
-    raise exception 'this movement is not waiting for a review' using errcode = '22023';
+    raise exception 'this movement is not waiting for a review' using errcode = 'DKB01';
   end if;
   update public.bank_statement_lines
      set state = case when p_duplicate then 'duplicate' else 'open' end,
@@ -583,35 +607,40 @@ create or replace function public.match_bank_line_v1(
   p_line_id uuid, p_invoice_id uuid, p_resolution text, p_note text default '')
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
+  v_ws uuid;
   v_line public.bank_statement_lines;
   v_invoice public.invoices;
   v_me uuid;
   v_ledger uuid;
   v_ledger_member uuid;
 begin
+  -- Authorised first, locked after: an unknown line reads as one the
+  -- caller may not act on.
+  select workspace_id into v_ws from public.bank_statement_lines where id = p_line_id;
+  if v_ws is null then raise exception 'you may not do this for the bank statements' using errcode = '42501'; end if;
+  v_me := public.bank_import_actor(v_ws, 'issueInvoices');
   select * into v_line from public.bank_statement_lines where id = p_line_id for update;
-  if v_line.id is null then raise exception 'unknown bank line' using errcode = '22023'; end if;
-  v_me := public.bank_import_actor(v_line.workspace_id, 'issueInvoices');
   if v_line.state = 'review' then
-    raise exception 'this movement resembles another statement''s: review it first' using errcode = '22023';
+    raise exception 'this movement resembles another statement''s: review it first' using errcode = 'DKB02';
   end if;
   if v_line.state = 'duplicate' then
-    raise exception 'a duplicate movement settles nothing' using errcode = '22023';
+    raise exception 'a duplicate movement settles nothing' using errcode = 'DKB02';
   end if;
   if v_line.amount_cents <= 0 then
-    raise exception 'money out settles no invoice' using errcode = '22023';
+    raise exception 'money out settles no invoice' using errcode = 'DKB02';
   end if;
   if public.bank_line_status(v_line) in ('matched', 'pending') then
-    raise exception 'this movement already settles an invoice' using errcode = '22023';
+    raise exception 'this movement already settles an invoice' using errcode = 'DKB01';
   end if;
   -- The invoice is locked too: two movements confirmed against it at once
   -- are measured one after the other against what is still due.
-  select * into v_invoice from public.invoices where id = p_invoice_id for update;
-  if v_invoice.id is null or v_invoice.workspace_id <> v_line.workspace_id then
-    raise exception 'unknown invoice' using errcode = '22023';
+  select * into v_invoice from public.invoices
+   where id = p_invoice_id and workspace_id = v_line.workspace_id for update;
+  if v_invoice.id is null then
+    raise exception 'unknown invoice' using errcode = 'DKB02';
   end if;
   if v_invoice.currency <> v_line.currency then
-    raise exception 'the invoice is in another currency than the movement' using errcode = '22023';
+    raise exception 'the invoice is in another currency than the movement' using errcode = 'DKB02';
   end if;
   v_ledger := v_line.payment_ledger_id;
   if v_ledger is null then
@@ -626,7 +655,7 @@ begin
   else
     select member_id into v_ledger_member from public.ledger_entries where id = v_ledger;
     if v_ledger_member is distinct from v_invoice.member_id then
-      raise exception 'this movement is recorded as another member''s payment' using errcode = '22023';
+      raise exception 'this movement is recorded as another member''s payment' using errcode = 'DKB02';
     end if;
   end if;
   update public.bank_statement_lines
@@ -647,31 +676,36 @@ grant execute on function public.match_bank_line_v1(uuid, uuid, text, text) to a
 create or replace function public.reconcile_bank_line_out_v1(p_line_id uuid, p_outgoing_payment_id uuid)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
+  v_ws uuid;
   v_line public.bank_statement_lines;
   v_pay public.outgoing_payments;
   v_me uuid;
 begin
+  -- Authorised first, locked after: an unknown line reads as one the
+  -- caller may not act on.
+  select workspace_id into v_ws from public.bank_statement_lines where id = p_line_id;
+  if v_ws is null then raise exception 'you may not do this for the bank statements' using errcode = '42501'; end if;
+  v_me := public.bank_import_actor(v_ws, 'recordOutgoingPayments');
   select * into v_line from public.bank_statement_lines where id = p_line_id for update;
-  if v_line.id is null then raise exception 'unknown bank line' using errcode = '22023'; end if;
-  v_me := public.bank_import_actor(v_line.workspace_id, 'recordOutgoingPayments');
   if v_line.state <> 'open' then
-    raise exception 'this movement is not open' using errcode = '22023';
+    raise exception 'this movement is not open' using errcode = 'DKB01';
   end if;
   if v_line.amount_cents >= 0 then
-    raise exception 'money in reconciles no payment out' using errcode = '22023';
+    raise exception 'money in reconciles no payment out' using errcode = 'DKB02';
   end if;
   if v_line.outgoing_payment_id is not null then
-    raise exception 'this movement already reconciles a payment' using errcode = '22023';
+    raise exception 'this movement already reconciles a payment' using errcode = 'DKB01';
   end if;
-  select * into v_pay from public.outgoing_payments where id = p_outgoing_payment_id for update;
-  if v_pay.id is null or v_pay.workspace_id <> v_line.workspace_id then
-    raise exception 'unknown outgoing payment' using errcode = '22023';
+  select * into v_pay from public.outgoing_payments
+   where id = p_outgoing_payment_id and workspace_id = v_line.workspace_id for update;
+  if v_pay.id is null then
+    raise exception 'unknown outgoing payment' using errcode = 'DKB02';
   end if;
   if v_pay.state <> 'reported' then
-    raise exception 'only a payment reported as made is reconciled' using errcode = '22023';
+    raise exception 'only a payment reported as made is reconciled' using errcode = 'DKB02';
   end if;
   if v_pay.currency <> v_line.currency or v_pay.amount_cents <> -v_line.amount_cents then
-    raise exception 'the payment and the movement differ in amount or currency' using errcode = '22023';
+    raise exception 'the payment and the movement differ in amount or currency' using errcode = 'DKB02';
   end if;
   update public.bank_statement_lines
      set outgoing_payment_id = v_pay.id, matched_by_member_id = v_me, matched_at = now()

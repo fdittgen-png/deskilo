@@ -129,7 +129,11 @@ void main() {
       expect(l.amountCents, -100050);
       expect(l.bookingDate, DateTime.utc(2025, 12, 17));
       expect(l.valueDate, DateTime.utc(2028, 12, 17));
-      expect(l.transactionId, '');
+      expect(
+        l.transactionId,
+        '07be0a8e-4a63-45cb-8258-59ffb215b8a3',
+        reason: 'without an AcctSvcrRef the UETR names the movement',
+      );
       expect(l.reference, '');
     });
   });
