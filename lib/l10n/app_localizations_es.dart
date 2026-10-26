@@ -1776,6 +1776,312 @@ class AppLocalizationsEs extends AppLocalizations {
       'Guarde este QR ahora — solo se muestra una vez.';
 
   @override
+  String get bankBasisAmount => 'mismo importe y pagador';
+
+  @override
+  String get bankBasisCreditorReference => 'referencia RF';
+
+  @override
+  String get bankBasisInvoiceNumber => 'número de factura en el concepto';
+
+  @override
+  String get bankBasisQrReference => 'referencia QR';
+
+  @override
+  String bankConfirmReferences(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Confirmar $count conciliaciones por referencia',
+      one: 'Confirmar 1 conciliación por referencia',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bankConfirmedReferences(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pagos conciliados.',
+      one: '1 pago conciliado.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bankCsvAccount => 'Cuenta (IBAN)';
+
+  @override
+  String get bankCsvAccountHint =>
+      'Una hoja de cálculo rara vez indica su cuenta; la misma cuenta mantiene sus movimientos separados de los de otra.';
+
+  @override
+  String get bankCsvAmount => 'Columna del importe (o de entradas)';
+
+  @override
+  String bankCsvColumn(int n, String first) {
+    return 'Columna $n ($first)';
+  }
+
+  @override
+  String get bankCsvCounterparty => 'Columna del pagador o beneficiario';
+
+  @override
+  String get bankCsvCounterpartyIban =>
+      'Columna del IBAN del pagador o beneficiario';
+
+  @override
+  String get bankCsvCurrency => 'Moneda';
+
+  @override
+  String get bankCsvCurrencyColumn =>
+      'Columna de la moneda, si el archivo la tiene';
+
+  @override
+  String get bankCsvDate => 'Columna de la fecha';
+
+  @override
+  String get bankCsvDateFormat => 'Formato de fecha';
+
+  @override
+  String get bankCsvDebit => 'Columna de salidas, si va aparte';
+
+  @override
+  String get bankCsvDecimalComma => 'Los importes usan coma decimal';
+
+  @override
+  String get bankCsvDuplicateColumn =>
+      'Una columna está elegida dos veces: dé a cada columna un solo significado.';
+
+  @override
+  String get bankCsvHeader => 'La primera fila nombra las columnas';
+
+  @override
+  String bankCsvNeedsAccount(int max) {
+    return 'Indique la cuenta, con $max caracteres como máximo.';
+  }
+
+  @override
+  String get bankCsvNeedsAmount => 'Elija la columna del importe.';
+
+  @override
+  String get bankCsvNeedsCurrency =>
+      'Indique la moneda con tres letras (EUR, CHF).';
+
+  @override
+  String get bankCsvNeedsDate => 'Elija la columna de la fecha.';
+
+  @override
+  String get bankCsvNone => 'Ninguna';
+
+  @override
+  String get bankCsvReference => 'Columna de la referencia';
+
+  @override
+  String get bankCsvRemittance => 'Columna del concepto';
+
+  @override
+  String get bankCsvTitle => 'Leer la hoja de cálculo';
+
+  @override
+  String get bankCsvTransactionId => 'Columna del identificador bancario';
+
+  @override
+  String get bankCsvValueDate => 'Columna de la fecha valor';
+
+  @override
+  String get bankFileTypeLabel => 'Extracto bancario';
+
+  @override
+  String get bankFormatCamt053 => 'Extracto ISO 20022 (camt.053)';
+
+  @override
+  String get bankFormatCamt054 => 'Aviso ISO 20022 (camt.054)';
+
+  @override
+  String get bankFormatCoda => 'CODA (Bélgica)';
+
+  @override
+  String get bankFormatCsv => 'Hoja de cálculo (CSV)';
+
+  @override
+  String get bankFormatMt940 => 'SWIFT MT940';
+
+  @override
+  String get bankFormatOfx => 'OFX / QFX';
+
+  @override
+  String get bankFormatRead => 'Leer';
+
+  @override
+  String get bankFormatTitle => '¿Qué archivo es?';
+
+  @override
+  String get bankImportAction => 'Importar un extracto';
+
+  @override
+  String get bankImportFailed =>
+      'No se ha podido importar el extracto. No se ha añadido nada.';
+
+  @override
+  String get bankImportRepeated =>
+      'Este archivo ya se había importado. No se ha añadido nada.';
+
+  @override
+  String bankImported(int created, int known, int review) {
+    return 'Importado: $created nuevos, $known ya conocidos, $review por revisar.';
+  }
+
+  @override
+  String get bankLineDuplicate => 'Duplicado';
+
+  @override
+  String bankLineMatched(String number) {
+    return 'Liquida $number';
+  }
+
+  @override
+  String get bankLineMoneyOut => 'Salida, por conciliar';
+
+  @override
+  String get bankLineOpen => 'Por conciliar';
+
+  @override
+  String bankLinePending(String number) {
+    return '$number: pendiente de aprobación';
+  }
+
+  @override
+  String get bankLineReconciled => 'Conciliado con un pago registrado';
+
+  @override
+  String get bankLineRecorded => 'Pago registrado, aún sin factura';
+
+  @override
+  String get bankLineReview => 'Posiblemente ya importado: revíselo';
+
+  @override
+  String get bankLineSaved => 'Guardado.';
+
+  @override
+  String bankLineSuggested(String number, String why) {
+    return 'Propuesta: $number ($why)';
+  }
+
+  @override
+  String get bankMatchConfirm => 'Confirmar';
+
+  @override
+  String get bankMatchFailed =>
+      'No se ha podido conciliar el movimiento. No se ha cambiado nada.';
+
+  @override
+  String get bankMatchNoInvoice =>
+      'No hay ninguna factura abierta en esta moneda.';
+
+  @override
+  String get bankMatchPick => 'La factura que liquida este pago';
+
+  @override
+  String bankMatchTitle(String amount) {
+    return 'Conciliar $amount';
+  }
+
+  @override
+  String get bankOutNone =>
+      'No hay ningún pago de este importe registrado como realizado.';
+
+  @override
+  String get bankOutTitle => 'El pago registrado como realizado';
+
+  @override
+  String bankRefusedAtLine(String reason, int line) {
+    return '$reason (línea $line)';
+  }
+
+  @override
+  String get bankRefusedBadAmount =>
+      'Un importe del archivo no es válido. No se ha importado nada.';
+
+  @override
+  String get bankRefusedBadCurrency =>
+      'El archivo contiene una moneda desconocida o varias monedas en una misma cuenta. No se ha importado nada.';
+
+  @override
+  String get bankRefusedBadDate =>
+      'Una fecha del archivo no es un día válido. No se ha importado nada.';
+
+  @override
+  String get bankRefusedEmpty =>
+      'El archivo no contiene ningún movimiento. No se ha importado nada.';
+
+  @override
+  String bankRefusedMalformed(String format) {
+    return 'El archivo no puede leerse como $format. No se ha importado nada.';
+  }
+
+  @override
+  String get bankRefusedMissingAccount =>
+      'El archivo no indica ninguna cuenta. No se ha importado nada.';
+
+  @override
+  String get bankRefusedTooLarge =>
+      'El archivo supera el tamaño que importa este servidor. No se ha importado nada.';
+
+  @override
+  String get bankRefusedTooLong =>
+      'Una cuenta o un identificador bancario del archivo es más largo de lo que guarda un extracto. No se ha importado nada.';
+
+  @override
+  String bankRefusedTooManyLines(int max) {
+    return 'El archivo tiene más de $max movimientos. Divídalo por periodo en el banco. No se ha importado nada.';
+  }
+
+  @override
+  String get bankReviewBody =>
+      'Otro extracto contiene un movimiento con el mismo día, importe y datos, y el banco no dio identificador a ninguno de los dos. Consérvelo si se trata de un segundo pago.';
+
+  @override
+  String get bankReviewDuplicate => 'Es un duplicado';
+
+  @override
+  String get bankReviewKeep => 'Conservarlo';
+
+  @override
+  String get bankReviewTitle => '¿Ya importado?';
+
+  @override
+  String bankStatementCounts(int count, int open) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count movimientos',
+      one: '1 movimiento',
+    );
+    return '$_temp0, $open pendientes';
+  }
+
+  @override
+  String bankStatementPeriod(String account, String from, String to) {
+    return '$account · $from – $to';
+  }
+
+  @override
+  String get bankStatementsEmpty => 'Aún no se ha importado ningún extracto.';
+
+  @override
+  String get bankStatementsIntro =>
+      'Importe los archivos que genera su banco. Cada movimiento se lee una sola vez; los pagos se concilian con sus facturas cuando usted confirma.';
+
+  @override
+  String get bankStatementsLoadFailed =>
+      'No se han podido cargar los extractos bancarios.';
+
+  @override
+  String get bankStatementsTitle => 'Extractos bancarios';
+
+  @override
   String get baseRoleNote =>
       'Cada persona tiene exactamente un rol base: Usuario, Administrador, Copropietario o Propietario. Los demás roles se suman; ninguno quita nada.';
 
@@ -7745,6 +8051,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureBadgeSignInTitle => 'Iniciar sesión con credencial';
+
+  @override
+  String get featureBankImportDesc =>
+      'Lee los extractos del banco (camt.053/054, MT940, CODA, OFX/QFX o una hoja de cálculo) en el espacio, cada movimiento una sola vez, y propone la factura que liquida cada pago por la referencia QR o RF impresa en ella, su número o su importe; una persona confirma cada conciliación y el resto queda en una lista de trabajo. Un pago saliente concilia un pago ya registrado como realizado.';
+
+  @override
+  String get featureBankImportTitle => 'Extractos bancarios';
 
   @override
   String get featureBiReportDesignerDesc =>
@@ -19513,6 +19826,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Alguien ya lo ha decidido. La lista muestra el resultado.';
 
   @override
+  String get refusalBankFileRefused =>
+      'El servidor rechazó el extracto entero (demasiado grande, demasiados movimientos o varias monedas). No se ha importado nada.';
+
+  @override
+  String get refusalBankLineDecided =>
+      'Este movimiento se decidió entretanto (conciliado o revisado). La lista muestra su estado actual.';
+
+  @override
+  String get refusalBankLineRefused =>
+      'Este movimiento no puede liquidar eso: su sentido, moneda, importe o estado no encajan. No se ha cambiado nada.';
+
+  @override
   String get refusalChangedMeanwhile =>
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
 
@@ -21840,6 +22165,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'El mayor número de filas de un lote de valoraciones del contable, una por bien. Un archivo mayor se rechaza entero; divídalo antes de importar.';
 
   @override
+  String get settingHintBankImportMaxBytes =>
+      'Un archivo mayor se rechaza entero antes de leerse.';
+
+  @override
+  String get settingHintBankImportMaxLines =>
+      'Un extracto con más se rechaza entero; divídalo por periodo en el banco.';
+
+  @override
+  String get settingHintBankMatchWindowDays =>
+      'Cuántos días antes de un pago puede haberse emitido su factura para proponerla solo por el importe y el pagador. Siempre confirma una persona.';
+
+  @override
   String get settingHintBiBatchMaxRequests =>
       'El mayor número de cifras que una página de informe puede pedir en una sola lectura. Una página que necesita más se divide en varias lecturas; un lote mayor se rechaza entero.';
 
@@ -22045,6 +22382,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelAssetsValuationMaxRows =>
       'Filas de valoración por lote';
+
+  @override
+  String get settingLabelBankImportMaxBytes =>
+      'Tamaño máximo de un extracto bancario';
+
+  @override
+  String get settingLabelBankImportMaxLines =>
+      'Movimientos por extracto bancario';
+
+  @override
+  String get settingLabelBankMatchWindowDays =>
+      'Ventana de facturas para un pago sin referencia';
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Cifras por lectura de informe';

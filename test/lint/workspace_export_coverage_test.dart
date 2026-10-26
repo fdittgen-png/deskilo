@@ -195,6 +195,13 @@ const Map<String, String> _notExported = {
       '#2585 — the receipt of a native financial command attempt (request id and '
           'the invoice or event it made); technical recovery state, never a '
           'workbook row',
+  'bank_statements':
+      '#2380 — a bank file read into the space: what the bank itself issued and keeps; '
+          'the payments its movements became are exported as ledger rows',
+  'bank_statement_lines':
+      '#2380 — the movements of a bank file read into the space, and their links to the '
+          'payments, invoices and outgoing payments of this server, which are '
+          'exported themselves',
   'document_exchange_rates':
       '#3031 — the rate recorded with a purchase in another currency; it names '
           'purchase documents of this server, and the posted exports carry it '

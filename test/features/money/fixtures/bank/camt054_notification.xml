@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic camt.054.001.08 credit notification built from the ISO 20022
+     message definition: one batch entry of two QR-bill payments (a QRR and
+     an RF reference, details without a bank reference of their own) and one
+     credit without a reference. Demo names only. -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.054.001.08">
+  <BkToCstmrDbtCdtNtfctn>
+    <GrpHdr>
+      <MsgId>DEMO-NTFCTN-20260115</MsgId>
+      <CreDtTm>2026-01-15T12:00:00+01:00</CreDtTm>
+    </GrpHdr>
+    <Ntfctn>
+      <Id>NTF-2026-0115</Id>
+      <Acct>
+        <Id><IBAN>CH9300762011623852957</IBAN></Id>
+        <Ccy>CHF</Ccy>
+      </Acct>
+      <Ntry>
+        <Amt Ccy="CHF">200.50</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts>BOOK</Sts>
+        <BookgDt><DtTm>2026-01-15T09:30:00+01:00</DtTm></BookgDt>
+        <ValDt><Dt>2026-01-15</Dt></ValDt>
+        <AcctSvcrRef>BATCH-7</AcctSvcrRef>
+        <NtryDtls>
+          <Btch><NbOfTxs>2</NbOfTxs></Btch>
+          <TxDtls>
+            <Refs><EndToEndId>E2E-QRR</EndToEndId></Refs>
+            <Amt Ccy="CHF">120.00</Amt>
+            <CdtDbtInd>CRDT</CdtDbtInd>
+            <RltdPties><Dbtr><Pty><Nm>Demo Member One</Nm></Pty></Dbtr></RltdPties>
+            <RmtInf><Strd><CdtrRefInf><Ref>210000000003139471430009017</Ref></CdtrRefInf></Strd></RmtInf>
+          </TxDtls>
+          <TxDtls>
+            <Refs><EndToEndId>E2E-RF</EndToEndId></Refs>
+            <AmtDtls><TxAmt><Amt Ccy="CHF">80.50</Amt></TxAmt></AmtDtls>
+            <RltdPties><Dbtr><Pty><Nm>Demo Member Two</Nm></Pty></Dbtr></RltdPties>
+            <RmtInf><Strd><CdtrRefInf><Ref>RF18539007547034</Ref></CdtrRefInf></Strd></RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+      <Ntry>
+        <Amt Ccy="CHF">30.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts>BOOK</Sts>
+        <BookgDt><Dt>2026-01-15</Dt></BookgDt>
+        <ValDt><Dt>2026-01-15</Dt></ValDt>
+        <AcctSvcrRef>BANK-0099</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <RltdPties><Dbtr><Nm>Demo Guest</Nm></Dbtr></RltdPties>
+            <RmtInf><Ustrd>Coffee card</Ustrd></RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+    </Ntfctn>
+  </BkToCstmrDbtCdtNtfctn>
+</Document>

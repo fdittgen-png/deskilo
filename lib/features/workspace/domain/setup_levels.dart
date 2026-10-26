@@ -209,6 +209,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.accountingBook,
         WorkspaceFeature.accountingPeriods,
         WorkspaceFeature.accountingConnectors,
+        WorkspaceFeature.bankImport,
         WorkspaceFeature.einvoiceCustomerDelivery,
       },
     ),

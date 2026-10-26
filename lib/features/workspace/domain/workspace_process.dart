@@ -174,6 +174,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.accountingBook,
       WorkspaceFeature.accountingPeriods,
       WorkspaceFeature.accountingConnectors,
+      WorkspaceFeature.bankImport,
       WorkspaceFeature.vatManagement,
       WorkspaceFeature.vatDeclarations,
       WorkspaceFeature.vatGroups,

@@ -454,6 +454,7 @@ void main() {
         'inbox': 'app',
         'supplierLookup': 'app',
         'retention': 'app',
+        'bank': 'app',
         'members': 'app',
         'einvoice': 'file',
       });

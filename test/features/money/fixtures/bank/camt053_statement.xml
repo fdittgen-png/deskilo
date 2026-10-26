@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic camt.053.001.08 statement built from the ISO 20022 message
+     definition and the Swiss Payment Standards cash-management guide; demo
+     names only, no real account. -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>DEMO-STMT-20260131</MsgId>
+      <CreDtTm>2026-01-31T18:00:00+01:00</CreDtTm>
+    </GrpHdr>
+    <Stmt>
+      <Id>STMT-2026-01</Id>
+      <ElctrncSeqNb>1</ElctrncSeqNb>
+      <Acct>
+        <Id><IBAN>CH93 0076 2011 6238 5295 7</IBAN></Id>
+        <Ccy>CHF</Ccy>
+      </Acct>
+      <Bal>
+        <Tp><CdOrPrtry><Cd>OPBD</Cd></CdOrPrtry></Tp>
+        <Amt Ccy="CHF">1000.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt><Dt>2026-01-01</Dt></Dt>
+      </Bal>
+      <Bal>
+        <Tp><CdOrPrtry><Cd>CLBD</Cd></CdOrPrtry></Tp>
+        <Amt Ccy="CHF">1155.50</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt><Dt>2026-01-31</Dt></Dt>
+      </Bal>
+      <Ntry>
+        <Amt Ccy="CHF">120.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts><Cd>BOOK</Cd></Sts>
+        <BookgDt><Dt>2026-01-15</Dt></BookgDt>
+        <ValDt><Dt>2026-01-16</Dt></ValDt>
+        <AcctSvcrRef>BANK-0001</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs><EndToEndId>E2E-0001</EndToEndId></Refs>
+            <RltdPties>
+              <Dbtr><Pty><Nm>Demo Member One</Nm></Pty></Dbtr>
+              <DbtrAcct><Id><IBAN>CH5604835012345678009</IBAN></Id></DbtrAcct>
+            </RltdPties>
+            <RmtInf>
+              <Ustrd>Invoice 2026-0042</Ustrd>
+              <Strd><CdtrRefInf><Tp><CdOrPrtry><Prtry>QRR</Prtry></CdOrPrtry></Tp><Ref>210000000003139471430009017</Ref></CdtrRefInf></Strd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+      <Ntry>
+        <Amt Ccy="CHF">80.50</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts><Cd>BOOK</Cd></Sts>
+        <BookgDt><Dt>2026-01-20</Dt></BookgDt>
+        <ValDt><Dt>2026-01-20</Dt></ValDt>
+        <AcctSvcrRef>BANK-0002</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs><EndToEndId>E2E-0002</EndToEndId></Refs>
+            <RltdPties>
+              <Dbtr><Nm>Demo Member Two</Nm></Dbtr>
+            </RltdPties>
+            <RmtInf>
+              <Strd><CdtrRefInf><Tp><CdOrPrtry><Cd>SCOR</Cd></CdOrPrtry></Tp><Ref>RF18 5390 0754 7034</Ref></CdtrRefInf></Strd>
+            </RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+      <Ntry>
+        <Amt Ccy="CHF">45.00</Amt>
+        <CdtDbtInd>DBIT</CdtDbtInd>
+        <Sts><Cd>BOOK</Cd></Sts>
+        <BookgDt><Dt>2026-01-22</Dt></BookgDt>
+        <ValDt><Dt>2026-01-22</Dt></ValDt>
+        <AcctSvcrRef>BANK-0003</AcctSvcrRef>
+        <NtryDtls>
+          <TxDtls>
+            <Refs><EndToEndId>NOTPROVIDED</EndToEndId></Refs>
+            <RltdPties>
+              <Cdtr><Pty><Nm>Demo Supplier</Nm></Pty></Cdtr>
+              <CdtrAcct><Id><IBAN>CH4431999123000889012</IBAN></Id></CdtrAcct>
+            </RltdPties>
+            <RmtInf><Ustrd>Office supplies</Ustrd><Ustrd>January</Ustrd></RmtInf>
+          </TxDtls>
+        </NtryDtls>
+      </Ntry>
+      <Ntry>
+        <Amt Ccy="CHF">999.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts><Cd>PDNG</Cd></Sts>
+        <BookgDt><Dt>2026-01-31</Dt></BookgDt>
+        <AcctSvcrRef>BANK-0004</AcctSvcrRef>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>

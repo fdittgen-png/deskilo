@@ -72,7 +72,8 @@ void main() {
     // #2552 — personalShell: the person's layer is the installation's decision.
     // #3031 — foreignCurrencyPurchases: another currency is asked for.
     // #2370 — accountingConnectors: the accounting systems are asked for.
-    expect(onCount, featureManifest.length - 50);
+    // #2380 — bankImport: reading the bank's statements is asked for.
+    expect(onCount, featureManifest.length - 51);
   });
 
   testWidgets(
