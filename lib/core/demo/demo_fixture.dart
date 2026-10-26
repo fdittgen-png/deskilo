@@ -129,8 +129,7 @@ class DemoFixture {
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
     final money = FakeMoneyRepository(events: events);
-    // #2571 — the space's legal holds, and its books refusing a reset
-    // while they are under retention, as a server does.
+    // #2571 — legal holds; books under retention refuse a reset.
     final holds = seedDemoRetentionHolds(workspaces.workspaces.first.id, today);
     workspaces.booksKept = (id) => demoBooksKept(
       id,

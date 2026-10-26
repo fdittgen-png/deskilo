@@ -2564,7 +2564,7 @@ routine public.place_dunning_hold(p_invoice_id uuid, p_reason text, p_note text)
 routine public.place_feedback_member(p_workspace uuid, p_kind text, p_resource uuid) -> members | function | definer | stable | exec:service_role | body:3b78664cfc6e
 routine public.place_feedback_of(p_workspace uuid, p_kind text, p_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:629f7edf1397
 routine public.place_rating_summary(p_workspace uuid, p_kind text, p_resource uuid, p_member uuid) -> jsonb | function | definer | stable | exec:service_role | body:33058e62be96
-routine public.place_retention_hold(p_workspace_id uuid, p_issuer_site_id uuid, p_doc_class text, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6f612c94f426
+routine public.place_retention_hold(p_workspace_id uuid, p_issuer_site_id uuid, p_doc_class text, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f88511191cca
 routine public.place_visible_to(p_member uuid, p_office uuid, p_level uuid) -> boolean | function | definer | stable | exec:service_role | body:dd4853bb9952
 routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF text | function | definer | stable | exec:authenticated,service_role | body:9d9ed014d04e
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
@@ -2721,7 +2721,7 @@ routine public.resource_kind_enabled(p_workspace_id uuid, p_kind text) -> boolea
 routine public.resource_kind_feature(p_kind text) -> text | function | invoker | immutable | exec:service_role | body:7629d243b2ff
 routine public.respond_to_event(p_event_id uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:cf90d17406dd
 routine public.respond_to_message_request(p_conversation uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:e9a519f33e62
-routine public.retention_assess(p_workspace_id uuid, p_issuer_site_id uuid, p_classes text[], p_document_date date) -> jsonb | function | definer | stable | exec:service_role | body:63cc883bc790
+routine public.retention_assess(p_workspace_id uuid, p_issuer_site_id uuid, p_classes text[], p_document_date date) -> jsonb | function | definer | stable | exec:service_role | body:ee78b6ec5fbf
 routine public.retention_assess_records(p_workspace_id uuid, p_classes text[], p_records jsonb) -> jsonb | function | definer | stable | exec:service_role | body:1207a116ab3b
 routine public.retention_hold_writer(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:a8a4863dd41b
 routine public.retention_holds(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d6e366e7db3a

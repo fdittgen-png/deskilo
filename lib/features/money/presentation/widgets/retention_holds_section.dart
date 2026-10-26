@@ -11,7 +11,6 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/vat/retention.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/workspace_permission.dart';
 import '../../application/retention_holds.dart';
 import '../../domain/retention_hold.dart';
 import '../../providers/book_profile_providers.dart';
@@ -36,9 +35,7 @@ class RetentionHoldsSection extends ConsumerWidget {
     ];
     final scope = ref.watch(accountingSystemsScopeProvider);
     final sites = scope.issuers;
-    final canManage = scope.permissions.contains(
-      WorkspacePermission.manageBilling.wireName,
-    );
+    final canManage = scope.permissions.contains(retentionHoldPermission);
     final day = DateFormat.yMMMd(
       Localizations.localeOf(context).toLanguageTag(),
     );
