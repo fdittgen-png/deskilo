@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2378 item 5 — the readable handover of a British, Irish, Canadian or US
-// archive: the tables of the year's snapshot, the same bytes the GoBD
-// package writes, without the German index and DTD, and a README that
+// archive: the tables of the year's snapshot, written by the same table
+// builder and in the same cell format as the GoBD package, without the German index and DTD, and a README that
 // describes every table and every column in English (the CRA asks for
 // English or French). The README is read back line by line here and held
 // against the tables' own column lists, not against the builder's strings.
@@ -56,7 +56,10 @@ void main() {
     }
   });
 
-  test('every table is the GoBD bytes, with no index and no DTD', () {
+  test('every table is written by the GoBD table builder, with no index and no DTD', () {
+    // Built from the same request, the bytes are the GoBD package's. The
+    // archive's own request differs in one table on purpose: its audit
+    // trail is the archive's audit-trail.csv, with the files handed out.
     final files = readableHandoverFiles(_request(), _toronto);
     final gobd = buildGobdPackage(_request());
     final tables = gobdTables(_request());
