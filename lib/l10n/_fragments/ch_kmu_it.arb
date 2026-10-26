@@ -1,26 +1,15 @@
 {
-  "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI)",
-  "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
-  },
-  "swissKmuAccountsTitle": "Giornale delle registrazioni svizzero",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuAccountsIntro": "I valori predefiniti sono le proposte del piano contabile svizzero PMI. Ogni riga indica la cifra del rendiconto IVA su cui cade; verifichi i conti con il suo fiduciario.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuRevenueNormal": "Ricavi all'aliquota normale",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Ricavi all'aliquota ridotta o di alloggio",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
-  "swissKmuRevenueExempt": "Ricavi esclusi, esportati o all'estero",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  }
+  "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI, codici IVA)",
+  "invoiceExportBanana": "Banana Contabilità+ (importazione di registrazioni)",
+  "journalSwissTaxCodes": "Questi gruppi di aliquote non hanno un codice IVA nel riferimento fiscale; non è stato scritto nulla. Aggiunga prima i loro codici: {keys}",
+  "gebuevProcedureTitle": "Documentazione delle procedure (OelDC art. 4) — {workspace}",
+  "gebuevProcedureSystemBody": "DesKilo tiene le fatture, le note di credito, i pagamenti, i conti dei membri, le spese condivise e i documenti d'acquisto approvati di questo spazio e, dove lo spazio tiene un libro locale, le loro registrazioni sul suo piano dei conti. La contabilità generale della fiduciaria importa il giornale svizzero di queste registrazioni.",
+  "gebuevProcedureIntegrityHeading": "Integrità (art. 3 e 9)",
+  "gebuevProcedureIntegrityBody": "Ogni file di questo archivio è elencato in manifest.csv con la sua impronta SHA-256 e la sua dimensione. L'archivio stesso, come ogni esportazione contabile, è registrato nel registro delle esportazioni con la sua impronta, l'ora del server e la persona che l'ha creato. Ogni documento emesso porta l'impronta che il server verifica; register.csv ne indica l'esito.",
+  "gebuevProcedureAccessHeading": "Accessi (art. 8)",
+  "gebuevProcedureAccessBody": "Ogni esportazione contabile e ogni download di un archivio è registrato nel registro delle esportazioni: chi, quando, quale file e la sua impronta. La pista di controllo elenca questi accessi accanto ai documenti.",
+  "gebuevProcedureCarriersHeading": "Disponibilità e supporti (art. 5 e 10)",
+  "gebuevProcedureCarriersBody": "Questo archivio si legge con qualsiasi programma zip ed editor di testo. Una copia dell'intero spazio è provata da un'esportazione dello spazio completata, registrata con la sua impronta: la lista di preparazione indica quando è stata fatta l'ultima e ne chiede una nuova quando è vecchia.",
+  "taxRefChKmuKeys": "Giornale svizzero (formato ch_kmu): la chiave ch_kmu/tax:<gruppo> dà il codice IVA delle vendite di un gruppo di aliquote, ch_kmu/input:<gruppo> quello della sua imposta precedente su materiale e prestazioni (cifra 400), ch_kmu/asset:<gruppo> quello dell'imposta precedente su investimenti (cifra 405), come codice d'imposta; il codice deve esistere nella tabella IVA del file Banana.",
+  "archiveSwissNeedsExportLog": "La documentazione delle procedure di questo archivio svizzero indica che ogni download è registrato nel registro delle esportazioni, e questo spazio non ne tiene: attivi prima i periodi contabili o i sistemi contabili."
 }

@@ -208,6 +208,16 @@
   "acctConnStatusPending": "Wartet auf die Anmeldung",
   "acctConnStatusRevoked": "Widerrufen",
   "acctConnTenant": "Unternehmen: {tenant}",
+  "acctDeliverBooksBlocked": "Die Buchungen dieses Zeitraums können noch nicht erstellt werden: {subjects}.",
+  "acctDeliverDone": "Übertragen: {delivered} · bereits vorhanden: {unchanged} · zu prüfen: {attention}",
+  "acctDeliverFailed": "Die Übertragung ist nicht durchgegangen. Es wurde nichts weiter gesendet; versuchen Sie es später erneut.",
+  "acctDeliverMissing": "Ordnen Sie zuerst zu: {keys}",
+  "acctDeliverNotConnected": "Diese Verbindung ist abgemeldet: Verbinden Sie sie erneut und übertragen Sie dann.",
+  "acctDeliverNothing": "In diesem Zeitraum gibt es nichts zu übertragen.",
+  "acctDeliverNothingSent": "Es wurde nichts übertragen.",
+  "acctDeliverRefused": "Das Buchhaltungssystem hat diese Firma abgelehnt: {detail}.",
+  "acctDeliverStoppedAt": "Angehalten bei {month}. Davor übertragen: {count}.",
+  "acctDeliverYear": "{year} an {target} übertragen",
   "acctDeliveryAcknowledged": "Vom System empfangen",
   "acctDeliveryAttempts": "{count, plural, =1{ein Versuch} other{{count} Versuche}}",
   "acctDeliveryConflict": "Zu prüfen: Die Antwort fehlt oder weicht ab",
@@ -252,6 +262,8 @@
   "acctMapsEmpty": "Noch ist nichts zugeordnet.",
   "acctMapsIntro": "Wie jedes Konto, jeder Steuerschlüssel, jeder Kunde und jeder Artikel dieser Bücher im System heißt. Eine Übermittlung, die einen hier fehlenden braucht, hält an und nennt ihn; nichts wird durch einen Standardwert ersetzt.",
   "acctMapsTitle": "Namen in {target}",
+  "acctRedeliver": "Erneut übertragen",
+  "acctTargetNotDeliveredYet": "An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft.",
   "acctTargetsIntro": "Wohin die Bücher jedes Ausstellers gehen. Ein verbundenes System empfängt die Belege selbst; jedes andere die aus den Büchern exportierten Dateien. Jede Übertragung steht unten mit dem Hashwert dessen, was sie getragen hat.",
   "acctTargetsLoadFailed": "Die Buchhaltungssysteme konnten nicht geladen werden.",
   "acctTargetsNoApiTarget": "Noch kein Buchhaltungssystem dieses Landes wird über eine Verbindung erreicht: Die Bücher gehen per Datei, aus dem Buchhaltungsexport.",
@@ -381,6 +393,7 @@
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
   },
+  "archiveSwissNeedsExportLog": "Die Verfahrensdokumentation dieses Schweizer Archivs hält fest, dass jeder Download im Exportprotokoll steht, und dieser Space führt keines: schalten Sie zuerst die Buchungsperioden oder die Buchhaltungssysteme ein.",
   "assistantPrefix": "Assistent",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"
@@ -5610,7 +5623,7 @@
   "featureAccessorySupplementsDesc": "Bepreistes Platz-Zubehör pro gebuchtem Halbtag berechnen. Gilt für Buchungen ab der Aktivierung.",
   "featureAccountingBookDesc": "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher.",
   "featureAccountingBookTitle": "Buchführung",
-  "featureAccountingConnectorsDesc": "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane über seine API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.",
+  "featureAccountingConnectorsDesc": "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane und bexio über ihre API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.",
   "featureAccountingConnectorsTitle": "Buchhaltungssysteme",
   "featureAccountingPeriodsDesc": "Eine Periode der Bücher abschließen: Keine Rechnung mit Datum darin kann storniert, keine Zahlung darin zugeordnet werden, und jeder Buchhaltungsexport wird protokolliert. Aus: Nichts wird gesperrt und Exporte werden nicht protokolliert.",
   "@featureAccountingPeriodsDesc": {
@@ -6791,6 +6804,14 @@
   "financesTypeAll": "Alle Dokumente",
   "financesTypeCreditNote": "Gutschrift",
   "financesTypeInvoice": "Rechnung",
+  "gebuevProcedureAccessBody": "Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.",
+  "gebuevProcedureAccessHeading": "Zugriffe (Art. 8)",
+  "gebuevProcedureCarriersBody": "Dieses Archiv lässt sich mit jedem Zip-Programm und Texteditor lesen. Eine Kopie des ganzen Space wird durch einen abgeschlossenen Export des Space belegt, der mit seinem Hashwert festgehalten wird: die Bereitschafts-Checkliste zeigt, wann der letzte erstellt wurde, und verlangt einen neuen, wenn er alt ist.",
+  "gebuevProcedureCarriersHeading": "Verfügbarkeit und Informationsträger (Art. 5 und 10)",
+  "gebuevProcedureIntegrityBody": "Jede Datei dieses Archivs steht in manifest.csv mit ihrem SHA-256-Hashwert und ihrer Grösse. Das Archiv selbst wird wie jeder Buchhaltungsexport mit seinem Hashwert, der Zeit des Servers und der Person, die es erstellt hat, im Exportprotokoll festgehalten. Jeder ausgestellte Beleg trägt den Fingerabdruck, den der Server prüft; register.csv nennt das Ergebnis.",
+  "gebuevProcedureIntegrityHeading": "Integrität (Art. 3 und 9)",
+  "gebuevProcedureSystemBody": "DesKilo führt die Rechnungen, Gutschriften, Zahlungen, Mitgliederkonten, geteilten Kosten und genehmigten Einkaufsbelege dieses Space und, wo der Space ein lokales Buch führt, deren Buchungen auf seinem Kontenplan. Die Finanzbuchhaltung der Treuhänderin übernimmt das Schweizer Buchungsjournal dieser Buchungen.",
+  "gebuevProcedureTitle": "Verfahrensdokumentation (GeBüV Art. 4) — {workspace}",
   "gettingStartedActionChooseDay": "Anderen Tag wählen",
   "gettingStartedActionChooseTime": "Zeit zum Buchen wählen",
   "gettingStartedActionFinishSetup": "Einrichtung abschließen",
@@ -7732,6 +7753,7 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportBanana": "Banana Buchhaltung+ (Import von Buchungen)",
   "invoiceExportBundle": "Jahresarchiv (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"
@@ -7759,10 +7781,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
-  "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten)",
-  "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
-  },
+  "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten, MWST-Codes)",
   "invoiceExportTrialBalance": "Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)",
   "invoiceExternalIssuingTitle": "Diese Rechnung außerhalb der App ausstellen",
   "invoiceFacturXDownload": "Factur-X (PDF) herunterladen",
@@ -8442,6 +8461,7 @@
   "journalNeedsRates": "Diese Einkäufe sind in einer anderen Währung als der des Space und haben keinen erfassten Wechselkurs; es wurde nichts geschrieben. Erfassen Sie zuerst den Kurs jedes einzelnen: {documents}",
   "journalOpeningRefused": "Die Eröffnungssalden ({from} bis {to}) konnten nicht gebucht werden: {reason}",
   "journalSafTRefused": "Die SAF-T-Datei wurde nicht erstellt: {gaps}",
+  "journalSwissTaxCodes": "Für diese Satzgruppen gibt es in den Steuergrundlagen keinen MWST-Code; es wurde nichts geschrieben. Erfassen Sie zuerst ihre Codes: {keys}",
   "journeyClosedPaid": "Bezahlt am {date} — abgeschlossen",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -16687,26 +16707,6 @@
     }
   },
   "supportTitle": "Supportdetails",
-  "swissKmuAccountsIntro": "Die Vorgaben sind die Vorschläge des Schweizer Kontenrahmens KMU. Jede Zeile nennt die Ziffer der MWST-Abrechnung, auf der sie landet; prüfen Sie die Konten mit Ihrer Treuhänderin.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuAccountsTitle": "Schweizer Buchungsjournal",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuRevenueExempt": "Ertrag ausgenommen, exportiert oder im Ausland",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  },
-  "swissKmuRevenueNormal": "Ertrag zum Normalsatz",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Ertrag zum reduzierten oder Beherbergungssatz",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
   "symbolHint": "Ein rundes Zeichen aus einem oder zwei Buchstaben auf einer Farbe, einmalig für diesen Arbeitsbereich — oder stattdessen unten ein Foto verwenden.",
   "@symbolHint": {
     "description": "workspace symbol"
@@ -17339,6 +17339,7 @@
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
+  "taxRefChKmuKeys": "Schweizer Journal (Format ch_kmu): Schlüssel ch_kmu/tax:<Gruppe> gibt den MWST-Code der Umsätze einer Satzgruppe, ch_kmu/input:<Gruppe> den ihrer Vorsteuer auf Material und Dienstleistungen (Ziffer 400), ch_kmu/asset:<Gruppe> den der Vorsteuer auf Investitionen (Ziffer 405) als Steuercode; der Code muss in der MWST-Tabelle der Banana-Datei stehen.",
   "taxRefChargeCents": "Darüber fälliger Betrag (kleinste Einheit, Stempelsteuer)",
   "@taxRefChargeCents": {
     "description": "#2363 tax reference editor: taxRefChargeCents"

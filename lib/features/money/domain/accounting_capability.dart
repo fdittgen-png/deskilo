@@ -39,6 +39,10 @@ enum Obligation {
   targetAcceptance,
 }
 
+/// The reference the QuickBooks Online adapter was written against.
+const String _quickbooksSpecification =
+    'QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry';
+
 class AccountingCapability {
   const AccountingCapability({
     required this.formatId,
@@ -192,6 +196,44 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'ch_kmu',
     state: QualificationState.implemented,
   ),
+  // #2377 — the Swiss journal's rows under Banana's column names; the MWST
+  // codes must exist in the Banana file's VAT table. No Banana import of a
+  // file from this app has been reported yet.
+  'banana_transactions': AccountingCapability(
+    formatId: 'banana_transactions',
+    state: QualificationState.implemented,
+    specification: 'Banana Accounting+ import of transactions, column names of the Transactions table',
+  ),
+  // #2377 — the adapter maps the documents and delivers them once, read
+  // back by document number; no live exchange has happened (no bexio test
+  // company or registered app yet).
+  'bexio_api': AccountingCapability(
+    formatId: 'bexio_api',
+    state: QualificationState.implemented,
+    specification: 'bexio API 2.0, kb_invoice and kb_credit_voucher',
+  ),
+  // The Swiss journal is their working route; their own interfaces need a
+  // specification (Abacus a licence per interface).
+  'abacus_abaconnect': AccountingCapability(
+    formatId: 'abacus_abaconnect',
+    state: QualificationState.specificationNeeded,
+  ),
+  'sage50_extra_ch': AccountingCapability(
+    formatId: 'sage50_extra_ch',
+    state: QualificationState.specificationNeeded,
+  ),
+  'infoniqa_one': AccountingCapability(
+    formatId: 'infoniqa_one',
+    state: QualificationState.specificationNeeded,
+  ),
+  'klara': AccountingCapability(
+    formatId: 'klara',
+    state: QualificationState.specificationNeeded,
+  ),
+  'run_my_accounts': AccountingCapability(
+    formatId: 'run_my_accounts',
+    state: QualificationState.specificationNeeded,
+  ),
   'accountant_csv': AccountingCapability(
     formatId: 'accountant_csv',
     state: QualificationState.implemented,
@@ -246,13 +288,30 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     obligations: {},
     specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
   ),
-  // #2376 — the adapter maps the documents and delivers them once, read
-  // back by external reference; no live exchange has happened (no sandbox
-  // account yet) and the connection store is #2370's.
+  // #2376 — the adapter delivers each posting once as a ledger entry, read
+  // back by its external reference; no live exchange has happened (no
+  // sandbox account yet).
   'pennylane_api': AccountingCapability(
     formatId: 'pennylane_api',
     state: QualificationState.implemented,
-    specification: 'Pennylane API v2, customer_invoices import and ledger_entries',
+    specification: 'Pennylane API v2, ledger_entries and journals',
+  ),
+  // #2371 — delivered through the kit against a played realm; no sandbox
+  // company has answered yet.
+  'quickbooks_online_us': AccountingCapability(
+    formatId: 'quickbooks_online_us',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
+  ),
+  'quickbooks_online_ca': AccountingCapability(
+    formatId: 'quickbooks_online_ca',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
+  ),
+  'quickbooks_online_gb': AccountingCapability(
+    formatId: 'quickbooks_online_gb',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
   ),
   // The FEC is their working route today; their own formats need a spec.
   'cegid_quadra_ascii': AccountingCapability(

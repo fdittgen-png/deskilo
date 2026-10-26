@@ -50,6 +50,7 @@ import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_saft.dart';
+import 'accounting_export_swiss.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
 import 'invoice_actions.dart';
@@ -60,7 +61,6 @@ import 'vat_tax_point_labels.dart';
 import 'widgets/accountant_handoff_preflight.dart';
 import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
-import 'widgets/swiss_kmu_accounts_dialog.dart';
 
 /// THE ACCOUNTING EXPORT, one run: [start] gathers the books and asks
 /// which format, then the format's own method writes the file.
@@ -194,7 +194,9 @@ class AccountingExportRun {
       case 'sage50':
         await _sage();
       case 'ch_kmu':
-        await _swissKmu();
+        await swissJournalExport(SwissJournalLayout.kmu, stem: 'mwst buchungen');
+      case 'banana_transactions':
+        await swissJournalExport(SwissJournalLayout.banana, stem: 'banana');
       case 'saft_pt':
       case 'saft':
         await _safT();
@@ -300,27 +302,6 @@ class AccountingExportRun {
           customerRef: (invoice) => invoice.memberId,
         ),
         sageFileName(year, invoices.last.issuedAt.month),
-      ),
-    );
-  }
-
-  Future<void> _swissKmu() async {
-    // #2360 — the Swiss journal: the KMU accounts are asked for.
-    final kmu = await showSwissKmuAccountsDialog(context);
-    if (kmu == null || !context.mounted) return;
-    await runGuarded(
-      context,
-      domain: 'money',
-      message: 'Swiss booking export failed',
-      errorText: l10n.commonSaveFailed,
-      action: () => save(
-        buildSwissKmuFile(
-          invoices: exported,
-          matches: matches,
-          accounts: kmu,
-          customerRef: (invoice) => invoice.memberId,
-        ),
-        swissKmuFileName(year, invoices.last.issuedAt.month),
       ),
     );
   }
@@ -466,7 +447,12 @@ class AccountingExportRun {
         final verdicts = await Future.wait<String>(
           yearInvoices.map((i) => repo.verifyInvoiceSignature(i.id)),
         );
-        final files = await vatAccountFiles();
+        // #2377 — a Swiss archive's procedures, or null: refused, said.
+        final procedures = await archiveProcedures();
+        if (procedures == null) return;
+        final files = {...await vatAccountFiles(), ...procedures};
+        // #2377 — every file already handed out for the year, with who and when.
+        final exports = await ref.read(bookPeriodCommandProvider).exportLog(workspace.id, year);
         if (!context.mounted) return;
         final integrity = <String, String>{
           for (var i = 0; i < yearInvoices.length; i++)
@@ -488,7 +474,8 @@ class AccountingExportRun {
         }
         files['register.csv'] = textBytes(buildInvoiceRegisterCsv(yearInvoices, integrity: integrity));
         files['audit-trail.csv'] = textBytes(buildAuditTrailCsv(
-          events: buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger),
+          events: buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger,
+              exports: exports, memberNames: memberNames),
           generatedAt: now,
           workspaceName: workspace.name,
           source: books.revisions,
@@ -508,12 +495,19 @@ class AccountingExportRun {
         )))) || !context.mounted) {
           return;
         }
-        await savePdfToDownloads(
+        // #2377 — the manifest names every member's digest; the archive's
+        // own digest is logged with who downloaded it and when.
+        final bytes = zipBundle(withManifest(withRetentionNotice(files, country, year)));
+        final handedOut = await savePdfToDownloads(
           context,
           ref,
-          bytes: zipBundle(withRetentionNotice(files, country, year)),
+          bytes: bytes,
           fileName: archiveBundleFileName(company.legalId, year, development: development),
         );
+        // A download that did not happen is no access to the books.
+        if (!handedOut) return;
+        await ref.read(bookPeriodCommandProvider).logExportBytes(workspace.id,
+            formatId: format.id, year: year, bytes: bytes, rows: files.length, documents: yearInvoices.length);
       },
     );
   }
@@ -557,12 +551,16 @@ class AccountingExportRun {
       action: () async {
         // The ledger is the export year's, read with the invoices in
         // the one source response above: never a cached provider.
+        // #2377 — the files handed out for the year are accesses too.
+        final exports = await ref.read(bookPeriodCommandProvider).exportLog(workspace.id, year);
         await save(
           buildAuditTrailCsv(
             events: buildAuditEvents(
               invoices: exported,
               matches: matches,
               ledger: ledger,
+              exports: exports,
+              memberNames: memberNames,
             ),
             generatedAt: now,
             workspaceName: workspace.name,

@@ -10,6 +10,7 @@
 //
 // Pure Dart.
 import '../../../core/data/json_reader.dart';
+import 'accounting_delivery_run.dart';
 import 'accounting_target.dart';
 
 /// The right that connects, maps and revokes (the server's
@@ -471,5 +472,15 @@ abstract class AccountingConnectionRepository {
     required String issuerSiteId,
     required String bookExportId,
     required List<FileDocument> documents,
+  });
+
+  /// Delivers the postings of [from]..[to] (one calendar month) to the
+  /// connection [connectionId], or only the document event [document] of
+  /// it, delivered again.
+  Future<DeliveryRun> deliver(
+    String connectionId, {
+    required DateTime from,
+    required DateTime to,
+    ({String kind, String id})? document,
   });
 }

@@ -17,9 +17,14 @@
 //        The state is checked against Vault before the code is exchanged;
 //        the tokens are stored, the state is spent, the connection is
 //        connected. A refused exchange leaves it in `error`, said.
+//        A target that checks the company first (QuickBooks: its country
+//        and its own numbering) refuses it before it is connected.
 //   POST {action: "refresh", connection_id}
 //        A billing manager asks for a fresh token; a refused refresh marks
 //        the connection expired, which the screen shows.
+//   POST {action: "deliver", connection_id, from, to, document?}
+//        A billing manager delivers a period's postings, or one document
+//        again, through the delivery kit (deliver.ts).
 //
 // An installation that registered no OAuth application with a target
 // answers 503 `oauth_not_configured` before anything is opened.
@@ -27,86 +32,29 @@
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
-import { clientEnvName, type OAuthTarget, oauthTargets } from "../_shared/accounting_targets.ts";
+import { type OAuthTarget, oauthTargets } from "../_shared/accounting_targets.ts";
 import {
   authorizeUrl,
   connectedWrite,
   exchangeCode,
   expiredWrite,
-  type Fetch,
   isFailure,
   newState,
-  type OAuthClient,
   refreshTokens,
   sameSecret,
 } from "../_shared/accounting_oauth.ts";
+import { clientOf, type Deps, json, resolved, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
+import { deliverPeriod, deliveryAdapters } from "./deliver.ts";
+
+export type { Deps } from "./connection.ts";
 
 /** The most a request body may weigh: ids and a display name. A protocol
  * bound on the request's shape, not a choice. */
 export const MAX_BODY_BYTES = 4096;
 
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-
-type Db = {
-  rpc: (fn: string, args: Record<string, unknown>) => PromiseLike<{ data: unknown; error: unknown }>;
-};
-
-export type Deps = {
-  /** A client bound to the caller's own token. */
-  caller: (authorization: string) => Db;
-  /** The service role: Vault reads and writes only. */
-  service: () => Db;
-  env: (name: string) => string | undefined;
-  /** Where the target sends the person back: this function's URL. */
-  redirectUri: string;
-  fetcher?: Fetch;
-  now?: () => Date;
-};
-
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
-
 /** The page the browser shows after the redirect: plain words, no data. */
 const page = (text: string, status = 200) =>
   new Response(text, { status, headers: { "Content-Type": "text/plain; charset=utf-8" } });
-
-function clientOf(deps: Deps, targetId: string): OAuthClient | null {
-  const clientId = deps.env(clientEnvName(targetId, "CLIENT_ID")) ?? "";
-  const clientSecret = deps.env(clientEnvName(targetId, "CLIENT_SECRET")) ?? "";
-  return clientId && clientSecret ? { clientId, clientSecret } : null;
-}
-
-type Resolved = {
-  id: string;
-  target_id: string;
-  auth_kind: string;
-  revoked: boolean;
-  secrets: Record<string, string>;
-};
-
-async function resolved(deps: Deps, connectionId: string): Promise<Resolved | null> {
-  const { data, error } = await deps.service().rpc("accounting_credentials_resolved", {
-    p_connection_id: connectionId,
-  });
-  return error || !data ? null : data as Resolved;
-}
-
-async function store(
-  deps: Deps,
-  connectionId: string,
-  write: { secrets: Record<string, string>; patch: Record<string, unknown> },
-): Promise<boolean> {
-  const { error } = await deps.service().rpc("set_accounting_credentials", {
-    p_connection_id: connectionId,
-    p_secrets: write.secrets,
-    p_patch: write.patch,
-  });
-  if (error) console.error("accounting-connect: the credentials were not stored");
-  return !error;
-}
 
 async function authorize(
   deps: Deps,
@@ -187,6 +135,20 @@ async function callback(deps: Deps, url: URL): Promise<Response> {
     return page("The target refused the sign-in. You can close this page and try again.", 502);
   }
   const tenant = target.tenantParam ? url.searchParams.get(target.tenantParam) ?? undefined : undefined;
+  const refused = await deliveryAdapters[held.target_id]?.({
+    fetch: deps.fetcher ?? fetch,
+    secrets: { access_token: tokens.accessToken },
+    tenant: tenant ?? "",
+    targetId: held.target_id,
+    env: deps.env,
+  }).prepare();
+  if (refused) {
+    await store(deps, connectionId, {
+      secrets: { oauth_state: "", oauth_state_at: "" },
+      patch: { status: "error", status_detail: refused.slice(0, STATUS_DETAIL_LENGTH) },
+    });
+    return page("The target refused this company. The reason is shown in DesKilo.", 409);
+  }
   if (!await store(deps, connectionId, connectedWrite(tokens, tenant))) {
     return page("The connection could not be saved. You can close this page and try again.", 500);
   }
@@ -246,6 +208,8 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       return authorize(deps, authorization, body);
     case "refresh":
       return refresh(deps, authorization, body);
+    case "deliver":
+      return deliverPeriod(deps, authorization, body);
     default:
       return json({ error: "unknown action" }, 400);
   }

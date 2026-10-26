@@ -15,6 +15,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_connection.dart';
 import '../../domain/posting.dart';
 import '../../providers/accounting_connection_providers.dart';
+import '../posting_kind_labels.dart';
+import 'accounting_delivery_actions.dart';
 import 'accounting_targets_sheet.dart';
 
 /// How many hex digits of a digest a line shows; the whole digest is one
@@ -30,18 +32,7 @@ String _short(String sha) =>
 /// The words of a document event.
 String _documentKindLabel(AppLocalizations l10n, String wire) =>
     switch (PostingKind.values.where((k) => k.wire == wire).firstOrNull) {
-      PostingKind.invoice => l10n.acctKindInvoice,
-      PostingKind.creditNote => l10n.acctKindCreditNote,
-      PostingKind.receipt => l10n.acctKindReceipt,
-      PostingKind.refund => l10n.acctKindRefund,
-      PostingKind.writeOff => l10n.acctKindWriteOff,
-      PostingKind.expense => l10n.acctKindExpense,
-      PostingKind.supplierBill => l10n.acctKindSupplierBill,
-      PostingKind.supplierCreditNote => l10n.acctKindSupplierCreditNote,
-      PostingKind.supplierPayment => l10n.acctKindSupplierPayment,
-      PostingKind.vatRelease => l10n.acctKindVatRelease,
-      PostingKind.memberReceipt => l10n.acctKindMemberReceipt,
-      PostingKind.reimbursement => l10n.acctKindReimbursement,
+      final kind? => postingKindLabel(l10n, kind),
       null => l10n.acctKindOther,
     };
 
@@ -58,10 +49,14 @@ class AccountingTransfersList extends ConsumerStatefulWidget {
   const AccountingTransfersList({
     required this.workspaceId,
     required this.memberNames,
+    required this.manage,
     super.key,
   });
 
   final String workspaceId;
+
+  /// Whether the reader is a billing manager: the doors that deliver show.
+  final bool manage;
 
   /// Member id → name, for who made each file.
   final Map<String, String> memberNames;
@@ -114,6 +109,8 @@ class _AccountingTransfersListState
             ),
           ],
         ),
+        if (widget.manage)
+          AccountingDeliverButtons(workspaceId: widget.workspaceId, year: _year),
         transfers.when(
           loading: () => const LoadingView(),
           error: (_, _) => Text(
@@ -127,7 +124,8 @@ class _AccountingTransfersListState
                 Text(l10n.acctTransfersEmpty, key: const ValueKey('acct-transfers-empty')),
               for (final f in t.files)
                 _FileTile(file: f, by: names[f.exportedByMemberId]),
-              for (final d in t.deliveries) _DeliveryTile(delivery: d),
+              for (final d in t.deliveries)
+                _DeliveryTile(delivery: d, manage: widget.manage),
             ],
           ),
         ),
@@ -208,9 +206,12 @@ class _FileTile extends StatelessWidget {
 
 /// One document delivered to a connection, with what the target answered.
 class _DeliveryTile extends StatelessWidget {
-  const _DeliveryTile({required this.delivery});
+  const _DeliveryTile({required this.delivery, required this.manage});
 
   final AccountingDelivery delivery;
+
+  /// Whether a document the target has not acknowledged may be sent again.
+  final bool manage;
 
   @override
   Widget build(BuildContext context) {
@@ -226,6 +227,9 @@ class _DeliveryTile extends StatelessWidget {
             : Icons.cloud_sync_outlined,
       ),
       title: Text(_documentLine(context, d)),
+      trailing: manage && d.status != DeliveryStatus.acknowledged
+          ? AccountingRedeliverButton(delivery: d)
+          : null,
       subtitle: Text(
         [
           targetLabel(d.targetId),

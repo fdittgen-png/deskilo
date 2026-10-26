@@ -192,7 +192,10 @@ Deno.test("a refusal fails with the target's words; the next run creates again",
   assertEquals([...store.rows.values()][0].error, "422 invalid vat_rate");
   target.refuse = "";
   assertEquals((await deliver(job(), maps, store, target)).status, "acknowledged");
-  assertEquals(target.readbacks, 0, "a refused create left nothing to read back");
+  // Prepared before, it is read back first (another run may have sent it);
+  // nothing is found, so it is created once.
+  assertEquals(target.readbacks, 1);
+  assertEquals(target.creates, 2);
 });
 
 Deno.test("an acknowledged document with another content is refused, not created", async () => {
@@ -227,4 +230,32 @@ Deno.test("the database store sends every field and throws on a refusal", async 
   assertEquals(calls[0].p_remote, { id: "R-9", number: "N", version: "", state: "" });
   const refused = databaseStore({ rpc: () => Promise.resolve({ data: null, error: { code: "23514" } }) });
   await assertRejects(() => refused.record(job(), "sent"));
+});
+
+Deno.test("a create the target made something else, or that collides, is a conflict and never acknowledged", async () => {
+  const differs: RemoteAdapter = {
+    readback: () => Promise.resolve([]),
+    create: () =>
+      Promise.resolve({ ok: true as const, remote: { id: "R-9", matches: false, difference: "tax 14.99" } }),
+  };
+  const a = new MemoryStore();
+  assertEquals((await deliver(job(), maps, a, differs)).status, "conflict");
+  assertEquals([...a.rows.values()][0].error, "the target's document R-9 differs from this one: tax 14.99");
+  const collides: RemoteAdapter = {
+    readback: () => Promise.resolve([]),
+    create: () => Promise.resolve({ ok: false as const, unknown: false, conflict: true, detail: "holds F-1 (7)" }),
+  };
+  const b = new MemoryStore();
+  assertEquals((await deliver(job(), maps, b, collides)).status, "conflict");
+  assertEquals([...b.rows.values()][0].error, "holds F-1 (7)");
+});
+
+Deno.test("a delivery prepared by another run is read back before any create", async () => {
+  const store = new MemoryStore();
+  const target = new FakeTarget();
+  // Another run prepared it and sent it, and is still waiting for its answer.
+  await store.record(job(), "generated");
+  target.held.set([...store.rows.values()][0].idempotency_key, [{ id: "R-1", matches: true }]);
+  assertEquals((await deliver(job(), maps, store, target)).status, "acknowledged");
+  assertEquals(target.creates, 0);
 });

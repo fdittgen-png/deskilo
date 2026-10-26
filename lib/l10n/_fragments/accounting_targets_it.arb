@@ -1,7 +1,7 @@
 {
   "@@locale": "it",
   "featureAccountingConnectorsTitle": "Sistemi contabili",
-  "featureAccountingConnectorsDesc": "Collega la contabilità di ogni emittente al sistema contabile in cui è tenuta (Pennylane tramite la sua API, gli altri tramite file), nomina ogni conto, codice IVA e cliente come quel sistema li conosce ed elenca ogni file e ogni invio che ha portato un documento, con il suo SHA-256: il collegamento digitale che una verifica fiscale chiede di vedere.",
+  "featureAccountingConnectorsDesc": "Collega la contabilità di ogni emittente al sistema contabile in cui è tenuta (Pennylane e bexio tramite la loro API, gli altri tramite file), nomina ogni conto, codice IVA e cliente come quel sistema li conosce ed elenca ogni file e ogni invio che ha portato un documento, con il suo SHA-256: il collegamento digitale che una verifica fiscale chiede di vedere.",
   "acctTargetsTitle": "Sistemi contabili",
   "acctTargetsIntro": "Dove va la contabilità di ogni emittente. Un sistema collegato riceve i documenti da sé; gli altri ricevono i file esportati dalla contabilità. Ogni trasferimento è elencato qui sotto con l'impronta di ciò che ha portato.",
   "acctTargetsNoApiTarget": "Nessun sistema contabile di questo paese è ancora raggiunto da un collegamento: la contabilità parte tramite file, dall'esportazione contabile.",
@@ -92,5 +92,6 @@
   "acctDeliveryAttempts": "{count, plural, =1{un tentativo} other{{count} tentativi}}",
   "refusalAccountingClosed": "Questo collegamento non lo consente più: è stato revocato o ha già inviato documenti. Lo revochi e si colleghi di nuovo. Non è stato salvato nulla.",
   "refusalAccountingValue": "Il server ha rifiutato questo valore: verifichi il token, la chiave o l'emittente e riprovi. Non è stato salvato nulla.",
-  "acctJournalLogged": "{logged, plural, =0{Nessun nuovo documento registrato} =1{Un documento registrato} other{{logged} documenti registrati}}, {unchanged} invariati"
+  "acctJournalLogged": "{logged, plural, =0{Nessun nuovo documento registrato} =1{Un documento registrato} other{{logged} documenti registrati}}, {unchanged} invariati",
+  "acctTargetNotDeliveredYet": "Nessun documento viene ancora inviato a questo sistema: la connessione e le sue corrispondenze sono conservate per l'invio, che per esso non è ancora attivo."
 }

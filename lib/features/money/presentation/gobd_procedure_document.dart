@@ -37,10 +37,39 @@ typedef GobdProcedureFacts = ({
 
 /// The Verfahrensdokumentation of [f] in [l10n]'s language.
 String buildGobdProcedureDocument(AppLocalizations l10n, GobdProcedureFacts f) {
+  final lines = <String>[
+    ...procedureSections(
+      l10n,
+      f,
+      title: l10n.gobdProcedureTitle(f.workspace),
+      systemBody: l10n.gobdProcedureSystemBody,
+    ),
+    '## ${l10n.gobdProcedureHandoverHeading}',
+    '',
+    l10n.gobdProcedureHandoverBody,
+    '',
+    '## ${l10n.gobdProcedureExportsHeading}',
+    '',
+    l10n.gobdProcedureExportsBody,
+  ];
+  return '${lines.join('\n')}\n';
+}
+
+/// #2377 — the sections every procedures document of an archive states
+/// from the live facts [f]: when and for which period it was made, what the
+/// system keeps ([systemBody]), the software version, unalterability, the
+/// number sequences and the retention clocks; each section ends with a
+/// blank line.
+List<String> procedureSections(
+  AppLocalizations l10n,
+  GobdProcedureFacts f, {
+  required String title,
+  required String systemBody,
+}) {
   final day = DateFormat.yMd(l10n.localeName);
   final serverSchema = f.serverSchema;
-  final lines = <String>[
-    '# ${l10n.gobdProcedureTitle(f.workspace)}',
+  return <String>[
+    '# $title',
     '',
     l10n.gobdProcedureGenerated(
       day.format(f.generatedAt),
@@ -50,7 +79,7 @@ String buildGobdProcedureDocument(AppLocalizations l10n, GobdProcedureFacts f) {
     '',
     '## ${l10n.gobdProcedureSystemHeading}',
     '',
-    l10n.gobdProcedureSystemBody,
+    systemBody,
     '',
     '## ${l10n.gobdProcedureVersionHeading}',
     '',
@@ -76,15 +105,7 @@ String buildGobdProcedureDocument(AppLocalizations l10n, GobdProcedureFacts f) {
           '${r.confirmed ? '' : ' (${l10n.retentionUnconfirmed})'}. '
           '${r.source}',
     '',
-    '## ${l10n.gobdProcedureHandoverHeading}',
-    '',
-    l10n.gobdProcedureHandoverBody,
-    '',
-    '## ${l10n.gobdProcedureExportsHeading}',
-    '',
-    l10n.gobdProcedureExportsBody,
   ];
-  return '${lines.join('\n')}\n';
 }
 
 String _sequence(AppLocalizations l10n, NumberSequence s) {

@@ -149,7 +149,11 @@ class _FormatTile extends StatelessWidget {
   }
 
   IconData get _icon => switch (format.id) {
-        'fec' || 'datev' || 'sage50' || 'ch_kmu' => Icons.table_chart_outlined,
+        'fec' ||
+        'datev' ||
+        'sage50' ||
+        'ch_kmu' ||
+        'banana_transactions' => Icons.table_chart_outlined,
         'saft' ||
         'saft_pt' ||
         'saft_no' ||
@@ -170,6 +174,7 @@ class _FormatTile extends StatelessWidget {
         'datev' => l10n.invoiceExportDatev,
         'sage50' => l10n.invoiceExportSage,
         'ch_kmu' => l10n.invoiceExportSwissKmu,
+        'banana_transactions' => l10n.invoiceExportBanana,
         'accountant_csv' =>
           l10n.invoiceExportAccountantCsv,
         'generic_journal_csv' => l10n.invoiceExportGenericJournal,

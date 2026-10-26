@@ -37,7 +37,9 @@ import 'package:meta/meta.dart';
 
 import 'accountant_csv.dart';
 import 'accounting_target.dart';
+import 'accounting_targets_ch.dart';
 import 'accounting_targets_de.dart';
+import 'accounting_targets_quickbooks.dart';
 import 'accounting_targets_saft.dart';
 
 export 'accounting_target.dart';
@@ -144,16 +146,6 @@ const _datevFormat = AccountingFormat(
 /// Sage 50's audit-trail CSV — the British and Irish import shape.
 const _sageFormat = AccountingFormat(
   id: 'sage50',
-  claim: FormatClaim.exchange,
-  extension: 'csv',
-  needsAccounts: true,
-);
-
-/// #2360 — the booking journal of a Swiss space: the accounts of the KMU
-/// chart and the Ziffer of the MWST-Abrechnung per row. An exchange file;
-/// not a native Banana or bexio template (neither publishes one).
-const _swissKmuFormat = AccountingFormat(
-  id: 'ch_kmu',
   claim: FormatClaim.exchange,
   extension: 'csv',
   needsAccounts: true,
@@ -330,18 +322,7 @@ const List<AccountingTarget> accountingTargets = [
     format: _sageFormat,
     customerIdRule: CustomerIdRule(maxLength: 8, charset: r'[A-Z0-9]+'),
   ),
-  AccountingTarget(
-    id: 'ch_kmu',
-    vendor: 'KMU-Kontenrahmen',
-    product: 'Swiss booking journal',
-    edition: 'CSV, Ziffer per row',
-    countries: {'CH'},
-    transport: AccountingTransport.file,
-    payload: AccountingPayload.journal,
-    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},
-    taxCodeModel: TaxCodeModel.perRate,
-    format: _swissKmuFormat,
-  ),
+  ...swissAccountingTargets,
   ...safTFinancialTargets,
   AccountingTarget(
     id: 'saft',
@@ -440,21 +421,22 @@ const List<AccountingTarget> accountingTargets = [
     taxCodeModel: TaxCodeModel.none,
     format: archiveBundleFormat,
   ),
-  // #2376 — the French platforms. Pennylane takes the documents through
-  // its API (customer invoices created as issued, with the PDF/A-3 and the
-  // legal number; payments and write-offs as ledger entries), its adapter
-  // under supabase/functions/_accounting-pennylane. Cegid Quadra and EBP
+  // #2376 — the French platforms. Pennylane takes the postings through
+  // its API, each one a balanced ledger entry in the journal of its code
+  // (supabase/functions/_shared/accounting_pennylane.ts); importing the
+  // invoices with their PDF/A-3 waits for the PDF on the server. Cegid Quadra and EBP
   // import the FEC today; their own import formats wait for a reviewed
   // specification.
   AccountingTarget(
     id: 'pennylane_api',
+    runnerDelivers: true,
     vendor: 'Pennylane',
     product: 'Pennylane',
     edition: 'API v2',
     countries: {'FR'},
     transport: AccountingTransport.api,
-    payload: AccountingPayload.documents,
-    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.attachment},
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: CustomerIdRule(maxLength: 13, charset: r'[A-Z0-9]+'),
     // A company API token from Pennylane's settings, or a sign-in where
@@ -483,6 +465,7 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
     taxCodeModel: TaxCodeModel.none,
   ),
+  ...quickbooksAccountingTargets,
 ];
 
 /// #2370 — the targets offered in [countryCode], in registry order.

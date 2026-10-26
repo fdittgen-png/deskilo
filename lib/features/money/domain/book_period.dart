@@ -71,6 +71,7 @@ class BookExport {
     required this.documentCount,
     required this.closedPeriod,
     required this.exportedAt,
+    this.exportedByMemberId,
   });
 
   factory BookExport.fromJson(Object? raw) {
@@ -86,6 +87,7 @@ class BookExport {
       documentCount: r.integer('document_count'),
       closedPeriod: r.boolOr('closed_period', fallback: false),
       exportedAt: DateTime.parse(r.string('exported_at')),
+      exportedByMemberId: r.stringOrNull('exported_by_member_id'),
     );
   }
 
@@ -102,6 +104,9 @@ class BookExport {
   /// the same bytes, which the log shows as the same sha256.
   final bool closedPeriod;
   final DateTime exportedAt;
+
+  /// #2377 — the member who made the file; null where the log does not say.
+  final String? exportedByMemberId;
 }
 
 class BookPeriodsOverview {
@@ -160,4 +165,12 @@ abstract class BookPeriodRepository {
   /// Logs a file handed out: format, period, digest, size. Answers the
   /// log row's id, or null when the space keeps no log.
   Future<String?> recordExport(String workspaceId, BookExportRecord record);
+
+  /// #2377 — the files handed out whose period overlaps [from]..[to], oldest
+  /// first, each with who made it and when (GeBüV art. 8).
+  Future<List<BookExport>> fetchExportLog(
+    String workspaceId,
+    DateTime from,
+    DateTime to,
+  );
 }

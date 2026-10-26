@@ -327,6 +327,50 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String acctDeliverBooksBlocked(String subjects) {
+    return 'Los asientos de este periodo aún no se pueden contabilizar: $subjects.';
+  }
+
+  @override
+  String acctDeliverDone(int delivered, int unchanged, int attention) {
+    return 'Enviados: $delivered · ya recibidos: $unchanged · por revisar: $attention';
+  }
+
+  @override
+  String get acctDeliverFailed =>
+      'El envío no se ha completado. No se ha enviado nada más; inténtelo más tarde.';
+
+  @override
+  String acctDeliverMissing(String keys) {
+    return 'Asigne primero estas correspondencias: $keys';
+  }
+
+  @override
+  String get acctDeliverNotConnected =>
+      'Esta conexión está desconectada: vuelva a conectarla y luego envíe.';
+
+  @override
+  String get acctDeliverNothing => 'No hay nada que enviar en este periodo.';
+
+  @override
+  String get acctDeliverNothingSent => 'No se ha enviado nada.';
+
+  @override
+  String acctDeliverRefused(String detail) {
+    return 'El sistema contable ha rechazado esta empresa: $detail.';
+  }
+
+  @override
+  String acctDeliverStoppedAt(String month, int count) {
+    return 'Detenido en $month. Enviados antes: $count.';
+  }
+
+  @override
+  String acctDeliverYear(String year, String target) {
+    return 'Enviar $year a $target';
+  }
+
+  @override
   String get acctDeliveryAcknowledged => 'Recibido por el sistema';
 
   @override
@@ -494,6 +538,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String acctMapsTitle(String target) {
     return 'Nombres en $target';
   }
+
+  @override
+  String get acctRedeliver => 'Enviar de nuevo';
+
+  @override
+  String get acctTargetNotDeliveredYet =>
+      'Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él.';
 
   @override
   String get acctTargetsIntro =>
@@ -760,6 +811,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get applicationsTitle => 'Solicitudes de acceso';
+
+  @override
+  String get archiveSwissNeedsExportLog =>
+      'La documentación de los procedimientos de este archivo suizo indica que cada descarga queda registrada en el registro de exportaciones, y este espacio no lleva ninguno: active primero los periodos contables o los sistemas contables.';
 
   @override
   String get assistantPrefix => 'Asistente';
@@ -7582,7 +7637,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureAccountingConnectorsDesc =>
-      'Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver.';
+      'Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane y bexio por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver.';
 
   @override
   String get featureAccountingConnectorsTitle => 'Sistemas contables';
@@ -9253,6 +9308,37 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get financesTypeInvoice => 'Factura';
+
+  @override
+  String get gebuevProcedureAccessBody =>
+      'Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.';
+
+  @override
+  String get gebuevProcedureAccessHeading => 'Accesos (art. 8)';
+
+  @override
+  String get gebuevProcedureCarriersBody =>
+      'Este archivo se lee con cualquier herramienta zip y editor de texto. Una copia de todo el espacio se prueba con una exportación del espacio terminada, registrada con su huella: la lista de preparación muestra cuándo se hizo la última y pide una nueva cuando es antigua.';
+
+  @override
+  String get gebuevProcedureCarriersHeading =>
+      'Disponibilidad y soportes (art. 5 y 10)';
+
+  @override
+  String get gebuevProcedureIntegrityBody =>
+      'Cada archivo de este archivo comprimido figura en manifest.csv con su huella SHA-256 y su tamaño. El propio archivo, como cada exportación contable, queda registrado en el registro de exportaciones con su huella, la hora del servidor y la persona que lo creó. Cada documento emitido lleva la huella que el servidor verifica; register.csv indica el resultado.';
+
+  @override
+  String get gebuevProcedureIntegrityHeading => 'Integridad (art. 3 y 9)';
+
+  @override
+  String get gebuevProcedureSystemBody =>
+      'DesKilo lleva las facturas, notas de crédito, pagos, cuentas de los miembros, gastos compartidos y documentos de compra aprobados de este espacio y, cuando el espacio lleva un libro local, sus asientos en su plan contable. La contabilidad general de la fiduciaria importa el diario suizo de esos asientos.';
+
+  @override
+  String gebuevProcedureTitle(String workspace) {
+    return 'Documentación de los procedimientos (GeBüV art. 4) — $workspace';
+  }
 
   @override
   String get gettingStartedActionChooseDay => 'Elegir otro día';
@@ -11186,6 +11272,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceExportAuditTrail => 'Pista de auditoría';
 
   @override
+  String get invoiceExportBanana =>
+      'Banana Contabilidad+ (importación de asientos)';
+
+  @override
   String get invoiceExportBundle => 'Archivo del ejercicio (zip)';
 
   @override
@@ -11237,7 +11327,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceExportSwissKmu =>
-      'Diario de asientos suizo (CSV, cuentas KMU)';
+      'Diario de asientos suizo (CSV, cuentas PYME, códigos de IVA)';
 
   @override
   String get invoiceExportTrialBalance =>
@@ -12103,6 +12193,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String journalSafTRefused(String gaps) {
     return 'El archivo SAF-T no se ha generado: $gaps';
+  }
+
+  @override
+  String journalSwissTaxCodes(String keys) {
+    return 'Estos grupos de tipos no tienen código de IVA en la referencia fiscal; no se ha escrito nada. Añada primero sus códigos: $keys';
   }
 
   @override
@@ -24407,24 +24502,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get supportTitle => 'Detalles de soporte';
 
   @override
-  String get swissKmuAccountsIntro =>
-      'Los valores por defecto son las propuestas del plan contable suizo KMU. Cada fila nombra la cifra de la declaración de IVA suiza (MWST) en la que cae; revise las cuentas con su asesor.';
-
-  @override
-  String get swissKmuAccountsTitle => 'Diario de asientos suizo';
-
-  @override
-  String get swissKmuRevenueExempt =>
-      'Ingresos exentos, exportados o en el extranjero';
-
-  @override
-  String get swissKmuRevenueNormal => 'Ingresos al tipo normal';
-
-  @override
-  String get swissKmuRevenueReduced =>
-      'Ingresos al tipo reducido o de alojamiento';
-
-  @override
   String get symbolHint =>
       'Una marca redonda de una o dos letras sobre un color, única de este espacio — o use una foto abajo.';
 
@@ -25891,6 +25968,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxRefCents => 'Importe (unidad menor)';
+
+  @override
+  String get taxRefChKmuKeys =>
+      'Diario suizo (formato ch_kmu): la clave ch_kmu/tax:<grupo> da el código de IVA de las ventas de un grupo de tipos, ch_kmu/input:<grupo> el de su IVA soportado en material y servicios (cifra 400), ch_kmu/asset:<grupo> el del IVA soportado en inversiones (cifra 405), como código fiscal; el código debe existir en la tabla de IVA del archivo Banana.';
 
   @override
   String get taxRefChargeCents =>

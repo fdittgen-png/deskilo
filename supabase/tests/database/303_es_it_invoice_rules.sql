@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2363 (9999): the Spanish and Italian invoice rules as tax reference rows.
+-- #2363 (0600): the Spanish and Italian invoice rules as tax reference rows.
 -- The store takes the new threshold effects (with the stamp duty's charge)
 -- and the gate's outside-VAT postal codes, and refuses a malformed one; the
 -- rows are seeded; a Spanish seller at a Canary Islands, Ceuta or Melilla

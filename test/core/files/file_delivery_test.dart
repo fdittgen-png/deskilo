@@ -271,4 +271,20 @@ void main() {
       expect(tester.takeException(), isNull);
     });
   });
+
+  test('#2377 — only a delivery that handed the file out counts as one', () {
+    expect(fileHandedOut(const LocalSave(SavedFile('/d/a.zip'))), isTrue);
+    expect(fileHandedOut(const LocalSave(SavedPrivately('/p/a.zip'))), isTrue);
+    expect(fileHandedOut(const LocalSave(DownloadRequested('a.zip'))), isTrue);
+    expect(
+      fileHandedOut(const HandedToShareSheet('a.zip', confirmed: false)),
+      isTrue,
+    );
+    expect(fileHandedOut(const LocalSave(SaveFailed())), isFalse);
+    expect(fileHandedOut(const DeliveryCancelled()), isFalse);
+    expect(
+      fileHandedOut(const DeliveryFailed(SaveFailure.shareUnavailable)),
+      isFalse,
+    );
+  });
 }
