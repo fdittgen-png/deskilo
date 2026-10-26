@@ -90,5 +90,9 @@
   "invoiceMissingTerritoryOutsideVat": "El centro está donde no se aplica el IVA del Estado (Canarias: IGIC; Ceuta y Melilla: IPSI): DesKilo todavía no expide allí.",
   "@invoiceMissingTerritoryOutsideVat": {
     "description": "#2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat"
+  },
+  "vatRegister347Sii": "Un espacio que lleva los libros registro del IVA a través del SII no presenta el modelo 347: la AEAT ya dispone de sus facturas.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
   }
 }

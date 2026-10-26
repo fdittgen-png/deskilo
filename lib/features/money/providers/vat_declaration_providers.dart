@@ -8,6 +8,7 @@ import '../application/save_vat_filing_file.dart';
 import '../application/vat_register_files.dart';
 import '../domain/invoice_legal.dart';
 import '../domain/vat_declaration.dart';
+import '../domain/vat_declaration_period.dart';
 import '../domain/vat_filing_files.dart';
 import 'money_providers.dart';
 
@@ -57,4 +58,10 @@ VatRegisterFiles vatRegisterFiles(Ref ref) => VatRegisterFiles(
   invoices: () => ref.read(invoicesProvider.future),
   declarations: () => ref.read(vatDeclarationsProvider.future),
   reference: ref.watch(readyWorkspaceContextProvider)?.taxReference.set,
+  monthly: switch (ref.watch(currentWorkspaceProvider).value) {
+    final w? =>
+      InvoiceLegal.fromJson(w.invoiceLegal).filingPeriod ==
+          VatDeclarationPeriod.month,
+    null => false,
+  },
 );

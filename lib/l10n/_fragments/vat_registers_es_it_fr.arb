@@ -90,5 +90,9 @@
   "invoiceMissingTerritoryOutsideVat": "Le site se trouve là où la TVA de l’État ne s’applique pas (Canaries : IGIC ; Ceuta et Melilla : IPSI) : DesKilo n’y émet pas encore.",
   "@invoiceMissingTerritoryOutsideVat": {
     "description": "#2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat"
+  },
+  "vatRegister347Sii": "Un espace qui tient ses livres de TVA via le SII ne dépose pas de modelo 347 : l’AEAT détient déjà ses factures.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
   }
 }

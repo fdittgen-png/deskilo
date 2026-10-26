@@ -27652,6 +27652,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get vatRegister347Sii =>
+      'A space that keeps its VAT books through SII files no modelo 347: the AEAT already holds its invoices.';
+
+  @override
   String get vatRegisterActivity => 'Activity: code, type and IAE heading';
 
   @override

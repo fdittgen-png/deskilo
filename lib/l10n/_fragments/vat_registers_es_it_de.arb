@@ -90,5 +90,9 @@
   "invoiceMissingTerritoryOutsideVat": "Der Standort liegt dort, wo die staatliche Umsatzsteuer nicht gilt (Kanaren: IGIC; Ceuta und Melilla: IPSI): DesKilo stellt dort noch nicht aus.",
   "@invoiceMissingTerritoryOutsideVat": {
     "description": "#2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat"
+  },
+  "vatRegister347Sii": "Ein Space, der seine USt-Bücher über SII führt, gibt kein Modelo 347 ab: die AEAT hat seine Rechnungen bereits.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
   }
 }

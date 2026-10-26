@@ -20,6 +20,7 @@ import '../domain/vat_register_es.dart' show isEsActivity;
 import '../domain/vat_registers.dart';
 import '../providers/vat_declaration_providers.dart';
 import 'invoice_actions.dart';
+import 'vat_filing_file_actions.dart';
 
 /// The buttons of the period `[start, end]` (its last day included) for
 /// the workspace's country: the registers when [registers] (the VAT report
@@ -74,13 +75,7 @@ class VatCountryRegisters extends ConsumerWidget {
               ),
               VatRegisterKind.es347 => OutlinedButton.icon(
                 key: const ValueKey('vat-register-es-347'),
-                onPressed: () => _deliver(
-                  context,
-                  ref,
-                  () =>
-                      ref.read(vatRegisterFilesProvider).es347(year: end.year),
-                  empty: l10n.vatRegister347Empty('${end.year}'),
-                ),
+                onPressed: () => _es347(context, ref),
                 icon: const Icon(Icons.groups_outlined),
                 label: Text(l10n.vatRegisterEs347('${end.year}')),
               ),
@@ -139,9 +134,27 @@ class VatCountryRegisters extends ConsumerWidget {
     );
   }
 
+  Future<void> _es347(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    final sii = await showDialog<bool>(
+      context: context,
+      builder: (context) => _SiiDialog(l10n: l10n),
+    );
+    if (sii == null || !context.mounted) return;
+    await _deliver(
+      context,
+      ref,
+      () => ref
+          .read(vatRegisterFilesProvider)
+          .es347(year: end.year, immediateSupply: sii),
+      empty: l10n.vatRegister347Empty('${end.year}'),
+    );
+  }
+
   /// Writes the file [build] answers and hands it over; says so when the
   /// period holds nothing ([empty], else the register's own words) or the
-  /// space's NIF does not fit.
+  /// file is refused (the space's NIF, an invoice the schema cannot hold, a
+  /// space in SII asking for a modelo 347).
   Future<void> _deliver(
     BuildContext context,
     WidgetRef ref,
@@ -158,7 +171,15 @@ class VatCountryRegisters extends ConsumerWidget {
         'vat register refused: ${e.problem.name}',
         stackTrace: st,
       );
-      if (context.mounted) AppSnack.error(context, l10n.vatRegisterNif);
+      if (context.mounted) {
+        // A register names the space's NIF, not a UK VAT number.
+        AppSnack.error(
+          context,
+          e.problem == VatFilingFileProblem.vatNumber
+              ? l10n.vatRegisterNif
+              : vatFilingProblemText(l10n, e.problem),
+        );
+      }
       return;
     }
     if (!context.mounted) return;
@@ -230,6 +251,46 @@ class _ActivityDialogState extends State<_ActivityDialog> {
           key: const ValueKey('vat-register-activity-ok'),
           onPressed: _submit,
           child: Text(l10n.vatRegisterEsLibro),
+        ),
+      ],
+    );
+  }
+}
+
+/// Asks whether the space keeps its books through SII; null when cancelled.
+class _SiiDialog extends StatefulWidget {
+  const _SiiDialog({required this.l10n});
+
+  final AppLocalizations l10n;
+
+  @override
+  State<_SiiDialog> createState() => _SiiDialogState();
+}
+
+class _SiiDialogState extends State<_SiiDialog> {
+  var _sii = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    return AlertDialog(
+      content: SwitchListTile(
+        key: const ValueKey('vat-register-347-sii'),
+        contentPadding: EdgeInsets.zero,
+        title: Text(l10n.vatDeclFilingEsSii),
+        value: _sii,
+        onChanged: (v) => setState(() => _sii = v),
+      ),
+      actions: [
+        TextButton(
+          key: const ValueKey('vat-register-347-cancel'),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.commonCancel),
+        ),
+        FilledButton(
+          key: const ValueKey('vat-register-347-ok'),
+          onPressed: () => Navigator.of(context).pop(_sii),
+          child: Text(l10n.commonOk),
         ),
       ],
     );

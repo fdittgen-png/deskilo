@@ -177,6 +177,7 @@ bool isEsActivity(String raw) =>
 XlsxSheet esLibroExpedidas(
   List<Invoice> documents, {
   required String activity,
+  bool monthly = false,
 }) {
   final act = _activity(activity);
   List<Object?> header(Map<int, String> names) => [
@@ -188,7 +189,8 @@ XlsxSheet esLibroExpedidas(
       header(esLibroGroups),
       header(esLibroColumns),
       for (final invoice in documents)
-        for (final total in invoice.vatTotals) _line(invoice, total, act),
+        for (final total in invoice.vatTotals)
+          _line(invoice, total, act, monthly: monthly),
     ],
   );
 }
@@ -196,8 +198,9 @@ XlsxSheet esLibroExpedidas(
 List<Object?> _line(
   Invoice invoice,
   InvoiceVatTotal total,
-  ({String code, String type, String heading}) act,
-) {
+  ({String code, String type, String heading}) act, {
+  required bool monthly,
+}) {
   final day = invoice.issuedAt;
   final buyer = esBuyerIdOf(invoice);
   final op = esOperationOf(total.category, invoice.buyerParty?.country ?? '');
@@ -206,7 +209,9 @@ List<Object?> _line(
   final taxed = op.qualification == 'S1';
   return [
     day.year,
-    '${(day.month - 1) ~/ 3 + 1}T',
+    // the period of the return the line falls in: the month for a monthly
+    // filer, else the quarter (validation 11)
+    if (monthly) twoDigits(day.month) else '${(day.month - 1) ~/ 3 + 1}T',
     act.code,
     act.type,
     act.heading,

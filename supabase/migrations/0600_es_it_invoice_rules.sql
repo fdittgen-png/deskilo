@@ -4,7 +4,7 @@
 -- the Spanish issuing gate gets a new version and its predecessor ends on
 -- that day; no issued document, no filed period is touched)
 --
--- 0600 (#2363, numbered at push time) -- the remaining Spanish and Italian
+-- 0600 (#2363) -- the remaining Spanish and Italian
 -- invoice rules, as rows of the tax reference store:
 --   * `threshold` learns three effects: `annual_operations` (the yearly
 --     operations with one customer the modelo 347 lists, ES `modelo347`),
@@ -26,7 +26,7 @@
 -- with their national channels (Verifactu, SdI), not here.
 
 -- ── 1. the shapes ─────────────────────────────────────────────────────
--- Restated whole (the body of 0433 with 0434, 0455 and 0480 applied):
+-- Restated whole (the body of 0433 with 0434, 0455, 0480 and 0599 applied):
 -- `threshold` learns `charge_cents` and three effects, `issuing_gate` learns
 -- `outside_vat_postal_codes`.
 create or replace function public.tax_reference_valid(p_domain text, p_value jsonb)
@@ -171,7 +171,7 @@ begin
       if exists (select 1 from jsonb_object_keys(p_value) k
                   where k <> all (array['format', 'role', 'account', 'tax_code', 'label'])) then return false; end if;
       if (p_value ->> 'format') is null
-         or (p_value ->> 'format') <> all (array['coa', 'fec', 'datev', 'sage', 'saf_t']) then return false; end if;
+         or (p_value ->> 'format') <> all (array['coa', 'fec', 'datev', 'sage', 'saf_t', 'ch_kmu']) then return false; end if;
       if jsonb_typeof(p_value -> 'role') is distinct from 'string'
          or btrim(p_value ->> 'role') = '' then return false; end if;
       if p_value ? 'label' and jsonb_typeof(p_value -> 'label') <> 'string' then return false; end if;
@@ -243,10 +243,21 @@ $fn$;
 revoke execute on function public.tax_reference_valid(text, jsonb) from public, anon, authenticated;
 
 -- ── 2. the Spanish gate's version in force ends where its successor begins ──
-update public.tax_reference
-   set valid_to = date '2026-10-25'
- where domain = 'issuing_gate' and country = 'ES' and key = 'gate'
-   and valid_from = date '1900-01-01' and valid_to is null;
+do $migration$
+declare
+  v_rows int;
+begin
+  update public.tax_reference
+     set valid_to = date '2026-10-25'
+   where domain = 'issuing_gate' and country = 'ES' and key = 'gate'
+     and valid_from = date '1900-01-01' and valid_to is null;
+  get diagnostics v_rows = row_count;
+  -- one open version ends; any other count would leave two in force or none
+  if v_rows <> 1 then
+    raise exception '0600: % open Spanish gate versions closed, expected 1', v_rows;
+  end if;
+end
+$migration$;
 
 -- ── 3. the rows ───────────────────────────────────────────────────────
 -- BEGIN GENERATED SEED (dart run tool/build_tax_reference_seed.dart)

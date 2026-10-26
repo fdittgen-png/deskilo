@@ -7,8 +7,6 @@
 // the duty are the `threshold` row `stamp_duty` of the seller's country, read
 // on the document's day; the FatturaPA (`DatiBollo`) and the PDF's statutory
 // line read the same answer.
-import 'package:meta/meta.dart';
-
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
@@ -55,8 +53,7 @@ int? stampDutyCents(StampDutyDocument doc, {TaxReferenceSet? reference}) {
 }
 
 /// [stampDutyCents] of an issued [invoice], from its frozen parties.
-@visibleForTesting
-int? stampDutyOf(Invoice invoice, {TaxReferenceSet? reference}) =>
+int? _stampDutyOf(Invoice invoice, {TaxReferenceSet? reference}) =>
     stampDutyCents((
       country: invoice.sellerParty?.country ?? '',
       currency: invoice.currency,
@@ -69,7 +66,7 @@ int? stampDutyOf(Invoice invoice, {TaxReferenceSet? reference}) =>
 /// The statutory line of a document that owes the duty (the `exemption_text`
 /// row `stamp_duty` of the seller's country), or null.
 String? stampDutyMention(Invoice invoice, {TaxReferenceSet? reference}) {
-  if (stampDutyOf(invoice, reference: reference) == null) return null;
+  if (_stampDutyOf(invoice, reference: reference) == null) return null;
   return (reference ?? ActiveTaxReference.current).mentionFor(
     'stamp_duty',
     invoice.sellerParty?.country ?? '',

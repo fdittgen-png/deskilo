@@ -18814,6 +18814,10 @@
       }
     }
   },
+  "vatRegister347Sii": "Uno spazio che tiene i registri IVA tramite il SII non presenta il modelo 347: l’AEAT dispone già delle sue fatture.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
+  },
   "vatRegisterActivity": "Attività: codice, tipo ed epigrafe IAE",
   "@vatRegisterActivity": {
     "description": "#2363 VAT registers (ES, IT): vatRegisterActivity"

@@ -28,6 +28,7 @@ class VatRegisterFiles {
     required this.invoices,
     required this.declarations,
     required this.reference,
+    this.monthly = false,
   });
 
   /// The space that keeps the registers, or null before it is loaded.
@@ -39,6 +40,10 @@ class VatRegisterFiles {
 
   /// The workspace's tax reference, or null before its context is ready.
   final TaxReferenceSet? reference;
+
+  /// Whether the space files monthly (a REDEME filer): the libro's period
+  /// is then the month, else the quarter.
+  final bool monthly;
 
   VatFilingParty get _party =>
       party ?? (throw StateError('no workspace loaded'));
@@ -63,7 +68,9 @@ class VatRegisterFiles {
       fileName:
           '${end.year}${nif.startsWith('ES') ? nif.substring(2) : nif}E'
           '${party.name.replaceAll(RegExp(r'[\\/:*?"<>|]'), ' ')}.xlsx',
-      bytes: buildXlsx([esLibroExpedidas(docs, activity: activity)]),
+      bytes: buildXlsx([
+        esLibroExpedidas(docs, activity: activity, monthly: monthly),
+      ]),
     );
   }
 
@@ -91,8 +98,12 @@ class VatRegisterFiles {
     );
   }
 
-  /// The modelo 347 list of [year]: the customers above the line.
-  Future<VatRegisterFile?> es347({required int year}) async {
+  /// The modelo 347 list of [year]: the customers above the line. Throws
+  /// [VatFilingFileException] for a space in SII ([immediateSupply]).
+  Future<VatRegisterFile?> es347({
+    required int year,
+    required bool immediateSupply,
+  }) async {
     final all = await invoices();
     final docs = registerDocuments(
       all,
@@ -100,19 +111,18 @@ class VatRegisterFiles {
       to: DateTime(year + 1),
     );
     final data = reference;
-    if (docs.isEmpty || data == null) return null;
-    final currency = docs.first.currency;
-    final lines = modelo347Lines(
+    if (data == null) return null;
+    final list = modelo347Lines(
       docs,
       year: year,
-      currency: currency,
       reference: data,
+      immediateSupply: immediateSupply,
     );
-    if (lines.isEmpty) return null;
+    if (list == null || list.lines.isEmpty) return null;
     return (
       fileName: 'modelo-347-$year.csv',
       bytes: Uint8List.fromList(
-        utf8.encode(modelo347Csv(lines, currency: currency)),
+        utf8.encode(modelo347Csv(list.lines, currency: list.currency)),
       ),
     );
   }

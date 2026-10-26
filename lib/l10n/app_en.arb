@@ -32633,6 +32633,10 @@
       }
     }
   },
+  "vatRegister347Sii": "A space that keeps its VAT books through SII files no modelo 347: the AEAT already holds its invoices.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
+  },
   "vatRegisterActivity": "Activity: code, type and IAE heading",
   "@vatRegisterActivity": {
     "description": "#2363 VAT registers (ES, IT): vatRegisterActivity"

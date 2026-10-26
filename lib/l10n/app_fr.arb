@@ -18814,6 +18814,10 @@
       }
     }
   },
+  "vatRegister347Sii": "Un espace qui tient ses livres de TVA via le SII ne dépose pas de modelo 347 : l’AEAT détient déjà ses factures.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
+  },
   "vatRegisterActivity": "Activité : code, type et rubrique IAE",
   "@vatRegisterActivity": {
     "description": "#2363 VAT registers (ES, IT): vatRegisterActivity"

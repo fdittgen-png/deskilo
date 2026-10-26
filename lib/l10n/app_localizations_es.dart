@@ -27871,6 +27871,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get vatRegister347Sii =>
+      'Un espacio que lleva los libros registro del IVA a través del SII no presenta el modelo 347: la AEAT ya dispone de sus facturas.';
+
+  @override
   String get vatRegisterActivity =>
       'Actividad: código, tipo y epígrafe del IAE';
 

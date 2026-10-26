@@ -46145,6 +46145,12 @@ abstract class AppLocalizations {
   /// **'No customer passed the modelo 347 line in {year}.'**
   String vatRegister347Empty(String year);
 
+  /// #2363 VAT registers (ES, IT): vatRegister347Sii
+  ///
+  /// In en, this message translates to:
+  /// **'A space that keeps its VAT books through SII files no modelo 347: the AEAT already holds its invoices.'**
+  String get vatRegister347Sii;
+
   /// #2363 VAT registers (ES, IT): vatRegisterActivity
   ///
   /// In en, this message translates to:

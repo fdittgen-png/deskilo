@@ -15,6 +15,7 @@ import 'package:deskilo/features/money/domain/report_data.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/small_business_threshold.dart';
 import 'package:deskilo/features/money/domain/stamp_duty.dart';
+import 'package:deskilo/features/money/domain/vat_filing_terms.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_register_es_347.dart';
 import 'package:deskilo/features/money/presentation/widgets/tax_reference_gate_fields.dart';
@@ -63,6 +64,18 @@ InvoiceVatTotal _total(double percent, int net, int vat, {String c = 'S'}) =>
       netCents: net,
       vatCents: vat,
     );
+
+/// The duty of an issued document, through the decision the FatturaPA and
+/// the PDF share.
+int? stampDutyOf(Invoice invoice, {TaxReferenceSet? reference}) =>
+    stampDutyCents((
+      country: invoice.sellerParty?.country ?? '',
+      currency: invoice.currency,
+      day: invoice.issuedAt,
+      totals: invoice.vatTotals,
+      grossCents: invoice.vatTotals.fold(0, (sum, t) => sum + t.grossCents),
+      buyerCountry: invoice.buyerParty?.country ?? '',
+    ), reference: reference);
 
 void main() {
   final day = DateTime(2026, 5, 4);
@@ -177,7 +190,7 @@ void main() {
         vatId: nif,
         postalCode: postal,
       );
-      final lines = modelo347Lines(
+      final list = modelo347Lines(
         [
           es('F-1', DateTime(2026, 2), [_total(21, 200000, 42000)]),
           es('F-2', DateTime(2026, 8), [_total(21, 100000, 21000)]),
@@ -196,11 +209,17 @@ void main() {
             country: 'FR',
           ),
           es('F-5', DateTime(2025, 12), [_total(21, 900000, 189000)]),
+          // another currency is not summed with the euro line
+          es('F-6', DateTime(2026, 4), [
+            _total(21, 900000, 189000),
+          ], nif: 'ESB22222222').copyWith(currency: 'USD'),
         ],
         year: 2026,
-        currency: 'EUR',
         reference: ActiveTaxReference.current,
-      );
+        immediateSupply: false,
+      )!;
+      expect(list.currency, 'EUR');
+      final lines = list.lines;
       expect(lines, hasLength(1), reason: 'B22222222 stays under 3,005.06');
       expect(lines.single.nif, 'B11111111');
       expect(lines.single.province, '28');
@@ -208,6 +227,24 @@ void main() {
       expect(
         modelo347Csv(lines, currency: 'EUR').split('\r\n')[1],
         '"B11111111";"Cliente Srl";"28";B;3630.00;2420.00;0.00;1210.00;0.00',
+      );
+    });
+
+    test('a space in SII files no modelo 347', () {
+      expect(
+        () => modelo347Lines(
+          const [],
+          year: 2026,
+          reference: ActiveTaxReference.current,
+          immediateSupply: true,
+        ),
+        throwsA(
+          isA<VatFilingFileException>().having(
+            (e) => e.problem,
+            'problem',
+            VatFilingFileProblem.exoneratedBySii,
+          ),
+        ),
       );
     });
   });

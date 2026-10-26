@@ -18814,6 +18814,10 @@
       }
     }
   },
+  "vatRegister347Sii": "Ein Space, der seine USt-Bücher über SII führt, gibt kein Modelo 347 ab: die AEAT hat seine Rechnungen bereits.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
+  },
   "vatRegisterActivity": "Tätigkeit: Code, Art und IAE-Rubrik",
   "@vatRegisterActivity": {
     "description": "#2363 VAT registers (ES, IT): vatRegisterActivity"

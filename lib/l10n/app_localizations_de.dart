@@ -27942,6 +27942,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get vatRegister347Sii =>
+      'Ein Space, der seine USt-Bücher über SII führt, gibt kein Modelo 347 ab: die AEAT hat seine Rechnungen bereits.';
+
+  @override
   String get vatRegisterActivity => 'Tätigkeit: Code, Art und IAE-Rubrik';
 
   @override

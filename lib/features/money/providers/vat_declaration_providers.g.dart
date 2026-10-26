@@ -161,4 +161,4 @@ final class VatRegisterFilesProvider
   }
 }
 
-String _$vatRegisterFilesHash() => r'5cdfa87837a475f4c0f90d44af9bb7893cdd4764';
+String _$vatRegisterFilesHash() => r'c69e5d7af9494647d2cd6dc6343217b5a119adf9';

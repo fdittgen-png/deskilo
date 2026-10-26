@@ -90,5 +90,9 @@
   "invoiceMissingTerritoryOutsideVat": "The site is where the State’s VAT does not apply (Canary Islands: IGIC; Ceuta and Melilla: IPSI): DesKilo does not issue there yet.",
   "@invoiceMissingTerritoryOutsideVat": {
     "description": "#2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat"
+  },
+  "vatRegister347Sii": "A space that keeps its VAT books through SII files no modelo 347: the AEAT already holds its invoices.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
   }
 }

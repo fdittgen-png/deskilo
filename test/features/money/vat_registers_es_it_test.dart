@@ -14,6 +14,8 @@ import 'package:archive/archive.dart';
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/files/xlsx.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/application/vat_register_files.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
@@ -234,6 +236,51 @@ void main() {
     });
   });
 
+  group('an empty period writes nothing', () {
+    final files = VatRegisterFiles(
+      party: const VatFilingParty(
+        countryCode: 'ES',
+        name: 'Cowork',
+        street: '',
+        postalCode: '',
+        city: '',
+        vatId: 'ESB12345678',
+        legalId: '',
+      ),
+      invoices: () async => const [],
+      declarations: () async => const [],
+      reference: ActiveTaxReference.current,
+    );
+    final end = DateTime(2026, 9, 30);
+
+    test('the libro, the 347, the annual sheet and the registro', () async {
+      expect(await files.esLibro(end: end, activity: ''), isNull);
+      expect(await files.es347(year: 2026, immediateSupply: false), isNull);
+      expect(
+        await files.annualSummary(
+          year: 2026,
+          header: const ['a', 'b', 'c', 'd'],
+        ),
+        isNull,
+      );
+      expect(
+        await files.itRegistro(start: DateTime(2026, 7), end: end),
+        isNull,
+      );
+      expect(await files.esSii(start: DateTime(2026, 7), end: end), isNull);
+    });
+  });
+
+  test('a monthly filer\'s libro names the month', () {
+    final sheet = esLibroExpedidas(
+      registerDocuments(q3, from: DateTime(2026), to: DateTime(2026, 10)),
+      activity: '',
+      monthly: true,
+    );
+    expect(sheet.rows[2][1], '07');
+    expect(sheet.rows[2].sublist(2, 5), ['', '', ''], reason: 'no activity');
+  });
+
   group('SII facturas emitidas (ES)', () {
     test(
       'a valid message of the period, the breakdown the buyer calls for',
@@ -302,6 +349,24 @@ void main() {
         );
       },
     );
+
+    test('an invoice with more rates than the schema holds is refused', () {
+      final many = _invoice(
+        'F-2026-0099',
+        DateTime(2026, 7, 9),
+        vat: [for (var r = 1; r <= 7; r++) _total(r.toDouble(), 1000, 10 * r)],
+      );
+      expect(
+        () => siiFacturasEmitidasXml([many], vatId: 'ESB12345678', name: 'X'),
+        throwsA(
+          isA<VatFilingFileException>().having(
+            (e) => e.problem,
+            'problem',
+            VatFilingFileProblem.unmappedBox,
+          ),
+        ),
+      );
+    });
 
     test('the space names its NIF', () {
       expect(
@@ -391,17 +456,23 @@ void main() {
     final now = kTestNow;
     final money = FakeMoneyRepository()
       ..invoices.add(
-        _invoice('F-1', DateTime(now.year, now.month), vat: [
-          _total(21, 1000, 210),
-        ]),
+        _invoice(
+          'F-1',
+          DateTime(now.year, now.month),
+          vat: [_total(21, 1000, 210)],
+        ),
       );
     await openDeclarations(
       tester,
       saved,
-      (w) => w.copyWith(countryCode: 'ES', vatId: 'ESB12345678', name: 'Cowork'),
+      (w) =>
+          w.copyWith(countryCode: 'ES', vatId: 'ESB12345678', name: 'Cowork'),
       money,
     );
-    expect(find.byKey(const ValueKey('vat-register-it-registro')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('vat-register-it-registro')),
+      findsNothing,
+    );
     await tester.ensureVisible(
       find.byKey(const ValueKey('vat-register-es-libro')),
     );
@@ -479,7 +550,9 @@ void main() {
     await tester.pumpAndSettle();
     final csv = utf8.decode(saved.values.single);
     expect(csv, contains(';N4;'));
-    await tester.ensureVisible(find.byKey(const ValueKey('vat-annual-summary')));
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('vat-annual-summary')),
+    );
     await tester.tap(find.byKey(const ValueKey('vat-annual-summary')));
     await tester.pumpAndSettle();
     expect(saved.keys, contains('vat-annual-summary-${now.year}.xlsx'));

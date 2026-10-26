@@ -5659,6 +5659,7 @@ Map<String, _Getter> _part18() => {
   'vatDeclScreenTitle': (l) => l.vatDeclScreenTitle,
   'vatNeedsDefault': (l) => l.vatNeedsDefault,
   'vatRateDefaultTooltip': (l) => l.vatRateDefaultTooltip,
+  'vatRegister347Sii': (l) => l.vatRegister347Sii,
   'vatTitle': (l) => l.vatTitle,
   'visibilityAskContact': (l) => l.visibilityAskContact,
   'visibilitySpaceUnverified': (l) => l.visibilitySpaceUnverified,

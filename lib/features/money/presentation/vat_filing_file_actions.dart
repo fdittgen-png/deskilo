@@ -54,18 +54,7 @@ Future<void> exportVatFilingFile(
           stackTrace: st,
         );
         if (!context.mounted) return;
-        AppSnack.error(context, switch (e.problem) {
-          VatFilingFileProblem.period => l10n.vatDeclFilingPeriod,
-          VatFilingFileProblem.taxNumber => l10n.vatDeclFilingTaxNumber,
-          VatFilingFileProblem.vatNumber => l10n.vatDeclFilingVatNumber,
-          VatFilingFileProblem.uid => l10n.vatDeclFilingUid,
-          VatFilingFileProblem.businessNumber => l10n.vatDeclFilingBn,
-          VatFilingFileProblem.fiscalCode => l10n.vatDeclFilingFiscalCode,
-          VatFilingFileProblem.declarant => l10n.vatDeclFilingDeclarant,
-          VatFilingFileProblem.unmappedBox => l10n.vatDeclFilingUnmappedBox,
-          VatFilingFileProblem.negativeAmount => l10n.vatDeclFilingNegative,
-          VatFilingFileProblem.annualVolume => l10n.vatDeclFilingAnnualVolume,
-        });
+        AppSnack.error(context, vatFilingProblemText(l10n, e.problem));
         return;
       }
       if (!context.mounted) return;
@@ -73,6 +62,22 @@ Future<void> exportVatFilingFile(
     },
   );
 }
+
+/// The sentence that says why a filing file or a register was refused.
+String vatFilingProblemText(AppLocalizations l10n, VatFilingFileProblem p) =>
+    switch (p) {
+      VatFilingFileProblem.period => l10n.vatDeclFilingPeriod,
+      VatFilingFileProblem.taxNumber => l10n.vatDeclFilingTaxNumber,
+      VatFilingFileProblem.vatNumber => l10n.vatDeclFilingVatNumber,
+      VatFilingFileProblem.uid => l10n.vatDeclFilingUid,
+      VatFilingFileProblem.businessNumber => l10n.vatDeclFilingBn,
+      VatFilingFileProblem.fiscalCode => l10n.vatDeclFilingFiscalCode,
+      VatFilingFileProblem.declarant => l10n.vatDeclFilingDeclarant,
+      VatFilingFileProblem.unmappedBox => l10n.vatDeclFilingUnmappedBox,
+      VatFilingFileProblem.negativeAmount => l10n.vatDeclFilingNegative,
+      VatFilingFileProblem.annualVolume => l10n.vatDeclFilingAnnualVolume,
+      VatFilingFileProblem.exoneratedBySii => l10n.vatRegister347Sii,
+    };
 
 /// What the file of [save]'s country asks beyond the settings; null when
 /// the person cancelled.

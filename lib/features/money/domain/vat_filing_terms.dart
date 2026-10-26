@@ -42,6 +42,10 @@ enum VatFilingFileProblem {
   /// the annual summary and states the year's volume on the last 303, a
   /// page this file does not write.
   annualVolume,
+
+  /// A Spanish space that keeps its books through SII files no modelo 347:
+  /// the AEAT has its invoices already.
+  exoneratedBySii,
 }
 
 class VatFilingFileException implements Exception {
