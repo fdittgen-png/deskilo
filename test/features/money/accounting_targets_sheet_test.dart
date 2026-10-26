@@ -134,6 +134,36 @@ void main() {
     expect(find.text('One earlier connection was revoked'), findsOneWidget);
   });
 
+  testWidgets('#2374 — a billing manager connects Business Central with the company\'s Entra application; '
+      'a value of the wrong form is named and nothing is sent', (tester) async {
+    const card = 'business_central_fr-demo-site-studio';
+    const company = '7c3e8a1f-2b4d-4e6a-9f10-1a2b3c4d5e6f';
+    final repo = _empty();
+    await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+    await _tap(tester, 'acct-connect-token-$card');
+    expect(find.text('Connect Microsoft Dynamics 365 Business Central with a Microsoft Entra application'), findsOneWidget);
+    await tester.enterText(find.byKey(const ValueKey('acct-entra-clientId')), 'not-a-client-id');
+    await tester.enterText(find.byKey(const ValueKey('acct-token-value')), 'Xy8Q~secret');
+    await tester.enterText(find.byKey(const ValueKey('acct-entra-tenant')), 'contoso.onmicrosoft.com');
+    await tester.enterText(find.byKey(const ValueKey('acct-entra-environment')), 'Production');
+    await tester.enterText(find.byKey(const ValueKey('acct-entra-company')), company);
+    await _tap(tester, 'acct-token-save');
+    expect(find.text('This value does not have the expected form.'), findsOneWidget);
+    expect(repo.connections, isEmpty, reason: 'nothing was sent');
+
+    await tester.enterText(
+      find.byKey(const ValueKey('acct-entra-clientId')),
+      '0f1e2d3c-4b5a-4968-8776-655443322110',
+    );
+    await _tap(tester, 'acct-token-save');
+    expect(
+      repo.connections.single.remoteTenantId,
+      'contoso.onmicrosoft.com/Production/$company',
+    );
+    expect(find.text('Company: contoso.onmicrosoft.com/Production/$company'), findsOneWidget);
+    expect(find.textContaining('Xy8Q'), findsNothing, reason: 'the secret is never shown');
+  });
+
   testWidgets('a sign-in where the server registered no application says so and opens nothing', (tester) async {
     final repo = _empty();
     await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});

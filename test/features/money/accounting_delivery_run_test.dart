@@ -61,6 +61,23 @@ void main() {
     expect(run.missing, ['account bank']);
   });
 
+  test('#2374 — a draft the target refused to post needs attention, with '
+      'the target\'s words', () {
+    final run = DeliveryRunDone.fromJson({
+      'results': [
+        {
+          'document_kind': 'invoice',
+          'status': 'sent',
+          'detail': 'not posted: 403 posting is not permitted',
+        },
+      ],
+    });
+    expect(run.count(DeliveryRunStatus.sent), 1);
+    expect(run.count(DeliveryRunStatus.acknowledged), 0);
+    expect(run.needingAttention, 1);
+    expect(run.details, ['not posted: 403 posting is not permitted']);
+  });
+
   test('an answer without its results is never an empty run', () {
     expect(
       () => DeliveryRunDone.fromJson({'counts': <String, Object?>{}}),

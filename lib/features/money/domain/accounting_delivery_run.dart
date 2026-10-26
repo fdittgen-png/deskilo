@@ -22,7 +22,11 @@ enum DeliveryRunStatus {
   failed('failed'),
 
   /// A mapping it needs is missing; nothing was sent.
-  blocked('blocked');
+  blocked('blocked'),
+
+  /// #2374 — the target holds it as a draft and refused to post it (the
+  /// target's words say why); the next run posts the same draft.
+  sent('sent');
 
   const DeliveryRunStatus(this.wire);
   final String wire;
@@ -32,7 +36,7 @@ enum DeliveryRunStatus {
 
   /// Whether a person has to look at it.
   bool get needsAttention =>
-      this == conflict || this == failed || this == blocked;
+      this == conflict || this == failed || this == blocked || this == sent;
 }
 
 /// What one document event of a run became.

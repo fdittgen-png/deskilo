@@ -93,5 +93,13 @@
   "refusalAccountingClosed": "Diese Verbindung lässt das nicht mehr zu: Sie wurde widerrufen oder hat bereits übermittelt. Widerrufen Sie sie und verbinden Sie neu. Nichts wurde gespeichert.",
   "refusalAccountingValue": "Der Server hat diesen Wert abgelehnt: Prüfen Sie Token, Schlüssel oder Aussteller und versuchen Sie es erneut. Nichts wurde gespeichert.",
   "acctJournalLogged": "{logged, plural, =0{Kein neuer Beleg protokolliert} =1{Ein Beleg protokolliert} other{{logged} Belege protokolliert}}, {unchanged} unverändert",
-  "acctTargetNotDeliveredYet": "An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft."
+  "acctTargetNotDeliveredYet": "An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft.",
+  "acctEntraTitle": "{target} mit einer Microsoft-Entra-Anwendung verbinden",
+  "acctEntraBody": "Registrieren Sie für den Mandanten dieses Unternehmens eine Anwendung in Microsoft Entra ID, fügen Sie sie in Business Central unter Microsoft Entra-Anwendungen mit einem Berechtigungssatz hinzu, der auf Verkaufsbelege, Debitorenzahlungen und Buch.-Blätter beschränkt ist, und erstellen Sie dafür einen geheimen Clientschlüssel. Belege werden als Entwurf angelegt und nur gebucht, wo dieser Berechtigungssatz das Buchen erlaubt. Der Schlüssel wird verschlüsselt auf dem Server aufbewahrt und nie wieder angezeigt.",
+  "acctEntraClientId": "Anwendungs-ID (Client)",
+  "acctEntraSecret": "Geheimer Clientschlüssel",
+  "acctEntraTenant": "Mandant (Verzeichnis-ID oder Domäne)",
+  "acctEntraEnvironment": "Name der Umgebung",
+  "acctEntraCompany": "Unternehmens-ID",
+  "acctEntraInvalid": "Dieser Wert hat nicht die erwartete Form."
 }

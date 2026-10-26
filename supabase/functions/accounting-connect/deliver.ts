@@ -21,7 +21,9 @@
 // nothing; a target that refuses the company (pennylane: its journals;
 // quickbooks: its country and its numbering; sage: its country, its base
 // currency, tax rates and ledger accounts; xero: its country, its tax
-// rates and accounts) delivers nothing either.
+// rates and accounts; business central: the application's credentials, the
+// company by its id, its localisation and local currency, its accounts, tax
+// codes and journals) delivers nothing either.
 // A period lies within one calendar month, so one run stays well inside
 // the function's time and the target's rate limits; the app asks month by
 // month.
@@ -48,6 +50,7 @@ import { pennylaneLedger } from "../_shared/accounting_pennylane.ts";
 import { quickbooksOnline } from "../_shared/accounting_quickbooks.ts";
 import { sageAccounting } from "../_shared/accounting_sage.ts";
 import { xeroAccounting } from "../_shared/accounting_xero.ts";
+import { businessCentral } from "../_shared/accounting_business_central.ts";
 import { type CallerDb, clientOf, type Deps, json, resolved, store, UUID } from "./connection.ts";
 
 /** The targets this server delivers to, by target id. */
@@ -67,6 +70,12 @@ export const deliveryAdapters: Record<string, (ctx: AdapterContext) => PostingAd
   sage_business_cloud_fr: sageAccounting,
   sage_business_cloud_de: sageAccounting,
   sage_business_cloud_es: sageAccounting,
+  business_central_de: businessCentral,
+  business_central_fr: businessCentral,
+  business_central_ch: businessCentral,
+  business_central_gb: businessCentral,
+  business_central_us: businessCentral,
+  business_central_ca: businessCentral,
 };
 
 /** The context every adapter of [targetId] is built with. The EU check is
@@ -281,10 +290,13 @@ export async function deliverPeriod(
         payloadSha256: await postingSha256(posting),
         needs: adapter.needs(posting),
       }, maps, deliveries, adapter.remote(posting, parties[posting.documentId], maps, credited[posting.documentId]));
+      // A draft the target refused to post carries the target's words in
+      // the result; every other outcome in its delivery row.
+      const detail = result.status === "blocked" ? "" : result.status === "sent" ? result.detail : result.row.error ?? "";
       results.push(
         result.status === "blocked"
           ? { ...base, status: "blocked", missing: result.missing }
-          : { ...base, status: result.status, ...(result.row.error ? { detail: result.row.error } : {}) },
+          : { ...base, status: result.status, ...(detail ? { detail } : {}) },
       );
     } catch (error) {
       // A delivery the log refused (a changed document already

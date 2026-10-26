@@ -404,6 +404,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctDeliverySent => 'Sent, waiting for the answer';
 
   @override
+  String get acctEntraBody =>
+      'Register an application for this company\'s tenant in Microsoft Entra ID, add it in Business Central under Microsoft Entra Applications with a permission set limited to sales documents, customer payments and journals, and create a client secret for it. Documents are created as drafts and posted only where that permission set allows posting. The secret is kept encrypted on the server and never shown again.';
+
+  @override
+  String get acctEntraClientId => 'Application (client) ID';
+
+  @override
+  String get acctEntraCompany => 'Company ID';
+
+  @override
+  String get acctEntraEnvironment => 'Environment name';
+
+  @override
+  String get acctEntraInvalid => 'This value does not have the expected form.';
+
+  @override
+  String get acctEntraSecret => 'Client secret';
+
+  @override
+  String get acctEntraTenant => 'Tenant (directory ID or domain)';
+
+  @override
+  String acctEntraTitle(String target) {
+    return 'Connect $target with a Microsoft Entra application';
+  }
+
+  @override
   String acctJournalLogged(int logged, int unchanged) {
     String _temp0 = intl.Intl.pluralLogic(
       logged,

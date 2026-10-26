@@ -51,6 +51,18 @@ enum AccountingAuthKind {
       values.firstWhere((v) => v.wire == wire, orElse: () => token);
 }
 
+/// #2374 — what the person pastes to connect a token target.
+enum AccountingTokenShape {
+  /// An API token the person creates in the target.
+  apiToken,
+
+  /// The client id and secret of the Microsoft Entra application the
+  /// company's administrator registered (OAuth 2.0 client credentials),
+  /// with the company named by tenant, environment and company id
+  /// (`business_central_connection.dart`).
+  entraClientCredentials,
+}
+
 /// How the target codes tax: a code per rate, per tax component (a US or
 /// Canadian component), or not at all (the account carries the rate).
 enum TaxCodeModel { perRate, perComponent, none }
@@ -101,6 +113,7 @@ class AccountingTarget {
     this.customerIdRule = const CustomerIdRule(),
     this.limits = const TargetLimits(),
     this.connectsBy = const {},
+    this.tokenShape = AccountingTokenShape.apiToken,
     this.runnerDelivers = false,
     this.importsTargetId,
   });
@@ -130,6 +143,9 @@ class AccountingTarget {
 
   /// The ways an issuer connects to an API target; empty for a file target.
   final Set<AccountingAuthKind> connectsBy;
+
+  /// What a [AccountingAuthKind.token] connection is made with.
+  final AccountingTokenShape tokenShape;
 
   /// #2377 — the delivery runner sends documents through this API target's
   /// adapter. Until it does, a connection and its mappings are kept and the

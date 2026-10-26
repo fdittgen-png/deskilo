@@ -23,6 +23,14 @@
 //      conflict. A refusal fails (with the target's words); no answer is a
 //      conflict, resolved on the next run by step 3 and never by a second
 //      create.
+//   5. A target that creates a draft and posts it as its own operation
+//      (#2374, Business Central): the draft's identity is recorded `sent`
+//      first, then it is posted. Only the posted document acknowledges. A
+//      refused post leaves the delivery `sent` with its draft, never
+//      acknowledged; a post with no answer is a conflict, and the next run
+//      reads the same remote document back: posted, it acknowledges; still
+//      the same draft (the version the delivery holds), it is posted again;
+//      a draft changed since it was delivered is a conflict, never posted.
 //
 // Pure: the store and the adapter are parameters (accounting_delivery_test.ts).
 
@@ -88,6 +96,9 @@ export interface DeliveryRow {
   outcome: "created" | "existing" | "unchanged" | "updated" | "conflict";
   /** The target's words or the kit's reason of a conflict or a failure. */
   error?: string;
+  /** The remote document's version the delivery holds (an ETag), '' when
+   * none was recorded. */
+  remote_version?: string;
 }
 
 export interface DeliveryStore {
@@ -122,11 +133,17 @@ export interface RemoteAdapter {
     job: DeliveryJob,
     maps: AccountingMap[],
   ): Promise<CreateOutcome>;
+  /** A target whose create makes a draft (`state: "draft"`): posts that
+   * draft, as it was read at [draft]'s version, and answers the posted
+   * document. Never creates. */
+  post?(draft: RemoteDocument): Promise<CreateOutcome>;
 }
 
 export type DeliveryResult =
   | { status: "blocked"; missing: string[] }
-  | { status: "unchanged" | "acknowledged" | "conflict" | "failed"; row: DeliveryRow };
+  | { status: "unchanged" | "acknowledged" | "conflict" | "failed"; row: DeliveryRow }
+  /** A draft the target holds and refused to post: the target's words. */
+  | { status: "sent"; row: DeliveryRow; detail: string };
 
 /** The needs of [needs] no mapping of [maps] answers, as `kind key`. */
 export function missingMappings(
@@ -171,6 +188,19 @@ export async function deliver(
       const row = await store.record(job, "conflict", undefined, `readback failed: ${found}`);
       return { status: "conflict", row };
     }
+    if (found.length === 1 && found[0].matches && found[0].state === "draft" && adapter.post) {
+      const held = prepared.remote_version ?? "";
+      if (held && found[0].version !== held) {
+        const row = await store.record(
+          job,
+          "conflict",
+          undefined,
+          `the target's draft ${found[0].id} changed since it was delivered (version ${held}, now ${found[0].version || "none"})`,
+        );
+        return { status: "conflict", row };
+      }
+      return postDraft(job, store, adapter.post.bind(adapter), found[0]);
+    }
     if (found.length === 1 && found[0].matches) {
       const row = await store.record(job, "acknowledged", found[0]);
       return { status: row.status === "conflict" ? "conflict" : "acknowledged", row };
@@ -204,6 +234,10 @@ export async function deliver(
     );
     return { status: "conflict", row };
   }
+  if (created.ok && created.remote.state === "draft" && adapter.post) {
+    await store.record(job, "sent", created.remote);
+    return postDraft(job, store, adapter.post.bind(adapter), created.remote);
+  }
   if (created.ok) {
     const row = await store.record(job, "acknowledged", created.remote);
     return { status: row.status === "conflict" ? "conflict" : "acknowledged", row };
@@ -218,6 +252,42 @@ export async function deliver(
   }
   const row = await store.record(job, "failed", undefined, created.detail);
   return { status: "failed", row };
+}
+
+/** Step 5: posts [draft], whose identity is recorded. */
+async function postDraft(
+  job: DeliveryJob,
+  store: DeliveryStore,
+  post: (draft: RemoteDocument) => Promise<CreateOutcome>,
+  draft: RemoteDocument,
+): Promise<DeliveryResult> {
+  const posted = await post(draft);
+  if (posted.ok && posted.remote.matches && posted.remote.state !== "draft") {
+    const row = await store.record(job, "acknowledged", posted.remote);
+    return { status: row.status === "conflict" ? "conflict" : "acknowledged", row };
+  }
+  if (posted.ok) {
+    const row = await store.record(
+      job,
+      "conflict",
+      undefined,
+      `the target's document ${posted.remote.id} differs from this one after posting${
+        posted.remote.difference ? `: ${posted.remote.difference}` : ""
+      }`,
+    );
+    return { status: "conflict", row };
+  }
+  if (posted.conflict) {
+    const row = await store.record(job, "conflict", undefined, posted.detail);
+    return { status: "conflict", row };
+  }
+  if (posted.unknown) {
+    const row = await store.record(job, "conflict", undefined, `no answer after post: ${posted.detail}`);
+    return { status: "conflict", row };
+  }
+  // Refused: the draft stays the delivery's, and the next run posts it.
+  const row = await store.record(job, "sent", draft);
+  return { status: "sent", row, detail: `not posted: ${posted.detail}` };
 }
 
 /** The delivery log refused a record: nothing more is sent for it. [code]

@@ -93,5 +93,13 @@
   "refusalAccountingClosed": "Questo collegamento non lo consente più: è stato revocato o ha già inviato documenti. Lo revochi e si colleghi di nuovo. Non è stato salvato nulla.",
   "refusalAccountingValue": "Il server ha rifiutato questo valore: verifichi il token, la chiave o l'emittente e riprovi. Non è stato salvato nulla.",
   "acctJournalLogged": "{logged, plural, =0{Nessun nuovo documento registrato} =1{Un documento registrato} other{{logged} documenti registrati}}, {unchanged} invariati",
-  "acctTargetNotDeliveredYet": "Nessun documento viene ancora inviato a questo sistema: la connessione e le sue corrispondenze sono conservate per l'invio, che per esso non è ancora attivo."
+  "acctTargetNotDeliveredYet": "Nessun documento viene ancora inviato a questo sistema: la connessione e le sue corrispondenze sono conservate per l'invio, che per esso non è ancora attivo.",
+  "acctEntraTitle": "Colleghi {target} con un'applicazione Microsoft Entra",
+  "acctEntraBody": "Registri un'applicazione per il tenant di questa società in Microsoft Entra ID, la aggiunga in Business Central in Applicazioni Microsoft Entra con un set di autorizzazioni limitato ai documenti di vendita, agli incassi dai clienti e alle registrazioni COGE, e crei per essa un segreto client. I documenti vengono creati come bozza e registrati solo dove quel set di autorizzazioni consente la registrazione. Il segreto viene conservato cifrato sul server e non viene mai più mostrato.",
+  "acctEntraClientId": "ID applicazione (client)",
+  "acctEntraSecret": "Segreto client",
+  "acctEntraTenant": "Tenant (ID directory o dominio)",
+  "acctEntraEnvironment": "Nome dell'ambiente",
+  "acctEntraCompany": "ID della società",
+  "acctEntraInvalid": "Questo valore non ha la forma prevista."
 }

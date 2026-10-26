@@ -74,7 +74,10 @@ class MemoryStore implements DeliveryStore {
     }
     row.status = next;
     row.error = next === "conflict" || next === "failed" ? error : "";
-    if (next === "acknowledged" && remote) row.remote_id = remote.id;
+    if (next !== "conflict" && remote) {
+      if (next === "acknowledged" || remote.state === "draft") row.remote_id = remote.id;
+      if (remote.version) row.remote_version = remote.version;
+    }
     return Promise.resolve({ ...row, outcome });
   }
 }
@@ -258,4 +261,86 @@ Deno.test("a delivery prepared by another run is read back before any create", a
   target.held.set([...store.rows.values()][0].idempotency_key, [{ id: "R-1", matches: true }]);
   assertEquals((await deliver(job(), maps, store, target)).status, "acknowledged");
   assertEquals(target.creates, 0);
+});
+
+/** A target that creates drafts and posts them as their own operation
+ * (#2374). [postAnswer] decides the next post: done, refused, or done with
+ * no answer. */
+class DraftTarget implements RemoteAdapter {
+  held: RemoteDocument[] = [];
+  creates = 0;
+  posts = 0;
+  postAnswer: "posted" | "refused" | "lost" = "posted";
+
+  readback() {
+    return Promise.resolve(this.held.map((d) => ({ ...d })));
+  }
+
+  create() {
+    this.creates++;
+    const draft: RemoteDocument = { id: "R-1", version: "v1", state: "draft", matches: true };
+    this.held = [draft];
+    return Promise.resolve({ ok: true as const, remote: { ...draft } });
+  }
+
+  post(draft: RemoteDocument) {
+    this.posts++;
+    if (this.postAnswer === "refused") {
+      return Promise.resolve({ ok: false as const, unknown: false, detail: "403 posting is not permitted" });
+    }
+    const posted: RemoteDocument = { ...draft, number: "103001", version: "v2", state: "posted" };
+    this.held = [posted];
+    if (this.postAnswer === "lost") return Promise.resolve({ ok: false as const, unknown: true, detail: "timeout" });
+    return Promise.resolve({ ok: true as const, remote: posted });
+  }
+}
+
+Deno.test("a draft is recorded before it is posted, and only the posted document acknowledges", async () => {
+  const store = new MemoryStore();
+  const target = new DraftTarget();
+  const result = await deliver(job(), maps, store, target);
+  assertEquals(result.status, "acknowledged");
+  assertEquals([target.creates, target.posts], [1, 1]);
+  const row = [...store.rows.values()][0];
+  assertEquals([row.status, row.remote_id, row.remote_version], ["acknowledged", "R-1", "v2"]);
+});
+
+Deno.test("a refused post leaves the draft sent, never acknowledged; the next run posts the same draft", async () => {
+  const store = new MemoryStore();
+  const target = new DraftTarget();
+  target.postAnswer = "refused";
+  const refused = await deliver(job(), maps, store, target);
+  assertEquals(refused.status, "sent");
+  assertEquals(refused.status === "sent" && refused.detail, "not posted: 403 posting is not permitted");
+  assertEquals([...store.rows.values()][0].status, "sent");
+  target.postAnswer = "posted";
+  assertEquals((await deliver(job(), maps, store, target)).status, "acknowledged");
+  assertEquals([target.creates, target.posts], [1, 2]);
+});
+
+Deno.test("a post with no answer is read back: posted, it acknowledges, and nothing is posted or created again", async () => {
+  const store = new MemoryStore();
+  const target = new DraftTarget();
+  target.postAnswer = "lost";
+  const lost = await deliver(job(), maps, store, target);
+  assertEquals(lost.status, "conflict");
+  assertEquals([...store.rows.values()][0].error, "no answer after post: timeout");
+  assertEquals((await deliver(job(), maps, store, target)).status, "acknowledged");
+  assertEquals([target.creates, target.posts], [1, 1]);
+});
+
+Deno.test("a draft changed in the target since it was delivered is a conflict, never posted", async () => {
+  const store = new MemoryStore();
+  const target = new DraftTarget();
+  target.postAnswer = "refused";
+  await deliver(job(), maps, store, target);
+  target.held = [{ ...target.held[0], version: "v9" }];
+  target.postAnswer = "posted";
+  const stale = await deliver(job(), maps, store, target);
+  assertEquals(stale.status, "conflict");
+  assertEquals(
+    [...store.rows.values()][0].error,
+    "the target's draft R-1 changed since it was delivered (version v1, now v9)",
+  );
+  assertEquals(target.posts, 1);
 });

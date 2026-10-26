@@ -214,6 +214,12 @@ reached and how far it is qualified. The table below is generated from it;
 | `xero_ca` | Xero · Xero · Accounting API 2.0, Canadian organisation | api | documents | CA | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
 | `xero_us` | Xero · Xero · Accounting API 2.0, US organisation | api | documents | US | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
 | `xero_eu` | Xero · Xero · Accounting API 2.0, EU organisation | api | documents | EU members | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
+| `business_central_de` | Microsoft · Dynamics 365 Business Central · API v2.0, German localisation | api | documents | DE | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
+| `business_central_fr` | Microsoft · Dynamics 365 Business Central · API v2.0, French localisation | api | documents | FR | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
+| `business_central_ch` | Microsoft · Dynamics 365 Business Central · API v2.0, Swiss localisation | api | documents | CH | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
+| `business_central_gb` | Microsoft · Dynamics 365 Business Central · API v2.0, UK localisation | api | documents | GB | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
+| `business_central_us` | Microsoft · Dynamics 365 Business Central · API v2.0, US localisation | api | documents | US | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
+| `business_central_ca` | Microsoft · Dynamics 365 Business Central · API v2.0, Canadian localisation | api | documents | CA | implemented | Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups |
 <!-- END GENERATED TARGETS -->
 
 Write-offs are posted **gross**, as a loss, on the day they were given up:
@@ -397,6 +403,64 @@ function:
   change webhook and the `xero_invoice_csv` file target. The live exchange
   is NOT RUN: it needs a Xero developer application and a demo organisation
   per region.
+- `business_central_de`, `_fr`, `_ch`, `_gb`, `_us`, `_ca`
+  (`accounting_business_central.ts`, `businessCentral`, #2374): Microsoft
+  Dynamics 365 Business Central API v2.0, one target per localisation. The
+  connection is a token connection: the company's administrator registers a
+  Microsoft Entra application for the tenant, adds it in Business Central
+  under *Microsoft Entra Applications* with a permission set limited to
+  sales documents, customer payments and journals, and the billing manager
+  enters its client id and secret (kept as one Vault secret,
+  `client-id:secret`) with the company as `tenant/environment/company id`
+  (`business_central_connection.dart`; the adapter's `COMPANY_ADDRESS`). A
+  token is asked for each run with those client credentials
+  (`client_credentials`, scope `https://api.businesscentral.dynamics.com/.default`).
+  The company is named by its id, never by its name, and an environment
+  (production or a sandbox) is its own connection; the remote company cannot
+  change once the connection delivered (`set_accounting_token_v1`, DKA02).
+  Before a run the company must exist in the environment, its
+  `companyInformation.countryRegionCode` must be the target's localisation
+  and its `currencyCode` names the only currency sent; its `accounts`,
+  `bankAccounts`, `taxGroups`, `journals` and `customerPaymentJournals` are
+  read. An invoice is a `salesInvoice`, a credit note a `salesCreditMemo`
+  (one deep insert with its lines): `externalDocumentNumber` = the legal
+  number, one `Account` line per revenue line on the `account
+  revenue:<group>` mapping, net, with the `taxCode` of the `item
+  vat_output:<group>` mapping (the VAT product posting group, or the tax
+  group in the US and Canada); the customer is found by `number` (the member
+  number, at most 20 characters) or created, never in the US or Canada where
+  its tax area is the localisation's. A credit memo names its posted
+  invoice (`invoiceId`). A receipt is a `customerPayment` applied to the
+  posted invoice (`appliesToInvoiceId`) in the customer payment journal of
+  the posting's journal code (BQ); every other event balanced `journalLines`
+  (one `$batch` with `Isolation: snapshot`) in the general journal of the
+  posting's code (OD, BQ, HA), a customer's or supplier's line on the
+  `Customer`/`Vendor` of the party's number, the bank's on the bank account
+  `account bank` names. A payment and a journal carry `DK` + the start of
+  the idempotency key as `documentNumber`, by which the journal (before
+  posting) and the G/L entries (after) are read back. **Draft and post are
+  two steps** (the kit's step 5): a create is a draft whose id and ETag are
+  recorded `sent`; it is then posted (`Microsoft.NAV.post`, `If-Match` the
+  ETag; `postAndSend` is never called). The application's permission set is
+  the allowance: a refused post leaves the delivery `sent` with its draft,
+  never acknowledged, and the next run posts the same draft; a post with no
+  answer is read back by the legal number, never created again; a draft
+  whose ETag changed since its delivery is a `conflict` and is not posted. A
+  journal is posted whole, so one holding lines this delivery did not write
+  is refused. Business Central's read-back totals (`totalAmountExcludingTax`,
+  `totalTaxAmount`, `totalAmountIncludingTax`) must equal the document's to
+  the cent, otherwise `conflict` and the draft stays unposted; a credit memo
+  that was not applied, or still owes beside an invoice that still owes, is
+  a `conflict`. A number held for another customer is a `conflict`. Refused
+  by name before anything is sent: another currency, deferred tax
+  (`vat_pending`), a tax code or account the company does not hold, an
+  external number over 35 or a customer number over 20 characters, a credit
+  note or receipt whose invoice is not posted. Not yet: the PDF as an
+  attachment, dimensions for the site, Dynamics 365 Finance (another
+  product) and the General Journal "Edit in Excel" file target
+  `business_central_journal_xlsx`. The live exchange is NOT RUN: it needs an
+  Entra application registration and a Business Central sandbox per
+  localisation (DE, FR, GB, US first).
 
 ## What each country mandates that this app does not produce
 
