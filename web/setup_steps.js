@@ -91,6 +91,8 @@ const STEPS=[
   // #2863 — every server that asks a company registry for supplier details.
   selectEl(T('supLookupWait'),'supplierLookup.timeout',opts(SUP_LOOKUP_WAIT),T('supLookupWaitHint'),null,'identity'),
   selectEl(T('supLookupRate'),'supplierLookup.perMinute',opts(SUP_LOOKUP_RATE),T('supLookupRateHint'),null,'identity'),
+  // #2571 — a US space whose state asks for longer than the federal rule.
+  ...(S.country==='US'?[selectEl(T('retUsYears'),'retention.usYears',opts(RET_US_YEARS),T('retUsYearsHint'),null,'legal')]:[]),
   // #2378 — where the data lives, as the operator declares it; never inferred.
   selectEl(T('recordsHostingCountry'),'records.hostingCountry',[['',T('recordsHostingNone')],...COUNTRIES.map(c=>[c[0],countryName(c[0])])],T('recordsHostingCountryHint'),null,'identity'),
   ...(S.country==='CA'?[input(T('recordsCraReference'),'records.craReference',T('recordsCraReferenceHint'),'text','','identity')]:[]),

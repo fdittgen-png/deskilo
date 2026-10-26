@@ -63,8 +63,9 @@ void main() {
       final long = 'X' * 65;
       expect(commands.problemOf(_text(max: 64), long), SettingProblem.aboveMax);
       expect(commands.problemOf(_text(max: 64), 'X' * 64), isNull);
-      await expectLater(
-        commands.save(
+      // save() refuses before it builds a future: the throw is synchronous.
+      expect(
+        () => commands.save(
           workspaceId: 'ws',
           definition: _text(max: 64),
           text: long,
