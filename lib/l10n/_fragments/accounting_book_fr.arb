@@ -8,6 +8,7 @@
   "bookAuthorityLocal": "DesKilo tient le livre",
   "bookAuthorityExternal": "Logiciel externe",
   "bookExternalSystem": "Logiciel qui fait foi",
+  "bookExternalOther": "Autre…",
   "bookCurrency": "Devise de tenue",
   "bookFiscalStart": "L’exercice commence le",
   "bookBasisAccrual": "Engagements",

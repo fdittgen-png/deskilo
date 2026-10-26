@@ -9,6 +9,8 @@
 // of the TARGET, so the sheet, the coverage table and a future connection
 // read the same descriptor. The qualification stays the existing
 // [AccountingCapability], keyed by the target id.
+import 'package:meta/meta.dart';
+
 import '../../../core/vat/place_of_supply.dart' show isEuCountry;
 import 'accounting_capability.dart';
 import 'accounting_format.dart';
@@ -98,6 +100,26 @@ class TargetLimits {
 }
 
 /// One product edition DesKilo exports to or connects with.
+/// The vendor name of the app's own exports (the ledgers, the journals,
+/// the archive): files DesKilo writes, never a software the books are kept
+/// in.
+const String deskiloVendor = 'DesKilo';
+
+/// The public bodies whose file formats are targets (a filing, a SAF-T, an
+/// audit handover): an authority a return goes to, never a software the
+/// books are kept in. Pinned by `accounting_target_test`: every name here
+/// is the vendor of at least one target.
+@visibleForTesting
+const Set<String> accountingAuthorities = {
+  'DGFiP',
+  'Autoridade Tributária',
+  'OECD',
+  'Skatteetaten',
+  'Erhvervsstyrelsen',
+  'BMF',
+  'KMU-Kontenrahmen',
+};
+
 class AccountingTarget {
   const AccountingTarget({
     required this.id,
@@ -164,6 +186,11 @@ class AccountingTarget {
         countries.contains(code) ||
         (countries.contains(accountingCountriesEu) && isEuCountry(code));
   }
+
+  /// A software a space can keep its books in: neither the app's own
+  /// exports nor an authority's file format.
+  bool get isSoftware =>
+      vendor != deskiloVendor && !accountingAuthorities.contains(vendor);
 
   /// The reviewed qualification of this target; one nobody reviewed is
   /// `unsupported` and blocked, never silently allowed.

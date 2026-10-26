@@ -183,4 +183,21 @@ void main() {
       dispatched,
     );
   });
+
+  test('the book software picker: every authority named is a vendor, and '
+      'a target is software unless it is the app\'s own or an authority\'s', () {
+    final vendors = {for (final t in accountingTargets) t.vendor};
+    for (final name in accountingAuthorities) {
+      expect(vendors, contains(name), reason: '$name names no target');
+    }
+    expect(vendors, contains(deskiloVendor));
+    for (final t in accountingTargets) {
+      expect(
+        t.isSoftware,
+        t.vendor != deskiloVendor && !accountingAuthorities.contains(t.vendor),
+        reason: t.id,
+      );
+    }
+    expect(accountingTargets.where((t) => t.isSoftware), isNotEmpty);
+  });
 }

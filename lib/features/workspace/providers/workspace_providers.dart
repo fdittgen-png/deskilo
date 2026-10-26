@@ -45,6 +45,7 @@ import 'operation_context_providers.dart';
 import 'workspace_host_providers.dart';
 import 'workspace_roles_providers.dart';
 
+export '../domain/workspace_permission.dart' show accountingPageRights; // #2577: the accounting page's gate, one set
 export 'active_workspace_providers.dart';
 export 'member_display_providers.dart' show memberNamesProvider, memberProfilesProvider;
 export 'operation_context_providers.dart'; // #2561 C1: the contexts

@@ -3850,6 +3850,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get bookExternalOther => 'Other…';
+
+  @override
   String get bookExternalSystem => 'Authoritative system';
 
   @override

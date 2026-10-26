@@ -3874,6 +3874,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get bookExternalOther => 'Otro…';
+
+  @override
   String get bookExternalSystem => 'Sistema que hace fe';
 
   @override

@@ -2659,6 +2659,7 @@
   "bookChartTitle": "Plan comptable · {site}",
   "bookCurrency": "Devise de tenue",
   "bookEffectiveFrom": "En vigueur à partir du {date}",
+  "bookExternalOther": "Autre…",
   "bookExternalSystem": "Logiciel qui fait foi",
   "bookFiscalPreview": "Exercice {label} : {start} – {end}",
   "bookFiscalStart": "L’exercice commence le",

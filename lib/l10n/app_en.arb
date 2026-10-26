@@ -4869,6 +4869,10 @@
       }
     }
   },
+  "bookExternalOther": "Other…",
+  "@bookExternalOther": {
+    "description": "#2577 the book software picker: a software the catalogue does not list, typed by the person"
+  },
   "bookExternalSystem": "Authoritative system",
   "@bookExternalSystem": {
     "description": "#1869 accounting book sheet"

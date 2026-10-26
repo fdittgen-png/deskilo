@@ -250,9 +250,12 @@ List<Widget> _financeGroups(
       'drawer-cash', 'drawer-billing', 'drawer-payment-methods',
       'drawer-payment-config',
     }, from: all, after: [
-      group('accounting', labels.hubAccountingTitle, Icons.menu_book_outlined, {
-        for (final e in accounting) e.key,
-      }, from: accounting),
+      // Built only with a door inside: an empty sub-group would keep the
+      // Finance header for a member with no finance entry at all.
+      if (accounting.isNotEmpty)
+        group('accounting', labels.hubAccountingTitle, Icons.menu_book_outlined, {
+          for (final e in accounting) e.key,
+        }, from: accounting),
     ]),
   ];
 }

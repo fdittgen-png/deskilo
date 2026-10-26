@@ -2659,6 +2659,7 @@
   "bookChartTitle": "Piano dei conti · {site}",
   "bookCurrency": "Valuta funzionale",
   "bookEffectiveFrom": "In vigore dal {date}",
+  "bookExternalOther": "Altro…",
   "bookExternalSystem": "Sistema che fa fede",
   "bookFiscalPreview": "Esercizio {label}: {start} – {end}",
   "bookFiscalStart": "L’esercizio inizia il",

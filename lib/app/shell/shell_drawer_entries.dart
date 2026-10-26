@@ -156,9 +156,7 @@ class DrawerEntries {
     final billing = may(WorkspacePermission.manageBilling);
     return <DrawerEntry>[
       if (features.contains(WorkspaceFeature.moneyTab) &&
-          (billing ||
-              may(WorkspacePermission.viewFinances) ||
-              may(WorkspacePermission.workspaceSettings)))
+          accountingPageRights.any(may))
         DrawerEntry('drawer-accounting', Icons.menu_book_outlined,
             l10n.hubAccountingTitle, () => go('/money/accounting'),
             route: '/money/accounting'),

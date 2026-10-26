@@ -19,12 +19,17 @@ Future<void> _pump(
   Widget page, {
   Set<WorkspaceFeature> features = const {},
   Set<WorkspacePermission> rights = const {},
+  bool owner = true,
 }) => pumpApp(
   tester,
   page,
   overrides: [
     ...standardTestOverrides(
-      workspace: FakeWorkspaceRepository.withWorkspace(),
+      workspace: FakeWorkspaceRepository.withWorkspace()
+        ..myMember = FakeWorkspaceRepository.withWorkspace().myMember.copyWith(
+          isOwner: owner,
+          isAdmin: owner,
+        ),
     ),
     enabledFeaturesSyncProvider.overrideWithValue(features),
     myPermissionsProvider.overrideWithValue(rights),
@@ -121,5 +126,76 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(find.byKey(const ValueKey('cash-hub-to-pay')), findsOneWidget);
+  });
+
+  testWidgets('the accounting page opens a door only with its flag on', (
+    tester,
+  ) async {
+    await _pump(tester, const AccountingHubScreen());
+    await tester.pump();
+    expect(find.byKey(const ValueKey('accounting-hub')), findsOneWidget);
+    for (final key in [
+      'accounting-hub-export', 'accounting-hub-identity', 'accounting-hub-vat',
+      'accounting-hub-vat-declarations', 'accounting-hub-sequences',
+      'accounting-hub-einvoice',
+    ]) {
+      expect(find.byKey(ValueKey(key)), findsNothing, reason: key);
+    }
+
+    await _pump(
+      tester,
+      const AccountingHubScreen(),
+      features: {
+        WorkspaceFeature.invoicing,
+        WorkspaceFeature.vatManagement,
+        WorkspaceFeature.numberSequences,
+      },
+    );
+    await tester.pump();
+    expect(find.byKey(const ValueKey('accounting-hub-export')), findsOneWidget);
+    expect(find.byKey(const ValueKey('accounting-hub-identity')), findsOneWidget);
+    expect(find.byKey(const ValueKey('accounting-hub-vat')), findsOneWidget);
+    expect(find.byKey(const ValueKey('accounting-hub-sequences')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('accounting-hub-vat-declarations')),
+      findsNothing,
+      reason: 'the declarations need their own flag',
+    );
+  });
+
+  testWidgets('the accounting page shows a member only the doors of their '
+      'rights; the sequences door asks its own flag', (tester) async {
+    const flags = {WorkspaceFeature.invoicing, WorkspaceFeature.vatManagement};
+    await _pump(tester, const AccountingHubScreen(), features: flags, owner: false);
+    await tester.pump();
+    expect(find.byKey(const ValueKey('accounting-hub-export')), findsNothing);
+    expect(find.byKey(const ValueKey('accounting-hub-vat')), findsNothing);
+
+    await _pump(
+      tester,
+      const AccountingHubScreen(),
+      features: flags,
+      rights: {WorkspacePermission.issueInvoices},
+      owner: false,
+    );
+    await tester.pump();
+    expect(find.byKey(const ValueKey('accounting-hub-export')), findsOneWidget);
+    expect(find.byKey(const ValueKey('accounting-hub-vat')), findsNothing);
+    expect(find.byKey(const ValueKey('accounting-hub-identity')), findsNothing);
+
+    await _pump(
+      tester,
+      const AccountingHubScreen(),
+      features: flags,
+      rights: {WorkspacePermission.manageBilling},
+      owner: false,
+    );
+    await tester.pump();
+    expect(find.byKey(const ValueKey('accounting-hub-vat')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('accounting-hub-sequences')),
+      findsNothing,
+      reason: 'billing alone: the sequences flag is off',
+    );
   });
 }

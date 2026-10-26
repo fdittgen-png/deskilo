@@ -2659,6 +2659,7 @@
   "bookChartTitle": "Plan contable · {site}",
   "bookCurrency": "Moneda funcional",
   "bookEffectiveFrom": "Vigente desde el {date}",
+  "bookExternalOther": "Otro…",
   "bookExternalSystem": "Sistema que hace fe",
   "bookFiscalPreview": "Ejercicio {label}: {start} – {end}",
   "bookFiscalStart": "El ejercicio empieza el",

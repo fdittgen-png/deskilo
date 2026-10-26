@@ -2659,6 +2659,7 @@
   "bookChartTitle": "Kontenplan · {site}",
   "bookCurrency": "Buchungswährung",
   "bookEffectiveFrom": "Gültig ab {date}",
+  "bookExternalOther": "Anderes…",
   "bookExternalSystem": "Maßgebliches System",
   "bookFiscalPreview": "Geschäftsjahr {label}: {start} – {end}",
   "bookFiscalStart": "Das Geschäftsjahr beginnt am",

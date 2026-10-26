@@ -6541,6 +6541,12 @@ abstract class AppLocalizations {
   /// **'Takes effect from {date}'**
   String bookEffectiveFrom(String date);
 
+  /// #2577 the book software picker: a software the catalogue does not list, typed by the person
+  ///
+  /// In en, this message translates to:
+  /// **'Other…'**
+  String get bookExternalOther;
+
   /// #1869 accounting book sheet
   ///
   /// In en, this message translates to:

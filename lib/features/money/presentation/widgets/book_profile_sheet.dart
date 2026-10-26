@@ -67,6 +67,36 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   String? _issuer;
   var _authority = BookAuthority.preAccounting;
   final _external = TextEditingController();
+
+  /// The person chose "Other…": the software is typed, not picked.
+  bool _otherSoftware = false;
+
+  /// The software picked from the list, or null for "Other…", which
+  /// starts the typed field empty; typing into it keeps the choice.
+  void _software(String? picked) => setState(() {
+        if (picked == null && !_otherSoftware) _external.clear();
+        _otherSoftware = picked == null;
+        if (picked != null) _external.text = picked;
+      });
+
+  /// The external book's software: the list, and the typed field after
+  /// "Other…".
+  List<Widget> _softwareFields(AppLocalizations l10n, String country) => [
+        _SoftwareField(
+          key: const ValueKey('book-external-field'),
+          country: country,
+          value: _external.text,
+          other: _otherSoftware,
+          onChanged: _software,
+        ),
+        if (_otherSoftware)
+          TextField(
+            key: const ValueKey('book-external-other'),
+            controller: _external,
+            onChanged: (_) => _software(null),
+            decoration: InputDecoration(labelText: l10n.bookExternalSystem),
+          ),
+      ];
   final _currency = TextEditingController();
   var _month = 1;
   var _day = 1;
@@ -237,11 +267,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               ),
             ),
             if (_authority == BookAuthority.externalBook)
-              _SoftwareField(
-                country: workspace.countryCode,
-                value: _external.text,
-                onChanged: (v) => setState(() => _external.text = v),
-              ),
+              ..._softwareFields(l10n, workspace.countryCode),
             TextField(
               key: const ValueKey('book-currency'),
               controller: _currency,
@@ -423,39 +449,58 @@ class BookProfileSection extends ConsumerWidget {
   }
 }
 
-/// The list the book's external software is chosen from.
+/// The list the book's external software is chosen from, with "Other…"
+/// for a software the catalogue does not know; null means "Other…".
 class _SoftwareField extends StatelessWidget {
   const _SoftwareField({
     required this.country,
+    super.key,
     required this.value,
+    required this.other,
     required this.onChanged,
   });
 
   final String country;
   final String value;
-  final ValueChanged<String> onChanged;
+  final bool other;
+  final ValueChanged<String?> onChanged;
+
+  /// The dropdown's own value for "Other…".
+  static const _otherChoice = '\u0000other';
 
   @override
-  Widget build(BuildContext context) => DropdownButtonFormField<String>(
-    key: const ValueKey('book-external'),
-    initialValue: value.isEmpty ? null : value,
-    isExpanded: true,
-    decoration: InputDecoration(labelText: context.l10n.bookExternalSystem),
-    items: [
-      for (final name in _softwareChoices(country, value))
-        DropdownMenuItem(value: name, child: Text(name)),
-    ],
-    onChanged: (v) => onChanged(v ?? ''),
-  );
+  Widget build(BuildContext context) {
+    final choices = _softwareChoices(country, value);
+    final selected = other
+        ? _otherChoice
+        : choices.contains(value) ? value : null;
+    return DropdownButtonFormField<String>(
+      key: const ValueKey('book-external'),
+      initialValue: selected,
+      isExpanded: true,
+      decoration: InputDecoration(labelText: context.l10n.bookExternalSystem),
+      items: [
+        for (final name in choices)
+          DropdownMenuItem(value: name, child: Text(name)),
+        DropdownMenuItem(
+          key: const ValueKey('book-external-choice-other'),
+          value: _otherChoice,
+          child: Text(context.l10n.bookExternalOther),
+        ),
+      ],
+      onChanged: (v) => onChanged(v == _otherChoice ? null : v),
+    );
+  }
 }
 
-/// The software a space can name as its book: every product the accounting
-/// targets know in the space's country, by name, plus the one already stored
-/// so an earlier choice never vanishes from the list.
+/// The software a space can name as its book: every accounting software
+/// the targets know in the space's country, by name (the app's own exports
+/// and the authorities' file formats are no software), plus the one already
+/// stored so an earlier choice never vanishes from the list.
 List<String> _softwareChoices(String country, String stored) {
   final names = <String>{
     for (final t in accountingTargets)
-      if (t.offeredIn(country)) '${t.vendor} ${t.product}'.trim(),
+      if (t.isSoftware && t.offeredIn(country)) '${t.vendor} ${t.product}'.trim(),
     if (stored.isNotEmpty) stored,
   };
   return names.toList()..sort();
