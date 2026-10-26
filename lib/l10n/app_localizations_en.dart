@@ -19603,6 +19603,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.';
 
   @override
+  String get recordsLocationCraNone =>
+      'No CRA authorisation is recorded. A billing manager records it in the workspace settings.';
+
+  @override
+  String get recordsLocationCraNotice =>
+      'A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). Nothing declares this installation in Canada.';
+
+  @override
+  String recordsLocationCraReference(String reference) {
+    return 'CRA authorisation: $reference';
+  }
+
+  @override
+  String recordsLocationHosted(String country) {
+    return 'Hosted in $country, as the operator of this installation declares it';
+  }
+
+  @override
+  String get recordsLocationTitle => 'Where the records are kept';
+
+  @override
+  String get recordsLocationUndeclared =>
+      'Not declared by the operator of this installation: the app states no location';
+
+  @override
   String get refFacetMonth => 'Month';
 
   @override
@@ -21903,6 +21928,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingGroupReadiness => 'Readiness';
 
   @override
+  String get settingGroupRecords => 'Records location';
+
+  @override
   String get settingGroupSecurity => 'Security and access limits';
 
   @override
@@ -22108,6 +22136,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.';
 
   @override
+  String get settingHintRecordsCraReference =>
+      'For a Canadian business: the reference of the CRA authorisation (ETA s.286, ITA s.230) when its records are kept outside Canada. Empty means none is recorded.';
+
+  @override
+  String get settingHintRecordsHostingCountry =>
+      'Two letters (ISO 3166), e.g. CA or DE, as your hosting contract states where the database and its backups are. Empty means not declared: the app then states no location.';
+
+  @override
   String get settingHintRetentionUsYears =>
       'Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.';
 
@@ -22297,6 +22333,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelReadinessRecentExportDays => 'Recent export window';
+
+  @override
+  String get settingLabelRecordsCraReference =>
+      'CRA authorisation to keep records outside Canada';
+
+  @override
+  String get settingLabelRecordsHostingCountry =>
+      'Country where this installation keeps its data';
 
   @override
   String get settingLabelRetentionUsYears =>

@@ -32868,6 +32868,42 @@ abstract class AppLocalizations {
   /// **'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.'**
   String get recordingPrivacyWriteRefused;
 
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'No CRA authorisation is recorded. A billing manager records it in the workspace settings.'**
+  String get recordsLocationCraNone;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). Nothing declares this installation in Canada.'**
+  String get recordsLocationCraNotice;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'CRA authorisation: {reference}'**
+  String recordsLocationCraReference(String reference);
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Hosted in {country}, as the operator of this installation declares it'**
+  String recordsLocationHosted(String country);
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Where the records are kept'**
+  String get recordsLocationTitle;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Not declared by the operator of this installation: the app states no location'**
+  String get recordsLocationUndeclared;
+
   /// No description provided for @refFacetMonth.
   ///
   /// In en, this message translates to:
@@ -36894,6 +36930,12 @@ abstract class AppLocalizations {
   /// **'Readiness'**
   String get settingGroupReadiness;
 
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Records location'**
+  String get settingGroupRecords;
+
   /// #2485 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -37205,6 +37247,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.'**
   String get settingHintReadinessRecentExportDays;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'For a Canadian business: the reference of the CRA authorisation (ETA s.286, ITA s.230) when its records are kept outside Canada. Empty means none is recorded.'**
+  String get settingHintRecordsCraReference;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Two letters (ISO 3166), e.g. CA or DE, as your hosting contract states where the database and its backups are. Empty means not declared: the app then states no location.'**
+  String get settingHintRecordsHostingCountry;
 
   /// #2571 retention settings
   ///
@@ -37535,6 +37589,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recent export window'**
   String get settingLabelReadinessRecentExportDays;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'CRA authorisation to keep records outside Canada'**
+  String get settingLabelRecordsCraReference;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Country where this installation keeps its data'**
+  String get settingLabelRecordsHostingCountry;
 
   /// #2571 retention settings
   ///

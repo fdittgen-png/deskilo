@@ -1,0 +1,56 @@
+{
+  "settingGroupRecords": "Records location",
+  "@settingGroupRecords": {
+    "description": "#2378 records location"
+  },
+  "settingLabelRecordsHostingCountry": "Country where this installation keeps its data",
+  "@settingLabelRecordsHostingCountry": {
+    "description": "#2378 records location"
+  },
+  "settingHintRecordsHostingCountry": "Two letters (ISO 3166), e.g. CA or DE, as your hosting contract states where the database and its backups are. Empty means not declared: the app then states no location.",
+  "@settingHintRecordsHostingCountry": {
+    "description": "#2378 records location"
+  },
+  "settingLabelRecordsCraReference": "CRA authorisation to keep records outside Canada",
+  "@settingLabelRecordsCraReference": {
+    "description": "#2378 records location"
+  },
+  "settingHintRecordsCraReference": "For a Canadian business: the reference of the CRA authorisation (ETA s.286, ITA s.230) when its records are kept outside Canada. Empty means none is recorded.",
+  "@settingHintRecordsCraReference": {
+    "description": "#2378 records location"
+  },
+  "recordsLocationTitle": "Where the records are kept",
+  "@recordsLocationTitle": {
+    "description": "#2378 records location"
+  },
+  "recordsLocationHosted": "Hosted in {country}, as the operator of this installation declares it",
+  "@recordsLocationHosted": {
+    "description": "#2378 records location",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "recordsLocationUndeclared": "Not declared by the operator of this installation: the app states no location",
+  "@recordsLocationUndeclared": {
+    "description": "#2378 records location"
+  },
+  "recordsLocationCraNotice": "A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). Nothing declares this installation in Canada.",
+  "@recordsLocationCraNotice": {
+    "description": "#2378 records location"
+  },
+  "recordsLocationCraReference": "CRA authorisation: {reference}",
+  "@recordsLocationCraReference": {
+    "description": "#2378 records location",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "recordsLocationCraNone": "No CRA authorisation is recorded. A billing manager records it in the workspace settings.",
+  "@recordsLocationCraNone": {
+    "description": "#2378 records location"
+  }
+}

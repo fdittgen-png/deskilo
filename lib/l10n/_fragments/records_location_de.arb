@@ -1,0 +1,13 @@
+{
+  "settingGroupRecords": "Aufbewahrungsort der Aufzeichnungen",
+  "settingLabelRecordsHostingCountry": "Land, in dem diese Installation ihre Daten aufbewahrt",
+  "settingHintRecordsHostingCountry": "Zwei Buchstaben (ISO 3166), z. B. CA oder DE, wie Ihr Hosting-Vertrag den Ort der Datenbank und ihrer Sicherungen angibt. Leer heißt nicht erklärt: Die App nennt dann keinen Ort.",
+  "settingLabelRecordsCraReference": "CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas",
+  "settingHintRecordsCraReference": "Für ein kanadisches Unternehmen: das Aktenzeichen der CRA-Genehmigung (ETA s.286, ITA s.230), wenn seine Aufzeichnungen außerhalb Kanadas aufbewahrt werden. Leer heißt, es ist keine erfasst.",
+  "recordsLocationTitle": "Wo die Aufzeichnungen aufbewahrt werden",
+  "recordsLocationHosted": "Gehostet in {country}, wie der Betreiber dieser Installation es erklärt",
+  "recordsLocationUndeclared": "Vom Betreiber dieser Installation nicht erklärt: Die App nennt keinen Ort",
+  "recordsLocationCraNotice": "Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Nichts erklärt diese Installation als in Kanada.",
+  "recordsLocationCraReference": "CRA-Genehmigung: {reference}",
+  "recordsLocationCraNone": "Keine CRA-Genehmigung erfasst. Eine Person mit Abrechnungsrechten erfasst sie in den Einstellungen des Bereichs."
+}

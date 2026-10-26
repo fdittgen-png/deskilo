@@ -82,6 +82,14 @@ String _bankSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'bank.import_max_bytes' => l10n.settingLabelBankImportMaxBytes,
       'bank.import_max_lines' => l10n.settingLabelBankImportMaxLines,
       'bank.match_window_days' => l10n.settingLabelBankMatchWindowDays,
+      _ => _recordsSettingLabel(l10n, key),
+    };
+
+/// #2378 -- where the records are kept: the operator's declaration and the
+/// CRA authorisation of a Canadian space.
+String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'records.hosting_country' => l10n.settingLabelRecordsHostingCountry,
+      'records.cra_authorisation_reference' => l10n.settingLabelRecordsCraReference,
       _ => key,
     };
 
@@ -157,6 +165,8 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'bank.import_max_bytes' => l10n.settingHintBankImportMaxBytes,
       'bank.import_max_lines' => l10n.settingHintBankImportMaxLines,
       'bank.match_window_days' => l10n.settingHintBankMatchWindowDays,
+      'records.hosting_country' => l10n.settingHintRecordsHostingCountry,
+      'records.cra_authorisation_reference' => l10n.settingHintRecordsCraReference,
       _ => null,
     };
 
@@ -172,6 +182,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'vat' => l10n.settingGroupVat,
       'kpi' => l10n.settingGroupKpi,
       'personal' => l10n.settingGroupPersonal,
+      'records' => l10n.settingGroupRecords,
       _ => group,
     };
 

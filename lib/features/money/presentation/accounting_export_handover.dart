@@ -3,10 +3,12 @@
 // The readable handover of an archive (readable_handover.dart): the tables
 // of the year's one export snapshot, described in English, for a country
 // whose authority reads the records with its own audit software.
+import '../../../core/settings/active_settings.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../domain/audit_trail.dart';
 import '../domain/gobd_package.dart';
 import '../domain/readable_handover.dart';
+import '../domain/records_location.dart';
 import 'accounting_export_run.dart';
 import 'invoice_actions.dart';
 
@@ -45,6 +47,10 @@ extension ReadableHandoverExport on AccountingExportRun {
             if (row.country == country) row,
         ],
         vouchers: vouchers,
+      ),
+      RecordsLocation.fromSettings(
+        ref.read(activeSettingsProvider),
+        issuerCountry: country,
       ),
     );
   }

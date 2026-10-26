@@ -1,0 +1,13 @@
+{
+  "settingGroupRecords": "Lugar de conservación de los registros",
+  "settingLabelRecordsHostingCountry": "País donde esta instalación conserva sus datos",
+  "settingHintRecordsHostingCountry": "Dos letras (ISO 3166), p. ej. CA o DE, según lo que su contrato de alojamiento indique para la base de datos y sus copias de seguridad. Vacío significa no declarado: la aplicación no indica entonces ningún lugar.",
+  "settingLabelRecordsCraReference": "Autorización de la CRA para conservar los registros fuera de Canadá",
+  "settingHintRecordsCraReference": "Para una empresa canadiense: la referencia de la autorización de la CRA (ETA s.286, ITA s.230) cuando sus registros se conservan fuera de Canadá. Vacío significa que no se ha registrado ninguna.",
+  "recordsLocationTitle": "Dónde se conservan los registros",
+  "recordsLocationHosted": "Alojado en {country}, según lo declara el operador de esta instalación",
+  "recordsLocationUndeclared": "No declarado por el operador de esta instalación: la aplicación no indica ningún lugar",
+  "recordsLocationCraNotice": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Nada declara esta instalación en Canadá.",
+  "recordsLocationCraReference": "Autorización de la CRA: {reference}",
+  "recordsLocationCraNone": "No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio."
+}

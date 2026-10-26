@@ -19740,6 +19740,31 @@ class AppLocalizationsEs extends AppLocalizations {
       'No mientras el modo grabación esté activo: este formulario muestra una persona inventada, y guardarlo sobrescribiría los datos reales de alguien. Desactive antes el modo grabación.';
 
   @override
+  String get recordsLocationCraNone =>
+      'No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio.';
+
+  @override
+  String get recordsLocationCraNotice =>
+      'Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Nada declara esta instalación en Canadá.';
+
+  @override
+  String recordsLocationCraReference(String reference) {
+    return 'Autorización de la CRA: $reference';
+  }
+
+  @override
+  String recordsLocationHosted(String country) {
+    return 'Alojado en $country, según lo declara el operador de esta instalación';
+  }
+
+  @override
+  String get recordsLocationTitle => 'Dónde se conservan los registros';
+
+  @override
+  String get recordsLocationUndeclared =>
+      'No declarado por el operador de esta instalación: la aplicación no indica ningún lugar';
+
+  @override
   String get refFacetMonth => 'Mes';
 
   @override
@@ -22063,6 +22088,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingGroupReadiness => 'Puesta en marcha';
 
   @override
+  String get settingGroupRecords => 'Lugar de conservación de los registros';
+
+  @override
   String get settingGroupSecurity => 'Límites de seguridad y acceso';
 
   @override
@@ -22266,6 +22294,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHintReadinessRecentExportDays =>
       'Días durante los que una exportación registrada por la aplicación sigue contando como prueba reciente de que la recuperación funciona. Pasado ese plazo, la recuperación queda sin verificar.';
+
+  @override
+  String get settingHintRecordsCraReference =>
+      'Para una empresa canadiense: la referencia de la autorización de la CRA (ETA s.286, ITA s.230) cuando sus registros se conservan fuera de Canadá. Vacío significa que no se ha registrado ninguna.';
+
+  @override
+  String get settingHintRecordsHostingCountry =>
+      'Dos letras (ISO 3166), p. ej. CA o DE, según lo que su contrato de alojamiento indique para la base de datos y sus copias de seguridad. Vacío significa no declarado: la aplicación no indica entonces ningún lugar.';
 
   @override
   String get settingHintRetentionUsYears =>
@@ -22476,6 +22512,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelReadinessRecentExportDays =>
       'Ventana de exportación reciente';
+
+  @override
+  String get settingLabelRecordsCraReference =>
+      'Autorización de la CRA para conservar los registros fuera de Canadá';
+
+  @override
+  String get settingLabelRecordsHostingCountry =>
+      'País donde esta instalación conserva sus datos';
 
   @override
   String get settingLabelRetentionUsYears =>

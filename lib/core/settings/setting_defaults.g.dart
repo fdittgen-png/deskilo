@@ -102,6 +102,10 @@ abstract final class SettingDefaults {
   static const int purchaseSupplierLookupTimeoutSeconds = 15;
   /// `readiness.recent_export_days`
   static const int readinessRecentExportDays = 90;
+  /// `records.cra_authorisation_reference`
+  static const String recordsCraAuthorisationReference = '';
+  /// `records.hosting_country`
+  static const String recordsHostingCountry = '';
   /// `retention.us_years`
   static const int retentionUsYears = 0;
   /// `security.badge_lockout_failures`
