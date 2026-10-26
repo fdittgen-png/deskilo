@@ -7,7 +7,6 @@
 // QR-bill the invoice carries; nothing here reads the period again.
 import '../../../core/backend/schema_version.dart';
 import '../../../core/trace/trace_logger.dart';
-import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/datev_fields.dart';
@@ -26,11 +25,6 @@ extension SwissAccountingExports on AccountingExportRun {
     SwissJournalLayout layout, {
     required String stem,
   }) async {
-    final reference = workspaceTaxReference(ref);
-    if (reference == null) {
-      AppSnack.error(context, l10n.workspaceGenericError);
-      return;
-    }
     final instructions = workspace.paymentInstructions;
     // The reference the invoice's QR-bill carries (QRR on a QR-IBAN, SCOR
     // on an ordinary one); a document with no bill has none.
@@ -48,6 +42,11 @@ extension SwissAccountingExports on AccountingExportRun {
 
     GenericJournal written(GenericJournal read) {
       if (read is! JournalPosted) return read;
+      // The codes of this workspace's own installation; refused, never
+      // guessed, while its context is not ready (runGuarded says so).
+      final reference =
+          workspaceTaxReference(ref) ??
+          (throw StateError('workspace context not ready'));
       final journal = swissJournalOf(
         read.postings,
         reference: reference,

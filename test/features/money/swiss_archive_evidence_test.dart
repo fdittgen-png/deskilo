@@ -28,6 +28,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+/// The manifest's name in the archive.
+const _manifest = 'manifest.csv';
+
 final _members = <String, List<int>>{
   'register.csv': textBytes('number;integrity\r\nINV-101;verified\r\n'),
   'audit-trail.csv': textBytes('# DesKilo audit trail\n'),
@@ -43,7 +46,7 @@ List<String> _unverified(List<int> zip) {
       if (f.isFile) f.name: f.content,
   };
   final rows = const LineSplitter()
-      .convert(utf8.decode(files[archiveManifestName]!))
+      .convert(utf8.decode(files[_manifest]!))
       .skip(1);
   final named = <String>{};
   final out = <String>[];
@@ -58,7 +61,7 @@ List<String> _unverified(List<int> zip) {
     }
   }
   for (final path in files.keys) {
-    if (path != archiveManifestName && !named.contains(path)) out.add(path);
+    if (path != _manifest && !named.contains(path)) out.add(path);
   }
   return out;
 }
@@ -70,7 +73,7 @@ void main() {
 
   test('the manifest names every member with its digest and size', () {
     final files = withManifest(_members);
-    final manifest = utf8.decode(files[archiveManifestName]!);
+    final manifest = utf8.decode(files[_manifest]!);
     expect(manifest.split('\r\n').first, 'path;sha256;bytes');
     expect(
       manifest

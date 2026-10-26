@@ -1312,7 +1312,7 @@ window.SETUP_L10N={
    ],
    "accountingConnectors": [
     "Accounting systems",
-    "Connects each issuer's books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see."
+    "Connects each issuer's books to the accounting system they are kept in (Pennylane and bexio through their APIs, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see."
    ]
   },
   "process": {
@@ -2955,7 +2955,7 @@ window.SETUP_L10N={
    ],
    "accountingConnectors": [
     "Systèmes comptables",
-    "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane par son API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir."
+    "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane et bexio par leur API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir."
    ]
   },
   "process": {
@@ -4598,7 +4598,7 @@ window.SETUP_L10N={
    ],
    "accountingConnectors": [
     "Buchhaltungssysteme",
-    "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane über seine API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will."
+    "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane und bexio über ihre API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will."
    ]
   },
   "process": {
@@ -6241,7 +6241,7 @@ window.SETUP_L10N={
    ],
    "accountingConnectors": [
     "Sistemas contables",
-    "Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver."
+    "Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane y bexio por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver."
    ]
   },
   "process": {
@@ -7884,7 +7884,7 @@ window.SETUP_L10N={
    ],
    "accountingConnectors": [
     "Sistemi contabili",
-    "Collega la contabilità di ogni emittente al sistema contabile in cui è tenuta (Pennylane tramite la sua API, gli altri tramite file), nomina ogni conto, codice IVA e cliente come quel sistema li conosce ed elenca ogni file e ogni invio che ha portato un documento, con il suo SHA-256: il collegamento digitale che una verifica fiscale chiede di vedere."
+    "Collega la contabilità di ogni emittente al sistema contabile in cui è tenuta (Pennylane e bexio tramite la loro API, gli altri tramite file), nomina ogni conto, codice IVA e cliente come quel sistema li conosce ed elenca ogni file e ogni invio che ha portato un documento, con il suo SHA-256: il collegamento digitale che una verifica fiscale chiede di vedere."
    ]
   },
   "process": {

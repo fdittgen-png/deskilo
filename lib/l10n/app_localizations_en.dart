@@ -7512,7 +7512,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureAccountingConnectorsDesc =>
-      'Connects each issuer\'s books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.';
+      'Connects each issuer\'s books to the accounting system they are kept in (Pennylane and bexio through their APIs, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.';
 
   @override
   String get featureAccountingConnectorsTitle => 'Accounting systems';

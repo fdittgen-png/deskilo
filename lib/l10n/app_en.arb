@@ -9048,7 +9048,7 @@
   "@featureAccountingBookTitle": {
     "description": "#1869 feature name"
   },
-  "featureAccountingConnectorsDesc": "Connects each issuer's books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.",
+  "featureAccountingConnectorsDesc": "Connects each issuer's books to the accounting system they are kept in (Pennylane and bexio through their APIs, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.",
   "@featureAccountingConnectorsDesc": {
     "description": "#2370 Features screen: what the accounting systems feature does."
   },

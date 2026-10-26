@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
   "featureAccountingConnectorsTitle": "Sistemas contables",
-  "featureAccountingConnectorsDesc": "Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver.",
+  "featureAccountingConnectorsDesc": "Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane y bexio por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver.",
   "acctTargetsTitle": "Sistemas contables",
   "acctTargetsIntro": "Adónde va la contabilidad de cada emisor. Un sistema conectado recibe los documentos por sí mismo; los demás reciben los ficheros exportados de la contabilidad. Cada transferencia figura abajo con la huella de lo que llevó.",
   "acctTargetsNoApiTarget": "Ningún sistema contable de este país se alcanza todavía por conexión: la contabilidad sale por fichero, desde la exportación contable.",

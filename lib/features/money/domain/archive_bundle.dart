@@ -104,14 +104,14 @@ Map<String, List<int>> withRetentionNotice(
 /// recorded in the export log with the server's time and the person who
 /// downloaded it, so a member taken out later is checked against the
 /// manifest, and the manifest against the logged archive (GeBüV art. 3, 9).
-const String archiveManifestName = 'manifest.csv';
+const String _archiveManifestName = 'manifest.csv';
 
 /// [files] with their manifest.
 Map<String, List<int>> withManifest(Map<String, List<int>> files) {
   final paths = files.keys.toList()..sort();
   return {
     ...files,
-    archiveManifestName: textBytes(
+    _archiveManifestName: textBytes(
       '${[
         'path;sha256;bytes',
         for (final p in paths) '$p;${sha256.convert(files[p]!)};${files[p]!.length}',

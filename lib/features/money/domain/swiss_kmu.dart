@@ -201,79 +201,92 @@ SwissJournal swissJournalOf(
   final missing = <String>{};
   for (final p in postings) {
     final onDay = reference.on(isoDay(p.date));
-    final legs = _legs(p.lines);
-    final debits = [
-      for (final l in legs)
-        if (_onDebit(l.line)) l,
-    ];
-    final credits = [
-      for (final l in legs)
-        if (!_onDebit(l.line)) l,
-    ];
     final receivable = p.lines.any((l) => l.role == BookRole.customers);
-    SwissJournalRow row(_Leg leg, {String debit = '', String credit = ''}) {
-      var code = '';
-      if (leg.tax case final t?) {
-        final key = _codeKey(leg, t);
-        final value = onDay
-            .lookup(TaxDomain.accountMap, chMwstSpec.country, 'ch_kmu/$key')
-            ?.value;
-        code = (value as AccountMapValue?)?.taxCode ?? '';
-        if (code.isEmpty) missing.add(key);
-      }
-      return SwissJournalRow(
-        date: p.date,
-        document: p.documentNumber,
-        reference: receivable ? paymentReferences[p.documentId] ?? '' : '',
-        text: '${p.documentNumber} ${p.kind.wire}',
-        debit: debit,
-        credit: credit,
-        amount: _gross(leg),
-        vatCode: code,
-        vat: leg.tax == null ? null : _side(leg.tax!),
-        vatAccount: leg.tax?.accountCode ?? '',
-        ziffer: _zifferOf(leg, onDay),
-        original: _original(leg),
-        party: parties[p.documentId]?.number ?? '',
-      );
-    }
-
-    if (debits.length == 1 && credits.length == 1) {
-      // One row; it carries the tax of whichever side has it.
-      final (d, c) = (debits.single, credits.single);
+    for (final (:leg, :debit, :credit) in _pairs(_legs(p.lines))) {
+      final code = _codeOf(leg, onDay);
+      if (code.missing case final key?) missing.add(key);
       rows.add(
-        row(
-          c.tax != null ? c : d,
-          debit: d.line.accountCode,
-          credit: c.line.accountCode,
+        SwissJournalRow(
+          date: p.date,
+          document: p.documentNumber,
+          reference: receivable ? paymentReferences[p.documentId] ?? '' : '',
+          text: '${p.documentNumber} ${p.kind.wire}',
+          debit: debit,
+          credit: credit,
+          amount: _gross(leg),
+          vatCode: code.code,
+          vat: leg.tax == null ? null : _side(leg.tax!),
+          vatAccount: leg.tax?.accountCode ?? '',
+          ziffer: _zifferOf(leg, onDay),
+          original: _original(leg),
+          party: parties[p.documentId]?.number ?? '',
         ),
       );
-    } else if (credits.length == 1 && credits.single.tax == null) {
-      // One untaxed credit (the customer of a write-off, the supplier of a
-      // bill): each debit leg against it.
-      final c = credits.single.line.accountCode;
-      for (final d in debits) {
-        rows.add(row(d, debit: d.line.accountCode, credit: c));
-      }
-    } else if (debits.length == 1 && debits.single.tax == null) {
-      // One untaxed debit (the customer of an invoice): each credit leg.
-      final d = debits.single.line.accountCode;
-      for (final c in credits) {
-        rows.add(row(c, debit: d, credit: c.line.accountCode));
-      }
-    } else {
-      // A composite entry: one account per row, the entry held together by
-      // its document, as Banana reads a split booking.
-      for (final l in legs) {
-        rows.add(
-          _onDebit(l.line)
-              ? row(l, debit: l.line.accountCode)
-              : row(l, credit: l.line.accountCode),
-        );
-      }
     }
   }
   return (rows: rows, missingCodes: [...missing]..sort());
+}
+
+/// The MWST code of [leg]'s tax on its day ('' for an untaxed leg), or the
+/// tax key that has none.
+({String code, String? missing}) _codeOf(_Leg leg, TaxReferenceSet onDay) {
+  final tax = leg.tax;
+  if (tax == null) return (code: '', missing: null);
+  final key = _codeKey(leg, tax);
+  final value = onDay
+      .lookup(TaxDomain.accountMap, chMwstSpec.country, 'ch_kmu/$key')
+      ?.value;
+  final code = (value as AccountMapValue?)?.taxCode ?? '';
+  return (code: code, missing: code.isEmpty ? key : null);
+}
+
+/// The rows of one entry's [legs]: each leg with the debit and credit
+/// account its row names.
+List<({_Leg leg, String debit, String credit})> _pairs(List<_Leg> legs) {
+  final debits = [
+    for (final l in legs)
+      if (_onDebit(l.line)) l,
+  ];
+  final credits = [
+    for (final l in legs)
+      if (!_onDebit(l.line)) l,
+  ];
+  if (debits.length == 1 && credits.length == 1) {
+    // One row; it carries the tax of whichever side has it.
+    final (d, c) = (debits.single, credits.single);
+    return [
+      (
+        leg: c.tax != null ? c : d,
+        debit: d.line.accountCode,
+        credit: c.line.accountCode,
+      ),
+    ];
+  }
+  if (credits.length == 1 && credits.single.tax == null) {
+    // One untaxed credit (the customer of a write-off, the supplier of a
+    // bill): each debit leg against it.
+    final c = credits.single.line.accountCode;
+    return [
+      for (final d in debits) (leg: d, debit: d.line.accountCode, credit: c),
+    ];
+  }
+  if (debits.length == 1 && debits.single.tax == null) {
+    // One untaxed debit (the customer of an invoice): each credit leg.
+    final d = debits.single.line.accountCode;
+    return [
+      for (final c in credits) (leg: c, debit: d, credit: c.line.accountCode),
+    ];
+  }
+  // A composite entry: one account per row, the entry held together by its
+  // document, as Banana reads a split booking.
+  return [
+    for (final l in legs)
+      (
+        leg: l,
+        debit: _onDebit(l.line) ? l.line.accountCode : '',
+        credit: _onDebit(l.line) ? '' : l.line.accountCode,
+      ),
+  ];
 }
 
 String _dotted(DateTime on) =>

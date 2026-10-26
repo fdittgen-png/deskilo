@@ -7571,7 +7571,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureAccountingConnectorsDesc =>
-      'Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane par son API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu\'un contrôle fiscal demande à voir.';
+      'Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane et bexio par leur API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu\'un contrôle fiscal demande à voir.';
 
   @override
   String get featureAccountingConnectorsTitle => 'Systèmes comptables';

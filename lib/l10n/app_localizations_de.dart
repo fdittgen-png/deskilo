@@ -7571,7 +7571,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureAccountingConnectorsDesc =>
-      'Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane über seine API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.';
+      'Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane und bexio über ihre API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.';
 
   @override
   String get featureAccountingConnectorsTitle => 'Buchhaltungssysteme';

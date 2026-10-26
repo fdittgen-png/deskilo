@@ -5577,7 +5577,7 @@
   "featureAccessorySupplementsDesc": "Bepreistes Platz-Zubehör pro gebuchtem Halbtag berechnen. Gilt für Buchungen ab der Aktivierung.",
   "featureAccountingBookDesc": "Wer die offiziellen Bücher jedes Rechnungsstellers führt: Deskilo als Vorkontierung, ein lokales Buch oder ein externes Buchhaltungssystem, das maßgeblich bleibt. Jeder Rechnungssteller nennt Währung, Geschäftsjahr und Buchungsgrundlage. Aus: Mitgliedersalden und Rechnungen funktionieren wie bisher.",
   "featureAccountingBookTitle": "Buchführung",
-  "featureAccountingConnectorsDesc": "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane über seine API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.",
+  "featureAccountingConnectorsDesc": "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane und bexio über ihre API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.",
   "featureAccountingConnectorsTitle": "Buchhaltungssysteme",
   "featureAccountingPeriodsDesc": "Eine Periode der Bücher abschließen: Keine Rechnung mit Datum darin kann storniert, keine Zahlung darin zugeordnet werden, und jeder Buchhaltungsexport wird protokolliert. Aus: Nichts wird gesperrt und Exporte werden nicht protokolliert.",
   "@featureAccountingPeriodsDesc": {

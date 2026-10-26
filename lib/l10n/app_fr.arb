@@ -5577,7 +5577,7 @@
   "featureAccessorySupplementsDesc": "Facturer les accessoires de place tarifés par demi-journée réservée. S'applique aux réservations à partir de l'activation.",
   "featureAccountingBookDesc": "Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant.",
   "featureAccountingBookTitle": "Livre comptable",
-  "featureAccountingConnectorsDesc": "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane par son API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir.",
+  "featureAccountingConnectorsDesc": "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane et bexio par leur API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir.",
   "featureAccountingConnectorsTitle": "Systèmes comptables",
   "featureAccountingPeriodsDesc": "Clôturer une période des livres : aucune facture datée dans cette période ne peut être annulée, aucun règlement rapproché dans cette période, et chaque export comptable est consigné. Désactivé : rien n'est verrouillé et les exports ne sont pas consignés.",
   "@featureAccountingPeriodsDesc": {
