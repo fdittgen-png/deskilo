@@ -619,10 +619,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       final statement = (await repo.fetchStatements('ws-1')).single;
       final lines = await repo.fetchLines(statement.id);
       final open = openInvoices(w.f.money.invoices, w.f.money.invoiceMatchesStore);
-      final byReference = [
-        for (final l in lines)
-          if (referenceMatchOf(l, open, windowDays: 60) != null) l,
-      ];
+      final byReference = BankWorkList(lines, open, windowDays: 60).referenceBatch;
       return byReference.length == 2 &&
           lines.any((l) => l.isMoneyIn && l.reference.isEmpty) &&
           lines.any((l) => !l.isMoneyIn && l.outgoingCandidates.isNotEmpty);

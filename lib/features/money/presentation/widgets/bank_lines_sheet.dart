@@ -93,7 +93,8 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
 
   bool _actionable(StoredBankLine line) => switch (line.status) {
     BankLineStatus.review => widget.canMatch,
-    BankLineStatus.open => line.isMoneyIn ? widget.canMatch : widget.canReconcile,
+    BankLineStatus.open =>
+      line.isMoneyIn ? widget.canMatch : widget.canReconcile,
     BankLineStatus.recorded => line.isMoneyIn && widget.canMatch,
     _ => false,
   };
@@ -131,7 +132,8 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
       case BankLineStatus.open:
         final paymentId = await showBankOutDialog(context, line);
         if (paymentId == null) return;
-        action = () => commands.reconcileOut(line, outgoingPaymentId: paymentId);
+        action = () =>
+            commands.reconcileOut(line, outgoingPaymentId: paymentId);
       case BankLineStatus.duplicate ||
           BankLineStatus.recorded ||
           BankLineStatus.pending ||
@@ -186,7 +188,9 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
 
   Widget _list(BankWorkList list) {
     final l10n = context.l10n;
-    final batch = widget.canMatch ? list.referenceBatch : const <BankWorkItem>[];
+    final batch = widget.canMatch
+        ? list.referenceBatch
+        : const <BankWorkItem>[];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -234,8 +238,10 @@ class _LineTile extends StatelessWidget {
     final day = DateFormat.yMMMd(Localizations.localeOf(context).toString());
     final what = [
       if (line.counterpartyName.isNotEmpty) line.counterpartyName,
-      if (line.reference.isNotEmpty) line.reference
-      else if (line.remittance.isNotEmpty) line.remittance,
+      if (line.reference.isNotEmpty)
+        line.reference
+      else if (line.remittance.isNotEmpty)
+        line.remittance,
     ].join(' · ');
     final best = item.suggestions.firstOrNull;
     final status = best == null || !line.status.isOpen
@@ -248,7 +254,9 @@ class _LineTile extends StatelessWidget {
       key: ValueKey('bank-line-tile-${line.id}'),
       contentPadding: EdgeInsets.zero,
       leading: Icon(line.isMoneyIn ? Icons.south_west : Icons.north_east),
-      title: Text('${money.formatMinor(line.amountCents)} · ${day.format(line.valueDate)}'),
+      title: Text(
+        '${money.formatMinor(line.amountCents)} · ${day.format(line.valueDate)}',
+      ),
       subtitle: Text(what.isEmpty ? status : '$what\n$status'),
       isThreeLine: what.isNotEmpty,
       trailing: onTap == null ? null : const Icon(Icons.chevron_right),

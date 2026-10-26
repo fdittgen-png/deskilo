@@ -388,20 +388,7 @@ class MoneyActionSet {
         AccountingTargetsButton(workspaceId: data.workspace!.id),
       // #2380 — the bank statements, for those who read the finances or
       // match payments.
-      if (data.bankImportOn &&
-          data.workspace != null &&
-          ((data.member?.isOwner ?? false) ||
-              ref
-                  .read(myPermissionsProvider)
-                  .any((p) => bankStatementReaders.contains(p.wireName))))
-        BankStatementsButton(
-          workspaceId: data.workspace!.id,
-          currency: data.workspace!.currencyCode,
-          canMatch: (data.member?.isOwner ?? false) ||
-              ref.read(myPermissionsProvider).any((p) => p.wireName == bankMatchPermission),
-          canReconcile: (data.member?.isOwner ?? false) ||
-              ref.read(myPermissionsProvider).any((p) => p.wireName == bankReconcilePermission),
-        ),
+      ?_bankButton(ref, data),
       // #2568 — the rooms the space rents, for those who manage the plan.
       if (data.externalRoomsOn &&
           data.workspace != null &&
@@ -415,6 +402,23 @@ class MoneyActionSet {
               .any((p) => p.wireName == purchaseManagePermission),
         ),
     ];
+  }
+
+  /// The bank statements' door, or null while the flag is off or the
+  /// person reads no statement; its doors to match and reconcile follow
+  /// the person's rights.
+  static Widget? _bankButton(WidgetRef ref, MoneyViewData data) {
+    final workspace = data.workspace;
+    if (!data.bankImportOn || workspace == null) return null;
+    final owner = data.member?.isOwner ?? false;
+    final held = {for (final p in ref.read(myPermissionsProvider)) p.wireName};
+    if (!owner && held.intersection(bankStatementReaders).isEmpty) return null;
+    return BankStatementsButton(
+      workspaceId: workspace.id,
+      currency: workspace.currencyCode,
+      canMatch: owner || held.contains(bankMatchPermission),
+      canReconcile: owner || held.contains(bankReconcilePermission),
+    );
   }
 
   static Widget? _managementTile({

@@ -398,7 +398,7 @@ final class BankWorkListProvider
   }
 }
 
-String _$bankWorkListHash() => r'5538ae9db4d509d48ff50afa276a158748c7ded4';
+String _$bankWorkListHash() => r'f42f5e94d4caf659259ca1e8bd4d5c8b738d5e92';
 
 /// The work list of one statement: its movements with what each may
 /// settle, matched once per load against the space's open invoices.

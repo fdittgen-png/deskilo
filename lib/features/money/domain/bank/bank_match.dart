@@ -168,15 +168,6 @@ class _OpenIndex {
   }
 }
 
-/// The invoices [line] may settle, strongest reason first, each invoice
-/// once. Only money in that settles nothing yet is matched; [windowDays]
-/// is the setting `bank.match_window_days`.
-List<BankMatchSuggestion> suggestMatches(
-  StoredBankLine line,
-  List<OpenInvoice> open, {
-  required int windowDays,
-}) => _OpenIndex(open).suggest(line, windowDays);
-
 /// The one invoice a structured reference names for the whole amount
 /// still due: what a person may confirm for many movements at once. Null
 /// when the reference names none or several, or the amount differs (then
@@ -193,14 +184,6 @@ BankMatchSuggestion? _referenceMatch(
   final only = structured.single;
   return only.invoice.dueCents == line.amountCents ? only : null;
 }
-
-/// [referenceMatchOf] over [line] and [open] alone.
-@visibleForTesting
-BankMatchSuggestion? referenceMatchOf(
-  StoredBankLine line,
-  List<OpenInvoice> open, {
-  required int windowDays,
-}) => _referenceMatch(line, suggestMatches(line, open, windowDays: windowDays));
 
 /// One movement of the work list with what it may settle, computed once
 /// per load of its statement.

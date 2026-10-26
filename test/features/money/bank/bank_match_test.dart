@@ -56,6 +56,20 @@ StoredBankLine _line({
   counterpartyName: payer,
 );
 
+/// What the work list suggests for [line] alone.
+List<BankMatchSuggestion> suggestMatches(
+  StoredBankLine line,
+  List<OpenInvoice> open, {
+  required int windowDays,
+}) => BankWorkList([line], open, windowDays: windowDays).items.single.suggestions;
+
+/// What the work list would confirm in one press for [line] alone.
+BankMatchSuggestion? referenceMatchOf(
+  StoredBankLine line,
+  List<OpenInvoice> open, {
+  required int windowDays,
+}) => BankWorkList([line], open, windowDays: windowDays).items.single.referenceMatch;
+
 void main() {
   final a = _invoice('INV-2026-0042');
   final b = _invoice('INV-2026-0043', total: 8050, member: 'Studio Lumen');
@@ -180,5 +194,31 @@ void main() {
     );
     expect(result.single.id, partial.id);
     expect(result.single.dueCents, 10000);
+  });
+
+  test('the window edge: issued exactly windowDays before the movement '
+      'counts, a day earlier does not', () {
+    final edge = _invoice('E-1', total: 4400, member: 'Studio Lumen', issued: DateTime.utc(2026, 9, 20));
+    final open = openInvoices([edge], const {});
+    final line = _line(amount: 4400, payer: 'Studio Lumen');
+    expect(suggestMatches(line, open, windowDays: 30), hasLength(1));
+    expect(suggestMatches(line, open, windowDays: 29), isEmpty);
+  });
+
+  test('a legal form shared by two companies does not make them one payer', () {
+    final open = openInvoices([_invoice('L-1', total: 900, member: 'Atelier Nord SARL')], const {});
+    expect(
+      suggestMatches(_line(amount: 900, payer: 'Boulangerie Sud SARL'), open, windowDays: 60),
+      isEmpty,
+    );
+  });
+
+  test('an over-payment by reference is suggested, never confirmed at once; '
+      'a void invoice owes nothing', () {
+    final line = _line(amount: 13000, reference: qrrReferenceOf(a.number)!);
+    expect(suggestMatches(line, open, windowDays: 60).single.invoice.id, a.id);
+    expect(referenceMatchOf(line, open, windowDays: 60), isNull);
+    final voided = _invoice('V-1').copyWith(voidedAt: DateTime.utc(2026, 10, 3));
+    expect(openInvoices([voided], const {}), isEmpty);
   });
 }

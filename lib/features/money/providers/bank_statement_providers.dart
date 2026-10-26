@@ -42,12 +42,14 @@ Future<List<StoredBankLine>> bankStatementLines(Ref ref, String statementId) =>
 /// settle, matched once per load against the space's open invoices.
 @riverpod
 Future<BankWorkList> bankWorkList(Ref ref, String statementId) async {
-  final lines = await ref.watch(bankStatementLinesProvider(statementId).future);
-  final invoices = await ref.watch(invoicesProvider.future);
-  final matches = await ref.watch(invoiceMatchesProvider.future);
+  // Every dependency is registered before the first await.
+  final lines = ref.watch(bankStatementLinesProvider(statementId).future);
+  final invoices = ref.watch(invoicesProvider.future);
+  final matches = ref.watch(invoiceMatchesProvider.future);
+  final window = ref.watch(bankImportSettingsProvider).matchWindowDays;
   return BankWorkList(
-    lines,
-    openInvoices(invoices, matches),
-    windowDays: ref.watch(bankImportSettingsProvider).matchWindowDays,
+    await lines,
+    openInvoices(await invoices, await matches),
+    windowDays: window,
   );
 }
