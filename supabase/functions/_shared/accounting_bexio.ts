@@ -34,8 +34,8 @@ import type {
   MapNeed,
   RemoteAdapter,
   RemoteDocument,
-} from "../_shared/accounting_delivery.ts";
-import { exponentOf, toMajor } from "../_shared/money.ts";
+} from "./accounting_delivery.ts";
+import { exponentOf, toMajor } from "./money.ts";
 
 export type Config = Record<string, string>;
 export type Fetch = typeof fetch;

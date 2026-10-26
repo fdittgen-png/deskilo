@@ -17,13 +17,13 @@ import {
   type DeliveryStatus,
   type DeliveryStore,
   type RemoteDocument,
-} from "../_shared/accounting_delivery.ts";
+} from "./accounting_delivery.ts";
 import {
   bexioAdapter,
   type BexioDocument,
   documentKey,
   needsOf,
-} from "./adapter.ts";
+} from "./accounting_bexio.ts";
 
 const config = {
   base_url: "https://bexio.test",

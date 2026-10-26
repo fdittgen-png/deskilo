@@ -63,7 +63,7 @@ const List<AccountingTarget> swissAccountingTargets = [
   // bexio takes the documents through its API: an invoice created with its
   // legal number and issued, positions net with the tax id the connection
   // maps, payments on the invoice. The adapter is
-  // supabase/functions/_accounting-bexio; a company connects with a
+  // supabase/functions/_shared/accounting_bexio.ts; a company connects with a
   // personal access token or by signing in to the installation's app.
   AccountingTarget(
     id: 'bexio_api',
