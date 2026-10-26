@@ -11687,6 +11687,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le numéro d\'immatriculation TVA du workspace au format de l\'HMRC : GB ou XI suivi de neuf ou douze chiffres (VAT Notice 700)';
 
   @override
+  String get invoiceMissingTerritoryOutsideVat =>
+      'Le site se trouve là où la TVA de l’État ne s’applique pas (Canaries : IGIC ; Ceuta et Melilla : IPSI) : DesKilo n’y émet pas encore.';
+
+  @override
   String get invoiceMissingTitle =>
       'Complétez ces informations avant d\'émettre';
 
@@ -25974,6 +25978,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefCents => 'Montant (plus petite unité)';
 
   @override
+  String get taxRefChargeCents =>
+      'Montant dû au-delà (plus petite unité, droit de timbre)';
+
+  @override
   String get taxRefComponents =>
       'Juridictions, une par ligne : niveau, nom, pourcentage (niveau : state, county, city ou district)';
 
@@ -26131,6 +26139,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get taxRefOfflineCopy =>
       'Copie intégrée à l\'application : le serveur est injoignable.';
+
+  @override
+  String get taxRefOutsideVatPostalCodes =>
+      'Préfixes de code postal hors TVA (séparés par des virgules)';
 
   @override
   String get taxRefPattern => 'Format';
@@ -27861,6 +27873,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet espace n\'est pas déclaré assujetti à la TVA : les factures n\'en affichent aucune. Cela se change dans Identité légale.';
 
   @override
+  String vatRegister347Empty(String year) {
+    return 'Aucun client n’a dépassé le seuil du modelo 347 en $year.';
+  }
+
+  @override
   String get vatRegisterActivity => 'Activité : code, type et rubrique IAE';
 
   @override
@@ -27874,6 +27891,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get vatRegisterEmpty =>
       'Aucune facture n’a été émise sur cette période.';
+
+  @override
+  String vatRegisterEs347(String year) {
+    return 'Modelo 347 $year (CSV)';
+  }
 
   @override
   String get vatRegisterEsLibro => 'Registre des factures émises (XLSX AEAT)';

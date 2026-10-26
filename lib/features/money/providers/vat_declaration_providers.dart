@@ -56,4 +56,5 @@ VatRegisterFiles vatRegisterFiles(Ref ref) => VatRegisterFiles(
   party: ref.watch(saveVatFilingFileProvider).party,
   invoices: () => ref.read(invoicesProvider.future),
   declarations: () => ref.read(vatDeclarationsProvider.future),
+  reference: ref.watch(readyWorkspaceContextProvider)?.taxReference.set,
 );

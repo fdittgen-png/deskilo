@@ -39,7 +39,8 @@ class VatCountryRegisters extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final country = ref.watch(vatRegisterFilesProvider).party?.countryCode ?? '';
+    final country =
+        ref.watch(vatRegisterFilesProvider).party?.countryCode ?? '';
     final kinds = registers
         ? vatRegistersFor(country)
         : const <VatRegisterKind>[];
@@ -70,6 +71,18 @@ class VatCountryRegisters extends ConsumerWidget {
                 ),
                 icon: const Icon(Icons.code_outlined),
                 label: Text(l10n.vatRegisterEsSii),
+              ),
+              VatRegisterKind.es347 => OutlinedButton.icon(
+                key: const ValueKey('vat-register-es-347'),
+                onPressed: () => _deliver(
+                  context,
+                  ref,
+                  () =>
+                      ref.read(vatRegisterFilesProvider).es347(year: end.year),
+                  empty: l10n.vatRegister347Empty('${end.year}'),
+                ),
+                icon: const Icon(Icons.groups_outlined),
+                label: Text(l10n.vatRegisterEs347('${end.year}')),
               ),
               VatRegisterKind.itRegistro => OutlinedButton.icon(
                 key: const ValueKey('vat-register-it-registro'),

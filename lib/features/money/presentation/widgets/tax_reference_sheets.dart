@@ -12,11 +12,13 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/vat/tax_reference.dart';
+import '../../../../core/vat/threshold_effects.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/tax_reference_commands.dart';
 import '../../domain/einvoice_mandates.dart';
 import '../../domain/vat_rate.dart';
 import 'tax_reference_component_fields.dart';
+import 'tax_reference_gate_fields.dart';
 import 'tax_reference_labels.dart';
 import 'tax_reference_sales_fields.dart';
 
@@ -52,6 +54,7 @@ class _VersionForm {
             RateComponentValue v => rateComponentsText(v),
             _ => '',
           },
+          ...taxReferenceExtraTexts(from?.value),
           'tax_code': switch (from?.value) {
             AccountMapValue(:final taxCode) => taxCode,
             _ => '',
@@ -115,7 +118,7 @@ class _VersionForm {
           _ => VatGroup.standard.wire,
         },
         category = from?.value is RateValue ? (from!.value as RateValue).category : 'S',
-        choice = _choicesOf(from?.value),
+        choice = taxReferenceChoicesOf(from?.value),
         flag = _flagsOf(from?.value),
         confirmed = from?.confirmed ?? false;
 
@@ -130,17 +133,6 @@ class _VersionForm {
   /// mandate duty) and the yes/no switches of the typed forms.
   final Map<String, String> choice;
   final Map<String, bool> flag;
-
-  static Map<String, String> _choicesOf(TaxValue? v) => {
-        'effect': v is ThresholdValue ? v.effect : 'next_year',
-        'standard': v is TaxPointValue ? v.standard : 'invoice',
-        'cash_backstop': v is TaxPointValue ? v.cashBackstop : 'none',
-        'start': v is RetentionValue ? v.from : 'fiscal_year_end',
-        'duty': v is MandateValue ? v.duty : MandateDuty.receiveAll.wire,
-        'format': v is AccountMapValue ? v.format : 'coa',
-        'status': v is TaxabilityValue ? v.status : taxabilityStatuses.first,
-        'tax_system': v is IssuingGateValue ? v.taxSystem : 'vat',
-      };
 
   static Map<String, bool> _flagsOf(TaxValue? v) => {
         'invoice_option': v is TaxPointValue && v.invoiceOption,
@@ -190,6 +182,7 @@ class _VersionForm {
             cents: int.tryParse(fields.text('cents')) ?? 0,
             effect: choice['effect']!,
             currency: fields.text('currency').toUpperCase(),
+            chargeCents: int.tryParse(fields.text('charge_cents')) ?? 0,
           ),
         TaxDomain.taxPoint => TaxPointValue(
             standard: choice['standard']!,
@@ -204,6 +197,7 @@ class _VersionForm {
             nationalChannelRequired: flag['national_channel_required']!,
             currency: fields.text('currency').toUpperCase(),
             taxSystem: choice['tax_system']!,
+            outsideVatPostalCodes: postalPrefixesOf(fields.text('outside_vat_postal_codes')),
           ),
         TaxDomain.salesTax => SalesTaxValue(
             state: fields.text('state').toUpperCase(),
@@ -359,8 +353,9 @@ class _VersionForm {
       switch (domain) {
         TaxDomain.threshold => [
             _text('cents', l10n.taxRefCents, type: TextInputType.number),
-            _pick('effect', l10n.taxRefEffect, const ['next_year', 'immediate']),
+            _pick('effect', l10n.taxRefEffect, thresholdEffects),
             _text('currency', l10n.taxRefCurrency),
+            _text('charge_cents', l10n.taxRefChargeCents, type: TextInputType.number),
           ],
         TaxDomain.taxPoint => [
             _pick('standard', l10n.taxRefStandardRule,
@@ -384,6 +379,7 @@ class _VersionForm {
             _switch('national_channel_required', l10n.taxRefNationalChannel, refresh),
             _text('currency', l10n.taxRefCurrency),
             _pick('tax_system', l10n.taxRefTaxSystem, const ['vat', salesTaxSystem]),
+            _text('outside_vat_postal_codes', l10n.taxRefOutsideVatPostalCodes),
           ],
         TaxDomain.salesTax => [
             _text('state', l10n.taxRefState),

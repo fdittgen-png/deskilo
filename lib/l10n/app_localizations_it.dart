@@ -11661,6 +11661,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero di partita IVA dello spazio nel formato dell\'HMRC: GB o XI seguito da nove o dodici cifre (VAT Notice 700)';
 
   @override
+  String get invoiceMissingTerritoryOutsideVat =>
+      'La sede si trova dove l’IVA dello Stato non si applica (Canarie: IGIC; Ceuta e Melilla: IPSI): DesKilo non vi emette ancora.';
+
+  @override
   String get invoiceMissingTitle =>
       'Completi questi dati prima dell\'emissione';
 
@@ -25923,6 +25927,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefCents => 'Importo (unità minore)';
 
   @override
+  String get taxRefChargeCents =>
+      'Importo dovuto oltre la soglia (unità minore, imposta di bollo)';
+
+  @override
   String get taxRefComponents =>
       'Giurisdizioni, una per riga: livello, nome, percentuale (livello: state, county, city o district)';
 
@@ -26078,6 +26086,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taxRefOfflineCopy =>
       'Copia inclusa nell\'app: il server non è raggiungibile.';
+
+  @override
+  String get taxRefOutsideVatPostalCodes =>
+      'Prefissi di CAP fuori dall’IVA (separati da virgole)';
 
   @override
   String get taxRefPattern => 'Formato';
@@ -27806,6 +27818,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo spazio non è dichiarato soggetto a IVA, quindi le fatture non la espongono. Si cambia in Identità legale.';
 
   @override
+  String vatRegister347Empty(String year) {
+    return 'Nessun cliente ha superato la soglia del modelo 347 nel $year.';
+  }
+
+  @override
   String get vatRegisterActivity => 'Attività: codice, tipo ed epigrafe IAE';
 
   @override
@@ -27819,6 +27836,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatRegisterEmpty =>
       'Nessuna fattura è stata emessa in questo periodo.';
+
+  @override
+  String vatRegisterEs347(String year) {
+    return 'Modelo 347 $year (CSV)';
+  }
 
   @override
   String get vatRegisterEsLibro => 'Registro delle fatture emesse (XLSX AEAT)';

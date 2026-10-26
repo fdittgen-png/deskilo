@@ -56,5 +56,5 @@ lib/features/money/presentation/widgets/negotiation_card.dart :: '0 %', :: 1 :: 
 lib/features/money/domain/vat_form_catalogue.dart :: 'ES' => esAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
 lib/features/money/domain/vat_form_catalogue.dart :: 'IT' => itAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
 lib/features/money/domain/vat_register_es.dart :: 'AE' => ( :: 1 :: EN 16931 category (UNCL5305) to the AEAT's calificación and clave: a standard's fixed code
-lib/features/money/domain/vat_registers.dart :: 'ES' => const [VatRegisterKind.esLibro, VatRegisterKind.esSii], :: 1 :: which national register builders a country uses: structure (a new country is new code)
+lib/features/money/domain/vat_registers.dart :: 'ES' => const [ :: 1 :: which national register builders a country uses: structure (a new country is new code)
 lib/features/money/domain/vat_registers.dart :: 'IT' => const [VatRegisterKind.itRegistro], :: 1 :: which national register builders a country uses: structure (a new country is new code)

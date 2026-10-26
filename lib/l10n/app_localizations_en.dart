@@ -11582,6 +11582,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)';
 
   @override
+  String get invoiceMissingTerritoryOutsideVat =>
+      'The site is where the State’s VAT does not apply (Canary Islands: IGIC; Ceuta and Melilla: IPSI): DesKilo does not issue there yet.';
+
+  @override
   String get invoiceMissingTitle => 'Complete these details before issuing';
 
   @override
@@ -25688,6 +25692,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefCents => 'Amount (minor units)';
 
   @override
+  String get taxRefChargeCents =>
+      'Charged once passed (minor units, stamp duty)';
+
+  @override
   String get taxRefComponents =>
       'Jurisdictions, one per line: level, name, percent (level: state, county, city or district)';
 
@@ -25840,6 +25848,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get taxRefOfflineCopy =>
       'Showing the copy bundled with the app: the server could not be reached.';
+
+  @override
+  String get taxRefOutsideVatPostalCodes =>
+      'Postal-code prefixes outside the VAT (comma-separated)';
 
   @override
   String get taxRefPattern => 'Pattern';
@@ -27554,6 +27566,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.';
 
   @override
+  String vatRegister347Empty(String year) {
+    return 'No customer passed the modelo 347 line in $year.';
+  }
+
+  @override
   String get vatRegisterActivity => 'Activity: code, type and IAE heading';
 
   @override
@@ -27566,6 +27583,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatRegisterEmpty => 'No invoice was issued in this period.';
+
+  @override
+  String vatRegisterEs347(String year) {
+    return 'Modelo 347 $year (CSV)';
+  }
 
   @override
   String get vatRegisterEsLibro => 'Register of issued invoices (AEAT XLSX)';

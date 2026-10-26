@@ -68,5 +68,27 @@
   "vatRegisterActivityInvalid": "Un código de la A a la D, dos dígitos de tipo y hasta cuatro caracteres de epígrafe.",
   "@vatRegisterActivityInvalid": {
     "description": "#2363 VAT registers (ES, IT): vatRegisterActivityInvalid"
+  },
+  "vatRegisterEs347": "Modelo 347 {year} (CSV)",
+  "@vatRegisterEs347": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEs347",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatRegister347Empty": "Ningún cliente ha superado el umbral del modelo 347 en {year}.",
+  "@vatRegister347Empty": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Empty",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMissingTerritoryOutsideVat": "El centro está donde no se aplica el IVA del Estado (Canarias: IGIC; Ceuta y Melilla: IPSI): DesKilo todavía no expide allí.",
+  "@invoiceMissingTerritoryOutsideVat": {
+    "description": "#2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat"
   }
 }

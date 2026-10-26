@@ -8121,6 +8121,10 @@
   "@invoiceMissingSellerVatIdFormat": {
     "description": "#2359: invoiceMissingSellerVatIdFormat"
   },
+  "invoiceMissingTerritoryOutsideVat": "Der Standort liegt dort, wo die staatliche Umsatzsteuer nicht gilt (Kanaren: IGIC; Ceuta und Melilla: IPSI): DesKilo stellt dort noch nicht aus.",
+  "@invoiceMissingTerritoryOutsideVat": {
+    "description": "#2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat"
+  },
   "invoiceMissingTitle": "Vor der Ausstellung bitte ergänzen",
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
@@ -17335,6 +17339,10 @@
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
+  "taxRefChargeCents": "Darüber fälliger Betrag (kleinste Einheit, Stempelsteuer)",
+  "@taxRefChargeCents": {
+    "description": "#2363 tax reference editor: taxRefChargeCents"
+  },
   "taxRefComponents": "Jurisdiktionen, eine je Zeile: Ebene, Name, Prozent (Ebene: state, county, city oder district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"
@@ -17530,6 +17538,10 @@
   "taxRefOfflineCopy": "Es wird die in der App enthaltene Kopie gezeigt: Der Server ist nicht erreichbar.",
   "@taxRefOfflineCopy": {
     "description": "#2477 tax reference: Banner: values come from the bundled copy."
+  },
+  "taxRefOutsideVatPostalCodes": "Postleitzahl-Präfixe außerhalb der USt (durch Kommas getrennt)",
+  "@taxRefOutsideVatPostalCodes": {
+    "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
   },
   "taxRefPattern": "Muster",
   "@taxRefPattern": {
@@ -18792,6 +18804,15 @@
   "vatRateRemoveTooltip": "Entfernen",
   "vatRatesTile": "Steuersätze",
   "vatRegimeHint": "Dieser Space ist nicht als umsatzsteuerpflichtig deklariert, Rechnungen weisen daher keine Steuer aus. Das ändert sich unter Rechtliche Identität.",
+  "vatRegister347Empty": "Kein Kunde hat {year} die Grenze des Modelo 347 überschritten.",
+  "@vatRegister347Empty": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Empty",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
   "vatRegisterActivity": "Tätigkeit: Code, Art und IAE-Rubrik",
   "@vatRegisterActivity": {
     "description": "#2363 VAT registers (ES, IT): vatRegisterActivity"
@@ -18807,6 +18828,15 @@
   "vatRegisterEmpty": "In diesem Zeitraum wurde keine Rechnung ausgestellt.",
   "@vatRegisterEmpty": {
     "description": "#2363 VAT registers (ES, IT): vatRegisterEmpty"
+  },
+  "vatRegisterEs347": "Modelo 347 {year} (CSV)",
+  "@vatRegisterEs347": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEs347",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
   },
   "vatRegisterEsLibro": "Register der ausgestellten Rechnungen (AEAT-XLSX)",
   "@vatRegisterEsLibro": {

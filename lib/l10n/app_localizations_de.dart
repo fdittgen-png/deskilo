@@ -11680,6 +11680,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Umsatzsteuer-Registriernummer des Workspace im Format der HMRC: GB oder XI, gefolgt von neun oder zwölf Ziffern (VAT Notice 700)';
 
   @override
+  String get invoiceMissingTerritoryOutsideVat =>
+      'Der Standort liegt dort, wo die staatliche Umsatzsteuer nicht gilt (Kanaren: IGIC; Ceuta und Melilla: IPSI): DesKilo stellt dort noch nicht aus.';
+
+  @override
   String get invoiceMissingTitle => 'Vor der Ausstellung bitte ergänzen';
 
   @override
@@ -25956,6 +25960,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefCents => 'Betrag (kleinste Einheit)';
 
   @override
+  String get taxRefChargeCents =>
+      'Darüber fälliger Betrag (kleinste Einheit, Stempelsteuer)';
+
+  @override
   String get taxRefComponents =>
       'Jurisdiktionen, eine je Zeile: Ebene, Name, Prozent (Ebene: state, county, city oder district)';
 
@@ -26115,6 +26123,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taxRefOfflineCopy =>
       'Es wird die in der App enthaltene Kopie gezeigt: Der Server ist nicht erreichbar.';
+
+  @override
+  String get taxRefOutsideVatPostalCodes =>
+      'Postleitzahl-Präfixe außerhalb der USt (durch Kommas getrennt)';
 
   @override
   String get taxRefPattern => 'Muster';
@@ -27843,6 +27855,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Space ist nicht als umsatzsteuerpflichtig deklariert, Rechnungen weisen daher keine Steuer aus. Das ändert sich unter Rechtliche Identität.';
 
   @override
+  String vatRegister347Empty(String year) {
+    return 'Kein Kunde hat $year die Grenze des Modelo 347 überschritten.';
+  }
+
+  @override
   String get vatRegisterActivity => 'Tätigkeit: Code, Art und IAE-Rubrik';
 
   @override
@@ -27856,6 +27873,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatRegisterEmpty =>
       'In diesem Zeitraum wurde keine Rechnung ausgestellt.';
+
+  @override
+  String vatRegisterEs347(String year) {
+    return 'Modelo 347 $year (CSV)';
+  }
 
   @override
   String get vatRegisterEsLibro =>

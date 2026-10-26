@@ -19235,6 +19235,12 @@ abstract class AppLocalizations {
   /// **'The workspace\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)'**
   String get invoiceMissingSellerVatIdFormat;
 
+  /// #2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat
+  ///
+  /// In en, this message translates to:
+  /// **'The site is where the State’s VAT does not apply (Canary Islands: IGIC; Ceuta and Melilla: IPSI): DesKilo does not issue there yet.'**
+  String get invoiceMissingTerritoryOutsideVat;
+
   /// #1916 invoice essentials: invoiceMissingTitle
   ///
   /// In en, this message translates to:
@@ -42863,6 +42869,12 @@ abstract class AppLocalizations {
   /// **'Amount (minor units)'**
   String get taxRefCents;
 
+  /// #2363 tax reference editor: taxRefChargeCents
+  ///
+  /// In en, this message translates to:
+  /// **'Charged once passed (minor units, stamp duty)'**
+  String get taxRefChargeCents;
+
   /// #2362 sales tax: taxRefComponents
   ///
   /// In en, this message translates to:
@@ -43156,6 +43168,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Showing the copy bundled with the app: the server could not be reached.'**
   String get taxRefOfflineCopy;
+
+  /// #2363 tax reference editor: taxRefOutsideVatPostalCodes
+  ///
+  /// In en, this message translates to:
+  /// **'Postal-code prefixes outside the VAT (comma-separated)'**
+  String get taxRefOutsideVatPostalCodes;
 
   /// #2477 tax reference: Field: regular expression for the identifier body.
   ///
@@ -46007,6 +46025,12 @@ abstract class AppLocalizations {
   /// **'This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.'**
   String get vatRegimeHint;
 
+  /// #2363 VAT registers (ES, IT): vatRegister347Empty
+  ///
+  /// In en, this message translates to:
+  /// **'No customer passed the modelo 347 line in {year}.'**
+  String vatRegister347Empty(String year);
+
   /// #2363 VAT registers (ES, IT): vatRegisterActivity
   ///
   /// In en, this message translates to:
@@ -46030,6 +46054,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No invoice was issued in this period.'**
   String get vatRegisterEmpty;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterEs347
+  ///
+  /// In en, this message translates to:
+  /// **'Modelo 347 {year} (CSV)'**
+  String vatRegisterEs347(String year);
 
   /// #2363 VAT registers (ES, IT): vatRegisterEsLibro
   ///

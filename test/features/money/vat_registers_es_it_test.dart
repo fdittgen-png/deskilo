@@ -15,12 +15,12 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/files/xlsx.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
+import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/money/domain/vat_filing_files.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_register_es.dart';
 import 'package:deskilo/features/money/domain/vat_register_es_sii.dart';
 import 'package:deskilo/features/money/domain/vat_register_it.dart';
-import 'package:deskilo/features/money/domain/vat_declaration.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -456,7 +456,6 @@ void main() {
               netCents: 8000,
               vatCents: 0,
               invoiceCount: 1,
-              direction: 'output',
             ),
           ],
           totalNetCents: 8000,

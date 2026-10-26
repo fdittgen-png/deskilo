@@ -13,6 +13,9 @@ enum VatRegisterKind {
   /// The same documents of the period as the SII message.
   esSii,
 
+  /// The modelo 347 list of the period's year.
+  es347,
+
   /// The Italian registro delle fatture emesse of the period.
   itRegistro,
 }
@@ -20,7 +23,11 @@ enum VatRegisterKind {
 /// The registers a space of [country] can save.
 List<VatRegisterKind> vatRegistersFor(String country) =>
     switch (country.trim().toUpperCase()) {
-      'ES' => const [VatRegisterKind.esLibro, VatRegisterKind.esSii],
+      'ES' => const [
+        VatRegisterKind.esLibro,
+        VatRegisterKind.esSii,
+        VatRegisterKind.es347,
+      ],
       'IT' => const [VatRegisterKind.itRegistro],
       _ => const [],
     };

@@ -10,11 +10,13 @@ import 'dart:typed_data';
 
 import '../../../core/files/xlsx.dart';
 import '../../../core/time/date_text.dart';
+import '../../../core/vat/tax_reference.dart';
 import '../domain/invoice.dart';
 import '../domain/vat_annual_summary.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
 import '../domain/vat_register_es.dart';
+import '../domain/vat_register_es_347.dart';
 import '../domain/vat_register_es_sii.dart';
 import '../domain/vat_register_it.dart';
 
@@ -25,6 +27,7 @@ class VatRegisterFiles {
     required this.party,
     required this.invoices,
     required this.declarations,
+    required this.reference,
   });
 
   /// The space that keeps the registers, or null before it is loaded.
@@ -34,7 +37,11 @@ class VatRegisterFiles {
   final Future<List<Invoice>> Function() invoices;
   final Future<List<VatDeclaration>> Function() declarations;
 
-  VatFilingParty get _party => party ?? (throw StateError('no workspace loaded'));
+  /// The workspace's tax reference, or null before its context is ready.
+  final TaxReferenceSet? reference;
+
+  VatFilingParty get _party =>
+      party ?? (throw StateError('no workspace loaded'));
 
   /// The libro of the year up to [end] (its last day included): Pre303
   /// reads the book of the year so far, never one quarter. [activity] is
@@ -81,6 +88,32 @@ class VatRegisterFiles {
     return (
       fileName: 'sii-facturas-emitidas-${isoDay(start)}.xml',
       bytes: Uint8List.fromList(utf8.encode(xml)),
+    );
+  }
+
+  /// The modelo 347 list of [year]: the customers above the line.
+  Future<VatRegisterFile?> es347({required int year}) async {
+    final all = await invoices();
+    final docs = registerDocuments(
+      all,
+      from: DateTime(year),
+      to: DateTime(year + 1),
+    );
+    final data = reference;
+    if (docs.isEmpty || data == null) return null;
+    final currency = docs.first.currency;
+    final lines = modelo347Lines(
+      docs,
+      year: year,
+      currency: currency,
+      reference: data,
+    );
+    if (lines.isEmpty) return null;
+    return (
+      fileName: 'modelo-347-$year.csv',
+      bytes: Uint8List.fromList(
+        utf8.encode(modelo347Csv(lines, currency: currency)),
+      ),
     );
   }
 

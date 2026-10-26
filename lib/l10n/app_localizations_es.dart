@@ -11656,6 +11656,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El número de registro de IVA del espacio en el formato de la HMRC: GB o XI seguido de nueve o doce dígitos (VAT Notice 700)';
 
   @override
+  String get invoiceMissingTerritoryOutsideVat =>
+      'El centro está donde no se aplica el IVA del Estado (Canarias: IGIC; Ceuta y Melilla: IPSI): DesKilo todavía no expide allí.';
+
+  @override
   String get invoiceMissingTitle => 'Complete estos datos antes de emitir';
 
   @override
@@ -25889,6 +25893,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefCents => 'Importe (unidad menor)';
 
   @override
+  String get taxRefChargeCents =>
+      'Importe debido al superarlo (unidad menor, impuesto de timbre)';
+
+  @override
   String get taxRefComponents =>
       'Jurisdicciones, una por línea: nivel, nombre, porcentaje (nivel: state, county, city o district)';
 
@@ -26046,6 +26054,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get taxRefOfflineCopy =>
       'Se muestra la copia incluida en la aplicación: no se pudo contactar con el servidor.';
+
+  @override
+  String get taxRefOutsideVatPostalCodes =>
+      'Prefijos de código postal fuera del IVA (separados por comas)';
 
   @override
   String get taxRefPattern => 'Formato';
@@ -27773,6 +27785,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este espacio no está declarado como sujeto a IVA, así que las facturas no lo muestran. Eso se cambia en Identidad legal.';
 
   @override
+  String vatRegister347Empty(String year) {
+    return 'Ningún cliente ha superado el umbral del modelo 347 en $year.';
+  }
+
+  @override
   String get vatRegisterActivity =>
       'Actividad: código, tipo y epígrafe del IAE';
 
@@ -27787,6 +27804,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get vatRegisterEmpty =>
       'No se ha expedido ninguna factura en este periodo.';
+
+  @override
+  String vatRegisterEs347(String year) {
+    return 'Modelo 347 $year (CSV)';
+  }
 
   @override
   String get vatRegisterEsLibro =>

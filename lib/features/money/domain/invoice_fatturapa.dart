@@ -8,6 +8,7 @@ import '../../../core/money/money_text.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'stamp_duty.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
 
@@ -226,9 +227,6 @@ class _FatturaPaWriter {
   }
 
   void generalData() {
-    final natures = {
-      for (final t in supplyBreakdown) ?fatturaPaNatura(t.category, buyerCountry: buyer.country),
-    };
     builder.element(
       'DatiGenerali',
       nest: () {
@@ -239,17 +237,22 @@ class _FatturaPaWriter {
             el('Divisa', invoice.currency);
             el('Data', _date(invoice.issuedAt));
             el('Numero', _basic(invoice.number, 20));
-            // Stamp duty: €2 on a document above €77.47 that carries no
-            // VAT because the operation is exempt or outside its scope —
-            // not on exports, intra-EU supplies or a reverse charge.
-            if (taxCents == 0 &&
-                grossCents > 7747 &&
-                natures.any(_bolloNatures.contains)) {
+            // Stamp duty on a document that carries no VAT because its
+            // operation is exempt or outside the scope (`stamp_duty.dart`).
+            if (stampDutyCents((
+                  country: seller.country,
+                  currency: invoice.currency,
+                  day: invoice.issuedAt,
+                  totals: supplyBreakdown,
+                  grossCents: grossCents,
+                  buyerCountry: buyer.country,
+                ))
+                case final duty?) {
               builder.element(
                 'DatiBollo',
                 nest: () {
                   el('BolloVirtuale', 'SI');
-                  el('ImportoBollo', '2.00');
+                  el('ImportoBollo', amount(duty));
                 },
               );
             }
@@ -357,11 +360,6 @@ class _FatturaPaWriter {
     );
   }
 }
-
-/// The Natura that stamp duty applies to: exempt or outside-scope
-/// operations, not exports (N3.1), intra-EU supplies (N3.2) or a reverse
-/// charge (N6.x, N2.1).
-const _bolloNatures = {'N1', 'N2.2', 'N3.5', 'N4'};
 
 /// Why a 0 % line carries no VAT, in SdI's codes (the FatturaPA and the
 /// registro IVA read the same one). Null for a taxed line.

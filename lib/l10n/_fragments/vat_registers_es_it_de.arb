@@ -68,5 +68,27 @@
   "vatRegisterActivityInvalid": "Ein Code von A bis D, zwei Ziffern für die Art und bis zu vier Zeichen für die Rubrik.",
   "@vatRegisterActivityInvalid": {
     "description": "#2363 VAT registers (ES, IT): vatRegisterActivityInvalid"
+  },
+  "vatRegisterEs347": "Modelo 347 {year} (CSV)",
+  "@vatRegisterEs347": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEs347",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatRegister347Empty": "Kein Kunde hat {year} die Grenze des Modelo 347 überschritten.",
+  "@vatRegister347Empty": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Empty",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMissingTerritoryOutsideVat": "Der Standort liegt dort, wo die staatliche Umsatzsteuer nicht gilt (Kanaren: IGIC; Ceuta und Melilla: IPSI): DesKilo stellt dort noch nicht aus.",
+  "@invoiceMissingTerritoryOutsideVat": {
+    "description": "#2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat"
   }
 }
