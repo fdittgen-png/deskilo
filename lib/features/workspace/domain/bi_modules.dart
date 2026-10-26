@@ -97,21 +97,33 @@ class BiDrill {
     required this.route,
     required this.permission,
     this.carriesPeriod = false,
+    this.carriesLevel = false,
   });
 
   final String route;
   final WorkspacePermission permission;
   final bool carriesPeriod;
 
-  /// The address to open for a figure of [period]. Only months and the
-  /// ids a screen already knows travel; nothing private rides in a URL.
-  String target(BiPeriod period) {
+  /// Whether the source screen narrows itself to one level (`level=`).
+  final bool carriesLevel;
+
+  /// The query parameter naming the level a figure was narrowed to.
+  static const levelParameter = 'level';
+
+  /// The address to open for a figure of [period], narrowed to [levelId]
+  /// when the figure was and the source can be. Only months and the ids a
+  /// screen already knows travel; nothing private rides in a URL.
+  String target(BiPeriod period, {String? levelId}) {
     if (!carriesPeriod) return route;
     final first = BiPeriod(BiGrain.month, period.year, period.startMonth);
     final last = first.shift(period.grain.months - 1);
     return Uri(
       path: route,
-      queryParameters: {'from': first.wire, 'to': last.wire},
+      queryParameters: {
+        'from': first.wire,
+        'to': last.wire,
+        if (carriesLevel && levelId != null) levelParameter: levelId,
+      },
     ).toString();
   }
 }
@@ -132,6 +144,7 @@ const biModules = <BiModule>[
       route: '/reservations/period',
       permission: WorkspacePermission.viewAnalytics,
       carriesPeriod: true,
+      carriesLevel: true,
     ),
   ),
   // #1924 — the treasurer's two figures, from the money report's own
@@ -336,6 +349,18 @@ const biModules = <BiModule>[
       WorkspacePermission.viewAnalytics,
       WorkspacePermission.viewFinances,
     },
+  ),
+  // #2580 — what waits on a decision of the space, read now: people waiting
+  // on an answer; its source is the requests themselves.
+  BiModule(
+    id: 'operations.pending_actions_current',
+    area: BiArea.people,
+    feature: WorkspaceFeature.workspaceOverview,
+    permissions: {WorkspacePermission.viewAnalytics},
+    drill: BiDrill(
+      route: '/events',
+      permission: WorkspacePermission.viewAnalytics,
+    ),
   ),
 ];
 

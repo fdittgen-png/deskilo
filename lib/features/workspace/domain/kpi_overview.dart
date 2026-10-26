@@ -10,10 +10,13 @@
 //     invoices past their proven due date, by the dunning rules themselves
 //     (credits, part payments and write-offs taken off); an invoice whose
 //     due date is unknown, or that is on hold, is counted apart, never in
-//     the overdue figure.
+//     the overdue figure;
+//   * operations.pending_actions_current — what waits on a decision of the
+//     space now: the requests its validators have not decided and the
+//     people asking to join (the space's, not one person's own list).
 //
 // The SERVER computes them (`kpi_memberships_current`,
-// `kpi_overdue_receivables`, 0536). Pure Dart: no Flutter, no l10n.
+// `kpi_overdue_receivables`, 0536; `kpi_pending_actions_current`). Pure Dart: no Flutter, no l10n.
 library;
 
 import '../../../core/data/json_reader.dart';
@@ -58,10 +61,30 @@ const _overdueReceivablesKpi = KpiDefinition(
   minCohort: null,
 );
 
+const _pendingActionsKpi = KpiDefinition(
+  id: 'operations.pending_actions_current',
+  version: 1,
+  unit: 'count',
+  timeBasis:
+      'now: the requests awaiting a validator\'s decision and the people '
+      'asking to join; a past period has no recorded count',
+  dateBasis: KpiDateBasis.currentState,
+  coverage: KpiCoverage.currentStateOnly,
+  dimensions: [],
+  numerator: 'pending_actions',
+  denominator: '',
+  aggregation: KpiAggregation.lastAtCutoff,
+  permissions: ['viewAnalytics'],
+  disclosure: KpiDisclosure.aggregateOperational,
+  prerequisites: ['members', 'validation policies'],
+  minCohort: null,
+);
+
 /// The overview's figures, in catalogue order.
 const overviewKpis = <KpiDefinition>[
   _activeMembershipsKpi,
   _overdueReceivablesKpi,
+  _pendingActionsKpi,
 ];
 
 /// One current-state figure as the server returned it: a count, or an

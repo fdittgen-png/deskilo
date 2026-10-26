@@ -59,12 +59,25 @@ class BiReportEditor extends _$BiReportEditor {
 
   void preview({required bool on}) => state = state.withPreview(on: on);
 
-  /// Keeps the page's selection as a filter of the page — an explicit
-  /// choice, saved with the report — and clears the temporary selection.
-  void keepSelection() {
+  /// Keeps the page's selection as a filter of the page, or with
+  /// [forReport] of every page — an explicit choice, saved with the report —
+  /// and clears the temporary selection.
+  void keepSelection({bool forReport = false}) {
     final picked = state.selection;
     if (picked == null) return;
-    run((report, page) => biAddPageFilter(report, page, picked.filter));
+    run(
+      (report, page) => forReport
+          ? biAddReportFilter(report, picked.filter)
+          : biAddPageFilter(report, page, picked.filter),
+    );
+    if (state.refusal == null) state = state.withSelection(null);
+  }
+
+  /// Limits visual [id] alone to the page's selection, then clears it.
+  void keepSelectionOn(String id) {
+    final picked = state.selection;
+    if (picked == null) return;
+    run((report, page) => biAddVisualFilter(report, page, id, picked.filter));
     if (state.refusal == null) state = state.withSelection(null);
   }
 

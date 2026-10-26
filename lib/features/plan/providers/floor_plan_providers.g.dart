@@ -440,3 +440,49 @@ final class TargetNamesProvider
 }
 
 String _$targetNamesHash() => r'df73e2ff7e54720a61304621ca40f9b26abf26b1';
+
+/// seat/desk/office id → the id of its level, for the active workspace.
+
+@ProviderFor(targetLevels)
+final targetLevelsProvider = TargetLevelsProvider._();
+
+/// seat/desk/office id → the id of its level, for the active workspace.
+
+final class TargetLevelsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// seat/desk/office id → the id of its level, for the active workspace.
+  TargetLevelsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'targetLevelsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$targetLevelsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    return targetLevels(ref);
+  }
+}
+
+String _$targetLevelsHash() => r'64a4a0806ca7b208b0cf173b28facf557c827ded';

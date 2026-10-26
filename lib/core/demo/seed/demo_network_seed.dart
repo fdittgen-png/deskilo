@@ -20,6 +20,8 @@ import 'dart:async';
 import '../../../features/directory/domain/messenger.dart';
 import '../../../features/directory/domain/public_workspace.dart';
 import '../../../features/visits/domain/guest_participation.dart';
+import '../../../features/workspace/domain/bi_query.dart';
+import '../../../features/workspace/domain/bi_report_definition.dart';
 import '../../../features/workspace/domain/bi_saved_view.dart';
 import '../data/connected_installations.dart';
 import '../data/guest_participation_repository.dart';
@@ -277,18 +279,19 @@ Map<String, Object?> _spaceRow(
 InMemoryBiViewRepository demoBiViews() {
   final views = InMemoryBiViewRepository();
   // The in-memory save has no await: the view is stored before it returns.
-  for (final (name, definition) in const [
+  for (final (name, definition) in [
     (
       'Finance against last year',
-      BiViewDefinition(
+      const BiViewDefinition(
         query: {'cmp': 'year'},
         cards: ['finance.invoiced', 'finance.collected'],
       ),
     ),
     (
       'Quarter by quarter',
-      BiViewDefinition(query: {'grain': 'quarter', 'cmp': 'previous'}),
+      const BiViewDefinition(query: {'grain': 'quarter', 'cmp': 'previous'}),
     ),
+    ('Occupancy and billing', BiViewDefinition.ofReport(_demoReport())),
   ]) {
     unawaited(
       views.save(
@@ -302,3 +305,38 @@ InMemoryBiViewRepository demoBiViews() {
   }
   return views;
 }
+
+/// A report of two pages: the occupancy figure beside it by floor, then the
+/// month's invoicing as a table.
+BiReportDefinition _demoReport() => BiReportDefinition(
+  period: const BiReportPeriod.relative(BiGrain.month, 0),
+  pages: [
+    BiReportPage(
+      id: 'p1',
+      title: 'Occupancy',
+      visuals: [
+        BiReportVisual.kpi(
+          id: 'v1',
+          metricId: 'capacity.seat_utilisation',
+          layout: const BiVisualLayout(order: 0, span: 3, height: 1),
+        ),
+        BiReportVisual.kpi(
+          id: 'v2',
+          metricId: 'capacity.seat_utilisation',
+          layout: const BiVisualLayout(order: 1, height: 3),
+        ).copyWith(type: BiVisualType.bar).withDimension('level'),
+      ],
+    ),
+    BiReportPage(
+      id: 'p2',
+      title: 'Billing',
+      visuals: [
+        BiReportVisual.kpi(
+          id: 'v3',
+          metricId: 'finance.invoiced',
+          layout: const BiVisualLayout(order: 0, height: 3),
+        ).copyWith(type: BiVisualType.table),
+      ],
+    ),
+  ],
+);

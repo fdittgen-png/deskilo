@@ -2,5 +2,7 @@
   "periodReservationsTitle": "Reservas de {period}",
   "periodReservationsEmpty": "Ninguna reserva en estos meses.",
   "periodReservationsFailed": "No se pudieron leer las reservas.",
-  "periodReservationsUnnamed": "(lugar sin nombre)"
+  "periodReservationsUnnamed": "(lugar sin nombre)",
+  "periodReservationsLevel": "Solo en {level}",
+  "periodReservationsUnknownLevel": "Este no es un nivel de este espacio."
 }

@@ -838,8 +838,12 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   WorkspaceFeature.reportDesigner: _toggle('the report designer'),
   WorkspaceFeature.biReportDesigner: _state(
     _owner,
-    'two saved analyses',
-    (w) async => (await w.f.biViews.list('ws-1')).length >= 2,
+    'two saved analyses and a report of two pages',
+    (w) async {
+      final views = await w.f.biViews.list('ws-1');
+      return views.length >= 3 &&
+          views.any((v) => (v.definition?.report?.pages.length ?? 0) >= 2);
+    },
   ),
   WorkspaceFeature.usageReport: _state(
     _admin,

@@ -59,7 +59,7 @@ final class BiModuleResultProvider
   }
 }
 
-String _$biModuleResultHash() => r'89978f73f3dda281d918e307e47535edbd39d66b';
+String _$biModuleResultHash() => r'0246010e32b76d54f7c7dec43d4c517c2e03348e';
 
 final class BiModuleResultFamily extends $Family
     with
@@ -163,7 +163,7 @@ final class BiModuleSeriesProvider
   }
 }
 
-String _$biModuleSeriesHash() => r'dd849fb973f94c91c362e211532348f7fb2d79f7';
+String _$biModuleSeriesHash() => r'eef7404ffdf6523e00079ca2142404f93701853e';
 
 /// The module's own figure for each of the [count] periods ending at
 /// [end], oldest first. Each is the same read the page makes for one
@@ -259,11 +259,15 @@ final class BiViewRepositoryProvider
 String _$biViewRepositoryHash() => r'2864d593a22be3af134fe0fcff9aef64a87f6b37';
 
 /// The reader's private views and the workspace's team views.
+/// The saved views as the server shows them to this reader now: read again
+/// when a right changes, so a figure withheld since is withheld here too.
 
 @ProviderFor(biViews)
 final biViewsProvider = BiViewsFamily._();
 
 /// The reader's private views and the workspace's team views.
+/// The saved views as the server shows them to this reader now: read again
+/// when a right changes, so a figure withheld since is withheld here too.
 
 final class BiViewsProvider
     extends
@@ -276,6 +280,8 @@ final class BiViewsProvider
         $FutureModifier<List<BiSavedView>>,
         $FutureProvider<List<BiSavedView>> {
   /// The reader's private views and the workspace's team views.
+  /// The saved views as the server shows them to this reader now: read again
+  /// when a right changes, so a figure withheld since is withheld here too.
   BiViewsProvider._({
     required BiViewsFamily super.from,
     required String super.argument,
@@ -320,9 +326,11 @@ final class BiViewsProvider
   }
 }
 
-String _$biViewsHash() => r'37c4bb9e21f3db8620426b39f745a948f36bf6a3';
+String _$biViewsHash() => r'24ab90166a73de09ae30ad4bda149c3e42128851';
 
 /// The reader's private views and the workspace's team views.
+/// The saved views as the server shows them to this reader now: read again
+/// when a right changes, so a figure withheld since is withheld here too.
 
 final class BiViewsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<BiSavedView>>, String> {
@@ -336,6 +344,8 @@ final class BiViewsFamily extends $Family
       );
 
   /// The reader's private views and the workspace's team views.
+  /// The saved views as the server shows them to this reader now: read again
+  /// when a right changes, so a figure withheld since is withheld here too.
 
   BiViewsProvider call(String workspaceId) =>
       BiViewsProvider._(argument: workspaceId, from: this);

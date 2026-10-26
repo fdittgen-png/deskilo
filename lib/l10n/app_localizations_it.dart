@@ -2099,6 +2099,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biEditorDiscard => 'Scarti';
 
   @override
+  String get biEditorDrill => 'Offrire la fonte';
+
+  @override
+  String get biEditorDrillHint =>
+      'I lettori possono aprire ciò che compone questa cifra, ristretto come questo elemento visivo.';
+
+  @override
   String get biEditorDuplicate => 'Duplichi';
 
   @override
@@ -2162,6 +2169,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biEditorKeepSelection => 'Conservi come filtro di questa pagina';
+
+  @override
+  String get biEditorKeepSelectionReport =>
+      'Mantenere come filtro dell\'intero report';
+
+  @override
+  String biEditorKeepSelectionVisual(String group) {
+    return 'Mostrare qui solo $group';
+  }
 
   @override
   String get biEditorKind => 'Mostrato come';
@@ -2393,6 +2409,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biEditorScopeReport => 'tutto il report';
 
   @override
+  String get biEditorScopeVisual => 'questo elemento visivo';
+
+  @override
   String get biEditorSelectHint =>
       'Selezioni una visualizzazione della pagina per modificarla.';
 
@@ -2444,6 +2463,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biEditorVisualDescription => 'Descrizione';
+
+  @override
+  String get biEditorVisualFilters => 'Filtri di questo elemento visivo';
 
   @override
   String biEditorVisualLabel(
@@ -2739,6 +2761,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biPrintFailed => 'senza risposta';
+
+  @override
+  String get biPrintFigures => 'Cifre';
 
   @override
   String get biPrintFilters => 'Filtri';
@@ -16637,6 +16662,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get overviewOverdueTitle => 'Crediti scaduti';
 
   @override
+  String get overviewPendingActions => 'In attesa di una decisione';
+
+  @override
+  String get overviewPendingActionsDefinition =>
+      'Le richieste che i validatori dello spazio non hanno ancora deciso e le persone che chiedono di entrare, oggi.';
+
+  @override
+  String overviewPendingInSpace(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count richieste attendono una decisione nello spazio.',
+      one: '1 richiesta attende una decisione nello spazio.',
+      zero: 'Nulla attende una decisione nello spazio.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get overviewPinned => 'I Suoi riquadri fissati';
 
   @override
@@ -16959,9 +17003,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile leggere le prenotazioni.';
 
   @override
+  String periodReservationsLevel(String level) {
+    return 'Solo su $level';
+  }
+
+  @override
   String periodReservationsTitle(String period) {
     return 'Prenotazioni di $period';
   }
+
+  @override
+  String get periodReservationsUnknownLevel =>
+      'Questo non è un livello di questo spazio.';
 
   @override
   String get periodReservationsUnnamed => '(posto senza nome)';

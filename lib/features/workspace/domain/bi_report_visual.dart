@@ -49,7 +49,7 @@ bool biFiltersNarrow(List<BiReportFilter> higher, List<BiReportFilter> lower) {
   return true;
 }
 
-/// A registered name: a metric, dimension or drill target.
+/// A registered name: a metric or a dimension.
 final _reportName = RegExp(r'^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$');
 
 /// A page or visual id.
@@ -314,7 +314,8 @@ class BiReportVisual {
   /// `filter` (a selection narrows the other visuals) or `none`.
   final String interaction;
 
-  /// A registered drill target, or null.
+  /// Absent: the figure's own registered source is offered; [noDrill]: no
+  /// source is offered from this visual.
   final String? drill;
 
   /// Plain content of a text visual, shown escaped.
@@ -327,6 +328,9 @@ class BiReportVisual {
   static const sorts = {'natural', 'value_desc', 'value_asc'};
   static const formats = {'auto', 'number', 'percent', 'currency'};
   static const interactions = {'filter', 'none'};
+
+  /// The stored [drill] of a visual that offers no source.
+  static const noDrill = 'none';
   static const _keys = {
     'id',
     'type',
@@ -379,6 +383,17 @@ class BiReportVisual {
 
   /// Sorted by [value].
   BiReportVisual withSort(String value) => _merged({'sort': value});
+
+  /// Limited by its own [value] filters (empty: none of its own).
+  BiReportVisual withFilters(List<BiReportFilter> value) =>
+      _merged({'filters': [for (final f in value) f.toJson()]});
+
+  /// Offering its figure's source ([on]) or not.
+  BiReportVisual withDrill({required bool on}) =>
+      _merged({'drill': on ? null : noDrill});
+
+  /// Whether this visual offers its figure's registered source.
+  bool get drills => drill != noDrill;
 
   /// This visual with [changes] merged into its stored form (a null clears
   /// that part); itself when the result would not be a valid visual.
@@ -438,12 +453,14 @@ class BiReportVisual {
   }
 
   /// The registered names a visual points at; a text carries no metric,
-  /// every other visual needs one.
+  /// every other visual needs one. A drill is only ever absent (the
+  /// figure's own source) or [noDrill]: any other word would read as "on"
+  /// without being a source anyone registered.
   static bool _bound(BiVisualType t, Object? metric, Object? dim, Object? drill) =>
       (t == BiVisualType.text) == (metric == null) &&
       _name(metric) &&
       (dim == null || _reportDimensions.contains(dim)) &&
-      _name(drill);
+      (drill == null || drill == noDrill);
 
   /// Plain content, and only on a text visual.
   static bool _plain(BiVisualType t, Object? text) =>

@@ -217,7 +217,7 @@ final class FinanceSummaryProvider
   }
 }
 
-String _$financeSummaryHash() => r'2838b299f77ee42bc55f4b8fb388cb982ac683d8';
+String _$financeSummaryHash() => r'a4ba3897ff58f97e75aed309a85761fd226bae22';
 
 /// One read per workspace and months, shared by every finance card.
 
@@ -366,7 +366,7 @@ final class PurchaseSummaryProvider
   }
 }
 
-String _$purchaseSummaryHash() => r'9e0fc33f1d262908973cf1edc962f5bb3746c93a';
+String _$purchaseSummaryHash() => r'6389143842519190af6157420e07bd726676e09a';
 
 /// One read per workspace and months, shared by every purchase card.
 
@@ -512,7 +512,7 @@ final class CostSummaryProvider
   }
 }
 
-String _$costSummaryHash() => r'6fd008ebcbf6e1141e3a02252c8f58a33569e59e';
+String _$costSummaryHash() => r'dc56dbfd67bb29697937940d61402f251827f45b';
 
 /// One read per workspace and months, shared by every cost card.
 
@@ -621,7 +621,7 @@ final class SeatCapacityMonthProvider
   }
 }
 
-String _$seatCapacityMonthHash() => r'c9568b3dce8bd076c5807ca90e06915b675e3ef3';
+String _$seatCapacityMonthHash() => r'7e39167966d84ff9e4d42021ad534613c88c2367';
 
 /// Seat utilisation of one calendar month, on the workspace clock: the
 /// month starts at local midnight of its first day, whatever DST does.

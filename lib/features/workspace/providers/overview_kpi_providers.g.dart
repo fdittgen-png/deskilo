@@ -123,7 +123,7 @@ final class OverviewFigureProvider
   }
 }
 
-String _$overviewFigureHash() => r'52b8697a85f3fac718e64d86e0428f4ebfc90b01';
+String _$overviewFigureHash() => r'826c32c862897a0fc5a3b8d9391c359a78f1874a';
 
 /// One figure of [kpiId] for the whole months [fromMonth, toMonth].
 

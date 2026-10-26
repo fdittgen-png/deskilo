@@ -42,7 +42,7 @@ class BiFilterPane extends ConsumerWidget {
     final p = report.pages[page];
     final names = {
       for (final d in {...report.filters, ...p.filters}.map((f) => f.dimension))
-        d: _groupNames(ref, d),
+        d: biGroupNames(ref, workspaceId, report, d),
     };
     String valueOf(BiReportFilter f) =>
         [for (final v in f.values) names[f.dimension]?[v] ?? v].join(', ');
@@ -99,29 +99,6 @@ class BiFilterPane extends ConsumerWidget {
     );
   }
 
-  /// The names of the groups of [dimension], from the answer of the first
-  /// figure this reader may see that groups by it — the same read a visual
-  /// grouped that way makes, so nothing is asked twice. A group it does not
-  /// name keeps its id.
-  Map<String, String> _groupNames(WidgetRef ref, String dimension) {
-    final module = visibleBiModules(
-      ref.watch(enabledFeaturesSyncProvider),
-      ref.watch(myPermissionsProvider),
-    ).where((m) => m.groupings.contains(dimension)).firstOrNull;
-    if (module == null) return const {};
-    final query =
-        (BiQueryContext.tryParse(report.period.toQuery()) ??
-                BiQueryContext.standard)
-            .copyWith(groupBy: dimension);
-    final groups = ref
-        .watch(biModuleResultProvider(workspaceId, module.id, query))
-        .value
-        ?.groups;
-    return {
-      for (final r in [...?groups]) r.key: ?r.label,
-    };
-  }
-
   Widget _chip(
     BuildContext context,
     String key,
@@ -133,4 +110,34 @@ class BiFilterPane extends ConsumerWidget {
     onDeleted: editable ? remove : null,
     deleteButtonTooltipMessage: context.l10n.biEditorRemoveFilter,
   );
+}
+
+/// The names of the groups of [dimension], from the answer of the first
+/// figure this reader may see that groups by it — the same read a visual
+/// grouped that way makes, so nothing is asked twice. A group it does not
+/// name keeps its id.
+Map<String, String> biGroupNames(
+  WidgetRef ref,
+  String workspaceId,
+  BiReportDefinition report,
+  String dimension,
+) {
+  final module = visibleBiModules(
+    ref.watch(enabledFeaturesSyncProvider),
+    ref.watch(myPermissionsProvider),
+  ).where((m) => m.groupings.contains(dimension)).firstOrNull;
+  if (module == null) return const {};
+  final query =
+      (BiQueryContext.tryParse(report.period.toQuery()) ??
+              BiQueryContext.standard)
+          .copyWith(groupBy: dimension);
+  final groups = ref
+      .watch(biModuleResultProvider(workspaceId, module.id, query))
+      // A current answer only: a refusal never names what came before.
+      .asData
+      ?.value
+      .groups;
+  return {
+    for (final r in [...?groups]) r.key: ?r.label,
+  };
 }

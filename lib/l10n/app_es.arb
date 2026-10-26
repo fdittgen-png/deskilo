@@ -1154,6 +1154,14 @@
   "@biEditorDiscard": {
     "description": "#2580 BI report editor"
   },
+  "biEditorDrill": "Ofrecer la fuente",
+  "@biEditorDrill": {
+    "description": "#2580 BI report editor: whether a visual offers its figure's source"
+  },
+  "biEditorDrillHint": "Los lectores pueden abrir lo que compone esta cifra, acotado como este elemento visual.",
+  "@biEditorDrillHint": {
+    "description": "#2580 BI report editor: what the source switch does"
+  },
   "biEditorDuplicate": "Duplicar",
   "@biEditorDuplicate": {
     "description": "#2580 BI report editor"
@@ -1250,6 +1258,19 @@
   "biEditorKeepSelection": "Conservar como filtro de esta página",
   "@biEditorKeepSelection": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorKeepSelectionReport": "Mantener como filtro de todo el informe",
+  "@biEditorKeepSelectionReport": {
+    "description": "#2580 BI report editor: keep the page's selection as a filter of every page"
+  },
+  "biEditorKeepSelectionVisual": "Mostrar aquí solo {group}",
+  "@biEditorKeepSelectionVisual": {
+    "description": "#2580 BI report editor: limit only the selected visual to the page's selection",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
   },
   "biEditorKind": "Mostrado como",
   "@biEditorKind": {
@@ -1552,6 +1573,10 @@
   "@biEditorScopeReport": {
     "description": "#2580 BI report editor"
   },
+  "biEditorScopeVisual": "este elemento visual",
+  "@biEditorScopeVisual": {
+    "description": "#2580 BI report editor: scope of a filter that narrows one visual"
+  },
   "biEditorSelectHint": "Seleccione un visual de la página para cambiarlo.",
   "@biEditorSelectHint": {
     "description": "#2580 BI report editor"
@@ -1631,6 +1656,10 @@
   "biEditorVisualDescription": "Descripción",
   "@biEditorVisualDescription": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorVisualFilters": "Filtros de este elemento visual",
+  "@biEditorVisualFilters": {
+    "description": "#2580 BI report editor: heading of a visual's own filters"
   },
   "biEditorVisualLabel": "{title}, {kind}, posición {position} de {count}, {span} de 12 columnas. Alt y flechas lo mueven, Mayús y flechas cambian su tamaño, Supr lo elimina.",
   "@biEditorVisualLabel": {
@@ -1921,6 +1950,10 @@
   "biPrintFailed": "sin respuesta",
   "@biPrintFailed": {
     "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFigures": "Cifras",
+  "@biPrintFigures": {
+    "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
   },
   "biPrintFilters": "Filtros",
   "@biPrintFilters": {
@@ -10978,6 +11011,9 @@
   "overviewOverdueBasis": "{count} facturas vencidas; {unknown} sin vencimiento probado y {held} en suspenso, aparte",
   "overviewOverdueDefinition": "Lo que los miembros aún deben de facturas emitidas pasado su vencimiento probado, tras abonos, pagos parciales y pérdidas, según las reglas de recordatorio. Una factura sin vencimiento probado, o en suspenso, se cuenta aparte y no entra en el importe.",
   "overviewOverdueTitle": "Cobros vencidos",
+  "overviewPendingActions": "En espera de una decisión",
+  "overviewPendingActionsDefinition": "Las solicitudes que los validadores del espacio aún no han decidido y las personas que piden unirse, hoy.",
+  "overviewPendingInSpace": "{count, plural, =0{Nada espera una decisión en el espacio.} =1{1 solicitud espera una decisión en el espacio.} other{{count} solicitudes esperan una decisión en el espacio.}}",
   "overviewPinned": "Sus mosaicos fijados",
   "@overviewPinned": {
     "description": "#2583 C2 overview layout"
@@ -11185,7 +11221,9 @@
   "percentValue": "{value} %",
   "periodReservationsEmpty": "Ninguna reserva en estos meses.",
   "periodReservationsFailed": "No se pudieron leer las reservas.",
+  "periodReservationsLevel": "Solo en {level}",
   "periodReservationsTitle": "Reservas de {period}",
+  "periodReservationsUnknownLevel": "Este no es un nivel de este espacio.",
   "periodReservationsUnnamed": "(lugar sin nombre)",
   "permAccessProd": "Entrar en el espacio de producción",
   "@permAccessProd": {

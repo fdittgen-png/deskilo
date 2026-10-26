@@ -58,7 +58,7 @@ final class BiReportEditorProvider
   }
 }
 
-String _$biReportEditorHash() => r'cde339ce4ed003e8441e0d655aee980aaaa99f5a';
+String _$biReportEditorHash() => r'f8d218ed9125966279bd25024ff6cfd26907602a';
 
 final class BiReportEditorFamily extends $Family
     with
