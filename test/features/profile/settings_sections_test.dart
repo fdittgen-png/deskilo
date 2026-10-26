@@ -129,7 +129,7 @@ void main() {
 
     await showWorkspaceSettings(tester);
     expect(find.text('This workspace'), findsNWidgets(2));
-    expect(find.text('Billing'), findsOneWidget);
+    expect(find.text('Pricing & packages'), findsOneWidget);
     expect(find.text('Roles'), findsNothing,
         reason: 'the matrix is for whoever holds manageRoles');
     for (final entry in ['Workspace', 'Availability', 'Features', 'Members & plans']) {

@@ -248,7 +248,7 @@ void main() {
     unawaited(GoRouter.of(context).push('/billing'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Billing'), findsNothing);
+    expect(find.text('Pricing & packages'), findsNothing);
     expect(find.text('Fee bands'), findsNothing);
   });
 
