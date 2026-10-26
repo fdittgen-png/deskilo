@@ -500,5 +500,9 @@
         "type": "int"
       }
     }
+  },
+  "acctTargetNotDeliveredYet": "No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.",
+  "@acctTargetNotDeliveredYet": {
+    "description": "#2377 Accounting systems sheet: an API target whose deliveries the runner does not send yet."
   }
 }

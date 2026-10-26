@@ -2,10 +2,12 @@
 -- #2377 / 0599: the Swiss journal's reference rows. Every taxed Swiss rate
 -- group in force has its MWST code for output tax, input tax and the input
 -- tax of an investment; the shape check knows the `ch_kmu` format and still
--- refuses one it does not know; the KMU chart names the accounts the
--- posting engine books; nothing is confirmed. Rolled back.
+-- refuses one it does not know, and a ch_kmu row missing its code or carrying
+-- an unknown field; no code is valid once the 2028 rates begin; the KMU chart
+-- names the accounts the posting engine books; nothing is confirmed. Rolled
+-- back.
 begin;
-select plan(9);
+select plan(12);
 
 -- The reader answers a signed-in caller only; no row is written here.
 select set_config('request.jwt.claims',
@@ -47,6 +49,15 @@ select is((select count(*)::int from public.tax_reference
 select is((select count(*)::int from public.tax_reference
             where domain = 'account_map' and country = 'CH' and key like 'ch_kmu/%'), 9,
           'three rate groups, each for sales, input tax and investments');
+select is((select count(*)::int from public.tax_reference('account_map', 'CH', '2028-06-01')
+            where key like 'ch_kmu/%'), 0,
+          'no code outlives the rates of 2024: a 2028 posting refuses its code, named');
+select ok(not public.tax_reference_valid('account_map',
+            '{"format":"ch_kmu","role":"tax:standard"}'::jsonb),
+          'a ch_kmu row without its tax code is refused');
+select ok(not public.tax_reference_valid('account_map',
+            '{"format":"ch_kmu","role":"tax:standard","tax_code":"V81","colour":"red"}'::jsonb),
+          'a ch_kmu row with a field the shape does not know is refused');
 
 select * from finish();
 rollback;

@@ -293,9 +293,8 @@ Deno.test("a create with no answer is read back by its number, never created twi
   assertEquals(b.docs.kb_invoice.length, 1, "read back, not created again");
 });
 
-Deno.test("a credit note is a kb_credit_voucher; a receipt a payment on its invoice", async () => {
+Deno.test("a credit note is a kb_credit_voucher, not a kb_invoice", async () => {
   const b = bexio();
-  const store = new MemoryStore();
   const credit: BexioDocument = {
     ...invoice("c1", "CN-101"),
     kind: "credit_note",
@@ -307,6 +306,21 @@ Deno.test("a credit note is a kb_credit_voucher; a receipt a payment on its invo
     }],
     totalMinor: 10810,
   };
+  const out = await deliverAll([credit], b, new MemoryStore());
+  assertEquals(out.map((o) => o.status), ["acknowledged"]);
+  assertEquals(b.docs.kb_credit_voucher.map((d) => d.document_nr), ["CN-101"]);
+  assertEquals(b.docs.kb_invoice, []);
+  assertEquals(
+    (b.docs.kb_credit_voucher[0].positions as { unit_price: string }[])[0]
+      .unit_price,
+    "100.00",
+  );
+});
+
+Deno.test("a receipt is a payment on its invoice, found by its number", async () => {
+  const b = bexio();
+  const store = new MemoryStore();
+  await deliverAll([invoice("d1", "INV-101")], b, store);
   const receipt: BexioDocument = {
     id: "d1",
     kind: "receipt",
@@ -318,22 +332,9 @@ Deno.test("a credit note is a kb_credit_voucher; a receipt a payment on its invo
     lines: [],
     totalMinor: 113230,
   };
-  const out = await deliverAll(
-    [invoice("d1", "INV-101"), credit, receipt],
-    b,
-    store,
-  );
-  assertEquals(out.map((o) => o.status), [
-    "acknowledged",
-    "acknowledged",
-    "acknowledged",
-  ]);
-  assertEquals(b.docs.kb_credit_voucher.map((d) => d.document_nr), ["CN-101"]);
-  assertEquals(
-    (b.docs.kb_credit_voucher[0].positions as { unit_price: string }[])[0]
-      .unit_price,
-    "100.00",
-  );
+  const out = await deliverAll([receipt], b, store);
+  assertEquals(out.map((o) => o.status), ["acknowledged"]);
+  assertEquals(b.docs.kb_invoice.length, 1, "no second invoice");
   assertEquals(b.payments.map((p) => [p.invoice, p.date, p.value]), [[
     b.docs.kb_invoice[0].id,
     "2026-03-20",

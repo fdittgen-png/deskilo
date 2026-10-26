@@ -495,6 +495,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get acctTargetNotDeliveredYet =>
+      'An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft.';
+
+  @override
   String get acctTargetsIntro =>
       'Wohin die Bücher jedes Ausstellers gehen. Ein verbundenes System empfängt die Belege selbst; jedes andere die aus den Büchern exportierten Dateien. Jede Übertragung steht unten mit dem Hashwert dessen, was sie getragen hat.';
 
@@ -760,6 +764,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get applicationsTitle => 'Arbeitsplatzanfragen';
+
+  @override
+  String get archiveSwissNeedsExportLog =>
+      'Die Verfahrensdokumentation dieses Schweizer Archivs hält fest, dass jeder Download im Exportprotokoll steht, und dieser Space führt keines: schalten Sie zuerst die Buchungsperioden oder die Buchhaltungssysteme ein.';
 
   @override
   String get assistantPrefix => 'Assistent';
@@ -25976,6 +25984,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefCents => 'Betrag (kleinste Einheit)';
+
+  @override
+  String get taxRefChKmuKeys =>
+      'Schweizer Journal (Format ch_kmu): Schlüssel ch_kmu/tax:<Gruppe> gibt den MWST-Code der Umsätze einer Satzgruppe, ch_kmu/input:<Gruppe> den ihrer Vorsteuer auf Material und Dienstleistungen (Ziffer 400), ch_kmu/asset:<Gruppe> den der Vorsteuer auf Investitionen (Ziffer 405) als Steuercode; der Code muss in der MWST-Tabelle der Banana-Datei stehen.';
 
   @override
   String get taxRefComponents =>

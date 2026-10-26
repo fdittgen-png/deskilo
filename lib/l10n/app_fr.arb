@@ -252,6 +252,7 @@
   "acctMapsEmpty": "Rien n'est encore mis en correspondance.",
   "acctMapsIntro": "Comment chaque compte, code de TVA, client et article de cette comptabilité s'appelle dans le système. Un envoi qui en demande un absent d'ici s'arrête et le nomme ; rien n'est remplacé par une valeur par défaut.",
   "acctMapsTitle": "Noms dans {target}",
+  "acctTargetNotDeliveredYet": "Aucune pièce n'est encore envoyée à ce système : la connexion et ses correspondances sont conservées pour l'envoi, qui ne fonctionne pas encore pour lui.",
   "acctTargetsIntro": "Où va la comptabilité de chaque émetteur. Un système connecté reçoit les pièces lui-même ; les autres reçoivent les fichiers exportés de la comptabilité. Chaque transfert est listé ci-dessous avec l'empreinte de ce qu'il a porté.",
   "acctTargetsLoadFailed": "Les systèmes comptables n'ont pas pu être chargés.",
   "acctTargetsNoApiTarget": "Aucun système comptable de ce pays n'est encore joint par une connexion : la comptabilité part par fichier, depuis l'export comptable.",
@@ -381,6 +382,7 @@
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
   },
+  "archiveSwissNeedsExportLog": "La documentation des procédures de cette archive suisse indique que chaque téléchargement est inscrit au journal des exports, et cet espace n'en tient pas : activez d'abord les périodes comptables ou les systèmes comptables.",
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"
@@ -17322,6 +17324,7 @@
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
+  "taxRefChKmuKeys": "Journal suisse (format ch_kmu) : la clé ch_kmu/tax:<groupe> donne le code TVA des ventes d'un groupe de taux, ch_kmu/input:<groupe> celui de son impôt préalable sur matériel et prestations (chiffre 400), ch_kmu/asset:<groupe> celui de l'impôt préalable sur investissements (chiffre 405), comme code fiscal ; le code doit exister dans la table TVA du fichier Banana.",
   "taxRefComponents": "Juridictions, une par ligne : niveau, nom, pourcentage (niveau : state, county, city ou district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"

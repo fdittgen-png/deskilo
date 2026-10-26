@@ -32,3 +32,7 @@ const String foreignCurrencyPurchasesKey = 'foreignCurrencyPurchases';
 /// The accounting systems the books go to, and the transfers that carried
 /// them.
 const String accountingConnectorsKey = 'accountingConnectors';
+
+/// #2377 — the book periods and the export log: with the accounting
+/// systems, what makes the server log a file handed out.
+const String accountingPeriodsKey = 'accountingPeriods';

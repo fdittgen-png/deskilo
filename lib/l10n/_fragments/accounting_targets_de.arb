@@ -92,5 +92,6 @@
   "acctDeliveryAttempts": "{count, plural, =1{ein Versuch} other{{count} Versuche}}",
   "refusalAccountingClosed": "Diese Verbindung lässt das nicht mehr zu: Sie wurde widerrufen oder hat bereits übermittelt. Widerrufen Sie sie und verbinden Sie neu. Nichts wurde gespeichert.",
   "refusalAccountingValue": "Der Server hat diesen Wert abgelehnt: Prüfen Sie Token, Schlüssel oder Aussteller und versuchen Sie es erneut. Nichts wurde gespeichert.",
-  "acctJournalLogged": "{logged, plural, =0{Kein neuer Beleg protokolliert} =1{Ein Beleg protokolliert} other{{logged} Belege protokolliert}}, {unchanged} unverändert"
+  "acctJournalLogged": "{logged, plural, =0{Kein neuer Beleg protokolliert} =1{Ein Beleg protokolliert} other{{logged} Belege protokolliert}}, {unchanged} unverändert",
+  "acctTargetNotDeliveredYet": "An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft."
 }

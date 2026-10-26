@@ -447,7 +447,10 @@ class AccountingExportRun {
         final verdicts = await Future.wait<String>(
           yearInvoices.map((i) => repo.verifyInvoiceSignature(i.id)),
         );
-        final files = {...await vatAccountFiles(), ...await archiveProcedures()};
+        // #2377 — a Swiss archive's procedures, or null: refused, said.
+        final procedures = await archiveProcedures();
+        if (procedures == null) return;
+        final files = {...await vatAccountFiles(), ...procedures};
         // #2377 — every file already handed out for the year, with who and when.
         final exports = await ref.read(bookPeriodCommandProvider).exportLog(workspace.id, year);
         if (!context.mounted) return;
@@ -495,12 +498,14 @@ class AccountingExportRun {
         // #2377 — the manifest names every member's digest; the archive's
         // own digest is logged with who downloaded it and when.
         final bytes = zipBundle(withManifest(withRetentionNotice(files, country, year)));
-        await savePdfToDownloads(
+        final handedOut = await savePdfToDownloads(
           context,
           ref,
           bytes: bytes,
           fileName: archiveBundleFileName(company.legalId, year, development: development),
         );
+        // A download that did not happen is no access to the books.
+        if (!handedOut) return;
         await ref.read(bookPeriodCommandProvider).logExportBytes(workspace.id,
             formatId: format.id, year: year, bytes: bytes, rows: files.length, documents: yearInvoices.length);
       },

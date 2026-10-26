@@ -902,6 +902,12 @@ abstract class AppLocalizations {
   /// **'Names in {target}'**
   String acctMapsTitle(String target);
 
+  /// #2377 Accounting systems sheet: an API target whose deliveries the runner does not send yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.'**
+  String get acctTargetNotDeliveredYet;
+
   /// #2370 Accounting systems sheet: what the sheet shows.
   ///
   /// In en, this message translates to:
@@ -1333,6 +1339,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace requests'**
   String get applicationsTitle;
+
+  /// #2377 The Swiss archive refused: no export log is kept (neither book periods nor accounting systems on).
+  ///
+  /// In en, this message translates to:
+  /// **'This Swiss archive\'s procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.'**
+  String get archiveSwissNeedsExportLog;
 
   /// #872 one wizard idiom: assistantPrefix
   ///
@@ -42892,6 +42904,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount (minor units)'**
   String get taxRefCents;
+
+  /// #2377 Tax reference editor: the keys of the Swiss journal's MWST code rows.
+  ///
+  /// In en, this message translates to:
+  /// **'Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group\'s sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file\'s VAT table.'**
+  String get taxRefChKmuKeys;
 
   /// #2362 sales tax: taxRefComponents
   ///

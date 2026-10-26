@@ -1,5 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- risk: additive
+-- risk: transforming
+-- (tax_reference_valid's body is patched at its anchor)
 --
 -- 0599 (#2377, the Swiss journal) -- two kinds of `account_map` rows of the
 -- tax reference store, CH, all UNCONFIRMED until a fiduciary has checked
@@ -11,7 +12,8 @@
 --     and services (M81, M26, M38, Ziffer 400) and `asset:<group>` for the
 --     input tax of an investment (I81, I26, I38, Ziffer 405): the codes of
 --     Banana's Swiss VAT table. Valid from 2024-01-01, the rates they name;
---     a confirmed change of the rates needs its own version. A taxed row
+--     closed on 2028-01-01, where the planned rates begin: a confirmed change
+--     of the rates needs its own codes. A taxed row
 --     whose group has no code stops the file and names the group.
 --   * the KMU chart gains the accounts the posting engine books: 1170
 --     Vorsteuer, 2000 Verbindlichkeiten, 3805 Verluste aus Forderungen,
@@ -47,6 +49,11 @@ declare
   v_def text;
 begin
   select pg_get_functiondef('public.tax_reference_valid(text,jsonb)'::regprocedure) into v_def;
+  -- The anchor occurs exactly once, or the patch would touch another list.
+  if (length(v_def) - length(replace(v_def, $a$array['coa', 'fec', 'datev', 'sage', 'saf_t']$a$, '')))
+     / length($a$array['coa', 'fec', 'datev', 'sage', 'saf_t']$a$) <> 1 then
+    raise exception '0599: tax_reference_valid account_map format anchor is not there exactly once';
+  end if;
   v_def := pg_temp.anchor_replace(v_def,
     $a$array['coa', 'fec', 'datev', 'sage', 'saf_t']$a$,
     $a$array['coa', 'fec', 'datev', 'sage', 'saf_t', 'ch_kmu']$a$);
@@ -79,5 +86,12 @@ values
 ('account_map', 'CH', 'coa/15-revenue_exempt', '1900-01-01', '{"format":"coa","role":"revenue:exempt","account":"3402","label":"Dienstleistungsertrag, von der Steuer ausgenommen"}'::jsonb, 'Schweizer Kontenrahmen KMU (veb.ch), account 3402 Dienstleistungsertrag, von der Steuer ausgenommen: the revenue of the exempt letting (art. 21 MWSTG) (#2377). A suggestion the accountant re-points; not yet confirmed by a fiduciary', false)
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
+
+-- The codes name the rates of 2024: a version of those rates that a
+-- confirmed change replaces on 2028-01-01 needs its own codes. Until then a
+-- 2028 posting refuses its code, named, rather than coding 8.5 % as V81.
+update public.tax_reference set valid_to = '2028-01-01'
+ where domain = 'account_map' and country = 'CH' and key like 'ch_kmu/%'
+   and valid_from = '2024-01-01' and valid_to is null;
 
 select public.set_deskilo_schema_version(599);

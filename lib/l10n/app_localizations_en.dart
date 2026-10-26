@@ -493,6 +493,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get acctTargetNotDeliveredYet =>
+      'No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.';
+
+  @override
   String get acctTargetsIntro =>
       'Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.';
 
@@ -756,6 +760,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applicationsTitle => 'Workspace requests';
+
+  @override
+  String get archiveSwissNeedsExportLog =>
+      'This Swiss archive\'s procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.';
 
   @override
   String get assistantPrefix => 'Assistant';
@@ -25708,6 +25716,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefCents => 'Amount (minor units)';
+
+  @override
+  String get taxRefChKmuKeys =>
+      'Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group\'s sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file\'s VAT table.';
 
   @override
   String get taxRefComponents =>

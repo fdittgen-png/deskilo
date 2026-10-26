@@ -112,9 +112,13 @@ for the audit:
 
 - **Journal and Banana.** Both layouts are the postings of the local book,
   read once (the rows above). The MWST codes are Banana's standard codes of
-  the Swiss VAT table, unconfirmed reference rows valid from the 2024 rates;
-  a fiduciary whose VAT table names them otherwise changes them in the tax
-  reference editor. The output tax of every rate is booked on 2200: the
+  the Swiss VAT table, unconfirmed reference rows (format `ch_kmu`) valid
+  for the 2024 rates, from 2024-01-01 to 2028-01-01, where the planned rates
+  begin: a posting after that refuses its code, named, until confirmed codes
+  exist. A fiduciary whose VAT table names them otherwise changes them in the
+  tax reference editor. A book on collected consideration codes the sale on
+  its own row; the release of its pending tax lands on the rate's Ziffer,
+  uncoded, so Banana never taxes the tax again. The output tax of every rate is booked on 2200: the
   code carries the rate, the Ziffer of each row ties it to the return.
 - **KMU chart.** The suggested chart maps every role the engine books: 1100,
   1020, 3400 (3401 reduced and accommodation, 3402 exempt letting), 2200,
@@ -126,12 +130,15 @@ for the audit:
   `account_id` the connection maps, then issued; a credit note as a
   `kb_credit_voucher`; a receipt as a payment on its invoice, found by
   number. A company connects with a personal access token or by signing in
-  (`auth.bexio.com`). The live exchange is not run: it needs a bexio test
+  (`auth.bexio.com`). The Accounting systems sheet says no document is sent
+  yet: the delivery runner does not dispatch to the adapter. The live exchange is not run: it needs a bexio test
   company and a token or a registered app.
 - **The other products.** Abacus (AbaConnect, licensed per interface), Sage 50
   Extra / Sage Start, Infoniqa ONE, Klara and Run my Accounts are catalogued
   as `specificationNeeded`; the Swiss journal is their working route.
-- **GeBüV.** Art. 3/9: every export and the archive are logged with their
+- **GeBüV.** The Swiss archive is refused, said, while the space keeps no
+  export log (neither the book periods nor the accounting systems are on): the
+  log is the evidence its procedures document states. Art. 3/9: every export and the archive download (once handed out) are logged with their
   SHA-256, the server's time and the actor; the archive's manifest names
   every member's digest and each issued document carries the fingerprint the
   server verifies (`register.csv`). Art. 4: the procedures document travels in

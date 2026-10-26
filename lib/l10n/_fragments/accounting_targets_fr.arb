@@ -92,5 +92,6 @@
   "acctDeliveryAttempts": "{count, plural, =1{une tentative} other{{count} tentatives}}",
   "refusalAccountingClosed": "Cette connexion n'accepte plus cela : elle a été révoquée, ou elle a déjà envoyé des pièces. Révoquez-la et connectez-vous de nouveau. Rien n'a été enregistré.",
   "refusalAccountingValue": "Le serveur a refusé cette valeur : vérifiez le jeton, la clé ou l'émetteur et réessayez. Rien n'a été enregistré.",
-  "acctJournalLogged": "{logged, plural, =0{Aucune nouvelle pièce enregistrée} =1{Une pièce enregistrée} other{{logged} pièces enregistrées}}, {unchanged} inchangées"
+  "acctJournalLogged": "{logged, plural, =0{Aucune nouvelle pièce enregistrée} =1{Une pièce enregistrée} other{{logged} pièces enregistrées}}, {unchanged} inchangées",
+  "acctTargetNotDeliveredYet": "Aucune pièce n'est encore envoyée à ce système : la connexion et ses correspondances sont conservées pour l'envoi, qui ne fonctionne pas encore pour lui."
 }

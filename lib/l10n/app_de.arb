@@ -252,6 +252,7 @@
   "acctMapsEmpty": "Noch ist nichts zugeordnet.",
   "acctMapsIntro": "Wie jedes Konto, jeder Steuerschlüssel, jeder Kunde und jeder Artikel dieser Bücher im System heißt. Eine Übermittlung, die einen hier fehlenden braucht, hält an und nennt ihn; nichts wird durch einen Standardwert ersetzt.",
   "acctMapsTitle": "Namen in {target}",
+  "acctTargetNotDeliveredYet": "An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft.",
   "acctTargetsIntro": "Wohin die Bücher jedes Ausstellers gehen. Ein verbundenes System empfängt die Belege selbst; jedes andere die aus den Büchern exportierten Dateien. Jede Übertragung steht unten mit dem Hashwert dessen, was sie getragen hat.",
   "acctTargetsLoadFailed": "Die Buchhaltungssysteme konnten nicht geladen werden.",
   "acctTargetsNoApiTarget": "Noch kein Buchhaltungssystem dieses Landes wird über eine Verbindung erreicht: Die Bücher gehen per Datei, aus dem Buchhaltungsexport.",
@@ -381,6 +382,7 @@
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
   },
+  "archiveSwissNeedsExportLog": "Die Verfahrensdokumentation dieses Schweizer Archivs hält fest, dass jeder Download im Exportprotokoll steht, und dieser Space führt keines: schalten Sie zuerst die Buchungsperioden oder die Buchhaltungssysteme ein.",
   "assistantPrefix": "Assistent",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"
@@ -17322,6 +17324,7 @@
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
+  "taxRefChKmuKeys": "Schweizer Journal (Format ch_kmu): Schlüssel ch_kmu/tax:<Gruppe> gibt den MWST-Code der Umsätze einer Satzgruppe, ch_kmu/input:<Gruppe> den ihrer Vorsteuer auf Material und Dienstleistungen (Ziffer 400), ch_kmu/asset:<Gruppe> den der Vorsteuer auf Investitionen (Ziffer 405) als Steuercode; der Code muss in der MWST-Tabelle der Banana-Datei stehen.",
   "taxRefComponents": "Jurisdiktionen, eine je Zeile: Ebene, Name, Prozent (Ebene: state, county, city oder district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"

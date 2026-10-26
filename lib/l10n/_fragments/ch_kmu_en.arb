@@ -52,5 +52,13 @@
   "gebuevProcedureCarriersBody": "This archive is read with any zip tool and text editor. A copy of the whole space is proven by a completed workspace export, recorded with its digest: the readiness checklist shows when the last one was made and asks for a new one when it is old.",
   "@gebuevProcedureCarriersBody": {
     "description": "#2377 The Swiss archive's procedures document: availability and carriers (GeBüV art. 5 and 10)."
+  },
+  "taxRefChKmuKeys": "Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group's sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file's VAT table.",
+  "@taxRefChKmuKeys": {
+    "description": "#2377 Tax reference editor: the keys of the Swiss journal's MWST code rows."
+  },
+  "archiveSwissNeedsExportLog": "This Swiss archive's procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.",
+  "@archiveSwissNeedsExportLog": {
+    "description": "#2377 The Swiss archive refused: no export log is kept (neither book periods nor accounting systems on)."
   }
 }

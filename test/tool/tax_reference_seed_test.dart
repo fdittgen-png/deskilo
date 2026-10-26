@@ -61,7 +61,17 @@ void main() {
       for (var i = 0; i < versions.length; i++) {
         final end = versions[i].validTo;
         if (i == versions.length - 1) {
-          expect(end, isNull, reason: '${entry.key}: the newest version is open');
+          // #2377 — or it ends where its country's rates change: a code that
+          // names a rate never outlives it, and waits for its successor.
+          expect(
+            end == null ||
+                rows.any((r) =>
+                    r.domain == 'rate' &&
+                    r.country == versions[i].country &&
+                    r.validFrom == end),
+            isTrue,
+            reason: '${entry.key}: the newest version is open',
+          );
         } else {
           expect(end, versions[i + 1].validFrom,
               reason: '${entry.key}: closed on its successor\'s first day');

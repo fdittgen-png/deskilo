@@ -252,6 +252,7 @@
   "acctMapsEmpty": "Todavía no hay ninguna correspondencia.",
   "acctMapsIntro": "Cómo se llama en el sistema cada cuenta, código de impuesto, cliente y artículo de esta contabilidad. Un envío que necesite uno que no esté aquí se detiene y lo nombra; nada se sustituye por un valor por defecto.",
   "acctMapsTitle": "Nombres en {target}",
+  "acctTargetNotDeliveredYet": "Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él.",
   "acctTargetsIntro": "Adónde va la contabilidad de cada emisor. Un sistema conectado recibe los documentos por sí mismo; los demás reciben los ficheros exportados de la contabilidad. Cada transferencia figura abajo con la huella de lo que llevó.",
   "acctTargetsLoadFailed": "No se han podido cargar los sistemas contables.",
   "acctTargetsNoApiTarget": "Ningún sistema contable de este país se alcanza todavía por conexión: la contabilidad sale por fichero, desde la exportación contable.",
@@ -381,6 +382,7 @@
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
   },
+  "archiveSwissNeedsExportLog": "La documentación de los procedimientos de este archivo suizo indica que cada descarga queda registrada en el registro de exportaciones, y este espacio no lleva ninguno: active primero los periodos contables o los sistemas contables.",
   "assistantPrefix": "Asistente",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"
@@ -17322,6 +17324,7 @@
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
+  "taxRefChKmuKeys": "Diario suizo (formato ch_kmu): la clave ch_kmu/tax:<grupo> da el código de IVA de las ventas de un grupo de tipos, ch_kmu/input:<grupo> el de su IVA soportado en material y servicios (cifra 400), ch_kmu/asset:<grupo> el del IVA soportado en inversiones (cifra 405), como código fiscal; el código debe existir en la tabla de IVA del archivo Banana.",
   "taxRefComponents": "Jurisdicciones, una por línea: nivel, nombre, porcentaje (nivel: state, county, city o district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"

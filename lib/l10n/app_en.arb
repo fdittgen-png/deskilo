@@ -606,6 +606,10 @@
       }
     }
   },
+  "acctTargetNotDeliveredYet": "No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.",
+  "@acctTargetNotDeliveredYet": {
+    "description": "#2377 Accounting systems sheet: an API target whose deliveries the runner does not send yet."
+  },
   "acctTargetsIntro": "Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.",
   "@acctTargetsIntro": {
     "description": "#2370 Accounting systems sheet: what the sheet shows."
@@ -975,6 +979,10 @@
   "applicationsTitle": "Workspace requests",
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
+  },
+  "archiveSwissNeedsExportLog": "This Swiss archive's procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.",
+  "@archiveSwissNeedsExportLog": {
+    "description": "#2377 The Swiss archive refused: no export log is kept (neither book periods nor accounting systems on)."
   },
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {
@@ -30342,6 +30350,10 @@
   "taxRefCents": "Amount (minor units)",
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
+  },
+  "taxRefChKmuKeys": "Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group's sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file's VAT table.",
+  "@taxRefChKmuKeys": {
+    "description": "#2377 Tax reference editor: the keys of the Swiss journal's MWST code rows."
   },
   "taxRefComponents": "Jurisdictions, one per line: level, name, percent (level: state, county, city or district)",
   "@taxRefComponents": {

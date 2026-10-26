@@ -92,5 +92,6 @@
   "acctDeliveryAttempts": "{count, plural, =1{un intento} other{{count} intentos}}",
   "refusalAccountingClosed": "Esta conexión ya no lo admite: se revocó o ya ha enviado documentos. Revóquela y vuelva a conectarse. No se ha guardado nada.",
   "refusalAccountingValue": "El servidor ha rechazado este valor: compruebe el token, la clave o el emisor e inténtelo de nuevo. No se ha guardado nada.",
-  "acctJournalLogged": "{logged, plural, =0{Ningún documento nuevo registrado} =1{Un documento registrado} other{{logged} documentos registrados}}, {unchanged} sin cambios"
+  "acctJournalLogged": "{logged, plural, =0{Ningún documento nuevo registrado} =1{Un documento registrado} other{{logged} documentos registrados}}, {unchanged} sin cambios",
+  "acctTargetNotDeliveredYet": "Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él."
 }

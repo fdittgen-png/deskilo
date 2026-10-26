@@ -6,7 +6,9 @@
 // the workspace's context holds, the QR reference of each invoice from the
 // QR-bill the invoice carries; nothing here reads the period again.
 import '../../../core/backend/schema_version.dart';
+import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/datev_fields.dart';
@@ -69,9 +71,18 @@ extension SwissAccountingExports on AccountingExportRun {
 
   /// #2377 — the procedures document a Swiss archive carries (GeBüV
   /// art. 4), from the space's live facts: its schema version, number
-  /// sequences and retention clocks. None outside Switzerland.
-  Future<Map<String, List<int>>> archiveProcedures() async {
+  /// sequences and retention clocks. None outside Switzerland. Null, said
+  /// to the person, while the space keeps no export log: the document
+  /// states every download is logged, and the server logs only when the
+  /// book periods or the accounting systems are switched on.
+  Future<Map<String, List<int>>?> archiveProcedures() async {
     if (!archiveCarriesProcedures(country)) return const {};
+    final keys = ref.read(enabledFeatureKeysProvider);
+    if (!featureOn(keys, accountingPeriodsKey, byDefault: false) &&
+        !featureOn(keys, accountingConnectorsKey, byDefault: false)) {
+      AppSnack.error(context, l10n.archiveSwissNeedsExportLog);
+      return null;
+    }
     final reference = workspaceTaxReference(ref);
     if (reference == null) throw StateError('workspace context not ready');
     final sequences = await repo.fetchNumberSequences(workspace.id);

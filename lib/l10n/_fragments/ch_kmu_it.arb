@@ -9,5 +9,7 @@
   "gebuevProcedureAccessHeading": "Accessi (art. 8)",
   "gebuevProcedureAccessBody": "Ogni esportazione contabile e ogni download di un archivio è registrato nel registro delle esportazioni: chi, quando, quale file e la sua impronta. La pista di controllo elenca questi accessi accanto ai documenti.",
   "gebuevProcedureCarriersHeading": "Disponibilità e supporti (art. 5 e 10)",
-  "gebuevProcedureCarriersBody": "Questo archivio si legge con qualsiasi programma zip ed editor di testo. Una copia dell'intero spazio è provata da un'esportazione dello spazio completata, registrata con la sua impronta: la lista di preparazione indica quando è stata fatta l'ultima e ne chiede una nuova quando è vecchia."
+  "gebuevProcedureCarriersBody": "Questo archivio si legge con qualsiasi programma zip ed editor di testo. Una copia dell'intero spazio è provata da un'esportazione dello spazio completata, registrata con la sua impronta: la lista di preparazione indica quando è stata fatta l'ultima e ne chiede una nuova quando è vecchia.",
+  "taxRefChKmuKeys": "Giornale svizzero (formato ch_kmu): la chiave ch_kmu/tax:<gruppo> dà il codice IVA delle vendite di un gruppo di aliquote, ch_kmu/input:<gruppo> quello della sua imposta precedente su materiale e prestazioni (cifra 400), ch_kmu/asset:<gruppo> quello dell'imposta precedente su investimenti (cifra 405), come codice d'imposta; il codice deve esistere nella tabella IVA del file Banana.",
+  "archiveSwissNeedsExportLog": "La documentazione delle procedure di questo archivio svizzero indica che ogni download è registrato nel registro delle esportazioni, e questo spazio non ne tiene: attivi prima i periodi contabili o i sistemi contabili."
 }

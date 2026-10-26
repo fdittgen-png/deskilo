@@ -496,6 +496,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get acctTargetNotDeliveredYet =>
+      'Aucune pièce n\'est encore envoyée à ce système : la connexion et ses correspondances sont conservées pour l\'envoi, qui ne fonctionne pas encore pour lui.';
+
+  @override
   String get acctTargetsIntro =>
       'Où va la comptabilité de chaque émetteur. Un système connecté reçoit les pièces lui-même ; les autres reçoivent les fichiers exportés de la comptabilité. Chaque transfert est listé ci-dessous avec l\'empreinte de ce qu\'il a porté.';
 
@@ -761,6 +765,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get applicationsTitle => 'Demandes d’accès';
+
+  @override
+  String get archiveSwissNeedsExportLog =>
+      'La documentation des procédures de cette archive suisse indique que chaque téléchargement est inscrit au journal des exports, et cet espace n\'en tient pas : activez d\'abord les périodes comptables ou les systèmes comptables.';
 
   @override
   String get assistantPrefix => 'Assistant';
@@ -25994,6 +26002,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefCents => 'Montant (plus petite unité)';
+
+  @override
+  String get taxRefChKmuKeys =>
+      'Journal suisse (format ch_kmu) : la clé ch_kmu/tax:<groupe> donne le code TVA des ventes d\'un groupe de taux, ch_kmu/input:<groupe> celui de son impôt préalable sur matériel et prestations (chiffre 400), ch_kmu/asset:<groupe> celui de l\'impôt préalable sur investissements (chiffre 405), comme code fiscal ; le code doit exister dans la table TVA du fichier Banana.';
 
   @override
   String get taxRefComponents =>
