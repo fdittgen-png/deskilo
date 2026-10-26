@@ -89,10 +89,13 @@ class _Log implements BookPeriodRepository {
   final records = <BookExportRecord>[];
 
   @override
-  Future<void> recordExport(
+  Future<String?> recordExport(
     String workspaceId,
     BookExportRecord record,
-  ) async => records.add(record);
+  ) async {
+    records.add(record);
+    return null;
+  }
 
   @override
   dynamic noSuchMethod(Invocation invocation) =>

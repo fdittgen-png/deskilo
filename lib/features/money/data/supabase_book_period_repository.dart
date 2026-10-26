@@ -50,8 +50,8 @@ class SupabaseBookPeriodRepository implements BookPeriodRepository {
   );
 
   @override
-  Future<void> recordExport(String workspaceId, BookExportRecord record) async {
-    await _client.rpc<Object?>(
+  Future<String?> recordExport(String workspaceId, BookExportRecord record) async {
+    final logged = await _client.rpc<Object?>(
       'record_book_export_v1',
       params: {
         'p_workspace_id': workspaceId,
@@ -64,5 +64,6 @@ class SupabaseBookPeriodRepository implements BookPeriodRepository {
         'p_documents': record.documents,
       },
     );
+    return logged is Map && logged['logged'] == true ? '${logged['id']}' : null;
   }
 }

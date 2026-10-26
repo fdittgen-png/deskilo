@@ -5,7 +5,8 @@
 // scopes a delivery needs, and the query parameter a target uses to name
 // the remote company in its redirect, if any. The app's descriptor
 // (`accounting_target.dart`) says WHICH targets take a sign-in; this table
-// says HOW, and the two agree by target id (accounting_targets_test.ts).
+// says HOW, and the two agree by target id
+// (test/features/money/accounting_targets_test.dart).
 //
 // The app's OAuth client of each target is the installation's own: its id
 // and secret are the function's environment

@@ -139,6 +139,6 @@ class _Broken extends FakeBookPeriodRepository {
   _Broken() : super(today: DateTime(2026, 10, 18));
 
   @override
-  Future<void> recordExport(String workspaceId, BookExportRecord record) async =>
+  Future<String?> recordExport(String workspaceId, BookExportRecord record) async =>
       throw Exception('offline');
 }
