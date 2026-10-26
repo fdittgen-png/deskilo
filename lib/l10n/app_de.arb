@@ -2628,7 +2628,7 @@
       }
     }
   },
-  "billingTitle": "Abrechnung",
+  "billingTitle": "Tarife und Pakete",
   "billingUsageAuto": "Automatisch erstellen",
   "billingUsageOff": "Schalten Sie „Monatsabschluss-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
   "billingUsageSection": "Der gerade beendete Monat",

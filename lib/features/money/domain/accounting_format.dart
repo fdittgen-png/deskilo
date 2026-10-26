@@ -261,6 +261,7 @@ const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'fec',
     vendor: 'DGFiP',
+    authority: true,
     product: 'FEC',
     edition: 'BIC/IS, art. A47 A-1 LPF',
     countries: {'FR'},
@@ -277,6 +278,7 @@ const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'fr_ereporting',
     vendor: 'DGFiP',
+    authority: true,
     product: 'e-reporting',
     edition: 'flows 10.1-10.4',
     countries: {'FR'},
@@ -289,6 +291,7 @@ const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'saft_pt',
     vendor: 'Autoridade Tributária',
+    authority: true,
     product: 'SAF-T (PT)',
     edition: '1.04_01, TaxAccountingBasis F',
     countries: {'PT'},
@@ -331,6 +334,7 @@ const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'saft',
     vendor: 'OECD',
+    authority: true,
     product: 'SAF-T',
     edition: '2.0, ledger omitted',
     countries: <String>{},

@@ -27,9 +27,14 @@ class BookSoftwareField extends StatelessWidget {
   /// The dropdown's own value for "Other…".
   static const _otherChoice = '\u0000other';
 
+  /// Whether [value] is one of the software names offered in [country]: a
+  /// stored name outside the list is "Other…" with its text field.
+  static bool isListed(String country, String value) =>
+      _softwareChoices(country).contains(value);
+
   @override
   Widget build(BuildContext context) {
-    final choices = _softwareChoices(country, value);
+    final choices = _softwareChoices(country);
     final selected = other
         ? _otherChoice
         : choices.contains(value) ? value : null;
@@ -54,13 +59,12 @@ class BookSoftwareField extends StatelessWidget {
 
 /// The software a space can name as its book: every accounting software
 /// the targets know in the space's country, by name (the app's own exports
-/// and the authorities' file formats are no software), plus the one already
-/// stored so an earlier choice never vanishes from the list.
-List<String> _softwareChoices(String country, String stored) {
+/// and the authorities' file formats are no software). A stored name the
+/// list does not carry is "Other…" with its text field, never an item.
+List<String> _softwareChoices(String country) {
   final names = <String>{
     for (final t in accountingTargets)
       if (t.isSoftware && t.offeredIn(country)) '${t.vendor} ${t.product}'.trim(),
-    if (stored.isNotEmpty) stored,
   };
   return names.toList()..sort();
 }

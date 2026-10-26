@@ -194,8 +194,8 @@ void main() {
     expect(find.textContaining('Someone saved this book'), findsOneWidget);
   });
 
-  testWidgets('a software the catalogue does not offer here stays listed '
-      'and is saved unchanged', (tester) async {
+  testWidgets('a software the catalogue does not offer here is "Other…" '
+      'with its name in the field, and is saved unchanged', (tester) async {
     // A DE space whose books are kept in Holded (an ES product).
     final r = await _pump(
       tester,
@@ -222,8 +222,9 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.tap(tile);
     await tester.pump(const Duration(seconds: 1));
-    expect(find.text('Holded'), findsOneWidget, reason: 'listed, selected');
-    expect(find.byKey(const ValueKey('book-external-other')), findsNothing);
+    expect(find.text('Holded'), findsOneWidget, reason: 'in the text field');
+    expect(find.byKey(const ValueKey('book-external-other')), findsOneWidget,
+        reason: 'a name outside the list is Other…, not an item');
     final save = find.byKey(const ValueKey('book-save'));
     await tester.ensureVisible(save);
     await tester.pump(const Duration(seconds: 1));

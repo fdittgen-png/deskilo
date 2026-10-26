@@ -3799,7 +3799,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get billingTitle => 'Abrechnung';
+  String get billingTitle => 'Tarife und Pakete';
 
   @override
   String get billingUsageAuto => 'Automatisch erstellen';

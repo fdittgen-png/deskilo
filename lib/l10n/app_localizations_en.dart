@@ -3769,7 +3769,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get billingTitle => 'Billing';
+  String get billingTitle => 'Pricing & packages';
 
   @override
   String get billingUsageAuto => 'Issue automatically';

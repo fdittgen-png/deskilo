@@ -3793,7 +3793,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get billingTitle => 'Facturación';
+  String get billingTitle => 'Tarifas y paquetes';
 
   @override
   String get billingUsageAuto => 'Emitir automáticamente';

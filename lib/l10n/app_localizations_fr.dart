@@ -3798,7 +3798,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get billingTitle => 'Facturation';
+  String get billingTitle => 'Tarifs et forfaits';
 
   @override
   String get billingUsageAuto => 'Émettre automatiquement';

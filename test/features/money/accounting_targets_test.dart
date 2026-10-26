@@ -187,16 +187,22 @@ void main() {
   test('the book software picker: every authority named is a vendor, and '
       'a target is software unless it is the app\'s own or an authority\'s', () {
     final vendors = {for (final t in accountingTargets) t.vendor};
-    for (final name in accountingAuthorities) {
-      expect(vendors, contains(name), reason: '$name names no target');
-    }
     expect(vendors, contains(deskiloVendor));
+    AccountingTarget byId(String id) =>
+        accountingTargets.firstWhere((t) => t.id == id);
+    // An authority's or a standard's file is no software, whatever its
+    // vendor is called; a product is.
+    for (final id in ['faia_lu', 'saft', 'saft_oecd_full', 'fec', 'saft_pt']) {
+      expect(byId(id).authority, isTrue, reason: id);
+      expect(byId(id).isSoftware, isFalse, reason: id);
+    }
+    for (final id in ['datev', 'sage50']) {
+      expect(byId(id).authority, isFalse, reason: id);
+      expect(byId(id).isSoftware, isTrue, reason: id);
+    }
     for (final t in accountingTargets) {
-      expect(
-        t.isSoftware,
-        t.vendor != deskiloVendor && !accountingAuthorities.contains(t.vendor),
-        reason: t.id,
-      );
+      expect(t.isSoftware, t.vendor != deskiloVendor && !t.authority, reason: t.id);
+      if (t.vendor == deskiloVendor) expect(t.authority, isFalse, reason: t.id);
     }
     expect(accountingTargets.where((t) => t.isSoftware), isNotEmpty);
   });

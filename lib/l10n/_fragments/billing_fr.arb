@@ -1,6 +1,6 @@
 {
   "@@locale": "fr",
-  "billingTitle": "Facturation",
+  "billingTitle": "Tarifs et forfaits",
   "billingFeeBands": "Paliers tarifaires",
   "billingBandFrom": "dès {from} %",
   "billingBandTo": "Jusqu'à %",

@@ -72,6 +72,13 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   /// The person chose "Other…": the software is typed, not picked.
   bool _otherSoftware = false;
 
+  /// A stored software the list does not offer in this country (kept from
+  /// an earlier choice or another country) is shown as "Other…" with its
+  /// name in the text field, never appended to the list.
+  bool _unlisted(String country) =>
+      _external.text.isNotEmpty &&
+      !BookSoftwareField.isListed(country, _external.text);
+
   /// The software picked from the list, or null for "Other…", which
   /// starts the typed field empty; typing into it keeps the choice.
   void _software(String? picked) => setState(() {
@@ -87,10 +94,10 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
           key: const ValueKey('book-external-field'),
           country: country,
           value: _external.text,
-          other: _otherSoftware,
+          other: _otherSoftware || _unlisted(country),
           onChanged: _software,
         ),
-        if (_otherSoftware)
+        if (_otherSoftware || _unlisted(country))
           AppTextField(
             key: const ValueKey('book-external-other'),
             controller: _external,

@@ -19,6 +19,7 @@ const List<AccountingTarget> germanAccountingTargets = [
   AccountingTarget(
     id: 'gobd',
     vendor: 'BMF',
+    authority: true,
     product: 'GoBD Datenträgerüberlassung (Z3)',
     edition: 'Beschreibungsstandard, gdpdu-01-08-2002.dtd',
     countries: {'DE'},

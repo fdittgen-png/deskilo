@@ -6400,7 +6400,7 @@ abstract class AppLocalizations {
   /// Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry
   ///
   /// In en, this message translates to:
-  /// **'Billing'**
+  /// **'Pricing & packages'**
   String get billingTitle;
 
   /// No description provided for @billingUsageAuto.

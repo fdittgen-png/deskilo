@@ -39,6 +39,7 @@ const List<AccountingTarget> swissAccountingTargets = [
   AccountingTarget(
     id: 'ch_kmu',
     vendor: 'KMU-Kontenrahmen',
+    authority: true,
     product: 'Swiss booking journal',
     edition: 'CSV from compute_postings, MWST code and Ziffer per row',
     countries: {'CH'},

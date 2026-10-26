@@ -2628,7 +2628,7 @@
       }
     }
   },
-  "billingTitle": "Facturation",
+  "billingTitle": "Tarifs et forfaits",
   "billingUsageAuto": "Émettre automatiquement",
   "billingUsageOff": "Activez « Factures de fin de mois » dans Fonctionnalités pour l’utiliser.",
   "billingUsageSection": "Le mois qui vient de finir",

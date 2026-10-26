@@ -4789,7 +4789,7 @@
       }
     }
   },
-  "billingTitle": "Billing",
+  "billingTitle": "Pricing & packages",
   "@billingTitle": {
     "description": "Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry"
   },

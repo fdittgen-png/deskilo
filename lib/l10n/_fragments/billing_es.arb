@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "billingTitle": "Facturación",
+  "billingTitle": "Tarifas y paquetes",
   "billingFeeBands": "Tramos de tarifas",
   "billingBandFrom": "desde {from} %",
   "billingBandTo": "Hasta %",

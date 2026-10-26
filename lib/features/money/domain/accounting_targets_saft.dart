@@ -48,6 +48,7 @@ const List<AccountingTarget> safTFinancialTargets = [
   AccountingTarget(
     id: 'saft_no',
     vendor: 'Skatteetaten',
+    authority: true,
     product: 'SAF-T Financial',
     edition: '1.30',
     countries: {'NO'},
@@ -60,6 +61,7 @@ const List<AccountingTarget> safTFinancialTargets = [
   AccountingTarget(
     id: 'faia_lu',
     vendor: "Administration de l'enregistrement",
+    authority: true,
     product: 'FAIA',
     edition: '2.01',
     countries: {'LU'},
@@ -76,6 +78,7 @@ const List<AccountingTarget> safTFinancialTargets = [
   AccountingTarget(
     id: 'denmark_registered_system',
     vendor: 'Erhvervsstyrelsen',
+    authority: true,
     product: 'Registered digital bookkeeping system',
     edition: 'Bogføringsloven 2022',
     countries: {'DK'},
@@ -87,6 +90,7 @@ const List<AccountingTarget> safTFinancialTargets = [
   AccountingTarget(
     id: 'saft_dk',
     vendor: 'Erhvervsstyrelsen',
+    authority: true,
     product: 'SAF-T DK',
     edition: 'standard export with the standard chart mapping',
     countries: {'DK'},
@@ -133,6 +137,7 @@ const List<AccountingTarget> safTFinancialTargets = [
   AccountingTarget(
     id: 'saft_oecd_full',
     vendor: 'OECD',
+    authority: true,
     product: 'SAF-T',
     edition: '2.0, general ledger from the posting engine',
     countries: <String>{},

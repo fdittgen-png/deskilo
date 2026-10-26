@@ -2628,7 +2628,7 @@
       }
     }
   },
-  "billingTitle": "Fatturazione",
+  "billingTitle": "Tariffe e pacchetti",
   "billingUsageAuto": "Emetti automaticamente",
   "billingUsageOff": "Attivi «Fatture di fine mese» in Funzionalità per usarlo.",
   "billingUsageSection": "Il mese appena concluso",

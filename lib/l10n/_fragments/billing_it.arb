@@ -1,6 +1,6 @@
 {
   "@@locale": "it",
-  "billingTitle": "Fatturazione",
+  "billingTitle": "Tariffe e pacchetti",
   "billingFeeBands": "Fasce tariffarie",
   "billingBandFrom": "da {from}%",
   "billingBandTo": "Fino a %",
