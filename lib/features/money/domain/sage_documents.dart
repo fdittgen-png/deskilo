@@ -106,25 +106,36 @@ class _Document {
   SageRow _row(
     String type,
     String nominal,
-    DateTime on,
     String details,
     int net, {
-    String? code,
-    int tax = 0,
-    bool party = true,
+    DateTime? on,
+    ({String code, int tax})? taxed,
   }) => SageRow(
     type: type,
-    account: party ? customer : '',
+    account: customer,
     nominal: nominal,
-    date: on,
+    date: on ?? invoice.issuedAt,
     reference: invoice.number,
     details: details,
     netMinor: net,
-    taxCode: code ?? accounts.noTax,
-    taxMinor: tax,
+    taxCode: taxed?.code ?? accounts.noTax,
+    taxMinor: taxed?.tax ?? 0,
     currency: currency,
-    countryOfVat: code != null && sageCrossBorder(code) ? euCountry : '',
+    countryOfVat: taxed != null && sageCrossBorder(taxed.code) ? euCountry : '',
   );
+
+  /// A journal row: no customer, no tax.
+  SageRow _journal(String type, String nominal, DateTime on, int net) =>
+      SageRow(
+        type: type,
+        nominal: nominal,
+        date: on,
+        reference: invoice.number,
+        details: 'Write-off ${invoice.number}',
+        netMinor: net,
+        taxCode: accounts.noTax,
+        currency: currency,
+      );
 
   void write(
     List<SageRow> rows,
@@ -138,13 +149,7 @@ class _Document {
     if (!invoice.isCreditNote) {
       for (final line in invoice.lines.where((l) => l.isMoneyIn)) {
         rows.add(
-          _row(
-            'SR',
-            accounts.bank,
-            invoice.issuedAt,
-            'Payment ${invoice.number}',
-            -line.amountCents,
-          ),
+          _row('SR', accounts.bank, 'Payment ${invoice.number}', -line.amountCents),
         );
       }
     }
@@ -157,9 +162,9 @@ class _Document {
       _row(
         refund ? 'SP' : 'SR',
         accounts.bank,
-        match.matchedAt,
         '${refund ? 'Refund' : 'Payment'} ${invoice.number}',
         match.paidCents,
+        on: match.matchedAt,
       ),
     );
     // The rest the owner gave up, journalled from the debtors control to
@@ -167,10 +172,9 @@ class _Document {
     // is the accountant's.
     final owed = invoice.totalCents - match.paidCents;
     if (match.writeoffAt case final day? when owed > 0) {
-      final details = 'Write-off ${invoice.number}';
       rows
-        ..add(_row('JD', accounts.writeOff, day, details, owed, party: false))
-        ..add(_row('JC', accounts.debtors, day, details, owed, party: false));
+        ..add(_journal('JD', accounts.writeOff, day, owed))
+        ..add(_journal('JC', accounts.debtors, day, owed));
     }
   }
 
@@ -211,11 +215,9 @@ class _Document {
         _row(
           invoice.isCreditNote ? 'SC' : 'SI',
           accounts.sales,
-          invoice.issuedAt,
           invoice.title,
           amount(p.net),
-          code: code,
-          tax: amount(p.tax),
+          taxed: (code: code, tax: amount(p.tax)),
         ),
       );
     }

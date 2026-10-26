@@ -22,19 +22,27 @@ import 'sage.dart';
 import 'sage_documents.dart';
 import 'vat_rate.dart';
 
-/// The audit trail of [postings] in their order, the tax codes of
-/// [accounts]. [parties] names each document's customer or supplier,
-/// [documents] the sales documents by id (their VAT categories and their
-/// customer's country), [kindText] each event in the Details column.
+/// What the posted audit trail is written on: the tax codes of
+/// [accounts], the customers' countries of [customers], and the book's
+/// currency, the only one Sage is given.
+typedef SageBook = ({
+  SageAccounts accounts,
+  SageCustomers customers,
+  String baseCurrency,
+});
+
+/// The audit trail of [postings] in their order, on [book]. [parties]
+/// names each document's customer or supplier, [documents] the sales
+/// documents by id (their VAT categories and their customer's country),
+/// [kindText] each event in the Details column.
 SageAuditTrail sageRowsOfPostings(
   List<Posting> postings, {
-  required SageAccounts accounts,
+  required SageBook book,
   required Map<String, PostingParty> parties,
   required Map<String, Invoice> documents,
-  required SageCustomers customers,
-  required String baseCurrency,
   required String Function(PostingKind kind) kindText,
 }) {
+  final (:accounts, :customers, :baseCurrency) = book;
   final rows = <SageRow>[];
   final blockers = <SageBlocker>{};
   for (final p in postings) {

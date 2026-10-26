@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
+
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/time/date_text.dart';
@@ -111,7 +113,7 @@ class SageAccounts {
           'Z' => _tax('tax_zero'),
           'E' => _tax('tax_exempt'),
           'AE' => euCustomer ? sageEuServicesCode : sageReverseChargeCode,
-          'K' => sageEuGoodsCode,
+          'K' => _sageEuGoodsCode,
           // A taxed rate no rate row names has no Sage code.
           'S' => null,
           _ => noTax,
@@ -123,22 +125,26 @@ class SageAccounts {
 /// Sage 50 UK's shipped VAT codes of the cross-border and reverse-charge
 /// treatments, fixed by the product's default VAT code table: services to
 /// an EU business customer, goods to one, and the domestic reverse charge.
+@visibleForTesting
 const sageEuServicesCode = 'T22';
-const sageEuGoodsCode = 'T4';
+const _sageEuGoodsCode = 'T4';
+@visibleForTesting
 const sageReverseChargeCode = 'T20';
 
 /// Whether [code] is a supply to a customer in another EU member state,
 /// which Sage reports with the customer's Country of VAT.
 bool sageCrossBorder(String code) =>
-    code == sageEuServicesCode || code == sageEuGoodsCode;
+    code == sageEuServicesCode || code == _sageEuGoodsCode;
 
 /// The column widths Sage 50's import takes (its audit-trail template).
-const int sageNominalLength = 8;
+const int _sageNominalLength = 8;
+@visibleForTesting
 const int sageReferenceLength = 30;
-const int sageDetailsLength = 60;
+const int _sageDetailsLength = 60;
 
 /// The 18 columns of Sage 50's audit-trail template, in its order. The
 /// names are what its import wizard maps on, so they are not free-form.
+@visibleForTesting
 const List<String> sageColumns = [
   'Type',
   'Account Reference',
@@ -247,7 +253,7 @@ SageAuditTrail sageAuditTrail(List<SageRow> rows, Set<SageBlocker> blockers) {
     for (final r in rows) ...[
       if (r.reference.length > sageReferenceLength)
         SageBlocker(SageBlock.fieldTooLong, r.reference),
-      if (r.nominal.length > sageNominalLength)
+      if (r.nominal.length > _sageNominalLength)
         SageBlocker(SageBlock.fieldTooLong, r.nominal),
     ],
   };
@@ -273,8 +279,8 @@ String _line(SageRow r) => [
   dmy(r.date),
   _cell(r.reference),
   _cell(
-    r.details.length > sageDetailsLength
-        ? r.details.substring(0, sageDetailsLength)
+    r.details.length > _sageDetailsLength
+        ? r.details.substring(0, _sageDetailsLength)
         : r.details,
   ),
   minorToText(r.netMinor, r.currency),

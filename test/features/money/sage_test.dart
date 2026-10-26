@@ -136,11 +136,13 @@ SageAuditTrail _posted(
   Map<String, Invoice> documents = const {},
 }) => sageRowsOfPostings(
   postings,
-  accounts: const SageAccounts(),
+  book: (
+    accounts: const SageAccounts(),
+    customers: const SageCustomers(memberNumbers: {}, sellerCountry: 'GB'),
+    baseCurrency: _gbp,
+  ),
   parties: parties,
   documents: documents,
-  customers: const SageCustomers(memberNumbers: {}, sellerCountry: 'GB'),
-  baseCurrency: _gbp,
   kindText: (kind) => kind.wire,
 );
 

@@ -5,7 +5,7 @@
 // book's chart, or the year's documents on the nominal codes the person
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
-import '../../../core/vat/tax_reference_active.dart';
+import '../../../core/vat/tax_reference_active.dart' show TaxReferenceQueries;
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
@@ -42,7 +42,12 @@ GenericJournal _written(SageAuditTrail trail) => trail.blockers.isEmpty
 
 extension SageAccountingExports on AccountingExportRun {
   Future<void> sageExport() async {
-    final reference = workspaceTaxReference(ref);
+    // The codes and rate groups of this workspace's own installation;
+    // refused, never guessed, while its context is not ready (runGuarded
+    // says so).
+    final reference =
+        workspaceTaxReference(ref) ??
+        (throw StateError('workspace context not ready'));
     final customers = SageCustomers(
       memberNumbers: await memberNumbers(),
       sellerCountry: country,
@@ -51,9 +56,6 @@ extension SageAccountingExports on AccountingExportRun {
     final name = sageFileName(year, invoices.last.issuedAt.month);
     final journal = posted;
     if (journal != null) {
-      // A local book's codes are its installation's; refused, never
-      // guessed, while the workspace context is not ready.
-      if (reference == null) throw StateError('workspace context not ready');
       final documents = {for (final i in exported) i.id: i};
       return exportGenericJournal(
         context,
@@ -61,12 +63,14 @@ extension SageAccountingExports on AccountingExportRun {
             ? _written(
                 sageRowsOfPostings(
                   journal.postings,
-                  accounts: SageAccounts(reference: reference),
+                  book: (
+                    accounts: SageAccounts(reference: reference),
+                    customers: customers,
+                    baseCurrency:
+                        journal.functionalCurrency ?? workspace.currencyCode,
+                  ),
                   parties: journal.parties,
                   documents: documents,
-                  customers: customers,
-                  baseCurrency:
-                      journal.functionalCurrency ?? workspace.currencyCode,
                   kindText: (kind) => postingKindLabel(l10n, kind),
                 ),
               )
@@ -76,7 +80,6 @@ extension SageAccountingExports on AccountingExportRun {
     }
     final accounts = await showSageAccountsDialog(context);
     if (accounts == null || !context.mounted) return;
-    final groups = reference ?? ActiveTaxReference.current;
     await exportGenericJournal(
       context,
       () async => _written(
@@ -86,7 +89,7 @@ extension SageAccountingExports on AccountingExportRun {
           accounts: accounts,
           customers: customers,
           baseCurrency: workspace.currencyCode,
-          groupOf: (t) => groups.groupOfRate(country, t.percent, t.category),
+          groupOf: (t) => reference.groupOfRate(country, t.percent, t.category),
         ),
       ),
       save: (content) => save(content, name),

@@ -531,11 +531,13 @@ final Map<String, Future<String> Function()> _files = {
     final journal = _posted(await _read('sage50', local: true, country: 'GB'));
     final trail = sageRowsOfPostings(
       journal.postings,
-      accounts: const SageAccounts(),
+      book: (
+        accounts: const SageAccounts(),
+        customers: const SageCustomers(memberNumbers: {}, sellerCountry: 'FR'),
+        baseCurrency: journal.functionalCurrency!,
+      ),
       parties: journal.parties,
       documents: {for (final i in SeededExportYear.acceptanceInvoices) i.id: i},
-      customers: const SageCustomers(memberNumbers: {}, sellerCountry: 'FR'),
-      baseCurrency: journal.functionalCurrency!,
       kindText: (kind) => postingKindLabel(_l10n, kind),
     );
     expect(trail.blockers, isEmpty);
