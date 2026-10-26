@@ -416,7 +416,10 @@ enum WorkspaceFeature {
   setupGuide,
   dataReport,
   personalShell,
-  foreignCurrencyPurchases;
+  foreignCurrencyPurchases,
+  /// #2370 — the accounting target systems: connections, mappings and the
+  /// transfers list (OFF).
+  accountingConnectors;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
