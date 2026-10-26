@@ -206,6 +206,8 @@ void main() {
       // Someone under audit is looking for one specific file.
       expect(formatsFor('FR').first.id, 'fec');
       expect(formatsFor('PT').first.id, 'saft_pt');
+      expect(formatsFor('NO').first.id, 'saft_no');
+      expect(formatsFor('LU').first.id, 'faia_lu');
     });
   });
 
@@ -215,7 +217,10 @@ void main() {
         for (final f in accountingTargets.map((t) => t.format).nonNulls)
           if (f.claim == FormatClaim.regulatory) f.id,
       ];
-      expect(regulatory, unorderedEquals(['fec', 'saft_pt']),
+      // #2379 — the SAF-T Financial of Norway and Luxembourg, written to
+      // their authorities' published schemas.
+      expect(regulatory,
+          unorderedEquals(['fec', 'saft_pt', 'saft_no', 'faia_lu']),
           reason: 'widening this set needs the authority\'s own spec — '
               'DATEV and Sage are read by a PERSON who posts them, which '
               'is why they can be produced without a ledger at all');

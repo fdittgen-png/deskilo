@@ -468,6 +468,8 @@ class FormBoxValue extends TaxValue {
 /// `coa` (the country's suggested chart: [role] is `chart` for its code and
 /// name, else the account's role, the key's number orders them), `fec`,
 /// `datev`, `sage` or `saf_t` (what that file asks for beyond the chart).
+/// #2379 `saf_t/<role>`: [account] the standard code, [label] Norway's GroupingCategory;
+/// `saf_t/tax:<output|input>:<group>`: [taxCode] the standard VAT code.
 /// The workspace's own chart stays its `book_profile`; the accountant's
 /// correction at export time always wins over these.
 class AccountMapValue extends TaxValue {

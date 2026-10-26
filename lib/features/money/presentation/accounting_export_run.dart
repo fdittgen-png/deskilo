@@ -19,6 +19,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_format.dart';
+import '../domain/accounting_targets_saft.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
@@ -48,6 +49,7 @@ import '../providers/vat_declaration_providers.dart';
 import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
 import 'accounting_export_journal.dart';
+import 'accounting_export_saft.dart';
 import 'accounting_export_swiss.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
@@ -137,6 +139,7 @@ class AccountingExportRun {
   final chosen = await showAccountingExportSheet(
     context,
     formats: exportFormatsOf(ref, country),
+    notices: [if (registeredSystemsFor(country) case final s when s.isNotEmpty) l10n.exportDenmarkRegisteredSystem(s.join(', '))],
   );
   if (chosen == null || !context.mounted) return;
   format = chosen;
@@ -212,6 +215,10 @@ class AccountingExportRun {
       case 'journals':
         await fecActions.bookReport(format.id, posted, letterhead: {'workspace': workspace.name,
             'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace)});
+      case 'saft_no':
+      case 'faia_lu':
+      case 'saft_oecd_full':
+        await safTFinancialExport();
       case 'generic_journal_csv':
         await exportGenericJournal(context, () async => writtenWith(posted!, journalCsvOf),
             save: saveJournal);

@@ -19,7 +19,9 @@ export '../application/generic_journal_export.dart'
         GenericJournal,
         JournalBlocked,
         JournalNeedsRates,
+        JournalOpeningRefused,
         JournalPosted,
+        JournalSafTRefused,
         journalCsvOf,
         writtenWith;
 
@@ -58,6 +60,23 @@ Future<void> exportGenericJournal(
         blockers.any((b) => b.block == FecBlock.partyCode)
             ? l10n.journalFecPartyCode(named(FecBlock.partyCode))
             : l10n.journalFecMissingRate(named(FecBlock.missingRate)),
+      );
+    case JournalOpeningRefused(:final period, :final subjects):
+      final day = MaterialLocalizations.of(context).formatMediumDate;
+      AppSnack.error(
+        context,
+        l10n.journalOpeningRefused(
+          day(period.from),
+          day(period.to),
+          subjects.join(', '),
+        ),
+      );
+    case JournalSafTRefused(:final gaps):
+      AppSnack.error(
+        context,
+        l10n.journalSafTRefused(
+          gaps.map((g) => l10n.saftGap(g.kind.name, g.subject)).join('; '),
+        ),
       );
     case JournalTaxCodesMissing(:final keys):
       AppSnack.error(context, l10n.journalSwissTaxCodes(keys.join(', ')));

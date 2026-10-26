@@ -1,0 +1,14 @@
+{
+  "@@locale": "es",
+  "invoiceExportSafTNo": "SAF-T Financial (Noruega)",
+  "invoiceExportFaiaLu": "FAIA (Luxemburgo)",
+  "invoiceExportSafTFull": "SAF-T con el libro mayor (XML, internacional)",
+  "exportLocalBookOnly": "Elaborado a partir de los asientos de su contabilidad local: su contabilidad completa solo si todas las operaciones de la empresa pasan por DesKilo.",
+  "exportDenmarkRegisteredSystem": "Dinamarca: la ley exige un sistema de contabilidad digital registrado, y DesKilo no lo es. Envíe sus facturas a un sistema registrado ({systems}) o entregue a su asesor la exportación estándar SAF-T DK que este genera. Ningún archivo de aquí cumple esa obligación por sí solo.",
+  "journalSafTRefused": "El archivo SAF-T no se ha generado: {gaps}",
+  "saftGap": "{kind, select, standardAccount{ninguna cuenta estándar para {subject}} standardTaxCode{ningún código de IVA estándar para {subject}} taxRate{ningún tipo de IVA para {subject}} company{falta el campo {subject} de la empresa} contact{el campo {subject} de la persona de contacto} party{falta {subject} en un cliente o proveedor} tooLong{{subject} supera la longitud que admite el archivo} other{{subject}}}",
+  "saftContactTitle": "Contacto para este archivo",
+  "saftContactIntro": "El archivo de la administración indica una persona de contacto, y el de Luxemburgo también un teléfono. Solo se escribe en este archivo.",
+  "taxRefSafTKeys": "SAF-T Financial (formato saf_t): la clave saf_t/<rol> asigna las cuentas de un rol contable a su código estándar, introducido como cuenta (Noruega: el GroupingCode, con su GroupingCategory como etiqueta; Luxemburgo: el StandardAccountID); la clave saf_t/tax:<output|input>:<grupo> indica el código de IVA estándar de un grupo de tipos como código de impuesto (Noruega).",
+  "journalOpeningRefused": "Los saldos de apertura (del {from} al {to}) no se han podido contabilizar: {reason}"
+}

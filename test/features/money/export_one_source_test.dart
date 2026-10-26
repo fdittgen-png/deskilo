@@ -21,6 +21,7 @@ import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo/features/money/domain/saf_t_financial.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -39,6 +40,10 @@ const _postedWhenLocalBook = {
   'general_ledger',
   'trial_balance',
   'journals',
+  // #2379 — the SAF-T Financial files, written from the postings only.
+  'saft_no',
+  'faia_lu',
+  'saft_oecd_full',
   // #2377 — the Swiss journal and its Banana layout.
   'ch_kmu',
   'banana_transactions',
@@ -51,13 +56,22 @@ const _named = {
   'general_ledger',
   'trial_balance',
   'journals',
+  // #2379 — they name the accounts and the parties too.
+  'saft_no',
+  'faia_lu',
+  'saft_oecd_full',
   'ch_kmu',
   'banana_transactions',
 };
 
 /// The formats with no source but the postings: without a local book they
 /// hold that answer.
-const _postedOnly = {'generic_journal_csv', 'ch_kmu', 'banana_transactions'};
+final _postedOnly = {
+  'generic_journal_csv',
+  ...safTFinancialFormats,
+  'ch_kmu',
+  'banana_transactions',
+};
 
 BookProfile _localBook({int startMonth = 1}) => BookProfile(
   id: 'p',

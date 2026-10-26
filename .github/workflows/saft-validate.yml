@@ -1,0 +1,68 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: CI · SAF-T schemas
+
+# #2379 — a SAF-T Financial profile claims its authority's format only when
+# its file passes that authority's published schema. This job builds one
+# sample per profile with the app's own writer
+# (test/features/money/saf_t_financial_test.dart) and reads each against
+# the schema shipped verbatim under test/fixtures/saft/, its SHA-256 pinned
+# in tool/saft/validate.sh.
+
+on:
+  pull_request:
+    paths:
+      - 'lib/features/money/domain/**'
+      - 'test/features/money/saf_t_financial_test.dart'
+      - 'test/fixtures/saft/**'
+      - 'tool/saft/**'
+      - '.github/workflows/saft-validate.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'lib/features/money/domain/**'
+      - 'test/fixtures/saft/**'
+      - 'tool/saft/**'
+  workflow_dispatch:
+
+concurrency:
+  group: saft-validate-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+
+jobs:
+  validate:
+    name: SAF-T samples · published schemas
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: xmllint
+        run: |
+          command -v xmllint || {
+            sudo apt-get update -q
+            sudo apt-get install -y --no-install-recommends libxml2-utils
+          }
+      - run: flutter pub get
+      - name: Build one sample per profile
+        env:
+          SAFT_SAMPLES_DIR: ${{ runner.temp }}/saft-samples
+        run: flutter test test/features/money/saf_t_financial_test.dart
+      - name: Read each against its schema
+        run: bash tool/saft/validate.sh "${{ runner.temp }}/saft-samples"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: saft-samples
+          path: ${{ runner.temp }}/saft-samples
