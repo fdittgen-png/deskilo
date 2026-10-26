@@ -7034,6 +7034,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get exportDenmarkRegisteredSystem =>
+      'Danemark : la loi impose un système de comptabilité numérique enregistré, et DesKilo n’en est pas un. Transmettez vos factures à un système enregistré (e-conomic, Dinero, Billy) ou remettez à votre comptable l’export standard SAF-T DK qu’il produit. Aucun fichier ici ne remplit cette obligation à lui seul.';
+
+  @override
+  String get exportLocalBookOnly =>
+      'Établi à partir des écritures de votre comptabilité locale : votre comptabilité complète seulement si toutes les opérations de l’entreprise passent par DesKilo.';
+
+  @override
   String get exportNoCompleteBooks =>
       'Reconstitué à partir des factures et des paiements — DesKilo ne tient pas de comptabilité en partie double, ce ne sont donc pas vos livres complets. Votre comptable le complète.';
 
@@ -10826,6 +10834,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceExportDatev => 'DATEV (Buchungsstapel)';
 
   @override
+  String get invoiceExportFaiaLu => 'FAIA (Luxembourg)';
+
+  @override
   String get invoiceExportFec => 'FEC (France, exigé en cas de contrôle)';
 
   @override
@@ -10849,6 +10860,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceExportSafT => 'SAF-T (XML, international)';
+
+  @override
+  String get invoiceExportSafTFull =>
+      'SAF-T avec le grand livre (XML, international)';
+
+  @override
+  String get invoiceExportSafTNo => 'SAF-T Financial (Norvège)';
 
   @override
   String get invoiceExportSafTPt => 'SAF-T (Portugal)';
@@ -11709,6 +11727,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : $documents';
+  }
+
+  @override
+  String journalSafTRefused(String gaps) {
+    return 'Le fichier SAF-T n’a pas été établi : $gaps';
   }
 
   @override
@@ -20735,6 +20758,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get saftDocumentsOnly => 'Documents seuls';
+
+  @override
+  String saftGap(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'standardAccount': 'aucun compte standard pour $subject',
+      'standardTaxCode': 'aucun code de TVA standard pour $subject',
+      'taxRate': 'aucun taux de TVA pour $subject',
+      'company': 'le champ $subject de l’entreprise manque',
+      'contact': 'votre prénom, nom ou téléphone dans votre profil ($subject)',
+      'party': '$subject manque pour un client ou un fournisseur',
+      'tooLong': '$subject dépasse la longueur admise par le fichier',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get saftLedgerIntro =>

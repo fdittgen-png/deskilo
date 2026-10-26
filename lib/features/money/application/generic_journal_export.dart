@@ -16,6 +16,7 @@ import '../domain/fec_postings.dart';
 import '../domain/fiscal_year.dart';
 import '../domain/generic_journal_csv.dart';
 import '../domain/posting.dart';
+import '../domain/saf_t_financial.dart';
 
 /// What a year's journal is.
 sealed class GenericJournal {
@@ -53,6 +54,12 @@ final class JournalRefused extends GenericJournal {
   final List<FecBlocker> blockers;
 }
 
+/// #2379 — the SAF-T Financial file was refused: each missing fact named.
+final class JournalSafTRefused extends GenericJournal {
+  const JournalSafTRefused(this.gaps);
+  final List<SafTGap> gaps;
+}
+
 /// The latest local-book profile of [profiles] in force in [year]; null
 /// when no issuer keeps a local book then.
 BookProfile? localBookOf(List<BookProfile> profiles, int year) => ([
@@ -72,8 +79,18 @@ final class JournalPosted extends GenericJournal {
     this.accountNames = const {},
     this.parties = const {},
     this.functionalCurrency,
+    this.opening = const [],
+    this.accountTypes = const {},
   });
   final List<Posting> postings;
+
+  /// #2379 — every posting of the book before [year], read once beside it
+  /// for a file that states opening balances (SAF-T Financial); empty for
+  /// the others.
+  final List<Posting> opening;
+
+  /// #2379 — the type of each account of the chart, by code.
+  final Map<String, AccountType> accountTypes;
 
   /// #2376 — the fiscal year the postings were read for, on the book
   /// profile's start day: the FEC's period and its closing date.
@@ -158,19 +175,60 @@ class GenericJournalExport {
   /// [profiles] in force in [year]: ONE read for the period, cut on the
   /// profile's fiscal year (#2376). [named] adds the chart's account names
   /// and the documents' parties, which the FEC writes beside each line.
+  /// #2379 — [withOpening] also reads, once, every posting of the book from
+  /// its first day to the eve of that fiscal year: the opening balances.
   Future<GenericJournal> read(
     String workspaceId,
     List<BookProfile> profiles,
     int year, {
     bool named = false,
+    bool withOpening = false,
     DateTime? asOf,
   }) async {
     final local = localBookOf(profiles, year);
     if (local == null) return const JournalNeedsLocalBook();
-    final journals = await _readYears(workspaceId, local, [
-      bookYearOf(local, asOf ?? DateTime(year, 12, 31)),
+    final period = bookYearOf(local, asOf ?? DateTime(year, 12, 31));
+    final journal = (await _readYears(workspaceId, local, [
+      period,
+    ], named: named)).single;
+    if (!withOpening || journal is! JournalPosted) return journal;
+    final start = _bookStart(profiles, local);
+    if (!start.isBefore(period.from)) return journal;
+    final opening = await _readYears(workspaceId, local, [
+      FiscalYear(
+        start,
+        DateTime(period.from.year, period.from.month, period.from.day - 1),
+      ),
     ], named: named);
-    return journals.single;
+    return switch (opening.single) {
+      final JournalPosted before => JournalPosted(
+        journal.postings,
+        year: journal.year,
+        accountNames: journal.accountNames,
+        parties: {...before.parties, ...journal.parties},
+        functionalCurrency: journal.functionalCurrency,
+        opening: before.postings,
+        accountTypes: journal.accountTypes,
+      ),
+      final refused => refused,
+    };
+  }
+
+  /// The first day the issuer of [local] kept a local book: the earliest of
+  /// its unbroken run of local-book profiles up to [local].
+  DateTime _bookStart(List<BookProfile> profiles, BookProfile local) {
+    final own = [
+      for (final p in profiles)
+        if (p.issuerSiteId == local.issuerSiteId &&
+            !p.effectiveFrom.isAfter(local.effectiveFrom))
+          p,
+    ]..sort((a, b) => b.effectiveFrom.compareTo(a.effectiveFrom));
+    var start = local.effectiveFrom;
+    for (final p in own) {
+      if (p.authority != BookAuthority.localBook) break;
+      start = p.effectiveFrom;
+    }
+    return start;
   }
 
   /// The year archive's books: the postings of every fiscal year the
@@ -265,6 +323,10 @@ class GenericJournalExport {
       accountNames: {
         for (final a in chart.accounts)
           if (a.issuerSiteId == local.issuerSiteId) a.code: a.name,
+      },
+      accountTypes: {
+        for (final a in chart.accounts)
+          if (a.issuerSiteId == local.issuerSiteId) a.code: a.type,
       },
       parties: {
         for (final e in parties.entries)

@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "invoiceExportSafTNo": "SAF-T Financial (Norvège)",
+  "invoiceExportFaiaLu": "FAIA (Luxembourg)",
+  "invoiceExportSafTFull": "SAF-T avec le grand livre (XML, international)",
+  "exportLocalBookOnly": "Établi à partir des écritures de votre comptabilité locale : votre comptabilité complète seulement si toutes les opérations de l’entreprise passent par DesKilo.",
+  "exportDenmarkRegisteredSystem": "Danemark : la loi impose un système de comptabilité numérique enregistré, et DesKilo n’en est pas un. Transmettez vos factures à un système enregistré (e-conomic, Dinero, Billy) ou remettez à votre comptable l’export standard SAF-T DK qu’il produit. Aucun fichier ici ne remplit cette obligation à lui seul.",
+  "journalSafTRefused": "Le fichier SAF-T n’a pas été établi : {gaps}",
+  "saftGap": "{kind, select, standardAccount{aucun compte standard pour {subject}} standardTaxCode{aucun code de TVA standard pour {subject}} taxRate{aucun taux de TVA pour {subject}} company{le champ {subject} de l’entreprise manque} contact{votre prénom, nom ou téléphone dans votre profil ({subject})} party{{subject} manque pour un client ou un fournisseur} tooLong{{subject} dépasse la longueur admise par le fichier} other{{subject}}}"
+}

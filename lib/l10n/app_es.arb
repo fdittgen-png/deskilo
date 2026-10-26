@@ -5470,6 +5470,8 @@
     "description": "#669 - accounting export formats"
   },
   "exportColumnName": "{key, select, action{Acción} active{Activo} actor{Realizado por} address{Dirección} admin{Administrador} amenities{Equipamiento} amount{Importe} area_kind{Tipo de zona} blocked_from{Bloqueado desde} blocked_to{Bloqueado hasta} bookable_as_whole{Reservable entero} by_system{Automático} capacity{Capacidad} category{Categoría} chair{Silla} checked_in_at{Entrada} checked_out_at{Salida} city{Ciudad} co_owner{Copropietario} color{Color} company{Empresa} country{País} created_at{Registrado el} currency{Moneda} decided_at{Decidido el} decided_by{Decidido por} decision{Decisión} decisions{Decisiones} description{Descripción} desk{Mesa} detailed{Detallada} details{Detalles} due_on{Vence el} email{Correo electrónico} enabled_features{Funciones activas} ends_at{Fin} event_id{Solicitud} event_type{Tipo de solicitud} first_name{Nombre} height{Alto} id{ID} invoice{Factura} issued_at{Emitida el} issued_by{Emitida por} joined_at{Miembro desde} kind{Tipo} kiosk{Quiosco} label{Concepto} last_name{Apellidos} last_seen{Última visita} last_sent_at{Último envío} legal_id{Número de registro} level{Planta} line{Línea} member{Miembro} member_id{ID de miembro} member_number{N.º de miembro} minutes_present{Minutos presente} name{Nombre} net{Base imponible} number{Número} occurred_on{Fecha} office{Sala} order_id{Pedido} orientation{Orientación} overage_policy{Al superar la cuota} owner{Propietario} parking_kind{Tipo de plaza} payment_terms{Condiciones de pago} period{Período} phone{Teléfono} postal_code{Código postal} price{Precio} provider{Proveedor} quantity{Cantidad} recorded_at{Registrado el} replaces{Sustituye} reservation_id{Reserva} resource_kind{Tipo de puesto} series_id{Serie} series_pattern{Repetición} signed_amount{Efecto en el saldo} slot_minutes{Franja (minutos)} sort_order{Orden} source_invoice{Factura de origen} space{Puesto} starts_at{Inicio} state{Estado} status{Estado} street{Calle} subject{Afecta a} subscription_pct{Suscripción (%)} timezone{Zona horaria} title{Título} total{Total} type{Tipo} vat{IVA} vat_by_rate{IVA por tipo} vat_category{Categoría de IVA} vat_id{NIF-IVA} vat_percent{IVA %} vat_regime{Régimen de IVA} vat_treatment{Tratamiento del IVA} voided_at{Anulada el} whatsapp{WhatsApp} width{Ancho} workspace_code{Código del espacio} x{X} y{Y} field{Campo} value{Valor} process{Proceso} feature{Función} on{Activa} other{{key}}}",
+  "exportDenmarkRegisteredSystem": "Dinamarca: la ley exige un sistema de contabilidad digital registrado, y DesKilo no lo es. Envíe sus facturas a un sistema registrado (e-conomic, Dinero, Billy) o entregue a su asesor la exportación estándar SAF-T DK que este genera. Ningún archivo de aquí cumple esa obligación por sí solo.",
+  "exportLocalBookOnly": "Elaborado a partir de los asientos de su contabilidad local: su contabilidad completa solo si todas las operaciones de la empresa pasan por DesKilo.",
   "exportNoCompleteBooks": "Reconstruido a partir de facturas y pagos — DesKilo no lleva contabilidad por partida doble, así que no son sus libros completos. Su asesor los completa.",
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
@@ -7615,6 +7617,7 @@
   "@invoiceExportDatev": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportFaiaLu": "FAIA (Luxemburgo)",
   "invoiceExportFec": "FEC (Francia, exigido en una inspección)",
   "invoiceExportFrEReporting": "E-reporting Francia (B2C, internacional, pagos)",
   "invoiceExportGeneralLedger": "Libro mayor (PDF, desde la contabilidad)",
@@ -7622,6 +7625,8 @@
   "invoiceExportGobd": "Acceso a datos GoBD (Z3)",
   "invoiceExportJournals": "Diarios y diario resumen (PDF, desde la contabilidad)",
   "invoiceExportSafT": "SAF-T (XML, internacional)",
+  "invoiceExportSafTFull": "SAF-T con el libro mayor (XML, internacional)",
+  "invoiceExportSafTNo": "SAF-T Financial (Noruega)",
   "invoiceExportSafTPt": "SAF-T (Portugal)",
   "@invoiceExportSafTPt": {
     "description": "#669 - accounting export formats"
@@ -8307,6 +8312,7 @@
   "journalFecPartyCode": "El FEC necesita un código de cliente para cada tercero, de hasta 13 letras y cifras: asigne primero un número de miembro o de proveedor a: {names}",
   "journalNeedsLocalBook": "El diario sale de una contabilidad llevada aquí: configure primero el plan de cuentas del emisor.",
   "journalNeedsRates": "Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: {documents}",
+  "journalSafTRefused": "El archivo SAF-T no se ha generado: {gaps}",
   "journeyClosedPaid": "Pagada el {date} — cerrada",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -14667,6 +14673,7 @@
   "@saftDocumentsOnly": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftGap": "{kind, select, standardAccount{ninguna cuenta estándar para {subject}} standardTaxCode{ningún código de IVA estándar para {subject}} taxRate{ningún tipo de IVA para {subject}} company{falta el campo {subject} de la empresa} contact{su nombre, apellido o teléfono en su perfil ({subject})} party{falta {subject} en un cliente o proveedor} tooLong{{subject} supera la longitud que admite el archivo} other{{subject}}}",
   "saftLedgerIntro": "Con números de cuenta, el archivo lleva asientos por partida doble que su asesor puede importar en lugar de teclear. Cubren sus ventas y los cobros correspondientes — no toda su contabilidad.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"

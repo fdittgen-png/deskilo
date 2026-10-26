@@ -8506,6 +8506,14 @@
       }
     }
   },
+  "exportDenmarkRegisteredSystem": "Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system (e-conomic, Dinero, Billy) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.",
+  "@exportDenmarkRegisteredSystem": {
+    "description": "Accounting export sheet (#2379): the Danish registered-system duty and its two routes"
+  },
+  "exportLocalBookOnly": "Written from your local book's postings: your complete books only if every operation of the business passes through DesKilo.",
+  "@exportLocalBookOnly": {
+    "description": "Accounting export sheet (#2379): a file from the local book is the complete books only if everything passes through the app"
+  },
   "exportNoCompleteBooks": "Rebuilt from invoices and payments — DesKilo keeps no double-entry ledger, so this is not your complete books. Your accountant completes it.",
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
@@ -12559,6 +12567,10 @@
   "@invoiceExportDatev": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportFaiaLu": "FAIA (Luxembourg)",
+  "@invoiceExportFaiaLu": {
+    "description": "Accounting export sheet (#2379): Luxembourg's FAIA"
+  },
   "invoiceExportFec": "FEC (France, required in an audit)",
   "@invoiceExportFec": {
     "description": "Export chooser: the French audit file (0075)"
@@ -12583,6 +12595,14 @@
   "invoiceExportSafT": "SAF-T (XML, international)",
   "@invoiceExportSafT": {
     "description": "Export chooser: the OECD audit file (0074)"
+  },
+  "invoiceExportSafTFull": "SAF-T with the general ledger (XML, international)",
+  "@invoiceExportSafTFull": {
+    "description": "Accounting export sheet (#2379): the OECD SAF-T tree with the general ledger"
+  },
+  "invoiceExportSafTNo": "SAF-T Financial (Norway)",
+  "@invoiceExportSafTNo": {
+    "description": "Accounting export sheet (#2379): Norway's SAF-T Financial"
   },
   "invoiceExportSafTPt": "SAF-T (Portugal)",
   "@invoiceExportSafTPt": {
@@ -13672,6 +13692,15 @@
     "description": "#3031 Posted export: purchases in another currency without a recorded rate.",
     "placeholders": {
       "documents": {
+        "type": "String"
+      }
+    }
+  },
+  "journalSafTRefused": "The SAF-T file was not made: {gaps}",
+  "@journalSafTRefused": {
+    "description": "SAF-T Financial export (#2379): the file was refused, with the reasons",
+    "placeholders": {
+      "gaps": {
         "type": "String"
       }
     }
@@ -24336,6 +24365,18 @@
   "saftDocumentsOnly": "Documents only",
   "@saftDocumentsOnly": {
     "description": "#669 - SAF-T derived postings"
+  },
+  "saftGap": "{kind, select, standardAccount{no standard account for {subject}} standardTaxCode{no standard VAT code for {subject}} taxRate{no VAT rate for {subject}} company{the company's {subject} is missing} contact{your first name, last name or telephone in your profile ({subject})} party{{subject} is missing for a customer or supplier} tooLong{{subject} is longer than the file allows} other{{subject}}}",
+  "@saftGap": {
+    "description": "SAF-T Financial export (#2379): one reason the file was refused, by kind",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
   },
   "saftLedgerIntro": "With account numbers, the file carries double-entry postings your accountant can import instead of keying in. They cover your sales and the payments against them — not your whole books.",
   "@saftLedgerIntro": {

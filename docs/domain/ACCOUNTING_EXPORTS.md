@@ -6,8 +6,8 @@ about itself, and — the part that keeps the registry honest — **what
 each supported country actually mandates that we do not produce.**
 
 The app bills in **32 countries**: EU27 plus CH, NO, GB, CA and US
-(`CountryCatalog`). Two of them get a file made to a published national
-spec. Every one of them gets at least one exchange format, and
+(`CountryCatalog`). Four of them get a file made to a published national
+spec (FR, PT, and since #2379 NO and LU from a local book). Every one of them gets at least one exchange format, and
 `accounting_standards_test.dart` fails if that ever stops being true.
 
 ## What a claim means
@@ -33,6 +33,9 @@ authority. Widening one needs the authority's own spec in hand.
 | GoBD data handover (Z3) | subset | DE | a zip (#2375): `index.xml` valid against the published `gdpdu-01-08-2002.dtd` (shipped beside it), one header-less UTF-8 CSV per table with every column, key and join described (invoices, lines, tax amounts, payments, instalments, write-offs, member ledger, shared costs, purchase documents and lines, customers, tax rates with their versions, number sequences, audit trail, vouchers), each invoice's e-invoice XML and PDF/A-3 in `belege/`, and the Verfahrensdokumentation (server schema version, number sequences, retention clocks). Says in its own index that it is DesKilo's sub-ledger, not the complete books. |
 | Sage 50 audit trail | exchange | GB, IE | a written-off rest is an SC to 8100 without tax |
 | Swiss booking journal (KMU accounts, Ziffer per row) | exchange | CH | Not a native Banana or bexio template: neither publishes its column specification. |
+| SAF-T Financial (NO) | regulatory | NO | #2379, a local book's postings only: valid against Skatteetaten's `Norwegian_SAF-T_Financial_Schema_v_1.30.xsd` (shipped under `test/fixtures/saft/`, read in CI by `tool/saft/validate.sh`); every account with its opening and closing balance of the fiscal year, its GroupingCategory and GroupingCode from the `saf_t/<role>` row of NO; customers and suppliers by their sub-ledger numbers with a BalanceAccount per collective account; the tax table with each rate version in force and its StandardTaxCode from the `saf_t/tax:<direction>:<group>` row; one transaction per posting, every line naming its SourceDocumentID, TaxInformation on the tax lines. An account or tax code without its row, a missing company or contact field, a party without its number, or an identifier longer than the schema allows refuses the file and is named. |
+| FAIA (LU) | regulatory | LU | #2379, the same tree to the FAIA 2.01 schema (`FAIA_v_2.01_full.xsd`): StandardAccountID from the `saf_t/<role>` row of LU, the contact's telephone and every party's postal address required (refused, named, otherwise), one AccountID per party. |
+| SAF-T with the general ledger | exchange | everywhere | #2379, the same tree in the OECD 2.0 namespace without national restriction; the OECD publishes its XSD only inside its 2010 guidance, so the file is read against Luxembourg's publication of the same tree. |
 | SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted unless the owner maps accounts; then sales cycle only, every transaction balances, credit notes reverse the sale, netted cash is posted, a written-off rest to the mapped loss account, in the sales journal (none mapped, none posted) |
 | Accountant CSV | exchange | everywhere | format 3 (#2378): `tax_components` holds each invoice's taxes as frozen at issue (JSON, integer minor units; a total stored without components is marked `"split": false`), then one column per tax key of the period — `GST`, `HST`, `QST`, `PST` (Canada), `state_tax` / `local_tax` (US sales tax), `VAT <rate>` (an un-split total) — each the sum of its components |
 | Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
@@ -103,6 +106,14 @@ reached and how far it is qualified. The table below is generated from it;
 | `datev_belegbilderservice` | DATEV · Belegbilderservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
 | `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
 | `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV, Ziffer per row | file | journal | CH | implemented | not named yet |
+| `saft_no` | Skatteetaten · SAF-T Financial · 1.30 | file | journal | NO | locallyValidated | Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd |
+| `faia_lu` | Administration de l'enregistrement · FAIA · 2.01 | file | journal | LU | locallyValidated | AED FAIA 2.01, FAIA_v_2.01_full.xsd |
+| `denmark_registered_system` | Erhvervsstyrelsen · Registered digital bookkeeping system · Bogføringsloven 2022 | api | documents | DK | specificationNeeded | not named yet |
+| `saft_dk` | Erhvervsstyrelsen · SAF-T DK · standard export with the standard chart mapping | file | journal | DK | specificationNeeded | not named yet |
+| `economic_api` | Visma · e-conomic · REST API | api | documents | DK | specificationNeeded | not named yet |
+| `dinero_api` | Visma · Dinero · API | api | documents | DK | specificationNeeded | not named yet |
+| `billy_api` | Billy · Billy · API v2 | api | documents | DK | specificationNeeded | not named yet |
+| `saft_oecd_full` | OECD · SAF-T · 2.0, general ledger from the posting engine | file | journal | everywhere | implemented | OECD SAF-T 2.0 guidance (2010), read against FAIA_v_2.01_full.xsd |
 | `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |
 | `accountant_csv` | DesKilo · Accountant CSV · format 3 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `generic_journal_csv` | DesKilo · Generic journal CSV · compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
@@ -130,29 +141,29 @@ confirm the current position with the workspace's own accountant before
 relying on any row. What the table is for is making sure no absence is an
 oversight.
 
-The single reason most of these cannot be produced is the same one, and
-it is a data-model fact rather than a formatting one: **DesKilo keeps
-invoices, payments and a running member account — not a double-entry
-general ledger over a chart of accounts** (ADR 0022). Every format below
-marked *ledger* mandates `GeneralLedgerEntries` or its equivalent. No
-amount of exporting closes that.
+Every format below marked *ledger* mandates `GeneralLedgerEntries` or its
+equivalent. A space that keeps a **local book** (#2365) has those
+postings, and #2379 writes them for NO and LU; each further country needs
+its own profile (schema, code lists, chart map). A space without a local
+book keeps invoices, payments and a running member account, not a
+double-entry ledger (ADR 0022), and no exporting closes that.
 
 | country | obligation we do not meet | why |
 |---|---|---|
 | DE | GoBD handover of the COMPLETE books for a Betriebsprüfung | ledger; the GoBD export (#2375) hands over DesKilo's sub-ledger in the descriptor-file form and says so |
-| AT | §§131/132 BAO data provision | ledger |
+| AT | §§131/132 BAO data provision | ledger; no profile yet |
 | PT | SAF-T accounting variants (`TaxAccountingBasis` C / I); certified-software obligation above the threshold | ledger; certification is a separate obligation the file cannot satisfy |
-| NO | SAF-T Financial on demand | ledger |
-| LU | FAIA | ledger |
-| PL | JPK_KR (books) | ledger |
-| RO | SAF-T D406 | ledger |
-| LT | i.SAF / SAF-T | ledger |
+| NO | SAF-T Financial on demand, for a space without a local book | ledger; with one, `saft_no` (#2379) |
+| LU | FAIA, for a space without a local book | ledger; with one, `faia_lu` (#2379) |
+| PL | JPK_KR (books) | ledger; no profile yet (JPK_KR_PD schema and chart segments) |
+| RO | SAF-T D406 | ledger; no profile yet |
+| LT | i.SAF / SAF-T | ledger; no profile yet |
 | BG | SAF-T (phased introduction) | ledger |
 | ES | SII, and the certified-billing-software regime | real-time reporting and certification, not a file |
 | IT | FatturaPA through SdI | e-invoicing transport — see below |
 | HU | Online Számla real-time invoice reporting | real-time reporting |
 | GR | myDATA | real-time reporting |
-| DK | digital bookkeeping act, registered systems | system registration, not a file |
+| DK | digital bookkeeping act, registered systems | system registration, not a file: the export sheet says so and names the two routes (a registered system such as e-conomic, Dinero or Billy; its SAF-T DK standard export); `denmark_registered_system`, `saft_dk` and the three systems are decided targets, none reachable (#2379) |
 | HR, SI, SK, CZ | cash-register fiscalisation | point-of-sale regimes; a coworking invoicing monthly is usually out of scope, but confirm |
 | CH, GB, IE, SE, FI, NL, BE, EE, LV, CY, MT, CA, US | no standing accounting-export mandate known | the exchange formats are the answer |
 
@@ -202,4 +213,11 @@ divide cleanly:
 - every SAF-T ledger transaction balances, credit notes included, and its header totals are the sums of its lines (#2365);
 - a ledger expense netted on an invoice is booked once (purchases), never also as money in on the bank (#2365);
 - every supported country is offered something, and `regulatory` is
-  claimed only for FR and PT.
+  claimed only for FR, PT, NO and LU, never for DK;
+- `saf_t_financial_test.dart` (#2379), over the seeded year with a fiscal
+  year from 1 April: debits equal credits and the stated totals, every
+  transaction balances and names its source document, the customers are
+  the sub-ledger numbers, each account closes at its opening plus the year,
+  each tax line's code is in the dated tax table; an unmapped account or
+  tax code, a missing contact, telephone, party or postal address is named.
+  `tool/saft/validate.sh` reads its samples against the shipped schemas.
