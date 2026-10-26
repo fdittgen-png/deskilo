@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2571 / 9999: a retention clock gives a disposition, never a permission.
+-- #2571 / 0604: a retention clock gives a disposition, never a permission.
 -- The rules here are SYNTHETIC (countries ZZ and ZY, confirmed inside this
 -- rolled-back transaction) so the mechanism is proved without claiming any
 -- country's law. Expected dates are written by hand from those rows.

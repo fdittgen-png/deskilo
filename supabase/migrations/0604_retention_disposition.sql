@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
 --
--- 9999 (#2571) -- a retention clock gives a disposition, not a permission.
+-- 0604 (#2571) -- a retention clock gives a disposition, not a permission.
 --
 --   1. retention_holds    a legal or audit hold: every class or one, every
 --      issuer or one, with its reason; it ends only when someone releases it
@@ -477,7 +477,7 @@ begin
 
   delete from public.event_decisions d$a$);
   if v_def is null or position('retention_refuse_unless_eligible' in v_def) = 0 then
-    raise exception '9999: reset_workspace anchor missing';
+    raise exception '0604: reset_workspace anchor missing';
   end if;
   execute v_def;
 
@@ -495,7 +495,7 @@ begin
   if v_def is null
      or position($a$retention_member_records(p_workspace_id, v_me.id, 'invoices')$a$ in v_def) = 0
      or position($a$retention_member_records(p_workspace_id, v_me.id, 'ledger_entries')$a$ in v_def) = 0 then
-    raise exception '9999: preview_my_erasure anchor missing';
+    raise exception '0604: preview_my_erasure anchor missing';
   end if;
   execute v_def;
 end
@@ -503,4 +503,4 @@ $migration$;
 
 revoke execute on function pg_temp.anchor_replace(text, text, text) from public, anon;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(604);
