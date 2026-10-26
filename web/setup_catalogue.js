@@ -1983,6 +1983,24 @@ window.SETUP_OBLIGATIONS={
    "from": "2027-01-01",
    "source": "einvoice_mandates.dart (#2358): RD 1007/2023 as moved by RDL 15/2025, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
+  },
+  {
+   "kind": "vatThreshold",
+   "question": "vat_registered",
+   "detail": "simplified_invoice",
+   "cents": 40000,
+   "currency": "EUR",
+   "source": "RD 1619/2012 art. 4.1.a: a simplified invoice is enough up to EUR 400, VAT included (#2363); not yet confirmed",
+   "confirmed": false
+  },
+  {
+   "kind": "vatThreshold",
+   "question": "vat_registered",
+   "detail": "annual_operations",
+   "cents": 300506,
+   "currency": "EUR",
+   "source": "RD 1065/2007 art. 33 (modelo 347): the operations with one person or entity above EUR 3,005.06 in the calendar year, VAT included (#2363); not yet confirmed",
+   "confirmed": false
   }
  ],
  "FR": [
@@ -2045,6 +2063,15 @@ window.SETUP_OBLIGATIONS={
    "from": "2019-01-01",
    "source": "einvoice_mandates.dart (#2358): 2019 (SdI), as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
+  },
+  {
+   "kind": "vatThreshold",
+   "question": "vat_registered",
+   "detail": "stamp_duty",
+   "cents": 7747,
+   "currency": "EUR",
+   "source": "DPR 642/1972, tariff art. 13 note 1, and DL 69/2013: EUR 2.00 on an invoice without VAT above EUR 77.47, the figures invoice_fatturapa.dart carried (#2438, #2363); typed in code, not re-verified",
+   "confirmed": false
   }
  ],
  "PL": [
@@ -2072,6 +2099,17 @@ window.SETUP_OBLIGATIONS={
    "detail": "issue_all",
    "from": "2024-07-01",
    "source": "einvoice_mandates.dart (#2358): OUG 120/2021, as the laws stood in October 2026; typed in code, not re-verified",
+   "confirmed": false
+  }
+ ],
+ "GB": [
+  {
+   "kind": "vatThreshold",
+   "question": "vat_registered",
+   "detail": "simplified_invoice",
+   "cents": 25000,
+   "currency": "GBP",
+   "source": "VAT Notice 700 §16.4: a less detailed invoice is enough up to GBP 250 including VAT, the figure invoice_essentials_missing carried since 0417 (#2359, #2363); typed in code, not re-verified",
    "confirmed": false
   }
  ]

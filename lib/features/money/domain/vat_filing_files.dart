@@ -32,9 +32,17 @@
 //    into My Business Account or Mon dossier (#2361). Filing is the
 //    owner's: both channels need their own registration and are not used
 //    here.
+//  * ES — the Modelo 303 in the AEAT's "diseño de registro" (pages 01 and
+//    03), the fixed-width text the Sede imports into the form before the
+//    owner signs it with a certificate or Cl@ve (`vat_filing_es.dart`).
+//  * IT — the LIPE as the XML of the Agenzia delle Entrate's fornitura
+//    IVP18, validated against its published XSD, which the owner's
+//    intermediary transmits through Entratel (`vat_filing_it.dart`).
 //
 // Both read the boxes `vatFormBoxes` fills, so the file and the PDF can
 // never disagree.
+import 'dart:convert' show Encoding, latin1, utf8;
+
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
@@ -42,32 +50,11 @@ import '../../../core/time/date_text.dart';
 import 'vat_declaration.dart';
 import 'vat_filing_ca.dart';
 import 'vat_filing_ech0217.dart';
+import 'vat_filing_es.dart';
+import 'vat_filing_it.dart';
+import 'vat_filing_terms.dart';
 
-/// Why a filing file cannot be written for a declaration.
-enum VatFilingFileProblem {
-  /// A UStVA covers a calendar month or quarter.
-  period,
-
-  /// The declarant's tax number (Steuernummer, SIREN) is missing.
-  taxNumber,
-
-  /// A UK return names the VAT registration number (nine digits).
-  vatNumber,
-
-  /// A Swiss return names the UID (CHE-123.456.789 and its check digit).
-  uid,
-
-  /// A Canadian return names the business number with its RT account.
-  businessNumber,
-}
-
-class VatFilingFileException implements Exception {
-  const VatFilingFileException(this.problem);
-  final VatFilingFileProblem problem;
-
-  @override
-  String toString() => 'VatFilingFileException: ${problem.name}';
-}
+export 'vat_filing_terms.dart';
 
 /// Who files: the space as its settings describe it.
 class VatFilingParty {
@@ -103,23 +90,29 @@ class VatFilingParty {
     'GB' || 'UK' => 'GB',
     'CH' => 'CH',
     'CA' => 'CA',
+    'ES' => 'ES',
+    'IT' => 'IT',
     _ => null,
   };
 }
 
-/// The filing file of [declaration] for [party]: its name and its text.
-/// [taxNumber] is the Steuernummer a German file names. Throws
-/// [VatFilingFileException] when the period or the number does not fit,
-/// and [UnsupportedError] for a country without a file.
-({String fileName, String text}) vatFilingFile({
+/// The filing file of [declaration] for [party]: its name, its text and the
+/// encoding its channel reads. [facts] holds what the file asks for beyond
+/// the settings (the Steuernummer of a German file, the declarant of an
+/// Italian one, the registers a Spanish space is in). Throws
+/// [VatFilingFileException] when the period or a number does not fit, and
+/// [UnsupportedError] for a country without a file.
+({String fileName, String text, Encoding encoding}) vatFilingFile({
   required VatDeclaration declaration,
   required VatFilingParty party,
   required DateTime now,
-  String taxNumber = '',
+  VatFilingFacts facts = const VatFilingFacts(),
 }) {
   final start = isoDay(declaration.periodStart);
+  final taxNumber = facts.taxNumber;
   return switch (party.fileCountry) {
     'DE' => (
+      encoding: utf8,
       fileName: 'ustva-$start.xml',
       text: elsterUstvaXml(
         declaration: declaration,
@@ -132,6 +125,7 @@ class VatFilingParty {
       ),
     ),
     'FR' => (
+      encoding: utf8,
       fileName: 'edi-tva-ca3-$start.edi',
       text: ediTvaCa3(
         declaration: declaration,
@@ -145,10 +139,12 @@ class VatFilingParty {
       ),
     ),
     'GB' => (
+      encoding: utf8,
       fileName: 'mtd-vat-return-$start.csv',
       text: mtdBridgingCsv(declaration: declaration, vatId: party.vatId),
     ),
     'CH' => (
+      encoding: utf8,
       fileName: 'mwst-abrechnung-$start.xml',
       text: ech0217Xml(
         declaration: declaration,
@@ -159,8 +155,31 @@ class VatFilingParty {
       ),
     ),
     'CA' => (
+      encoding: utf8,
       fileName: 'gst-hst-qst-return-$start.csv',
       text: gstQstReturnCsv(declaration: declaration, businessNumber: party.vatId),
+    ),
+    // The Sede reads the 303 file as ISO-8859-1, one byte a position.
+    'ES' => (
+      encoding: latin1,
+      fileName: 'modelo-303-$start.txt',
+      text: aeat303File(
+        declaration: declaration,
+        vatId: party.vatId,
+        name: party.name,
+        onReceipts: party.onReceipts,
+        facts: facts,
+      ),
+    ),
+    'IT' => (
+      encoding: utf8,
+      fileName: 'lipe-$start.xml',
+      text: lipeXml(
+        declaration: declaration,
+        vatId: party.vatId,
+        fiscalCode: party.legalId,
+        facts: facts,
+      ),
     ),
     _ => throw UnsupportedError('no filing file for ${party.countryCode}'),
   };

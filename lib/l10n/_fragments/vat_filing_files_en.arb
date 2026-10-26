@@ -8,7 +8,7 @@
   "@vatDeclEdiTva": {
     "description": "#2357 VAT filing files: vatDeclEdiTva"
   },
-  "vatDeclFilingPeriod": "An ELSTER advance return covers a month or a quarter; the annual return is filed separately.",
+  "vatDeclFilingPeriod": "A periodic return file covers a month or a quarter; the annual return is filed separately.",
   "@vatDeclFilingPeriod": {
     "description": "#2357 VAT filing files: vatDeclFilingPeriod"
   },

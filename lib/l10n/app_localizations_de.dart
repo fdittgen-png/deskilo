@@ -11771,6 +11771,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Umsatzsteuer-Registriernummer des Workspace im Format der HMRC: GB oder XI, gefolgt von neun oder zwölf Ziffern (VAT Notice 700)';
 
   @override
+  String get invoiceMissingTerritoryOutsideVat =>
+      'Der Standort liegt dort, wo die staatliche Umsatzsteuer nicht gilt (Kanaren: IGIC; Ceuta und Melilla: IPSI): DesKilo stellt dort noch nicht aus.';
+
+  @override
   String get invoiceMissingTitle => 'Vor der Ausstellung bitte ergänzen';
 
   @override
@@ -26038,6 +26042,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Schweizer Journal (Format ch_kmu): Schlüssel ch_kmu/tax:<Gruppe> gibt den MWST-Code der Umsätze einer Satzgruppe, ch_kmu/input:<Gruppe> den ihrer Vorsteuer auf Material und Dienstleistungen (Ziffer 400), ch_kmu/asset:<Gruppe> den der Vorsteuer auf Investitionen (Ziffer 405) als Steuercode; der Code muss in der MWST-Tabelle der Banana-Datei stehen.';
 
   @override
+  String get taxRefChargeCents =>
+      'Darüber fälliger Betrag (kleinste Einheit, Stempelsteuer)';
+
+  @override
   String get taxRefComponents =>
       'Jurisdiktionen, eine je Zeile: Ebene, Name, Prozent (Ebene: state, county, city oder district)';
 
@@ -26197,6 +26205,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taxRefOfflineCopy =>
       'Es wird die in der App enthaltene Kopie gezeigt: Der Server ist nicht erreichbar.';
+
+  @override
+  String get taxRefOutsideVatPostalCodes =>
+      'Postleitzahl-Präfixe außerhalb der USt (durch Kommas getrennt)';
 
   @override
   String get taxRefPattern => 'Muster';
@@ -27556,6 +27568,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatAddRate => 'Satz hinzufügen';
 
   @override
+  String get vatAnnualSummaryBase => 'Bemessungsgrundlage';
+
+  @override
+  String get vatAnnualSummaryBox => 'Feld';
+
+  @override
+  String vatAnnualSummaryButton(String form, String year) {
+    return '$form $year (Jahresübersicht)';
+  }
+
+  @override
+  String vatAnnualSummaryEmpty(String year) {
+    return 'Noch keine vorbereitete oder abgegebene Erklärung in $year.';
+  }
+
+  @override
+  String get vatAnnualSummaryLabel => 'Bezeichnung';
+
+  @override
+  String get vatAnnualSummaryTax => 'Steuer';
+
+  @override
   String get vatChangeByLaw => 'Änderung per Gesetz';
 
   @override
@@ -27569,6 +27603,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatChangeNeedsSave =>
       'Speichern Sie den Satz zuerst; dann ändern Sie ihn per Gesetz.';
+
+  @override
+  String get vatDeclAeat303 => 'AEAT-Datei (Modelo 303)';
 
   @override
   String get vatDeclBox => 'Kz';
@@ -27609,12 +27646,59 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatDeclFiled => 'Abgegeben';
 
   @override
+  String get vatDeclFilingAnnualVolume =>
+      'Ein Space im SII gibt auf der letzten Erklärung das Jahresvolumen an, eine Seite, die diese Datei nicht schreibt; geben Sie den letzten Zeitraum direkt im Formular ab.';
+
+  @override
   String get vatDeclFilingBn =>
       'Tragen Sie die GST/HST-Geschäftsnummer des Arbeitsbereichs mit RT-Konto ein (123456789 RT0001): die Datei nennt sie.';
 
   @override
+  String get vatDeclFilingDeclarant =>
+      'Der Erklärende braucht einen gültigen codice fiscale und einen codice carica von 1 bis 9 oder 11 bis 15.';
+
+  @override
+  String get vatDeclFilingEsCashRecipient =>
+      'Erhält Leistungen, die nach dem Kassenkriterium besteuert werden';
+
+  @override
+  String get vatDeclFilingEsIntro =>
+      'Die Sede der AEAT liest diese Datei in das Formular Modelo 303 ein; dort unterschreiben und übermitteln Sie es. Kreuzen Sie an, was für den Space gilt:';
+
+  @override
+  String get vatDeclFilingEsMonthlyRefund =>
+      'Im Register für monatliche Erstattungen (REDEME) eingetragen';
+
+  @override
+  String get vatDeclFilingEsSii => 'Führt seine USt-Bücher über SII';
+
+  @override
+  String get vatDeclFilingFiscalCode =>
+      'Geben Sie den codice fiscale des Space als Registernummer ein (11 Ziffern für eine Gesellschaft, 16 Zeichen für eine Person): die Datei nennt ihn.';
+
+  @override
+  String get vatDeclFilingItDeclarantCf =>
+      'Steuernummer des Erklärenden (codice fiscale)';
+
+  @override
+  String get vatDeclFilingItDeclarantRole =>
+      'Funktionscode des Erklärenden (codice carica)';
+
+  @override
+  String get vatDeclFilingItDeclarantRoleHelp =>
+      'Der Code aus der Tabelle der Agenzia delle Entrate: 1 bis 9 oder 11 bis 15.';
+
+  @override
+  String get vatDeclFilingItIntro =>
+      'Ihr Intermediär übermittelt diese Datei über Entratel. Eine Gesellschaft nennt die Person, die für sie unterschreibt; lassen Sie beide Felder leer, wenn Sie für sich selbst abgeben.';
+
+  @override
+  String get vatDeclFilingNegative =>
+      'Ein Feld dieser Erklärung ist negativ und die Datei hat dafür kein Vorzeichen; erfassen Sie die Berichtigung direkt im Formular.';
+
+  @override
   String get vatDeclFilingPeriod =>
-      'Eine Umsatzsteuer-Voranmeldung umfasst einen Monat oder ein Quartal; die Jahreserklärung wird gesondert abgegeben.';
+      'Die Datei einer periodischen Erklärung umfasst einen Monat oder ein Quartal; die Jahreserklärung wird gesondert abgegeben.';
 
   @override
   String get vatDeclFilingTaxNumber =>
@@ -27626,6 +27710,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatDeclFilingUid =>
       'Tragen Sie die UID des Workspace ein (CHE-123.456.789 mit gültiger Prüfziffer): die Datei nennt sie.';
+
+  @override
+  String get vatDeclFilingUnmappedBox =>
+      'Die Erklärung enthält Umsätze zu einem Satz, für den das Formular kein Feld hat; geben Sie diesen Zeitraum direkt im Formular ab.';
 
   @override
   String get vatDeclFilingVatNumber =>
@@ -27643,6 +27731,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatDeclInvoices => 'Rechnungen';
+
+  @override
+  String get vatDeclLipeXml => 'LIPE-XML (periodische USt-Abrechnung)';
 
   @override
   String get vatDeclMarkFiled => 'Als abgegeben markieren';
@@ -27844,6 +27935,50 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatRegimeHint =>
       'Dieser Space ist nicht als umsatzsteuerpflichtig deklariert, Rechnungen weisen daher keine Steuer aus. Das ändert sich unter Rechtliche Identität.';
+
+  @override
+  String vatRegister347Empty(String year) {
+    return 'Kein Kunde hat $year die Grenze des Modelo 347 überschritten.';
+  }
+
+  @override
+  String get vatRegister347Sii =>
+      'Ein Space, der seine USt-Bücher über SII führt, gibt kein Modelo 347 ab: die AEAT hat seine Rechnungen bereits.';
+
+  @override
+  String get vatRegisterActivity => 'Tätigkeit: Code, Art und IAE-Rubrik';
+
+  @override
+  String get vatRegisterActivityHelp =>
+      'So wie die AEAT es schreibt, z. B. A038612. Leer lassen, um die Tätigkeitsspalten selbst auszufüllen.';
+
+  @override
+  String get vatRegisterActivityInvalid =>
+      'Ein Code von A bis D, zwei Ziffern für die Art und bis zu vier Zeichen für die Rubrik.';
+
+  @override
+  String get vatRegisterEmpty =>
+      'In diesem Zeitraum wurde keine Rechnung ausgestellt.';
+
+  @override
+  String vatRegisterEs347(String year) {
+    return 'Modelo 347 $year (CSV)';
+  }
+
+  @override
+  String get vatRegisterEsLibro =>
+      'Register der ausgestellten Rechnungen (AEAT-XLSX)';
+
+  @override
+  String get vatRegisterEsSii => 'SII: ausgestellte Rechnungen (XML)';
+
+  @override
+  String get vatRegisterItRegistro =>
+      'Register der ausgestellten Rechnungen (CSV)';
+
+  @override
+  String get vatRegisterNif =>
+      'Geben Sie die NIF des Space als USt-IdNr. ein (neun Zeichen, auf Wunsch mit ES davor): die Datei nennt sie.';
 
   @override
   String get vatReportByRate => 'Summen je Satz';

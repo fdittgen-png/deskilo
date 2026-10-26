@@ -11752,6 +11752,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero di partita IVA dello spazio nel formato dell\'HMRC: GB o XI seguito da nove o dodici cifre (VAT Notice 700)';
 
   @override
+  String get invoiceMissingTerritoryOutsideVat =>
+      'La sede si trova dove l’IVA dello Stato non si applica (Canarie: IGIC; Ceuta e Melilla: IPSI): DesKilo non vi emette ancora.';
+
+  @override
   String get invoiceMissingTitle =>
       'Completi questi dati prima dell\'emissione';
 
@@ -26006,6 +26010,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Giornale svizzero (formato ch_kmu): la chiave ch_kmu/tax:<gruppo> dà il codice IVA delle vendite di un gruppo di aliquote, ch_kmu/input:<gruppo> quello della sua imposta precedente su materiale e prestazioni (cifra 400), ch_kmu/asset:<gruppo> quello dell\'imposta precedente su investimenti (cifra 405), come codice d\'imposta; il codice deve esistere nella tabella IVA del file Banana.';
 
   @override
+  String get taxRefChargeCents =>
+      'Importo dovuto oltre la soglia (unità minore, imposta di bollo)';
+
+  @override
   String get taxRefComponents =>
       'Giurisdizioni, una per riga: livello, nome, percentuale (livello: state, county, city o district)';
 
@@ -26161,6 +26169,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taxRefOfflineCopy =>
       'Copia inclusa nell\'app: il server non è raggiungibile.';
+
+  @override
+  String get taxRefOutsideVatPostalCodes =>
+      'Prefissi di CAP fuori dall’IVA (separati da virgole)';
 
   @override
   String get taxRefPattern => 'Formato';
@@ -27522,6 +27534,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatAddRate => 'Aggiungi un\'aliquota';
 
   @override
+  String get vatAnnualSummaryBase => 'Imponibile';
+
+  @override
+  String get vatAnnualSummaryBox => 'Rigo';
+
+  @override
+  String vatAnnualSummaryButton(String form, String year) {
+    return '$form $year (foglio annuale)';
+  }
+
+  @override
+  String vatAnnualSummaryEmpty(String year) {
+    return 'Ancora nessuna dichiarazione preparata o presentata nel $year.';
+  }
+
+  @override
+  String get vatAnnualSummaryLabel => 'Descrizione';
+
+  @override
+  String get vatAnnualSummaryTax => 'Imposta';
+
+  @override
   String get vatChangeByLaw => 'Modifica per legge';
 
   @override
@@ -27535,6 +27569,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatChangeNeedsSave =>
       'Salvi prima l\'aliquota; poi la modifichi per legge.';
+
+  @override
+  String get vatDeclAeat303 => 'File AEAT (Modelo 303)';
 
   @override
   String get vatDeclBox => 'Rigo';
@@ -27575,12 +27612,57 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatDeclFiled => 'Presentata';
 
   @override
+  String get vatDeclFilingAnnualVolume =>
+      'Uno spazio nel SII dichiara il volume annuo delle operazioni nell’ultima liquidazione, una pagina che questo file non scrive; presenti l’ultimo periodo direttamente nel modulo.';
+
+  @override
   String get vatDeclFilingBn =>
       'Inserisca il numero d\'impresa GST/HST dello spazio con il conto RT (123456789 RT0001): il file lo riporta.';
 
   @override
+  String get vatDeclFilingDeclarant =>
+      'Il dichiarante richiede un codice fiscale valido e un codice carica da 1 a 9 o da 11 a 15.';
+
+  @override
+  String get vatDeclFilingEsCashRecipient =>
+      'Riceve operazioni soggette al criterio di cassa';
+
+  @override
+  String get vatDeclFilingEsIntro =>
+      'La Sede dell’AEAT importa questo file nel modulo Modelo 303; poi Lei lo firma e lo presenta lì. Selezioni ciò che vale per lo spazio:';
+
+  @override
+  String get vatDeclFilingEsMonthlyRefund =>
+      'Iscritto al registro dei rimborsi mensili (REDEME)';
+
+  @override
+  String get vatDeclFilingEsSii => 'Tiene i registri IVA tramite il SII';
+
+  @override
+  String get vatDeclFilingFiscalCode =>
+      'Inserisca il codice fiscale dello spazio come numero di registrazione (11 cifre per una società, 16 caratteri per una persona): il file lo indica.';
+
+  @override
+  String get vatDeclFilingItDeclarantCf => 'Codice fiscale del dichiarante';
+
+  @override
+  String get vatDeclFilingItDeclarantRole => 'Codice carica del dichiarante';
+
+  @override
+  String get vatDeclFilingItDeclarantRoleHelp =>
+      'Il codice della tabella dell’Agenzia delle Entrate: da 1 a 9 o da 11 a 15.';
+
+  @override
+  String get vatDeclFilingItIntro =>
+      'Il Suo intermediario trasmette questo file tramite Entratel. Una società indica la persona che firma per essa; lasci vuoti entrambi i campi se presenta per sé.';
+
+  @override
+  String get vatDeclFilingNegative =>
+      'Un rigo di questa dichiarazione è negativo e il file non ammette il segno; registri la rettifica direttamente nel modulo.';
+
+  @override
   String get vatDeclFilingPeriod =>
-      'Una dichiarazione anticipata ELSTER copre un mese o un trimestre; la dichiarazione annuale si presenta a parte.';
+      'Il file di una dichiarazione periodica copre un mese o un trimestre; la dichiarazione annuale si presenta a parte.';
 
   @override
   String get vatDeclFilingTaxNumber =>
@@ -27592,6 +27674,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatDeclFilingUid =>
       'Inserisca il numero IDI dello spazio (CHE-123.456.789 con una cifra di controllo valida): il file lo cita.';
+
+  @override
+  String get vatDeclFilingUnmappedBox =>
+      'La dichiarazione contiene vendite a un’aliquota per cui il modello non ha un rigo; presenti questo periodo direttamente nel modulo.';
 
   @override
   String get vatDeclFilingVatNumber =>
@@ -27609,6 +27695,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatDeclInvoices => 'Fatture';
+
+  @override
+  String get vatDeclLipeXml => 'XML LIPE (liquidazione periodica IVA)';
 
   @override
   String get vatDeclMarkFiled => 'Segna come presentata';
@@ -27810,6 +27899,48 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatRegimeHint =>
       'Questo spazio non è dichiarato soggetto a IVA, quindi le fatture non la espongono. Si cambia in Identità legale.';
+
+  @override
+  String vatRegister347Empty(String year) {
+    return 'Nessun cliente ha superato la soglia del modelo 347 nel $year.';
+  }
+
+  @override
+  String get vatRegister347Sii =>
+      'Uno spazio che tiene i registri IVA tramite il SII non presenta il modelo 347: l’AEAT dispone già delle sue fatture.';
+
+  @override
+  String get vatRegisterActivity => 'Attività: codice, tipo ed epigrafe IAE';
+
+  @override
+  String get vatRegisterActivityHelp =>
+      'Come lo scrive l’AEAT, ad esempio A038612. Lo lasci vuoto per compilare Lei stesso le colonne dell’attività.';
+
+  @override
+  String get vatRegisterActivityInvalid =>
+      'Un codice da A a D, due cifre di tipo e fino a quattro caratteri di epigrafe.';
+
+  @override
+  String get vatRegisterEmpty =>
+      'Nessuna fattura è stata emessa in questo periodo.';
+
+  @override
+  String vatRegisterEs347(String year) {
+    return 'Modelo 347 $year (CSV)';
+  }
+
+  @override
+  String get vatRegisterEsLibro => 'Registro delle fatture emesse (XLSX AEAT)';
+
+  @override
+  String get vatRegisterEsSii => 'SII: fatture emesse (XML)';
+
+  @override
+  String get vatRegisterItRegistro => 'Registro delle fatture emesse (CSV)';
+
+  @override
+  String get vatRegisterNif =>
+      'Inserisca il NIF dello spazio come partita IVA (nove caratteri, con ES davanti se desidera): il file lo indica.';
 
   @override
   String get vatReportByRate => 'Totali per aliquota';

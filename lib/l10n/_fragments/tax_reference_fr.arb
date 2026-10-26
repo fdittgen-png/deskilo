@@ -299,5 +299,13 @@
   "taxRefRetentionStart": "Le délai court à partir de (fiscal_year_end ou document_date)",
   "@taxRefRetentionStart": {
     "description": "#2571 retention: taxRefRetentionStart"
+  },
+  "taxRefChargeCents": "Montant dû au-delà (plus petite unité, droit de timbre)",
+  "@taxRefChargeCents": {
+    "description": "#2363 tax reference editor: taxRefChargeCents"
+  },
+  "taxRefOutsideVatPostalCodes": "Préfixes de code postal hors TVA (séparés par des virgules)",
+  "@taxRefOutsideVatPostalCodes": {
+    "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
   }
 }

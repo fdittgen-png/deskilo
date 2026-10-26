@@ -299,5 +299,13 @@
   "taxRefRetentionStart": "The clock starts at (fiscal_year_end or document_date)",
   "@taxRefRetentionStart": {
     "description": "#2571 retention: taxRefRetentionStart"
+  },
+  "taxRefChargeCents": "Charged once passed (minor units, stamp duty)",
+  "@taxRefChargeCents": {
+    "description": "#2363 tax reference editor: taxRefChargeCents"
+  },
+  "taxRefOutsideVatPostalCodes": "Postal-code prefixes outside the VAT (comma-separated)",
+  "@taxRefOutsideVatPostalCodes": {
+    "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
   }
 }

@@ -35,6 +35,10 @@ class SmallBusinessThreshold {
   final bool confirmed;
 }
 
+/// The effects of a small-business threshold; the store's other threshold
+/// rows (the modelo 347, a simplified invoice, stamp duty) are not one.
+const _smallBusinessEffects = {'next_year', 'immediate'};
+
 /// #2478/#2479 -- the thresholds are rows of the tax reference store
 /// (`threshold`, key `small_business_<effect>`), in minor units of NET
 /// turnover, each with its source and whether somebody confirmed it.
@@ -54,6 +58,7 @@ List<SmallBusinessThreshold> _thresholdsOf(
     [
       for (final row in set.where(TaxDomain.threshold, country: country))
         if (row.country == country &&
+            _smallBusinessEffects.contains((row.value as ThresholdValue).effect) &&
             (row.value as ThresholdValue).currency == currency)
           SmallBusinessThreshold(
             country: row.country,
