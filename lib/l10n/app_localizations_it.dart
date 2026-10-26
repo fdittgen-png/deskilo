@@ -326,6 +326,43 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String acctDeliverBooksBlocked(String subjects) {
+    return 'Le scritture di questo periodo non possono ancora essere registrate: $subjects. Non è stato inviato nulla.';
+  }
+
+  @override
+  String acctDeliverDone(int delivered, int unchanged, int attention) {
+    return 'Inviati: $delivered · già presenti: $unchanged · da verificare: $attention';
+  }
+
+  @override
+  String get acctDeliverFailed =>
+      'L\'invio non è andato a buon fine. Non è stato inviato altro; riprovi più tardi.';
+
+  @override
+  String acctDeliverMissing(String keys) {
+    return 'Imposti prima queste corrispondenze: $keys';
+  }
+
+  @override
+  String get acctDeliverNotConnected =>
+      'Questo collegamento è disconnesso: lo colleghi di nuovo, poi invii.';
+
+  @override
+  String get acctDeliverNothing =>
+      'Non c\'è nulla da inviare in questo periodo.';
+
+  @override
+  String acctDeliverRefused(String detail) {
+    return 'Il sistema contabile ha rifiutato questa società: $detail. Non è stato inviato nulla.';
+  }
+
+  @override
+  String acctDeliverYear(String year, String target) {
+    return 'Invia $year a $target';
+  }
+
+  @override
   String get acctDeliveryAcknowledged => 'Ricevuto dal sistema';
 
   @override
@@ -493,6 +530,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String acctMapsTitle(String target) {
     return 'Nomi in $target';
   }
+
+  @override
+  String get acctRedeliver => 'Invia di nuovo';
 
   @override
   String get acctTargetsIntro =>

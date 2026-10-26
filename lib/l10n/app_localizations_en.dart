@@ -325,6 +325,42 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String acctDeliverBooksBlocked(String subjects) {
+    return 'The books of this period cannot be posted yet: $subjects. Nothing was delivered.';
+  }
+
+  @override
+  String acctDeliverDone(int delivered, int unchanged, int attention) {
+    return 'Delivered: $delivered · already there: $unchanged · to check: $attention';
+  }
+
+  @override
+  String get acctDeliverFailed =>
+      'The delivery did not go through. Nothing more was sent; try again later.';
+
+  @override
+  String acctDeliverMissing(String keys) {
+    return 'Map these first: $keys';
+  }
+
+  @override
+  String get acctDeliverNotConnected =>
+      'This connection is signed out: connect it again, then deliver.';
+
+  @override
+  String get acctDeliverNothing => 'Nothing to deliver in this period.';
+
+  @override
+  String acctDeliverRefused(String detail) {
+    return 'The accounting system refused this company: $detail. Nothing was delivered.';
+  }
+
+  @override
+  String acctDeliverYear(String year, String target) {
+    return 'Deliver $year to $target';
+  }
+
+  @override
   String get acctDeliveryAcknowledged => 'Received by the system';
 
   @override
@@ -491,6 +527,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String acctMapsTitle(String target) {
     return 'Names in $target';
   }
+
+  @override
+  String get acctRedeliver => 'Deliver again';
 
   @override
   String get acctTargetsIntro =>

@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
+import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Producible targets whose external specification nobody has named yet.
@@ -116,6 +117,21 @@ void main() {
       for (final t in accountingTargets)
         if (t.connectsBy.contains(AccountingAuthKind.oauth2)) t.id,
     });
+  });
+
+  // The Pennylane adapter finds a company's journal by the code of the
+  // posting's journal: the same codes as the app's.
+  test('the Pennylane adapter reads the journals by the app\'s codes', () {
+    final adapter = File(
+      'supabase/functions/_shared/accounting_pennylane.ts',
+    ).readAsStringSync();
+    final table = adapter.substring(adapter.indexOf('JOURNAL_CODES'));
+    final codes = {
+      for (final m in RegExp(r'^  ([a-z]+): "([A-Z]+)",', multiLine: true)
+          .allMatches(table.substring(0, table.indexOf('};'))))
+        m[1]!: m[2]!,
+    };
+    expect(codes, {for (final j in PostingJournal.values) j.name: j.code});
   });
 
   test('the FEC target names the client code of an auxiliary account', () {

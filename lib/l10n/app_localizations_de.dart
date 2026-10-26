@@ -326,6 +326,43 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String acctDeliverBooksBlocked(String subjects) {
+    return 'Die Buchungen dieses Zeitraums können noch nicht erstellt werden: $subjects. Es wurde nichts übertragen.';
+  }
+
+  @override
+  String acctDeliverDone(int delivered, int unchanged, int attention) {
+    return 'Übertragen: $delivered · bereits vorhanden: $unchanged · zu prüfen: $attention';
+  }
+
+  @override
+  String get acctDeliverFailed =>
+      'Die Übertragung ist nicht durchgegangen. Es wurde nichts weiter gesendet; versuchen Sie es später erneut.';
+
+  @override
+  String acctDeliverMissing(String keys) {
+    return 'Ordnen Sie zuerst zu: $keys';
+  }
+
+  @override
+  String get acctDeliverNotConnected =>
+      'Diese Verbindung ist abgemeldet: Verbinden Sie sie erneut und übertragen Sie dann.';
+
+  @override
+  String get acctDeliverNothing =>
+      'In diesem Zeitraum gibt es nichts zu übertragen.';
+
+  @override
+  String acctDeliverRefused(String detail) {
+    return 'Das Buchhaltungssystem hat diese Firma abgelehnt: $detail. Es wurde nichts übertragen.';
+  }
+
+  @override
+  String acctDeliverYear(String year, String target) {
+    return '$year an $target übertragen';
+  }
+
+  @override
   String get acctDeliveryAcknowledged => 'Vom System empfangen';
 
   @override
@@ -493,6 +530,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String acctMapsTitle(String target) {
     return 'Namen in $target';
   }
+
+  @override
+  String get acctRedeliver => 'Erneut übertragen';
 
   @override
   String get acctTargetsIntro =>

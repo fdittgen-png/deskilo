@@ -638,6 +638,54 @@ abstract class AppLocalizations {
   /// **'Company: {tenant}'**
   String acctConnTenant(String tenant);
 
+  /// #2370 Snack: the posting engine cannot post the period.
+  ///
+  /// In en, this message translates to:
+  /// **'The books of this period cannot be posted yet: {subjects}. Nothing was delivered.'**
+  String acctDeliverBooksBlocked(String subjects);
+
+  /// #2370 Snack: what a delivery run became.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered: {delivered} · already there: {unchanged} · to check: {attention}'**
+  String acctDeliverDone(int delivered, int unchanged, int attention);
+
+  /// #2370 Snack: the delivery request itself failed.
+  ///
+  /// In en, this message translates to:
+  /// **'The delivery did not go through. Nothing more was sent; try again later.'**
+  String get acctDeliverFailed;
+
+  /// #2370 Snack: the mapping keys documents wait for.
+  ///
+  /// In en, this message translates to:
+  /// **'Map these first: {keys}'**
+  String acctDeliverMissing(String keys);
+
+  /// #2370 Snack: the connection must sign in again before a delivery.
+  ///
+  /// In en, this message translates to:
+  /// **'This connection is signed out: connect it again, then deliver.'**
+  String get acctDeliverNotConnected;
+
+  /// #2370 Snack: the period holds no document to deliver.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to deliver in this period.'**
+  String get acctDeliverNothing;
+
+  /// #2370 Snack: the target refused the company before any document.
+  ///
+  /// In en, this message translates to:
+  /// **'The accounting system refused this company: {detail}. Nothing was delivered.'**
+  String acctDeliverRefused(String detail);
+
+  /// #2370 Transfers list: the button that delivers a year's postings to one connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver {year} to {target}'**
+  String acctDeliverYear(String year, String target);
+
   /// #2370 Delivery state: the system received it and said so.
   ///
   /// In en, this message translates to:
@@ -901,6 +949,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Names in {target}'**
   String acctMapsTitle(String target);
+
+  /// #2370 Transfers list: the button that delivers one document to its connection again.
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver again'**
+  String get acctRedeliver;
 
   /// #2370 Accounting systems sheet: what the sheet shows.
   ///

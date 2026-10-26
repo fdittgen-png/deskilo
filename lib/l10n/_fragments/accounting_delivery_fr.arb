@@ -1,0 +1,12 @@
+{
+  "@@locale": "fr",
+  "acctDeliverYear": "Envoyer {year} à {target}",
+  "acctRedeliver": "Envoyer à nouveau",
+  "acctDeliverDone": "Envoyées : {delivered} · déjà reçues : {unchanged} · à vérifier : {attention}",
+  "acctDeliverNothing": "Rien à envoyer sur cette période.",
+  "acctDeliverMissing": "Renseignez d'abord ces correspondances : {keys}",
+  "acctDeliverBooksBlocked": "Les écritures de cette période ne peuvent pas encore être passées : {subjects}. Rien n'a été envoyé.",
+  "acctDeliverRefused": "Le logiciel comptable a refusé cette société : {detail}. Rien n'a été envoyé.",
+  "acctDeliverNotConnected": "Cette connexion est déconnectée : reconnectez-la, puis envoyez.",
+  "acctDeliverFailed": "L'envoi n'a pas abouti. Rien de plus n'a été envoyé ; réessayez plus tard."
+}

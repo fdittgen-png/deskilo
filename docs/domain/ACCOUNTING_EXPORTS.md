@@ -197,6 +197,25 @@ made it, when and the documents it carried, and every document delivered to a
 connection with the target's answer (remote number, draft or posted, attempts,
 error).
 
+**Delivering** (`accounting-connect`, action `deliver`, `deliver.ts`): a billing
+manager delivers a year to a connected connection from the Transfers list
+("Deliver *year* to *target*"), the app asking one calendar month per run, and
+sends one document again from its line ("Deliver again"). What leaves is the
+posting engine's answer to the caller (`compute_postings`, viewFinances), never
+a body the client sent: one posting per document event, its digest the sha256
+of its event, day, document and lines by role and amount (a changed mapping is
+not a changed document). A period the engine cannot post (its blockers) sends
+nothing; the target first checks the company (`prepare`) and a refusal sends
+nothing either. An OAuth token about to expire is refreshed before the run. The
+adapters sit flat in `_shared/` because only that directory deploys beside a
+function:
+
+- `pennylane_api` (`accounting_pennylane.ts`, `pennylaneLedger`): every posting
+  a balanced ledger entry in the company's journal of the posting's code (VE,
+  BQ, HA, OD), each line on the ledger account its role is mapped to
+  (`account` mapping, remote id = the Pennylane ledger account id), its
+  external reference the delivery's idempotency key, read back by it.
+
 ## What each country mandates that this app does not produce
 
 **This table is a map of known absences, not a compliance statement.**

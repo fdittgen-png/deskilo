@@ -443,7 +443,7 @@ const List<AccountingTarget> accountingTargets = [
   // #2376 — the French platforms. Pennylane takes the documents through
   // its API (customer invoices created as issued, with the PDF/A-3 and the
   // legal number; payments and write-offs as ledger entries), its adapter
-  // under supabase/functions/_accounting-pennylane. Cegid Quadra and EBP
+  // supabase/functions/_shared/accounting_pennylane.ts. Cegid Quadra and EBP
   // import the FEC today; their own import formats wait for a reviewed
   // specification.
   AccountingTarget(

@@ -7,6 +7,7 @@
 // a form names the field before anything is sent.
 import '../../../core/trace/trace_logger.dart';
 import '../domain/accounting_connection.dart';
+import '../domain/accounting_delivery_run.dart';
 import '../domain/generic_journal_csv.dart';
 import '../domain/posting.dart';
 
@@ -116,6 +117,42 @@ class AccountingConnectionCommands {
 
   Future<AccountingConnection> deleteMap(String mapId) =>
       _repository.deleteMap(mapId);
+
+  /// Delivers the postings of [year] up to [today] to [connection], one
+  /// month per run. The first month the server refuses as a whole ends the
+  /// run with its reason; the months before it stay delivered.
+  Future<DeliveryRun> deliverYear(
+    AccountingConnection connection,
+    int year,
+    DateTime today,
+  ) async {
+    var done = const DeliveryRunDone([]);
+    for (final month in deliveryMonths(year, today)) {
+      final run = await _repository.deliver(
+        connection.id,
+        from: month.from,
+        to: month.to,
+      );
+      if (run is! DeliveryRunDone) return run;
+      done = done.then(run);
+    }
+    return done;
+  }
+
+  /// Delivers the document of [delivery] again: the server reads an
+  /// unknown outcome back before it creates anything.
+  Future<DeliveryRun> redeliver(AccountingDelivery delivery) {
+    final connectionId = delivery.connectionId;
+    if (connectionId == null) {
+      throw StateError('a file delivery is handed out again as a file');
+    }
+    return _repository.deliver(
+      connectionId,
+      from: delivery.eventDate,
+      to: delivery.eventDate,
+      document: (kind: delivery.documentKind, id: delivery.documentId),
+    );
+  }
 
   /// Records the documents the generic journal of [postings] carried in
   /// the logged file [bookExportId], one delivery each, for the issuer

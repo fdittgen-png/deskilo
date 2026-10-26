@@ -1,0 +1,12 @@
+{
+  "@@locale": "es",
+  "acctDeliverYear": "Enviar {year} a {target}",
+  "acctRedeliver": "Enviar de nuevo",
+  "acctDeliverDone": "Enviados: {delivered} · ya recibidos: {unchanged} · por revisar: {attention}",
+  "acctDeliverNothing": "No hay nada que enviar en este periodo.",
+  "acctDeliverMissing": "Asigne primero estas correspondencias: {keys}",
+  "acctDeliverBooksBlocked": "Los asientos de este periodo aún no se pueden contabilizar: {subjects}. No se ha enviado nada.",
+  "acctDeliverRefused": "El sistema contable ha rechazado esta empresa: {detail}. No se ha enviado nada.",
+  "acctDeliverNotConnected": "Esta conexión está desconectada: vuelva a conectarla y luego envíe.",
+  "acctDeliverFailed": "El envío no se ha completado. No se ha enviado nada más; inténtelo más tarde."
+}

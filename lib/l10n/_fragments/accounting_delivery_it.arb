@@ -1,0 +1,12 @@
+{
+  "@@locale": "it",
+  "acctDeliverYear": "Invia {year} a {target}",
+  "acctRedeliver": "Invia di nuovo",
+  "acctDeliverDone": "Inviati: {delivered} · già presenti: {unchanged} · da verificare: {attention}",
+  "acctDeliverNothing": "Non c'è nulla da inviare in questo periodo.",
+  "acctDeliverMissing": "Imposti prima queste corrispondenze: {keys}",
+  "acctDeliverBooksBlocked": "Le scritture di questo periodo non possono ancora essere registrate: {subjects}. Non è stato inviato nulla.",
+  "acctDeliverRefused": "Il sistema contabile ha rifiutato questa società: {detail}. Non è stato inviato nulla.",
+  "acctDeliverNotConnected": "Questo collegamento è disconnesso: lo colleghi di nuovo, poi invii.",
+  "acctDeliverFailed": "L'invio non è andato a buon fine. Non è stato inviato altro; riprovi più tardi."
+}
