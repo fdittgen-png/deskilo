@@ -78,6 +78,19 @@ abstract class FloorPlanRepository {
     String? imageId,
   });
 
+  /// Owner-only: draw a [kind] symbol (wall, door, table …) on [levelId] at
+  /// [rect]; no object is stored. [imageId] keeps a retry to one row.
+  Future<PlanImage> createPlanDecor({
+    required String workspaceId,
+    required String levelId,
+    required GridRect rect,
+    required PlanDecorKind kind,
+    String? imageId,
+  });
+
+  /// Owner-only: turn a symbol to [quarterTurns] (0..3).
+  Future<void> setPlanDecorTurns(String imageId, int quarterTurns);
+
   /// Owner-only: move/resize an illustration image.
   Future<void> updatePlanImageRect(String imageId, GridRect rect);
 

@@ -294,6 +294,34 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  Future<PlanImage> createPlanDecor({
+    required String workspaceId,
+    required String levelId,
+    required GridRect rect,
+    required PlanDecorKind kind,
+    String? imageId,
+  }) async {
+    final existing = planImages.where((im) => im.id == imageId);
+    if (existing.isNotEmpty) return existing.first;
+    final image = PlanImage(
+      id: imageId ?? 'img-${_imgSeq++}',
+      levelId: levelId,
+      rect: rect,
+      kind: kind,
+    );
+    planImages.add(image);
+    return image;
+  }
+
+  @override
+  Future<void> setPlanDecorTurns(String imageId, int quarterTurns) async {
+    final i = planImages.indexWhere((im) => im.id == imageId);
+    if (i >= 0) {
+      planImages[i] = planImages[i].copyWith(quarterTurns: quarterTurns);
+    }
+  }
+
+  @override
   Future<void> updatePlanImageRect(String imageId, GridRect rect) async {
     final i = planImages.indexWhere((im) => im.id == imageId);
     if (i >= 0) planImages[i] = planImages[i].copyWith(rect: rect);

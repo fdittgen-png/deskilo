@@ -410,6 +410,43 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
+  Future<PlanImage> createPlanDecor({
+    required String workspaceId,
+    required String levelId,
+    required GridRect rect,
+    required PlanDecorKind kind,
+    String? imageId,
+  }) async {
+    final id = imageId ?? newRequestId();
+    await _client.from('plan_images').upsert(
+      {
+        'id': id,
+        'workspace_id': workspaceId,
+        'level_id': levelId,
+        'x': rect.x,
+        'y': rect.y,
+        'w': rect.w,
+        'h': rect.h,
+        'kind': kind.name,
+      },
+      onConflict: 'id',
+      ignoreDuplicates: true,
+    );
+    await _bust();
+    final row = await _client.from('plan_images').select().eq('id', id).single();
+    return _planImageFromRow(row);
+  }
+
+  @override
+  Future<void> setPlanDecorTurns(String imageId, int quarterTurns) async {
+    await _client
+        .from('plan_images')
+        .update({'quarter_turns': quarterTurns})
+        .eq('id', imageId);
+    await _bust();
+  }
+
+  @override
   Future<void> updatePlanImageRect(String imageId, GridRect rect) async {
     await _client.from('plan_images').update({
       'x': rect.x,
@@ -459,7 +496,9 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
         id: row['id'] as String,
         levelId: row['level_id'] as String,
         rect: _rectFromRow(row),
-        storagePath: row['storage_path'] as String,
+        storagePath: row['storage_path'] as String?,
+        kind: PlanDecorKind.fromWire(row['kind'] as String?),
+        quarterTurns: (row['quarter_turns'] as num?)?.toInt() ?? 0,
       );
 
   @override
