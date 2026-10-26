@@ -27417,6 +27417,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Guarde primero el tipo; después cámbielo por ley.';
 
   @override
+  String get vatDeclAeat303 => 'Fichero AEAT (Modelo 303)';
+
+  @override
   String get vatDeclBox => 'Casilla';
 
   @override
@@ -27455,12 +27458,60 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatDeclFiled => 'Presentada';
 
   @override
+  String get vatDeclFilingAnnualVolume =>
+      'Un espacio en el SII declara el volumen anual de operaciones en su última autoliquidación, una página que este fichero no escribe; presente el último periodo en el propio formulario.';
+
+  @override
   String get vatDeclFilingBn =>
       'Introduzca el número de empresa GST/HST del espacio con su cuenta RT (123456789 RT0001): el archivo lo indica.';
 
   @override
+  String get vatDeclFilingDeclarant =>
+      'El declarante necesita un codice fiscale válido y un codice carica del 1 al 9 o del 11 al 15.';
+
+  @override
+  String get vatDeclFilingEsCashRecipient =>
+      'Es destinatario de operaciones acogidas al criterio de caja';
+
+  @override
+  String get vatDeclFilingEsIntro =>
+      'La Sede de la AEAT importa este fichero en el formulario del Modelo 303; después usted lo firma y lo presenta allí. Marque lo que se aplica al espacio:';
+
+  @override
+  String get vatDeclFilingEsMonthlyRefund =>
+      'Inscrito en el Registro de devolución mensual (REDEME)';
+
+  @override
+  String get vatDeclFilingEsSii =>
+      'Lleva los libros registro del IVA a través del SII';
+
+  @override
+  String get vatDeclFilingFiscalCode =>
+      'Introduzca el codice fiscale del espacio como número de registro (11 dígitos para una sociedad, 16 caracteres para una persona): el fichero lo indica.';
+
+  @override
+  String get vatDeclFilingItDeclarantCf =>
+      'Código fiscal del declarante (codice fiscale)';
+
+  @override
+  String get vatDeclFilingItDeclarantRole =>
+      'Código de cargo del declarante (codice carica)';
+
+  @override
+  String get vatDeclFilingItDeclarantRoleHelp =>
+      'El código de la tabla de la Agenzia delle Entrate: del 1 al 9 o del 11 al 15.';
+
+  @override
+  String get vatDeclFilingItIntro =>
+      'Su intermediario transmite este fichero por Entratel. Una sociedad indica la persona que firma por ella; deje ambos campos vacíos si presenta por sí mismo.';
+
+  @override
+  String get vatDeclFilingNegative =>
+      'Una casilla de esta declaración es negativa y el fichero no admite signo en ella; registre la rectificación en el propio formulario.';
+
+  @override
   String get vatDeclFilingPeriod =>
-      'Una declaración anticipada ELSTER cubre un mes o un trimestre; la declaración anual se presenta aparte.';
+      'El fichero de una declaración periódica abarca un mes o un trimestre; la declaración anual se presenta aparte.';
 
   @override
   String get vatDeclFilingTaxNumber =>
@@ -27472,6 +27523,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get vatDeclFilingUid =>
       'Introduzca el UID del espacio (CHE-123.456.789 con un dígito de control válido): el archivo lo cita.';
+
+  @override
+  String get vatDeclFilingUnmappedBox =>
+      'La declaración contiene ventas a un tipo para el que el modelo no tiene casilla; presente este periodo directamente en el formulario.';
 
   @override
   String get vatDeclFilingVatNumber =>
@@ -27489,6 +27544,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatDeclInvoices => 'Facturas';
+
+  @override
+  String get vatDeclLipeXml => 'XML LIPE (liquidación periódica del IVA)';
 
   @override
   String get vatDeclMarkFiled => 'Marcar como presentada';

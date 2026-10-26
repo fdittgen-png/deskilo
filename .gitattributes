@@ -1,2 +1,4 @@
 # #1643 — the calendar-file goldens are RFC 5545 files: CRLF is the content, never a line-ending preference to normalise.
 *.ics -text
+# The national tax schemas and layouts under test/fixtures/vat_filing/ are the authorities' bytes, pinned by SHA-256 in tool/vat_filing/validate.sh.
+test/fixtures/vat_filing/** -text

@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2357 — the filing-ready file of a prepared VAT return, where the
-// workspace's country has one: the UStVA as ELSTER XML (Germany), the
-// CA3 as an EDI-TVA interchange (France). The owner hands it to the
+// The filing-ready file of a prepared VAT return, where the workspace's
+// country has one (see `vat_filing_files.dart`). The owner hands it to the
 // channel that files it; nothing here transmits.
 import 'package:flutter/material.dart';
 
@@ -15,6 +14,7 @@ import '../../../l10n/app_localizations.dart';
 import '../application/save_vat_filing_file.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
+import 'vat_filing_facts_dialogs.dart';
 
 /// The button's label for [country], or null where no file exists.
 String? vatFilingFileLabel(AppLocalizations l10n, String? country) =>
@@ -24,6 +24,8 @@ String? vatFilingFileLabel(AppLocalizations l10n, String? country) =>
       'GB' => l10n.vatDeclMtdCsv,
       'CH' => l10n.vatDeclMwstXml,
       'CA' => l10n.vatDeclGstQstCsv,
+      'ES' => l10n.vatDeclAeat303,
+      'IT' => l10n.vatDeclLipeXml,
       _ => null,
     };
 
@@ -34,13 +36,8 @@ Future<void> exportVatFilingFile(
   VatDeclaration declaration,
 ) async {
   final l10n = context.l10n;
-  // The Steuernummer is not the VAT id a registered space keeps: asked
-  // for the file, and not stored.
-  final german = save.country == 'DE';
-  final taxNumber = german
-      ? await _askTaxNumber(context, l10n, save.party?.legalId ?? '')
-      : '';
-  if (taxNumber == null || !context.mounted) return;
+  final facts = await _askFacts(context, l10n, save);
+  if (facts == null || !context.mounted) return;
   await runGuarded(
     context,
     domain: 'money',
@@ -49,7 +46,7 @@ Future<void> exportVatFilingFile(
     action: () async {
       final String? path;
       try {
-        path = await save(declaration, taxNumber: taxNumber);
+        path = await save(declaration, facts: facts);
       } on VatFilingFileException catch (e, st) {
         TraceLogger.instance.warn(
           'money',
@@ -63,6 +60,11 @@ Future<void> exportVatFilingFile(
           VatFilingFileProblem.vatNumber => l10n.vatDeclFilingVatNumber,
           VatFilingFileProblem.uid => l10n.vatDeclFilingUid,
           VatFilingFileProblem.businessNumber => l10n.vatDeclFilingBn,
+          VatFilingFileProblem.fiscalCode => l10n.vatDeclFilingFiscalCode,
+          VatFilingFileProblem.declarant => l10n.vatDeclFilingDeclarant,
+          VatFilingFileProblem.unmappedBox => l10n.vatDeclFilingUnmappedBox,
+          VatFilingFileProblem.negativeAmount => l10n.vatDeclFilingNegative,
+          VatFilingFileProblem.annualVolume => l10n.vatDeclFilingAnnualVolume,
         });
         return;
       }
@@ -71,6 +73,22 @@ Future<void> exportVatFilingFile(
     },
   );
 }
+
+/// What the file of [save]'s country asks beyond the settings; null when
+/// the person cancelled.
+Future<VatFilingFacts?> _askFacts(
+  BuildContext context,
+  AppLocalizations l10n,
+  SaveVatFilingFile save,
+) => switch (save.country) {
+  // The Steuernummer is not the VAT id a registered space keeps.
+  'DE' => _askTaxNumber(context, l10n, save.party?.legalId ?? '').then(
+    (number) => number == null ? null : VatFilingFacts(taxNumber: number),
+  ),
+  'ES' => askSpanishFilingFacts(context, l10n),
+  'IT' => askItalianDeclarant(context, l10n),
+  _ => Future.value(const VatFilingFacts()),
+};
 
 /// Asks the Steuernummer the ELSTER file names; null when cancelled.
 Future<String?> _askTaxNumber(

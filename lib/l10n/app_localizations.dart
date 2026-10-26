@@ -45389,6 +45389,12 @@ abstract class AppLocalizations {
   /// **'Save the rate first; then change it by law.'**
   String get vatChangeNeedsSave;
 
+  /// #2363 VAT filing files (ES, IT): vatDeclAeat303
+  ///
+  /// In en, this message translates to:
+  /// **'AEAT file (Modelo 303)'**
+  String get vatDeclAeat303;
+
   /// Box-code column
   ///
   /// In en, this message translates to:
@@ -45455,16 +45461,88 @@ abstract class AppLocalizations {
   /// **'Filed'**
   String get vatDeclFiled;
 
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingAnnualVolume
+  ///
+  /// In en, this message translates to:
+  /// **'A space in SII states the year’s volume of operations on its last return, a page this file does not write; file the last period in the form itself.'**
+  String get vatDeclFilingAnnualVolume;
+
   /// #2361 VAT filing files: vatDeclFilingBn
   ///
   /// In en, this message translates to:
   /// **'Enter the GST/HST business number of the workspace with its RT account (123456789 RT0001): the file names it.'**
   String get vatDeclFilingBn;
 
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingDeclarant
+  ///
+  /// In en, this message translates to:
+  /// **'The declarant needs both a valid codice fiscale and a codice carica from 1 to 9 or 11 to 15.'**
+  String get vatDeclFilingDeclarant;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingEsCashRecipient
+  ///
+  /// In en, this message translates to:
+  /// **'Receives supplies taxed under the cash criterion'**
+  String get vatDeclFilingEsCashRecipient;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingEsIntro
+  ///
+  /// In en, this message translates to:
+  /// **'The AEAT Sede imports this file into the Modelo 303 form; you then sign and file it there. Tick what applies to the space:'**
+  String get vatDeclFilingEsIntro;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingEsMonthlyRefund
+  ///
+  /// In en, this message translates to:
+  /// **'Registered for monthly refunds (REDEME)'**
+  String get vatDeclFilingEsMonthlyRefund;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingEsSii
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps its VAT books through SII'**
+  String get vatDeclFilingEsSii;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingFiscalCode
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the codice fiscale of the workspace as its registration number (11 digits for a company, 16 characters for a person): the file names it.'**
+  String get vatDeclFilingFiscalCode;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantCf
+  ///
+  /// In en, this message translates to:
+  /// **'Declarant’s tax code (codice fiscale)'**
+  String get vatDeclFilingItDeclarantCf;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRole
+  ///
+  /// In en, this message translates to:
+  /// **'Declarant’s role code (codice carica)'**
+  String get vatDeclFilingItDeclarantRole;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRoleHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The code of the Agenzia delle Entrate’s table: 1 to 9 or 11 to 15.'**
+  String get vatDeclFilingItDeclarantRoleHelp;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingItIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Your intermediary transmits this file through Entratel. A company names the person who signs for it; leave both fields empty when you file for yourself.'**
+  String get vatDeclFilingItIntro;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingNegative
+  ///
+  /// In en, this message translates to:
+  /// **'A box of this return is negative and the file has no sign for it; record the correction in the form itself.'**
+  String get vatDeclFilingNegative;
+
   /// #2357 VAT filing files: vatDeclFilingPeriod
   ///
   /// In en, this message translates to:
-  /// **'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.'**
+  /// **'A periodic return file covers a month or a quarter; the annual return is filed separately.'**
   String get vatDeclFilingPeriod;
 
   /// #2357 VAT filing files: vatDeclFilingTaxNumber
@@ -45484,6 +45562,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter the UID of the workspace (CHE-123.456.789 with a valid check digit): the file names it.'**
   String get vatDeclFilingUid;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingUnmappedBox
+  ///
+  /// In en, this message translates to:
+  /// **'The return holds sales at a rate the form has no box for; file this period in the form itself.'**
+  String get vatDeclFilingUnmappedBox;
 
   /// #2359 VAT filing files: vatDeclFilingVatNumber
   ///
@@ -45514,6 +45598,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoices'**
   String get vatDeclInvoices;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclLipeXml
+  ///
+  /// In en, this message translates to:
+  /// **'LIPE XML (periodic VAT settlement)'**
+  String get vatDeclLipeXml;
 
   /// Manual-filing action
   ///

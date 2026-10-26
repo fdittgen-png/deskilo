@@ -1,0 +1,63 @@
+{
+  "@@locale": "fr",
+  "vatDeclAeat303": "Fichier AEAT (Modelo 303)",
+  "@vatDeclAeat303": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"
+  },
+  "vatDeclLipeXml": "XML LIPE (liquidation périodique de TVA)",
+  "@vatDeclLipeXml": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclLipeXml"
+  },
+  "vatDeclFilingEsIntro": "La Sede de l’AEAT importe ce fichier dans le formulaire Modelo 303 ; vous le signez et le déposez ensuite sur place. Cochez ce qui s’applique à l’espace :",
+  "@vatDeclFilingEsIntro": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsIntro"
+  },
+  "vatDeclFilingEsMonthlyRefund": "Inscrit au registre des remboursements mensuels (REDEME)",
+  "@vatDeclFilingEsMonthlyRefund": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsMonthlyRefund"
+  },
+  "vatDeclFilingEsSii": "Tient ses livres de TVA via le SII",
+  "@vatDeclFilingEsSii": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsSii"
+  },
+  "vatDeclFilingEsCashRecipient": "Reçoit des opérations soumises au critère de caisse",
+  "@vatDeclFilingEsCashRecipient": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsCashRecipient"
+  },
+  "vatDeclFilingItIntro": "Votre intermédiaire transmet ce fichier par Entratel. Une société indique la personne qui signe pour elle ; laissez les deux champs vides si vous déclarez pour vous-même.",
+  "@vatDeclFilingItIntro": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItIntro"
+  },
+  "vatDeclFilingItDeclarantCf": "Code fiscal du déclarant (codice fiscale)",
+  "@vatDeclFilingItDeclarantCf": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantCf"
+  },
+  "vatDeclFilingItDeclarantRole": "Code de fonction du déclarant (codice carica)",
+  "@vatDeclFilingItDeclarantRole": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRole"
+  },
+  "vatDeclFilingItDeclarantRoleHelp": "Le code du tableau de l’Agenzia delle Entrate : 1 à 9 ou 11 à 15.",
+  "@vatDeclFilingItDeclarantRoleHelp": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRoleHelp"
+  },
+  "vatDeclFilingFiscalCode": "Saisissez le codice fiscale de l’espace comme numéro d’immatriculation (11 chiffres pour une société, 16 caractères pour une personne) : le fichier l’indique.",
+  "@vatDeclFilingFiscalCode": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingFiscalCode"
+  },
+  "vatDeclFilingDeclarant": "Le déclarant a besoin d’un codice fiscale valide et d’un codice carica de 1 à 9 ou de 11 à 15.",
+  "@vatDeclFilingDeclarant": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingDeclarant"
+  },
+  "vatDeclFilingUnmappedBox": "La déclaration contient des ventes à un taux pour lequel le formulaire n’a pas de case ; déclarez cette période directement dans le formulaire.",
+  "@vatDeclFilingUnmappedBox": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingUnmappedBox"
+  },
+  "vatDeclFilingNegative": "Une case de cette déclaration est négative et le fichier n’a pas de signe pour elle ; saisissez la rectification dans le formulaire.",
+  "@vatDeclFilingNegative": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingNegative"
+  },
+  "vatDeclFilingAnnualVolume": "Un espace soumis au SII indique le volume annuel d’opérations dans sa dernière déclaration, une page que ce fichier n’écrit pas ; déclarez la dernière période dans le formulaire.",
+  "@vatDeclFilingAnnualVolume": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingAnnualVolume"
+  }
+}

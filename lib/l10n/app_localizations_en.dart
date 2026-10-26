@@ -27203,6 +27203,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Save the rate first; then change it by law.';
 
   @override
+  String get vatDeclAeat303 => 'AEAT file (Modelo 303)';
+
+  @override
   String get vatDeclBox => 'Box';
 
   @override
@@ -27241,12 +27244,59 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclFiled => 'Filed';
 
   @override
+  String get vatDeclFilingAnnualVolume =>
+      'A space in SII states the year’s volume of operations on its last return, a page this file does not write; file the last period in the form itself.';
+
+  @override
   String get vatDeclFilingBn =>
       'Enter the GST/HST business number of the workspace with its RT account (123456789 RT0001): the file names it.';
 
   @override
+  String get vatDeclFilingDeclarant =>
+      'The declarant needs both a valid codice fiscale and a codice carica from 1 to 9 or 11 to 15.';
+
+  @override
+  String get vatDeclFilingEsCashRecipient =>
+      'Receives supplies taxed under the cash criterion';
+
+  @override
+  String get vatDeclFilingEsIntro =>
+      'The AEAT Sede imports this file into the Modelo 303 form; you then sign and file it there. Tick what applies to the space:';
+
+  @override
+  String get vatDeclFilingEsMonthlyRefund =>
+      'Registered for monthly refunds (REDEME)';
+
+  @override
+  String get vatDeclFilingEsSii => 'Keeps its VAT books through SII';
+
+  @override
+  String get vatDeclFilingFiscalCode =>
+      'Enter the codice fiscale of the workspace as its registration number (11 digits for a company, 16 characters for a person): the file names it.';
+
+  @override
+  String get vatDeclFilingItDeclarantCf =>
+      'Declarant’s tax code (codice fiscale)';
+
+  @override
+  String get vatDeclFilingItDeclarantRole =>
+      'Declarant’s role code (codice carica)';
+
+  @override
+  String get vatDeclFilingItDeclarantRoleHelp =>
+      'The code of the Agenzia delle Entrate’s table: 1 to 9 or 11 to 15.';
+
+  @override
+  String get vatDeclFilingItIntro =>
+      'Your intermediary transmits this file through Entratel. A company names the person who signs for it; leave both fields empty when you file for yourself.';
+
+  @override
+  String get vatDeclFilingNegative =>
+      'A box of this return is negative and the file has no sign for it; record the correction in the form itself.';
+
+  @override
   String get vatDeclFilingPeriod =>
-      'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.';
+      'A periodic return file covers a month or a quarter; the annual return is filed separately.';
 
   @override
   String get vatDeclFilingTaxNumber =>
@@ -27258,6 +27308,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vatDeclFilingUid =>
       'Enter the UID of the workspace (CHE-123.456.789 with a valid check digit): the file names it.';
+
+  @override
+  String get vatDeclFilingUnmappedBox =>
+      'The return holds sales at a rate the form has no box for; file this period in the form itself.';
 
   @override
   String get vatDeclFilingVatNumber =>
@@ -27275,6 +27329,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatDeclInvoices => 'Invoices';
+
+  @override
+  String get vatDeclLipeXml => 'LIPE XML (periodic VAT settlement)';
 
   @override
   String get vatDeclMarkFiled => 'Mark as filed';

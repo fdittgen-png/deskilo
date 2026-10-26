@@ -18396,6 +18396,10 @@
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
   },
+  "vatDeclAeat303": "Fichero AEAT (Modelo 303)",
+  "@vatDeclAeat303": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"
+  },
   "vatDeclBox": "Casilla",
   "@vatDeclBox": {
     "description": "Box-code column"
@@ -18445,11 +18449,59 @@
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
   },
+  "vatDeclFilingAnnualVolume": "Un espacio en el SII declara el volumen anual de operaciones en su última autoliquidación, una página que este fichero no escribe; presente el último periodo en el propio formulario.",
+  "@vatDeclFilingAnnualVolume": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingAnnualVolume"
+  },
   "vatDeclFilingBn": "Introduzca el número de empresa GST/HST del espacio con su cuenta RT (123456789 RT0001): el archivo lo indica.",
   "@vatDeclFilingBn": {
     "description": "#2361 VAT filing files: vatDeclFilingBn"
   },
-  "vatDeclFilingPeriod": "Una declaración anticipada ELSTER cubre un mes o un trimestre; la declaración anual se presenta aparte.",
+  "vatDeclFilingDeclarant": "El declarante necesita un codice fiscale válido y un codice carica del 1 al 9 o del 11 al 15.",
+  "@vatDeclFilingDeclarant": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingDeclarant"
+  },
+  "vatDeclFilingEsCashRecipient": "Es destinatario de operaciones acogidas al criterio de caja",
+  "@vatDeclFilingEsCashRecipient": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsCashRecipient"
+  },
+  "vatDeclFilingEsIntro": "La Sede de la AEAT importa este fichero en el formulario del Modelo 303; después usted lo firma y lo presenta allí. Marque lo que se aplica al espacio:",
+  "@vatDeclFilingEsIntro": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsIntro"
+  },
+  "vatDeclFilingEsMonthlyRefund": "Inscrito en el Registro de devolución mensual (REDEME)",
+  "@vatDeclFilingEsMonthlyRefund": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsMonthlyRefund"
+  },
+  "vatDeclFilingEsSii": "Lleva los libros registro del IVA a través del SII",
+  "@vatDeclFilingEsSii": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsSii"
+  },
+  "vatDeclFilingFiscalCode": "Introduzca el codice fiscale del espacio como número de registro (11 dígitos para una sociedad, 16 caracteres para una persona): el fichero lo indica.",
+  "@vatDeclFilingFiscalCode": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingFiscalCode"
+  },
+  "vatDeclFilingItDeclarantCf": "Código fiscal del declarante (codice fiscale)",
+  "@vatDeclFilingItDeclarantCf": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantCf"
+  },
+  "vatDeclFilingItDeclarantRole": "Código de cargo del declarante (codice carica)",
+  "@vatDeclFilingItDeclarantRole": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRole"
+  },
+  "vatDeclFilingItDeclarantRoleHelp": "El código de la tabla de la Agenzia delle Entrate: del 1 al 9 o del 11 al 15.",
+  "@vatDeclFilingItDeclarantRoleHelp": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRoleHelp"
+  },
+  "vatDeclFilingItIntro": "Su intermediario transmite este fichero por Entratel. Una sociedad indica la persona que firma por ella; deje ambos campos vacíos si presenta por sí mismo.",
+  "@vatDeclFilingItIntro": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItIntro"
+  },
+  "vatDeclFilingNegative": "Una casilla de esta declaración es negativa y el fichero no admite signo en ella; registre la rectificación en el propio formulario.",
+  "@vatDeclFilingNegative": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingNegative"
+  },
+  "vatDeclFilingPeriod": "El fichero de una declaración periódica abarca un mes o un trimestre; la declaración anual se presenta aparte.",
   "@vatDeclFilingPeriod": {
     "description": "#2357 VAT filing files: vatDeclFilingPeriod"
   },
@@ -18464,6 +18516,10 @@
   "vatDeclFilingUid": "Introduzca el UID del espacio (CHE-123.456.789 con un dígito de control válido): el archivo lo cita.",
   "@vatDeclFilingUid": {
     "description": "#2360 VAT filing files: vatDeclFilingUid"
+  },
+  "vatDeclFilingUnmappedBox": "La declaración contiene ventas a un tipo para el que el modelo no tiene casilla; presente este periodo directamente en el formulario.",
+  "@vatDeclFilingUnmappedBox": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingUnmappedBox"
   },
   "vatDeclFilingVatNumber": "Introduzca el número de registro de IVA del espacio (GB y nueve dígitos): el archivo lo indica.",
   "@vatDeclFilingVatNumber": {
@@ -18484,6 +18540,10 @@
   "vatDeclInvoices": "Facturas",
   "@vatDeclInvoices": {
     "description": "Invoice-count column"
+  },
+  "vatDeclLipeXml": "XML LIPE (liquidación periódica del IVA)",
+  "@vatDeclLipeXml": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclLipeXml"
   },
   "vatDeclMarkFiled": "Marcar como presentada",
   "@vatDeclMarkFiled": {
