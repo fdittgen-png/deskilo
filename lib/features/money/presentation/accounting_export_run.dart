@@ -219,15 +219,17 @@ class AccountingExportRun {
         await safTFinancialExport();
       case 'generic_journal_csv':
         await exportGenericJournal(context, () async => writtenWith(posted!, journalCsvOf),
-            save: (content) => save(content, named('journal')));
+            save: saveJournal);
     }
   }
 
-  Future<void> save(String content, String fileName, [FiscalYear? period]) async {
+  /// Saves and logs [content]; answers the log row's id, null when nothing
+  /// was logged.
+  Future<String?> save(String content, String fileName, [FiscalYear? period]) async {
     final bytes = Uint8List.fromList(utf8.encode(content));
-    if (!context.mounted) return;
+    if (!context.mounted) return null;
     await savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName);
-    await ref.read(bookPeriodCommandProvider).logExport(workspace.id, formatId: format.id,
+    return ref.read(bookPeriodCommandProvider).logExport(workspace.id, formatId: format.id,
         year: year, content: content, documents: exported.length, period: period);
   }
 

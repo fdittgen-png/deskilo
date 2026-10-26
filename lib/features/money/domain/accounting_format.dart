@@ -457,6 +457,9 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.attachment},
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: CustomerIdRule(maxLength: 13, charset: r'[A-Z0-9]+'),
+    // A company API token from Pennylane's settings, or a sign-in where
+    // the installation registered a Pennylane partner application.
+    connectsBy: {AccountingAuthKind.token, AccountingAuthKind.oauth2},
   ),
   AccountingTarget(
     id: 'cegid_quadra_ascii',
@@ -483,7 +486,6 @@ const List<AccountingTarget> accountingTargets = [
 ];
 
 /// #2370 — the targets offered in [countryCode], in registry order.
-@visibleForTesting
 List<AccountingTarget> targetsFor(String countryCode) => [
   for (final t in accountingTargets)
     if (t.offeredIn(countryCode)) t,

@@ -154,6 +154,49 @@ claim) has its own conditions and stays with the accountant. The loss accounts
 are `account_map` rows of the tax reference store (FR 654000 confirmed; DE 2400
 and GB 8100 unconfirmed until an accountant has checked the chart in use).
 
+## Connections, mappings and transfers (#2370)
+
+An API target is reached through a **connection**: one per issuer and target
+(`accounting_connections`), its state (`pending`, `connected`, `expired`,
+`revoked`, `error`) shown on the *Accounting systems* sheet under the
+`accountingConnectors` flag (child of `accountingBook`). No secret is in a
+table: the pasted API token (`set_accounting_token_v1`) or the OAuth tokens of
+a sign-in (the `accounting-connect` edge function: authorisation, the target's
+redirect checked against a state kept in Vault, the code exchange, refresh) are
+Vault secrets `accounting:<connection>:<key>`, resolved for the service role
+only (`accounting_credentials_resolved`). Revoking forgets them and keeps the
+mappings and the deliveries. A connection's remote company cannot change once
+a delivery or a mapping names it; switching company is a new connection.
+
+**Mappings** (`accounting_maps`, one table, `map_kind` account | tax | party |
+item) name each key of the books on the target: a book role with its qualifier
+(`revenue:standard`), a tax component key
+`scheme|authority|treatment|rate|version` (`VAT|FR|taxed|20|2014`), a member,
+site or supplier by id, a revenue role. A delivery that needs a key with no
+mapping is blocked with the key named, and nothing is sent; no default code is
+ever put in its place (`_shared/accounting_delivery.ts`, `missingMappings`).
+
+**Deliveries** (`accounting_deliveries`): one row per stable identity — the
+connection (or the file target and the issuer), the document event kind, the
+document and the event day. The idempotency key is the sha256 of that identity,
+stored before anything is sent; no profile revision or mapping change makes a
+new one. For an API target the delivery kit runs: prepare; block on an
+unmapped key; a send whose outcome is unknown (`sent`, `conflict`) is read back
+first — exactly one matching remote document acknowledges it, a disagreeing one
+or several are a `conflict` for a person — and only then create; an
+acknowledged delivery asked again with its digest is a no-op, with another
+digest it is refused (a correction, never a second create). For a file target
+the generic journal records each document event it carried with the sha256 of
+its own rows (`record_file_deliveries_v1`), pointing at the `book_exports` row
+of the file: the same books delivered again change nothing, a changed document
+follows the newer file.
+
+The **Transfers** list (`accounting_transfers_v1`) is the digital-link evidence
+of a year: every file handed out whose period overlaps it, with its sha256, who
+made it, when and the documents it carried, and every document delivered to a
+connection with the target's answer (remote number, draft or posted, attempts,
+error).
+
 ## What each country mandates that this app does not produce
 
 **This table is a map of known absences, not a compliance statement.**

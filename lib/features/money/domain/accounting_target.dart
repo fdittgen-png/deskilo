@@ -2,7 +2,8 @@
 //
 // #2370 — the accounting target registry: one descriptor per product edition
 // an export or a connection reaches. A file target carries the format it
-// writes ([AccountingFormat]); an API target (#2370 PR 2) carries none. The
+// writes ([AccountingFormat]); an API target carries none
+// and says how an issuer connects to it. The
 // countries a target is offered in, what it receives, which operations it
 // takes, how it codes tax and what its customer ids may look like are facts
 // of the TARGET, so the sheet, the coverage table and a future connection
@@ -27,6 +28,21 @@ enum AccountingOperation {
   writeOff,
   expense,
   attachment,
+}
+
+/// How an issuer connects to an API target: by signing in to it (OAuth 2.0,
+/// the installation's application with the target; the redirect is
+/// handled by the `accounting-connect` function) or with an API token the
+/// person creates in the target and pastes once.
+enum AccountingAuthKind {
+  oauth2('oauth2'),
+  token('token');
+
+  const AccountingAuthKind(this.wire);
+  final String wire;
+
+  static AccountingAuthKind of(String? wire) =>
+      values.firstWhere((v) => v.wire == wire, orElse: () => token);
 }
 
 /// How the target codes tax: a code per rate, per tax component (a US or
@@ -67,6 +83,7 @@ class AccountingTarget {
     this.format,
     this.customerIdRule = const CustomerIdRule(),
     this.limits = const TargetLimits(),
+    this.connectsBy = const {},
   });
 
   /// Stable wire id: the format id of a file target.
@@ -89,6 +106,9 @@ class AccountingTarget {
   final AccountingFormat? format;
   final CustomerIdRule customerIdRule;
   final TargetLimits limits;
+
+  /// The ways an issuer connects to an API target; empty for a file target.
+  final Set<AccountingAuthKind> connectsBy;
 
   bool offeredIn(String countryCode) =>
       countries.isEmpty || countries.contains(countryCode.toUpperCase());

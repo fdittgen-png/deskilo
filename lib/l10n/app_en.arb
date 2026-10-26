@@ -276,6 +276,491 @@
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
+  "acctConnConnectToken": "Connect with an API token",
+  "@acctConnConnectToken": {
+    "description": "#2370 Button: connect with a pasted API token."
+  },
+  "acctConnDetail": "Answer of the system: {detail}",
+  "@acctConnDetail": {
+    "description": "#2370 Connection card: the system's own words about the state.",
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "acctConnRefresh": "Check the connection",
+  "@acctConnRefresh": {
+    "description": "#2370 Button: ask the system for fresh tokens and show the state."
+  },
+  "acctConnRefused": "The server refused: check that you may manage the billing.",
+  "@acctConnRefused": {
+    "description": "#2370 Error: the server refused a connection change."
+  },
+  "acctConnReplaceToken": "Replace the token",
+  "@acctConnReplaceToken": {
+    "description": "#2370 Button: replace the API token of a connection."
+  },
+  "acctConnRevoke": "Revoke",
+  "@acctConnRevoke": {
+    "description": "#2370 Button and dialog title: revoke a connection."
+  },
+  "acctConnRevokeConfirm": "Revoke this connection? Its token is forgotten at once; its mappings and the deliveries already made stay listed.",
+  "@acctConnRevokeConfirm": {
+    "description": "#2370 Dialog: what revoking a connection does."
+  },
+  "acctConnRevoked": "The connection is revoked.",
+  "@acctConnRevoked": {
+    "description": "#2370 Snack: a connection was revoked."
+  },
+  "acctConnRevokedBefore": "{count, plural, =1{One earlier connection was revoked} other{{count} earlier connections were revoked}}",
+  "@acctConnRevokedBefore": {
+    "description": "#2370 Connection card: earlier connections of this issuer were revoked.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "acctConnSaved": "The connection is saved.",
+  "@acctConnSaved": {
+    "description": "#2370 Snack: a connection was saved."
+  },
+  "acctConnSignIn": "Sign in to {target}",
+  "@acctConnSignIn": {
+    "description": "#2370 Button: sign in to the system (OAuth).",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "acctConnSignInAgain": "Sign in again",
+  "@acctConnSignInAgain": {
+    "description": "#2370 Button: sign in again to a signed-out connection."
+  },
+  "acctConnSignInFailed": "The sign-in page could not be opened.",
+  "@acctConnSignInFailed": {
+    "description": "#2370 Snack: the sign-in page could not be opened."
+  },
+  "acctConnSignInNotConfigured": "This server has no application registered with {target}: connect with an API token instead.",
+  "@acctConnSignInNotConfigured": {
+    "description": "#2370 Snack: this server registered no OAuth application with the system.",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "acctConnSignInOpened": "Finish the sign-in in your browser, then come back and check the connection.",
+  "@acctConnSignInOpened": {
+    "description": "#2370 Snack: the sign-in continues in the browser."
+  },
+  "acctConnSince": "Connected on {date}",
+  "@acctConnSince": {
+    "description": "#2370 Connection card: when the connection was made.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "acctConnStatusConnected": "Connected",
+  "@acctConnStatusConnected": {
+    "description": "#2370 Connection state: the system may be delivered to."
+  },
+  "acctConnStatusError": "The connection failed",
+  "@acctConnStatusError": {
+    "description": "#2370 Connection state: the sign-in was refused or failed."
+  },
+  "acctConnStatusExpired": "Signed out: sign in again",
+  "@acctConnStatusExpired": {
+    "description": "#2370 Connection state: the system signed the issuer out."
+  },
+  "acctConnStatusPending": "Waiting for the sign-in",
+  "@acctConnStatusPending": {
+    "description": "#2370 Connection state: opened, the sign-in or token is not finished."
+  },
+  "acctConnStatusRevoked": "Revoked",
+  "@acctConnStatusRevoked": {
+    "description": "#2370 Connection state: revoked by a billing manager."
+  },
+  "acctConnTenant": "Company: {tenant}",
+  "@acctConnTenant": {
+    "description": "#2370 Connection card: the company at the system.",
+    "placeholders": {
+      "tenant": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDeliveryAcknowledged": "Received by the system",
+  "@acctDeliveryAcknowledged": {
+    "description": "#2370 Delivery state: the system received it and said so."
+  },
+  "acctDeliveryAttempts": "{count, plural, =1{one attempt} other{{count} attempts}}",
+  "@acctDeliveryAttempts": {
+    "description": "#2370 Transfers list: how many sends a delivery took.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "acctDeliveryConflict": "To check: the answer is missing or differs",
+  "@acctDeliveryConflict": {
+    "description": "#2370 Delivery state: the answer is missing or differs; a readback decides."
+  },
+  "acctDeliveryFailed": "Refused",
+  "@acctDeliveryFailed": {
+    "description": "#2370 Delivery state: refused or blocked, with the reason beside it."
+  },
+  "acctDeliveryGenerated": "File written",
+  "@acctDeliveryGenerated": {
+    "description": "#2370 Delivery state: the file was written; the system reads it on import."
+  },
+  "acctDeliveryRemote": "In the system: {number}",
+  "@acctDeliveryRemote": {
+    "description": "#2370 Transfers list: the document's number or id in the system.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDeliveryRemoteDraft": "a draft in the system, not posted yet",
+  "@acctDeliveryRemoteDraft": {
+    "description": "#2370 Transfers list: the system holds it as a draft, not posted."
+  },
+  "acctDeliverySent": "Sent, waiting for the answer",
+  "@acctDeliverySent": {
+    "description": "#2370 Delivery state: sent, no answer recorded yet."
+  },
+  "acctJournalLogged": "{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged",
+  "@acctJournalLogged": {
+    "description": "#2370 Snack after the generic journal export: how many documents the file delivered and how many it carried unchanged.",
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "unchanged": {
+        "type": "int"
+      }
+    }
+  },
+  "acctKindCreditNote": "Credit note",
+  "@acctKindCreditNote": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindExpense": "Expense",
+  "@acctKindExpense": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindInvoice": "Invoice",
+  "@acctKindInvoice": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindMemberReceipt": "Member's receipt",
+  "@acctKindMemberReceipt": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindOther": "Other entry",
+  "@acctKindOther": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindReceipt": "Payment received",
+  "@acctKindReceipt": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindRefund": "Refund",
+  "@acctKindRefund": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindReimbursement": "Paid back to a member",
+  "@acctKindReimbursement": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindSupplierBill": "Supplier bill",
+  "@acctKindSupplierBill": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindSupplierCreditNote": "Supplier credit note",
+  "@acctKindSupplierCreditNote": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindSupplierPayment": "Payment to a supplier",
+  "@acctKindSupplierPayment": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindVatRelease": "VAT falling due",
+  "@acctKindVatRelease": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctKindWriteOff": "Write-off",
+  "@acctKindWriteOff": {
+    "description": "#2370 Transfers list: the kind of document event a line carried."
+  },
+  "acctMapAdd": "Add a mapping",
+  "@acctMapAdd": {
+    "description": "#2370 Mappings sheet button and dialog title: add a mapping."
+  },
+  "acctMapDelete": "Remove the mapping",
+  "@acctMapDelete": {
+    "description": "#2370 Mappings sheet tooltip: remove a mapping."
+  },
+  "acctMapKeyInvalid": "This is not a key of this kind.",
+  "@acctMapKeyInvalid": {
+    "description": "#2370 Mapping dialog error: the key is not of this kind."
+  },
+  "acctMapKind": "What is mapped",
+  "@acctMapKind": {
+    "description": "#2370 Mapping dialog field: what is mapped."
+  },
+  "acctMapKindAccount": "Account",
+  "@acctMapKindAccount": {
+    "description": "#2370 Mapping kind: a book role mapped to a remote account."
+  },
+  "acctMapKindItem": "Item",
+  "@acctMapKindItem": {
+    "description": "#2370 Mapping kind: a revenue role mapped to a remote item."
+  },
+  "acctMapKindParty": "Customer",
+  "@acctMapKindParty": {
+    "description": "#2370 Mapping kind: a member mapped to a remote customer."
+  },
+  "acctMapKindTax": "Tax code",
+  "@acctMapKindTax": {
+    "description": "#2370 Mapping kind: a tax component mapped to a remote tax code."
+  },
+  "acctMapLine": "{key} → {remote}",
+  "@acctMapLine": {
+    "description": "#2370 Mappings sheet: one mapping, the app key and the remote name.",
+    "placeholders": {
+      "key": {
+        "type": "String"
+      },
+      "remote": {
+        "type": "String"
+      }
+    }
+  },
+  "acctMapParty": "Member",
+  "@acctMapParty": {
+    "description": "#2370 Mapping dialog field: the member mapped."
+  },
+  "acctMapQualifier": "Rate group (optional)",
+  "@acctMapQualifier": {
+    "description": "#2370 Mapping dialog field: the rate group or provider of a qualified role, optional."
+  },
+  "acctMapRemoteCode": "Code in the system",
+  "@acctMapRemoteCode": {
+    "description": "#2370 Mapping dialog field: the code in the system."
+  },
+  "acctMapRemoteId": "Identifier in the system (optional)",
+  "@acctMapRemoteId": {
+    "description": "#2370 Mapping dialog field: the identifier in the system, optional."
+  },
+  "acctMapRemoteMissing": "Give the code or the identifier the system uses.",
+  "@acctMapRemoteMissing": {
+    "description": "#2370 Mapping dialog error: neither code nor identifier given."
+  },
+  "acctMapRemoteName": "Name in the system (optional)",
+  "@acctMapRemoteName": {
+    "description": "#2370 Mapping dialog field: the name in the system, optional."
+  },
+  "acctMapRole": "Role in the books",
+  "@acctMapRole": {
+    "description": "#2370 Mapping dialog field: the role of the books."
+  },
+  "acctMapTaxKey": "Tax component",
+  "@acctMapTaxKey": {
+    "description": "#2370 Mapping dialog field: the tax component key."
+  },
+  "acctMapTaxKeyHelper": "scheme|authority|treatment|rate|version, as the tax report groups it: VAT|FR|taxed|20|2014",
+  "@acctMapTaxKeyHelper": {
+    "description": "#2370 Mapping dialog helper: the shape of a tax component key; keep the example unchanged."
+  },
+  "acctMapsButton": "{count, plural, =0{Mappings} =1{One mapping} other{{count} mappings}}",
+  "@acctMapsButton": {
+    "description": "#2370 Button: the mappings of a connection, with their number.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "acctMapsEmpty": "Nothing is mapped yet.",
+  "@acctMapsEmpty": {
+    "description": "#2370 Mappings sheet: nothing mapped."
+  },
+  "acctMapsIntro": "What each account, tax code, customer and item of these books is called in the system. A delivery that needs one that is not here stops and names it; nothing is replaced by a default.",
+  "@acctMapsIntro": {
+    "description": "#2370 Mappings sheet: what a mapping is for."
+  },
+  "acctMapsTitle": "Names in {target}",
+  "@acctMapsTitle": {
+    "description": "#2370 Mappings sheet: title.",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "acctTargetsIntro": "Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.",
+  "@acctTargetsIntro": {
+    "description": "#2370 Accounting systems sheet: what the sheet shows."
+  },
+  "acctTargetsLoadFailed": "The accounting systems could not be loaded.",
+  "@acctTargetsLoadFailed": {
+    "description": "#2370 Accounting systems sheet: the connections or transfers could not be read."
+  },
+  "acctTargetsNoApiTarget": "No accounting system of this country is reached by a connection yet: the books go by file, from the accounting export.",
+  "@acctTargetsNoApiTarget": {
+    "description": "#2370 Accounting systems sheet: no system of the country is reached by a connection."
+  },
+  "acctTargetsNotConnected": "Not connected",
+  "@acctTargetsNotConnected": {
+    "description": "#2370 Connection card: this issuer has no connection to this system."
+  },
+  "acctTargetsTitle": "Accounting systems",
+  "@acctTargetsTitle": {
+    "description": "#2370 Accounting systems sheet: title and the door to it."
+  },
+  "acctTokenBody": "Create an API token in {target}'s settings for this company and paste it here. It is kept encrypted on the server and never shown again.",
+  "@acctTokenBody": {
+    "description": "#2370 Token dialog: where the token comes from and how it is kept.",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "acctTokenField": "API token",
+  "@acctTokenField": {
+    "description": "#2370 Token dialog field: the API token."
+  },
+  "acctTokenName": "Name of the connection",
+  "@acctTokenName": {
+    "description": "#2370 Token dialog field: the name of the connection."
+  },
+  "acctTokenSave": "Connect",
+  "@acctTokenSave": {
+    "description": "#2370 Token dialog button: connect."
+  },
+  "acctTokenTenant": "Company identifier at {target} (optional)",
+  "@acctTokenTenant": {
+    "description": "#2370 Token dialog field: the company identifier at the system, optional.",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "acctTokenTitle": "Connect {target} with an API token",
+  "@acctTokenTitle": {
+    "description": "#2370 Token dialog: title.",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "acctTokenTooShort": "Paste the whole token.",
+  "@acctTokenTooShort": {
+    "description": "#2370 Token dialog error: the pasted token is too short."
+  },
+  "acctTransferClosed": "closed period",
+  "@acctTransferClosed": {
+    "description": "#2370 Transfers list: the file covers a closed period."
+  },
+  "acctTransferDocLine": "{number} · {kind} · {date}",
+  "@acctTransferDocLine": {
+    "description": "#2370 Transfers list: one document, its number, kind and day.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "acctTransferDocuments": "{count, plural, =1{One document carried} other{{count} documents carried}}",
+  "@acctTransferDocuments": {
+    "description": "#2370 Transfers list: the documents a file is the delivery of.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "acctTransferFile": "File {format} · {from} – {to}",
+  "@acctTransferFile": {
+    "description": "#2370 Transfers list: one file, its format and period.",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "acctTransferFileMeta": "{when} by {who} · {documents, plural, =1{one document} other{{documents} documents}}",
+  "@acctTransferFileMeta": {
+    "description": "#2370 Transfers list: when, by whom and how many documents.",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "who": {
+        "type": "String"
+      },
+      "documents": {
+        "type": "int"
+      }
+    }
+  },
+  "acctTransferSha": "SHA-256 {digest}",
+  "@acctTransferSha": {
+    "description": "#2370 Transfers list: the digest of what was carried.",
+    "placeholders": {
+      "digest": {
+        "type": "String"
+      }
+    }
+  },
+  "acctTransfersEmpty": "Nothing was handed out or delivered in this period.",
+  "@acctTransfersEmpty": {
+    "description": "#2370 Transfers list: nothing in the year."
+  },
+  "acctTransfersIntro": "Every file handed out and every document delivered in the period, with the SHA-256 of what was carried: the evidence of the digital link from these books to the accounting system.",
+  "@acctTransfersIntro": {
+    "description": "#2370 Transfers list: what it shows and why."
+  },
+  "acctTransfersPeriod": "Year {year}",
+  "@acctTransfersPeriod": {
+    "description": "#2370 Transfers list: the year shown.",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "acctTransfersTitle": "Transfers",
+  "@acctTransfersTitle": {
+    "description": "#2370 Transfers list: title."
+  },
+  "acctWhoUnknown": "someone no longer in the space",
+  "@acctWhoUnknown": {
+    "description": "#2370 Transfers list: the person who made a file is no longer known."
+  },
   "addressCountryLabel": "Country",
   "@addressCountryLabel": {
     "description": "Country field on the member address sheet"
@@ -8562,6 +9047,14 @@
   "featureAccountingBookTitle": "Accounting book",
   "@featureAccountingBookTitle": {
     "description": "#1869 feature name"
+  },
+  "featureAccountingConnectorsDesc": "Connects each issuer's books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.",
+  "@featureAccountingConnectorsDesc": {
+    "description": "#2370 Features screen: what the accounting systems feature does."
+  },
+  "featureAccountingConnectorsTitle": "Accounting systems",
+  "@featureAccountingConnectorsTitle": {
+    "description": "#2370 Features screen: the accounting systems the books are handed to, a platform flag."
   },
   "featureAccountingPeriodsDesc": "Close a period of the books so that no invoice dated inside it can be voided and no payment matched inside it, and keep a log of every accounting export. Off: nothing is locked and exports are not logged.",
   "@featureAccountingPeriodsDesc": {
@@ -22335,6 +22828,14 @@
   "refStatusRefunded": "Refunded",
   "refTypeCreditNote": "Credit note",
   "refTypeInvoice": "Invoice",
+  "refusalAccountingClosed": "This connection is closed for this: it was revoked, or it has already delivered. Revoke it and connect again. Nothing was saved.",
+  "@refusalAccountingClosed": {
+    "description": "#2370 Refusal (DKA02): the accounting connection was revoked, or it already delivered and its token cannot change."
+  },
+  "refusalAccountingValue": "The server refused this value: check the token, the key or the issuer and try again. Nothing was saved.",
+  "@refusalAccountingValue": {
+    "description": "#2370 Refusal (DKA03): the server refused a value of an accounting connection (token, key, issuer, file)."
+  },
   "refusalAlreadyDecided": "Someone has already decided this. The list shows the outcome.",
   "@refusalAlreadyDecided": {
     "description": "#1305 Shown when a validation was already decided by someone else"
