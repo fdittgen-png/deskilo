@@ -105,6 +105,17 @@ void main() {
         _refused(BankFileProblem.malformed),
       );
     });
+    test('a comma radix is read as such, never as a grouper', () {
+      final l = _read(text.replaceFirst('<TRNAMT>80.50', '<TRNAMT>-12,50'))
+          .lines
+          .firstWhere((l) => l.amountCents == -1250);
+      expect(l.amountCents, -1250);
+      expect(
+        () => _read(text.replaceFirst('<TRNAMT>80.50', '<TRNAMT>1,234.50')),
+        _refused(BankFileProblem.badAmount),
+        reason: 'OFX knows no grouping separator',
+      );
+    });
     test('an amount that is not one', () {
       expect(
         () => _read(text.replaceFirst('<TRNAMT>80.50', '<TRNAMT>80.5x')),

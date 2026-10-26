@@ -13,7 +13,7 @@ import 'structured_reference.dart';
 
 final _tag = RegExp(r'^:(\d{2}[A-Z]?):');
 final _f61 = RegExp(
-  r'^(\d{2})(\d{2})(\d{2})(\d{2}\d{2})?(R?[CD])([A-Z])?(\d+,\d*)([NFS][A-Z0-9]{3})([^/]*?)(?://(.*))?$',
+  r'^(\d{2})(\d{2})(\d{2})(\d{2}\d{2})?(R?[CD])([A-Z])?(\d+,\d*)([NFS][A-Z0-9]{3})(.*?)(?://(.*))?$',
 );
 final _balance = RegExp(r'^([CD])(\d{2})(\d{2})(\d{2})([A-Z]{3})(\d+,\d*)$');
 

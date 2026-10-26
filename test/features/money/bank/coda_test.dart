@@ -60,7 +60,8 @@ void main() {
     expect(ogm.valueDate, DateTime.utc(2026, 1, 16));
     expect(ogm.bookingDate, DateTime.utc(2026, 1, 15));
     expect(ogm.transactionId, 'BANKREF0001');
-    expect(ogm.reference, '090933755493');
+    expect(ogm.reference, '', reason: 'a Belgian OGM is not a QR or RF reference');
+    expect(ogm.remittance, contains('090933755493'));
     expect(ogm.counterpartyIban, 'BE71096123456769');
     expect(ogm.counterpartyName, 'Demo Member One');
     expect(rf.reference, 'RF18539007547034');

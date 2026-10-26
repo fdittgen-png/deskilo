@@ -57,6 +57,15 @@ void main() {
       expect(qrr.remittance, 'Invoice 2026-0042');
       expect(rf.reference, 'RF18539007547034');
       expect(rf.counterpartyName, 'Demo Member Two');
+      final odd = _read(
+        _fixture('camt053_statement.xml').replaceFirst(
+          '<Ref>RF18 5390 0754 7034</Ref>',
+          '<Ref>ORDER-77</Ref>',
+        ),
+        BankFileFormat.camt053,
+      ).lines[1];
+      expect(odd.reference, '', reason: 'not a QR or RF reference');
+      expect(odd.remittance, startsWith('ORDER-77'));
       expect(rf.amountCents, 8050);
       expect(out.amountCents, -4500);
       expect(out.reference, '');
@@ -141,6 +150,18 @@ void main() {
           BankFileFormat.camt053,
         ),
         _refused(BankFileProblem.malformed),
+      );
+    });
+    test('a comma in an amount', () {
+      expect(
+        () => _read(
+          text.replaceFirst(
+            '<Amt Ccy="CHF">80.50</Amt>',
+            '<Amt Ccy="CHF">80,50</Amt>',
+          ),
+          BankFileFormat.camt053,
+        ),
+        _refused(BankFileProblem.badAmount),
       );
     });
     test('an amount with a third decimal', () {

@@ -133,7 +133,13 @@ BankStatement readCsv(String text, BankCsvMapping mapping) {
       final s = cell(column);
       return s.isEmpty
           ? 0
-          : bankAmount(s, currency, line: line, decimalSeparator: separator);
+          : bankAmount(
+              s,
+              currency,
+              line: line,
+              decimalSeparator: separator,
+              grouping: true,
+            );
     }
 
     final cents = mapping.amount != null
@@ -142,6 +148,7 @@ BankStatement readCsv(String text, BankCsvMapping mapping) {
             currency,
             line: line,
             decimalSeparator: separator,
+            grouping: true,
           )
         : money(mapping.credit).abs() - money(mapping.debit).abs();
     final booking = _date(cell(mapping.bookingDate), mapping.datePattern, line);

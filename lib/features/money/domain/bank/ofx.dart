@@ -57,7 +57,7 @@ BankStatement readOfx(String text) {
       lines.add(_lineOf(t, lines.length + 1, ccy));
     }
     final bal = s.child('LEDGERBAL')?.value('BALAMT');
-    if (bal != null) closing = bankAmount(bal, ccy);
+    if (bal != null) closing = _ofxAmount(bal, ccy);
   }
   return BankStatement(
     format: BankFileFormat.ofx,
@@ -77,7 +77,7 @@ BankLine _lineOf(_Node t, int position, String currency) {
     position: position,
     bookingDate: posted,
     valueDate: user == null || user.isEmpty ? posted : _day(user, position),
-    amountCents: bankAmount(t.value('TRNAMT') ?? '', currency, line: position),
+    amountCents: _ofxAmount(t.value('TRNAMT') ?? '', currency, line: position),
     currency: currency,
     transactionId: t.value('FITID') ?? '',
     counterpartyName: t.value('NAME') ?? t.child('PAYEE')?.value('NAME') ?? '',
@@ -163,3 +163,12 @@ String _unescape(String s) => s
     .replaceAll('&quot;', '"')
     .replaceAll('&apos;', "'")
     .replaceAll('&amp;', '&');
+
+/// An OFX amount: a point or, in a file of a comma locale, a comma as its
+/// radix (the specification allows either), never a grouping separator.
+int _ofxAmount(String text, String currency, {int? line}) => bankAmount(
+  text,
+  currency,
+  line: line,
+  decimalSeparator: text.contains(',') && !text.contains('.') ? ',' : '.',
+);

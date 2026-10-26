@@ -232,7 +232,9 @@ class _Movement {
       final type = communication.substring(0, 3);
       final body = communication.substring(3);
       if (_ogmTypes.contains(type)) {
-        reference = body.substring(0, 12).trim();
+        // The Belgian structured communication is not a QR or RF
+        // reference: kept as text, where the number scan still reads it.
+        remittance = body.substring(0, 12).trim();
       } else {
         reference = structuredReferenceIn(body) ?? '';
         remittance = body.trim();

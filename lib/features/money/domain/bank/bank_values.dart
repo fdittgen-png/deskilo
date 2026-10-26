@@ -57,14 +57,18 @@ String bankCurrency(String code, {int? line}) {
   return c;
 }
 
-/// [text] in minor units of [currency]: an optional sign, digits grouped
-/// by spaces, apostrophes or the other separator, and [decimalSeparator].
-/// Decimals beyond the currency's exponent must be zeros.
+/// [text] in minor units of [currency]: an optional sign, digits and
+/// [decimalSeparator]. Only where the format allows digit grouping
+/// ([grouping]: a spreadsheet) are spaces, apostrophes and the other
+/// separator read as thousands groups; elsewhere they refuse the file, so a
+/// comma is never mistaken for a grouper. Decimals beyond the currency's
+/// exponent must be zeros.
 int bankAmount(
   String text,
   String currency, {
   int? line,
   String decimalSeparator = '.',
+  bool grouping = false,
 }) {
   BankFileException bad() =>
       BankFileException(BankFileProblem.badAmount, line: line, detail: text);
@@ -74,9 +78,14 @@ int bankAmount(
     negative = s.startsWith('-');
     s = s.substring(1).trim();
   }
-  final group = decimalSeparator == ',' ? '.' : ',';
-  s = s.replaceAll(RegExp("[ '  ]"), '').replaceAll(group, '');
-  if (decimalSeparator != '.') s = s.replaceAll(decimalSeparator, '.');
+  if (grouping) {
+    final group = decimalSeparator == ',' ? '.' : ',';
+    s = s.replaceAll(RegExp("[ '  ]"), '').replaceAll(group, '');
+  }
+  if (decimalSeparator != '.') {
+    if (s.contains('.')) throw bad();
+    s = s.replaceAll(decimalSeparator, '.');
+  }
   final m = _plain.firstMatch(s);
   if (m == null) throw bad();
   final whole = m.group(1)!.replaceFirst(RegExp(r'^0+(?=\d)'), '');

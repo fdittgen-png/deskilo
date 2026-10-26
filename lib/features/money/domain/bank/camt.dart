@@ -196,6 +196,17 @@ BankLine _detailLine(
   final structured = [
     for (final s in _kids(rmt, 'Strd')) _text(s, ['CdtrRefInf', 'Ref']),
   ].where((r) => r.isNotEmpty);
+  final text = [for (final u in _kids(rmt, 'Ustrd')) u.innerText.trim()]
+      .where((t) => t.isNotEmpty)
+      .join(' ');
+  // Only a QR or RF reference whose check digits hold is a structured
+  // reference; any other creditor reference stays readable as text.
+  final given = structured.isEmpty ? '' : normalizeReference(structured.first);
+  final valid = isQrReference(given) || isCreditorReference(given);
+  final reference = valid ? given : structuredReferenceIn(text) ?? '';
+  final remittance = valid || structured.isEmpty
+      ? text
+      : [structured.first.trim(), text].where((t) => t.isNotEmpty).join(' ');
   final endToEnd = _text(tx, ['Refs', 'EndToEndId']);
   final ownRef = _text(tx, ['Refs', 'AcctSvcrRef']);
   return BankLine(
@@ -209,11 +220,9 @@ BankLine _detailLine(
     counterpartyIban: compactIban(
       _text(parties, ['${party}Acct', 'Id', 'IBAN']),
     ),
-    reference: structured.isEmpty ? '' : normalizeReference(structured.first),
+    reference: reference,
     endToEndId: endToEnd == 'NOTPROVIDED' ? '' : endToEnd,
-    remittance: [for (final u in _kids(rmt, 'Ustrd')) u.innerText.trim()]
-        .where((t) => t.isNotEmpty)
-        .join(' '),
+    remittance: remittance,
   );
 }
 

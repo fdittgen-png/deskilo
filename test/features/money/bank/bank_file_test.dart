@@ -136,9 +136,29 @@ void main() {
       expect(bankAmount('1.500', 'KWD'), 1500);
       expect(bankAmount('12.3', 'EUR'), 1230);
       expect(bankAmount('-0.07', 'EUR'), -7);
-      expect(bankAmount("1'234.50", 'CHF'), 123450);
-      expect(bankAmount('1 234,50', 'EUR', decimalSeparator: ','), 123450);
+      expect(bankAmount("1'234.50", 'CHF', grouping: true), 123450);
+      expect(
+        bankAmount('1 234,50', 'EUR', decimalSeparator: ',', grouping: true),
+        123450,
+      );
       expect(bankAmount('10.000', 'EUR'), 1000, reason: 'zero decimals beyond');
+    });
+
+    test('a grouper is read only where the format allows one: a comma is '
+        'never a thousands separator of a point-radix amount', () {
+      for (final bad in ["1'234.50", '12,50', '1 234.50', '1.234,50']) {
+        expect(
+          () => bankAmount(bad, 'EUR'),
+          _refused(BankFileProblem.badAmount),
+          reason: bad,
+        );
+      }
+      expect(
+        () => bankAmount('1.234,50', 'EUR', decimalSeparator: ','),
+        _refused(BankFileProblem.badAmount),
+        reason: 'a point in a comma-radix amount without grouping',
+      );
+      expect(bankAmount('-12,50', 'EUR', decimalSeparator: ','), -1250);
     });
 
     test('a figure that is not exact is refused', () {

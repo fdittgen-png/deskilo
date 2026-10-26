@@ -81,6 +81,17 @@ void main() {
     expect(l.amountCents, 4500);
   });
 
+  test('a slash inside the owner reference is part of it', () {
+    final l = _read(
+      _text.replaceFirst(
+        ':61:260120C80,50NTRFNONREF//BANK-0002',
+        ':61:260120C80,50NMSCTRF/12345//BANK-3',
+      ),
+    ).lines[1];
+    expect(l.amountCents, 8050);
+    expect(l.transactionId, 'BANK-3');
+  });
+
   test('a reference with a wrong check digit is free text', () {
     final l = _read(_text.replaceFirst('RF18 5390', 'RF19 5390')).lines[1];
     expect(l.reference, '');
