@@ -35,7 +35,7 @@ class SetupResumeBanner extends ConsumerWidget {
     if (status == null || milestone == null || step == null) {
       return const SizedBox.shrink();
     }
-    return Card(
+    final card = Card(
       key: const ValueKey('setup-resume-banner'),
       margin: EdgeInsets.symmetric(
         vertical: compact ? AppSpacing.xs : AppSpacing.sm,
@@ -64,6 +64,8 @@ class SetupResumeBanner extends ConsumerWidget {
         ),
       ),
     );
+    // Without its title the compact line still names itself to a reader.
+    return compact ? Semantics(label: l10n.setupGuideTitle, child: card) : card;
   }
 }
 
