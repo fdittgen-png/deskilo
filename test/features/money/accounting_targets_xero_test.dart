@@ -9,7 +9,6 @@ import 'dart:io';
 import 'package:deskilo/core/vat/place_of_supply.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
-import 'package:deskilo/features/workspace/domain/feature_countries.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _ids = {'xero_gb', 'xero_ca', 'xero_us', 'xero_eu'};
@@ -72,7 +71,7 @@ void main() {
     expect(
       {
         ...countries,
-        eu: {featureCountriesEu},
+        eu: {accountingCountriesEu},
       },
       {for (final t in _xero) t.id: t.countries},
     );

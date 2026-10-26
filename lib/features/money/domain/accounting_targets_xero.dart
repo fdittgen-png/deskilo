@@ -7,7 +7,6 @@
 // manual journal, through supabase/functions/_shared/accounting_xero.ts.
 // Reached by signing in to a Xero application of the installation; the
 // sign-in binds the one organisation it authorised.
-import '../../workspace/domain/feature_countries.dart';
 import 'accounting_format.dart';
 
 /// The operations every Xero region takes.
@@ -63,7 +62,7 @@ const List<AccountingTarget> xeroAccountingTargets = [
     vendor: 'Xero',
     product: 'Xero',
     edition: 'Accounting API 2.0, EU organisation',
-    countries: {featureCountriesEu},
+    countries: {accountingCountriesEu},
     transport: AccountingTransport.api,
     payload: AccountingPayload.documents,
     operations: _xeroOperations,
