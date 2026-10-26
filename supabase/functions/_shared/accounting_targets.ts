@@ -41,6 +41,24 @@ const quickbooksOnline: OAuthTarget = {
   stateLifetimeMs: 10 * 60 * 1000,
 };
 
+// spec: developer.xero.com — "OAuth 2.0 / Auth flow" (web apps): the
+// authorisation page on login.xero.com, the token endpoint on
+// identity.xero.com, offline_access for a rotating refresh token. The
+// redirect names no organisation: the sign-in's organisation is read from
+// GET /connections (accounting_xero.ts `signedInTenant`). One Xero
+// application serves the four regions. The scopes are the broad ones the
+// issue names; an application registered after Xero's granular scopes
+// (accounting.invoices, accounting.payments, ...) needs those instead. Not
+// yet verified against a registered Xero application. No attachment scope:
+// no attachment is sent yet.
+const xero: OAuthTarget = {
+  authorizeUrl: "https://login.xero.com/identity/connect/authorize",
+  tokenUrl: "https://identity.xero.com/connect/token",
+  scopes: ["offline_access", "accounting.transactions", "accounting.contacts", "accounting.settings.read"],
+  // A person signing in, not a batch: ten minutes.
+  stateLifetimeMs: 10 * 60 * 1000,
+};
+
 export const oauthTargets: Record<string, OAuthTarget> = {
   // spec: developers.pennylane.com — "OAuth 2.0" (partner applications):
   // authorisation and token endpoints on app.pennylane.com, scopes per
@@ -60,6 +78,10 @@ export const oauthTargets: Record<string, OAuthTarget> = {
   quickbooks_online_us: { ...quickbooksOnline },
   quickbooks_online_ca: { ...quickbooksOnline },
   quickbooks_online_gb: { ...quickbooksOnline },
+  xero_gb: { ...xero },
+  xero_ca: { ...xero },
+  xero_us: { ...xero },
+  xero_eu: { ...xero },
 };
 
 /** The environment variable holding [part] of [targetId]'s OAuth client. */

@@ -21,6 +21,8 @@ function world(
     token?: (body: URLSearchParams) => Response;
     target?: string;
     api?: (url: URL) => Response | null;
+    /** The company the connection was made for, if it was. */
+    heldTenant?: string;
   } = {},
 ) {
   const target = opts.target ?? "pennylane_api";
@@ -37,7 +39,14 @@ function world(
       }
       if (fn === "accounting_credentials_resolved") {
         return Promise.resolve({
-          data: { id: CONN, target_id: target, auth_kind: "oauth2", revoked: false, secrets: { ...vault } },
+          data: {
+            id: CONN,
+            target_id: target,
+            auth_kind: "oauth2",
+            revoked: false,
+            remote_tenant_id: opts.heldTenant ?? "",
+            secrets: { ...vault },
+          },
           error: null,
         });
       }
@@ -53,7 +62,11 @@ function world(
     },
   });
   const deps: Deps = {
-    caller: () => answer("caller"),
+    caller: () => ({
+      ...answer("caller"),
+      // The sign-in reads no table.
+      from: () => ({ select: () => ({ in: () => Promise.resolve({ data: null, error: { code: "42501" } }) }) }),
+    }),
     service: () => answer("service"),
     env: (name) => opts.configured === false ? undefined : ({
       [`ACCOUNTING_${target.toUpperCase()}_CLIENT_ID`]: "app-id",
@@ -212,5 +225,56 @@ Deno.test("a QuickBooks company without custom transaction numbers is refused at
   assertEquals(realmCalls, ["/v3/company/9130350000000001/companyinfo/9130350000000001", "/v3/company/9130350000000001/preferences"]);
   assertEquals(w.state().status, "error");
   assert(String(w.state().status_detail).includes("Custom transaction numbers"));
+  assertEquals(w.vault.access_token, undefined, "no token is kept for a refused company");
+});
+
+/** A Xero sign-in: the token names its authorisation event, the connections
+ * list two organisations of which that event added one. */
+function xeroWorld(heldTenant?: string) {
+  const event = "e-42";
+  const access = `h.${btoa(JSON.stringify({ authentication_event_id: event })).replace(/=+$/, "")}.s`;
+  const xeroCalls: string[] = [];
+  const w = world({
+    target: "xero_gb",
+    heldTenant,
+    token: () => Response.json({ access_token: access, refresh_token: "RT-secret", expires_in: 1800 }),
+    api: (url) => {
+      if (url.host !== "api.xero.com") return null;
+      xeroCalls.push(url.pathname);
+      if (url.pathname === "/connections") {
+        return Response.json([
+          { authEventId: "e-1", tenantId: "t-earlier", tenantType: "ORGANISATION" },
+          { authEventId: event, tenantId: "t-new", tenantType: "ORGANISATION" },
+        ]);
+      }
+      if (url.pathname.endsWith("/Organisation")) return Response.json({ Organisations: [{ CountryCode: "GB" }] });
+      return Response.json({ TaxRates: [], Accounts: [] });
+    },
+  });
+  return { w, xeroCalls };
+}
+
+const xeroCallback = async (w: ReturnType<typeof world>) => {
+  const res = await handle(post({ ...start, target_id: "xero_gb" }), w.deps);
+  const state = new URL((await res.json()).authorize_url).searchParams.get("state")!;
+  return handle(new Request(`https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}`), w.deps);
+};
+
+Deno.test("a Xero sign-in binds the one organisation it authorised and checks it before connecting", async () => {
+  const { w, xeroCalls } = xeroWorld();
+  const back = await xeroCallback(w);
+  assertEquals(back.status, 200);
+  assertEquals(w.state().remote_tenant_id, "t-new");
+  assertEquals(w.state().status, "connected");
+  assertEquals(xeroCalls, ["/connections", "/api.xro/2.0/Organisation", "/api.xro/2.0/TaxRates", "/api.xro/2.0/Accounts"]);
+});
+
+Deno.test("a Xero connection signed in again to another organisation is refused, its company kept", async () => {
+  const { w } = xeroWorld("t-earlier");
+  const back = await xeroCallback(w);
+  assertEquals(back.status, 409);
+  assertEquals(w.state().status, "error");
+  assert(String(w.state().status_detail).includes("another company"));
+  assertEquals(w.state().remote_tenant_id, undefined);
   assertEquals(w.vault.access_token, undefined, "no token is kept for a refused company");
 });

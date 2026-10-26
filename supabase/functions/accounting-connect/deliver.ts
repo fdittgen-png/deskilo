@@ -19,7 +19,8 @@
 // key nobody filled blocks that document with the key named. A period the
 // engine cannot post (an unmapped role, an unbalanced document) delivers
 // nothing; a target that refuses the company (pennylane: its journals;
-// quickbooks: its country and its numbering) delivers nothing either.
+// quickbooks: its country and its numbering; xero: its country, its tax
+// rates and accounts) delivers nothing either.
 // A period lies within one calendar month, so one run stays well inside
 // the function's time and the target's rate limits; the app asks month by
 // month.
@@ -44,7 +45,8 @@ import {
 } from "../_shared/accounting_postings.ts";
 import { pennylaneLedger } from "../_shared/accounting_pennylane.ts";
 import { quickbooksOnline } from "../_shared/accounting_quickbooks.ts";
-import { clientOf, type Deps, json, resolved, store, UUID } from "./connection.ts";
+import { xeroAccounting } from "../_shared/accounting_xero.ts";
+import { type CallerDb, clientOf, type Deps, json, resolved, store, UUID } from "./connection.ts";
 
 /** The targets this server delivers to, by target id. */
 export const deliveryAdapters: Record<string, (ctx: AdapterContext) => PostingAdapter> = {
@@ -52,7 +54,49 @@ export const deliveryAdapters: Record<string, (ctx: AdapterContext) => PostingAd
   quickbooks_online_us: quickbooksOnline,
   quickbooks_online_ca: quickbooksOnline,
   quickbooks_online_gb: quickbooksOnline,
+  xero_gb: xeroAccounting,
+  xero_ca: xeroAccounting,
+  xero_us: xeroAccounting,
+  xero_eu: xeroAccounting,
 };
+
+/** The context every adapter of [targetId] is built with. The EU check is
+ * the tax reference's own (`is_eu_country`), asked as the service role:
+ * a sign-in's redirect carries no caller token. */
+export function adapterContext(
+  deps: Deps,
+  targetId: string,
+  accessToken: string,
+  tenant: string,
+): AdapterContext {
+  return {
+    fetch: deps.fetcher ?? fetch,
+    secrets: { access_token: accessToken },
+    tenant,
+    targetId,
+    env: deps.env,
+    isEuCountry: async (code) => {
+      const { data, error } = await deps.service().rpc("is_eu_country", { p_code: code });
+      return error || typeof data !== "boolean" ? null : data;
+    },
+  };
+}
+
+/** The legal number of the invoice each credit note of [documentIds]
+ * corrects (`invoices.replaces_number`), as the caller reads them. A
+ * credit note that names none is a credit kept for the customer. */
+async function creditedNumbers(caller: CallerDb, documentIds: string[]): Promise<Record<string, string> | null> {
+  if (documentIds.length === 0) return {};
+  const { data, error } = await caller.from("invoices").select("id, replaces_number").in("id", documentIds);
+  if (error || !Array.isArray(data)) return null;
+  const numbers: Record<string, string> = {};
+  for (const row of data as Record<string, unknown>[]) {
+    if (typeof row.id === "string" && typeof row.replaces_number === "string" && row.replaces_number) {
+      numbers[row.id] = row.replaces_number;
+    }
+  }
+  return numbers;
+}
 
 /** The longest an Edge function runs on the hosted platform (its
  * wall-clock limit). spec: supabase.com/docs/guides/functions/limits. */
@@ -190,13 +234,12 @@ export async function deliverPeriod(
     p_workspace_id: workspaceId,
     p_document_ids: [...new Set(chosen.map(({ posting }) => posting.documentId))],
   }).then((r) => (r.error ? {} : (r.data ?? {}) as Record<string, PostingParty>));
-  const adapter = adapterOf({
-    fetch: deps.fetcher ?? fetch,
-    secrets: { access_token: token },
-    tenant: held.remote_tenant_id,
-    targetId: held.target_id,
-    env: deps.env,
-  });
+  const credited = await creditedNumbers(
+    caller,
+    [...new Set(chosen.filter(({ posting }) => posting.kind === "credit_note").map(({ posting }) => posting.documentId))],
+  );
+  if (!credited) return json({ error: "not allowed to read the books" }, 403);
+  const adapter = adapterOf(adapterContext(deps, held.target_id, token, held.remote_tenant_id));
   if (chosen.length > 0) {
     const refused = await adapter.prepare();
     if (refused) return json({ error: "target_refused", detail: refused }, 409);
@@ -225,7 +268,7 @@ export async function deliverPeriod(
         periodTo: period.to,
         payloadSha256: await postingSha256(posting),
         needs: adapter.needs(posting),
-      }, maps, deliveries, adapter.remote(posting, parties[posting.documentId], maps));
+      }, maps, deliveries, adapter.remote(posting, parties[posting.documentId], maps, credited[posting.documentId]));
       results.push(
         result.status === "blocked"
           ? { ...base, status: "blocked", missing: result.missing }

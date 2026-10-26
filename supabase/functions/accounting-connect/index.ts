@@ -18,7 +18,9 @@
 //        the tokens are stored, the state is spent, the connection is
 //        connected. A refused exchange leaves it in `error`, said.
 //        A target that checks the company first (QuickBooks: its country
-//        and its own numbering) refuses it before it is connected.
+//        and its own numbering; Xero: the one organisation the sign-in
+//        authorised, and its country) refuses it before it is connected,
+//        and a connection signed in again keeps its company.
 //   POST {action: "refresh", connection_id}
 //        A billing manager asks for a fresh token; a refused refresh marks
 //        the connection expired, which the screen shows.
@@ -44,7 +46,7 @@ import {
   sameSecret,
 } from "../_shared/accounting_oauth.ts";
 import { clientOf, type Deps, json, resolved, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
-import { deliverPeriod, deliveryAdapters } from "./deliver.ts";
+import { adapterContext, deliverPeriod, deliveryAdapters } from "./deliver.ts";
 
 export type { Deps } from "./connection.ts";
 
@@ -134,14 +136,21 @@ async function callback(deps: Deps, url: URL): Promise<Response> {
     });
     return page("The target refused the sign-in. You can close this page and try again.", 502);
   }
-  const tenant = target.tenantParam ? url.searchParams.get(target.tenantParam) ?? undefined : undefined;
-  const refused = await deliveryAdapters[held.target_id]?.({
-    fetch: deps.fetcher ?? fetch,
-    secrets: { access_token: tokens.accessToken },
-    tenant: tenant ?? "",
-    targetId: held.target_id,
-    env: deps.env,
-  }).prepare();
+  const adapterOf = deliveryAdapters[held.target_id];
+  let tenant = target.tenantParam ? url.searchParams.get(target.tenantParam) ?? undefined : undefined;
+  let refused: string | null = null;
+  // A target whose redirect names no company (Xero): the one the sign-in
+  // authorised, read with the new token.
+  const signedIn = !target.tenantParam
+    ? await adapterOf?.(adapterContext(deps, held.target_id, tokens.accessToken, "")).signedInTenant?.()
+    : undefined;
+  if (signedIn && "refused" in signedIn) refused = signedIn.refused;
+  if (signedIn && "tenant" in signedIn) tenant = signedIn.tenant;
+  // A connection signed in again stays the company it was made for.
+  if (!refused && tenant && held.remote_tenant_id && tenant !== held.remote_tenant_id) {
+    refused = "this sign-in reached another company than the one this connection was made for";
+  }
+  refused ??= await adapterOf?.(adapterContext(deps, held.target_id, tokens.accessToken, tenant ?? "")).prepare() ?? null;
   if (refused) {
     await store(deps, connectionId, {
       secrets: { oauth_state: "", oauth_state_at: "" },
@@ -218,10 +227,17 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
 if (import.meta.main) {
   const url = Deno.env.get("SUPABASE_URL")!;
   const deps: Deps = {
-    caller: (authorization) =>
-      createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
+    caller: (authorization) => {
+      const client = createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
         global: { headers: { Authorization: authorization } },
-      }),
+      });
+      return {
+        rpc: (fn, args) => client.rpc(fn, args),
+        from: (table) => ({
+          select: (columns) => ({ in: (column, values) => client.from(table).select(columns).in(column, values) }),
+        }),
+      };
+    },
     service: () => createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
     env: (name) => Deno.env.get(name),
     redirectUri: `${url}/functions/v1/accounting-connect`,

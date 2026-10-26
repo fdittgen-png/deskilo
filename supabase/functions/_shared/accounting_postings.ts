@@ -128,6 +128,10 @@ export interface AdapterContext {
   /** The connection's target id. */
   targetId: string;
   env: (name: string) => string | undefined;
+  /** Whether [code] is an EU member state as the tax reference's
+   * `eu_member` rows say (`is_eu_country`); null when it could not be
+   * asked. Given where a target's company may be in any member state. */
+  isEuCountry?: (code: string) => Promise<boolean | null>;
 }
 
 /** A target that takes postings through the delivery kit. */
@@ -137,8 +141,12 @@ export interface PostingAdapter {
   prepare(): Promise<string | null>;
   /** The mapping keys [posting] needs on this target. */
   needs(posting: Posting): MapNeed[];
-  /** The readback and create of [posting] for the kit. */
-  remote(posting: Posting, party: PostingParty | undefined, maps: AccountingMap[]): RemoteAdapter;
+  /** The readback and create of [posting] for the kit. [credited] is the
+   * legal number of the invoice a credit note corrects, when it names one. */
+  remote(posting: Posting, party: PostingParty | undefined, maps: AccountingMap[], credited?: string): RemoteAdapter;
+  /** A target whose redirect names no company: the one company the
+   * sign-in authorised, read with the new token, or why there is not one. */
+  signedInTenant?(): Promise<{ tenant: string } | { refused: string }>;
 }
 
 /** The remote id or code a mapping of [kind] [key] names, '' when none. */
