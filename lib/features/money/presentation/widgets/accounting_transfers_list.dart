@@ -15,6 +15,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_connection.dart';
 import '../../domain/posting.dart';
 import '../../providers/accounting_connection_providers.dart';
+import '../posting_kind_labels.dart';
 import 'accounting_targets_sheet.dart';
 
 /// How many hex digits of a digest a line shows; the whole digest is one
@@ -30,18 +31,7 @@ String _short(String sha) =>
 /// The words of a document event.
 String _documentKindLabel(AppLocalizations l10n, String wire) =>
     switch (PostingKind.values.where((k) => k.wire == wire).firstOrNull) {
-      PostingKind.invoice => l10n.acctKindInvoice,
-      PostingKind.creditNote => l10n.acctKindCreditNote,
-      PostingKind.receipt => l10n.acctKindReceipt,
-      PostingKind.refund => l10n.acctKindRefund,
-      PostingKind.writeOff => l10n.acctKindWriteOff,
-      PostingKind.expense => l10n.acctKindExpense,
-      PostingKind.supplierBill => l10n.acctKindSupplierBill,
-      PostingKind.supplierCreditNote => l10n.acctKindSupplierCreditNote,
-      PostingKind.supplierPayment => l10n.acctKindSupplierPayment,
-      PostingKind.vatRelease => l10n.acctKindVatRelease,
-      PostingKind.memberReceipt => l10n.acctKindMemberReceipt,
-      PostingKind.reimbursement => l10n.acctKindReimbursement,
+      final kind? => postingKindLabel(l10n, kind),
       null => l10n.acctKindOther,
     };
 

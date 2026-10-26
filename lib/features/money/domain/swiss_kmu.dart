@@ -89,11 +89,26 @@ String _codeKey(_Leg leg, PostingLine tax) {
       : leg.line.role == BookRole.fixedAssets
       ? 'asset'
       : 'input';
-  return '$kind:${tax.qualifier ?? ''}';
+  return '$kind:${_groupOf(leg) ?? ''}';
 }
+
+/// The rate group of [leg]: its tax line's, else its base's (output tax
+/// waiting on `vat_pending` names no group; the revenue it is booked with
+/// does).
+String? _groupOf(_Leg leg) => leg.tax?.qualifier ?? leg.line.qualifier;
 
 bool _isTax(PostingLine l) =>
     l.role == BookRole.vatOutput || l.role == BookRole.vatInput;
+
+/// Whether [l] is the tax of [base], booked with it on the same side: its
+/// output or input tax, or (a book on collected consideration) its output
+/// tax waiting on `vat_pending` for its tax point, when [base] names the
+/// rate group that tax belongs to.
+bool _taxOf(PostingLine base, PostingLine l) =>
+    !_isTax(base) &&
+    base.role != BookRole.vatPending &&
+    _onDebit(base) == _onDebit(l) &&
+    (_isTax(l) || (l.role == BookRole.vatPending && base.qualifier != null));
 
 bool _onDebit(PostingLine l) => l.debit.minor != 0;
 
@@ -104,16 +119,13 @@ typedef _Leg = ({PostingLine line, PostingLine? tax});
 
 /// The legs of [lines]: a tax line that follows its base on the same side
 /// is folded into it, as the posting rules write them (revenue then its
-/// output tax, an expense then its input tax).
+/// output tax, due or pending; an expense then its input tax). The release
+/// of pending tax (`vat_pending` to `vat_output`) stays two legs.
 List<_Leg> _legs(List<PostingLine> lines) {
   final out = <_Leg>[];
   for (final l in lines) {
     final last = out.lastOrNull;
-    if (_isTax(l) &&
-        last != null &&
-        last.tax == null &&
-        !_isTax(last.line) &&
-        _onDebit(last.line) == _onDebit(l)) {
+    if (last != null && last.tax == null && _taxOf(last.line, l)) {
       out[out.length - 1] = (line: last.line, tax: l);
     } else {
       out.add((line: l, tax: null));
@@ -159,9 +171,11 @@ String _zifferOf(_Leg leg, TaxReferenceSet onDay) {
       ),
     );
   }
-  final group = tax?.qualifier ?? leg.line.qualifier;
+  final group = _groupOf(leg);
   if (group == null) return '';
-  if (tax != null) {
+  // A released output tax lands on its rate line on its tax point, like the
+  // taxed sale it was waiting for.
+  if (tax != null || leg.line.role == BookRole.vatOutput) {
     return _boxWhere((box) {
       final row = box.formBox == null
           ? null
@@ -190,10 +204,12 @@ String _zifferOf(_Leg leg, TaxReferenceSet onDay) {
 /// The Swiss journal of [postings] in their order. The MWST code of each
 /// taxed row is the `ch_kmu/<tax key>` row of [reference] in force on the
 /// row's day; [paymentReferences] holds the QR reference of each invoice
-/// by document id, [parties] the documents' customers and suppliers.
+/// by document id, [parties] the documents' customers and suppliers;
+/// [kindText] names each entry's event in the Text column.
 SwissJournal swissJournalOf(
   List<Posting> postings, {
   required TaxReferenceSet reference,
+  required String Function(PostingKind kind) kindText,
   Map<String, String> paymentReferences = const {},
   Map<String, PostingParty> parties = const {},
 }) {
@@ -210,7 +226,7 @@ SwissJournal swissJournalOf(
           date: p.date,
           document: p.documentNumber,
           reference: receivable ? paymentReferences[p.documentId] ?? '' : '',
-          text: '${p.documentNumber} ${p.kind.wire}',
+          text: '${p.documentNumber} ${kindText(p.kind)}',
           debit: debit,
           credit: credit,
           amount: _gross(leg),
@@ -252,11 +268,14 @@ List<({_Leg leg, String debit, String credit})> _pairs(List<_Leg> legs) {
       if (!_onDebit(l.line)) l,
   ];
   if (debits.length == 1 && credits.length == 1) {
-    // One row; it carries the tax of whichever side has it.
+    // One row; it carries the tax of whichever side has it, and a release
+    // of pending tax the rate group of the output tax it credits. The
+    // release carries no MWST code: the sale was coded once, on its own row,
+    // and a code here would tax the tax again.
     final (d, c) = (debits.single, credits.single);
     return [
       (
-        leg: c.tax != null ? c : d,
+        leg: c.tax != null || c.line.qualifier != null ? c : d,
         debit: d.line.accountCode,
         credit: c.line.accountCode,
       ),

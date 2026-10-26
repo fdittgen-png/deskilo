@@ -41,9 +41,14 @@ import 'package:deskilo/features/money/domain/swiss_kmu.dart';
 import 'package:deskilo/features/money/domain/swiss_qr_bill.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_regime.dart';
+import 'package:deskilo/features/money/domain/vat_tax_point.dart';
+import 'package:deskilo/features/money/presentation/posting_kind_labels.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _update = Platform.environment['UPDATE_GOLDEN'] == '1';
+final _en = lookupAppLocalizations(const Locale('en'));
 const _dir = 'test/features/money/goldens/seeded_year';
 const _ws = 'ws-ch';
 const _site = 'site-ch';
@@ -249,6 +254,11 @@ class _Snapshot implements AccountingSourceQueries {
 
 /// `compute_postings` answered by its Dart twin over the Swiss year.
 class _Books implements BookProfileRepository {
+  _Books({this.taxPoints});
+
+  /// The tax points of a book on collected consideration; null: every tax
+  /// is due when the invoice is issued.
+  final VatTaxPointIndex? taxPoints;
   int postingReads = 0;
 
   @override
@@ -270,6 +280,7 @@ class _Books implements BookProfileRepository {
       matches: _matches,
       book: book,
       groupOf: (t) => reference.groupOfRate('CH', t.percent, t.category),
+      taxPoints: taxPoints,
     );
     final bought = purchasePostingsOf(
       purchases: [_bill],
@@ -334,6 +345,7 @@ SwissJournal _journal(JournalPosted books, {TaxReferenceSet? reference}) =>
     swissJournalOf(
       books.postings,
       reference: reference ?? ActiveTaxReference.current,
+      kindText: (kind) => postingKindLabel(_en, kind),
       paymentReferences: _references,
       parties: books.parties,
     );
@@ -529,6 +541,76 @@ void main() {
       final read = await _read('ch_kmu');
       expect(read, isA<JournalBlocked>());
       expect((read! as JournalBlocked).roles, ['write_off']);
+    } finally {
+      _chart = saved;
+    }
+  });
+  test('a book on collected consideration codes the sale on its own row and '
+      'releases the pending tax on its rate line, uncoded', () async {
+    final saved = _chart;
+    const pending = BookAccount(
+      id: 'acc-2206',
+      workspaceId: _ws,
+      issuerSiteId: _site,
+      code: '2206',
+      name: 'MWST auf vereinnahmten Entgelten',
+      type: AccountType.liability,
+      isPosting: true,
+      origin: AccountOrigin.manual,
+      revision: 1,
+    );
+    _chart = (
+      accounts: [...saved.accounts, pending],
+      mappings: [
+        ...saved.mappings,
+        BookMapping(
+          id: 'map-2206',
+          workspaceId: _ws,
+          issuerSiteId: _site,
+          role: BookRole.vatPending,
+          accountId: pending.id,
+          effectiveFrom: DateTime.utc(2026),
+          revision: 1,
+        ),
+      ],
+    );
+    try {
+      final paid = DateTime(2026, 4, 20);
+      final books = _Books(
+        taxPoints: VatTaxPointIndex([
+          for (final (percent, gross, net) in [
+            (8.1, 21620, 20000),
+            (2.6, 5130, 5000),
+          ])
+            VatTaxPointAmount(
+              invoiceId: _inv102.id,
+              on: paid,
+              percent: percent,
+              grossCents: gross,
+              netCents: net,
+              vatCents: gross - net,
+            ),
+        ]),
+      );
+      final journal = _journal(await _posted(books));
+      expect(journal.missingCodes, isEmpty);
+      final inv102 = [
+        for (final r in journal.rows)
+          if (r.document == 'INV-102' && r.date == _inv102.issuedAt)
+            '${r.debit}/${r.credit}/${r.amount.toDecimalString()}/'
+                '${r.vatCode}/${r.ziffer}/${r.vatAccount}',
+      ];
+      expect(inv102, [
+        '1100/3400/216.20/V81/303/2206',
+        '1100/3401/51.30/V26/313/2206',
+      ]);
+      final released = [
+        for (final r in journal.rows)
+          if (r.text.endsWith(_en.acctKindVatRelease))
+            '${r.debit}/${r.credit}/${r.amount.toDecimalString()}/'
+                '${r.vatCode}/${r.ziffer}',
+      ];
+      expect(released, ['2206/2200/16.20//303', '2206/2200/1.30//313']);
     } finally {
       _chart = saved;
     }

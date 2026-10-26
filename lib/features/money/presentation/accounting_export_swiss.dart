@@ -17,6 +17,7 @@ import 'accounting_export_run.dart';
 import 'e_invoice_identity.dart';
 import 'gobd_procedure_document.dart';
 import 'invoice_actions.dart';
+import 'posting_kind_labels.dart';
 import 'swiss_procedure_document.dart';
 
 extension SwissAccountingExports on AccountingExportRun {
@@ -50,6 +51,7 @@ extension SwissAccountingExports on AccountingExportRun {
       final journal = swissJournalOf(
         read.postings,
         reference: reference,
+        kindText: (kind) => postingKindLabel(l10n, kind),
         paymentReferences: references,
         parties: read.parties,
       );
