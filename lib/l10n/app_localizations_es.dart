@@ -1793,10 +1793,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bankCsvAmount => 'Columna del importe (o de entradas)';
 
   @override
+  String bankCsvColumn(int n, String first) {
+    return 'Columna $n ($first)';
+  }
+
+  @override
   String get bankCsvCounterparty => 'Columna del pagador o beneficiario';
 
   @override
+  String get bankCsvCounterpartyIban =>
+      'Columna del IBAN del pagador o beneficiario';
+
+  @override
   String get bankCsvCurrency => 'Moneda';
+
+  @override
+  String get bankCsvCurrencyColumn =>
+      'Columna de la moneda, si el archivo la tiene';
 
   @override
   String get bankCsvDate => 'Columna de la fecha';
@@ -1811,7 +1824,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bankCsvDecimalComma => 'Los importes usan coma decimal';
 
   @override
-  String get bankCsvNeedsAccount => 'Indique la cuenta.';
+  String get bankCsvDuplicateColumn =>
+      'Una columna está elegida dos veces: dé a cada columna un solo significado.';
+
+  @override
+  String get bankCsvHeader => 'La primera fila nombra las columnas';
+
+  @override
+  String get bankCsvNeedsAccount =>
+      'Indique la cuenta, con 64 caracteres como máximo.';
 
   @override
   String get bankCsvNeedsAmount => 'Elija la columna del importe.';
@@ -1979,6 +2000,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get bankRefusedTooLarge =>
       'El archivo supera el tamaño que importa este servidor. No se ha importado nada.';
+
+  @override
+  String get bankRefusedTooLong =>
+      'Una cuenta o un identificador bancario del archivo es más largo de lo que guarda un extracto. No se ha importado nada.';
 
   @override
   String bankRefusedTooManyLines(int max) {
@@ -19771,6 +19796,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalAlreadyDecided =>
       'Alguien ya lo ha decidido. La lista muestra el resultado.';
+
+  @override
+  String get refusalBankFileRefused =>
+      'El servidor rechazó el extracto entero (demasiado grande, demasiados movimientos o varias monedas). No se ha importado nada.';
+
+  @override
+  String get refusalBankLineDecided =>
+      'Este movimiento se decidió entretanto (conciliado o revisado). La lista muestra su estado actual.';
+
+  @override
+  String get refusalBankLineRefused =>
+      'Este movimiento no puede liquidar eso: su sentido, moneda, importe o estado no encajan. No se ha cambiado nada.';
 
   @override
   String get refusalChangedMeanwhile =>

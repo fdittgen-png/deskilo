@@ -16,6 +16,11 @@ import 'bank_statement.dart';
 /// the owner always does).
 const Set<String> bankStatementReaders = {'viewFinances', 'issueInvoices'};
 
+/// The permission that imports and matches money in, and the one that
+/// reconciles money out with a payment reported as made.
+const String bankMatchPermission = 'issueInvoices';
+const String bankReconcilePermission = 'recordOutgoingPayments';
+
 /// Where one movement stands.
 enum BankLineStatus {
   open,

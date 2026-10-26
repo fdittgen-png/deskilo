@@ -57,6 +57,7 @@ String bankFileRefusal(
     BankFileProblem.badDate => l10n.bankRefusedBadDate,
     BankFileProblem.badCurrency => l10n.bankRefusedBadCurrency,
     BankFileProblem.empty => l10n.bankRefusedEmpty,
+    BankFileProblem.tooLong => l10n.bankRefusedTooLong,
   };
   final line = e.line;
   return line == null ? reason : l10n.bankRefusedAtLine(reason, line);

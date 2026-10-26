@@ -1790,10 +1790,23 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankCsvAmount => 'Colonna dell\'importo (o delle entrate)';
 
   @override
+  String bankCsvColumn(int n, String first) {
+    return 'Colonna $n ($first)';
+  }
+
+  @override
   String get bankCsvCounterparty => 'Colonna del pagatore o beneficiario';
 
   @override
+  String get bankCsvCounterpartyIban =>
+      'Colonna dell\'IBAN del pagatore o beneficiario';
+
+  @override
   String get bankCsvCurrency => 'Valuta';
+
+  @override
+  String get bankCsvCurrencyColumn =>
+      'Colonna della valuta, se il file ne ha una';
 
   @override
   String get bankCsvDate => 'Colonna della data';
@@ -1808,7 +1821,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankCsvDecimalComma => 'Gli importi usano la virgola decimale';
 
   @override
-  String get bankCsvNeedsAccount => 'Indichi il conto.';
+  String get bankCsvDuplicateColumn =>
+      'Una colonna è scelta due volte: dia a ogni colonna un solo significato.';
+
+  @override
+  String get bankCsvHeader => 'La prima riga indica le colonne';
+
+  @override
+  String get bankCsvNeedsAccount =>
+      'Indichi il conto, con al massimo 64 caratteri.';
 
   @override
   String get bankCsvNeedsAmount => 'Scelga la colonna dell\'importo.';
@@ -1975,6 +1996,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get bankRefusedTooLarge =>
       'Il file supera la dimensione che questo server importa. Non è stato importato nulla.';
+
+  @override
+  String get bankRefusedTooLong =>
+      'Un conto o un identificativo bancario del file è più lungo di quanto un estratto conserva. Non è stato importato nulla.';
 
   @override
   String bankRefusedTooManyLines(int max) {
@@ -19788,6 +19813,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalAlreadyDecided =>
       'Qualcuno ha già deciso. L\'elenco mostra l\'esito.';
+
+  @override
+  String get refusalBankFileRefused =>
+      'Il server ha rifiutato l\'estratto per intero (troppo grande, troppi movimenti o più valute). Non è stato importato nulla.';
+
+  @override
+  String get refusalBankLineDecided =>
+      'Questo movimento è stato deciso nel frattempo (abbinato, riconciliato o verificato). L\'elenco mostra il suo stato attuale.';
+
+  @override
+  String get refusalBankLineRefused =>
+      'Questo movimento non può saldare ciò: direzione, valuta, importo o stato non corrispondono. Non è cambiato nulla.';
 
   @override
   String get refusalChangedMeanwhile =>

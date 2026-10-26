@@ -1795,10 +1795,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bankCsvAmount => 'Colonne du montant (ou des entrées)';
 
   @override
+  String bankCsvColumn(int n, String first) {
+    return 'Colonne $n ($first)';
+  }
+
+  @override
   String get bankCsvCounterparty => 'Colonne du payeur ou bénéficiaire';
 
   @override
+  String get bankCsvCounterpartyIban =>
+      'Colonne de l\'IBAN du payeur ou bénéficiaire';
+
+  @override
   String get bankCsvCurrency => 'Devise';
+
+  @override
+  String get bankCsvCurrencyColumn =>
+      'Colonne de la devise, si le fichier en a une';
 
   @override
   String get bankCsvDate => 'Colonne de la date';
@@ -1814,7 +1827,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les montants utilisent une virgule décimale';
 
   @override
-  String get bankCsvNeedsAccount => 'Indiquez le compte.';
+  String get bankCsvDuplicateColumn =>
+      'Une colonne est choisie deux fois : donnez à chaque colonne un seul sens.';
+
+  @override
+  String get bankCsvHeader => 'La première ligne nomme les colonnes';
+
+  @override
+  String get bankCsvNeedsAccount =>
+      'Indiquez le compte, en 64 caractères au plus.';
 
   @override
   String get bankCsvNeedsAmount => 'Choisissez la colonne du montant.';
@@ -1981,6 +2002,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get bankRefusedTooLarge =>
       'Le fichier dépasse la taille que ce serveur importe. Rien n\'a été importé.';
+
+  @override
+  String get bankRefusedTooLong =>
+      'Un compte ou un identifiant bancaire du fichier est plus long que ce qu\'un relevé conserve. Rien n\'a été importé.';
 
   @override
   String bankRefusedTooManyLines(int max) {
@@ -19825,6 +19850,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalAlreadyDecided =>
       'Quelqu\'un a déjà décidé. La liste affiche le résultat.';
+
+  @override
+  String get refusalBankFileRefused =>
+      'Le serveur a refusé le relevé en entier (trop grand, trop de mouvements ou plusieurs devises). Rien n\'a été importé.';
+
+  @override
+  String get refusalBankLineDecided =>
+      'Ce mouvement a été traité entre-temps (rapproché ou vérifié). La liste montre où il en est.';
+
+  @override
+  String get refusalBankLineRefused =>
+      'Ce mouvement ne peut pas régler cela : son sens, sa devise, son montant ou son état ne conviennent pas. Rien n\'a changé.';
 
   @override
   String get refusalChangedMeanwhile =>

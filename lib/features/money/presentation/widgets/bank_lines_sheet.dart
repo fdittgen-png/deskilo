@@ -2,15 +2,18 @@
 //
 // #2380 — the movements of one statement, the work list of a person who
 // reconciles: each with where it stands and, for money in still open, the
-// invoice it most likely settles and why. The movements whose structured
-// reference names one invoice for exactly what it owes are confirmed in
-// one press; every other one by itself.
+// invoice it most likely settles and why, matched once per load. The
+// movements whose structured reference names one invoice for exactly what
+// it owes are confirmed in one press; every other one by itself. While a
+// decision is sent nothing else can be pressed; a reader who may not match
+// or reconcile sees the list and no door.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -18,110 +21,85 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/bank/bank_match.dart';
 import '../../domain/bank/bank_records.dart';
-import '../../domain/invoice.dart';
 import '../../providers/bank_statement_providers.dart';
 import '../../providers/money_providers.dart';
 import '../bank_labels.dart';
 import 'bank_line_dialogs.dart';
 
+/// The share of the screen's height the work list sheet takes: room for a
+/// long list that scrolls within it.
+const double _sheetHeightShare = 0.85;
+
 @visibleForTesting
-class BankLinesView extends ConsumerWidget {
+class BankLinesView extends ConsumerStatefulWidget {
   const BankLinesView({
     required this.workspaceId,
     required this.statement,
+    required this.canMatch,
+    required this.canReconcile,
     super.key,
   });
 
   final String workspaceId;
   final StoredBankStatement statement;
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    final lines = ref.watch(bankStatementLinesProvider(statement.id));
-    final window = ref.watch(bankImportSettingsProvider).matchWindowDays;
-    final open = openInvoices(
-      ref.watch(invoicesProvider).value ?? const <Invoice>[],
-      ref.watch(invoiceMatchesProvider).value ?? const {},
-    );
-    return SheetShell(
-      title: statement.account,
-      children: [
-        lines.when(
-          loading: () => const LoadingView(),
-          error: (_, _) => Text(
-            l10n.bankStatementsLoadFailed,
-            key: const ValueKey('bank-lines-failed'),
-          ),
-          data: (all) {
-            final byReference = [
-              for (final l in all)
-                if (referenceMatchOf(l, open, windowDays: window) != null) l,
-            ];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (byReference.isNotEmpty) ...[
-                  FilledButton.icon(
-                    key: const ValueKey('bank-confirm-references'),
-                    onPressed: () => _confirmAll(context, ref, byReference, open, window),
-                    icon: const Icon(Icons.done_all),
-                    label: Text(l10n.bankConfirmReferences(byReference.length)),
-                  ),
-                  const FormGap(),
-                ],
-                for (final line in all)
-                  _LineTile(
-                    key: ValueKey('bank-line-${line.id}'),
-                    line: line,
-                    suggestions: suggestMatches(line, open, windowDays: window),
-                    onTap: () => _decide(context, ref, line, open, window),
-                  ),
-              ],
-            );
-          },
-        ),
-      ],
-    );
-  }
+  /// The person may match money in (issueInvoices).
+  final bool canMatch;
 
-  void _changed(WidgetRef ref) => ref
-    ..invalidate(bankStatementLinesProvider(statement.id))
-    ..invalidate(bankStatementsProvider(workspaceId))
+  /// The person may reconcile money out (recordOutgoingPayments).
+  final bool canReconcile;
+
+  @override
+  ConsumerState<BankLinesView> createState() => _BankLinesViewState();
+}
+
+class _BankLinesViewState extends ConsumerState<BankLinesView> {
+  bool _busy = false;
+
+  String get _statementId => widget.statement.id;
+
+  void _changed() => ref
+    ..invalidate(bankStatementLinesProvider(_statementId))
+    ..invalidate(bankStatementsProvider(widget.workspaceId))
     ..invalidate(invoiceMatchesProvider)
     ..invalidate(invoicesProvider);
 
-  Future<void> _confirmAll(
-    BuildContext context,
-    WidgetRef ref,
-    List<StoredBankLine> lines,
-    List<OpenInvoice> open,
-    int window,
-  ) async {
-    final l10n = context.l10n;
-    var confirmed = 0;
+  /// Runs [send] with every control disabled, then reloads the list.
+  Future<bool> _guarded(String message, Future<void> Function() send) async {
+    setState(() => _busy = true);
     final ok = await runGuarded(
       context,
       domain: 'money',
-      message: 'bank reference matches failed',
-      errorText: l10n.bankMatchFailed,
-      action: () async => confirmed = await ref
-          .read(bankImportCommandsProvider)
-          .confirmReferenceMatches(lines, open, windowDays: window),
+      message: message,
+      errorText: context.l10n.bankMatchFailed,
+      action: send,
     );
-    _changed(ref);
-    if (!ok || !context.mounted) return;
-    AppSnack.success(context, l10n.bankConfirmedReferences(confirmed));
+    _changed();
+    if (mounted) setState(() => _busy = false);
+    return ok;
   }
 
-  Future<void> _decide(
-    BuildContext context,
-    WidgetRef ref,
-    StoredBankLine line,
-    List<OpenInvoice> open,
-    int window,
-  ) async {
-    final l10n = context.l10n;
+  Future<void> _confirmAll(BankWorkList list) async {
+    var confirmed = 0;
+    final ok = await _guarded(
+      'bank reference matches failed',
+      () async => confirmed = await ref
+          .read(bankImportCommandsProvider)
+          .confirmReferenceMatches(list),
+    );
+    if (!ok || !mounted) return;
+    AppSnack.success(context, context.l10n.bankConfirmedReferences(confirmed));
+  }
+
+  bool _actionable(StoredBankLine line) => switch (line.status) {
+    BankLineStatus.review => widget.canMatch,
+    BankLineStatus.open => line.isMoneyIn ? widget.canMatch : widget.canReconcile,
+    BankLineStatus.recorded => line.isMoneyIn && widget.canMatch,
+    _ => false,
+  };
+
+  Future<void> _decide(BankWorkList list, BankWorkItem item) async {
+    final line = item.line;
     final commands = ref.read(bankImportCommandsProvider);
     Future<void> Function()? action;
     switch (line.status) {
@@ -130,15 +108,14 @@ class BankLinesView extends ConsumerWidget {
         if (duplicate == null) return;
         action = () => commands.review(line, duplicate: duplicate);
       case BankLineStatus.open || BankLineStatus.recorded when line.isMoneyIn:
-        final suggestions = suggestMatches(line, open, windowDays: window);
-        final suggested = {for (final s in suggestions) s.invoice.id};
+        final suggested = {for (final s in item.suggestions) s.invoice.id};
         final choice = await showDialog<BankMatchChoice>(
           context: context,
           builder: (_) => BankMatchDialog(
             line: line,
-            suggestions: suggestions,
+            suggestions: item.suggestions,
             others: [
-              for (final i in open)
+              for (final i in list.open)
                 if (i.currency == line.currency && !suggested.contains(i.id)) i,
             ],
           ),
@@ -162,40 +139,97 @@ class BankLinesView extends ConsumerWidget {
           BankLineStatus.reconciled:
         return;
     }
-    if (!context.mounted) return;
-    final ok = await runGuarded(
-      context,
-      domain: 'money',
-      message: 'bank line decision failed',
-      errorText: l10n.bankMatchFailed,
-      action: action,
-    );
-    _changed(ref);
-    if (!ok || !context.mounted) return;
-    AppSnack.success(context, l10n.bankLineSaved);
+    if (!mounted) return;
+    final ok = await _guarded('bank line decision failed', action);
+    if (!ok || !mounted) return;
+    AppSnack.success(context, context.l10n.bankLineSaved);
   }
-}
-
-class _LineTile extends StatelessWidget {
-  const _LineTile({
-    required this.line,
-    required this.suggestions,
-    required this.onTap,
-    super.key,
-  });
-
-  final StoredBankLine line;
-  final List<BankMatchSuggestion> suggestions;
-  final VoidCallback onTap;
-
-  bool get _actionable =>
-      line.status == BankLineStatus.review ||
-      (line.status == BankLineStatus.open) ||
-      (line.status == BankLineStatus.recorded && line.isMoneyIn);
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final work = ref.watch(bankWorkListProvider(_statementId));
+    final height = MediaQuery.sizeOf(context).height * _sheetHeightShare;
+    return SizedBox(
+      height: height,
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.statement.account,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                const SheetCloseButton(key: ValueKey('sheet-close')),
+              ],
+            ),
+            Expanded(
+              child: work.when(
+                loading: () => const LoadingView(),
+                error: (_, _) => Text(
+                  l10n.bankStatementsLoadFailed,
+                  key: const ValueKey('bank-lines-failed'),
+                ),
+                data: _list,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _list(BankWorkList list) {
+    final l10n = context.l10n;
+    final batch = widget.canMatch ? list.referenceBatch : const <BankWorkItem>[];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (batch.isNotEmpty) ...[
+          FilledButton.icon(
+            key: const ValueKey('bank-confirm-references'),
+            onPressed: _busy ? null : () => _confirmAll(list),
+            icon: const Icon(Icons.done_all),
+            label: Text(l10n.bankConfirmReferences(batch.length)),
+          ),
+          const FormGap(),
+        ],
+        Expanded(
+          child: ListView.builder(
+            itemCount: list.items.length,
+            itemBuilder: (_, i) {
+              final item = list.items[i];
+              final open = !_busy && _actionable(item.line);
+              return _LineTile(
+                key: ValueKey('bank-line-${item.line.id}'),
+                item: item,
+                onTap: open ? () => _decide(list, item) : null,
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LineTile extends StatelessWidget {
+  const _LineTile({required this.item, required this.onTap, super.key});
+
+  final BankWorkItem item;
+
+  /// Null when the movement waits for nobody, or for someone else.
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final line = item.line;
     final money = moneyFormat(line.currency);
     final day = DateFormat.yMMMd(Localizations.localeOf(context).toString());
     final what = [
@@ -203,7 +237,7 @@ class _LineTile extends StatelessWidget {
       if (line.reference.isNotEmpty) line.reference
       else if (line.remittance.isNotEmpty) line.remittance,
     ].join(' · ');
-    final best = suggestions.firstOrNull;
+    final best = item.suggestions.firstOrNull;
     final status = best == null || !line.status.isOpen
         ? bankLineStatusLabel(l10n, line)
         : l10n.bankLineSuggested(
@@ -217,8 +251,8 @@ class _LineTile extends StatelessWidget {
       title: Text('${money.formatMinor(line.amountCents)} · ${day.format(line.valueDate)}'),
       subtitle: Text(what.isEmpty ? status : '$what\n$status'),
       isThreeLine: what.isNotEmpty,
-      trailing: _actionable ? const Icon(Icons.chevron_right) : null,
-      onTap: _actionable ? onTap : null,
+      trailing: onTap == null ? null : const Icon(Icons.chevron_right),
+      onTap: onTap,
     );
   }
 }

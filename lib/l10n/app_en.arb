@@ -2047,13 +2047,33 @@
   "@bankCsvAmount": {
     "description": "#2380 CSV sheet: the amount column (money in when money out is apart)."
   },
+  "bankCsvColumn": "Column {n} ({first})",
+  "@bankCsvColumn": {
+    "description": "#2380 CSV sheet: a column of a file without a header row, by number and first cell.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "first": {
+        "type": "String"
+      }
+    }
+  },
   "bankCsvCounterparty": "Payer or payee column",
   "@bankCsvCounterparty": {
     "description": "#2380 CSV sheet: the payer or payee column."
   },
+  "bankCsvCounterpartyIban": "Payer or payee IBAN column",
+  "@bankCsvCounterpartyIban": {
+    "description": "#2380 CSV sheet: the payer's or payee's IBAN column."
+  },
   "bankCsvCurrency": "Currency",
   "@bankCsvCurrency": {
     "description": "#2380 CSV sheet: the currency of the movements."
+  },
+  "bankCsvCurrencyColumn": "Currency column, when the file has one",
+  "@bankCsvCurrencyColumn": {
+    "description": "#2380 CSV sheet: the currency column, when the file has one."
   },
   "bankCsvDate": "Date column",
   "@bankCsvDate": {
@@ -2071,9 +2091,17 @@
   "@bankCsvDecimalComma": {
     "description": "#2380 CSV sheet: amounts use a decimal comma."
   },
-  "bankCsvNeedsAccount": "Name the account.",
+  "bankCsvDuplicateColumn": "A column is chosen twice: give each column one meaning.",
+  "@bankCsvDuplicateColumn": {
+    "description": "#2380 CSV sheet: a column chosen for two meanings."
+  },
+  "bankCsvHeader": "The first row names the columns",
+  "@bankCsvHeader": {
+    "description": "#2380 CSV sheet: the first row names the columns."
+  },
+  "bankCsvNeedsAccount": "Name the account, in at most 64 characters.",
   "@bankCsvNeedsAccount": {
-    "description": "#2380 CSV sheet: the account is missing."
+    "description": "#2380 CSV sheet: the account is missing or too long."
   },
   "bankCsvNeedsAmount": "Choose the amount column.",
   "@bankCsvNeedsAmount": {
@@ -2309,6 +2337,10 @@
   "bankRefusedTooLarge": "The file is larger than this server imports. Nothing was imported.",
   "@bankRefusedTooLarge": {
     "description": "#2380 Refusal: the file is larger than the setting allows."
+  },
+  "bankRefusedTooLong": "An account or a bank transaction id in the file is longer than a statement keeps. Nothing was imported.",
+  "@bankRefusedTooLong": {
+    "description": "#2380 Refusal: an account or a bank id longer than a statement keeps."
   },
   "bankRefusedTooManyLines": "The file has more than {max} movements. Split it by period at the bank. Nothing was imported.",
   "@bankRefusedTooManyLines": {
@@ -23459,6 +23491,18 @@
   "refusalAlreadyDecided": "Someone has already decided this. The list shows the outcome.",
   "@refusalAlreadyDecided": {
     "description": "#1305 Shown when a validation was already decided by someone else"
+  },
+  "refusalBankFileRefused": "The server refused the statement whole (too large, too many movements, or several currencies). Nothing was imported.",
+  "@refusalBankFileRefused": {
+    "description": "#2380 Refusal DKB03: the server refused the statement whole."
+  },
+  "refusalBankLineDecided": "This movement was decided meanwhile (matched, reconciled or reviewed). The list shows where it stands now.",
+  "@refusalBankLineDecided": {
+    "description": "#2380 Refusal DKB01: the movement was decided meanwhile."
+  },
+  "refusalBankLineRefused": "This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.",
+  "@refusalBankLineRefused": {
+    "description": "#2380 Refusal DKB02: the movement and its choice do not go together."
   },
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {

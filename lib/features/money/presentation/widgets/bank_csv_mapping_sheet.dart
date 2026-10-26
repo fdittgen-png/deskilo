@@ -11,6 +11,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/bank_import_commands.dart';
+import '../../domain/bank/bank_statement.dart';
 import '../../domain/bank/csv_statement.dart';
 import '../bank_labels.dart';
 
@@ -49,11 +50,25 @@ AppFormSheet _mappingSheet(
   final chosen = <String, int?>{};
   var pattern = BankCsvDatePattern.isoDay;
   var decimalComma = delimiter == BankCsvDelimiters.semicolon;
+  var header = true;
+  // Every column but the date, the amount and the currency, for the
+  // check that no column is chosen twice.
+  const others = [
+    'debit',
+    'valueDate',
+    'counterparty',
+    'counterpartyIban',
+    'reference',
+    'remittance',
+    'transactionId',
+  ];
   Set<BankCsvMappingProblem> problems() => bankCsvMappingProblems(
     account: fields.text('account'),
     currency: fields.text('currency'),
     dateColumn: chosen['date'],
     amountColumn: chosen['amount'],
+    currencyColumn: chosen['currency'],
+    otherColumns: [for (final k in others) chosen[k]],
   );
   return AppFormSheet(
     title: l10n.bankCsvTitle,
@@ -76,8 +91,10 @@ AppFormSheet _mappingSheet(
         BankCsvMapping(
           account: fields.text('account'),
           fixedCurrency: fields.text('currency').toUpperCase(),
+          currency: chosen['currency'],
           delimiter: delimiter,
           decimalComma: decimalComma,
+          header: header,
           datePattern: pattern,
           bookingDate: chosen['date']!,
           valueDate: chosen['valueDate'],
@@ -85,6 +102,7 @@ AppFormSheet _mappingSheet(
           credit: debit == null ? null : chosen['amount'],
           debit: debit,
           counterpartyName: chosen['counterparty'],
+          counterpartyIban: chosen['counterpartyIban'],
           reference: chosen['reference'],
           remittance: chosen['remittance'],
           transactionId: chosen['transactionId'],
@@ -104,7 +122,12 @@ AppFormSheet _mappingSheet(
                 if (optional)
                   DropdownMenuItem<int?>(child: Text(l10n.bankCsvNone)),
                 for (var i = 0; i < columns.length; i++)
-                  DropdownMenuItem<int?>(value: i, child: Text(columns[i])),
+                  DropdownMenuItem<int?>(
+                    value: i,
+                    child: Text(
+                      header ? columns[i] : l10n.bankCsvColumn(i + 1, columns[i]),
+                    ),
+                  ),
               ],
               onChanged: (v) {
                 chosen[key] = v;
@@ -119,6 +142,7 @@ AppFormSheet _mappingSheet(
           fieldKey: 'account',
           label: l10n.bankCsvAccount,
           helper: l10n.bankCsvAccountHint,
+          maxLength: BankColumnWidths.account,
         ),
         const FormGap(),
         AppTextField(
@@ -143,6 +167,16 @@ AppFormSheet _mappingSheet(
           },
         ),
         SwitchListTile(
+          key: const ValueKey('bank-csv-header'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l10n.bankCsvHeader),
+          value: header,
+          onChanged: (v) {
+            header = v;
+            refresh();
+          },
+        ),
+        SwitchListTile(
           key: const ValueKey('bank-csv-decimal-comma'),
           contentPadding: EdgeInsets.zero,
           title: Text(l10n.bankCsvDecimalComma),
@@ -157,7 +191,9 @@ AppFormSheet _mappingSheet(
         column('amount', l10n.bankCsvAmount, optional: false),
         column('debit', l10n.bankCsvDebit),
         column('valueDate', l10n.bankCsvValueDate),
+        column('currency', l10n.bankCsvCurrencyColumn),
         column('counterparty', l10n.bankCsvCounterparty),
+        column('counterpartyIban', l10n.bankCsvCounterpartyIban),
         column('reference', l10n.bankCsvReference),
         column('remittance', l10n.bankCsvRemittance),
         column('transactionId', l10n.bankCsvTransactionId),
@@ -172,4 +208,5 @@ String _problemText(AppLocalizations l10n, BankCsvMappingProblem p) =>
       BankCsvMappingProblem.currency => l10n.bankCsvNeedsCurrency,
       BankCsvMappingProblem.date => l10n.bankCsvNeedsDate,
       BankCsvMappingProblem.amount => l10n.bankCsvNeedsAmount,
+      BankCsvMappingProblem.duplicateColumn => l10n.bankCsvDuplicateColumn,
     };

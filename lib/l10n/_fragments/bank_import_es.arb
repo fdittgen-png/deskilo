@@ -72,7 +72,7 @@
   "bankCsvRemittance": "Columna del concepto",
   "bankCsvTransactionId": "Columna del identificador bancario",
   "bankCsvNone": "Ninguna",
-  "bankCsvNeedsAccount": "Indique la cuenta.",
+  "bankCsvNeedsAccount": "Indique la cuenta, con 64 caracteres como máximo.",
   "bankCsvNeedsCurrency": "Indique la moneda con tres letras (EUR, CHF).",
   "bankCsvNeedsDate": "Elija la columna de la fecha.",
   "bankCsvNeedsAmount": "Elija la columna del importe.",
@@ -81,5 +81,14 @@
   "settingLabelBankImportMaxLines": "Movimientos por extracto bancario",
   "settingHintBankImportMaxLines": "Un extracto con más se rechaza entero; divídalo por periodo en el banco.",
   "settingLabelBankMatchWindowDays": "Ventana de facturas para un pago sin referencia",
-  "settingHintBankMatchWindowDays": "Cuántos días antes de un pago puede haberse emitido su factura para proponerla solo por el importe y el pagador. Siempre confirma una persona."
+  "settingHintBankMatchWindowDays": "Cuántos días antes de un pago puede haberse emitido su factura para proponerla solo por el importe y el pagador. Siempre confirma una persona.",
+  "bankCsvColumn": "Columna {n} ({first})",
+  "bankCsvHeader": "La primera fila nombra las columnas",
+  "bankCsvCurrencyColumn": "Columna de la moneda, si el archivo la tiene",
+  "bankCsvCounterpartyIban": "Columna del IBAN del pagador o beneficiario",
+  "bankCsvDuplicateColumn": "Una columna está elegida dos veces: dé a cada columna un solo significado.",
+  "bankRefusedTooLong": "Una cuenta o un identificador bancario del archivo es más largo de lo que guarda un extracto. No se ha importado nada.",
+  "refusalBankLineDecided": "Este movimiento se decidió entretanto (conciliado o revisado). La lista muestra su estado actual.",
+  "refusalBankLineRefused": "Este movimiento no puede liquidar eso: su sentido, moneda, importe o estado no encajan. No se ha cambiado nada.",
+  "refusalBankFileRefused": "El servidor rechazó el extracto entero (demasiado grande, demasiados movimientos o varias monedas). No se ha importado nada."
 }

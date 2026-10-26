@@ -96,6 +96,78 @@ class BankMatchSuggestion {
   final BankMatchBasis basis;
 }
 
+/// The open invoices prepared once for many movements: their references
+/// and numbers computed a single time, by currency.
+class _OpenIndex {
+  _OpenIndex(List<OpenInvoice> open) {
+    for (final i in open) {
+      (byCurrency[i.currency] ??= []).add(i);
+      if (qrrReferenceOf(i.number) case final r?) (byQr[r] ??= []).add(i);
+      if (scorReferenceOf(i.number) case final r?) (byRf[r] ??= []).add(i);
+      final n = i.number.trim().toUpperCase();
+      if (n.isNotEmpty && n.contains(RegExp('[0-9]'))) numbers[i.id] = n;
+    }
+  }
+
+  final byCurrency = <String, List<OpenInvoice>>{};
+  final byQr = <String, List<OpenInvoice>>{};
+  final byRf = <String, List<OpenInvoice>>{};
+  final numbers = <String, String>{};
+
+  List<BankMatchSuggestion> suggest(StoredBankLine line, int windowDays) {
+    final matchable =
+        line.isMoneyIn &&
+        (line.status == BankLineStatus.open ||
+            line.status == BankLineStatus.recorded);
+    if (!matchable) return const [];
+    final candidates = byCurrency[line.currency] ?? const <OpenInvoice>[];
+    if (candidates.isEmpty) return const [];
+    final reference = line.reference.isNotEmpty
+        ? line.reference
+        : structuredReferenceIn(line.remittance) ?? '';
+    final found = <String, BankMatchSuggestion>{};
+    void add(OpenInvoice invoice, BankMatchBasis basis) => found.putIfAbsent(
+      invoice.id,
+      () => BankMatchSuggestion(invoice, basis),
+    );
+    if (reference.isNotEmpty) {
+      final (named, basis) = isQrReference(reference)
+          ? (byQr[reference], BankMatchBasis.qrReference)
+          : isCreditorReference(reference)
+          ? (byRf[reference], BankMatchBasis.creditorReference)
+          : (null, BankMatchBasis.qrReference);
+      for (final i in named ?? const <OpenInvoice>[]) {
+        if (i.currency == line.currency) add(i, basis);
+      }
+    }
+    final text = '${line.remittance} ${line.reference} ${line.endToEndId}'
+        .toUpperCase();
+    for (final i in candidates) {
+      final n = numbers[i.id];
+      if (n != null && _names(text, n)) add(i, BankMatchBasis.invoiceNumber);
+    }
+    final b = line.bookingDate;
+    final earliest = DateTime.utc(b.year, b.month, b.day - windowDays);
+    final payer = _nameWords(line.counterpartyName);
+    for (final i in candidates) {
+      final issued = DateTime.utc(
+        i.issuedAt.year,
+        i.issuedAt.month,
+        i.issuedAt.day,
+      );
+      if (i.dueCents == line.amountCents &&
+          !issued.isBefore(earliest) &&
+          !issued.isAfter(line.bookingDate) &&
+          payer.isNotEmpty &&
+          payer.intersection(_nameWords(i.memberName)).isNotEmpty) {
+        add(i, BankMatchBasis.amount);
+      }
+    }
+    return found.values.toList()
+      ..sort((a, b) => a.basis.index.compareTo(b.basis.index));
+  }
+}
+
 /// The invoices [line] may settle, strongest reason first, each invoice
 /// once. Only money in that settles nothing yet is matched; [windowDays]
 /// is the setting `bank.match_window_days`.
@@ -103,65 +175,16 @@ List<BankMatchSuggestion> suggestMatches(
   StoredBankLine line,
   List<OpenInvoice> open, {
   required int windowDays,
-}) {
-  final matchable =
-      line.isMoneyIn &&
-      (line.status == BankLineStatus.open ||
-          line.status == BankLineStatus.recorded);
-  if (!matchable) return const [];
-  final candidates = [
-    for (final i in open)
-      if (i.currency == line.currency) i,
-  ];
-  final reference = line.reference.isNotEmpty
-      ? line.reference
-      : structuredReferenceIn(line.remittance) ?? '';
-  final found = <String, BankMatchSuggestion>{};
-  void add(OpenInvoice invoice, BankMatchBasis basis) =>
-      found.putIfAbsent(invoice.id, () => BankMatchSuggestion(invoice, basis));
-  for (final i in candidates) {
-    if (reference.isEmpty) break;
-    if (isQrReference(reference) && qrrReferenceOf(i.number) == reference) {
-      add(i, BankMatchBasis.qrReference);
-    } else if (isCreditorReference(reference) &&
-        scorReferenceOf(i.number) == reference) {
-      add(i, BankMatchBasis.creditorReference);
-    }
-  }
-  final text = '${line.remittance} ${line.reference} ${line.endToEndId}'
-      .toUpperCase();
-  for (final i in candidates) {
-    if (_names(text, i.number)) add(i, BankMatchBasis.invoiceNumber);
-  }
-  final b = line.bookingDate;
-  final earliest = DateTime.utc(b.year, b.month, b.day - windowDays);
-  for (final i in candidates) {
-    final issued = DateTime.utc(
-      i.issuedAt.year,
-      i.issuedAt.month,
-      i.issuedAt.day,
-    );
-    if (i.dueCents == line.amountCents &&
-        !issued.isBefore(earliest) &&
-        !issued.isAfter(line.bookingDate) &&
-        _samePayer(line.counterpartyName, i.memberName)) {
-      add(i, BankMatchBasis.amount);
-    }
-  }
-  return found.values.toList()
-    ..sort((a, b) => a.basis.index.compareTo(b.basis.index));
-}
+}) => _OpenIndex(open).suggest(line, windowDays);
 
 /// The one invoice a structured reference names for the whole amount
 /// still due: what a person may confirm for many movements at once. Null
-/// when the reference names none, or the amount differs (then the
-/// resolution is the person's to choose, one by one).
-BankMatchSuggestion? referenceMatchOf(
+/// when the reference names none or several, or the amount differs (then
+/// the resolution is the person's to choose, one by one).
+BankMatchSuggestion? _referenceMatch(
   StoredBankLine line,
-  List<OpenInvoice> open, {
-  required int windowDays,
-}) {
-  final suggestions = suggestMatches(line, open, windowDays: windowDays);
+  List<BankMatchSuggestion> suggestions,
+) {
   final structured = [
     for (final s in suggestions)
       if (s.basis.isStructured) s,
@@ -171,27 +194,95 @@ BankMatchSuggestion? referenceMatchOf(
   return only.invoice.dueCents == line.amountCents ? only : null;
 }
 
-/// Whether [text] (upper case) names [number] as a whole word: a number
-/// inside a longer one ("2026-00421" for "2026-0042") does not count.
+/// [referenceMatchOf] over [line] and [open] alone.
+@visibleForTesting
+BankMatchSuggestion? referenceMatchOf(
+  StoredBankLine line,
+  List<OpenInvoice> open, {
+  required int windowDays,
+}) => _referenceMatch(line, suggestMatches(line, open, windowDays: windowDays));
+
+/// One movement of the work list with what it may settle, computed once
+/// per load of its statement.
+@immutable
+class BankWorkItem {
+  const BankWorkItem(this.line, this.suggestions, this.referenceMatch);
+
+  final StoredBankLine line;
+  final List<BankMatchSuggestion> suggestions;
+
+  /// The one invoice its structured reference names for exactly what it
+  /// owes, or null.
+  final BankMatchSuggestion? referenceMatch;
+}
+
+/// The work list of a statement: every movement with its suggestions,
+/// the open invoices prepared once; and [open] itself, the dialogs' list.
+@immutable
+class BankWorkList {
+  BankWorkList(this.lines, this.open, {required int windowDays})
+    : items = _items(lines, open, windowDays);
+
+  final List<StoredBankLine> lines;
+  final List<OpenInvoice> open;
+  final List<BankWorkItem> items;
+
+  static List<BankWorkItem> _items(
+    List<StoredBankLine> lines,
+    List<OpenInvoice> open,
+    int windowDays,
+  ) {
+    final index = _OpenIndex(open);
+    BankWorkItem item(StoredBankLine l) {
+      final s = index.suggest(l, windowDays);
+      return BankWorkItem(l, s, _referenceMatch(l, s));
+    }
+
+    return [for (final l in lines) item(l)];
+  }
+
+  /// The movements a person may confirm in one press: each invoice once,
+  /// for the first movement naming it; a second movement carrying the
+  /// same reference waits for its own decision.
+  List<BankWorkItem> get referenceBatch {
+    final taken = <String>{};
+    return [
+      for (final item in items)
+        if (item.referenceMatch case final m?)
+          if (taken.add(m.invoice.id)) item,
+    ];
+  }
+}
+
+/// Whether [text] (upper case) names [number] (upper case) as a whole
+/// word: a number inside a longer one ("2026-00421" for "2026-0042") does
+/// not count.
 bool _names(String text, String number) {
-  final n = number.trim().toUpperCase();
-  if (n.isEmpty || !n.contains(RegExp('[0-9]'))) return false;
-  return RegExp(
-    '(?<![A-Z0-9])${RegExp.escape(n)}(?![A-Z0-9])',
-  ).hasMatch(text);
+  bool alnum(int c) =>
+      (c >= 48 && c <= 57) || (c >= 65 && c <= 90);
+  for (var at = text.indexOf(number); at >= 0; at = text.indexOf(number, at + 1)) {
+    final end = at + number.length;
+    final before = at == 0 || !alnum(text.codeUnitAt(at - 1));
+    final after = end == text.length || !alnum(text.codeUnitAt(end));
+    if (before && after) return true;
+  }
+  return false;
 }
 
 /// The shortest word of a name that tells two people apart; shorter ones
 /// ("de", "SA", initials) are shared by too many.
 const int _nameWordMin = 3;
 
-/// Whether a payer's name and a member's share a word of their names,
-/// case aside: "M. DUPONT JEAN" and "Jean Dupont".
-bool _samePayer(String payer, String member) {
-  Set<String> words(String s) => {
-    for (final w in s.toUpperCase().split(RegExp(r'[^\p{L}0-9]+', unicode: true)))
-      if (w.length >= _nameWordMin) w,
-  };
-  final a = words(payer);
-  return a.isNotEmpty && a.intersection(words(member)).isNotEmpty;
-}
+/// Words that name a company's legal form, not who it is: two companies
+/// share them without being one payer.
+const Set<String> _legalFormWords = {
+  'SARL', 'SAS', 'SASU', 'EURL', 'GMBH', 'LTD', 'LLC', 'INC', 'SRL', 'SPRL',
+  'BVBA', 'SPA', 'SNC',
+};
+
+/// The words of a name that tell a payer apart, case aside: "M. DUPONT
+/// JEAN" and "Jean Dupont" share DUPONT and JEAN.
+Set<String> _nameWords(String name) => {
+  for (final w in name.toUpperCase().split(RegExp(r'[^\p{L}0-9]+', unicode: true)))
+    if (w.length >= _nameWordMin && !_legalFormWords.contains(w)) w,
+};

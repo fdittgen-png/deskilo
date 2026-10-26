@@ -3001,17 +3001,35 @@ abstract class AppLocalizations {
   /// **'Amount column (or money in)'**
   String get bankCsvAmount;
 
+  /// #2380 CSV sheet: a column of a file without a header row, by number and first cell.
+  ///
+  /// In en, this message translates to:
+  /// **'Column {n} ({first})'**
+  String bankCsvColumn(int n, String first);
+
   /// #2380 CSV sheet: the payer or payee column.
   ///
   /// In en, this message translates to:
   /// **'Payer or payee column'**
   String get bankCsvCounterparty;
 
+  /// #2380 CSV sheet: the payer's or payee's IBAN column.
+  ///
+  /// In en, this message translates to:
+  /// **'Payer or payee IBAN column'**
+  String get bankCsvCounterpartyIban;
+
   /// #2380 CSV sheet: the currency of the movements.
   ///
   /// In en, this message translates to:
   /// **'Currency'**
   String get bankCsvCurrency;
+
+  /// #2380 CSV sheet: the currency column, when the file has one.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency column, when the file has one'**
+  String get bankCsvCurrencyColumn;
 
   /// #2380 CSV sheet: the booking date column.
   ///
@@ -3037,10 +3055,22 @@ abstract class AppLocalizations {
   /// **'Amounts use a decimal comma'**
   String get bankCsvDecimalComma;
 
-  /// #2380 CSV sheet: the account is missing.
+  /// #2380 CSV sheet: a column chosen for two meanings.
   ///
   /// In en, this message translates to:
-  /// **'Name the account.'**
+  /// **'A column is chosen twice: give each column one meaning.'**
+  String get bankCsvDuplicateColumn;
+
+  /// #2380 CSV sheet: the first row names the columns.
+  ///
+  /// In en, this message translates to:
+  /// **'The first row names the columns'**
+  String get bankCsvHeader;
+
+  /// #2380 CSV sheet: the account is missing or too long.
+  ///
+  /// In en, this message translates to:
+  /// **'Name the account, in at most 64 characters.'**
   String get bankCsvNeedsAccount;
 
   /// #2380 CSV sheet: no amount column chosen.
@@ -3324,6 +3354,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The file is larger than this server imports. Nothing was imported.'**
   String get bankRefusedTooLarge;
+
+  /// #2380 Refusal: an account or a bank id longer than a statement keeps.
+  ///
+  /// In en, this message translates to:
+  /// **'An account or a bank transaction id in the file is longer than a statement keeps. Nothing was imported.'**
+  String get bankRefusedTooLong;
 
   /// #2380 Refusal: more movements than one import takes.
   ///
@@ -32945,6 +32981,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Someone has already decided this. The list shows the outcome.'**
   String get refusalAlreadyDecided;
+
+  /// #2380 Refusal DKB03: the server refused the statement whole.
+  ///
+  /// In en, this message translates to:
+  /// **'The server refused the statement whole (too large, too many movements, or several currencies). Nothing was imported.'**
+  String get refusalBankFileRefused;
+
+  /// #2380 Refusal DKB01: the movement was decided meanwhile.
+  ///
+  /// In en, this message translates to:
+  /// **'This movement was decided meanwhile (matched, reconciled or reviewed). The list shows where it stands now.'**
+  String get refusalBankLineDecided;
+
+  /// #2380 Refusal DKB02: the movement and its choice do not go together.
+  ///
+  /// In en, this message translates to:
+  /// **'This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.'**
+  String get refusalBankLineRefused;
 
   /// #1305 Shown when an invoice changed state before the action reached the server
   ///

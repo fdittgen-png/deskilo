@@ -72,7 +72,7 @@
   "bankCsvRemittance": "Colonne du libellé",
   "bankCsvTransactionId": "Colonne de l'identifiant bancaire",
   "bankCsvNone": "Aucune",
-  "bankCsvNeedsAccount": "Indiquez le compte.",
+  "bankCsvNeedsAccount": "Indiquez le compte, en 64 caractères au plus.",
   "bankCsvNeedsCurrency": "Indiquez la devise en trois lettres (EUR, CHF).",
   "bankCsvNeedsDate": "Choisissez la colonne de la date.",
   "bankCsvNeedsAmount": "Choisissez la colonne du montant.",
@@ -81,5 +81,14 @@
   "settingLabelBankImportMaxLines": "Mouvements par relevé bancaire",
   "settingHintBankImportMaxLines": "Un relevé qui en contient davantage est refusé en entier ; scindez-le par période à la banque.",
   "settingLabelBankMatchWindowDays": "Fenêtre des factures pour un paiement sans référence",
-  "settingHintBankMatchWindowDays": "Combien de jours avant un paiement sa facture peut avoir été émise pour être proposée d'après le seul montant et le payeur. Une personne confirme toujours."
+  "settingHintBankMatchWindowDays": "Combien de jours avant un paiement sa facture peut avoir été émise pour être proposée d'après le seul montant et le payeur. Une personne confirme toujours.",
+  "bankCsvColumn": "Colonne {n} ({first})",
+  "bankCsvHeader": "La première ligne nomme les colonnes",
+  "bankCsvCurrencyColumn": "Colonne de la devise, si le fichier en a une",
+  "bankCsvCounterpartyIban": "Colonne de l'IBAN du payeur ou bénéficiaire",
+  "bankCsvDuplicateColumn": "Une colonne est choisie deux fois : donnez à chaque colonne un seul sens.",
+  "bankRefusedTooLong": "Un compte ou un identifiant bancaire du fichier est plus long que ce qu'un relevé conserve. Rien n'a été importé.",
+  "refusalBankLineDecided": "Ce mouvement a été traité entre-temps (rapproché ou vérifié). La liste montre où il en est.",
+  "refusalBankLineRefused": "Ce mouvement ne peut pas régler cela : son sens, sa devise, son montant ou son état ne conviennent pas. Rien n'a changé.",
+  "refusalBankFileRefused": "Le serveur a refusé le relevé en entier (trop grand, trop de mouvements ou plusieurs devises). Rien n'a été importé."
 }

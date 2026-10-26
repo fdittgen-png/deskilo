@@ -12,7 +12,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_connection.dart'
     show accountingTransferReaders;
-import '../../domain/bank/bank_records.dart' show bankStatementReaders;
+import '../../domain/bank/bank_records.dart'
+    show bankMatchPermission, bankReconcilePermission, bankStatementReaders;
 import '../../domain/premises_lease.dart' show leaseManagePermission;
 import '../../domain/purchase.dart' show
         purchaseDecidePermission,
@@ -396,6 +397,10 @@ class MoneyActionSet {
         BankStatementsButton(
           workspaceId: data.workspace!.id,
           currency: data.workspace!.currencyCode,
+          canMatch: (data.member?.isOwner ?? false) ||
+              ref.read(myPermissionsProvider).any((p) => p.wireName == bankMatchPermission),
+          canReconcile: (data.member?.isOwner ?? false) ||
+              ref.read(myPermissionsProvider).any((p) => p.wireName == bankReconcilePermission),
         ),
       // #2568 — the rooms the space rents, for those who manage the plan.
       if (data.externalRoomsOn &&

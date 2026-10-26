@@ -72,7 +72,7 @@
   "bankCsvRemittance": "Textspalte",
   "bankCsvTransactionId": "Spalte Bank-Transaktionskennung",
   "bankCsvNone": "Keine",
-  "bankCsvNeedsAccount": "Nennen Sie das Konto.",
+  "bankCsvNeedsAccount": "Nennen Sie das Konto, mit höchstens 64 Zeichen.",
   "bankCsvNeedsCurrency": "Geben Sie die Währung mit drei Buchstaben an (EUR, CHF).",
   "bankCsvNeedsDate": "Wählen Sie die Datumsspalte.",
   "bankCsvNeedsAmount": "Wählen Sie die Betragsspalte.",
@@ -81,5 +81,14 @@
   "settingLabelBankImportMaxLines": "Bewegungen je Kontoauszug",
   "settingHintBankImportMaxLines": "Ein Auszug mit mehr wird vollständig abgelehnt; teilen Sie ihn bei der Bank nach Zeitraum auf.",
   "settingLabelBankMatchWindowDays": "Rechnungsfenster für eine Zahlung ohne Referenz",
-  "settingHintBankMatchWindowDays": "Wie viele Tage vor einer Zahlung ihre Rechnung ausgestellt sein darf, um allein nach Betrag und Zahler vorgeschlagen zu werden. Bestätigt wird immer von einer Person."
+  "settingHintBankMatchWindowDays": "Wie viele Tage vor einer Zahlung ihre Rechnung ausgestellt sein darf, um allein nach Betrag und Zahler vorgeschlagen zu werden. Bestätigt wird immer von einer Person.",
+  "bankCsvColumn": "Spalte {n} ({first})",
+  "bankCsvHeader": "Die erste Zeile benennt die Spalten",
+  "bankCsvCurrencyColumn": "Währungsspalte, falls vorhanden",
+  "bankCsvCounterpartyIban": "Spalte IBAN von Zahler oder Empfänger",
+  "bankCsvDuplicateColumn": "Eine Spalte ist doppelt gewählt: Geben Sie jeder Spalte nur eine Bedeutung.",
+  "bankRefusedTooLong": "Ein Konto oder eine Bank-Transaktionskennung in der Datei ist länger, als ein Auszug speichert. Nichts wurde importiert.",
+  "refusalBankLineDecided": "Diese Bewegung wurde inzwischen entschieden (zugeordnet, abgeglichen oder geprüft). Die Liste zeigt den aktuellen Stand.",
+  "refusalBankLineRefused": "Diese Bewegung kann das nicht begleichen: Richtung, Währung, Betrag oder Stand passen nicht. Nichts wurde geändert.",
+  "refusalBankFileRefused": "Der Server hat den Auszug vollständig abgelehnt (zu groß, zu viele Bewegungen oder mehrere Währungen). Nichts wurde importiert."
 }

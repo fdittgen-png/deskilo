@@ -334,3 +334,92 @@ final class BankStatementLinesFamily extends $Family
   @override
   String toString() => r'bankStatementLinesProvider';
 }
+
+/// The work list of one statement: its movements with what each may
+/// settle, matched once per load against the space's open invoices.
+
+@ProviderFor(bankWorkList)
+final bankWorkListProvider = BankWorkListFamily._();
+
+/// The work list of one statement: its movements with what each may
+/// settle, matched once per load against the space's open invoices.
+
+final class BankWorkListProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<BankWorkList>,
+          BankWorkList,
+          FutureOr<BankWorkList>
+        >
+    with $FutureModifier<BankWorkList>, $FutureProvider<BankWorkList> {
+  /// The work list of one statement: its movements with what each may
+  /// settle, matched once per load against the space's open invoices.
+  BankWorkListProvider._({
+    required BankWorkListFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'bankWorkListProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$bankWorkListHash();
+
+  @override
+  String toString() {
+    return r'bankWorkListProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<BankWorkList> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<BankWorkList> create(Ref ref) {
+    final argument = this.argument as String;
+    return bankWorkList(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is BankWorkListProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$bankWorkListHash() => r'5538ae9db4d509d48ff50afa276a158748c7ded4';
+
+/// The work list of one statement: its movements with what each may
+/// settle, matched once per load against the space's open invoices.
+
+final class BankWorkListFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<BankWorkList>, String> {
+  BankWorkListFamily._()
+    : super(
+        retry: null,
+        name: r'bankWorkListProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The work list of one statement: its movements with what each may
+  /// settle, matched once per load against the space's open invoices.
+
+  BankWorkListProvider call(String statementId) =>
+      BankWorkListProvider._(argument: statementId, from: this);
+
+  @override
+  String toString() => r'bankWorkListProvider';
+}

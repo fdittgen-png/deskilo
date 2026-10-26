@@ -151,6 +151,11 @@ BankStatement readCsv(String text, BankCsvMapping mapping) {
             grouping: true,
           )
         : money(mapping.credit).abs() - money(mapping.debit).abs();
+    // No movement is worth nothing: an empty or zero amount is a row the
+    // mapping misread, and kept it would block its own correction.
+    if (cents == 0) {
+      throw BankFileException(BankFileProblem.badAmount, line: line);
+    }
     final booking = _date(cell(mapping.bookingDate), mapping.datePattern, line);
     final value = cell(mapping.valueDate);
     final remittance = cell(mapping.remittance).replaceAll(RegExp(r'\s+'), ' ');

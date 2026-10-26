@@ -23,6 +23,10 @@ class FakeBankStatementRepository implements BankStatementRepository {
 
   final FakeMoneyRepository money;
   final DateTime today;
+
+  /// The payments reported as made and not yet reconciled: what a movement
+  /// out of the same amount and currency may reconcile.
+  final reportedPayments = <({OutgoingCandidate payment, String currency})>[];
   final statements = <StoredBankStatement>[];
   final _lines = <String, List<StoredBankLine>>{};
   final _sources = <String, String>{};
@@ -70,8 +74,30 @@ class FakeBankStatementRepository implements BankStatementRepository {
 
   @override
   Future<List<StoredBankLine>> fetchLines(String statementId) async => [
-    ...?_lines[statementId],
+    for (final l in _lines[statementId] ?? const <StoredBankLine>[])
+      if (l.isMoneyIn || l.status != BankLineStatus.open) l else _withCandidates(l),
   ];
+
+  StoredBankLine _withCandidates(StoredBankLine l) => StoredBankLine(
+    id: l.id,
+    position: l.position,
+    bookingDate: l.bookingDate,
+    valueDate: l.valueDate,
+    amountCents: l.amountCents,
+    currency: l.currency,
+    status: l.status,
+    transactionId: l.transactionId,
+    counterpartyName: l.counterpartyName,
+    counterpartyIban: l.counterpartyIban,
+    reference: l.reference,
+    endToEndId: l.endToEndId,
+    remittance: l.remittance,
+    outgoingCandidates: [
+      for (final r in reportedPayments)
+        if (r.currency == l.currency && r.payment.amountCents == -l.amountCents)
+          r.payment,
+    ],
+  );
 
   @override
   Future<BankImportResult> importStatement(
@@ -287,13 +313,14 @@ class FakeBankStatementRepository implements BankStatementRepository {
     String lineId, {
     required String outgoingPaymentId,
   }) async {
-    final line = _line(lineId);
+    final line = _withCandidates(_line(lineId));
     if (line.isMoneyIn || line.status != BankLineStatus.open) {
       throw StateError('only open money out reconciles a payment');
     }
     if (!line.outgoingCandidates.any((c) => c.id == outgoingPaymentId)) {
       throw StateError('unknown outgoing payment');
     }
+    reportedPayments.removeWhere((r) => r.payment.id == outgoingPaymentId);
     return _set(lineId, BankLineStatus.reconciled);
   }
 }
@@ -343,8 +370,19 @@ FakeBankStatementRepository seedDemoBankStatements(
       line(2, byRf.dueCents,
           reference: scorReferenceOf(byRf.number)!, payer: byRf.memberName),
     line(3, 4200, text: 'Thanks for the coffee corner', payer: 'Studio Lumen'),
-    line(4, -1500, text: 'Account fee'),
+    line(4, -1500, text: 'Reimbursement REIMB-1', payer: 'Studio Lumen'),
   ];
+  // A reimbursement reported as made, which the movement out reconciles.
+  repo.reportedPayments.add((
+    payment: OutgoingCandidate(
+      id: 'demo-outgoing-1',
+      amountCents: 1500,
+      paidOn: day,
+      reference: 'REIMB-1',
+      payee: 'Studio Lumen',
+    ),
+    currency: currency,
+  ));
   final statement = BankStatement(
     format: BankFileFormat.camt054,
     account: _demoAccount,

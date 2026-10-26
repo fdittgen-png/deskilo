@@ -23,36 +23,50 @@ typedef BankImportOutcome = ({
   BankFileException? refused,
 });
 
-/// The widths of the text columns a movement is stored in
-/// (`bank_statement_lines`): a longer name or text is cut there, the rest
-/// of the movement is kept.
-const int _nameWidth = 140;
-const int _remittanceWidth = 1000;
-
-BankStatement _fitted(BankStatement s) => BankStatement(
-  format: s.format,
-  account: s.account,
-  currency: s.currency,
-  statementId: s.statementId,
-  openingCents: s.openingCents,
-  closingCents: s.closingCents,
-  lines: [
-    for (final l in s.lines)
-      BankLine(
-        position: l.position,
-        bookingDate: l.bookingDate,
-        valueDate: l.valueDate,
-        amountCents: l.amountCents,
-        currency: l.currency,
-        transactionId: l.transactionId,
-        counterpartyName: _cut(l.counterpartyName, _nameWidth),
-        counterpartyIban: l.counterpartyIban,
-        reference: l.reference,
-        endToEndId: l.endToEndId,
-        remittance: _cut(l.remittance, _remittanceWidth),
-      ),
-  ],
-);
+/// [s] as the store keeps it: an account or a bank id that does not fit
+/// refuses the file, by name; a name or a text is cut to its column; an
+/// end-to-end id or an IBAN that does not fit is left out.
+BankStatement _fitted(BankStatement s) {
+  BankFileException tooLong(int? line, String what) =>
+      BankFileException(BankFileProblem.tooLong, line: line, detail: what);
+  if (s.account.trim().length > BankColumnWidths.account) {
+    throw tooLong(null, 'account');
+  }
+  return BankStatement(
+    format: s.format,
+    account: s.account,
+    currency: s.currency,
+    statementId: _cut(s.statementId, BankColumnWidths.statementRef),
+    openingCents: s.openingCents,
+    closingCents: s.closingCents,
+    lines: [
+      for (final l in s.lines)
+        if (l.transactionId.length > BankColumnWidths.transactionId)
+          throw tooLong(l.position, 'transaction id')
+        else
+          BankLine(
+            position: l.position,
+            bookingDate: l.bookingDate,
+            valueDate: l.valueDate,
+            amountCents: l.amountCents,
+            currency: l.currency,
+            transactionId: l.transactionId,
+            counterpartyName: _cut(
+              l.counterpartyName,
+              BankColumnWidths.counterpartyName,
+            ),
+            counterpartyIban: BankColumnWidths.iban.hasMatch(l.counterpartyIban)
+                ? l.counterpartyIban
+                : '',
+            reference: l.reference,
+            endToEndId: l.endToEndId.length > BankColumnWidths.endToEndId
+                ? ''
+                : l.endToEndId,
+            remittance: _cut(l.remittance, BankColumnWidths.remittance),
+          ),
+    ],
+  );
+}
 
 String _cut(String s, int width) => s.length <= width ? s : s.substring(0, width);
 
@@ -74,11 +88,8 @@ class BankImportCommands {
   }) async {
     final BankStatement statement;
     try {
-      statement = parseBankFile(
-        bytes,
-        format: format,
-        limits: settings.limits,
-        csv: csv,
+      statement = _fitted(
+        parseBankFile(bytes, format: format, limits: settings.limits, csv: csv),
       );
     } on BankFileException catch (e, st) {
       TraceLogger.instance.warn(
@@ -91,9 +102,9 @@ class BankImportCommands {
     }
     final result = await _repository.importStatement(
       workspaceId,
-      statement: _fitted(statement),
+      statement: statement,
       sourceSha256: sha256.convert(bytes).toString(),
-      fileName: fileName,
+      fileName: _cut(fileName, BankColumnWidths.fileName),
     );
     return (result: result, refused: null);
   }
@@ -118,21 +129,16 @@ class BankImportCommands {
     note: note.trim(),
   );
 
-  /// Confirms every movement whose structured reference names one invoice
-  /// for exactly what it still owes, one after the other; answers how many
+  /// Confirms the movements of [list] whose structured reference names one
+  /// invoice for exactly what it still owes, each invoice once
+  /// ([BankWorkList.referenceBatch]), one after the other; answers how many
   /// the server took.
-  Future<int> confirmReferenceMatches(
-    List<StoredBankLine> lines,
-    List<OpenInvoice> open, {
-    required int windowDays,
-  }) async {
+  Future<int> confirmReferenceMatches(BankWorkList list) async {
     var confirmed = 0;
-    for (final line in lines) {
-      final match = referenceMatchOf(line, open, windowDays: windowDays);
-      if (match == null) continue;
+    for (final item in list.referenceBatch) {
       await _repository.matchLine(
-        line.id,
-        invoiceId: match.invoice.id,
+        item.line.id,
+        invoiceId: item.referenceMatch!.invoice.id,
         resolution: 'exact',
         note: '',
       );
@@ -151,19 +157,36 @@ class BankImportCommands {
 }
 
 /// What a spreadsheet's mapping still lacks, field by field.
-enum BankCsvMappingProblem { account, currency, date, amount }
+enum BankCsvMappingProblem { account, currency, date, amount, duplicateColumn }
 
-/// The problems of a mapping as the person filled it in: an account named,
-/// a three-letter currency, a date column and an amount column chosen.
+/// The problems of a mapping as the person filled it in: an account named
+/// in at most [BankColumnWidths.account] characters, a three-letter
+/// currency, a date column and an amount column chosen, and no column
+/// chosen for two meanings.
 Set<BankCsvMappingProblem> bankCsvMappingProblems({
   required String account,
   required String currency,
   required int? dateColumn,
   required int? amountColumn,
-}) => {
-  if (account.trim().isEmpty) BankCsvMappingProblem.account,
-  if (!RegExp(r'^[A-Za-z]{3}$').hasMatch(currency.trim()))
-    BankCsvMappingProblem.currency,
-  if (dateColumn == null) BankCsvMappingProblem.date,
-  if (amountColumn == null) BankCsvMappingProblem.amount,
-};
+  int? currencyColumn,
+  List<int?> otherColumns = const [],
+}) {
+  final chosen = [
+    dateColumn,
+    amountColumn,
+    currencyColumn,
+    ...otherColumns,
+  ].nonNulls.toList();
+  return {
+    if (account.trim().isEmpty ||
+        account.trim().length > BankColumnWidths.account)
+      BankCsvMappingProblem.account,
+    if (currencyColumn == null &&
+        !RegExp(r'^[A-Za-z]{3}$').hasMatch(currency.trim()))
+      BankCsvMappingProblem.currency,
+    if (dateColumn == null) BankCsvMappingProblem.date,
+    if (amountColumn == null) BankCsvMappingProblem.amount,
+    if (chosen.toSet().length < chosen.length)
+      BankCsvMappingProblem.duplicateColumn,
+  };
+}

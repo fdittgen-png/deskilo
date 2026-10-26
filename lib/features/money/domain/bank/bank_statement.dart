@@ -61,6 +61,28 @@ enum BankFileProblem {
 
   /// No movement at all.
   empty,
+
+  /// An account or a bank id longer than a statement keeps
+  /// ([BankColumnWidths]).
+  tooLong,
+}
+
+/// The widths of the columns a statement and its movements are stored in
+/// (`bank_statements`, `bank_statement_lines`, their checks): not a choice,
+/// the shape of the store. An identity (the account, a bank id) longer than
+/// its column refuses the file; a text is cut; an end-to-end id or an IBAN
+/// that does not fit is left out.
+abstract final class BankColumnWidths {
+  static const int account = 64;
+  static const int transactionId = 140;
+  static const int statementRef = 140;
+  static const int endToEndId = 35;
+  static const int counterpartyName = 140;
+  static const int remittance = 1000;
+  static const int fileName = 255;
+
+  /// An IBAN as stored: up to 34 upper-case letters and digits.
+  static final RegExp iban = RegExp(r'^[A-Z0-9]{0,34}$');
 }
 
 /// A refused file: the reason, the 1-based line or entry it was found at

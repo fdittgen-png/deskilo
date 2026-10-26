@@ -72,7 +72,7 @@
   "bankCsvRemittance": "Colonna della causale",
   "bankCsvTransactionId": "Colonna dell'identificativo bancario",
   "bankCsvNone": "Nessuna",
-  "bankCsvNeedsAccount": "Indichi il conto.",
+  "bankCsvNeedsAccount": "Indichi il conto, con al massimo 64 caratteri.",
   "bankCsvNeedsCurrency": "Indichi la valuta con tre lettere (EUR, CHF).",
   "bankCsvNeedsDate": "Scelga la colonna della data.",
   "bankCsvNeedsAmount": "Scelga la colonna dell'importo.",
@@ -81,5 +81,14 @@
   "settingLabelBankImportMaxLines": "Movimenti per estratto conto",
   "settingHintBankImportMaxLines": "Un estratto con più movimenti viene rifiutato per intero; lo suddivida per periodo presso la banca.",
   "settingLabelBankMatchWindowDays": "Finestra delle fatture per un pagamento senza riferimento",
-  "settingHintBankMatchWindowDays": "Quanti giorni prima di un pagamento può essere stata emessa la sua fattura per essere proposta in base al solo importo e al pagatore. Conferma sempre una persona."
+  "settingHintBankMatchWindowDays": "Quanti giorni prima di un pagamento può essere stata emessa la sua fattura per essere proposta in base al solo importo e al pagatore. Conferma sempre una persona.",
+  "bankCsvColumn": "Colonna {n} ({first})",
+  "bankCsvHeader": "La prima riga indica le colonne",
+  "bankCsvCurrencyColumn": "Colonna della valuta, se il file ne ha una",
+  "bankCsvCounterpartyIban": "Colonna dell'IBAN del pagatore o beneficiario",
+  "bankCsvDuplicateColumn": "Una colonna è scelta due volte: dia a ogni colonna un solo significato.",
+  "bankRefusedTooLong": "Un conto o un identificativo bancario del file è più lungo di quanto un estratto conserva. Non è stato importato nulla.",
+  "refusalBankLineDecided": "Questo movimento è stato deciso nel frattempo (abbinato, riconciliato o verificato). L'elenco mostra il suo stato attuale.",
+  "refusalBankLineRefused": "Questo movimento non può saldare ciò: direzione, valuta, importo o stato non corrispondono. Non è cambiato nulla.",
+  "refusalBankFileRefused": "Il server ha rifiutato l'estratto per intero (troppo grande, troppi movimenti o più valute). Non è stato importato nulla."
 }

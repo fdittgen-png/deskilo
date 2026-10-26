@@ -1780,10 +1780,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankCsvAmount => 'Amount column (or money in)';
 
   @override
+  String bankCsvColumn(int n, String first) {
+    return 'Column $n ($first)';
+  }
+
+  @override
   String get bankCsvCounterparty => 'Payer or payee column';
 
   @override
+  String get bankCsvCounterpartyIban => 'Payer or payee IBAN column';
+
+  @override
   String get bankCsvCurrency => 'Currency';
+
+  @override
+  String get bankCsvCurrencyColumn => 'Currency column, when the file has one';
 
   @override
   String get bankCsvDate => 'Date column';
@@ -1798,7 +1809,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankCsvDecimalComma => 'Amounts use a decimal comma';
 
   @override
-  String get bankCsvNeedsAccount => 'Name the account.';
+  String get bankCsvDuplicateColumn =>
+      'A column is chosen twice: give each column one meaning.';
+
+  @override
+  String get bankCsvHeader => 'The first row names the columns';
+
+  @override
+  String get bankCsvNeedsAccount =>
+      'Name the account, in at most 64 characters.';
 
   @override
   String get bankCsvNeedsAmount => 'Choose the amount column.';
@@ -1964,6 +1983,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get bankRefusedTooLarge =>
       'The file is larger than this server imports. Nothing was imported.';
+
+  @override
+  String get bankRefusedTooLong =>
+      'An account or a bank transaction id in the file is longer than a statement keeps. Nothing was imported.';
 
   @override
   String bankRefusedTooManyLines(int max) {
@@ -19636,6 +19659,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalAlreadyDecided =>
       'Someone has already decided this. The list shows the outcome.';
+
+  @override
+  String get refusalBankFileRefused =>
+      'The server refused the statement whole (too large, too many movements, or several currencies). Nothing was imported.';
+
+  @override
+  String get refusalBankLineDecided =>
+      'This movement was decided meanwhile (matched, reconciled or reviewed). The list shows where it stands now.';
+
+  @override
+  String get refusalBankLineRefused =>
+      'This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.';
 
   @override
   String get refusalChangedMeanwhile =>

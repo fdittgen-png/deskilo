@@ -23,6 +23,8 @@ class BankStatementsButton extends StatelessWidget {
   const BankStatementsButton({
     required this.workspaceId,
     required this.currency,
+    required this.canMatch,
+    required this.canReconcile,
     super.key,
   });
 
@@ -31,14 +33,24 @@ class BankStatementsButton extends StatelessWidget {
   /// The space's currency: a spreadsheet's default.
   final String currency;
 
+  /// Imports and matches money in (issueInvoices).
+  final bool canMatch;
+
+  /// Reconciles money out (recordOutgoingPayments).
+  final bool canReconcile;
+
   @override
   Widget build(BuildContext context) => OutlinedButton.icon(
     key: const ValueKey('bank-statements-button'),
     onPressed: () => showAppSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) =>
-          BankStatementsView(workspaceId: workspaceId, currency: currency),
+      builder: (_) => BankStatementsView(
+        workspaceId: workspaceId,
+        currency: currency,
+        canMatch: canMatch,
+        canReconcile: canReconcile,
+      ),
     ),
     icon: const Icon(Icons.account_balance_outlined),
     label: Text(context.l10n.bankStatementsTitle),
@@ -50,11 +62,15 @@ class BankStatementsView extends ConsumerWidget {
   const BankStatementsView({
     required this.workspaceId,
     required this.currency,
+    required this.canMatch,
+    required this.canReconcile,
     super.key,
   });
 
   final String workspaceId;
   final String currency;
+  final bool canMatch;
+  final bool canReconcile;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -66,7 +82,7 @@ class BankStatementsView extends ConsumerWidget {
       children: [
         Text(l10n.bankStatementsIntro, style: Theme.of(context).textTheme.bodySmall),
         const FormGap(),
-        FilledButton.icon(
+        if (canMatch) FilledButton.icon(
           key: const ValueKey('bank-import'),
           onPressed: () => BankImportFlow(
             ref,
@@ -117,6 +133,11 @@ class BankStatementsView extends ConsumerWidget {
   void _open(BuildContext context, StoredBankStatement s) => showAppSheet<void>(
     context: context,
     isScrollControlled: true,
-    builder: (_) => BankLinesView(workspaceId: workspaceId, statement: s),
+    builder: (_) => BankLinesView(
+      workspaceId: workspaceId,
+      statement: s,
+      canMatch: canMatch,
+      canReconcile: canReconcile,
+    ),
   );
 }

@@ -82,7 +82,9 @@ void main() {
     var lines = await bank.fetchLines(id);
     final open = openInvoices(money.invoices, money.invoiceMatchesStore);
     expect(
-      await commands.confirmReferenceMatches(lines, open, windowDays: 60),
+      await commands.confirmReferenceMatches(
+        BankWorkList(lines, open, windowDays: 60),
+      ),
       2,
     );
     lines = await bank.fetchLines(id);
@@ -104,7 +106,13 @@ void main() {
     expect(again.result!.statementId, id);
     expect(await bank.fetchStatements('ws-1'), hasLength(1));
     expect(
-      await commands.confirmReferenceMatches(await bank.fetchLines(id), openInvoices(money.invoices, money.invoiceMatchesStore), windowDays: 60),
+      await commands.confirmReferenceMatches(
+        BankWorkList(
+          await bank.fetchLines(id),
+          openInvoices(money.invoices, money.invoiceMatchesStore),
+          windowDays: 60,
+        ),
+      ),
       0,
       reason: 'a settled movement is not confirmed twice',
     );
@@ -156,6 +164,114 @@ void main() {
     expect(
       await commands.review(review, duplicate: true),
       BankLineStatus.duplicate,
+    );
+  });
+
+  test('two movements carrying one invoice\'s QR reference: the batch '
+      'confirms the first and leaves the second to its own decision', () async {
+    const mapping = BankCsvMapping(
+      account: 'CH9300762011623852957',
+      delimiter: ';',
+      fixedCurrency: 'CHF',
+      bookingDate: 0,
+      amount: 1,
+      reference: 2,
+      transactionId: 3,
+    );
+    final file = utf8.encode(
+      'date;amount;ref;id\n'
+      '2026-10-20;120.00;210000000003139471430009017;Q1\n'
+      '2026-10-21;120.00;210000000003139471430009017;Q2\n',
+    );
+    final id = (await import(file, BankFileFormat.csv, csv: mapping)).result!.statementId;
+    final list = BankWorkList(
+      await bank.fetchLines(id),
+      openInvoices(money.invoices, money.invoiceMatchesStore),
+      windowDays: 60,
+    );
+    expect(list.items.where((i) => i.referenceMatch != null), hasLength(2));
+    expect(await commands.confirmReferenceMatches(list), 1);
+    final lines = await bank.fetchLines(id);
+    expect(lines.map((l) => l.status), [BankLineStatus.matched, BankLineStatus.open]);
+  });
+
+  test('a spreadsheet row worth nothing is refused, by its line', () async {
+    const mapping = BankCsvMapping(
+      account: 'A-1',
+      delimiter: ';',
+      fixedCurrency: 'CHF',
+      bookingDate: 0,
+      credit: 1,
+      debit: 2,
+    );
+    final out = await import(
+      utf8.encode('date;in;out\n2026-10-20;12.00;\n2026-10-21;;\n'),
+      BankFileFormat.csv,
+      csv: mapping,
+    );
+    expect(out.refused?.problem, BankFileProblem.badAmount);
+    expect(out.refused?.line, 3);
+    expect(await bank.fetchStatements('ws-1'), isEmpty);
+  });
+
+  test('a mapping names its problems: an account too long, a column chosen '
+      'twice, and no currency needed when a column carries it', () {
+    expect(
+      bankCsvMappingProblems(
+        account: 'x' * (BankColumnWidths.account + 1),
+        currency: 'CHF',
+        dateColumn: 0,
+        amountColumn: 1,
+      ),
+      {BankCsvMappingProblem.account},
+    );
+    expect(
+      bankCsvMappingProblems(
+        account: 'A-1',
+        currency: 'CHF',
+        dateColumn: 0,
+        amountColumn: 1,
+        otherColumns: [1],
+      ),
+      {BankCsvMappingProblem.duplicateColumn},
+    );
+    expect(
+      bankCsvMappingProblems(
+        account: 'A-1',
+        currency: '',
+        dateColumn: 0,
+        amountColumn: 1,
+        currencyColumn: 2,
+      ),
+      isEmpty,
+    );
+  });
+
+  test('an account or a bank id longer than its column refuses the file; '
+      'an IBAN cell that is not one is left out', () async {
+    BankCsvMapping mapping(String account) => BankCsvMapping(
+      account: account,
+      delimiter: ';',
+      fixedCurrency: 'CHF',
+      bookingDate: 0,
+      amount: 1,
+      counterpartyIban: 2,
+      transactionId: 3,
+    );
+    final ok = utf8.encode('d;a;iban;id\n2026-10-20;5.00;n/a;T-1\n');
+    final long = utf8.encode('d;a;iban;id\n2026-10-20;5.00;;${'T' * 141}\n');
+    expect(
+      (await import(ok, BankFileFormat.csv, csv: mapping('x' * 65))).refused?.problem,
+      BankFileProblem.tooLong,
+    );
+    expect(
+      (await import(long, BankFileFormat.csv, csv: mapping('A-1'))).refused?.problem,
+      BankFileProblem.tooLong,
+    );
+    final kept = await import(ok, BankFileFormat.csv, csv: mapping('A-1'));
+    expect(
+      (await bank.fetchLines(kept.result!.statementId)).single.counterpartyIban,
+      '',
     );
   });
 

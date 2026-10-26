@@ -612,7 +612,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     _owner,
     "the bank's last statement: two "
     'invoices paid with their QR and RF references, a transfer without one '
-    'in the work list, and the account fee going out',
+    'in the work list, and a reimbursement going out that reconciles the '
+    'payment reported as made',
     (w) async {
       final repo = seedDemoBankStatements(w.f.money, w.now);
       final statement = (await repo.fetchStatements('ws-1')).single;
@@ -624,7 +625,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       ];
       return byReference.length == 2 &&
           lines.any((l) => l.isMoneyIn && l.reference.isEmpty) &&
-          lines.any((l) => !l.isMoneyIn);
+          lines.any((l) => !l.isMoneyIn && l.outgoingCandidates.isNotEmpty);
     },
   ),
   WorkspaceFeature.dunning: _state(

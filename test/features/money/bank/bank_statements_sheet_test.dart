@@ -84,7 +84,12 @@ void main() {
 
   testWidgets('importing a file lists it and says what it added; the same '
       'file again adds nothing', (tester) async {
-    await pump(tester, const BankStatementsView(workspaceId: 'ws-1', currency: 'CHF'));
+    await pump(tester, const BankStatementsView(
+      workspaceId: 'ws-1',
+      currency: 'CHF',
+      canMatch: true,
+      canReconcile: true,
+    ));
     expect(find.byKey(const ValueKey('bank-statements-empty')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('bank-import')));
     await tester.pumpAndSettle();
@@ -119,7 +124,12 @@ void main() {
     );
     final statement = (await bank.fetchStatements('ws-1')).single;
     expect(statement.id, result.statementId);
-    await pump(tester, BankLinesView(workspaceId: 'ws-1', statement: statement));
+    await pump(tester, BankLinesView(
+      workspaceId: 'ws-1',
+      statement: statement,
+      canMatch: true,
+      canReconcile: true,
+    ));
     expect(find.text('Confirm 2 matches by reference'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('bank-confirm-references')));
     await tester.pumpAndSettle();
@@ -151,7 +161,12 @@ void main() {
     expect(second.review, 1);
     final statement = (await bank.fetchStatements('ws-1'))
         .singleWhere((s) => s.id == second.statementId);
-    await pump(tester, BankLinesView(workspaceId: 'ws-1', statement: statement));
+    await pump(tester, BankLinesView(
+      workspaceId: 'ws-1',
+      statement: statement,
+      canMatch: true,
+      canReconcile: true,
+    ));
     expect(find.textContaining('Possibly imported already'), findsOneWidget);
     await tester.tap(find.textContaining('Possibly imported already'));
     await tester.pumpAndSettle();
@@ -160,6 +175,70 @@ void main() {
     expect(find.textContaining('Duplicate'), findsOneWidget);
     final stored = (await bank.fetchLines(second.statementId)).single;
     expect(stored.status, BankLineStatus.duplicate);
+  });
+
+  testWidgets('money out reconciles the payment reported as made; a reader '
+      'without the rights sees the list and no door', (tester) async {
+    bank.reportedPayments.add((
+      payment: OutgoingCandidate(
+        id: 'out-1',
+        amountCents: 1500,
+        paidOn: DateTime.utc(2026, 10, 19),
+        reference: 'REIMB-1',
+        payee: 'Studio Lumen',
+      ),
+      currency: 'CHF',
+    ));
+    final result = await bank.importStatement(
+      'ws-1',
+      statement: BankStatement(
+        format: BankFileFormat.camt054,
+        account: 'CH9300762011623852957',
+        currency: 'CHF',
+        lines: [
+          BankLine(
+            position: 1,
+            bookingDate: DateTime.utc(2026, 10, 20),
+            valueDate: DateTime.utc(2026, 10, 20),
+            amountCents: -1500,
+            currency: 'CHF',
+            transactionId: 'O1',
+          ),
+        ],
+      ),
+      sourceSha256: 'd' * 64,
+      fileName: 'o.xml',
+    );
+    final statement = (await bank.fetchStatements('ws-1'))
+        .singleWhere((s) => s.id == result.statementId);
+    final line = (await bank.fetchLines(statement.id)).single;
+
+    await pump(tester, BankLinesView(
+      workspaceId: 'ws-1',
+      statement: statement,
+      canMatch: true,
+      canReconcile: false,
+    ));
+    expect(
+      tester.widget<ListTile>(find.byKey(ValueKey('bank-line-tile-${line.id}'))).onTap,
+      isNull,
+      reason: 'reconciling needs recordOutgoingPayments',
+    );
+
+    await pump(tester, BankLinesView(
+      workspaceId: 'ws-1',
+      statement: statement,
+      canMatch: false,
+      canReconcile: true,
+    ));
+    await tester.tap(find.byKey(ValueKey('bank-line-tile-${line.id}')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('bank-out-out-1')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('bank-out-confirm')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Reconciled with a recorded payment'), findsOneWidget);
+    expect((await bank.fetchLines(statement.id)).single.status, BankLineStatus.reconciled);
+    expect(bank.reportedPayments, isEmpty);
   });
 }
 

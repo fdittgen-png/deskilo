@@ -1795,10 +1795,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankCsvAmount => 'Betragsspalte (oder Eingänge)';
 
   @override
+  String bankCsvColumn(int n, String first) {
+    return 'Spalte $n ($first)';
+  }
+
+  @override
   String get bankCsvCounterparty => 'Spalte Zahler oder Empfänger';
 
   @override
+  String get bankCsvCounterpartyIban => 'Spalte IBAN von Zahler oder Empfänger';
+
+  @override
   String get bankCsvCurrency => 'Währung';
+
+  @override
+  String get bankCsvCurrencyColumn => 'Währungsspalte, falls vorhanden';
 
   @override
   String get bankCsvDate => 'Datumsspalte';
@@ -1813,7 +1824,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankCsvDecimalComma => 'Beträge mit Dezimalkomma';
 
   @override
-  String get bankCsvNeedsAccount => 'Nennen Sie das Konto.';
+  String get bankCsvDuplicateColumn =>
+      'Eine Spalte ist doppelt gewählt: Geben Sie jeder Spalte nur eine Bedeutung.';
+
+  @override
+  String get bankCsvHeader => 'Die erste Zeile benennt die Spalten';
+
+  @override
+  String get bankCsvNeedsAccount =>
+      'Nennen Sie das Konto, mit höchstens 64 Zeichen.';
 
   @override
   String get bankCsvNeedsAmount => 'Wählen Sie die Betragsspalte.';
@@ -1980,6 +1999,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get bankRefusedTooLarge =>
       'Die Datei ist größer, als dieser Server importiert. Nichts wurde importiert.';
+
+  @override
+  String get bankRefusedTooLong =>
+      'Ein Konto oder eine Bank-Transaktionskennung in der Datei ist länger, als ein Auszug speichert. Nichts wurde importiert.';
 
   @override
   String bankRefusedTooManyLines(int max) {
@@ -19816,6 +19839,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalAlreadyDecided =>
       'Jemand hat bereits darüber entschieden. Die Liste zeigt das Ergebnis.';
+
+  @override
+  String get refusalBankFileRefused =>
+      'Der Server hat den Auszug vollständig abgelehnt (zu groß, zu viele Bewegungen oder mehrere Währungen). Nichts wurde importiert.';
+
+  @override
+  String get refusalBankLineDecided =>
+      'Diese Bewegung wurde inzwischen entschieden (zugeordnet, abgeglichen oder geprüft). Die Liste zeigt den aktuellen Stand.';
+
+  @override
+  String get refusalBankLineRefused =>
+      'Diese Bewegung kann das nicht begleichen: Richtung, Währung, Betrag oder Stand passen nicht. Nichts wurde geändert.';
 
   @override
   String get refusalChangedMeanwhile =>
