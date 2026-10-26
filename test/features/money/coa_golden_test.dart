@@ -78,10 +78,10 @@ Map<String, Object?> _capture() {
     ],
     'sage': [sage.debtors, sage.sales, sage.bank, sage.taxCode],
     'sageCodes': [
-      SageAccounts.zeroRatedCode,
-      SageAccounts.exemptCode,
-      SageAccounts.reducedCode,
-      SageAccounts.noTaxCode,
+      const SageAccounts().codeOf('zero', 'Z')!,
+      const SageAccounts().codeOf('exempt', 'E')!,
+      const SageAccounts().codeOf('reduced', 'S')!,
+      const SageAccounts().noTax,
     ],
   };
   return out;

@@ -175,10 +175,10 @@ void main() {
     expect(trail.blockers, isEmpty);
     final cells = trail.rows.map(_cells).toList();
     expect(cells.map((c) => c[8]), [
-      sageEuServicesCode,
-      SageAccounts.zeroRatedCode,
-      SageAccounts.exemptCode,
-      SageAccounts.noTaxCode,
+      const SageAccounts().codeOf('', 'AE', euCustomer: true),
+      const SageAccounts().codeOf('zero', 'Z'),
+      const SageAccounts().codeOf('exempt', 'E'),
+      const SageAccounts().noTax,
     ]);
     expect(cells.map((c) => c[8]).toSet(), hasLength(4));
     // The EU customer's member state goes in Country of VAT; nobody
@@ -192,7 +192,7 @@ void main() {
     final trail = _documents([
       _invoice('rc', vat: [_untaxed('AE', 10000)]),
     ]);
-    expect(trail.rows.single.taxCode, sageReverseChargeCode);
+    expect(trail.rows.single.taxCode, const SageAccounts().codeOf('', 'AE'));
     expect(trail.rows.single.countryOfVat, '');
   });
 
@@ -296,7 +296,7 @@ void main() {
         _line(BookRole.revenue, '4000', 10000, debit: false),
       ]);
       final trail = _posted([sale], documents: {'d1': eu});
-      expect(trail.rows.single.taxCode, sageEuServicesCode);
+      expect(trail.rows.single.taxCode, const SageAccounts().codeOf('', 'AE', euCustomer: true));
       expect(trail.rows.single.countryOfVat, 'DE');
     });
 
@@ -338,7 +338,7 @@ void main() {
       final rows = _posted([writeOff]).rows;
       expect(rows.map((r) => r.type), ['JD', 'JC']);
       expect(rows.map((r) => r.account), ['', '']);
-      expect(rows.map((r) => r.taxCode).toSet(), {SageAccounts.noTaxCode});
+      expect(rows.map((r) => r.taxCode).toSet(), {const SageAccounts().noTax});
     });
   });
 }

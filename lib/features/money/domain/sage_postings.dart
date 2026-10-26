@@ -230,7 +230,7 @@ class _Entry {
           account: account,
           code: code,
           tax: tax == null ? 0 : _amount(tax),
-          country: sageCrossBorder(code) ? euCountry : '',
+          country: accounts.crossBorder(code) ? euCountry : '',
         ),
       );
     }

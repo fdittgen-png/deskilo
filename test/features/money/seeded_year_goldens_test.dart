@@ -806,7 +806,7 @@ void main() {
     expect(bill[8], const SageAccounts().taxCode);
     expect(
       [for (final r in rows) if (r[5] == '"INV-1"' && r[0] == 'SI') r[8]],
-      [const SageAccounts().taxCode, SageAccounts.reducedCode],
+      [const SageAccounts().taxCode, const SageAccounts().codeOf('reduced', 'S')!],
     );
     for (final r in rows) {
       final account = r[1].replaceAll('"', '');

@@ -79,25 +79,29 @@ class SageAccounts {
   /// The VAT code for the standard rate: Sage's shipped standard rate.
   String get taxCode => _givenTaxCode ?? _tax('tax_standard');
 
-  /// #2359 — Sage 50 UK's own codes by treatment: zero-rated, exempt and the
-  /// reduced rate. A zero-rated supply stays on the VAT return (Box 6) and
-  /// so does an exempt one, but they are not the same line on a
-  /// partial-exemption calculation. Read from the installed snapshot; an
-  /// instance reads the one it was given.
-  static String get zeroRatedCode => _installed('tax_zero');
-  static String get exemptCode => _installed('tax_exempt');
-  static String get reducedCode => _installed('tax_reduced');
-
-  /// The code for a line that carries no tax: out of scope rather than
-  /// zero-rated, because a zero-RATED supply still belongs on the VAT return
-  /// and an out-of-scope one does not.
-  static String get noTaxCode => _installed('tax_none');
-
-  static String _installed(String role) => ActiveTaxReference.current
-      .accountOf('sage', role, 'GB', tax: true);
-
+  /// #2359 — Sage 50 UK's own codes by treatment (the `sage/tax_*` rows):
+  /// zero-rated, exempt and the reduced rate. A zero-rated supply stays on
+  /// the VAT return (Box 6) and so does an exempt one, but they are not the
+  /// same line on a partial-exemption calculation. The code for a line that
+  /// carries no tax is out of scope (T9) rather than zero-rated, because a
+  /// zero-RATED supply still belongs on the VAT return and an out-of-scope
+  /// one does not.
   /// This instance's out-of-scope code.
   String get noTax => _tax('tax_none');
+
+  /// Whether [code] is a supply to a business in another EU member state,
+  /// which Sage reports with the customer's Country of VAT.
+  bool crossBorder(String code) => code == _tax('tax_eu_services');
+
+  /// These nominal codes, the codes read from [onDay] (the workspace's own
+  /// tax reference).
+  SageAccounts on(TaxReferenceSet onDay) => SageAccounts(
+    debtors: _givenDebtors,
+    sales: _givenSales,
+    bank: _givenBank,
+    taxCode: _givenTaxCode,
+    reference: onDay,
+  );
 
   /// The Sage code of a supply in the rate group [group] ('' when its rate
   /// has none) of the VAT category [category]; null when Sage 50 has no
@@ -112,35 +116,28 @@ class SageAccounts {
         '' => switch (category) {
           'Z' => _tax('tax_zero'),
           'E' => _tax('tax_exempt'),
-          'AE' => euCustomer ? sageEuServicesCode : sageReverseChargeCode,
-          'K' => _sageEuGoodsCode,
-          // A taxed rate no rate row names has no Sage code.
-          'S' => null,
+          // #2373 — the reverse charge: a service to a business in another
+          // EU member state (T22) or at home (T20), `sage/tax_eu_services`
+          // and `sage/tax_reverse_charge`.
+          'AE' => _tax(euCustomer ? 'tax_eu_services' : 'tax_reverse_charge'),
+          // A taxed rate no rate row names, or goods to another member
+          // state (K: the app sells none), have no Sage code.
+          'S' || 'K' => null,
           _ => noTax,
         },
         _ => null,
       };
 }
 
-/// Sage 50 UK's shipped VAT codes of the cross-border and reverse-charge
-/// treatments, fixed by the product's default VAT code table: services to
-/// an EU business customer, goods to one, and the domestic reverse charge.
-@visibleForTesting
-const sageEuServicesCode = 'T22';
-const _sageEuGoodsCode = 'T4';
-@visibleForTesting
-const sageReverseChargeCode = 'T20';
-
-/// Whether [code] is a supply to a customer in another EU member state,
-/// which Sage reports with the customer's Country of VAT.
-bool sageCrossBorder(String code) =>
-    code == sageEuServicesCode || code == _sageEuGoodsCode;
-
 /// The column widths Sage 50's import takes (its audit-trail template).
 const int _sageNominalLength = 8;
 @visibleForTesting
 const int sageReferenceLength = 30;
 const int _sageDetailsLength = 60;
+
+/// The Department Code of every row: no departmental analysis (sites carry
+/// no number yet), and Sage requires the column.
+const String _noDepartment = '0';
 
 /// The 18 columns of Sage 50's audit-trail template, in its order. The
 /// names are what its import wizard maps on, so they are not free-form.
@@ -252,9 +249,15 @@ SageAuditTrail sageAuditTrail(List<SageRow> rows, Set<SageBlocker> blockers) {
     ...blockers,
     for (final r in rows) ...[
       if (r.reference.length > sageReferenceLength)
-        SageBlocker(SageBlock.fieldTooLong, r.reference),
+        SageBlocker(
+          SageBlock.fieldTooLong,
+          '${r.reference} (> $sageReferenceLength)',
+        ),
       if (r.nominal.length > _sageNominalLength)
-        SageBlocker(SageBlock.fieldTooLong, r.nominal),
+        SageBlocker(
+          SageBlock.fieldTooLong,
+          '${r.nominal} (> $_sageNominalLength)',
+        ),
     ],
   };
   return all.isEmpty
@@ -272,8 +275,7 @@ String _line(SageRow r) => [
   r.type,
   _cell(r.account),
   r.nominal,
-  // No departmental analysis: Sage requires the column.
-  '0',
+  _noDepartment,
   // Sage 50 is a UK product and reads DD/MM/YYYY: an ISO date imports as
   // a different day for the first twelve of every month.
   dmy(r.date),

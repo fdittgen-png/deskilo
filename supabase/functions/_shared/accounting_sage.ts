@@ -21,8 +21,9 @@
 //     looked up first, and a missing one creates nothing, not even a
 //     contact;
 //   * every other event (write-off, purchases, a member's receipt and its
-//     reimbursement, tax release) as a balanced `journal` on the mapped
-//     ledger accounts.
+//     reimbursement) as a balanced `journal` on the mapped ledger accounts.
+//     A tax release (`vat_pending` to output tax) is refused with the
+//     invoice whose tax waited: deferred tax is not delivered to Sage.
 //
 // Tax. The issued document is the source: Sage is never its tax authority.
 // The tax rates and ledger accounts are the business's own (read in
@@ -85,13 +86,17 @@ const MAX_PAGES = 50;
 export const CONTACT_REFERENCE_LENGTH = 8;
 
 /** What a payment's `reference` or a journal's `description` carries
- * before the delivery's idempotency key. */
+ * before the delivery's idempotency key (64 hex characters).
+ * spec: ContactPayments — the longest `reference` Sage keeps. A cut
+ * reference would make the readback of a lost payment find nothing and the
+ * next run create it a second time: to verify against a live business
+ * before the first delivery. */
 const NOTE_PREFIX = "deskilo:";
 
 /** The country of the business each target is for, as the business's
  * `country.id` reads it: the app descriptor's
  * (`accounting_targets_sage.dart`; pinned by accounting_targets_test). */
-export const BUSINESS_COUNTRIES: Record<string, string> = {
+const BUSINESS_COUNTRIES: Record<string, string> = {
   sage_business_cloud_gb: "GB",
   sage_business_cloud_ie: "IE",
   sage_business_cloud_ca: "CA",
@@ -421,7 +426,9 @@ export function sageAccounting(ctx: AdapterContext): PostingAdapter {
       : `Sage holds ${found.length} ${what}s referenced ${number}`;
   }
 
-  /** The contact of [party], by its reference; '' when Sage holds none. */
+  /** The contact of [party], by its reference; '' when Sage holds none.
+   * spec: Contacts — that `search` matches the contact's `reference`; if it
+   * matches names only, a contact is never found and is created again. */
   async function findContact(party: PostingParty | undefined): Promise<string | { failure: CreateOutcome }> {
     if (!party?.number) return "";
     const found = await all("contacts", `&search=${encodeURIComponent(party.number)}`);
@@ -648,7 +655,20 @@ export function sageAccounting(ctx: AdapterContext): PostingAdapter {
             if (rows.length === 0) return [];
             const contact = await findContact(party);
             if (typeof contact !== "string") return "detail" in contact.failure ? contact.failure.detail : "the contact could not be read";
-            return rows.map((r) => saleRemote(r, p, contact));
+            const remotes = rows.map((r) => saleRemote(r, p, contact));
+            // A credit note whose allocation got no answer or was refused
+            // stays a conflict while it and its invoice both still owe:
+            // acknowledging it would leave the invoice owing in Sage, and
+            // nothing would ever allocate it.
+            if (entity !== "SalesCreditNote" || !credited) return remotes;
+            const invoice = await oneReferenced("SalesInvoice", credited);
+            if (typeof invoice === "string") return invoice;
+            const invoiceOwes = (minorOf(invoice.outstanding_amount, p.currency) ?? 0) > 0;
+            return remotes.map((remote, i) =>
+              remote.matches && invoiceOwes && (minorOf(rows[i].outstanding_amount, p.currency) ?? 0) > 0
+                ? { ...remote, matches: false, difference: `not allocated to ${credited} in Sage` }
+                : remote
+            );
           }
           const window = `&from_date=${p.date}&to_date=${p.date}`;
           const rows = await all(RESOURCE[entity].path, window);

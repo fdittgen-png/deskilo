@@ -5,6 +5,7 @@
 // book's chart, or the year's documents on the nominal codes the person
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
+import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart' show TaxReferenceQueries;
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
@@ -41,13 +42,14 @@ GenericJournal _written(SageAuditTrail trail) => trail.blockers.isEmpty
     : JournalSageRefused(trail.blockers);
 
 extension SageAccountingExports on AccountingExportRun {
+  /// The codes and rate groups of this workspace's own installation;
+  /// refused, never guessed, while its context is not ready: called inside
+  /// the guarded builder, which says so.
+  TaxReferenceSet _reference() =>
+      workspaceTaxReference(ref) ??
+      (throw StateError('workspace context not ready'));
+
   Future<void> sageExport() async {
-    // The codes and rate groups of this workspace's own installation;
-    // refused, never guessed, while its context is not ready (runGuarded
-    // says so).
-    final reference =
-        workspaceTaxReference(ref) ??
-        (throw StateError('workspace context not ready'));
     final customers = SageCustomers(
       memberNumbers: await memberNumbers(),
       sellerCountry: country,
@@ -64,7 +66,7 @@ extension SageAccountingExports on AccountingExportRun {
                 sageRowsOfPostings(
                   journal.postings,
                   book: (
-                    accounts: SageAccounts(reference: reference),
+                    accounts: SageAccounts(reference: _reference()),
                     customers: customers,
                     baseCurrency:
                         journal.functionalCurrency ?? workspace.currencyCode,
@@ -78,20 +80,29 @@ extension SageAccountingExports on AccountingExportRun {
         save: (content) => save(content, name),
       );
     }
-    final accounts = await showSageAccountsDialog(context);
+    // The dialog proposes this workspace's own defaults when its context is
+    // ready; the builder refuses the file otherwise.
+    final accounts = await showSageAccountsDialog(
+      context,
+      initial: SageAccounts(reference: workspaceTaxReference(ref)),
+    );
     if (accounts == null || !context.mounted) return;
     await exportGenericJournal(
       context,
-      () async => _written(
-        sageRowsOfInvoices(
-          invoices: exported,
-          matches: matches,
-          accounts: accounts,
-          customers: customers,
-          baseCurrency: workspace.currencyCode,
-          groupOf: (t) => reference.groupOfRate(country, t.percent, t.category),
-        ),
-      ),
+      () async {
+        final reference = _reference();
+        return _written(
+          sageRowsOfInvoices(
+            invoices: exported,
+            matches: matches,
+            accounts: accounts.on(reference),
+            customers: customers,
+            baseCurrency: workspace.currencyCode,
+            groupOf: (t) =>
+                reference.groupOfRate(country, t.percent, t.category),
+          ),
+        );
+      },
       save: (content) => save(content, name),
     );
   }

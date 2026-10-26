@@ -121,7 +121,7 @@ class _Document {
     taxCode: taxed?.code ?? accounts.noTax,
     taxMinor: taxed?.tax ?? 0,
     currency: currency,
-    countryOfVat: taxed != null && sageCrossBorder(taxed.code) ? euCountry : '',
+    countryOfVat: taxed != null && accounts.crossBorder(taxed.code) ? euCountry : '',
   );
 
   /// A journal row: no customer, no tax.

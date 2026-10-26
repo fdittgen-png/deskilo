@@ -90,6 +90,7 @@ function business(
     businesses?: string[];
     limitAfter?: number;
     loseWrite?: number;
+    refuseAllocation?: boolean;
   } = {},
 ) {
   const held: Record<string, Row[]> = {
@@ -101,7 +102,7 @@ function business(
     contacts: [],
   };
   const calls: { method: string; path: string; headers: Record<string, string>; body?: Row }[] = [];
-  const st = { writes: 0 };
+  const st: { writes: number; limitAfter?: number } = { writes: 0, limitAfter: opts.limitAfter };
   let next = 100;
   const list = (items: Row[]) => Response.json({ $items: items, $next: null });
   const fetcher = (async (input: string | URL | Request, init?: RequestInit) => {
@@ -111,7 +112,7 @@ function business(
     const path = url.pathname.replace(/^\/v3\.1\//, "");
     const body = init?.body ? JSON.parse(String(init.body)) as Row : undefined;
     calls.push({ method, path, headers, body });
-    if (opts.limitAfter !== undefined && calls.length > opts.limitAfter) {
+    if (st.limitAfter !== undefined && calls.length > st.limitAfter) {
       return new Response("[]", { status: 429, headers: { "Retry-After": "60" } });
     }
     if (opts.status) {
@@ -134,6 +135,11 @@ function business(
         return list(held[path].filter((r) => r.date === day));
       }
       return list(held[path].filter((r) => String(r.reference ?? "").includes(search)));
+    }
+    if (path === "contact_allocations" && opts.refuseAllocation) {
+      return Response.json([{ $severity: "error", $dataCode: "RecordInvalid", $message: "Allocation not allowed", $source: "" }], {
+        status: 422,
+      });
     }
     const key = Object.keys(body!)[0];
     const row: Row = { ...(body![key] as Row), id: `${path}-${next++}`, updated_at: `2026-01-01T00:00:${next}Z` };
@@ -439,4 +445,61 @@ Deno.test("Sage's call limit stops the run's remaining calls", async () => {
   assert(errorOf(log).includes("call limit"), errorOf(log));
   // After the 429 nothing more is asked of Sage.
   assertEquals(calls, 10);
+});
+
+Deno.test("a credit note whose allocation was refused stays a conflict on the next run", async () => {
+  const s = business({ refuseAllocation: true });
+  const log = new Log();
+  assertEquals((await run(s, log, [invoice, credit])).statuses, ["acknowledged", "conflict"]);
+  const before = writes(s).length;
+  assertEquals((await run(s, log, [invoice, credit])).statuses, ["unchanged", "conflict"]);
+  assert(errorOf(log).includes("not allocated to F-2026-0001"), errorOf(log));
+  assertEquals(s.held.sales_credit_notes.length, 1);
+  assertEquals(writes(s).length, before);
+});
+
+Deno.test("an allocation applied but whose answer was lost is acknowledged on the next run", async () => {
+  // Writes: the contact, the invoice, the credit note, its allocation.
+  const s = business({ loseWrite: 4 });
+  const log = new Log();
+  assertEquals((await run(s, log, [invoice, credit])).statuses, ["acknowledged", "conflict"]);
+  assertEquals((await run(s, log, [invoice, credit])).statuses, ["unchanged", "acknowledged"]);
+  assertEquals(s.held.sales_credit_notes.length, 1);
+  assertEquals(s.held.contact_allocations.length, 1);
+});
+
+Deno.test("the documents the call limit stopped are delivered by the next run", async () => {
+  const s = business({ limitAfter: 9 });
+  const log = new Log();
+  const first = (await run(s, log, year)).statuses;
+  assertEquals(first[0], "acknowledged");
+  assert(first.slice(1).every((x) => x === "failed"), first.join(","));
+  s.st.limitAfter = undefined;
+  assertEquals((await run(s, log, year)).statuses, ["unchanged", "acknowledged", "acknowledged", "acknowledged", "acknowledged"]);
+  assertEquals(s.held.sales_invoices.length, 1);
+});
+
+Deno.test("a lost payment answer and a lost journal answer are read back: one artefact each", async () => {
+  for (const [p, lose, collection] of [[receipt, 3, "contact_payments"], [writeOff, 3, "journals"]] as const) {
+    // Writes: the contact, the invoice, then the payment or the journal.
+    const s = business({ loseWrite: lose });
+    const log = new Log();
+    assertEquals((await run(s, log, [invoice, p])).statuses, ["acknowledged", "conflict"]);
+    assertEquals((await run(s, log, [invoice, p])).statuses, ["unchanged", "acknowledged"]);
+    assertEquals(s.held[collection].length, 1, collection);
+  }
+});
+
+Deno.test("two revenue lines of one rate group carry its tax once, on the first", async () => {
+  const s = business();
+  const twoLines = posting("invoice", INV, "F-2026-0003", "2026-01-31", [
+    line("customers", null, 18000, 0),
+    line("revenue", "standard", 0, 10000),
+    line("revenue", "standard", 0, 5000),
+    line("vat_output", "standard", 0, 3000),
+  ]);
+  assertEquals((await run(s, new Log(), [twoLines])).statuses, ["acknowledged"]);
+  const lines = s.held.sales_invoices[0].invoice_lines as Row[];
+  assertEquals(lines.map((l) => [l.unit_price, l.tax_amount]), [[100, 30], [50, 0]]);
+  assertEquals(s.held.sales_invoices[0].tax_amount, "30.00");
 });

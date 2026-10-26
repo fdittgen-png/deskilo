@@ -144,7 +144,7 @@ const _datevFormat = AccountingFormat(
   needsAccounts: true,
 );
 
-/// Sage 50's audit-trail CSV — the British and Irish import shape.
+/// Sage 50's audit-trail CSV — the British import shape.
 const _sageFormat = AccountingFormat(
   id: 'sage50',
   claim: FormatClaim.exchange,
@@ -315,7 +315,9 @@ const List<AccountingTarget> accountingTargets = [
     vendor: 'Sage',
     product: 'Sage 50 Accounts',
     edition: 'audit trail CSV',
-    countries: {'GB', 'IE'},
+    // #2373 — the `sage/*` rows are the UK product's code table; Ireland
+    // waits for its own rows.
+    countries: {'GB'},
     transport: AccountingTransport.file,
     payload: AccountingPayload.documents,
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},

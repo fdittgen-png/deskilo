@@ -355,14 +355,14 @@ void main() {
 
     test('a receipt carries NO tax, or the VAT return doubles it', () {
       final receipt = build(vat: _vat20).trim().split('\r\n')[2];
-      expect(receipt, contains(SageAccounts.noTaxCode));
+      expect(receipt, contains(const SageAccounts().noTax));
       expect(receipt.split(',')[9], '0.00');
     });
 
     test('an untaxed invoice is out of scope (T9), not zero-rated (T0)', () {
       // A zero-RATED supply still belongs on the VAT return; an
       // out-of-scope one does not.
-      expect(build(), contains(SageAccounts.noTaxCode));
+      expect(build(), contains(const SageAccounts().noTax));
       expect(build(), isNot(contains(',T0,')));
     });
   });

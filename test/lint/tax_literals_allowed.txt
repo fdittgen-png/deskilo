@@ -44,5 +44,4 @@ lib/features/money/presentation/vat_filing_file_actions.dart :: 'GB' => l10n.vat
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'CH' => l10n.vatDeclMwstXml, :: 1 :: the label of each country's filing-file action: UI wording
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'CA' => l10n.vatDeclGstQstCsv, :: 1 :: the label of each country's filing-file action: UI wording
 lib/features/money/presentation/widgets/negotiation_card.dart :: '0 %', :: 1 :: UI: the "no discount" placeholder, not a tax value
-lib/features/money/domain/sage.dart :: 'AE' => euCustomer ? sageEuServicesCode : sageReverseChargeCode, :: 1 :: EN 16931 category to Sage 50's shipped VAT code (T22 / T20): a standard's fixed code
 lib/features/money/domain/accounting_targets_sage.dart :: countries: {'US', 'CA', 'GB'}, :: 1 :: the countries a product (Sage Intacct) is sold in, a target descriptor, not a tax value

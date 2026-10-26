@@ -386,11 +386,21 @@ const Map<String, AccountingCapability> accountingCapabilities = {
   'sage100_fr': AccountingCapability(
     formatId: 'sage100_fr',
     state: QualificationState.implemented,
+    // The FEC's own: a reconstruction an accountant completes.
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
     specification: 'imports the FEC (target fec): DGFiP fichiers standards des écritures comptables',
   ),
   'sage50_fr': AccountingCapability(
     formatId: 'sage50_fr',
     state: QualificationState.implemented,
+    // The FEC's own: a reconstruction an accountant completes.
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
     specification: 'imports the FEC (target fec): DGFiP fichiers standards des écritures comptables',
   ),
   'sage_de': AccountingCapability(
