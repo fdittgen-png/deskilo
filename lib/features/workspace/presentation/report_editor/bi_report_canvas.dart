@@ -59,6 +59,7 @@ class BiReportCanvas extends StatelessWidget {
     required this.selection,
     required this.onSelection,
     this.onKeepSelection,
+    this.onKeepForReport,
     this.editing,
   });
 
@@ -71,6 +72,9 @@ class BiReportCanvas extends StatelessWidget {
   /// Saves the selection as a filter of the page; null in read mode, where
   /// a selection is never written anywhere.
   final ValueChanged<BiReportSelection>? onKeepSelection;
+
+  /// Saves the selection as a filter of the whole report; null in read mode.
+  final ValueChanged<BiReportSelection>? onKeepForReport;
 
   /// Null in read mode.
   final BiCanvasEditing? editing;
@@ -109,6 +113,9 @@ class BiReportCanvas extends StatelessWidget {
                 onKeep: onKeepSelection == null
                     ? null
                     : () => onKeepSelection!(shown),
+                onKeepForReport: onKeepForReport == null
+                    ? null
+                    : () => onKeepForReport!(shown),
               ),
             if (visuals.isEmpty)
               Padding(
@@ -160,11 +167,13 @@ class _SelectionBar extends StatelessWidget {
     required this.selection,
     required this.onReset,
     required this.onKeep,
+    required this.onKeepForReport,
   });
 
   final BiReportSelection selection;
   final VoidCallback onReset;
   final VoidCallback? onKeep;
+  final VoidCallback? onKeepForReport;
 
   @override
   Widget build(BuildContext context) {
@@ -192,6 +201,12 @@ class _SelectionBar extends StatelessWidget {
               key: const ValueKey('bi-selection-keep'),
               onPressed: keep,
               child: Text(l10n.biEditorKeepSelection),
+            ),
+          if (onKeepForReport case final keep?)
+            TextButton(
+              key: const ValueKey('bi-selection-keep-report'),
+              onPressed: keep,
+              child: Text(l10n.biEditorKeepSelectionReport),
             ),
         ],
       ),

@@ -375,6 +375,78 @@ BiEdit biAddPageFilter(
   return _setFilters(report, page, [...kept, filter]);
 }
 
+/// The report's filters with [filter] added, for every page; a filter of the
+/// same dimension is replaced. Refused when the report is full, or when a
+/// page or visual already names a value [filter] does not admit.
+BiEdit biAddReportFilter(BiReportDefinition report, BiReportFilter filter) {
+  final kept = [
+    for (final f in report.filters)
+      if (f.dimension != filter.dimension) f,
+  ];
+  if (kept.length >= BiReportFilter.maxPerLevel) {
+    return const BiEdit.refused(BiEditRefusal.limit);
+  }
+  return _setFilters(report, null, [...kept, filter]);
+}
+
+/// Visual [id]'s own filters set to [filters], when they narrow the report's
+/// and the page's.
+BiEdit _setVisualFilters(
+  BiReportDefinition report,
+  int page,
+  String id,
+  List<BiReportFilter> filters,
+) {
+  final above = [...report.filters, ...report.pages[page].filters];
+  if (!biFiltersNarrow(above, filters)) {
+    return const BiEdit.refused(BiEditRefusal.widens);
+  }
+  return _replace(report, page, id, (v) => v.withFilters(filters));
+}
+
+/// Visual [id] limited to [filter] as well (one per dimension); the other
+/// visuals of the page are left as they are.
+BiEdit biAddVisualFilter(
+  BiReportDefinition report,
+  int page,
+  String id,
+  BiReportFilter filter,
+) {
+  final v = _visualOn(report, page, id);
+  if (v == null) return const BiEdit.refused(BiEditRefusal.missing);
+  final kept = [
+    for (final f in v.filters)
+      if (f.dimension != filter.dimension) f,
+  ];
+  if (kept.length >= BiReportFilter.maxPerLevel) {
+    return const BiEdit.refused(BiEditRefusal.limit);
+  }
+  return _setVisualFilters(report, page, id, [...kept, filter]);
+}
+
+/// Visual [id] without its own filter [index].
+BiEdit biRemoveVisualFilter(
+  BiReportDefinition report,
+  int page,
+  String id,
+  int index,
+) {
+  final v = _visualOn(report, page, id);
+  if (v == null) return const BiEdit.refused(BiEditRefusal.missing);
+  if (index < 0 || index >= v.filters.length) {
+    return const BiEdit.refused(BiEditRefusal.missing);
+  }
+  return _setVisualFilters(report, page, id, [...v.filters]..removeAt(index));
+}
+
+/// Whether visual [id] offers its figure's registered source.
+BiEdit biSetDrill(
+  BiReportDefinition report,
+  int page,
+  String id, {
+  required bool on,
+}) => _replace(report, page, id, (v) => v.withDrill(on: on));
+
 /// The report's filters ([page] null) or page [page]'s without filter
 /// [index]. Removing a filter of the report may leave a lower level naming
 /// a value the report no longer limits: that only narrows, so it stays.

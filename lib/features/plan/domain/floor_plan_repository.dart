@@ -92,6 +92,10 @@ abstract class FloorPlanRepository {
   /// event lists label bookings without loading every level's plan).
   Future<Map<String, String>> fetchTargetNames(String workspaceId);
 
+  /// seat/desk/office id → the id of the level it stands on, across the
+  /// whole workspace, so a list of bookings can be narrowed to one level.
+  Future<Map<String, String>> fetchTargetLevels(String workspaceId);
+
   /// Resolves where [seatId] lives (#182): level · office · desk · seat
   /// names for the reservation detail sheet. Null when the seat (or any
   /// link of its chain) no longer exists.

@@ -3037,6 +3037,18 @@ abstract class AppLocalizations {
   /// **'Discard'**
   String get biEditorDiscard;
 
+  /// #2580 BI report editor: whether a visual offers its figure's source
+  ///
+  /// In en, this message translates to:
+  /// **'Offer the source'**
+  String get biEditorDrill;
+
+  /// #2580 BI report editor: what the source switch does
+  ///
+  /// In en, this message translates to:
+  /// **'Readers can open what makes this figure, narrowed like this visual.'**
+  String get biEditorDrillHint;
+
   /// #2580 BI report editor
   ///
   /// In en, this message translates to:
@@ -3150,6 +3162,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Keep as a filter of this page'**
   String get biEditorKeepSelection;
+
+  /// #2580 BI report editor: keep the page's selection as a filter of every page
+  ///
+  /// In en, this message translates to:
+  /// **'Keep as a filter of the whole report'**
+  String get biEditorKeepSelectionReport;
+
+  /// #2580 BI report editor: limit only the selected visual to the page's selection
+  ///
+  /// In en, this message translates to:
+  /// **'Show only {group} here'**
+  String biEditorKeepSelectionVisual(String group);
 
   /// #2580 BI report editor
   ///
@@ -3541,6 +3565,12 @@ abstract class AppLocalizations {
   /// **'whole report'**
   String get biEditorScopeReport;
 
+  /// #2580 BI report editor: scope of a filter that narrows one visual
+  ///
+  /// In en, this message translates to:
+  /// **'this visual'**
+  String get biEditorScopeVisual;
+
   /// #2580 BI report editor
   ///
   /// In en, this message translates to:
@@ -3636,6 +3666,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Description'**
   String get biEditorVisualDescription;
+
+  /// #2580 BI report editor: heading of a visual's own filters
+  ///
+  /// In en, this message translates to:
+  /// **'Filters of this visual'**
+  String get biEditorVisualFilters;
 
   /// #2580 BI report editor
   ///
@@ -27533,6 +27569,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The bookings could not be read.'**
   String get periodReservationsFailed;
+
+  /// #2580 the bookings behind the capacity figure, narrowed to one level
+  ///
+  /// In en, this message translates to:
+  /// **'On {level} only'**
+  String periodReservationsLevel(String level);
 
   /// #2578 the bookings behind the capacity figure
   ///

@@ -337,6 +337,7 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
     selection: s.selection,
     onSelection: _editor.select,
     onKeepSelection: s.preview ? null : (_) => _keep(),
+    onKeepForReport: s.preview ? null : (_) => _keep(forReport: true),
     editing: s.preview
         ? null
         : BiCanvasEditing(
@@ -347,8 +348,8 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
           ),
   );
 
-  void _keep() {
-    _editor.keepSelection();
+  void _keep({bool forReport = false}) {
+    _editor.keepSelection(forReport: forReport);
     _afterCommand();
   }
 
@@ -397,6 +398,7 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
           child: SingleChildScrollView(
             padding: AppSpacing.mdAll,
             child: BiPropertiesPanel(
+              workspaceId: widget.seed.workspaceId,
               provider: _provider,
               onCommand: _afterCommand,
             ),
@@ -430,6 +432,7 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
               label: Text(l10n.biEditorProperties),
               onPressed: () => _sheet(
                 (_) => BiPropertiesPanel(
+                  workspaceId: widget.seed.workspaceId,
                   provider: _provider,
                   onCommand: _afterCommand,
                 ),

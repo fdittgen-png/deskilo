@@ -581,6 +581,134 @@ final class BookingTargetNamesProvider
 String _$bookingTargetNamesHash() =>
     r'e78fa00a1f52b64ae63c953466a06697326b746c';
 
+/// The level each bookable place stands on (seat, desk, office by id), read
+/// from the plan once for the active workspace.
+
+@ProviderFor(bookingTargetLevels)
+final bookingTargetLevelsProvider = BookingTargetLevelsProvider._();
+
+/// The level each bookable place stands on (seat, desk, office by id), read
+/// from the plan once for the active workspace.
+
+final class BookingTargetLevelsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// The level each bookable place stands on (seat, desk, office by id), read
+  /// from the plan once for the active workspace.
+  BookingTargetLevelsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'bookingTargetLevelsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookingTargetLevelsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    return bookingTargetLevels(ref);
+  }
+}
+
+String _$bookingTargetLevelsHash() =>
+    r'fd6868a997dcbb886b78dc783569157d71ac4b74';
+
+/// The name of level [levelId], or null when the plan has no such level.
+
+@ProviderFor(bookingLevelName)
+final bookingLevelNameProvider = BookingLevelNameFamily._();
+
+/// The name of level [levelId], or null when the plan has no such level.
+
+final class BookingLevelNameProvider
+    extends $FunctionalProvider<AsyncValue<String?>, String?, FutureOr<String?>>
+    with $FutureModifier<String?>, $FutureProvider<String?> {
+  /// The name of level [levelId], or null when the plan has no such level.
+  BookingLevelNameProvider._({
+    required BookingLevelNameFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'bookingLevelNameProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$bookingLevelNameHash();
+
+  @override
+  String toString() {
+    return r'bookingLevelNameProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<String?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<String?> create(Ref ref) {
+    final argument = this.argument as String;
+    return bookingLevelName(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is BookingLevelNameProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$bookingLevelNameHash() => r'79c18016eeb1fd1555bbc8a2a592bab8e4c0cfca';
+
+/// The name of level [levelId], or null when the plan has no such level.
+
+final class BookingLevelNameFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<String?>, String> {
+  BookingLevelNameFamily._()
+    : super(
+        retry: null,
+        name: r'bookingLevelNameProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The name of level [levelId], or null when the plan has no such level.
+
+  BookingLevelNameProvider call(String levelId) =>
+      BookingLevelNameProvider._(argument: levelId, from: this);
+
+  @override
+  String toString() => r'bookingLevelNameProvider';
+}
+
 /// The bookings of the months, earliest first; empty for a malformed
 /// period or a [toMonth] before [fromMonth].
 
@@ -675,6 +803,114 @@ final class PeriodReservationsFamily extends $Family
 
   @override
   String toString() => r'periodReservationsProvider';
+}
+
+/// The bookings of the months on level [levelId] only: a whole-level
+/// booking of it, or one of a place standing on it. A place the plan no
+/// longer places on a level is left out, never guessed.
+
+@ProviderFor(levelPeriodReservations)
+final levelPeriodReservationsProvider = LevelPeriodReservationsFamily._();
+
+/// The bookings of the months on level [levelId] only: a whole-level
+/// booking of it, or one of a place standing on it. A place the plan no
+/// longer places on a level is left out, never guessed.
+
+final class LevelPeriodReservationsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Reservation>>,
+          List<Reservation>,
+          FutureOr<List<Reservation>>
+        >
+    with
+        $FutureModifier<List<Reservation>>,
+        $FutureProvider<List<Reservation>> {
+  /// The bookings of the months on level [levelId] only: a whole-level
+  /// booking of it, or one of a place standing on it. A place the plan no
+  /// longer places on a level is left out, never guessed.
+  LevelPeriodReservationsProvider._({
+    required LevelPeriodReservationsFamily super.from,
+    required (String, String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'levelPeriodReservationsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$levelPeriodReservationsHash();
+
+  @override
+  String toString() {
+    return r'levelPeriodReservationsProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Reservation>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Reservation>> create(Ref ref) {
+    final argument = this.argument as (String, String, String);
+    return levelPeriodReservations(ref, argument.$1, argument.$2, argument.$3);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is LevelPeriodReservationsProvider &&
+        other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$levelPeriodReservationsHash() =>
+    r'b64b55626ea96f56fae844911d2a4e6c75924488';
+
+/// The bookings of the months on level [levelId] only: a whole-level
+/// booking of it, or one of a place standing on it. A place the plan no
+/// longer places on a level is left out, never guessed.
+
+final class LevelPeriodReservationsFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<List<Reservation>>,
+          (String, String, String)
+        > {
+  LevelPeriodReservationsFamily._()
+    : super(
+        retry: null,
+        name: r'levelPeriodReservationsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// The bookings of the months on level [levelId] only: a whole-level
+  /// booking of it, or one of a place standing on it. A place the plan no
+  /// longer places on a level is left out, never guessed.
+
+  LevelPeriodReservationsProvider call(
+    String fromMonth,
+    String toMonth,
+    String levelId,
+  ) => LevelPeriodReservationsProvider._(
+    argument: (fromMonth, toMonth, levelId),
+    from: this,
+  );
+
+  @override
+  String toString() => r'levelPeriodReservationsProvider';
 }
 
 /// The hosts My reservations reads. By default the selected workspace's

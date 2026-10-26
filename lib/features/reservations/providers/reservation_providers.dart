@@ -244,6 +244,20 @@ final audienceMembersFromReservations = audienceMembersProvider.overrideWith(
 Future<Map<String, String>> bookingTargetNames(Ref ref) =>
     ref.watch(targetNamesProvider.future);
 
+/// The level each bookable place stands on (seat, desk, office by id), read
+/// from the plan once for the active workspace.
+@riverpod
+Future<Map<String, String>> bookingTargetLevels(Ref ref) =>
+    ref.watch(targetLevelsProvider.future);
+
+/// The name of level [levelId], or null when the plan has no such level.
+@riverpod
+Future<String?> bookingLevelName(Ref ref, String levelId) async =>
+    (await ref.watch(levelsProvider.future))
+        .where((l) => l.id == levelId)
+        .firstOrNull
+        ?.name;
+
 // #2578 — the reservations behind a capacity figure: every booking of the
 // active workspace in the whole months [fromMonth, toMonth] on the local
 // calendar, as the row policies let the reader see them.
@@ -276,6 +290,28 @@ Future<List<Reservation>> periodReservations(
   final to = DateTime(last.year, last.month + 1);
   final rows = await repository.fetchWindow(workspace.id, from: from, to: to);
   return [...rows]..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+}
+
+/// The bookings of the months on level [levelId] only: a whole-level
+/// booking of it, or one of a place standing on it. A place the plan no
+/// longer places on a level is left out, never guessed.
+@riverpod
+Future<List<Reservation>> levelPeriodReservations(
+  Ref ref,
+  String fromMonth,
+  String toMonth,
+  String levelId,
+) async {
+  final rows = await ref.watch(
+    periodReservationsProvider(fromMonth, toMonth).future,
+  );
+  final levels = await ref.watch(bookingTargetLevelsProvider.future);
+  return [
+    for (final r in rows)
+      if ((r.levelId ?? levels[r.seatId ?? r.deskId ?? r.officeId ?? '']) ==
+          levelId)
+        r,
+  ];
 }
 
 // #2553 -- kept beside the workspace context it reads; the rest of My

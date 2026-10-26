@@ -1971,6 +1971,14 @@
   "@biEditorDiscard": {
     "description": "#2580 BI report editor"
   },
+  "biEditorDrill": "Offer the source",
+  "@biEditorDrill": {
+    "description": "#2580 BI report editor: whether a visual offers its figure's source"
+  },
+  "biEditorDrillHint": "Readers can open what makes this figure, narrowed like this visual.",
+  "@biEditorDrillHint": {
+    "description": "#2580 BI report editor: what the source switch does"
+  },
   "biEditorDuplicate": "Duplicate",
   "@biEditorDuplicate": {
     "description": "#2580 BI report editor"
@@ -2067,6 +2075,19 @@
   "biEditorKeepSelection": "Keep as a filter of this page",
   "@biEditorKeepSelection": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorKeepSelectionReport": "Keep as a filter of the whole report",
+  "@biEditorKeepSelectionReport": {
+    "description": "#2580 BI report editor: keep the page's selection as a filter of every page"
+  },
+  "biEditorKeepSelectionVisual": "Show only {group} here",
+  "@biEditorKeepSelectionVisual": {
+    "description": "#2580 BI report editor: limit only the selected visual to the page's selection",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
   },
   "biEditorKind": "Shown as",
   "@biEditorKind": {
@@ -2369,6 +2390,10 @@
   "@biEditorScopeReport": {
     "description": "#2580 BI report editor"
   },
+  "biEditorScopeVisual": "this visual",
+  "@biEditorScopeVisual": {
+    "description": "#2580 BI report editor: scope of a filter that narrows one visual"
+  },
   "biEditorSelectHint": "Select a visual on the page to change it.",
   "@biEditorSelectHint": {
     "description": "#2580 BI report editor"
@@ -2448,6 +2473,10 @@
   "biEditorVisualDescription": "Description",
   "@biEditorVisualDescription": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorVisualFilters": "Filters of this visual",
+  "@biEditorVisualFilters": {
+    "description": "#2580 BI report editor: heading of a visual's own filters"
   },
   "biEditorVisualLabel": "{title}, {kind}, place {position} of {count}, {span} of 12 columns. Alt and arrows move it, Shift and arrows resize it, Delete removes it.",
   "@biEditorVisualLabel": {
@@ -19514,6 +19543,15 @@
   "periodReservationsFailed": "The bookings could not be read.",
   "@periodReservationsFailed": {
     "description": "#2578 the bookings behind the capacity figure"
+  },
+  "periodReservationsLevel": "On {level} only",
+  "@periodReservationsLevel": {
+    "description": "#2580 the bookings behind the capacity figure, narrowed to one level",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
   },
   "periodReservationsTitle": "Bookings of {period}",
   "@periodReservationsTitle": {

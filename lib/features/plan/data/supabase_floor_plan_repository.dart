@@ -248,6 +248,35 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     };
   }
 
+  @override
+  Future<Map<String, String>> fetchTargetLevels(String workspaceId) async {
+    // Every table paged to the end, like the names: a place past the
+    // server's cap would otherwise fall out of its level's bookings.
+    Future<List<Map<String, dynamic>>> rows(String table, String parent) =>
+        fetchAllPages(
+          table: table,
+          build: () => _client
+              .from(table)
+              .select('id, $parent')
+              .eq('workspace_id', workspaceId)
+              .order('id', ascending: true),
+        );
+    final officeLevel = {
+      for (final r in await rows('offices', 'level_id'))
+        r['id'] as String: r['level_id'] as String,
+    };
+    final deskLevel = <String, String>{
+      for (final r in await rows('desks', 'office_id'))
+        r['id'] as String: ?officeLevel[r['office_id']],
+    };
+    return {
+      ...officeLevel,
+      ...deskLevel,
+      for (final r in await rows('seats', 'desk_id'))
+        r['id'] as String: ?deskLevel[r['desk_id']],
+    };
+  }
+
   // #182: four small keyed reads along seats → desks → offices → levels
   // instead of one PostgREST FK-embedded select — the plain form is
   // obviously covered by the existing is_member_of RLS selects and needs

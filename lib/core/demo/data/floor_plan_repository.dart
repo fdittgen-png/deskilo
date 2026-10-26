@@ -144,6 +144,24 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
       };
 
   @override
+  Future<Map<String, String>> fetchTargetLevels(String workspaceId) async {
+    final officeLevel = {
+      for (final o in offices.where((o) => o.workspaceId == workspaceId))
+        o.id: o.levelId,
+    };
+    final deskLevel = {
+      for (final d in desks)
+        d.id: ?officeLevel[d.officeId],
+    };
+    return {
+      ...officeLevel,
+      ...deskLevel,
+      for (final s in seats)
+        s.id: ?deskLevel[s.deskId],
+    };
+  }
+
+  @override
   Future<SeatContext?> fetchSeatContext(String seatId) async {
     final seat = seats.where((s) => s.id == seatId).firstOrNull;
     if (seat == null) return null;

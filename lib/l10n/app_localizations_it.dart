@@ -1738,6 +1738,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biEditorDiscard => 'Scarti';
 
   @override
+  String get biEditorDrill => 'Offrire la fonte';
+
+  @override
+  String get biEditorDrillHint =>
+      'I lettori possono aprire ciò che compone questa cifra, ristretto come questo elemento visivo.';
+
+  @override
   String get biEditorDuplicate => 'Duplichi';
 
   @override
@@ -1801,6 +1808,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biEditorKeepSelection => 'Conservi come filtro di questa pagina';
+
+  @override
+  String get biEditorKeepSelectionReport =>
+      'Mantenere come filtro dell\'intero report';
+
+  @override
+  String biEditorKeepSelectionVisual(String group) {
+    return 'Mostrare qui solo $group';
+  }
 
   @override
   String get biEditorKind => 'Mostrato come';
@@ -2032,6 +2048,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biEditorScopeReport => 'tutto il report';
 
   @override
+  String get biEditorScopeVisual => 'questo elemento visivo';
+
+  @override
   String get biEditorSelectHint =>
       'Selezioni una visualizzazione della pagina per modificarla.';
 
@@ -2083,6 +2102,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get biEditorVisualDescription => 'Descrizione';
+
+  @override
+  String get biEditorVisualFilters => 'Filtri di questo elemento visivo';
 
   @override
   String biEditorVisualLabel(
@@ -16520,6 +16542,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get periodReservationsFailed =>
       'Non è stato possibile leggere le prenotazioni.';
+
+  @override
+  String periodReservationsLevel(String level) {
+    return 'Solo su $level';
+  }
 
   @override
   String periodReservationsTitle(String period) {
