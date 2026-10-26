@@ -18380,6 +18380,43 @@
   "vatAccountField": "Steuerkonto",
   "vatAccountHint": "Konto, auf das der Buchhaltungsexport die vereinnahmte Steuer bucht. Leer = 445710.",
   "vatAddRate": "Satz hinzufügen",
+  "vatAnnualSummaryBase": "Bemessungsgrundlage",
+  "@vatAnnualSummaryBase": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryBase"
+  },
+  "vatAnnualSummaryBox": "Feld",
+  "@vatAnnualSummaryBox": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryBox"
+  },
+  "vatAnnualSummaryButton": "{form} {year} (Jahresübersicht)",
+  "@vatAnnualSummaryButton": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryButton",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatAnnualSummaryEmpty": "Noch keine vorbereitete oder abgegebene Erklärung in {year}.",
+  "@vatAnnualSummaryEmpty": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryEmpty",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatAnnualSummaryLabel": "Bezeichnung",
+  "@vatAnnualSummaryLabel": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryLabel"
+  },
+  "vatAnnualSummaryTax": "Steuer",
+  "@vatAnnualSummaryTax": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryTax"
+  },
   "vatChangeByLaw": "Änderung per Gesetz",
   "@vatChangeByLaw": {
     "description": "#985 VAT versions and counterparty: vatChangeByLaw"
@@ -18755,6 +18792,38 @@
   "vatRateRemoveTooltip": "Entfernen",
   "vatRatesTile": "Steuersätze",
   "vatRegimeHint": "Dieser Space ist nicht als umsatzsteuerpflichtig deklariert, Rechnungen weisen daher keine Steuer aus. Das ändert sich unter Rechtliche Identität.",
+  "vatRegisterActivity": "Tätigkeit: Code, Art und IAE-Rubrik",
+  "@vatRegisterActivity": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivity"
+  },
+  "vatRegisterActivityHelp": "So wie die AEAT es schreibt, z. B. A038612. Leer lassen, um die Tätigkeitsspalten selbst auszufüllen.",
+  "@vatRegisterActivityHelp": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivityHelp"
+  },
+  "vatRegisterActivityInvalid": "Ein Code von A bis D, zwei Ziffern für die Art und bis zu vier Zeichen für die Rubrik.",
+  "@vatRegisterActivityInvalid": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivityInvalid"
+  },
+  "vatRegisterEmpty": "In diesem Zeitraum wurde keine Rechnung ausgestellt.",
+  "@vatRegisterEmpty": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEmpty"
+  },
+  "vatRegisterEsLibro": "Register der ausgestellten Rechnungen (AEAT-XLSX)",
+  "@vatRegisterEsLibro": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEsLibro"
+  },
+  "vatRegisterEsSii": "SII: ausgestellte Rechnungen (XML)",
+  "@vatRegisterEsSii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEsSii"
+  },
+  "vatRegisterItRegistro": "Register der ausgestellten Rechnungen (CSV)",
+  "@vatRegisterItRegistro": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterItRegistro"
+  },
+  "vatRegisterNif": "Geben Sie die NIF des Space als USt-IdNr. ein (neun Zeichen, auf Wunsch mit ES davor): die Datei nennt sie.",
+  "@vatRegisterNif": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterNif"
+  },
   "vatReportByRate": "Summen je Satz",
   "@vatReportByRate": {
     "description": "#878 VAT review / report: vatReportByRate"

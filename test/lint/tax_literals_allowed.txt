@@ -15,7 +15,7 @@ lib/features/money/domain/e_invoice_routing.dart :: 'ES': EInvoiceRoute( :: 1 ::
 lib/features/money/domain/e_invoice_routing.dart :: 'NL': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
 lib/features/money/domain/e_invoice_routing.dart :: 'PT': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
 lib/features/money/domain/e_invoice_routing.dart :: 'LU': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
-lib/features/money/domain/invoice_fatturapa.dart :: 'AE' => buyer.country.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1', :: 1 :: EN 16931 category to the FatturaPA natura code: a standard's fixed code
+lib/features/money/domain/invoice_fatturapa.dart :: 'AE' => buyerCountry.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1', :: 1 :: EN 16931 category to the FatturaPA natura code: a standard's fixed code
 lib/features/money/domain/invoice_ksef_fa3.dart :: 'AE' => buyer.country.toUpperCase() == 'PL' ? '10' : '9', :: 1 :: EN 16931 category to the KSeF FA(3) code: a standard's fixed code
 lib/features/money/domain/invoice_ksef_fa3.dart :: 'AE' => buyer.country.toUpperCase() == 'PL' ? 'oo' : 'np II', :: 1 :: EN 16931 category to the KSeF FA(3) code: a standard's fixed code
 lib/features/money/domain/vat_compliance.dart :: 'AE' => 'VATEX-EU-AE', :: 1 :: EN 16931 category (UNCL5305) and its VATEX code: a standard's fixed code
@@ -53,3 +53,8 @@ lib/features/money/presentation/vat_filing_file_actions.dart :: 'DE' => _askTaxN
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'ES' => askSpanishFilingFacts(context, l10n), :: 1 :: what each country's filing file asks beyond the settings: the question of that file's own builder (structure)
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'IT' => askItalianDeclarant(context, l10n), :: 1 :: what each country's filing file asks beyond the settings: the question of that file's own builder (structure)
 lib/features/money/presentation/widgets/negotiation_card.dart :: '0 %', :: 1 :: UI: the "no discount" placeholder, not a tax value
+lib/features/money/domain/vat_form_catalogue.dart :: 'ES' => esAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
+lib/features/money/domain/vat_form_catalogue.dart :: 'IT' => itAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
+lib/features/money/domain/vat_register_es.dart :: 'AE' => ( :: 1 :: EN 16931 category (UNCL5305) to the AEAT's calificación and clave: a standard's fixed code
+lib/features/money/domain/vat_registers.dart :: 'ES' => const [VatRegisterKind.esLibro, VatRegisterKind.esSii], :: 1 :: which national register builders a country uses: structure (a new country is new code)
+lib/features/money/domain/vat_registers.dart :: 'IT' => const [VatRegisterKind.itRegistro], :: 1 :: which national register builders a country uses: structure (a new country is new code)

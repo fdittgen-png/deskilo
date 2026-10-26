@@ -27188,6 +27188,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatAddRate => 'Add a rate';
 
   @override
+  String get vatAnnualSummaryBase => 'Base';
+
+  @override
+  String get vatAnnualSummaryBox => 'Box';
+
+  @override
+  String vatAnnualSummaryButton(String form, String year) {
+    return '$form $year (annual sheet)';
+  }
+
+  @override
+  String vatAnnualSummaryEmpty(String year) {
+    return 'No prepared or filed return in $year yet.';
+  }
+
+  @override
+  String get vatAnnualSummaryLabel => 'Description';
+
+  @override
+  String get vatAnnualSummaryTax => 'Tax';
+
+  @override
   String get vatChangeByLaw => 'Change by law';
 
   @override
@@ -27530,6 +27552,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vatRegimeHint =>
       'This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.';
+
+  @override
+  String get vatRegisterActivity => 'Activity: code, type and IAE heading';
+
+  @override
+  String get vatRegisterActivityHelp =>
+      'As the AEAT writes it, e.g. A038612. Leave it empty to fill in the activity columns yourself.';
+
+  @override
+  String get vatRegisterActivityInvalid =>
+      'A code from A to D, two digits of type and up to four characters of heading.';
+
+  @override
+  String get vatRegisterEmpty => 'No invoice was issued in this period.';
+
+  @override
+  String get vatRegisterEsLibro => 'Register of issued invoices (AEAT XLSX)';
+
+  @override
+  String get vatRegisterEsSii => 'SII: issued invoices (XML)';
+
+  @override
+  String get vatRegisterItRegistro => 'Register of issued invoices (CSV)';
+
+  @override
+  String get vatRegisterNif =>
+      'Enter the NIF of the workspace as its VAT number (nine characters, ES first if you like): the file names it.';
 
   @override
   String get vatReportByRate => 'Totals per rate';

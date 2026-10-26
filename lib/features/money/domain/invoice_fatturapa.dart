@@ -227,7 +227,7 @@ class _FatturaPaWriter {
 
   void generalData() {
     final natures = {
-      for (final t in supplyBreakdown) ?_natura(t.category, buyer),
+      for (final t in supplyBreakdown) ?fatturaPaNatura(t.category, buyerCountry: buyer.country),
     };
     builder.element(
       'DatiGenerali',
@@ -304,7 +304,7 @@ class _FatturaPaWriter {
         el('PrezzoTotale', amount(lineNet));
         el('AliquotaIVA', _rate(line.vatPercent));
         if (line.vatPercent == 0) {
-          el('Natura', _natura(lineCategory, buyer) ?? 'N2.2');
+          el('Natura', fatturaPaNatura(lineCategory, buyerCountry: buyer.country) ?? 'N2.2');
         }
       },
     );
@@ -312,7 +312,7 @@ class _FatturaPaWriter {
 
   void vatSummary(InvoiceVatTotal total) {
     final natura = total.percent == 0
-        ? _natura(total.category, buyer) ?? 'N2.2'
+        ? fatturaPaNatura(total.category, buyerCountry: buyer.country) ?? 'N2.2'
         : null;
     builder.element(
       'DatiRiepilogo',
@@ -363,14 +363,15 @@ class _FatturaPaWriter {
 /// charge (N6.x, N2.1).
 const _bolloNatures = {'N1', 'N2.2', 'N3.5', 'N4'};
 
-/// Why a 0 % line carries no VAT, in SdI's codes. Null for a taxed line.
-String? _natura(String category, InvoiceParty buyer) => switch (category) {
+/// Why a 0 % line carries no VAT, in SdI's codes (the FatturaPA and the
+/// registro IVA read the same one). Null for a taxed line.
+String? fatturaPaNatura(String category, {required String buyerCountry}) => switch (category) {
   'O' => 'N2.2',
   'E' => 'N4',
   'Z' => 'N3.5',
   'K' => 'N3.2',
   'G' => 'N3.1',
-  'AE' => buyer.country.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1',
+  'AE' => buyerCountry.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1',
   _ => null,
 };
 

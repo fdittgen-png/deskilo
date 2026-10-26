@@ -27474,6 +27474,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get vatAddRate => 'Satz hinzufügen';
 
   @override
+  String get vatAnnualSummaryBase => 'Bemessungsgrundlage';
+
+  @override
+  String get vatAnnualSummaryBox => 'Feld';
+
+  @override
+  String vatAnnualSummaryButton(String form, String year) {
+    return '$form $year (Jahresübersicht)';
+  }
+
+  @override
+  String vatAnnualSummaryEmpty(String year) {
+    return 'Noch keine vorbereitete oder abgegebene Erklärung in $year.';
+  }
+
+  @override
+  String get vatAnnualSummaryLabel => 'Bezeichnung';
+
+  @override
+  String get vatAnnualSummaryTax => 'Steuer';
+
+  @override
   String get vatChangeByLaw => 'Änderung per Gesetz';
 
   @override
@@ -27819,6 +27841,36 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatRegimeHint =>
       'Dieser Space ist nicht als umsatzsteuerpflichtig deklariert, Rechnungen weisen daher keine Steuer aus. Das ändert sich unter Rechtliche Identität.';
+
+  @override
+  String get vatRegisterActivity => 'Tätigkeit: Code, Art und IAE-Rubrik';
+
+  @override
+  String get vatRegisterActivityHelp =>
+      'So wie die AEAT es schreibt, z. B. A038612. Leer lassen, um die Tätigkeitsspalten selbst auszufüllen.';
+
+  @override
+  String get vatRegisterActivityInvalid =>
+      'Ein Code von A bis D, zwei Ziffern für die Art und bis zu vier Zeichen für die Rubrik.';
+
+  @override
+  String get vatRegisterEmpty =>
+      'In diesem Zeitraum wurde keine Rechnung ausgestellt.';
+
+  @override
+  String get vatRegisterEsLibro =>
+      'Register der ausgestellten Rechnungen (AEAT-XLSX)';
+
+  @override
+  String get vatRegisterEsSii => 'SII: ausgestellte Rechnungen (XML)';
+
+  @override
+  String get vatRegisterItRegistro =>
+      'Register der ausgestellten Rechnungen (CSV)';
+
+  @override
+  String get vatRegisterNif =>
+      'Geben Sie die NIF des Space als USt-IdNr. ein (neun Zeichen, auf Wunsch mit ES davor): die Datei nennt sie.';
 
   @override
   String get vatReportByRate => 'Summen je Satz';

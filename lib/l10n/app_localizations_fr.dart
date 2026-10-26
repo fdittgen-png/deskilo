@@ -27492,6 +27492,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatAddRate => 'Ajouter un taux';
 
   @override
+  String get vatAnnualSummaryBase => 'Base';
+
+  @override
+  String get vatAnnualSummaryBox => 'Case';
+
+  @override
+  String vatAnnualSummaryButton(String form, String year) {
+    return '$form $year (feuille annuelle)';
+  }
+
+  @override
+  String vatAnnualSummaryEmpty(String year) {
+    return 'Aucune déclaration préparée ou déposée en $year pour l’instant.';
+  }
+
+  @override
+  String get vatAnnualSummaryLabel => 'Libellé';
+
+  @override
+  String get vatAnnualSummaryTax => 'Taxe';
+
+  @override
   String get vatChangeByLaw => 'Changement par la loi';
 
   @override
@@ -27837,6 +27859,34 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get vatRegimeHint =>
       'Cet espace n\'est pas déclaré assujetti à la TVA : les factures n\'en affichent aucune. Cela se change dans Identité légale.';
+
+  @override
+  String get vatRegisterActivity => 'Activité : code, type et rubrique IAE';
+
+  @override
+  String get vatRegisterActivityHelp =>
+      'Comme l’AEAT l’écrit, par exemple A038612. Laissez vide pour remplir vous-même les colonnes d’activité.';
+
+  @override
+  String get vatRegisterActivityInvalid =>
+      'Un code de A à D, deux chiffres de type et jusqu’à quatre caractères de rubrique.';
+
+  @override
+  String get vatRegisterEmpty =>
+      'Aucune facture n’a été émise sur cette période.';
+
+  @override
+  String get vatRegisterEsLibro => 'Registre des factures émises (XLSX AEAT)';
+
+  @override
+  String get vatRegisterEsSii => 'SII : factures émises (XML)';
+
+  @override
+  String get vatRegisterItRegistro => 'Registre des factures émises (CSV)';
+
+  @override
+  String get vatRegisterNif =>
+      'Saisissez le NIF de l’espace comme numéro de TVA (neuf caractères, ES devant si vous le souhaitez) : le fichier l’indique.';
 
   @override
   String get vatReportByRate => 'Totaux par taux';

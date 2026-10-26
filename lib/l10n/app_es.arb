@@ -18380,6 +18380,43 @@
   "vatAccountField": "Cuenta de IVA",
   "vatAccountHint": "Cuenta donde la exportación contable registra el IVA recaudado. Vacío = 445710.",
   "vatAddRate": "Añadir un tipo",
+  "vatAnnualSummaryBase": "Base imponible",
+  "@vatAnnualSummaryBase": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryBase"
+  },
+  "vatAnnualSummaryBox": "Casilla",
+  "@vatAnnualSummaryBox": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryBox"
+  },
+  "vatAnnualSummaryButton": "{form} {year} (hoja anual)",
+  "@vatAnnualSummaryButton": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryButton",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatAnnualSummaryEmpty": "Todavía no hay ninguna declaración preparada o presentada en {year}.",
+  "@vatAnnualSummaryEmpty": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryEmpty",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatAnnualSummaryLabel": "Descripción",
+  "@vatAnnualSummaryLabel": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryLabel"
+  },
+  "vatAnnualSummaryTax": "Cuota",
+  "@vatAnnualSummaryTax": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryTax"
+  },
   "vatChangeByLaw": "Cambio por ley",
   "@vatChangeByLaw": {
     "description": "#985 VAT versions and counterparty: vatChangeByLaw"
@@ -18755,6 +18792,38 @@
   "vatRateRemoveTooltip": "Quitar",
   "vatRatesTile": "Tipos de IVA",
   "vatRegimeHint": "Este espacio no está declarado como sujeto a IVA, así que las facturas no lo muestran. Eso se cambia en Identidad legal.",
+  "vatRegisterActivity": "Actividad: código, tipo y epígrafe del IAE",
+  "@vatRegisterActivity": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivity"
+  },
+  "vatRegisterActivityHelp": "Tal como lo escribe la AEAT, por ejemplo A038612. Déjelo vacío para completar usted mismo las columnas de actividad.",
+  "@vatRegisterActivityHelp": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivityHelp"
+  },
+  "vatRegisterActivityInvalid": "Un código de la A a la D, dos dígitos de tipo y hasta cuatro caracteres de epígrafe.",
+  "@vatRegisterActivityInvalid": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivityInvalid"
+  },
+  "vatRegisterEmpty": "No se ha expedido ninguna factura en este periodo.",
+  "@vatRegisterEmpty": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEmpty"
+  },
+  "vatRegisterEsLibro": "Libro registro de facturas expedidas (XLSX AEAT)",
+  "@vatRegisterEsLibro": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEsLibro"
+  },
+  "vatRegisterEsSii": "SII: facturas emitidas (XML)",
+  "@vatRegisterEsSii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEsSii"
+  },
+  "vatRegisterItRegistro": "Registro de facturas emitidas (CSV)",
+  "@vatRegisterItRegistro": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterItRegistro"
+  },
+  "vatRegisterNif": "Introduzca el NIF del espacio como número de IVA (nueve caracteres, con ES delante si lo desea): el fichero lo indica.",
+  "@vatRegisterNif": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterNif"
+  },
   "vatReportByRate": "Totales por tipo",
   "@vatReportByRate": {
     "description": "#878 VAT review / report: vatReportByRate"

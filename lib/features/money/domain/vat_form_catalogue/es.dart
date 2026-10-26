@@ -2,6 +2,9 @@
 import '../vat_form_terms.dart';
 import '../vat_forms.dart';
 
+/// The annual summary the year's 303s add up to.
+const esAnnualSummaryName = 'Modelo 390';
+
 final esModelo303Spec = VatFormSpec(
   country: 'ES',
   name: 'Modelo 303',

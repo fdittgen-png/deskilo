@@ -27402,6 +27402,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vatAddRate => 'Añadir un tipo';
 
   @override
+  String get vatAnnualSummaryBase => 'Base imponible';
+
+  @override
+  String get vatAnnualSummaryBox => 'Casilla';
+
+  @override
+  String vatAnnualSummaryButton(String form, String year) {
+    return '$form $year (hoja anual)';
+  }
+
+  @override
+  String vatAnnualSummaryEmpty(String year) {
+    return 'Todavía no hay ninguna declaración preparada o presentada en $year.';
+  }
+
+  @override
+  String get vatAnnualSummaryLabel => 'Descripción';
+
+  @override
+  String get vatAnnualSummaryTax => 'Cuota';
+
+  @override
   String get vatChangeByLaw => 'Cambio por ley';
 
   @override
@@ -27749,6 +27771,36 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get vatRegimeHint =>
       'Este espacio no está declarado como sujeto a IVA, así que las facturas no lo muestran. Eso se cambia en Identidad legal.';
+
+  @override
+  String get vatRegisterActivity =>
+      'Actividad: código, tipo y epígrafe del IAE';
+
+  @override
+  String get vatRegisterActivityHelp =>
+      'Tal como lo escribe la AEAT, por ejemplo A038612. Déjelo vacío para completar usted mismo las columnas de actividad.';
+
+  @override
+  String get vatRegisterActivityInvalid =>
+      'Un código de la A a la D, dos dígitos de tipo y hasta cuatro caracteres de epígrafe.';
+
+  @override
+  String get vatRegisterEmpty =>
+      'No se ha expedido ninguna factura en este periodo.';
+
+  @override
+  String get vatRegisterEsLibro =>
+      'Libro registro de facturas expedidas (XLSX AEAT)';
+
+  @override
+  String get vatRegisterEsSii => 'SII: facturas emitidas (XML)';
+
+  @override
+  String get vatRegisterItRegistro => 'Registro de facturas emitidas (CSV)';
+
+  @override
+  String get vatRegisterNif =>
+      'Introduzca el NIF del espacio como número de IVA (nueve caracteres, con ES delante si lo desea): el fichero lo indica.';
 
   @override
   String get vatReportByRate => 'Totales por tipo';

@@ -5,6 +5,7 @@ import '../../../core/files/file_saver.dart';
 import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/save_vat_filing_file.dart';
+import '../application/vat_register_files.dart';
 import '../domain/invoice_legal.dart';
 import '../domain/vat_declaration.dart';
 import '../domain/vat_filing_files.dart';
@@ -47,3 +48,12 @@ SaveVatFilingFile saveVatFilingFile(Ref ref) {
           ),
   );
 }
+
+/// The registers and the annual summary of a Spanish or an Italian space,
+/// read from the issued documents and the returns when a file is asked for.
+@riverpod
+VatRegisterFiles vatRegisterFiles(Ref ref) => VatRegisterFiles(
+  party: ref.watch(saveVatFilingFileProvider).party,
+  invoices: () => ref.read(invoicesProvider.future),
+  declarations: () => ref.read(vatDeclarationsProvider.future),
+);

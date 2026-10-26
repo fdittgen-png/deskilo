@@ -108,3 +108,57 @@ final class SaveVatFilingFileProvider
 }
 
 String _$saveVatFilingFileHash() => r'b8f4b1959e24341576f0ff07bdc96c6d3162833a';
+
+/// The registers and the annual summary of a Spanish or an Italian space,
+/// read from the issued documents and the returns when a file is asked for.
+
+@ProviderFor(vatRegisterFiles)
+final vatRegisterFilesProvider = VatRegisterFilesProvider._();
+
+/// The registers and the annual summary of a Spanish or an Italian space,
+/// read from the issued documents and the returns when a file is asked for.
+
+final class VatRegisterFilesProvider
+    extends
+        $FunctionalProvider<
+          VatRegisterFiles,
+          VatRegisterFiles,
+          VatRegisterFiles
+        >
+    with $Provider<VatRegisterFiles> {
+  /// The registers and the annual summary of a Spanish or an Italian space,
+  /// read from the issued documents and the returns when a file is asked for.
+  VatRegisterFilesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'vatRegisterFilesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$vatRegisterFilesHash();
+
+  @$internal
+  @override
+  $ProviderElement<VatRegisterFiles> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  VatRegisterFiles create(Ref ref) {
+    return vatRegisterFiles(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(VatRegisterFiles value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<VatRegisterFiles>(value),
+    );
+  }
+}
+
+String _$vatRegisterFilesHash() => r'977b56e5e4895b2461caf67674ee8e00b9b665e8';

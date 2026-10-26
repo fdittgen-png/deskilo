@@ -45365,6 +45365,42 @@ abstract class AppLocalizations {
   /// **'Add a rate'**
   String get vatAddRate;
 
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryBase
+  ///
+  /// In en, this message translates to:
+  /// **'Base'**
+  String get vatAnnualSummaryBase;
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryBox
+  ///
+  /// In en, this message translates to:
+  /// **'Box'**
+  String get vatAnnualSummaryBox;
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryButton
+  ///
+  /// In en, this message translates to:
+  /// **'{form} {year} (annual sheet)'**
+  String vatAnnualSummaryButton(String form, String year);
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No prepared or filed return in {year} yet.'**
+  String vatAnnualSummaryEmpty(String year);
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get vatAnnualSummaryLabel;
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryTax
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get vatAnnualSummaryTax;
+
   /// #985 VAT versions and counterparty: vatChangeByLaw
   ///
   /// In en, this message translates to:
@@ -45970,6 +46006,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.'**
   String get vatRegimeHint;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterActivity
+  ///
+  /// In en, this message translates to:
+  /// **'Activity: code, type and IAE heading'**
+  String get vatRegisterActivity;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterActivityHelp
+  ///
+  /// In en, this message translates to:
+  /// **'As the AEAT writes it, e.g. A038612. Leave it empty to fill in the activity columns yourself.'**
+  String get vatRegisterActivityHelp;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterActivityInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'A code from A to D, two digits of type and up to four characters of heading.'**
+  String get vatRegisterActivityInvalid;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice was issued in this period.'**
+  String get vatRegisterEmpty;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterEsLibro
+  ///
+  /// In en, this message translates to:
+  /// **'Register of issued invoices (AEAT XLSX)'**
+  String get vatRegisterEsLibro;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterEsSii
+  ///
+  /// In en, this message translates to:
+  /// **'SII: issued invoices (XML)'**
+  String get vatRegisterEsSii;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterItRegistro
+  ///
+  /// In en, this message translates to:
+  /// **'Register of issued invoices (CSV)'**
+  String get vatRegisterItRegistro;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterNif
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the NIF of the workspace as its VAT number (nine characters, ES first if you like): the file names it.'**
+  String get vatRegisterNif;
 
   /// #878 VAT review / report: vatReportByRate
   ///

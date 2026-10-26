@@ -27439,6 +27439,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatAddRate => 'Aggiungi un\'aliquota';
 
   @override
+  String get vatAnnualSummaryBase => 'Imponibile';
+
+  @override
+  String get vatAnnualSummaryBox => 'Rigo';
+
+  @override
+  String vatAnnualSummaryButton(String form, String year) {
+    return '$form $year (foglio annuale)';
+  }
+
+  @override
+  String vatAnnualSummaryEmpty(String year) {
+    return 'Ancora nessuna dichiarazione preparata o presentata nel $year.';
+  }
+
+  @override
+  String get vatAnnualSummaryLabel => 'Descrizione';
+
+  @override
+  String get vatAnnualSummaryTax => 'Imposta';
+
+  @override
   String get vatChangeByLaw => 'Modifica per legge';
 
   @override
@@ -27782,6 +27804,34 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatRegimeHint =>
       'Questo spazio non è dichiarato soggetto a IVA, quindi le fatture non la espongono. Si cambia in Identità legale.';
+
+  @override
+  String get vatRegisterActivity => 'Attività: codice, tipo ed epigrafe IAE';
+
+  @override
+  String get vatRegisterActivityHelp =>
+      'Come lo scrive l’AEAT, ad esempio A038612. Lo lasci vuoto per compilare Lei stesso le colonne dell’attività.';
+
+  @override
+  String get vatRegisterActivityInvalid =>
+      'Un codice da A a D, due cifre di tipo e fino a quattro caratteri di epigrafe.';
+
+  @override
+  String get vatRegisterEmpty =>
+      'Nessuna fattura è stata emessa in questo periodo.';
+
+  @override
+  String get vatRegisterEsLibro => 'Registro delle fatture emesse (XLSX AEAT)';
+
+  @override
+  String get vatRegisterEsSii => 'SII: fatture emesse (XML)';
+
+  @override
+  String get vatRegisterItRegistro => 'Registro delle fatture emesse (CSV)';
+
+  @override
+  String get vatRegisterNif =>
+      'Inserisca il NIF dello spazio come partita IVA (nove caratteri, con ES davanti se desidera): il file lo indica.';
 
   @override
   String get vatReportByRate => 'Totali per aliquota';
