@@ -29,7 +29,6 @@ import 'package:deskilo/features/money/application/save_book_profile.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
-import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
@@ -112,7 +111,7 @@ final _inv101 = _invoice('INV-101', DateTime(2026, 3, 2), [
 
 /// INV-102: a desk at 8.1 % and drinks at 2.6 %; paid in part, the rest
 /// written off.
-final _inv102 = _invoice('INV-102', DateTime(2026, 4, 1), [
+final _inv102 = _invoice('INV-102', DateTime(2026, 4), [
   _vt(8.1, 'S', 20000, 1620),
   _vt(2.6, 'S', 5000, 130),
 ]);
