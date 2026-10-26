@@ -549,7 +549,7 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
-    since: 'retention_us_override',
+    since: 'retention_disposition',
     row: (
       key: 'retention.us_years',
       type: 'int',
@@ -563,8 +563,8 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       floor: null,
       editable: true,
       choices: null,
-      source: 'retention_rule_for (0481)',
-      note: 'Years a US space keeps its records when its state asks for more or less than the federal default of the retention rule. 0 means the rule applies. Never legal advice: confirm the period of your state.',
+      source: 'retention_rule_for, retention_assess (0604)',
+      note: 'Years a US space keeps its records when its state asks for longer than the federal default of the retention rule. A longer period extends every kind of record; a shorter one changes nothing. 0 means the rule applies. Never legal advice: confirm the period of your state.',
     ),
   ),
   (

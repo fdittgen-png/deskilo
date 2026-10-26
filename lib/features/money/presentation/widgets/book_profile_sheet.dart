@@ -389,7 +389,10 @@ class BookProfileSection extends ConsumerWidget {
           trailing: const Icon(Icons.add),
           onTap: () => _showBookProfileSheet(context),
         ),
-        RetentionClocksTile(country: ref.watch(currentWorkspaceProvider).value?.countryCode),
+        RetentionClocksTile(
+          country: ref.watch(currentWorkspaceProvider).value?.countryCode,
+          workspaceId: ref.watch(currentWorkspaceProvider).value?.id,
+        ),
         RecordsLocationTile(country: ref.watch(currentWorkspaceProvider).value?.countryCode),
         for (final site in sites.values)
           ListTile(

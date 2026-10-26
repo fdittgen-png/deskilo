@@ -125,6 +125,15 @@ extension _FakeWorkspaceRepositoryPart4 on FakeWorkspaceRepository {
 
   Future<void> _resetWorkspaceImpl(String workspaceId) async {
     resetWorkspaceCalls.add(workspaceId);
+    // #2571 — as on a server: books still under retention refuse the reset.
+    final kept = booksKept?.call(workspaceId);
+    if (kept != null) {
+      throw PostgrestException(
+        message: 'retention: the books of this space are kept; nothing was deleted',
+        code: 'DKE01',
+        details: kept,
+      );
+    }
   }
 
   Future<Workspace> _saveWorkspaceSettingsImpl(

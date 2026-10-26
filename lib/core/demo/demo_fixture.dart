@@ -17,6 +17,7 @@ import '../../features/profile/domain/profile.dart';
 import '../../features/workspace/domain/bi_saved_view.dart';
 import 'data/accessory_repository.dart';
 import 'data/auth_repository.dart';
+import 'data/book_profile_repository.dart';
 import 'data/calendar_repository.dart';
 import 'data/credit_repository.dart';
 import 'data/deployment_repository.dart';
@@ -86,6 +87,7 @@ class DemoFixture {
     required this.events,
     required this.calendar,
     required this.money,
+    required this.holds,
     required this.credits,
     required this.accessories,
     required this.chargingStations,
@@ -127,6 +129,15 @@ class DemoFixture {
     // #2313 — a service charge or an expense recorded in the demo files
     // its event, as on a server.
     final money = FakeMoneyRepository(events: events);
+    // #2571 — legal holds; books under retention refuse a reset.
+    final holds = seedDemoRetentionHolds(workspaces.workspaces.first.id, today);
+    workspaces.booksKept = (id) => demoBooksKept(
+      id,
+      workspaces.workspaces.firstWhere((w) => w.id == id).countryCode,
+      ledger: money.ledger,
+      holds: holds,
+      today: today,
+    );
     final calendar = FakeCalendarRepository(actor: () => actor.memberId);
     final credits = FakeCreditRepository();
     seedDemoCarnets(credits);
@@ -243,6 +254,7 @@ class DemoFixture {
       badge: FakeAppBadge(),
       outward: DemoOutwardEdges(),
       seededAt: today,
+      holds: holds,
       secondSpace: secondSpace,
     );
   }
@@ -261,6 +273,9 @@ class DemoFixture {
   final FakeEventRepository events;
   final FakeCalendarRepository calendar;
   final FakeMoneyRepository money;
+
+  /// #2571 — the space's legal holds.
+  final FakeRetentionHoldRepository holds;
   final FakeCreditRepository credits;
   final FakeAccessoryRepository accessories;
 

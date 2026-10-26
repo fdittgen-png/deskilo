@@ -730,5 +730,8 @@
  "optMovements": "{n} movimenti",
  "accountingTitle": "Contabilità e banca",
  "accountingWhy": "Come gli estratti conto della banca vengono letti nello spazio e abbinati alle sue fatture.",
- "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati."
+ "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati.",
+ "retUsYears": "Conservazione dei documenti, stato USA",
+ "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
+ "retUsRule": "Vale la regola di conservazione"
 }

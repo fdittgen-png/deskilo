@@ -229,7 +229,7 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
     // #2863 — the registry a supplier is looked up in answers from fixtures.
     companyLookupRepositoryProvider.overrideWithValue(FakeCompanyLookupRepository()),
     purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
-    bookProfileRepositoryProvider.overrideWithValue(main.books),
+    bookProfileRepositoryProvider.overrideWithValue(main.books), retentionHoldRepositoryProvider.overrideWithValue(fixture.holds),
     premisesLeaseRepositoryProvider.overrideWithValue(main.lease),
     workspaceAssetRepositoryProvider.overrideWithValue(main.assets),
     // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.

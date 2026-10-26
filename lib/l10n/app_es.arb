@@ -14353,6 +14353,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
+  "retentionExtendedBySetting": "{years} años desde la fecha del documento (ajuste propio de este espacio)",
   "retentionFromDocument": "{years} años desde la fecha del documento",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
@@ -14380,6 +14381,30 @@
       }
     }
   },
+  "retentionHoldClass": "Tipo de registro",
+  "retentionHoldEveryClass": "Todos los tipos de registro",
+  "retentionHoldEveryIssuer": "Todos los emisores",
+  "retentionHoldIssuer": "Emisor",
+  "retentionHoldPlace": "Establecer una retención",
+  "retentionHoldPlaced": "La retención está establecida.",
+  "retentionHoldReason": "Motivo",
+  "retentionHoldReasonHelper": "Por qué deben conservarse los registros, por ejemplo una inspección fiscal o un litigio.",
+  "retentionHoldReasonMissing": "Indique el motivo, en {max} caracteres como máximo.",
+  "retentionHoldRelease": "Levantar",
+  "retentionHoldReleaseReason": "Por qué termina la retención",
+  "retentionHoldReleaseTitle": "¿Levantar esta retención?",
+  "retentionHoldReleased": "La retención se ha levantado.",
+  "retentionHoldSaveFailed": "No se ha podido guardar la retención. No ha cambiado nada.",
+  "retentionHoldSince": "{what} · {issuer} · desde el {date}",
+  "retentionHoldsEmpty": "No hay ninguna retención. Una retención conserva los registros más allá de su plazo, para una auditoría o un litigio.",
+  "retentionHoldsLoadFailed": "No se han podido leer las retenciones.",
+  "retentionHoldsTitle": "Retenciones legales",
+  "retentionKeptHold": "Se conserva por una retención legal: {reason}",
+  "retentionKeptReview": "Se conserva hasta que una persona revise la regla de conservación",
+  "retentionKeptReviewEnded": "Se conserva hasta que una persona revise la regla de conservación; su plazo terminó el {date}",
+  "retentionKeptUntil": "Se conserva hasta el {date} según {rule}",
+  "retentionPeriodEnded": "El plazo de conservación ha terminado: el espacio puede revisar el borrado",
+  "retentionResetRefused": "No se ha borrado nada: la contabilidad aún debe conservarse. {why}",
   "retentionTitle": "Plazos de conservación",
   "@retentionTitle": {
     "description": "#2571 retention clocks"
@@ -15321,7 +15346,7 @@
   },
   "settingHintRecordsCraReference": "Para una empresa canadiense: la referencia de la autorización de la CRA (ETA s.286, ITA s.230) cuando sus registros se conservan fuera de Canadá. Vacío significa que no se ha registrado ninguna.",
   "settingHintRecordsHostingCountry": "Dos letras (ISO 3166), p. ej. CA o DE, según lo que su contrato de alojamiento indique para la base de datos y sus copias de seguridad. Vacío significa no declarado: la aplicación no indica entonces ningún lugar.",
-  "settingHintRetentionUsYears": "Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más o menos que la norma federal. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.",
+  "settingHintRetentionUsYears": "Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más que la norma federal. Un plazo más largo se aplica a todos los registros; uno más corto no cambia nada. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },

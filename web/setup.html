@@ -232,7 +232,7 @@ const DEFAULTS={
  // each workspace server (platform setting messaging.inbox_page_size).
  inbox:{pageSize:'50'},
  // #2863 — supplier lookup wait and quota (platform settings purchase.supplier_lookup_*).
- supplierLookup:{timeout:'15',perMinute:'20'},bank:{maxBytes:'5242880',maxLines:'5000',matchWindow:'60'},records:{hostingCountry:'',craReference:''}, // #2380 bank.import_max_*/match_window_days; #2378 records.hosting_country ('' = none declared), records.cra_authorisation_reference
+ supplierLookup:{timeout:'15',perMinute:'20'},retention:{usYears:'0'},bank:{maxBytes:'5242880',maxLines:'5000',matchWindow:'60'},records:{hostingCountry:'',craReference:''}, // #2380 bank.import_max_*/match_window_days; #2378 records.hosting_country ('' = none declared), records.cra_authorisation_reference
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',

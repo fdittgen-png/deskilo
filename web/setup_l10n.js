@@ -735,7 +735,10 @@ window.SETUP_L10N={
    "optMovements": "{n} movements",
    "accountingTitle": "Books and bank",
    "accountingWhy": "How the bank's statement files are read into the space and matched to its invoices.",
-   "accountingOk": "The bank statements' bounds and suggestion window are set."
+   "accountingOk": "The bank statements' bounds and suggestion window are set.",
+   "retUsYears": "US state record retention",
+   "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
+   "retUsRule": "The retention rule applies"
   },
   "feature": {
    "calendarTab": [
@@ -2398,7 +2401,10 @@ window.SETUP_L10N={
    "optMovements": "{n} mouvements",
    "accountingTitle": "Comptabilité et banque",
    "accountingWhy": "Comment les relevés de la banque sont lus dans l'espace et rapprochés de ses factures.",
-   "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées."
+   "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées.",
+   "retUsYears": "Conservation des pièces, État américain",
+   "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
+   "retUsRule": "La règle de conservation s'applique"
   },
   "feature": {
    "calendarTab": [
@@ -4061,7 +4067,10 @@ window.SETUP_L10N={
    "optMovements": "{n} Bewegungen",
    "accountingTitle": "Buchhaltung und Bank",
    "accountingWhy": "Wie die Kontoauszugsdateien der Bank in den Space gelesen und seinen Rechnungen zugeordnet werden.",
-   "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt."
+   "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt.",
+   "retUsYears": "Aufbewahrung, US-Bundesstaat",
+   "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+   "retUsRule": "Die Aufbewahrungsregel gilt"
   },
   "feature": {
    "calendarTab": [
@@ -5724,7 +5733,10 @@ window.SETUP_L10N={
    "optMovements": "{n} movimientos",
    "accountingTitle": "Contabilidad y banco",
    "accountingWhy": "Cómo se leen los extractos del banco en el espacio y se concilian con sus facturas.",
-   "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados."
+   "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados.",
+   "retUsYears": "Conservación de registros, estado de EE. UU.",
+   "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
+   "retUsRule": "Se aplica la regla de conservación"
   },
   "feature": {
    "calendarTab": [
@@ -7387,7 +7399,10 @@ window.SETUP_L10N={
    "optMovements": "{n} movimenti",
    "accountingTitle": "Contabilità e banca",
    "accountingWhy": "Come gli estratti conto della banca vengono letti nello spazio e abbinati alle sue fatture.",
-   "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati."
+   "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati.",
+   "retUsYears": "Conservazione dei documenti, stato USA",
+   "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
+   "retUsRule": "Vale la regola di conservazione"
   },
   "feature": {
    "calendarTab": [

@@ -76,7 +76,7 @@
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
   },
-  "settingHintRetentionUsYears": "Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.",
+  "settingHintRetentionUsYears": "Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },

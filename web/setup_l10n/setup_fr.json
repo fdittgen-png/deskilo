@@ -730,5 +730,8 @@
  "optMovements": "{n} mouvements",
  "accountingTitle": "Comptabilité et banque",
  "accountingWhy": "Comment les relevés de la banque sont lus dans l'espace et rapprochés de ses factures.",
- "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées."
+ "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées.",
+ "retUsYears": "Conservation des pièces, État américain",
+ "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
+ "retUsRule": "La règle de conservation s'applique"
 }

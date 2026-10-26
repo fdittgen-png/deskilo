@@ -730,5 +730,8 @@
  "optMovements": "{n} movements",
  "accountingTitle": "Books and bank",
  "accountingWhy": "How the bank's statement files are read into the space and matched to its invoices.",
- "accountingOk": "The bank statements' bounds and suggestion window are set."
+ "accountingOk": "The bank statements' bounds and suggestion window are set.",
+ "retUsYears": "US state record retention",
+ "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
+ "retUsRule": "The retention rule applies"
 }

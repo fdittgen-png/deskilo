@@ -21239,6 +21239,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get retentionClassVoucher => 'Giustificativi';
 
   @override
+  String retentionExtendedBySetting(int years) {
+    return '$years anni dalla data del documento (impostazione propria di questo spazio)';
+  }
+
+  @override
   String retentionFromDocument(int years) {
     return '$years anni dalla data del documento';
   }
@@ -21251,6 +21256,96 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String retentionHint(String country) {
     return 'Per quanto tempo $country impone a questo spazio di conservare ogni tipo di documento. I termini sono dati di riferimento; una regola non ancora confermata non è stata verificata da una persona con l\'autorità di confermarla.';
+  }
+
+  @override
+  String get retentionHoldClass => 'Tipo di documento';
+
+  @override
+  String get retentionHoldEveryClass => 'Tutti i tipi di documento';
+
+  @override
+  String get retentionHoldEveryIssuer => 'Tutti gli emittenti';
+
+  @override
+  String get retentionHoldIssuer => 'Emittente';
+
+  @override
+  String get retentionHoldPlace => 'Imposti un blocco';
+
+  @override
+  String get retentionHoldPlaced => 'Il blocco è attivo.';
+
+  @override
+  String get retentionHoldReason => 'Motivo';
+
+  @override
+  String get retentionHoldReasonHelper =>
+      'Perché i documenti devono restare, per esempio una verifica fiscale o una controversia.';
+
+  @override
+  String retentionHoldReasonMissing(int max) {
+    return 'Indichi il motivo, in $max caratteri al massimo.';
+  }
+
+  @override
+  String get retentionHoldRelease => 'Revochi';
+
+  @override
+  String get retentionHoldReleaseReason => 'Perché il blocco termina';
+
+  @override
+  String get retentionHoldReleaseTitle => 'Revocare questo blocco?';
+
+  @override
+  String get retentionHoldReleased => 'Il blocco è revocato.';
+
+  @override
+  String get retentionHoldSaveFailed =>
+      'Non è stato possibile salvare il blocco. Non è cambiato nulla.';
+
+  @override
+  String retentionHoldSince(String what, String issuer, String date) {
+    return '$what · $issuer · dal $date';
+  }
+
+  @override
+  String get retentionHoldsEmpty =>
+      'Nessun blocco attivo. Un blocco conserva i documenti oltre il periodo di conservazione, per una verifica o una controversia.';
+
+  @override
+  String get retentionHoldsLoadFailed =>
+      'Non è stato possibile leggere i blocchi.';
+
+  @override
+  String get retentionHoldsTitle => 'Blocchi di conservazione';
+
+  @override
+  String retentionKeptHold(String reason) {
+    return 'Conservato per un blocco di conservazione: $reason';
+  }
+
+  @override
+  String get retentionKeptReview =>
+      'Conservato finché una persona non verifica la regola di conservazione';
+
+  @override
+  String retentionKeptReviewEnded(String date) {
+    return 'Conservato finché una persona non verifica la regola di conservazione; il periodo è terminato il $date';
+  }
+
+  @override
+  String retentionKeptUntil(String date, String rule) {
+    return 'Conservato fino al $date secondo $rule';
+  }
+
+  @override
+  String get retentionPeriodEnded =>
+      'Il periodo di conservazione è terminato: lo spazio può esaminare la cancellazione';
+
+  @override
+  String retentionResetRefused(String why) {
+    return 'Non è stato cancellato nulla: la contabilità deve ancora essere conservata. $why';
   }
 
   @override
@@ -22331,7 +22426,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingHintRetentionUsYears =>
-      'Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più o meno della regola federale. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.';
+      'Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più della regola federale. Un periodo più lungo vale per tutti i documenti; uno più breve non cambia nulla. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.';
 
   @override
   String get settingHintSecurityBadgeLockoutFailures =>

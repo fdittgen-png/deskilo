@@ -453,6 +453,7 @@ void main() {
         'federation': 'app',
         'inbox': 'app',
         'supplierLookup': 'app',
+        'retention': 'app',
         'bank': 'app',
         'records': 'app',
         'members': 'app',

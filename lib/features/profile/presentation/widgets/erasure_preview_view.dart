@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/retention_text.dart';
+import '../../../../core/vat/retention_assessment.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/rights_request.dart';
 
@@ -57,8 +59,14 @@ class ErasurePreviewView extends StatelessWidget {
           if (!count || (s.count ?? 0) > 0) s,
       ];
       if (shown.isEmpty) return const SizedBox.shrink();
-      // Invoices and ledger read as one line.
+      // Invoices and ledger read as one line, under the stricter of their
+      // two retention assessments.
       final seen = <String>{};
+      RetentionAssessment? kept(String label) => [
+        for (final s in shown)
+          if (erasureStoreLabel(l10n, s.store) == label) s.retention,
+      ].fold<RetentionAssessment?>(null, RetentionAssessment.strictest);
+      final locale = Localizations.localeOf(context).toLanguageTag();
       return Padding(
         padding: const EdgeInsets.only(top: AppSpacing.sm),
         child: Column(
@@ -66,13 +74,23 @@ class ErasurePreviewView extends StatelessWidget {
           children: [
             Text(title, style: theme.textTheme.titleSmall),
             for (final s in shown)
-              if (seen.add(erasureStoreLabel(l10n, s.store)))
+              if (seen.add(erasureStoreLabel(l10n, s.store))) ...[
                 Text(
                   count && s.count != null
                       ? '• ${erasureStoreLabel(l10n, s.store)} (${s.count})'
                       : '• ${erasureStoreLabel(l10n, s.store)}',
                   style: theme.textTheme.bodySmall,
                 ),
+                if (kept(erasureStoreLabel(l10n, s.store)) case final a?)
+                  Padding(
+                    padding: const EdgeInsets.only(left: AppSpacing.md),
+                    child: Text(
+                      retentionAssessmentText(l10n, a, locale),
+                      key: ValueKey('erasure-retention-${s.store}'),
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ),
+              ],
           ],
         ),
       );

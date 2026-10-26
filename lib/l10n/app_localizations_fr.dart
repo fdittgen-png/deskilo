@@ -21280,6 +21280,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get retentionClassVoucher => 'Pièces justificatives';
 
   @override
+  String retentionExtendedBySetting(int years) {
+    return '$years ans à partir de la date du document (réglage propre à cet espace)';
+  }
+
+  @override
   String retentionFromDocument(int years) {
     return '$years ans à partir de la date du document';
   }
@@ -21292,6 +21297,96 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String retentionHint(String country) {
     return 'Combien de temps $country impose à cet espace de conserver chaque type de pièce. Les durées sont des données de référence ; une règle non encore confirmée n\'a pas été vérifiée par une personne habilitée à la confirmer.';
+  }
+
+  @override
+  String get retentionHoldClass => 'Type de pièce';
+
+  @override
+  String get retentionHoldEveryClass => 'Tous les types de pièces';
+
+  @override
+  String get retentionHoldEveryIssuer => 'Tous les émetteurs';
+
+  @override
+  String get retentionHoldIssuer => 'Émetteur';
+
+  @override
+  String get retentionHoldPlace => 'Imposer une conservation';
+
+  @override
+  String get retentionHoldPlaced => 'La conservation est imposée.';
+
+  @override
+  String get retentionHoldReason => 'Motif';
+
+  @override
+  String get retentionHoldReasonHelper =>
+      'Pourquoi les pièces doivent rester, par exemple un contrôle fiscal ou un litige.';
+
+  @override
+  String retentionHoldReasonMissing(int max) {
+    return 'Indiquez le motif, en $max caractères au plus.';
+  }
+
+  @override
+  String get retentionHoldRelease => 'Lever';
+
+  @override
+  String get retentionHoldReleaseReason => 'Pourquoi la conservation prend fin';
+
+  @override
+  String get retentionHoldReleaseTitle => 'Lever cette conservation ?';
+
+  @override
+  String get retentionHoldReleased => 'La conservation est levée.';
+
+  @override
+  String get retentionHoldSaveFailed =>
+      'La conservation n\'a pas pu être enregistrée. Rien n\'a changé.';
+
+  @override
+  String retentionHoldSince(String what, String issuer, String date) {
+    return '$what · $issuer · depuis le $date';
+  }
+
+  @override
+  String get retentionHoldsEmpty =>
+      'Aucune conservation imposée. Elle garde des pièces au-delà de leur durée de conservation, pour un contrôle ou un litige.';
+
+  @override
+  String get retentionHoldsLoadFailed =>
+      'Les conservations imposées n’ont pas pu être lues.';
+
+  @override
+  String get retentionHoldsTitle => 'Conservations imposées';
+
+  @override
+  String retentionKeptHold(String reason) {
+    return 'Conservé au titre d’une conservation imposée : $reason';
+  }
+
+  @override
+  String get retentionKeptReview =>
+      'Conservé jusqu’à ce qu’une personne vérifie la règle de conservation';
+
+  @override
+  String retentionKeptReviewEnded(String date) {
+    return 'Conservé jusqu’à ce qu’une personne vérifie la règle de conservation ; sa durée a pris fin le $date';
+  }
+
+  @override
+  String retentionKeptUntil(String date, String rule) {
+    return 'Conservé jusqu’au $date selon $rule';
+  }
+
+  @override
+  String get retentionPeriodEnded =>
+      'La durée de conservation a pris fin : l’espace peut examiner l’effacement';
+
+  @override
+  String retentionResetRefused(String why) {
+    return 'Rien n’a été supprimé : la comptabilité doit encore être conservée. $why';
   }
 
   @override
@@ -22373,7 +22468,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingHintRetentionUsYears =>
-      'Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus ou moins que la règle fédérale. 0 signifie que la règle de conservation s\'applique. Pas un conseil juridique : vérifiez le délai de votre État.';
+      'Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus que la règle fédérale. Une durée plus longue s\'applique à toutes les pièces ; une durée plus courte ne change rien. 0 signifie que la règle de conservation s\'applique. Pas un conseil juridique : vérifiez le délai de votre État.';
 
   @override
   String get settingHintSecurityBadgeLockoutFailures =>
