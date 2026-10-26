@@ -91,6 +91,9 @@ const STEPS=[
   // #2863 — every server that asks a company registry for supplier details.
   selectEl(T('supLookupWait'),'supplierLookup.timeout',opts(SUP_LOOKUP_WAIT),T('supLookupWaitHint'),null,'identity'),
   selectEl(T('supLookupRate'),'supplierLookup.perMinute',opts(SUP_LOOKUP_RATE),T('supLookupRateHint'),null,'identity'),
+  // #2378 — where the data lives, as the operator declares it; never inferred.
+  selectEl(T('recordsHostingCountry'),'records.hostingCountry',[['',T('recordsHostingNone')],...COUNTRIES.map(c=>[c[0],countryName(c[0])])],T('recordsHostingCountryHint'),null,'identity'),
+  ...(S.country==='CA'?[input(T('recordsCraReference'),'records.craReference',T('recordsCraReferenceHint'),'text','','identity')]:[]),
  ]},
  check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
   // #2562 C2a — a refresh slower than the lifetime lets statuses lapse.
