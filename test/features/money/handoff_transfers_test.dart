@@ -161,33 +161,34 @@ void main() {
   });
 
   test('the same transfers in another order give the same report', () {
-    final reversed = AccountingTransfers(
-      files: _transfers.files.reversed.toList(),
-      deliveries: [
-        AccountingDelivery.fromJson(
-          _delivery(
-            id: 'd-3',
-            target: 'xero',
-            sha: _xeroSha,
-            connection: 'c-1',
-          ),
-        ),
-        ..._transfers.deliveries,
-      ],
+    // A second file, made a month earlier, and a second delivery.
+    final february = TransferFile.fromJson({
+      'id': 'exp-0',
+      'format_id': 'sage50',
+      'period_from': '2026-02-01',
+      'period_to': '2026-02-28',
+      'sha256': _docSha,
+      'document_count': 0,
+      'closed_period': false,
+      'exported_at': '2026-03-02T08:00:00Z',
+      'deliveries': const [],
+    });
+    final again = AccountingDelivery.fromJson(
+      _delivery(id: 'd-3', target: 'xero', sha: _xeroSha, connection: 'c-1'),
     );
     final forward = AccountingTransfers(
-      files: _transfers.files,
-      deliveries: [
-        ..._transfers.deliveries,
-        AccountingDelivery.fromJson(
-          _delivery(
-            id: 'd-3',
-            target: 'xero',
-            sha: _xeroSha,
-            connection: 'c-1',
-          ),
-        ),
-      ],
+      files: [february, ..._transfers.files],
+      deliveries: [..._transfers.deliveries, again],
+    );
+    final reversed = AccountingTransfers(
+      files: [..._transfers.files, february],
+      deliveries: [again, ..._transfers.deliveries],
+    );
+    final quoted = _json(_report(transfers: reversed))['transfers']! as Map;
+    // Files by when they were made: February's first.
+    expect(
+      [for (final f in quoted['files'] as List) (f as Map)['period_from']],
+      ['2026-02-01', '2026-03-01'],
     );
     expect(
       _report(transfers: reversed).toPrettyJson(),
