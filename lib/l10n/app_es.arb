@@ -819,7 +819,7 @@
   "bankCsvDecimalComma": "Los importes usan coma decimal",
   "bankCsvDuplicateColumn": "Una columna está elegida dos veces: dé a cada columna un solo significado.",
   "bankCsvHeader": "La primera fila nombra las columnas",
-  "bankCsvNeedsAccount": "Indique la cuenta, con 64 caracteres como máximo.",
+  "bankCsvNeedsAccount": "Indique la cuenta, con {max} caracteres como máximo.",
   "bankCsvNeedsAmount": "Elija la columna del importe.",
   "bankCsvNeedsCurrency": "Indique la moneda con tres letras (EUR, CHF).",
   "bankCsvNeedsDate": "Elija la columna de la fecha.",

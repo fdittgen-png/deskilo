@@ -722,5 +722,8 @@
  "bankMatchWindow": "Ventana de facturas para un pago sin referencia",
  "bankMatchWindowHint": "Cuántos días antes de un pago puede haberse emitido su factura para proponerla solo por el importe y el pagador; siempre confirma una persona. Se ajusta en la configuración de la app.",
  "optMegabytes": "{n} MB",
- "optMovements": "{n} movimientos"
+ "optMovements": "{n} movimientos",
+ "accountingTitle": "Contabilidad y banco",
+ "accountingWhy": "Cómo se leen los extractos del banco en el espacio y se concilian con sus facturas.",
+ "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados."
 }

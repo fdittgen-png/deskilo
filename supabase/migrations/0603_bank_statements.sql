@@ -328,13 +328,16 @@ returns uuid language plpgsql stable security definer set search_path = public a
 declare
   v_me uuid;
 begin
-  if auth.uid() is null then raise exception 'not signed in' using errcode = '42501'; end if;
-  if public.mcp_is_delegated() then
-    raise exception 'an assistant may not do this for the bank statements' using errcode = '42501';
+  -- One sentence for every caller turned away before the space is read:
+  -- signed out, an assistant's token, or no active membership. It says
+  -- nothing about what exists in the space.
+  if auth.uid() is not null and not public.mcp_is_delegated() then
+    select m.id into v_me from public.members m
+     where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active';
   end if;
-  select m.id into v_me from public.members m
-   where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active';
-  if v_me is null then raise exception 'not an active member' using errcode = '42501'; end if;
+  if v_me is null then
+    raise exception 'you may not do this for the bank statements' using errcode = '42501';
+  end if;
   if not public.feature_effective(p_workspace_id, 'bankImport') then
     raise exception 'bank statements are switched off in this space' using errcode = '0A000';
   end if;

@@ -74,6 +74,7 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
       errorText: context.l10n.bankMatchFailed,
       action: send,
     );
+    if (!mounted) return ok;
     _changed();
     if (mounted) setState(() => _busy = false);
     return ok;

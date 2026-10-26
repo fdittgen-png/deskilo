@@ -15,13 +15,14 @@
 -- currencies are refused whole. A plain member, a stranger, a space with
 -- the flag off and an assistant's delegated token are refused; under the
 -- authenticated role a plain member reads no statement and the owner does,
--- and a stranger reads no movement. Another space's invoice or reported
+-- and a stranger reads no movement. A payload over bank.import_max_bytes
+-- is refused whole (DKB03). Another space's invoice or reported
 -- payment is not found; a biller (issueInvoices alone) sees no payment made
 -- and may not reconcile. The refusals the screen explains carry DKB01
 -- (decided meanwhile), DKB02 (does not go together), DKB03 (file refused).
 -- Positive cases beside every refusal.
 begin;
-select plan(45);
+select plan(46);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -337,6 +338,15 @@ select is(pg_temp.as_role('member', 'select count(*) from public.bank_statements
           'a plain member reads no statement');
 select is(pg_temp.as_role('owner', 'select count(*) from public.bank_statements'), '2',
           'the owner reads both');
+
+-- ── the payload's bound ──────────────────────────────────────────────
+-- Last: the platform bound is lowered to its floor for this one case.
+insert into public.setting_values (scope, workspace_id, key, value, note)
+values ('platform', null, 'bank.import_max_bytes', '65536'::jsonb, 'small files');
+select is(pg_temp.import('owner', 'f',
+            (select jsonb_agg(pg_temp.mv(n, 100, '', 'P' || n, 'CHF', repeat('x', 1000)))
+               from generate_series(1, 100) n)) ->> 'refused',
+          'DKB03', 'a payload over bank.import_max_bytes is refused whole');
 
 select * from finish();
 rollback;

@@ -369,9 +369,14 @@
   "@bankCsvNone": {
     "description": "#2380 CSV sheet: no column chosen."
   },
-  "bankCsvNeedsAccount": "Name the account, in at most 64 characters.",
+  "bankCsvNeedsAccount": "Name the account, in at most {max} characters.",
   "@bankCsvNeedsAccount": {
-    "description": "#2380 CSV sheet: the account is missing or too long."
+    "description": "#2380 CSV sheet: the account is missing or longer than its column.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
   },
   "bankCsvNeedsCurrency": "Give the currency in three letters (EUR, CHF).",
   "@bankCsvNeedsCurrency": {

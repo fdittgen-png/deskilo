@@ -72,7 +72,7 @@
   "bankCsvRemittance": "Columna del concepto",
   "bankCsvTransactionId": "Columna del identificador bancario",
   "bankCsvNone": "Ninguna",
-  "bankCsvNeedsAccount": "Indique la cuenta, con 64 caracteres como máximo.",
+  "bankCsvNeedsAccount": "Indique la cuenta, con {max} caracteres como máximo.",
   "bankCsvNeedsCurrency": "Indique la moneda con tres letras (EUR, CHF).",
   "bankCsvNeedsDate": "Elija la columna de la fecha.",
   "bankCsvNeedsAmount": "Elija la columna del importe.",

@@ -819,7 +819,7 @@
   "bankCsvDecimalComma": "Les montants utilisent une virgule décimale",
   "bankCsvDuplicateColumn": "Une colonne est choisie deux fois : donnez à chaque colonne un seul sens.",
   "bankCsvHeader": "La première ligne nomme les colonnes",
-  "bankCsvNeedsAccount": "Indiquez le compte, en 64 caractères au plus.",
+  "bankCsvNeedsAccount": "Indiquez le compte, en {max} caractères au plus.",
   "bankCsvNeedsAmount": "Choisissez la colonne du montant.",
   "bankCsvNeedsCurrency": "Indiquez la devise en trois lettres (EUR, CHF).",
   "bankCsvNeedsDate": "Choisissez la colonne de la date.",

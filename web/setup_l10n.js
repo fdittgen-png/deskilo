@@ -727,7 +727,10 @@ window.SETUP_L10N={
    "bankMatchWindow": "Invoice window for a payment without reference",
    "bankMatchWindowHint": "How many days before a payment its invoice may have been issued to be suggested by amount and payer alone; a person always confirms. Set in the app's settings.",
    "optMegabytes": "{n} MB",
-   "optMovements": "{n} movements"
+   "optMovements": "{n} movements",
+   "accountingTitle": "Books and bank",
+   "accountingWhy": "How the bank's statement files are read into the space and matched to its invoices.",
+   "accountingOk": "The bank statements' bounds and suggestion window are set."
   },
   "feature": {
    "calendarTab": [
@@ -2382,7 +2385,10 @@ window.SETUP_L10N={
    "bankMatchWindow": "Fenêtre des factures pour un paiement sans référence",
    "bankMatchWindowHint": "Combien de jours avant un paiement sa facture peut avoir été émise pour être proposée d'après le seul montant et le payeur ; une personne confirme toujours. Se règle dans les paramètres de l'app.",
    "optMegabytes": "{n} Mo",
-   "optMovements": "{n} mouvements"
+   "optMovements": "{n} mouvements",
+   "accountingTitle": "Comptabilité et banque",
+   "accountingWhy": "Comment les relevés de la banque sont lus dans l'espace et rapprochés de ses factures.",
+   "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées."
   },
   "feature": {
    "calendarTab": [
@@ -4037,7 +4043,10 @@ window.SETUP_L10N={
    "bankMatchWindow": "Rechnungsfenster für eine Zahlung ohne Referenz",
    "bankMatchWindowHint": "Wie viele Tage vor einer Zahlung ihre Rechnung ausgestellt sein darf, um allein nach Betrag und Zahler vorgeschlagen zu werden; bestätigt wird immer von einer Person. In den Einstellungen der App.",
    "optMegabytes": "{n} MB",
-   "optMovements": "{n} Bewegungen"
+   "optMovements": "{n} Bewegungen",
+   "accountingTitle": "Buchhaltung und Bank",
+   "accountingWhy": "Wie die Kontoauszugsdateien der Bank in den Space gelesen und seinen Rechnungen zugeordnet werden.",
+   "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt."
   },
   "feature": {
    "calendarTab": [
@@ -5692,7 +5701,10 @@ window.SETUP_L10N={
    "bankMatchWindow": "Ventana de facturas para un pago sin referencia",
    "bankMatchWindowHint": "Cuántos días antes de un pago puede haberse emitido su factura para proponerla solo por el importe y el pagador; siempre confirma una persona. Se ajusta en la configuración de la app.",
    "optMegabytes": "{n} MB",
-   "optMovements": "{n} movimientos"
+   "optMovements": "{n} movimientos",
+   "accountingTitle": "Contabilidad y banco",
+   "accountingWhy": "Cómo se leen los extractos del banco en el espacio y se concilian con sus facturas.",
+   "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados."
   },
   "feature": {
    "calendarTab": [
@@ -7347,7 +7359,10 @@ window.SETUP_L10N={
    "bankMatchWindow": "Finestra delle fatture per un pagamento senza riferimento",
    "bankMatchWindowHint": "Quanti giorni prima di un pagamento può essere stata emessa la sua fattura per essere proposta in base al solo importo e al pagatore; conferma sempre una persona. Si imposta nelle impostazioni dell'app.",
    "optMegabytes": "{n} MB",
-   "optMovements": "{n} movimenti"
+   "optMovements": "{n} movimenti",
+   "accountingTitle": "Contabilità e banca",
+   "accountingWhy": "Come gli estratti conto della banca vengono letti nello spazio e abbinati alle sue fatture.",
+   "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati."
   },
   "feature": {
    "calendarTab": [

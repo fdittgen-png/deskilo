@@ -1828,8 +1828,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankCsvHeader => 'La prima riga indica le colonne';
 
   @override
-  String get bankCsvNeedsAccount =>
-      'Indichi il conto, con al massimo 64 caratteri.';
+  String bankCsvNeedsAccount(int max) {
+    return 'Indichi il conto, con al massimo $max caratteri.';
+  }
 
   @override
   String get bankCsvNeedsAmount => 'Scelga la colonna dell\'importo.';

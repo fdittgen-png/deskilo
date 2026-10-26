@@ -293,12 +293,17 @@ const STEPS=[
   k.push(lbl(T('payMobile'),'pay','pay'),h('div',{class:'row'},input(T('payPaypal'),'pay.paypal_me',''),isEU()?input(T('payWero'),'pay.wero',T('payWeroHint')):null),
    h('div',{class:'row'},S.country==='FR'?input(T('payLydia'),'pay.lydia',''):null,input(T('payWise'),'pay.wise','')),input(T('payReference'),'pay.reference',T('payReferenceHint')));
   if(on('onlinePayments'))k.push(dep(T('payOnlineDep'),'features'),help('online'));
-  // #2380 — the bank's statement files the space imports and matches.
-  if(on('bankImport'))k.push(selectEl(T('bankMaxBytes'),'bank.maxBytes',opts(BANK_MAX_BYTES),T('bankMaxBytesHint'),null,'pay'),selectEl(T('bankMaxLines'),'bank.maxLines',opts(BANK_MAX_LINES),T('bankMaxLinesHint'),null,'pay'),selectEl(T('bankMatchWindow'),'bank.matchWindow',opts(BANK_WINDOW),T('bankMatchWindowHint'),null,'pay'));
   return k},
  check(){const any=Object.values(S.pay).some(v=>String(v).trim());const f=[];if(!any&&!on('onlinePayments'))f.push(F.warn(T('payWarnNone'),'pay'));else f.push(F.ok(T(any?'payOkInstructions':'payOkOnlineOnly')));
   if((scheme()==='sepa'||scheme()==='ch')&&S.pay.iban.trim()&&!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(S.pay.iban.replace(/\s+/g,'').toUpperCase()))f.push(F.err(T('payErrIban'),'pay'));
   if(scheme()==='ch'&&S.pay.qr_iban.trim()&&!/^(CH|LI)\d{2}3[01]\d{3}[A-Z0-9]{12}$/.test(S.pay.qr_iban.replace(/\s+/g,'').toUpperCase()))f.push(F.err(T('payErrQrIban'),'pay'));return f}},
+
+// #2380 — the books: the bank's statement files the space imports and
+// matches (platform settings bank.import_max_bytes and bank.import_max_lines,
+// the space's bank.match_window_days).
+{id:'accounting',get title(){return T('accountingTitle')},get why(){return T('accountingWhy')},applies(){return on('bankImport')},
+ build(st=this){const{selectEl}=ui(st);return[selectEl(T('bankMaxBytes'),'bank.maxBytes',opts(BANK_MAX_BYTES),T('bankMaxBytesHint'),null,'pay'),selectEl(T('bankMaxLines'),'bank.maxLines',opts(BANK_MAX_LINES),T('bankMaxLinesHint'),null,'pay'),selectEl(T('bankMatchWindow'),'bank.matchWindow',opts(BANK_WINDOW),T('bankMatchWindowHint'),null,'pay')]},
+ check(){return[F.ok(T('accountingOk'))]}},
 
 {id:'roles',get title(){return T('rolesTitle')},get why(){return T('rolesWhy')},
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);const k=[];

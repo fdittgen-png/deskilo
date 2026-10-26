@@ -819,7 +819,7 @@
   "bankCsvDecimalComma": "Gli importi usano la virgola decimale",
   "bankCsvDuplicateColumn": "Una colonna è scelta due volte: dia a ogni colonna un solo significato.",
   "bankCsvHeader": "La prima riga indica le colonne",
-  "bankCsvNeedsAccount": "Indichi il conto, con al massimo 64 caratteri.",
+  "bankCsvNeedsAccount": "Indichi il conto, con al massimo {max} caratteri.",
   "bankCsvNeedsAmount": "Scelga la colonna dell'importo.",
   "bankCsvNeedsCurrency": "Indichi la valuta con tre lettere (EUR, CHF).",
   "bankCsvNeedsDate": "Scelga la colonna della data.",

@@ -819,7 +819,7 @@
   "bankCsvDecimalComma": "Beträge mit Dezimalkomma",
   "bankCsvDuplicateColumn": "Eine Spalte ist doppelt gewählt: Geben Sie jeder Spalte nur eine Bedeutung.",
   "bankCsvHeader": "Die erste Zeile benennt die Spalten",
-  "bankCsvNeedsAccount": "Nennen Sie das Konto, mit höchstens 64 Zeichen.",
+  "bankCsvNeedsAccount": "Nennen Sie das Konto, mit höchstens {max} Zeichen.",
   "bankCsvNeedsAmount": "Wählen Sie die Betragsspalte.",
   "bankCsvNeedsCurrency": "Geben Sie die Währung mit drei Buchstaben an (EUR, CHF).",
   "bankCsvNeedsDate": "Wählen Sie die Datumsspalte.",

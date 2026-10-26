@@ -203,10 +203,9 @@ class BankWorkItem {
 /// the open invoices prepared once; and [open] itself, the dialogs' list.
 @immutable
 class BankWorkList {
-  BankWorkList(this.lines, this.open, {required int windowDays})
+  BankWorkList(List<StoredBankLine> lines, this.open, {required int windowDays})
     : items = _items(lines, open, windowDays);
 
-  final List<StoredBankLine> lines;
   final List<OpenInvoice> open;
   final List<BankWorkItem> items;
 
@@ -256,8 +255,10 @@ bool _names(String text, String number) {
 /// ("de", "SA", initials) are shared by too many.
 const int _nameWordMin = 3;
 
-/// Words that name a company's legal form, not who it is: two companies
-/// share them without being one payer.
+/// A heuristic of the suggestion by amount, not configuration: words that
+/// name a company's legal form, not who it is, so two companies sharing
+/// one are not taken for one payer. A missed form only adds a suggestion a
+/// person still confirms; it never matches anything by itself.
 const Set<String> _legalFormWords = {
   'SARL', 'SAS', 'SASU', 'EURL', 'GMBH', 'LTD', 'LLC', 'INC', 'SRL', 'SPRL',
   'BVBA', 'SPA', 'SNC',

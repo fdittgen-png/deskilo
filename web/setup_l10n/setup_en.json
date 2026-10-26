@@ -722,5 +722,8 @@
  "bankMatchWindow": "Invoice window for a payment without reference",
  "bankMatchWindowHint": "How many days before a payment its invoice may have been issued to be suggested by amount and payer alone; a person always confirms. Set in the app's settings.",
  "optMegabytes": "{n} MB",
- "optMovements": "{n} movements"
+ "optMovements": "{n} movements",
+ "accountingTitle": "Books and bank",
+ "accountingWhy": "How the bank's statement files are read into the space and matched to its invoices.",
+ "accountingOk": "The bank statements' bounds and suggestion window are set."
 }

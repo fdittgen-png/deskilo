@@ -72,7 +72,7 @@
   "bankCsvRemittance": "Textspalte",
   "bankCsvTransactionId": "Spalte Bank-Transaktionskennung",
   "bankCsvNone": "Keine",
-  "bankCsvNeedsAccount": "Nennen Sie das Konto, mit höchstens 64 Zeichen.",
+  "bankCsvNeedsAccount": "Nennen Sie das Konto, mit höchstens {max} Zeichen.",
   "bankCsvNeedsCurrency": "Geben Sie die Währung mit drei Buchstaben an (EUR, CHF).",
   "bankCsvNeedsDate": "Wählen Sie die Datumsspalte.",
   "bankCsvNeedsAmount": "Wählen Sie die Betragsspalte.",

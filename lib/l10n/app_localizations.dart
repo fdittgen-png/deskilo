@@ -3067,11 +3067,11 @@ abstract class AppLocalizations {
   /// **'The first row names the columns'**
   String get bankCsvHeader;
 
-  /// #2380 CSV sheet: the account is missing or too long.
+  /// #2380 CSV sheet: the account is missing or longer than its column.
   ///
   /// In en, this message translates to:
-  /// **'Name the account, in at most 64 characters.'**
-  String get bankCsvNeedsAccount;
+  /// **'Name the account, in at most {max} characters.'**
+  String bankCsvNeedsAccount(int max);
 
   /// #2380 CSV sheet: no amount column chosen.
   ///

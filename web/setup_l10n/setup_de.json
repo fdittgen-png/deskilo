@@ -722,5 +722,8 @@
  "bankMatchWindow": "Rechnungsfenster für eine Zahlung ohne Referenz",
  "bankMatchWindowHint": "Wie viele Tage vor einer Zahlung ihre Rechnung ausgestellt sein darf, um allein nach Betrag und Zahler vorgeschlagen zu werden; bestätigt wird immer von einer Person. In den Einstellungen der App.",
  "optMegabytes": "{n} MB",
- "optMovements": "{n} Bewegungen"
+ "optMovements": "{n} Bewegungen",
+ "accountingTitle": "Buchhaltung und Bank",
+ "accountingWhy": "Wie die Kontoauszugsdateien der Bank in den Space gelesen und seinen Rechnungen zugeordnet werden.",
+ "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt."
 }

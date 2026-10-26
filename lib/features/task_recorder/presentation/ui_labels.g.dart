@@ -2755,7 +2755,6 @@ Map<String, _Getter> _part9() => {
   'badgePinCleared': (l) => l.badgePinCleared,
   'bankCsvAccountHint': (l) => l.bankCsvAccountHint,
   'bankCsvCounterpartyIban': (l) => l.bankCsvCounterpartyIban,
-  'bankCsvNeedsAccount': (l) => l.bankCsvNeedsAccount,
   'bankCsvRemittance': (l) => l.bankCsvRemittance,
   'biAssetsAcquisitionsTitle': (l) => l.biAssetsAcquisitionsTitle,
   'biBasisInvoiceMonth': (l) => l.biBasisInvoiceMonth,

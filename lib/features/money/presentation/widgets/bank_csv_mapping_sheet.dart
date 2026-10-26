@@ -246,7 +246,9 @@ List<Widget> _columnFields(
 
 String _problemText(AppLocalizations l10n, BankCsvMappingProblem p) =>
     switch (p) {
-      BankCsvMappingProblem.account => l10n.bankCsvNeedsAccount,
+      BankCsvMappingProblem.account => l10n.bankCsvNeedsAccount(
+    BankColumnWidths.account,
+  ),
       BankCsvMappingProblem.currency => l10n.bankCsvNeedsCurrency,
       BankCsvMappingProblem.date => l10n.bankCsvNeedsDate,
       BankCsvMappingProblem.amount => l10n.bankCsvNeedsAmount,

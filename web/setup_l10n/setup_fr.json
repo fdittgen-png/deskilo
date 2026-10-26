@@ -722,5 +722,8 @@
  "bankMatchWindow": "Fenêtre des factures pour un paiement sans référence",
  "bankMatchWindowHint": "Combien de jours avant un paiement sa facture peut avoir été émise pour être proposée d'après le seul montant et le payeur ; une personne confirme toujours. Se règle dans les paramètres de l'app.",
  "optMegabytes": "{n} Mo",
- "optMovements": "{n} mouvements"
+ "optMovements": "{n} mouvements",
+ "accountingTitle": "Comptabilité et banque",
+ "accountingWhy": "Comment les relevés de la banque sont lus dans l'espace et rapprochés de ses factures.",
+ "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées."
 }
