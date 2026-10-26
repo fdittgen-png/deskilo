@@ -2,7 +2,7 @@
 -- risk: additive
 -- (two rows of the settings registry; no function, table or policy)
 --
--- 9999 (#2378) -- where a space's records are kept, as far as anyone has
+-- 0606 (#2378) -- where a space's records are kept, as far as anyone has
 -- declared it:
 --
 --   records.hosting_country               text, platform, default ''
@@ -28,4 +28,4 @@ values
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(606);
