@@ -5559,6 +5559,8 @@
     "description": "#669 - accounting export formats"
   },
   "exportColumnName": "{key, select, action{Azione} active{Attivo} actor{Eseguito da} address{Indirizzo} admin{Amministratore} amenities{Dotazioni} amount{Importo} area_kind{Tipo di area} blocked_from{Bloccato dal} blocked_to{Bloccato fino al} bookable_as_whole{Prenotabile per intero} by_system{Automatico} capacity{Capienza} category{Categoria} chair{Sedia} checked_in_at{Arrivo} checked_out_at{Uscita} city{Città} co_owner{Comproprietario} color{Colore} company{Azienda} country{Paese} created_at{Registrato il} currency{Valuta} decided_at{Deciso il} decided_by{Deciso da} decision{Decisione} decisions{Decisioni} description{Descrizione} desk{Scrivania} detailed{Dettagliata} details{Dettagli} due_on{Scadenza} email{E-mail} enabled_features{Funzioni attive} ends_at{Fine} event_id{Richiesta} event_type{Tipo di richiesta} first_name{Nome} height{Altezza} id{ID} invoice{Fattura} issued_at{Emessa il} issued_by{Emessa da} joined_at{Membro dal} kind{Tipo} kiosk{Chiosco} label{Voce} last_name{Cognome} last_seen{Ultima visita} last_sent_at{Ultimo invio} legal_id{Numero di registrazione} level{Piano} line{Riga} member{Membro} member_id{ID membro} member_number{N. di membro} minutes_present{Minuti di presenza} name{Nome} net{Imponibile} number{Numero} occurred_on{Data} office{Sala} order_id{Ordine} orientation{Orientamento} overage_policy{Oltre la quota} owner{Proprietario} parking_kind{Tipo di posto auto} payment_terms{Termini di pagamento} period{Periodo} phone{Telefono} postal_code{CAP} price{Prezzo} provider{Fornitore} quantity{Quantità} recorded_at{Registrato il} replaces{Sostituisce} reservation_id{Prenotazione} resource_kind{Tipo di posto} series_id{Serie} series_pattern{Ripetizione} signed_amount{Effetto sul saldo} slot_minutes{Fascia (minuti)} sort_order{Ordine} source_invoice{Fattura di origine} space{Posto} starts_at{Inizio} state{Stato} status{Stato} street{Via} subject{Riguarda} subscription_pct{Abbonamento (%)} timezone{Fuso orario} title{Titolo} total{Totale} type{Tipo} vat{IVA} vat_by_rate{IVA per aliquota} vat_category{Categoria IVA} vat_id{Partita IVA} vat_percent{IVA %} vat_regime{Regime IVA} vat_treatment{Trattamento IVA} voided_at{Annullata il} whatsapp{WhatsApp} width{Larghezza} workspace_code{Codice dello spazio} x{X} y{Y} field{Campo} value{Valore} process{Processo} feature{Funzione} on{Attiva} other{{key}}}",
+  "exportDenmarkRegisteredSystem": "Danimarca: la legge richiede un sistema di contabilità digitale registrato, e DesKilo non lo è. Trasmetta le sue fatture a un sistema registrato ({systems}) o consegni al suo commercialista l’esportazione standard SAF-T DK che esso produce. Nessun file qui adempie da solo a questo obbligo.",
+  "exportLocalBookOnly": "Redatto dalle scritture della sua contabilità locale: la sua contabilità completa solo se ogni operazione dell’impresa passa da DesKilo.",
   "exportNoCompleteBooks": "Ricostruito da fatture e pagamenti — DesKilo non tiene una contabilità in partita doppia, quindi non sono i suoi libri completi. Il suo commercialista li completa.",
   "@exportNoCompleteBooks": {
     "description": "#1868 - accounting capability: no complete posted books"
@@ -7706,6 +7708,7 @@
   "@invoiceExportDatev": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportFaiaLu": "FAIA (Lussemburgo)",
   "invoiceExportFec": "FEC (Francia, richiesto in caso di verifica)",
   "invoiceExportFrEReporting": "E-reporting Francia (B2C, internazionale, pagamenti)",
   "invoiceExportGeneralLedger": "Libro mastro (PDF, dalla contabilità)",
@@ -7713,6 +7716,8 @@
   "invoiceExportGobd": "Accesso ai dati GoBD (Z3)",
   "invoiceExportJournals": "Giornali e riepilogo (PDF, dalla contabilità)",
   "invoiceExportSafT": "SAF-T (XML, internazionale)",
+  "invoiceExportSafTFull": "SAF-T con il libro mastro (XML, internazionale)",
+  "invoiceExportSafTNo": "SAF-T Financial (Norvegia)",
   "invoiceExportSafTPt": "SAF-T (Portogallo)",
   "@invoiceExportSafTPt": {
     "description": "#669 - accounting export formats"
@@ -8398,6 +8403,8 @@
   "journalFecPartyCode": "Il FEC richiede un codice cliente per ogni terzo, fino a 13 lettere e cifre: assegni prima un numero di membro o di fornitore a: {names}",
   "journalNeedsLocalBook": "Il giornale nasce da una contabilità tenuta qui: configura prima il piano dei conti dell'emittente.",
   "journalNeedsRates": "Questi acquisti sono in una valuta diversa da quella dello spazio e non hanno un tasso di cambio registrato; non è stato scritto nulla. Registri prima il tasso di ciascuno: {documents}",
+  "journalOpeningRefused": "I saldi di apertura (dal {from} al {to}) non sono stati contabilizzati: {reason}",
+  "journalSafTRefused": "Il file SAF-T non è stato redatto: {gaps}",
   "journeyClosedPaid": "Pagata il {date} — chiusa",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -14756,10 +14763,13 @@
       }
     }
   },
+  "saftContactIntro": "Il file dell’amministrazione indica una persona di contatto, e quello del Lussemburgo anche un telefono. Viene scritta solo in questo file.",
+  "saftContactTitle": "Contatto per questo file",
   "saftDocumentsOnly": "Solo documenti",
   "@saftDocumentsOnly": {
     "description": "#669 - SAF-T derived postings"
   },
+  "saftGap": "{kind, select, standardAccount{nessun conto standard per {subject}} standardTaxCode{nessun codice IVA standard per {subject}} taxRate{nessuna aliquota IVA per {subject}} company{manca il campo {subject} dell’impresa} contact{il campo {subject} della persona di contatto} party{manca {subject} per un cliente o fornitore} tooLong{{subject} supera la lunghezza ammessa dal file} other{{subject}}}",
   "saftLedgerIntro": "Con i numeri di conto il file porta scritture in partita doppia che il suo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"
@@ -17519,6 +17529,7 @@
   "@taxRefRole": {
     "description": "#2481 tax reference: Field: the role of an account row."
   },
+  "taxRefSafTKeys": "SAF-T Financial (formato saf_t): la chiave saf_t/<ruolo> associa i conti di un ruolo contabile al loro codice standard, inserito come conto (Norvegia: il GroupingCode, con la sua GroupingCategory come etichetta; Lussemburgo: lo StandardAccountID); la chiave saf_t/tax:<output|input>:<gruppo> indica il codice IVA standard di un gruppo di aliquote come codice d’imposta (Norvegia).",
   "taxRefSave": "Salva la versione",
   "@taxRefSave": {
     "description": "#2477 tax reference: Button: save the new version."

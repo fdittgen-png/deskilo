@@ -21,6 +21,7 @@ import 'package:deskilo/features/money/domain/book_profile.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
+import 'package:deskilo/features/money/domain/saf_t_financial.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -39,10 +40,24 @@ const _postedWhenLocalBook = {
   'general_ledger',
   'trial_balance',
   'journals',
+  // #2379 — the SAF-T Financial files, written from the postings only.
+  'saft_no',
+  'faia_lu',
+  'saft_oecd_full',
 };
 
 /// The posted formats that also read the chart's names and the parties.
-const _named = {'fec', 'bundle', 'general_ledger', 'trial_balance', 'journals'};
+const _named = {
+  'fec',
+  'bundle',
+  'general_ledger',
+  'trial_balance',
+  'journals',
+  // #2379 — they name the accounts and the parties too.
+  'saft_no',
+  'faia_lu',
+  'saft_oecd_full',
+};
 
 BookProfile _localBook({int startMonth = 1}) => BookProfile(
   id: 'p',
@@ -214,7 +229,7 @@ void main() {
           input.posted,
           posted
               ? isA<JournalPosted>()
-              : id == 'generic_journal_csv'
+              : id == 'generic_journal_csv' || safTFinancialFormats.contains(id)
               ? isA<JournalNeedsLocalBook>()
               : isNull,
         );

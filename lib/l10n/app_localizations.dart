@@ -12341,6 +12341,18 @@ abstract class AppLocalizations {
   /// **'{key, select, action{Action} active{Active} actor{Done by} address{Address} admin{Administrator} amenities{Amenities} amount{Amount} area_kind{Area type} blocked_from{Blocked from} blocked_to{Blocked until} bookable_as_whole{Bookable as a whole} by_system{Automatic} capacity{Capacity} category{Category} chair{Chair} checked_in_at{Checked in} checked_out_at{Checked out} city{City} co_owner{Co-owner} color{Colour} company{Company} country{Country} created_at{Recorded on} currency{Currency} decided_at{Decided on} decided_by{Decided by} decision{Decision} decisions{Decisions} description{Description} desk{Desk} detailed{Detailed} details{Details} due_on{Due on} email{E-mail} enabled_features{Features on} ends_at{Ends} event_id{Request} event_type{Request type} first_name{First name} height{Height} id{Id} invoice{Invoice} issued_at{Issued on} issued_by{Issued by} joined_at{Member since} kind{Type} kiosk{Kiosk} label{Wording} last_name{Last name} last_seen{Last seen} last_sent_at{Last sent} legal_id{Registration number} level{Level} line{Line} member{Member} member_id{Member id} member_number{Member number} minutes_present{Minutes present} name{Name} net{Net} number{Number} occurred_on{Date} office{Room} order_id{Order} orientation{Orientation} overage_policy{When over quota} owner{Owner} parking_kind{Parking type} payment_terms{Payment terms} period{Period} phone{Phone} postal_code{Postcode} price{Price} provider{Provider} quantity{Quantity} recorded_at{Recorded on} replaces{Replaces} reservation_id{Booking} resource_kind{Place type} series_id{Series} series_pattern{Repeats} signed_amount{Effect on balance} slot_minutes{Slot (minutes)} sort_order{Order} source_invoice{From invoice} space{Place} starts_at{Starts} state{State} status{Status} street{Street} subject{Concerns} subscription_pct{Subscription (%)} timezone{Time zone} title{Title} total{Total} type{Type} vat{VAT} vat_by_rate{VAT by rate} vat_category{VAT category} vat_id{VAT number} vat_percent{VAT %} vat_regime{VAT regime} vat_treatment{VAT treatment} voided_at{Cancelled on} whatsapp{WhatsApp} width{Width} workspace_code{Workspace code} x{X} y{Y} field{Field} value{Value} process{Process} feature{Feature} on{On} other{{key}}}'**
   String exportColumnName(String key);
 
+  /// Accounting export sheet (#2379): the Danish registered-system duty and its two routes; systems = the registered systems of the registry
+  ///
+  /// In en, this message translates to:
+  /// **'Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system ({systems}) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.'**
+  String exportDenmarkRegisteredSystem(String systems);
+
+  /// Accounting export sheet (#2379): a file from the local book is the complete books only if everything passes through the app
+  ///
+  /// In en, this message translates to:
+  /// **'Written from your local book\'s postings: your complete books only if every operation of the business passes through DesKilo.'**
+  String get exportLocalBookOnly;
+
   /// #1868 - accounting capability: no complete posted books
   ///
   /// In en, this message translates to:
@@ -18407,6 +18419,12 @@ abstract class AppLocalizations {
   /// **'DATEV (Buchungsstapel)'**
   String get invoiceExportDatev;
 
+  /// Accounting export sheet (#2379): Luxembourg's FAIA
+  ///
+  /// In en, this message translates to:
+  /// **'FAIA (Luxembourg)'**
+  String get invoiceExportFaiaLu;
+
   /// Export chooser: the French audit file (0075)
   ///
   /// In en, this message translates to:
@@ -18448,6 +18466,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SAF-T (XML, international)'**
   String get invoiceExportSafT;
+
+  /// Accounting export sheet (#2379): the OECD SAF-T tree with the general ledger
+  ///
+  /// In en, this message translates to:
+  /// **'SAF-T with the general ledger (XML, international)'**
+  String get invoiceExportSafTFull;
+
+  /// Accounting export sheet (#2379): Norway's SAF-T Financial
+  ///
+  /// In en, this message translates to:
+  /// **'SAF-T Financial (Norway)'**
+  String get invoiceExportSafTNo;
 
   /// #669 - accounting export formats
   ///
@@ -19918,6 +19948,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'These purchases are in another currency than the space\'s and have no recorded exchange rate, so nothing was written; record each one\'s rate first: {documents}'**
   String journalNeedsRates(String documents);
+
+  /// SAF-T Financial export (#2379): the postings before the fiscal year could not be read, with the period and the reason
+  ///
+  /// In en, this message translates to:
+  /// **'The opening balances ({from} to {to}) could not be posted: {reason}'**
+  String journalOpeningRefused(String from, String to, String reason);
+
+  /// SAF-T Financial export (#2379): the file was refused, with the reasons
+  ///
+  /// In en, this message translates to:
+  /// **'The SAF-T file was not made: {gaps}'**
+  String journalSafTRefused(String gaps);
 
   /// No description provided for @journeyClosedPaid.
   ///
@@ -35328,11 +35370,29 @@ abstract class AppLocalizations {
   /// **'From {from}, no end date'**
   String roomRentWindowOpen(String from);
 
+  /// SAF-T Financial export (#2379): why the contact is asked
+  ///
+  /// In en, this message translates to:
+  /// **'The authority\'s file names a contact person, and Luxembourg\'s a telephone too. It is written into this file only.'**
+  String get saftContactIntro;
+
+  /// SAF-T Financial export (#2379): the dialog asking for the contact person the file names
+  ///
+  /// In en, this message translates to:
+  /// **'Contact for this file'**
+  String get saftContactTitle;
+
   /// #669 - SAF-T derived postings
   ///
   /// In en, this message translates to:
   /// **'Documents only'**
   String get saftDocumentsOnly;
+
+  /// SAF-T Financial export (#2379): one reason the file was refused, by kind
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, standardAccount{no standard account for {subject}} standardTaxCode{no standard VAT code for {subject}} taxRate{no VAT rate for {subject}} company{the company\'s {subject} is missing} contact{the contact person\'s {subject}} party{{subject} is missing for a customer or supplier} tooLong{{subject} is longer than the file allows} other{{subject}}}'**
+  String saftGap(String kind, String subject);
 
   /// #669 - SAF-T derived postings
   ///
@@ -43078,6 +43138,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Role'**
   String get taxRefRole;
+
+  /// Tax reference editor (#2379): the key convention of the SAF-T Financial account_map rows
+  ///
+  /// In en, this message translates to:
+  /// **'SAF-T Financial (format saf_t): key saf_t/<role> maps a posting role\'s accounts, with the standard code as account (Norway: the GroupingCode, with its GroupingCategory as label; Luxembourg: the StandardAccountID); key saf_t/tax:<output|input>:<group> gives a rate group\'s standard VAT code as tax code (Norway).'**
+  String get taxRefSafTKeys;
 
   /// #2477 tax reference: Button: save the new version.
   ///

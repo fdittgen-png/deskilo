@@ -1,0 +1,2929 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSpy v2013 sp1 (http://www.altova.com) by PEREIRA (Pereira) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Belastingdienst/Centrum voor ICT (Belastingdienst/Centrum voor ICT) -->
+<!-- edited by Administration de l'enregistrement et des Domaines (AED) -->
+<xs:schema xmlns="urn:OECD:StandardAuditFile-Taxation/2.00" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:doc="urn:schemas-OECD:schema-extensions:documentation" targetNamespace="urn:OECD:StandardAuditFile-Taxation/2.00" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.00" id="FAIA-T">
+	<xs:annotation>
+		<xs:documentation>
+			<doc:Title>OECD Standard Audit File</doc:Title>
+			<doc:Copyright>Copyright OECD</doc:Copyright>
+			<doc:Subject>FAIA - Fichier d'audit informatisé AED</doc:Subject>
+			<doc:Version>
+				<doc:Number>2.01</doc:Number>
+				<doc:Status>Final version</doc:Status>
+			</doc:Version>
+			<doc:Author>AED</doc:Author>
+			<doc:ModificationDate>31-01-2013</doc:ModificationDate>
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AuditFile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header">
+					<xs:annotation>
+						<xs:documentation>Holds general information about the file including the name of the software which produced it; the company on whose behalf the FAIA is being submitted; and the selection criteria used.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="HeaderStructure">
+								<xs:sequence>
+									<xs:element name="TaxAccountingBasis" type="FAIAshorttextType">
+										<xs:annotation>
+											<xs:documentation>Invoice Accounting, Cash Accounting, Delivery, other ...</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="TaxEntity" type="FAIAmiddle2textType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Company / Division / Branch reference</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:any namespace="##other" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements if required. See Annex A.</xs:documentation>
+										</xs:annotation>
+									</xs:any>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MasterFiles" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Holds standing data about general ledger account, suppliers, customers, products, etc.. An extension point is provided to allow Revenue Bodies to specify additional elements or structures such as tax rate tables.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="GeneralLedgerAccounts" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Account" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AccountID" type="FAIAmiddle2textType">
+														<xs:annotation>
+															<xs:documentation>General Ledger Account code. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AccountDescription" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Name of individual GL account</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="StandardAccountID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>AccountID based on a standard prescribed by authorities. Holds the Standard Chart of Accounts Numbering.  StandardAccountID must be populated if the element AccountID is not the same.   </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="GroupingCategory" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Category for grouping the accounts, relevant in reconciling financial statements f.i.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="GroupingCode" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Subcode for grouping the accounts, relevant in reconciling financial statements f.i.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AccountType" type="FAIAshorttextType">
+														<xs:annotation>
+															<xs:documentation>Type of account  - Asset/Liability/Sale/Expense  Actif/Passif/Produit/Charge</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AccountCreationDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Date of creating the generalledger account</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:choice>
+														<xs:element name="OpeningDebitBalance" type="FAIAmonetaryType">
+															<xs:annotation>
+																<xs:documentation>Debit balance at the start date of the selection period in the header's default currency.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="OpeningCreditBalance" type="FAIAmonetaryType">
+															<xs:annotation>
+																<xs:documentation>Credit balance at the start date of the selection period in the header's default currency.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:choice>
+													<xs:choice>
+														<xs:element name="ClosingDebitBalance" type="FAIAmonetaryType">
+															<xs:annotation>
+																<xs:documentation>Debit balance at the end date of the selection period in the header's default currency.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="ClosingCreditBalance" type="FAIAmonetaryType">
+															<xs:annotation>
+																<xs:documentation>Credit balance at the end date of the selection period in the header's default currency.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:choice>
+													<xs:any namespace="##other" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+														</xs:annotation>
+													</xs:any>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Taxonomies" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>This element must not be populated</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Taxonomy" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="TaxonomyReference" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Reference to the taxonomy that applies to the GL Account.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="TaxonomyElement" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="TaxonomyCode" type="FAIAlongtextType">
+																	<xs:annotation>
+																		<xs:documentation>Reference to specific taxonomy element</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="TaxonomyClusterID" type="FAIAlongtextType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Additional reference to specific taxonomy element</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="TaxonomyClusterContextID" type="FAIAlongtextType" minOccurs="0"/>
+																<xs:element name="AccountID" type="FAIAmiddle2textType">
+																	<xs:annotation>
+																		<xs:documentation>General Ledger Account code for this TaxanomyReference/TaxonomyCode. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Customers" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Customer" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="CompanyStructure">
+														<xs:sequence>
+															<xs:element name="CustomerID" type="FAIAmiddle1textType">
+																<xs:annotation>
+																	<xs:documentation>Unique code for the customer  Can not exist more than one registration with the same CustomerID. In case of final consumer, a generic client with the designation of "FINAL CONSUMER" shall be created.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="SelfBillingIndicator" type="FAIAcodeType" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Indicator showing if a self-billing agreement exists between the customer and the supplier</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="AccountID" type="FAIAmiddle2textType" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>General Ledger Account code for this customer. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:choice minOccurs="0">
+																<xs:element name="OpeningDebitBalance" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Debit balance at the start date of the selection period in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="OpeningCreditBalance" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Credit balance at the start date of the selection period in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:choice>
+															<xs:choice minOccurs="0">
+																<xs:element name="ClosingDebitBalance" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Debit balance at the end date of the selection period in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ClosingCreditBalance" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Credit balance at the end date of the selection period in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:choice>
+															<xs:any namespace="##other" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+																</xs:annotation>
+															</xs:any>
+														</xs:sequence>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Suppliers" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Supplier" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="CompanyStructure">
+														<xs:sequence>
+															<xs:element name="SupplierID" type="FAIAmiddle1textType">
+																<xs:annotation>
+																	<xs:documentation>Unique code for the supplier. Can not exist more than one record with the same SupplierID</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="SelfBillingIndicator" type="FAIAcodeType" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Indicator showing if a self-billing agreement exists between the customer and the supplier</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="AccountID" type="FAIAmiddle2textType" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>General Ledger Account code for this supplier. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:choice minOccurs="0">
+																<xs:element name="OpeningDebitBalance" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Debit balance at the start date of the selection period in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="OpeningCreditBalance" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Credit balance at the start date of the selection period in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:choice>
+															<xs:choice minOccurs="0">
+																<xs:element name="ClosingDebitBalance" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Debit balance at the end date of the selection period in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ClosingCreditBalance" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Credit balance at the end date of the selection period in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:choice>
+															<xs:any namespace="##other" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+																</xs:annotation>
+															</xs:any>
+														</xs:sequence>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="TaxTable" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="TaxTableEntry" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="TaxType" type="FAIAcodeType">
+														<xs:annotation>
+															<xs:documentation>Tax type for look-up in tables, , contains a fixed value "TVA"</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Description" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of the Tax Type, contains a fixed value "Taxe sur la valeur ajoutée"</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="TaxCodeDetails" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="TaxCode" type="FAIAcodeType">
+																	<xs:annotation>
+																		<xs:documentation>Tax Code for lookup in tables, holds the Tax Code with is used to identify the different tax codes within the  used application.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="EffectiveDate" type="xs:date" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Representing the starting date for this entry</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ExpirationDate" type="xs:date" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Representing the ending date for this entry</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="Description" type="FAIAlongtextType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Description of the Tax Code</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:choice minOccurs="0">
+																	<xs:element name="TaxPercentage" type="xs:decimal">
+																		<xs:annotation>
+																			<xs:documentation>Tax percentage.</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																	<xs:element name="FlatTaxRate" type="AmountStructure">
+																		<xs:annotation>
+																			<xs:documentation>FlatTaxRate</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																</xs:choice>
+																<xs:element name="Country" type="ISOCountryCode">
+																	<xs:annotation>
+																		<xs:documentation>Two-letter country code according to ISO 3166-1 alpha 2 standard. Example NL for the Netherlands.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="Region" type="FAIAcodeType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Country specific code to indicate regions / provinces within the tax authority. Preferably described according to ISO 3166-2. Example: GB-KEN for Kent county in the United Kingdom. </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="UOMTable" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Table with descriptions of all different kinds of UOM's</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="UOMTableEntry" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="UnitOfMeasure" type="FAIAcodeType">
+														<xs:annotation>
+															<xs:documentation>Quantity unit of measure e.g. pack of 12</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Description" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of the UOM</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="AnalysisTypeTable" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Table with the analysiscode identifiers.
+Used for further specification of transaction data.
+Example: cost unit, cost center, project.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="AnalysisTypeTableEntry" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AnalysisType" type="FAIAcodeType">
+														<xs:annotation>
+															<xs:documentation>Analysis type identifier: e.g. CC (for Cost Center), DEP (for department), etc.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AnalysisTypeDescription" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of the AnalysisType, e.g. "Cost Center"</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AnalysisID" type="FAIAmiddle1textType">
+														<xs:annotation>
+															<xs:documentation>Analysis ID: e.g. 1200-HDOF-TR (for cost center treasury in the headoffice), P-4800-123 (for project 123 in branch 4800) </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AnalysisIDDescription" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of the AnalysisID: e.g. "Headoffice-Treasury".</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="MovementTypeTable" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Table with descriptions of all different kinds of movementtypes and movementsubtypes</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="MovementTypeTableEntry" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="MovementType" type="FAIAcodeType">
+														<xs:annotation>
+															<xs:documentation>Identify kind of movement or movement line. E.g. sale, purchase, adjustment, etc.  Or  efficiencyloss, use of components in production, etc. Predescribed TABLE is possible.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Description" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of the movement(sub)type</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Products" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Product" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ProductCode" type="FAIAmiddle2textType">
+														<xs:annotation>
+															<xs:documentation>Product code, Indicator of product or service</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="GoodsServicesID" type="FAIAcodeType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Indicator showing if goods or services (Predescribed TABLE is possible)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ProductGroup" type="FAIAmiddle2textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Code identifying aggregated level at which similar products are grouped</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Description" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of goods or services.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ProductCommodityCode" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Classification for import / export</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ProductNumberCode" type="FAIAmiddle2textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>EAN or other code</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ValuationMethod" type="FAIAcodeType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>FIFO, LIFO, Average cost etc.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="UOMBase" type="FAIAcodeType">
+														<xs:annotation>
+															<xs:documentation>Unit of measure for Stock Administration for this product Predescribed TABLE is possible.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:sequence minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Not needed when not applicable</xs:documentation>
+														</xs:annotation>
+														<xs:element name="UOMStandard" type="FAIAcodeType">
+															<xs:annotation>
+																<xs:documentation>A Standard Unit of Measure applicable for this product, f.i. Kilo, Metres, Litres (Predescribed TABLE is possible)</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="UOMToUOMBaseConversionFactor" type="xs:decimal">
+															<xs:annotation>
+																<xs:documentation>Conversion factor of the UOM to UOM Base</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+													<xs:element name="Tax" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence minOccurs="0">
+																<xs:element name="TaxType" type="FAIAcodeType">
+																	<xs:annotation>
+																		<xs:documentation>Tax Type for lookup in tables</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="TaxCode" type="FAIAcodeType">
+																	<xs:annotation>
+																		<xs:documentation>Tax Code for lookup in tables</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:any namespace="##other" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+														</xs:annotation>
+													</xs:any>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PhysicalStock" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="PhysicalStockEntry" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="WarehouseID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Warehouse where goods held - possoble also to identify work-in-progress, or stock-in-transit</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="LocationID" type="FAIAshorttextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Location of goods in warehouse</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ProductCode" type="FAIAmiddle2textType">
+														<xs:annotation>
+															<xs:documentation>Product code</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="StockAccountNo" type="FAIAmiddle2textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Stock batch, lot, serial identification. Not used when there is exactly 1 PhysicalStock entry per ProductCode</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ProductType" type="FAIAshorttextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>To determine whether the product/stockaccount is raw material, work-in-progress, finished good, merchandise for resale, etc.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ProductStatus" type="FAIAshorttextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>To determine whether the product/stockaccount is discontinued, damaged, obsolete, active, etc.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="StockAccountCommodityCode" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Classification for import / export</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="OwnerID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Reference to the owner Master File</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:sequence minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Not needed when UOMPhysicalStock equals UOMBase</xs:documentation>
+														</xs:annotation>
+														<xs:element name="UOMPhysicalStock" type="FAIAcodeType">
+															<xs:annotation>
+																<xs:documentation>Unit of Measurement for this Physical Stock position</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="UOMToUOMBaseConversionFactor" type="xs:decimal">
+															<xs:annotation>
+																<xs:documentation>Conversion factor of the UOM to UOM Base</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+													<xs:element name="UnitPrice" type="FAIAmonetaryType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Base Unit price for this stock account  in the header's default currency.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="OpeningStockQuantity" type="FAIAquantityType">
+														<xs:annotation>
+															<xs:documentation>In UOM Physical Stock for selection period</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="OpeningStockValue" type="FAIAmonetaryType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>In  the header's currency code for selection period</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ClosingStockQuantity" type="FAIAquantityType">
+														<xs:annotation>
+															<xs:documentation>In UOM Physical Stock for selection period</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ClosingStockValue" type="FAIAmonetaryType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Closing stock value  in the header's default currency for selection period</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="StockCharacteristics" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence maxOccurs="unbounded">
+																<xs:element name="StockCharacteristic" type="FAIAshorttextType">
+																	<xs:annotation>
+																		<xs:documentation>User definable characteristics of the goods. Predescribed TABLE is possible.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="StockCharacteristicValue" type="FAIAmiddle1textType">
+																	<xs:annotation>
+																		<xs:documentation>The weight, pack size, colour etc.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:any namespace="##other" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+														</xs:annotation>
+													</xs:any>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Owners" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Owner" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="CompanyStructure">
+														<xs:sequence>
+															<xs:element name="OwnerID" type="FAIAmiddle1textType" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Reference to the owner Master File</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="AccountID" type="FAIAmiddle2textType" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>General Ledger Account code for this owner. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:any namespace="##other" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+																</xs:annotation>
+															</xs:any>
+														</xs:sequence>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Assets" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Asset" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AssetID" type="FAIAmiddle1textType">
+														<xs:annotation>
+															<xs:documentation>Unique identifier of the asset</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AccountID" type="FAIAmiddle2textType">
+														<xs:annotation>
+															<xs:documentation>General Ledger Account code. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Description" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of this asset</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Supplier" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Contains the information of all suppliers, including the historical suppliers.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="SupplierName" type="FAIAmiddle2textType">
+																	<xs:annotation>
+																		<xs:documentation>Name of the supplier of the asset</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SupplierID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Unique code for the supplier</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="PostalAddress" type="AddressStructure">
+																	<xs:annotation>
+																		<xs:documentation>Address information of the supplier of the asset</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="PurchaseOrderDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Date of the purchase order of this asset</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="DateOfAcquisition" type="xs:date">
+														<xs:annotation>
+															<xs:documentation>Date of the acquisition of the asset (usually the date of delivery).</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="StartUpDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Commissioning date of the asset.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Valuations">
+														<xs:annotation>
+															<xs:documentation>The data can be reported for different purposes. More than one can be in this FAIA.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Valuation" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="AssetValuationType" type="FAIAshorttextType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Describes the purpose for the reporting: f.i. commercial, tax  in country 1, tax in country 2, etc.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="ValuationClass" type="FAIAshorttextType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>This describes the classification of the asset for (tax) reporting purposes.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="AcquisitionAndProductionCostsBegin" type="FAIAmonetaryType">
+																				<xs:annotation>
+																					<xs:documentation>Total costs of acquisition and/or production of the asset at SelectionStartDate in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="AcquisitionAndProductionCostsEnd" type="FAIAmonetaryType">
+																				<xs:annotation>
+																					<xs:documentation>Total costs of acquisition and/or production of the asset at SelectionEndDate in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="InvestmentSupport" type="FAIAmonetaryType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Total amount of investment support for this asset in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:choice>
+																				<xs:element name="AssetLifeYear" type="xs:decimal">
+																					<xs:annotation>
+																						<xs:documentation>Periode of useful life in years</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																				<xs:element name="AssetLifeMonth" type="xs:decimal">
+																					<xs:annotation>
+																						<xs:documentation>Period of useful life in months</xs:documentation>
+																					</xs:annotation>
+																				</xs:element>
+																			</xs:choice>
+																			<xs:element name="AssetAddition" type="FAIAmonetaryType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Bookvalue of the acquisition and/or production of the asset in the  Selectionperiod in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="Transfers" type="FAIAmonetaryType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Book value of the transfers of the asset during the Selectionperiod in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="AssetDisposal" type="FAIAmonetaryType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Book value of the disposals of the asset during the Selectionperiod in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="BookValueBegin" type="FAIAmonetaryType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Bookvalue at the beginning of the Selectionperiod in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="DepreciationMethod" type="FAIAmiddle1textType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Method of normal depreciation during the Selectionperiod.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="DepreciationPercentage" type="xs:decimal" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>The rate of the normal depreciation per year or month (depends on choice useful life periode)</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="DepreciationForPeriod" type="FAIAmonetaryType">
+																				<xs:annotation>
+																					<xs:documentation>Total amouunt of normal depreciation during the Selectionperiod in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="AppreciationForPeriod" type="FAIAmonetaryType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Total amouunt of appreciation during the Selectionperiod in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="ExtraordinaryDepreciationsForPeriod" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Extraordinary depreciations for this asset during the Selectionperiod.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="ExtraordinaryDepreciationForPeriod" maxOccurs="unbounded">
+																							<xs:complexType>
+																								<xs:sequence>
+																									<xs:element name="ExtraordinaryDepreciationMethod" type="FAIAmiddle1textType">
+																										<xs:annotation>
+																											<xs:documentation>Method of extraordinary depreciation during the Selectionperiod.</xs:documentation>
+																										</xs:annotation>
+																									</xs:element>
+																									<xs:element name="ExtraordinaryDepreciationForPeriod" type="FAIAmonetaryType">
+																										<xs:annotation>
+																											<xs:documentation>Amouunt of extraordinary depreciation during the Selectionperiod in the header's default currency.</xs:documentation>
+																										</xs:annotation>
+																									</xs:element>
+																								</xs:sequence>
+																							</xs:complexType>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="AccumulatedDepreciation" type="FAIAmonetaryType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Total amount of depreciation for this asset</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="BookValueEnd" type="FAIAmonetaryType">
+																				<xs:annotation>
+																					<xs:documentation>Bookvalue at the end of the Selectionperiod in the header's default currency.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:any namespace="##other" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+														</xs:annotation>
+													</xs:any>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:any namespace="##other" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Represents space to allow individual Revenue Bodies to specify additional standing data.</xs:documentation>
+								</xs:annotation>
+							</xs:any>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="GeneralLedgerEntries" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="NumberOfEntries" type="xs:nonNegativeInteger">
+								<xs:annotation>
+									<xs:documentation>Number of entries. Contains number of GL entries. </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TotalDebit" type="FAIAmonetaryType">
+								<xs:annotation>
+									<xs:documentation>The total of all debit amounts in the header's default currency.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TotalCredit" type="FAIAmonetaryType">
+								<xs:annotation>
+									<xs:documentation>The total of all credit amounts in the header's default currency.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Journal" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="JournalID" type="FAIAshorttextType">
+											<xs:annotation>
+												<xs:documentation>Source GL journal identifier, or invoices and payments in single ledger systems</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Description" type="FAIAlongtextType">
+											<xs:annotation>
+												<xs:documentation>Description of the Journal</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Type" type="FAIAcodeType">
+											<xs:annotation>
+												<xs:documentation>Grouping mechanism for journals</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Transaction" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="TransactionID" type="FAIAmiddle2textType">
+														<xs:annotation>
+															<xs:documentation>Cross-reference to GL posting. It can contain many different levels to identify the transaction. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Period" type="xs:nonNegativeInteger">
+														<xs:annotation>
+															<xs:documentation>Accounting Period</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="PeriodYear">
+														<xs:annotation>
+															<xs:documentation>The year of the Accounting Period.</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:nonNegativeInteger">
+																<xs:minInclusive value="1970"/>
+																<xs:maxInclusive value="2100"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="TransactionDate" type="xs:date">
+														<xs:annotation>
+															<xs:documentation>Document date </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SourceID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Details of person or application that entered the transaction</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="TransactionType" type="FAIAshorttextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Type of journaltransaction: normal, (automated) periodically, etc.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Description" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of Journal Transaction</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="BatchID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Systems generated ID for batch</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SystemEntryDate" type="xs:date">
+														<xs:annotation>
+															<xs:documentation>Date captured  by system</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="GLPostingDate" type="xs:date">
+														<xs:annotation>
+															<xs:documentation>Date posting to GL</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="CustomerID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Unique code for the customer. </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SupplierID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Unique code for the supplier</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SystemID" type="FAIAshorttextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Unique number created by the system for the document</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Line" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="RecordID" type="FAIAshorttextType">
+																	<xs:annotation>
+																		<xs:documentation>Identifier to trace entry to journal line or posting reference</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="AccountID" type="FAIAmiddle2textType">
+																	<xs:annotation>
+																		<xs:documentation>General Ledger Account code. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="Analysis" type="AnalysisStructure" minOccurs="0" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation>General Ledger analysis codes</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ValueDate" type="xs:date" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Effective date from which interest charged. To be reported when this date differs from the transactiondate.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SourceDocumentID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Source document number to which line relates</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="CustomerID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Unique code for the customer </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SupplierID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Unique code for the supplier</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="Description" type="FAIAlongtextType">
+																	<xs:annotation>
+																		<xs:documentation>Description of the Journal Line.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:choice>
+																	<xs:element name="DebitAmount" type="AmountStructure">
+																		<xs:annotation>
+																			<xs:documentation>Debit amount information for transaction</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																	<xs:element name="CreditAmount" type="AmountStructure">
+																		<xs:annotation>
+																			<xs:documentation>Credit amount information for transaction</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																</xs:choice>
+																<xs:element name="TaxInformation" type="TaxInformationStructure" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:any namespace="##other" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+																	</xs:annotation>
+																</xs:any>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SourceDocuments" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SalesInvoices" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Contains all the details about the issued invoices and credit incoices. This element has to be populated if the invoices are issued with an invoicing software.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="NumberOfEntries" type="xs:nonNegativeInteger">
+											<xs:annotation>
+												<xs:documentation>Number of entries. Contains the number of invoices issued.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TotalDebit" type="FAIAmonetaryType">
+											<xs:annotation>
+												<xs:documentation>The total of all debit amounts in the header's default currency</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TotalCredit" type="FAIAmonetaryType">
+											<xs:annotation>
+												<xs:documentation>The total of all credit amounts in the header's default currency</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Invoice" type="InvoiceStructure" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PurchaseInvoices" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="NumberOfEntries" type="xs:nonNegativeInteger">
+											<xs:annotation>
+												<xs:documentation>Number of entries</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TotalDebit" type="FAIAmonetaryType">
+											<xs:annotation>
+												<xs:documentation>The total of all debit amounts in the header's default currency</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TotalCredit" type="FAIAmonetaryType">
+											<xs:annotation>
+												<xs:documentation>The total of all credit amounts in the header's default currency</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Invoice" type="InvoiceStructure" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Payments" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="NumberOfEntries" type="xs:nonNegativeInteger">
+											<xs:annotation>
+												<xs:documentation>Number of entries</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TotalDebit" type="FAIAmonetaryType">
+											<xs:annotation>
+												<xs:documentation>The total of all debit amounts in the header's default currency</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TotalCredit" type="FAIAmonetaryType">
+											<xs:annotation>
+												<xs:documentation>The total of all credit amounts in the header's default currency</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Payment" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="PaymentRefNo" type="FAIAmiddle1textType">
+														<xs:annotation>
+															<xs:documentation>Unique reference number for payment</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Period" type="xs:nonNegativeInteger" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Accounting Period</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="PeriodYear" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The year of the Accounting Period.</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:nonNegativeInteger">
+																<xs:minInclusive value="1970"/>
+																<xs:maxInclusive value="2100"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="TransactionID" type="FAIAmiddle2textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Cross-reference to GL posting. It can contain many different levels to identify the transaction. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="TransactionDate" type="xs:date">
+														<xs:annotation>
+															<xs:documentation>Document date </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="PaymentMethod" type="FAIAcodeType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Cheque, Bank, Giro, Cash, etc.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Description" type="FAIAlongtextType">
+														<xs:annotation>
+															<xs:documentation>Description of the payment.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="BatchID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Systems generated ID for batch</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SystemID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Unique number created by the system for the document</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SourceID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Details of person or application that entered the transaction</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Line" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="LineNumber" type="FAIAshorttextType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Number of the paymentline</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SourceDocumentID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>The source document to which the line relates</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="AccountID" type="FAIAmiddle2textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>General Ledger Account code. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="Analysis" type="AnalysisStructure" minOccurs="0" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation>General Ledger analysis codes</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="CustomerID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Unique code for the customer </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SupplierID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Unique code for the supplier</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="TaxPointDate" type="xs:date" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Tax Point date where recorded or if not recorded then the Invoice date </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="Description" type="FAIAlongtextType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Description of the payment line.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="DebitCreditIndicator">
+																	<xs:annotation>
+																		<xs:documentation>Indicates whether the amounts on line-level are debit or credit amounts. Entry must correspond to entry reflected in General Ledger Entry. Signing of lineamounts is relative to this indicator. E.g. a return can lead to a negative amount.</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="FAIAcodeType">
+																			<xs:enumeration value="D"/>
+																			<xs:enumeration value="C"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="PaymentLineAmount" type="AmountStructure">
+																	<xs:annotation>
+																		<xs:documentation>Amount for transaction excluding taxes.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="TaxInformation" type="TaxInformationStructure" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:any namespace="##other" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+																	</xs:annotation>
+																</xs:any>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Settlement" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="SettlementDiscount" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Description Settlement / Other Discount  </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SettlementAmount" type="AmountStructure" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Settlement amount</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SettlementDate" type="xs:date" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Date settled</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="PaymentMechanism" type="FAIAcodeType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Payment mechanism </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="DocumentTotals" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="TaxInformationTotals" type="TaxInformationStructure" minOccurs="0" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation>Control totals tax payable information. Per TaxType/TaxCode the TaxBase and TaxAmount are summarised.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="NetTotal" type="FAIAmonetaryType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Total amount excluding tax in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="GrossTotal" type="FAIAmonetaryType">
+																	<xs:annotation>
+																		<xs:documentation>Total amount including tax in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:any namespace="##other" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+														</xs:annotation>
+													</xs:any>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="MovementOfGoods" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="NumberOfMovementLines" type="xs:nonNegativeInteger">
+											<xs:annotation>
+												<xs:documentation>Number of movementlines in selected period</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TotalQuantityReceived" type="FAIAquantityType">
+											<xs:annotation>
+												<xs:documentation>Quantity of goods received</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="TotalQuantityIssued" type="FAIAquantityType">
+											<xs:annotation>
+												<xs:documentation>Quantity of goods issued in selected period</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="StockMovement" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="MovementReference" type="FAIAmiddle1textType">
+														<xs:annotation>
+															<xs:documentation>Unique reference to the movement.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="MovementDate" type="xs:date">
+														<xs:annotation>
+															<xs:documentation>Document date </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="MovementPostingDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Date of posting of the movement if different to Movement Date</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="MovementPostingTime" type="xs:time" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Time of posting of the movement</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="TaxPointDate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Date of supply of goods</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="MovementType" type="FAIAcodeType">
+														<xs:annotation>
+															<xs:documentation>The movementtype expresses the type of the process for the underlaying lines. E.g. production, sales, purchase. Predescribed TABLE is possible.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SourceID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Details of person or application that entered the transaction</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="SystemID" type="FAIAmiddle1textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Unique number created by the system for the document</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="DocumentReference" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="DocumentType" type="FAIAshorttextType">
+																	<xs:annotation>
+																		<xs:documentation>Type of document</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="DocumentNumber" type="FAIAmiddle1textType">
+																	<xs:annotation>
+																		<xs:documentation>Reference number of the document</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="DocumentLine" type="FAIAshorttextType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Line number of the document</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="Line" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="LineNumber" type="FAIAshorttextType">
+																	<xs:annotation>
+																		<xs:documentation>Number of the movementline</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="AccountID" type="FAIAmiddle2textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>General Ledger Account code. Can be including sub-account id.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="TransactionID" type="FAIAmiddle2textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Cross-reference to GL posting. It can contain many different levels to identify the transaction. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="CustomerID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Unique code for the customer </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SupplierID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Unique code for the supplier</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ShipTo" type="ShippingPointStructure" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Ship To details</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ShipFrom" type="ShippingPointStructure" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Ship from Details</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="ProductCode" type="FAIAmiddle2textType">
+																	<xs:annotation>
+																		<xs:documentation>Product code</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="StockAccountNo" type="FAIAmiddle2textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Stock batch, lot, serial identification. Not used when there is exactly 1 PhysicalStock entry per ProductCode</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="Quantity" type="FAIAquantityType">
+																	<xs:annotation>
+																		<xs:documentation>Quantity of goods </xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:sequence minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Not needed when UOM of this line equals UOMPhysicalStock</xs:documentation>
+																	</xs:annotation>
+																	<xs:element name="UnitOfMeasure" type="FAIAcodeType">
+																		<xs:annotation>
+																			<xs:documentation>Quantity unit of measure e.g. pack of 12</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																	<xs:element name="UOMToUOMPhysicalStockConversionFactor" type="xs:decimal">
+																		<xs:annotation>
+																			<xs:documentation>Conversion factor of the UOM to UOM Physical Stock</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																</xs:sequence>
+																<xs:element name="BookValue" type="FAIAmonetaryType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Value of the transaction line as registrerd in the general ledger in the header's default currency.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="MovementSubType" type="FAIAcodeType">
+																	<xs:annotation>
+																		<xs:documentation>Indentify the type of the movement on line / article level. A movement(type) production contains f.i. use of components, getting finished product, efficiencyloss as movementsubtypes. Predescribed TABLE is possible.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="MovementComments" type="FAIAlongtextType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>A reason for the movement</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="TaxInformation" type="TaxInformationStructure" minOccurs="0" maxOccurs="unbounded"/>
+																<xs:any namespace="##other" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+																	</xs:annotation>
+																</xs:any>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:any namespace="##other" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+														</xs:annotation>
+													</xs:any>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="AssetTransactions" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Details of all transactions related to an asset during the Selectionperiod.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="NumberOfAssetTransactions" type="xs:nonNegativeInteger">
+											<xs:annotation>
+												<xs:documentation>Number of movementlines during selected period</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="AssetTransaction" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AssetTransactionID" type="FAIAmiddle2textType">
+														<xs:annotation>
+															<xs:documentation>Unique Identification  of the transaction</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AssetID" type="FAIAmiddle1textType">
+														<xs:annotation>
+															<xs:documentation>Unique identifier of the asset</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AssetTransactionType" type="FAIAcodeType">
+														<xs:annotation>
+															<xs:documentation>Code for the type of the transaction</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Description" type="FAIAlongtextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Description of the type of the transaction.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AssetTransactionDate" type="xs:date">
+														<xs:annotation>
+															<xs:documentation>Recording date of the transaction type (e. g. assets: date of the addition of the asset)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="Supplier" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Information about the supplier of the asset</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="SupplierName" type="FAIAmiddle2textType">
+																	<xs:annotation>
+																		<xs:documentation>Name of the supplier of the asset</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="SupplierID" type="FAIAmiddle1textType" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Unique code for the supplier</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="PostalAddress" type="AddressStructure">
+																	<xs:annotation>
+																		<xs:documentation>Address information of the supplier of the asset</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="TransactionID" type="FAIAmiddle2textType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Cross-reference to GL posting in the journal. It can contain many different levels to identify the transaction. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="AssetTransactionValuations">
+														<xs:annotation>
+															<xs:documentation>These amounts of the transaction can differ per asset valuation type.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="AssetTransactionValuation" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="AssetValuationType" type="FAIAshorttextType" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Describes the purpose for the reporting: f.i. commercial, tax  in country 1, tax in country 2, etc.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="AcquisitionAndProductionCostsOnTransaction" type="FAIAmonetaryType">
+																				<xs:annotation>
+																					<xs:documentation>Costs of acquisition and/or production of related asset transaction in the header's default currency at date of transaction.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="BookValueOnTransaction" type="FAIAmonetaryType">
+																				<xs:annotation>
+																					<xs:documentation>Bookvalue of related asset transaction in the header's default currency at date of transaction.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:element name="AssetTransactionAmount" type="FAIAmonetaryType">
+																				<xs:annotation>
+																					<xs:documentation>Net Amount of related asset transaction in the header's default currency, for instance the net sales revenue.</xs:documentation>
+																				</xs:annotation>
+																			</xs:element>
+																			<xs:any namespace="##other" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+																				</xs:annotation>
+																			</xs:any>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:any namespace="##other" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+														</xs:annotation>
+													</xs:any>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="KeyGeneralLedgerAccount">
+			<xs:selector xpath="MasterFiles/GeneralLedgerAccounts/Account"/>
+			<xs:field xpath="AccountID"/>
+		</xs:key>
+		<xs:key name="KeySupplier">
+			<xs:selector xpath="MasterFiles/Suppliers/Supplier"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:key>
+		<xs:key name="KeyCustomer">
+			<xs:selector xpath="MasterFiles/Customers/Customer"/>
+			<xs:field xpath="CustomerID"/>
+		</xs:key>
+		<xs:key name="KeyTaxType">
+			<xs:selector xpath="MasterFiles/TaxTable/TaxTableEntry"/>
+			<xs:field xpath="TaxType"/>
+		</xs:key>
+		<xs:key name="KeyUnitOfMeasure">
+			<xs:selector xpath="MasterFiles/UOMTable/UOMTableEntry"/>
+			<xs:field xpath="UnitOfMeasure"/>
+		</xs:key>
+		<xs:key name="KeyMovementType">
+			<xs:selector xpath="MasterFiles/MovementTypeTable/MovementTypeTableEntry"/>
+			<xs:field xpath="MovementType"/>
+		</xs:key>
+		<xs:key name="KeyProductCode">
+			<xs:selector xpath="MasterFiles/Products/Product"/>
+			<xs:field xpath="ProductCode"/>
+		</xs:key>
+		<xs:key name="KeyOwner">
+			<xs:selector xpath="MasterFiles/Owners/Owner"/>
+			<xs:field xpath="OwnerID"/>
+		</xs:key>
+		<xs:key name="KeyAsset">
+			<xs:selector xpath="MasterFiles/Assets/Asset"/>
+			<xs:field xpath="AssetID"/>
+		</xs:key>
+		<xs:key name="KeyMovementReference">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement"/>
+			<xs:field xpath="MovementReference"/>
+		</xs:key>
+		<xs:key name="KeyTransactionReference">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction"/>
+			<xs:field xpath="TransactionID"/>
+		</xs:key>
+		<xs:key name="KeyTaxCode">
+			<xs:selector xpath="MasterFiles/TaxTable/TaxTableEntry"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:key>
+		<xs:key name="KeyAnalysisType">
+			<xs:selector xpath="MasterFiles/AnalysisTypeTable/AnalysisTypeTableEntry"/>
+			<xs:field xpath="AnalysisType"/>
+		</xs:key>
+		<xs:key name="KeyAnalysisID">
+			<xs:selector xpath="MasterFiles/AnalysisTypeTable/AnalysisTypeTableEntry"/>
+			<xs:field xpath="AnalysisID"/>
+		</xs:key>
+		<xs:key name="KeyStockAccountNo">
+			<xs:selector xpath="MasterFiles/PhysicalStock/PhysicalStockEntry"/>
+			<xs:field xpath="StockAccountNo"/>
+		</xs:key>
+		<xs:keyref name="RefTaxonomyAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="MasterFiles/Taxonomies/Taxonomy/TaxonomyElement"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefCustomerAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="MasterFiles/Customers/Customer"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefSupplierAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="MasterFiles/Suppliers/Supplier"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefOwnerAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="MasterFiles/Owners/Owner"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefAssetAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="MasterFiles/Assets/Asset"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefTransactionLineAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction/Line"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceLineAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/Line"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceLineAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/Line"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentLineAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/Line"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementLineAccount" refer="KeyGeneralLedgerAccount">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line"/>
+			<xs:field xpath="AccountID"/>
+		</xs:keyref>
+		<xs:keyref name="RefAssetSupplier" refer="KeySupplier">
+			<xs:selector xpath="MasterFiles/Assets/Asset/Supplier"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:keyref>
+		<xs:keyref name="RefGLTransactionSupplier" refer="KeySupplier">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:keyref>
+		<xs:keyref name="RefGLTransactionLineSupplier" refer="KeySupplier">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction/Line"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceSupplier" refer="KeySupplier">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/SupplierInfo"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceSupplier" refer="KeySupplier">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/SupplierInfo"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymenLineSupplier" refer="KeySupplier">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/Line"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementLineSupplier" refer="KeySupplier">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:keyref>
+		<xs:keyref name="RefAssetTransactionSupplier" refer="KeySupplier">
+			<xs:selector xpath="SourceDocuments/AssetTransactions/AssetTransaction/Supplier"/>
+			<xs:field xpath="SupplierID"/>
+		</xs:keyref>
+		<xs:keyref name="RefGLTransactionCustomer" refer="KeyCustomer">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction"/>
+			<xs:field xpath="CustomerID"/>
+		</xs:keyref>
+		<xs:keyref name="RefGLTransactionLineCustomer" refer="KeyCustomer">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction/Line"/>
+			<xs:field xpath="CustomerID"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceCustomer" refer="KeyCustomer">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/CustomerInfo"/>
+			<xs:field xpath="CustomerID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceCustomer" refer="KeyCustomer">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/CustomerInfo"/>
+			<xs:field xpath="CustomerID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentLineCustomer" refer="KeyCustomer">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/Line"/>
+			<xs:field xpath="CustomerID"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementLineCustomer" refer="KeyCustomer">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line"/>
+			<xs:field xpath="CustomerID"/>
+		</xs:keyref>
+		<xs:keyref name="RefRegistrationTaxType" refer="KeyTaxType">
+			<xs:selector xpath="Header/Company/TaxRegistration"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefCustomerTaxType" refer="KeyTaxType">
+			<xs:selector xpath="MasterFiles/Customers/Customer/TaxRegistration"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefSupplierTaxType" refer="KeyTaxType">
+			<xs:selector xpath="MasterFiles/Suppliers/Supplier/TaxRegistration"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefProductTaxType" refer="KeyTaxType">
+			<xs:selector xpath="MasterFiles/Products/Product/Tax"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefOwnerTaxType" refer="KeyTaxType">
+			<xs:selector xpath="MasterFiles/Owners/Owner/TaxRegistration"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefGLTransactionTaxType" refer="KeyTaxType">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction/Line/TaxInformation"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceLineTaxType" refer="KeyTaxType">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/Line/TaxInformation"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceTotalsTaxType" refer="KeyTaxType">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/DocumentTotals/TaxInformationTotals"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceLineTaxType" refer="KeyTaxType">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/Line/TaxInformation"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceTotalsTaxType" refer="KeyTaxType">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/DocumentTotals/TaxInformationTotals"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentLineTaxType" refer="KeyTaxType">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/Line/TaxInformation"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentTotalsTaxType" refer="KeyTaxType">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/Line/TaxInformation"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementLineTaxType" refer="KeyTaxType">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line/TaxInformation"/>
+			<xs:field xpath="TaxType"/>
+		</xs:keyref>
+		<xs:keyref name="RefProductUOMBase" refer="KeyUnitOfMeasure">
+			<xs:selector xpath="MasterFiles/Products/Product"/>
+			<xs:field xpath="UOMBase"/>
+		</xs:keyref>
+		<xs:keyref name="RefProductUOMStandard" refer="KeyUnitOfMeasure">
+			<xs:selector xpath="MasterFiles/Products/Product"/>
+			<xs:field xpath="UOMStandard"/>
+		</xs:keyref>
+		<xs:keyref name="RefUOMPhysicalStock" refer="KeyUnitOfMeasure">
+			<xs:selector xpath="MasterFiles/PhysicalStock/PhysicalStockEntry"/>
+			<xs:field xpath="UOMPhysicalStock"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceLineUOM" refer="KeyUnitOfMeasure">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/Line"/>
+			<xs:field xpath="InvoiceUOM"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceLineUOM" refer="KeyUnitOfMeasure">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/Line"/>
+			<xs:field xpath="InvoiceUOM"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementUOM" refer="KeyUnitOfMeasure">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line"/>
+			<xs:field xpath="UnitOfMeasure"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementType" refer="KeyMovementType">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement"/>
+			<xs:field xpath="MovementType"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementLineType" refer="KeyMovementType">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line"/>
+			<xs:field xpath="MovementSubType"/>
+		</xs:keyref>
+		<xs:keyref name="RefPhysicalStockProductCode" refer="KeyProductCode">
+			<xs:selector xpath="MasterFiles/PhysicalStock/PhysicalStockEntry"/>
+			<xs:field xpath="ProductCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceLineProductCode" refer="KeyProductCode">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/Line"/>
+			<xs:field xpath="ProductCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvpiceLineProductCode" refer="KeyProductCode">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/Line"/>
+			<xs:field xpath="ProductCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementLineProductCode" refer="KeyProductCode">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line"/>
+			<xs:field xpath="ProductCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefPhysicalStockOwner" refer="KeyOwner">
+			<xs:selector xpath="MasterFiles/PhysicalStock/PhysicalStockEntry"/>
+			<xs:field xpath="OwnerID"/>
+		</xs:keyref>
+		<xs:keyref name="RefAssetTransactionAsset" refer="KeyAsset">
+			<xs:selector xpath="SourceDocuments/AssetTransactions/AssetTransaction"/>
+			<xs:field xpath="AssetID"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceLineMovementReference" refer="KeyMovementReference">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/Line/Delivery"/>
+			<xs:field xpath="MovementReference"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceLineMovementReference" refer="KeyMovementReference">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/Line/Delivery"/>
+			<xs:field xpath="MovementReference"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceTransactionReference" refer="KeyTransactionReference">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice"/>
+			<xs:field xpath="TransactionID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoideTransacrionReference" refer="KeyTransactionReference">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice"/>
+			<xs:field xpath="TransactionID"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementTransactionReference" refer="KeyTransactionReference">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line"/>
+			<xs:field xpath="TransactionID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentTransactionReference" refer="KeyTransactionReference">
+			<xs:selector xpath="SourceDocuments/Payments/Payment"/>
+			<xs:field xpath="TransactionID"/>
+		</xs:keyref>
+		<xs:keyref name="RefAssetTransactionReference" refer="KeyTransactionReference">
+			<xs:selector xpath="SourceDocuments/AssetTransactions/AssetTransaction"/>
+			<xs:field xpath="AssetTransactionID"/>
+		</xs:keyref>
+		<xs:keyref name="RefProductTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="MasterFiles/Products/Product/Tax"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefGLTransactionLineTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction/Line/TaxInformation"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceLineTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/Line/TaxInformation"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceTotalsTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/DocumentTotals/TaxInformationTotals"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceLineTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/Line/TaxInformation"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceTotalsTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/DocumentTotals/TaxInformationTotals"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentLineTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/Line/TaxInformation"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentTotalsTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/DocumentTotals/TaxInformationTotals"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementLineTaxCode" refer="KeyTaxCode">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line/TaxInformation"/>
+			<xs:field xpath="TaxCode"/>
+		</xs:keyref>
+		<xs:keyref name="RefGLAnalysisType" refer="KeyAnalysisType">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction/Line/Analysis"/>
+			<xs:field xpath="AnalysisType"/>
+		</xs:keyref>
+		<xs:keyref name="RefGLAnalysisID" refer="KeyAnalysisID">
+			<xs:selector xpath="GeneralLedgerEntries/Journal/Transaction/Line/Analysis"/>
+			<xs:field xpath="AnalysisID"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceLineAnalysisType" refer="KeyAnalysisType">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/Line/Analysis"/>
+			<xs:field xpath="AnalysisType"/>
+		</xs:keyref>
+		<xs:keyref name="RefSalesInvoiceLineAnalysisID" refer="KeyAnalysisID">
+			<xs:selector xpath="SourceDocuments/SalesInvoices/Invoice/Line/Analysis"/>
+			<xs:field xpath="AnalysisID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceLineAnalysisType" refer="KeyAnalysisType">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/Line/Analysis"/>
+			<xs:field xpath="AnalysisType"/>
+		</xs:keyref>
+		<xs:keyref name="RefPurchaseInvoiceLineAnalysisID" refer="KeyAnalysisID">
+			<xs:selector xpath="SourceDocuments/PurchaseInvoices/Invoice/Line/Analysis"/>
+			<xs:field xpath="AnalysisID"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentLineAnalysisType" refer="KeyAnalysisType">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/Line/Analysis"/>
+			<xs:field xpath="AnalysisType"/>
+		</xs:keyref>
+		<xs:keyref name="RefPaymentLineAnalysisID" refer="KeyAnalysisID">
+			<xs:selector xpath="SourceDocuments/Payments/Payment/Line/Analysis"/>
+			<xs:field xpath="AnalysisID"/>
+		</xs:keyref>
+		<xs:keyref name="RefStockMovementLineStockAccountNo" refer="KeyStockAccountNo">
+			<xs:selector xpath="SourceDocuments/MovementOfGoods/StockMovement/Line"/>
+			<xs:field xpath="StockAccountNo"/>
+		</xs:keyref>
+	</xs:element>
+	<xs:complexType name="InvoiceStructure">
+		<xs:annotation>
+			<xs:documentation>Containing all information about sales invoices and suppliers invoices</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InvoiceNo" type="FAIAmiddle2textType"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="CustomerInfo">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice>
+								<xs:element name="CustomerID" type="FAIAmiddle1textType">
+									<xs:annotation>
+										<xs:documentation>Unique code for the customer</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="Name" type="FAIAmiddle2textType">
+									<xs:annotation>
+										<xs:documentation>Name of the customer</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:choice>
+							<xs:element name="BillingAddress" type="AddressStructure"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SupplierInfo">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice>
+								<xs:element name="SupplierID" type="FAIAmiddle1textType">
+									<xs:annotation>
+										<xs:documentation>Unique code for the supplier</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="Name" type="FAIAmiddle2textType">
+									<xs:annotation>
+										<xs:documentation>Name of the supplier</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:choice>
+							<xs:element name="BillingAddress" type="AddressStructure"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="AccountID" type="FAIAmiddle2textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>General Ledger Account code of the customer / supplier. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BranchStoreNumber" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Branch or Storenumber, additional segregation of customer/supplier, used if not included as part of the customer/supplier id.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Period" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Accounting Period</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PeriodYear" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The year of the Accounting Period.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:nonNegativeInteger">
+						<xs:minInclusive value="1970"/>
+						<xs:maxInclusive value="2100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="InvoiceDate" type="xs:date"/>
+			<xs:element name="InvoiceType" type="FAIAcodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of invoice: Debit invoice, Credit invoice, Cash, Ticket, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipTo" type="ShippingPointStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ship To details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipFrom" type="ShippingPointStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ship from Details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentTerms" type="FAIAmiddle2textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Payments terms for this invoice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SelfBillingIndicator" type="FAIAcodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicator showing if self-billing  is used for this invoice.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SourceID" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Details of person or application that entered the transaction</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GLPostingDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date posting to GL</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatchID" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Systems generated ID for batch</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SystemID" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unique number created by the system for the document</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionID" type="FAIAmiddle2textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Cross-reference to GL posting. It can contain many different levels to identify the transaction. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReceiptNumbers" type="FAIAlongtextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number(s) of the receipt(s) on this "consolidated invoicerecord". Can be a single number, a range or a list. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Line" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="LineNumber" type="FAIAshorttextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Number of the invoiceline</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="AccountID" type="FAIAmiddle2textType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>General Ledger Account code of the GL-revenue-account. Can be including sub-account id. It can contain many different levels to identify the Account. It could include cost centres such as company, division, region, group and branch/department.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Analysis" type="AnalysisStructure" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>General Ledger analysis codes</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="OrderReferences" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Relevant order references</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="OriginatingON" type="FAIAmiddle2textType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Origination Order Number </xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="OrderDate" type="xs:date" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Date of order</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ShipTo" type="ShippingPointStructure" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Ship To details</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ShipFrom" type="ShippingPointStructure" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Ship from Details</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="GoodsServicesID" type="FAIAcodeType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Indicator showing if goods or service</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ProductCode" type="FAIAmiddle2textType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Product code</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ProductDescription" type="FAIAlongtextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Description of goods or services.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Delivery" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Information about the date or timeframe of the delivery of the goods or services.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:choice>
+									<xs:element name="MovementReference" type="FAIAmiddle1textType" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Unique reference to the movement.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="DeliveryDate" type="xs:date">
+										<xs:annotation>
+											<xs:documentation>The date of the delivery</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="DeliveryPeriod">
+										<xs:annotation>
+											<xs:documentation>Timeframe of the deliveries</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="FromDate" type="xs:date">
+													<xs:annotation>
+														<xs:documentation>Startdate of the deliveries</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="ToDate" type="xs:date">
+													<xs:annotation>
+														<xs:documentation>Enddate of the deliveries</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Quantity" type="FAIAquantityType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Quantity of goods and services supplied.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="InvoiceUOM" type="FAIAcodeType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Quantity unit of measure e.g. pack of 12</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="UOMToUOMBaseConversionFactor" type="xs:decimal" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Conversion factor of the InvoiceUOM to UOM Base. Only needed when InvoiceUOM is reported and is different from the UOM Base.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="UnitPrice" type="FAIAmonetaryType">
+							<xs:annotation>
+								<xs:documentation>Unit price for the unit/group of units per UOM in the header's default currency.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="TaxPointDate" type="xs:date">
+							<xs:annotation>
+								<xs:documentation>Tax Point date where recorded or if not recorded then the Invoice date </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="References" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Credit Note references</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CreditNote" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Reference" type="FAIAmiddle1textType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Credit note reference (where applicable) to original invoice      </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="Reason" type="FAIAlongtextType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>Credit note reason or rationale      </xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Description" type="FAIAlongtextType">
+							<xs:annotation>
+								<xs:documentation>Description of Invoice Line.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="InvoiceLineAmount" type="AmountStructure">
+							<xs:annotation>
+								<xs:documentation>Amount for transaction excluding taxes and freightcharges.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="DebitCreditIndicator">
+							<xs:annotation>
+								<xs:documentation>Indicates whether the amounts on line-level are debit or credit amounts. Entry must correspond to entry reflected in General Ledger Entry. Signing of lineamounts is relative to this indicator. E.g. a return can lead to a negative amount.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="FAIAcodeType">
+									<xs:enumeration value="D"/>
+									<xs:enumeration value="C"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="ShippingCostsAmount" type="AmountStructure" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Amount for shipping/freight charges. </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="TaxInformation" type="TaxInformationStructure" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:any namespace="##other" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+							</xs:annotation>
+						</xs:any>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Settlement" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SettlementDiscount" type="FAIAmiddle1textType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Description Settlement / Other Discount  </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="SettlementAmount" type="AmountStructure">
+							<xs:annotation>
+								<xs:documentation>Settlement amount</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="SettlementDate" type="xs:date" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Date settled</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="PaymentMechanism" type="FAIAcodeType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Payment mechanism </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DocumentTotals" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TaxInformationTotals" type="TaxInformationStructure" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Control totals tax payable information. Per TaxType/TaxCode the TaxBase and TaxAmount are summarised.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ShippingCostsAmountTotal" type="FAIAmonetaryType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Control total amount freight charges</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="NetTotal" type="FAIAmonetaryType">
+							<xs:annotation>
+								<xs:documentation>Control total sales value excluding tax and shippingcosts.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="GrossTotal" type="FAIAmonetaryType">
+							<xs:annotation>
+								<xs:documentation>Control total amount including tax and shippingcosts.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Represents space to allow individual Revenue Bodies to add further elements</xs:documentation>
+				</xs:annotation>
+			</xs:any>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShippingPointStructure">
+		<xs:annotation>
+			<xs:documentation> A structure that holds all shipping point information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DeliveryID" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the delivery</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeliveryDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date goods are delivered</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WarehouseID" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Warehouse where goods held - also to identify work-in-progress, or stock-in-transit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocationID" type="FAIAshorttextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Location of goods in warehouse</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UCR" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unique consignment reference number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="AddressStructure" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] A common structure used wherever an address is required.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StreetName" type="FAIAmiddle2textType" minOccurs="0"/>
+			<xs:element name="Number" type="FAIAshorttextType" minOccurs="0"/>
+			<xs:element name="AdditionalAddressDetail" type="FAIAmiddle2textType" minOccurs="0"/>
+			<xs:element name="Building" type="FAIAmiddle1textType" minOccurs="0"/>
+			<xs:element name="City" type="FAIAmiddle1textType"/>
+			<xs:element name="PostalCode" type="FAIAshorttextType"/>
+			<xs:element name="Region" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country specific code to indicate regions / provinces within the tax authority. Preferably described according to ISO 3166-2. Example: GB-KEN for Kent county in the United Kingdom. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="ISOCountryCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Two-letter country code according to ISO 3166-1 alpha 2 standard. Example NL for the Netherlands.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Field to differentiate between multiple addresses. To indicate the type of address. Choose  from the predefined enumeration. (examples: StreetAddress PostalAddress, BillingAddress)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="StreetAddress"/>
+						<xs:enumeration value="PostalAddress"/>
+						<xs:enumeration value="BillingAddress"/>
+						<xs:enumeration value="ShipToAddress"/>
+						<xs:enumeration value="ShipFromAddress"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] A common structure used wherever an amount is required. Monetary amount with optional foreign currency exchange rate information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Amount" type="FAIAmonetaryType">
+				<xs:annotation>
+					<xs:documentation>In the header's default currency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:sequence minOccurs="0">
+				<xs:element name="CurrencyCode" type="ISOCurrencyCode">
+					<xs:annotation>
+						<xs:documentation>Three-letter currency code according to ISO 4217 standard. Example: EUR for the Euros or USD for American Dollars.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CurrencyAmount" type="FAIAmonetaryType">
+					<xs:annotation>
+						<xs:documentation>Amount in foreign currency.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ExchangeRate" type="FAIAexchangerateType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The exchange rate used. CurrencyAmount x ExchangeRate = Amount </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AnalysisStructure">
+		<xs:annotation>
+			<xs:documentation>General Ledger analysis codes</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AnalysisType" type="FAIAcodeType">
+				<xs:annotation>
+					<xs:documentation>Analysis code identifier: cost center, cost unit, cost type, project, etc. Refers to the MasterFile AnalysisTypeTable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AnalysisID" type="FAIAlongtextType">
+				<xs:annotation>
+					<xs:documentation>Value of the analysisID: f.i. which cost center applies</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AnalysisAmount" type="AmountStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Amount applying to the Analysis: f.i. the amount applying for this cost center</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BankAccountStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] Bank account number information. IBAN number, or account number with optional information.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="IBANNumber" type="FAIAmiddle1textType">
+				<xs:annotation>
+					<xs:documentation>International Bank Account Number, ISO 13616</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="BankAccountNumber" type="FAIAmiddle1textType">
+					<xs:annotation>
+						<xs:documentation>The number allocated to the account by the individual’s or company’s own bank.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="BankAccountName" type="FAIAmiddle2textType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The name of the individual or company holding the bank account.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SortCode" type="FAIAshorttextType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Identifier for the bank branch at which the account is held. May be needed to uniquely identify the account.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CompanyHeaderStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] CompanyStructure with mandatory RegistrationNumber and Telephone (Contact)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="CompanyStructure">
+				<xs:sequence>
+					<xs:element name="RegistrationNumber" type="FAIAmiddle1textType">
+						<xs:annotation>
+							<xs:documentation>Unique number to identify the company in the accounting records, issued by a government body or created by the company for internal purposes to identify different entities within their corporate group.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Name" type="FAIAmiddle2textType"/>
+					<xs:element name="Address" type="AddressStructure" maxOccurs="unbounded"/>
+					<xs:element name="Contact" type="ContactHeaderStructure" maxOccurs="unbounded"/>
+					<xs:element name="TaxRegistration" type="TaxIDStructure" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="BankAccount" type="BankAccountStructure" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CompanyStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] Name, address, contact and identification information of a company.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegistrationNumber" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unique number to identify the company in the accounting records, issued by a government authority or created by the company for internal purposes to identify different entities within their corporate group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="FAIAmiddle2textType"/>
+			<xs:element name="Address" type="AddressStructure" maxOccurs="unbounded"/>
+			<xs:element name="Contact" type="ContactInformationStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TaxRegistration" type="TaxIDStructure" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="BankAccount" type="BankAccountStructure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactHeaderStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] ContactInformationStructure with madatory TelephoneNumber</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ContactInformationStructure">
+				<xs:sequence>
+					<xs:element name="ContactPerson" type="PersonNameStructure"/>
+					<xs:element name="Telephone" type="FAIAshorttextType"/>
+					<xs:element name="Fax" type="FAIAshorttextType" minOccurs="0"/>
+					<xs:element name="Email" type="FAIAmiddle2textType" minOccurs="0"/>
+					<xs:element name="Website" type="xs:anyURI" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContactInformationStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] Contact information of a company.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContactPerson" type="PersonNameStructure"/>
+			<xs:element name="Telephone" type="FAIAshorttextType" minOccurs="0"/>
+			<xs:element name="Fax" type="FAIAshorttextType" minOccurs="0"/>
+			<xs:element name="Email" type="FAIAmiddle2textType" minOccurs="0"/>
+			<xs:element name="Website" type="xs:anyURI" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HeaderStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] Overall information about this Standard Auditfile.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AuditFileVersion" type="FAIAcodeType">
+				<xs:annotation>
+					<xs:documentation>Identification of the FAIA version being used. Reference to the xml schema used.  Schema is available on www.public.aed.lu/faia</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AuditFileCountry" type="ISOCountryCode">
+				<xs:annotation>
+					<xs:documentation>Two-letter country code according to ISO 3166-1 alpha 2 standard. Example LU for the Luxembourg.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AuditFileRegion" type="FAIAcodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country specific code to indicate regions / provinces within the tax authority. Preferably described according to ISO 3166-2. Example: GB-KEN for Kent county in the United Kingdom. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AuditFileDateCreated" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Date of production of FAIA-T</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoftwareCompanyName" type="FAIAmiddle2textType">
+				<xs:annotation>
+					<xs:documentation>Name of the software company whose product created the FAIA-T.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoftwareID" type="FAIAlongtextType">
+				<xs:annotation>
+					<xs:documentation>Name of the Software that generated the FAIA-T.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoftwareVersion" type="FAIAshorttextType">
+				<xs:annotation>
+					<xs:documentation>Version of the software that created the FAIA-T.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Company" type="CompanyHeaderStructure">
+				<xs:annotation>
+					<xs:documentation>Company's name and address details.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DefaultCurrencyCode" type="ISOCurrencyCode">
+				<xs:annotation>
+					<xs:documentation>Three letter Currency Code  (ISO 4217) of local currency which is the default for the FAIA.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SelectionCriteria" type="SelectionCriteriaStructure" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Criteria set by the user to populate the audit files</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeaderComment" type="FAIAlongtextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Space for any further generic comments on the FAIA-T. Revenue Bodies should consider what information they would expect to see here.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonNameStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] All information about the name of a natural person.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Title" type="FAIAcodeType" minOccurs="0"/>
+			<xs:element name="FirstName" type="FAIAmiddle1textType"/>
+			<xs:element name="Initials" type="FAIAshorttextType" minOccurs="0"/>
+			<xs:element name="LastNamePrefix" type="FAIAshorttextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A textual expression of a prefix that precedes this person's family name such as Van, Von.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastName" type="FAIAmiddle2textType"/>
+			<xs:element name="BirthName" type="FAIAmiddle2textType" minOccurs="0"/>
+			<xs:element name="Salutation" type="FAIAshorttextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A formal sign or expression of greeting, expressed as text, that is appropriate for this person such as Right Honourable, Monsignor or Madam.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherTitles" type="FAIAshorttextType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SelectionCriteriaStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] The selection criteria used to generate this Standard Auditfile</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="0">
+			<xs:element name="TaxReportingJurisdiction" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies the tax jurisdiction for whose purpose the FAIA has been created. Principally for use where a single Revenue body covers more than one territory.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CompanyEntity" type="FAIAmiddle2textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For use where data has been extracted from the full data set by reference to a specific corporate entity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Allows for a choice between selection on calendar dates and periods according to the accounting system, e.g. 1 to 12 for a 12-months accounting system.    The extract of the data has to take place for an entire period. The period starts from the 01/01 to the 31/12. It's not possible to submit a FAIA with a period that is not matching the civil year.</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="SelectionStartDate" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>The start date for the reporting period covered by the FAIA.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SelectionEndDate" type="xs:date">
+						<xs:annotation>
+							<xs:documentation>The end date for the reporting period covered by the FAIA.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element name="PeriodStart" type="xs:nonNegativeInteger">
+						<xs:annotation>
+							<xs:documentation>The first Accounting Period covered by the FAIA.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeriodStartYear">
+						<xs:annotation>
+							<xs:documentation>The Accounting Year in which the PeriodStart falls.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:nonNegativeInteger">
+								<xs:minInclusive value="1970"/>
+								<xs:maxInclusive value="2100"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="PeriodEnd" type="xs:nonNegativeInteger">
+						<xs:annotation>
+							<xs:documentation>The last Accounting Period covered by the FAIA.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PeriodEndYear">
+						<xs:annotation>
+							<xs:documentation>The Accounting Year in which the PeriodEnd falls.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:nonNegativeInteger">
+								<xs:minInclusive value="1970"/>
+								<xs:maxInclusive value="2100"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:choice>
+			<xs:element name="DocumentType" type="FAIAlongtextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of documents selected. For use where the data has been restricted by reference to particular transaction types.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherCriteria" type="FAIAlongtextType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Any other criteria used in selecting data. Individual Revenue Bodies may wish to draw up a list of other acceptable selection criteria for use within their jurisdiction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaxIDStructure">
+		<xs:annotation>
+			<xs:documentation>[Common to all FAIAs] Tax information of a company.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TaxRegistrationNumber" type="FAIAmiddle1textType">
+				<xs:annotation>
+					<xs:documentation>Unique number issued by AED for use by the company. (LU123456-78)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxType" type="FAIAcodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For use where information reported in the FAIA-T covers more than one type of tax regime: to identify the type of tax regime to which this entry relates.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxNumber" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The tax registration number for the particular tax regime referred to by TaxType, f.i. VAT-number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxAuthority" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the Revenue Body to which this TaxType refers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxVerificationDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date that the tax registration details referred to above were last checked.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaxInformationStructure">
+		<xs:annotation>
+			<xs:documentation> Tax Amount information structure</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TaxType" type="FAIAcodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tax type for look-up in tables</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxCode" type="FAIAcodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tax Code for lookup in tables</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxPercentage" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tax percentage.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBase" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The base on which the tax is calculated. This can be an amount, or a quantity, eg. Litres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxBaseDescription" type="FAIAmiddle2textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description of the value in the TaxBase. Eg. Litres for excises on alcoholic bevarages.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxAmount" type="AmountStructure">
+				<xs:annotation>
+					<xs:documentation>Tax amount information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxExemptionReason" type="FAIAmiddle2textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tax exemption or reduction reason or rationale </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaxDeclarationPeriod" type="FAIAmiddle1textType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The identification of the declaration/return in which the taxamount is reported to the Revenue body.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FAIAmonetaryType">
+		<xs:annotation>
+			<xs:documentation>Monetary amount.18 digits max, of which 2 can be fractional digits.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FAIAexchangerateType">
+		<xs:annotation>
+			<xs:documentation>18 digits max, of which 8 can be fractional digits.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="18"/>
+			<xs:fractionDigits value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FAIAquantityType">
+		<xs:annotation>
+			<xs:documentation>Used to describe a quantity. Monetary amount. 22 digits max, of which 6 can be fractional digits.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="22"/>
+			<xs:fractionDigits value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FAIAweightType">
+		<xs:annotation>
+			<xs:documentation>Describes a weight. Monetary amount.14 digits max, of which 3 can be fractional digits.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="14"/>
+			<xs:fractionDigits value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FAIAcodeType">
+		<xs:annotation>
+			<xs:documentation>Text of max 9 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FAIAshorttextType">
+		<xs:annotation>
+			<xs:documentation>18 character text.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FAIAmiddle1textType">
+		<xs:annotation>
+			<xs:documentation>35 character text.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FAIAmiddle2textType">
+		<xs:annotation>
+			<xs:documentation>70 character text.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="70"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FAIAlongtextType">
+		<xs:annotation>
+			<xs:documentation>256 character text.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISOCountryCode">
+		<xs:annotation>
+			<xs:documentation>Two-letter country code according to ISO 3166-1 alpha 2 standard. Example: NL for the Netherlands.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ISOCurrencyCode">
+		<xs:annotation>
+			<xs:documentation>Three-letter currency code according to ISO 4217 standard. Example: EUR for the Euros or USD for American Dollars.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

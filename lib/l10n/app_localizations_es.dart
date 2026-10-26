@@ -7381,6 +7381,15 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String exportDenmarkRegisteredSystem(String systems) {
+    return 'Dinamarca: la ley exige un sistema de contabilidad digital registrado, y DesKilo no lo es. Envíe sus facturas a un sistema registrado ($systems) o entregue a su asesor la exportación estándar SAF-T DK que este genera. Ningún archivo de aquí cumple esa obligación por sí solo.';
+  }
+
+  @override
+  String get exportLocalBookOnly =>
+      'Elaborado a partir de los asientos de su contabilidad local: su contabilidad completa solo si todas las operaciones de la empresa pasan por DesKilo.';
+
+  @override
   String get exportNoCompleteBooks =>
       'Reconstruido a partir de facturas y pagos — DesKilo no lleva contabilidad por partida doble, así que no son sus libros completos. Su asesor los completa.';
 
@@ -11161,6 +11170,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceExportDatev => 'DATEV (Buchungsstapel)';
 
   @override
+  String get invoiceExportFaiaLu => 'FAIA (Luxemburgo)';
+
+  @override
   String get invoiceExportFec => 'FEC (Francia, exigido en una inspección)';
 
   @override
@@ -11184,6 +11196,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceExportSafT => 'SAF-T (XML, internacional)';
+
+  @override
+  String get invoiceExportSafTFull =>
+      'SAF-T con el libro mayor (XML, internacional)';
+
+  @override
+  String get invoiceExportSafTNo => 'SAF-T Financial (Noruega)';
 
   @override
   String get invoiceExportSafTPt => 'SAF-T (Portugal)';
@@ -12045,6 +12064,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: $documents';
+  }
+
+  @override
+  String journalOpeningRefused(String from, String to, String reason) {
+    return 'Los saldos de apertura (del $from al $to) no se han podido contabilizar: $reason';
+  }
+
+  @override
+  String journalSafTRefused(String gaps) {
+    return 'El archivo SAF-T no se ha generado: $gaps';
   }
 
   @override
@@ -21048,7 +21077,29 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get saftContactIntro =>
+      'El archivo de la administración indica una persona de contacto, y el de Luxemburgo también un teléfono. Solo se escribe en este archivo.';
+
+  @override
+  String get saftContactTitle => 'Contacto para este archivo';
+
+  @override
   String get saftDocumentsOnly => 'Solo documentos';
+
+  @override
+  String saftGap(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'standardAccount': 'ninguna cuenta estándar para $subject',
+      'standardTaxCode': 'ningún código de IVA estándar para $subject',
+      'taxRate': 'ningún tipo de IVA para $subject',
+      'company': 'falta el campo $subject de la empresa',
+      'contact': 'el campo $subject de la persona de contacto',
+      'party': 'falta $subject en un cliente o proveedor',
+      'tooLong': '$subject supera la longitud que admite el archivo',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get saftLedgerIntro =>
@@ -25971,6 +26022,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxRefRole => 'Función';
+
+  @override
+  String get taxRefSafTKeys =>
+      'SAF-T Financial (formato saf_t): la clave saf_t/<rol> asigna las cuentas de un rol contable a su código estándar, introducido como cuenta (Noruega: el GroupingCode, con su GroupingCategory como etiqueta; Luxemburgo: el StandardAccountID); la clave saf_t/tax:<output|input>:<grupo> indica el código de IVA estándar de un grupo de tipos como código de impuesto (Noruega).';
 
   @override
   String get taxRefSave => 'Guardar la versión';

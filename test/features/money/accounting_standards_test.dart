@@ -494,9 +494,13 @@ void main() {
         for (final t in accountingTargets)
           if (t.format?.claim == FormatClaim.regulatory) t.id: t.countries,
       };
+      // #2379 — Norway and Luxembourg: each authority's published schema
+      // is shipped under test/fixtures/saft/ and read in CI.
       expect(regulatory, {
         'fec': {'FR'},
         'saft_pt': {'PT'},
+        'saft_no': {'NO'},
+        'faia_lu': {'LU'},
       },
           reason: 'adding to this needs the authority\'s own published '
               'spec in hand, and docs/domain/ACCOUNTING_EXPORTS.md '

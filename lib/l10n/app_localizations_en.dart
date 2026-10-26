@@ -7336,6 +7336,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String exportDenmarkRegisteredSystem(String systems) {
+    return 'Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system ($systems) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.';
+  }
+
+  @override
+  String get exportLocalBookOnly =>
+      'Written from your local book\'s postings: your complete books only if every operation of the business passes through DesKilo.';
+
+  @override
   String get exportNoCompleteBooks =>
       'Rebuilt from invoices and payments — DesKilo keeps no double-entry ledger, so this is not your complete books. Your accountant completes it.';
 
@@ -11094,6 +11103,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportDatev => 'DATEV (Buchungsstapel)';
 
   @override
+  String get invoiceExportFaiaLu => 'FAIA (Luxembourg)';
+
+  @override
   String get invoiceExportFec => 'FEC (France, required in an audit)';
 
   @override
@@ -11117,6 +11129,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceExportSafT => 'SAF-T (XML, international)';
+
+  @override
+  String get invoiceExportSafTFull =>
+      'SAF-T with the general ledger (XML, international)';
+
+  @override
+  String get invoiceExportSafTNo => 'SAF-T Financial (Norway)';
 
   @override
   String get invoiceExportSafTPt => 'SAF-T (Portugal)';
@@ -11969,6 +11988,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'These purchases are in another currency than the space\'s and have no recorded exchange rate, so nothing was written; record each one\'s rate first: $documents';
+  }
+
+  @override
+  String journalOpeningRefused(String from, String to, String reason) {
+    return 'The opening balances ($from to $to) could not be posted: $reason';
+  }
+
+  @override
+  String journalSafTRefused(String gaps) {
+    return 'The SAF-T file was not made: $gaps';
   }
 
   @override
@@ -20896,7 +20925,29 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get saftContactIntro =>
+      'The authority\'s file names a contact person, and Luxembourg\'s a telephone too. It is written into this file only.';
+
+  @override
+  String get saftContactTitle => 'Contact for this file';
+
+  @override
   String get saftDocumentsOnly => 'Documents only';
+
+  @override
+  String saftGap(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'standardAccount': 'no standard account for $subject',
+      'standardTaxCode': 'no standard VAT code for $subject',
+      'taxRate': 'no VAT rate for $subject',
+      'company': 'the company\'s $subject is missing',
+      'contact': 'the contact person\'s $subject',
+      'party': '$subject is missing for a customer or supplier',
+      'tooLong': '$subject is longer than the file allows',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get saftLedgerIntro =>
@@ -25765,6 +25816,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefRole => 'Role';
+
+  @override
+  String get taxRefSafTKeys =>
+      'SAF-T Financial (format saf_t): key saf_t/<role> maps a posting role\'s accounts, with the standard code as account (Norway: the GroupingCode, with its GroupingCategory as label; Luxembourg: the StandardAccountID); key saf_t/tax:<output|input>:<group> gives a rate group\'s standard VAT code as tax code (Norway).';
 
   @override
   String get taxRefSave => 'Save version';

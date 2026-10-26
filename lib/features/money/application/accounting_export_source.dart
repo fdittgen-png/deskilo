@@ -15,6 +15,7 @@ import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/export_year.dart';
 import '../domain/invoice.dart';
+import '../domain/saf_t_financial.dart';
 import 'generic_journal_export.dart';
 
 /// The books of one fiscal year as the accounting export holds them: ONE
@@ -90,8 +91,20 @@ const Set<String> _postedWhenLocalBook = {
 
 /// The posted formats that name the accounts and the parties: the FEC,
 /// and #2376 the books printed from the postings.
-const Set<String> _postedFec = {'fec', _archiveFormat, ...bookReportFormats};
-const String _postedOnlyFormat = 'generic_journal_csv';
+/// #2379 — and the SAF-T Financial files, which also state the accounts'
+/// opening balances: the book's postings before the year are read with it.
+final Set<String> _postedFec = {
+  'fec',
+  _archiveFormat,
+  ...bookReportFormats,
+  ...safTFinancialFormats,
+};
+
+/// The formats that have no source but the posting engine.
+final Set<String> _postedOnlyFormats = {
+  'generic_journal_csv',
+  ...safTFinancialFormats,
+};
 const String _archiveFormat = 'bundle';
 
 /// #2376 — the day of the latest document the person exports, on the same
@@ -133,7 +146,7 @@ class AccountingExportSource {
     );
     if (books == null) return null;
     final posted =
-        formatId == _postedOnlyFormat ||
+        _postedOnlyFormats.contains(formatId) ||
         (_postedWhenLocalBook.contains(formatId) &&
             (formatId != _archiveFormat || archiveCarriesFec(country)) &&
             localBookOf(books.bookProfiles, year) != null);
@@ -161,6 +174,7 @@ class AccountingExportSource {
         books.bookProfiles,
         year,
         named: _postedFec.contains(formatId),
+        withOpening: safTFinancialFormats.contains(formatId),
         asOf: asOf,
       ),
       archiveYears: const <GenericJournal>[],
