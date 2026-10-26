@@ -233,6 +233,9 @@ const DEFAULTS={
  inbox:{pageSize:'50'},
  // #2863 — supplier lookup wait and quota (platform settings purchase.supplier_lookup_*).
  supplierLookup:{timeout:'15',perMinute:'20'},
+ // #2571 — a US space's own longer record retention (workspace setting
+ // retention.us_years): 0 = the retention rule applies; it only extends.
+ retention:{usYears:'0'},
  weekdays:['1','2','3','4','5'],granularity:'half_day',dayStart:'08:00',boundary:'12:00',dayEnd:'17:00',closures:[],
  halfDayHours:'4',fullDayHours:'8',deskOpacity:'100',
  horizonDays:'90',minDuration:'30',maxDuration:'1440',

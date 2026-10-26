@@ -10,6 +10,7 @@ import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/demo/data/retention_hold_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
@@ -59,6 +60,7 @@ import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
 import 'package:deskilo/features/money/providers/einvoice_inbox_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
+import 'package:deskilo/features/money/providers/retention_hold_providers.dart';
 import 'package:deskilo/features/money/providers/room_rental_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
@@ -230,6 +232,8 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
     companyLookupRepositoryProvider.overrideWithValue(FakeCompanyLookupRepository()),
     purchaseRepositoryProvider.overrideWithValue(purchasing.purchases),
     bookProfileRepositoryProvider.overrideWithValue(main.books),
+    // #2571 — the space's legal holds, none until the visitor places one.
+    retentionHoldRepositoryProvider.overrideWithValue(FakeRetentionHoldRepository(now: () => fixture.seededAt)),
     premisesLeaseRepositoryProvider.overrideWithValue(main.lease),
     workspaceAssetRepositoryProvider.overrideWithValue(main.assets),
     // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.

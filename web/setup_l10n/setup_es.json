@@ -714,5 +714,8 @@
  "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
  "supLookupRate": "Búsquedas de proveedores por minuto",
  "supLookupRateHint": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor; las demás se responden como ocupadas y no se envía nada al registro. Se ajusta en la configuración de la app.",
- "optPerMinute": "{n} por minuto"
+ "optPerMinute": "{n} por minuto",
+ "retUsYears": "Conservación de registros, estado de EE. UU.",
+ "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
+ "retUsRule": "Se aplica la regla de conservación"
 }

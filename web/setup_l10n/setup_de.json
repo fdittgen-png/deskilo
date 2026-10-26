@@ -714,5 +714,8 @@
  "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
  "supLookupRate": "Lieferantensuchen pro Minute",
  "supLookupRateHint": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf; weitere werden als ausgelastet beantwortet und nicht an das Register gesendet. Wird in den Einstellungen der App festgelegt.",
- "optPerMinute": "{n} pro Minute"
+ "optPerMinute": "{n} pro Minute",
+ "retUsYears": "Aufbewahrung, US-Bundesstaat",
+ "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+ "retUsRule": "Die Aufbewahrungsregel gilt"
 }

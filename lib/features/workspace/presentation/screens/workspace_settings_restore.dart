@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/retention_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -52,7 +53,20 @@ class WorkspaceSettingsRestore {
     if (confirmed != true || !context.mounted) return;
 
     await host.runTool('workspace reset failed', () async {
-      await resetWorkspaceData(ref, workspace.id);
+      try {
+        await resetWorkspaceData(ref, workspace.id);
+      } on Object catch (e, st) {
+        // #2571 — the books still under retention: the server deleted
+        // nothing and says until when, under which rule, or which hold.
+        final kept = retentionRefusalOf(e);
+        if (kept == null) Error.throwWithStackTrace(e, st);
+        TraceLogger.instance.warn('workspace', 'workspace reset refused by retention', error: e, stackTrace: st);
+        if (context.mounted) {
+          final locale = Localizations.localeOf(context).toLanguageTag();
+          AppSnack.error(context, l10n.retentionResetRefused(retentionAssessmentText(l10n, kept, locale)));
+        }
+        return;
+      }
       refreshAfterReset(ref);
       if (!context.mounted) return;
       AppSnack.success(

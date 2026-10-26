@@ -714,5 +714,8 @@
  "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
  "supLookupRate": "Recherches fournisseur par minute",
  "supLookupRateHint": "Le nombre maximal de recherches fournisseur qu'une personne peut faire par minute sur ce serveur ; au-delà, la recherche est signalée comme occupée et rien n'est envoyé au registre. Se règle dans les paramètres de l'app.",
- "optPerMinute": "{n} par minute"
+ "optPerMinute": "{n} par minute",
+ "retUsYears": "Conservation des pièces, État américain",
+ "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
+ "retUsRule": "La règle de conservation s'applique"
 }

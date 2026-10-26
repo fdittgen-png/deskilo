@@ -714,5 +714,8 @@
  "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
  "supLookupRate": "Ricerche fornitore al minuto",
  "supLookupRateHint": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server; le altre risultano occupate e non viene inviato nulla al registro. Si imposta nelle impostazioni dell'app.",
- "optPerMinute": "{n} al minuto"
+ "optPerMinute": "{n} al minuto",
+ "retUsYears": "Conservazione dei documenti, stato USA",
+ "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
+ "retUsRule": "Vale la regola di conservazione"
 }

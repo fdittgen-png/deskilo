@@ -714,5 +714,8 @@
  "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
  "supLookupRate": "Supplier lookups per minute",
  "supLookupRateHint": "The most supplier lookups one person may make per minute on this server; more are answered as busy and nothing is sent to the registry. Set in the app's settings.",
- "optPerMinute": "{n} per minute"
+ "optPerMinute": "{n} per minute",
+ "retUsYears": "US state record retention",
+ "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
+ "retUsRule": "The retention rule applies"
 }

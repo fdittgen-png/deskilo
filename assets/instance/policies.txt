@@ -330,6 +330,7 @@ public.resource_favorites.mcp_delegated_deny
 public.resource_favorites.resource_favorites_own
 public.resource_ratings.mcp_delegated_deny
 public.resource_ratings.resource_ratings_own
+public.retention_holds.mcp_delegated_deny
 public.retired_invite_codes.mcp_delegated_deny
 public.rights_requests.mcp_delegated_deny
 public.rights_requests.rights_requests_select

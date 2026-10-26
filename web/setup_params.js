@@ -60,6 +60,9 @@ const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','
 // purchase.supplier_lookup_per_minute 1..120).
 const SUP_LOOKUP_WAIT=[['5','optSeconds',{n:5}],['10','optSeconds',{n:10}],['15','optSeconds',{n:15}],['30','optSeconds',{n:30}]];
 const SUP_LOOKUP_RATE=[['5','optPerMinute',{n:5}],['10','optPerMinute',{n:10}],['20','optPerMinute',{n:20}],['60','optPerMinute',{n:60}],['120','optPerMinute',{n:120}]];
+// #2571 — a US space's own longer retention (workspace setting
+// retention.us_years, 0..30 years; it extends the rule, never shortens it).
+const RET_US_YEARS=[['0','retUsRule'],['5','optYears',{n:5}],['6','optYears',{n:6}],['7','optYears',{n:7}],['10','optYears',{n:10}]];
 const DIR_QUERY=[['60','optCharacters',{n:60}],['120','optCharacters',{n:120}],['200','optCharacters',{n:200}]];
 const NUMDATE=[['none','numDateNone'],['year','numDateYear'],['year_month','numDateYearMonth']];
 const NUMRESET=[['never','numResetNever'],['yearly','numResetYearly'],['monthly','numResetMonthly']];
@@ -110,6 +113,7 @@ const PARAM_META=[
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],
+ ['retention.usYears','retUsYears','enum',()=>RET_US_YEARS.map(x=>x[0])],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
  ['granularity','availGranularity','enum',(s=S)=>(on('workingHours',s)?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
@@ -159,7 +163,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',retention:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it

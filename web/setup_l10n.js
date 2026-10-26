@@ -719,7 +719,10 @@ window.SETUP_L10N={
    "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
    "supLookupRate": "Supplier lookups per minute",
    "supLookupRateHint": "The most supplier lookups one person may make per minute on this server; more are answered as busy and nothing is sent to the registry. Set in the app's settings.",
-   "optPerMinute": "{n} per minute"
+   "optPerMinute": "{n} per minute",
+   "retUsYears": "US state record retention",
+   "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
+   "retUsRule": "The retention rule applies"
   },
   "feature": {
    "calendarTab": [
@@ -2362,7 +2365,10 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
    "supLookupRate": "Recherches fournisseur par minute",
    "supLookupRateHint": "Le nombre maximal de recherches fournisseur qu'une personne peut faire par minute sur ce serveur ; au-delà, la recherche est signalée comme occupée et rien n'est envoyé au registre. Se règle dans les paramètres de l'app.",
-   "optPerMinute": "{n} par minute"
+   "optPerMinute": "{n} par minute",
+   "retUsYears": "Conservation des pièces, État américain",
+   "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
+   "retUsRule": "La règle de conservation s'applique"
   },
   "feature": {
    "calendarTab": [
@@ -4005,7 +4011,10 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
    "supLookupRate": "Lieferantensuchen pro Minute",
    "supLookupRateHint": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf; weitere werden als ausgelastet beantwortet und nicht an das Register gesendet. Wird in den Einstellungen der App festgelegt.",
-   "optPerMinute": "{n} pro Minute"
+   "optPerMinute": "{n} pro Minute",
+   "retUsYears": "Aufbewahrung, US-Bundesstaat",
+   "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+   "retUsRule": "Die Aufbewahrungsregel gilt"
   },
   "feature": {
    "calendarTab": [
@@ -5648,7 +5657,10 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
    "supLookupRate": "Búsquedas de proveedores por minuto",
    "supLookupRateHint": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor; las demás se responden como ocupadas y no se envía nada al registro. Se ajusta en la configuración de la app.",
-   "optPerMinute": "{n} por minuto"
+   "optPerMinute": "{n} por minuto",
+   "retUsYears": "Conservación de registros, estado de EE. UU.",
+   "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
+   "retUsRule": "Se aplica la regla de conservación"
   },
   "feature": {
    "calendarTab": [
@@ -7291,7 +7303,10 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
    "supLookupRate": "Ricerche fornitore al minuto",
    "supLookupRateHint": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server; le altre risultano occupate e non viene inviato nulla al registro. Si imposta nelle impostazioni dell'app.",
-   "optPerMinute": "{n} al minuto"
+   "optPerMinute": "{n} al minuto",
+   "retUsYears": "Conservazione dei documenti, stato USA",
+   "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
+   "retUsRule": "Vale la regola di conservazione"
   },
   "feature": {
    "calendarTab": [

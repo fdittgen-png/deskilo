@@ -20860,6 +20860,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get retentionClassVoucher => 'Justificantes';
 
   @override
+  String retentionExtendedBySetting(int years) {
+    return '$years años desde la fecha del documento (ajuste propio de este espacio)';
+  }
+
+  @override
   String retentionFromDocument(int years) {
     return '$years años desde la fecha del documento';
   }
@@ -20872,6 +20877,87 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String retentionHint(String country) {
     return 'Cuánto tiempo obliga $country a este espacio a conservar cada tipo de documento. Los plazos son datos de referencia; una regla aún sin confirmar no ha sido verificada por una persona con autoridad para confirmarla.';
+  }
+
+  @override
+  String get retentionHoldClass => 'Tipo de registro';
+
+  @override
+  String get retentionHoldEveryClass => 'Todos los tipos de registro';
+
+  @override
+  String get retentionHoldEveryIssuer => 'Todos los emisores';
+
+  @override
+  String get retentionHoldIssuer => 'Emisor';
+
+  @override
+  String get retentionHoldPlace => 'Establecer una retención';
+
+  @override
+  String get retentionHoldPlaced => 'La retención está establecida.';
+
+  @override
+  String get retentionHoldReason => 'Motivo';
+
+  @override
+  String get retentionHoldReasonHelper =>
+      'Por qué deben conservarse los registros, por ejemplo una inspección fiscal o un litigio.';
+
+  @override
+  String get retentionHoldReasonMissing =>
+      'Indique el motivo, en 500 caracteres como máximo.';
+
+  @override
+  String get retentionHoldRelease => 'Levantar';
+
+  @override
+  String get retentionHoldReleaseReason => 'Por qué termina la retención';
+
+  @override
+  String get retentionHoldReleaseTitle => '¿Levantar esta retención?';
+
+  @override
+  String get retentionHoldReleased => 'La retención se ha levantado.';
+
+  @override
+  String retentionHoldSince(String what, String issuer, String date) {
+    return '$what · $issuer · desde el $date';
+  }
+
+  @override
+  String get retentionHoldsEmpty =>
+      'No hay ninguna retención. Una retención conserva los registros más allá de su plazo, para una auditoría o un litigio.';
+
+  @override
+  String get retentionHoldsTitle => 'Retenciones legales';
+
+  @override
+  String retentionKeptHold(String reason) {
+    return 'Se conserva por una retención legal: $reason';
+  }
+
+  @override
+  String get retentionKeptReview =>
+      'Se conserva hasta que una persona revise la regla de conservación';
+
+  @override
+  String retentionKeptReviewEnded(String date) {
+    return 'Se conserva hasta que una persona revise la regla de conservación; su plazo terminó el $date';
+  }
+
+  @override
+  String retentionKeptUntil(String date, String rule) {
+    return 'Se conserva hasta el $date según $rule';
+  }
+
+  @override
+  String get retentionPeriodEnded =>
+      'El plazo de conservación ha terminado: el espacio puede revisar el borrado';
+
+  @override
+  String retentionResetRefused(String why) {
+    return 'No se ha borrado nada: la contabilidad aún debe conservarse. $why';
   }
 
   @override
@@ -21927,7 +22013,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingHintRetentionUsYears =>
-      'Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más o menos que la norma federal. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.';
+      'Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más que la norma federal. Un plazo más largo se aplica a todos los registros; uno más corto no cambia nada. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.';
 
   @override
   String get settingHintSecurityBadgeLockoutFailures =>
