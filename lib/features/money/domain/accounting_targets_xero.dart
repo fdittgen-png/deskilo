@@ -23,6 +23,7 @@ const Set<AccountingOperation> _xeroOperations = {
 const List<AccountingTarget> xeroAccountingTargets = [
   AccountingTarget(
     id: 'xero_gb',
+    runnerDelivers: true,
     vendor: 'Xero',
     product: 'Xero',
     edition: 'Accounting API 2.0, UK organisation',
@@ -35,6 +36,7 @@ const List<AccountingTarget> xeroAccountingTargets = [
   ),
   AccountingTarget(
     id: 'xero_ca',
+    runnerDelivers: true,
     vendor: 'Xero',
     product: 'Xero',
     edition: 'Accounting API 2.0, Canadian organisation',
@@ -47,6 +49,7 @@ const List<AccountingTarget> xeroAccountingTargets = [
   ),
   AccountingTarget(
     id: 'xero_us',
+    runnerDelivers: true,
     vendor: 'Xero',
     product: 'Xero',
     edition: 'Accounting API 2.0, US organisation',
@@ -59,6 +62,7 @@ const List<AccountingTarget> xeroAccountingTargets = [
   ),
   AccountingTarget(
     id: 'xero_eu',
+    runnerDelivers: true,
     vendor: 'Xero',
     product: 'Xero',
     edition: 'Accounting API 2.0, EU organisation',

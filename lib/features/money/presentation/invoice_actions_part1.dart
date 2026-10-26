@@ -184,8 +184,8 @@ Future<void> sendEInvoice(
 /// and tells the person what actually happened: the shared "download,
 /// don't just share" path of every money document (#474). A browser
 /// request offers "Download again", the user gesture a blocked hand-over
-/// needs.
-Future<void> savePdfToDownloads(
+/// needs. Answers whether the file was handed out ([fileHandedOut]).
+Future<bool> savePdfToDownloads(
   BuildContext context,
   WidgetRef ref, {
   required Uint8List bytes,
@@ -193,7 +193,7 @@ Future<void> savePdfToDownloads(
 }) async {
   final delivery =
       await deliverFile(context, ref, bytes: bytes, fileName: fileName);
-  if (!context.mounted) return;
+  if (!context.mounted) return fileHandedOut(delivery);
   announceFileDelivery(
     context,
     delivery,
@@ -201,6 +201,7 @@ Future<void> savePdfToDownloads(
       savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName),
     ),
   );
+  return fileHandedOut(delivery);
 }
 
 Future<void> downloadInvoicePdf(

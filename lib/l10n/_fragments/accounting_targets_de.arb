@@ -1,7 +1,7 @@
 {
   "@@locale": "de",
   "featureAccountingConnectorsTitle": "Buchhaltungssysteme",
-  "featureAccountingConnectorsDesc": "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane über seine API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.",
+  "featureAccountingConnectorsDesc": "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane und bexio über ihre API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.",
   "acctTargetsTitle": "Buchhaltungssysteme",
   "acctTargetsIntro": "Wohin die Bücher jedes Ausstellers gehen. Ein verbundenes System empfängt die Belege selbst; jedes andere die aus den Büchern exportierten Dateien. Jede Übertragung steht unten mit dem Hashwert dessen, was sie getragen hat.",
   "acctTargetsNoApiTarget": "Noch kein Buchhaltungssystem dieses Landes wird über eine Verbindung erreicht: Die Bücher gehen per Datei, aus dem Buchhaltungsexport.",
@@ -92,5 +92,6 @@
   "acctDeliveryAttempts": "{count, plural, =1{ein Versuch} other{{count} Versuche}}",
   "refusalAccountingClosed": "Diese Verbindung lässt das nicht mehr zu: Sie wurde widerrufen oder hat bereits übermittelt. Widerrufen Sie sie und verbinden Sie neu. Nichts wurde gespeichert.",
   "refusalAccountingValue": "Der Server hat diesen Wert abgelehnt: Prüfen Sie Token, Schlüssel oder Aussteller und versuchen Sie es erneut. Nichts wurde gespeichert.",
-  "acctJournalLogged": "{logged, plural, =0{Kein neuer Beleg protokolliert} =1{Ein Beleg protokolliert} other{{logged} Belege protokolliert}}, {unchanged} unverändert"
+  "acctJournalLogged": "{logged, plural, =0{Kein neuer Beleg protokolliert} =1{Ein Beleg protokolliert} other{{logged} Belege protokolliert}}, {unchanged} unverändert",
+  "acctTargetNotDeliveredYet": "An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft."
 }

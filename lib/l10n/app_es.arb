@@ -263,6 +263,7 @@
   "acctMapsIntro": "Cómo se llama en el sistema cada cuenta, código de impuesto, cliente y artículo de esta contabilidad. Un envío que necesite uno que no esté aquí se detiene y lo nombra; nada se sustituye por un valor por defecto.",
   "acctMapsTitle": "Nombres en {target}",
   "acctRedeliver": "Enviar de nuevo",
+  "acctTargetNotDeliveredYet": "Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él.",
   "acctTargetsIntro": "Adónde va la contabilidad de cada emisor. Un sistema conectado recibe los documentos por sí mismo; los demás reciben los ficheros exportados de la contabilidad. Cada transferencia figura abajo con la huella de lo que llevó.",
   "acctTargetsLoadFailed": "No se han podido cargar los sistemas contables.",
   "acctTargetsNoApiTarget": "Ningún sistema contable de este país se alcanza todavía por conexión: la contabilidad sale por fichero, desde la exportación contable.",
@@ -392,6 +393,7 @@
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
   },
+  "archiveSwissNeedsExportLog": "La documentación de los procedimientos de este archivo suizo indica que cada descarga queda registrada en el registro de exportaciones, y este espacio no lleva ninguno: active primero los periodos contables o los sistemas contables.",
   "assistantPrefix": "Asistente",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"
@@ -5621,7 +5623,7 @@
   "featureAccessorySupplementsDesc": "Facturar los accesorios de sitio con precio por media jornada reservada. Se aplica a las reservas desde la activación.",
   "featureAccountingBookDesc": "Quién lleva los libros oficiales de cada emisor: Deskilo como precontabilidad, un libro local o un sistema contable externo que hace fe. Cada emisor indica su moneda, su ejercicio y su base contable. Desactivado: los saldos de los miembros y las facturas funcionan como antes.",
   "featureAccountingBookTitle": "Libro contable",
-  "featureAccountingConnectorsDesc": "Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver.",
+  "featureAccountingConnectorsDesc": "Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane y bexio por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver.",
   "featureAccountingConnectorsTitle": "Sistemas contables",
   "featureAccountingPeriodsDesc": "Cerrar un periodo de los libros: ninguna factura con fecha en él puede anularse, ningún cobro conciliarse en él, y cada exportación contable queda registrada. Desactivado: nada se bloquea y las exportaciones no se registran.",
   "@featureAccountingPeriodsDesc": {
@@ -6802,6 +6804,14 @@
   "financesTypeAll": "Todos los documentos",
   "financesTypeCreditNote": "Nota de crédito",
   "financesTypeInvoice": "Factura",
+  "gebuevProcedureAccessBody": "Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.",
+  "gebuevProcedureAccessHeading": "Accesos (art. 8)",
+  "gebuevProcedureCarriersBody": "Este archivo se lee con cualquier herramienta zip y editor de texto. Una copia de todo el espacio se prueba con una exportación del espacio terminada, registrada con su huella: la lista de preparación muestra cuándo se hizo la última y pide una nueva cuando es antigua.",
+  "gebuevProcedureCarriersHeading": "Disponibilidad y soportes (art. 5 y 10)",
+  "gebuevProcedureIntegrityBody": "Cada archivo de este archivo comprimido figura en manifest.csv con su huella SHA-256 y su tamaño. El propio archivo, como cada exportación contable, queda registrado en el registro de exportaciones con su huella, la hora del servidor y la persona que lo creó. Cada documento emitido lleva la huella que el servidor verifica; register.csv indica el resultado.",
+  "gebuevProcedureIntegrityHeading": "Integridad (art. 3 y 9)",
+  "gebuevProcedureSystemBody": "DesKilo lleva las facturas, notas de crédito, pagos, cuentas de los miembros, gastos compartidos y documentos de compra aprobados de este espacio y, cuando el espacio lleva un libro local, sus asientos en su plan contable. La contabilidad general de la fiduciaria importa el diario suizo de esos asientos.",
+  "gebuevProcedureTitle": "Documentación de los procedimientos (GeBüV art. 4) — {workspace}",
   "gettingStartedActionChooseDay": "Elegir otro día",
   "gettingStartedActionChooseTime": "Elegir un horario para reservar",
   "gettingStartedActionFinishSetup": "Terminar la configuración",
@@ -7743,6 +7753,7 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportBanana": "Banana Contabilidad+ (importación de asientos)",
   "invoiceExportBundle": "Archivo del ejercicio (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"
@@ -7770,10 +7781,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
-  "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas KMU)",
-  "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
-  },
+  "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas PYME, códigos de IVA)",
   "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
   "invoiceExternalIssuingTitle": "Emita esta factura fuera de la aplicación",
   "invoiceFacturXDownload": "Descargar Factur-X (PDF)",
@@ -8449,6 +8457,7 @@
   "journalNeedsRates": "Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: {documents}",
   "journalOpeningRefused": "Los saldos de apertura (del {from} al {to}) no se han podido contabilizar: {reason}",
   "journalSafTRefused": "El archivo SAF-T no se ha generado: {gaps}",
+  "journalSwissTaxCodes": "Estos grupos de tipos no tienen código de IVA en la referencia fiscal; no se ha escrito nada. Añada primero sus códigos: {keys}",
   "journeyClosedPaid": "Pagada el {date} — cerrada",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -16694,26 +16703,6 @@
     }
   },
   "supportTitle": "Detalles de soporte",
-  "swissKmuAccountsIntro": "Los valores por defecto son las propuestas del plan contable suizo KMU. Cada fila nombra la cifra de la declaración de IVA suiza (MWST) en la que cae; revise las cuentas con su asesor.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuAccountsTitle": "Diario de asientos suizo",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuRevenueExempt": "Ingresos exentos, exportados o en el extranjero",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  },
-  "swissKmuRevenueNormal": "Ingresos al tipo normal",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Ingresos al tipo reducido o de alojamiento",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
   "symbolHint": "Una marca redonda de una o dos letras sobre un color, única de este espacio — o use una foto abajo.",
   "@symbolHint": {
     "description": "workspace symbol"
@@ -17346,6 +17335,7 @@
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
+  "taxRefChKmuKeys": "Diario suizo (formato ch_kmu): la clave ch_kmu/tax:<grupo> da el código de IVA de las ventas de un grupo de tipos, ch_kmu/input:<grupo> el de su IVA soportado en material y servicios (cifra 400), ch_kmu/asset:<grupo> el del IVA soportado en inversiones (cifra 405), como código fiscal; el código debe existir en la tabla de IVA del archivo Banana.",
   "taxRefComponents": "Jurisdicciones, una por línea: nivel, nombre, porcentaje (nivel: state, county, city o district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"

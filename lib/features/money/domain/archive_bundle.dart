@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:crypto/crypto.dart';
 
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
@@ -75,6 +76,11 @@ List<int> textBytes(String text) => utf8.encode(text);
 /// archive carries one.
 bool archiveCarriesFec(String countryCode) => countryCode.toUpperCase() == 'FR';
 
+/// #2377 — the record-keeping ordinance (GeBüV art. 4) asks for the
+/// documentation of the procedures: a Swiss workspace's archive carries it.
+bool archiveCarriesProcedures(String countryCode) =>
+    countryCode.toUpperCase() == 'CH';
+
 /// Adds the FEC [members] (the file under its own name and its manifest,
 /// #2376) to [files] when the archive of [countryCode] carries a FEC.
 void addArchiveFec(
@@ -92,3 +98,24 @@ Map<String, List<int>> withRetentionNotice(
   String countryCode,
   int year,
 ) => {...files, 'retention.txt': textBytes(retentionNotice(countryCode, year))};
+
+/// #2377 — the archive's manifest: every other member of the archive with
+/// its SHA-256 digest and size, by path. The archive's own digest is
+/// recorded in the export log with the server's time and the person who
+/// downloaded it, so a member taken out later is checked against the
+/// manifest, and the manifest against the logged archive (GeBüV art. 3, 9).
+const String _archiveManifestName = 'manifest.csv';
+
+/// [files] with their manifest.
+Map<String, List<int>> withManifest(Map<String, List<int>> files) {
+  final paths = files.keys.toList()..sort();
+  return {
+    ...files,
+    _archiveManifestName: textBytes(
+      '${[
+        'path;sha256;bytes',
+        for (final p in paths) '$p;${sha256.convert(files[p]!)};${files[p]!.length}',
+      ].join('\r\n')}\r\n',
+    ),
+  };
+}

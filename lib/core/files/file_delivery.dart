@@ -48,6 +48,15 @@ final class DeliveryFailed extends FileDelivery {
   final SaveFailure reason;
 }
 
+/// #2377 — whether [d] handed the file out: saved, kept privately, given to
+/// the browser or to the system sheet. A cancelled or failed delivery did
+/// not, and is never logged as a file handed out.
+bool fileHandedOut(FileDelivery d) => switch (d) {
+  LocalSave(outcome: SaveFailed()) => false,
+  LocalSave() || HandedToShareSheet() => true,
+  DeliveryCancelled() || DeliveryFailed() => false,
+};
+
 enum _ExportChoice { keep, share }
 
 /// Delivers [bytes] as [fileName] the way this platform can be truthful

@@ -32,14 +32,15 @@ authority. Widening one needs the authority's own spec in hand.
 | DATEV EXTF Buchungsstapel | exchange | DE, AT | a zip (#2375): one Buchungsstapel per calendar month and journal (sales; every booking that moves the bank) of the workspace's calendar, at most 99 999 rows each, 125 fields per row (format 700, version 13), each under its month's header (SKR in field 27, fiscal-year start from the book profile — refused when the sites' profiles disagree — Bezeichnung cut at 30, `Festschreibung` 1 when the month lies in a closed period, else 0); every customer row on the member's Debitor: the first Debitor the person enters plus the counter of the member number read through the space's member series (`M-2026-0007` is counter 7), in DATEV's range for the Sachkontenlänge entered (10000–69999 for four); KOST1 = the document's site, else the cost centre entered; Beleginfo Rechnungsnummer/Belegdatum/Fälligkeit; when chosen, Beleglink `BEDI "<invoice id>"` to the voucher PDF/A-3 in `belege/`; EU-Land u. UStID on a reverse charge; each rate on its automatic account without a key, a non-automatic revenue account with the rate group's BU-Schlüssel (`account_map` `datev/tax:<group>`, refused with the rate named while no such row exists); the Debitoren-Stammdaten (category 16) name every Debitor used; a Belegfeld 1 or KOST1 longer than 36 is refused, never cut; Buchungstext cut at 60, positive amounts + S/H, DDMM, **UTF-8 BOM**, a written-off rest on SKR03 2400. Berater-/Mandantennummer, the Sachkontenlänge and the currency (euros only) are checked before anything is written. The DATEV online services (Buchungsdatenservice, Rechnungsdatenservice 1.0, Belegbilderservice) are decided targets that need a DATEV marketplace partnership and the client's SmartLogin; none exists. |
 | GoBD data handover (Z3) | subset | DE | a zip (#2375): `index.xml` valid against the published `gdpdu-01-08-2002.dtd` (shipped beside it), one header-less UTF-8 CSV per table with every column, key and join described (invoices, lines, tax amounts, payments, instalments, write-offs, member ledger, shared costs, purchase documents and lines, customers, tax rates with their versions, number sequences, audit trail, vouchers), each invoice's e-invoice XML and PDF/A-3 in `belege/`, and the Verfahrensdokumentation (server schema version, number sequences, retention clocks). Says in its own index that it is DesKilo's sub-ledger, not the complete books. |
 | Sage 50 audit trail | exchange | GB, IE | a written-off rest is an SC to 8100 without tax |
-| Swiss booking journal (KMU accounts, Ziffer per row) | exchange | CH | Not a native Banana or bexio template: neither publishes its column specification. |
+| Swiss booking journal (`ch_kmu`) | exchange | CH | a local book's postings (#2377), one row per leg pair on the issuer's KMU chart, the tax line folded into its base: gross amount, MWST code of the rate group (`account_map` `ch_kmu/tax:<group>`, `input:<group>`, `asset:<group>`; refused with the group named while none exists), the VAT amount and account, the Ziffer of the MWST-Abrechnung read from the effective method's form (303/313/343, 220/221/230, 400/405); the QR reference (QRR or SCOR) of a receivable's invoice; a converted line's original amount and currency; the customer or supplier number; UTF-8 BOM, `;`, `dd.MM.yyyy`, CRLF. No local book, no journal; an unmapped role is named. |
+| Banana Accounting+ transactions (`banana_transactions`) | exchange | CH | the same rows under Banana's column names (`Date, Doc, Description, AccountDebit, AccountCredit, Amount, VatCode`), tab separated, ISO dates, the amount gross: Banana splits the tax by the VatCode, which must be a code of the Banana file's VAT table |
 | SAF-T Financial (NO) | regulatory | NO | #2379, a local book's postings only: valid against Skatteetaten's `Norwegian_SAF-T_Financial_Schema_v_1.30.xsd` (shipped under `test/fixtures/saft/`, read in CI by `tool/saft/validate.sh`); every account with its opening and closing balance of the fiscal year, its GroupingCategory and GroupingCode from the `saf_t/<role>` row of NO; customers and suppliers by their sub-ledger numbers with a BalanceAccount per collective account; the tax table with each rate version in force and its StandardTaxCode from the `saf_t/tax:<direction>:<group>` row; one transaction per posting, every line naming its SourceDocumentID, TaxInformation on the tax lines. An account or tax code without its row, a missing company or contact field, a party without its number, or an identifier longer than the schema allows refuses the file and is named. |
 | FAIA (LU) | regulatory | LU | #2379, the same tree to the FAIA 2.01 schema (`FAIA_v_2.01_full.xsd`): StandardAccountID from the `saf_t/<role>` row of LU, the contact's telephone and every party's postal address required (refused, named, otherwise), one AccountID per party. |
 | SAF-T with the general ledger | exchange | everywhere | #2379, the same tree in the OECD 2.0 namespace without national restriction; the OECD publishes its XSD only inside its 2010 guidance, so the file is read against Luxembourg's publication of the same tree. |
 | SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted unless the owner maps accounts; then sales cycle only, every transaction balances, credit notes reverse the sale, netted cash is posted, a written-off rest to the mapped loss account, in the sales journal (none mapped, none posted) |
 | Accountant CSV | exchange | everywhere | format 3 (#2378): `tax_components` holds each invoice's taxes as frozen at issue (JSON, integer minor units; a total stored without components is marked `"split": false`), then one column per tax key of the period — `GST`, `HST`, `QST`, `PST` (Canada), `state_tax` / `local_tax` (US sales tax), `VAT <rate>` (an un-split total) — each the sum of its components |
 | Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
-| Archive bundle | exchange | everywhere | a fiscal year as one zip; `vat-account.csv` (#2378, the VAT account of UK VAT Regulations 1995 reg. 32) when the year has prepared or filed returns: per period output and input tax, corrections of earlier periods apart, payable = box 1 and allowable = box 4 of the return |
+| Archive bundle | exchange | everywhere | a fiscal year as one zip; `vat-account.csv` (#2378, the VAT account of UK VAT Regulations 1995 reg. 32) when the year has prepared or filed returns: per period output and input tax, corrections of earlier periods apart, payable = box 1 and allowable = box 4 of the return; `manifest.csv` (#2377) names every member with its SHA-256 and size, and the downloaded archive is logged with its digest, the server's time and the person who made it; a Swiss archive carries `verfahrensdokumentation.md` (GeBüV art. 4) |
 
 ## The SAF-T Financial chart map (#2379)
 
@@ -107,6 +108,46 @@ for the audit:
   auxiliary) and the journals with their summary print from the same
   postings, as report kinds of the designer.
 
+## Switzerland (#2377)
+
+- **Journal and Banana.** Both layouts are the postings of the local book,
+  read once (the rows above). The MWST codes are Banana's standard codes of
+  the Swiss VAT table, unconfirmed reference rows (format `ch_kmu`) valid
+  for the 2024 rates, from 2024-01-01 to 2028-01-01, where the planned rates
+  begin: a posting after that refuses its code, named, until confirmed codes
+  exist. A fiduciary whose VAT table names them otherwise changes them in the
+  tax reference editor. A book on collected consideration codes the sale on
+  its own row; the release of its pending tax lands on the rate's Ziffer,
+  uncoded, so Banana never taxes the tax again. The output tax of every rate is booked on 2200: the
+  code carries the rate, the Ziffer of each row ties it to the return.
+- **KMU chart.** The suggested chart maps every role the engine books: 1100,
+  1020, 3400 (3401 reduced and accommodation, 3402 exempt letting), 2200,
+  1170, 2000, 3805, 6500; 2201 and 6000 are offered unmapped. A role or an
+  account the chart lists twice is mapped to its first account.
+- **bexio.** `bexio_api` delivers through the delivery kit: an invoice as a
+  `kb_invoice` with its legal number as `document_nr` and the kit's
+  idempotency key as `api_reference`, positions net with the `tax_id` and
+  `account_id` the connection maps, then issued; a credit note as a
+  `kb_credit_voucher`; a receipt as a payment on its invoice, found by
+  number. A company connects with a personal access token or by signing in
+  (`auth.bexio.com`). The Accounting systems sheet says no document is sent
+  yet: the delivery runner does not dispatch to the adapter. The live exchange is not run: it needs a bexio test
+  company and a token or a registered app.
+- **The other products.** Abacus (AbaConnect, licensed per interface), Sage 50
+  Extra / Sage Start, Infoniqa ONE, Klara and Run my Accounts are catalogued
+  as `specificationNeeded`; the Swiss journal is their working route.
+- **GeBüV.** The Swiss archive is refused, said, while the space keeps no
+  export log (neither the book periods nor the accounting systems are on): the
+  log is the evidence its procedures document states. Art. 3/9: every export and the archive download (once handed out) are logged with their
+  SHA-256, the server's time and the actor; the archive's manifest names
+  every member's digest and each issued document carries the fingerprint the
+  server verifies (`register.csv`). Art. 4: the procedures document travels in
+  the Swiss archive. Art. 8: the audit trail lists every file handed out
+  (`export`, `archive`) with actor and time. Art. 10: the procedures document
+  names the recovery evidence of a completed workspace export (0301).
+  Retention is the country's `retention` rows: ten years from the end of the
+  fiscal year.
+
 ## The target registry
 
 Every file and connection target is a descriptor in `accounting_format.dart`
@@ -126,7 +167,14 @@ reached and how far it is qualified. The table below is generated from it;
 | `datev_rechnungsdatenservice` | DATEV · Rechnungsdatenservice 1.0 · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
 | `datev_belegbilderservice` | DATEV · Belegbilderservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
 | `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
-| `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV, Ziffer per row | file | journal | CH | implemented | not named yet |
+| `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV from compute_postings, MWST code and Ziffer per row | file | journal | CH | implemented | not named yet |
+| `banana_transactions` | Banana · Banana Accounting+ · import of transactions, tab-separated text | file | journal | CH | implemented | Banana Accounting+ import of transactions, column names of the Transactions table |
+| `bexio_api` | bexio · bexio · API 2.0 (kb_invoice, kb_credit_voucher) | api | documents | CH | implemented | bexio API 2.0, kb_invoice and kb_credit_voucher |
+| `abacus_abaconnect` | Abacus · Abacus Finanzbuchhaltung · AbaConnect XML, licensed per interface | file | journal | CH | specificationNeeded | not named yet |
+| `sage50_extra_ch` | Sage · Sage 50 Extra / Sage Start (CH) · text import of Buchungen | file | journal | CH | specificationNeeded | not named yet |
+| `infoniqa_one` | Infoniqa · Infoniqa ONE · API | api | documents | CH | specificationNeeded | not named yet |
+| `klara` | Klara · Klara Business · API | api | documents | CH | specificationNeeded | not named yet |
+| `run_my_accounts` | Run my Accounts · Run my Accounts · API | api | documents | CH | specificationNeeded | not named yet |
 | `saft_no` | Skatteetaten · SAF-T Financial · 1.30 | file | journal | NO | locallyValidated | Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd |
 | `faia_lu` | Administration de l'enregistrement · FAIA · 2.01 | file | journal | LU | locallyValidated | AED FAIA 2.01, FAIA_v_2.01_full.xsd |
 | `denmark_registered_system` | Erhvervsstyrelsen · Registered digital bookkeeping system · Bogføringsloven 2022 | api | documents | DK | specificationNeeded | not named yet |

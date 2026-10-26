@@ -53,6 +53,16 @@ class BookPeriodCommands {
     ),
   );
 
+  /// #2377 — the export log of the calendar [year], each file with who
+  /// made it and when: what the audit trail lists as accesses (GeBüV
+  /// art. 8). A log that cannot be read fails the trail, never shortens it.
+  Future<List<BookExport>> exportLog(String workspaceId, int year) =>
+      _repository.fetchExportLog(
+        workspaceId,
+        DateTime(year),
+        DateTime(year, 12, 31),
+      );
+
   /// [logExport] for a file of [bytes] (a zip) of the calendar [year]
   /// holding [rows] records.
   Future<String?> logExportBytes(

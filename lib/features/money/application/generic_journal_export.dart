@@ -69,6 +69,13 @@ final class JournalSafTRefused extends GenericJournal {
   final List<SafTGap> gaps;
 }
 
+/// #2377 — the Swiss journal's taxed rows of these keys (`tax:standard`)
+/// have no MWST code in the tax reference; nothing was written.
+final class JournalTaxCodesMissing extends GenericJournal {
+  const JournalTaxCodesMissing(this.keys);
+  final List<String> keys;
+}
+
 /// The latest local-book profile of [profiles] in force in [year]; null
 /// when no issuer keeps a local book then.
 BookProfile? localBookOf(List<BookProfile> profiles, int year) => ([

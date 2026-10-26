@@ -158,4 +158,20 @@ void main() {
     expect(rule.maxLength, 13);
     expect(rule.charset, isNotNull);
   });
+
+  test('a target says it is delivered exactly when the runner dispatches it', () {
+    final runner = File(
+      'supabase/functions/accounting-connect/deliver.ts',
+    ).readAsStringSync();
+    final dispatched = {
+      for (final m in RegExp(r'^\s+([a-z0-9_]+): [a-zA-Z]+,\s*$', multiLine: true)
+          .allMatches(runner))
+        m.group(1)!,
+    }.intersection({for (final t in accountingTargets) t.id});
+    expect(dispatched, isNotEmpty);
+    expect(
+      {for (final t in accountingTargets) if (t.runnerDelivers) t.id},
+      dispatched,
+    );
+  });
 }

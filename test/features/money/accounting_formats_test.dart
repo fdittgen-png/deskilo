@@ -14,6 +14,7 @@
 import 'dart:io';
 
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
+import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/datev.dart';
@@ -85,10 +86,12 @@ void main() {
     // DATEV was built, committed, and called by nothing. It is easy to
     // repeat: a domain file compiles and its tests pass whether or not
     // anything invokes it.
-    // The run and its German exports (DATEV, GoBD), which it dispatches to.
+    // The run and its German (DATEV, GoBD) and Swiss exports, which it
+    // dispatches to.
     final export = [
       'lib/features/money/presentation/accounting_export_run.dart',
       'lib/features/money/presentation/accounting_export_german.dart',
+      'lib/features/money/presentation/accounting_export_swiss.dart',
     ].map((p) => File(p).readAsStringSync()).join();
 
     test('the export switch handles every registry format', () {
@@ -107,7 +110,8 @@ void main() {
         'datev': 'buildDatevPackage',
         'gobd': 'buildGobdPackage',
         'sage50': 'buildSageFile',
-        'ch_kmu': 'buildSwissKmuFile',
+        'ch_kmu': 'swissJournalFile',
+        'banana_transactions': 'swissJournalFile',
         'accountant_csv': 'buildAccountantCsv',
         'audit_trail': 'buildAuditTrailCsv',
       }.entries) {
@@ -146,8 +150,38 @@ void main() {
       expect(
         formatsFor('CH').firstWhere((f) => f.id == 'ch_kmu').claim,
         FormatClaim.exchange,
-        reason: 'neither Banana nor bexio publishes a template to claim',
+        reason: 'a fiduciary reviews and posts it; no authority reads it',
       );
+    });
+
+    test('Switzerland is offered the Swiss journal, Banana and bexio, and no '
+        'DATEV, FEC or Sage 50 UK (#2377)', () {
+      final files = formatsFor('CH').map((f) => f.id);
+      expect(files, containsAll(['ch_kmu', 'banana_transactions']));
+      expect(files, isNot(anyOf(contains('datev'), contains('fec'),
+          contains('sage50'))));
+      final targets = {for (final t in targetsFor('CH')) t.id: t};
+      expect(targets['bexio_api']!.transport, AccountingTransport.api);
+      expect(targets['bexio_api']!.capability.producible, isTrue);
+      for (final id in ['datev', 'fec', 'sage50', 'pennylane_api']) {
+        expect(targets, isNot(contains(id)), reason: id);
+      }
+      for (final id in [
+        'abacus_abaconnect',
+        'sage50_extra_ch',
+        'infoniqa_one',
+        'klara',
+        'run_my_accounts',
+      ]) {
+        expect(targets[id]!.capability.state,
+            QualificationState.specificationNeeded, reason: id);
+        expect(targets[id]!.capability.producible, isFalse, reason: id);
+      }
+      for (final country in ['DE', 'FR', 'GB']) {
+        expect(targetsFor(country).map((t) => t.id),
+            isNot(anyOf(contains('banana_transactions'), contains('bexio_api'))),
+            reason: country);
+      }
     });
 
     test('Portugal gets its own SAF-T', () {

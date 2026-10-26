@@ -692,6 +692,10 @@
   "@acctRedeliver": {
     "description": "#2370 Transfers list: the button that delivers one document to its connection again."
   },
+  "acctTargetNotDeliveredYet": "No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.",
+  "@acctTargetNotDeliveredYet": {
+    "description": "#2377 Accounting systems sheet: an API target whose deliveries the runner does not send yet."
+  },
   "acctTargetsIntro": "Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.",
   "@acctTargetsIntro": {
     "description": "#2370 Accounting systems sheet: what the sheet shows."
@@ -1061,6 +1065,10 @@
   "applicationsTitle": "Workspace requests",
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
+  },
+  "archiveSwissNeedsExportLog": "This Swiss archive's procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.",
+  "@archiveSwissNeedsExportLog": {
+    "description": "#2377 The Swiss archive refused: no export log is kept (neither book periods nor accounting systems on)."
   },
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {
@@ -9167,7 +9175,7 @@
   "@featureAccountingBookTitle": {
     "description": "#1869 feature name"
   },
-  "featureAccountingConnectorsDesc": "Connects each issuer's books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.",
+  "featureAccountingConnectorsDesc": "Connects each issuer's books to the accounting system they are kept in (Pennylane and bexio through their APIs, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.",
   "@featureAccountingConnectorsDesc": {
     "description": "#2370 Features screen: what the accounting systems feature does."
   },
@@ -10984,6 +10992,43 @@
   "financesTypeInvoice": "Invoice",
   "@financesTypeInvoice": {
     "description": "#2557 C4 Me › Finances: the document state of an issued invoice (a row and the type filter)."
+  },
+  "gebuevProcedureAccessBody": "Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.",
+  "@gebuevProcedureAccessBody": {
+    "description": "#2377 The Swiss archive's procedures document: access logging (GeBüV art. 8)."
+  },
+  "gebuevProcedureAccessHeading": "Access (art. 8)",
+  "@gebuevProcedureAccessHeading": {
+    "description": "#2377 The Swiss archive's procedures document: heading."
+  },
+  "gebuevProcedureCarriersBody": "This archive is read with any zip tool and text editor. A copy of the whole space is proven by a completed workspace export, recorded with its digest: the readiness checklist shows when the last one was made and asks for a new one when it is old.",
+  "@gebuevProcedureCarriersBody": {
+    "description": "#2377 The Swiss archive's procedures document: availability and carriers (GeBüV art. 5 and 10)."
+  },
+  "gebuevProcedureCarriersHeading": "Availability and carriers (art. 5 and 10)",
+  "@gebuevProcedureCarriersHeading": {
+    "description": "#2377 The Swiss archive's procedures document: heading."
+  },
+  "gebuevProcedureIntegrityBody": "Every file of this archive is listed in manifest.csv with its SHA-256 digest and size. The archive itself, like every accounting export, is recorded in the export log with its digest, the server's time and the person who made it. Each issued document carries the fingerprint the server verifies; register.csv states the verdict.",
+  "@gebuevProcedureIntegrityBody": {
+    "description": "#2377 The Swiss archive's procedures document: integrity (GeBüV art. 3 and 9)."
+  },
+  "gebuevProcedureIntegrityHeading": "Integrity (art. 3 and 9)",
+  "@gebuevProcedureIntegrityHeading": {
+    "description": "#2377 The Swiss archive's procedures document: heading."
+  },
+  "gebuevProcedureSystemBody": "DesKilo keeps this space's invoices, credit notes, payments, member accounts, shared costs and approved purchase documents, and, where the space keeps a local book, their postings on its chart. The accountant's general ledger imports the Swiss journal of those postings.",
+  "@gebuevProcedureSystemBody": {
+    "description": "#2377 The Swiss archive's procedures document: what the system keeps."
+  },
+  "gebuevProcedureTitle": "Procedures documentation (GeBüV art. 4) — {workspace}",
+  "@gebuevProcedureTitle": {
+    "description": "#2377 The Swiss archive's procedures document: title.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      }
+    }
   },
   "gettingStartedActionChooseDay": "Choose another day",
   "@gettingStartedActionChooseDay": {
@@ -13172,6 +13217,10 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportBanana": "Banana Accounting+ (transactions import)",
+  "@invoiceExportBanana": {
+    "description": "#2377 The Swiss journal under Banana's column names, on the accounting export sheet."
+  },
   "invoiceExportBundle": "Year archive (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"
@@ -13229,9 +13278,9 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
-  "invoiceExportSwissKmu": "Swiss booking journal (CSV, KMU accounts)",
+  "invoiceExportSwissKmu": "Swiss booking journal (CSV, KMU accounts, MWST codes)",
   "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
+    "description": "#2360/#2377 The Swiss journal of a local book on the accounting export sheet."
   },
   "invoiceExportTrialBalance": "Trial balance, general and auxiliary (PDF, from the book)",
   "@invoiceExportTrialBalance": {
@@ -14333,6 +14382,15 @@
     "description": "SAF-T Financial export (#2379): the file was refused, with the reasons",
     "placeholders": {
       "gaps": {
+        "type": "String"
+      }
+    }
+  },
+  "journalSwissTaxCodes": "These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: {keys}",
+  "@journalSwissTaxCodes": {
+    "description": "#2377 The Swiss journal refused: a taxed row's rate group has no MWST code.",
+    "placeholders": {
+      "keys": {
         "type": "String"
       }
     }
@@ -28500,26 +28558,6 @@
     }
   },
   "supportTitle": "Support details",
-  "swissKmuAccountsIntro": "The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuAccountsTitle": "Swiss booking journal",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuRevenueExempt": "Revenue exempt, exported or abroad",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  },
-  "swissKmuRevenueNormal": "Revenue at the normal rate",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Revenue at the reduced or accommodation rate",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
   "symbolHint": "A round mark of one or two letters on a colour, unique to this workspace — or use a photo below instead.",
   "@symbolHint": {
     "description": "workspace symbol"
@@ -30398,6 +30436,10 @@
   "taxRefCents": "Amount (minor units)",
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
+  },
+  "taxRefChKmuKeys": "Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group's sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file's VAT table.",
+  "@taxRefChKmuKeys": {
+    "description": "#2377 Tax reference editor: the keys of the Swiss journal's MWST code rows."
   },
   "taxRefComponents": "Jurisdictions, one per line: level, name, percent (level: state, county, city or district)",
   "@taxRefComponents": {

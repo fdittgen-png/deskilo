@@ -32,8 +32,12 @@ library;
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import 'accounting_source_snapshot.dart';
+import 'book_period.dart';
 import 'invoice.dart';
 import 'ledger_entry.dart';
+
+/// The export log's format id of the fiscal-year archive.
+const String _archiveFormatId = 'bundle';
 
 /// One row of the trail, already flattened. Keeping this as an explicit
 /// type rather than a tuple is what lets the sort below be about the
@@ -58,7 +62,8 @@ class AuditEvent {
   /// the trail disagrees with the bank statement beside it.
   final DateTime at;
 
-  /// 'invoice', 'void', 'payment', 'credit', 'writeoff'.
+  /// 'invoice', 'void', 'payment', 'credit', 'writeoff'; #2377 'export'
+  /// and 'archive' for a file handed out.
   final String kind;
 
   /// The document number — how a row ties back to something physical.
@@ -97,8 +102,25 @@ List<AuditEvent> buildAuditEvents({
   required List<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
   List<LedgerEntry> ledger = const [],
+  List<BookExport> exports = const [],
+  Map<String, String> memberNames = const {},
 }) {
   final events = <AuditEvent>[];
+
+  // #2377 — every file handed out is an access to the books (GeBüV art. 8):
+  // who made it, when, which format and its digest. The archive is its own
+  // kind, so a download of the whole year reads apart from one file.
+  for (final e in exports) {
+    events.add(AuditEvent(
+      at: e.exportedAt,
+      kind: e.formatId == _archiveFormatId ? 'archive' : 'export',
+      reference: e.formatId,
+      description: 'sha256 ${e.sha256}',
+      amountCents: 0,
+      actor: memberNames[e.exportedByMemberId] ?? e.exportedByMemberId ?? '',
+      status: e.closedPeriod ? 'closed' : 'open',
+    ));
+  }
 
   for (final invoice in invoices) {
     // #2365 — a credit note charges nothing (`chargesCents` is the
