@@ -136,6 +136,37 @@ void main() {
     expect(find.text('On Ground only'), findsOneWidget);
   });
 
+  testWidgets('a level this space does not hold lists nothing and says so, '
+      'never the whole space', (tester) async {
+    await pumpApp(
+      tester,
+      const PeriodReservationsScreen(
+        fromMonth: '2026-03',
+        toMonth: '2026-03',
+        levelId: 'level-elsewhere',
+      ),
+      overrides: [
+        periodReservationsProvider('2026-03', '2026-03').overrideWith(
+          (ref) async => [_booking('on-a', DateTime(2026, 3, 2, 9))],
+        ),
+        bookingTargetLevelsProvider.overrideWith(
+          (ref) async => {'seat-a1': 'level-a'},
+        ),
+        bookingLevelNameProvider('level-elsewhere').overrideWith(
+          (ref) async => null,
+        ),
+        memberNamesProvider.overrideWith((ref) async => const {}),
+        bookingTargetNamesProvider.overrideWith((ref) async => const {}),
+      ],
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('period-reservations-unknown-level')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('period-reservation-on-a')), findsNothing);
+  });
+
   testWidgets('no booking in the months says so', (tester) async {
     await pumpApp(
       tester,

@@ -148,7 +148,7 @@ class BiVisualBody extends ConsumerWidget {
             label: Text(l10n.biOpenSource),
             // push: Back returns to this report, its page and selection.
             onPressed: () => context.push(
-              drill.target(period, levelId: _levelOf(filters)),
+              drill.target(period, levelId: biSingleLevelOf(filters)),
             ),
           ),
       ],
@@ -159,16 +159,6 @@ class BiVisualBody extends ConsumerWidget {
     l10n.overviewUnavailable,
     key: ValueKey('bi-visual-unavailable-${visual.id}'),
   );
-}
-
-/// The one level [filters] narrow a figure to, or null when they name
-/// none or several.
-String? _levelOf(List<BiReportFilter> filters) {
-  final levels = {
-    for (final f in filters)
-      if (f.dimension == 'level' && f.operator == 'eq') f.value,
-  };
-  return levels.length == 1 ? levels.single : null;
 }
 
 /// The display name of [row].

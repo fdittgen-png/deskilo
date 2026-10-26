@@ -11,7 +11,8 @@ final planInvalidations = [
   // cache refetches straight back into the stale bundle.
   InvalidationContribution(
     const ['levels', 'offices', 'desks', 'seats', 'plan_images'],
-    [levelsProvider, floorPlanProvider],
+    // A place moved to another level moves its bookings with it.
+    [levelsProvider, floorPlanProvider, targetLevelsProvider],
     bustsPlanCache: true,
   ),
   // Seat accessory data rides the floor plan fetch, and its cache.
@@ -24,8 +25,16 @@ final planInvalidations = [
   // RLS lets them read; everything fetched under the old horizon is stale.
   InvalidationContribution(
     const ['members'],
-    [levelsProvider, floorPlanProvider, targetNamesProvider],
+    [
+      levelsProvider,
+      floorPlanProvider,
+      targetNamesProvider,
+      targetLevelsProvider,
+    ],
     bustsPlanCache: true,
   ),
-  InvalidationContribution(const ['reservations'], [targetNamesProvider]),
+  InvalidationContribution(
+    const ['reservations'],
+    [targetNamesProvider, targetLevelsProvider],
+  ),
 ];

@@ -16534,6 +16534,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get periodReservationsUnknownLevel =>
+      'Este no es un nivel de este espacio.';
+
+  @override
   String get periodReservationsUnnamed => '(lugar sin nombre)';
 
   @override

@@ -49,7 +49,7 @@ bool biFiltersNarrow(List<BiReportFilter> higher, List<BiReportFilter> lower) {
   return true;
 }
 
-/// A registered name: a metric, dimension or drill target.
+/// A registered name: a metric or a dimension.
 final _reportName = RegExp(r'^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$');
 
 /// A page or visual id.
@@ -453,12 +453,14 @@ class BiReportVisual {
   }
 
   /// The registered names a visual points at; a text carries no metric,
-  /// every other visual needs one.
+  /// every other visual needs one. A drill is only ever absent (the
+  /// figure's own source) or [noDrill]: any other word would read as "on"
+  /// without being a source anyone registered.
   static bool _bound(BiVisualType t, Object? metric, Object? dim, Object? drill) =>
       (t == BiVisualType.text) == (metric == null) &&
       _name(metric) &&
       (dim == null || _reportDimensions.contains(dim)) &&
-      _name(drill);
+      (drill == null || drill == noDrill);
 
   /// Plain content, and only on a text visual.
   static bool _plain(BiVisualType t, Object? text) =>

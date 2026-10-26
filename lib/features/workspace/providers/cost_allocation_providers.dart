@@ -7,6 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../data/supabase_cost_allocation_repository.dart';
 import '../data/supabase_kpi_repository.dart';
 import '../domain/cost_allocation_rules.dart';
+import 'kpi_providers.dart';
 import 'operation_context_providers.dart';
 
 part 'cost_allocation_providers.g.dart';
@@ -24,9 +25,12 @@ Future<CostAllocationKpi> costAllocation(
   String workspaceId,
   String fromMonth,
   String toMonth,
-) => ref
-    .watch(costAllocationRepositoryProvider)
-    .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+) {
+  watchReaderRights(ref);
+  return ref
+      .watch(costAllocationRepositoryProvider)
+      .summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth);
+}
 
 /// Every revision of the workspace's rules; the editor invalidates it
 /// after a save.

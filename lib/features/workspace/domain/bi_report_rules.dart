@@ -202,3 +202,16 @@ BiBinding biSetStyle(BiReportVisual visual, String key, Object? value) {
   final style = visual.style.withValue(key, value);
   return biChecked(visual.copyWith(style: style));
 }
+
+/// The grouping a capacity figure is narrowed to one level by.
+const biLevelDimension = 'level';
+
+/// The one level [scope] narrows a figure to (a single `eq` filter on
+/// [biLevelDimension]), or null when it names none, or several levels.
+String? biSingleLevelOf(List<BiReportFilter> scope) {
+  final levels = {
+    for (final f in scope)
+      if (f.dimension == biLevelDimension && f.operator == 'eq') f.value,
+  };
+  return levels.length == 1 ? levels.single : null;
+}

@@ -19566,6 +19566,10 @@
       }
     }
   },
+  "periodReservationsUnknownLevel": "This is not a level of this space.",
+  "@periodReservationsUnknownLevel": {
+    "description": "#2580 the bookings of one level: the address names a level this space does not have"
+  },
   "periodReservationsUnnamed": "(unnamed place)",
   "@periodReservationsUnnamed": {
     "description": "#2578 the bookings behind the capacity figure"

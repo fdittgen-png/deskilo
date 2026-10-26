@@ -11115,6 +11115,7 @@
   "periodReservationsFailed": "Les réservations n'ont pas pu être lues.",
   "periodReservationsLevel": "Sur {level} seulement",
   "periodReservationsTitle": "Réservations de {period}",
+  "periodReservationsUnknownLevel": "Ce n'est pas un niveau de cet espace.",
   "periodReservationsUnnamed": "(lieu sans nom)",
   "permAccessProd": "Entrer dans l'espace de production",
   "@permAccessProd": {

@@ -27588,6 +27588,12 @@ abstract class AppLocalizations {
   /// **'Bookings of {period}'**
   String periodReservationsTitle(String period);
 
+  /// #2580 the bookings of one level: the address names a level this space does not have
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a level of this space.'**
+  String get periodReservationsUnknownLevel;
+
   /// #2578 the bookings behind the capacity figure
   ///
   /// In en, this message translates to:
