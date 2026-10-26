@@ -4,7 +4,7 @@
 -- the Spanish issuing gate gets a new version and its predecessor ends on
 -- that day; no issued document, no filed period is touched)
 --
--- 9999 (#2363, numbered at push time) -- the remaining Spanish and Italian
+-- 0600 (#2363, numbered at push time) -- the remaining Spanish and Italian
 -- invoice rules, as rows of the tax reference store:
 --   * `threshold` learns three effects: `annual_operations` (the yearly
 --     operations with one customer the modelo 347 lists, ES `modelo347`),
@@ -503,4 +503,4 @@ $fn$;
 revoke execute on function public.invoice_essentials_missing(uuid, uuid, jsonb, jsonb)
   from public, anon, authenticated;
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(600);
