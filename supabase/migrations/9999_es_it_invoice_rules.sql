@@ -76,7 +76,7 @@ $migration$;
 
 -- ── 2. the Spanish gate's version in force ends where its successor begins ──
 update public.tax_reference
-   set valid_to = date '2026-10-26'
+   set valid_to = date '2026-10-25'
  where domain = 'issuing_gate' and country = 'ES' and key = 'gate'
    and valid_from = date '1900-01-01' and valid_to is null;
 
@@ -86,7 +86,7 @@ insert into public.tax_reference
   (domain, country, key, valid_from, value, source, confirmed)
 values
 ('exemption_text', 'IT', 'stamp_duty', '1900-01-01', '{"regime":"stamp_duty","text":"Imposta di bollo assolta in modo virtuale ai sensi del D.M. 17 giugno 2014."}'::jsonb, 'DM 17 June 2014 art. 6 (the duty on electronic invoices paid virtually) (#2363); not yet confirmed', false),
-('issuing_gate', 'ES', 'gate', '2026-10-26', '{"supported":true,"requires_tax_number":true,"national_channel_required":true,"outside_vat_postal_codes":["35","38","51","52"]}'::jsonb, '#2363: the gate as it stood, and the sites the State''s VAT does not reach by postal-code prefix: Las Palmas (35) and Santa Cruz de Tenerife (38) under the Canary Islands'' IGIC (Ley 20/1991), Ceuta (51) and Melilla (52) under the IPSI (Ley 8/1991), outside the VAT''s territory by art. 3 Ley 37/1992; not yet confirmed', false),
+('issuing_gate', 'ES', 'gate', '2026-10-25', '{"supported":true,"requires_tax_number":true,"national_channel_required":true,"outside_vat_postal_codes":["35","38","51","52"]}'::jsonb, '#2363: the gate as it stood, and the sites the State''s VAT does not reach by postal-code prefix: Las Palmas (35) and Santa Cruz de Tenerife (38) under the Canary Islands'' IGIC (Ley 20/1991), Ceuta (51) and Melilla (52) under the IPSI (Ley 8/1991), outside the VAT''s territory by art. 3 Ley 37/1992; not yet confirmed', false),
 ('threshold', 'ES', 'modelo347', '1900-01-01', '{"cents":300506,"effect":"annual_operations","currency":"EUR"}'::jsonb, 'RD 1065/2007 art. 33 (modelo 347): the operations with one person or entity above EUR 3,005.06 in the calendar year, VAT included (#2363); not yet confirmed', false),
 ('threshold', 'ES', 'simplified_invoice', '2013-01-01', '{"cents":40000,"effect":"simplified_invoice","currency":"EUR"}'::jsonb, 'RD 1619/2012 art. 4.1.a: a simplified invoice is enough up to EUR 400, VAT included (#2363); not yet confirmed', false),
 ('threshold', 'GB', 'simplified_invoice', '1900-01-01', '{"cents":25000,"effect":"simplified_invoice","currency":"GBP"}'::jsonb, 'VAT Notice 700 §16.4: a less detailed invoice is enough up to GBP 250 including VAT, the figure invoice_essentials_missing carried since 0417 (#2359, #2363); typed in code, not re-verified', false),
