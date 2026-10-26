@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2373 / 9999: the Sage 50 UK codes of the reverse charge. A service to a
+-- #2373 / 0601: the Sage 50 UK codes of the reverse charge. A service to a
 -- business in another EU member state is T22, the domestic reverse charge
 -- T20; both are valid sage rows that name no account, in force today,
 -- unconfirmed; goods to another member state (T4) have no row. Rolled back.

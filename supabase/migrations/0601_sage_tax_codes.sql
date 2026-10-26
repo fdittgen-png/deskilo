@@ -2,7 +2,7 @@
 -- risk: additive
 -- (two rows of the tax reference store; no function, table or policy)
 --
--- 9999 (#2373, Sage 50 UK) -- two `account_map` rows of the tax reference
+-- 0601 (#2373, Sage 50 UK) -- two `account_map` rows of the tax reference
 -- store, GB, UNCONFIRMED until an accountant has checked them: the Sage 50
 -- VAT codes of the reverse charge, beside the five rate codes of 0433.
 --
@@ -24,4 +24,4 @@ values
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(601);
