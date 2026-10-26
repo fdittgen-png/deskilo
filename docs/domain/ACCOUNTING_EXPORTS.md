@@ -143,9 +143,12 @@ reached and how far it is qualified. The table below is generated from it;
 | `journals` | DesKilo · Journals · per journal and summary, PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `audit_trail` | DesKilo · Audit trail · CSV | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `bundle` | DesKilo · Fiscal-year archive · PDF/A-3 bundle | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
-| `pennylane_api` | Pennylane · Pennylane · API v2 | api | documents | FR | implemented | Pennylane API v2, customer_invoices import and ledger_entries |
+| `pennylane_api` | Pennylane · Pennylane · API v2 | api | journal | FR | implemented | Pennylane API v2, ledger_entries and journals |
 | `cegid_quadra_ascii` | Cegid · Quadra · ASCII import | file | journal | FR | specificationNeeded | not named yet |
 | `ebp_import` | EBP · Comptabilité · import of entries | file | journal | FR | specificationNeeded | not named yet |
+| `quickbooks_online_us` | Intuit · QuickBooks Online · Accounting API v3, US realm | api | documents | US | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
+| `quickbooks_online_ca` | Intuit · QuickBooks Online · Accounting API v3, CA realm | api | documents | CA | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
+| `quickbooks_online_gb` | Intuit · QuickBooks Online · Accounting API v3, GB realm | api | documents | GB | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
 <!-- END GENERATED TARGETS -->
 
 Write-offs are posted **gross**, as a loss, on the day they were given up:
@@ -196,6 +199,60 @@ of a year: every file handed out whose period overlaps it, with its sha256, who
 made it, when and the documents it carried, and every document delivered to a
 connection with the target's answer (remote number, draft or posted, attempts,
 error).
+
+**Delivering** (`accounting-connect`, action `deliver`, `deliver.ts`): a billing
+manager delivers a year to a connected connection from the Transfers list
+("Deliver *year* to *target*"), the app asking one calendar month per run, and
+sends one document again from its line ("Deliver again"). What leaves is the
+posting engine's answer to the caller (`compute_postings`, viewFinances), never
+a body the client sent: one posting per document event, its digest the sha256
+of its event, day, document and lines by role and amount (a changed mapping is
+not a changed document). A period the engine cannot post (its blockers) sends
+nothing; the target first checks the company (`prepare`) and a refusal sends
+nothing either. An OAuth token expiring within one function budget is
+refreshed before the run, and the adapter is given that token only. A
+delivery prepared before (an earlier run, or one running now) is read back
+before any create. A receipt or a refund is delivered under a name-based id of
+its invoice, day, amount and rank among equal ones of that day, so two
+payments of one invoice on one day are two deliveries. A year asked month by
+month that stops in one month names it and what the months before delivered. The
+adapters sit flat in `_shared/` because only that directory deploys beside a
+function:
+
+- `pennylane_api` (`accounting_pennylane.ts`, `pennylaneLedger`): every posting
+  a balanced ledger entry in the company's journal of the posting's code (VE,
+  BQ, HA, OD), each line on the ledger account its role is mapped to
+  (`account` mapping, remote id = the Pennylane ledger account id), its
+  external reference the delivery's idempotency key, read back by it.
+- `quickbooks_online_us`, `_ca`, `_gb` (`accounting_quickbooks.ts`,
+  `quickbooksOnline`, #2371): signed in to the installation's Intuit
+  application (`realmId` is the remote company). Before a run and after the
+  sign-in the realm's `CompanyInfo.Country` must be the target's and
+  `Preferences.SalesFormsPrefs.CustomTxnNumbers` on, or nothing is sent. An
+  invoice is an `Invoice`, a credit note a `CreditMemo` (`DocNumber` = the
+  legal number, one `SalesItemLine` per revenue line on the `item` mapping of
+  its role, the customer found by "name (member number)" or created), a
+  receipt a `Payment` linked to the invoice of its number, every other event
+  a balanced `JournalEntry`. Every call names `minorversion=70`, every create
+  a `requestid` (the idempotency key's first 50 characters) and carries the
+  key in `PrivateNote`. Tax: QuickBooks is never the tax authority of an
+  issued document. A US realm gets `TAX`/`NON` per line and the document's
+  tax as the override `TxnTaxDetail {TxnTaxCodeRef, TotalTax}`
+  (`TxnTaxCodeRef` = the `item vat_output:<group>` mapping); a CA or GB
+  line carries the realm tax code its rate group is mapped to
+  (`item vat_output:<group>`, a zero-rated group too). The tax code is an
+  `item` mapping because `account vat_output:<group>` is the tax account a
+  journal entry's tax line posts to, and a `tax` mapping is keyed by a tax
+  component while the postings carry rate groups. The total and tax
+  QuickBooks books are compared with the document: a difference, a
+  `SyncToken` other than the first (an edit in QuickBooks) or the number
+  held by a document DesKilo did not deliver is a `conflict`; nothing is
+  ever updated or created over it. Not yet: the `Attachable` PDF, `Bill` for
+  purchases (they go as journal entries), two `TaxLine`s per GST+QST code in
+  the readback (the postings carry one tax line per rate group), the
+  journal CSV file target and the change webhook. The live exchange is NOT
+  RUN: it needs an Intuit developer application and a sandbox company per
+  country.
 
 ## What each country mandates that this app does not produce
 

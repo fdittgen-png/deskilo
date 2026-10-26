@@ -394,6 +394,88 @@
       }
     }
   },
+  "acctDeliverBooksBlocked": "The books of this period cannot be posted yet: {subjects}.",
+  "@acctDeliverBooksBlocked": {
+    "description": "#2370 Snack: the posting engine cannot post the period.",
+    "placeholders": {
+      "subjects": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDeliverDone": "Delivered: {delivered} · already there: {unchanged} · to check: {attention}",
+  "@acctDeliverDone": {
+    "description": "#2370 Snack: what a delivery run became.",
+    "placeholders": {
+      "delivered": {
+        "type": "int"
+      },
+      "unchanged": {
+        "type": "int"
+      },
+      "attention": {
+        "type": "int"
+      }
+    }
+  },
+  "acctDeliverFailed": "The delivery did not go through. Nothing more was sent; try again later.",
+  "@acctDeliverFailed": {
+    "description": "#2370 Snack: the delivery request itself failed."
+  },
+  "acctDeliverMissing": "Map these first: {keys}",
+  "@acctDeliverMissing": {
+    "description": "#2370 Snack: the mapping keys documents wait for.",
+    "placeholders": {
+      "keys": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDeliverNotConnected": "This connection is signed out: connect it again, then deliver.",
+  "@acctDeliverNotConnected": {
+    "description": "#2370 Snack: the connection must sign in again before a delivery."
+  },
+  "acctDeliverNothing": "Nothing to deliver in this period.",
+  "@acctDeliverNothing": {
+    "description": "#2370 Snack: the period holds no document to deliver."
+  },
+  "acctDeliverNothingSent": "Nothing was delivered.",
+  "@acctDeliverNothingSent": {
+    "description": "#2370 Snack: a refusal before any document of the run was delivered."
+  },
+  "acctDeliverRefused": "The accounting system refused this company: {detail}.",
+  "@acctDeliverRefused": {
+    "description": "#2370 Snack: the target refused the company before any document.",
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDeliverStoppedAt": "Stopped at {month}. Delivered before it: {count}.",
+  "@acctDeliverStoppedAt": {
+    "description": "#2370 Snack: a run of several months stopped at one; what the months before it delivered stays.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "acctDeliverYear": "Deliver {year} to {target}",
+  "@acctDeliverYear": {
+    "description": "#2370 Transfers list: the button that delivers a year's postings to one connection.",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
   "acctDeliveryAcknowledged": "Received by the system",
   "@acctDeliveryAcknowledged": {
     "description": "#2370 Delivery state: the system received it and said so."
@@ -605,6 +687,10 @@
         "type": "String"
       }
     }
+  },
+  "acctRedeliver": "Deliver again",
+  "@acctRedeliver": {
+    "description": "#2370 Transfers list: the button that delivers one document to its connection again."
   },
   "acctTargetsIntro": "Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.",
   "@acctTargetsIntro": {

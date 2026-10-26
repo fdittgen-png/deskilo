@@ -39,6 +39,10 @@ enum Obligation {
   targetAcceptance,
 }
 
+/// The reference the QuickBooks Online adapter was written against.
+const String _quickbooksSpecification =
+    'QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry';
+
 class AccountingCapability {
   const AccountingCapability({
     required this.formatId,
@@ -246,13 +250,30 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     obligations: {},
     specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
   ),
-  // #2376 — the adapter maps the documents and delivers them once, read
-  // back by external reference; no live exchange has happened (no sandbox
-  // account yet) and the connection store is #2370's.
+  // #2376 — the adapter delivers each posting once as a ledger entry, read
+  // back by its external reference; no live exchange has happened (no
+  // sandbox account yet).
   'pennylane_api': AccountingCapability(
     formatId: 'pennylane_api',
     state: QualificationState.implemented,
-    specification: 'Pennylane API v2, customer_invoices import and ledger_entries',
+    specification: 'Pennylane API v2, ledger_entries and journals',
+  ),
+  // #2371 — delivered through the kit against a played realm; no sandbox
+  // company has answered yet.
+  'quickbooks_online_us': AccountingCapability(
+    formatId: 'quickbooks_online_us',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
+  ),
+  'quickbooks_online_ca': AccountingCapability(
+    formatId: 'quickbooks_online_ca',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
+  ),
+  'quickbooks_online_gb': AccountingCapability(
+    formatId: 'quickbooks_online_gb',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
   ),
   // The FEC is their working route today; their own formats need a spec.
   'cegid_quadra_ascii': AccountingCapability(
