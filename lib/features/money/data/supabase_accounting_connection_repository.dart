@@ -24,6 +24,10 @@ class SupabaseAccountingConnectionRepository
   /// connection); its body says which.
   static const _runRefused = 409;
 
+  /// The HTTP status of a caller the server refused: they may not deliver
+  /// for this connection or read these books.
+  static const _notAllowed = 403;
+
   Future<AccountingConnection> _connection(
     String fn,
     Map<String, Object?> params,
@@ -198,6 +202,7 @@ class SupabaseAccountingConnectionRepository
       );
       return DeliveryRunDone.fromJson(response.data);
     } on FunctionException catch (e, st) {
+      if (e.status == _notAllowed) return const DeliveryRunNotAllowed();
       final refusal = e.status == _runRefused ? deliveryRunRefusal(e.details) : null;
       if (refusal != null) return refusal;
       Error.throwWithStackTrace(e, st);

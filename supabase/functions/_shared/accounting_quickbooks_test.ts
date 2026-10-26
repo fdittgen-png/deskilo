@@ -135,7 +135,8 @@ const party: PostingParty = { kind: "member", number: "M-7", name: "Ada Lovelace
 
 const maps: AccountingMap[] = [
   { kind: "item", key: "revenue:standard", remoteId: "IT-1", remoteCode: "" },
-  { kind: "account", key: "vat_output:standard", remoteId: "TC-QC", remoteCode: "" },
+  { kind: "item", key: "vat_output:standard", remoteId: "TC-QC", remoteCode: "" },
+  { kind: "account", key: "vat_output:standard", remoteId: "AC-25", remoteCode: "" },
   { kind: "account", key: "bank", remoteId: "AC-35", remoteCode: "" },
   { kind: "account", key: "customers", remoteId: "AC-84", remoteCode: "" },
   { kind: "account", key: "write_off", remoteId: "AC-90", remoteCode: "" },
@@ -242,6 +243,7 @@ Deno.test("a US realm takes TAX and NON lines and the document's tax as the over
 Deno.test("a zero-rated group needs its realm tax code too: unmapped, the document is blocked", async () => {
   const q = realm({ country: "GB" });
   const sale: Posting = { ...year[0], currency: "GBP", lines: [line("customers", null, 2000, 0), line("revenue", "zero", 0, 2000)] };
+  // The zero group's item is mapped; its realm tax code is not.
   const gb = [...maps, { kind: "item" as const, key: "revenue:zero", remoteId: "IT-2", remoteCode: "" }];
   assertEquals((await run(q, new Log(), [sale], "quickbooks_online_gb", gb)).statuses, ["blocked"]);
   assertEquals(q.st.posts, 0);
@@ -280,8 +282,39 @@ Deno.test("a number another issuer already holds in the realm is a conflict, and
   assertEquals(q.st.posts, 0);
 });
 
-Deno.test("a payment waits for its invoice: refused, nothing created", async () => {
+Deno.test("a payment waits for its invoice: refused, nothing created, not even its customer", async () => {
   const q = realm();
   assertEquals((await run(q, new Log(), [year[1]])).statuses, ["failed"]);
   assertEquals(q.held.Payment.length, 0);
+  assertEquals(q.st.posts, 0);
+});
+
+Deno.test("a write-off with a tax line posts to the tax account, not the tax code", async () => {
+  const q = realm();
+  const log = new Log();
+  const writeOff = posting("write_off", INV, "F-2026-0001", "2026-03-31", [
+    line("write_off", null, 10000, 0),
+    line("vat_output", "standard", 1498, 0),
+    line("customers", null, 0, 11498),
+  ]);
+  assertEquals((await run(q, log, [year[0], writeOff])).statuses, ["acknowledged", "acknowledged"]);
+  const sale = (q.held.Invoice[0].Line as Record<string, Record<string, Record<string, string>>>[])[0];
+  assertEquals(sale.SalesItemLineDetail.TaxCodeRef.value, "TC-QC");
+  const accounts = (q.held.JournalEntry[0].Line as Record<string, Record<string, Record<string, string>>>[]).map((l) =>
+    l.JournalEntryLineDetail.AccountRef.value
+  );
+  assertEquals(accounts, ["AC-90", "AC-25", "AC-84"]);
+});
+
+Deno.test("a British company may read UK", async () => {
+  const q = realm({ country: "UK" });
+  assertEquals((await run(q, new Log(), [], "quickbooks_online_gb")).refused, null);
+});
+
+Deno.test("a customer is found again by the member number kept in its notes", async () => {
+  const q = realm();
+  q.held.Customer.push({ Id: "C-9", DisplayName: "Ada King (M-7)", Notes: "M-7" });
+  await run(q, new Log(), [year[0]]);
+  assertEquals((q.held.Invoice[0].CustomerRef as Record<string, string>).value, "C-9");
+  assertEquals(q.held.Customer.length, 1);
 });

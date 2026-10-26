@@ -28,6 +28,7 @@ import {
   type AccountingMap,
   databaseStore,
   deliver,
+  DeliveryNotRecorded,
   type DeliveryResult,
 } from "../_shared/accounting_delivery.ts";
 import { oauthTargets } from "../_shared/accounting_targets.ts";
@@ -35,6 +36,7 @@ import { connectedWrite, expiredWrite, isFailure, refreshTokens } from "../_shar
 import {
   type AdapterContext,
   balanced,
+  deliveryIds,
   type PostingAdapter,
   type PostingParty,
   postingSha256,
@@ -52,9 +54,13 @@ export const deliveryAdapters: Record<string, (ctx: AdapterContext) => PostingAd
   quickbooks_online_gb: quickbooksOnline,
 };
 
-/** A token that expires sooner than this is refreshed before a run: a
- * run makes many calls and must not lose its token halfway. */
-const REFRESH_AHEAD_MS = 60_000;
+/** The longest an Edge function runs on the hosted platform (its
+ * wall-clock limit). spec: supabase.com/docs/guides/functions/limits. */
+const FUNCTION_BUDGET_MS = 400_000;
+
+/** A token that expires within one function budget is refreshed before
+ * the run: a run makes many calls and must not lose its token halfway. */
+const REFRESH_AHEAD_MS = FUNCTION_BUDGET_MS;
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -103,17 +109,19 @@ async function mapsOf(
   }));
 }
 
-/** The connection's secrets with a fresh token; null when the sign-in is
- * gone (the connection is then marked expired). */
-async function freshSecrets(
+/** The connection's access token, fresh; null when the sign-in is gone
+ * (the connection is then marked expired). The adapter is given this token
+ * and nothing else of Vault. */
+async function freshToken(
   deps: Deps,
   held: NonNullable<Awaited<ReturnType<typeof resolved>>>,
-): Promise<Record<string, string> | null> {
+): Promise<string | null> {
+  const current = held.secrets.access_token ?? "";
   const target = oauthTargets[held.target_id];
-  if (held.auth_kind !== "oauth2" || !target) return held.secrets;
+  if (held.auth_kind !== "oauth2" || !target) return current || null;
   const now = (deps.now ?? (() => new Date()))();
   const expires = Date.parse(held.token_expires_at ?? "");
-  if (Number.isFinite(expires) && expires - now.getTime() > REFRESH_AHEAD_MS) return held.secrets;
+  if (current && Number.isFinite(expires) && expires - now.getTime() > REFRESH_AHEAD_MS) return current;
   const client = clientOf(deps, held.target_id);
   const refreshToken = held.secrets.refresh_token ?? "";
   if (!client || !refreshToken) return null;
@@ -124,7 +132,7 @@ async function freshSecrets(
   }
   const write = connectedWrite(tokens);
   if (!await store(deps, held.id, write)) return null;
-  return { ...held.secrets, ...write.secrets };
+  return tokens.accessToken;
 }
 
 type Outcome = {
@@ -135,6 +143,8 @@ type Outcome = {
   status: DeliveryResult["status"];
   missing?: string[];
   detail?: string;
+  /** The delivery log's refusal code, when it refused the record. */
+  code?: string;
 };
 
 export async function deliverPeriod(
@@ -159,8 +169,8 @@ export async function deliverPeriod(
   if (!adapterOf) return json({ error: "not_delivered_here" }, 400);
   const held = await resolved(deps, connectionId);
   if (!held || held.revoked || held.status !== "connected") return json({ error: "not_connected" }, 409);
-  const secrets = await freshSecrets(deps, held);
-  if (!secrets) return json({ error: "not_connected" }, 409);
+  const token = await freshToken(deps, held);
+  if (!token) return json({ error: "not_connected" }, 409);
   const maps = await mapsOf(deps, authorization, workspaceId, connectionId);
   if (!maps) return json({ error: "not allowed to deliver for this connection" }, 403);
   const computed = await caller.rpc("compute_postings", {
@@ -172,14 +182,17 @@ export async function deliverPeriod(
   if (computed.error) return json({ error: "not allowed to read the books" }, 403);
   const { postings, blockers } = postingsOf(computed.data);
   if (blockers.length > 0) return json({ error: "books_blocked", blockers }, 409);
-  const chosen = postings.filter((p) => !only || (p.kind === only.kind && p.documentId === only.id));
+  const ids = await deliveryIds(postings);
+  const chosen = postings
+    .map((posting, i) => ({ posting, id: ids[i] }))
+    .filter(({ posting, id }) => !only || (posting.kind === only.kind && id === only.id));
   const parties = chosen.length === 0 ? {} : await caller.rpc("posting_parties", {
     p_workspace_id: workspaceId,
-    p_document_ids: [...new Set(chosen.map((p) => p.documentId))],
+    p_document_ids: [...new Set(chosen.map(({ posting }) => posting.documentId))],
   }).then((r) => (r.error ? {} : (r.data ?? {}) as Record<string, PostingParty>));
   const adapter = adapterOf({
     fetch: deps.fetcher ?? fetch,
-    secrets,
+    secrets: { access_token: token },
     tenant: held.remote_tenant_id,
     targetId: held.target_id,
     env: deps.env,
@@ -190,10 +203,10 @@ export async function deliverPeriod(
   }
   const deliveries = databaseStore(deps.service());
   const results: Outcome[] = [];
-  for (const posting of chosen) {
+  for (const { posting, id } of chosen) {
     const base = {
       document_kind: posting.kind,
-      document_id: posting.documentId,
+      document_id: id,
       document_number: posting.documentNumber,
       event_date: posting.date,
     };
@@ -205,7 +218,7 @@ export async function deliverPeriod(
       const result = await deliver({
         connectionId,
         documentKind: posting.kind,
-        documentId: posting.documentId,
+        documentId: id,
         eventDate: posting.date,
         documentNumber: posting.documentNumber,
         periodFrom: period.from,
@@ -213,14 +226,16 @@ export async function deliverPeriod(
         payloadSha256: await postingSha256(posting),
         needs: adapter.needs(posting),
       }, maps, deliveries, adapter.remote(posting, parties[posting.documentId], maps));
-      results.push(result.status === "blocked" ? { ...base, status: "blocked", missing: result.missing } : {
-        ...base,
-        status: result.status,
-      });
+      results.push(
+        result.status === "blocked"
+          ? { ...base, status: "blocked", missing: result.missing }
+          : { ...base, status: result.status, ...(result.row.error ? { detail: result.row.error } : {}) },
+      );
     } catch (error) {
       // A delivery the log refused (a changed document already
-      // acknowledged) was not sent; the others still go.
-      results.push({ ...base, status: "failed", detail: String(error instanceof Error ? error.message : error) });
+      // acknowledged: 23514) was not sent; the others still go.
+      if (!(error instanceof DeliveryNotRecorded)) throw error;
+      results.push({ ...base, status: "failed", code: error.code, detail: error.message });
     }
   }
   const counts: Record<string, number> = {};

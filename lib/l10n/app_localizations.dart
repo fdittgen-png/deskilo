@@ -641,7 +641,7 @@ abstract class AppLocalizations {
   /// #2370 Snack: the posting engine cannot post the period.
   ///
   /// In en, this message translates to:
-  /// **'The books of this period cannot be posted yet: {subjects}. Nothing was delivered.'**
+  /// **'The books of this period cannot be posted yet: {subjects}.'**
   String acctDeliverBooksBlocked(String subjects);
 
   /// #2370 Snack: what a delivery run became.
@@ -674,11 +674,23 @@ abstract class AppLocalizations {
   /// **'Nothing to deliver in this period.'**
   String get acctDeliverNothing;
 
+  /// #2370 Snack: a refusal before any document of the run was delivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was delivered.'**
+  String get acctDeliverNothingSent;
+
   /// #2370 Snack: the target refused the company before any document.
   ///
   /// In en, this message translates to:
-  /// **'The accounting system refused this company: {detail}. Nothing was delivered.'**
+  /// **'The accounting system refused this company: {detail}.'**
   String acctDeliverRefused(String detail);
+
+  /// #2370 Snack: a run of several months stopped at one; what the months before it delivered stays.
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped at {month}. Delivered before it: {count}.'**
+  String acctDeliverStoppedAt(String month, int count);
 
   /// #2370 Transfers list: the button that delivers a year's postings to one connection.
   ///

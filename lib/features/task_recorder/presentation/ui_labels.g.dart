@@ -6539,6 +6539,7 @@ Map<String, _Getter> _part22() => {
   'aboutReportBug': (l) => l.aboutReportBug,
   'accessoriesEmpty': (l) => l.accessoriesEmpty,
   'acctConnRevoked': (l) => l.acctConnRevoked,
+  'acctDeliverNothingSent': (l) => l.acctDeliverNothingSent,
   'acctKindOther': (l) => l.acctKindOther,
   'acctMapKind': (l) => l.acctMapKind,
   'acctMapRemoteMissing': (l) => l.acctMapRemoteMissing,

@@ -441,10 +441,10 @@ const List<AccountingTarget> accountingTargets = [
     taxCodeModel: TaxCodeModel.none,
     format: archiveBundleFormat,
   ),
-  // #2376 — the French platforms. Pennylane takes the documents through
-  // its API (customer invoices created as issued, with the PDF/A-3 and the
-  // legal number; payments and write-offs as ledger entries), its adapter
-  // supabase/functions/_shared/accounting_pennylane.ts. Cegid Quadra and EBP
+  // #2376 — the French platforms. Pennylane takes the postings through
+  // its API, each one a balanced ledger entry in the journal of its code
+  // (supabase/functions/_shared/accounting_pennylane.ts); importing the
+  // invoices with their PDF/A-3 waits for the PDF on the server. Cegid Quadra and EBP
   // import the FEC today; their own import formats wait for a reviewed
   // specification.
   AccountingTarget(
@@ -454,8 +454,8 @@ const List<AccountingTarget> accountingTargets = [
     edition: 'API v2',
     countries: {'FR'},
     transport: AccountingTransport.api,
-    payload: AccountingPayload.documents,
-    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.attachment},
+    payload: AccountingPayload.journal,
+    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: CustomerIdRule(maxLength: 13, charset: r'[A-Z0-9]+'),
     // A company API token from Pennylane's settings, or a sign-in where

@@ -5,8 +5,10 @@
   "acctDeliverDone": "Übertragen: {delivered} · bereits vorhanden: {unchanged} · zu prüfen: {attention}",
   "acctDeliverNothing": "In diesem Zeitraum gibt es nichts zu übertragen.",
   "acctDeliverMissing": "Ordnen Sie zuerst zu: {keys}",
-  "acctDeliverBooksBlocked": "Die Buchungen dieses Zeitraums können noch nicht erstellt werden: {subjects}. Es wurde nichts übertragen.",
-  "acctDeliverRefused": "Das Buchhaltungssystem hat diese Firma abgelehnt: {detail}. Es wurde nichts übertragen.",
+  "acctDeliverBooksBlocked": "Die Buchungen dieses Zeitraums können noch nicht erstellt werden: {subjects}.",
+  "acctDeliverRefused": "Das Buchhaltungssystem hat diese Firma abgelehnt: {detail}.",
   "acctDeliverNotConnected": "Diese Verbindung ist abgemeldet: Verbinden Sie sie erneut und übertragen Sie dann.",
-  "acctDeliverFailed": "Die Übertragung ist nicht durchgegangen. Es wurde nichts weiter gesendet; versuchen Sie es später erneut."
+  "acctDeliverFailed": "Die Übertragung ist nicht durchgegangen. Es wurde nichts weiter gesendet; versuchen Sie es später erneut.",
+  "acctDeliverNothingSent": "Es wurde nichts übertragen.",
+  "acctDeliverStoppedAt": "Angehalten bei {month}. Davor übertragen: {count}."
 }

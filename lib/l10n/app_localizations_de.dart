@@ -327,7 +327,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String acctDeliverBooksBlocked(String subjects) {
-    return 'Die Buchungen dieses Zeitraums können noch nicht erstellt werden: $subjects. Es wurde nichts übertragen.';
+    return 'Die Buchungen dieses Zeitraums können noch nicht erstellt werden: $subjects.';
   }
 
   @override
@@ -353,8 +353,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'In diesem Zeitraum gibt es nichts zu übertragen.';
 
   @override
+  String get acctDeliverNothingSent => 'Es wurde nichts übertragen.';
+
+  @override
   String acctDeliverRefused(String detail) {
-    return 'Das Buchhaltungssystem hat diese Firma abgelehnt: $detail. Es wurde nichts übertragen.';
+    return 'Das Buchhaltungssystem hat diese Firma abgelehnt: $detail.';
+  }
+
+  @override
+  String acctDeliverStoppedAt(String month, int count) {
+    return 'Angehalten bei $month. Davor übertragen: $count.';
   }
 
   @override

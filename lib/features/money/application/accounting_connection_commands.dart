@@ -120,7 +120,8 @@ class AccountingConnectionCommands {
 
   /// Delivers the postings of [year] up to [today] to [connection], one
   /// month per run. The first month the server refuses as a whole ends the
-  /// run with its reason; the months before it stay delivered.
+  /// run: [DeliveryRunStopped] names that month, its reason and what the
+  /// months before it delivered, which stays delivered.
   Future<DeliveryRun> deliverYear(
     AccountingConnection connection,
     int year,
@@ -133,7 +134,9 @@ class AccountingConnectionCommands {
         from: month.from,
         to: month.to,
       );
-      if (run is! DeliveryRunDone) return run;
+      if (run is! DeliveryRunDone) {
+        return DeliveryRunStopped(reason: run, month: month.from, before: done);
+      }
       done = done.then(run);
     }
     return done;

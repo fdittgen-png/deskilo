@@ -326,7 +326,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String acctDeliverBooksBlocked(String subjects) {
-    return 'The books of this period cannot be posted yet: $subjects. Nothing was delivered.';
+    return 'The books of this period cannot be posted yet: $subjects.';
   }
 
   @override
@@ -351,8 +351,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctDeliverNothing => 'Nothing to deliver in this period.';
 
   @override
+  String get acctDeliverNothingSent => 'Nothing was delivered.';
+
+  @override
   String acctDeliverRefused(String detail) {
-    return 'The accounting system refused this company: $detail. Nothing was delivered.';
+    return 'The accounting system refused this company: $detail.';
+  }
+
+  @override
+  String acctDeliverStoppedAt(String month, int count) {
+    return 'Stopped at $month. Delivered before it: $count.';
   }
 
   @override

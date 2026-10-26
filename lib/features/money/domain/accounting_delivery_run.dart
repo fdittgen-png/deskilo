@@ -37,17 +37,25 @@ enum DeliveryRunStatus {
 
 /// What one document event of a run became.
 class DeliveryRunDocument {
-  const DeliveryRunDocument({required this.status, this.missing = const []});
+  const DeliveryRunDocument({
+    required this.status,
+    this.missing = const [],
+    this.detail = '',
+  });
 
   factory DeliveryRunDocument.fromJson(Object? raw) {
     final r = JsonReader.of(raw, context: 'delivery run document');
     return DeliveryRunDocument(
       status: DeliveryRunStatus.of(r.stringOrNull('status')),
       missing: r.strings('missing'),
+      detail: r.stringOr('detail'),
     );
   }
 
   final DeliveryRunStatus status;
+
+  /// The target's words, or the delivery log's, of a conflict or a failure.
+  final String detail;
 
   /// The mapping keys it waits for, as `kind key`.
   final List<String> missing;
@@ -62,10 +70,21 @@ sealed class DeliveryRun {
 final class DeliveryRunDone extends DeliveryRun {
   const DeliveryRunDone(this.documents);
 
+  /// Throws [JsonShapeException] when the answer has no `results` list:
+  /// another body (an error page, a renamed field) is never an empty run.
   factory DeliveryRunDone.fromJson(Object? raw) {
     final r = JsonReader.of(raw, context: 'delivery run');
+    final results = r.json['results'];
+    if (results is! List) {
+      throw JsonShapeException(
+        'delivery run',
+        'results',
+        'List',
+        results == null ? 'null' : '${results.runtimeType}',
+      );
+    }
     return DeliveryRunDone([
-      for (final d in r.list('results')) DeliveryRunDocument.fromJson(d),
+      for (final d in results) DeliveryRunDocument.fromJson(d),
     ]);
   }
 
@@ -80,6 +99,12 @@ final class DeliveryRunDone extends DeliveryRun {
   /// Every mapping key a document waits for, once each, in order.
   List<String> get missing =>
       ({for (final d in documents) ...d.missing}.toList()..sort());
+
+  /// The words of every document that needs attention, once each.
+  List<String> get details => {
+    for (final d in documents)
+      if (d.status.needsAttention && d.detail.isNotEmpty) d.detail,
+  }.toList();
 
   /// This run followed by [next].
   DeliveryRunDone then(DeliveryRunDone next) =>
@@ -102,6 +127,26 @@ final class DeliveryRunTargetRefused extends DeliveryRun {
 /// The connection is not signed in any more: it is connected again first.
 final class DeliveryRunNotConnected extends DeliveryRun {
   const DeliveryRunNotConnected();
+}
+
+/// The server refused the caller: they may not deliver for this connection
+/// or read these books.
+final class DeliveryRunNotAllowed extends DeliveryRun {
+  const DeliveryRunNotAllowed();
+}
+
+/// A run of several months stopped at [month] for [reason]; [before] is
+/// what the months before it delivered, which stays delivered.
+final class DeliveryRunStopped extends DeliveryRun {
+  const DeliveryRunStopped({
+    required this.reason,
+    required this.month,
+    required this.before,
+  });
+
+  final DeliveryRun reason;
+  final DateTime month;
+  final DeliveryRunDone before;
 }
 
 /// What the server's refusal of a whole run says (its HTTP 409 body), or

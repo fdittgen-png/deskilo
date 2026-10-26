@@ -2,17 +2,12 @@
 //
 // #2376 — the adapter of the accounting target `pennylane_api`: the
 // Pennylane external API v2, the most used SME accounting platform in
-// France. What it sends:
-//
-//   * every issued invoice and credit note as a customer invoice created
-//     ALREADY ISSUED (imported, never a draft Pennylane would number
-//     again), with its legal number as it is and its PDF/A-3 as the
-//     voucher (the *justificatif*);
-//   * payments and write-offs as balanced ledger entries.
-//
-// Delivery is idempotent: each document is first read back by its
-// `external_reference` (the app's document id), and a document Pennylane
-// already holds is reported `exists`, never created twice.
+// France. The delivery kit sends it the postings of a period, each one a
+// balanced ledger entry in the company's journal of its code, read back by
+// its external reference (the delivery's idempotency key), so a document
+// Pennylane already holds is never created twice. Importing invoices as
+// customer invoices with their PDF/A-3 needs the PDF on the server, which
+// the app alone builds today.
 //
 // The adapter is pure and takes `fetch` as a parameter, so the tests play
 // Pennylane and no request leaves a test run (accounting_pennylane_test.ts).
@@ -26,20 +21,18 @@
 // could be read without an account; a mapping not yet verified against
 // the live API says so in a `// spec:` comment naming where to check.
 
-import { exponentOf, toMajor } from "./money.ts";
+import { exponentOf, toMajor, toMinor } from "./money.ts";
 import {
   accountNeeds,
   type AdapterContext,
   mapped,
+  type Posting,
   type PostingAdapter,
   roleKey,
 } from "./accounting_postings.ts";
 
 export type Config = Record<string, string>;
 export type Fetch = typeof fetch;
-
-/** The config fields a delivery cannot run without. */
-export const requiredFields = ["base_url", "access_token"] as const;
 
 /** Pennylane documents no shared sandbox host: a sandbox is a test
  * company on the production API, so the base URL is the same and the
@@ -48,37 +41,6 @@ export const requiredFields = ["base_url", "access_token"] as const;
 export const SANDBOX: Config = {
   base_url: "https://app.pennylane.com/api/external/v2",
 };
-
-/** One line of an issued document, in integer minor units. */
-export interface PennylaneLine {
-  label: string;
-  /** Net amount (before tax), minor units. */
-  netMinor: number;
-  /** Tax amount, minor units. */
-  vatMinor: number;
-  /** The rate as the document states it, a decimal string ("20", "5.5"). */
-  vatRate: string;
-}
-
-/** An issued invoice or credit note, as the app holds it. */
-export interface PennylaneDocument {
-  /** The app's document id: Pennylane's `external_reference`. */
-  id: string;
-  /** The legal number, carried as it is. */
-  number: string;
-  kind: "invoice" | "credit_note";
-  /** YYYY-MM-DD. */
-  issueDate: string;
-  /** YYYY-MM-DD; the issue date when the document has no due date. */
-  dueDate?: string;
-  currency: string;
-  customer: { number: string; name: string; legalId?: string };
-  lines: PennylaneLine[];
-  /** The document's gross total, minor units (credit note: negative). */
-  totalMinor: number;
-  label?: string;
-  pdf: { fileName: string; bytes: Uint8Array };
-}
 
 /** A payment or write-off, as a balanced entry of the books. */
 export interface PennylaneJournalEntry {
@@ -114,31 +76,6 @@ export interface Failure {
   detail: string;
 }
 
-export interface Delivery {
-  documentId: string;
-  status: "created" | "exists" | "failed";
-  pennylaneId?: string;
-  error?: Failure;
-}
-
-/** Pennylane's VAT rate codes for the French rates.
- * spec: API v2 reference, "Customer invoices" → invoice_lines.vat_rate
- * enum (FR_200, FR_100, FR_85, FR_55, FR_21, exempt). */
-const VAT_CODES: Record<string, string> = {
-  "20": "FR_200",
-  "10": "FR_100",
-  "8.5": "FR_85",
-  "5.5": "FR_55",
-  "2.1": "FR_21",
-  "0": "exempt",
-};
-
-const normaliseRate = (rate: string): string =>
-  rate.trim().replace(",", ".").replace(/(\.\d*?)0+$/, "$1").replace(
-    /\.$/,
-    "",
-  );
-
 /** A typed refusal while building a payload. */
 export class PayloadRefusal extends Error {
   constructor(readonly failure: Failure) {
@@ -153,55 +90,6 @@ export function amount(minor: number, currency: string): string {
     throw new PayloadRefusal({ reason: "unsupported", detail: currency });
   }
   return toMajor(minor, currency);
-}
-
-function vatCode(rate: string): string {
-  const code = VAT_CODES[normaliseRate(rate)];
-  if (!code) {
-    throw new PayloadRefusal({ reason: "unsupported", detail: `VAT ${rate}` });
-  }
-  return code;
-}
-
-/** The body of `POST /customer_invoices/import`: the document as ALREADY
- * ISSUED, its PDF the attachment [fileAttachmentId], its customer
- * [customerId]. Throws [PayloadRefusal] for an unstated currency or rate. */
-export function customerInvoicePayload(
-  doc: PennylaneDocument,
-  ids: { fileAttachmentId: number; customerId: number },
-): Record<string, unknown> {
-  const c = doc.currency.toUpperCase();
-  const net = doc.lines.reduce((s, l) => s + l.netMinor, 0);
-  const tax = doc.lines.reduce((s, l) => s + l.vatMinor, 0);
-  return {
-    file_attachment_id: ids.fileAttachmentId,
-    customer_id: ids.customerId,
-    // The legal number, as it is: Pennylane must not renumber.
-    invoice_number: doc.number,
-    external_reference: doc.id,
-    date: doc.issueDate,
-    deadline: doc.dueDate ?? doc.issueDate,
-    currency: c,
-    // spec: "Import a customer invoice" — currency_amount_before_tax,
-    // currency_tax and currency_amount are the document-currency totals;
-    // a credit note is imported with negative amounts (verify against
-    // the credit-note section of the same page).
-    currency_amount_before_tax: amount(net, c),
-    currency_tax: amount(tax, c),
-    currency_amount: amount(doc.totalMinor, c),
-    label: doc.label ?? doc.number,
-    invoice_lines: doc.lines.map((l) => ({
-      label: l.label,
-      quantity: "1",
-      // spec: invoice_lines — raw_currency_unit_price is the unit price
-      // before tax; unit is free text ("piece" in the examples).
-      raw_currency_unit_price: amount(l.netMinor, c),
-      unit: "piece",
-      vat_rate: vatCode(l.vatRate),
-      currency_amount: amount(l.netMinor + l.vatMinor, c),
-      currency_tax: amount(l.vatMinor, c),
-    })),
-  };
 }
 
 /** The body of `POST /ledger_entries` for a payment or write-off, its
@@ -333,139 +221,6 @@ async function call(
   }
 }
 
-const first = (
-  body: Record<string, unknown>,
-): Record<string, unknown> | null => {
-  const items = body.items;
-  return Array.isArray(items) && items.length > 0
-    ? items[0] as Record<string, unknown>
-    : null;
-};
-
-/** The Pennylane customer of [doc], read back by its number or created. */
-async function customerId(
-  fetchImpl: Fetch,
-  cfg: Config,
-  doc: PennylaneDocument,
-): Promise<{ id: number } | { failure: Failure }> {
-  // spec: "List customers" — external_reference is a filterable field.
-  const found = await call(
-    fetchImpl,
-    cfg,
-    `customers?${byField("external_reference", doc.customer.number)}`,
-  );
-  if (!found.ok) return { failure: found.failure };
-  const existing = first(found.body);
-  if (existing) return { id: Number(existing.id) };
-  const created = await call(fetchImpl, cfg, "company_customers", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      name: doc.customer.name,
-      external_reference: doc.customer.number,
-      // spec: "Create a company customer" — reg_no carries the SIREN.
-      ...(doc.customer.legalId ? { reg_no: doc.customer.legalId } : {}),
-    }),
-  });
-  if (!created.ok) return { failure: created.failure };
-  return { id: Number(created.body.id) };
-}
-
-/** The failure [build] refuses with, or null when it builds. */
-function refusalOf(build: () => unknown): Failure | null {
-  try {
-    build();
-    return null;
-  } catch (error) {
-    if (error instanceof PayloadRefusal) return error.failure;
-    throw error;
-  }
-}
-
-async function deliverOne(
-  doc: PennylaneDocument,
-  fetchImpl: Fetch,
-  cfg: Config,
-): Promise<Delivery> {
-  const failed = (error: Failure): Delivery => ({
-    documentId: doc.id,
-    status: "failed",
-    error,
-  });
-  const known = await call(
-    fetchImpl,
-    cfg,
-    `customer_invoices?${byField("external_reference", doc.id)}`,
-  );
-  if (!known.ok) return failed(known.failure);
-  const held = first(known.body);
-  if (held) {
-    return {
-      documentId: doc.id,
-      status: "exists",
-      pennylaneId: String(held.id),
-    };
-  }
-  // A currency or rate the payload cannot state is refused before
-  // anything is written to Pennylane: no orphan customer or attachment.
-  const refusal = refusalOf(() =>
-    customerInvoicePayload(doc, { fileAttachmentId: 0, customerId: 0 })
-  );
-  if (refusal) return failed(refusal);
-  const customer = await customerId(fetchImpl, cfg, doc);
-  if ("failure" in customer) return failed(customer.failure);
-  const form = new FormData();
-  form.append(
-    "file",
-    new Blob([new Uint8Array(doc.pdf.bytes)], { type: "application/pdf" }),
-    doc.pdf.fileName,
-  );
-  const upload = await call(fetchImpl, cfg, "file_attachments", {
-    method: "POST",
-    body: form,
-  });
-  if (!upload.ok) return failed(upload.failure);
-  const payload = customerInvoicePayload(doc, {
-    fileAttachmentId: Number(upload.body.id),
-    customerId: customer.id,
-  });
-  const imported = await call(fetchImpl, cfg, "customer_invoices/import", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!imported.ok) return failed(imported.failure);
-  return {
-    documentId: doc.id,
-    status: "created",
-    pennylaneId: String(imported.body.id),
-  };
-}
-
-/** Delivers [docs] one by one: read back by external_reference, else the
- * PDF uploaded and the invoice imported as issued. A failure is that
- * document's answer; the others still go. Never throws for an HTTP
- * answer or a refused payload. */
-export async function deliver(
-  docs: PennylaneDocument[],
-  { fetch: fetchImpl, config }: { fetch: Fetch; config: Config },
-): Promise<Delivery[]> {
-  const missing = requiredFields.filter((f) => !config[f]);
-  if (missing.length > 0) {
-    return docs.map((d) => ({
-      documentId: d.id,
-      status: "failed" as const,
-      error: {
-        reason: "reauth_needed" as const,
-        detail: `missing ${missing.join(", ")}`,
-      },
-    }));
-  }
-  const out: Delivery[] = [];
-  for (const doc of docs) out.push(await deliverOne(doc, fetchImpl, config));
-  return out;
-}
-
 // ── the delivery kit: postings as ledger entries ──────────────────────────
 
 /** The usual code of each journal of the posting engine, the code a
@@ -507,6 +262,29 @@ async function journalIds(
 const outcomeUnknown = (status?: number): boolean =>
   status === undefined || status >= 500;
 
+/** How the ledger entry [e] Pennylane holds differs from [posting]: its
+ * day, and its debits and credits summed (an entry edited at the target is
+ * not ours any more). spec: "List ledger entries" — each item carries its
+ * `ledger_entry_lines` with decimal `debit` and `credit`; an item without
+ * them cannot be compared and is a difference. */
+function differencesOf(e: Record<string, unknown>, posting: Posting): string[] {
+  const out: string[] = [];
+  if (e.date !== posting.date) out.push(`dated ${e.date}`);
+  const lines = e.ledger_entry_lines;
+  if (!Array.isArray(lines)) return [...out, "Pennylane shows no lines to compare"];
+  const sum = (side: "debit" | "credit") =>
+    (lines as Record<string, unknown>[]).reduce<number | null>((s, l) => {
+      const v = toMinor(String(l[side] ?? "0"), posting.currency);
+      return s === null || v === null ? null : s + v;
+    }, 0);
+  const debit = posting.lines.reduce((s, l) => s + l.debitCents, 0);
+  const credit = posting.lines.reduce((s, l) => s + l.creditCents, 0);
+  if (sum("debit") !== debit || sum("credit") !== credit) {
+    out.push(`Pennylane's lines sum to other amounts than the document's ${toMajor(debit, posting.currency)}`);
+  }
+  return out;
+}
+
 /** The Pennylane adapter of the delivery kit: every posting of a period a
  * balanced ledger entry in the journal of its code, each line on the
  * Pennylane ledger account its role is mapped to (`account` mappings,
@@ -538,13 +316,16 @@ export function pennylaneLedger(ctx: AdapterContext): PostingAdapter {
           );
           if (!found.ok) return found.failure.detail;
           const items = Array.isArray(found.body.items) ? found.body.items : [];
-          return (items as Record<string, unknown>[]).map((e) => ({
-            id: String(e.id),
-            number: typeof e.piece_number === "string" ? e.piece_number : "",
-            state: "posted" as const,
-            matches: e.date === posting.date,
-            difference: e.date === posting.date ? undefined : `dated ${e.date}`,
-          }));
+          return (items as Record<string, unknown>[]).map((e) => {
+            const differences = differencesOf(e, posting);
+            return {
+              id: String(e.id),
+              number: typeof e.piece_number === "string" ? e.piece_number : "",
+              state: "posted" as const,
+              matches: differences.length === 0,
+              difference: differences.length > 0 ? differences.join("; ") : undefined,
+            };
+          });
         },
         async create(key) {
           const code = JOURNAL_CODES[posting.journal] ?? "";

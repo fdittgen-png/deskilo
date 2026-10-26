@@ -143,7 +143,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `journals` | DesKilo · Journals · per journal and summary, PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `audit_trail` | DesKilo · Audit trail · CSV | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `bundle` | DesKilo · Fiscal-year archive · PDF/A-3 bundle | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
-| `pennylane_api` | Pennylane · Pennylane · API v2 | api | documents | FR | implemented | Pennylane API v2, customer_invoices import and ledger_entries |
+| `pennylane_api` | Pennylane · Pennylane · API v2 | api | journal | FR | implemented | Pennylane API v2, ledger_entries and journals |
 | `cegid_quadra_ascii` | Cegid · Quadra · ASCII import | file | journal | FR | specificationNeeded | not named yet |
 | `ebp_import` | EBP · Comptabilité · import of entries | file | journal | FR | specificationNeeded | not named yet |
 | `quickbooks_online_us` | Intuit · QuickBooks Online · Accounting API v3, US realm | api | documents | US | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
@@ -209,7 +209,13 @@ a body the client sent: one posting per document event, its digest the sha256
 of its event, day, document and lines by role and amount (a changed mapping is
 not a changed document). A period the engine cannot post (its blockers) sends
 nothing; the target first checks the company (`prepare`) and a refusal sends
-nothing either. An OAuth token about to expire is refreshed before the run. The
+nothing either. An OAuth token expiring within one function budget is
+refreshed before the run, and the adapter is given that token only. A
+delivery prepared before (an earlier run, or one running now) is read back
+before any create. A receipt or a refund is delivered under a name-based id of
+its invoice, day, amount and rank among equal ones of that day, so two
+payments of one invoice on one day are two deliveries. A year asked month by
+month that stops in one month names it and what the months before delivered. The
 adapters sit flat in `_shared/` because only that directory deploys beside a
 function:
 
@@ -232,9 +238,12 @@ function:
   key in `PrivateNote`. Tax: QuickBooks is never the tax authority of an
   issued document. A US realm gets `TAX`/`NON` per line and the document's
   tax as the override `TxnTaxDetail {TxnTaxCodeRef, TotalTax}`
-  (`TxnTaxCodeRef` = the `account vat_output:<group>` mapping); a CA or GB
+  (`TxnTaxCodeRef` = the `item vat_output:<group>` mapping); a CA or GB
   line carries the realm tax code its rate group is mapped to
-  (`account vat_output:<group>`, a zero-rated group too). The total and tax
+  (`item vat_output:<group>`, a zero-rated group too). The tax code is an
+  `item` mapping because `account vat_output:<group>` is the tax account a
+  journal entry's tax line posts to, and a `tax` mapping is keyed by a tax
+  component while the postings carry rate groups. The total and tax
   QuickBooks books are compared with the document: a difference, a
   `SyncToken` other than the first (an edit in QuickBooks) or the number
   held by a document DesKilo did not deliver is a `conflict`; nothing is

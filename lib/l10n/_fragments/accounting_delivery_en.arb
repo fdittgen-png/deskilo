@@ -44,7 +44,7 @@
       }
     }
   },
-  "acctDeliverBooksBlocked": "The books of this period cannot be posted yet: {subjects}. Nothing was delivered.",
+  "acctDeliverBooksBlocked": "The books of this period cannot be posted yet: {subjects}.",
   "@acctDeliverBooksBlocked": {
     "description": "#2370 Snack: the posting engine cannot post the period.",
     "placeholders": {
@@ -53,7 +53,7 @@
       }
     }
   },
-  "acctDeliverRefused": "The accounting system refused this company: {detail}. Nothing was delivered.",
+  "acctDeliverRefused": "The accounting system refused this company: {detail}.",
   "@acctDeliverRefused": {
     "description": "#2370 Snack: the target refused the company before any document.",
     "placeholders": {
@@ -69,5 +69,21 @@
   "acctDeliverFailed": "The delivery did not go through. Nothing more was sent; try again later.",
   "@acctDeliverFailed": {
     "description": "#2370 Snack: the delivery request itself failed."
+  },
+  "acctDeliverNothingSent": "Nothing was delivered.",
+  "@acctDeliverNothingSent": {
+    "description": "#2370 Snack: a refusal before any document of the run was delivered."
+  },
+  "acctDeliverStoppedAt": "Stopped at {month}. Delivered before it: {count}.",
+  "@acctDeliverStoppedAt": {
+    "description": "#2370 Snack: a run of several months stopped at one; what the months before it delivered stays.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

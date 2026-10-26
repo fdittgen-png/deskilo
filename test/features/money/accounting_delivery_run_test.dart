@@ -3,6 +3,7 @@
 // #2370 — what a delivery to a connection answers, read as the server
 // writes it, and a year asked month by month: the months up to today, the
 // first refusal of a whole month ending the run.
+import 'package:deskilo/core/data/json_reader.dart';
 import 'package:deskilo/core/demo/data/accounting_connection_repository.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
@@ -60,6 +61,25 @@ void main() {
     expect(run.missing, ['account bank']);
   });
 
+  test('an answer without its results is never an empty run', () {
+    expect(
+      () => DeliveryRunDone.fromJson({'counts': <String, Object?>{}}),
+      throwsA(isA<JsonShapeException>()),
+    );
+    expect(DeliveryRunStatus.of('weird'), DeliveryRunStatus.failed);
+  });
+
+  test('the words of a document that needs attention are kept, once', () {
+    final run = DeliveryRunDone.fromJson({
+      'results': [
+        {'status': 'failed', 'detail': 'needs a correction'},
+        {'status': 'conflict', 'detail': 'needs a correction'},
+        {'status': 'acknowledged', 'detail': 'ignored'},
+      ],
+    });
+    expect(run.details, ['needs a correction']);
+  });
+
   test('a refusal of the whole run says which, and any other body is none', () {
     expect(
       (deliveryRunRefusal({
@@ -111,7 +131,10 @@ void main() {
       ]);
       final run = await AccountingConnectionCommands(repo)
           .deliverYear(seeded.connections.single, 2026, _today);
-      expect(run, isA<DeliveryRunBooksBlocked>());
+      final stopped = run as DeliveryRunStopped;
+      expect(stopped.reason, isA<DeliveryRunBooksBlocked>());
+      expect(stopped.month, DateTime(2026, 2));
+      expect(stopped.before.count(DeliveryRunStatus.acknowledged), 1);
       expect(repo.asked, [DateTime(2026), DateTime(2026, 2)]);
     },
   );

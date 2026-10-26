@@ -142,7 +142,7 @@ void main() {
     ).readAsStringSync();
     final table = adapter.substring(adapter.indexOf('REALM_COUNTRIES'));
     final countries = {
-      for (final m in RegExp(r'^  ([a-z_]+): "([A-Z]{2})",', multiLine: true)
+      for (final m in RegExp(r'^  ([a-z_]+): \["([A-Z]{2})"', multiLine: true)
           .allMatches(table.substring(0, table.indexOf('};'))))
         m[1]!: m[2]!,
     };

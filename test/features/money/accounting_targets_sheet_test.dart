@@ -6,6 +6,8 @@
 // transfers but no door to act; a sign-in where the server registered no
 // application says so; the transfers name each file's digest and the
 // documents it carried, and a connection delivery's state.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/accounting_connection_repository.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
@@ -188,6 +190,8 @@ void main() {
   testWidgets('a reader has no door to deliver', (tester) async {
     final repo = seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today);
     await _open(tester, repo, permissions: {WorkspacePermission.viewFinances});
+    // The list is there, with the delivery a manager could send again.
+    expect(find.byKey(const ValueKey('acct-delivery-demo-delivery-credit')), findsOneWidget);
     expect(find.byKey(const ValueKey('acct-deliver-demo-connection-pennylane')), findsNothing);
     expect(find.byKey(const ValueKey('acct-redeliver-demo-delivery-credit')), findsNothing);
   });
@@ -203,7 +207,10 @@ void main() {
           const DeliveryRunBooksBlocked(['bank']),
       'The accounting system refused this company: Custom transaction numbers is off. Nothing was delivered.':
           const DeliveryRunTargetRefused('Custom transaction numbers is off'),
-      'This connection is signed out: connect it again, then deliver.': const DeliveryRunNotConnected(),
+      'This connection is signed out: connect it again, then deliver. Nothing was delivered.':
+          const DeliveryRunNotConnected(),
+      'The server refused: check that you may manage the billing. Nothing was delivered.':
+          const DeliveryRunNotAllowed(),
     };
     for (final MapEntry(key: said, value: answer) in answers.entries) {
       repo.answer = answer;
@@ -213,6 +220,39 @@ void main() {
       await _frames(tester);
     }
     expect(repo.asked, answers.length, reason: 'one request per tap');
+  });
+
+  testWidgets('a door is disabled and busy while its run goes; a second tap starts nothing', (tester) async {
+    final pending = Completer<DeliveryRun>();
+    final repo = _Answering(seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today))
+      ..pending = pending;
+    await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+    const door = ValueKey('acct-redeliver-demo-delivery-credit');
+    await tester.tap(find.byKey(door));
+    await tester.pump();
+    expect(tester.widget<ButtonStyleButton>(find.byKey(door)).onPressed, isNull);
+    await tester.tap(find.byKey(door), warnIfMissed: false);
+    await tester.pump();
+    expect(repo.asked, 1);
+    pending.complete(const DeliveryRunDone([]));
+    await _frames(tester);
+    expect(tester.widget<ButtonStyleButton>(find.byKey(door)).onPressed, isNotNull);
+    expect(find.text('Nothing to deliver in this period.'), findsOneWidget);
+  });
+
+  testWidgets('a year stopped in one month names it and what went before it', (tester) async {
+    final repo = _Answering(seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today))
+      ..answers = [
+        const DeliveryRunDone([DeliveryRunDocument(status: DeliveryRunStatus.acknowledged)]),
+        const DeliveryRunBooksBlocked(['bank']),
+      ];
+    await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+    await _tap(tester, 'acct-deliver-demo-connection-pennylane');
+    expect(
+      find.text('The books of this period cannot be posted yet: bank. Stopped at February 2026. Delivered before it: 1.'),
+      findsOneWidget,
+    );
+    expect(repo.asked, 2);
   });
 
   testWidgets('the transfers move by year', (tester) async {
@@ -247,6 +287,12 @@ class _Answering extends FakeAccountingConnectionRepository {
       );
 
   DeliveryRun answer = const DeliveryRunDone([]);
+
+  /// One answer per request, in order, before [answer].
+  List<DeliveryRun> answers = const [];
+
+  /// When set, the next request waits for it.
+  Completer<DeliveryRun>? pending;
   int asked = 0;
 
   @override
@@ -257,6 +303,11 @@ class _Answering extends FakeAccountingConnectionRepository {
     ({String kind, String id})? document,
   }) async {
     asked++;
-    return answer;
+    final waiting = pending;
+    if (waiting != null) {
+      pending = null;
+      return waiting.future;
+    }
+    return asked <= answers.length ? answers[asked - 1] : answer;
   }
 }

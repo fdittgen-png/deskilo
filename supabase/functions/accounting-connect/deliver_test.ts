@@ -127,9 +127,14 @@ function world(opts: {
   manageable?: boolean;
   target?: string;
   status?: string;
+  /** An OAuth connection whose token expires at this instant. */
+  oauthExpiresAt?: string;
+  refresh?: () => Response;
 } = {}) {
   const log = deliveryLog();
   const pl = pennylane();
+  const order: string[] = [];
+  const stored: Record<string, unknown>[] = [];
   const calls: { as: string; fn: string; args: Record<string, unknown> }[] = [];
   const postings = opts.postings ?? [sale(INV, "F-1", "2026-03-02"), receipt(INV, "F-1", "2026-03-09")];
   const caller = {
@@ -165,29 +170,47 @@ function world(opts: {
             workspace_id: WS,
             issuer_site_id: SITE,
             target_id: opts.target ?? "pennylane_api",
-            auth_kind: "token",
+            auth_kind: opts.oauthExpiresAt ? "oauth2" : "token",
             status: opts.status ?? "connected",
             remote_tenant_id: "",
             revoked: false,
-            token_expires_at: null,
-            secrets: { access_token: "PL-secret" },
+            token_expires_at: opts.oauthExpiresAt ?? null,
+            secrets: { access_token: "PL-secret", refresh_token: "RT-secret" },
           },
           error: null,
         });
       }
       if (fn === "record_accounting_delivery") return Promise.resolve(log.record(args));
+      if (fn === "set_accounting_credentials") {
+        stored.push(args);
+        return Promise.resolve({ data: { id: CONN }, error: null });
+      }
       return Promise.resolve({ data: null, error: { code: "42883" } });
     },
   };
   const deps: Deps = {
     caller: () => caller,
     service: () => service,
-    env: () => undefined,
+    env: (name) =>
+      ({ ACCOUNTING_PENNYLANE_API_CLIENT_ID: "app-id", ACCOUNTING_PENNYLANE_API_CLIENT_SECRET: "app-secret" } as Record<
+        string,
+        string
+      >)[name],
     redirectUri: "https://x.test/functions/v1/accounting-connect",
-    fetcher: pl.fetcher,
+    fetcher: ((input: string | URL | Request, init?: RequestInit) => {
+      const url = String(input);
+      if (url.includes("/oauth/token")) {
+        order.push("token");
+        return Promise.resolve(
+          opts.refresh?.() ?? Response.json({ access_token: "AT-fresh", refresh_token: "RT-2", expires_in: 3600 }),
+        );
+      }
+      order.push(`pennylane ${new URL(url).pathname.split("/").pop()} ${(init?.headers as Record<string, string>)?.authorization ?? ""}`);
+      return pl.fetcher(input, init);
+    }) as typeof fetch,
     now: () => new Date("2026-04-02T10:00:00Z"),
   };
-  return { deps, calls, log, pl };
+  return { deps, calls, log, pl, order, stored };
 }
 
 const run = (w: ReturnType<typeof world>, extra: Record<string, unknown> = {}, auth = "Bearer user-token") =>
@@ -295,4 +318,49 @@ Deno.test("an assistant's delegated token never delivers", async () => {
   const res = await run(w, {}, `Bearer h.${claims}.s`);
   assertEquals(res.status, 403);
   assertEquals(w.calls.length, 0);
+});
+
+Deno.test("two payments of one invoice on one day are two deliveries", async () => {
+  const w = world({ postings: [receipt(INV, "F-1", "2026-03-09"), receipt(INV, "F-1", "2026-03-09")] });
+  const body = await (await run(w)).json();
+  assertEquals(body.counts, { acknowledged: 2 });
+  assertEquals(w.pl.st.posts, 2);
+  const [a, b] = body.results.map((r: { document_id: string }) => r.document_id);
+  assert(a !== b && a !== INV && b !== INV);
+  // Each is delivered again by its own id, and nothing is created twice.
+  const again = await (await run(w, { document: { kind: "receipt", id: b } })).json();
+  assertEquals(again.counts, { unchanged: 1 });
+  assertEquals(w.pl.st.posts, 2);
+});
+
+Deno.test("a document acknowledged with another content is refused by the log, with its code", async () => {
+  const w = world({ postings: [sale(INV, "F-1", "2026-03-02")] });
+  await run(w);
+  const changed = world({ postings: [{ ...sale(INV, "F-1", "2026-03-02"), document_number: "F-1bis" }] });
+  // The same log: the document was acknowledged with the first content.
+  changed.log.rows.clear();
+  for (const [k, v] of w.log.rows) changed.log.rows.set(k, v);
+  const body = await (await run(changed)).json();
+  assertEquals(body.results[0].status, "failed");
+  assertEquals(body.results[0].code, "23514");
+  assertEquals(changed.pl.st.posts, 0);
+});
+
+Deno.test("a token about to expire is refreshed before the first call; a refused refresh sends nothing", async () => {
+  const w = world({ oauthExpiresAt: "2026-04-02T10:01:00Z" });
+  assertEquals((await run(w)).status, 200);
+  assertEquals(w.order[0], "token");
+  assert(w.order.slice(1).every((c) => c.endsWith("Bearer AT-fresh")));
+  assertEquals(w.stored.length, 1);
+
+  const gone = world({
+    oauthExpiresAt: "2026-04-02T10:01:00Z",
+    refresh: () => Response.json({ error: "invalid_grant" }, { status: 400 }),
+  });
+  const res = await run(gone);
+  assertEquals(res.status, 409);
+  assertEquals((await res.json()).error, "not_connected");
+  assertEquals(gone.order, ["token"]);
+  assertEquals((gone.stored[0].p_patch as Record<string, unknown>).status, "expired");
+  assertEquals(gone.log.rows.size, 0);
 });

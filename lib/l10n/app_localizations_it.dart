@@ -327,7 +327,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String acctDeliverBooksBlocked(String subjects) {
-    return 'Le scritture di questo periodo non possono ancora essere registrate: $subjects. Non è stato inviato nulla.';
+    return 'Le scritture di questo periodo non possono ancora essere registrate: $subjects.';
   }
 
   @override
@@ -353,8 +353,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non c\'è nulla da inviare in questo periodo.';
 
   @override
+  String get acctDeliverNothingSent => 'Non è stato inviato nulla.';
+
+  @override
   String acctDeliverRefused(String detail) {
-    return 'Il sistema contabile ha rifiutato questa società: $detail. Non è stato inviato nulla.';
+    return 'Il sistema contabile ha rifiutato questa società: $detail.';
+  }
+
+  @override
+  String acctDeliverStoppedAt(String month, int count) {
+    return 'Interrotto a $month. Inviati prima: $count.';
   }
 
   @override

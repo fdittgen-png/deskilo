@@ -146,3 +146,39 @@ export function mapped(maps: AccountingMap[], kind: AccountingMap["kind"], key: 
   const m = maps.find((x) => x.kind === kind && x.key === key);
   return m ? (m.remoteId || m.remoteCode) : "";
 }
+
+/** The document events a document can have several of on one day: two
+ * payments of one invoice, two refunds of one credit note. */
+const SEVERAL_A_DAY = new Set(["receipt", "refund"]);
+
+const hex = async (text: string): Promise<string> =>
+  [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)))]
+    .map((b) => b.toString(16).padStart(2, "0")).join("");
+
+/** The document id each posting is delivered under, in order. A receipt
+ * or a refund names its document (the invoice) together with its amount
+ * and its rank among equal ones of that day, so two payments of one
+ * invoice on one day are two deliveries; a later payment of another
+ * amount never renames an earlier one. Every other event is its document. */
+export async function deliveryIds(postings: Posting[]): Promise<string[]> {
+  const seen = new Map<string, number>();
+  const ids: string[] = [];
+  for (const p of postings) {
+    if (!SEVERAL_A_DAY.has(p.kind)) {
+      ids.push(p.documentId);
+      continue;
+    }
+    const amount = p.lines.reduce((s, l) => s + l.debitCents, 0);
+    const group = `${p.kind}|${p.documentId}|${p.date}|${amount}`;
+    const rank = seen.get(group) ?? 0;
+    seen.set(group, rank + 1);
+    const h = await hex(`${group}|${rank}`);
+    // A name-based UUID (version 5 layout, RFC 9562 §5.5).
+    ids.push(
+      `${h.slice(0, 8)}-${h.slice(8, 12)}-5${h.slice(13, 16)}-${
+        ((parseInt(h[16], 16) & 0x3) | 0x8).toString(16)
+      }${h.slice(17, 20)}-${h.slice(20, 32)}`,
+    );
+  }
+  return ids;
+}

@@ -328,7 +328,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String acctDeliverBooksBlocked(String subjects) {
-    return 'Los asientos de este periodo aún no se pueden contabilizar: $subjects. No se ha enviado nada.';
+    return 'Los asientos de este periodo aún no se pueden contabilizar: $subjects.';
   }
 
   @override
@@ -353,8 +353,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get acctDeliverNothing => 'No hay nada que enviar en este periodo.';
 
   @override
+  String get acctDeliverNothingSent => 'No se ha enviado nada.';
+
+  @override
   String acctDeliverRefused(String detail) {
-    return 'El sistema contable ha rechazado esta empresa: $detail. No se ha enviado nada.';
+    return 'El sistema contable ha rechazado esta empresa: $detail.';
+  }
+
+  @override
+  String acctDeliverStoppedAt(String month, int count) {
+    return 'Detenido en $month. Enviados antes: $count.';
   }
 
   @override

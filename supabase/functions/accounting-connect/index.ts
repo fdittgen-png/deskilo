@@ -43,7 +43,7 @@ import {
   refreshTokens,
   sameSecret,
 } from "../_shared/accounting_oauth.ts";
-import { clientOf, type Deps, json, resolved, store, UUID } from "./connection.ts";
+import { clientOf, type Deps, json, resolved, STATUS_DETAIL_LENGTH, store, UUID } from "./connection.ts";
 import { deliverPeriod, deliveryAdapters } from "./deliver.ts";
 
 export type { Deps } from "./connection.ts";
@@ -145,7 +145,7 @@ async function callback(deps: Deps, url: URL): Promise<Response> {
   if (refused) {
     await store(deps, connectionId, {
       secrets: { oauth_state: "", oauth_state_at: "" },
-      patch: { status: "error", status_detail: refused.slice(0, 500) },
+      patch: { status: "error", status_detail: refused.slice(0, STATUS_DETAIL_LENGTH) },
     });
     return page("The target refused this company. The reason is shown in DesKilo.", 409);
   }

@@ -21,10 +21,10 @@
 //     carries tax) or NON, and the invoice's tax is the override
 //     `TxnTaxDetail {TxnTaxCodeRef, TotalTax}`, honoured from minor version
 //     70 on; `TxnTaxCodeRef` is the realm tax code the posting's tax role
-//     is mapped to (`account vat_output:<group>`).
+//     is mapped to (`item vat_output:<group>`, TAX_CODE_MAP).
 //   * CA and GB realms: tax codes are realm objects (`HST ON`, `GST/QST QC`,
 //     `20.0% S`, `0.0% Z`), so each line carries the code its rate group is
-//     mapped to (`account vat_output:<group>`, a zero-rated group too) and
+//     mapped to (`item vat_output:<group>`, a zero-rated group too) and
 //     `TotalTax` is the document's.
 //
 // Idempotency and concurrency. Every create names `requestid` (the
@@ -82,14 +82,23 @@ const FIRST_SYNC_TOKEN = "0";
 /** What `PrivateNote` carries before the delivery's idempotency key. */
 const NOTE_PREFIX = "deskilo:";
 
-/** The country of the realm each target is for (the app's descriptor
- * `accounting_target.dart`; pinned to it by accounting_targets_test).
- * spec: `CompanyInfo.Country` reads the ISO code ("US", "CA", "GB"). */
-export const REALM_COUNTRIES: Record<string, string> = {
-  quickbooks_online_us: "US",
-  quickbooks_online_ca: "CA",
-  quickbooks_online_gb: "GB",
+/** The country of the realm each target is for, as `CompanyInfo.Country`
+ * may read it: the first is the app descriptor's
+ * (`accounting_targets_quickbooks.dart`; pinned by accounting_targets_test).
+ * spec: the ISO code; a British company may read "UK" until a sandbox
+ * settles it. */
+export const REALM_COUNTRIES: Record<string, string[]> = {
+  quickbooks_online_us: ["US"],
+  quickbooks_online_ca: ["CA"],
+  quickbooks_online_gb: ["GB", "UK"],
 };
+
+/** The mapping kind that names a rate group's realm `TaxCode`, keyed by
+ * the group's tax role (`vat_output:<group>`). Not `account`: the same
+ * role key names the tax ACCOUNT of a journal entry's tax line, and one key
+ * must not mean both. Not `tax` either: a tax mapping is keyed by a tax
+ * component (`VAT|GB|taxed|20|2011`) and the postings carry rate groups. */
+const TAX_CODE_MAP = "item" as const;
 
 /** The US realm's pseudo tax codes of a line. spec: "US sales tax". */
 const US_TAXABLE = "TAX";
@@ -229,6 +238,12 @@ async function partyRef(
   if (!party || !party.name) return { failure: refused("the document names no customer or supplier") };
   const type = party.kind === "supplier" ? "Vendor" : "Customer";
   const name = displayName(party);
+  // By the number kept in Notes first, so a renamed member or supplier is
+  // the same customer; then by the name it was created under.
+  // spec: "Query operations" — whether Notes is filterable on Customer and
+  // Vendor; a refused filter falls through to the name.
+  const byNumber = party.number ? await query(fetchImpl, cfg, type, `Notes = ${quoted(party.number)}`) : [];
+  if (Array.isArray(byNumber) && byNumber.length === 1) return { id: String(byNumber[0].Id), type };
   const found = await query(fetchImpl, cfg, type, `DisplayName = ${quoted(name)}`);
   if (typeof found === "string") return { failure: { ok: false, unknown: false, detail: found } };
   if (found.length > 0) return { id: String(found[0].Id), type };
@@ -245,14 +260,14 @@ async function partyRef(
 
 /** The realm's country and its numbering, checked before anything goes:
  * a refusal in words, or null. */
-export async function checkRealm(fetchImpl: typeof fetch, cfg: Cfg, country: string): Promise<string | null> {
+export async function checkRealm(fetchImpl: typeof fetch, cfg: Cfg, countries: string[]): Promise<string | null> {
   if (!cfg.token) return "the connection holds no token";
   if (!cfg.realm) return "the sign-in named no QuickBooks company";
   const info = await qbo(fetchImpl, cfg, `companyinfo/${encodeURIComponent(cfg.realm)}`);
   if (!info.ok) return info.detail;
   const held = String((info.body.CompanyInfo as Record<string, unknown> | undefined)?.Country ?? "");
-  if (held !== country) {
-    return `this QuickBooks company is in ${held || "no named country"}; the connection is for ${country}`;
+  if (!countries.includes(held)) {
+    return `this QuickBooks company is in ${held || "no named country"}; the connection is for ${countries[0]}`;
   }
   const prefs = await qbo(fetchImpl, cfg, "preferences");
   if (!prefs.ok) return prefs.detail;
@@ -311,7 +326,7 @@ export function salesPayload(
   let txnTaxCode = "";
   if (us && tax > 0) {
     if (groups.size !== 1) return `a US invoice carries one sales-tax code; this one has ${groups.size} taxed rate groups`;
-    txnTaxCode = mapped(maps, "account", taxKeyOf({ qualifier: [...groups][0] }));
+    txnTaxCode = mapped(maps, TAX_CODE_MAP, taxKeyOf({ qualifier: [...groups][0] }));
   }
   return {
     DocNumber: p.documentNumber,
@@ -329,7 +344,7 @@ export function salesPayload(
       SalesItemLineDetail: {
         ItemRef: { value: mapped(maps, "item", roleKey(l)) },
         TaxCodeRef: {
-          value: us ? (groups.has(l.qualifier) ? US_TAXABLE : US_NOT_TAXABLE) : mapped(maps, "account", taxKeyOf(l)),
+          value: us ? (groups.has(l.qualifier) ? US_TAXABLE : US_NOT_TAXABLE) : mapped(maps, TAX_CODE_MAP, taxKeyOf(l)),
         },
       },
     })),
@@ -370,7 +385,8 @@ export function journalPayload(
 
 /** The QuickBooks Online adapter of the delivery kit. */
 export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
-  const country = REALM_COUNTRIES[ctx.targetId] ?? "";
+  const countries = REALM_COUNTRIES[ctx.targetId] ?? [];
+  const country = countries[0] ?? "";
   const cfg: Cfg = {
     base: ctx.env(API_BASE_ENV) || API_BASE,
     token: ctx.secrets.access_token ?? "",
@@ -378,7 +394,8 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
   };
   const f = ctx.fetch;
   return {
-    prepare: () => country ? checkRealm(f, cfg, country) : Promise.resolve(`no QuickBooks realm for ${ctx.targetId}`),
+    prepare: () =>
+      country ? checkRealm(f, cfg, countries) : Promise.resolve(`no QuickBooks realm for ${ctx.targetId}`),
     needs(p): MapNeed[] {
       switch (entityOf(p.kind)) {
         case "Invoice":
@@ -389,7 +406,7 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
             : lines.map(taxKeyOf);
           return [
             ...new Set(lines.map((l) => `item ${roleKey(l)}`)),
-            ...new Set(taxKeys.map((k) => `account ${k}`)),
+            ...new Set(taxKeys.map((k) => `${TAX_CODE_MAP} ${k}`)),
           ].map((n) => ({ kind: n.slice(0, n.indexOf(" ")) as MapNeed["kind"], key: n.slice(n.indexOf(" ") + 1) }));
         }
         case "Payment":
@@ -439,8 +456,8 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
             if (typeof sale === "string") return refused(sale);
             body = sale;
           } else if (entity === "Payment") {
-            const customer = await partyRef(f, cfg, party);
-            if ("failure" in customer) return customer.failure;
+            // The invoice first: a payment that cannot be linked creates
+            // nothing, not even its customer.
             const invoices = await query(f, cfg, "Invoice", `DocNumber = ${quoted(p.documentNumber)}`);
             if (typeof invoices === "string") return refused(invoices);
             if (invoices.length !== 1) {
@@ -450,6 +467,8 @@ export function quickbooksOnline(ctx: AdapterContext): PostingAdapter {
                   : `QuickBooks holds ${invoices.length} invoices numbered ${p.documentNumber}`,
               );
             }
+            const customer = await partyRef(f, cfg, party);
+            if ("failure" in customer) return customer.failure;
             const deposit = p.lines.find((l) => l.debitCents > 0)!;
             body = {
               CustomerRef: { value: customer.id },

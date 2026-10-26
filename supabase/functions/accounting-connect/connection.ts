@@ -9,6 +9,10 @@ import { CORS } from "../_shared/cors.ts";
 import { clientEnvName } from "../_shared/accounting_targets.ts";
 import type { Fetch, OAuthClient } from "../_shared/accounting_oauth.ts";
 
+/** The width of `accounting_connections.status_detail` (0595): the most
+ * of a target's words a connection keeps. */
+export const STATUS_DETAIL_LENGTH = 500;
+
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export type Db = {

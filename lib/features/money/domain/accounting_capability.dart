@@ -250,13 +250,13 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     obligations: {},
     specification: 'DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md',
   ),
-  // #2376 — the adapter maps the documents and delivers them once, read
-  // back by external reference; no live exchange has happened (no sandbox
-  // account yet) and the connection store is #2370's.
+  // #2376 — the adapter delivers each posting once as a ledger entry, read
+  // back by its external reference; no live exchange has happened (no
+  // sandbox account yet).
   'pennylane_api': AccountingCapability(
     formatId: 'pennylane_api',
     state: QualificationState.implemented,
-    specification: 'Pennylane API v2, customer_invoices import and ledger_entries',
+    specification: 'Pennylane API v2, ledger_entries and journals',
   ),
   // #2371 — delivered through the kit against a played realm; no sandbox
   // company has answered yet.

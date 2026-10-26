@@ -82,6 +82,8 @@ export interface DeliveryRow {
   idempotency_key: string;
   remote_id: string;
   outcome: "created" | "existing" | "unchanged" | "updated" | "conflict";
+  /** The target's words or the kit's reason of a conflict or a failure. */
+  error?: string;
 }
 
 export interface DeliveryStore {
@@ -151,12 +153,15 @@ export async function deliver(
   // A send whose outcome is unknown stays a conflict while it is blocked:
   // recording it failed would let the next run create without a readback.
   const unknown = prepared.status === "sent" || prepared.status === "conflict";
+  // A delivery prepared before (by an earlier run, or by one running now)
+  // may have been sent already: it is read back before any create.
+  const readFirst = unknown || prepared.outcome === "existing";
   if (missing.length > 0) {
     await store.record(job, unknown ? "conflict" : "failed", undefined, `unmapped: ${missing.join(", ")}`);
     return { status: "blocked", missing };
   }
   const key = prepared.idempotency_key;
-  if (unknown) {
+  if (readFirst) {
     const found = await adapter.readback(key, job);
     if (typeof found === "string") {
       const row = await store.record(job, "conflict", undefined, `readback failed: ${found}`);
@@ -211,6 +216,16 @@ export async function deliver(
   return { status: "failed", row };
 }
 
+/** The delivery log refused a record: nothing more is sent for it. [code]
+ * is the database's (23514: the document was acknowledged with another
+ * content and needs a correction, not a second delivery). */
+export class DeliveryNotRecorded extends Error {
+  constructor(readonly code: string, message: string) {
+    super(message);
+    this.name = "DeliveryNotRecorded";
+  }
+}
+
 /** What the store asks of a Supabase client with the service role. */
 export type ServiceDb = {
   rpc: (fn: string, args: Record<string, unknown>) => PromiseLike<{ data: unknown; error: unknown }>;
@@ -236,7 +251,10 @@ export function databaseStore(db: ServiceDb): DeliveryStore {
           : {},
         p_error: error ?? "",
       });
-      if (failed) throw new Error(`the delivery was not recorded: ${JSON.stringify(failed)}`);
+      if (failed) {
+        const e = failed as { code?: unknown; message?: unknown };
+        throw new DeliveryNotRecorded(String(e.code ?? ""), String(e.message ?? JSON.stringify(failed)));
+      }
       return data as DeliveryRow;
     },
   };
