@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2379 / 9999: the standard codes a SAF-T Financial file states. Norway's
+-- #2379 / 0597: the standard codes a SAF-T Financial file states. Norway's
 -- `saf_t/<role>` rows carry a GroupingCode and its GroupingCategory, its
 -- `saf_t/tax:<output|input>:<group>` rows a StandardTaxCode for every rate
 -- group in force, Luxembourg's `saf_t/<role>` rows a StandardAccountID. The

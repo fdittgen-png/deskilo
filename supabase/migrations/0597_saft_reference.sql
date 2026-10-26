@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2379, renumbered at push time) -- the standard codes a SAF-T
+-- 0597 (#2379, renumbered at push time) -- the standard codes a SAF-T
 -- Financial file states, as `account_map` rows of the tax reference store,
 -- UNCONFIRMED until an accountant has checked them:
 --   * `saf_t/<role>` of NO: the GroupingCode (`account`) and its
@@ -49,4 +49,4 @@ values
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(597);
