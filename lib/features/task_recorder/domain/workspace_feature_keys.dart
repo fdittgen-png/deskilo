@@ -156,4 +156,5 @@ const Set<String> workspaceFeatureKeys = {
   'dataReport',
   'personalShell',
   'foreignCurrencyPurchases',
+  'accountingConnectors',
 };

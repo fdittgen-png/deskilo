@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -24,6 +25,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
+import 'accounting_targets_sheet.dart';
 import 'book_chart_sheet.dart';
 import 'book_periods_sheet.dart';
 import 'book_profile_sheet.dart';
@@ -66,6 +68,19 @@ class SetupAccountingStep extends ConsumerWidget {
                     workspaceId: workspaceId,
                     isOwner: isOwner,
                   ),
+                ),
+              ],
+              // The systems the books go to: a connection per issuer, the
+              // names each key has there, and the transfers.
+              if (featureOn(
+                ref.watch(enabledFeatureKeysProvider),
+                accountingConnectorsKey,
+                byDefault: false,
+              )) ...[
+                const FormGap(),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: AccountingTargetsButton(workspaceId: workspaceId),
                 ),
               ],
             ],

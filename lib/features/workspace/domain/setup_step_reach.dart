@@ -99,7 +99,7 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
     _F.letterStandard,
     _F.invoiceAddressWindow,
   },
-  'accounting': {_F.accountingPeriods},
+  'accounting': {_F.accountingPeriods, _F.accountingConnectors},
   // The reminder rules and the payment conditions they recall.
   'reminders': {_F.paymentReminders, _F.memberPaymentTerms},
   // A copy of the space: its data and its configuration.

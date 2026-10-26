@@ -10,6 +10,8 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/accounting_connection.dart'
+    show accountingTransferReaders;
 import '../../domain/premises_lease.dart' show leaseManagePermission;
 import '../../domain/purchase.dart' show
         purchaseDecidePermission,
@@ -17,6 +19,7 @@ import '../../domain/purchase.dart' show
         purchaseOffsetPermission,
         purchasePayPermission;
 import '../../domain/room_rental.dart' show roomRentalManagePermission;
+import '../widgets/accounting_targets_sheet.dart';
 import '../widgets/book_periods_sheet.dart';
 import '../widgets/consumption_sheet.dart';
 import '../widgets/equipment_sheet.dart';
@@ -372,6 +375,14 @@ class MoneyActionSet {
           workspaceId: data.workspace!.id,
           isOwner: data.member?.isOwner ?? false,
         ),
+      // #2370 — the accounting systems the books go to and the transfers
+      // that carried them, for those who read the finances, export or bill.
+      if (data.accountingConnectorsOn &&
+          data.workspace != null &&
+          ref
+              .read(myPermissionsProvider)
+              .any((p) => accountingTransferReaders.contains(p.wireName)))
+        AccountingTargetsButton(workspaceId: data.workspace!.id),
       // #2568 — the rooms the space rents, for those who manage the plan.
       if (data.externalRoomsOn &&
           data.workspace != null &&

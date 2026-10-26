@@ -374,4 +374,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.purchases,
     defaultOn: false,
   ),
+  // The systems the books are handed to: a connection per issuer and
+  // target, what each key is called there, and every file and delivery
+  // that carried a document. Asked for, beside the books it hands out.
+  WorkspaceFeature.accountingConnectors: FeatureManifestEntry(
+    feature: WorkspaceFeature.accountingConnectors,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.accountingBook,
+    defaultOn: false,
+  ),
 };

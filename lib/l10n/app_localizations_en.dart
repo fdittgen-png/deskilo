@@ -238,6 +238,365 @@ class AppLocalizationsEn extends AppLocalizations {
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
 
   @override
+  String get acctConnConnectToken => 'Connect with an API token';
+
+  @override
+  String acctConnDetail(String detail) {
+    return 'Answer of the system: $detail';
+  }
+
+  @override
+  String get acctConnRefresh => 'Check the connection';
+
+  @override
+  String get acctConnRefused =>
+      'The server refused: check that you may manage the billing.';
+
+  @override
+  String get acctConnReplaceToken => 'Replace the token';
+
+  @override
+  String get acctConnRevoke => 'Revoke';
+
+  @override
+  String get acctConnRevokeConfirm =>
+      'Revoke this connection? Its token is forgotten at once; its mappings and the deliveries already made stay listed.';
+
+  @override
+  String get acctConnRevoked => 'The connection is revoked.';
+
+  @override
+  String acctConnRevokedBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count earlier connections were revoked',
+      one: 'One earlier connection was revoked',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctConnSaved => 'The connection is saved.';
+
+  @override
+  String acctConnSignIn(String target) {
+    return 'Sign in to $target';
+  }
+
+  @override
+  String get acctConnSignInAgain => 'Sign in again';
+
+  @override
+  String get acctConnSignInFailed => 'The sign-in page could not be opened.';
+
+  @override
+  String acctConnSignInNotConfigured(String target) {
+    return 'This server has no application registered with $target: connect with an API token instead.';
+  }
+
+  @override
+  String get acctConnSignInOpened =>
+      'Finish the sign-in in your browser, then come back and check the connection.';
+
+  @override
+  String acctConnSince(String date) {
+    return 'Connected on $date';
+  }
+
+  @override
+  String get acctConnStatusConnected => 'Connected';
+
+  @override
+  String get acctConnStatusError => 'The connection failed';
+
+  @override
+  String get acctConnStatusExpired => 'Signed out: sign in again';
+
+  @override
+  String get acctConnStatusPending => 'Waiting for the sign-in';
+
+  @override
+  String get acctConnStatusRevoked => 'Revoked';
+
+  @override
+  String acctConnTenant(String tenant) {
+    return 'Company: $tenant';
+  }
+
+  @override
+  String get acctDeliveryAcknowledged => 'Received by the system';
+
+  @override
+  String acctDeliveryAttempts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count attempts',
+      one: 'one attempt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctDeliveryConflict =>
+      'To check: the answer is missing or differs';
+
+  @override
+  String get acctDeliveryFailed => 'Refused';
+
+  @override
+  String get acctDeliveryGenerated => 'File written';
+
+  @override
+  String acctDeliveryRemote(String number) {
+    return 'In the system: $number';
+  }
+
+  @override
+  String get acctDeliveryRemoteDraft => 'a draft in the system, not posted yet';
+
+  @override
+  String get acctDeliverySent => 'Sent, waiting for the answer';
+
+  @override
+  String acctJournalLogged(int logged, int unchanged) {
+    String _temp0 = intl.Intl.pluralLogic(
+      logged,
+      locale: localeName,
+      other: '$logged documents logged',
+      one: 'One document logged',
+      zero: 'No new document logged',
+    );
+    return '$_temp0, $unchanged unchanged';
+  }
+
+  @override
+  String get acctKindCreditNote => 'Credit note';
+
+  @override
+  String get acctKindExpense => 'Expense';
+
+  @override
+  String get acctKindInvoice => 'Invoice';
+
+  @override
+  String get acctKindMemberReceipt => 'Member\'s receipt';
+
+  @override
+  String get acctKindOther => 'Other entry';
+
+  @override
+  String get acctKindReceipt => 'Payment received';
+
+  @override
+  String get acctKindRefund => 'Refund';
+
+  @override
+  String get acctKindReimbursement => 'Paid back to a member';
+
+  @override
+  String get acctKindSupplierBill => 'Supplier bill';
+
+  @override
+  String get acctKindSupplierCreditNote => 'Supplier credit note';
+
+  @override
+  String get acctKindSupplierPayment => 'Payment to a supplier';
+
+  @override
+  String get acctKindVatRelease => 'VAT falling due';
+
+  @override
+  String get acctKindWriteOff => 'Write-off';
+
+  @override
+  String get acctMapAdd => 'Add a mapping';
+
+  @override
+  String get acctMapDelete => 'Remove the mapping';
+
+  @override
+  String get acctMapKeyInvalid => 'This is not a key of this kind.';
+
+  @override
+  String get acctMapKind => 'What is mapped';
+
+  @override
+  String get acctMapKindAccount => 'Account';
+
+  @override
+  String get acctMapKindItem => 'Item';
+
+  @override
+  String get acctMapKindParty => 'Customer';
+
+  @override
+  String get acctMapKindTax => 'Tax code';
+
+  @override
+  String acctMapLine(String key, String remote) {
+    return '$key → $remote';
+  }
+
+  @override
+  String get acctMapParty => 'Member';
+
+  @override
+  String get acctMapQualifier => 'Rate group (optional)';
+
+  @override
+  String get acctMapRemoteCode => 'Code in the system';
+
+  @override
+  String get acctMapRemoteId => 'Identifier in the system (optional)';
+
+  @override
+  String get acctMapRemoteMissing =>
+      'Give the code or the identifier the system uses.';
+
+  @override
+  String get acctMapRemoteName => 'Name in the system (optional)';
+
+  @override
+  String get acctMapRole => 'Role in the books';
+
+  @override
+  String get acctMapTaxKey => 'Tax component';
+
+  @override
+  String get acctMapTaxKeyHelper =>
+      'scheme|authority|treatment|rate|version, as the tax report groups it: VAT|FR|taxed|20|2014';
+
+  @override
+  String acctMapsButton(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mappings',
+      one: 'One mapping',
+      zero: 'Mappings',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctMapsEmpty => 'Nothing is mapped yet.';
+
+  @override
+  String get acctMapsIntro =>
+      'What each account, tax code, customer and item of these books is called in the system. A delivery that needs one that is not here stops and names it; nothing is replaced by a default.';
+
+  @override
+  String acctMapsTitle(String target) {
+    return 'Names in $target';
+  }
+
+  @override
+  String get acctTargetsIntro =>
+      'Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.';
+
+  @override
+  String get acctTargetsLoadFailed =>
+      'The accounting systems could not be loaded.';
+
+  @override
+  String get acctTargetsNoApiTarget =>
+      'No accounting system of this country is reached by a connection yet: the books go by file, from the accounting export.';
+
+  @override
+  String get acctTargetsNotConnected => 'Not connected';
+
+  @override
+  String get acctTargetsTitle => 'Accounting systems';
+
+  @override
+  String acctTokenBody(String target) {
+    return 'Create an API token in $target\'s settings for this company and paste it here. It is kept encrypted on the server and never shown again.';
+  }
+
+  @override
+  String get acctTokenField => 'API token';
+
+  @override
+  String get acctTokenName => 'Name of the connection';
+
+  @override
+  String get acctTokenSave => 'Connect';
+
+  @override
+  String acctTokenTenant(String target) {
+    return 'Company identifier at $target (optional)';
+  }
+
+  @override
+  String acctTokenTitle(String target) {
+    return 'Connect $target with an API token';
+  }
+
+  @override
+  String get acctTokenTooShort => 'Paste the whole token.';
+
+  @override
+  String get acctTransferClosed => 'closed period';
+
+  @override
+  String acctTransferDocLine(String number, String kind, String date) {
+    return '$number · $kind · $date';
+  }
+
+  @override
+  String acctTransferDocuments(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documents carried',
+      one: 'One document carried',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String acctTransferFile(String format, String from, String to) {
+    return 'File $format · $from – $to';
+  }
+
+  @override
+  String acctTransferFileMeta(String when, String who, int documents) {
+    String _temp0 = intl.Intl.pluralLogic(
+      documents,
+      locale: localeName,
+      other: '$documents documents',
+      one: 'one document',
+    );
+    return '$when by $who · $_temp0';
+  }
+
+  @override
+  String acctTransferSha(String digest) {
+    return 'SHA-256 $digest';
+  }
+
+  @override
+  String get acctTransfersEmpty =>
+      'Nothing was handed out or delivered in this period.';
+
+  @override
+  String get acctTransfersIntro =>
+      'Every file handed out and every document delivered in the period, with the SHA-256 of what was carried: the evidence of the digital link from these books to the accounting system.';
+
+  @override
+  String acctTransfersPeriod(String year) {
+    return 'Year $year';
+  }
+
+  @override
+  String get acctTransfersTitle => 'Transfers';
+
+  @override
+  String get acctWhoUnknown => 'someone no longer in the space';
+
+  @override
   String get addressCountryLabel => 'Country';
 
   @override
@@ -7141,6 +7500,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureAccountingBookTitle => 'Accounting book';
+
+  @override
+  String get featureAccountingConnectorsDesc =>
+      'Connects each issuer\'s books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.';
+
+  @override
+  String get featureAccountingConnectorsTitle => 'Accounting systems';
 
   @override
   String get featureAccountingPeriodsDesc =>
@@ -18777,6 +19143,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get refTypeInvoice => 'Invoice';
+
+  @override
+  String get refusalAccountingClosed =>
+      'This connection is closed for this: it was revoked, or it has already delivered. Revoke it and connect again. Nothing was saved.';
+
+  @override
+  String get refusalAccountingValue =>
+      'The server refused this value: check the token, the key or the issuer and try again. Nothing was saved.';
 
   @override
   String get refusalAlreadyDecided =>

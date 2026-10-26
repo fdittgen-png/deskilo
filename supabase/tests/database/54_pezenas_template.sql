@@ -140,6 +140,7 @@ begin
     "feature_flags": {
       "accessorySupplements": false,
       "accountingBook": false,
+      "accountingConnectors": false,
       "accountingPeriods": false,
       "adminInvoicing": false,
       "adminLevelAssign": false,

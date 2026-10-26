@@ -732,6 +732,12 @@
       "capabilities": []
     },
     {
+      "key": "accountingConnectors",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "accountingPeriods",
       "maturity": "beta",
       "lifecycle": "active",

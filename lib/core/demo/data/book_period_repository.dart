@@ -57,14 +57,15 @@ class FakeBookPeriodRepository implements BookPeriodRepository {
   }
 
   @override
-  Future<void> recordExport(String workspaceId, BookExportRecord record) async {
+  Future<String?> recordExport(String workspaceId, BookExportRecord record) async {
     final closed = periods.any(
       (p) => p.closed && !record.from.isBefore(p.from) && !record.to.isAfter(p.to),
     );
+    final id = 'demo-export-${_next++}';
     exports.insert(
       0,
       BookExport(
-        id: 'demo-export-${_next++}',
+        id: id,
         formatId: record.formatId,
         from: record.from,
         to: record.to,
@@ -76,5 +77,6 @@ class FakeBookPeriodRepository implements BookPeriodRepository {
         exportedAt: today,
       ),
     );
+    return id;
   }
 }

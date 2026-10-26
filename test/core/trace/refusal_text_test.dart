@@ -81,6 +81,21 @@ void main() {
       expect(knownRefusalText(englishL10n, e), contains('currency and the country'));
     });
 
+    test('an accounting connection explains its own refusals (#2370, DKA01-03)', () {
+      expect(knownRefusalOf(_pg('already connected', code: 'DKA01')), KnownRefusal.changedMeanwhile);
+      final closed = _pg('this connection has delivered: revoke it and connect again', code: 'DKA02');
+      expect(knownRefusalOf(closed), KnownRefusal.accountingConnectionClosed);
+      expect(knownRefusalText(englishL10n, closed), contains('Revoke it and connect again'));
+      final value = _pg('paste the whole token', code: 'DKA03');
+      expect(knownRefusalOf(value), KnownRefusal.accountingValueRefused);
+      expect(knownRefusalText(englishL10n, value), contains('check the token'));
+      // The codes are the server's: the migration still raises each.
+      final sql = File('supabase/migrations/0595_accounting_connections.sql').readAsStringSync();
+      for (final code in ['DKA01', 'DKA02', 'DKA03']) {
+        expect(sql, contains("errcode = '$code'"), reason: code);
+      }
+    });
+
     test('a rate on issued invoices changes by law (#2356, DKV01)', () {
       final e = _pg('vat_rate_versioned: Standard 20 % is on issued invoices; '
           'change it by law from a date', code: 'DKV01');

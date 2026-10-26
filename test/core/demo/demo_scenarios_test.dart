@@ -35,6 +35,7 @@ import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_setup_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_valuation_seed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/domain/asset_valuation.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
@@ -740,6 +741,25 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'last year closed and '
     'exported',
     (w) async => (await w.books.fetch('ws-1')).periods.isNotEmpty,
+  ),
+  WorkspaceFeature.accountingConnectors: _state(
+    _owner,
+    'the studio connected to '
+    'Pennylane: one invoice received, a credit note waiting for its readback',
+    (w) async {
+      final repo = seedDemoAccountingConnections(w.books, w.now);
+      final connected = (await repo.fetchConnections('ws-1')).any(
+        (c) => c.status == ConnectionStatus.connected && c.maps.isNotEmpty,
+      );
+      final moved = (await repo.fetchTransfers(
+        'ws-1',
+        DateTime(w.now.year),
+        DateTime(w.now.year, 12, 31),
+      )).deliveries;
+      return connected &&
+          moved.any((d) => d.status == DeliveryStatus.acknowledged) &&
+          moved.any((d) => d.status == DeliveryStatus.conflict);
+    },
   ),
   WorkspaceFeature.vatManagement: _state(
     _owner,

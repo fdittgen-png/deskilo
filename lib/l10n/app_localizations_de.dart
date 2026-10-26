@@ -238,6 +238,367 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
 
   @override
+  String get acctConnConnectToken => 'Mit API-Token verbinden';
+
+  @override
+  String acctConnDetail(String detail) {
+    return 'Antwort des Systems: $detail';
+  }
+
+  @override
+  String get acctConnRefresh => 'Verbindung prüfen';
+
+  @override
+  String get acctConnRefused =>
+      'Der Server hat abgelehnt: Prüfen Sie, ob Sie die Abrechnung verwalten dürfen.';
+
+  @override
+  String get acctConnReplaceToken => 'Token ersetzen';
+
+  @override
+  String get acctConnRevoke => 'Widerrufen';
+
+  @override
+  String get acctConnRevokeConfirm =>
+      'Diese Verbindung widerrufen? Ihr Token wird sofort vergessen; ihre Zuordnungen und die bereits erfolgten Übermittlungen bleiben aufgeführt.';
+
+  @override
+  String get acctConnRevoked => 'Die Verbindung ist widerrufen.';
+
+  @override
+  String acctConnRevokedBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count frühere Verbindungen wurden widerrufen',
+      one: 'Eine frühere Verbindung wurde widerrufen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctConnSaved => 'Die Verbindung ist gespeichert.';
+
+  @override
+  String acctConnSignIn(String target) {
+    return 'Bei $target anmelden';
+  }
+
+  @override
+  String get acctConnSignInAgain => 'Erneut anmelden';
+
+  @override
+  String get acctConnSignInFailed =>
+      'Die Anmeldeseite konnte nicht geöffnet werden.';
+
+  @override
+  String acctConnSignInNotConfigured(String target) {
+    return 'Dieser Server hat keine Anwendung bei $target registriert: Verbinden Sie stattdessen mit einem API-Token.';
+  }
+
+  @override
+  String get acctConnSignInOpened =>
+      'Schließen Sie die Anmeldung im Browser ab, kommen Sie dann zurück und prüfen Sie die Verbindung.';
+
+  @override
+  String acctConnSince(String date) {
+    return 'Verbunden am $date';
+  }
+
+  @override
+  String get acctConnStatusConnected => 'Verbunden';
+
+  @override
+  String get acctConnStatusError => 'Die Verbindung ist fehlgeschlagen';
+
+  @override
+  String get acctConnStatusExpired => 'Abgemeldet: erneut anmelden';
+
+  @override
+  String get acctConnStatusPending => 'Wartet auf die Anmeldung';
+
+  @override
+  String get acctConnStatusRevoked => 'Widerrufen';
+
+  @override
+  String acctConnTenant(String tenant) {
+    return 'Unternehmen: $tenant';
+  }
+
+  @override
+  String get acctDeliveryAcknowledged => 'Vom System empfangen';
+
+  @override
+  String acctDeliveryAttempts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Versuche',
+      one: 'ein Versuch',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctDeliveryConflict =>
+      'Zu prüfen: Die Antwort fehlt oder weicht ab';
+
+  @override
+  String get acctDeliveryFailed => 'Abgelehnt';
+
+  @override
+  String get acctDeliveryGenerated => 'Datei geschrieben';
+
+  @override
+  String acctDeliveryRemote(String number) {
+    return 'Im System: $number';
+  }
+
+  @override
+  String get acctDeliveryRemoteDraft =>
+      'ein Entwurf im System, noch nicht gebucht';
+
+  @override
+  String get acctDeliverySent => 'Gesendet, wartet auf die Antwort';
+
+  @override
+  String acctJournalLogged(int logged, int unchanged) {
+    String _temp0 = intl.Intl.pluralLogic(
+      logged,
+      locale: localeName,
+      other: '$logged Belege protokolliert',
+      one: 'Ein Beleg protokolliert',
+      zero: 'Kein neuer Beleg protokolliert',
+    );
+    return '$_temp0, $unchanged unverändert';
+  }
+
+  @override
+  String get acctKindCreditNote => 'Gutschrift';
+
+  @override
+  String get acctKindExpense => 'Ausgabe';
+
+  @override
+  String get acctKindInvoice => 'Rechnung';
+
+  @override
+  String get acctKindMemberReceipt => 'Beleg eines Mitglieds';
+
+  @override
+  String get acctKindOther => 'Andere Buchung';
+
+  @override
+  String get acctKindReceipt => 'Zahlungseingang';
+
+  @override
+  String get acctKindRefund => 'Erstattung';
+
+  @override
+  String get acctKindReimbursement => 'Erstattung an ein Mitglied';
+
+  @override
+  String get acctKindSupplierBill => 'Lieferantenrechnung';
+
+  @override
+  String get acctKindSupplierCreditNote => 'Lieferantengutschrift';
+
+  @override
+  String get acctKindSupplierPayment => 'Zahlung an einen Lieferanten';
+
+  @override
+  String get acctKindVatRelease => 'Fällig gewordene Umsatzsteuer';
+
+  @override
+  String get acctKindWriteOff => 'Abschreibung';
+
+  @override
+  String get acctMapAdd => 'Zuordnung hinzufügen';
+
+  @override
+  String get acctMapDelete => 'Zuordnung entfernen';
+
+  @override
+  String get acctMapKeyInvalid => 'Das ist kein Schlüssel dieser Art.';
+
+  @override
+  String get acctMapKind => 'Was zugeordnet wird';
+
+  @override
+  String get acctMapKindAccount => 'Konto';
+
+  @override
+  String get acctMapKindItem => 'Artikel';
+
+  @override
+  String get acctMapKindParty => 'Kunde';
+
+  @override
+  String get acctMapKindTax => 'Steuerschlüssel';
+
+  @override
+  String acctMapLine(String key, String remote) {
+    return '$key → $remote';
+  }
+
+  @override
+  String get acctMapParty => 'Mitglied';
+
+  @override
+  String get acctMapQualifier => 'Satzgruppe (optional)';
+
+  @override
+  String get acctMapRemoteCode => 'Code im System';
+
+  @override
+  String get acctMapRemoteId => 'Kennung im System (optional)';
+
+  @override
+  String get acctMapRemoteMissing =>
+      'Geben Sie den Code oder die Kennung an, die das System verwendet.';
+
+  @override
+  String get acctMapRemoteName => 'Name im System (optional)';
+
+  @override
+  String get acctMapRole => 'Rolle in den Büchern';
+
+  @override
+  String get acctMapTaxKey => 'Steuerkomponente';
+
+  @override
+  String get acctMapTaxKeyHelper =>
+      'Steuer|Behörde|Behandlung|Satz|Version, wie der Steuerbericht sie gruppiert: VAT|FR|taxed|20|2014';
+
+  @override
+  String acctMapsButton(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Zuordnungen',
+      one: 'Eine Zuordnung',
+      zero: 'Zuordnungen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctMapsEmpty => 'Noch ist nichts zugeordnet.';
+
+  @override
+  String get acctMapsIntro =>
+      'Wie jedes Konto, jeder Steuerschlüssel, jeder Kunde und jeder Artikel dieser Bücher im System heißt. Eine Übermittlung, die einen hier fehlenden braucht, hält an und nennt ihn; nichts wird durch einen Standardwert ersetzt.';
+
+  @override
+  String acctMapsTitle(String target) {
+    return 'Namen in $target';
+  }
+
+  @override
+  String get acctTargetsIntro =>
+      'Wohin die Bücher jedes Ausstellers gehen. Ein verbundenes System empfängt die Belege selbst; jedes andere die aus den Büchern exportierten Dateien. Jede Übertragung steht unten mit dem Hashwert dessen, was sie getragen hat.';
+
+  @override
+  String get acctTargetsLoadFailed =>
+      'Die Buchhaltungssysteme konnten nicht geladen werden.';
+
+  @override
+  String get acctTargetsNoApiTarget =>
+      'Noch kein Buchhaltungssystem dieses Landes wird über eine Verbindung erreicht: Die Bücher gehen per Datei, aus dem Buchhaltungsexport.';
+
+  @override
+  String get acctTargetsNotConnected => 'Nicht verbunden';
+
+  @override
+  String get acctTargetsTitle => 'Buchhaltungssysteme';
+
+  @override
+  String acctTokenBody(String target) {
+    return 'Erstellen Sie in den Einstellungen von $target ein API-Token für dieses Unternehmen und fügen Sie es hier ein. Es wird verschlüsselt auf dem Server aufbewahrt und nie wieder angezeigt.';
+  }
+
+  @override
+  String get acctTokenField => 'API-Token';
+
+  @override
+  String get acctTokenName => 'Name der Verbindung';
+
+  @override
+  String get acctTokenSave => 'Verbinden';
+
+  @override
+  String acctTokenTenant(String target) {
+    return 'Unternehmenskennung bei $target (optional)';
+  }
+
+  @override
+  String acctTokenTitle(String target) {
+    return '$target mit einem API-Token verbinden';
+  }
+
+  @override
+  String get acctTokenTooShort => 'Fügen Sie das ganze Token ein.';
+
+  @override
+  String get acctTransferClosed => 'abgeschlossener Zeitraum';
+
+  @override
+  String acctTransferDocLine(String number, String kind, String date) {
+    return '$number · $kind · $date';
+  }
+
+  @override
+  String acctTransferDocuments(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count getragene Belege',
+      one: 'Ein getragener Beleg',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String acctTransferFile(String format, String from, String to) {
+    return 'Datei $format · $from – $to';
+  }
+
+  @override
+  String acctTransferFileMeta(String when, String who, int documents) {
+    String _temp0 = intl.Intl.pluralLogic(
+      documents,
+      locale: localeName,
+      other: '$documents Belege',
+      one: 'ein Beleg',
+    );
+    return '$when von $who · $_temp0';
+  }
+
+  @override
+  String acctTransferSha(String digest) {
+    return 'SHA-256 $digest';
+  }
+
+  @override
+  String get acctTransfersEmpty =>
+      'In diesem Zeitraum wurde nichts übergeben oder übermittelt.';
+
+  @override
+  String get acctTransfersIntro =>
+      'Jede übergebene Datei und jeder übermittelte Beleg des Zeitraums, mit dem SHA-256 des Getragenen: der Nachweis der digitalen Verbindung von diesen Büchern zum Buchhaltungssystem.';
+
+  @override
+  String acctTransfersPeriod(String year) {
+    return 'Jahr $year';
+  }
+
+  @override
+  String get acctTransfersTitle => 'Übertragungen';
+
+  @override
+  String get acctWhoUnknown => 'jemand, der nicht mehr im Space ist';
+
+  @override
   String get addressCountryLabel => 'Land';
 
   @override
@@ -7198,6 +7559,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureAccountingBookTitle => 'Buchführung';
+
+  @override
+  String get featureAccountingConnectorsDesc =>
+      'Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane über seine API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.';
+
+  @override
+  String get featureAccountingConnectorsTitle => 'Buchhaltungssysteme';
 
   @override
   String get featureAccountingPeriodsDesc =>
@@ -18952,6 +19320,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get refTypeInvoice => 'Rechnung';
+
+  @override
+  String get refusalAccountingClosed =>
+      'Diese Verbindung lässt das nicht mehr zu: Sie wurde widerrufen oder hat bereits übermittelt. Widerrufen Sie sie und verbinden Sie neu. Nichts wurde gespeichert.';
+
+  @override
+  String get refusalAccountingValue =>
+      'Der Server hat diesen Wert abgelehnt: Prüfen Sie Token, Schlüssel oder Aussteller und versuchen Sie es erneut. Nichts wurde gespeichert.';
 
   @override
   String get refusalAlreadyDecided =>

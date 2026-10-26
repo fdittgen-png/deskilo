@@ -288,6 +288,8 @@ String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.personalShell => l10n.featurePersonalShellDesc,
       WorkspaceFeature.foreignCurrencyPurchases =>
         l10n.featureForeignCurrencyPurchasesDesc,
+      WorkspaceFeature.accountingConnectors =>
+        l10n.featureAccountingConnectorsDesc,
       _ => feature.name,
     };
 

@@ -590,6 +590,10 @@ window.SETUP_REGISTRY={
   [
    "foreignCurrencyPurchases",
    false
+  ],
+  [
+   "accountingConnectors",
+   false
   ]
  ],
  "requires": {
@@ -673,7 +677,8 @@ window.SETUP_REGISTRY={
   "accountingPeriods": "accountingBook",
   "purchaseAnalytics": "purchases",
   "dataReport": "dataExport",
-  "foreignCurrencyPurchases": "purchases"
+  "foreignCurrencyPurchases": "purchases",
+  "accountingConnectors": "accountingBook"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1253,6 +1258,7 @@ window.SETUP_PROCESSES=[
     "features": [
      "accountingBook",
      "accountingPeriods",
+     "accountingConnectors",
      "vatManagement",
      "vatDeclarations",
      "vatGroups",
@@ -1569,7 +1575,8 @@ window.SETUP_LEVELS={
      "features": [
       "einvoiceCustomerDelivery",
       "accountingBook",
-      "accountingPeriods"
+      "accountingPeriods",
+      "accountingConnectors"
      ],
      "needs": {
       "money": "invoices"

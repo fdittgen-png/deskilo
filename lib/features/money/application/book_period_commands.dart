@@ -31,7 +31,8 @@ class BookPeriodCommands {
   /// [period] when given (#2376: a FEC covers its fiscal year):
   /// format, size and sha256. The file is the accountant's already, so a
   /// failed log is traced and never turns the export into a failure.
-  Future<void> logExport(
+  /// Answers the log row's id, null when nothing was logged.
+  Future<String?> logExport(
     String workspaceId, {
     required String formatId,
     required int year,
@@ -54,7 +55,7 @@ class BookPeriodCommands {
 
   /// [logExport] for a file of [bytes] (a zip) of the calendar [year]
   /// holding [rows] records.
-  Future<void> logExportBytes(
+  Future<String?> logExportBytes(
     String workspaceId, {
     required String formatId,
     required int year,
@@ -76,13 +77,13 @@ class BookPeriodCommands {
   );
 
   /// Records [what] with the digest and size of [bytes].
-  Future<void> _record(
+  Future<String?> _record(
     String workspaceId,
     List<int> bytes,
     BookExportRecord what,
   ) async {
     try {
-      await _repository.recordExport(
+      return await _repository.recordExport(
         workspaceId,
         BookExportRecord(
           formatId: what.formatId,
@@ -101,6 +102,7 @@ class BookPeriodCommands {
         error: e,
         stackTrace: st,
       );
+      return null;
     }
   }
 

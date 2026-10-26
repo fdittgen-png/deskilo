@@ -71,7 +71,8 @@ void main() {
     // #2583 — workspaceOverview: the overview is asked for.
     // #2552 — personalShell: the person's layer is the installation's decision.
     // #3031 — foreignCurrencyPurchases: another currency is asked for.
-    expect(onCount, featureManifest.length - 49);
+    // #2370 — accountingConnectors: the accounting systems are asked for.
+    expect(onCount, featureManifest.length - 50);
   });
 
   testWidgets(

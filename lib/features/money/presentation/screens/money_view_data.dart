@@ -141,6 +141,8 @@ class MoneyViewData {
   bool get assetRegisterOn => _on(WorkspaceFeature.assetRegister);
   bool get externalRoomsOn => _on(WorkspaceFeature.externalRooms);
   bool get accountingPeriodsOn => _on(WorkspaceFeature.accountingPeriods);
+  bool get accountingConnectorsOn =>
+      _on(WorkspaceFeature.accountingConnectors);
 
   /// 0042 — the owner put this member on the package plan.
   bool get onPackagePlan => member?.overagePolicy == OveragePolicy.package;
