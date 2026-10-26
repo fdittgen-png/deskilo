@@ -7037,6 +7037,38 @@
   "@decisionSurfaceEmptyDetail": {
     "description": "#1247: decisionSurfaceEmptyDetail"
   },
+  "decorCouch": "Couch",
+  "@decorCouch": {
+    "description": "#3074 the plan's drawn shapes: decorCouch"
+  },
+  "decorDoor": "Door",
+  "@decorDoor": {
+    "description": "#3074 the plan's drawn shapes: decorDoor"
+  },
+  "decorKitchen": "Kitchen",
+  "@decorKitchen": {
+    "description": "#3074 the plan's drawn shapes: decorKitchen"
+  },
+  "decorPillar": "Pillar",
+  "@decorPillar": {
+    "description": "#3074 the plan's drawn shapes: decorPillar"
+  },
+  "decorTable": "Table",
+  "@decorTable": {
+    "description": "#3074 the plan's drawn shapes: decorTable"
+  },
+  "decorWall": "Wall",
+  "@decorWall": {
+    "description": "#3074 the plan's drawn shapes: decorWall"
+  },
+  "decorWc": "WC",
+  "@decorWc": {
+    "description": "#3074 the plan's drawn shapes: decorWc"
+  },
+  "decorWindow": "Window",
+  "@decorWindow": {
+    "description": "#3074 the plan's drawn shapes: decorWindow"
+  },
   "defaultPeriodNone": "No preference (full day)",
   "defaultPeriodTitle": "Default booking period",
   "demoEntryAction": "Explore the demo workspace",
@@ -8176,6 +8208,10 @@
   "@editorConnectorType2": {
     "description": "#2631 resource_editor: editorConnectorType2"
   },
+  "editorDecorPaletteHint": "Draw the room as it is: walls, doors and windows frame it, the rest furnishes it.",
+  "@editorDecorPaletteHint": {
+    "description": "#3074 the plan's drawn shapes: editorDecorPaletteHint"
+  },
   "editorDeleteElementConfirm": "Delete this element? Anything placed on it is removed too.",
   "@editorDeleteElementConfirm": {
     "description": "Confirmation body for the erase tool"
@@ -8223,6 +8259,10 @@
   "editorEmptyFloorTitle": "This floor is empty",
   "@editorEmptyFloorTitle": {
     "description": "#1216 the card shown on a level nobody has drawn on yet"
+  },
+  "editorHintDecor": "Tap the plan to drop the shape; drag it to place it",
+  "@editorHintDecor": {
+    "description": "#3074 the plan's drawn shapes: editorHintDecor"
   },
   "editorHintDesk": "Drag inside an office to draw a desk",
   "@editorHintDesk": {
@@ -8372,6 +8412,10 @@
   "@editorRoomProperties": {
     "description": "#2631 resource_editor: editorRoomProperties"
   },
+  "editorRotate": "Rotate",
+  "@editorRotate": {
+    "description": "#3074 the plan's drawn shapes: editorRotate"
+  },
   "editorSeatNameDefault": "Seat",
   "@editorSeatNameDefault": {
     "description": "Default seat name prefix; a number is appended"
@@ -8420,6 +8464,10 @@
   "editorTitle": "Workspace editor",
   "@editorTitle": {
     "description": "App-bar title of the owner-only workspace editor"
+  },
+  "editorToolDecor": "Shapes",
+  "@editorToolDecor": {
+    "description": "#3074 the plan's drawn shapes: editorToolDecor"
   },
   "editorToolDesk": "Desk",
   "@editorToolDesk": {

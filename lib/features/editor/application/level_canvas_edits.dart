@@ -87,6 +87,34 @@ class LevelCanvasEdits {
     imageId: imageId,
   );
 
+  /// A drawn symbol at [rect]; [imageId] keeps a retry to one.
+  Future<void> createDecor(
+    String workspaceId, {
+    required PlanDecorKind kind,
+    required GridRect rect,
+    required String imageId,
+  }) => _repository.createPlanDecor(
+    workspaceId: workspaceId,
+    levelId: levelId,
+    rect: rect,
+    kind: kind,
+    imageId: imageId,
+  );
+
+  /// Turns the symbol [image] a quarter clockwise about its centre: the
+  /// footprint swaps its sides and the symbol keeps its place.
+  Future<void> rotateDecor(PlanImage image) async {
+    final r = image.rect;
+    final cx2 = 2 * r.x + r.w, cy2 = 2 * r.y + r.h;
+    final x = ((cx2 - r.h) / 2).floor().clamp(0, 1 << 20);
+    final y = ((cy2 - r.w) / 2).floor().clamp(0, 1 << 20);
+    await _repository.updatePlanImageRect(
+      image.id,
+      GridRect(x: x, y: y, w: r.h, h: r.w),
+    );
+    await _repository.setPlanDecorTurns(image.id, (image.quarterTurns + 1) % 4);
+  }
+
   Future<void> setBackground(String workspaceId, PickedImage image) =>
       _repository.setLevelBackground(
         workspaceId,

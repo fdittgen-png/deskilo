@@ -10,7 +10,6 @@ import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/floor_plan_editing.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
-import 'package:deskilo/features/plan/domain/plan_image.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';

@@ -141,7 +141,8 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           ? EditorSelectionBar(
               kind: selected.kind,
               // An image has no name of its own, so the bar says what it is.
-              name: selected.name ?? l10n.editorToolImage,
+              name: selected.name ??
+                  decorOrImageName(l10n, selectedDecorOf(shownPlan!, _selectedKind, _selectedId)),
               onEdit: selected.kind == ElementKind.image
                   ? null
                   : () => _flows.editElement(
@@ -150,15 +151,15 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
                   ? () => _flows.duplicateSeat(
                       context, shownPlan!, _selectedId)
                   : null,
-              onDelete: () => _deleteSelection(shownPlan!),
+              onDelete: () => _deleteSelection(shownPlan),
               onDismiss: _clearSelection,
+              onRotate: selectedDecorOf(shownPlan!, _selectedKind, _selectedId) == null
+                  ? null
+                  : () => _rotateSelection(shownPlan),
             )
           : EditorToolbar(
               armed: _tool,
-              onArm: (tool) {
-                _clearSelection();
-                setState(() => _tool = tool);
-              },
+              onArm: (tool) => unawaited(_arm(tool)),
             ),
       // Keep the canvas mounted whenever we have ANY plan to show — the last
       // fetched one during a reload. Matching only AsyncData here swapped in a
@@ -404,6 +405,13 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       await _flows.placeSeat(context, plan, cell);
       return;
     }
+    final decor = _decorKind;
+    if (_tool == EditorTool.decor && decor != null) {
+      await _flows.placeDecor(context, cell, decor, onPlaced: () {
+        if (mounted) setState(() => _tool = null);
+      });
+      return;
+    }
     if (_tool == EditorTool.image) {
       await _flows.placeImage(context, cell,
           // Back to the resting state so the fresh image can be moved or
@@ -435,6 +443,27 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       _draft = null;
       _draftValid = true;
     });
+  }
+
+  /// The shape the next tap draws (#3074), chosen from the palette.
+  PlanDecorKind? _decorKind;
+
+  /// Arms [tool]; the shapes tool first asks which shape to draw.
+  Future<void> _arm(EditorTool? tool) async {
+    _clearSelection();
+    final kind = tool == EditorTool.decor ? await pickDecorKind(context) : null;
+    if (!mounted || (tool == EditorTool.decor && kind == null)) return;
+    setState(() {
+      _decorKind = kind;
+      _tool = tool;
+    });
+  }
+
+  Future<void> _rotateSelection(FloorPlan plan) async {
+    final image = selectedDecorOf(plan, _selectedKind, _selectedId);
+    if (image == null) return;
+    await _edits.rotateDecor(image);
+    _refresh();
   }
 
   /// Delete what is selected. The element is outlined on the canvas in

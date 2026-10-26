@@ -5715,6 +5715,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get decisionSurfaceEmptyDetail => 'Todo está resuelto.';
 
   @override
+  String get decorCouch => 'Sofá';
+
+  @override
+  String get decorDoor => 'Puerta';
+
+  @override
+  String get decorKitchen => 'Cocina';
+
+  @override
+  String get decorPillar => 'Pilar';
+
+  @override
+  String get decorTable => 'Mesa';
+
+  @override
+  String get decorWall => 'Pared';
+
+  @override
+  String get decorWc => 'WC';
+
+  @override
+  String get decorWindow => 'Ventana';
+
+  @override
   String get defaultPeriodNone => 'Sin preferencia (día completo)';
 
   @override
@@ -6675,6 +6699,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editorConnectorType2 => 'Tipo 2';
 
   @override
+  String get editorDecorPaletteHint =>
+      'Dibuje la sala tal como es: paredes, puertas y ventanas la enmarcan, el resto la amuebla.';
+
+  @override
   String get editorDeleteElementConfirm =>
       '¿Eliminar este elemento? Todo lo colocado sobre él también se eliminará.';
 
@@ -6714,6 +6742,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get editorEmptyFloorTitle => 'Esta planta está vacía';
+
+  @override
+  String get editorHintDecor =>
+      'Toque el plano para soltar la forma; arrástrela a su sitio';
 
   @override
   String get editorHintDesk =>
@@ -6834,6 +6866,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editorRoomProperties => 'Sala de reuniones';
 
   @override
+  String get editorRotate => 'Girar';
+
+  @override
   String get editorSeatNameDefault => 'Asiento';
 
   @override
@@ -6884,6 +6919,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get editorTitle => 'Editor del espacio';
+
+  @override
+  String get editorToolDecor => 'Formas';
 
   @override
   String get editorToolDesk => 'Mesa';

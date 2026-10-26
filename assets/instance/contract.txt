@@ -1038,8 +1038,11 @@ constraint payment_intents.payment_intents_workspace_id_fkey FOREIGN KEY (worksp
 constraint payment_intents.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint payment_intents.system_company_present CHECK ((company_id IS NOT NULL))
 constraint plan_images.plan_images_h_check CHECK ((h > 0))
+constraint plan_images.plan_images_kind_check CHECK (((kind IS NULL) OR (kind = ANY (ARRAY['wall'::text, 'door'::text, 'window'::text, 'pillar'::text, 'table'::text, 'couch'::text, 'wc'::text, 'kitchen'::text]))))
 constraint plan_images.plan_images_level_id_fkey FOREIGN KEY (level_id) REFERENCES levels(id) ON DELETE CASCADE
+constraint plan_images.plan_images_photo_or_symbol CHECK (((storage_path IS NULL) = (kind IS NOT NULL)))
 constraint plan_images.plan_images_pkey PRIMARY KEY (id)
+constraint plan_images.plan_images_quarter_turns_check CHECK (((quarter_turns >= 0) AND (quarter_turns <= 3)))
 constraint plan_images.plan_images_w_check CHECK ((w > 0))
 constraint plan_images.plan_images_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint plan_images.system_columns_order CHECK ((modified_datetime >= created_datetime))

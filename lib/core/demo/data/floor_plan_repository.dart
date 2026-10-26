@@ -7,7 +7,6 @@ import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/office.dart';
-import 'package:deskilo/features/plan/domain/plan_image.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/plan/domain/seat_context.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'

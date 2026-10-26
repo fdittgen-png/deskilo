@@ -5687,6 +5687,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get decisionSurfaceEmptyDetail => 'Everything is answered.';
 
   @override
+  String get decorCouch => 'Couch';
+
+  @override
+  String get decorDoor => 'Door';
+
+  @override
+  String get decorKitchen => 'Kitchen';
+
+  @override
+  String get decorPillar => 'Pillar';
+
+  @override
+  String get decorTable => 'Table';
+
+  @override
+  String get decorWall => 'Wall';
+
+  @override
+  String get decorWc => 'WC';
+
+  @override
+  String get decorWindow => 'Window';
+
+  @override
   String get defaultPeriodNone => 'No preference (full day)';
 
   @override
@@ -6639,6 +6663,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorConnectorType2 => 'Type 2';
 
   @override
+  String get editorDecorPaletteHint =>
+      'Draw the room as it is: walls, doors and windows frame it, the rest furnishes it.';
+
+  @override
   String get editorDeleteElementConfirm =>
       'Delete this element? Anything placed on it is removed too.';
 
@@ -6678,6 +6706,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorEmptyFloorTitle => 'This floor is empty';
+
+  @override
+  String get editorHintDecor =>
+      'Tap the plan to drop the shape; drag it to place it';
 
   @override
   String get editorHintDesk => 'Drag inside an office to draw a desk';
@@ -6794,6 +6826,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorRoomProperties => 'Meeting room';
 
   @override
+  String get editorRotate => 'Rotate';
+
+  @override
   String get editorSeatNameDefault => 'Seat';
 
   @override
@@ -6841,6 +6876,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorTitle => 'Workspace editor';
+
+  @override
+  String get editorToolDecor => 'Shapes';
 
   @override
   String get editorToolDesk => 'Desk';

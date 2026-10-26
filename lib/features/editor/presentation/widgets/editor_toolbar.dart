@@ -68,6 +68,11 @@ class EditorToolbar extends StatelessWidget {
                 Icons.add_photo_alternate_outlined,
                 l10n.editorToolImage,
               ),
+              (
+                EditorTool.decor,
+                Icons.category_outlined,
+                l10n.editorToolDecor,
+              ),
             ])
               Expanded(
                 child: _ToolButton(

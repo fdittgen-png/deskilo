@@ -6,7 +6,6 @@ import 'floor_plan.dart';
 import 'grid_geometry.dart';
 import 'level.dart';
 import 'office.dart';
-import 'plan_image.dart';
 import 'seat.dart';
 import 'seat_context.dart';
 

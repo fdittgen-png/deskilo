@@ -35,6 +35,7 @@ class EditorToolHint extends StatelessWidget {
         EditorTool.seat => l10n.editorHintSeat,
         EditorTool.image =>
           l10n.editorHintImage,
+        EditorTool.decor => l10n.editorHintDecor,
       };
 
   @override

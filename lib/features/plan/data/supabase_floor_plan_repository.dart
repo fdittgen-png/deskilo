@@ -16,14 +16,16 @@ import '../domain/floor_plan_repository.dart';
 import '../domain/grid_geometry.dart';
 import '../domain/level.dart';
 import '../domain/office.dart';
-import '../domain/plan_image.dart';
 import '../domain/seat.dart';
 import '../domain/seat_context.dart';
 import 'place_index.dart';
+import 'plan_decor_writes.dart';
 import 'plan_media_steps.dart';
 import 'plan_media_sweep.dart';
 
-class SupabaseFloorPlanRepository implements FloorPlanRepository {
+class SupabaseFloorPlanRepository
+    with PlanDecorWrites
+    implements FloorPlanRepository {
   SupabaseFloorPlanRepository(this._client, this._cache);
 
   final SupabaseClient _client;
@@ -46,6 +48,12 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
 
   @override
   Future<void> invalidateCache() => _bust();
+
+  @override
+  SupabaseClient get decorClient => _client;
+
+  @override
+  Future<void> bustPlanCache() => _bust();
 
   @override
   Future<List<Level>> fetchLevels(String workspaceId) =>
@@ -357,7 +365,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
       offices: section('offices').map(_officeFromRow).toList(),
       desks: section('desks').map(_deskFromRow).toList(),
       seats: section('seats').map(_seatFromRow).toList(),
-      images: section('images').map(_planImageFromRow).toList(),
+      images: section('images').map(planImageFromRow).toList(),
     );
   }
 
@@ -406,44 +414,7 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     // Read back: the row a first attempt committed is the answer.
     final row =
         await _client.from('plan_images').select().eq('id', id).single();
-    return _planImageFromRow(row);
-  }
-
-  @override
-  Future<PlanImage> createPlanDecor({
-    required String workspaceId,
-    required String levelId,
-    required GridRect rect,
-    required PlanDecorKind kind,
-    String? imageId,
-  }) async {
-    final id = imageId ?? newRequestId();
-    await _client.from('plan_images').upsert(
-      {
-        'id': id,
-        'workspace_id': workspaceId,
-        'level_id': levelId,
-        'x': rect.x,
-        'y': rect.y,
-        'w': rect.w,
-        'h': rect.h,
-        'kind': kind.name,
-      },
-      onConflict: 'id',
-      ignoreDuplicates: true,
-    );
-    await _bust();
-    final row = await _client.from('plan_images').select().eq('id', id).single();
-    return _planImageFromRow(row);
-  }
-
-  @override
-  Future<void> setPlanDecorTurns(String imageId, int quarterTurns) async {
-    await _client
-        .from('plan_images')
-        .update({'quarter_turns': quarterTurns})
-        .eq('id', imageId);
-    await _bust();
+    return planImageFromRow(row);
   }
 
   @override
@@ -490,16 +461,6 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
     if (path == null || path == 'pending') return null;
     return _client.storage.from('floor-plans').download(path);
   }
-
-  PlanImage _planImageFromRow(Map<String, dynamic> row) => PlanImage(
-        system: SystemColumns.fromRow(row),
-        id: row['id'] as String,
-        levelId: row['level_id'] as String,
-        rect: _rectFromRow(row),
-        storagePath: row['storage_path'] as String?,
-        kind: PlanDecorKind.fromWire(row['kind'] as String?),
-        quarterTurns: (row['quarter_turns'] as num?)?.toInt() ?? 0,
-      );
 
   @override
   Future<Office> createOffice({
