@@ -298,6 +298,13 @@ const STEPS=[
   if((scheme()==='sepa'||scheme()==='ch')&&S.pay.iban.trim()&&!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(S.pay.iban.replace(/\s+/g,'').toUpperCase()))f.push(F.err(T('payErrIban'),'pay'));
   if(scheme()==='ch'&&S.pay.qr_iban.trim()&&!/^(CH|LI)\d{2}3[01]\d{3}[A-Z0-9]{12}$/.test(S.pay.qr_iban.replace(/\s+/g,'').toUpperCase()))f.push(F.err(T('payErrQrIban'),'pay'));return f}},
 
+// #2380 — the books: the bank's statement files the space imports and
+// matches (platform settings bank.import_max_bytes and bank.import_max_lines,
+// the space's bank.match_window_days).
+{id:'accounting',get title(){return T('accountingTitle')},get why(){return T('accountingWhy')},applies(){return on('bankImport')},
+ build(st=this){const{selectEl}=ui(st);return[selectEl(T('bankMaxBytes'),'bank.maxBytes',opts(BANK_MAX_BYTES),T('bankMaxBytesHint'),null,'pay'),selectEl(T('bankMaxLines'),'bank.maxLines',opts(BANK_MAX_LINES),T('bankMaxLinesHint'),null,'pay'),selectEl(T('bankMatchWindow'),'bank.matchWindow',opts(BANK_WINDOW),T('bankMatchWindowHint'),null,'pay')]},
+ check(){return[F.ok(T('accountingOk'))]}},
+
 {id:'roles',get title(){return T('rolesTitle')},get why(){return T('rolesWhy')},
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);const k=[];
   if(on('roleManagement')){k.push(help('roles'));for(const[role,label]of[['co_owner','roleCoOwner'],['admin','roleAdmin'],['member','roleEveryMember']]){if(role==='co_owner'&&!on('coOwner'))continue;

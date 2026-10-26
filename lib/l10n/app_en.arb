@@ -2038,6 +2038,420 @@
   "@badgeTokenOnce": {
     "description": "Warning under the freshly issued badge QR; the raw token is never recoverable later"
   },
+  "bankBasisAmount": "same amount and payer",
+  "@bankBasisAmount": {
+    "description": "#2380 Why suggested: same amount, same payer, recent."
+  },
+  "bankBasisCreditorReference": "RF reference",
+  "@bankBasisCreditorReference": {
+    "description": "#2380 Why suggested: the RF creditor reference."
+  },
+  "bankBasisInvoiceNumber": "invoice number in the text",
+  "@bankBasisInvoiceNumber": {
+    "description": "#2380 Why suggested: the invoice number in the text."
+  },
+  "bankBasisQrReference": "QR reference",
+  "@bankBasisQrReference": {
+    "description": "#2380 Why suggested: the QR reference."
+  },
+  "bankConfirmReferences": "{count, plural, =1{Confirm 1 match by reference} other{Confirm {count} matches by reference}}",
+  "@bankConfirmReferences": {
+    "description": "#2380 Lines sheet: confirm every match by structured reference.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bankConfirmedReferences": "{count, plural, =1{1 payment matched.} other{{count} payments matched.}}",
+  "@bankConfirmedReferences": {
+    "description": "#2380 Snack: how many reference matches were confirmed.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bankCsvAccount": "Account (IBAN)",
+  "@bankCsvAccount": {
+    "description": "#2380 CSV sheet: the account the file is about."
+  },
+  "bankCsvAccountHint": "A spreadsheet rarely names its account; the same account keeps its movements apart from another's.",
+  "@bankCsvAccountHint": {
+    "description": "#2380 CSV sheet: why the account is asked for."
+  },
+  "bankCsvAmount": "Amount column (or money in)",
+  "@bankCsvAmount": {
+    "description": "#2380 CSV sheet: the amount column (money in when money out is apart)."
+  },
+  "bankCsvColumn": "Column {n} ({first})",
+  "@bankCsvColumn": {
+    "description": "#2380 CSV sheet: a column of a file without a header row, by number and first cell.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "first": {
+        "type": "String"
+      }
+    }
+  },
+  "bankCsvCounterparty": "Payer or payee column",
+  "@bankCsvCounterparty": {
+    "description": "#2380 CSV sheet: the payer or payee column."
+  },
+  "bankCsvCounterpartyIban": "Payer or payee IBAN column",
+  "@bankCsvCounterpartyIban": {
+    "description": "#2380 CSV sheet: the payer's or payee's IBAN column."
+  },
+  "bankCsvCurrency": "Currency",
+  "@bankCsvCurrency": {
+    "description": "#2380 CSV sheet: the currency of the movements."
+  },
+  "bankCsvCurrencyColumn": "Currency column, when the file has one",
+  "@bankCsvCurrencyColumn": {
+    "description": "#2380 CSV sheet: the currency column, when the file has one."
+  },
+  "bankCsvDate": "Date column",
+  "@bankCsvDate": {
+    "description": "#2380 CSV sheet: the booking date column."
+  },
+  "bankCsvDateFormat": "Date format",
+  "@bankCsvDateFormat": {
+    "description": "#2380 CSV sheet: how the file writes a day."
+  },
+  "bankCsvDebit": "Money-out column, when apart",
+  "@bankCsvDebit": {
+    "description": "#2380 CSV sheet: the money-out column when it is apart."
+  },
+  "bankCsvDecimalComma": "Amounts use a decimal comma",
+  "@bankCsvDecimalComma": {
+    "description": "#2380 CSV sheet: amounts use a decimal comma."
+  },
+  "bankCsvDuplicateColumn": "A column is chosen twice: give each column one meaning.",
+  "@bankCsvDuplicateColumn": {
+    "description": "#2380 CSV sheet: a column chosen for two meanings."
+  },
+  "bankCsvHeader": "The first row names the columns",
+  "@bankCsvHeader": {
+    "description": "#2380 CSV sheet: the first row names the columns."
+  },
+  "bankCsvNeedsAccount": "Name the account, in at most {max} characters.",
+  "@bankCsvNeedsAccount": {
+    "description": "#2380 CSV sheet: the account is missing or longer than its column.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "bankCsvNeedsAmount": "Choose the amount column.",
+  "@bankCsvNeedsAmount": {
+    "description": "#2380 CSV sheet: no amount column chosen."
+  },
+  "bankCsvNeedsCurrency": "Give the currency in three letters (EUR, CHF).",
+  "@bankCsvNeedsCurrency": {
+    "description": "#2380 CSV sheet: the currency is not three letters."
+  },
+  "bankCsvNeedsDate": "Choose the date column.",
+  "@bankCsvNeedsDate": {
+    "description": "#2380 CSV sheet: no date column chosen."
+  },
+  "bankCsvNone": "None",
+  "@bankCsvNone": {
+    "description": "#2380 CSV sheet: no column chosen."
+  },
+  "bankCsvReference": "Reference column",
+  "@bankCsvReference": {
+    "description": "#2380 CSV sheet: the reference column."
+  },
+  "bankCsvRemittance": "Text column",
+  "@bankCsvRemittance": {
+    "description": "#2380 CSV sheet: the text column."
+  },
+  "bankCsvTitle": "Read the spreadsheet",
+  "@bankCsvTitle": {
+    "description": "#2380 CSV sheet title."
+  },
+  "bankCsvTransactionId": "Bank transaction id column",
+  "@bankCsvTransactionId": {
+    "description": "#2380 CSV sheet: the bank's own id column."
+  },
+  "bankCsvValueDate": "Value date column",
+  "@bankCsvValueDate": {
+    "description": "#2380 CSV sheet: the value date column."
+  },
+  "bankFileTypeLabel": "Bank statement",
+  "@bankFileTypeLabel": {
+    "description": "#2380 File picker: the kind of file asked for."
+  },
+  "bankFormatCamt053": "ISO 20022 statement (camt.053)",
+  "@bankFormatCamt053": {
+    "description": "#2380 Format: ISO 20022 end-of-day statement."
+  },
+  "bankFormatCamt054": "ISO 20022 notification (camt.054)",
+  "@bankFormatCamt054": {
+    "description": "#2380 Format: ISO 20022 debit/credit notification."
+  },
+  "bankFormatCoda": "CODA (Belgium)",
+  "@bankFormatCoda": {
+    "description": "#2380 Format: Belgian CODA."
+  },
+  "bankFormatCsv": "Spreadsheet (CSV)",
+  "@bankFormatCsv": {
+    "description": "#2380 Format: a spreadsheet export whose columns are mapped."
+  },
+  "bankFormatMt940": "SWIFT MT940",
+  "@bankFormatMt940": {
+    "description": "#2380 Format: SWIFT MT940."
+  },
+  "bankFormatOfx": "OFX / QFX",
+  "@bankFormatOfx": {
+    "description": "#2380 Format: OFX or QFX."
+  },
+  "bankFormatRead": "Read",
+  "@bankFormatRead": {
+    "description": "#2380 Format dialog and CSV sheet: read the file."
+  },
+  "bankFormatTitle": "Which file is this?",
+  "@bankFormatTitle": {
+    "description": "#2380 Format dialog: which format the file is in."
+  },
+  "bankImportAction": "Import a statement",
+  "@bankImportAction": {
+    "description": "#2380 Bank statements: import a file."
+  },
+  "bankImportFailed": "The statement could not be imported. Nothing was added.",
+  "@bankImportFailed": {
+    "description": "#2380 Snack: the server refused or could not be reached."
+  },
+  "bankImportRepeated": "This file was already imported. Nothing was added.",
+  "@bankImportRepeated": {
+    "description": "#2380 Snack: this very file was imported before."
+  },
+  "bankImported": "Imported: {created} new, {known} already known, {review} to review.",
+  "@bankImported": {
+    "description": "#2380 Snack: what an import did.",
+    "placeholders": {
+      "created": {
+        "type": "int"
+      },
+      "known": {
+        "type": "int"
+      },
+      "review": {
+        "type": "int"
+      }
+    }
+  },
+  "bankLineDuplicate": "Duplicate",
+  "@bankLineDuplicate": {
+    "description": "#2380 Movement status: a duplicate, settles nothing."
+  },
+  "bankLineMatched": "Settles {number}",
+  "@bankLineMatched": {
+    "description": "#2380 Movement status: matched to an invoice.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "bankLineMoneyOut": "Money out, to reconcile",
+  "@bankLineMoneyOut": {
+    "description": "#2380 Movement status: money out, not reconciled."
+  },
+  "bankLineOpen": "To match",
+  "@bankLineOpen": {
+    "description": "#2380 Movement status: money in to match."
+  },
+  "bankLinePending": "{number}: awaiting approval",
+  "@bankLinePending": {
+    "description": "#2380 Movement status: its match awaits the validators.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "bankLineReconciled": "Reconciled with a recorded payment",
+  "@bankLineReconciled": {
+    "description": "#2380 Movement status: money out reconciled."
+  },
+  "bankLineRecorded": "Payment recorded, no invoice yet",
+  "@bankLineRecorded": {
+    "description": "#2380 Movement status: the payment exists, settles no invoice yet."
+  },
+  "bankLineReview": "Possibly imported already: review it",
+  "@bankLineReview": {
+    "description": "#2380 Movement status: it resembles a movement of another statement."
+  },
+  "bankLineSaved": "Saved.",
+  "@bankLineSaved": {
+    "description": "#2380 Snack: the decision on a movement is saved."
+  },
+  "bankLineSuggested": "Suggested: {number} ({why})",
+  "@bankLineSuggested": {
+    "description": "#2380 Movement: the suggested invoice and why.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "why": {
+        "type": "String"
+      }
+    }
+  },
+  "bankMatchConfirm": "Confirm",
+  "@bankMatchConfirm": {
+    "description": "#2380 Match and reconcile dialogs: confirm."
+  },
+  "bankMatchFailed": "The movement could not be matched. Nothing was changed.",
+  "@bankMatchFailed": {
+    "description": "#2380 Snack: the server refused the decision."
+  },
+  "bankMatchNoInvoice": "No open invoice in this currency.",
+  "@bankMatchNoInvoice": {
+    "description": "#2380 Match dialog: no open invoice in this currency."
+  },
+  "bankMatchPick": "The invoice this payment settles",
+  "@bankMatchPick": {
+    "description": "#2380 Match dialog: choose the invoice."
+  },
+  "bankMatchTitle": "Match {amount}",
+  "@bankMatchTitle": {
+    "description": "#2380 Match dialog title, with the movement's amount.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "bankOutNone": "No payment of this amount is recorded as made.",
+  "@bankOutNone": {
+    "description": "#2380 Reconcile dialog: no recorded payment of this amount."
+  },
+  "bankOutTitle": "The payment recorded as made",
+  "@bankOutTitle": {
+    "description": "#2380 Reconcile dialog title for money out."
+  },
+  "bankRefusedAtLine": "{reason} (line {line})",
+  "@bankRefusedAtLine": {
+    "description": "#2380 Refusal: the reason and the line it was found at.",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      },
+      "line": {
+        "type": "int"
+      }
+    }
+  },
+  "bankRefusedBadAmount": "An amount in the file is not a valid amount. Nothing was imported.",
+  "@bankRefusedBadAmount": {
+    "description": "#2380 Refusal: an amount is not a valid amount."
+  },
+  "bankRefusedBadCurrency": "The file has an unknown currency, or several currencies on one account. Nothing was imported.",
+  "@bankRefusedBadCurrency": {
+    "description": "#2380 Refusal: a currency is wrong or several are mixed."
+  },
+  "bankRefusedBadDate": "A date in the file is not a valid day. Nothing was imported.",
+  "@bankRefusedBadDate": {
+    "description": "#2380 Refusal: a date is not a calendar day."
+  },
+  "bankRefusedEmpty": "The file holds no movement. Nothing was imported.",
+  "@bankRefusedEmpty": {
+    "description": "#2380 Refusal: no movement at all."
+  },
+  "bankRefusedMalformed": "The file cannot be read as {format}. Nothing was imported.",
+  "@bankRefusedMalformed": {
+    "description": "#2380 Refusal: the file cannot be read as the chosen format.",
+    "placeholders": {
+      "format": {
+        "type": "String"
+      }
+    }
+  },
+  "bankRefusedMissingAccount": "The file names no account. Nothing was imported.",
+  "@bankRefusedMissingAccount": {
+    "description": "#2380 Refusal: the file names no account."
+  },
+  "bankRefusedTooLarge": "The file is larger than this server imports. Nothing was imported.",
+  "@bankRefusedTooLarge": {
+    "description": "#2380 Refusal: the file is larger than the setting allows."
+  },
+  "bankRefusedTooLong": "An account or a bank transaction id in the file is longer than a statement keeps. Nothing was imported.",
+  "@bankRefusedTooLong": {
+    "description": "#2380 Refusal: an account or a bank id longer than a statement keeps."
+  },
+  "bankRefusedTooManyLines": "The file has more than {max} movements. Split it by period at the bank. Nothing was imported.",
+  "@bankRefusedTooManyLines": {
+    "description": "#2380 Refusal: more movements than one import takes.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "bankReviewBody": "Another statement holds a movement with the same day, amount and details, and the bank gave neither an identity. Keep it if it is a second payment.",
+  "@bankReviewBody": {
+    "description": "#2380 Review dialog: why the movement waits."
+  },
+  "bankReviewDuplicate": "It is a duplicate",
+  "@bankReviewDuplicate": {
+    "description": "#2380 Review dialog: the same movement read twice."
+  },
+  "bankReviewKeep": "Keep it",
+  "@bankReviewKeep": {
+    "description": "#2380 Review dialog: a second genuine movement."
+  },
+  "bankReviewTitle": "Imported already?",
+  "@bankReviewTitle": {
+    "description": "#2380 Review dialog title."
+  },
+  "bankStatementCounts": "{count, plural, =1{1 movement} other{{count} movements}}, {open} to do",
+  "@bankStatementCounts": {
+    "description": "#2380 Bank statements: the movements of one statement and how many still wait.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "open": {
+        "type": "int"
+      }
+    }
+  },
+  "bankStatementPeriod": "{account} · {from} – {to}",
+  "@bankStatementPeriod": {
+    "description": "#2380 Bank statements: one statement, its account and period.",
+    "placeholders": {
+      "account": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "bankStatementsEmpty": "No statement imported yet.",
+  "@bankStatementsEmpty": {
+    "description": "#2380 Bank statements: none imported yet."
+  },
+  "bankStatementsIntro": "Import the files your bank produces. Each movement is read once; the payments are matched to their invoices when you confirm.",
+  "@bankStatementsIntro": {
+    "description": "#2380 Bank statements sheet: what it is for."
+  },
+  "bankStatementsLoadFailed": "The bank statements could not be loaded.",
+  "@bankStatementsLoadFailed": {
+    "description": "#2380 Bank statements: the list could not be loaded."
+  },
+  "bankStatementsTitle": "Bank statements",
+  "@bankStatementsTitle": {
+    "description": "#2380 Money: the bank statements button and sheet title."
+  },
   "baseRoleNote": "Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.",
   "@baseRoleNote": {
     "description": "the mandatory base role"
@@ -9331,6 +9745,14 @@
   "featureBadgeSignInTitle": "Sign in with a badge",
   "@featureBadgeSignInTitle": {
     "description": "#662 - feature registry entry"
+  },
+  "featureBankImportDesc": "Reads the bank's statement files (camt.053/054, MT940, CODA, OFX/QFX or a spreadsheet) into the space, each movement once, and suggests the invoice each payment settles by the QR or RF reference printed on it, its number or its amount; a person confirms every match, and the rest stays in a work list. A payment out reconciles a payment already recorded as made.",
+  "@featureBankImportDesc": {
+    "description": "#2380 Features screen: what the bank statements flag does."
+  },
+  "featureBankImportTitle": "Bank statements",
+  "@featureBankImportTitle": {
+    "description": "#2380 Features screen: the bank statements flag."
   },
   "featureBiReportDesignerDesc": "Turn a saved analysis into an editable report of pages and cards. A report stores the question, never the figures: everyone sees only what their own rights allow. Off: saved views stay as they are and existing reports can still be read.",
   "@featureBiReportDesignerDesc": {
@@ -23132,6 +23554,18 @@
   "@refusalAlreadyDecided": {
     "description": "#1305 Shown when a validation was already decided by someone else"
   },
+  "refusalBankFileRefused": "The server refused the statement whole (too large, too many movements, or several currencies). Nothing was imported.",
+  "@refusalBankFileRefused": {
+    "description": "#2380 Refusal DKB03: the server refused the statement whole."
+  },
+  "refusalBankLineDecided": "This movement was decided meanwhile (matched, reconciled or reviewed). The list shows where it stands now.",
+  "@refusalBankLineDecided": {
+    "description": "#2380 Refusal DKB01: the movement was decided meanwhile."
+  },
+  "refusalBankLineRefused": "This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.",
+  "@refusalBankLineRefused": {
+    "description": "#2380 Refusal DKB02: the movement and its choice do not go together."
+  },
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
@@ -25590,6 +26024,18 @@
   "@settingHintAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
   },
+  "settingHintBankImportMaxBytes": "A larger file is refused whole before it is read.",
+  "@settingHintBankImportMaxBytes": {
+    "description": "#2380 Settings hint: the largest bank file."
+  },
+  "settingHintBankImportMaxLines": "A statement with more is refused whole; split it by period at the bank.",
+  "@settingHintBankImportMaxLines": {
+    "description": "#2380 Settings hint: the most movements per import."
+  },
+  "settingHintBankMatchWindowDays": "How many days before a payment its invoice may have been issued to be suggested by amount and payer alone. A person always confirms.",
+  "@settingHintBankMatchWindowDays": {
+    "description": "#2380 Settings hint: the window of a suggestion by amount."
+  },
   "settingHintBiBatchMaxRequests": "The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.",
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
@@ -25797,6 +26243,18 @@
   "settingLabelAssetsValuationMaxRows": "Valuation rows per batch",
   "@settingLabelAssetsValuationMaxRows": {
     "description": "#2576 valuation settings"
+  },
+  "settingLabelBankImportMaxBytes": "Largest bank statement file",
+  "@settingLabelBankImportMaxBytes": {
+    "description": "#2380 Settings: the largest bank file read."
+  },
+  "settingLabelBankImportMaxLines": "Movements per bank statement",
+  "@settingLabelBankImportMaxLines": {
+    "description": "#2380 Settings: the most movements per import."
+  },
+  "settingLabelBankMatchWindowDays": "Invoice window for a payment without reference",
+  "@settingLabelBankMatchWindowDays": {
+    "description": "#2380 Settings: the window of a suggestion by amount."
   },
   "settingLabelBiBatchMaxRequests": "Figures per report read",
   "@settingLabelBiBatchMaxRequests": {

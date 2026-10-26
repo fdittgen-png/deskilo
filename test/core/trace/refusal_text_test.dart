@@ -96,6 +96,21 @@ void main() {
       }
     });
 
+    test('a bank statement explains its own refusals (#2380, DKB01-03)', () {
+      final decided = _pg('this movement already settles an invoice', code: 'DKB01');
+      expect(knownRefusalOf(decided), KnownRefusal.bankLineDecided);
+      expect(knownRefusalText(englishL10n, decided), contains('decided meanwhile'));
+      expect(knownRefusalOf(_pg('money out settles no invoice', code: 'DKB02')),
+          KnownRefusal.bankLineRefused);
+      expect(knownRefusalOf(_pg('too many movements', code: 'DKB03')),
+          KnownRefusal.bankFileRefused);
+      // The codes are the server's: the migration still raises each.
+      final sql = File('supabase/migrations/0603_bank_statements.sql').readAsStringSync();
+      for (final code in ['DKB01', 'DKB02', 'DKB03']) {
+        expect(sql, contains("errcode = '$code'"), reason: code);
+      }
+    });
+
     test('a rate on issued invoices changes by law (#2356, DKV01)', () {
       final e = _pg('vat_rate_versioned: Standard 20 % is on issued invoices; '
           'change it by law from a date', code: 'DKV01');

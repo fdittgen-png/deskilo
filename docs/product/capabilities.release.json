@@ -782,6 +782,12 @@
       "capabilities": []
     },
     {
+      "key": "bankImport",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "biReportDesigner",
       "maturity": "beta",
       "lifecycle": "active",

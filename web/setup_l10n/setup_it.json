@@ -714,5 +714,16 @@
  "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
  "supLookupRate": "Ricerche fornitore al minuto",
  "supLookupRateHint": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server; le altre risultano occupate e non viene inviato nulla al registro. Si imposta nelle impostazioni dell'app.",
- "optPerMinute": "{n} al minuto"
+ "optPerMinute": "{n} al minuto",
+ "bankMaxBytes": "Dimensione massima di un estratto conto",
+ "bankMaxBytesHint": "Un file più grande viene rifiutato per intero prima di essere letto. Impostazione del server, nelle impostazioni dell'app.",
+ "bankMaxLines": "Movimenti per estratto conto",
+ "bankMaxLinesHint": "Un estratto con più movimenti viene rifiutato per intero; lo suddivida per periodo presso la banca. Si imposta nelle impostazioni dell'app.",
+ "bankMatchWindow": "Finestra delle fatture per un pagamento senza riferimento",
+ "bankMatchWindowHint": "Quanti giorni prima di un pagamento può essere stata emessa la sua fattura per essere proposta in base al solo importo e al pagatore; conferma sempre una persona. Si imposta nelle impostazioni dell'app.",
+ "optMegabytes": "{n} MB",
+ "optMovements": "{n} movimenti",
+ "accountingTitle": "Contabilità e banca",
+ "accountingWhy": "Come gli estratti conto della banca vengono letti nello spazio e abbinati alle sue fatture.",
+ "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati."
 }

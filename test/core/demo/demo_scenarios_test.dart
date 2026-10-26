@@ -17,6 +17,7 @@
 import 'dart:async';
 
 import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
+import 'package:deskilo/core/demo/data/bank_statement_repository.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
@@ -37,6 +38,7 @@ import 'package:deskilo/core/demo/seed/demo_valuation_seed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/domain/asset_valuation.dart';
+import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
@@ -605,6 +607,23 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'Bruno pays his bill '
     'online (the provider is simulated)',
     (w) => _open(w, 'member-2'),
+  ),
+  WorkspaceFeature.bankImport: _state(
+    _owner,
+    "the bank's last statement: two "
+    'invoices paid with their QR and RF references, a transfer without one '
+    'in the work list, and a reimbursement going out that reconciles the '
+    'payment reported as made',
+    (w) async {
+      final repo = seedDemoBankStatements(w.f.money, w.now);
+      final statement = (await repo.fetchStatements('ws-1')).single;
+      final lines = await repo.fetchLines(statement.id);
+      final open = openInvoices(w.f.money.invoices, w.f.money.invoiceMatchesStore);
+      final byReference = BankWorkList(lines, open, windowDays: 60).referenceBatch;
+      return byReference.length == 2 &&
+          lines.any((l) => l.isMoneyIn && l.reference.isEmpty) &&
+          lines.any((l) => !l.isMoneyIn && l.outgoingCandidates.isNotEmpty);
+    },
   ),
   WorkspaceFeature.dunning: _state(
     _owner,

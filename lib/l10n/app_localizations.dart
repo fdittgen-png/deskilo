@@ -2995,6 +2995,486 @@ abstract class AppLocalizations {
   /// **'Save this QR now — it is shown only once.'**
   String get badgeTokenOnce;
 
+  /// #2380 Why suggested: same amount, same payer, recent.
+  ///
+  /// In en, this message translates to:
+  /// **'same amount and payer'**
+  String get bankBasisAmount;
+
+  /// #2380 Why suggested: the RF creditor reference.
+  ///
+  /// In en, this message translates to:
+  /// **'RF reference'**
+  String get bankBasisCreditorReference;
+
+  /// #2380 Why suggested: the invoice number in the text.
+  ///
+  /// In en, this message translates to:
+  /// **'invoice number in the text'**
+  String get bankBasisInvoiceNumber;
+
+  /// #2380 Why suggested: the QR reference.
+  ///
+  /// In en, this message translates to:
+  /// **'QR reference'**
+  String get bankBasisQrReference;
+
+  /// #2380 Lines sheet: confirm every match by structured reference.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Confirm 1 match by reference} other{Confirm {count} matches by reference}}'**
+  String bankConfirmReferences(int count);
+
+  /// #2380 Snack: how many reference matches were confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 payment matched.} other{{count} payments matched.}}'**
+  String bankConfirmedReferences(int count);
+
+  /// #2380 CSV sheet: the account the file is about.
+  ///
+  /// In en, this message translates to:
+  /// **'Account (IBAN)'**
+  String get bankCsvAccount;
+
+  /// #2380 CSV sheet: why the account is asked for.
+  ///
+  /// In en, this message translates to:
+  /// **'A spreadsheet rarely names its account; the same account keeps its movements apart from another\'s.'**
+  String get bankCsvAccountHint;
+
+  /// #2380 CSV sheet: the amount column (money in when money out is apart).
+  ///
+  /// In en, this message translates to:
+  /// **'Amount column (or money in)'**
+  String get bankCsvAmount;
+
+  /// #2380 CSV sheet: a column of a file without a header row, by number and first cell.
+  ///
+  /// In en, this message translates to:
+  /// **'Column {n} ({first})'**
+  String bankCsvColumn(int n, String first);
+
+  /// #2380 CSV sheet: the payer or payee column.
+  ///
+  /// In en, this message translates to:
+  /// **'Payer or payee column'**
+  String get bankCsvCounterparty;
+
+  /// #2380 CSV sheet: the payer's or payee's IBAN column.
+  ///
+  /// In en, this message translates to:
+  /// **'Payer or payee IBAN column'**
+  String get bankCsvCounterpartyIban;
+
+  /// #2380 CSV sheet: the currency of the movements.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get bankCsvCurrency;
+
+  /// #2380 CSV sheet: the currency column, when the file has one.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency column, when the file has one'**
+  String get bankCsvCurrencyColumn;
+
+  /// #2380 CSV sheet: the booking date column.
+  ///
+  /// In en, this message translates to:
+  /// **'Date column'**
+  String get bankCsvDate;
+
+  /// #2380 CSV sheet: how the file writes a day.
+  ///
+  /// In en, this message translates to:
+  /// **'Date format'**
+  String get bankCsvDateFormat;
+
+  /// #2380 CSV sheet: the money-out column when it is apart.
+  ///
+  /// In en, this message translates to:
+  /// **'Money-out column, when apart'**
+  String get bankCsvDebit;
+
+  /// #2380 CSV sheet: amounts use a decimal comma.
+  ///
+  /// In en, this message translates to:
+  /// **'Amounts use a decimal comma'**
+  String get bankCsvDecimalComma;
+
+  /// #2380 CSV sheet: a column chosen for two meanings.
+  ///
+  /// In en, this message translates to:
+  /// **'A column is chosen twice: give each column one meaning.'**
+  String get bankCsvDuplicateColumn;
+
+  /// #2380 CSV sheet: the first row names the columns.
+  ///
+  /// In en, this message translates to:
+  /// **'The first row names the columns'**
+  String get bankCsvHeader;
+
+  /// #2380 CSV sheet: the account is missing or longer than its column.
+  ///
+  /// In en, this message translates to:
+  /// **'Name the account, in at most {max} characters.'**
+  String bankCsvNeedsAccount(int max);
+
+  /// #2380 CSV sheet: no amount column chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the amount column.'**
+  String get bankCsvNeedsAmount;
+
+  /// #2380 CSV sheet: the currency is not three letters.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the currency in three letters (EUR, CHF).'**
+  String get bankCsvNeedsCurrency;
+
+  /// #2380 CSV sheet: no date column chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the date column.'**
+  String get bankCsvNeedsDate;
+
+  /// #2380 CSV sheet: no column chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get bankCsvNone;
+
+  /// #2380 CSV sheet: the reference column.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference column'**
+  String get bankCsvReference;
+
+  /// #2380 CSV sheet: the text column.
+  ///
+  /// In en, this message translates to:
+  /// **'Text column'**
+  String get bankCsvRemittance;
+
+  /// #2380 CSV sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Read the spreadsheet'**
+  String get bankCsvTitle;
+
+  /// #2380 CSV sheet: the bank's own id column.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transaction id column'**
+  String get bankCsvTransactionId;
+
+  /// #2380 CSV sheet: the value date column.
+  ///
+  /// In en, this message translates to:
+  /// **'Value date column'**
+  String get bankCsvValueDate;
+
+  /// #2380 File picker: the kind of file asked for.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank statement'**
+  String get bankFileTypeLabel;
+
+  /// #2380 Format: ISO 20022 end-of-day statement.
+  ///
+  /// In en, this message translates to:
+  /// **'ISO 20022 statement (camt.053)'**
+  String get bankFormatCamt053;
+
+  /// #2380 Format: ISO 20022 debit/credit notification.
+  ///
+  /// In en, this message translates to:
+  /// **'ISO 20022 notification (camt.054)'**
+  String get bankFormatCamt054;
+
+  /// #2380 Format: Belgian CODA.
+  ///
+  /// In en, this message translates to:
+  /// **'CODA (Belgium)'**
+  String get bankFormatCoda;
+
+  /// #2380 Format: a spreadsheet export whose columns are mapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Spreadsheet (CSV)'**
+  String get bankFormatCsv;
+
+  /// #2380 Format: SWIFT MT940.
+  ///
+  /// In en, this message translates to:
+  /// **'SWIFT MT940'**
+  String get bankFormatMt940;
+
+  /// #2380 Format: OFX or QFX.
+  ///
+  /// In en, this message translates to:
+  /// **'OFX / QFX'**
+  String get bankFormatOfx;
+
+  /// #2380 Format dialog and CSV sheet: read the file.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get bankFormatRead;
+
+  /// #2380 Format dialog: which format the file is in.
+  ///
+  /// In en, this message translates to:
+  /// **'Which file is this?'**
+  String get bankFormatTitle;
+
+  /// #2380 Bank statements: import a file.
+  ///
+  /// In en, this message translates to:
+  /// **'Import a statement'**
+  String get bankImportAction;
+
+  /// #2380 Snack: the server refused or could not be reached.
+  ///
+  /// In en, this message translates to:
+  /// **'The statement could not be imported. Nothing was added.'**
+  String get bankImportFailed;
+
+  /// #2380 Snack: this very file was imported before.
+  ///
+  /// In en, this message translates to:
+  /// **'This file was already imported. Nothing was added.'**
+  String get bankImportRepeated;
+
+  /// #2380 Snack: what an import did.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported: {created} new, {known} already known, {review} to review.'**
+  String bankImported(int created, int known, int review);
+
+  /// #2380 Movement status: a duplicate, settles nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get bankLineDuplicate;
+
+  /// #2380 Movement status: matched to an invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Settles {number}'**
+  String bankLineMatched(String number);
+
+  /// #2380 Movement status: money out, not reconciled.
+  ///
+  /// In en, this message translates to:
+  /// **'Money out, to reconcile'**
+  String get bankLineMoneyOut;
+
+  /// #2380 Movement status: money in to match.
+  ///
+  /// In en, this message translates to:
+  /// **'To match'**
+  String get bankLineOpen;
+
+  /// #2380 Movement status: its match awaits the validators.
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: awaiting approval'**
+  String bankLinePending(String number);
+
+  /// #2380 Movement status: money out reconciled.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconciled with a recorded payment'**
+  String get bankLineReconciled;
+
+  /// #2380 Movement status: the payment exists, settles no invoice yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment recorded, no invoice yet'**
+  String get bankLineRecorded;
+
+  /// #2380 Movement status: it resembles a movement of another statement.
+  ///
+  /// In en, this message translates to:
+  /// **'Possibly imported already: review it'**
+  String get bankLineReview;
+
+  /// #2380 Snack: the decision on a movement is saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get bankLineSaved;
+
+  /// #2380 Movement: the suggested invoice and why.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested: {number} ({why})'**
+  String bankLineSuggested(String number, String why);
+
+  /// #2380 Match and reconcile dialogs: confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get bankMatchConfirm;
+
+  /// #2380 Snack: the server refused the decision.
+  ///
+  /// In en, this message translates to:
+  /// **'The movement could not be matched. Nothing was changed.'**
+  String get bankMatchFailed;
+
+  /// #2380 Match dialog: no open invoice in this currency.
+  ///
+  /// In en, this message translates to:
+  /// **'No open invoice in this currency.'**
+  String get bankMatchNoInvoice;
+
+  /// #2380 Match dialog: choose the invoice.
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice this payment settles'**
+  String get bankMatchPick;
+
+  /// #2380 Match dialog title, with the movement's amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Match {amount}'**
+  String bankMatchTitle(String amount);
+
+  /// #2380 Reconcile dialog: no recorded payment of this amount.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment of this amount is recorded as made.'**
+  String get bankOutNone;
+
+  /// #2380 Reconcile dialog title for money out.
+  ///
+  /// In en, this message translates to:
+  /// **'The payment recorded as made'**
+  String get bankOutTitle;
+
+  /// #2380 Refusal: the reason and the line it was found at.
+  ///
+  /// In en, this message translates to:
+  /// **'{reason} (line {line})'**
+  String bankRefusedAtLine(String reason, int line);
+
+  /// #2380 Refusal: an amount is not a valid amount.
+  ///
+  /// In en, this message translates to:
+  /// **'An amount in the file is not a valid amount. Nothing was imported.'**
+  String get bankRefusedBadAmount;
+
+  /// #2380 Refusal: a currency is wrong or several are mixed.
+  ///
+  /// In en, this message translates to:
+  /// **'The file has an unknown currency, or several currencies on one account. Nothing was imported.'**
+  String get bankRefusedBadCurrency;
+
+  /// #2380 Refusal: a date is not a calendar day.
+  ///
+  /// In en, this message translates to:
+  /// **'A date in the file is not a valid day. Nothing was imported.'**
+  String get bankRefusedBadDate;
+
+  /// #2380 Refusal: no movement at all.
+  ///
+  /// In en, this message translates to:
+  /// **'The file holds no movement. Nothing was imported.'**
+  String get bankRefusedEmpty;
+
+  /// #2380 Refusal: the file cannot be read as the chosen format.
+  ///
+  /// In en, this message translates to:
+  /// **'The file cannot be read as {format}. Nothing was imported.'**
+  String bankRefusedMalformed(String format);
+
+  /// #2380 Refusal: the file names no account.
+  ///
+  /// In en, this message translates to:
+  /// **'The file names no account. Nothing was imported.'**
+  String get bankRefusedMissingAccount;
+
+  /// #2380 Refusal: the file is larger than the setting allows.
+  ///
+  /// In en, this message translates to:
+  /// **'The file is larger than this server imports. Nothing was imported.'**
+  String get bankRefusedTooLarge;
+
+  /// #2380 Refusal: an account or a bank id longer than a statement keeps.
+  ///
+  /// In en, this message translates to:
+  /// **'An account or a bank transaction id in the file is longer than a statement keeps. Nothing was imported.'**
+  String get bankRefusedTooLong;
+
+  /// #2380 Refusal: more movements than one import takes.
+  ///
+  /// In en, this message translates to:
+  /// **'The file has more than {max} movements. Split it by period at the bank. Nothing was imported.'**
+  String bankRefusedTooManyLines(int max);
+
+  /// #2380 Review dialog: why the movement waits.
+  ///
+  /// In en, this message translates to:
+  /// **'Another statement holds a movement with the same day, amount and details, and the bank gave neither an identity. Keep it if it is a second payment.'**
+  String get bankReviewBody;
+
+  /// #2380 Review dialog: the same movement read twice.
+  ///
+  /// In en, this message translates to:
+  /// **'It is a duplicate'**
+  String get bankReviewDuplicate;
+
+  /// #2380 Review dialog: a second genuine movement.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it'**
+  String get bankReviewKeep;
+
+  /// #2380 Review dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported already?'**
+  String get bankReviewTitle;
+
+  /// #2380 Bank statements: the movements of one statement and how many still wait.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 movement} other{{count} movements}}, {open} to do'**
+  String bankStatementCounts(int count, int open);
+
+  /// #2380 Bank statements: one statement, its account and period.
+  ///
+  /// In en, this message translates to:
+  /// **'{account} · {from} – {to}'**
+  String bankStatementPeriod(String account, String from, String to);
+
+  /// #2380 Bank statements: none imported yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No statement imported yet.'**
+  String get bankStatementsEmpty;
+
+  /// #2380 Bank statements sheet: what it is for.
+  ///
+  /// In en, this message translates to:
+  /// **'Import the files your bank produces. Each movement is read once; the payments are matched to their invoices when you confirm.'**
+  String get bankStatementsIntro;
+
+  /// #2380 Bank statements: the list could not be loaded.
+  ///
+  /// In en, this message translates to:
+  /// **'The bank statements could not be loaded.'**
+  String get bankStatementsLoadFailed;
+
+  /// #2380 Money: the bank statements button and sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank statements'**
+  String get bankStatementsTitle;
+
   /// the mandatory base role
   ///
   /// In en, this message translates to:
@@ -12718,6 +13198,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in with a badge'**
   String get featureBadgeSignInTitle;
+
+  /// #2380 Features screen: what the bank statements flag does.
+  ///
+  /// In en, this message translates to:
+  /// **'Reads the bank\'s statement files (camt.053/054, MT940, CODA, OFX/QFX or a spreadsheet) into the space, each movement once, and suggests the invoice each payment settles by the QR or RF reference printed on it, its number or its amount; a person confirms every match, and the rest stays in a work list. A payment out reconciles a payment already recorded as made.'**
+  String get featureBankImportDesc;
+
+  /// #2380 Features screen: the bank statements flag.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank statements'**
+  String get featureBankImportTitle;
 
   /// #2579 analytical reports
   ///
@@ -32556,6 +33048,24 @@ abstract class AppLocalizations {
   /// **'Someone has already decided this. The list shows the outcome.'**
   String get refusalAlreadyDecided;
 
+  /// #2380 Refusal DKB03: the server refused the statement whole.
+  ///
+  /// In en, this message translates to:
+  /// **'The server refused the statement whole (too large, too many movements, or several currencies). Nothing was imported.'**
+  String get refusalBankFileRefused;
+
+  /// #2380 Refusal DKB01: the movement was decided meanwhile.
+  ///
+  /// In en, this message translates to:
+  /// **'This movement was decided meanwhile (matched, reconciled or reviewed). The list shows where it stands now.'**
+  String get refusalBankLineDecided;
+
+  /// #2380 Refusal DKB02: the movement and its choice do not go together.
+  ///
+  /// In en, this message translates to:
+  /// **'This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.'**
+  String get refusalBankLineRefused;
+
   /// #1305 Shown when an invoice changed state before the action reached the server
   ///
   /// In en, this message translates to:
@@ -36426,6 +36936,24 @@ abstract class AppLocalizations {
   /// **'The most rows one batch of the accountant\'s valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.'**
   String get settingHintAssetsValuationMaxRows;
 
+  /// #2380 Settings hint: the largest bank file.
+  ///
+  /// In en, this message translates to:
+  /// **'A larger file is refused whole before it is read.'**
+  String get settingHintBankImportMaxBytes;
+
+  /// #2380 Settings hint: the most movements per import.
+  ///
+  /// In en, this message translates to:
+  /// **'A statement with more is refused whole; split it by period at the bank.'**
+  String get settingHintBankImportMaxLines;
+
+  /// #2380 Settings hint: the window of a suggestion by amount.
+  ///
+  /// In en, this message translates to:
+  /// **'How many days before a payment its invoice may have been issued to be suggested by amount and payer alone. A person always confirms.'**
+  String get settingHintBankMatchWindowDays;
+
   /// #2578 BI settings
   ///
   /// In en, this message translates to:
@@ -36737,6 +37265,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Valuation rows per batch'**
   String get settingLabelAssetsValuationMaxRows;
+
+  /// #2380 Settings: the largest bank file read.
+  ///
+  /// In en, this message translates to:
+  /// **'Largest bank statement file'**
+  String get settingLabelBankImportMaxBytes;
+
+  /// #2380 Settings: the most movements per import.
+  ///
+  /// In en, this message translates to:
+  /// **'Movements per bank statement'**
+  String get settingLabelBankImportMaxLines;
+
+  /// #2380 Settings: the window of a suggestion by amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice window for a payment without reference'**
+  String get settingLabelBankMatchWindowDays;
 
   /// #2578 BI settings
   ///

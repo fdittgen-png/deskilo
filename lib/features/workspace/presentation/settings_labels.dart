@@ -74,6 +74,14 @@ String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_pages' => l10n.settingLabelBiReportMaxPages,
       'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
+      _ => _bankSettingLabel(l10n, key),
+    };
+
+/// #2380 -- the bank statement import's bounds and suggestion window.
+String _bankSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'bank.import_max_bytes' => l10n.settingLabelBankImportMaxBytes,
+      'bank.import_max_lines' => l10n.settingLabelBankImportMaxLines,
+      'bank.match_window_days' => l10n.settingLabelBankMatchWindowDays,
       _ => key,
     };
 
@@ -142,6 +150,13 @@ String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) 
       'bi.report_max_pages' => l10n.settingHintBiReportMaxPages,
       'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
+      _ => _bankSettingHint(l10n, key),
+    };
+
+String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'bank.import_max_bytes' => l10n.settingHintBankImportMaxBytes,
+      'bank.import_max_lines' => l10n.settingHintBankImportMaxLines,
+      'bank.match_window_days' => l10n.settingHintBankMatchWindowDays,
       _ => null,
     };
 

@@ -20,6 +20,7 @@ import '../../features/calendar/providers/calendar_providers.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/me/providers/me_providers.dart'
     show myReservationsSourcesFromMe;
+import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
@@ -31,6 +32,7 @@ import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
+import 'data/bank_statement_repository.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
@@ -88,6 +90,11 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
   final homeKpi = kpi(home.money);
   final myReservations = _myReservations(fixture);
   final secondKpi = kpi(second.money);
+  final homeBank = seedDemoBankStatements(home.money, home.seededAt);
+  final secondBank = FakeBankStatementRepository(
+    money: second.money,
+    today: home.seededAt,
+  );
   return [
     workspaceRepositoryProvider.overrideWith(
       (ref) => pick(ref, home.workspaces, second.workspaces),
@@ -135,6 +142,10 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     // #2591 — each money port has its own demo adapter over the space's
     // one in-memory store; the facade stays for the tests that read it.
     moneyRepositoryProvider.overrideWith(money),
+    // #2380 — the main space's last bank statement; the second has none yet.
+    bankStatementRepositoryProvider.overrideWith(
+      (ref) => pick(ref, homeBank, secondBank),
+    ),
     invoiceQueriesProvider.overrideWith((ref) => money(ref).invoiceQueries),
     memberAccountQueriesProvider.overrideWith(
       (ref) => money(ref).accountQueries,

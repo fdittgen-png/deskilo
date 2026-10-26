@@ -164,6 +164,46 @@ constraint asset_valuation_rows.system_columns_order CHECK ((modified_datetime >
 constraint asset_valuation_rows.system_company_present CHECK ((company_id IS NOT NULL))
 constraint badge_auth_attempts.badge_auth_attempts_pkey PRIMARY KEY (id)
 constraint badge_auth_attempts.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bank_statement_lines.bank_statement_lines_account_check CHECK (((char_length(account) >= 1) AND (char_length(account) <= 64)))
+constraint bank_statement_lines.bank_statement_lines_amount_cents_check CHECK (((amount_cents <> 0) AND (abs(amount_cents) <= 2147483647)))
+constraint bank_statement_lines.bank_statement_lines_check CHECK (((state <> 'review'::text) OR (resembles_line_id IS NOT NULL)))
+constraint bank_statement_lines.bank_statement_lines_check1 CHECK (((payment_ledger_id IS NULL) OR (amount_cents > 0)))
+constraint bank_statement_lines.bank_statement_lines_check2 CHECK (((outgoing_payment_id IS NULL) OR (amount_cents < 0)))
+constraint bank_statement_lines.bank_statement_lines_counterparty_iban_check CHECK ((counterparty_iban ~ '^[A-Z0-9]{0,34}$'::text))
+constraint bank_statement_lines.bank_statement_lines_counterparty_name_check CHECK ((char_length(counterparty_name) <= 140))
+constraint bank_statement_lines.bank_statement_lines_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint bank_statement_lines.bank_statement_lines_end_to_end_id_check CHECK ((char_length(end_to_end_id) <= 35))
+constraint bank_statement_lines.bank_statement_lines_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE SET NULL
+constraint bank_statement_lines.bank_statement_lines_line_hash_check CHECK ((line_hash ~ '^[0-9a-f]{64}$'::text))
+constraint bank_statement_lines.bank_statement_lines_matched_by_member_id_fkey FOREIGN KEY (matched_by_member_id) REFERENCES members(id) ON DELETE SET NULL
+constraint bank_statement_lines.bank_statement_lines_outgoing_payment_id_fkey FOREIGN KEY (outgoing_payment_id) REFERENCES outgoing_payments(id) ON DELETE SET NULL
+constraint bank_statement_lines.bank_statement_lines_payment_ledger_id_fkey FOREIGN KEY (payment_ledger_id) REFERENCES ledger_entries(id) ON DELETE SET NULL
+constraint bank_statement_lines.bank_statement_lines_pkey PRIMARY KEY (id)
+constraint bank_statement_lines.bank_statement_lines_position UNIQUE (statement_id, "position")
+constraint bank_statement_lines.bank_statement_lines_position_check CHECK (("position" >= 1))
+constraint bank_statement_lines.bank_statement_lines_reference_check CHECK ((reference ~ '^[A-Z0-9]{0,35}$'::text))
+constraint bank_statement_lines.bank_statement_lines_remittance_check CHECK ((char_length(remittance) <= 1000))
+constraint bank_statement_lines.bank_statement_lines_resembles_line_id_fkey FOREIGN KEY (resembles_line_id) REFERENCES bank_statement_lines(id) ON DELETE SET NULL
+constraint bank_statement_lines.bank_statement_lines_reviewed_by_member_id_fkey FOREIGN KEY (reviewed_by_member_id) REFERENCES members(id) ON DELETE SET NULL
+constraint bank_statement_lines.bank_statement_lines_state_check CHECK ((state = ANY (ARRAY['open'::text, 'review'::text, 'duplicate'::text])))
+constraint bank_statement_lines.bank_statement_lines_statement_id_fkey FOREIGN KEY (statement_id) REFERENCES bank_statements(id) ON DELETE CASCADE
+constraint bank_statement_lines.bank_statement_lines_transaction_id_check CHECK ((char_length(transaction_id) <= 140))
+constraint bank_statement_lines.bank_statement_lines_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint bank_statement_lines.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bank_statement_lines.system_company_present CHECK ((company_id IS NOT NULL))
+constraint bank_statements.bank_statements_account_check CHECK (((char_length(account) >= 1) AND (char_length(account) <= 64)))
+constraint bank_statements.bank_statements_check CHECK ((period_to >= period_from))
+constraint bank_statements.bank_statements_currency_check CHECK ((currency ~ '^[A-Z]{3}$'::text))
+constraint bank_statements.bank_statements_file_name_check CHECK ((char_length(file_name) <= 255))
+constraint bank_statements.bank_statements_format_check CHECK ((format = ANY (ARRAY['camt053'::text, 'camt054'::text, 'mt940'::text, 'coda'::text, 'ofx'::text, 'csv'::text])))
+constraint bank_statements.bank_statements_imported_by_member_id_fkey FOREIGN KEY (imported_by_member_id) REFERENCES members(id) ON DELETE SET NULL
+constraint bank_statements.bank_statements_pkey PRIMARY KEY (id)
+constraint bank_statements.bank_statements_source UNIQUE (workspace_id, source_sha256)
+constraint bank_statements.bank_statements_source_sha256_check CHECK ((source_sha256 ~ '^[0-9a-f]{64}$'::text))
+constraint bank_statements.bank_statements_statement_ref_check CHECK ((char_length(statement_ref) <= 140))
+constraint bank_statements.bank_statements_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint bank_statements.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint bank_statements.system_company_present CHECK ((company_id IS NOT NULL))
 constraint bi_cost_allocation_rules.bi_cost_allocation_rules_basis_check CHECK (((char_length(btrim(basis)) >= 1) AND (char_length(btrim(basis)) <= 300)))
 constraint bi_cost_allocation_rules.bi_cost_allocation_rules_category_check CHECK ((char_length(category) <= 80))
 constraint bi_cost_allocation_rules.bi_cost_allocation_rules_check CHECK (((purchase_line_id IS NULL) <> (category = ''::text)))
@@ -1910,6 +1950,12 @@ routine public.asset_valuations_page_v1(p_workspace_id uuid, p_filters jsonb, p_
 routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d7e8160735b
 routine public.badge_auth_verify(p_uid text, p_pin text) -> jsonb | function | definer | volatile | exec:service_role | body:72d7485dcf0b
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
+routine public.bank_import_actor(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:716d86bbf858
+routine public.bank_line_hash(p_account text, p_booking date, p_value date, p_amount bigint, p_currency text, p_reference text, p_end_to_end text, p_iban text, p_remittance text) -> text | function | invoker | immutable | exec:service_role | body:7a38c4adb37d
+routine public.bank_line_status(l bank_statement_lines) -> text | function | definer | stable | exec:service_role | body:313425c5a2ff
+routine public.bank_statement_lines_v1(p_statement_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4ba69858a780
+routine public.bank_statement_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:40e3eb8e6cf6
+routine public.bank_statements_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5f3e293f231
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
 routine public.bi_cost_allocation_rules_guard() -> trigger | function | invoker | volatile | exec:service_role | body:1accf0f116ad
 routine public.bi_definition_for_reader(p_workspace_id uuid, p jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:f3058d8868ca
@@ -2068,7 +2114,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:b819e638be08
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:23f413092a9e
 routine public.federation_answer_wait() -> interval | function | definer | stable | exec: | body:ecc7c683d6e9
 routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
 routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:9eb383212bb9
@@ -2116,6 +2162,7 @@ routine public.identity_status_drain() -> jsonb | function | definer | volatile 
 routine public.identity_status_issue(p_user uuid, p_status text) -> integer | function | definer | volatile | exec: | body:a88a61387f1f
 routine public.identity_status_linked_targets(p_user uuid) -> SETOF uuid | function | definer | stable | exec: | body:c186af7603f1
 routine public.identity_status_on_account_change() -> trigger | function | definer | volatile | exec: | body:e2b19e7c50c1
+routine public.import_bank_statement_v1(p_workspace_id uuid, p_statement jsonb, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04298c18cd9e
 routine public.import_closure_days(p_workspace_id uuid, p_days jsonb, p_apply boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e99f11021cb3
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:bc90d83d1544
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f20c38cf0ab5
@@ -2225,6 +2272,7 @@ routine public.mark_instance_notice_read(p_id uuid) -> jsonb | function | define
 routine public.mark_member_notes_read(p_workspace_id uuid, p_from_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:4d0a83c717a6
 routine public.mark_payment_failed(p_provider text, p_order_id text) -> void | function | definer | volatile | exec:service_role | body:75d9d37905a1
 routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:a65d618c53b6
+routine public.match_bank_line_v1(p_line_id uuid, p_invoice_id uuid, p_resolution text, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fc175d03524e
 routine public.match_einvoice(p_inbox_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:dbae7df91e2e
 routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:1e9db86583a4
 routine public.match_purchase_commitments_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_matches jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ed8832a5c76f
@@ -2489,7 +2537,7 @@ routine public.operator_set_installation_roles(p_roles text[], p_installation_id
 routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | definer | volatile | exec:service_role | body:c659b2933f84
 routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:46902c960cbd
 routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:862bc3e5136b
-routine public.outgoing_payments_guard() -> trigger | function | invoker | volatile | exec:service_role | body:4bbded633c7e
+routine public.outgoing_payments_guard() -> trigger | function | invoker | volatile | exec:service_role | body:f39ec0341d2b
 routine public.owns_workspace_template(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f91919c37225
 routine public.payment_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:39efd058a90d
 routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f135c6a70d02
@@ -2577,6 +2625,7 @@ routine public.purge_expired_field_answer_holds() -> integer | function | define
 routine public.react_to_message(p_kind text, p_message_id uuid, p_emoji text) -> void | function | definer | volatile | exec:authenticated,service_role | body:30da61c7ed4b
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
 routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with time zone, p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:5ddacb1438c6
+routine public.reconcile_bank_line_out_v1(p_line_id uuid, p_outgoing_payment_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e5450258fe42
 routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:543a1c987f88
 routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, subject uuid, detail text) | function | definer | volatile | exec:authenticated,service_role | body:62bcd10a8d15
 routine public.record_accounting_delivery(p_connection_id uuid, p_document_kind text, p_document_id uuid, p_event_date date, p_document_number text, p_period_from date, p_period_to date, p_payload_sha256 text, p_status text, p_remote jsonb, p_error text) -> jsonb | function | definer | volatile | exec:service_role | body:d8a127d312db
@@ -2666,6 +2715,7 @@ routine public.retention_until(p_workspace_id uuid, p_class text, p_document_dat
 routine public.retire_invite_code() -> trigger | function | definer | volatile | exec:service_role | body:be59ed519e67
 routine public.reverse_commitment_match_v1(p_workspace_id uuid, p_match_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:97d633ba12e0
 routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d30e7f7dde11
+routine public.review_bank_line_v1(p_line_id uuid, p_duplicate boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6386a82bf7d4
 routine public.revoke_accounting_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:94fb907fe07b
 routine public.revoke_database_admin_internal(p_target uuid, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:0bfc1190fea1
 routine public.revoke_handover(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:acc4131b50b3
@@ -2819,7 +2869,7 @@ routine public.setup_closure_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | 
 routine public.setup_current_levels(p_flags jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:b6d27e138549
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:e538d2964b75
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:bf72b263bf88
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e6938ac89e2d
 routine public.setup_numbering_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c64909ab9fba
@@ -2867,7 +2917,7 @@ routine public.tax_threshold_cents(p_country text, p_key text) -> bigint | funct
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c3aa21449e53
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:e5aa44976767
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
@@ -3003,6 +3053,8 @@ trigger analytics_history.zz_system_columns_stamp CREATE TRIGGER zz_system_colum
 trigger asset_valuation_batches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.asset_valuation_batches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger asset_valuation_rows.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.asset_valuation_rows FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger badge_auth_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.badge_auth_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger bank_statement_lines.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_statement_lines FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger bank_statements.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bank_statements FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bi_cost_allocation_rules.bi_cost_allocation_rules_guard CREATE TRIGGER bi_cost_allocation_rules_guard BEFORE UPDATE ON public.bi_cost_allocation_rules FOR EACH ROW EXECUTE FUNCTION bi_cost_allocation_rules_guard()
 trigger bi_cost_allocation_rules.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.bi_cost_allocation_rules FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger bi_export_evidence.bi_export_evidence_append_only CREATE TRIGGER bi_export_evidence_append_only BEFORE UPDATE ON public.bi_export_evidence FOR EACH ROW EXECUTE FUNCTION bi_export_evidence_append_only()

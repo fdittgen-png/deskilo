@@ -8,6 +8,12 @@
 abstract final class SettingDefaults {
   /// `assets.valuation_max_rows`
   static const int assetsValuationMaxRows = 2000;
+  /// `bank.import_max_bytes`
+  static const int bankImportMaxBytes = 5242880;
+  /// `bank.import_max_lines`
+  static const int bankImportMaxLines = 5000;
+  /// `bank.match_window_days`
+  static const int bankMatchWindowDays = 60;
   /// `bi.batch_max_requests`
   static const int biBatchMaxRequests = 60;
   /// `bi.report_max_bytes`

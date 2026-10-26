@@ -1773,6 +1773,311 @@ class AppLocalizationsIt extends AppLocalizations {
       'Salvi questo QR adesso — viene mostrato una sola volta.';
 
   @override
+  String get bankBasisAmount => 'stesso importo e pagatore';
+
+  @override
+  String get bankBasisCreditorReference => 'riferimento RF';
+
+  @override
+  String get bankBasisInvoiceNumber => 'numero di fattura nella causale';
+
+  @override
+  String get bankBasisQrReference => 'riferimento QR';
+
+  @override
+  String bankConfirmReferences(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Confermi $count abbinamenti per riferimento',
+      one: 'Confermi 1 abbinamento per riferimento',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bankConfirmedReferences(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pagamenti abbinati.',
+      one: '1 pagamento abbinato.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bankCsvAccount => 'Conto (IBAN)';
+
+  @override
+  String get bankCsvAccountHint =>
+      'Un foglio di calcolo indica raramente il proprio conto; lo stesso conto tiene i suoi movimenti separati da quelli di un altro.';
+
+  @override
+  String get bankCsvAmount => 'Colonna dell\'importo (o delle entrate)';
+
+  @override
+  String bankCsvColumn(int n, String first) {
+    return 'Colonna $n ($first)';
+  }
+
+  @override
+  String get bankCsvCounterparty => 'Colonna del pagatore o beneficiario';
+
+  @override
+  String get bankCsvCounterpartyIban =>
+      'Colonna dell\'IBAN del pagatore o beneficiario';
+
+  @override
+  String get bankCsvCurrency => 'Valuta';
+
+  @override
+  String get bankCsvCurrencyColumn =>
+      'Colonna della valuta, se il file ne ha una';
+
+  @override
+  String get bankCsvDate => 'Colonna della data';
+
+  @override
+  String get bankCsvDateFormat => 'Formato della data';
+
+  @override
+  String get bankCsvDebit => 'Colonna delle uscite, se separata';
+
+  @override
+  String get bankCsvDecimalComma => 'Gli importi usano la virgola decimale';
+
+  @override
+  String get bankCsvDuplicateColumn =>
+      'Una colonna è scelta due volte: dia a ogni colonna un solo significato.';
+
+  @override
+  String get bankCsvHeader => 'La prima riga indica le colonne';
+
+  @override
+  String bankCsvNeedsAccount(int max) {
+    return 'Indichi il conto, con al massimo $max caratteri.';
+  }
+
+  @override
+  String get bankCsvNeedsAmount => 'Scelga la colonna dell\'importo.';
+
+  @override
+  String get bankCsvNeedsCurrency =>
+      'Indichi la valuta con tre lettere (EUR, CHF).';
+
+  @override
+  String get bankCsvNeedsDate => 'Scelga la colonna della data.';
+
+  @override
+  String get bankCsvNone => 'Nessuna';
+
+  @override
+  String get bankCsvReference => 'Colonna del riferimento';
+
+  @override
+  String get bankCsvRemittance => 'Colonna della causale';
+
+  @override
+  String get bankCsvTitle => 'Leggere il foglio di calcolo';
+
+  @override
+  String get bankCsvTransactionId => 'Colonna dell\'identificativo bancario';
+
+  @override
+  String get bankCsvValueDate => 'Colonna della data valuta';
+
+  @override
+  String get bankFileTypeLabel => 'Estratto conto';
+
+  @override
+  String get bankFormatCamt053 => 'Estratto ISO 20022 (camt.053)';
+
+  @override
+  String get bankFormatCamt054 => 'Avviso ISO 20022 (camt.054)';
+
+  @override
+  String get bankFormatCoda => 'CODA (Belgio)';
+
+  @override
+  String get bankFormatCsv => 'Foglio di calcolo (CSV)';
+
+  @override
+  String get bankFormatMt940 => 'SWIFT MT940';
+
+  @override
+  String get bankFormatOfx => 'OFX / QFX';
+
+  @override
+  String get bankFormatRead => 'Leggi';
+
+  @override
+  String get bankFormatTitle => 'Di quale file si tratta?';
+
+  @override
+  String get bankImportAction => 'Importa un estratto';
+
+  @override
+  String get bankImportFailed =>
+      'Non è stato possibile importare l\'estratto. Non è stato aggiunto nulla.';
+
+  @override
+  String get bankImportRepeated =>
+      'Questo file è già stato importato. Non è stato aggiunto nulla.';
+
+  @override
+  String bankImported(int created, int known, int review) {
+    return 'Importato: $created nuovi, $known già noti, $review da verificare.';
+  }
+
+  @override
+  String get bankLineDuplicate => 'Duplicato';
+
+  @override
+  String bankLineMatched(String number) {
+    return 'Salda $number';
+  }
+
+  @override
+  String get bankLineMoneyOut => 'Uscita, da riconciliare';
+
+  @override
+  String get bankLineOpen => 'Da abbinare';
+
+  @override
+  String bankLinePending(String number) {
+    return '$number: in attesa di approvazione';
+  }
+
+  @override
+  String get bankLineReconciled => 'Riconciliato con un pagamento registrato';
+
+  @override
+  String get bankLineRecorded => 'Pagamento registrato, ancora senza fattura';
+
+  @override
+  String get bankLineReview => 'Forse già importato: da verificare';
+
+  @override
+  String get bankLineSaved => 'Salvato.';
+
+  @override
+  String bankLineSuggested(String number, String why) {
+    return 'Proposta: $number ($why)';
+  }
+
+  @override
+  String get bankMatchConfirm => 'Confermi';
+
+  @override
+  String get bankMatchFailed =>
+      'Non è stato possibile abbinare il movimento. Non è cambiato nulla.';
+
+  @override
+  String get bankMatchNoInvoice => 'Nessuna fattura aperta in questa valuta.';
+
+  @override
+  String get bankMatchPick => 'La fattura che questo pagamento salda';
+
+  @override
+  String bankMatchTitle(String amount) {
+    return 'Abbinare $amount';
+  }
+
+  @override
+  String get bankOutNone =>
+      'Nessun pagamento di questo importo risulta registrato come effettuato.';
+
+  @override
+  String get bankOutTitle => 'Il pagamento registrato come effettuato';
+
+  @override
+  String bankRefusedAtLine(String reason, int line) {
+    return '$reason (riga $line)';
+  }
+
+  @override
+  String get bankRefusedBadAmount =>
+      'Un importo del file non è valido. Non è stato importato nulla.';
+
+  @override
+  String get bankRefusedBadCurrency =>
+      'Il file contiene una valuta sconosciuta o più valute sullo stesso conto. Non è stato importato nulla.';
+
+  @override
+  String get bankRefusedBadDate =>
+      'Una data del file non è un giorno valido. Non è stato importato nulla.';
+
+  @override
+  String get bankRefusedEmpty =>
+      'Il file non contiene alcun movimento. Non è stato importato nulla.';
+
+  @override
+  String bankRefusedMalformed(String format) {
+    return 'Il file non può essere letto come $format. Non è stato importato nulla.';
+  }
+
+  @override
+  String get bankRefusedMissingAccount =>
+      'Il file non indica alcun conto. Non è stato importato nulla.';
+
+  @override
+  String get bankRefusedTooLarge =>
+      'Il file supera la dimensione che questo server importa. Non è stato importato nulla.';
+
+  @override
+  String get bankRefusedTooLong =>
+      'Un conto o un identificativo bancario del file è più lungo di quanto un estratto conserva. Non è stato importato nulla.';
+
+  @override
+  String bankRefusedTooManyLines(int max) {
+    return 'Il file contiene più di $max movimenti. Lo suddivida per periodo presso la banca. Non è stato importato nulla.';
+  }
+
+  @override
+  String get bankReviewBody =>
+      'Un altro estratto contiene un movimento con lo stesso giorno, importo e dati, e la banca non ha dato un identificativo a nessuno dei due. Lo conservi se si tratta di un secondo pagamento.';
+
+  @override
+  String get bankReviewDuplicate => 'È un duplicato';
+
+  @override
+  String get bankReviewKeep => 'Conservarlo';
+
+  @override
+  String get bankReviewTitle => 'Già importato?';
+
+  @override
+  String bankStatementCounts(int count, int open) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count movimenti',
+      one: '1 movimento',
+    );
+    return '$_temp0, $open da trattare';
+  }
+
+  @override
+  String bankStatementPeriod(String account, String from, String to) {
+    return '$account · $from – $to';
+  }
+
+  @override
+  String get bankStatementsEmpty => 'Nessun estratto ancora importato.';
+
+  @override
+  String get bankStatementsIntro =>
+      'Importi i file prodotti dalla Sua banca. Ogni movimento viene letto una sola volta; i pagamenti vengono abbinati alle fatture quando Lei conferma.';
+
+  @override
+  String get bankStatementsLoadFailed =>
+      'Non è stato possibile caricare gli estratti conto.';
+
+  @override
+  String get bankStatementsTitle => 'Estratti conto';
+
+  @override
   String get baseRoleNote =>
       'Ognuno ha esattamente un ruolo di base: Utente, Amministratore, Co-proprietario o Proprietario. Gli altri ruoli si aggiungono; nessuno toglie nulla.';
 
@@ -7756,6 +8061,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureBadgeSignInTitle => 'Accesso con badge';
+
+  @override
+  String get featureBankImportDesc =>
+      'Legge gli estratti conto della banca (camt.053/054, MT940, CODA, OFX/QFX o un foglio di calcolo) nello spazio, ogni movimento una sola volta, e propone la fattura che ogni pagamento salda in base al riferimento QR o RF stampato su di essa, al suo numero o al suo importo; una persona conferma ogni abbinamento e il resto rimane in un elenco di lavoro. Un pagamento in uscita riconcilia un pagamento già registrato come effettuato.';
+
+  @override
+  String get featureBankImportTitle => 'Estratti conto';
 
   @override
   String get featureBiReportDesignerDesc =>
@@ -19543,6 +19855,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Qualcuno ha già deciso. L\'elenco mostra l\'esito.';
 
   @override
+  String get refusalBankFileRefused =>
+      'Il server ha rifiutato l\'estratto per intero (troppo grande, troppi movimenti o più valute). Non è stato importato nulla.';
+
+  @override
+  String get refusalBankLineDecided =>
+      'Questo movimento è stato deciso nel frattempo (abbinato, riconciliato o verificato). L\'elenco mostra il suo stato attuale.';
+
+  @override
+  String get refusalBankLineRefused =>
+      'Questo movimento non può saldare ciò: direzione, valuta, importo o stato non corrispondono. Non è cambiato nulla.';
+
+  @override
   String get refusalChangedMeanwhile =>
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
 
@@ -21785,6 +22109,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero massimo di righe di un lotto di valutazioni del commercialista, una per bene. Un file più grande è rifiutato per intero; lo divida prima di importare.';
 
   @override
+  String get settingHintBankImportMaxBytes =>
+      'Un file più grande viene rifiutato per intero prima di essere letto.';
+
+  @override
+  String get settingHintBankImportMaxLines =>
+      'Un estratto con più movimenti viene rifiutato per intero; lo suddivida per periodo presso la banca.';
+
+  @override
+  String get settingHintBankMatchWindowDays =>
+      'Quanti giorni prima di un pagamento può essere stata emessa la sua fattura per essere proposta in base al solo importo e al pagatore. Conferma sempre una persona.';
+
+  @override
   String get settingHintBiBatchMaxRequests =>
       'Il numero massimo di cifre che una pagina di report può chiedere in una sola lettura. Una pagina che ne richiede di più viene divisa in più letture; un lotto più grande è rifiutato per intero.';
 
@@ -21990,6 +22326,17 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelAssetsValuationMaxRows =>
       'Righe di valutazione per lotto';
+
+  @override
+  String get settingLabelBankImportMaxBytes =>
+      'Dimensione massima di un estratto conto';
+
+  @override
+  String get settingLabelBankImportMaxLines => 'Movimenti per estratto conto';
+
+  @override
+  String get settingLabelBankMatchWindowDays =>
+      'Finestra delle fatture per un pagamento senza riferimento';
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Cifre per lettura di report';
