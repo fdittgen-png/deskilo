@@ -12,6 +12,7 @@ import 'package:deskilo/features/workspace/presentation/widgets/local_setup_view
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/setup_resume_banner.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -167,6 +168,26 @@ void main() {
       expect(pushed, ['/setup']);
     },
   );
+
+  testWidgets('compact, the banner is one dense line without a title', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      _status(),
+      home: const Scaffold(body: SetupResumeBanner(workspaceId: 'ws-1', compact: true)),
+      features: {WorkspaceFeature.setupGuide},
+    );
+    final tile = tester.widget<ListTile>(
+      find.descendant(
+        of: find.byKey(const ValueKey('setup-resume-banner')),
+        matching: find.byType(ListTile),
+      ),
+    );
+    expect(tile.dense, isTrue);
+    expect(tile.title, isNull);
+    expect(find.textContaining('Next: Places on the plan'), findsOneWidget);
+  });
 
   testWidgets('with the guide off, the settings keep their cards', (
     tester,

@@ -16,8 +16,15 @@ import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 
 class SetupResumeBanner extends ConsumerWidget {
-  const SetupResumeBanner({super.key, required this.workspaceId});
+  const SetupResumeBanner({
+    super.key,
+    required this.workspaceId,
+    this.compact = false,
+  });
   final String workspaceId;
+
+  /// One dense line, for a screen whose content must stay in view (Reserve).
+  final bool compact;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,10 +37,13 @@ class SetupResumeBanner extends ConsumerWidget {
     }
     return Card(
       key: const ValueKey('setup-resume-banner'),
-      margin: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      margin: EdgeInsets.symmetric(
+        vertical: compact ? AppSpacing.xs : AppSpacing.sm,
+      ),
       child: ListTile(
+        dense: compact,
         leading: const Icon(Icons.checklist_outlined),
-        title: Text(l10n.setupGuideTitle),
+        title: compact ? null : Text(l10n.setupGuideTitle),
         subtitle: Text(
           l10n.setupGuideBanner(
             l10n.setupMilestoneName(milestone.milestone),
@@ -41,6 +51,8 @@ class SetupResumeBanner extends ConsumerWidget {
             milestone.required,
             l10n.setupStepTitle(step.step),
           ),
+          maxLines: compact ? 1 : null,
+          overflow: compact ? TextOverflow.ellipsis : null,
         ),
         trailing: TextButton(
           key: const ValueKey('setup-resume-open'),
@@ -61,6 +73,7 @@ Widget? setupResumeBannerFor(
   WidgetRef ref,
   String? workspaceId, {
   required bool configures,
+  bool compact = false,
 }) {
   if (workspaceId == null ||
       !configures ||
@@ -72,7 +85,7 @@ Widget? setupResumeBannerFor(
   final status = ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
   return status?.nextMilestone == null || status?.nextStep == null
       ? null
-      : SetupResumeBanner(workspaceId: workspaceId);
+      : SetupResumeBanner(workspaceId: workspaceId, compact: compact);
 }
 
 /// The readiness sections of [workspaceId], for a surface outside this
