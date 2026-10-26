@@ -12199,6 +12199,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String journalSageRefused(String reasons) {
+    return 'Il file Sage 50 non è stato scritto: $reasons';
+  }
+
+  @override
   String journalSwissTaxCodes(String keys) {
     return 'Questi gruppi di aliquote non hanno un codice IVA nel riferimento fiscale; non è stato scritto nulla. Aggiunga prima i loro codici: $keys';
   }
@@ -21286,6 +21291,21 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get sageAccountsTitle => 'Esportazione Sage';
+
+  @override
+  String sageBlock(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'accountReference':
+          '$subject non ha alcun numero che Sage accetti come Account Reference (al massimo 8 maiuscole e cifre)',
+      'fieldTooLong': '$subject supera la colonna di Sage',
+      'deferredTax':
+          'l’IVA di $subject attende la sua esigibilità, che Sage 50 non importa',
+      'currency': '$subject non è nella valuta di base',
+      'taxCode': 'nessun codice IVA di Sage per $subject',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get sageTaxCode => 'Codice IVA (T1 / T0 / T9)';

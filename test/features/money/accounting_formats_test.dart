@@ -24,6 +24,7 @@ import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'support/datev_collective.dart';
+import 'support/sage_files.dart';
 
 Invoice inv({
   String id = 'i1',
@@ -86,12 +87,13 @@ void main() {
     // DATEV was built, committed, and called by nothing. It is easy to
     // repeat: a domain file compiles and its tests pass whether or not
     // anything invokes it.
-    // The run and its German (DATEV, GoBD) and Swiss exports, which it
-    // dispatches to.
+    // The run and its German (DATEV, GoBD), Swiss and Sage exports, which
+    // it dispatches to.
     final export = [
       'lib/features/money/presentation/accounting_export_run.dart',
       'lib/features/money/presentation/accounting_export_german.dart',
       'lib/features/money/presentation/accounting_export_swiss.dart',
+      'lib/features/money/presentation/accounting_export_sage.dart',
     ].map((p) => File(p).readAsStringSync()).join();
 
     test('the export switch handles every registry format', () {
@@ -109,7 +111,7 @@ void main() {
         'saft_pt': 'buildSafTFile',
         'datev': 'buildDatevPackage',
         'gobd': 'buildGobdPackage',
-        'sage50': 'buildSageFile',
+        'sage50': 'sageFile',
         'ch_kmu': 'swissJournalFile',
         'banana_transactions': 'swissJournalFile',
         'accountant_csv': 'buildAccountantCsv',
@@ -325,12 +327,8 @@ void main() {
   });
 
   group('Sage gets the traps right', () {
-    String build({List<InvoiceVatTotal> vat = const []}) => buildSageFile(
-          invoices: [inv(vat: vat)],
-          matches: {'i1': match()},
-          accounts: const SageAccounts(),
-          customerRef: (i) => i.memberId,
-        );
+    String build({List<InvoiceVatTotal> vat = const []}) =>
+        sageOfInvoices([inv(vat: vat)], {'i1': match()});
 
     test('an invoice is SI and its receipt is SR', () {
       // Getting SI/SC or SI/SR backwards does not error — it moves the
@@ -358,7 +356,7 @@ void main() {
     test('a receipt carries NO tax, or the VAT return doubles it', () {
       final receipt = build(vat: _vat20).trim().split('\r\n')[2];
       expect(receipt, contains(SageAccounts.noTaxCode));
-      expect(receipt.split(',').last, '0.00');
+      expect(receipt.split(',')[9], '0.00');
     });
 
     test('an untaxed invoice is out of scope (T9), not zero-rated (T0)', () {
@@ -370,12 +368,8 @@ void main() {
   });
 
   group('Sage 50 UK: credit notes and one code per rate (#2359)', () {
-    List<String> rows(Invoice invoice) => buildSageFile(
-          invoices: [invoice],
-          matches: const {},
-          accounts: const SageAccounts(),
-          customerRef: (i) => i.memberId,
-        ).trim().split('\r\n');
+    List<String> rows(Invoice invoice) =>
+        sageOfInvoices([invoice], const {}).trim().split('\r\n');
 
     test('a credit note is an SC with positive amounts, never a negative SI',
         () {

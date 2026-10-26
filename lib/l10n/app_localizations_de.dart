@@ -12217,6 +12217,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String journalSageRefused(String reasons) {
+    return 'Die Sage-50-Datei wurde nicht geschrieben: $reasons';
+  }
+
+  @override
   String journalSwissTaxCodes(String keys) {
     return 'Für diese Satzgruppen gibt es in den Steuergrundlagen keinen MWST-Code; es wurde nichts geschrieben. Erfassen Sie zuerst ihre Codes: $keys';
   }
@@ -21313,6 +21318,21 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get sageAccountsTitle => 'Sage-Export';
+
+  @override
+  String sageBlock(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'accountReference':
+          '$subject hat keine Nummer, die Sage als Account Reference annimmt (höchstens 8 Großbuchstaben und Ziffern)',
+      'fieldTooLong': '$subject ist länger als die Sage-Spalte',
+      'deferredTax':
+          'die Steuer von $subject wartet auf ihren Steuerzeitpunkt, den Sage 50 nicht importiert',
+      'currency': '$subject ist nicht in der Basiswährung',
+      'taxCode': 'kein Sage-Steuercode für $subject',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get sageTaxCode => 'Steuerschlüssel (T1 / T0 / T9)';

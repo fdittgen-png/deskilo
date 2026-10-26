@@ -17,6 +17,7 @@ import '../domain/fiscal_year.dart';
 import '../domain/generic_journal_csv.dart';
 import '../domain/posting.dart';
 import '../domain/saf_t_financial.dart';
+import '../domain/sage.dart';
 
 /// What a year's journal is.
 sealed class GenericJournal {
@@ -74,6 +75,12 @@ final class JournalSafTRefused extends GenericJournal {
 final class JournalTaxCodesMissing extends GenericJournal {
   const JournalTaxCodesMissing(this.keys);
   final List<String> keys;
+}
+
+/// #2373 — the Sage 50 audit trail was refused: each blocker named.
+final class JournalSageRefused extends GenericJournal {
+  const JournalSageRefused(this.blockers);
+  final List<SageBlocker> blockers;
 }
 
 /// The latest local-book profile of [profiles] in force in [year]; null

@@ -8457,6 +8457,7 @@
   "journalNeedsRates": "Diese Einkäufe sind in einer anderen Währung als der des Space und haben keinen erfassten Wechselkurs; es wurde nichts geschrieben. Erfassen Sie zuerst den Kurs jedes einzelnen: {documents}",
   "journalOpeningRefused": "Die Eröffnungssalden ({from} bis {to}) konnten nicht gebucht werden: {reason}",
   "journalSafTRefused": "Die SAF-T-Datei wurde nicht erstellt: {gaps}",
+  "journalSageRefused": "Die Sage-50-Datei wurde nicht geschrieben: {reasons}",
   "journalSwissTaxCodes": "Für diese Satzgruppen gibt es in den Steuergrundlagen keinen MWST-Code; es wurde nichts geschrieben. Erfassen Sie zuerst ihre Codes: {keys}",
   "journeyClosedPaid": "Bezahlt am {date} — abgeschlossen",
   "@journeyClosedPaid": {
@@ -14848,6 +14849,7 @@
   "@sageAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
+  "sageBlock": "{kind, select, accountReference{{subject} hat keine Nummer, die Sage als Account Reference annimmt (höchstens 8 Großbuchstaben und Ziffern)} fieldTooLong{{subject} ist länger als die Sage-Spalte} deferredTax{die Steuer von {subject} wartet auf ihren Steuerzeitpunkt, den Sage 50 nicht importiert} currency{{subject} ist nicht in der Basiswährung} taxCode{kein Sage-Steuercode für {subject}} other{{subject}}}",
   "sageTaxCode": "Steuerschlüssel (T1 / T0 / T9)",
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"

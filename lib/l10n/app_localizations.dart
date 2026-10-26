@@ -20135,6 +20135,12 @@ abstract class AppLocalizations {
   /// **'The SAF-T file was not made: {gaps}'**
   String journalSafTRefused(String gaps);
 
+  /// #2373 Sage 50 export: the audit trail was refused, with the reasons (each a sageBlock).
+  ///
+  /// In en, this message translates to:
+  /// **'The Sage 50 file was not written: {reasons}'**
+  String journalSageRefused(String reasons);
+
   /// #2377 The Swiss journal refused: a taxed row's rate group has no MWST code.
   ///
   /// In en, this message translates to:
@@ -35633,6 +35639,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sage export'**
   String get sageAccountsTitle;
+
+  /// #2373 Sage 50 export: one reason the file was refused, by kind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, accountReference{{subject} has no number Sage can take as its Account Reference (at most 8 capitals and digits)} fieldTooLong{{subject} is longer than the Sage column} deferredTax{the tax of {subject} waits for its tax point, which Sage 50 does not import} currency{{subject} is not in the base currency} taxCode{no Sage tax code for {subject}} other{{subject}}}'**
+  String sageBlock(String kind, String subject);
 
   /// #669 - accounting export formats
   ///

@@ -8457,6 +8457,7 @@
   "journalNeedsRates": "Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: {documents}",
   "journalOpeningRefused": "Los saldos de apertura (del {from} al {to}) no se han podido contabilizar: {reason}",
   "journalSafTRefused": "El archivo SAF-T no se ha generado: {gaps}",
+  "journalSageRefused": "El archivo de Sage 50 no se ha escrito: {reasons}",
   "journalSwissTaxCodes": "Estos grupos de tipos no tienen código de IVA en la referencia fiscal; no se ha escrito nada. Añada primero sus códigos: {keys}",
   "journeyClosedPaid": "Pagada el {date} — cerrada",
   "@journeyClosedPaid": {
@@ -14848,6 +14849,7 @@
   "@sageAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
+  "sageBlock": "{kind, select, accountReference{{subject} no tiene ningún número que Sage acepte como Account Reference (8 mayúsculas y cifras como máximo)} fieldTooLong{{subject} supera la columna de Sage} deferredTax{el IVA de {subject} espera su devengo, que Sage 50 no importa} currency{{subject} no está en la moneda base} taxCode{ningún código de IVA de Sage para {subject}} other{{subject}}}",
   "sageTaxCode": "Código de IVA (T1 / T0 / T9)",
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"

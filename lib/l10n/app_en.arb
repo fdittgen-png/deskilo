@@ -14386,6 +14386,15 @@
       }
     }
   },
+  "journalSageRefused": "The Sage 50 file was not written: {reasons}",
+  "@journalSageRefused": {
+    "description": "#2373 Sage 50 export: the audit trail was refused, with the reasons (each a sageBlock).",
+    "placeholders": {
+      "reasons": {
+        "type": "String"
+      }
+    }
+  },
   "journalSwissTaxCodes": "These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: {keys}",
   "@journalSwissTaxCodes": {
     "description": "#2377 The Swiss journal refused: a taxed row's rate group has no MWST code.",
@@ -25133,6 +25142,18 @@
   "sageAccountsTitle": "Sage export",
   "@sageAccountsTitle": {
     "description": "#669 - accounting export formats"
+  },
+  "sageBlock": "{kind, select, accountReference{{subject} has no number Sage can take as its Account Reference (at most 8 capitals and digits)} fieldTooLong{{subject} is longer than the Sage column} deferredTax{the tax of {subject} waits for its tax point, which Sage 50 does not import} currency{{subject} is not in the base currency} taxCode{no Sage tax code for {subject}} other{{subject}}}",
+  "@sageBlock": {
+    "description": "#2373 Sage 50 export: one reason the file was refused, by kind.",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "subject": {
+        "type": "String"
+      }
+    }
   },
   "sageTaxCode": "VAT code (T1 / T0 / T9)",
   "@sageTaxCode": {

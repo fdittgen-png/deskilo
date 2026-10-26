@@ -58,6 +58,17 @@ class CustomerIdRule {
   /// A regular expression every id must match in full.
   final String? charset;
 
+  /// [number] as the target's id: in capitals without separators, when the
+  /// rule admits it; null otherwise (empty, too long, another charset).
+  String? admit(String number) {
+    final code = number.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
+    if (code.isEmpty) return null;
+    if (maxLength case final max? when code.length > max) return null;
+    if (charset case final c? when !RegExp('^(?:$c)\$').hasMatch(code)) {
+      return null;
+    }
+    return code;
+  }
 }
 
 /// The volume a target takes; null is unbounded or unknown.

@@ -8457,6 +8457,7 @@
   "journalNeedsRates": "Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : {documents}",
   "journalOpeningRefused": "Les soldes d’ouverture (du {from} au {to}) n’ont pas pu être comptabilisés : {reason}",
   "journalSafTRefused": "Le fichier SAF-T n’a pas été établi : {gaps}",
+  "journalSageRefused": "Le fichier Sage 50 n’a pas été écrit : {reasons}",
   "journalSwissTaxCodes": "Ces groupes de taux n'ont pas de code TVA dans le référentiel fiscal ; rien n'a été écrit. Ajoutez d'abord leurs codes : {keys}",
   "journeyClosedPaid": "Payée le {date} — close",
   "@journeyClosedPaid": {
@@ -14848,6 +14849,7 @@
   "@sageAccountsTitle": {
     "description": "#669 - accounting export formats"
   },
+  "sageBlock": "{kind, select, accountReference{{subject} n’a aucun numéro que Sage accepte comme Account Reference (8 majuscules et chiffres au plus)} fieldTooLong{{subject} dépasse la colonne de Sage} deferredTax{la TVA de {subject} attend son fait générateur, que Sage 50 n’importe pas} currency{{subject} n’est pas dans la devise de base} taxCode{aucun code de TVA Sage pour {subject}} other{{subject}}}",
   "sageTaxCode": "Code TVA (T1 / T0 / T9)",
   "@sageTaxCode": {
     "description": "#669 - accounting export formats"
