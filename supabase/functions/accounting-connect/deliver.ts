@@ -19,7 +19,8 @@
 // key nobody filled blocks that document with the key named. A period the
 // engine cannot post (an unmapped role, an unbalanced document) delivers
 // nothing; a target that refuses the company (pennylane: its journals;
-// quickbooks: its country and its numbering; xero: its country, its tax
+// quickbooks: its country and its numbering; sage: its country, its base
+// currency, tax rates and ledger accounts; xero: its country, its tax
 // rates and accounts) delivers nothing either.
 // A period lies within one calendar month, so one run stays well inside
 // the function's time and the target's rate limits; the app asks month by
@@ -45,6 +46,7 @@ import {
 } from "../_shared/accounting_postings.ts";
 import { pennylaneLedger } from "../_shared/accounting_pennylane.ts";
 import { quickbooksOnline } from "../_shared/accounting_quickbooks.ts";
+import { sageAccounting } from "../_shared/accounting_sage.ts";
 import { xeroAccounting } from "../_shared/accounting_xero.ts";
 import { type CallerDb, clientOf, type Deps, json, resolved, store, UUID } from "./connection.ts";
 
@@ -58,6 +60,13 @@ export const deliveryAdapters: Record<string, (ctx: AdapterContext) => PostingAd
   xero_ca: xeroAccounting,
   xero_us: xeroAccounting,
   xero_eu: xeroAccounting,
+  sage_business_cloud_gb: sageAccounting,
+  sage_business_cloud_ie: sageAccounting,
+  sage_business_cloud_ca: sageAccounting,
+  sage_business_cloud_us: sageAccounting,
+  sage_business_cloud_fr: sageAccounting,
+  sage_business_cloud_de: sageAccounting,
+  sage_business_cloud_es: sageAccounting,
 };
 
 /** The context every adapter of [targetId] is built with. The EU check is

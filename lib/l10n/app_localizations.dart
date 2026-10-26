@@ -12467,6 +12467,12 @@ abstract class AppLocalizations {
   /// **'Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system ({systems}) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.'**
   String exportDenmarkRegisteredSystem(String systems);
 
+  /// #2373 Accounting export sheet: products of the country (Sage 100 France, Sage 50 Germany) that import one of the offered files, and which one to choose.
+  ///
+  /// In en, this message translates to:
+  /// **'{products} {count, plural, =1{imports} other{import}} this file: choose “{format}” below.'**
+  String exportImportedVia(String products, int count, String format);
+
   /// Accounting export sheet (#2379): a file from the local book is the complete books only if everything passes through the app
   ///
   /// In en, this message translates to:

@@ -7421,6 +7421,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String exportImportedVia(String products, int count, String format) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'import',
+      one: 'imports',
+    );
+    return '$products $_temp0 this file: choose “$format” below.';
+  }
+
+  @override
   String get exportLocalBookOnly =>
       'Written from your local book\'s postings: your complete books only if every operation of the business passes through DesKilo.';
 

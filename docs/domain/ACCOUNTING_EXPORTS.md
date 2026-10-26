@@ -31,7 +31,7 @@ authority. Widening one needs the authority's own spec in hand.
 | SAF-T (PT), `TaxAccountingBasis` **F** | regulatory | PT | declared invoicing-only, `SoftwareCertificateNumber` 0 |
 | DATEV EXTF Buchungsstapel | exchange | DE, AT | a zip (#2375): one Buchungsstapel per calendar month and journal (sales; every booking that moves the bank) of the workspace's calendar, at most 99 999 rows each, 125 fields per row (format 700, version 13), each under its month's header (SKR in field 27, fiscal-year start from the book profile — refused when the sites' profiles disagree — Bezeichnung cut at 30, `Festschreibung` 1 when the month lies in a closed period, else 0); every customer row on the member's Debitor: the first Debitor the person enters plus the counter of the member number read through the space's member series (`M-2026-0007` is counter 7), in DATEV's range for the Sachkontenlänge entered (10000–69999 for four); KOST1 = the document's site, else the cost centre entered; Beleginfo Rechnungsnummer/Belegdatum/Fälligkeit; when chosen, Beleglink `BEDI "<invoice id>"` to the voucher PDF/A-3 in `belege/`; EU-Land u. UStID on a reverse charge; each rate on its automatic account without a key, a non-automatic revenue account with the rate group's BU-Schlüssel (`account_map` `datev/tax:<group>`, refused with the rate named while no such row exists); the Debitoren-Stammdaten (category 16) name every Debitor used; a Belegfeld 1 or KOST1 longer than 36 is refused, never cut; Buchungstext cut at 60, positive amounts + S/H, DDMM, **UTF-8 BOM**, a written-off rest on SKR03 2400. Berater-/Mandantennummer, the Sachkontenlänge and the currency (euros only) are checked before anything is written. The DATEV online services (Buchungsdatenservice, Rechnungsdatenservice 1.0, Belegbilderservice) are decided targets that need a DATEV marketplace partnership and the client's SmartLogin; none exists. |
 | GoBD data handover (Z3) | subset | DE | a zip (#2375): `index.xml` valid against the published `gdpdu-01-08-2002.dtd` (shipped beside it), one header-less UTF-8 CSV per table with every column, key and join described (invoices, lines, tax amounts, payments, instalments, write-offs, member ledger, shared costs, purchase documents and lines, customers, tax rates with their versions, number sequences, audit trail, vouchers), each invoice's e-invoice XML and PDF/A-3 in `belege/`, and the Verfahrensdokumentation (server schema version, number sequences, retention clocks). Says in its own index that it is DesKilo's sub-ledger, not the complete books. |
-| Sage 50 audit trail | exchange | GB, IE | a written-off rest is an SC to 8100 without tax |
+| Sage 50 audit trail | exchange | GB, IE | #2373: the 18 columns of Sage 50's template (`Type` … `Fund`), CRLF, DD/MM/YYYY, Exchange Rate 1, Extra Reference the row's month; for a local book written from its postings on the book's chart (SI/SC one row per revenue line with its tax, SR/SP the bank line, PI/PC per expense line with its recoverable input tax, PP, every other event one JD/JC per line at T9), otherwise from the documents on the nominal codes confirmed at export (SI/SC per VAT breakdown line, SR/SP, a written-off rest JD 8100 / JC 1100); the code of each rate line from its rate group (`sage/tax_*` rows: T1 standard, T5 reduced, T0 zero, T2 exempt, T9 out of scope) or, untaxed, its category (T22 a service to a business in another EU member state, with its Country of VAT; T4 goods to one; T20 a domestic reverse charge); the Account Reference the member or supplier number in capitals without separators, at most 8; refused, every reason named and nothing written: a party without such a number, output tax waiting on `vat_pending`, an amount in another currency than the base currency, a rate group Sage has no code for (or untaxed lines of several categories), a Reference over 30 or a nominal code over 8 characters. Details are cut at 60. No Department (no site numbers yet). |
 | Swiss booking journal (`ch_kmu`) | exchange | CH | a local book's postings (#2377), one row per leg pair on the issuer's KMU chart, the tax line folded into its base: gross amount, MWST code of the rate group (`account_map` `ch_kmu/tax:<group>`, `input:<group>`, `asset:<group>`; refused with the group named while none exists), the VAT amount and account, the Ziffer of the MWST-Abrechnung read from the effective method's form (303/313/343, 220/221/230, 400/405); the QR reference (QRR or SCOR) of a receivable's invoice; a converted line's original amount and currency; the customer or supplier number; UTF-8 BOM, `;`, `dd.MM.yyyy`, CRLF. No local book, no journal; an unmapped role is named. |
 | Banana Accounting+ transactions (`banana_transactions`) | exchange | CH | the same rows under Banana's column names (`Date, Doc, Description, AccountDebit, AccountCredit, Amount, VatCode`), tab separated, ISO dates, the amount gross: Banana splits the tax by the VatCode, which must be a code of the Banana file's VAT table |
 | SAF-T Financial (NO) | regulatory | NO | #2379, a local book's postings only: valid against Skatteetaten's `Norwegian_SAF-T_Financial_Schema_v_1.30.xsd` (shipped under `test/fixtures/saft/`, read in CI by `tool/saft/validate.sh`); every account with its opening and closing balance of the fiscal year, its GroupingCategory and GroupingCode from the `saf_t/<role>` row of NO; customers and suppliers by their sub-ledger numbers with a BalanceAccount per collective account; the tax table with each rate version in force and its StandardTaxCode from the `saf_t/tax:<direction>:<group>` row; one transaction per posting, every line naming its SourceDocumentID, TaxInformation on the tax lines. An account or tax code without its row, a missing company or contact field, a party without its number, or an identifier longer than the schema allows refuses the file and is named. |
@@ -197,6 +197,19 @@ reached and how far it is qualified. The table below is generated from it;
 | `quickbooks_online_us` | Intuit · QuickBooks Online · Accounting API v3, US realm | api | documents | US | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
 | `quickbooks_online_ca` | Intuit · QuickBooks Online · Accounting API v3, CA realm | api | documents | CA | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
 | `quickbooks_online_gb` | Intuit · QuickBooks Online · Accounting API v3, GB realm | api | documents | GB | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
+| `sage_business_cloud_gb` | Sage · Sage Business Cloud Accounting · API v3.1, UK business | api | documents | GB | implemented | Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals |
+| `sage_business_cloud_ie` | Sage · Sage Business Cloud Accounting · API v3.1, Irish business | api | documents | IE | implemented | Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals |
+| `sage_business_cloud_ca` | Sage · Sage Business Cloud Accounting · API v3.1, Canadian business | api | documents | CA | implemented | Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals |
+| `sage_business_cloud_us` | Sage · Sage Business Cloud Accounting · API v3.1, US business | api | documents | US | implemented | Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals |
+| `sage_business_cloud_fr` | Sage · Sage Business Cloud Accounting · API v3.1, French business | api | documents | FR | implemented | Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals |
+| `sage_business_cloud_de` | Sage · Sage Business Cloud Accounting · API v3.1, German business | api | documents | DE | implemented | Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals |
+| `sage_business_cloud_es` | Sage · Sage Business Cloud Accounting · API v3.1, Spanish business | api | documents | ES | implemented | Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals |
+| `sage100_fr` | Sage · Sage 100 Comptabilité · import of the FEC | file | journal | FR | implemented | imports the FEC (target fec): DGFiP fichiers standards des écritures comptables |
+| `sage50_fr` | Sage · Sage 50 (ex Ciel Compta) · import of the FEC | file | journal | FR | implemented | imports the FEC (target fec): DGFiP fichiers standards des écritures comptables |
+| `sage_de` | Sage · Sage 50 / Sage 100 (KHK, Office Line) · import of a DATEV EXTF Buchungsstapel | file | journal | AT, DE | implemented | imports DATEV (target datev): EXTF 700 Buchungsstapel |
+| `sage50_ca` | Sage · Sage 50 Accounting (Canada) · .IMP sales invoices and general journal | file | documents | CA | specificationNeeded | not named yet |
+| `sage200` | Sage · Sage 200 · import of transactions | file | journal | GB, IE | specificationNeeded | not named yet |
+| `sage_intacct` | Sage · Sage Intacct · journal import templates and XML API | api | journal | CA, GB, US | specificationNeeded | not named yet |
 | `xero_gb` | Xero · Xero · Accounting API 2.0, UK organisation | api | documents | GB | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
 | `xero_ca` | Xero · Xero · Accounting API 2.0, Canadian organisation | api | documents | CA | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
 | `xero_us` | Xero · Xero · Accounting API 2.0, US organisation | api | documents | US | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
@@ -208,6 +221,42 @@ the VAT correction (bad debt relief, e.g. art. 272 CGI, §17 UStG, Sage's relief
 claim) has its own conditions and stays with the accountant. The loss accounts
 are `account_map` rows of the tax reference store (FR 654000 confirmed; DE 2400
 and GB 8100 unconfirmed until an accountant has checked the chart in use).
+
+## Sage (#2373)
+
+"Sage" is a family of unrelated products, so each edition is its own target
+(`accounting_targets_sage.dart`):
+
+- **Sage 50 Accounts (UK/IE)** writes its own audit trail (`sage50`, above).
+- **Sage Business Cloud Accounting**, one target per region
+  (`sage_business_cloud_gb`, `_ie`, `_ca`, `_us`, `_fr`, `_de`, `_es`):
+  signed in to (OAuth 2.0, one Sage application of the installation; the
+  sign-in binds the one business it reaches) and delivered through the kit
+  (`_shared/accounting_sage.ts`): an invoice as a `sales_invoice` and a credit
+  note as a `sales_credit_note` with the legal number as `reference`, one line
+  per revenue line on the mapped ledger account (`account revenue:<group>`)
+  with the mapped tax rate (`item vat_output:<group>`) and the document's own
+  tax; a credit note names the invoice it corrects (`original_invoice_id`)
+  and is allocated to it; a receipt (CUSTOMER_RECEIPT) and a refund
+  (CUSTOMER_REFUND) as a `contact_payment` allocated to their document on the
+  bank account of the ledger account `account bank` names; every other event
+  a balanced `journal`. The document a credit note, a receipt or a refund
+  refers to is read first: when it is not in Sage nothing is written, not
+  even a contact. The business's country and base currency, its tax rates,
+  ledger accounts and bank accounts are read before a run; a document in
+  another currency, deferred tax (`vat_pending`), a ledger account or tax
+  rate the business does not hold, and a party number longer than Sage's
+  8-character contact reference are refused by name. The live exchange is
+  NOT RUN: it needs a Sage developer application and a trial business.
+- **Sage 100 Comptabilité and Sage 50 (ex Ciel) in France** import the FEC
+  (`sage100_fr`, `sage50_fr`); **Sage 50 / Sage 100 (KHK, Office Line) in
+  Germany and Austria** import DATEV (`sage_de`). They write nothing of
+  their own; the export sheet names them above the file they take.
+- **Sage 50 Canada** (`sage50_ca`): the tagged `.IMP` sales-invoice import
+  and the general-journal `.txt` are documented only in Sage's own knowledge
+  base, so the target is `specificationNeeded` until that layout is in hand
+  and a company file can import a fixture. **Sage 200** and **Sage Intacct**
+  are `specificationNeeded` too.
 
 ## Connections, mappings and transfers (#2370)
 

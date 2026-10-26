@@ -7481,6 +7481,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String exportImportedVia(String products, int count, String format) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'importieren',
+      one: 'importiert',
+    );
+    return '$products $_temp0 diese Datei: Wählen Sie unten „$format“.';
+  }
+
+  @override
   String get exportLocalBookOnly =>
       'Aus den Buchungen Ihrer lokalen Buchführung erstellt: Ihre vollständigen Bücher nur, wenn jeder Geschäftsvorfall über DesKilo läuft.';
 

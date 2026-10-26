@@ -9127,6 +9127,21 @@
       }
     }
   },
+  "exportImportedVia": "{products} {count, plural, =1{imports} other{import}} this file: choose “{format}” below.",
+  "@exportImportedVia": {
+    "description": "#2373 Accounting export sheet: products of the country (Sage 100 France, Sage 50 Germany) that import one of the offered files, and which one to choose.",
+    "placeholders": {
+      "products": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      },
+      "format": {
+        "type": "String"
+      }
+    }
+  },
   "exportLocalBookOnly": "Written from your local book's postings: your complete books only if every operation of the business passes through DesKilo.",
   "@exportLocalBookOnly": {
     "description": "Accounting export sheet (#2379): a file from the local book is the complete books only if everything passes through the app"

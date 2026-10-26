@@ -6,7 +6,9 @@
 // confirms. The tax codes come from the tax reference the workspace's
 // context holds; nothing here reads the period again.
 import '../../../core/vat/tax_reference_active.dart';
+import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
+import '../domain/accounting_format.dart';
 import '../domain/sage.dart';
 import '../domain/sage_documents.dart';
 import '../domain/sage_postings.dart';
@@ -14,7 +16,25 @@ import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
 import 'invoice_actions.dart';
 import 'posting_kind_labels.dart';
+import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
+
+/// #2373 — what the export sheet says of the products of [country] that
+/// import one of its files (Sage 100 France the FEC, Sage 50 Germany
+/// DATEV): the products and the file to choose.
+List<String> importNotices(AppLocalizations l10n, String country) {
+  final offered = {for (final f in formatsFor(country)) f.id};
+  return [
+    for (final MapEntry(key: via, value: products)
+        in importRoutesFor(country).entries)
+      if (offered.contains(via))
+        l10n.exportImportedVia(
+          products.map((t) => t.product).join(', '),
+          products.length,
+          accountingFormatName(l10n, via),
+        ),
+  ];
+}
 
 GenericJournal _written(SageAuditTrail trail) => trail.blockers.isEmpty
     ? JournalFile(sageFile(trail.rows))

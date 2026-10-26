@@ -102,6 +102,7 @@ class AccountingTarget {
     this.limits = const TargetLimits(),
     this.connectsBy = const {},
     this.runnerDelivers = false,
+    this.importsTargetId,
   });
 
   /// Stable wire id: the format id of a file target.
@@ -134,6 +135,12 @@ class AccountingTarget {
   /// adapter. Until it does, a connection and its mappings are kept and the
   /// sheet says nothing is sent yet.
   final bool runnerDelivers;
+
+  /// #2373 — a product that imports another target's file rather than one
+  /// of its own (Sage 100 France reads the FEC, Sage 50 Germany DATEV): the
+  /// id of that target. Such a product writes no format; choosing it is
+  /// choosing that target, and the export sheet says so.
+  final String? importsTargetId;
 
   bool offeredIn(String countryCode) {
     final code = countryCode.toUpperCase();

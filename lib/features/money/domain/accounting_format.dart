@@ -28,9 +28,8 @@
 /// (`accounting_targets_saft.dart`): Norway's and Luxembourg's FAIA, and
 /// the OECD tree. Portugal's `TaxAccountingBasis` 'C' stays absent (it
 /// needs certified software), and Poland's JPK_KR, Romania's D406,
-/// Lithuania's and Austria's each wait for their own profile. Sage's German lines (KHK / Office Line) and the
-/// per-country Sage products each need their own vendor import spec,
-/// which is not public.
+/// Lithuania's and Austria's each wait for their own profile. #2373 — Sage's German lines (KHK / Office Line)
+/// import DATEV and the French ones the FEC (`accounting_targets_sage.dart`).
 library;
 
 import 'package:meta/meta.dart';
@@ -41,6 +40,7 @@ import 'accounting_targets_ch.dart';
 import 'accounting_targets_de.dart';
 import 'accounting_targets_quickbooks.dart';
 import 'accounting_targets_saft.dart';
+import 'accounting_targets_sage.dart';
 import 'accounting_targets_xero.dart';
 
 export 'accounting_target.dart';
@@ -467,6 +467,7 @@ const List<AccountingTarget> accountingTargets = [
     taxCodeModel: TaxCodeModel.none,
   ),
   ...quickbooksAccountingTargets,
+  ...sageAccountingTargets,
   ...xeroAccountingTargets,
 ];
 
@@ -475,3 +476,13 @@ List<AccountingTarget> targetsFor(String countryCode) => [
   for (final t in accountingTargets)
     if (t.offeredIn(countryCode)) t,
 ];
+
+/// #2373 — the products offered in [countryCode] that import another
+/// target's file, grouped by the id of that target, in registry order.
+Map<String, List<AccountingTarget>> importRoutesFor(String countryCode) {
+  final routes = <String, List<AccountingTarget>>{};
+  for (final t in targetsFor(countryCode)) {
+    if (t.importsTargetId case final via?) (routes[via] ??= []).add(t);
+  }
+  return routes;
+}
