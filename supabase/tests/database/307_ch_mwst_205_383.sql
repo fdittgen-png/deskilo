@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #2360 (9999) -- the two Ziffern of the Swiss MWST return the lines did not
+-- #2360 (0605) -- the two Ziffern of the Swiss MWST return the lines did not
 -- carry: 205 (supplies opted for, art. 22 MWSTG) and 383 (acquisition tax,
 -- art. 45). A Swiss September holds an opted bare letting with a coffee
 -- line (10 000.00 of its 11 000.00 is the letting), a package and a bare

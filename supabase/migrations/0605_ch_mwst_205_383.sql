@@ -4,7 +4,7 @@
 -- vat_return_summary restated whole; one function and two rows of the tax
 -- reference store added; no table, no policy; a filed return is untouched)
 --
--- 9999 (#2360) -- the two Ziffern of the Swiss MWST return the lines did not
+-- 0605 (#2360) -- the two Ziffern of the Swiss MWST return the lines did not
 -- carry yet:
 --
 --   * 205, the supplies opted for under art. 22 MWSTG. A Swiss invoice
@@ -369,4 +369,4 @@ values
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(605);

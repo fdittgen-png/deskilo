@@ -21,7 +21,7 @@
 //
 // And input VAT (0408, `170_input_vat.sql`): the base and the deductible
 // share of an expense, rounded as the server rounds them; and the
-// acquisition tax of a service bought abroad (`9999_ch_mwst_205_383.sql`).
+// acquisition tax of a service bought abroad (`0605_ch_mwst_205_383.sql`).
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -463,7 +463,7 @@ void main() {
     });
   });
 
-  group('acquisition tax — the 9999_ch_mwst_205_383.sql fixture', () {
+  group('acquisition tax — the 0605_ch_mwst_205_383.sql fixture', () {
     test('the tax owed on the amount and the share deducted', () {
       expect(vatAcquisitionSplit(10000, 8.1, 100), (taxCents: 810, deductibleCents: 810));
       expect(vatAcquisitionSplit(2000, 8.1, 50), (taxCents: 162, deductibleCents: 81));
