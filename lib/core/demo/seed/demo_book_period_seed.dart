@@ -8,9 +8,12 @@ import '../../../features/money/domain/book_period.dart';
 import '../data/accounting_connection_repository.dart';
 import '../data/book_period_repository.dart';
 
-FakeBookPeriodRepository seedDemoBookPeriods(DateTime now) =>
+FakeBookPeriodRepository seedDemoBookPeriods(DateTime now, {String? actor}) =>
     FakeBookPeriodRepository(
       today: now,
+      // #2377 — the demo's exports name the person who made them, as the
+      // server's log does.
+      actorMemberId: actor,
       periods: [
         BookPeriod(
           id: 'demo-period-last-year',
@@ -31,6 +34,7 @@ FakeBookPeriodRepository seedDemoBookPeriods(DateTime now) =>
           documentCount: 41,
           closedPeriod: true,
           exportedAt: DateTime(now.year, 1, 15),
+          exportedByMemberId: actor,
         ),
       ],
     );

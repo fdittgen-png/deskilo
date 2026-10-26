@@ -1,7 +1,7 @@
 {
   "@@locale": "fr",
   "featureAccountingConnectorsTitle": "Systèmes comptables",
-  "featureAccountingConnectorsDesc": "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane par son API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir.",
+  "featureAccountingConnectorsDesc": "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane et bexio par leur API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir.",
   "acctTargetsTitle": "Systèmes comptables",
   "acctTargetsIntro": "Où va la comptabilité de chaque émetteur. Un système connecté reçoit les pièces lui-même ; les autres reçoivent les fichiers exportés de la comptabilité. Chaque transfert est listé ci-dessous avec l'empreinte de ce qu'il a porté.",
   "acctTargetsNoApiTarget": "Aucun système comptable de ce pays n'est encore joint par une connexion : la comptabilité part par fichier, depuis l'export comptable.",
@@ -92,5 +92,6 @@
   "acctDeliveryAttempts": "{count, plural, =1{une tentative} other{{count} tentatives}}",
   "refusalAccountingClosed": "Cette connexion n'accepte plus cela : elle a été révoquée, ou elle a déjà envoyé des pièces. Révoquez-la et connectez-vous de nouveau. Rien n'a été enregistré.",
   "refusalAccountingValue": "Le serveur a refusé cette valeur : vérifiez le jeton, la clé ou l'émetteur et réessayez. Rien n'a été enregistré.",
-  "acctJournalLogged": "{logged, plural, =0{Aucune nouvelle pièce enregistrée} =1{Une pièce enregistrée} other{{logged} pièces enregistrées}}, {unchanged} inchangées"
+  "acctJournalLogged": "{logged, plural, =0{Aucune nouvelle pièce enregistrée} =1{Une pièce enregistrée} other{{logged} pièces enregistrées}}, {unchanged} inchangées",
+  "acctTargetNotDeliveredYet": "Aucune pièce n'est encore envoyée à ce système : la connexion et ses correspondances sont conservées pour l'envoi, qui ne fonctionne pas encore pour lui."
 }

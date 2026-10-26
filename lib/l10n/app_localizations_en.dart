@@ -540,6 +540,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctRedeliver => 'Deliver again';
 
   @override
+  String get acctTargetNotDeliveredYet =>
+      'No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.';
+
+  @override
   String get acctTargetsIntro =>
       'Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.';
 
@@ -803,6 +807,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applicationsTitle => 'Workspace requests';
+
+  @override
+  String get archiveSwissNeedsExportLog =>
+      'This Swiss archive\'s procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.';
 
   @override
   String get assistantPrefix => 'Assistant';
@@ -7584,7 +7592,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureAccountingConnectorsDesc =>
-      'Connects each issuer\'s books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.';
+      'Connects each issuer\'s books to the accounting system they are kept in (Pennylane and bexio through their APIs, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.';
 
   @override
   String get featureAccountingConnectorsTitle => 'Accounting systems';
@@ -9241,6 +9249,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesTypeInvoice => 'Invoice';
+
+  @override
+  String get gebuevProcedureAccessBody =>
+      'Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.';
+
+  @override
+  String get gebuevProcedureAccessHeading => 'Access (art. 8)';
+
+  @override
+  String get gebuevProcedureCarriersBody =>
+      'This archive is read with any zip tool and text editor. A copy of the whole space is proven by a completed workspace export, recorded with its digest: the readiness checklist shows when the last one was made and asks for a new one when it is old.';
+
+  @override
+  String get gebuevProcedureCarriersHeading =>
+      'Availability and carriers (art. 5 and 10)';
+
+  @override
+  String get gebuevProcedureIntegrityBody =>
+      'Every file of this archive is listed in manifest.csv with its SHA-256 digest and size. The archive itself, like every accounting export, is recorded in the export log with its digest, the server\'s time and the person who made it. Each issued document carries the fingerprint the server verifies; register.csv states the verdict.';
+
+  @override
+  String get gebuevProcedureIntegrityHeading => 'Integrity (art. 3 and 9)';
+
+  @override
+  String get gebuevProcedureSystemBody =>
+      'DesKilo keeps this space\'s invoices, credit notes, payments, member accounts, shared costs and approved purchase documents, and, where the space keeps a local book, their postings on its chart. The accountant\'s general ledger imports the Swiss journal of those postings.';
+
+  @override
+  String gebuevProcedureTitle(String workspace) {
+    return 'Procedures documentation (GeBüV art. 4) — $workspace';
+  }
 
   @override
   String get gettingStartedActionChooseDay => 'Choose another day';
@@ -11166,6 +11205,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceExportAuditTrail => 'Audit trail';
 
   @override
+  String get invoiceExportBanana => 'Banana Accounting+ (transactions import)';
+
+  @override
   String get invoiceExportBundle => 'Year archive (zip)';
 
   @override
@@ -11217,7 +11259,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceExportSwissKmu =>
-      'Swiss booking journal (CSV, KMU accounts)';
+      'Swiss booking journal (CSV, KMU accounts, MWST codes)';
 
   @override
   String get invoiceExportTrialBalance =>
@@ -12070,6 +12112,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String journalSafTRefused(String gaps) {
     return 'The SAF-T file was not made: $gaps';
+  }
+
+  @override
+  String journalSwissTaxCodes(String keys) {
+    return 'These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: $keys';
   }
 
   @override
@@ -24261,23 +24308,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportTitle => 'Support details';
 
   @override
-  String get swissKmuAccountsIntro =>
-      'The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.';
-
-  @override
-  String get swissKmuAccountsTitle => 'Swiss booking journal';
-
-  @override
-  String get swissKmuRevenueExempt => 'Revenue exempt, exported or abroad';
-
-  @override
-  String get swissKmuRevenueNormal => 'Revenue at the normal rate';
-
-  @override
-  String get swissKmuRevenueReduced =>
-      'Revenue at the reduced or accommodation rate';
-
-  @override
   String get symbolHint =>
       'A round mark of one or two letters on a colour, unique to this workspace — or use a photo below instead.';
 
@@ -25733,6 +25763,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefCents => 'Amount (minor units)';
+
+  @override
+  String get taxRefChKmuKeys =>
+      'Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group\'s sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file\'s VAT table.';
 
   @override
   String get taxRefComponents =>

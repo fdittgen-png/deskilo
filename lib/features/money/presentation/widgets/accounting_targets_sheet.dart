@@ -282,8 +282,17 @@ class _ConnectionCard extends ConsumerWidget {
     final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     final c = connection;
+    final waiting = [
+      if (!target.runnerDelivers)
+        Text(
+          l10n.acctTargetNotDeliveredYet,
+          key: ValueKey('acct-not-delivered-${target.id}-$issuerId'),
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+    ];
     if (c == null) {
       return [
+        ...waiting,
         Text(
           l10n.acctTargetsNotConnected,
           key: ValueKey('acct-connection-state-${target.id}-$issuerId'),
@@ -291,6 +300,7 @@ class _ConnectionCard extends ConsumerWidget {
       ];
     }
     return [
+      ...waiting,
       Text(
         _connectionStatusLabel(l10n, c.status),
         key: ValueKey('acct-connection-state-${target.id}-$issuerId'),

@@ -25,6 +25,7 @@ void main() {
       accountingConnectorsKey,
       WorkspaceFeature.accountingConnectors.dbKey,
     );
+    expect(accountingPeriodsKey, WorkspaceFeature.accountingPeriods.dbKey);
   });
 
   test('unwired, a question is answered with the registry default', () {

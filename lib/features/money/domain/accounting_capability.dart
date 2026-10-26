@@ -196,6 +196,44 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'ch_kmu',
     state: QualificationState.implemented,
   ),
+  // #2377 — the Swiss journal's rows under Banana's column names; the MWST
+  // codes must exist in the Banana file's VAT table. No Banana import of a
+  // file from this app has been reported yet.
+  'banana_transactions': AccountingCapability(
+    formatId: 'banana_transactions',
+    state: QualificationState.implemented,
+    specification: 'Banana Accounting+ import of transactions, column names of the Transactions table',
+  ),
+  // #2377 — the adapter maps the documents and delivers them once, read
+  // back by document number; no live exchange has happened (no bexio test
+  // company or registered app yet).
+  'bexio_api': AccountingCapability(
+    formatId: 'bexio_api',
+    state: QualificationState.implemented,
+    specification: 'bexio API 2.0, kb_invoice and kb_credit_voucher',
+  ),
+  // The Swiss journal is their working route; their own interfaces need a
+  // specification (Abacus a licence per interface).
+  'abacus_abaconnect': AccountingCapability(
+    formatId: 'abacus_abaconnect',
+    state: QualificationState.specificationNeeded,
+  ),
+  'sage50_extra_ch': AccountingCapability(
+    formatId: 'sage50_extra_ch',
+    state: QualificationState.specificationNeeded,
+  ),
+  'infoniqa_one': AccountingCapability(
+    formatId: 'infoniqa_one',
+    state: QualificationState.specificationNeeded,
+  ),
+  'klara': AccountingCapability(
+    formatId: 'klara',
+    state: QualificationState.specificationNeeded,
+  ),
+  'run_my_accounts': AccountingCapability(
+    formatId: 'run_my_accounts',
+    state: QualificationState.specificationNeeded,
+  ),
   'accountant_csv': AccountingCapability(
     formatId: 'accountant_csv',
     state: QualificationState.implemented,

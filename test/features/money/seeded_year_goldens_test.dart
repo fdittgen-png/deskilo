@@ -58,7 +58,6 @@ import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
 import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/sage.dart';
-import 'package:deskilo/features/money/domain/swiss_kmu.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/presentation/datev_profile.dart';
@@ -516,15 +515,6 @@ final Map<String, Future<String> Function()> _files = {
       customerRef: (invoice) => invoice.memberId,
     );
   },
-  'ch_kmu.csv': () async {
-    final b = (await _read('ch_kmu', country: 'CH')).books;
-    return buildSwissKmuFile(
-      invoices: b.invoices,
-      matches: b.matches,
-      accounts: const SwissKmuAccounts(),
-      customerRef: (invoice) => invoice.memberId,
-    );
-  },
   'saft_pt.xml': () async =>
       _safT(await _read('saft_pt', country: 'PT'), portugal: true),
   'saft.xml': () async {
@@ -628,7 +618,8 @@ void main() {
         'fec',
         'datev',
         'sage50',
-        'ch',
+        // The Swiss journal's goldens are its Swiss year's
+        // (swiss_kmu_test.dart): it posts on a Swiss chart.
         'saft',
         'accountant',
         'generic',

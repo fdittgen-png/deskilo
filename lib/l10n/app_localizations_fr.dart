@@ -543,6 +543,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get acctRedeliver => 'Envoyer à nouveau';
 
   @override
+  String get acctTargetNotDeliveredYet =>
+      'Aucune pièce n\'est encore envoyée à ce système : la connexion et ses correspondances sont conservées pour l\'envoi, qui ne fonctionne pas encore pour lui.';
+
+  @override
   String get acctTargetsIntro =>
       'Où va la comptabilité de chaque émetteur. Un système connecté reçoit les pièces lui-même ; les autres reçoivent les fichiers exportés de la comptabilité. Chaque transfert est listé ci-dessous avec l\'empreinte de ce qu\'il a porté.';
 
@@ -808,6 +812,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get applicationsTitle => 'Demandes d’accès';
+
+  @override
+  String get archiveSwissNeedsExportLog =>
+      'La documentation des procédures de cette archive suisse indique que chaque téléchargement est inscrit au journal des exports, et cet espace n\'en tient pas : activez d\'abord les périodes comptables ou les systèmes comptables.';
 
   @override
   String get assistantPrefix => 'Assistant';
@@ -7643,7 +7651,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureAccountingConnectorsDesc =>
-      'Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane par son API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu\'un contrôle fiscal demande à voir.';
+      'Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane et bexio par leur API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu\'un contrôle fiscal demande à voir.';
 
   @override
   String get featureAccountingConnectorsTitle => 'Systèmes comptables';
@@ -9324,6 +9332,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get financesTypeInvoice => 'Facture';
+
+  @override
+  String get gebuevProcedureAccessBody =>
+      'Chaque export comptable et chaque téléchargement d\'archive est inscrit au journal des exports : qui, quand, quel fichier et son empreinte. La piste d\'audit liste ces accès à côté des documents.';
+
+  @override
+  String get gebuevProcedureAccessHeading => 'Accès (art. 8)';
+
+  @override
+  String get gebuevProcedureCarriersBody =>
+      'Cette archive se lit avec n\'importe quel outil zip et éditeur de texte. Une copie de tout l\'espace est prouvée par un export de l\'espace terminé, inscrit avec son empreinte : la liste de préparation indique la date du dernier et en demande un nouveau lorsqu\'il est ancien.';
+
+  @override
+  String get gebuevProcedureCarriersHeading =>
+      'Disponibilité et supports (art. 5 et 10)';
+
+  @override
+  String get gebuevProcedureIntegrityBody =>
+      'Chaque fichier de cette archive figure dans manifest.csv avec son empreinte SHA-256 et sa taille. L\'archive elle-même, comme chaque export comptable, est inscrite au journal des exports avec son empreinte, l\'heure du serveur et la personne qui l\'a créée. Chaque document émis porte l\'empreinte que le serveur vérifie ; register.csv en donne le résultat.';
+
+  @override
+  String get gebuevProcedureIntegrityHeading => 'Intégrité (art. 3 et 9)';
+
+  @override
+  String get gebuevProcedureSystemBody =>
+      'DesKilo tient les factures, notes de crédit, paiements, comptes des membres, frais partagés et pièces d\'achat approuvées de cet espace et, lorsque l\'espace tient un livre local, leurs écritures sur son plan comptable. La comptabilité générale de la fiduciaire importe le journal suisse de ces écritures.';
+
+  @override
+  String gebuevProcedureTitle(String workspace) {
+    return 'Documentation des procédures (Olico art. 4) — $workspace';
+  }
 
   @override
   String get gettingStartedActionChooseDay => 'Choisir un autre jour';
@@ -11266,6 +11305,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceExportAuditTrail => 'Piste d’audit';
 
   @override
+  String get invoiceExportBanana =>
+      'Banana Comptabilité+ (import d\'écritures)';
+
+  @override
   String get invoiceExportBundle => 'Archive de l\'exercice (zip)';
 
   @override
@@ -11317,7 +11360,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceExportSwissKmu =>
-      'Journal des écritures suisse (CSV, comptes PME)';
+      'Journal des écritures suisse (CSV, comptes PME, codes TVA)';
 
   @override
   String get invoiceExportTrialBalance =>
@@ -12178,6 +12221,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String journalSafTRefused(String gaps) {
     return 'Le fichier SAF-T n’a pas été établi : $gaps';
+  }
+
+  @override
+  String journalSwissTaxCodes(String keys) {
+    return 'Ces groupes de taux n\'ont pas de code TVA dans le référentiel fiscal ; rien n\'a été écrit. Ajoutez d\'abord leurs codes : $keys';
   }
 
   @override
@@ -24521,24 +24569,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get supportTitle => 'Détails pour l’assistance';
 
   @override
-  String get swissKmuAccountsIntro =>
-      'Les valeurs par défaut sont les propositions du plan comptable suisse PME. Chaque ligne nomme le chiffre du décompte TVA sur lequel elle tombe ; vérifiez les comptes avec votre fiduciaire.';
-
-  @override
-  String get swissKmuAccountsTitle => 'Journal des écritures suisse';
-
-  @override
-  String get swissKmuRevenueExempt =>
-      'Produits exclus de l\'impôt, exportés ou à l\'étranger';
-
-  @override
-  String get swissKmuRevenueNormal => 'Produits au taux normal';
-
-  @override
-  String get swissKmuRevenueReduced =>
-      'Produits au taux réduit ou d\'hébergement';
-
-  @override
   String get symbolHint =>
       'Une pastille ronde d’une ou deux lettres sur une couleur, unique à cet espace — ou utilisez plutôt une photo ci-dessous.';
 
@@ -26019,6 +26049,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefCents => 'Montant (plus petite unité)';
+
+  @override
+  String get taxRefChKmuKeys =>
+      'Journal suisse (format ch_kmu) : la clé ch_kmu/tax:<groupe> donne le code TVA des ventes d\'un groupe de taux, ch_kmu/input:<groupe> celui de son impôt préalable sur matériel et prestations (chiffre 400), ch_kmu/asset:<groupe> celui de l\'impôt préalable sur investissements (chiffre 405), comme code fiscal ; le code doit exister dans la table TVA du fichier Banana.';
 
   @override
   String get taxRefComponents =>

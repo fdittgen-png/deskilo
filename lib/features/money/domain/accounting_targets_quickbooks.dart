@@ -11,6 +11,7 @@ import 'accounting_format.dart';
 const List<AccountingTarget> quickbooksAccountingTargets = [
   AccountingTarget(
     id: 'quickbooks_online_us',
+    runnerDelivers: true,
     vendor: 'Intuit',
     product: 'QuickBooks Online',
     edition: 'Accounting API v3, US realm',
@@ -30,6 +31,7 @@ const List<AccountingTarget> quickbooksAccountingTargets = [
   ),
   AccountingTarget(
     id: 'quickbooks_online_ca',
+    runnerDelivers: true,
     vendor: 'Intuit',
     product: 'QuickBooks Online',
     edition: 'Accounting API v3, CA realm',
@@ -49,6 +51,7 @@ const List<AccountingTarget> quickbooksAccountingTargets = [
   ),
   AccountingTarget(
     id: 'quickbooks_online_gb',
+    runnerDelivers: true,
     vendor: 'Intuit',
     product: 'QuickBooks Online',
     edition: 'Accounting API v3, GB realm',

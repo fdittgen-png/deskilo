@@ -44,6 +44,9 @@ const _postedWhenLocalBook = {
   'saft_no',
   'faia_lu',
   'saft_oecd_full',
+  // #2377 — the Swiss journal and its Banana layout.
+  'ch_kmu',
+  'banana_transactions',
 };
 
 /// The posted formats that also read the chart's names and the parties.
@@ -57,6 +60,17 @@ const _named = {
   'saft_no',
   'faia_lu',
   'saft_oecd_full',
+  'ch_kmu',
+  'banana_transactions',
+};
+
+/// The formats with no source but the postings: without a local book they
+/// hold that answer.
+final _postedOnly = {
+  'generic_journal_csv',
+  ...safTFinancialFormats,
+  'ch_kmu',
+  'banana_transactions',
 };
 
 BookProfile _localBook({int startMonth = 1}) => BookProfile(
@@ -229,7 +243,7 @@ void main() {
           input.posted,
           posted
               ? isA<JournalPosted>()
-              : id == 'generic_journal_csv' || safTFinancialFormats.contains(id)
+              : _postedOnly.contains(id)
               ? isA<JournalNeedsLocalBook>()
               : isNull,
         );

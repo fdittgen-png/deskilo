@@ -263,6 +263,7 @@
   "acctMapsIntro": "Comment chaque compte, code de TVA, client et article de cette comptabilité s'appelle dans le système. Un envoi qui en demande un absent d'ici s'arrête et le nomme ; rien n'est remplacé par une valeur par défaut.",
   "acctMapsTitle": "Noms dans {target}",
   "acctRedeliver": "Envoyer à nouveau",
+  "acctTargetNotDeliveredYet": "Aucune pièce n'est encore envoyée à ce système : la connexion et ses correspondances sont conservées pour l'envoi, qui ne fonctionne pas encore pour lui.",
   "acctTargetsIntro": "Où va la comptabilité de chaque émetteur. Un système connecté reçoit les pièces lui-même ; les autres reçoivent les fichiers exportés de la comptabilité. Chaque transfert est listé ci-dessous avec l'empreinte de ce qu'il a porté.",
   "acctTargetsLoadFailed": "Les systèmes comptables n'ont pas pu être chargés.",
   "acctTargetsNoApiTarget": "Aucun système comptable de ce pays n'est encore joint par une connexion : la comptabilité part par fichier, depuis l'export comptable.",
@@ -392,6 +393,7 @@
   "@applicationsTitle": {
     "description": "Workspace admission history and discussion (#1791)"
   },
+  "archiveSwissNeedsExportLog": "La documentation des procédures de cette archive suisse indique que chaque téléchargement est inscrit au journal des exports, et cet espace n'en tient pas : activez d'abord les périodes comptables ou les systèmes comptables.",
   "assistantPrefix": "Assistant",
   "@assistantPrefix": {
     "description": "#872 one wizard idiom: assistantPrefix"
@@ -5621,7 +5623,7 @@
   "featureAccessorySupplementsDesc": "Facturer les accessoires de place tarifés par demi-journée réservée. S'applique aux réservations à partir de l'activation.",
   "featureAccountingBookDesc": "Qui tient les livres officiels de chaque émetteur : Deskilo en pré-comptabilité, un livre local ou un logiciel comptable externe qui fait foi. Chaque émetteur indique sa devise, son exercice et sa base comptable. Désactivé : les soldes des membres et les factures fonctionnent comme avant.",
   "featureAccountingBookTitle": "Livre comptable",
-  "featureAccountingConnectorsDesc": "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane par son API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir.",
+  "featureAccountingConnectorsDesc": "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane et bexio par leur API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir.",
   "featureAccountingConnectorsTitle": "Systèmes comptables",
   "featureAccountingPeriodsDesc": "Clôturer une période des livres : aucune facture datée dans cette période ne peut être annulée, aucun règlement rapproché dans cette période, et chaque export comptable est consigné. Désactivé : rien n'est verrouillé et les exports ne sont pas consignés.",
   "@featureAccountingPeriodsDesc": {
@@ -6802,6 +6804,14 @@
   "financesTypeAll": "Tous les documents",
   "financesTypeCreditNote": "Avoir",
   "financesTypeInvoice": "Facture",
+  "gebuevProcedureAccessBody": "Chaque export comptable et chaque téléchargement d'archive est inscrit au journal des exports : qui, quand, quel fichier et son empreinte. La piste d'audit liste ces accès à côté des documents.",
+  "gebuevProcedureAccessHeading": "Accès (art. 8)",
+  "gebuevProcedureCarriersBody": "Cette archive se lit avec n'importe quel outil zip et éditeur de texte. Une copie de tout l'espace est prouvée par un export de l'espace terminé, inscrit avec son empreinte : la liste de préparation indique la date du dernier et en demande un nouveau lorsqu'il est ancien.",
+  "gebuevProcedureCarriersHeading": "Disponibilité et supports (art. 5 et 10)",
+  "gebuevProcedureIntegrityBody": "Chaque fichier de cette archive figure dans manifest.csv avec son empreinte SHA-256 et sa taille. L'archive elle-même, comme chaque export comptable, est inscrite au journal des exports avec son empreinte, l'heure du serveur et la personne qui l'a créée. Chaque document émis porte l'empreinte que le serveur vérifie ; register.csv en donne le résultat.",
+  "gebuevProcedureIntegrityHeading": "Intégrité (art. 3 et 9)",
+  "gebuevProcedureSystemBody": "DesKilo tient les factures, notes de crédit, paiements, comptes des membres, frais partagés et pièces d'achat approuvées de cet espace et, lorsque l'espace tient un livre local, leurs écritures sur son plan comptable. La comptabilité générale de la fiduciaire importe le journal suisse de ces écritures.",
+  "gebuevProcedureTitle": "Documentation des procédures (Olico art. 4) — {workspace}",
   "gettingStartedActionChooseDay": "Choisir un autre jour",
   "gettingStartedActionChooseTime": "Choisir un créneau",
   "gettingStartedActionFinishSetup": "Terminer la mise en place",
@@ -7743,6 +7753,7 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportBanana": "Banana Comptabilité+ (import d'écritures)",
   "invoiceExportBundle": "Archive de l'exercice (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"
@@ -7770,10 +7781,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
-  "invoiceExportSwissKmu": "Journal des écritures suisse (CSV, comptes PME)",
-  "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
-  },
+  "invoiceExportSwissKmu": "Journal des écritures suisse (CSV, comptes PME, codes TVA)",
   "invoiceExportTrialBalance": "Balance générale et auxiliaire (PDF, depuis la comptabilité)",
   "invoiceExternalIssuingTitle": "Émettez cette facture hors de l’application",
   "invoiceFacturXDownload": "Télécharger le Factur-X (PDF)",
@@ -8449,6 +8457,7 @@
   "journalNeedsRates": "Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : {documents}",
   "journalOpeningRefused": "Les soldes d’ouverture (du {from} au {to}) n’ont pas pu être comptabilisés : {reason}",
   "journalSafTRefused": "Le fichier SAF-T n’a pas été établi : {gaps}",
+  "journalSwissTaxCodes": "Ces groupes de taux n'ont pas de code TVA dans le référentiel fiscal ; rien n'a été écrit. Ajoutez d'abord leurs codes : {keys}",
   "journeyClosedPaid": "Payée le {date} — close",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -16694,26 +16703,6 @@
     }
   },
   "supportTitle": "Détails pour l’assistance",
-  "swissKmuAccountsIntro": "Les valeurs par défaut sont les propositions du plan comptable suisse PME. Chaque ligne nomme le chiffre du décompte TVA sur lequel elle tombe ; vérifiez les comptes avec votre fiduciaire.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuAccountsTitle": "Journal des écritures suisse",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuRevenueExempt": "Produits exclus de l'impôt, exportés ou à l'étranger",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  },
-  "swissKmuRevenueNormal": "Produits au taux normal",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Produits au taux réduit ou d'hébergement",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
   "symbolHint": "Une pastille ronde d’une ou deux lettres sur une couleur, unique à cet espace — ou utilisez plutôt une photo ci-dessous.",
   "@symbolHint": {
     "description": "workspace symbol"
@@ -17346,6 +17335,7 @@
   "@taxRefCents": {
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
+  "taxRefChKmuKeys": "Journal suisse (format ch_kmu) : la clé ch_kmu/tax:<groupe> donne le code TVA des ventes d'un groupe de taux, ch_kmu/input:<groupe> celui de son impôt préalable sur matériel et prestations (chiffre 400), ch_kmu/asset:<groupe> celui de l'impôt préalable sur investissements (chiffre 405), comme code fiscal ; le code doit exister dans la table TVA du fichier Banana.",
   "taxRefComponents": "Juridictions, une par ligne : niveau, nom, pourcentage (niveau : state, county, city ou district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"

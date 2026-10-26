@@ -222,7 +222,7 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
 List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
-  final purchasing = main.purchasing, bookPeriods = seedDemoBookPeriods(fixture.seededAt);
+  final purchasing = main.purchasing, bookPeriods = seedDemoBookPeriods(fixture.seededAt, actor: fixture.actor.memberId);
   return [
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
     supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),

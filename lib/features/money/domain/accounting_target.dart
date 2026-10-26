@@ -84,6 +84,7 @@ class AccountingTarget {
     this.customerIdRule = const CustomerIdRule(),
     this.limits = const TargetLimits(),
     this.connectsBy = const {},
+    this.runnerDelivers = false,
   });
 
   /// Stable wire id: the format id of a file target.
@@ -109,6 +110,11 @@ class AccountingTarget {
 
   /// The ways an issuer connects to an API target; empty for a file target.
   final Set<AccountingAuthKind> connectsBy;
+
+  /// #2377 — the delivery runner sends documents through this API target's
+  /// adapter. Until it does, a connection and its mappings are kept and the
+  /// sheet says nothing is sent yet.
+  final bool runnerDelivers;
 
   bool offeredIn(String countryCode) =>
       countries.isEmpty || countries.contains(countryCode.toUpperCase());

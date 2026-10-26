@@ -968,6 +968,12 @@ abstract class AppLocalizations {
   /// **'Deliver again'**
   String get acctRedeliver;
 
+  /// #2377 Accounting systems sheet: an API target whose deliveries the runner does not send yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.'**
+  String get acctTargetNotDeliveredYet;
+
   /// #2370 Accounting systems sheet: what the sheet shows.
   ///
   /// In en, this message translates to:
@@ -1399,6 +1405,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace requests'**
   String get applicationsTitle;
+
+  /// #2377 The Swiss archive refused: no export log is kept (neither book periods nor accounting systems on).
+  ///
+  /// In en, this message translates to:
+  /// **'This Swiss archive\'s procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.'**
+  String get archiveSwissNeedsExportLog;
 
   /// #872 one wizard idiom: assistantPrefix
   ///
@@ -12524,7 +12536,7 @@ abstract class AppLocalizations {
   /// #2370 Features screen: what the accounting systems feature does.
   ///
   /// In en, this message translates to:
-  /// **'Connects each issuer\'s books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.'**
+  /// **'Connects each issuer\'s books to the accounting system they are kept in (Pennylane and bexio through their APIs, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.'**
   String get featureAccountingConnectorsDesc;
 
   /// #2370 Features screen: the accounting systems the books are handed to, a platform flag.
@@ -15298,6 +15310,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoice'**
   String get financesTypeInvoice;
+
+  /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
+  ///
+  /// In en, this message translates to:
+  /// **'Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.'**
+  String get gebuevProcedureAccessBody;
+
+  /// #2377 The Swiss archive's procedures document: heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Access (art. 8)'**
+  String get gebuevProcedureAccessHeading;
+
+  /// #2377 The Swiss archive's procedures document: availability and carriers (GeBüV art. 5 and 10).
+  ///
+  /// In en, this message translates to:
+  /// **'This archive is read with any zip tool and text editor. A copy of the whole space is proven by a completed workspace export, recorded with its digest: the readiness checklist shows when the last one was made and asks for a new one when it is old.'**
+  String get gebuevProcedureCarriersBody;
+
+  /// #2377 The Swiss archive's procedures document: heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability and carriers (art. 5 and 10)'**
+  String get gebuevProcedureCarriersHeading;
+
+  /// #2377 The Swiss archive's procedures document: integrity (GeBüV art. 3 and 9).
+  ///
+  /// In en, this message translates to:
+  /// **'Every file of this archive is listed in manifest.csv with its SHA-256 digest and size. The archive itself, like every accounting export, is recorded in the export log with its digest, the server\'s time and the person who made it. Each issued document carries the fingerprint the server verifies; register.csv states the verdict.'**
+  String get gebuevProcedureIntegrityBody;
+
+  /// #2377 The Swiss archive's procedures document: heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrity (art. 3 and 9)'**
+  String get gebuevProcedureIntegrityHeading;
+
+  /// #2377 The Swiss archive's procedures document: what the system keeps.
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo keeps this space\'s invoices, credit notes, payments, member accounts, shared costs and approved purchase documents, and, where the space keeps a local book, their postings on its chart. The accountant\'s general ledger imports the Swiss journal of those postings.'**
+  String get gebuevProcedureSystemBody;
+
+  /// #2377 The Swiss archive's procedures document: title.
+  ///
+  /// In en, this message translates to:
+  /// **'Procedures documentation (GeBüV art. 4) — {workspace}'**
+  String gebuevProcedureTitle(String workspace);
 
   /// #1654 getting started card: gettingStartedActionChooseDay
   ///
@@ -18509,6 +18569,12 @@ abstract class AppLocalizations {
   /// **'Audit trail'**
   String get invoiceExportAuditTrail;
 
+  /// #2377 The Swiss journal under Banana's column names, on the accounting export sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Banana Accounting+ (transactions import)'**
+  String get invoiceExportBanana;
+
   /// #957 archive bundle: invoiceExportBundle
   ///
   /// In en, this message translates to:
@@ -18599,10 +18665,10 @@ abstract class AppLocalizations {
   /// **'Sage 50 (audit trail)'**
   String get invoiceExportSage;
 
-  /// #2360: invoiceExportSwissKmu
+  /// #2360/#2377 The Swiss journal of a local book on the accounting export sheet.
   ///
   /// In en, this message translates to:
-  /// **'Swiss booking journal (CSV, KMU accounts)'**
+  /// **'Swiss booking journal (CSV, KMU accounts, MWST codes)'**
   String get invoiceExportSwissKmu;
 
   /// Accounting export sheet (#2376): the trial balance report
@@ -20068,6 +20134,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The SAF-T file was not made: {gaps}'**
   String journalSafTRefused(String gaps);
+
+  /// #2377 The Swiss journal refused: a taxed row's rate group has no MWST code.
+  ///
+  /// In en, this message translates to:
+  /// **'These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: {keys}'**
+  String journalSwissTaxCodes(String keys);
 
   /// No description provided for @journeyClosedPaid.
   ///
@@ -40289,36 +40361,6 @@ abstract class AppLocalizations {
   /// **'Support details'**
   String get supportTitle;
 
-  /// #2360: swissKmuAccountsIntro
-  ///
-  /// In en, this message translates to:
-  /// **'The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.'**
-  String get swissKmuAccountsIntro;
-
-  /// #2360: swissKmuAccountsTitle
-  ///
-  /// In en, this message translates to:
-  /// **'Swiss booking journal'**
-  String get swissKmuAccountsTitle;
-
-  /// #2360: swissKmuRevenueExempt
-  ///
-  /// In en, this message translates to:
-  /// **'Revenue exempt, exported or abroad'**
-  String get swissKmuRevenueExempt;
-
-  /// #2360: swissKmuRevenueNormal
-  ///
-  /// In en, this message translates to:
-  /// **'Revenue at the normal rate'**
-  String get swissKmuRevenueNormal;
-
-  /// #2360: swissKmuRevenueReduced
-  ///
-  /// In en, this message translates to:
-  /// **'Revenue at the reduced or accommodation rate'**
-  String get swissKmuRevenueReduced;
-
   /// workspace symbol
   ///
   /// In en, this message translates to:
@@ -42928,6 +42970,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount (minor units)'**
   String get taxRefCents;
+
+  /// #2377 Tax reference editor: the keys of the Swiss journal's MWST code rows.
+  ///
+  /// In en, this message translates to:
+  /// **'Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group\'s sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file\'s VAT table.'**
+  String get taxRefChKmuKeys;
 
   /// #2362 sales tax: taxRefComponents
   ///

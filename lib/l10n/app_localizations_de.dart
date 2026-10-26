@@ -543,6 +543,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get acctRedeliver => 'Erneut übertragen';
 
   @override
+  String get acctTargetNotDeliveredYet =>
+      'An dieses System wird noch kein Beleg gesendet: die Verbindung und ihre Zuordnungen bleiben für die Übermittlung erhalten, die für dieses System noch nicht läuft.';
+
+  @override
   String get acctTargetsIntro =>
       'Wohin die Bücher jedes Ausstellers gehen. Ein verbundenes System empfängt die Belege selbst; jedes andere die aus den Büchern exportierten Dateien. Jede Übertragung steht unten mit dem Hashwert dessen, was sie getragen hat.';
 
@@ -808,6 +812,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get applicationsTitle => 'Arbeitsplatzanfragen';
+
+  @override
+  String get archiveSwissNeedsExportLog =>
+      'Die Verfahrensdokumentation dieses Schweizer Archivs hält fest, dass jeder Download im Exportprotokoll steht, und dieser Space führt keines: schalten Sie zuerst die Buchungsperioden oder die Buchhaltungssysteme ein.';
 
   @override
   String get assistantPrefix => 'Assistent';
@@ -7644,7 +7652,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureAccountingConnectorsDesc =>
-      'Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane über seine API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.';
+      'Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane und bexio über ihre API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will.';
 
   @override
   String get featureAccountingConnectorsTitle => 'Buchhaltungssysteme';
@@ -9310,6 +9318,37 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get financesTypeInvoice => 'Rechnung';
+
+  @override
+  String get gebuevProcedureAccessBody =>
+      'Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.';
+
+  @override
+  String get gebuevProcedureAccessHeading => 'Zugriffe (Art. 8)';
+
+  @override
+  String get gebuevProcedureCarriersBody =>
+      'Dieses Archiv lässt sich mit jedem Zip-Programm und Texteditor lesen. Eine Kopie des ganzen Space wird durch einen abgeschlossenen Export des Space belegt, der mit seinem Hashwert festgehalten wird: die Bereitschafts-Checkliste zeigt, wann der letzte erstellt wurde, und verlangt einen neuen, wenn er alt ist.';
+
+  @override
+  String get gebuevProcedureCarriersHeading =>
+      'Verfügbarkeit und Informationsträger (Art. 5 und 10)';
+
+  @override
+  String get gebuevProcedureIntegrityBody =>
+      'Jede Datei dieses Archivs steht in manifest.csv mit ihrem SHA-256-Hashwert und ihrer Grösse. Das Archiv selbst wird wie jeder Buchhaltungsexport mit seinem Hashwert, der Zeit des Servers und der Person, die es erstellt hat, im Exportprotokoll festgehalten. Jeder ausgestellte Beleg trägt den Fingerabdruck, den der Server prüft; register.csv nennt das Ergebnis.';
+
+  @override
+  String get gebuevProcedureIntegrityHeading => 'Integrität (Art. 3 und 9)';
+
+  @override
+  String get gebuevProcedureSystemBody =>
+      'DesKilo führt die Rechnungen, Gutschriften, Zahlungen, Mitgliederkonten, geteilten Kosten und genehmigten Einkaufsbelege dieses Space und, wo der Space ein lokales Buch führt, deren Buchungen auf seinem Kontenplan. Die Finanzbuchhaltung der Treuhänderin übernimmt das Schweizer Buchungsjournal dieser Buchungen.';
+
+  @override
+  String gebuevProcedureTitle(String workspace) {
+    return 'Verfahrensdokumentation (GeBüV Art. 4) — $workspace';
+  }
 
   @override
   String get gettingStartedActionChooseDay => 'Anderen Tag wählen';
@@ -11259,6 +11298,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceExportAuditTrail => 'Prüfpfad';
 
   @override
+  String get invoiceExportBanana =>
+      'Banana Buchhaltung+ (Import von Buchungen)';
+
+  @override
   String get invoiceExportBundle => 'Jahresarchiv (zip)';
 
   @override
@@ -11310,7 +11353,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceExportSwissKmu =>
-      'Schweizer Buchungsjournal (CSV, KMU-Konten)';
+      'Schweizer Buchungsjournal (CSV, KMU-Konten, MWST-Codes)';
 
   @override
   String get invoiceExportTrialBalance =>
@@ -12171,6 +12214,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String journalSafTRefused(String gaps) {
     return 'Die SAF-T-Datei wurde nicht erstellt: $gaps';
+  }
+
+  @override
+  String journalSwissTaxCodes(String keys) {
+    return 'Für diese Satzgruppen gibt es in den Steuergrundlagen keinen MWST-Code; es wurde nichts geschrieben. Erfassen Sie zuerst ihre Codes: $keys';
   }
 
   @override
@@ -24500,24 +24548,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get supportTitle => 'Supportdetails';
 
   @override
-  String get swissKmuAccountsIntro =>
-      'Die Vorgaben sind die Vorschläge des Schweizer Kontenrahmens KMU. Jede Zeile nennt die Ziffer der MWST-Abrechnung, auf der sie landet; prüfen Sie die Konten mit Ihrer Treuhänderin.';
-
-  @override
-  String get swissKmuAccountsTitle => 'Schweizer Buchungsjournal';
-
-  @override
-  String get swissKmuRevenueExempt =>
-      'Ertrag ausgenommen, exportiert oder im Ausland';
-
-  @override
-  String get swissKmuRevenueNormal => 'Ertrag zum Normalsatz';
-
-  @override
-  String get swissKmuRevenueReduced =>
-      'Ertrag zum reduzierten oder Beherbergungssatz';
-
-  @override
   String get symbolHint =>
       'Ein rundes Zeichen aus einem oder zwei Buchstaben auf einer Farbe, einmalig für diesen Arbeitsbereich — oder stattdessen unten ein Foto verwenden.';
 
@@ -26002,6 +26032,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get taxRefCents => 'Betrag (kleinste Einheit)';
+
+  @override
+  String get taxRefChKmuKeys =>
+      'Schweizer Journal (Format ch_kmu): Schlüssel ch_kmu/tax:<Gruppe> gibt den MWST-Code der Umsätze einer Satzgruppe, ch_kmu/input:<Gruppe> den ihrer Vorsteuer auf Material und Dienstleistungen (Ziffer 400), ch_kmu/asset:<Gruppe> den der Vorsteuer auf Investitionen (Ziffer 405) als Steuercode; der Code muss in der MWST-Tabelle der Banana-Datei stehen.';
 
   @override
   String get taxRefComponents =>
