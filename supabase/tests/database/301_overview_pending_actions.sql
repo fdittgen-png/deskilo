@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2580 / 9999: what waits on a decision of the space now.
+-- #2580 / 0598: what waits on a decision of the space now.
 -- Space b1: two requests pending, one applied and one confirmed (out), one
 -- person asking to join, two active members -> 3. Space b2 has a pending
 -- request of its own, never counted in b1. A past period gets today's

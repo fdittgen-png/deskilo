@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 9999 (#2580) -- what waits on a decision of the space, as a registered
+-- 0598 (#2580) -- what waits on a decision of the space, as a registered
 -- figure of the overview:
 --
 --   operations.pending_actions_current  the requests the space's validators
@@ -60,4 +60,4 @@ grant execute on function public.kpi_pending_actions_current(uuid, text, text) t
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(598);
