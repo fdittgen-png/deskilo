@@ -9,15 +9,16 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_book_profile.dart';
-import '../../domain/accounting_format.dart' show accountingTargets;
 import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
 import 'book_chart_sheet.dart';
+import 'book_software_field.dart';
 import 'retention_clocks_tile.dart';
 
 String _bookAuthorityLabel(AppLocalizations l10n, BookAuthority a) =>
@@ -82,7 +83,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   /// The external book's software: the list, and the typed field after
   /// "Other…".
   List<Widget> _softwareFields(AppLocalizations l10n, String country) => [
-        _SoftwareField(
+        BookSoftwareField(
           key: const ValueKey('book-external-field'),
           country: country,
           value: _external.text,
@@ -90,11 +91,11 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
           onChanged: _software,
         ),
         if (_otherSoftware)
-          TextField(
+          AppTextField(
             key: const ValueKey('book-external-other'),
             controller: _external,
+            label: l10n.bookExternalSystem,
             onChanged: (_) => _software(null),
-            decoration: InputDecoration(labelText: l10n.bookExternalSystem),
           ),
       ];
   final _currency = TextEditingController();
@@ -447,61 +448,4 @@ class BookProfileSection extends ConsumerWidget {
       ],
     );
   }
-}
-
-/// The list the book's external software is chosen from, with "Other…"
-/// for a software the catalogue does not know; null means "Other…".
-class _SoftwareField extends StatelessWidget {
-  const _SoftwareField({
-    required this.country,
-    super.key,
-    required this.value,
-    required this.other,
-    required this.onChanged,
-  });
-
-  final String country;
-  final String value;
-  final bool other;
-  final ValueChanged<String?> onChanged;
-
-  /// The dropdown's own value for "Other…".
-  static const _otherChoice = '\u0000other';
-
-  @override
-  Widget build(BuildContext context) {
-    final choices = _softwareChoices(country, value);
-    final selected = other
-        ? _otherChoice
-        : choices.contains(value) ? value : null;
-    return DropdownButtonFormField<String>(
-      key: const ValueKey('book-external'),
-      initialValue: selected,
-      isExpanded: true,
-      decoration: InputDecoration(labelText: context.l10n.bookExternalSystem),
-      items: [
-        for (final name in choices)
-          DropdownMenuItem(value: name, child: Text(name)),
-        DropdownMenuItem(
-          key: const ValueKey('book-external-choice-other'),
-          value: _otherChoice,
-          child: Text(context.l10n.bookExternalOther),
-        ),
-      ],
-      onChanged: (v) => onChanged(v == _otherChoice ? null : v),
-    );
-  }
-}
-
-/// The software a space can name as its book: every accounting software
-/// the targets know in the space's country, by name (the app's own exports
-/// and the authorities' file formats are no software), plus the one already
-/// stored so an earlier choice never vanishes from the list.
-List<String> _softwareChoices(String country, String stored) {
-  final names = <String>{
-    for (final t in accountingTargets)
-      if (t.isSoftware && t.offeredIn(country)) '${t.vendor} ${t.product}'.trim(),
-    if (stored.isNotEmpty) stored,
-  };
-  return names.toList()..sort();
 }

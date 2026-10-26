@@ -226,6 +226,7 @@ void main() {
     expect(find.byKey(const ValueKey('book-external-other')), findsNothing);
     final save = find.byKey(const ValueKey('book-save'));
     await tester.ensureVisible(save);
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(save);
     await tester.pump(const Duration(seconds: 1));
     expect(r.books.saves.single.externalSystem, 'Holded');
@@ -256,6 +257,7 @@ void main() {
     await tester.pump();
     final save = find.byKey(const ValueKey('book-save'));
     await tester.ensureVisible(save);
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(save);
     await tester.pump(const Duration(seconds: 1));
     expect(books.saves.single.externalSystem, 'Holded');

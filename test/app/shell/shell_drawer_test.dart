@@ -195,6 +195,8 @@ void main() {
     await _reveal(tester, 'drawer-accounting');
     expect(find.byKey(const ValueKey('drawer-legal-identity')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('drawer-accounting')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const ValueKey('accounting-hub')), findsOneWidget);
   });

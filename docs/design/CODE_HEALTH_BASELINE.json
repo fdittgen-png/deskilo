@@ -3074,7 +3074,7 @@
     {"id":"lib/features/money/presentation/usage_report_data.dart#usageReportData(BuildContext context,WidgetRef ref,{required String period,required String memberId,required String memberName,AppLocalizations? l10nOverride,String? localeName})","cog":6,"cyc":26,"len":97,"params":7},
     {"id":"lib/features/money/presentation/widgets/bill_view.dart#_OpenPositionsCard._label(AppLocalizations l10n,WorkspaceEvent event)","cog":1,"cyc":29,"len":41,"params":2},
     {"id":"lib/features/money/presentation/widgets/book_chart_sheet.dart#_BookChartSheetState.build(BuildContext context)","cog":29,"cyc":18,"len":154,"params":1},
-    {"id":"lib/features/money/presentation/widgets/book_profile_sheet.dart#_BookProfileSheetState.build(BuildContext context)","cog":24,"cyc":28,"len":206,"params":1},
+    {"id":"lib/features/money/presentation/widgets/book_profile_sheet.dart#_BookProfileSheetState.build(BuildContext context)","cog":24,"cyc":28,"len":202,"params":1},
     {"id":"lib/features/money/presentation/widgets/consumption_sheet.dart#showConsumptionSheet(BuildContext context,WidgetRef ref,{required String subjectMemberId,String? subjectName})","cog":34,"cyc":24,"len":195,"params":4},
     {"id":"lib/features/money/presentation/widgets/e_invoice_sheet.dart#showEInvoiceSheet(BuildContext context,{required EInvoiceRoute route,required EInvoiceReadiness readiness,required bool canFixIdentity,bool canSend,bool canSendCustomer,bool identityFixedSince,String validator,String sendChannel,List<ChannelGap> sendGaps,List<EInvoiceMandate> mandates,required DateTime today})","cog":0,"cyc":1,"len":37,"params":12},
     {"id":"lib/features/money/presentation/widgets/e_invoice_sheet.dart#_EInvoiceBody.build(BuildContext context)","cog":35,"cyc":29,"len":259,"params":1},
