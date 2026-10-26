@@ -5,7 +5,6 @@
 // own figures, the cost allocation, the saved views among them), so the
 // server's answer under the new rights replaces the one read before.
 import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
-import 'package:deskilo/features/workspace/domain/bi_view_memory.dart';
 import 'package:deskilo/features/workspace/domain/cost_allocation_rules.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_overview.dart';
