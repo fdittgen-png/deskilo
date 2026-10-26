@@ -447,11 +447,18 @@ declare
   v_pattern text;
   v_out text;
 begin
+  -- An anchor names one place: it occurs exactly once, or nothing is patched.
   if position(p_old in p_def) > 0 then
+    if (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old) <> 1 then
+      raise exception '0604: anchor not unique';
+    end if;
     return replace(p_def, p_old, p_new);
   end if;
   v_pattern := regexp_replace(btrim(p_old, E' \t\n'), '([.^$*+?()\[\]{}|\\])', '\\\1', 'g');
   v_pattern := regexp_replace(v_pattern, '\s+', '\\s*', 'g');
+  if regexp_count(p_def, v_pattern) > 1 then
+    raise exception '0604: anchor not unique';
+  end if;
   v_out := regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'), 'g');
   return case when v_out = p_def then null else v_out end;
 end
