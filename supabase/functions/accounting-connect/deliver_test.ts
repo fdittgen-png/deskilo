@@ -395,11 +395,14 @@ Deno.test("the invoice a credit note corrects is read as the caller; a refused r
   const read = w.calls.find((c) => c.fn === "invoices.id, replaces_number")!;
   assertEquals([read.as, read.args], ["caller", { id: [CRN] }]);
 
-  const refused = world({ postings: [creditNote], invoices: null });
-  const res = await run(refused);
-  assertEquals(res.status, 403);
-  assertEquals(refused.pl.st.posts, 0);
-  assertEquals(refused.log.rows.size, 0);
+  // A read refused outright, and one row-level security answers empty.
+  for (const invoices of [null, []]) {
+    const refused = world({ postings: [creditNote], invoices });
+    const res = await run(refused);
+    assertEquals(res.status, 403);
+    assertEquals(refused.pl.st.posts, 0);
+    assertEquals(refused.log.rows.size, 0);
+  }
 });
 
 Deno.test("a period without a credit note reads no invoice", async () => {

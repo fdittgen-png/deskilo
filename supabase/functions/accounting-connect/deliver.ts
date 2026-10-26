@@ -89,13 +89,16 @@ async function creditedNumbers(caller: CallerDb, documentIds: string[]): Promise
   if (documentIds.length === 0) return {};
   const { data, error } = await caller.from("invoices").select("id, replaces_number").in("id", documentIds);
   if (error || !Array.isArray(data)) return null;
+  // Row-level security answers fewer rows, not an error: a credit note
+  // the caller cannot read is refused, never taken for an unallocated one.
+  const seen = new Set<string>();
   const numbers: Record<string, string> = {};
   for (const row of data as Record<string, unknown>[]) {
-    if (typeof row.id === "string" && typeof row.replaces_number === "string" && row.replaces_number) {
-      numbers[row.id] = row.replaces_number;
-    }
+    if (typeof row.id !== "string") continue;
+    seen.add(row.id);
+    if (typeof row.replaces_number === "string" && row.replaces_number) numbers[row.id] = row.replaces_number;
   }
-  return numbers;
+  return documentIds.every((id) => seen.has(id)) ? numbers : null;
 }
 
 /** The longest an Edge function runs on the hosted platform (its

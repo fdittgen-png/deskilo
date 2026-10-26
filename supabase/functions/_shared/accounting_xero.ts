@@ -35,6 +35,10 @@
 // creates. A payment and a journal carry the key in their `Reference` or
 // `Narration`, by which a readback knows its own.
 //
+// One organisation keeps one workspace's books: a contact is found by the
+// member number alone, so two workspaces delivering to one organisation
+// would share the contact of a number.
+//
 // The tenant. Every call names the connection's organisation
 // (`xero-tenant-id`); the sign-in binds it from the organisations THAT
 // sign-in authorised (its `authentication_event_id`), exactly one, and the
@@ -52,7 +56,7 @@
 // follow the Accounting API 2.0 reference; what was not verified against a
 // live organisation says so in a `// spec:` comment.
 
-import type { AccountingMap, CreateOutcome, MapNeed, RemoteDocument } from "./accounting_delivery.ts";
+import { type AccountingMap, type CreateOutcome, DETAIL_LENGTH, type MapNeed, type RemoteDocument } from "./accounting_delivery.ts";
 import {
   accountNeeds,
   type AdapterContext,
@@ -65,7 +69,7 @@ import {
 import { exponentOf, toMajor, toMinor } from "./money.ts";
 
 /** spec: developer.xero.com — "Accounting API" base URL. */
-export const API_BASE = "https://api.xero.com/api.xro/2.0";
+const API_BASE = "https://api.xero.com/api.xro/2.0";
 
 /** spec: developer.xero.com — "OAuth 2.0 / Connections": the organisations
  * a token may reach, each with the sign-in (`authEventId`) that added it. */
@@ -73,7 +77,7 @@ export const CONNECTIONS_URL = "https://api.xero.com/connections";
 
 /** The function's environment variable that points the adapter at another
  * host (a recorded or proxied Xero), set by the installation's operator. */
-export const API_BASE_ENV = "ACCOUNTING_XERO_API_BASE";
+const API_BASE_ENV = "ACCOUNTING_XERO_API_BASE";
 
 /** The longest `Idempotency-Key` Xero keeps. spec: "Idempotent requests". */
 export const IDEMPOTENCY_KEY_LENGTH = 128;
@@ -116,6 +120,18 @@ const ROLE = {
   vatPending: "vat_pending",
 } as const;
 
+/** The field of a tax rate that admits it on an account of each class.
+ * spec: TaxRates — `CanApplyToAssets`, `CanApplyToEquity`,
+ * `CanApplyToExpenses`, `CanApplyToLiabilities`, `CanApplyToRevenue`;
+ * Accounts — `Class`. */
+const APPLIES_TO: Record<string, string> = {
+  ASSET: "CanApplyToAssets",
+  EQUITY: "CanApplyToEquity",
+  EXPENSE: "CanApplyToExpenses",
+  LIABILITY: "CanApplyToLiabilities",
+  REVENUE: "CanApplyToRevenue",
+};
+
 /** The states of a sale document that are a posted sale. spec: Invoices,
  * CreditNotes — `Status`. */
 const POSTED_SALE = new Set(["AUTHORISED", "PAID"]);
@@ -123,9 +139,9 @@ const POSTED_SALE = new Set(["AUTHORISED", "PAID"]);
 const DRAFT_SALE = new Set(["DRAFT", "SUBMITTED"]);
 
 /** The Xero object a document event becomes. */
-export type Entity = "Invoice" | "CreditNote" | "Payment" | "ManualJournal";
+type Entity = "Invoice" | "CreditNote" | "Payment" | "ManualJournal";
 
-export function entityOf(kind: string): Entity {
+function entityOf(kind: string): Entity {
   switch (kind) {
     case "invoice":
       return "Invoice";
@@ -163,7 +179,7 @@ type Answer = { ok: true; body: Row } | { ok: false; status?: number; detail: st
 /** Xero's own words of a refusal. spec: the `ValidationException` body
  * (`Message`, `Elements[].ValidationErrors[].Message`) and the problem body
  * of a refused token (`Title`, `Detail`). */
-export function problemOf(text: string): string {
+function problemOf(text: string): string {
   try {
     const body = JSON.parse(text) as Row;
     const elements = Array.isArray(body.Elements) ? body.Elements as Row[] : [];
@@ -200,9 +216,9 @@ const revenueLines = (p: Posting): PostingLine[] => p.lines.filter((l) => l.role
 /** The amount of a line, whichever side it books. */
 const amountOf = (l: PostingLine): number => l.debitCents + l.creditCents;
 
-const isTax = (l: PostingLine): boolean => l.role === ROLE.vatOutput || l.role === ROLE.vatPending;
+const isTax = (l: PostingLine): boolean => l.role === ROLE.vatOutput;
 
-/** The tax of the rate group [qualifier], due now or on its tax point. */
+/** The tax of the rate group [qualifier]. */
 const groupTax = (p: Posting, qualifier: string | null): number =>
   p.lines.filter((l) => isTax(l) && l.qualifier === qualifier).reduce((s, l) => s + amountOf(l), 0);
 
@@ -231,6 +247,9 @@ const contactName = (party: PostingParty): string => party.number ? `${party.nam
 
 /** What the run learned of the organisation in `prepare`. */
 type Organisation = {
+  /** `Organisation.BaseCurrency`: the only currency sent, so Xero never
+   * puts its own day rate in place of the document's. */
+  baseCurrency: string;
   taxRates: Row[];
   accounts: Row[];
 };
@@ -250,10 +269,10 @@ export async function signedInTenant(
       headers: { authorization: `Bearer ${accessToken}`, accept: "application/json" },
     });
   } catch (error) {
-    return { refused: String(error).slice(0, 300) };
+    return { refused: String(error).slice(0, DETAIL_LENGTH) };
   }
   const text = await res.text();
-  if (!res.ok) return { refused: `${res.status} ${problemOf(text).slice(0, 300)}` };
+  if (!res.ok) return { refused: `${res.status} ${problemOf(text).slice(0, DETAIL_LENGTH)}` };
   let rows: Row[] = [];
   try {
     const parsed = JSON.parse(text);
@@ -261,6 +280,9 @@ export async function signedInTenant(
   } catch {
     return { refused: "the Xero connections were not JSON" };
   }
+  // spec: Connections — that a re-consent to an organisation already
+  // connected rewrites its `authEventId` to the new sign-in's event; if it
+  // does not, such a sign-in answers "no organisation".
   const added = rows.filter((r) => r.authEventId === event && r.tenantType === ORGANISATION && r.tenantId);
   if (added.length === 1) return { tenant: String(added[0].tenantId) };
   return {
@@ -302,7 +324,12 @@ function accountRef(maps: AccountingMap[], key: string): Row {
 
 /** Why [p]'s sale lines cannot go to this organisation as mapped, naming
  * the mapping key; null when every line's account and `TaxType` fit. */
-export function saleProblem(p: Posting, maps: AccountingMap[], org: Organisation): string | null {
+function saleProblem(p: Posting, maps: AccountingMap[], org: Organisation): string | null {
+  // Tax due on receipt carries no rate group in the postings, so it cannot
+  // be put on a line's TaxType: such a document is not delivered yet.
+  if (p.lines.some((l) => l.role === ROLE.vatPending && amountOf(l) > 0)) {
+    return "deferred tax (vat_pending): a document taxed on receipt is not delivered to Xero yet";
+  }
   for (const l of revenueLines(p)) {
     const accountKey = roleKey(l);
     const account = accountOf(org, maps, accountKey);
@@ -315,9 +342,9 @@ export function saleProblem(p: Posting, maps: AccountingMap[], org: Organisation
     if (!rate || rate.Status !== "ACTIVE") {
       return `${TAX_TYPE_MAP} ${taxKey} → ${taxType}: not an active TaxType of this Xero organisation`;
     }
-    // spec: TaxRates — `CanApplyTo<Class>` per account class.
     const cls = String(account.Class ?? "");
-    const field = `CanApplyTo${cls.charAt(0)}${cls.slice(1).toLowerCase()}`;
+    const field = APPLIES_TO[cls];
+    if (!field) return `account ${accountKey} → ${account.Code}: Xero names its class ${cls || "nothing"}`;
     if (rate[field] !== true) {
       return `${TAX_TYPE_MAP} ${taxKey} → ${taxType}: Xero does not admit it on account ${account.Code} (class ${cls})`;
     }
@@ -329,7 +356,7 @@ export function saleProblem(p: Posting, maps: AccountingMap[], org: Organisation
 }
 
 /** The body of an `ACCREC` invoice or `ACCRECCREDIT` credit note for [p]. */
-export function salePayload(
+function salePayload(
   p: Posting,
   contactId: string,
   maps: AccountingMap[],
@@ -347,20 +374,24 @@ export function salePayload(
     CurrencyCode: p.currency,
     LineAmountTypes: "Exclusive",
     Status: "AUTHORISED",
-    LineItems: revenueLines(p).map((l) => ({
+    LineItems: revenueLines(p).map((l, i, lines) => ({
       Description: l.qualifier ? `${p.documentNumber} ${l.qualifier}` : p.documentNumber,
       Quantity: 1,
       UnitAmount: major(amountOf(l), p.currency),
       ...accountRef(maps, roleKey(l)),
       TaxType: codeOf(maps, TAX_TYPE_MAP, taxKeyOf(l)),
-      // spec: LineItems.TaxAmount overrides the amount Xero computes.
-      TaxAmount: major(groupTax(p, l.qualifier), p.currency),
+      // spec: LineItems.TaxAmount overrides the amount Xero computes. A
+      // group's tax goes on its first line, once.
+      TaxAmount: major(
+        lines.findIndex((x) => x.qualifier === l.qualifier) === i ? groupTax(p, l.qualifier) : 0,
+        p.currency,
+      ),
     })),
   };
 }
 
 /** The body of a balanced `POSTED` manual journal for [p]. */
-export function journalPayload(p: Posting, maps: AccountingMap[], narration: string): Row {
+function journalPayload(p: Posting, maps: AccountingMap[], narration: string): Row {
   return {
     Narration: narration,
     Date: p.date,
@@ -383,7 +414,7 @@ const saleExpected = (p: Posting) => {
 
 /** What the readback of a sale [row] says of [p]. [contactId] is the
  * contact the document is ours under ('' when the contact is unknown). */
-export function saleRemote(row: Row, p: Posting, contactId: string, fresh: boolean): RemoteDocument {
+function saleRemote(row: Row, p: Posting, contactId: string, fresh: boolean): RemoteDocument {
   const entity = entityOf(p.kind);
   const expected = saleExpected(p);
   const differences: string[] = [];
@@ -468,7 +499,7 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
         },
       });
     } catch (error) {
-      return { ok: false, detail: String(error).slice(0, 500) };
+      return { ok: false, detail: String(error).slice(0, DETAIL_LENGTH) };
     }
     const text = await res.text();
     // spec: "Rate limits" — 429 with `Retry-After` (seconds) and
@@ -478,7 +509,7 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
         ` (retry after ${res.headers.get("Retry-After") ?? "?"} s): run the delivery again then`;
       return { ok: false, status: 429, detail: limited };
     }
-    if (!res.ok) return { ok: false, status: res.status, detail: `${res.status} ${problemOf(text).slice(0, 500)}` };
+    if (!res.ok) return { ok: false, status: res.status, detail: `${res.status} ${problemOf(text).slice(0, DETAIL_LENGTH)}` };
     try {
       const body = text ? JSON.parse(text) : {};
       return { ok: true, body: body && typeof body === "object" ? body : {} };
@@ -548,10 +579,9 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
       : `Xero holds ${found.length} invoices numbered ${number}`;
   }
 
-  /** Allocates [credit] to the invoice [credited] for what it still owes. */
-  async function allocate(credit: Row, credited: string, p: Posting, key: string): Promise<string | null> {
-    const invoice = await invoiceNumbered(credited);
-    if (typeof invoice === "string") return invoice;
+  /** Allocates [credit] to [invoice] (numbered [credited]) for what it
+   * still owes. */
+  async function allocate(credit: Row, invoice: Row, credited: string, p: Posting, key: string): Promise<string | null> {
     const owed = minorOf(invoice.AmountDue, p.currency);
     const total = minorOf(credit.Total, p.currency);
     if (owed === null || total === null) return `Xero answered no amount for ${credited}`;
@@ -574,8 +604,11 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
       if (!cfg.tenant) return "the sign-in named no Xero organisation";
       const info = await xero("Organisation");
       if (!info.ok) return info.detail;
-      const held = String(((info.body.Organisations as Row[] | undefined)?.[0])?.CountryCode ?? "");
+      const organisation = (info.body.Organisations as Row[] | undefined)?.[0];
+      const held = String(organisation?.CountryCode ?? "");
       if (!held) return "the Xero organisation named no country";
+      const baseCurrency = String(organisation?.BaseCurrency ?? "");
+      if (!baseCurrency) return "the Xero organisation named no base currency";
       const allowed = ctx.targetId === EU_TARGET
         ? (await ctx.isEuCountry?.(held)) === true
         : (ORGANISATION_COUNTRIES[ctx.targetId] ?? []).includes(held);
@@ -589,6 +622,7 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
       const accounts = await xero("Accounts");
       if (!accounts.ok) return accounts.detail;
       org = {
+        baseCurrency,
         taxRates: Array.isArray(rates.body.TaxRates) ? rates.body.TaxRates as Row[] : [],
         accounts: Array.isArray(accounts.body.Accounts) ? accounts.body.Accounts as Row[] : [],
       };
@@ -626,6 +660,8 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
               const remote = saleRemote(r, p, contact, false);
               // A credit note whose answer was lost may never have been
               // allocated: a person allocates it, nothing is sent twice.
+              // spec: CreditNotes — whether the filtered list answers
+              // `Allocations`, or only GET CreditNotes/{id} does.
               const allocated = Array.isArray(r.Allocations) && r.Allocations.length > 0;
               return entity === "CreditNote" && credited && remote.matches && !allocated
                 ? { ...remote, matches: false, difference: `not allocated to ${credited} in Xero` }
@@ -641,9 +677,16 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
         async create(key, job) {
           if (exponentOf(p.currency) === null) return refused(`the currency ${p.currency} is not stated`);
           if (!org) return refused("the Xero organisation was not read before the delivery");
+          if (p.currency !== org.baseCurrency) {
+            return refused(`the document is in ${p.currency}; this Xero organisation keeps its books in ${org.baseCurrency}`);
+          }
           if (sale) {
             const problem = saleProblem(p, maps, org);
             if (problem) return refused(problem);
+            // The invoice a credit note corrects first: a credit note that
+            // cannot be allocated creates nothing.
+            const creditedInvoice = entity === "CreditNote" && credited ? await invoiceNumbered(credited) : undefined;
+            if (typeof creditedInvoice === "string") return refused(creditedInvoice);
             const held = await salesNumbered(entity, p.documentNumber);
             if (typeof held === "string") return refused(held);
             if (held.length > 0) {
@@ -665,8 +708,8 @@ export function xeroAccounting(ctx: AdapterContext): PostingAdapter {
             const row = (sent.body[COLLECTION[entity]] as Row[] | undefined)?.[0];
             if (!row?.[ID_FIELD[entity]]) return { ok: false, unknown: true, detail: `Xero answered no ${entity}` };
             const remote = saleRemote(row, p, contact, true);
-            if (entity === "CreditNote" && credited && remote.matches) {
-              const unallocated = await allocate(row, credited, p, key);
+            if (creditedInvoice && credited && remote.matches) {
+              const unallocated = await allocate(row, creditedInvoice, credited, p, key);
               if (unallocated) return { ok: true, remote: { ...remote, matches: false, difference: unallocated } };
             }
             return { ok: true, remote };

@@ -16,6 +16,7 @@ import { assert, assertEquals } from "jsr:@std/assert@1";
 import {
   type AccountingMap,
   deliver,
+  DeliveryNotRecorded,
   type DeliveryJob,
   type DeliveryRow,
   type DeliveryStatus,
@@ -46,6 +47,8 @@ class Log implements DeliveryStore {
     if (row.status === "acknowledged" && row.sha === j.payloadSha256) {
       return Promise.resolve({ ...row, outcome: "unchanged" as const });
     }
+    // An acknowledged document with another content needs a correction.
+    if (row.status === "acknowledged") throw new DeliveryNotRecorded("23514", "needs a correction");
     if (status === "generated") return Promise.resolve({ ...row, outcome: "existing" as const });
     row.status = status;
     row.error = status === "conflict" || status === "failed" ? error : "";
@@ -59,10 +62,13 @@ type Row = Record<string, unknown>;
 const cents = (v: unknown) => Math.round(Number(v) * 100);
 const major = (c: number) => c / 100;
 
+/** The base currency of each played organisation's country. */
+const BASE_CURRENCY: Record<string, string> = { GB: "GBP", CA: "CAD", US: "USD", IE: "EUR", UK: "GBP" };
+
 const TENANT = "70784a63-d24b-46a9-a4db-0e70a274b056";
 
 const GB_RATES: Row[] = [
-  { TaxType: "OUTPUT2", Status: "ACTIVE", EffectiveRate: 20, CanApplyToRevenue: true, CanApplyToExpenses: false },
+  { TaxType: "OUTPUT2", Status: "ACTIVE", EffectiveRate: 20, CanApplyToRevenue: true, CanApplyToLiabilities: true },
   { TaxType: "ZERORATEDOUTPUT", Status: "ACTIVE", EffectiveRate: 0, CanApplyToRevenue: true },
   { TaxType: "INPUT2", Status: "ACTIVE", EffectiveRate: 20, CanApplyToRevenue: false, CanApplyToExpenses: true },
 ];
@@ -72,6 +78,7 @@ const ACCOUNTS: Row[] = [
   { AccountID: "a-090", Code: "090", Class: "ASSET", Type: "BANK", Status: "ACTIVE" },
   { AccountID: "a-610", Code: "610", Class: "ASSET", Type: "CURRENT", Status: "ACTIVE" },
   { AccountID: "a-820", Code: "820", Class: "LIABILITY", Type: "CURRLIAB", Status: "ACTIVE" },
+  { AccountID: "a-835", Code: "835", Class: "LIABILITY", Type: "CURRLIAB", Status: "ACTIVE" },
   { AccountID: "a-480", Code: "480", Class: "EXPENSE", Type: "EXPENSE", Status: "ACTIVE" },
 ];
 
@@ -95,7 +102,10 @@ function organisation(opts: { country?: string; taxDelta?: number; status?: numb
     }
     if (opts.status) return Response.json({ Title: "Unauthorized", Detail: "TokenExpired" }, { status: opts.status });
     if (method === "GET") {
-      if (path === "Organisation") return Response.json({ Organisations: [{ CountryCode: opts.country ?? "GB" }] });
+      if (path === "Organisation") {
+        const country = opts.country ?? "GB";
+        return Response.json({ Organisations: [{ CountryCode: country, BaseCurrency: BASE_CURRENCY[country] }] });
+      }
       if (path === "TaxRates") return Response.json({ TaxRates: opts.rates ?? GB_RATES });
       if (path === "Accounts") return Response.json({ Accounts: ACCOUNTS });
       if (path === "Invoices") {
@@ -445,4 +455,72 @@ Deno.test("a credit note whose answer was lost is not taken as allocated", async
   assertEquals((await run(x, log, [year[2]])).statuses, ["conflict"]);
   assert([...log.rows.values()][1].error.includes("not allocated to F-2026-0001"));
   assertEquals(x.held.CreditNotes.length, 1);
+});
+
+Deno.test("a credit note whose invoice is not in Xero is refused, nothing sent", async () => {
+  const x = organisation();
+  const log = new Log();
+  assertEquals((await run(x, log, [year[2]])).statuses, ["failed"]);
+  assert([...log.rows.values()][0].error.includes("the invoice F-2026-0001 is not in Xero yet"));
+  assertEquals(writes(x).length, 0);
+});
+
+Deno.test("a sale on a liability account takes a TaxType Xero admits on liabilities", async () => {
+  const x = organisation();
+  // A deposit taken as a liability: OUTPUT2 is admitted there.
+  const deposit = maps.map((m) => m.key === "revenue:standard" ? { ...m, remoteCode: "835" } : m);
+  assertEquals((await run(x, new Log(), [year[0]], { maps: deposit })).statuses, ["acknowledged"]);
+  const zeroOnLiability = maps.map((m) => m.key === "revenue:zero" ? { ...m, remoteCode: "835" } : m);
+  const log = new Log();
+  assertEquals((await run(organisation(), log, [year[0]], { maps: zeroOnLiability })).statuses, ["failed"]);
+  assert([...log.rows.values()][0].error.includes("class LIABILITY"));
+});
+
+Deno.test("a deferred invoice's tax is refused by name, nothing sent", async () => {
+  const x = organisation();
+  const log = new Log();
+  const deferred = posting("invoice", INV, "F-2026-0002", "2026-01-31", [
+    line("customers", null, 12000, 0),
+    line("revenue", "standard", 0, 10000),
+    line("vat_pending", null, 0, 2000),
+  ]);
+  assertEquals((await run(x, log, [deferred])).statuses, ["failed"]);
+  assert([...log.rows.values()][0].error.includes("deferred tax (vat_pending)"));
+  assertEquals(writes(x).length, 0);
+});
+
+Deno.test("a document in another currency than the organisation's is refused", async () => {
+  const x = organisation();
+  const log = new Log();
+  assertEquals((await run(x, log, [{ ...year[0], currency: "EUR" }])).statuses, ["failed"]);
+  assert([...log.rows.values()][0].error.includes("keeps its books in GBP"));
+  assertEquals(writes(x).length, 0);
+});
+
+Deno.test("a rate group's tax goes on its first line only", async () => {
+  const x = organisation();
+  const twoLines = posting("invoice", INV, "F-2026-0003", "2026-01-31", [
+    line("customers", null, 18000, 0),
+    line("revenue", "standard", 0, 10000),
+    line("revenue", "standard", 0, 5000),
+    line("vat_output", "standard", 0, 3000),
+  ]);
+  assertEquals((await run(x, new Log(), [twoLines])).statuses, ["acknowledged"]);
+  assertEquals((x.held.Invoices[0].LineItems as Row[]).map((l) => l.TaxAmount), [30, 0]);
+  assertEquals(x.held.Invoices[0].TotalTax, 30);
+});
+
+Deno.test("an acknowledged document with another content is refused by the log", async () => {
+  const x = organisation();
+  const log = new Log();
+  await run(x, log, [year[0]]);
+  let code = "";
+  try {
+    // The same document event with another content: its lines reordered.
+    await run(x, log, [{ ...year[0], lines: [...year[0].lines].reverse() }]);
+  } catch (e) {
+    code = (e as DeliveryNotRecorded).code;
+  }
+  assertEquals(code, "23514");
+  assertEquals(x.held.Invoices.length, 1);
 });

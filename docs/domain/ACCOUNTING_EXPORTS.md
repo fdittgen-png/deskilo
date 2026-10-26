@@ -335,7 +335,13 @@ function:
   a `conflict`. `AUTHORISED` is decided, not configured: the app's document
   is issued, and a Xero draft is not a posted sale (the drafts route is the
   sales-invoice CSV template, still to come). A call refused for Xero's call
-  limits (429) stops the run's remaining calls; the next run continues. Not
+  limits (429) stops the run's remaining calls; the next run continues. A
+  document in another currency than the organisation's `BaseCurrency` is
+  refused (Xero would put its own day rate in place of the document's), and
+  so is one with tax due on receipt (`vat_pending` carries no rate group to
+  put on a line). A credit note whose invoice is not in Xero yet is refused
+  before anything is created. One organisation keeps one workspace's books:
+  the contact is the member number alone. Not
   yet: the PDF as an attachment (no server copy of the PDF), the contact's
   `TaxNumber` (the parties carry none), `ACCPAY` bills (purchases go as
   manual journals), `TrackingCategories` for the site, batches of 50, the

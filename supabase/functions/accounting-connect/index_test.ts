@@ -50,6 +50,10 @@ function world(
           error: null,
         });
       }
+      if (fn === "is_eu_country") {
+        calls.push({ as, fn: `eu:${args.p_code}`, args });
+        return Promise.resolve({ data: args.p_code === "IE", error: null });
+      }
       if (fn === "set_accounting_credentials") {
         for (const [k, v] of Object.entries(args.p_secrets as Record<string, string>)) {
           if (v) vault[k] = v;
@@ -230,12 +234,12 @@ Deno.test("a QuickBooks company without custom transaction numbers is refused at
 
 /** A Xero sign-in: the token names its authorisation event, the connections
  * list two organisations of which that event added one. */
-function xeroWorld(heldTenant?: string) {
+function xeroWorld(heldTenant?: string, target = "xero_gb", country = "GB") {
   const event = "e-42";
   const access = `h.${btoa(JSON.stringify({ authentication_event_id: event })).replace(/=+$/, "")}.s`;
   const xeroCalls: string[] = [];
   const w = world({
-    target: "xero_gb",
+    target,
     heldTenant,
     token: () => Response.json({ access_token: access, refresh_token: "RT-secret", expires_in: 1800 }),
     api: (url) => {
@@ -247,15 +251,15 @@ function xeroWorld(heldTenant?: string) {
           { authEventId: event, tenantId: "t-new", tenantType: "ORGANISATION" },
         ]);
       }
-      if (url.pathname.endsWith("/Organisation")) return Response.json({ Organisations: [{ CountryCode: "GB" }] });
+      if (url.pathname.endsWith("/Organisation")) return Response.json({ Organisations: [{ CountryCode: country, BaseCurrency: "EUR" }] });
       return Response.json({ TaxRates: [], Accounts: [] });
     },
   });
   return { w, xeroCalls };
 }
 
-const xeroCallback = async (w: ReturnType<typeof world>) => {
-  const res = await handle(post({ ...start, target_id: "xero_gb" }), w.deps);
+const xeroCallback = async (w: ReturnType<typeof world>, target = "xero_gb") => {
+  const res = await handle(post({ ...start, target_id: target }), w.deps);
   const state = new URL((await res.json()).authorize_url).searchParams.get("state")!;
   return handle(new Request(`https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}`), w.deps);
 };
@@ -277,4 +281,16 @@ Deno.test("a Xero connection signed in again to another organisation is refused,
   assert(String(w.state().status_detail).includes("another company"));
   assertEquals(w.state().remote_tenant_id, undefined);
   assertEquals(w.vault.access_token, undefined, "no token is kept for a refused company");
+});
+
+Deno.test("the EU target asks the tax reference: an Irish organisation connects, a British one is refused", async () => {
+  const ie = xeroWorld(undefined, "xero_eu", "IE");
+  assertEquals((await xeroCallback(ie.w, "xero_eu")).status, 200);
+  assertEquals(ie.w.state().status, "connected");
+  const asked = ie.w.calls.find((c) => c.fn === "eu:IE")!;
+  assertEquals(asked.as, "service");
+  const gb = xeroWorld(undefined, "xero_eu", "GB");
+  assertEquals((await xeroCallback(gb.w, "xero_eu")).status, 409);
+  assert(String(gb.w.state().status_detail).includes("an EU member state"));
+  assert(gb.w.calls.some((c) => c.fn === "eu:GB"));
 });
