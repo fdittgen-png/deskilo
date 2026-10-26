@@ -52,6 +52,10 @@ const String _quickbooksSpecification =
 const String _sageAccountingSpecification =
     'Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals';
 
+/// #2374 — the reference the Business Central adapter was written against.
+const String _businessCentralSpecification =
+    'Business Central API v2.0: salesInvoices, salesCreditMemos with Microsoft.NAV.post, customerPayments, journalLines, taxGroups';
+
 class AccountingCapability {
   const AccountingCapability({
     required this.formatId,
@@ -380,6 +384,38 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'sage_business_cloud_es',
     state: QualificationState.implemented,
     specification: _sageAccountingSpecification,
+  ),
+  // #2374 — delivered through the kit against a played company; no
+  // sandbox environment has answered yet.
+  'business_central_de': AccountingCapability(
+    formatId: 'business_central_de',
+    state: QualificationState.implemented,
+    specification: _businessCentralSpecification,
+  ),
+  'business_central_fr': AccountingCapability(
+    formatId: 'business_central_fr',
+    state: QualificationState.implemented,
+    specification: _businessCentralSpecification,
+  ),
+  'business_central_ch': AccountingCapability(
+    formatId: 'business_central_ch',
+    state: QualificationState.implemented,
+    specification: _businessCentralSpecification,
+  ),
+  'business_central_gb': AccountingCapability(
+    formatId: 'business_central_gb',
+    state: QualificationState.implemented,
+    specification: _businessCentralSpecification,
+  ),
+  'business_central_us': AccountingCapability(
+    formatId: 'business_central_us',
+    state: QualificationState.implemented,
+    specification: _businessCentralSpecification,
+  ),
+  'business_central_ca': AccountingCapability(
+    formatId: 'business_central_ca',
+    state: QualificationState.implemented,
+    specification: _businessCentralSpecification,
   ),
   // #2373 — they import another target's file; that target's production
   // is theirs, and no import from them has been reported yet.

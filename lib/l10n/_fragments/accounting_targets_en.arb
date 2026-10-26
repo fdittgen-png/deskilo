@@ -504,5 +504,42 @@
   "acctTargetNotDeliveredYet": "No document is sent to this system yet: the connection and its mappings are kept for the delivery, which does not run for it yet.",
   "@acctTargetNotDeliveredYet": {
     "description": "#2377 Accounting systems sheet: an API target whose deliveries the runner does not send yet."
+  },
+  "acctEntraTitle": "Connect {target} with a Microsoft Entra application",
+  "@acctEntraTitle": {
+    "description": "#2374 Business Central connection dialog: title.",
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "acctEntraBody": "Register an application for this company's tenant in Microsoft Entra ID, add it in Business Central under Microsoft Entra Applications with a permission set limited to sales documents, customer payments and journals, and create a client secret for it. Documents are created as drafts and posted only where that permission set allows posting. The secret is kept encrypted on the server and never shown again.",
+  "@acctEntraBody": {
+    "description": "#2374 Business Central connection dialog: how the application is registered, what posting needs, how the secret is kept."
+  },
+  "acctEntraClientId": "Application (client) ID",
+  "@acctEntraClientId": {
+    "description": "#2374 Business Central connection field: the Entra application's client id."
+  },
+  "acctEntraSecret": "Client secret",
+  "@acctEntraSecret": {
+    "description": "#2374 Business Central connection field: the application's client secret."
+  },
+  "acctEntraTenant": "Tenant (directory ID or domain)",
+  "@acctEntraTenant": {
+    "description": "#2374 Business Central connection field: the Entra tenant, its id or a domain."
+  },
+  "acctEntraEnvironment": "Environment name",
+  "@acctEntraEnvironment": {
+    "description": "#2374 Business Central connection field: the environment's name (production or a sandbox)."
+  },
+  "acctEntraCompany": "Company ID",
+  "@acctEntraCompany": {
+    "description": "#2374 Business Central connection field: the company's id."
+  },
+  "acctEntraInvalid": "This value does not have the expected form.",
+  "@acctEntraInvalid": {
+    "description": "#2374 Business Central connection error: a field does not have its expected form."
   }
 }

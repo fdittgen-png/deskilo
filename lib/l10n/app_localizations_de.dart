@@ -407,6 +407,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get acctDeliverySent => 'Gesendet, wartet auf die Antwort';
 
   @override
+  String get acctEntraBody =>
+      'Registrieren Sie für den Mandanten dieses Unternehmens eine Anwendung in Microsoft Entra ID, fügen Sie sie in Business Central unter Microsoft Entra-Anwendungen mit einem Berechtigungssatz hinzu, der auf Verkaufsbelege, Debitorenzahlungen und Buch.-Blätter beschränkt ist, und erstellen Sie dafür einen geheimen Clientschlüssel. Belege werden als Entwurf angelegt und nur gebucht, wo dieser Berechtigungssatz das Buchen erlaubt. Der Schlüssel wird verschlüsselt auf dem Server aufbewahrt und nie wieder angezeigt.';
+
+  @override
+  String get acctEntraClientId => 'Anwendungs-ID (Client)';
+
+  @override
+  String get acctEntraCompany => 'Unternehmens-ID';
+
+  @override
+  String get acctEntraEnvironment => 'Name der Umgebung';
+
+  @override
+  String get acctEntraInvalid => 'Dieser Wert hat nicht die erwartete Form.';
+
+  @override
+  String get acctEntraSecret => 'Geheimer Clientschlüssel';
+
+  @override
+  String get acctEntraTenant => 'Mandant (Verzeichnis-ID oder Domäne)';
+
+  @override
+  String acctEntraTitle(String target) {
+    return '$target mit einer Microsoft-Entra-Anwendung verbinden';
+  }
+
+  @override
   String acctJournalLogged(int logged, int unchanged) {
     String _temp0 = intl.Intl.pluralLogic(
       logged,

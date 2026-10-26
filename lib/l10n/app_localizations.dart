@@ -746,6 +746,54 @@ abstract class AppLocalizations {
   /// **'Sent, waiting for the answer'**
   String get acctDeliverySent;
 
+  /// #2374 Business Central connection dialog: how the application is registered, what posting needs, how the secret is kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Register an application for this company\'s tenant in Microsoft Entra ID, add it in Business Central under Microsoft Entra Applications with a permission set limited to sales documents, customer payments and journals, and create a client secret for it. Documents are created as drafts and posted only where that permission set allows posting. The secret is kept encrypted on the server and never shown again.'**
+  String get acctEntraBody;
+
+  /// #2374 Business Central connection field: the Entra application's client id.
+  ///
+  /// In en, this message translates to:
+  /// **'Application (client) ID'**
+  String get acctEntraClientId;
+
+  /// #2374 Business Central connection field: the company's id.
+  ///
+  /// In en, this message translates to:
+  /// **'Company ID'**
+  String get acctEntraCompany;
+
+  /// #2374 Business Central connection field: the environment's name (production or a sandbox).
+  ///
+  /// In en, this message translates to:
+  /// **'Environment name'**
+  String get acctEntraEnvironment;
+
+  /// #2374 Business Central connection error: a field does not have its expected form.
+  ///
+  /// In en, this message translates to:
+  /// **'This value does not have the expected form.'**
+  String get acctEntraInvalid;
+
+  /// #2374 Business Central connection field: the application's client secret.
+  ///
+  /// In en, this message translates to:
+  /// **'Client secret'**
+  String get acctEntraSecret;
+
+  /// #2374 Business Central connection field: the Entra tenant, its id or a domain.
+  ///
+  /// In en, this message translates to:
+  /// **'Tenant (directory ID or domain)'**
+  String get acctEntraTenant;
+
+  /// #2374 Business Central connection dialog: title.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect {target} with a Microsoft Entra application'**
+  String acctEntraTitle(String target);
+
   /// #2370 Snack after the generic journal export: how many documents the file delivered and how many it carried unchanged.
   ///
   /// In en, this message translates to:

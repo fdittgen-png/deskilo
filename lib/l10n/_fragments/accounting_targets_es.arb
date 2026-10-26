@@ -93,5 +93,13 @@
   "refusalAccountingClosed": "Esta conexión ya no lo admite: se revocó o ya ha enviado documentos. Revóquela y vuelva a conectarse. No se ha guardado nada.",
   "refusalAccountingValue": "El servidor ha rechazado este valor: compruebe el token, la clave o el emisor e inténtelo de nuevo. No se ha guardado nada.",
   "acctJournalLogged": "{logged, plural, =0{Ningún documento nuevo registrado} =1{Un documento registrado} other{{logged} documentos registrados}}, {unchanged} sin cambios",
-  "acctTargetNotDeliveredYet": "Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él."
+  "acctTargetNotDeliveredYet": "Todavía no se envía ningún documento a este sistema: la conexión y sus correspondencias se conservan para el envío, que aún no funciona para él.",
+  "acctEntraTitle": "Conectar {target} con una aplicación de Microsoft Entra",
+  "acctEntraBody": "Registre una aplicación para el inquilino de esta empresa en Microsoft Entra ID, añádala en Business Central en Aplicaciones de Microsoft Entra con un conjunto de permisos limitado a los documentos de venta, los cobros de clientes y los diarios, y cree para ella un secreto de cliente. Los documentos se crean como borrador y solo se registran donde ese conjunto de permisos permite registrar. El secreto se guarda cifrado en el servidor y no vuelve a mostrarse.",
+  "acctEntraClientId": "Id. de aplicación (cliente)",
+  "acctEntraSecret": "Secreto de cliente",
+  "acctEntraTenant": "Inquilino (id. de directorio o dominio)",
+  "acctEntraEnvironment": "Nombre del entorno",
+  "acctEntraCompany": "Id. de la empresa",
+  "acctEntraInvalid": "Este valor no tiene la forma esperada."
 }
