@@ -41,11 +41,15 @@ import {
   postingsOf,
 } from "../_shared/accounting_postings.ts";
 import { pennylaneLedger } from "../_shared/accounting_pennylane.ts";
+import { quickbooksOnline } from "../_shared/accounting_quickbooks.ts";
 import { clientOf, type Deps, json, resolved, store, UUID } from "./connection.ts";
 
 /** The targets this server delivers to, by target id. */
 export const deliveryAdapters: Record<string, (ctx: AdapterContext) => PostingAdapter> = {
   pennylane_api: pennylaneLedger,
+  quickbooks_online_us: quickbooksOnline,
+  quickbooks_online_ca: quickbooksOnline,
+  quickbooks_online_gb: quickbooksOnline,
 };
 
 /** A token that expires sooner than this is refreshed before a run: a

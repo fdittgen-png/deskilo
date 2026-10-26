@@ -134,6 +134,25 @@ void main() {
     expect(codes, {for (final j in PostingJournal.values) j.name: j.code});
   });
 
+  // The QuickBooks adapter refuses a realm of another country than its
+  // target's: the same countries as the descriptors.
+  test('the QuickBooks adapter knows each QuickBooks target by its country', () {
+    final adapter = File(
+      'supabase/functions/_shared/accounting_quickbooks.ts',
+    ).readAsStringSync();
+    final table = adapter.substring(adapter.indexOf('REALM_COUNTRIES'));
+    final countries = {
+      for (final m in RegExp(r'^  ([a-z_]+): "([A-Z]{2})",', multiLine: true)
+          .allMatches(table.substring(0, table.indexOf('};'))))
+        m[1]!: m[2]!,
+    };
+    expect(countries, {
+      for (final t in accountingTargets)
+        if (t.id.startsWith('quickbooks_online_')) t.id: t.countries.single,
+    });
+    expect(countries, hasLength(3));
+  });
+
   test('the FEC target names the client code of an auxiliary account', () {
     final rule = accountingTargets.firstWhere((t) => t.id == 'fec').customerIdRule;
     expect(rule.maxLength, 13);

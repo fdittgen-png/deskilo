@@ -38,6 +38,7 @@ import 'package:meta/meta.dart';
 import 'accountant_csv.dart';
 import 'accounting_target.dart';
 import 'accounting_targets_de.dart';
+import 'accounting_targets_quickbooks.dart';
 import 'accounting_targets_saft.dart';
 
 export 'accounting_target.dart';
@@ -483,6 +484,7 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.expense},
     taxCodeModel: TaxCodeModel.none,
   ),
+  ...quickbooksAccountingTargets,
 ];
 
 /// #2370 — the targets offered in [countryCode], in registry order.

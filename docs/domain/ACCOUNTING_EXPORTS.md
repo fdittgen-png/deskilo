@@ -146,6 +146,9 @@ reached and how far it is qualified. The table below is generated from it;
 | `pennylane_api` | Pennylane · Pennylane · API v2 | api | documents | FR | implemented | Pennylane API v2, customer_invoices import and ledger_entries |
 | `cegid_quadra_ascii` | Cegid · Quadra · ASCII import | file | journal | FR | specificationNeeded | not named yet |
 | `ebp_import` | EBP · Comptabilité · import of entries | file | journal | FR | specificationNeeded | not named yet |
+| `quickbooks_online_us` | Intuit · QuickBooks Online · Accounting API v3, US realm | api | documents | US | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
+| `quickbooks_online_ca` | Intuit · QuickBooks Online · Accounting API v3, CA realm | api | documents | CA | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
+| `quickbooks_online_gb` | Intuit · QuickBooks Online · Accounting API v3, GB realm | api | documents | GB | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
 <!-- END GENERATED TARGETS -->
 
 Write-offs are posted **gross**, as a loss, on the day they were given up:
@@ -215,6 +218,32 @@ function:
   BQ, HA, OD), each line on the ledger account its role is mapped to
   (`account` mapping, remote id = the Pennylane ledger account id), its
   external reference the delivery's idempotency key, read back by it.
+- `quickbooks_online_us`, `_ca`, `_gb` (`accounting_quickbooks.ts`,
+  `quickbooksOnline`, #2371): signed in to the installation's Intuit
+  application (`realmId` is the remote company). Before a run and after the
+  sign-in the realm's `CompanyInfo.Country` must be the target's and
+  `Preferences.SalesFormsPrefs.CustomTxnNumbers` on, or nothing is sent. An
+  invoice is an `Invoice`, a credit note a `CreditMemo` (`DocNumber` = the
+  legal number, one `SalesItemLine` per revenue line on the `item` mapping of
+  its role, the customer found by "name (member number)" or created), a
+  receipt a `Payment` linked to the invoice of its number, every other event
+  a balanced `JournalEntry`. Every call names `minorversion=70`, every create
+  a `requestid` (the idempotency key's first 50 characters) and carries the
+  key in `PrivateNote`. Tax: QuickBooks is never the tax authority of an
+  issued document. A US realm gets `TAX`/`NON` per line and the document's
+  tax as the override `TxnTaxDetail {TxnTaxCodeRef, TotalTax}`
+  (`TxnTaxCodeRef` = the `account vat_output:<group>` mapping); a CA or GB
+  line carries the realm tax code its rate group is mapped to
+  (`account vat_output:<group>`, a zero-rated group too). The total and tax
+  QuickBooks books are compared with the document: a difference, a
+  `SyncToken` other than the first (an edit in QuickBooks) or the number
+  held by a document DesKilo did not deliver is a `conflict`; nothing is
+  ever updated or created over it. Not yet: the `Attachable` PDF, `Bill` for
+  purchases (they go as journal entries), two `TaxLine`s per GST+QST code in
+  the readback (the postings carry one tax line per rate group), the
+  journal CSV file target and the change webhook. The live exchange is NOT
+  RUN: it needs an Intuit developer application and a sandbox company per
+  country.
 
 ## What each country mandates that this app does not produce
 

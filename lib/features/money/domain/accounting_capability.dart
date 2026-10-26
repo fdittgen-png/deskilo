@@ -39,6 +39,10 @@ enum Obligation {
   targetAcceptance,
 }
 
+/// The reference the QuickBooks Online adapter was written against.
+const String _quickbooksSpecification =
+    'QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry';
+
 class AccountingCapability {
   const AccountingCapability({
     required this.formatId,
@@ -253,6 +257,23 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'pennylane_api',
     state: QualificationState.implemented,
     specification: 'Pennylane API v2, customer_invoices import and ledger_entries',
+  ),
+  // #2371 — delivered through the kit against a played realm; no sandbox
+  // company has answered yet.
+  'quickbooks_online_us': AccountingCapability(
+    formatId: 'quickbooks_online_us',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
+  ),
+  'quickbooks_online_ca': AccountingCapability(
+    formatId: 'quickbooks_online_ca',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
+  ),
+  'quickbooks_online_gb': AccountingCapability(
+    formatId: 'quickbooks_online_gb',
+    state: QualificationState.implemented,
+    specification: _quickbooksSpecification,
   ),
   // The FEC is their working route today; their own formats need a spec.
   'cegid_quadra_ascii': AccountingCapability(
