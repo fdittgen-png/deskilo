@@ -25,7 +25,6 @@ void main() {
       accountingConnectorsKey,
       WorkspaceFeature.accountingConnectors.dbKey,
     );
-    expect(bankImportKey, WorkspaceFeature.bankImport.dbKey);
     expect(accountingPeriodsKey, WorkspaceFeature.accountingPeriods.dbKey);
   });
 

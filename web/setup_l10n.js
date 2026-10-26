@@ -719,7 +719,15 @@ window.SETUP_L10N={
    "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
    "supLookupRate": "Supplier lookups per minute",
    "supLookupRateHint": "The most supplier lookups one person may make per minute on this server; more are answered as busy and nothing is sent to the registry. Set in the app's settings.",
-   "optPerMinute": "{n} per minute"
+   "optPerMinute": "{n} per minute",
+   "bankMaxBytes": "Largest bank statement file",
+   "bankMaxBytesHint": "A larger file is refused whole before it is read. A setting of the server, set in the app's settings.",
+   "bankMaxLines": "Movements per bank statement",
+   "bankMaxLinesHint": "A statement with more movements is refused whole; split it by period at the bank. Set in the app's settings.",
+   "bankMatchWindow": "Invoice window for a payment without reference",
+   "bankMatchWindowHint": "How many days before a payment its invoice may have been issued to be suggested by amount and payer alone; a person always confirms. Set in the app's settings.",
+   "optMegabytes": "{n} MB",
+   "optMovements": "{n} movements"
   },
   "feature": {
    "calendarTab": [
@@ -1313,6 +1321,10 @@ window.SETUP_L10N={
    "accountingConnectors": [
     "Accounting systems",
     "Connects each issuer's books to the accounting system they are kept in (Pennylane and bexio through their APIs, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see."
+   ],
+   "bankImport": [
+    "Bank statements",
+    "Reads the bank's statement files (camt.053/054, MT940, CODA, OFX/QFX or a spreadsheet) into the space, each movement once, and suggests the invoice each payment settles by the QR or RF reference printed on it, its number or its amount; a person confirms every match, and the rest stays in a work list. A payment out reconciles a payment already recorded as made."
    ]
   },
   "process": {
@@ -2362,7 +2374,15 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
    "supLookupRate": "Recherches fournisseur par minute",
    "supLookupRateHint": "Le nombre maximal de recherches fournisseur qu'une personne peut faire par minute sur ce serveur ; au-delà, la recherche est signalée comme occupée et rien n'est envoyé au registre. Se règle dans les paramètres de l'app.",
-   "optPerMinute": "{n} par minute"
+   "optPerMinute": "{n} par minute",
+   "bankMaxBytes": "Taille maximale d'un relevé bancaire",
+   "bankMaxBytesHint": "Un fichier plus grand est refusé en entier avant d'être lu. Réglage du serveur, dans les paramètres de l'app.",
+   "bankMaxLines": "Mouvements par relevé bancaire",
+   "bankMaxLinesHint": "Un relevé qui en contient davantage est refusé en entier ; scindez-le par période à la banque. Se règle dans les paramètres de l'app.",
+   "bankMatchWindow": "Fenêtre des factures pour un paiement sans référence",
+   "bankMatchWindowHint": "Combien de jours avant un paiement sa facture peut avoir été émise pour être proposée d'après le seul montant et le payeur ; une personne confirme toujours. Se règle dans les paramètres de l'app.",
+   "optMegabytes": "{n} Mo",
+   "optMovements": "{n} mouvements"
   },
   "feature": {
    "calendarTab": [
@@ -2956,6 +2976,10 @@ window.SETUP_L10N={
    "accountingConnectors": [
     "Systèmes comptables",
     "Relie la comptabilité de chaque émetteur au système comptable où elle est tenue (Pennylane et bexio par leur API, les autres par fichier), nomme chaque compte, code de TVA et client comme ce système les connaît, et liste chaque fichier et chaque envoi qui a porté une pièce, avec son SHA-256 : le lien numérique qu'un contrôle fiscal demande à voir."
+   ],
+   "bankImport": [
+    "Relevés bancaires",
+    "Lit les relevés de la banque (camt.053/054, MT940, CODA, OFX/QFX ou un tableur) dans l'espace, chaque mouvement une seule fois, et propose la facture que chaque paiement règle d'après la référence QR ou RF imprimée dessus, son numéro ou son montant ; une personne confirme chaque rapprochement, le reste demeure dans une liste de travail. Un paiement sortant rapproche un paiement déjà enregistré comme effectué."
    ]
   },
   "process": {
@@ -4005,7 +4029,15 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
    "supLookupRate": "Lieferantensuchen pro Minute",
    "supLookupRateHint": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf; weitere werden als ausgelastet beantwortet und nicht an das Register gesendet. Wird in den Einstellungen der App festgelegt.",
-   "optPerMinute": "{n} pro Minute"
+   "optPerMinute": "{n} pro Minute",
+   "bankMaxBytes": "Größte Kontoauszugsdatei",
+   "bankMaxBytesHint": "Eine größere Datei wird vollständig abgelehnt, bevor sie gelesen wird. Eine Servereinstellung, in den Einstellungen der App.",
+   "bankMaxLines": "Bewegungen je Kontoauszug",
+   "bankMaxLinesHint": "Ein Auszug mit mehr Bewegungen wird vollständig abgelehnt; teilen Sie ihn bei der Bank nach Zeitraum auf. In den Einstellungen der App.",
+   "bankMatchWindow": "Rechnungsfenster für eine Zahlung ohne Referenz",
+   "bankMatchWindowHint": "Wie viele Tage vor einer Zahlung ihre Rechnung ausgestellt sein darf, um allein nach Betrag und Zahler vorgeschlagen zu werden; bestätigt wird immer von einer Person. In den Einstellungen der App.",
+   "optMegabytes": "{n} MB",
+   "optMovements": "{n} Bewegungen"
   },
   "feature": {
    "calendarTab": [
@@ -4599,6 +4631,10 @@ window.SETUP_L10N={
    "accountingConnectors": [
     "Buchhaltungssysteme",
     "Verbindet die Bücher jedes Ausstellers mit dem Buchhaltungssystem, in dem sie geführt werden (Pennylane und bexio über ihre API, die anderen per Datei), benennt jedes Konto, jeden Steuerschlüssel und jeden Kunden so, wie dieses System sie kennt, und listet jede Datei und jede Übermittlung, die einen Beleg getragen hat, mit ihrem SHA-256: die digitale Verbindung, die eine Steuerprüfung sehen will."
+   ],
+   "bankImport": [
+    "Kontoauszüge",
+    "Liest die Kontoauszugsdateien der Bank (camt.053/054, MT940, CODA, OFX/QFX oder eine Tabelle) in den Space ein, jede Bewegung nur einmal, und schlägt die Rechnung vor, die eine Zahlung begleicht – anhand der darauf gedruckten QR- oder RF-Referenz, ihrer Nummer oder ihres Betrags; jede Zuordnung bestätigt eine Person, der Rest bleibt in einer Arbeitsliste. Eine ausgehende Zahlung gleicht eine bereits als geleistet erfasste Zahlung ab."
    ]
   },
   "process": {
@@ -5648,7 +5684,15 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
    "supLookupRate": "Búsquedas de proveedores por minuto",
    "supLookupRateHint": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor; las demás se responden como ocupadas y no se envía nada al registro. Se ajusta en la configuración de la app.",
-   "optPerMinute": "{n} por minuto"
+   "optPerMinute": "{n} por minuto",
+   "bankMaxBytes": "Tamaño máximo de un extracto bancario",
+   "bankMaxBytesHint": "Un archivo mayor se rechaza entero antes de leerse. Ajuste del servidor, en la configuración de la app.",
+   "bankMaxLines": "Movimientos por extracto bancario",
+   "bankMaxLinesHint": "Un extracto con más movimientos se rechaza entero; divídalo por periodo en el banco. Se ajusta en la configuración de la app.",
+   "bankMatchWindow": "Ventana de facturas para un pago sin referencia",
+   "bankMatchWindowHint": "Cuántos días antes de un pago puede haberse emitido su factura para proponerla solo por el importe y el pagador; siempre confirma una persona. Se ajusta en la configuración de la app.",
+   "optMegabytes": "{n} MB",
+   "optMovements": "{n} movimientos"
   },
   "feature": {
    "calendarTab": [
@@ -6242,6 +6286,10 @@ window.SETUP_L10N={
    "accountingConnectors": [
     "Sistemas contables",
     "Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane y bexio por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver."
+   ],
+   "bankImport": [
+    "Extractos bancarios",
+    "Lee los extractos del banco (camt.053/054, MT940, CODA, OFX/QFX o una hoja de cálculo) en el espacio, cada movimiento una sola vez, y propone la factura que liquida cada pago por la referencia QR o RF impresa en ella, su número o su importe; una persona confirma cada conciliación y el resto queda en una lista de trabajo. Un pago saliente concilia un pago ya registrado como realizado."
    ]
   },
   "process": {
@@ -7291,7 +7339,15 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
    "supLookupRate": "Ricerche fornitore al minuto",
    "supLookupRateHint": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server; le altre risultano occupate e non viene inviato nulla al registro. Si imposta nelle impostazioni dell'app.",
-   "optPerMinute": "{n} al minuto"
+   "optPerMinute": "{n} al minuto",
+   "bankMaxBytes": "Dimensione massima di un estratto conto",
+   "bankMaxBytesHint": "Un file più grande viene rifiutato per intero prima di essere letto. Impostazione del server, nelle impostazioni dell'app.",
+   "bankMaxLines": "Movimenti per estratto conto",
+   "bankMaxLinesHint": "Un estratto con più movimenti viene rifiutato per intero; lo suddivida per periodo presso la banca. Si imposta nelle impostazioni dell'app.",
+   "bankMatchWindow": "Finestra delle fatture per un pagamento senza riferimento",
+   "bankMatchWindowHint": "Quanti giorni prima di un pagamento può essere stata emessa la sua fattura per essere proposta in base al solo importo e al pagatore; conferma sempre una persona. Si imposta nelle impostazioni dell'app.",
+   "optMegabytes": "{n} MB",
+   "optMovements": "{n} movimenti"
   },
   "feature": {
    "calendarTab": [
@@ -7885,6 +7941,10 @@ window.SETUP_L10N={
    "accountingConnectors": [
     "Sistemi contabili",
     "Collega la contabilità di ogni emittente al sistema contabile in cui è tenuta (Pennylane e bexio tramite la loro API, gli altri tramite file), nomina ogni conto, codice IVA e cliente come quel sistema li conosce ed elenca ogni file e ogni invio che ha portato un documento, con il suo SHA-256: il collegamento digitale che una verifica fiscale chiede di vedere."
+   ],
+   "bankImport": [
+    "Estratti conto",
+    "Legge gli estratti conto della banca (camt.053/054, MT940, CODA, OFX/QFX o un foglio di calcolo) nello spazio, ogni movimento una sola volta, e propone la fattura che ogni pagamento salda in base al riferimento QR o RF stampato su di essa, al suo numero o al suo importo; una persona conferma ogni abbinamento e il resto rimane in un elenco di lavoro. Un pagamento in uscita riconcilia un pagamento già registrato come effettuato."
    ]
   },
   "process": {

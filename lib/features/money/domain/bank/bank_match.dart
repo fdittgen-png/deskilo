@@ -133,7 +133,8 @@ List<BankMatchSuggestion> suggestMatches(
   for (final i in candidates) {
     if (_names(text, i.number)) add(i, BankMatchBasis.invoiceNumber);
   }
-  final earliest = line.bookingDate.subtract(Duration(days: windowDays));
+  final b = line.bookingDate;
+  final earliest = DateTime.utc(b.year, b.month, b.day - windowDays);
   for (final i in candidates) {
     final issued = DateTime.utc(
       i.issuedAt.year,

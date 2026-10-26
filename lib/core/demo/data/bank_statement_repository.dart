@@ -8,6 +8,7 @@ import '../../../features/money/domain/bank/bank_records.dart';
 import '../../../features/money/domain/bank/bank_statement.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/swiss_qr_bill.dart';
+import '../../time/date_text.dart';
 import 'money_repository.dart';
 
 /// The bank statements in memory, with the server's rules the screens
@@ -245,8 +246,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
           category: LedgerCategory.payment,
           amountCents: line.amountCents,
           description: line.reference.isNotEmpty ? line.reference : line.remittance,
-          period:
-              '${line.valueDate.year}-${line.valueDate.month.toString().padLeft(2, '0')}',
+          period: yearMonth(line.valueDate.year, line.valueDate.month),
           createdAt: today,
           occurredOn: line.valueDate,
         ),

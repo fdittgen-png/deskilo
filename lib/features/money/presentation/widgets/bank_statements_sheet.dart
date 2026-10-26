@@ -20,9 +20,16 @@ import 'bank_lines_sheet.dart';
 
 /// The door to the bank statements, for those who match payments.
 class BankStatementsButton extends StatelessWidget {
-  const BankStatementsButton({required this.workspaceId, super.key});
+  const BankStatementsButton({
+    required this.workspaceId,
+    required this.currency,
+    super.key,
+  });
 
   final String workspaceId;
+
+  /// The space's currency: a spreadsheet's default.
+  final String currency;
 
   @override
   Widget build(BuildContext context) => OutlinedButton.icon(
@@ -30,7 +37,8 @@ class BankStatementsButton extends StatelessWidget {
     onPressed: () => showAppSheet<void>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => BankStatementsView(workspaceId: workspaceId),
+      builder: (_) =>
+          BankStatementsView(workspaceId: workspaceId, currency: currency),
     ),
     icon: const Icon(Icons.account_balance_outlined),
     label: Text(context.l10n.bankStatementsTitle),
@@ -39,9 +47,14 @@ class BankStatementsButton extends StatelessWidget {
 
 @visibleForTesting
 class BankStatementsView extends ConsumerWidget {
-  const BankStatementsView({required this.workspaceId, super.key});
+  const BankStatementsView({
+    required this.workspaceId,
+    required this.currency,
+    super.key,
+  });
 
   final String workspaceId;
+  final String currency;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,7 +68,11 @@ class BankStatementsView extends ConsumerWidget {
         const FormGap(),
         FilledButton.icon(
           key: const ValueKey('bank-import'),
-          onPressed: () => importBankFile(context, ref, workspaceId: workspaceId),
+          onPressed: () => BankImportFlow(
+            ref,
+            workspaceId: workspaceId,
+            currency: currency,
+          ).run(context),
           icon: const Icon(Icons.upload_file_outlined),
           label: Text(l10n.bankImportAction),
         ),

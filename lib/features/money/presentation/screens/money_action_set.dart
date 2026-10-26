@@ -393,7 +393,10 @@ class MoneyActionSet {
               ref
                   .read(myPermissionsProvider)
                   .any((p) => bankStatementReaders.contains(p.wireName))))
-        BankStatementsButton(workspaceId: data.workspace!.id),
+        BankStatementsButton(
+          workspaceId: data.workspace!.id,
+          currency: data.workspace!.currencyCode,
+        ),
       // #2568 — the rooms the space rents, for those who manage the plan.
       if (data.externalRoomsOn &&
           data.workspace != null &&

@@ -437,6 +437,8 @@ as $registry$
     {"id":"workspace.whatsapp_group","entity":"identity","type":"text","portability":"never","absent":"inherit","reason":"the source's own identity","process":"operations"}
   ]$json$::jsonb
 $registry$;
+revoke execute on function public.template_field_registry() from public, anon;
+grant execute on function public.template_field_registry() to authenticated;
 
 -- ── the builtin template carries `bankImport` (off: platform tier) ──
 insert into public.workspace_templates

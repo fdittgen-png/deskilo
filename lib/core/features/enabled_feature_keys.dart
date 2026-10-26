@@ -33,9 +33,6 @@ const String foreignCurrencyPurchasesKey = 'foreignCurrencyPurchases';
 /// them.
 const String accountingConnectorsKey = 'accountingConnectors';
 
-/// The bank statements read into the space and matched to its invoices.
-const String bankImportKey = 'bankImport';
-
 /// #2377 — the book periods and the export log: with the accounting
 /// systems, what makes the server log a file handed out.
 const String accountingPeriodsKey = 'accountingPeriods';

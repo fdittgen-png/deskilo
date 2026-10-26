@@ -714,5 +714,13 @@
  "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
  "supLookupRate": "Lieferantensuchen pro Minute",
  "supLookupRateHint": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf; weitere werden als ausgelastet beantwortet und nicht an das Register gesendet. Wird in den Einstellungen der App festgelegt.",
- "optPerMinute": "{n} pro Minute"
+ "optPerMinute": "{n} pro Minute",
+ "bankMaxBytes": "Größte Kontoauszugsdatei",
+ "bankMaxBytesHint": "Eine größere Datei wird vollständig abgelehnt, bevor sie gelesen wird. Eine Servereinstellung, in den Einstellungen der App.",
+ "bankMaxLines": "Bewegungen je Kontoauszug",
+ "bankMaxLinesHint": "Ein Auszug mit mehr Bewegungen wird vollständig abgelehnt; teilen Sie ihn bei der Bank nach Zeitraum auf. In den Einstellungen der App.",
+ "bankMatchWindow": "Rechnungsfenster für eine Zahlung ohne Referenz",
+ "bankMatchWindowHint": "Wie viele Tage vor einer Zahlung ihre Rechnung ausgestellt sein darf, um allein nach Betrag und Zahler vorgeschlagen zu werden; bestätigt wird immer von einer Person. In den Einstellungen der App.",
+ "optMegabytes": "{n} MB",
+ "optMovements": "{n} Bewegungen"
 }

@@ -7,6 +7,8 @@
 // right, before anything is sent.
 import 'package:crypto/crypto.dart';
 
+import '../../../core/trace/trace_logger.dart';
+
 import '../domain/bank/bank_file.dart';
 import '../domain/bank/bank_import_settings.dart';
 import '../domain/bank/bank_match.dart';
@@ -78,7 +80,13 @@ class BankImportCommands {
         limits: settings.limits,
         csv: csv,
       );
-    } on BankFileException catch (e) {
+    } on BankFileException catch (e, st) {
+      TraceLogger.instance.warn(
+        'money',
+        'bank file refused: $e',
+        error: e,
+        stackTrace: st,
+      );
       return (result: null, refused: e);
     }
     final result = await _repository.importStatement(

@@ -108,6 +108,7 @@ class _BankMatchDialogState extends State<BankMatchDialog> {
               Text(l10n.bankMatchNoInvoice, key: const ValueKey('bank-match-none'))
             else
               RadioGroup<String>(
+                key: const ValueKey('bank-match-invoice-group'),
                 groupValue: _invoiceId,
                 onChanged: (v) => setState(() {
                   _invoiceId = v;
@@ -126,6 +127,7 @@ class _BankMatchDialogState extends State<BankMatchDialog> {
               const FormGap.small(),
               Text(l10n.invoiceMatchOver(money.formatMinor(paid - invoice.dueCents))),
               RadioGroup<String>(
+                key: const ValueKey('bank-match-over-group'),
                 groupValue: _over,
                 onChanged: (v) => setState(() => _over = v ?? _over),
                 child: Column(
@@ -237,6 +239,7 @@ class _BankOutDialogState extends State<_BankOutDialog> {
         child: candidates.isEmpty
             ? Text(l10n.bankOutNone, key: const ValueKey('bank-out-none'))
             : RadioGroup<String>(
+                key: const ValueKey('bank-out-group'),
                 groupValue: _id,
                 onChanged: (v) => setState(() => _id = v),
                 child: Column(

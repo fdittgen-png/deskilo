@@ -114,6 +114,7 @@ AppFormSheet _mappingSheet(
           );
       return [
         AppTextField(
+          key: const ValueKey('bank-csv-account'),
           controller: fields['account'],
           fieldKey: 'account',
           label: l10n.bankCsvAccount,
@@ -121,6 +122,7 @@ AppFormSheet _mappingSheet(
         ),
         const FormGap(),
         AppTextField(
+          key: const ValueKey('bank-csv-currency'),
           controller: fields['currency'],
           fieldKey: 'currency',
           label: l10n.bankCsvCurrency,

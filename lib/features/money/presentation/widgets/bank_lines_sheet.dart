@@ -211,6 +211,7 @@ class _LineTile extends StatelessWidget {
             bankMatchBasisLabel(l10n, best.basis),
           );
     return ListTile(
+      key: ValueKey('bank-line-tile-${line.id}'),
       contentPadding: EdgeInsets.zero,
       leading: Icon(line.isMoneyIn ? Icons.south_west : Icons.north_east),
       title: Text('${money.formatMinor(line.amountCents)} · ${day.format(line.valueDate)}'),
