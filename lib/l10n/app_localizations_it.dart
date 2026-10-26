@@ -19769,6 +19769,35 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non mentre la modalità ripresa è attiva: questo modulo mostra una persona inventata, e salvarlo sovrascriverebbe i dati reali di qualcuno. Disattivi prima la modalità ripresa.';
 
   @override
+  String get recordsLocationCraNone =>
+      'Nessuna autorizzazione della CRA è registrata. Un responsabile della fatturazione la registra nelle impostazioni dello spazio.';
+
+  @override
+  String get recordsLocationCraNotice =>
+      'Un\'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Nulla dichiara questa installazione in Canada.';
+
+  @override
+  String get recordsLocationCraOutside =>
+      'Un\'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Questa installazione è dichiarata fuori dal Canada.';
+
+  @override
+  String recordsLocationCraReference(String reference) {
+    return 'Autorizzazione della CRA: $reference';
+  }
+
+  @override
+  String recordsLocationHosted(String country) {
+    return 'Ospitato in $country, come dichiara il gestore di questa installazione';
+  }
+
+  @override
+  String get recordsLocationTitle => 'Dove sono conservate le scritture';
+
+  @override
+  String get recordsLocationUndeclared =>
+      'Non dichiarato dal gestore di questa installazione: l\'app non indica alcun luogo';
+
+  @override
   String get refFacetMonth => 'Mese';
 
   @override
@@ -22192,6 +22221,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingGroupReadiness => 'Messa in servizio';
 
   @override
+  String get settingGroupRecords => 'Luogo di conservazione delle scritture';
+
+  @override
   String get settingGroupSecurity => 'Limiti di sicurezza e di accesso';
 
   @override
@@ -22395,6 +22427,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingHintReadinessRecentExportDays =>
       'Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.';
+
+  @override
+  String get settingHintRecordsCraReference =>
+      'Per un\'impresa canadese: il riferimento dell\'autorizzazione della CRA (ETA s.286, ITA s.230) quando le sue scritture sono conservate fuori dal Canada. Vuoto significa che non ne è registrata alcuna.';
+
+  @override
+  String get settingHintRecordsHostingCountry =>
+      'Due lettere (ISO 3166), ad es. CA o DE, secondo quanto il Suo contratto di hosting indica per il database e i suoi backup. Vuoto significa non dichiarato: l\'app non indica allora alcun luogo.';
 
   @override
   String get settingHintRetentionUsYears =>
@@ -22605,6 +22645,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelReadinessRecentExportDays =>
       'Finestra dell’esportazione recente';
+
+  @override
+  String get settingLabelRecordsCraReference =>
+      'Autorizzazione della CRA a conservare le scritture fuori dal Canada';
+
+  @override
+  String get settingLabelRecordsHostingCountry =>
+      'Paese in cui questa installazione conserva i suoi dati';
 
   @override
   String get settingLabelRetentionUsYears =>

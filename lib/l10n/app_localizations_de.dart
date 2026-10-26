@@ -19796,6 +19796,35 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nicht, solange der Aufnahmemodus aktiv ist: Dieses Formular zeigt eine erfundene Person, und Speichern würde damit die echten Angaben einer Person überschreiben. Schalten Sie den Aufnahmemodus zuerst aus.';
 
   @override
+  String get recordsLocationCraNone =>
+      'Keine CRA-Genehmigung erfasst. Eine Person mit Abrechnungsrechten erfasst sie in den Einstellungen des Bereichs.';
+
+  @override
+  String get recordsLocationCraNotice =>
+      'Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Nichts erklärt diese Installation als in Kanada.';
+
+  @override
+  String get recordsLocationCraOutside =>
+      'Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Diese Installation ist außerhalb Kanadas erklärt.';
+
+  @override
+  String recordsLocationCraReference(String reference) {
+    return 'CRA-Genehmigung: $reference';
+  }
+
+  @override
+  String recordsLocationHosted(String country) {
+    return 'Gehostet in $country, wie der Betreiber dieser Installation es erklärt';
+  }
+
+  @override
+  String get recordsLocationTitle => 'Wo die Aufzeichnungen aufbewahrt werden';
+
+  @override
+  String get recordsLocationUndeclared =>
+      'Vom Betreiber dieser Installation nicht erklärt: Die App nennt keinen Ort';
+
+  @override
   String get refFacetMonth => 'Monat';
 
   @override
@@ -22217,6 +22246,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingGroupReadiness => 'Einsatzbereitschaft';
 
   @override
+  String get settingGroupRecords => 'Aufbewahrungsort der Aufzeichnungen';
+
+  @override
   String get settingGroupSecurity => 'Sicherheits- und Zugriffsgrenzen';
 
   @override
@@ -22422,6 +22454,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.';
 
   @override
+  String get settingHintRecordsCraReference =>
+      'Für ein kanadisches Unternehmen: das Aktenzeichen der CRA-Genehmigung (ETA s.286, ITA s.230), wenn seine Aufzeichnungen außerhalb Kanadas aufbewahrt werden. Leer heißt, es ist keine erfasst.';
+
+  @override
+  String get settingHintRecordsHostingCountry =>
+      'Zwei Buchstaben (ISO 3166), z. B. CA oder DE, wie Ihr Hosting-Vertrag den Ort der Datenbank und ihrer Sicherungen angibt. Leer heißt nicht erklärt: Die App nennt dann keinen Ort.';
+
+  @override
   String get settingHintRetentionUsYears =>
       'Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr als die bundesweite Vorgabe verlangt. Eine längere Frist gilt für alle Unterlagen; eine kürzere ändert nichts. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.';
 
@@ -22622,6 +22662,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelReadinessRecentExportDays =>
       'Zeitfenster für aktuelle Exporte';
+
+  @override
+  String get settingLabelRecordsCraReference =>
+      'CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas';
+
+  @override
+  String get settingLabelRecordsHostingCountry =>
+      'Land, in dem diese Installation ihre Daten aufbewahrt';
 
   @override
   String get settingLabelRetentionUsYears =>

@@ -13044,6 +13044,13 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationCraNone": "Nessuna autorizzazione della CRA è registrata. Un responsabile della fatturazione la registra nelle impostazioni dello spazio.",
+  "recordsLocationCraNotice": "Un'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Nulla dichiara questa installazione in Canada.",
+  "recordsLocationCraOutside": "Un'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Questa installazione è dichiarata fuori dal Canada.",
+  "recordsLocationCraReference": "Autorizzazione della CRA: {reference}",
+  "recordsLocationHosted": "Ospitato in {country}, come dichiara il gestore di questa installazione",
+  "recordsLocationTitle": "Dove sono conservate le scritture",
+  "recordsLocationUndeclared": "Non dichiarato dal gestore di questa installazione: l'app non indica alcun luogo",
   "refFacetMonth": "Mese",
   "refFacetPerson": "Persona",
   "refFacetStatus": "Stato",
@@ -15185,6 +15192,7 @@
   "@settingGroupReadiness": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupRecords": "Luogo di conservazione delle scritture",
   "settingGroupSecurity": "Limiti di sicurezza e di accesso",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15339,6 +15347,8 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintRecordsCraReference": "Per un'impresa canadese: il riferimento dell'autorizzazione della CRA (ETA s.286, ITA s.230) quando le sue scritture sono conservate fuori dal Canada. Vuoto significa che non ne è registrata alcuna.",
+  "settingHintRecordsHostingCountry": "Due lettere (ISO 3166), ad es. CA o DE, secondo quanto il Suo contratto di hosting indica per il database e i suoi backup. Vuoto significa non dichiarato: l'app non indica allora alcun luogo.",
   "settingHintRetentionUsYears": "Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più della regola federale. Un periodo più lungo vale per tutti i documenti; uno più breve non cambia nulla. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -15505,6 +15515,8 @@
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelRecordsCraReference": "Autorizzazione della CRA a conservare le scritture fuori dal Canada",
+  "settingLabelRecordsHostingCountry": "Paese in cui questa installazione conserva i suoi dati",
   "settingLabelRetentionUsYears": "Conservazione negli USA, stato (anni)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"

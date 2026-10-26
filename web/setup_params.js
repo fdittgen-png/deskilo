@@ -122,6 +122,7 @@ const PARAM_META=[
  ['bank.maxBytes','bankMaxBytes','enum',()=>BANK_MAX_BYTES.map(x=>x[0]),{needs:'bankImport'}],
  ['bank.maxLines','bankMaxLines','enum',()=>BANK_MAX_LINES.map(x=>x[0]),{needs:'bankImport'}],
  ['bank.matchWindow','bankMatchWindow','enum',()=>BANK_WINDOW.map(x=>x[0]),{needs:'bankImport'}],
+ ['records.hostingCountry','recordsHostingCountry','enum',()=>['',...COUNTRIES.map(c=>c[0])]],['records.craReference','recordsCraReference','text'],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
  ['granularity','availGranularity','enum',(s=S)=>(on('workingHours',s)?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
@@ -171,7 +172,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',retention:'app',bank:'app',members:'app',einvoice:'file'};
+const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',retention:'app',bank:'app',records:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it

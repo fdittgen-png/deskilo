@@ -19807,6 +19807,35 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible tant que le mode tournage est actif : ce formulaire affiche une personne inventée, et l\'enregistrer écraserait les vraies coordonnées de quelqu\'un. Désactivez d\'abord le mode tournage.';
 
   @override
+  String get recordsLocationCraNone =>
+      'Aucune autorisation de l\'ARC n\'est enregistrée. Un gestionnaire de facturation l\'enregistre dans les paramètres de l\'espace.';
+
+  @override
+  String get recordsLocationCraNotice =>
+      'Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l\'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Rien ne déclare cette installation au Canada.';
+
+  @override
+  String get recordsLocationCraOutside =>
+      'Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l\'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Cette installation est déclarée hors du Canada.';
+
+  @override
+  String recordsLocationCraReference(String reference) {
+    return 'Autorisation de l\'ARC : $reference';
+  }
+
+  @override
+  String recordsLocationHosted(String country) {
+    return 'Hébergé en $country, selon la déclaration de l\'exploitant de cette installation';
+  }
+
+  @override
+  String get recordsLocationTitle => 'Où les registres sont conservés';
+
+  @override
+  String get recordsLocationUndeclared =>
+      'Non déclaré par l\'exploitant de cette installation : l\'application n\'indique aucun lieu';
+
+  @override
   String get refFacetMonth => 'Mois';
 
   @override
@@ -22235,6 +22264,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupReadiness => 'Mise en service';
 
   @override
+  String get settingGroupRecords => 'Lieu de conservation des registres';
+
+  @override
   String get settingGroupSecurity => 'Limites de sécurité et d\'accès';
 
   @override
@@ -22438,6 +22470,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingHintReadinessRecentExportDays =>
       'Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.';
+
+  @override
+  String get settingHintRecordsCraReference =>
+      'Pour une entreprise canadienne : la référence de l\'autorisation de l\'ARC (LTA art. 286, LIR art. 230) lorsque ses registres sont conservés hors du Canada. Vide signifie qu\'aucune n\'est enregistrée.';
+
+  @override
+  String get settingHintRecordsHostingCountry =>
+      'Deux lettres (ISO 3166), par ex. CA ou DE, selon ce que votre contrat d\'hébergement indique pour la base de données et ses sauvegardes. Vide signifie non déclaré : l\'application n\'indique alors aucun lieu.';
 
   @override
   String get settingHintRetentionUsYears =>
@@ -22645,6 +22685,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelReadinessRecentExportDays => 'Fenêtre d’export récent';
+
+  @override
+  String get settingLabelRecordsCraReference =>
+      'Autorisation de l\'ARC de conserver les registres hors du Canada';
+
+  @override
+  String get settingLabelRecordsHostingCountry =>
+      'Pays où cette installation conserve ses données';
 
   @override
   String get settingLabelRetentionUsYears =>

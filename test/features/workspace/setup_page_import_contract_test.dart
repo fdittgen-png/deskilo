@@ -455,6 +455,7 @@ void main() {
         'supplierLookup': 'app',
         'retention': 'app',
         'bank': 'app',
+        'records': 'app',
         'members': 'app',
         'einvoice': 'file',
       });
