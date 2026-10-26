@@ -328,15 +328,20 @@ FakeBankStatementRepository seedDemoBankStatements(
         reference: reference,
         remittance: text,
       );
+  // A QR reference keeps only the number's digits, so two numbers that
+  // differ by their letters share one; the demo pays an invoice whose
+  // reference is its own.
+  String? qrr(OpenInvoice i) => qrrReferenceOf(i.number);
+  final byQr = open
+      .where((i) => qrr(i) != null && open.where((o) => qrr(o) == qrr(i)).length == 1)
+      .firstOrNull;
+  final byRf = open.where((i) => i != byQr && scorReferenceOf(i.number) != null).firstOrNull;
   final lines = <BankLine>[
-    if (open.isNotEmpty)
-      line(1, open[0].dueCents,
-          reference: qrrReferenceOf(open[0].number) ?? '',
-          payer: open[0].memberName),
-    if (open.length > 1)
-      line(2, open[1].dueCents,
-          reference: scorReferenceOf(open[1].number) ?? '',
-          payer: open[1].memberName),
+    if (byQr != null)
+      line(1, byQr.dueCents, reference: qrr(byQr)!, payer: byQr.memberName),
+    if (byRf != null)
+      line(2, byRf.dueCents,
+          reference: scorReferenceOf(byRf.number)!, payer: byRf.memberName),
     line(3, 4200, text: 'Thanks for the coffee corner', payer: 'Studio Lumen'),
     line(4, -1500, text: 'Account fee'),
   ];
