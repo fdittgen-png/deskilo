@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-33 literal(s) in 6 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+35 literal(s) in 7 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -19,6 +19,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_money_seed.dart:221` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:227` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:243` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_network_seed.dart:316` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_network_seed.dart:332` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:144` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:152` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:160` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
