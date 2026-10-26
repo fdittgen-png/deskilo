@@ -39,10 +39,12 @@ import '../domain/report_strings.dart';
 import '../domain/saf_t.dart';
 import '../domain/sage.dart';
 import '../domain/swiss_kmu.dart';
+import '../domain/vat_account.dart';
 import '../domain/vat_tax_point.dart';
 import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
+import '../providers/vat_declaration_providers.dart';
 import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
 import 'accounting_export_journal.dart';
@@ -105,6 +107,10 @@ class AccountingExportRun {
     for (final m in await ref.read(workspaceMembersProvider.future))
       m.id: m.memberNumber,
   };
+  /// #2378 — the archive's first file: the VAT account of the returns whose
+  /// period ends in [year] (reg. 32), when the space prepared any.
+  Future<Map<String, List<int>>> vatAccountFiles() async =>
+      archiveVatAccount(await ref.read(vatDeclarationsProvider.future), year);
   /// The workspace's calendar day of an instant.
   DateTime Function(DateTime instant) get workspaceDayOf =>
       WorkspaceTime.dateOf;
@@ -451,12 +457,12 @@ class AccountingExportRun {
         final verdicts = await Future.wait<String>(
           yearInvoices.map((i) => repo.verifyInvoiceSignature(i.id)),
         );
+        final files = await vatAccountFiles();
         if (!context.mounted) return;
         final integrity = <String, String>{
           for (var i = 0; i < yearInvoices.length; i++)
             yearInvoices[i].id: verdicts[i],
         };
-        final files = <String, List<int>>{};
         for (final invoice in yearInvoices) {
           final pdf = await buildFacturXFile(
             context,
