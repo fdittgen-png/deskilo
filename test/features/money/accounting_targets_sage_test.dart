@@ -44,6 +44,11 @@ void main() {
       expect(t.capability.obligations, {Obligation.targetAcceptance});
       expect(t.customerIdRule.maxLength, 8, reason: id);
     }
+    // #2373 — a product that imports the FEC carries the FEC's duties.
+    for (final id in ['sage100_fr', 'sage50_fr']) {
+      expect(_target(id).capability.obligations,
+          _target('fec').capability.obligations, reason: id);
+    }
   });
 
   test('the adapter knows each region by the descriptor\'s country', () {
@@ -60,6 +65,15 @@ void main() {
     };
     expect(countries, _regions);
     expect(adapter, contains('CONTACT_REFERENCE_LENGTH = 8;'));
+  });
+
+  test('every region signs in through the Sage application', () {
+    final table = File(
+      'supabase/functions/_shared/accounting_targets.ts',
+    ).readAsStringSync();
+    for (final id in _regions.keys) {
+      expect(table, contains('  $id: { ...sageAccounting },'), reason: id);
+    }
   });
 
   test('the runner dispatches every region to the Sage adapter', () {

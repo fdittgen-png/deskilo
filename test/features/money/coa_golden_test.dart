@@ -156,6 +156,22 @@ void main() {
           ),
         );
         expect(SageAccounts(reference: sage).taxCode, 'T20');
+        // #2373 — the reverse-charge codes are rows too: a company whose
+        // VAT code table numbers them otherwise says so on the screen.
+        final eu = changed(
+          'GB',
+          'sage/tax_eu_services',
+          const AccountMapValue(
+            format: 'sage',
+            role: 'tax_eu_services',
+            taxCode: 'T23',
+          ),
+        );
+        final accounts = SageAccounts(reference: eu);
+        expect(accounts.codeOf('', 'AE', euCustomer: true), 'T23');
+        expect(accounts.crossBorder('T23'), isTrue);
+        expect(accounts.codeOf('', 'AE'), 'T20');
+        expect(accounts.codeOf('', 'K'), isNull, reason: 'no goods code');
       },
     );
 

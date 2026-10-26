@@ -247,7 +247,9 @@ void main() {
         _invoice('a', vat: [_untaxed('O', 100)], number: long),
       ]);
       expect(trail.rows, isEmpty);
-      expect(trail.blockers, [SageBlocker(SageBlock.fieldTooLong, long)]);
+      expect(trail.blockers, [
+        SageBlocker(SageBlock.fieldTooLong, '$long (> $sageReferenceLength)'),
+      ]);
     });
   });
 
@@ -326,7 +328,7 @@ void main() {
       final trail = _posted([sale]);
       expect(trail.rows, isEmpty);
       expect(trail.blockers, [
-        const SageBlocker(SageBlock.fieldTooLong, '706000000'),
+        const SageBlocker(SageBlock.fieldTooLong, '706000000 (> 8)'),
       ]);
     });
 

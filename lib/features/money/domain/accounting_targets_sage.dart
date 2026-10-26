@@ -16,8 +16,8 @@
 //     reviewed specification and say so.
 import 'accounting_format.dart';
 
-/// The operations every Sage Business Cloud region takes.
-const Set<AccountingOperation> _cloudOperations = {
+/// The operations every Sage target takes, by API or by file.
+const Set<AccountingOperation> _operations = {
   AccountingOperation.sale,
   AccountingOperation.credit,
   AccountingOperation.receipt,
@@ -26,15 +26,6 @@ const Set<AccountingOperation> _cloudOperations = {
   AccountingOperation.expense,
 };
 
-/// The operations of a journal file.
-const Set<AccountingOperation> _journalOperations = {
-  AccountingOperation.sale,
-  AccountingOperation.credit,
-  AccountingOperation.receipt,
-  AccountingOperation.refund,
-  AccountingOperation.writeOff,
-  AccountingOperation.expense,
-};
 
 /// A Sage Business Cloud contact reference holds at most eight characters
 /// (accounting_sage.ts `CONTACT_REFERENCE_LENGTH`).
@@ -51,7 +42,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'GB'},
     transport: AccountingTransport.api,
     payload: AccountingPayload.documents,
-    operations: _cloudOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: _contactReference,
     connectsBy: {AccountingAuthKind.oauth2},
@@ -65,7 +56,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'IE'},
     transport: AccountingTransport.api,
     payload: AccountingPayload.documents,
-    operations: _cloudOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: _contactReference,
     connectsBy: {AccountingAuthKind.oauth2},
@@ -79,7 +70,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'CA'},
     transport: AccountingTransport.api,
     payload: AccountingPayload.documents,
-    operations: _cloudOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: _contactReference,
     connectsBy: {AccountingAuthKind.oauth2},
@@ -93,7 +84,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'US'},
     transport: AccountingTransport.api,
     payload: AccountingPayload.documents,
-    operations: _cloudOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: _contactReference,
     connectsBy: {AccountingAuthKind.oauth2},
@@ -107,7 +98,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'FR'},
     transport: AccountingTransport.api,
     payload: AccountingPayload.documents,
-    operations: _cloudOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: _contactReference,
     connectsBy: {AccountingAuthKind.oauth2},
@@ -121,7 +112,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'DE'},
     transport: AccountingTransport.api,
     payload: AccountingPayload.documents,
-    operations: _cloudOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: _contactReference,
     connectsBy: {AccountingAuthKind.oauth2},
@@ -135,7 +126,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'ES'},
     transport: AccountingTransport.api,
     payload: AccountingPayload.documents,
-    operations: _cloudOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: _contactReference,
     connectsBy: {AccountingAuthKind.oauth2},
@@ -148,7 +139,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'FR'},
     transport: AccountingTransport.file,
     payload: AccountingPayload.journal,
-    operations: _journalOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.none,
     importsTargetId: 'fec',
   ),
@@ -160,7 +151,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'FR'},
     transport: AccountingTransport.file,
     payload: AccountingPayload.journal,
-    operations: _journalOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.none,
     importsTargetId: 'fec',
   ),
@@ -172,7 +163,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'DE', 'AT'},
     transport: AccountingTransport.file,
     payload: AccountingPayload.journal,
-    operations: _journalOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
     importsTargetId: 'datev',
   ),
@@ -203,7 +194,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'GB', 'IE'},
     transport: AccountingTransport.file,
     payload: AccountingPayload.journal,
-    operations: _journalOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perRate,
   ),
   AccountingTarget(
@@ -214,7 +205,7 @@ const List<AccountingTarget> sageAccountingTargets = [
     countries: {'US', 'CA', 'GB'},
     transport: AccountingTransport.api,
     payload: AccountingPayload.journal,
-    operations: _journalOperations,
+    operations: _operations,
     taxCodeModel: TaxCodeModel.perComponent,
   ),
 ];

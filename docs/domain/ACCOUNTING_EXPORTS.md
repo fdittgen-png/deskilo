@@ -166,7 +166,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `datev_buchungsdatenservice` | DATEV · Buchungsdatenservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | journal | AT, DE | specificationNeeded | not named yet |
 | `datev_rechnungsdatenservice` | DATEV · Rechnungsdatenservice 1.0 · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
 | `datev_belegbilderservice` | DATEV · Belegbilderservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
-| `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
+| `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB | implemented | not named yet |
 | `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV from compute_postings, MWST code and Ziffer per row | file | journal | CH | implemented | not named yet |
 | `banana_transactions` | Banana · Banana Accounting+ · import of transactions, tab-separated text | file | journal | CH | implemented | Banana Accounting+ import of transactions, column names of the Transactions table |
 | `bexio_api` | bexio · bexio · API 2.0 (kb_invoice, kb_credit_voucher) | api | documents | CH | implemented | bexio API 2.0, kb_invoice and kb_credit_voucher |
