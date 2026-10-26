@@ -47,6 +47,11 @@ const String _xeroSpecification =
 const String _quickbooksSpecification =
     'QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry';
 
+/// #2373 — the reference the Sage Business Cloud Accounting adapter was
+/// written against.
+const String _sageAccountingSpecification =
+    'Sage Accounting API v3.1: sales_invoices, sales_credit_notes, contact_payments, contact_allocations, journals';
+
 class AccountingCapability {
   const AccountingCapability({
     required this.formatId,
@@ -338,6 +343,84 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'xero_eu',
     state: QualificationState.implemented,
     specification: _xeroSpecification,
+  ),
+  // #2373 — delivered through the kit against a played business; no trial
+  // business has answered yet.
+  'sage_business_cloud_gb': AccountingCapability(
+    formatId: 'sage_business_cloud_gb',
+    state: QualificationState.implemented,
+    specification: _sageAccountingSpecification,
+  ),
+  'sage_business_cloud_ie': AccountingCapability(
+    formatId: 'sage_business_cloud_ie',
+    state: QualificationState.implemented,
+    specification: _sageAccountingSpecification,
+  ),
+  'sage_business_cloud_ca': AccountingCapability(
+    formatId: 'sage_business_cloud_ca',
+    state: QualificationState.implemented,
+    specification: _sageAccountingSpecification,
+  ),
+  'sage_business_cloud_us': AccountingCapability(
+    formatId: 'sage_business_cloud_us',
+    state: QualificationState.implemented,
+    specification: _sageAccountingSpecification,
+  ),
+  'sage_business_cloud_fr': AccountingCapability(
+    formatId: 'sage_business_cloud_fr',
+    state: QualificationState.implemented,
+    specification: _sageAccountingSpecification,
+  ),
+  'sage_business_cloud_de': AccountingCapability(
+    formatId: 'sage_business_cloud_de',
+    state: QualificationState.implemented,
+    specification: _sageAccountingSpecification,
+  ),
+  'sage_business_cloud_es': AccountingCapability(
+    formatId: 'sage_business_cloud_es',
+    state: QualificationState.implemented,
+    specification: _sageAccountingSpecification,
+  ),
+  // #2373 — they import another target's file; that target's production
+  // is theirs, and no import from them has been reported yet.
+  'sage100_fr': AccountingCapability(
+    formatId: 'sage100_fr',
+    state: QualificationState.implemented,
+    // The FEC's own: a reconstruction an accountant completes.
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
+    specification: 'imports the FEC (target fec): DGFiP fichiers standards des écritures comptables',
+  ),
+  'sage50_fr': AccountingCapability(
+    formatId: 'sage50_fr',
+    state: QualificationState.implemented,
+    // The FEC's own: a reconstruction an accountant completes.
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
+    specification: 'imports the FEC (target fec): DGFiP fichiers standards des écritures comptables',
+  ),
+  'sage_de': AccountingCapability(
+    formatId: 'sage_de',
+    state: QualificationState.implemented,
+    specification: 'imports DATEV (target datev): EXTF 700 Buchungsstapel',
+  ),
+  // The .IMP layout is in Sage's knowledge base only; Sage 200 and Intacct
+  // are separate products with their own imports.
+  'sage50_ca': AccountingCapability(
+    formatId: 'sage50_ca',
+    state: QualificationState.specificationNeeded,
+  ),
+  'sage200': AccountingCapability(
+    formatId: 'sage200',
+    state: QualificationState.specificationNeeded,
+  ),
+  'sage_intacct': AccountingCapability(
+    formatId: 'sage_intacct',
+    state: QualificationState.specificationNeeded,
   ),
   // The FEC is their working route today; their own formats need a spec.
   'cegid_quadra_ascii': AccountingCapability(

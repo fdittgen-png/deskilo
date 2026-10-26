@@ -67,6 +67,15 @@ List<VatFormSpec> get vatFormCatalogue => [
     resolveFormBoxes(f, ActiveTaxReference.current, DateTime(9999)),
 ];
 
+/// The annual summary [country]'s periodic returns add up to, by the name
+/// of its form; null where the periodic returns stand alone.
+String? vatAnnualSummaryName(String country) =>
+    switch (country.trim().toUpperCase()) {
+      'ES' => esAnnualSummaryName,
+      'IT' => itAnnualSummaryName,
+      _ => null,
+    };
+
 /// #2361 — Revenu Québec's FPZ-500, QST part.
 VatFormSpec get qstFormSpec => caFpz500QstSpec;
 

@@ -122,6 +122,7 @@ sealed class TaxValue {
           cents: r.integer('cents'),
           effect: r.string('effect'),
           currency: r.string('currency'),
+          chargeCents: r.intOrNull('charge_cents') ?? 0,
         ),
       TaxDomain.taxPoint => TaxPointValue(
           standard: r.string('standard'),
@@ -139,6 +140,7 @@ sealed class TaxValue {
           nationalChannelRequired: r.boolOr('national_channel_required', fallback: false),
           currency: r.stringOr('currency'),
           taxSystem: r.stringOr('tax_system', 'vat'),
+          outsideVatPostalCodes: r.strings('outside_vat_postal_codes'),
         ),
       TaxDomain.formBox => FormBoxValue(
           label: r.string('label'),
@@ -279,26 +281,29 @@ class GroupExampleValue extends TaxValue {
       {'group': group, 'text': text, 'position': position};
 }
 
-/// `threshold`: {cents, effect, currency} -- the net turnover (minor units)
-/// that ends a small-business exemption; [effect] is `next_year` (it ends
-/// with the year) or `immediate` (on the supply that passes it).
+/// `threshold`: {cents, effect, currency, charge_cents?} -- a line in minor
+/// units and what crossing it does (`threshold_effects.dart`); a
+/// `stamp_duty` row charges [chargeCents].
 class ThresholdValue extends TaxValue {
   const ThresholdValue({
     required this.cents,
     required this.effect,
     required this.currency,
+    this.chargeCents = 0,
   });
 
   final int cents;
   final String effect;
   final String currency;
 
+  final int chargeCents;
+
   @override
   TaxDomain get domain => TaxDomain.threshold;
 
   @override
-  Map<String, Object?> toJson() =>
-      {'cents': cents, 'effect': effect, 'currency': currency};
+  Map<String, Object?> toJson() => {'cents': cents, 'effect': effect,
+        'currency': currency, if (chargeCents != 0) 'charge_cents': chargeCents};
 }
 
 /// `tax_point`: {standard, invoice_option, cash_option, cash_backstop} --
@@ -356,6 +361,7 @@ class IssuingGateValue extends TaxValue {
     this.nationalChannelRequired = false,
     this.currency = '',
     this.taxSystem = 'vat',
+    this.outsideVatPostalCodes = const [],
   });
 
   final bool supported;
@@ -368,6 +374,9 @@ class IssuingGateValue extends TaxValue {
   /// `vat` (the tax is inside the price) or `sales_tax` (added to a net
   /// price, per jurisdiction): how a seller of this country issues.
   final String taxSystem;
+
+  /// Postal-code prefixes of sites outside the country's VAT (refused).
+  final List<String> outsideVatPostalCodes;
 
   /// Whether the seller issues in sales-tax mode.
   bool get salesTaxMode => taxSystem == salesTaxSystem;
@@ -386,6 +395,8 @@ class IssuingGateValue extends TaxValue {
         'national_channel_required': nationalChannelRequired,
         if (currency.isNotEmpty) 'currency': currency,
         if (taxSystem != 'vat') 'tax_system': taxSystem,
+        if (outsideVatPostalCodes.isNotEmpty)
+          'outside_vat_postal_codes': outsideVatPostalCodes,
       };
 }
 

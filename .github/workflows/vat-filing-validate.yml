@@ -1,0 +1,71 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: CI · VAT filing schemas
+
+# A national VAT file claims its authority's format only when it passes
+# that authority's published schema. This job builds the samples with the
+# app's own writers (the tests named below, VAT_FILING_SAMPLES_DIR set) and
+# reads each against the schema shipped verbatim under
+# test/fixtures/vat_filing/, its SHA-256 pinned in tool/vat_filing/validate.sh.
+
+on:
+  pull_request:
+    paths:
+      - 'lib/features/money/domain/**'
+      - 'test/features/money/vat_filing_es_it_test.dart'
+      - 'test/features/money/vat_registers_es_it_test.dart'
+      - 'test/fixtures/vat_filing/**'
+      - 'tool/vat_filing/**'
+      - '.github/workflows/vat-filing-validate.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'lib/features/money/domain/**'
+      - 'test/fixtures/vat_filing/**'
+      - 'tool/vat_filing/**'
+  workflow_dispatch:
+
+concurrency:
+  group: vat-filing-validate-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+
+jobs:
+  validate:
+    name: VAT filing samples · published schemas
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: xmllint
+        run: |
+          command -v xmllint || {
+            sudo apt-get update -q
+            sudo apt-get install -y --no-install-recommends libxml2-utils
+          }
+      - run: flutter pub get
+      - name: Build the samples
+        env:
+          VAT_FILING_SAMPLES_DIR: ${{ runner.temp }}/vat-filing-samples
+        run: >-
+          flutter test
+          test/features/money/vat_filing_es_it_test.dart
+          test/features/money/vat_registers_es_it_test.dart
+      - name: Read each against its schema
+        run: bash tool/vat_filing/validate.sh "${{ runner.temp }}/vat-filing-samples"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vat-filing-samples
+          path: ${{ runner.temp }}/vat-filing-samples

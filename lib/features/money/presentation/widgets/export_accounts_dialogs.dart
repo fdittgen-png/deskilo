@@ -317,6 +317,7 @@ Future<SageAccounts?> showSageAccountsDialog(
             sales: sales.text.trim(),
             bank: bank.text.trim(),
             taxCode: taxCode.text.trim(),
+            reference: initial.reference,
           )),
           child: Text(l10n.commonSave),
         ),

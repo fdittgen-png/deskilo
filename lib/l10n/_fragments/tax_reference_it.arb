@@ -299,5 +299,13 @@
   "taxRefRetentionStart": "Il termine decorre da (fiscal_year_end o document_date)",
   "@taxRefRetentionStart": {
     "description": "#2571 retention: taxRefRetentionStart"
+  },
+  "taxRefChargeCents": "Importo dovuto oltre la soglia (unità minore, imposta di bollo)",
+  "@taxRefChargeCents": {
+    "description": "#2363 tax reference editor: taxRefChargeCents"
+  },
+  "taxRefOutsideVatPostalCodes": "Prefissi di CAP fuori dall’IVA (separati da virgole)",
+  "@taxRefOutsideVatPostalCodes": {
+    "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
   }
 }

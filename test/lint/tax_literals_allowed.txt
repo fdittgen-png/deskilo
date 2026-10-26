@@ -15,7 +15,7 @@ lib/features/money/domain/e_invoice_routing.dart :: 'ES': EInvoiceRoute( :: 1 ::
 lib/features/money/domain/e_invoice_routing.dart :: 'NL': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
 lib/features/money/domain/e_invoice_routing.dart :: 'PT': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
 lib/features/money/domain/e_invoice_routing.dart :: 'LU': EInvoiceRoute( :: 1 :: which national e-invoicing channel the app has code for (a capability: data cannot add a channel, epic #2476 non-goal)
-lib/features/money/domain/invoice_fatturapa.dart :: 'AE' => buyer.country.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1', :: 1 :: EN 16931 category to the FatturaPA natura code: a standard's fixed code
+lib/features/money/domain/invoice_fatturapa.dart :: 'AE' => buyerCountry.toUpperCase() == 'IT' ? 'N6.9' : 'N2.1', :: 1 :: EN 16931 category to the FatturaPA natura code: a standard's fixed code
 lib/features/money/domain/invoice_ksef_fa3.dart :: 'AE' => buyer.country.toUpperCase() == 'PL' ? '10' : '9', :: 1 :: EN 16931 category to the KSeF FA(3) code: a standard's fixed code
 lib/features/money/domain/invoice_ksef_fa3.dart :: 'AE' => buyer.country.toUpperCase() == 'PL' ? 'oo' : 'np II', :: 1 :: EN 16931 category to the KSeF FA(3) code: a standard's fixed code
 lib/features/money/domain/vat_compliance.dart :: 'AE' => 'VATEX-EU-AE', :: 1 :: EN 16931 category (UNCL5305) and its VATEX code: a standard's fixed code
@@ -30,6 +30,10 @@ lib/features/money/domain/vat_filing_files.dart :: 'FR' => ( :: 1 :: which natio
 lib/features/money/domain/vat_filing_files.dart :: 'GB' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
 lib/features/money/domain/vat_filing_files.dart :: 'CH' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
 lib/features/money/domain/vat_filing_files.dart :: 'CA' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'ES' => 'ES', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'IT' => 'IT', :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'ES' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
+lib/features/money/domain/vat_filing_files.dart :: 'IT' => ( :: 1 :: which national filing-file builder a country uses: structure (a new country is new code, epic non-goal)
 lib/features/money/domain/vat_form_catalogue.dart :: r == 0 ? '0 % / out of scope' : 'Rate ${_pct(r)}', :: 1 :: an ISO spelling alias (UK for GB) / the label of the generic per-rate box: not a tax value
 lib/features/money/domain/vat_form_catalogue.dart :: 'UK' => 'GB', :: 1 :: an ISO spelling alias (UK for GB) / the label of the generic per-rate box: not a tax value
 lib/features/money/presentation/report_sample_data.dart :: 'vat_rate': '20 %', :: 2 :: sample data of the report designer's preview, not a rate in force
@@ -43,4 +47,16 @@ lib/features/money/presentation/vat_filing_file_actions.dart :: 'FR' => l10n.vat
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'GB' => l10n.vatDeclMtdCsv, :: 1 :: the label of each country's filing-file action: UI wording
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'CH' => l10n.vatDeclMwstXml, :: 1 :: the label of each country's filing-file action: UI wording
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'CA' => l10n.vatDeclGstQstCsv, :: 1 :: the label of each country's filing-file action: UI wording
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'ES' => l10n.vatDeclAeat303, :: 1 :: the label of each country's filing-file action: UI wording
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'IT' => l10n.vatDeclLipeXml, :: 1 :: the label of each country's filing-file action: UI wording
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'DE' => _askTaxNumber(context, l10n, save.party?.legalId ?? '').then( :: 1 :: what each country's filing file asks beyond the settings: the question of that file's own builder (structure)
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'ES' => askSpanishFilingFacts(context, l10n), :: 1 :: what each country's filing file asks beyond the settings: the question of that file's own builder (structure)
+lib/features/money/presentation/vat_filing_file_actions.dart :: 'IT' => askItalianDeclarant(context, l10n), :: 1 :: what each country's filing file asks beyond the settings: the question of that file's own builder (structure)
 lib/features/money/presentation/widgets/negotiation_card.dart :: '0 %', :: 1 :: UI: the "no discount" placeholder, not a tax value
+lib/features/money/domain/accounting_targets_sage.dart :: countries: {'US', 'CA', 'GB'}, :: 1 :: the countries a product (Sage Intacct) is sold in, a target descriptor, not a tax value
+lib/features/money/domain/vat_form_catalogue.dart :: 'ES' => esAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
+lib/features/money/domain/vat_form_catalogue.dart :: 'IT' => itAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
+lib/features/money/domain/vat_register_es.dart :: 'AE' => ( :: 1 :: EN 16931 category (UNCL5305) to the AEAT's calificación and clave: a standard's fixed code
+lib/features/money/domain/vat_registers.dart :: 'ES' => const [ :: 1 :: which national register builders a country uses: structure (a new country is new code)
+lib/features/money/domain/vat_registers.dart :: 'IT' => const [VatRegisterKind.itRegistro], :: 1 :: which national register builders a country uses: structure (a new country is new code)
+lib/features/money/domain/sage.dart :: 'AE' => _tax(euCustomer ? 'tax_eu_services' : 'tax_reverse_charge'), :: 1 :: EN 16931 category to the role of the Sage 50 code row (sage/tax_eu_services, sage/tax_reverse_charge): the codes themselves are reference rows

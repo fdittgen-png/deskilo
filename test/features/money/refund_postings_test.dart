@@ -8,10 +8,10 @@ import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice.dart';
 import 'package:deskilo/features/money/domain/saf_t.dart';
-import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';
+import 'support/sage_files.dart';
 import 'support/seeded_export_year.dart';
 
 Map<String, InvoiceMatch> _matches({String resolution = 'refunded'}) => {
@@ -86,12 +86,8 @@ void main() {
     expect(f[9], '1006');
   });
 
-  String sage(Map<String, InvoiceMatch> matches) => buildSageFile(
-    invoices: SeededExportYear.invoices,
-    matches: matches,
-    accounts: const SageAccounts(),
-    customerRef: (_) => 'C1',
-  );
+  String sage(Map<String, InvoiceMatch> matches) =>
+      sageOfInvoices(SeededExportYear.invoices, matches, country: 'FR');
 
   test('Sage: the refund is a payment (SP), not a receipt (SR)', () {
     final rows = sage(_matches()).split('\r\n');

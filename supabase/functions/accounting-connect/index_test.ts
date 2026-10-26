@@ -294,3 +294,48 @@ Deno.test("the EU target asks the tax reference: an Irish organisation connects,
   assert(String(gb.w.state().status_detail).includes("an EU member state"));
   assert(gb.w.calls.some((c) => c.fn === "eu:GB"));
 });
+
+/** A Sage sign-in: the token reaches [businesses]; the business is in
+ * [country]. */
+function sageWorld(businesses: string[], country = "GB") {
+  const sageCalls: string[] = [];
+  const w = world({
+    target: "sage_business_cloud_gb",
+    token: () => Response.json({ access_token: "SAGE-AT", refresh_token: "RT-secret", expires_in: 300 }),
+    api: (url) => {
+      if (url.host !== "api.accounting.sage.com") return null;
+      sageCalls.push(url.pathname);
+      if (url.pathname === "/v3.1/businesses") return Response.json({ $items: businesses.map((id) => ({ id })), $next: null });
+      if (url.pathname.startsWith("/v3.1/businesses/")) return Response.json({ id: businesses[0], country: { id: country } });
+      if (url.pathname === "/v3.1/financial_settings") return Response.json({ base_currency: { id: "GBP" } });
+      return Response.json({ $items: [], $next: null });
+    },
+  });
+  return { w, sageCalls };
+}
+
+Deno.test("a Sage sign-in binds the one business it reaches and checks it before connecting", async () => {
+  const { w, sageCalls } = sageWorld(["b-1"]);
+  const back = await xeroCallback(w, "sage_business_cloud_gb");
+  assertEquals(back.status, 200);
+  assertEquals(w.state().remote_tenant_id, "b-1");
+  assertEquals(w.state().status, "connected");
+  assertEquals(sageCalls, [
+    "/v3.1/businesses",
+    "/v3.1/businesses/b-1",
+    "/v3.1/financial_settings",
+    "/v3.1/tax_rates",
+    "/v3.1/ledger_accounts",
+    "/v3.1/bank_accounts",
+  ]);
+});
+
+Deno.test("a Sage sign-in reaching several businesses, or one in another country, connects nothing", async () => {
+  const several = sageWorld(["b-1", "b-2"]);
+  assertEquals((await xeroCallback(several.w, "sage_business_cloud_gb")).status, 409);
+  assert(String(several.w.state().status_detail).includes("2 businesses"));
+  assertEquals(several.w.vault.access_token, undefined, "no token is kept for a refused sign-in");
+  const ie = sageWorld(["b-1"], "IE");
+  assertEquals((await xeroCallback(ie.w, "sage_business_cloud_gb")).status, 409);
+  assert(String(ie.w.state().status_detail).includes("is in IE"));
+});

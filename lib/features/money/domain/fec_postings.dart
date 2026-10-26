@@ -101,13 +101,8 @@ typedef PostedFecResult = ({String file, List<FecBlocker> blockers});
 /// collective account [collective]: the collective's root and the number
 /// in capitals without separators, when [rule] admits it; null otherwise.
 String? fecAuxAccount(String collective, String number, CustomerIdRule rule) {
-  final code = number.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
-  if (code.isEmpty) return null;
-  if (rule.maxLength case final max? when code.length > max) return null;
-  if (rule.charset case final charset?
-      when !RegExp('^(?:$charset)\$').hasMatch(code)) {
-    return null;
-  }
+  final code = rule.admit(number);
+  if (code == null) return null;
   final root = collective.length < _collectiveRootLength
       ? collective
       : collective.substring(0, _collectiveRootLength);

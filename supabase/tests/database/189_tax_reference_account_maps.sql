@@ -7,8 +7,8 @@
 begin;
 select plan(9);
 
-select is((select count(*)::int from public.tax_reference where domain = 'account_map'), 179,
-          'eleven charts, the FEC rows and the Sage rows are seeded, the posting roles of 0520 and 0521 and the DATEV reduced rate of 0522 and the SKR04 plan of 0523, the DATEV BU-Schlüssel of 0593, the GB, IE and CA charts of 0594 and the SAF-T standard codes of NO and LU (#2379), and the MWST codes and KMU accounts of the Swiss journal (#2377)');
+select is((select count(*)::int from public.tax_reference where domain = 'account_map'), 181,
+          'eleven charts, the FEC rows and the Sage rows are seeded, the posting roles of 0520 and 0521 and the DATEV reduced rate of 0522 and the SKR04 plan of 0523, the DATEV BU-Schlüssel of 0593, the GB, IE and CA charts of 0594 and the SAF-T standard codes of NO and LU (#2379), and the MWST codes and KMU accounts of the Swiss journal (#2377), and the Sage reverse-charge codes (#2373)');
 select is((select value ->> 'account' from public.tax_reference
             where domain = 'account_map' and country = 'FR' and key = 'coa/04-vat'), '445710',
           'the French chart books the collected VAT on 445710');
@@ -20,7 +20,7 @@ select is((select value ->> 'account' from public.tax_reference
           'the German chart header names SKR03');
 select is((select string_agg(value ->> 'tax_code', ',' order by key) from public.tax_reference
             where domain = 'account_map' and country = 'GB' and key like 'sage/tax\_%'),
-          'T2,T9,T5,T1,T0', 'the Sage VAT codes');
+          'T22,T2,T9,T5,T20,T1,T0', 'the Sage VAT codes');
 select ok(public.tax_reference_valid('account_map', '{"format":"coa","role":"bank","account":"512000","label":"Banques"}'::jsonb)
           and public.tax_reference_valid('account_map', '{"format":"sage","role":"tax_zero","tax_code":"T0"}'::jsonb),
           'an account row and a tax code row are valid');

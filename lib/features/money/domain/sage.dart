@@ -1,39 +1,41 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
+
 import '../../../core/money/money_text.dart';
 import '../../../core/text/csv.dart';
 import '../../../core/time/date_text.dart';
 import '../../../core/vat/tax_reference.dart';
 import '../../../core/vat/tax_reference_active.dart';
-import 'billing_rules.dart';
-import 'invoice.dart';
-import 'invoice_line_cash.dart';
-import 'vat_rate.dart';
+import 'accounting_format.dart';
 
-/// Sage 50's **audit-trail CSV** (#669) — the import shape the British
-/// and Irish Sage lines read.
+/// Sage 50 Accounts' **audit-trail CSV** (#669, #2373) — the import shape
+/// the British and Irish Sage 50 reads, in the 18 columns of its current
+/// template.
 ///
 /// An ACCOUNTANT-EXCHANGE format, like the DATEV file beside it: a
 /// person opens it in Sage, reviews the transactions and posts them.
-/// Nothing here is told to an authority, which is exactly why it can be
-/// produced honestly by an app that keeps no ledger.
+/// Nothing here is told to an authority.
 ///
-/// Same bargain as the FEC and DATEV: the nominal codes are ASKED FOR at
-/// export time and shown before the file is written. Sage's defaults
-/// below are the standard nominal ranges of its own shipped chart, which
-/// is what most small businesses run — but a chart is the accountant's,
-/// and every wrong code is unbooked by hand.
+/// Two sources write the same rows: the documents (`sage_documents.dart`:
+/// an issuer without a local book, nominal codes asked for at export time)
+/// and, for a local book, its postings (`sage_postings.dart`, on the
+/// book's own chart).
 ///
-/// TWO THINGS SAGE PUNISHES:
+/// THREE THINGS SAGE PUNISHES:
 ///
 ///  1. The **transaction type** is the first column and decides
 ///     everything downstream. `SI` is a sales invoice, `SC` a sales
-///     credit, `SR` a receipt against the sales ledger. Getting SI/SC
-///     backwards does not error — it doubles the debtor balance in the
-///     wrong direction, silently.
-///  2. Sage 50 reads `Net` and `Tax` as SEPARATE columns and does NOT
-///     derive one from the other. DesKilo's prices are VAT-inclusive, so
-///     the split has to happen here; handing it the gross as `Net` would
-///     overstate turnover by the tax on every line.
+///     credit (positive amounts), `SR` a receipt against the sales
+///     ledger, `SP` a payment to a customer, `PI`/`PC`/`PP` the purchase
+///     side, `JD`/`JC` a journal debit or credit. Getting SI/SC backwards
+///     does not error — it doubles the debtor balance in the wrong
+///     direction, silently.
+///  2. Sage 50 reads `Net Amount` and `Tax Amount` as SEPARATE columns
+///     and does NOT derive one from the other: the split is the
+///     document's own, per rate line, each with its own tax code.
+///  3. The **Account Reference** keys a row to a customer or supplier
+///     record and holds at most eight capitals and digits: the party's
+///     number, never an internal id. A party without one stops the file.
 class SageAccounts {
   const SageAccounts({
     String? debtors,
@@ -71,243 +73,235 @@ class SageAccounts {
   String get bank => _givenBank ?? _account('bank');
 
   /// #2365 -- Sage's Bad Debt Write Off nominal (8100): what the owner gave
-  /// up of an invoice, cleared from the debtor by a sales credit (T9).
+  /// up of an invoice, journalled off the debtors control (JD/JC, T9).
   String get writeOff => _account('write_off');
 
-  /// The VAT code for the standard rate: Sage's shipped standard rate. The
-  /// zero-rated code and the out-of-scope code are the other ends of it —
-  /// out of scope is the one an exempt workspace wants, and getting it wrong
-  /// puts turnover on a VAT return that should never have seen it.
+  /// The VAT code for the standard rate: Sage's shipped standard rate.
   String get taxCode => _givenTaxCode ?? _tax('tax_standard');
 
-  /// #2359 — Sage 50 UK's own codes by treatment: zero-rated, exempt and the
-  /// reduced rate. A zero-rated supply stays on the VAT return (Box 6) and
-  /// so does an exempt one, but they are not the same line on a
-  /// partial-exemption calculation. Read from the installed snapshot; an
-  /// instance reads the one it was given.
-  static String get zeroRatedCode => _installed('tax_zero');
-  static String get exemptCode => _installed('tax_exempt');
-  static String get reducedCode => _installed('tax_reduced');
-
-  /// The code for a line that carries no tax: out of scope rather than
-  /// zero-rated, because a zero-RATED supply still belongs on the VAT return
-  /// and an out-of-scope one does not.
-  static String get noTaxCode => _installed('tax_none');
-
-  static String _installed(String role) => ActiveTaxReference.current
-      .accountOf('sage', role, 'GB', tax: true);
-
+  /// #2359 — Sage 50 UK's own codes by treatment (the `sage/tax_*` rows):
+  /// zero-rated, exempt and the reduced rate. A zero-rated supply stays on
+  /// the VAT return (Box 6) and so does an exempt one, but they are not the
+  /// same line on a partial-exemption calculation. The code for a line that
+  /// carries no tax is out of scope (T9) rather than zero-rated, because a
+  /// zero-RATED supply still belongs on the VAT return and an out-of-scope
+  /// one does not.
   /// This instance's out-of-scope code.
   String get noTax => _tax('tax_none');
 
-  /// The Sage code of one VAT breakdown line. The reduced code is the one of
-  /// the lines taxed in the United Kingdom's `reduced` rate group.
-  String codeFor(InvoiceVatTotal total) {
-    if (total.category == 'S' &&
-        total.percent > 0 &&
-        _data.groupOfRate('GB', total.percent, 'S') == 'reduced') {
-      return _tax('tax_reduced');
-    }
-    return switch (total.category) {
-      'Z' => _tax('tax_zero'),
-      'E' => _tax('tax_exempt'),
-      'S' when total.percent > 0 => taxCode,
-      'S' => _tax('tax_zero'),
-      _ => noTax,
-    };
-  }
+  /// Whether [code] is a supply to a business in another EU member state,
+  /// which Sage reports with the customer's Country of VAT.
+  bool crossBorder(String code) => code == _tax('tax_eu_services');
+
+  /// These nominal codes, the codes read from [onDay] (the workspace's own
+  /// tax reference).
+  SageAccounts on(TaxReferenceSet onDay) => SageAccounts(
+    debtors: _givenDebtors,
+    sales: _givenSales,
+    bank: _givenBank,
+    taxCode: _givenTaxCode,
+    reference: onDay,
+  );
+
+  /// The Sage code of a supply in the rate group [group] ('' when its rate
+  /// has none) of the VAT category [category]; null when Sage 50 has no
+  /// code for it (a rate group it does not know). [euCustomer]: the
+  /// customer is a business in another EU member state.
+  String? codeOf(String group, String category, {bool euCustomer = false}) =>
+      switch (group) {
+        'standard' => taxCode,
+        'reduced' => _tax('tax_reduced'),
+        'zero' => _tax('tax_zero'),
+        'exempt' => _tax('tax_exempt'),
+        '' => switch (category) {
+          'Z' => _tax('tax_zero'),
+          'E' => _tax('tax_exempt'),
+          // #2373 — the reverse charge: a service to a business in another
+          // EU member state (T22) or at home (T20), `sage/tax_eu_services`
+          // and `sage/tax_reverse_charge`.
+          'AE' => _tax(euCustomer ? 'tax_eu_services' : 'tax_reverse_charge'),
+          // A taxed rate no rate row names, or goods to another member
+          // state (K: the app sells none), have no Sage code.
+          'S' || 'K' => null,
+          _ => noTax,
+        },
+        _ => null,
+      };
+}
+
+/// The column widths Sage 50's import takes (its audit-trail template).
+const int _sageNominalLength = 8;
+@visibleForTesting
+const int sageReferenceLength = 30;
+const int _sageDetailsLength = 60;
+
+/// The Department Code of every row: no departmental analysis (sites carry
+/// no number yet), and Sage requires the column.
+const String _noDepartment = '0';
+
+/// The 18 columns of Sage 50's audit-trail template, in its order. The
+/// names are what its import wizard maps on, so they are not free-form.
+@visibleForTesting
+const List<String> sageColumns = [
+  'Type',
+  'Account Reference',
+  'Nominal A/C Ref',
+  'Department Code',
+  'Date',
+  'Reference',
+  'Details',
+  'Net Amount',
+  'Tax Code',
+  'Tax Amount',
+  'Exchange Rate',
+  'Extra Reference',
+  'User Name',
+  'Project Refn',
+  'Cost Code Refn',
+  'Country of VAT',
+  'Report Type',
+  'Fund',
+];
+
+/// The Account Reference rule of the Sage 50 target (at most eight
+/// capitals and digits).
+final CustomerIdRule sageAccountReferenceRule = accountingTargets
+    .firstWhere((t) => t.id == 'sage50')
+    .customerIdRule;
+
+/// One transaction of the audit trail. Amounts are positive minor units
+/// of the base currency (the exchange rate is 1).
+class SageRow {
+  const SageRow({
+    required this.type,
+    required this.nominal,
+    required this.date,
+    required this.reference,
+    required this.details,
+    required this.netMinor,
+    required this.taxCode,
+    required this.currency,
+    this.taxMinor = 0,
+    this.account = '',
+    this.countryOfVat = '',
+  });
+
+  final String type;
+
+  /// The customer's or supplier's Account Reference; '' on a journal.
+  final String account;
+  final String nominal;
+  final DateTime date;
+  final String reference;
+  final String details;
+  final int netMinor;
+  final String taxCode;
+  final int taxMinor;
+  final String currency;
+
+  /// The EU member state of a cross-border supply's customer.
+  final String countryOfVat;
+}
+
+/// Why the file was not written.
+enum SageBlock {
+  /// A customer or supplier has no number Sage can take as its Account
+  /// Reference.
+  accountReference,
+
+  /// A reference or a nominal code is longer than Sage's column.
+  fieldTooLong,
+
+  /// Output tax waits for its tax point (`vat_pending`): Sage 50 does not
+  /// import deferred tax; its own VAT cash accounting decides that.
+  deferredTax,
+
+  /// An amount in another currency than the base currency.
+  currency,
+
+  /// A rate line with no Sage tax code.
+  taxCode,
+}
+
+class SageBlocker {
+  const SageBlocker(this.block, this.subject);
+  final SageBlock block;
+  final String subject;
+
+  @override
+  bool operator ==(Object other) =>
+      other is SageBlocker && other.block == block && other.subject == subject;
+
+  @override
+  int get hashCode => Object.hash(block, subject);
+
+  @override
+  String toString() => 'SageBlocker(${block.name}: $subject)';
+}
+
+/// The rows of a period, or every blocker that stops them (the rows are
+/// then empty: nothing is written around a blocker).
+typedef SageAuditTrail = ({List<SageRow> rows, List<SageBlocker> blockers});
+
+/// [rows] with [blockers], and the blockers of the rows' column widths.
+SageAuditTrail sageAuditTrail(List<SageRow> rows, Set<SageBlocker> blockers) {
+  final all = {
+    ...blockers,
+    for (final r in rows) ...[
+      if (r.reference.length > sageReferenceLength)
+        SageBlocker(
+          SageBlock.fieldTooLong,
+          '${r.reference} (> $sageReferenceLength)',
+        ),
+      if (r.nominal.length > _sageNominalLength)
+        SageBlocker(
+          SageBlock.fieldTooLong,
+          '${r.nominal} (> $_sageNominalLength)',
+        ),
+    ],
+  };
+  return all.isEmpty
+      ? (rows: rows, blockers: const <SageBlocker>[])
+      : (rows: const <SageRow>[], blockers: all.toList());
 }
 
 String sageFileName(int year, int month) =>
     'Sage_Audit_${yearMonth(year, month, separator: '')}.csv';
 
-/// Builds the Sage 50 audit-trail CSV for one period.
-///
-/// [reference] is what shows in Sage's Reference column — the invoice
-/// number, which is how an accountant ties a row back to a document.
-String buildSageFile({
-  required List<Invoice> invoices,
-  required Map<String, InvoiceMatch> matches,
-  required SageAccounts accounts,
-  required String Function(Invoice invoice) customerRef,
-}) {
-  // Sage's own import header. The names are what its wizard maps on, so
-  // they are not free-form.
-  const header = 'Type,Account Reference,Nominal A/C Ref,Department Code,'
-      'Date,Reference,Details,Net Amount,Tax Code,Tax Amount';
+String _cell(String text) =>
+    csvCell(text, dialect: CsvDialect.sage, quoteEmpty: true);
 
-  // Sage 50 is a UK product and reads DD/MM/YYYY (`dmy`). An ISO date
-  // imports as a different day for the first twelve of every month,
-  // which is the kind of error nobody notices until a VAT quarter is
-  // wrong.
+String _line(SageRow r) => [
+  r.type,
+  _cell(r.account),
+  r.nominal,
+  _noDepartment,
+  // Sage 50 is a UK product and reads DD/MM/YYYY: an ISO date imports as
+  // a different day for the first twelve of every month.
+  dmy(r.date),
+  _cell(r.reference),
+  _cell(
+    r.details.length > _sageDetailsLength
+        ? r.details.substring(0, _sageDetailsLength)
+        : r.details,
+  ),
+  minorToText(r.netMinor, r.currency),
+  r.taxCode,
+  minorToText(r.taxMinor, r.currency),
+  // The amounts are the base currency's.
+  '1',
+  // Extra Reference: the period the row belongs to.
+  yearMonth(r.date.year, r.date.month),
+  '',
+  '',
+  '',
+  r.countryOfVat,
+  '',
+  '',
+].join(',');
 
-  final rows = <String>[header];
-
-  void row({
-    required String type,
-    required String nominal,
-    required DateTime on,
-    required String reference,
-    required String details,
-    required int netCents,
-    required String taxCode,
-    required int taxCents,
-    required String customer,
-  }) =>
-      rows.add([
-        type,
-        csvCell(customer, dialect: CsvDialect.sage, quoteEmpty: true),
-        nominal,
-        '0', // no departmental analysis; Sage requires the column
-        dmy(on),
-        csvCell(reference, dialect: CsvDialect.sage, quoteEmpty: true),
-        csvCell(details, dialect: CsvDialect.sage, quoteEmpty: true),
-        // #1077 — two decimals is CORRECT here: Sage 50's audit-trail CSV
-        // is the British and Irish shape, and both GBP and EUR carry two.
-        minorToText(netCents, 'EUR'),
-        taxCode,
-        minorToText(taxCents, 'EUR'),
-      ].join(','));
-
-  for (final invoice in invoices) {
-    // A voided invoice was never booked, so it is not exported as one.
-    // It is not silently dropped either — the audit trail export carries
-    // it, which is the file that is supposed to show what happened.
-    if (invoice.isVoided) continue;
-    // #831 — a settlement regroups booked revenue.
-    if (invoice.kind == InvoiceKind.settlement) continue;
-
-    final customer = customerRef(invoice);
-    // The tax split comes from the invoice's own 0072 snapshot, which is
-    // what the signature covers. Deriving it here would risk disagreeing
-    // with the document the customer holds.
-    //
-    // #2359 — a credit note is an SC with POSITIVE amounts; a negative SI
-    // is read by Sage as an invoice of negative value and the debtor
-    // balance moves the wrong way. One row per VAT rate and category, each
-    // with its own code (T1, T5, T0, T2).
-    int amount(int cents) => invoice.isCreditNote ? cents.abs() : cents;
-    final type = invoice.isCreditNote ? 'SC' : 'SI';
-    final parts = invoice.vatTotals.isEmpty
-        ? [(net: invoice.netCents, tax: invoice.vatCents,
-            code: invoice.vatCents > 0 ? accounts.taxCode : accounts.noTax)]
-        : [
-            for (final t in invoice.vatTotals)
-              (net: t.netCents, tax: t.vatCents, code: accounts.codeFor(t)),
-          ];
-    for (final part in parts) {
-      row(
-        type: type,
-        nominal: accounts.sales,
-        on: invoice.issuedAt,
-        reference: invoice.number,
-        details: invoice.title,
-        netCents: amount(part.net),
-        taxCode: part.code,
-        taxCents: amount(part.tax),
-        customer: customer,
-      );
-    }
-
-    _bookNettedReceipts(row, invoice, accounts, customer);
-
-    final match = matches[invoice.id];
-    // A PENDING match is a settlement still awaiting validation (0067).
-    // Booking it would put money in Sage the workspace has not agreed it
-    // received — the same exclusion the FEC and DATEV make.
-    if (match != null && !match.pending) {
-      // A receipt carries NO tax: the tax was accounted for on the
-      // invoice, and repeating it here would double it on the VAT
-      // return. T9 is what says so.
-      // #2365 — a refunded credit note is money OUT: SP, never a receipt.
-      final (type: settleType, :details) = _settlement(invoice, match);
-      row(
-        type: settleType,
-        nominal: accounts.bank,
-        on: match.matchedAt,
-        reference: invoice.number,
-        details: details,
-        netCents: match.paidCents,
-        taxCode: accounts.noTax,
-        taxCents: 0,
-        customer: customer,
-      );
-      _bookWriteOff(row, invoice, match, accounts, customer);
-    }
-  }
-
-  // CRLF and a trailing newline: Sage's importer is a Windows tool and
-  // has been seen to drop a last line that does not end in one.
-  return '${rows.join('\r\n')}\r\n';
-}
-
-typedef _SageRow = void Function({
-  required String type,
-  required String nominal,
-  required DateTime on,
-  required String reference,
-  required String details,
-  required int netCents,
-  required String taxCode,
-  required int taxCents,
-  required String customer,
-});
-
-/// #2365 -- the payments an invoice itself netted were money in on its
-/// date; without them the debtor stays open on a document whose total is
-/// already net of them. A receipt carries no tax (T9).
-void _bookNettedReceipts(
-  _SageRow row,
-  Invoice invoice,
-  SageAccounts accounts,
-  String customer,
-) {
-  if (invoice.isCreditNote) return;
-  for (final line in invoice.lines.where((l) => l.isMoneyIn)) {
-    row(
-      type: 'SR',
-      nominal: accounts.bank,
-      on: invoice.issuedAt,
-      reference: invoice.number,
-      details: 'Payment ${invoice.number}',
-      netCents: -line.amountCents,
-      taxCode: accounts.noTax,
-      taxCents: 0,
-      customer: customer,
-    );
-  }
-}
-
-/// #2365 -- what a standing match is in Sage: a receipt (SR), or for a
-/// refunded credit note a payment to the customer (SP).
-({String type, String details}) _settlement(Invoice invoice, InvoiceMatch m) =>
-    refundedCents(invoice, m) > 0
-    ? (type: 'SP', details: 'Refund ${invoice.number}')
-    : (type: 'SR', details: 'Payment ${invoice.number}');
-
-/// #2365 -- the rest of an invoice the owner gave up: a sales credit (SC)
-/// against the customer posted to the bad-debt nominal, positive and
-/// without tax (T9), on the write-off day. The VAT bad debt relief is the
-/// accountant's.
-void _bookWriteOff(
-  _SageRow row,
-  Invoice invoice,
-  InvoiceMatch match,
-  SageAccounts accounts,
-  String customer,
-) {
-  final owed = invoice.totalCents - match.paidCents;
-  final day = match.writeoffAt;
-  if (day == null || owed <= 0) return;
-  row(
-    type: 'SC',
-    nominal: accounts.writeOff,
-    on: day,
-    reference: invoice.number,
-    details: 'Write-off ${invoice.number}',
-    netCents: owed,
-    taxCode: accounts.noTax,
-    taxCents: 0,
-    customer: customer,
-  );
-}
+/// The audit-trail CSV of [rows]: the template's header, CRLF and a
+/// trailing newline (Sage's importer is a Windows tool and has been seen
+/// to drop a last line that does not end in one).
+String sageFile(List<SageRow> rows) =>
+    '${[sageColumns.join(','), ...rows.map(_line)].join('\r\n')}\r\n';

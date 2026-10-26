@@ -7699,6 +7699,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String exportImportedVia(String products, int count, String format) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'import',
+      one: 'imports',
+    );
+    return '$products $_temp0 this file: choose “$format” below.';
+  }
+
+  @override
   String get exportLocalBookOnly =>
       'Written from your local book\'s postings: your complete books only if every operation of the business passes through DesKilo.';
 
@@ -11956,6 +11967,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)';
 
   @override
+  String get invoiceMissingTerritoryOutsideVat =>
+      'The site is where the State’s VAT does not apply (Canary Islands: IGIC; Ceuta and Melilla: IPSI): DesKilo does not issue there yet.';
+
+  @override
   String get invoiceMissingTitle => 'Complete these details before issuing';
 
   @override
@@ -12397,6 +12412,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String journalSafTRefused(String gaps) {
     return 'The SAF-T file was not made: $gaps';
+  }
+
+  @override
+  String journalSageRefused(String reasons) {
+    return 'The Sage 50 file was not written: $reasons';
   }
 
   @override
@@ -21399,6 +21419,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sageAccountsTitle => 'Sage export';
 
   @override
+  String sageBlock(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'accountReference':
+          '$subject has no number Sage can take as its Account Reference (at most 8 capitals and digits)',
+      'fieldTooLong': '$subject is longer than the Sage column',
+      'deferredTax':
+          'the tax of $subject waits for its tax point, which Sage 50 does not import',
+      'currency': '$subject is not in the base currency',
+      'taxCode': 'no Sage tax code for $subject',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get sageTaxCode => 'VAT code (T1 / T0 / T9)';
 
   @override
@@ -26076,6 +26111,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group\'s sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file\'s VAT table.';
 
   @override
+  String get taxRefChargeCents =>
+      'Charged once passed (minor units, stamp duty)';
+
+  @override
   String get taxRefComponents =>
       'Jurisdictions, one per line: level, name, percent (level: state, county, city or district)';
 
@@ -26228,6 +26267,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get taxRefOfflineCopy =>
       'Showing the copy bundled with the app: the server could not be reached.';
+
+  @override
+  String get taxRefOutsideVatPostalCodes =>
+      'Postal-code prefixes outside the VAT (comma-separated)';
 
   @override
   String get taxRefPattern => 'Pattern';
@@ -27576,6 +27619,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatAddRate => 'Add a rate';
 
   @override
+  String get vatAnnualSummaryBase => 'Base';
+
+  @override
+  String get vatAnnualSummaryBox => 'Box';
+
+  @override
+  String vatAnnualSummaryButton(String form, String year) {
+    return '$form $year (annual sheet)';
+  }
+
+  @override
+  String vatAnnualSummaryEmpty(String year) {
+    return 'No prepared or filed return in $year yet.';
+  }
+
+  @override
+  String get vatAnnualSummaryLabel => 'Description';
+
+  @override
+  String get vatAnnualSummaryTax => 'Tax';
+
+  @override
   String get vatChangeByLaw => 'Change by law';
 
   @override
@@ -27589,6 +27654,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vatChangeNeedsSave =>
       'Save the rate first; then change it by law.';
+
+  @override
+  String get vatDeclAeat303 => 'AEAT file (Modelo 303)';
 
   @override
   String get vatDeclBox => 'Box';
@@ -27629,12 +27697,59 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclFiled => 'Filed';
 
   @override
+  String get vatDeclFilingAnnualVolume =>
+      'A space in SII states the year’s volume of operations on its last return, a page this file does not write; file the last period in the form itself.';
+
+  @override
   String get vatDeclFilingBn =>
       'Enter the GST/HST business number of the workspace with its RT account (123456789 RT0001): the file names it.';
 
   @override
+  String get vatDeclFilingDeclarant =>
+      'The declarant needs both a valid codice fiscale and a codice carica from 1 to 9 or 11 to 15.';
+
+  @override
+  String get vatDeclFilingEsCashRecipient =>
+      'Receives supplies taxed under the cash criterion';
+
+  @override
+  String get vatDeclFilingEsIntro =>
+      'The AEAT Sede imports this file into the Modelo 303 form; you then sign and file it there. Tick what applies to the space:';
+
+  @override
+  String get vatDeclFilingEsMonthlyRefund =>
+      'Registered for monthly refunds (REDEME)';
+
+  @override
+  String get vatDeclFilingEsSii => 'Keeps its VAT books through SII';
+
+  @override
+  String get vatDeclFilingFiscalCode =>
+      'Enter the codice fiscale of the workspace as its registration number (11 digits for a company, 16 characters for a person): the file names it.';
+
+  @override
+  String get vatDeclFilingItDeclarantCf =>
+      'Declarant’s tax code (codice fiscale)';
+
+  @override
+  String get vatDeclFilingItDeclarantRole =>
+      'Declarant’s role code (codice carica)';
+
+  @override
+  String get vatDeclFilingItDeclarantRoleHelp =>
+      'The code of the Agenzia delle Entrate’s table: 1 to 9 or 11 to 15.';
+
+  @override
+  String get vatDeclFilingItIntro =>
+      'Your intermediary transmits this file through Entratel. A company names the person who signs for it; leave both fields empty when you file for yourself.';
+
+  @override
+  String get vatDeclFilingNegative =>
+      'A box of this return is negative and the file has no sign for it; record the correction in the form itself.';
+
+  @override
   String get vatDeclFilingPeriod =>
-      'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.';
+      'A periodic return file covers a month or a quarter; the annual return is filed separately.';
 
   @override
   String get vatDeclFilingTaxNumber =>
@@ -27646,6 +27761,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vatDeclFilingUid =>
       'Enter the UID of the workspace (CHE-123.456.789 with a valid check digit): the file names it.';
+
+  @override
+  String get vatDeclFilingUnmappedBox =>
+      'The return holds sales at a rate the form has no box for; file this period in the form itself.';
 
   @override
   String get vatDeclFilingVatNumber =>
@@ -27663,6 +27782,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatDeclInvoices => 'Invoices';
+
+  @override
+  String get vatDeclLipeXml => 'LIPE XML (periodic VAT settlement)';
 
   @override
   String get vatDeclMarkFiled => 'Mark as filed';
@@ -27861,6 +27983,47 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vatRegimeHint =>
       'This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.';
+
+  @override
+  String vatRegister347Empty(String year) {
+    return 'No customer passed the modelo 347 line in $year.';
+  }
+
+  @override
+  String get vatRegister347Sii =>
+      'A space that keeps its VAT books through SII files no modelo 347: the AEAT already holds its invoices.';
+
+  @override
+  String get vatRegisterActivity => 'Activity: code, type and IAE heading';
+
+  @override
+  String get vatRegisterActivityHelp =>
+      'As the AEAT writes it, e.g. A038612. Leave it empty to fill in the activity columns yourself.';
+
+  @override
+  String get vatRegisterActivityInvalid =>
+      'A code from A to D, two digits of type and up to four characters of heading.';
+
+  @override
+  String get vatRegisterEmpty => 'No invoice was issued in this period.';
+
+  @override
+  String vatRegisterEs347(String year) {
+    return 'Modelo 347 $year (CSV)';
+  }
+
+  @override
+  String get vatRegisterEsLibro => 'Register of issued invoices (AEAT XLSX)';
+
+  @override
+  String get vatRegisterEsSii => 'SII: issued invoices (XML)';
+
+  @override
+  String get vatRegisterItRegistro => 'Register of issued invoices (CSV)';
+
+  @override
+  String get vatRegisterNif =>
+      'Enter the NIF of the workspace as its VAT number (nine characters, ES first if you like): the file names it.';
 
   @override
   String get vatReportByRate => 'Totals per rate';

@@ -59,6 +59,21 @@ const xero: OAuthTarget = {
   stateLifetimeMs: 10 * 60 * 1000,
 };
 
+// #2373 — spec: developer.sage.com/accounting — "Authenticating with
+// Sage Accounting": the central authorisation page on www.sageone.com
+// (filter apiv3.1), the token endpoint on oauth.accounting.sage.com, the
+// full_access scope (the API has no narrower write scope). The redirect
+// names no business: the sign-in's business is read from GET /businesses
+// (accounting_sage.ts `signedInTenant`). One Sage application serves the
+// seven regions. Not yet verified against a registered Sage application.
+const sageAccounting: OAuthTarget = {
+  authorizeUrl: "https://www.sageone.com/oauth2/auth/central?filter=apiv3.1",
+  tokenUrl: "https://oauth.accounting.sage.com/token",
+  scopes: ["full_access"],
+  // A person signing in, not a batch: ten minutes.
+  stateLifetimeMs: 10 * 60 * 1000,
+};
+
 export const oauthTargets: Record<string, OAuthTarget> = {
   // #2377 — spec: docs.bexio.com — "Authentication" (OpenID Connect on
   // auth.bexio.com, realm bexio): the authorisation and token endpoints,
@@ -99,6 +114,13 @@ export const oauthTargets: Record<string, OAuthTarget> = {
   xero_ca: { ...xero },
   xero_us: { ...xero },
   xero_eu: { ...xero },
+  sage_business_cloud_gb: { ...sageAccounting },
+  sage_business_cloud_ie: { ...sageAccounting },
+  sage_business_cloud_ca: { ...sageAccounting },
+  sage_business_cloud_us: { ...sageAccounting },
+  sage_business_cloud_fr: { ...sageAccounting },
+  sage_business_cloud_de: { ...sageAccounting },
+  sage_business_cloud_es: { ...sageAccounting },
 };
 
 /** The environment variable holding [part] of [targetId]'s OAuth client. */

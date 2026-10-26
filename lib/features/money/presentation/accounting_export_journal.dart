@@ -78,6 +78,13 @@ Future<void> exportGenericJournal(
           gaps.map((g) => l10n.saftGap(g.kind.name, g.subject)).join('; '),
         ),
       );
+    case JournalSageRefused(:final blockers):
+      AppSnack.error(
+        context,
+        l10n.journalSageRefused(
+          blockers.map((b) => l10n.sageBlock(b.block.name, b.subject)).join('; '),
+        ),
+      );
     case JournalTaxCodesMissing(:final keys):
       AppSnack.error(context, l10n.journalSwissTaxCodes(keys.join(', ')));
     case JournalContractBroken(:final report):

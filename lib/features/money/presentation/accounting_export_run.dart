@@ -38,7 +38,6 @@ import '../domain/posting.dart';
 import '../domain/report_data.dart';
 import '../domain/report_strings.dart';
 import '../domain/saf_t.dart';
-import '../domain/sage.dart';
 import '../domain/swiss_kmu.dart';
 import '../domain/vat_account.dart';
 import '../domain/vat_tax_point.dart';
@@ -50,6 +49,7 @@ import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_saft.dart';
+import 'accounting_export_sage.dart';
 import 'accounting_export_swiss.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
@@ -139,7 +139,8 @@ class AccountingExportRun {
   final chosen = await showAccountingExportSheet(
     context,
     formats: exportFormatsOf(ref, country),
-    notices: [if (registeredSystemsFor(country) case final s when s.isNotEmpty) l10n.exportDenmarkRegisteredSystem(s.join(', '))],
+    notices: [if (registeredSystemsFor(country) case final s when s.isNotEmpty) l10n.exportDenmarkRegisteredSystem(s.join(', ')),
+        ...importNotices(l10n, country)],
   );
   if (chosen == null || !context.mounted) return;
   format = chosen;
@@ -192,7 +193,7 @@ class AccountingExportRun {
       case 'datev':
         await datevExport();
       case 'sage50':
-        await _sage();
+        await sageExport();
       case 'ch_kmu':
         await swissJournalExport(SwissJournalLayout.kmu, stem: 'mwst buchungen');
       case 'banana_transactions':
@@ -278,30 +279,6 @@ class AccountingExportRun {
         )),
         fecFileName(company.legalId, DateTime(year, 12, 31),
             development: development),
-      ),
-    );
-  }
-
-  Future<void> _sage() async {
-    final sage = await showSageAccountsDialog(context);
-    if (sage == null || !context.mounted) return;
-    await runGuarded(
-      context,
-      domain: 'money',
-      message: 'Sage export failed',
-      errorText: l10n.workspaceGenericError,
-      action: () => save(
-        buildSageFile(
-          invoices: exported,
-          matches: matches,
-          accounts: sage,
-          // Sage keys a transaction to a customer by its Account
-          // Reference, and the member id is the only stable one the
-          // app owns. An accountant re-maps these once; a NAME would
-          // silently split one customer into two the day they marry.
-          customerRef: (invoice) => invoice.memberId,
-        ),
-        sageFileName(year, invoices.last.issuedAt.month),
       ),
     );
   }

@@ -47,11 +47,15 @@ const _postedWhenLocalBook = {
   // #2377 — the Swiss journal and its Banana layout.
   'ch_kmu',
   'banana_transactions',
+  // #2373 — Sage 50's audit trail of a local book.
+  'sage50',
 };
 
 /// The posted formats that also read the chart's names and the parties.
 const _named = {
   'fec',
+  // #2373 — Sage 50 keys each row to its customer or supplier.
+  'sage50',
   'bundle',
   'general_ledger',
   'trial_balance',

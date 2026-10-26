@@ -14,7 +14,7 @@ fileLength lib/core/help/help_anchors.dart // #2386 within the former 600-line b
 fileLength lib/core/instance/instance_doctor.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/core/instance/mcp_readiness_checks.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/core/ui/canvas_controls.dart // #2386 within the former 600-line budget; split when next changed
-fileLength lib/core/vat/tax_value.dart // #2539: +28, the sealed TaxValue family must live in one library (a new `part of` is refused by part_of_test); the rate_component value joins it and its helper class is its own file
+fileLength lib/core/vat/tax_value.dart // #2539: +28, the sealed TaxValue family must live in one library (a new `part of` is refused by part_of_test); the rate_component value joins it and its helper class is its own file; #2363 (2026-10-26): +11, a threshold's charge (Italian stamp duty) and the issuing gate's outside-VAT postal codes (Canary Islands, Ceuta, Melilla), the effect list in threshold_effects.dart
 fileLength lib/features/auth/data/supabase_auth_repository.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/auth/presentation/screens/auth_screen.dart // #2459: +5 for the welcome link (import + the Wrap beside Discover); was 590 (2026-10-11 #2386: the budget fell 600→500; this file was within the old one).
 fileLength lib/features/calendar/presentation/screens/calendar_hub_screen.dart // calendar holds the alerts +43: the Alerts view, its request listener, the switcher's fourth segment and the alert row opening it in place

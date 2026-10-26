@@ -8,6 +8,12 @@ import '../../../../l10n/app_localizations.dart';
 String _salesTaxMissingLabel(AppLocalizations l10n, String key) => switch (key) {
   'sales_tax_rate_unset' => l10n.invoiceMissingSalesTaxRate,
   'sales_tax_taxability_unset' => l10n.invoiceMissingSalesTaxTaxability,
+  _ => _territoryMissingLabel(l10n, key),
+};
+
+/// #2363 -- a site where the country's VAT does not apply (9999).
+String _territoryMissingLabel(AppLocalizations l10n, String key) => switch (key) {
+  'territory_outside_vat' => l10n.invoiceMissingTerritoryOutsideVat,
   _ => key,
 };
 
