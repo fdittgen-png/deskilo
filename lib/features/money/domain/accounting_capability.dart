@@ -39,6 +39,10 @@ enum Obligation {
   targetAcceptance,
 }
 
+/// The reference the Xero adapter was written against.
+const String _xeroSpecification =
+    'Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates';
+
 /// The reference the QuickBooks Online adapter was written against.
 const String _quickbooksSpecification =
     'QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry';
@@ -312,6 +316,28 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     formatId: 'quickbooks_online_gb',
     state: QualificationState.implemented,
     specification: _quickbooksSpecification,
+  ),
+  // #2372 — delivered through the kit against a played organisation; no
+  // demo organisation has answered yet.
+  'xero_gb': AccountingCapability(
+    formatId: 'xero_gb',
+    state: QualificationState.implemented,
+    specification: _xeroSpecification,
+  ),
+  'xero_ca': AccountingCapability(
+    formatId: 'xero_ca',
+    state: QualificationState.implemented,
+    specification: _xeroSpecification,
+  ),
+  'xero_us': AccountingCapability(
+    formatId: 'xero_us',
+    state: QualificationState.implemented,
+    specification: _xeroSpecification,
+  ),
+  'xero_eu': AccountingCapability(
+    formatId: 'xero_eu',
+    state: QualificationState.implemented,
+    specification: _xeroSpecification,
   ),
   // The FEC is their working route today; their own formats need a spec.
   'cegid_quadra_ascii': AccountingCapability(

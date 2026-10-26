@@ -41,6 +41,7 @@ import 'accounting_targets_ch.dart';
 import 'accounting_targets_de.dart';
 import 'accounting_targets_quickbooks.dart';
 import 'accounting_targets_saft.dart';
+import 'accounting_targets_xero.dart';
 
 export 'accounting_target.dart';
 
@@ -466,6 +467,7 @@ const List<AccountingTarget> accountingTargets = [
     taxCodeModel: TaxCodeModel.none,
   ),
   ...quickbooksAccountingTargets,
+  ...xeroAccountingTargets,
 ];
 
 /// #2370 — the targets offered in [countryCode], in registry order.

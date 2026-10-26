@@ -19,9 +19,19 @@ export type Db = {
   rpc: (fn: string, args: Record<string, unknown>) => PromiseLike<{ data: unknown; error: unknown }>;
 };
 
+/** A client bound to the caller's token that also reads tables, under the
+ * caller's row-level security. */
+export type CallerDb = Db & {
+  from: (table: string) => {
+    select: (columns: string) => {
+      in: (column: string, values: string[]) => PromiseLike<{ data: unknown; error: unknown }>;
+    };
+  };
+};
+
 export type Deps = {
   /** A client bound to the caller's own token. */
-  caller: (authorization: string) => Db;
+  caller: (authorization: string) => CallerDb;
   /** The service role: Vault reads and writes, and the delivery log. */
   service: () => Db;
   env: (name: string) => string | undefined;
