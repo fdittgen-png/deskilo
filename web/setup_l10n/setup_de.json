@@ -725,5 +725,8 @@
  "optMovements": "{n} Bewegungen",
  "accountingTitle": "Buchhaltung und Bank",
  "accountingWhy": "Wie die Kontoauszugsdateien der Bank in den Space gelesen und seinen Rechnungen zugeordnet werden.",
- "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt."
+ "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt.",
+ "retUsYears": "Aufbewahrung, US-Bundesstaat",
+ "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+ "retUsRule": "Die Aufbewahrungsregel gilt"
 }

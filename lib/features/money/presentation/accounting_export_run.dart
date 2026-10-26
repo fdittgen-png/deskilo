@@ -8,6 +8,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
@@ -18,6 +19,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
+import '../domain/accounting_connection.dart';
 import '../domain/accounting_format.dart';
 import '../domain/accounting_targets_saft.dart';
 import '../domain/accounting_view.dart';
@@ -41,12 +43,14 @@ import '../domain/saf_t.dart';
 import '../domain/swiss_kmu.dart';
 import '../domain/vat_account.dart';
 import '../domain/vat_tax_point.dart';
+import '../providers/accounting_connection_providers.dart';
 import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
 import '../providers/vat_declaration_providers.dart';
 import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
+import 'accounting_export_handover.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_saft.dart';
 import 'accounting_export_sage.dart';
@@ -113,6 +117,14 @@ class AccountingExportRun {
   /// period ends in [year] (reg. 32), when the space prepared any.
   Future<Map<String, List<int>>> vatAccountFiles() async =>
       archiveVatAccount(await ref.read(vatDeclarationsProvider.future), year);
+  /// #2378 — the Transfers list of the export year, which the handoff
+  /// report quotes; null while the accounting systems are off, since the
+  /// space then keeps no such list.
+  Future<AccountingTransfers?> handoffTransfers() async =>
+      featureOn(ref.read(enabledFeatureKeysProvider), accountingConnectorsKey,
+              byDefault: false)
+          ? ref.read(accountingConnectionCommandProvider).yearTransfers(workspace.id, year)
+          : null;
   /// The workspace's calendar day of an instant.
   DateTime Function(DateTime instant) get workspaceDayOf =>
       WorkspaceTime.dateOf;
@@ -361,7 +373,8 @@ class AccountingExportRun {
           matches: matches,
           csv: csv,
           generatedAt: now,
-        );
+        ).quoting(await handoffTransfers());
+        if (!context.mounted) return;
         if (!await showAccountantHandoffPreflight(context, report)) return;
         // #1640 — a bounded recheck: the same documents read again from
         // the server must give the same fingerprint, in the same space,
@@ -435,6 +448,7 @@ class AccountingExportRun {
           for (var i = 0; i < yearInvoices.length; i++)
             yearInvoices[i].id: verdicts[i],
         };
+        final vouchers = <String, Map<String, List<int>>>{};
         for (final invoice in yearInvoices) {
           final pdf = await buildFacturXFile(
             context,
@@ -448,11 +462,14 @@ class AccountingExportRun {
           // archive missing an invoice must never be saved as complete.
           if (pdf.bytes.isEmpty) return;
           files['invoices/${pdf.fileName}'] = pdf.bytes;
+          vouchers[invoice.id] = {'invoices/${pdf.fileName}': pdf.bytes};
         }
         files['register.csv'] = textBytes(buildInvoiceRegisterCsv(yearInvoices, integrity: integrity));
+        final events = buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger,
+            exports: exports, memberNames: memberNames);
+        files.addAll(await readableHandover(vouchers: vouchers, auditEvents: events));
         files['audit-trail.csv'] = textBytes(buildAuditTrailCsv(
-          events: buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger,
-              exports: exports, memberNames: memberNames),
+          events: events,
           generatedAt: now,
           workspaceName: workspace.name,
           source: books.revisions,

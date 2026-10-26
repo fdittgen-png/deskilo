@@ -16673,6 +16673,12 @@ abstract class AppLocalizations {
   /// **'Before you save'**
   String get handoffTitle;
 
+  /// #2378 accountant_handoff
+  ///
+  /// In en, this message translates to:
+  /// **'The report quotes the Transfers list of the year: {files} file(s) handed out and {deliveries} document(s) delivered to a connection, each with its SHA-256'**
+  String handoffTransfersQuoted(String files, String deliveries);
+
   /// #1870 accountant handoff blocking finding
   ///
   /// In en, this message translates to:
@@ -35490,6 +35496,12 @@ abstract class AppLocalizations {
   /// **'Vouchers'**
   String get retentionClassVoucher;
 
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'{years} years from the document date (this space’s own setting)'**
+  String retentionExtendedBySetting(int years);
+
   /// #2571 retention clocks
   ///
   /// In en, this message translates to:
@@ -35507,6 +35519,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How long {country} makes this space keep each kind of record. The periods are reference data; a rule not yet confirmed has not been checked by a person with the authority to confirm it.'**
   String retentionHint(String country);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of record'**
+  String get retentionHoldClass;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Every kind of record'**
+  String get retentionHoldEveryClass;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Every issuer'**
+  String get retentionHoldEveryIssuer;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Issuer'**
+  String get retentionHoldIssuer;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Place a hold'**
+  String get retentionHoldPlace;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The hold is in place.'**
+  String get retentionHoldPlaced;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get retentionHoldReason;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Why the records must stay, for example a tax audit or a dispute.'**
+  String get retentionHoldReasonHelper;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Name the reason, in at most {max} characters.'**
+  String retentionHoldReasonMissing(int max);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Release'**
+  String get retentionHoldRelease;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Why the hold ends'**
+  String get retentionHoldReleaseReason;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Release this hold?'**
+  String get retentionHoldReleaseTitle;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The hold is released.'**
+  String get retentionHoldReleased;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The hold could not be saved. Nothing changed.'**
+  String get retentionHoldSaveFailed;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'{what} · {issuer} · since {date}'**
+  String retentionHoldSince(String what, String issuer, String date);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.'**
+  String get retentionHoldsEmpty;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The holds could not be read.'**
+  String get retentionHoldsLoadFailed;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Legal holds'**
+  String get retentionHoldsTitle;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kept under a legal hold: {reason}'**
+  String retentionKeptHold(String reason);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kept until a person reviews the retention rule'**
+  String get retentionKeptReview;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kept until a person reviews the retention rule; its period ended on {date}'**
+  String retentionKeptReviewEnded(String date);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kept until {date} under {rule}'**
+  String retentionKeptUntil(String date, String rule);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The retention period has ended: the space may review the erasure'**
+  String get retentionPeriodEnded;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was deleted: the books must still be kept. {why}'**
+  String retentionResetRefused(String why);
 
   /// #2571 retention clocks
   ///
@@ -37221,7 +37377,7 @@ abstract class AppLocalizations {
   /// #2571 retention settings
   ///
   /// In en, this message translates to:
-  /// **'Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.'**
+  /// **'Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.'**
   String get settingHintRetentionUsYears;
 
   /// #2485 settings: Setting hint.

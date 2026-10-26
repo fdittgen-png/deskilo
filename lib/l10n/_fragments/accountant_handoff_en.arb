@@ -115,5 +115,17 @@
         "type": "String"
       }
     }
+  },
+  "handoffTransfersQuoted": "The report quotes the Transfers list of the year: {files} file(s) handed out and {deliveries} document(s) delivered to a connection, each with its SHA-256",
+  "@handoffTransfersQuoted": {
+    "description": "#2378 accountant_handoff",
+    "placeholders": {
+      "files": {
+        "type": "String"
+      },
+      "deliveries": {
+        "type": "String"
+      }
+    }
   }
 }

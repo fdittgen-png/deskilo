@@ -7104,6 +7104,7 @@
   "handoffRowMismatch": "Le righe del file non corrispondono ai documenti ({detail})",
   "handoffSave": "Salva file e rapporto",
   "handoffTitle": "Prima di salvare",
+  "handoffTransfersQuoted": "Il rapporto riporta l'elenco dei trasferimenti dell'anno: {files} file consegnato/i e {deliveries} documento/i inviato/i a una connessione, ciascuno con il suo SHA-256",
   "handoffUnsupportedCurrency": "{number}: la sua valuta non ha un numero di decimali verificato",
   "handoffVoided": "Annullate",
   "helpContents": "Indice",
@@ -14348,6 +14349,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
+  "retentionExtendedBySetting": "{years} anni dalla data del documento (impostazione propria di questo spazio)",
   "retentionFromDocument": "{years} anni dalla data del documento",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
@@ -14375,6 +14377,30 @@
       }
     }
   },
+  "retentionHoldClass": "Tipo di documento",
+  "retentionHoldEveryClass": "Tutti i tipi di documento",
+  "retentionHoldEveryIssuer": "Tutti gli emittenti",
+  "retentionHoldIssuer": "Emittente",
+  "retentionHoldPlace": "Imposti un blocco",
+  "retentionHoldPlaced": "Il blocco è attivo.",
+  "retentionHoldReason": "Motivo",
+  "retentionHoldReasonHelper": "Perché i documenti devono restare, per esempio una verifica fiscale o una controversia.",
+  "retentionHoldReasonMissing": "Indichi il motivo, in {max} caratteri al massimo.",
+  "retentionHoldRelease": "Revochi",
+  "retentionHoldReleaseReason": "Perché il blocco termina",
+  "retentionHoldReleaseTitle": "Revocare questo blocco?",
+  "retentionHoldReleased": "Il blocco è revocato.",
+  "retentionHoldSaveFailed": "Non è stato possibile salvare il blocco. Non è cambiato nulla.",
+  "retentionHoldSince": "{what} · {issuer} · dal {date}",
+  "retentionHoldsEmpty": "Nessun blocco attivo. Un blocco conserva i documenti oltre il periodo di conservazione, per una verifica o una controversia.",
+  "retentionHoldsLoadFailed": "Non è stato possibile leggere i blocchi.",
+  "retentionHoldsTitle": "Blocchi di conservazione",
+  "retentionKeptHold": "Conservato per un blocco di conservazione: {reason}",
+  "retentionKeptReview": "Conservato finché una persona non verifica la regola di conservazione",
+  "retentionKeptReviewEnded": "Conservato finché una persona non verifica la regola di conservazione; il periodo è terminato il {date}",
+  "retentionKeptUntil": "Conservato fino al {date} secondo {rule}",
+  "retentionPeriodEnded": "Il periodo di conservazione è terminato: lo spazio può esaminare la cancellazione",
+  "retentionResetRefused": "Non è stato cancellato nulla: la contabilità deve ancora essere conservata. {why}",
   "retentionTitle": "Termini di conservazione",
   "@retentionTitle": {
     "description": "#2571 retention clocks"
@@ -15313,7 +15339,7 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
-  "settingHintRetentionUsYears": "Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più o meno della regola federale. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.",
+  "settingHintRetentionUsYears": "Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più della regola federale. Un periodo più lungo vale per tutti i documenti; uno più breve non cambia nulla. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },

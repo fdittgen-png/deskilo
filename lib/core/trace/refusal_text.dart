@@ -50,6 +50,10 @@ enum KnownRefusal {
 
   /// #2380 (DKB03) — a bank statement file the server refuses whole.
   bankFileRefused,
+
+  /// #2571 (DKE01) — a destructive step over records still under retention:
+  /// the server deleted nothing.
+  retentionKept,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -111,6 +115,7 @@ KnownRefusal? knownRefusalOf(Object error) {
     return KnownRefusal.accountingConnectionClosed;
   }
   if (serverErrorCode(error) == 'DKA03') return KnownRefusal.accountingValueRefused;
+  if (serverErrorCode(error) == 'DKE01') return KnownRefusal.retentionKept;
   final bank = _bankRefusals[serverErrorCode(error)];
   if (bank != null) return bank;
   final message = serverErrorMessage(error)?.toLowerCase();
@@ -144,5 +149,7 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
       KnownRefusal.bankLineDecided => l10n.refusalBankLineDecided,
       KnownRefusal.bankLineRefused => l10n.refusalBankLineRefused,
       KnownRefusal.bankFileRefused => l10n.refusalBankFileRefused,
+      KnownRefusal.retentionKept =>
+        l10n.retentionResetRefused(l10n.retentionKeptReview),
       null => null,
     };

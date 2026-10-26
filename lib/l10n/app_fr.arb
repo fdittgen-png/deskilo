@@ -7104,6 +7104,7 @@
   "handoffRowMismatch": "Les lignes du fichier ne correspondent pas aux documents ({detail})",
   "handoffSave": "Enregistrer le fichier et le rapport",
   "handoffTitle": "Avant d’enregistrer",
+  "handoffTransfersQuoted": "Le rapport reprend la liste des transferts de l'année : {files} fichier(s) remis et {deliveries} document(s) transmis à une connexion, chacun avec son SHA-256",
   "handoffUnsupportedCurrency": "{number} : sa devise n’a pas de nombre de décimales vérifié",
   "handoffVoided": "Annulées",
   "helpContents": "Sommaire",
@@ -14348,6 +14349,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
+  "retentionExtendedBySetting": "{years} ans à partir de la date du document (réglage propre à cet espace)",
   "retentionFromDocument": "{years} ans à partir de la date du document",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
@@ -14375,6 +14377,30 @@
       }
     }
   },
+  "retentionHoldClass": "Type de pièce",
+  "retentionHoldEveryClass": "Tous les types de pièces",
+  "retentionHoldEveryIssuer": "Tous les émetteurs",
+  "retentionHoldIssuer": "Émetteur",
+  "retentionHoldPlace": "Imposer une conservation",
+  "retentionHoldPlaced": "La conservation est imposée.",
+  "retentionHoldReason": "Motif",
+  "retentionHoldReasonHelper": "Pourquoi les pièces doivent rester, par exemple un contrôle fiscal ou un litige.",
+  "retentionHoldReasonMissing": "Indiquez le motif, en {max} caractères au plus.",
+  "retentionHoldRelease": "Lever",
+  "retentionHoldReleaseReason": "Pourquoi la conservation prend fin",
+  "retentionHoldReleaseTitle": "Lever cette conservation ?",
+  "retentionHoldReleased": "La conservation est levée.",
+  "retentionHoldSaveFailed": "La conservation n'a pas pu être enregistrée. Rien n'a changé.",
+  "retentionHoldSince": "{what} · {issuer} · depuis le {date}",
+  "retentionHoldsEmpty": "Aucune conservation imposée. Elle garde des pièces au-delà de leur durée de conservation, pour un contrôle ou un litige.",
+  "retentionHoldsLoadFailed": "Les conservations imposées n’ont pas pu être lues.",
+  "retentionHoldsTitle": "Conservations imposées",
+  "retentionKeptHold": "Conservé au titre d’une conservation imposée : {reason}",
+  "retentionKeptReview": "Conservé jusqu’à ce qu’une personne vérifie la règle de conservation",
+  "retentionKeptReviewEnded": "Conservé jusqu’à ce qu’une personne vérifie la règle de conservation ; sa durée a pris fin le {date}",
+  "retentionKeptUntil": "Conservé jusqu’au {date} selon {rule}",
+  "retentionPeriodEnded": "La durée de conservation a pris fin : l’espace peut examiner l’effacement",
+  "retentionResetRefused": "Rien n’a été supprimé : la comptabilité doit encore être conservée. {why}",
   "retentionTitle": "Durées de conservation",
   "@retentionTitle": {
     "description": "#2571 retention clocks"
@@ -15313,7 +15339,7 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
-  "settingHintRetentionUsYears": "Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus ou moins que la règle fédérale. 0 signifie que la règle de conservation s'applique. Pas un conseil juridique : vérifiez le délai de votre État.",
+  "settingHintRetentionUsYears": "Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus que la règle fédérale. Une durée plus longue s'applique à toutes les pièces ; une durée plus courte ne change rien. 0 signifie que la règle de conservation s'applique. Pas un conseil juridique : vérifiez le délai de votre État.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },

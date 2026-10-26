@@ -5,12 +5,15 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/accounting_export_source.dart';
 import '../application/generic_journal_export.dart';
+import '../application/retention_holds.dart';
 import '../application/save_book_profile.dart';
 import '../data/supabase_book_profile_repository.dart';
+import '../data/supabase_retention_hold_repository.dart';
 import '../domain/accounting_connection.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
+import '../domain/retention_hold.dart';
 import 'credit_providers.dart';
 import 'money_queries_providers.dart';
 
@@ -48,6 +51,30 @@ Future<({List<BookAccount> accounts, List<BookMapping> mappings})> bookChart(
     return (accounts: <BookAccount>[], mappings: <BookMapping>[]);
   }
   return repository.fetchBookChart(workspace.id);
+}
+
+/// #2571 — where retention holds are read, placed and released.
+@Riverpod(keepAlive: true)
+RetentionHoldRepository retentionHoldRepository(Ref ref) =>
+    SupabaseRetentionHoldRepository(ref.watch(moneyClientProvider));
+
+/// Placing and releasing a hold (the decision the retention dialog asks for).
+@riverpod
+RetentionHolds retentionHoldCommands(Ref ref) =>
+    RetentionHolds(ref.watch(retentionHoldRepositoryProvider));
+
+/// A refused or failed read of the holds is shown at once, not retried
+/// behind a spinner: the dialog says it could not read them.
+Duration? _holdsNoRetry(int count, Object error) => null;
+
+/// Every hold of the current workspace, the active ones first; invalidated
+/// after a change.
+@Riverpod(retry: _holdsNoRetry)
+Future<List<RetentionHold>> retentionHolds(Ref ref) async {
+  final repository = ref.watch(retentionHoldRepositoryProvider);
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const [];
+  return repository.fetchHolds(workspace.id);
 }
 
 /// #2365 — what one accounting export reads: the one source response of the

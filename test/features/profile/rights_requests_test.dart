@@ -134,6 +134,42 @@ void main() {
     expect(find.textContaining('separate controller'), findsOneWidget);
   });
 
+  testWidgets('the records the space keeps say until when and under which '
+      'rule, or that a hold keeps them (0604)', (tester) async {
+    Map<String, Object?> kept(String disposition, {String? until, bool hold = false}) => {
+      'disposition': disposition,
+      'retain_until': until,
+      'indefinite': hold,
+      'rule': {'source': 'Code de commerce L123-22'},
+      'holds': [if (hold) {'reason': 'tax audit 2026'}],
+      'reasons': [if (disposition == 'review_required') 'unconfirmed'],
+    };
+    Future<void> show(Map<String, Object?> invoices, Map<String, Object?> ledger) async {
+      final preview = ErasurePreview.fromJson({
+        'retained': [
+          {'store': 'invoices', 'count': 3, 'retention': invoices},
+          {'store': 'ledger_entries', 'count': 5, 'retention': ledger},
+        ],
+      });
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(body: ErasurePreviewView(preview: preview)),
+        ),
+      );
+    }
+
+    await show(kept('retain', until: '2031-12-31'), kept('retain', until: '2036-12-31'));
+    expect(find.text('Kept until Dec 31, 2036 under Code de commerce L123-22'), findsOneWidget,
+        reason: 'invoices and ledger read as one line, under the later end');
+    await show(kept('retain', until: '2031-12-31'), kept('retain', until: '2020-12-31', hold: true));
+    expect(find.text('Kept under a legal hold: tax audit 2026'), findsOneWidget);
+    await show(kept('review_required', until: '2012-12-31'), kept('review_required', until: '2010-12-31'));
+    expect(find.text('Kept until a person reviews the retention rule; its period ended on Dec 31, 2012'),
+        findsOneWidget, reason: 'an ended clock under an unconfirmed rule is never "erasable"');
+  });
+
   test('every new rights string exists in all five languages', () {
     for (final locale in AppLocalizations.supportedLocales) {
       final l10n = lookupAppLocalizations(locale);

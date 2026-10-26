@@ -1391,6 +1391,17 @@ constraint resource_ratings.resource_ratings_stars_check CHECK (((stars >= 0) AN
 constraint resource_ratings.resource_ratings_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint resource_ratings.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint resource_ratings.system_company_present CHECK ((company_id IS NOT NULL))
+constraint retention_holds.retention_holds_doc_class_check CHECK (((doc_class IS NULL) OR (btrim(doc_class) <> ''::text)))
+constraint retention_holds.retention_holds_issuer_site_id_fkey FOREIGN KEY (issuer_site_id) REFERENCES sites(id) ON DELETE RESTRICT
+constraint retention_holds.retention_holds_pkey PRIMARY KEY (id)
+constraint retention_holds.retention_holds_placed_by_fkey FOREIGN KEY (placed_by) REFERENCES auth.users(id) ON DELETE SET NULL
+constraint retention_holds.retention_holds_reason_check CHECK (((char_length(btrim(reason)) >= 1) AND (char_length(btrim(reason)) <= 500)))
+constraint retention_holds.retention_holds_release_reason_check CHECK (((release_reason IS NULL) OR ((char_length(btrim(release_reason)) >= 1) AND (char_length(btrim(release_reason)) <= 500))))
+constraint retention_holds.retention_holds_release_whole CHECK (((released_at IS NULL) = (release_reason IS NULL)))
+constraint retention_holds.retention_holds_released_by_fkey FOREIGN KEY (released_by) REFERENCES auth.users(id) ON DELETE SET NULL
+constraint retention_holds.retention_holds_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint retention_holds.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint retention_holds.system_company_present CHECK ((company_id IS NOT NULL))
 constraint retired_invite_codes.retired_invite_codes_pkey PRIMARY KEY (code)
 constraint retired_invite_codes.retired_invite_codes_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint retired_invite_codes.system_columns_order CHECK ((modified_datetime >= created_datetime))
@@ -2553,6 +2564,7 @@ routine public.place_dunning_hold(p_invoice_id uuid, p_reason text, p_note text)
 routine public.place_feedback_member(p_workspace uuid, p_kind text, p_resource uuid) -> members | function | definer | stable | exec:service_role | body:3b78664cfc6e
 routine public.place_feedback_of(p_workspace uuid, p_kind text, p_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:629f7edf1397
 routine public.place_rating_summary(p_workspace uuid, p_kind text, p_resource uuid, p_member uuid) -> jsonb | function | definer | stable | exec:service_role | body:33058e62be96
+routine public.place_retention_hold(p_workspace_id uuid, p_issuer_site_id uuid, p_doc_class text, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f88511191cca
 routine public.place_visible_to(p_member uuid, p_office uuid, p_level uuid) -> boolean | function | definer | stable | exec:service_role | body:dd4853bb9952
 routine public.plan_media_orphans(p_workspace_id uuid, p_limit integer) -> SETOF text | function | definer | stable | exec:authenticated,service_role | body:9d9ed014d04e
 routine public.post_context_notice(p_context_kind text, p_context_id uuid, p_notice jsonb, p_body text) -> uuid | function | definer | volatile | exec:service_role | body:d77a52768f00
@@ -2569,7 +2581,7 @@ routine public.preview_deployment(p_from uuid, p_to uuid, p_entities text[]) -> 
 routine public.preview_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | stable | exec:authenticated,service_role | body:e360ad9d105a
 routine public.preview_invoice(p_workspace_id uuid, p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3087814d455f
 routine public.preview_my_account(p_as text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6f6e88906558
-routine public.preview_my_erasure(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:431459af66d6
+routine public.preview_my_erasure(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:db6bb449a970
 routine public.preview_my_member_profile(p_as text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a93755c4c74e
 routine public.preview_series(p_workspace_id uuid, p_seat_id uuid, p_first_start timestamp with time zone, p_first_end timestamp with time zone, p_pattern text, p_until timestamp with time zone, p_desk_id uuid, p_office_id uuid, p_level_id uuid) -> jsonb | function | invoker | volatile | exec:authenticated,service_role | body:7fd3ab9e7e9a
 routine public.preview_workspace_template(p_workspace_id uuid, p_template_id uuid, p_groups text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b115c43eb789
@@ -2655,6 +2667,7 @@ routine public.register_public_directory(p_origin text, p_key text) -> void | fu
 routine public.reject_einvoice(p_inbox_id uuid, p_reason text) -> void | function | definer | volatile | exec:authenticated,service_role | body:c64009f0d506
 routine public.release_dunning_hold(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:2de18bb4860c
 routine public.release_invoice_payment(p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:31f5acde6a81
+routine public.release_retention_hold(p_hold_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:453a81248395
 routine public.reminder_attempts_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:aef59fb23b5d
 routine public.reminder_queue_push(p_intent_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:c8749c5c0d61
 routine public.remove_account_group_member(p_group uuid, p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:54961220ca5d
@@ -2700,7 +2713,7 @@ routine public.reservation_uses_seat_quota(r reservations) -> boolean | function
 routine public.reservations_rebalance_credits() -> trigger | function | definer | volatile | exec:service_role | body:a2ecbd8ded62
 routine public.reservations_resource_gate() -> trigger | function | definer | volatile | exec:service_role | body:2f76484bb922
 routine public.reset_work_hours(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3557f4f0c673
-routine public.reset_workspace(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:b676f1b7b1f5
+routine public.reset_workspace(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:991a67a57cbc
 routine public.reset_workspace_public_page(p_workspace uuid, p_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0ebe84a74fa9
 routine public.resolve_supplier_review(p_candidate_id uuid, p_supplier_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:1e281dbc16ab
 routine public.resolved_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:b5eaa7447fca
@@ -2708,10 +2721,17 @@ routine public.resource_kind_enabled(p_workspace_id uuid, p_kind text) -> boolea
 routine public.resource_kind_feature(p_kind text) -> text | function | invoker | immutable | exec:service_role | body:7629d243b2ff
 routine public.respond_to_event(p_event_id uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:cf90d17406dd
 routine public.respond_to_message_request(p_conversation uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:e9a519f33e62
+routine public.retention_assess(p_workspace_id uuid, p_issuer_site_id uuid, p_classes text[], p_document_date date) -> jsonb | function | definer | stable | exec:service_role | body:ee78b6ec5fbf
+routine public.retention_assess_records(p_workspace_id uuid, p_classes text[], p_records jsonb) -> jsonb | function | definer | stable | exec:service_role | body:1207a116ab3b
+routine public.retention_hold_writer(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:a8a4863dd41b
+routine public.retention_holds(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d6e366e7db3a
+routine public.retention_holds_json(p_hold retention_holds) -> jsonb | function | invoker | stable | exec:service_role | body:9337c95d7061
+routine public.retention_member_records(p_workspace_id uuid, p_member_id uuid, p_store text) -> jsonb | function | definer | stable | exec:service_role | body:d4d8735ab24a
+routine public.retention_refuse_unless_eligible(p_what text, p_assessment jsonb) -> void | function | definer | stable | exec:service_role | body:37f9c36bded7
 routine public.retention_rule(p_workspace_id uuid, p_class text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:74a6c55c8f47
-routine public.retention_rule_for(p_workspace_id uuid, p_class text) -> jsonb | function | definer | stable | exec:service_role | body:a90d66d4ab22
+routine public.retention_rule_for(p_workspace_id uuid, p_class text) -> jsonb | function | definer | stable | exec:service_role | body:205606e2d87f
 routine public.retention_rule_of(p_country text, p_class text) -> jsonb | function | definer | stable | exec:service_role | body:9018c3af5615
-routine public.retention_until(p_workspace_id uuid, p_class text, p_document_date date) -> date | function | definer | stable | exec:authenticated,service_role | body:f7f456fbe4c9
+routine public.retention_until(p_workspace_id uuid, p_class text, p_document_date date) -> date | function | definer | stable | exec:authenticated,service_role | body:4c42b7194887
 routine public.retire_invite_code() -> trigger | function | definer | volatile | exec:service_role | body:be59ed519e67
 routine public.reverse_commitment_match_v1(p_workspace_id uuid, p_match_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:97d633ba12e0
 routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d30e7f7dde11
@@ -3287,6 +3307,7 @@ trigger reservations.reservations_usage_record CREATE TRIGGER reservations_usage
 trigger reservations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger resource_favorites.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.resource_favorites FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger resource_ratings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.resource_ratings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger retention_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.retention_holds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger retired_invite_codes.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.retired_invite_codes FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger rights_requests.rights_requests_guard CREATE TRIGGER rights_requests_guard BEFORE UPDATE ON public.rights_requests FOR EACH ROW EXECUTE FUNCTION rights_requests_guard()
 trigger rights_requests.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.rights_requests FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

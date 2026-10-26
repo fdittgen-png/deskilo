@@ -10179,6 +10179,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get handoffTitle => 'Vor dem Speichern';
 
   @override
+  String handoffTransfersQuoted(String files, String deliveries) {
+    return 'Der Bericht zitiert die Übertragungsliste des Jahres: $files ausgegebene Datei(en) und $deliveries an eine Verbindung übermittelte(s) Dokument(e), jeweils mit SHA-256';
+  }
+
+  @override
   String handoffUnsupportedCurrency(String number) {
     return '$number: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt';
   }
@@ -21242,6 +21247,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get retentionClassVoucher => 'Belege';
 
   @override
+  String retentionExtendedBySetting(int years) {
+    return '$years Jahre ab dem Belegdatum (eigene Einstellung dieses Space)';
+  }
+
+  @override
   String retentionFromDocument(int years) {
     return '$years Jahre ab dem Belegdatum';
   }
@@ -21254,6 +21264,96 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String retentionHint(String country) {
     return 'Wie lange $country diesen Space jede Art von Unterlagen aufbewahren lässt. Die Fristen sind Referenzdaten; eine noch nicht bestätigte Regel wurde noch nicht von einer dazu befugten Person geprüft.';
+  }
+
+  @override
+  String get retentionHoldClass => 'Art der Unterlage';
+
+  @override
+  String get retentionHoldEveryClass => 'Alle Arten von Unterlagen';
+
+  @override
+  String get retentionHoldEveryIssuer => 'Alle Aussteller';
+
+  @override
+  String get retentionHoldIssuer => 'Aussteller';
+
+  @override
+  String get retentionHoldPlace => 'Sperre setzen';
+
+  @override
+  String get retentionHoldPlaced => 'Die Sperre ist gesetzt.';
+
+  @override
+  String get retentionHoldReason => 'Grund';
+
+  @override
+  String get retentionHoldReasonHelper =>
+      'Warum die Unterlagen bleiben müssen, etwa wegen einer Betriebsprüfung oder eines Streitfalls.';
+
+  @override
+  String retentionHoldReasonMissing(int max) {
+    return 'Nennen Sie den Grund, höchstens $max Zeichen.';
+  }
+
+  @override
+  String get retentionHoldRelease => 'Aufheben';
+
+  @override
+  String get retentionHoldReleaseReason => 'Warum die Sperre endet';
+
+  @override
+  String get retentionHoldReleaseTitle => 'Diese Sperre aufheben?';
+
+  @override
+  String get retentionHoldReleased => 'Die Sperre ist aufgehoben.';
+
+  @override
+  String get retentionHoldSaveFailed =>
+      'Die Sperre konnte nicht gespeichert werden. Nichts wurde geändert.';
+
+  @override
+  String retentionHoldSince(String what, String issuer, String date) {
+    return '$what · $issuer · seit $date';
+  }
+
+  @override
+  String get retentionHoldsEmpty =>
+      'Keine Sperre aktiv. Eine Sperre hält Unterlagen über ihre Aufbewahrungsfrist hinaus, etwa für eine Prüfung oder einen Streitfall.';
+
+  @override
+  String get retentionHoldsLoadFailed =>
+      'Die Sperren konnten nicht gelesen werden.';
+
+  @override
+  String get retentionHoldsTitle => 'Aufbewahrungssperren';
+
+  @override
+  String retentionKeptHold(String reason) {
+    return 'Wegen einer Aufbewahrungssperre behalten: $reason';
+  }
+
+  @override
+  String get retentionKeptReview =>
+      'Aufbewahrt, bis eine Person die Aufbewahrungsregel prüft';
+
+  @override
+  String retentionKeptReviewEnded(String date) {
+    return 'Aufbewahrt, bis eine Person die Aufbewahrungsregel prüft; ihre Frist endete am $date';
+  }
+
+  @override
+  String retentionKeptUntil(String date, String rule) {
+    return 'Aufbewahrt bis $date nach $rule';
+  }
+
+  @override
+  String get retentionPeriodEnded =>
+      'Die Aufbewahrungsfrist ist abgelaufen: der Space kann die Löschung prüfen';
+
+  @override
+  String retentionResetRefused(String why) {
+    return 'Nichts wurde gelöscht: die Buchhaltung muss noch aufbewahrt werden. $why';
   }
 
   @override
@@ -22323,7 +22423,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingHintRetentionUsYears =>
-      'Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr oder weniger als die bundesweite Vorgabe verlangt. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.';
+      'Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr als die bundesweite Vorgabe verlangt. Eine längere Frist gilt für alle Unterlagen; eine kürzere ändert nichts. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.';
 
   @override
   String get settingHintSecurityBadgeLockoutFailures =>
