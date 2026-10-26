@@ -75,7 +75,10 @@ class SwissJournalRow {
 
 /// The rows of a year's postings, or the tax keys (`tax:<group>`,
 /// `input:<group>`, `asset:<group>`) that have no MWST code.
-typedef SwissJournal = ({List<SwissJournalRow> rows, List<String> missingCodes});
+typedef SwissJournal = ({
+  List<SwissJournalRow> rows,
+  List<String> missingCodes,
+});
 
 /// The reference key of the MWST code of [leg]'s tax: output tax under
 /// `tax:<group>`, input tax under `input:<group>`, and the input tax of an
@@ -238,11 +241,13 @@ SwissJournal swissJournalOf(
     if (debits.length == 1 && credits.length == 1) {
       // One row; it carries the tax of whichever side has it.
       final (d, c) = (debits.single, credits.single);
-      rows.add(row(
-        c.tax != null ? c : d,
-        debit: d.line.accountCode,
-        credit: c.line.accountCode,
-      ));
+      rows.add(
+        row(
+          c.tax != null ? c : d,
+          debit: d.line.accountCode,
+          credit: c.line.accountCode,
+        ),
+      );
     } else if (credits.length == 1 && credits.single.tax == null) {
       // One untaxed credit (the customer of a write-off, the supplier of a
       // bill): each debit leg against it.

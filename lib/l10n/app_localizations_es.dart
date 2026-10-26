@@ -9230,6 +9230,37 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesTypeInvoice => 'Factura';
 
   @override
+  String get gebuevProcedureAccessBody =>
+      'Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.';
+
+  @override
+  String get gebuevProcedureAccessHeading => 'Accesos (art. 8)';
+
+  @override
+  String get gebuevProcedureCarriersBody =>
+      'Este archivo se lee con cualquier herramienta zip y editor de texto. Una copia de todo el espacio se prueba con una exportación del espacio terminada, registrada con su huella: la lista de preparación muestra cuándo se hizo la última y pide una nueva cuando es antigua.';
+
+  @override
+  String get gebuevProcedureCarriersHeading =>
+      'Disponibilidad y soportes (art. 5 y 10)';
+
+  @override
+  String get gebuevProcedureIntegrityBody =>
+      'Cada archivo de este archivo comprimido figura en manifest.csv con su huella SHA-256 y su tamaño. El propio archivo, como cada exportación contable, queda registrado en el registro de exportaciones con su huella, la hora del servidor y la persona que lo creó. Cada documento emitido lleva la huella que el servidor verifica; register.csv indica el resultado.';
+
+  @override
+  String get gebuevProcedureIntegrityHeading => 'Integridad (art. 3 y 9)';
+
+  @override
+  String get gebuevProcedureSystemBody =>
+      'DesKilo lleva las facturas, notas de crédito, pagos, cuentas de los miembros, gastos compartidos y documentos de compra aprobados de este espacio y, cuando el espacio lleva un libro local, sus asientos en su plan contable. La contabilidad general de la fiduciaria importa el diario suizo de esos asientos.';
+
+  @override
+  String gebuevProcedureTitle(String workspace) {
+    return 'Documentación de los procedimientos (GeBüV art. 4) — $workspace';
+  }
+
+  @override
   String get gettingStartedActionChooseDay => 'Elegir otro día';
 
   @override

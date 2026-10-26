@@ -150,7 +150,11 @@ const resourceOf = (kind: BexioDocument["kind"]): string =>
   kind === "credit_note" ? "kb_credit_voucher" : "kb_invoice";
 
 /** What [maps] names for [kind] [key] on bexio, as a number. */
-function mappedId(maps: AccountingMap[], kind: MapNeed["kind"], key: string): number {
+function mappedId(
+  maps: AccountingMap[],
+  kind: MapNeed["kind"],
+  key: string,
+): number {
   const m = maps.find((x) => x.kind === kind && x.key === key);
   return Number(m?.remoteId || m?.remoteCode);
 }
@@ -199,9 +203,12 @@ async function currencyId(
   const listed = await call(fetchImpl, cfg, "3.0/currencies");
   if (!listed.ok) return listed.detail;
   const found = (Array.isArray(listed.body) ? listed.body : []).find(
-    (x: Record<string, unknown>) => String(x.name).toUpperCase() === currency.toUpperCase(),
+    (x: Record<string, unknown>) =>
+      String(x.name).toUpperCase() === currency.toUpperCase(),
   );
-  return found ? Number(found.id) : `currency ${currency} is not in the bexio company`;
+  return found
+    ? Number(found.id)
+    : `currency ${currency} is not in the bexio company`;
 }
 
 /** The bexio documents of [kind] numbered [number]
@@ -216,24 +223,33 @@ async function byNumber(
     { field: "document_nr", value: number, criteria: "=" },
   ]);
   if (!found.ok) return found.detail;
-  return Array.isArray(found.body) ? found.body as Record<string, unknown>[] : [];
+  return Array.isArray(found.body)
+    ? found.body as Record<string, unknown>[]
+    : [];
 }
 
 /** The key of a document event among the adapter's documents: an invoice
  * and the receipt that pays it share the document id. */
-export const documentKey = (kind: string, id: string): string => `${kind}:${id}`;
+export const documentKey = (kind: string, id: string): string =>
+  `${kind}:${id}`;
 
 /** The adapter over [documents] (by [documentKey]): what the kit runs. */
 export function bexioAdapter(
   documents: Record<string, BexioDocument>,
   { fetch: fetchImpl, config }: { fetch: Fetch; config: Config },
 ): RemoteAdapter {
-  const docOf = (job: DeliveryJob) => documents[documentKey(job.documentKind, job.documentId)];
+  const docOf = (job: DeliveryJob) =>
+    documents[documentKey(job.documentKind, job.documentId)];
   return {
     async readback(idempotencyKey, job): Promise<RemoteDocument[] | string> {
       const doc = docOf(job);
       if (!doc) return `no document ${job.documentId}`;
-      const held = await byNumber(fetchImpl, config, doc.kind === "receipt" ? "invoice" : doc.kind, doc.number);
+      const held = await byNumber(
+        fetchImpl,
+        config,
+        doc.kind === "receipt" ? "invoice" : doc.kind,
+        doc.number,
+      );
       if (typeof held === "string") return held;
       if (doc.kind !== "receipt") {
         return held.map((r) => ({
@@ -242,48 +258,90 @@ export function bexioAdapter(
           state: "posted",
           // spec: "kb_invoice" → total is the gross as a decimal string.
           matches: r.api_reference === idempotencyKey &&
-            String(r.total) === amount(doc.totalMinor, doc.currency.toUpperCase()),
+            String(r.total) ===
+              amount(doc.totalMinor, doc.currency.toUpperCase()),
         }));
       }
-      if (held.length !== 1) return `invoice ${doc.number}: ${held.length} documents in bexio`;
-      const paid = await call(fetchImpl, config, `2.0/kb_invoice/${held[0].id}/payment`);
+      if (held.length !== 1) {
+        return `invoice ${doc.number}: ${held.length} documents in bexio`;
+      }
+      const paid = await call(
+        fetchImpl,
+        config,
+        `2.0/kb_invoice/${held[0].id}/payment`,
+      );
       if (!paid.ok) return paid.detail;
-      return (Array.isArray(paid.body) ? paid.body as Record<string, unknown>[] : [])
+      return (Array.isArray(paid.body)
+        ? paid.body as Record<string, unknown>[]
+        : [])
         .filter((p) => p.date === doc.date)
         .map((p) => ({
           id: String(p.id),
           state: "posted",
-          matches: String(p.value) === amount(doc.totalMinor, doc.currency.toUpperCase()),
+          matches: String(p.value) ===
+            amount(doc.totalMinor, doc.currency.toUpperCase()),
         }));
     },
 
     async create(idempotencyKey, job, maps): Promise<CreateOutcome> {
       const doc = docOf(job);
-      if (!doc) return { ok: false, unknown: false, detail: `no document ${job.documentId}` };
+      if (!doc) {
+        return {
+          ok: false,
+          unknown: false,
+          detail: `no document ${job.documentId}`,
+        };
+      }
       const missing = requiredFields.filter((f) => !config[f]);
       if (missing.length > 0) {
-        return { ok: false, unknown: false, detail: `missing ${missing.join(", ")}` };
+        return {
+          ok: false,
+          unknown: false,
+          detail: `missing ${missing.join(", ")}`,
+        };
       }
       if (exponentOf(doc.currency) === null) {
-        return { ok: false, unknown: false, detail: `unsupported ${doc.currency}` };
+        return {
+          ok: false,
+          unknown: false,
+          detail: `unsupported ${doc.currency}`,
+        };
       }
       if (doc.kind === "receipt") {
         const held = await byNumber(fetchImpl, config, "invoice", doc.number);
-        if (typeof held === "string") return { ok: false, unknown: false, detail: held };
+        if (typeof held === "string") {
+          return { ok: false, unknown: false, detail: held };
+        }
         if (held.length !== 1) {
-          return { ok: false, unknown: false, detail: `invoice ${doc.number} is not in bexio once` };
+          return {
+            ok: false,
+            unknown: false,
+            detail: `invoice ${doc.number} is not in bexio once`,
+          };
         }
         // spec: "Create payment" → date and value; bank_account_id optional.
-        const paid = await post(fetchImpl, config, `2.0/kb_invoice/${held[0].id}/payment`, {
-          date: doc.date,
-          value: amount(doc.totalMinor, doc.currency.toUpperCase()),
-        });
-        if (!paid.ok) return { ok: false, unknown: paid.unknown, detail: paid.detail };
+        const paid = await post(
+          fetchImpl,
+          config,
+          `2.0/kb_invoice/${held[0].id}/payment`,
+          {
+            date: doc.date,
+            value: amount(doc.totalMinor, doc.currency.toUpperCase()),
+          },
+        );
+        if (!paid.ok) {
+          return { ok: false, unknown: paid.unknown, detail: paid.detail };
+        }
         const body = paid.body as Record<string, unknown>;
-        return { ok: true, remote: { id: String(body.id), state: "posted", matches: true } };
+        return {
+          ok: true,
+          remote: { id: String(body.id), state: "posted", matches: true },
+        };
       }
       const currency = await currencyId(fetchImpl, config, doc.currency);
-      if (typeof currency === "string") return { ok: false, unknown: false, detail: currency };
+      if (typeof currency === "string") {
+        return { ok: false, unknown: false, detail: currency };
+      }
       const resource = resourceOf(doc.kind);
       const created = await post(
         fetchImpl,
@@ -294,15 +352,29 @@ export function bexioAdapter(
           currencyId: currency,
         }),
       );
-      if (!created.ok) return { ok: false, unknown: created.unknown, detail: created.detail };
+      if (!created.ok) {
+        return { ok: false, unknown: created.unknown, detail: created.detail };
+      }
       const body = created.body as Record<string, unknown>;
       // Issued, never left a draft: an issue that has no answer leaves the
       // document unknown, and the next run reads it back by its number.
-      const issued = await post(fetchImpl, config, `2.0/${resource}/${body.id}/issue`, {});
-      if (!issued.ok) return { ok: false, unknown: true, detail: `issue: ${issued.detail}` };
+      const issued = await post(
+        fetchImpl,
+        config,
+        `2.0/${resource}/${body.id}/issue`,
+        {},
+      );
+      if (!issued.ok) {
+        return { ok: false, unknown: true, detail: `issue: ${issued.detail}` };
+      }
       return {
         ok: true,
-        remote: { id: String(body.id), number: String(body.document_nr ?? doc.number), state: "posted", matches: true },
+        remote: {
+          id: String(body.id),
+          number: String(body.document_nr ?? doc.number),
+          state: "posted",
+          matches: true,
+        },
       };
     },
   };

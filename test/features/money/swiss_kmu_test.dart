@@ -311,16 +311,18 @@ Future<GenericJournal?> _read(
   String formatId, {
   _Books? books,
   bool local = true,
-}) async => (await AccountingExportSource(
-  _Snapshot(local: local),
-  () => GenericJournalExport(books ?? _Books()),
-).read(
-  formatId: formatId,
-  workspaceId: _ws,
-  country: 'CH',
-  year: 2026,
-  invoices: _invoices,
-))?.posted;
+}) async =>
+    (await AccountingExportSource(
+          _Snapshot(local: local),
+          () => GenericJournalExport(books ?? _Books()),
+        ).read(
+          formatId: formatId,
+          workspaceId: _ws,
+          country: 'CH',
+          year: 2026,
+          invoices: _invoices,
+        ))
+        ?.posted;
 
 Future<JournalPosted> _posted([_Books? books]) async =>
     switch (await _read('ch_kmu', books: books)) {

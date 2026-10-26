@@ -9231,6 +9231,37 @@ class AppLocalizationsIt extends AppLocalizations {
   String get financesTypeInvoice => 'Fattura';
 
   @override
+  String get gebuevProcedureAccessBody =>
+      'Ogni esportazione contabile e ogni download di un archivio è registrato nel registro delle esportazioni: chi, quando, quale file e la sua impronta. La pista di controllo elenca questi accessi accanto ai documenti.';
+
+  @override
+  String get gebuevProcedureAccessHeading => 'Accessi (art. 8)';
+
+  @override
+  String get gebuevProcedureCarriersBody =>
+      'Questo archivio si legge con qualsiasi programma zip ed editor di testo. Una copia dell\'intero spazio è provata da un\'esportazione dello spazio completata, registrata con la sua impronta: la lista di preparazione indica quando è stata fatta l\'ultima e ne chiede una nuova quando è vecchia.';
+
+  @override
+  String get gebuevProcedureCarriersHeading =>
+      'Disponibilità e supporti (art. 5 e 10)';
+
+  @override
+  String get gebuevProcedureIntegrityBody =>
+      'Ogni file di questo archivio è elencato in manifest.csv con la sua impronta SHA-256 e la sua dimensione. L\'archivio stesso, come ogni esportazione contabile, è registrato nel registro delle esportazioni con la sua impronta, l\'ora del server e la persona che l\'ha creato. Ogni documento emesso porta l\'impronta che il server verifica; register.csv ne indica l\'esito.';
+
+  @override
+  String get gebuevProcedureIntegrityHeading => 'Integrità (art. 3 e 9)';
+
+  @override
+  String get gebuevProcedureSystemBody =>
+      'DesKilo tiene le fatture, le note di credito, i pagamenti, i conti dei membri, le spese condivise e i documenti d\'acquisto approvati di questo spazio e, dove lo spazio tiene un libro locale, le loro registrazioni sul suo piano dei conti. La contabilità generale della fiduciaria importa il giornale svizzero di queste registrazioni.';
+
+  @override
+  String gebuevProcedureTitle(String workspace) {
+    return 'Documentazione delle procedure (OelDC art. 4) — $workspace';
+  }
+
+  @override
   String get gettingStartedActionChooseDay => 'Scegli un altro giorno';
 
   @override

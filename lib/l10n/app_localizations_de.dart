@@ -9239,6 +9239,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesTypeInvoice => 'Rechnung';
 
   @override
+  String get gebuevProcedureAccessBody =>
+      'Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.';
+
+  @override
+  String get gebuevProcedureAccessHeading => 'Zugriffe (Art. 8)';
+
+  @override
+  String get gebuevProcedureCarriersBody =>
+      'Dieses Archiv lässt sich mit jedem Zip-Programm und Texteditor lesen. Eine Kopie des ganzen Space wird durch einen abgeschlossenen Export des Space belegt, der mit seinem Hashwert festgehalten wird: die Bereitschafts-Checkliste zeigt, wann der letzte erstellt wurde, und verlangt einen neuen, wenn er alt ist.';
+
+  @override
+  String get gebuevProcedureCarriersHeading =>
+      'Verfügbarkeit und Informationsträger (Art. 5 und 10)';
+
+  @override
+  String get gebuevProcedureIntegrityBody =>
+      'Jede Datei dieses Archivs steht in manifest.csv mit ihrem SHA-256-Hashwert und ihrer Grösse. Das Archiv selbst wird wie jeder Buchhaltungsexport mit seinem Hashwert, der Zeit des Servers und der Person, die es erstellt hat, im Exportprotokoll festgehalten. Jeder ausgestellte Beleg trägt den Fingerabdruck, den der Server prüft; register.csv nennt das Ergebnis.';
+
+  @override
+  String get gebuevProcedureIntegrityHeading => 'Integrität (Art. 3 und 9)';
+
+  @override
+  String get gebuevProcedureSystemBody =>
+      'DesKilo führt die Rechnungen, Gutschriften, Zahlungen, Mitgliederkonten, geteilten Kosten und genehmigten Einkaufsbelege dieses Space und, wo der Space ein lokales Buch führt, deren Buchungen auf seinem Kontenplan. Die Finanzbuchhaltung der Treuhänderin übernimmt das Schweizer Buchungsjournal dieser Buchungen.';
+
+  @override
+  String gebuevProcedureTitle(String workspace) {
+    return 'Verfahrensdokumentation (GeBüV Art. 4) — $workspace';
+  }
+
+  @override
   String get gettingStartedActionChooseDay => 'Anderen Tag wählen';
 
   @override

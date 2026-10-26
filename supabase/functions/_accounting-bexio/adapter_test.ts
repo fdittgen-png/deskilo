@@ -18,9 +18,18 @@ import {
   type DeliveryStore,
   type RemoteDocument,
 } from "../_shared/accounting_delivery.ts";
-import { type BexioDocument, bexioAdapter, documentKey, needsOf } from "./adapter.ts";
+import {
+  bexioAdapter,
+  type BexioDocument,
+  documentKey,
+  needsOf,
+} from "./adapter.ts";
 
-const config = { base_url: "https://bexio.test", access_token: "t", user_id: "7" };
+const config = {
+  base_url: "https://bexio.test",
+  access_token: "t",
+  user_id: "7",
+};
 
 const member = "member:00000000-0000-4000-8000-000000000001";
 const tax81 = "VAT|CH|taxed|8.1|2024";
@@ -30,8 +39,18 @@ const maps: AccountingMap[] = [
   { kind: "party", key: member, remoteId: "501", remoteCode: "" },
   { kind: "tax", key: tax81, remoteId: "16", remoteCode: "UN81" },
   { kind: "tax", key: tax26, remoteId: "17", remoteCode: "UR26" },
-  { kind: "account", key: "revenue:standard", remoteId: "340", remoteCode: "3400" },
-  { kind: "account", key: "revenue:reduced", remoteId: "341", remoteCode: "3401" },
+  {
+    kind: "account",
+    key: "revenue:standard",
+    remoteId: "340",
+    remoteCode: "3400",
+  },
+  {
+    kind: "account",
+    key: "revenue:reduced",
+    remoteId: "341",
+    remoteCode: "3401",
+  },
 ];
 
 const invoice = (id: string, number: string): BexioDocument => ({
@@ -44,8 +63,18 @@ const invoice = (id: string, number: string): BexioDocument => ({
   partyKey: member,
   title: `Desk ${number}`,
   lines: [
-    { label: "Desk", netMinor: 100000, taxKey: tax81, accountKey: "revenue:standard" },
-    { label: "Drinks", netMinor: 5000, taxKey: tax26, accountKey: "revenue:reduced" },
+    {
+      label: "Desk",
+      netMinor: 100000,
+      taxKey: tax81,
+      accountKey: "revenue:standard",
+    },
+    {
+      label: "Drinks",
+      netMinor: 5000,
+      taxKey: tax26,
+      accountKey: "revenue:reduced",
+    },
   ],
   totalMinor: 113230,
 });
@@ -53,7 +82,10 @@ const invoice = (id: string, number: string): BexioDocument => ({
 /** A bexio that keeps what it is sent. [silentOnce] lets the next create
  * land and answer nothing. */
 function bexio() {
-  const docs: Record<string, Record<string, unknown>[]> = { kb_invoice: [], kb_credit_voucher: [] };
+  const docs: Record<string, Record<string, unknown>[]> = {
+    kb_invoice: [],
+    kb_credit_voucher: [],
+  };
   const payments: Record<string, unknown>[] = [];
   const calls: string[] = [];
   let next = 1000;
@@ -70,14 +102,25 @@ function bexio() {
     }
     const search = path.match(/^2\.0\/(kb_invoice|kb_credit_voucher)\/search$/);
     if (method === "POST" && search) {
-      return json(docs[search[1]].filter((d) => d.document_nr === body[0].value));
+      return json(
+        docs[search[1]].filter((d) => d.document_nr === body[0].value),
+      );
     }
     const create = path.match(/^2\.0\/(kb_invoice|kb_credit_voucher)$/);
     if (method === "POST" && create) {
-      const net = (body.positions as { unit_price: string; tax_id: number }[]);
+      const net = body.positions as { unit_price: string; tax_id: number }[];
       const rate: Record<number, number> = { 16: 0.081, 17: 0.026 };
-      const total = net.reduce((s, p) => s + Math.round(Number(p.unit_price) * 100 * (1 + rate[p.tax_id])), 0);
-      const d = { id: next++, ...body, total: (total / 100).toFixed(2), kb_item_status_id: 7 };
+      const total = net.reduce(
+        (s, p) =>
+          s + Math.round(Number(p.unit_price) * 100 * (1 + rate[p.tax_id])),
+        0,
+      );
+      const d = {
+        id: next++,
+        ...body,
+        total: (total / 100).toFixed(2),
+        kb_item_status_id: 7,
+      };
       docs[create[1]].push(d);
       if (silentOnce) {
         silentOnce = false;
@@ -85,7 +128,9 @@ function bexio() {
       }
       return json(d);
     }
-    const issue = path.match(/^2\.0\/(kb_invoice|kb_credit_voucher)\/(\d+)\/issue$/);
+    const issue = path.match(
+      /^2\.0\/(kb_invoice|kb_credit_voucher)\/(\d+)\/issue$/,
+    );
     if (method === "POST" && issue) {
       const d = docs[issue[1]].find((x) => x.id === Number(issue[2]))!;
       d.kb_item_status_id = 8;
@@ -124,7 +169,8 @@ function bexio() {
 class MemoryStore implements DeliveryStore {
   rows = new Map<string, DeliveryRow & { sha: string }>();
   record(j: DeliveryJob, status: DeliveryStatus, remote?: RemoteDocument) {
-    const identity = `${j.connectionId}:${j.documentKind}:${j.documentId}:${j.eventDate}`;
+    const identity =
+      `${j.connectionId}:${j.documentKind}:${j.documentId}:${j.eventDate}`;
     const held = this.rows.get(identity);
     if (!held) {
       const row = {
@@ -140,7 +186,9 @@ class MemoryStore implements DeliveryStore {
     if (held.status === "acknowledged" && held.sha === j.payloadSha256) {
       return Promise.resolve({ ...held, outcome: "unchanged" as const });
     }
-    if (status === "generated") return Promise.resolve({ ...held, outcome: "existing" as const });
+    if (status === "generated") {
+      return Promise.resolve({ ...held, outcome: "existing" as const });
+    }
     held.status = status;
     if (remote) held.remote_id = remote.id;
     return Promise.resolve({ ...held, outcome: "updated" as const });
@@ -159,24 +207,42 @@ const jobOf = (doc: BexioDocument): DeliveryJob => ({
   needs: needsOf(doc),
 });
 
-async function deliverAll(docs: BexioDocument[], b: ReturnType<typeof bexio>, store: MemoryStore, with_ = maps) {
-  const adapter = bexioAdapter(Object.fromEntries(docs.map((d) => [documentKey(d.kind, d.id), d])), {
-    fetch: b.fetchImpl,
-    config,
-  });
+async function deliverAll(
+  docs: BexioDocument[],
+  b: ReturnType<typeof bexio>,
+  store: MemoryStore,
+  with_ = maps,
+) {
+  const adapter = bexioAdapter(
+    Object.fromEntries(docs.map((d) => [documentKey(d.kind, d.id), d])),
+    {
+      fetch: b.fetchImpl,
+      config,
+    },
+  );
   const out = [];
-  for (const d of docs) out.push(await deliver(jobOf(d), with_, store, adapter));
+  for (const d of docs) {
+    out.push(await deliver(jobOf(d), with_, store, adapter));
+  }
   return out;
 }
 
 Deno.test("one kb_invoice per document: its number, the mapped tax ids and accounts, issued", async () => {
   const b = bexio();
-  const out = await deliverAll([invoice("d1", "INV-101"), invoice("d2", "INV-102")], b, new MemoryStore());
+  const out = await deliverAll(
+    [invoice("d1", "INV-101"), invoice("d2", "INV-102")],
+    b,
+    new MemoryStore(),
+  );
   assertEquals(out.map((o) => o.status), ["acknowledged", "acknowledged"]);
   const held = b.docs.kb_invoice;
   assertEquals(held.map((d) => d.document_nr), ["INV-101", "INV-102"]);
   assertEquals(held.map((d) => d.api_reference), ["key-d1", "key-d2"]);
-  const positions = held[0].positions as { tax_id: number; account_id: number; unit_price: string }[];
+  const positions = held[0].positions as {
+    tax_id: number;
+    account_id: number;
+    unit_price: string;
+  }[];
   assertEquals(positions.map((p) => [p.tax_id, p.account_id, p.unit_price]), [
     [16, 340, "1000.00"],
     [17, 341, "50.00"],
@@ -184,7 +250,10 @@ Deno.test("one kb_invoice per document: its number, the mapped tax ids and accou
   assertEquals(held[0].contact_id, 501);
   assertEquals(held[0].user_id, 7);
   assertEquals(held[0].currency_id, 1);
-  assertEquals([held[0].is_valid_from, held[0].is_valid_to], ["2026-03-02", "2026-04-01"]);
+  assertEquals([held[0].is_valid_from, held[0].is_valid_to], [
+    "2026-03-02",
+    "2026-04-01",
+  ]);
   assertEquals(held.map((d) => d.kb_item_status_id), [8, 8]);
 });
 
@@ -202,7 +271,12 @@ Deno.test("a second delivery creates nothing", async () => {
 
 Deno.test("an unmapped tax blocks before anything is sent, the key named", async () => {
   const b = bexio();
-  const out = await deliverAll([invoice("d1", "INV-101")], b, new MemoryStore(), maps.filter((m) => m.key !== tax26));
+  const out = await deliverAll(
+    [invoice("d1", "INV-101")],
+    b,
+    new MemoryStore(),
+    maps.filter((m) => m.key !== tax26),
+  );
   assertEquals(out[0], { status: "blocked", missing: [`tax ${tax26}`] });
   assertEquals(b.calls, []);
 });
@@ -225,7 +299,12 @@ Deno.test("a credit note is a kb_credit_voucher; a receipt a payment on its invo
   const credit: BexioDocument = {
     ...invoice("c1", "CN-101"),
     kind: "credit_note",
-    lines: [{ label: "Desk", netMinor: -10000, taxKey: tax81, accountKey: "revenue:standard" }],
+    lines: [{
+      label: "Desk",
+      netMinor: -10000,
+      taxKey: tax81,
+      accountKey: "revenue:standard",
+    }],
     totalMinor: 10810,
   };
   const receipt: BexioDocument = {
@@ -239,9 +318,25 @@ Deno.test("a credit note is a kb_credit_voucher; a receipt a payment on its invo
     lines: [],
     totalMinor: 113230,
   };
-  const out = await deliverAll([invoice("d1", "INV-101"), credit, receipt], b, store);
-  assertEquals(out.map((o) => o.status), ["acknowledged", "acknowledged", "acknowledged"]);
+  const out = await deliverAll(
+    [invoice("d1", "INV-101"), credit, receipt],
+    b,
+    store,
+  );
+  assertEquals(out.map((o) => o.status), [
+    "acknowledged",
+    "acknowledged",
+    "acknowledged",
+  ]);
   assertEquals(b.docs.kb_credit_voucher.map((d) => d.document_nr), ["CN-101"]);
-  assertEquals((b.docs.kb_credit_voucher[0].positions as { unit_price: string }[])[0].unit_price, "100.00");
-  assertEquals(b.payments.map((p) => [p.invoice, p.date, p.value]), [[b.docs.kb_invoice[0].id, "2026-03-20", "1132.30"]]);
+  assertEquals(
+    (b.docs.kb_credit_voucher[0].positions as { unit_price: string }[])[0]
+      .unit_price,
+    "100.00",
+  );
+  assertEquals(b.payments.map((p) => [p.invoice, p.date, p.value]), [[
+    b.docs.kb_invoice[0].id,
+    "2026-03-20",
+    "1132.30",
+  ]]);
 });

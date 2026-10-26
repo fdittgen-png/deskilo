@@ -66,4 +66,26 @@ class SupabaseBookPeriodRepository implements BookPeriodRepository {
     );
     return logged is Map && logged['logged'] == true ? '${logged['id']}' : null;
   }
+
+  @override
+  Future<List<BookExport>> fetchExportLog(
+    String workspaceId,
+    DateTime from,
+    DateTime to,
+  ) async {
+    // The log itself, under its read policy (viewFinances, exportData or
+    // the owner): it names the member who made each file.
+    final rows = await _client
+        .from('book_exports')
+        .select(
+          'id, format_id, period_from, period_to, sha256, byte_count, '
+          'row_count, document_count, closed_period, exported_at, '
+          'exported_by_member_id',
+        )
+        .eq('workspace_id', workspaceId)
+        .lte('period_from', isoDay(to))
+        .gte('period_to', isoDay(from))
+        .order('exported_at');
+    return [for (final r in rows) BookExport.fromJson(r)];
+  }
 }

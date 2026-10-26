@@ -9254,6 +9254,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get financesTypeInvoice => 'Facture';
 
   @override
+  String get gebuevProcedureAccessBody =>
+      'Chaque export comptable et chaque téléchargement d\'archive est inscrit au journal des exports : qui, quand, quel fichier et son empreinte. La piste d\'audit liste ces accès à côté des documents.';
+
+  @override
+  String get gebuevProcedureAccessHeading => 'Accès (art. 8)';
+
+  @override
+  String get gebuevProcedureCarriersBody =>
+      'Cette archive se lit avec n\'importe quel outil zip et éditeur de texte. Une copie de tout l\'espace est prouvée par un export de l\'espace terminé, inscrit avec son empreinte : la liste de préparation indique la date du dernier et en demande un nouveau lorsqu\'il est ancien.';
+
+  @override
+  String get gebuevProcedureCarriersHeading =>
+      'Disponibilité et supports (art. 5 et 10)';
+
+  @override
+  String get gebuevProcedureIntegrityBody =>
+      'Chaque fichier de cette archive figure dans manifest.csv avec son empreinte SHA-256 et sa taille. L\'archive elle-même, comme chaque export comptable, est inscrite au journal des exports avec son empreinte, l\'heure du serveur et la personne qui l\'a créée. Chaque document émis porte l\'empreinte que le serveur vérifie ; register.csv en donne le résultat.';
+
+  @override
+  String get gebuevProcedureIntegrityHeading => 'Intégrité (art. 3 et 9)';
+
+  @override
+  String get gebuevProcedureSystemBody =>
+      'DesKilo tient les factures, notes de crédit, paiements, comptes des membres, frais partagés et pièces d\'achat approuvées de cet espace et, lorsque l\'espace tient un livre local, leurs écritures sur son plan comptable. La comptabilité générale de la fiduciaire importe le journal suisse de ces écritures.';
+
+  @override
+  String gebuevProcedureTitle(String workspace) {
+    return 'Documentation des procédures (Olico art. 4) — $workspace';
+  }
+
+  @override
   String get gettingStartedActionChooseDay => 'Choisir un autre jour';
 
   @override

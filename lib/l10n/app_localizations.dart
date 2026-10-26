@@ -15191,6 +15191,54 @@ abstract class AppLocalizations {
   /// **'Invoice'**
   String get financesTypeInvoice;
 
+  /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
+  ///
+  /// In en, this message translates to:
+  /// **'Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.'**
+  String get gebuevProcedureAccessBody;
+
+  /// #2377 The Swiss archive's procedures document: heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Access (art. 8)'**
+  String get gebuevProcedureAccessHeading;
+
+  /// #2377 The Swiss archive's procedures document: availability and carriers (GeBüV art. 5 and 10).
+  ///
+  /// In en, this message translates to:
+  /// **'This archive is read with any zip tool and text editor. A copy of the whole space is proven by a completed workspace export, recorded with its digest: the readiness checklist shows when the last one was made and asks for a new one when it is old.'**
+  String get gebuevProcedureCarriersBody;
+
+  /// #2377 The Swiss archive's procedures document: heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability and carriers (art. 5 and 10)'**
+  String get gebuevProcedureCarriersHeading;
+
+  /// #2377 The Swiss archive's procedures document: integrity (GeBüV art. 3 and 9).
+  ///
+  /// In en, this message translates to:
+  /// **'Every file of this archive is listed in manifest.csv with its SHA-256 digest and size. The archive itself, like every accounting export, is recorded in the export log with its digest, the server\'s time and the person who made it. Each issued document carries the fingerprint the server verifies; register.csv states the verdict.'**
+  String get gebuevProcedureIntegrityBody;
+
+  /// #2377 The Swiss archive's procedures document: heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrity (art. 3 and 9)'**
+  String get gebuevProcedureIntegrityHeading;
+
+  /// #2377 The Swiss archive's procedures document: what the system keeps.
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo keeps this space\'s invoices, credit notes, payments, member accounts, shared costs and approved purchase documents, and, where the space keeps a local book, their postings on its chart. The accountant\'s general ledger imports the Swiss journal of those postings.'**
+  String get gebuevProcedureSystemBody;
+
+  /// #2377 The Swiss archive's procedures document: title.
+  ///
+  /// In en, this message translates to:
+  /// **'Procedures documentation (GeBüV art. 4) — {workspace}'**
+  String gebuevProcedureTitle(String workspace);
+
   /// #1654 getting started card: gettingStartedActionChooseDay
   ///
   /// In en, this message translates to:

@@ -9,10 +9,14 @@ class FakeBookPeriodRepository implements BookPeriodRepository {
     required this.today,
     Iterable<BookPeriod> periods = const [],
     Iterable<BookExport> exports = const [],
+    this.actorMemberId,
   }) : periods = [...periods],
        exports = [...exports];
 
   final DateTime today;
+
+  /// The member the server would name as the one who exported.
+  final String? actorMemberId;
   final List<BookPeriod> periods;
   final List<BookExport> exports;
   var _next = 1;
@@ -75,8 +79,19 @@ class FakeBookPeriodRepository implements BookPeriodRepository {
         documentCount: record.documents,
         closedPeriod: closed,
         exportedAt: today,
+        exportedByMemberId: actorMemberId,
       ),
     );
     return id;
   }
+
+  @override
+  Future<List<BookExport>> fetchExportLog(
+    String workspaceId,
+    DateTime from,
+    DateTime to,
+  ) async => [
+    for (final e in exports.reversed)
+      if (!e.from.isAfter(to) && !e.to.isBefore(from)) e,
+  ];
 }

@@ -447,7 +447,9 @@ class AccountingExportRun {
         final verdicts = await Future.wait<String>(
           yearInvoices.map((i) => repo.verifyInvoiceSignature(i.id)),
         );
-        final files = await vatAccountFiles();
+        final files = {...await vatAccountFiles(), ...await archiveProcedures()};
+        // #2377 — every file already handed out for the year, with who and when.
+        final exports = await ref.read(bookPeriodCommandProvider).exportLog(workspace.id, year);
         if (!context.mounted) return;
         final integrity = <String, String>{
           for (var i = 0; i < yearInvoices.length; i++)
@@ -469,7 +471,8 @@ class AccountingExportRun {
         }
         files['register.csv'] = textBytes(buildInvoiceRegisterCsv(yearInvoices, integrity: integrity));
         files['audit-trail.csv'] = textBytes(buildAuditTrailCsv(
-          events: buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger),
+          events: buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger,
+              exports: exports, memberNames: memberNames),
           generatedAt: now,
           workspaceName: workspace.name,
           source: books.revisions,
@@ -489,12 +492,17 @@ class AccountingExportRun {
         )))) || !context.mounted) {
           return;
         }
+        // #2377 — the manifest names every member's digest; the archive's
+        // own digest is logged with who downloaded it and when.
+        final bytes = zipBundle(withManifest(withRetentionNotice(files, country, year)));
         await savePdfToDownloads(
           context,
           ref,
-          bytes: zipBundle(withRetentionNotice(files, country, year)),
+          bytes: bytes,
           fileName: archiveBundleFileName(company.legalId, year, development: development),
         );
+        await ref.read(bookPeriodCommandProvider).logExportBytes(workspace.id,
+            formatId: format.id, year: year, bytes: bytes, rows: files.length, documents: yearInvoices.length);
       },
     );
   }
@@ -538,12 +546,16 @@ class AccountingExportRun {
       action: () async {
         // The ledger is the export year's, read with the invoices in
         // the one source response above: never a cached provider.
+        // #2377 — the files handed out for the year are accesses too.
+        final exports = await ref.read(bookPeriodCommandProvider).exportLog(workspace.id, year);
         await save(
           buildAuditTrailCsv(
             events: buildAuditEvents(
               invoices: exported,
               matches: matches,
               ledger: ledger,
+              exports: exports,
+              memberNames: memberNames,
             ),
             generatedAt: now,
             workspaceName: workspace.name,
