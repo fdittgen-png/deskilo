@@ -9,6 +9,8 @@
 // of the TARGET, so the sheet, the coverage table and a future connection
 // read the same descriptor. The qualification stays the existing
 // [AccountingCapability], keyed by the target id.
+import '../../../core/vat/tax_reference_active.dart';
+import '../../workspace/domain/feature_countries.dart';
 import 'accounting_capability.dart';
 import 'accounting_format.dart';
 
@@ -92,7 +94,9 @@ class AccountingTarget {
   final String product;
   final String edition;
 
-  /// Uppercase ISO country codes the target is offered in. Empty means
+  /// Uppercase ISO country codes the target is offered in;
+  /// [featureCountriesEu] stands for every EU member state of the tax
+  /// reference. Empty means
   /// everywhere: a target with no national tie is useful to any
   /// accountant, and hiding it behind a country list would only make it
   /// unreachable for the countries that mandate nothing.
@@ -110,8 +114,13 @@ class AccountingTarget {
   /// The ways an issuer connects to an API target; empty for a file target.
   final Set<AccountingAuthKind> connectsBy;
 
-  bool offeredIn(String countryCode) =>
-      countries.isEmpty || countries.contains(countryCode.toUpperCase());
+  bool offeredIn(String countryCode) {
+    final code = countryCode.toUpperCase();
+    return countries.isEmpty ||
+        countries.contains(code) ||
+        (countries.contains(featureCountriesEu) &&
+            ActiveTaxReference.current.isEu(code));
+  }
 
   /// The reviewed qualification of this target; one nobody reviewed is
   /// `unsupported` and blocked, never silently allowed.

@@ -149,6 +149,10 @@ reached and how far it is qualified. The table below is generated from it;
 | `quickbooks_online_us` | Intuit · QuickBooks Online · Accounting API v3, US realm | api | documents | US | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
 | `quickbooks_online_ca` | Intuit · QuickBooks Online · Accounting API v3, CA realm | api | documents | CA | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
 | `quickbooks_online_gb` | Intuit · QuickBooks Online · Accounting API v3, GB realm | api | documents | GB | implemented | QuickBooks Online Accounting API v3, minorversion 70: Invoice, CreditMemo, Payment, JournalEntry |
+| `xero_gb` | Xero · Xero · Accounting API 2.0, UK organisation | api | documents | GB | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
+| `xero_ca` | Xero · Xero · Accounting API 2.0, Canadian organisation | api | documents | CA | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
+| `xero_us` | Xero · Xero · Accounting API 2.0, US organisation | api | documents | US | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
+| `xero_eu` | Xero · Xero · Accounting API 2.0, EU organisation | api | documents | EU members | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
 <!-- END GENERATED TARGETS -->
 
 Write-offs are posted **gross**, as a loss, on the day they were given up:
@@ -253,6 +257,43 @@ function:
   journal CSV file target and the change webhook. The live exchange is NOT
   RUN: it needs an Intuit developer application and a sandbox company per
   country.
+- `xero_gb`, `xero_ca`, `xero_us`, `xero_eu` (`accounting_xero.ts`,
+  `xeroAccounting`, #2372): signed in to the installation's Xero application.
+  The redirect names no organisation: the one the sign-in authorised is read
+  from `GET /connections` by the access token's `authentication_event_id`;
+  none or several are refused, and a connection signed in again keeps its
+  organisation. Every call names it (`xero-tenant-id`). Before a run and
+  after the sign-in `Organisation.CountryCode` must be the target's (GB, CA,
+  US; for `xero_eu` an EU member state of the tax reference,
+  `is_eu_country`), and the organisation's `TaxRates` and `Accounts` are
+  read. An invoice is an `ACCREC` invoice, a credit note an `ACCRECCREDIT`
+  credit note: the legal number as `InvoiceNumber`/`CreditNoteNumber`, the
+  period as `Reference`, `LineAmountTypes Exclusive`, `Status AUTHORISED`,
+  one line per revenue line on the `account` mapping of its role with the
+  `TaxType` of the `item vat_output:<group>` mapping and the document's tax
+  of that group as `TaxAmount`; the contact is found by `ContactNumber` (the
+  member number) or created as "name (number)". A credit note is then
+  allocated to the invoice it corrects (`replaces_number`, read as the
+  caller) for what that invoice still owes. A receipt is a `Payment` against
+  the invoice of its number on a bank account or one that takes payments;
+  every other event a balanced `POSTED` manual journal. Every write is a PUT
+  (Xero's PUT only creates) with `Idempotency-Key`; a payment carries the
+  key in `Reference`, a journal in `Narration`. A mapped `TaxType` the
+  organisation does not hold, or one its account's class does not admit
+  (`CanApplyTo<Class>`), fails the document with the key named before
+  anything is sent. The readback compares `Total`, `TotalTax` and
+  `AmountDue`/`RemainingCredit`; a different amount, a draft, a number held
+  for another contact or an unallocated credit note after a lost answer is
+  a `conflict`. `AUTHORISED` is decided, not configured: the app's document
+  is issued, and a Xero draft is not a posted sale (the drafts route is the
+  sales-invoice CSV template, still to come). A call refused for Xero's call
+  limits (429) stops the run's remaining calls; the next run continues. Not
+  yet: the PDF as an attachment (no server copy of the PDF), the contact's
+  `TaxNumber` (the parties carry none), `ACCPAY` bills (purchases go as
+  manual journals), `TrackingCategories` for the site, batches of 50, the
+  change webhook and the `xero_invoice_csv` file target. The live exchange
+  is NOT RUN: it needs a Xero developer application and a demo organisation
+  per region.
 
 ## What each country mandates that this app does not produce
 

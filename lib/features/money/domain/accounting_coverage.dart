@@ -6,6 +6,7 @@
 // the document and the registry disagree).
 import 'package:meta/meta.dart';
 
+import '../../workspace/domain/feature_countries.dart';
 import 'accounting_format.dart';
 
 const _begin =
@@ -22,7 +23,7 @@ String accountingCoverageTable() {
     for (final t in accountingTargets)
       '| `${t.id}` | ${cell('${t.vendor} · ${t.product} · ${t.edition}')} '
           '| ${t.transport.name} | ${t.payload.name} '
-          '| ${t.countries.isEmpty ? 'everywhere' : (t.countries.toList()..sort()).join(', ')} '
+          '| ${t.countries.isEmpty ? 'everywhere' : (t.countries.map((c) => c == featureCountriesEu ? 'EU members' : c).toList()..sort()).join(', ')} '
           '| ${t.capability.state.name} '
           '| ${t.capability.specification.isEmpty ? 'not named yet' : cell(t.capability.specification)} |',
   ];
