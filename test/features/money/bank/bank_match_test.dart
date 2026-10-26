@@ -23,7 +23,7 @@ Invoice _invoice(
   workspaceId: 'ws',
   memberId: 'm-$member',
   number: number,
-  issuedAt: issued ?? DateTime.utc(2026, 10, 1),
+  issuedAt: issued ?? DateTime.utc(2026, 10, 2),
   title: number,
   lines: const [],
   totalCents: total,

@@ -29,7 +29,7 @@ Invoice _invoice(String number, int total, {String member = 'm1'}) => Invoice(
   workspaceId: 'ws-1',
   memberId: member,
   number: number,
-  issuedAt: DateTime.utc(2026, 10, 1),
+  issuedAt: DateTime.utc(2026, 10, 2),
   title: number,
   lines: const [],
   totalCents: total,
