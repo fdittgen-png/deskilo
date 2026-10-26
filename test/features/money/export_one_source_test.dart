@@ -352,7 +352,10 @@ void main() {
     }
     // The only reads left in the run are the accountant handoff's recheck
     // (#1640): it re-reads AFTER the file is built and reviewed, to refuse
-    // the save if the books moved; it never feeds the file.
+    // the save if the books moved; it never feeds the file. The handoff
+    // report's quote of the Transfers list (#2378) is not the books: it is
+    // read through the accounting systems' commands, once.
+    expect('.yearTransfers('.allMatches(run), hasLength(1));
     expect(
       [for (final m in RegExp(r'\.(fetch\w+)\(').allMatches(run)) m.group(1)],
       ['fetchInvoices', 'fetchInvoiceMatches'],

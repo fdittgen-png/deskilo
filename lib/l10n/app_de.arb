@@ -7101,6 +7101,7 @@
   "handoffRowMismatch": "Die Zeilen der Datei passen nicht zu den Belegen ({detail})",
   "handoffSave": "Datei und Bericht speichern",
   "handoffTitle": "Vor dem Speichern",
+  "handoffTransfersQuoted": "Der Bericht zitiert die Übertragungsliste des Jahres: {files} ausgegebene Datei(en) und {deliveries} an eine Verbindung übermittelte(s) Dokument(e), jeweils mit SHA-256",
   "handoffUnsupportedCurrency": "{number}: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt",
   "handoffVoided": "Storniert",
   "helpContents": "Inhalt",

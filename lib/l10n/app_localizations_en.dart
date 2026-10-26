@@ -10089,6 +10089,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get handoffTitle => 'Before you save';
 
   @override
+  String handoffTransfersQuoted(String files, String deliveries) {
+    return 'The report quotes the Transfers list of the year: $files file(s) handed out and $deliveries document(s) delivered to a connection, each with its SHA-256';
+  }
+
+  @override
   String handoffUnsupportedCurrency(String number) {
     return '$number: its currency has no reviewed number of decimals';
   }

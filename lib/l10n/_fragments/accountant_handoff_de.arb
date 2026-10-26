@@ -14,5 +14,6 @@
   "handoffSave": "Datei und Bericht speichern",
   "handoffChanged": "Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.",
   "handoffUnsupportedCurrency": "{number}: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt",
-  "handoffAmountOutOfRange": "{number}: eine Summe, die zu groß ist, um exakt übertragen zu werden"
+  "handoffAmountOutOfRange": "{number}: eine Summe, die zu groß ist, um exakt übertragen zu werden",
+  "handoffTransfersQuoted": "Der Bericht zitiert die Übertragungsliste des Jahres: {files} ausgegebene Datei(en) und {deliveries} an eine Verbindung übermittelte(s) Dokument(e), jeweils mit SHA-256"
 }

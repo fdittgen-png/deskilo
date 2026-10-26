@@ -10155,6 +10155,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get handoffTitle => 'Prima di salvare';
 
   @override
+  String handoffTransfersQuoted(String files, String deliveries) {
+    return 'Il rapporto riporta l\'elenco dei trasferimenti dell\'anno: $files file consegnato/i e $deliveries documento/i inviato/i a una connessione, ciascuno con il suo SHA-256';
+  }
+
+  @override
   String handoffUnsupportedCurrency(String number) {
     return '$number: la sua valuta non ha un numero di decimali verificato';
   }

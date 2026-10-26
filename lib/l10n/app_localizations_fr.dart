@@ -10180,6 +10180,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get handoffTitle => 'Avant d’enregistrer';
 
   @override
+  String handoffTransfersQuoted(String files, String deliveries) {
+    return 'Le rapport reprend la liste des transferts de l\'année : $files fichier(s) remis et $deliveries document(s) transmis à une connexion, chacun avec son SHA-256';
+  }
+
+  @override
   String handoffUnsupportedCurrency(String number) {
     return '$number : sa devise n’a pas de nombre de décimales vérifié';
   }
