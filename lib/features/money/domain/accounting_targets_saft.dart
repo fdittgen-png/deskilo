@@ -143,3 +143,9 @@ const List<AccountingTarget> safTFinancialTargets = [
     format: _saftOecdFullFormat,
   ),
 ];
+
+/// #2379 — whether the law of [country] asks for a registered bookkeeping
+/// system rather than a file (Denmark): the export sheet says so first.
+bool needsRegisteredSystem(String country) => safTFinancialTargets.any(
+  (t) => t.id == 'denmark_registered_system' && t.offeredIn(country),
+);

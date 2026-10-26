@@ -20742,6 +20742,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get saftContactIntro =>
+      'Die Datei der Behörde nennt eine Ansprechperson, die luxemburgische auch eine Telefonnummer. Sie wird nur in diese Datei geschrieben.';
+
+  @override
+  String get saftContactTitle => 'Ansprechperson für diese Datei';
+
+  @override
   String get saftDocumentsOnly => 'Nur Belege';
 
   @override
@@ -20751,7 +20758,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'standardTaxCode': 'kein Standard-Steuercode für $subject',
       'taxRate': 'kein Steuersatz für $subject',
       'company': 'das Feld $subject des Unternehmens fehlt',
-      'contact': 'Ihr Vorname, Nachname oder Telefon im Profil ($subject)',
+      'contact': 'das Feld $subject der Ansprechperson',
       'party': '$subject fehlt bei einem Kunden oder Lieferanten',
       'tooLong': '$subject ist länger, als die Datei erlaubt',
       'other': '$subject',

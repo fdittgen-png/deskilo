@@ -14669,11 +14669,13 @@
       }
     }
   },
+  "saftContactIntro": "Le fichier de l’administration nomme une personne de contact, et celui du Luxembourg aussi un téléphone. Elle n’est écrite que dans ce fichier.",
+  "saftContactTitle": "Contact pour ce fichier",
   "saftDocumentsOnly": "Documents seuls",
   "@saftDocumentsOnly": {
     "description": "#669 - SAF-T derived postings"
   },
-  "saftGap": "{kind, select, standardAccount{aucun compte standard pour {subject}} standardTaxCode{aucun code de TVA standard pour {subject}} taxRate{aucun taux de TVA pour {subject}} company{le champ {subject} de l’entreprise manque} contact{votre prénom, nom ou téléphone dans votre profil ({subject})} party{{subject} manque pour un client ou un fournisseur} tooLong{{subject} dépasse la longueur admise par le fichier} other{{subject}}}",
+  "saftGap": "{kind, select, standardAccount{aucun compte standard pour {subject}} standardTaxCode{aucun code de TVA standard pour {subject}} taxRate{aucun taux de TVA pour {subject}} company{le champ {subject} de l’entreprise manque} contact{le champ {subject} de la personne de contact} party{{subject} manque pour un client ou un fournisseur} tooLong{{subject} dépasse la longueur admise par le fichier} other{{subject}}}",
   "saftLedgerIntro": "Avec les numéros de comptes, le fichier porte des écritures en partie double que votre comptable peut importer au lieu de les saisir. Elles couvrent vos ventes et les règlements correspondants — pas l’ensemble de votre comptabilité.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"

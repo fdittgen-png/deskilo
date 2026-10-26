@@ -29,7 +29,7 @@
       }
     }
   },
-  "saftGap": "{kind, select, standardAccount{no standard account for {subject}} standardTaxCode{no standard VAT code for {subject}} taxRate{no VAT rate for {subject}} company{the company's {subject} is missing} contact{your first name, last name or telephone in your profile ({subject})} party{{subject} is missing for a customer or supplier} tooLong{{subject} is longer than the file allows} other{{subject}}}",
+  "saftGap": "{kind, select, standardAccount{no standard account for {subject}} standardTaxCode{no standard VAT code for {subject}} taxRate{no VAT rate for {subject}} company{the company's {subject} is missing} contact{the contact person's {subject}} party{{subject} is missing for a customer or supplier} tooLong{{subject} is longer than the file allows} other{{subject}}}",
   "@saftGap": {
     "description": "SAF-T Financial export (#2379): one reason the file was refused, by kind",
     "placeholders": {
@@ -40,5 +40,13 @@
         "type": "String"
       }
     }
+  },
+  "saftContactTitle": "Contact for this file",
+  "saftContactIntro": "The authority's file names a contact person, and Luxembourg's a telephone too. It is written into this file only.",
+  "@saftContactTitle": {
+    "description": "SAF-T Financial export (#2379): the dialog asking for the contact person the file names"
+  },
+  "@saftContactIntro": {
+    "description": "SAF-T Financial export (#2379): why the contact is asked"
   }
 }

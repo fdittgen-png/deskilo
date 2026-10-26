@@ -34806,6 +34806,18 @@ abstract class AppLocalizations {
   /// **'From {from}, no end date'**
   String roomRentWindowOpen(String from);
 
+  /// SAF-T Financial export (#2379): why the contact is asked
+  ///
+  /// In en, this message translates to:
+  /// **'The authority\'s file names a contact person, and Luxembourg\'s a telephone too. It is written into this file only.'**
+  String get saftContactIntro;
+
+  /// SAF-T Financial export (#2379): the dialog asking for the contact person the file names
+  ///
+  /// In en, this message translates to:
+  /// **'Contact for this file'**
+  String get saftContactTitle;
+
   /// #669 - SAF-T derived postings
   ///
   /// In en, this message translates to:
@@ -34815,7 +34827,7 @@ abstract class AppLocalizations {
   /// SAF-T Financial export (#2379): one reason the file was refused, by kind
   ///
   /// In en, this message translates to:
-  /// **'{kind, select, standardAccount{no standard account for {subject}} standardTaxCode{no standard VAT code for {subject}} taxRate{no VAT rate for {subject}} company{the company\'s {subject} is missing} contact{your first name, last name or telephone in your profile ({subject})} party{{subject} is missing for a customer or supplier} tooLong{{subject} is longer than the file allows} other{{subject}}}'**
+  /// **'{kind, select, standardAccount{no standard account for {subject}} standardTaxCode{no standard VAT code for {subject}} taxRate{no VAT rate for {subject}} company{the company\'s {subject} is missing} contact{the contact person\'s {subject}} party{{subject} is missing for a customer or supplier} tooLong{{subject} is longer than the file allows} other{{subject}}}'**
   String saftGap(String kind, String subject);
 
   /// #669 - SAF-T derived postings

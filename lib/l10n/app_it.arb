@@ -14669,11 +14669,13 @@
       }
     }
   },
+  "saftContactIntro": "Il file dell’amministrazione indica una persona di contatto, e quello del Lussemburgo anche un telefono. Viene scritta solo in questo file.",
+  "saftContactTitle": "Contatto per questo file",
   "saftDocumentsOnly": "Solo documenti",
   "@saftDocumentsOnly": {
     "description": "#669 - SAF-T derived postings"
   },
-  "saftGap": "{kind, select, standardAccount{nessun conto standard per {subject}} standardTaxCode{nessun codice IVA standard per {subject}} taxRate{nessuna aliquota IVA per {subject}} company{manca il campo {subject} dell’impresa} contact{il suo nome, cognome o telefono nel profilo ({subject})} party{manca {subject} per un cliente o fornitore} tooLong{{subject} supera la lunghezza ammessa dal file} other{{subject}}}",
+  "saftGap": "{kind, select, standardAccount{nessun conto standard per {subject}} standardTaxCode{nessun codice IVA standard per {subject}} taxRate{nessuna aliquota IVA per {subject}} company{manca il campo {subject} dell’impresa} contact{il campo {subject} della persona di contatto} party{manca {subject} per un cliente o fornitore} tooLong{{subject} supera la lunghezza ammessa dal file} other{{subject}}}",
   "saftLedgerIntro": "Con i numeri di conto il file porta scritture in partita doppia che il suo commercialista può importare invece di digitare. Coprono le vendite e i relativi incassi — non l’intera contabilità.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"

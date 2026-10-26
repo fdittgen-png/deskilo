@@ -20757,6 +20757,13 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get saftContactIntro =>
+      'Le fichier de l’administration nomme une personne de contact, et celui du Luxembourg aussi un téléphone. Elle n’est écrite que dans ce fichier.';
+
+  @override
+  String get saftContactTitle => 'Contact pour ce fichier';
+
+  @override
   String get saftDocumentsOnly => 'Documents seuls';
 
   @override
@@ -20766,7 +20773,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'standardTaxCode': 'aucun code de TVA standard pour $subject',
       'taxRate': 'aucun taux de TVA pour $subject',
       'company': 'le champ $subject de l’entreprise manque',
-      'contact': 'votre prénom, nom ou téléphone dans votre profil ($subject)',
+      'contact': 'le champ $subject de la personne de contact',
       'party': '$subject manque pour un client ou un fournisseur',
       'tooLong': '$subject dépasse la longueur admise par le fichier',
       'other': '$subject',

@@ -4,8 +4,7 @@
 // book's postings read once with the year (and the book's postings before
 // it, for the opening balances), the profile's chart map from the tax
 // reference store, the parties' addresses from the documents and the
-// supplier register, and the person exporting as the file's contact.
-import '../../profile/providers/profile_providers.dart';
+// supplier register, and the contact person asked at export.
 import '../application/generic_journal_export.dart';
 import '../domain/saf_t.dart';
 import '../domain/saf_t_financial.dart';
@@ -13,17 +12,22 @@ import '../providers/supplier_providers.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
 import 'invoice_actions.dart';
+import 'widgets/saft_contact_dialog.dart';
 
 extension SafTFinancialExports on AccountingExportRun {
-  Future<void> safTFinancialExport() => exportGenericJournal(
-    context,
-    () async => switch (posted) {
-      final JournalPosted books => _written(books, await _parties()),
-      final other? => other,
-      null => const JournalNeedsLocalBook(),
-    },
-    save: (content) => save(content, named(format.id.replaceAll('_', ' '))),
-  );
+  Future<void> safTFinancialExport() async {
+    final contact = await showSafTContactDialog(context);
+    if (contact == null || !context.mounted) return;
+    await exportGenericJournal(
+      context,
+      () async => switch (posted) {
+        final JournalPosted books => _written(books, contact, await _parties()),
+        final other? => other,
+        null => const JournalNeedsLocalBook(),
+      },
+      save: (content) => save(content, named(format.id.replaceAll('_', ' '))),
+    );
+  }
 
   /// The address and tax number of every party the year's documents name:
   /// a member as the documents froze them, a supplier as registered.
@@ -55,11 +59,11 @@ extension SafTFinancialExports on AccountingExportRun {
 
   Future<GenericJournal> _written(
     JournalPosted books,
+    SafTContact contact,
     Map<String, SafTParty> parties,
   ) async {
     final reference = workspaceTaxReference(ref);
     if (reference == null) throw StateError('workspace context not ready');
-    final me = (await ref.read(myProfileProvider.future))?.identity;
     final request = SafTFinancialRequest(
       profile: SafTFinancialProfile.ofFormat(format.id)!,
       period: books.year,
@@ -70,11 +74,7 @@ extension SafTFinancialExports on AccountingExportRun {
       parties: books.parties,
       partyDetails: parties,
       company: company,
-      contact: SafTContact(
-        firstName: me?.firstName ?? '',
-        lastName: me?.lastName ?? '',
-        phone: me?.phone ?? '',
-      ),
+      contact: contact,
       currency: books.functionalCurrency ?? workspace.currencyCode,
       softwareVersion: safTSoftwareVersion,
       createdAt: now,

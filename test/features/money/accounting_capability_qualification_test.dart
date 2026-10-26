@@ -71,6 +71,8 @@ void main() {
     // generic route.
     final unknown = formatsFor('ZZ').map((f) => f.id).toSet();
     expect(unknown, {
+      // #2379 — the OECD tree with the ledger, an exchange file.
+      'saft_oecd_full',
       'saft',
       'accountant_csv',
       'generic_journal_csv',

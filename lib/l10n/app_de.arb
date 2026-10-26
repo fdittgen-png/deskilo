@@ -14669,11 +14669,13 @@
       }
     }
   },
+  "saftContactIntro": "Die Datei der Behörde nennt eine Ansprechperson, die luxemburgische auch eine Telefonnummer. Sie wird nur in diese Datei geschrieben.",
+  "saftContactTitle": "Ansprechperson für diese Datei",
   "saftDocumentsOnly": "Nur Belege",
   "@saftDocumentsOnly": {
     "description": "#669 - SAF-T derived postings"
   },
-  "saftGap": "{kind, select, standardAccount{kein Standardkonto für {subject}} standardTaxCode{kein Standard-Steuercode für {subject}} taxRate{kein Steuersatz für {subject}} company{das Feld {subject} des Unternehmens fehlt} contact{Ihr Vorname, Nachname oder Telefon im Profil ({subject})} party{{subject} fehlt bei einem Kunden oder Lieferanten} tooLong{{subject} ist länger, als die Datei erlaubt} other{{subject}}}",
+  "saftGap": "{kind, select, standardAccount{kein Standardkonto für {subject}} standardTaxCode{kein Standard-Steuercode für {subject}} taxRate{kein Steuersatz für {subject}} company{das Feld {subject} des Unternehmens fehlt} contact{das Feld {subject} der Ansprechperson} party{{subject} fehlt bei einem Kunden oder Lieferanten} tooLong{{subject} ist länger, als die Datei erlaubt} other{{subject}}}",
   "saftLedgerIntro": "Mit Kontonummern enthält die Datei doppelte Buchungen, die Ihre Steuerberatung importieren statt eintippen kann. Sie decken Ihre Umsätze und die zugehörigen Zahlungen ab — nicht Ihre gesamte Buchführung.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"

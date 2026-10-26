@@ -19,6 +19,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_format.dart';
+import '../domain/accounting_targets_saft.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
@@ -138,13 +139,7 @@ class AccountingExportRun {
   final chosen = await showAccountingExportSheet(
     context,
     formats: exportFormatsOf(ref, country),
-    notices: [
-      // #2379 — Denmark's duty is a registered system, not a file.
-      if (accountingTargets.any(
-        (t) => t.id == 'denmark_registered_system' && t.offeredIn(country),
-      ))
-        l10n.exportDenmarkRegisteredSystem,
-    ],
+    notices: [if (needsRegisteredSystem(country)) l10n.exportDenmarkRegisteredSystem],
   );
   if (chosen == null || !context.mounted) return;
   format = chosen;

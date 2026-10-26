@@ -14669,11 +14669,13 @@
       }
     }
   },
+  "saftContactIntro": "El archivo de la administración indica una persona de contacto, y el de Luxemburgo también un teléfono. Solo se escribe en este archivo.",
+  "saftContactTitle": "Contacto para este archivo",
   "saftDocumentsOnly": "Solo documentos",
   "@saftDocumentsOnly": {
     "description": "#669 - SAF-T derived postings"
   },
-  "saftGap": "{kind, select, standardAccount{ninguna cuenta estándar para {subject}} standardTaxCode{ningún código de IVA estándar para {subject}} taxRate{ningún tipo de IVA para {subject}} company{falta el campo {subject} de la empresa} contact{su nombre, apellido o teléfono en su perfil ({subject})} party{falta {subject} en un cliente o proveedor} tooLong{{subject} supera la longitud que admite el archivo} other{{subject}}}",
+  "saftGap": "{kind, select, standardAccount{ninguna cuenta estándar para {subject}} standardTaxCode{ningún código de IVA estándar para {subject}} taxRate{ningún tipo de IVA para {subject}} company{falta el campo {subject} de la empresa} contact{el campo {subject} de la persona de contacto} party{falta {subject} en un cliente o proveedor} tooLong{{subject} supera la longitud que admite el archivo} other{{subject}}}",
   "saftLedgerIntro": "Con números de cuenta, el archivo lleva asientos por partida doble que su asesor puede importar en lugar de teclear. Cubren sus ventas y los cobros correspondientes — no toda su contabilidad.",
   "@saftLedgerIntro": {
     "description": "#669 - SAF-T derived postings"

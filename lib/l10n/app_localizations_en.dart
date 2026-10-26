@@ -20545,6 +20545,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get saftContactIntro =>
+      'The authority\'s file names a contact person, and Luxembourg\'s a telephone too. It is written into this file only.';
+
+  @override
+  String get saftContactTitle => 'Contact for this file';
+
+  @override
   String get saftDocumentsOnly => 'Documents only';
 
   @override
@@ -20554,8 +20561,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'standardTaxCode': 'no standard VAT code for $subject',
       'taxRate': 'no VAT rate for $subject',
       'company': 'the company\'s $subject is missing',
-      'contact':
-          'your first name, last name or telephone in your profile ($subject)',
+      'contact': 'the contact person\'s $subject',
       'party': '$subject is missing for a customer or supplier',
       'tooLong': '$subject is longer than the file allows',
       'other': '$subject',
