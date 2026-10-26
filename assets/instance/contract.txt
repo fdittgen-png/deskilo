@@ -2055,7 +2055,7 @@ routine public.eu_country_code(p_code text) -> text | function | definer | stabl
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:2e3e2610f711
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:6149227a9717
 routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
-routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:52cecf24fb2a
+routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:97cf76ef47df
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:5cfd64cf3676
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:db0b5a4b3900
@@ -2902,9 +2902,10 @@ routine public.validation_requires(p_workspace_id uuid, p_type text, p_amount_ce
 routine public.valuation_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:371af9a55e5b
 routine public.valuation_batch_json(b asset_valuation_batches) -> jsonb | function | definer | stable | exec:service_role | body:410c01c4d36b
 routine public.valuation_bridge(r asset_valuation_rows) -> text | function | invoker | immutable | exec:service_role | body:42be3c1c13ba
+routine public.vat_acquisition_split(p_net bigint, p_percent numeric, p_share numeric) -> TABLE(tax_cents bigint, deductible_cents bigint) | function | invoker | immutable | exec:service_role | body:08a0f34cd310
 routine public.vat_components_entry(p_country text, p_percent numeric, p_net bigint, p_vat bigint) -> jsonb | function | invoker | stable | exec:service_role | body:5251dae676d1
 routine public.vat_declarations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:7e545bd2ecfe
-routine public.vat_input_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(expense_id uuid, tax_point date, percent numeric, category text, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:9284c92c9d0d
+routine public.vat_input_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(expense_id uuid, tax_point date, percent numeric, category text, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:f52b62e95390
 routine public.vat_input_split(p_gross bigint, p_percent numeric, p_share numeric) -> TABLE(net_cents bigint, deductible_cents bigint) | function | invoker | immutable | exec:service_role | body:95597107b5ee
 routine public.vat_percent_components(p_country text, p_percent numeric) -> jsonb | function | definer | stable | exec:service_role | body:6cecb7e04f44
 routine public.vat_period_overlaps_filed(p_workspace_id uuid, p_start date, p_end date) -> boolean | function | definer | stable | exec:service_role | body:7da21367be94
@@ -2914,8 +2915,8 @@ routine public.vat_rate_in_force(p_rate_id uuid, p_date date) -> numeric | funct
 routine public.vat_rate_percent_at(p_rate_id uuid, p_date date) -> numeric | function | definer | stable | exec:service_role | body:89d0065cfc67
 routine public.vat_return_amounts(p_workspace_id uuid, p_start date, p_end date) -> TABLE(invoice_id uuid, tax_point date, percent numeric, category text, credit_note boolean, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:289cdc3e37ab
 routine public.vat_return_entries_guard() -> trigger | function | invoker | volatile | exec:service_role | body:809594bfdd22
-routine public.vat_return_lines(p_workspace_id uuid, p_start date, p_end date) -> TABLE(direction text, invoice_id uuid, tax_point date, percent numeric, category text, credit_note boolean, correction boolean, corrects uuid, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:e00cd0e621d3
-routine public.vat_return_summary(p_workspace_id uuid, p_start date, p_end date) -> TABLE(lines jsonb, total_net_cents integer, total_vat_cents integer, invoice_count integer) | function | definer | stable | exec:service_role | body:05f901c5f332
+routine public.vat_return_lines(p_workspace_id uuid, p_start date, p_end date) -> TABLE(direction text, invoice_id uuid, tax_point date, percent numeric, category text, credit_note boolean, correction boolean, corrects uuid, gross_cents bigint, net_cents bigint) | function | definer | stable | exec:service_role | body:c024f8f43ddf
+routine public.vat_return_summary(p_workspace_id uuid, p_start date, p_end date) -> TABLE(lines jsonb, total_net_cents integer, total_vat_cents integer, invoice_count integer) | function | definer | stable | exec:service_role | body:07add76ad3a4
 routine public.vat_split_net(p_gross bigint, p_percent numeric) -> bigint | function | invoker | immutable | exec:authenticated,service_role | body:9614bff5ba9f
 routine public.vat_tax_point(p_period text) -> date | function | invoker | stable | exec:authenticated,service_role | body:55f2a0c0157c
 routine public.vat_tax_point_basis(p_country text, p_option text) -> TABLE(rule text, backstop text) | function | invoker | immutable | exec:authenticated,service_role | body:69909a2a7c2b
