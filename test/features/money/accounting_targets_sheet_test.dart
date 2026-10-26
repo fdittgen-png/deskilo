@@ -66,53 +66,49 @@ FakeAccountingConnectionRepository _empty() =>
 
 const _card = 'pennylane_api-demo-site-studio';
 
+/// Taps the control keyed [key] and lets the sheet settle.
+Future<void> _tap(WidgetTester tester, String key) async {
+  await tester.tap(find.byKey(ValueKey(key)));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets('a billing manager connects with a token, maps a tax code and revokes', (tester) async {
     final repo = _empty();
     await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
     expect(find.text('Not connected'), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('acct-connect-token-$_card')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-connect-token-$_card');
     await tester.enterText(find.byKey(const ValueKey('acct-token-value')), 'short');
-    await tester.tap(find.byKey(const ValueKey('acct-token-save')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-token-save');
     expect(find.text('Paste the whole token.'), findsOneWidget);
     expect(repo.connections, isEmpty, reason: 'nothing was sent');
 
     await tester.enterText(find.byKey(const ValueKey('acct-token-value')), 'tok-secret-2370-abcdef');
-    await tester.tap(find.byKey(const ValueKey('acct-token-save')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-token-save');
     expect(find.byKey(const ValueKey('acct-connection-state-$_card')), findsOneWidget);
     expect(find.text('Connected'), findsOneWidget);
     expect(find.textContaining('tok-secret'), findsNothing, reason: 'the token is never shown');
 
-    await tester.tap(find.byKey(const ValueKey('acct-maps-$_card')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-maps-$_card');
     expect(find.byKey(const ValueKey('acct-maps-empty')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('acct-map-add')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('acct-map-kind')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-map-add');
+    await _tap(tester, 'acct-map-kind');
     await tester.tap(find.text('Tax code').last);
     await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const ValueKey('acct-map-tax')), 'VAT|FR|5.5');
     await tester.enterText(find.byKey(const ValueKey('acct-map-code')), 'FR_55');
-    await tester.tap(find.byKey(const ValueKey('acct-map-save')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-map-save');
     expect(find.text('This is not a key of this kind.'), findsOneWidget);
     await tester.enterText(find.byKey(const ValueKey('acct-map-tax')), 'VAT|FR|taxed|5.5|2014');
-    await tester.tap(find.byKey(const ValueKey('acct-map-save')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-map-save');
     expect(repo.connections.single.maps.single.key, 'VAT|FR|taxed|5.5|2014');
     expect(find.text('VAT|FR|taxed|5.5|2014 → FR_55'), findsOneWidget);
     await tester.tapAt(const Offset(10, 10));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(const ValueKey('acct-revoke-$_card')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('acct-revoke-confirm')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-revoke-$_card');
+    await _tap(tester, 'acct-revoke-confirm');
     expect(repo.connections.single.live, isFalse);
     expect(repo.connections.single.maps, hasLength(1), reason: 'the mappings stay');
     expect(find.text('Not connected'), findsOneWidget);
@@ -145,8 +141,7 @@ void main() {
     // The file: its target, its short digest and who made it.
     expect(find.textContaining('Generic journal'), findsOneWidget);
     expect(find.textContaining('SHA-256 ${'e' * 12}…'), findsOneWidget);
-    await tester.tap(find.byKey(ValueKey('acct-transfer-file-$id')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-transfer-file-$id');
     expect(find.text('SHA-256 ${'e' * 64}'), findsOneWidget);
     expect(find.textContaining('F-2026-0001 · Invoice'), findsWidgets);
     // The connection's deliveries: received, and one waiting for its readback.
@@ -161,8 +156,7 @@ void main() {
     await _open(tester, repo, permissions: {WorkspacePermission.viewFinances});
     expect(find.text('Year 2026'), findsOneWidget);
     expect(find.byKey(const ValueKey('acct-transfers-empty')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('acct-transfers-previous')));
-    await tester.pumpAndSettle();
+    await _tap(tester, 'acct-transfers-previous');
     expect(find.text('Year 2025'), findsOneWidget);
   });
 }

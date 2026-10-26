@@ -14,14 +14,14 @@ import 'accounting_target.dart';
 
 /// The right that connects, maps and revokes (the server's
 /// `accounting_connector_actor`).
-const String accountingConnectPermission = 'manageBilling';
+const String _accountingConnectPermission = 'manageBilling';
 
 /// The rights that read the connections and the transfers (the server's
 /// `accounting_reader`, beside the owner).
 const Set<String> accountingTransferReaders = {
   'viewFinances',
   'exportData',
-  accountingConnectPermission,
+  _accountingConnectPermission,
 };
 
 /// What the accounting systems need of the space: its country (which
@@ -40,7 +40,7 @@ class AccountingSystemsScope {
   final Set<String> permissions;
   final Map<String, String> memberNames;
 
-  bool get manage => permissions.contains(accountingConnectPermission);
+  bool get manage => permissions.contains(_accountingConnectPermission);
 }
 
 /// The state of a connection as the screen shows it.

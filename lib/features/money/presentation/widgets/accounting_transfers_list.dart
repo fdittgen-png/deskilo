@@ -21,6 +21,9 @@ import 'accounting_targets_sheet.dart';
 /// tap away.
 const int _shortDigest = 12;
 
+/// The target's state of a document it holds as a draft (`remote_state`).
+const String _remoteDraft = 'draft';
+
 String _short(String sha) =>
     sha.length > _shortDigest ? '${sha.substring(0, _shortDigest)}…' : sha;
 
@@ -85,7 +88,6 @@ class _AccountingTransfersListState
       )),
     );
     final names = widget.memberNames;
-    String day(DateTime d) => material.formatMediumDate(d);
     return Column(
       key: const ValueKey('acct-transfers'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -124,84 +126,118 @@ class _AccountingTransfersListState
               if (t.files.isEmpty && t.deliveries.isEmpty)
                 Text(l10n.acctTransfersEmpty, key: const ValueKey('acct-transfers-empty')),
               for (final f in t.files)
-                ExpansionTile(
-                  key: ValueKey('acct-transfer-file-${f.id}'),
-                  tilePadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.description_outlined),
-                  title: Text(
-                    l10n.acctTransferFile(targetLabel(f.formatId), day(f.from), day(f.to)),
-                  ),
-                  subtitle: Text(
-                    [
-                      l10n.acctTransferFileMeta(
-                        day(f.exportedAt),
-                        names[f.exportedByMemberId] ?? l10n.acctWhoUnknown,
-                        f.documentCount,
-                      ),
-                      l10n.acctTransferSha(_short(f.sha256)),
-                      if (f.closedPeriod) l10n.acctTransferClosed,
-                    ].join(' · '),
-                  ),
-                  children: [
-                    SelectableText(
-                      l10n.acctTransferSha(f.sha256),
-                      key: ValueKey('acct-transfer-sha-${f.id}'),
-                      style: theme.bodySmall,
-                    ),
-                    if (f.deliveries.isNotEmpty)
-                      Text(l10n.acctTransferDocuments(f.deliveries.length), style: theme.labelMedium),
-                    for (final d in f.deliveries)
-                      ListTile(
-                        key: ValueKey('acct-transfer-doc-${d.id}'),
-                        dense: true,
-                        contentPadding: EdgeInsets.zero,
-                        title: Text(
-                          l10n.acctTransferDocLine(
-                            d.documentNumber,
-                            _documentKindLabel(l10n, d.documentKind),
-                            day(d.eventDate),
-                          ),
-                        ),
-                        subtitle: Text(l10n.acctTransferSha(_short(d.payloadSha256))),
-                      ),
-                  ],
-                ),
-              for (final d in t.deliveries)
-                ListTile(
-                  key: ValueKey('acct-delivery-${d.id}'),
-                  contentPadding: EdgeInsets.zero,
-                  leading: Icon(
-                    d.status == DeliveryStatus.acknowledged
-                        ? Icons.cloud_done_outlined
-                        : Icons.cloud_sync_outlined,
-                  ),
-                  title: Text(
-                    l10n.acctTransferDocLine(
-                      d.documentNumber,
-                      _documentKindLabel(l10n, d.documentKind),
-                      day(d.eventDate),
-                    ),
-                  ),
-                  subtitle: Text(
-                    [
-                      targetLabel(d.targetId),
-                      _deliveryStatusLabel(l10n, d.status),
-                      if (d.remoteNumber.isNotEmpty || d.remoteId.isNotEmpty)
-                        l10n.acctDeliveryRemote(
-                          d.remoteNumber.isNotEmpty ? d.remoteNumber : d.remoteId,
-                        ),
-                      if (d.remoteState == 'draft') l10n.acctDeliveryRemoteDraft,
-                      if (d.attempts > 1) l10n.acctDeliveryAttempts(d.attempts),
-                      if (d.error.isNotEmpty) d.error,
-                      l10n.acctTransferSha(_short(d.payloadSha256)),
-                    ].join(' · '),
-                    key: ValueKey('acct-delivery-state-${d.id}'),
-                  ),
-                ),
+                _FileTile(file: f, by: names[f.exportedByMemberId]),
+              for (final d in t.deliveries) _DeliveryTile(delivery: d),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+/// The line of one document event: its number, kind and day.
+String _documentLine(BuildContext context, AccountingDelivery d) =>
+    context.l10n.acctTransferDocLine(
+      d.documentNumber,
+      _documentKindLabel(context.l10n, d.documentKind),
+      MaterialLocalizations.of(context).formatMediumDate(d.eventDate),
+    );
+
+/// One file handed out: its target and period, when and by whom, its digest,
+/// and, opened, the whole digest and the documents it carried.
+class _FileTile extends StatelessWidget {
+  const _FileTile({required this.file, required this.by});
+
+  final TransferFile file;
+
+  /// Who made it, null when they are no longer known.
+  final String? by;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context).textTheme;
+    final material = MaterialLocalizations.of(context);
+    final f = file;
+    return ExpansionTile(
+      key: ValueKey('acct-transfer-file-${f.id}'),
+      tilePadding: EdgeInsets.zero,
+      leading: const Icon(Icons.description_outlined),
+      title: Text(
+        l10n.acctTransferFile(
+          targetLabel(f.formatId),
+          material.formatMediumDate(f.from),
+          material.formatMediumDate(f.to),
+        ),
+      ),
+      subtitle: Text(
+        [
+          l10n.acctTransferFileMeta(
+            material.formatMediumDate(f.exportedAt),
+            by ?? l10n.acctWhoUnknown,
+            f.documentCount,
+          ),
+          l10n.acctTransferSha(_short(f.sha256)),
+          if (f.closedPeriod) l10n.acctTransferClosed,
+        ].join(' · '),
+      ),
+      children: [
+        SelectableText(
+          l10n.acctTransferSha(f.sha256),
+          key: ValueKey('acct-transfer-sha-${f.id}'),
+          style: theme.bodySmall,
+        ),
+        if (f.deliveries.isNotEmpty)
+          Text(
+            l10n.acctTransferDocuments(f.deliveries.length),
+            style: theme.labelMedium,
+          ),
+        for (final d in f.deliveries)
+          ListTile(
+            key: ValueKey('acct-transfer-doc-${d.id}'),
+            dense: true,
+            contentPadding: EdgeInsets.zero,
+            title: Text(_documentLine(context, d)),
+            subtitle: Text(l10n.acctTransferSha(_short(d.payloadSha256))),
+          ),
+      ],
+    );
+  }
+}
+
+/// One document delivered to a connection, with what the target answered.
+class _DeliveryTile extends StatelessWidget {
+  const _DeliveryTile({required this.delivery});
+
+  final AccountingDelivery delivery;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final d = delivery;
+    final remote = d.remoteNumber.isNotEmpty ? d.remoteNumber : d.remoteId;
+    return ListTile(
+      key: ValueKey('acct-delivery-${d.id}'),
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(
+        d.status == DeliveryStatus.acknowledged
+            ? Icons.cloud_done_outlined
+            : Icons.cloud_sync_outlined,
+      ),
+      title: Text(_documentLine(context, d)),
+      subtitle: Text(
+        [
+          targetLabel(d.targetId),
+          _deliveryStatusLabel(l10n, d.status),
+          if (remote.isNotEmpty) l10n.acctDeliveryRemote(remote),
+          if (d.remoteState == _remoteDraft) l10n.acctDeliveryRemoteDraft,
+          if (d.attempts > 1) l10n.acctDeliveryAttempts(d.attempts),
+          if (d.error.isNotEmpty) d.error,
+          l10n.acctTransferSha(_short(d.payloadSha256)),
+        ].join(' · '),
+        key: ValueKey('acct-delivery-state-${d.id}'),
+      ),
     );
   }
 }

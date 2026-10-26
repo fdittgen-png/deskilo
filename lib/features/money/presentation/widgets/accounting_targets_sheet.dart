@@ -276,84 +276,109 @@ class _ConnectionCard extends ConsumerWidget {
     AppSnack.success(context, l10n.acctConnRevoked);
   }
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  /// What is known of the connection: its state and the target's words.
+  List<Widget> _facts(BuildContext context) {
     final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     final c = connection;
-    final name = targetLabel(target.id);
-    final signIn = target.connectsBy.contains(AccountingAuthKind.oauth2);
-    final byToken = target.connectsBy.contains(AccountingAuthKind.token);
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('$name · $issuerName', style: Theme.of(context).textTheme.titleMedium),
-            Text(
-              c == null ? l10n.acctTargetsNotConnected : _connectionStatusLabel(l10n, c.status),
-              key: ValueKey('acct-connection-state-${target.id}-$issuerId'),
-              style: c != null && c.needsAttention
-                  ? TextStyle(color: Theme.of(context).colorScheme.error)
-                  : null,
-            ),
-            if (c != null && c.displayName.isNotEmpty) Text(c.displayName),
-            if (c != null && c.remoteTenantId.isNotEmpty)
-              Text(l10n.acctConnTenant(c.remoteTenantId)),
-            if (c?.connectedAt case final at?)
-              Text(l10n.acctConnSince(material.formatMediumDate(at))),
-            if (c != null && c.statusDetail.isNotEmpty)
-              Text(l10n.acctConnDetail(c.statusDetail)),
-            if (revoked.isNotEmpty)
-              Text(
-                l10n.acctConnRevokedBefore(revoked.length),
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            Wrap(
-              spacing: AppSpacing.sm,
-              children: [
-                if (manage && byToken && (c == null || c.authKind == AccountingAuthKind.token))
-                  TextButton(
-                    key: ValueKey('acct-connect-token-${target.id}-$issuerId'),
-                    onPressed: () => _token(context, ref),
-                    child: Text(c == null ? l10n.acctConnConnectToken : l10n.acctConnReplaceToken),
-                  ),
-                if (manage && signIn && (c == null || c.authKind == AccountingAuthKind.oauth2))
-                  TextButton(
-                    key: ValueKey('acct-sign-in-${target.id}-$issuerId'),
-                    onPressed: () => _signIn(context, ref),
-                    child: Text(c == null ? l10n.acctConnSignIn(name) : l10n.acctConnSignInAgain),
-                  ),
-                if (manage && c != null && c.authKind == AccountingAuthKind.oauth2)
-                  TextButton(
-                    key: ValueKey('acct-refresh-${target.id}-$issuerId'),
-                    onPressed: () => _refresh(context, ref),
-                    child: Text(l10n.acctConnRefresh),
-                  ),
-                if (c != null)
-                  TextButton(
-                    key: ValueKey('acct-maps-${target.id}-$issuerId'),
-                    onPressed: () => showMappingsSheet(
-                      context,
-                      workspaceId: workspaceId,
-                      connection: c,
-                      manage: manage,
-                      memberNames: memberNames,
-                    ),
-                    child: Text(l10n.acctMapsButton(c.maps.length)),
-                  ),
-                if (manage && c != null)
-                  TextButton(
-                    key: ValueKey('acct-revoke-${target.id}-$issuerId'),
-                    onPressed: () => _revoke(context, ref),
-                    child: Text(l10n.acctConnRevoke),
-                  ),
-              ],
-            ),
-          ],
+    if (c == null) {
+      return [
+        Text(
+          l10n.acctTargetsNotConnected,
+          key: ValueKey('acct-connection-state-${target.id}-$issuerId'),
         ),
+      ];
+    }
+    return [
+      Text(
+        _connectionStatusLabel(l10n, c.status),
+        key: ValueKey('acct-connection-state-${target.id}-$issuerId'),
+        style: c.needsAttention
+            ? TextStyle(color: Theme.of(context).colorScheme.error)
+            : null,
       ),
-    );
+      if (c.displayName.isNotEmpty) Text(c.displayName),
+      if (c.remoteTenantId.isNotEmpty) Text(l10n.acctConnTenant(c.remoteTenantId)),
+      if (c.connectedAt case final at?)
+        Text(l10n.acctConnSince(material.formatMediumDate(at))),
+      if (c.statusDetail.isNotEmpty) Text(l10n.acctConnDetail(c.statusDetail)),
+    ];
   }
+
+  /// The doors: connecting and revoking for a billing manager, the
+  /// mappings for every reader of a connection.
+  List<Widget> _doors(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final c = connection;
+    final kind = c?.authKind;
+    final byToken = manage &&
+        target.connectsBy.contains(AccountingAuthKind.token) &&
+        (kind == null || kind == AccountingAuthKind.token);
+    final signIn = manage &&
+        target.connectsBy.contains(AccountingAuthKind.oauth2) &&
+        (kind == null || kind == AccountingAuthKind.oauth2);
+    final id = '${target.id}-$issuerId';
+    return [
+      if (byToken)
+        TextButton(
+          key: ValueKey('acct-connect-token-$id'),
+          onPressed: () => _token(context, ref),
+          child: Text(c == null ? l10n.acctConnConnectToken : l10n.acctConnReplaceToken),
+        ),
+      if (signIn)
+        TextButton(
+          key: ValueKey('acct-sign-in-$id'),
+          onPressed: () => _signIn(context, ref),
+          child: Text(c == null ? l10n.acctConnSignIn(targetLabel(target.id)) : l10n.acctConnSignInAgain),
+        ),
+      if (signIn && c != null)
+        TextButton(
+          key: ValueKey('acct-refresh-$id'),
+          onPressed: () => _refresh(context, ref),
+          child: Text(l10n.acctConnRefresh),
+        ),
+      if (c != null) ...[
+        TextButton(
+          key: ValueKey('acct-maps-$id'),
+          onPressed: () => showMappingsSheet(
+            context,
+            workspaceId: workspaceId,
+            connection: c,
+            manage: manage,
+            memberNames: memberNames,
+          ),
+          child: Text(l10n.acctMapsButton(c.maps.length)),
+        ),
+        if (manage)
+          TextButton(
+            key: ValueKey('acct-revoke-$id'),
+            onPressed: () => _revoke(context, ref),
+            child: Text(l10n.acctConnRevoke),
+          ),
+      ],
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => Card(
+    child: Padding(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${targetLabel(target.id)} · $issuerName',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          ..._facts(context),
+          if (revoked.isNotEmpty)
+            Text(
+              context.l10n.acctConnRevokedBefore(revoked.length),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          Wrap(spacing: AppSpacing.sm, children: _doors(context, ref)),
+        ],
+      ),
+    ),
+  );
 }
