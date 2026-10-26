@@ -76,5 +76,6 @@
   "a11ySeatReserved": "réservé",
   "a11ySeatOccupied": "occupé",
   "a11ySeatMine": "votre place",
-  "a11ySeatBlocked": "indisponible"
+  "a11ySeatBlocked": "indisponible",
+  "reservePlanLoading": "Chargement du plan…"
 }

@@ -9,13 +9,16 @@ import '../../../../core/theme/app_spacing.dart';
 /// plan (a few rooms and desks) in the surface's own tones, so the page does
 /// not jump when the plan arrives. Still, never animated: it holds under
 /// reduced motion too.
+const double _tallBlock = 96;
+const double _shortBlock = 72;
+
 class PlanSkeleton extends StatelessWidget {
   const PlanSkeleton({super.key});
 
   @override
   Widget build(BuildContext context) {
     final tone = Theme.of(context).colorScheme.surfaceContainerHighest;
-    Widget block(double flex, {double height = 96}) => Expanded(
+    Widget block(double flex, {double height = _tallBlock}) => Expanded(
       flex: (flex * 10).round(),
       child: Container(
         height: height,
@@ -24,7 +27,7 @@ class PlanSkeleton extends StatelessWidget {
     );
     return Semantics(
       key: const ValueKey('reserve-plan-skeleton'),
-      label: context.l10n.myReservationsLoadingMore,
+      label: context.l10n.reservePlanLoading,
       child: ExcludeSemantics(
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
@@ -35,10 +38,10 @@ class PlanSkeleton extends StatelessWidget {
               Row(spacing: AppSpacing.md, children: [block(2), block(1)]),
               Row(spacing: AppSpacing.md, children: [block(1), block(1.5)]),
               Row(
+                spacing: AppSpacing.md,
                 children: [
-                  block(1, height: 72),
-                  const SizedBox(width: 12),
-                  block(2, height: 72),
+                  block(1, height: _shortBlock),
+                  block(2, height: _shortBlock),
                 ],
               ),
             ],

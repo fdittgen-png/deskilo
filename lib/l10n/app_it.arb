@@ -14300,6 +14300,7 @@
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
   "reservePickDateTooltip": "Scegli una data",
+  "reservePlanLoading": "Caricamento della pianta…",
   "reserveRoomFor": "Sala riunioni · {count} persone",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
