@@ -400,8 +400,7 @@ enum WorkspaceFeature {
   parking,
   /// #2504 WebMCP tools (under mcpAccess); #2573 purchase documents (under
   /// moneyTab); #2569 premises lease (under scheduledExpenses); #2576 asset
-  /// register (under purchases); #2568 rented rooms (under levelBooking).
-  /// Platform, OFF.
+  /// register (under purchases); #2568 rented rooms (under levelBooking). OFF.
   webMcp,
   purchases,
   premisesLease,

@@ -12,6 +12,10 @@ import 'package:meta/meta.dart';
 import '../../../../core/data/json_reader.dart';
 import 'bank_statement.dart';
 
+/// The permissions that read the bank statements (bank_statement_reader;
+/// the owner always does).
+const Set<String> bankStatementReaders = {'viewFinances', 'issueInvoices'};
+
 /// Where one movement stands.
 enum BankLineStatus {
   open,

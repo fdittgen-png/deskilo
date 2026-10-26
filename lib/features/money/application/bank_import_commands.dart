@@ -141,3 +141,21 @@ class BankImportCommands {
     required String outgoingPaymentId,
   }) => _repository.reconcileOut(line.id, outgoingPaymentId: outgoingPaymentId);
 }
+
+/// What a spreadsheet's mapping still lacks, field by field.
+enum BankCsvMappingProblem { account, currency, date, amount }
+
+/// The problems of a mapping as the person filled it in: an account named,
+/// a three-letter currency, a date column and an amount column chosen.
+Set<BankCsvMappingProblem> bankCsvMappingProblems({
+  required String account,
+  required String currency,
+  required int? dateColumn,
+  required int? amountColumn,
+}) => {
+  if (account.trim().isEmpty) BankCsvMappingProblem.account,
+  if (!RegExp(r'^[A-Za-z]{3}$').hasMatch(currency.trim()))
+    BankCsvMappingProblem.currency,
+  if (dateColumn == null) BankCsvMappingProblem.date,
+  if (amountColumn == null) BankCsvMappingProblem.amount,
+};
