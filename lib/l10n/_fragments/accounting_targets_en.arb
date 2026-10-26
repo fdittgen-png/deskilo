@@ -206,7 +206,7 @@
   "@acctMapKindTax": {
     "description": "#2370 Mapping kind: a tax component mapped to a remote tax code."
   },
-  "acctMapKindParty": "Customer or supplier",
+  "acctMapKindParty": "Customer",
   "@acctMapKindParty": {
     "description": "#2370 Mapping kind: a member mapped to a remote customer."
   },
@@ -477,6 +477,26 @@
     "description": "#2370 Transfers list: how many sends a delivery took.",
     "placeholders": {
       "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refusalAccountingClosed": "This connection is closed for this: it was revoked, or it has already delivered. Revoke it and connect again. Nothing was saved.",
+  "@refusalAccountingClosed": {
+    "description": "#2370 Refusal (DKA02): the accounting connection was revoked, or it already delivered and its token cannot change."
+  },
+  "refusalAccountingValue": "The server refused this value: check the token, the key or the issuer and try again. Nothing was saved.",
+  "@refusalAccountingValue": {
+    "description": "#2370 Refusal (DKA03): the server refused a value of an accounting connection (token, key, issuer, file)."
+  },
+  "acctJournalLogged": "{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged",
+  "@acctJournalLogged": {
+    "description": "#2370 Snack after the generic journal export: how many documents the file delivered and how many it carried unchanged.",
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "unchanged": {
         "type": "int"
       }
     }

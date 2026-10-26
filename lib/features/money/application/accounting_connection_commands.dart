@@ -10,9 +10,6 @@ import '../domain/accounting_connection.dart';
 import '../domain/generic_journal_csv.dart';
 import '../domain/posting.dart';
 
-/// The fewest characters a pasted API token can have: the server refuses
-/// shorter ones (`set_accounting_token_v1`), so the form says it first.
-const int _minimumTokenLength = 8;
 
 /// Why a mapping cannot be saved as typed.
 enum MapDraftProblem { key, remote }
@@ -26,6 +23,13 @@ MapDraftProblem? mapDraftProblem(AccountingMapDraft draft) {
     return MapDraftProblem.remote;
   }
   return null;
+}
+
+/// Whether [token] has a length the server keeps; it says so first, so a
+/// form names the field before anything is sent.
+bool _tokenFits(String token) {
+  final n = token.trim().length;
+  return n >= accountingTokenLength.min && n <= accountingTokenLength.max;
 }
 
 class AccountingConnectionCommands {
@@ -43,7 +47,7 @@ class AccountingConnectionCommands {
     required String token,
     required String remoteTenantId,
   }) async {
-    if (token.trim().length < _minimumTokenLength) return null;
+    if (!_tokenFits(token)) return null;
     final opened = await _repository.openTokenConnection(
       workspaceId,
       issuerSiteId: issuerSiteId,
@@ -58,12 +62,13 @@ class AccountingConnectionCommands {
   }
 
   /// Replaces the token of an existing token connection; null when the
-  /// token is too short.
+  /// token does not fit, or the connection delivered (its company stays:
+  /// another one is a new connection).
   Future<AccountingConnection?> replaceToken(
     AccountingConnection connection, {
     required String token,
   }) async {
-    if (token.trim().length < _minimumTokenLength) return null;
+    if (!_tokenFits(token) || connection.delivered) return null;
     return _repository.setToken(
       connection.id,
       token: token.trim(),

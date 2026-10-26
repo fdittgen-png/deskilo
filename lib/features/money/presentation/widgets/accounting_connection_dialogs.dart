@@ -10,6 +10,8 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/accounting_connection_commands.dart';
 import '../../domain/accounting_connection.dart';
 import '../../domain/book_chart.dart';
@@ -47,6 +49,20 @@ String _mapKindLabel(BuildContext context, AccountingMapKind kind) {
   };
 }
 
+/// What a mapping's key reads as: a member's name, a role's label with
+/// its qualifier, else the key itself.
+String _keyText(AppLocalizations l10n, AccountingMap m, Map<String, String> names) {
+  if (m.kind == AccountingMapKind.party) {
+    return names[m.key.substring(m.key.indexOf(':') + 1)] ?? m.key;
+  }
+  if (m.kind == AccountingMapKind.tax) return m.key;
+  final role = m.key.split(':').first;
+  final known = BookRole.values.where((r) => r.wire == role).firstOrNull;
+  return known == null
+      ? m.key
+      : '${bookRoleLabel(l10n, known)}${m.key.substring(role.length)}';
+}
+
 class _MappingsView extends ConsumerWidget {
   const _MappingsView({
     required this.workspaceId,
@@ -65,9 +81,17 @@ class _MappingsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final all = ref.watch(accountingConnectionsProvider(workspaceId)).value;
-    final c = all?.where((x) => x.id == connectionId).firstOrNull;
-    if (c == null) return const SizedBox.shrink();
+    final loaded = ref.watch(accountingConnectionsProvider(workspaceId));
+    if (loaded.hasError) {
+      return SheetShell(
+        title: l10n.acctTargetsTitle,
+        children: [
+          Text(l10n.acctTargetsLoadFailed, key: const ValueKey('acct-maps-failed')),
+        ],
+      );
+    }
+    final c = loaded.value?.where((x) => x.id == connectionId).firstOrNull;
+    if (c == null) return const LoadingView();
     final names = memberNames;
     Future<void> edit([AccountingMap? map]) async {
       final saved = await showDialog<bool>(
@@ -92,22 +116,6 @@ class _MappingsView extends ConsumerWidget {
       if (ok) ref.invalidate(accountingConnectionsProvider(workspaceId));
     }
 
-    String keyText(AccountingMap m) {
-      if (m.kind == AccountingMapKind.party) {
-        final id = m.key.substring(m.key.indexOf(':') + 1);
-        return names[id] ?? m.key;
-      }
-      if (m.kind == AccountingMapKind.account || m.kind == AccountingMapKind.item) {
-        final role = m.key.split(':').first;
-        final known = BookRole.values.where((r) => r.wire == role).firstOrNull;
-        if (known != null) {
-          final rest = m.key.length > role.length ? m.key.substring(role.length) : '';
-          return '${bookRoleLabel(l10n, known)}$rest';
-        }
-      }
-      return m.key;
-    }
-
     return SheetShell(
       title: l10n.acctMapsTitle(targetLabel(c.targetId)),
       children: [
@@ -118,7 +126,7 @@ class _MappingsView extends ConsumerWidget {
           ListTile(
             key: ValueKey('acct-map-${m.id}'),
             contentPadding: EdgeInsets.zero,
-            title: Text(l10n.acctMapLine(keyText(m), m.remote)),
+            title: Text(l10n.acctMapLine(_keyText(l10n, m, names), m.remote)),
             subtitle: Text(
               m.remoteName.isEmpty
                   ? _mapKindLabel(context, m.kind)
@@ -211,7 +219,7 @@ class _MapDialogState extends ConsumerState<_MapDialog> {
           : '${_role.wire}:${_fields['qualifier'].text.trim()}',
     AccountingMapKind.tax => _fields['tax'].text.trim(),
     AccountingMapKind.party =>
-      _member == null ? '' : partyMapKey(AccountingPartyKind.member, _member!),
+      _member == null ? '' : memberMapKey(_member!),
   };
 
   AccountingMapDraft get _draft => AccountingMapDraft(

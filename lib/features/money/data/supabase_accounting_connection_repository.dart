@@ -5,7 +5,7 @@ import '../../../core/time/date_text.dart';
 import '../domain/accounting_connection.dart';
 import '../domain/accounting_target.dart';
 
-/// The accounting connections, mappings and transfers (9999) and the
+/// The accounting connections, mappings and transfers (0595) and the
 /// `accounting-connect` function. Every read and write checks the flag and
 /// the right on the server; no answer carries a secret.
 class SupabaseAccountingConnectionRepository

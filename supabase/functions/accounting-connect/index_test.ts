@@ -85,6 +85,7 @@ Deno.test("authorize opens the connection as the caller and keeps the state in V
   assertEquals(open.as, "caller");
   assertEquals(open.args.p_auth_kind, "oauth2");
   assertEquals(state, `${CONN}.${w.vault.oauth_state}`);
+  assertEquals(w.vault.oauth_state_at, "2026-10-25T10:00:00.000Z");
 });
 
 Deno.test("no OAuth application on this server: nothing is opened", async () => {
@@ -125,6 +126,23 @@ Deno.test("a redirect with another state is refused before any exchange", async 
   const res = await handle(new Request(`https://x.test/functions/v1/accounting-connect?code=C&state=${CONN}.forged`), w.deps);
   assertEquals(res.status, 400);
   assert(!exchanged);
+  assertEquals(w.state().status, "pending");
+});
+
+Deno.test("a stale state is refused before any exchange, and spent", async () => {
+  const w = world();
+  const state = await signIn(w);
+  let exchanged = false;
+  w.deps.fetcher = (() => {
+    exchanged = true;
+    return Promise.resolve(new Response("{}"));
+  }) as typeof fetch;
+  w.deps.now = () => new Date("2026-10-25T10:11:00Z");
+  const res = await handle(new Request(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`), w.deps);
+  assertEquals(res.status, 400);
+  assert((await res.text()).includes("expired"));
+  assert(!exchanged);
+  assertEquals(w.vault, {});
   assertEquals(w.state().status, "pending");
 });
 

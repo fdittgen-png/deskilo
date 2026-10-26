@@ -12,11 +12,14 @@
 -- by one acknowledgement; a re-run of an acknowledged delivery is a no-op,
 -- another digest is refused and another remote id is a conflict. A file of
 -- the generic journal delivered twice yields one row per document, the same
--- digests and no remote id; a changed document follows the newer file.
+-- digests and no remote id; a changed document is a new generation and the
+-- earlier one keeps its file. A revoked and reconnected company finds its
+-- documents again; a delegated token, a plain member and a stranger are
+-- refused by calls under the authenticated role.
 -- Revoking forgets the secret and keeps the mappings and deliveries.
 -- Positive cases beside every refusal.
 begin;
-select plan(45);
+select plan(58);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -92,6 +95,38 @@ exception when others then
 end
 $j$;
 
+-- p_sql's jsonb answer as p_who with an assistant's delegated token.
+create or replace function pg_temp.as_delegated(p_who text, p_sql text) returns jsonb
+language plpgsql as $j$
+declare v jsonb;
+begin
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', current_setting('ac.' || p_who), 'role', 'authenticated',
+                      'client_id', 'assistant')::text, true);
+  execute p_sql into v;
+  return v;
+exception when others then
+  return jsonb_build_object('refused', sqlstate);
+end
+$j$;
+
+-- p_sql run as p_who under the authenticated role itself (grants, RLS):
+-- its first value as text, or the SQLSTATE refused.
+create or replace function pg_temp.as_role(p_who text, p_sql text) returns text
+language plpgsql as $j$
+declare v text;
+begin
+  perform pg_temp.act_as(p_who);
+  execute 'set local role authenticated';
+  execute p_sql into v;
+  reset role;
+  return v;
+exception when others then
+  reset role;
+  return sqlstate;
+end
+$j$;
+
 create or replace function pg_temp.v(p_key text) returns text language sql as $v$
   select current_setting('ac.' || p_key)
 $v$;
@@ -122,7 +157,7 @@ $docs$;
 
 select pg_temp.seed();
 
--- ── 1-6: no secret is ever within a client's reach ───────────────────────
+-- ── no secret is ever within a client's reach ───────────────────────
 select is((select count(*)::int from pg_class c join pg_namespace n on n.oid = c.relnamespace
             where n.nspname = 'public' and c.relrowsecurity
               and c.relname in ('accounting_connections', 'accounting_maps', 'accounting_deliveries')),
@@ -152,16 +187,19 @@ select ok(has_function_privilege('service_role', 'public.accounting_credentials_
 select ok(not has_table_privilege('authenticated', 'vault.decrypted_secrets', 'select'),
           'no client reads the decrypted secrets');
 
--- ── 7-16: connections ────────────────────────────────────────────────────
+-- ── connections ────────────────────────────────────────────────────
 select is(pg_temp.as_json('stranger', format($q$select public.open_accounting_connection_v1(%L, %L, 'pennylane_api', 'token', '')$q$,
             pg_temp.v('ws2'), pg_temp.v('site2'))) ->> 'refused',
           '0A000', 'a space with the flag off opens no connection');
 select is(pg_temp.as_json('member', format($q$select public.open_accounting_connection_v1(%L, %L, 'pennylane_api', 'token', '')$q$,
             pg_temp.v('ws'), pg_temp.v('site'))) ->> 'refused',
           '42501', 'a plain member opens no connection');
+select is(pg_temp.as_delegated('billing', format($q$select public.open_accounting_connection_v1(%L, %L, 'pennylane_api', 'token', '')$q$,
+            pg_temp.v('ws'), pg_temp.v('site'))) ->> 'refused',
+          '42501', 'an assistant''s delegated token connects nothing, whoever it acts for');
 select is(pg_temp.as_json('billing', format($q$select public.open_accounting_connection_v1(%L, %L, 'pennylane_api', 'token', 'Pennylane')$q$,
             pg_temp.v('ws'), pg_temp.v('site2'))) ->> 'refused',
-          '22023', 'an issuer of another space is refused');
+          'DKA03', 'an issuer of another space is refused');
 select set_config('ac.conn', pg_temp.as_json('billing',
   format($q$select public.open_accounting_connection_v1(%L, %L, 'pennylane_api', 'token', 'Pennylane')$q$,
          pg_temp.v('ws'), pg_temp.v('site'))) ->> 'id', false);
@@ -169,15 +207,15 @@ select is((select status from public.accounting_connections where id = pg_temp.v
           'pending', 'a billing manager opens a pending connection');
 select is(pg_temp.as_json('billing', format($q$select public.open_accounting_connection_v1(%L, %L, 'pennylane_api', 'token', '')$q$,
             pg_temp.v('ws'), pg_temp.v('site'))) ->> 'refused',
-          '23505', 'one live connection per issuer and target');
+          'DKA01', 'one live connection per issuer and target');
 select is(pg_temp.as_json('billing', format($q$select public.set_accounting_token_v1(%L, 'short', '')$q$, pg_temp.v('conn'))) ->> 'refused',
-          '22023', 'a token too short is refused');
+          'DKA03', 'a token too short is refused');
 select is(pg_temp.as_json('billing', format($q$select public.set_accounting_token_v1(%L, 'tok-secret-2370-abcdef', '812345678')$q$,
             pg_temp.v('conn'))) - 'id' - 'connected_at' - 'issuer_site_id',
           jsonb_build_object('target_id', 'pennylane_api', 'auth_kind', 'token', 'remote_tenant_id', '812345678',
             'display_name', 'Pennylane', 'status', 'connected', 'status_detail', '', 'scopes', '[]'::jsonb,
             'token_expires_at', null, 'refresh_expires_at', null, 'revoked_at', null,
-            'secrets_set', '["access_token"]'::jsonb, 'maps', '[]'::jsonb),
+            'secrets_set', '["access_token"]'::jsonb, 'delivered', false, 'maps', '[]'::jsonb),
           'the token connects, and the answer names the secret, never its value');
 select is((select decrypted_secret from vault.decrypted_secrets
             where name = 'accounting:' || pg_temp.v('conn') || ':access_token'),
@@ -190,17 +228,30 @@ select ok((pg_temp.as_json('exporter', format('select public.accounting_connecti
           'a reader sees the connection and not the token');
 select is(pg_temp.as_json('stranger', format('select public.accounting_connections_v1(%L)', pg_temp.v('ws'))) ->> 'refused',
           '42501', 'another space''s owner reads nothing of this space');
+select is(pg_temp.as_role('member', format('select public.accounting_credentials_resolved(%L)', pg_temp.v('conn'))),
+          '42501', 'a member may not call the resolver');
+select is(pg_temp.as_role('member', format('select public.accounting_connections_v1(%L)', pg_temp.v('ws'))),
+          '42501', 'a plain member reads no connection');
+select is(pg_temp.as_role('member', format($q$select public.accounting_transfers_v1(%L, '2026-01-01', '2026-12-31')$q$, pg_temp.v('ws'))),
+          '42501', 'a plain member reads no transfer');
+select is(pg_temp.as_role('member', format('select public.revoke_accounting_connection_v1(%L)', pg_temp.v('conn'))),
+          '42501', 'a plain member revokes nothing');
+select is(pg_temp.as_role('stranger', format('select public.revoke_accounting_connection_v1(%L)', pg_temp.v('conn'))),
+          '42501', 'another space''s owner revokes nothing');
+select is(pg_temp.as_role('stranger', 'select (select count(*) from public.accounting_connections)
+            + (select count(*) from public.accounting_maps) + (select count(*) from public.accounting_deliveries)'),
+          '0', 'another space''s owner sees no row of the three tables');
 
--- ── 17-21: mappings ──────────────────────────────────────────────────────
+-- ── mappings ──────────────────────────────────────────────────────
 select is(pg_temp.as_json('billing', format($q$select public.save_accounting_map_v1(%L, 'tax', 'VAT|FR|5.5', '', 'FR_55', '')$q$,
             pg_temp.v('conn'))) ->> 'refused',
-          '22023', 'a tax key of the wrong shape is refused');
+          'DKA03', 'a tax key of the wrong shape is refused');
 select is(pg_temp.as_json('billing', format($q$select public.save_accounting_map_v1(%L, 'tax', 'VAT|FR|taxed|20|2014', '', 'FR_200', '')$q$,
             pg_temp.v('conn'))) -> 'maps' -> 0 ->> 'remote_code',
           'FR_200', 'a tax component key maps to a remote code');
 select is(pg_temp.as_json('billing', format($q$select public.save_accounting_map_v1(%L, 'party', %L, '', 'C-1', '')$q$,
             pg_temp.v('conn'), 'member:' || pg_temp.v('member_x'))) ->> 'refused',
-          '22023', 'a member of another space is no party here');
+          'DKA03', 'a member of another space is no party here');
 select is(pg_temp.as_json('exporter', format($q$select public.save_accounting_map_v1(%L, 'account', 'revenue:standard', '', '706000', '')$q$,
             pg_temp.v('conn'))) ->> 'refused',
           '42501', 'an exporter maps nothing');
@@ -208,7 +259,7 @@ select is(pg_temp.as_json(null, format($q$select public.set_accounting_credentia
             pg_temp.v('conn'))) ->> 'refused',
           '23514', 'a mapped connection keeps its remote company');
 
--- ── 22-30: connection deliveries ─────────────────────────────────────────
+-- ── connection deliveries ─────────────────────────────────────────
 select ok(pg_temp.deliver('00000000-0000-4000-8000-00000237e001', 'c', 'generated') ->> 'idempotency_key' ~ '^[0-9a-f]{64}$',
           'the idempotency key is stored before any send');
 select is(pg_temp.deliver('00000000-0000-4000-8000-00000237e001', 'c', 'sent') ->> 'status', 'sent', 'the send is recorded');
@@ -217,7 +268,7 @@ select is(pg_temp.deliver('00000000-0000-4000-8000-00000237e001', 'c', 'conflict
 select is(pg_temp.deliver('00000000-0000-4000-8000-00000237e001', 'c', 'generated') - 'id' - 'idempotency_key' - 'recorded_at'
             - 'sent_at' - 'acknowledged_at' - 'issuer_site_id' - 'connection_id' - 'document_id' - 'recorded_by_member_id'
             - 'book_export_id' - 'period_from' - 'period_to' - 'event_date' - 'payload_sha256' - 'target_id' - 'document_kind'
-            - 'document_number' - 'remote_number' - 'remote_version' - 'remote_state',
+            - 'document_number' - 'remote_number' - 'remote_version' - 'remote_state' - 'generation',
           '{"status": "conflict", "outcome": "existing", "remote_id": "", "attempts": 1, "error": "no answer after send: timeout"}'::jsonb,
           'preparing it again leaves the conflict for a readback');
 select is(pg_temp.deliver('00000000-0000-4000-8000-00000237e001', 'c', 'acknowledged', '{"id": "R-1", "number": "F-2026-0007", "state": "posted"}') ->> 'status',
@@ -232,7 +283,13 @@ select is((select string_agg(status || ':' || remote_id || ':' || attempts, ',')
             where connection_id = pg_temp.v('conn')::uuid),
           'conflict:R-1:1', 'one row for the document, the first remote id kept');
 
--- ── 31-38: the generic journal file, delivered twice ─────────────────────
+select is(pg_temp.deliver('00000000-0000-4000-8000-00000237e002', 'a', 'acknowledged', '{"id": "R-7", "number": "F-2026-0008"}') ->> 'status',
+          'acknowledged', 'a second invoice is received');
+select is(pg_temp.as_json('billing', format($q$select public.set_accounting_token_v1(%L, 'tok-other-company-2370', '')$q$,
+            pg_temp.v('conn'))) ->> 'refused',
+          'DKA02', 'a connection that delivered keeps its token: revoke and connect again');
+
+-- ── the generic journal file, delivered twice ─────────────────────
 select set_config('ac.export1', pg_temp.as_json('exporter', format(
   $q$select public.record_book_export_v1(%L, 'generic_journal_csv', '2026-01-01', '2026-12-31', %L, 100, 7, 3)$q$,
   pg_temp.v('ws'), repeat('e', 64))) ->> 'id', false);
@@ -253,10 +310,14 @@ select is((select string_agg(document_kind || ':' || left(payload_sha256, 1) || 
           'one row per document, the same digests, no remote id');
 select is(pg_temp.as_json('exporter', format($q$select public.record_file_deliveries_v1(%L, 'generic_journal_csv', %L, %L, %L::jsonb)$q$,
             pg_temp.v('ws'), pg_temp.v('site'), pg_temp.v('export2'), pg_temp.docs('f'))),
-          '{"created": 0, "unchanged": 2, "changed": 1}'::jsonb, 'a changed document follows the newer file');
+          '{"created": 0, "unchanged": 2, "changed": 1}'::jsonb, 'a changed document is delivered again');
+select is((select string_agg(generation || ':' || left(payload_sha256, 1) || ':' || (book_export_id = pg_temp.v('export1')::uuid)::text, ','
+                             order by generation)
+             from public.accounting_deliveries where document_kind = 'credit_note' and workspace_id = pg_temp.v('ws')::uuid),
+          '1:c:true,2:f:false', 'a changed document gets a new generation, the old one keeps its file');
 select is(pg_temp.as_json('exporter', format($q$select public.record_file_deliveries_v1(%L, 'fec', %L, %L, %L::jsonb)$q$,
             pg_temp.v('ws'), pg_temp.v('site'), pg_temp.v('export2'), pg_temp.docs('c'))) ->> 'refused',
-          '22023', 'a file is delivered for the target it was written for');
+          'DKA03', 'a file is delivered for the target it was written for');
 select is(pg_temp.as_json('member', format($q$select public.record_file_deliveries_v1(%L, 'generic_journal_csv', %L, %L, %L::jsonb)$q$,
             pg_temp.v('ws'), pg_temp.v('site'), pg_temp.v('export2'), pg_temp.docs('c'))) ->> 'refused',
           '42501', 'a plain member logs no delivery');
@@ -266,18 +327,29 @@ select is((select jsonb_build_array(jsonb_array_length(t -> 'files'),
                                     jsonb_array_length(t -> 'deliveries'))
              from (select pg_temp.as_json('exporter', format($q$select public.accounting_transfers_v1(%L, '2026-01-01', '2026-12-31')$q$,
                                           pg_temp.v('ws'))) as t) x),
-          '[2, [1, 2], 1]'::jsonb, 'the transfers list the two files with their documents and the connection delivery');
+          '[2, [1, 3], 2]'::jsonb, 'the transfers list the two files with their documents and the connection deliveries');
 
--- ── 39-44: revoking, the flag off, the registries ────────────────────────
+-- ── revoking, the flag off, the registries ────────────────────────
 select is(pg_temp.as_json('billing', format('select public.revoke_accounting_connection_v1(%L)', pg_temp.v('conn'))) ->> 'status',
           'revoked', 'a billing manager revokes');
 select is((select count(*) from vault.secrets where name like 'accounting:' || pg_temp.v('conn') || ':%')::text
           || (select count(*) from public.accounting_maps where connection_id = pg_temp.v('conn')::uuid)::text
           || (select count(*) from public.accounting_deliveries where connection_id = pg_temp.v('conn')::uuid)::text,
-          '011', 'revoking forgets the token and keeps the mapping and the delivery');
-select is(pg_temp.as_json('billing', format($q$select public.open_accounting_connection_v1(%L, %L, 'pennylane_api', 'oauth2', '')$q$,
-            pg_temp.v('ws'), pg_temp.v('site'))) ->> 'status',
-          'pending', 'after a revocation the issuer connects again');
+          '012', 'revoking forgets the token and keeps the mapping and the deliveries');
+select is(pg_temp.deliver('00000000-0000-4000-8000-00000237e003', 'a', 'generated') ->> 'refused',
+          '23514', 'a revoked connection delivers nothing new');
+select set_config('ac.conn_old', pg_temp.v('conn'), false);
+select set_config('ac.conn', pg_temp.as_json('billing',
+  format($q$select public.open_accounting_connection_v1(%L, %L, 'pennylane_api', 'token', 'Pennylane')$q$,
+         pg_temp.v('ws'), pg_temp.v('site'))) ->> 'id', false);
+select is(pg_temp.as_json('billing', format($q$select public.set_accounting_token_v1(%L, 'tok-secret-2370-again', '812345678')$q$,
+            pg_temp.v('conn'))) ->> 'status',
+          'connected', 'after a revocation the issuer connects again, to the same company');
+select is(pg_temp.deliver('00000000-0000-4000-8000-00000237e002', 'a', 'generated') ->> 'outcome',
+          'unchanged', 'after revoke and reconnect, the acknowledged invoice is not created again');
+select is((select string_agg((connection_id = pg_temp.v('conn')::uuid)::text || ':' || remote_id, ',')
+             from public.accounting_deliveries where document_id = '00000000-0000-4000-8000-00000237e002'),
+          'true:R-7', 'its one row follows the reconnected connection with its remote id');
 select is(pg_temp.as_json('stranger', format(
             $q$select public.record_book_export_v1(%L, 'fec', '2026-01-01', '2026-12-31', %L, 1, 1, 1)$q$,
             pg_temp.v('ws2'), repeat('e', 64))) ->> 'logged',

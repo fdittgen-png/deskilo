@@ -363,6 +363,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get acctDeliverySent => 'Enviado, a la espera de la respuesta';
 
   @override
+  String acctJournalLogged(int logged, int unchanged) {
+    String _temp0 = intl.Intl.pluralLogic(
+      logged,
+      locale: localeName,
+      other: '$logged documentos registrados',
+      one: 'Un documento registrado',
+      zero: 'Ningún documento nuevo registrado',
+    );
+    return '$_temp0, $unchanged sin cambios';
+  }
+
+  @override
   String get acctKindCreditNote => 'Factura rectificativa';
 
   @override
@@ -420,7 +432,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get acctMapKindItem => 'Artículo';
 
   @override
-  String get acctMapKindParty => 'Cliente o proveedor';
+  String get acctMapKindParty => 'Cliente';
 
   @override
   String get acctMapKindTax => 'Código de impuesto';
@@ -19263,6 +19275,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get refTypeInvoice => 'Factura';
+
+  @override
+  String get refusalAccountingClosed =>
+      'Esta conexión ya no lo admite: se revocó o ya ha enviado documentos. Revóquela y vuelva a conectarse. No se ha guardado nada.';
+
+  @override
+  String get refusalAccountingValue =>
+      'El servidor ha rechazado este valor: compruebe el token, la clave o el emisor e inténtelo de nuevo. No se ha guardado nada.';
 
   @override
   String get refusalAlreadyDecided =>

@@ -85,7 +85,7 @@ extension JournalDeliveries on AccountingExportRun {
       byDefault: false,
     );
     if (!on) return;
-    await ref
+    final logged = await ref
         .read(accountingConnectionCommandProvider)
         .logJournalFile(
           workspace.id,
@@ -94,5 +94,13 @@ extension JournalDeliveries on AccountingExportRun {
           issuerSiteId: issuer,
           postings: journal.postings,
         );
+    if (logged == null || !context.mounted) return;
+    AppSnack.info(
+      context,
+      context.l10n.acctJournalLogged(
+        logged.created + logged.changed,
+        logged.unchanged,
+      ),
+    );
   }
 }

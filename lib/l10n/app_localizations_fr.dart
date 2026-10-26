@@ -363,6 +363,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get acctDeliverySent => 'Envoyé, en attente de la réponse';
 
   @override
+  String acctJournalLogged(int logged, int unchanged) {
+    String _temp0 = intl.Intl.pluralLogic(
+      logged,
+      locale: localeName,
+      other: '$logged pièces enregistrées',
+      one: 'Une pièce enregistrée',
+      zero: 'Aucune nouvelle pièce enregistrée',
+    );
+    return '$_temp0, $unchanged inchangées';
+  }
+
+  @override
   String get acctKindCreditNote => 'Avoir';
 
   @override
@@ -420,7 +432,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get acctMapKindItem => 'Article';
 
   @override
-  String get acctMapKindParty => 'Client ou fournisseur';
+  String get acctMapKindParty => 'Client';
 
   @override
   String get acctMapKindTax => 'Code de TVA';
@@ -19317,6 +19329,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get refTypeInvoice => 'Facture';
+
+  @override
+  String get refusalAccountingClosed =>
+      'Cette connexion n\'accepte plus cela : elle a été révoquée, ou elle a déjà envoyé des pièces. Révoquez-la et connectez-vous de nouveau. Rien n\'a été enregistré.';
+
+  @override
+  String get refusalAccountingValue =>
+      'Le serveur a refusé cette valeur : vérifiez le jeton, la clé ou l\'émetteur et réessayez. Rien n\'a été enregistré.';
 
   @override
   String get refusalAlreadyDecided =>

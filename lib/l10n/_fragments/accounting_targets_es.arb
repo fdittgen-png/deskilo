@@ -39,7 +39,7 @@
   "acctTokenSave": "Conectar",
   "acctMapKindAccount": "Cuenta",
   "acctMapKindTax": "Código de impuesto",
-  "acctMapKindParty": "Cliente o proveedor",
+  "acctMapKindParty": "Cliente",
   "acctMapKindItem": "Artículo",
   "acctMapsTitle": "Nombres en {target}",
   "acctMapsIntro": "Cómo se llama en el sistema cada cuenta, código de impuesto, cliente y artículo de esta contabilidad. Un envío que necesite uno que no esté aquí se detiene y lo nombra; nada se sustituye por un valor por defecto.",
@@ -89,5 +89,8 @@
   "acctTransferDocLine": "{number} · {kind} · {date}",
   "acctDeliveryRemote": "En el sistema: {number}",
   "acctDeliveryRemoteDraft": "un borrador en el sistema, aún sin contabilizar",
-  "acctDeliveryAttempts": "{count, plural, =1{un intento} other{{count} intentos}}"
+  "acctDeliveryAttempts": "{count, plural, =1{un intento} other{{count} intentos}}",
+  "refusalAccountingClosed": "Esta conexión ya no lo admite: se revocó o ya ha enviado documentos. Revóquela y vuelva a conectarse. No se ha guardado nada.",
+  "refusalAccountingValue": "El servidor ha rechazado este valor: compruebe el token, la clave o el emisor e inténtelo de nuevo. No se ha guardado nada.",
+  "acctJournalLogged": "{logged, plural, =0{Ningún documento nuevo registrado} =1{Un documento registrado} other{{logged} documentos registrados}}, {unchanged} sin cambios"
 }

@@ -360,6 +360,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctDeliverySent => 'Sent, waiting for the answer';
 
   @override
+  String acctJournalLogged(int logged, int unchanged) {
+    String _temp0 = intl.Intl.pluralLogic(
+      logged,
+      locale: localeName,
+      other: '$logged documents logged',
+      one: 'One document logged',
+      zero: 'No new document logged',
+    );
+    return '$_temp0, $unchanged unchanged';
+  }
+
+  @override
   String get acctKindCreditNote => 'Credit note';
 
   @override
@@ -417,7 +429,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctMapKindItem => 'Item';
 
   @override
-  String get acctMapKindParty => 'Customer or supplier';
+  String get acctMapKindParty => 'Customer';
 
   @override
   String get acctMapKindTax => 'Tax code';
@@ -19131,6 +19143,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get refTypeInvoice => 'Invoice';
+
+  @override
+  String get refusalAccountingClosed =>
+      'This connection is closed for this: it was revoked, or it has already delivered. Revoke it and connect again. Nothing was saved.';
+
+  @override
+  String get refusalAccountingValue =>
+      'The server refused this value: check the token, the key or the issuer and try again. Nothing was saved.';
 
   @override
   String get refusalAlreadyDecided =>

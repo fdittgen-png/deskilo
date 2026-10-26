@@ -2,11 +2,14 @@
 //
 // #2370 — the accounting connections as the app reads and sends them: the
 // server's answers parsed, the mapping keys checked with the server's
-// shapes (pgTAP 9999 refuses the same), the commands sending nothing that
+// shapes (pgTAP 299 refuses the same), the commands sending nothing that
 // cannot be right, and the generic journal's documents each with their own
 // digest, so delivering the same books twice changes nothing.
+import 'dart:io';
+
 import 'package:deskilo/core/demo/data/accounting_connection_repository.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
+import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/features/money/application/accounting_connection_commands.dart';
 import 'package:deskilo/features/money/application/book_period_commands.dart';
 import 'package:deskilo/features/money/domain/accounting_amount.dart';
@@ -100,7 +103,7 @@ void main() {
     expect(ok(AccountingMapKind.account, 'revenue:standard'), isTrue);
     expect(ok(AccountingMapKind.account, 'Revenue'), isFalse);
     expect(ok(AccountingMapKind.item, 'revenue'), isTrue);
-    expect(ok(AccountingMapKind.party, partyMapKey(AccountingPartyKind.member, _member)), isTrue);
+    expect(ok(AccountingMapKind.party, memberMapKey(_member)), isTrue);
     expect(ok(AccountingMapKind.party, 'member:42'), isFalse);
   });
 
@@ -222,6 +225,39 @@ void main() {
     expect(transfers.files.map((f) => f.deliveries.length), [0, 5],
         reason: 'the documents stay with the file that first carried them');
     expect(transfers.files.first.sha256, transfers.files.last.sha256);
+  });
+
+  test('the token lengths are the migration\'s; outside them nothing is sent', () async {
+    final sql = File('supabase/migrations/0595_accounting_connections.sql').readAsStringSync();
+    expect(sql, contains('not between ${accountingTokenLength.min} and ${accountingTokenLength.max}'));
+    final repo = FakeAccountingConnectionRepository(books: FakeBookPeriodRepository(today: _today), today: _today);
+    final commands = AccountingConnectionCommands(repo);
+    expect(await commands.connectWithToken('ws', issuerSiteId: 's', targetId: 'pennylane_api',
+        displayName: 'P', token: 'x' * (accountingTokenLength.max + 1), remoteTenantId: ''), isNull);
+    expect(await repo.fetchConnections('ws'), isEmpty);
+  });
+
+  test('a connection that delivered keeps its token', () async {
+    final books = FakeBookPeriodRepository(today: _today);
+    final repo = seedDemoAccountingConnections(books, _today);
+    final c = (await repo.fetchConnections('ws-1')).single;
+    expect(c.delivered, isTrue);
+    expect(await AccountingConnectionCommands(repo).replaceToken(c, token: 'tok-other-2370'), isNull,
+        reason: 'nothing is sent: the server refuses it (DKA02)');
+  });
+
+  test('a changed document is a new delivery; the earlier one keeps its file', () async {
+    final books = FakeBookPeriodRepository(today: _today);
+    final repo = FakeAccountingConnectionRepository(books: books, today: _today);
+    final log = BookPeriodCommands(books);
+    FileDocument doc(String sha) =>
+        FileDocument(kind: 'invoice', id: 'inv-1', number: 'F-1', date: DateTime(2026, 2), sha256: sha);
+    final e1 = (await log.logExport('ws', formatId: 'generic_journal_csv', year: 2026, content: 'a', documents: 1))!;
+    await repo.recordFileDeliveries('ws', targetId: 'generic_journal_csv', issuerSiteId: 's', bookExportId: e1, documents: [doc('a' * 64)]);
+    final e2 = (await log.logExport('ws', formatId: 'generic_journal_csv', year: 2026, content: 'b', documents: 1))!;
+    final out = await repo.recordFileDeliveries('ws', targetId: 'generic_journal_csv', issuerSiteId: 's', bookExportId: e2, documents: [doc('f' * 64)]);
+    expect(out.changed, 1);
+    expect([for (final d in repo.deliveries) '${d.bookExportId} ${d.payloadSha256[0]}'], ['$e1 a', '$e2 f']);
   });
 
   test('a failed delivery log never fails the export', () async {

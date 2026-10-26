@@ -39,7 +39,7 @@
   "acctTokenSave": "Collega",
   "acctMapKindAccount": "Conto",
   "acctMapKindTax": "Codice IVA",
-  "acctMapKindParty": "Cliente o fornitore",
+  "acctMapKindParty": "Cliente",
   "acctMapKindItem": "Articolo",
   "acctMapsTitle": "Nomi in {target}",
   "acctMapsIntro": "Come si chiama nel sistema ogni conto, codice IVA, cliente e articolo di questa contabilità. Un invio che ne richiede uno assente qui si ferma e lo nomina; nulla viene sostituito da un valore predefinito.",
@@ -89,5 +89,8 @@
   "acctTransferDocLine": "{number} · {kind} · {date}",
   "acctDeliveryRemote": "Nel sistema: {number}",
   "acctDeliveryRemoteDraft": "una bozza nel sistema, non ancora contabilizzata",
-  "acctDeliveryAttempts": "{count, plural, =1{un tentativo} other{{count} tentativi}}"
+  "acctDeliveryAttempts": "{count, plural, =1{un tentativo} other{{count} tentativi}}",
+  "refusalAccountingClosed": "Questo collegamento non lo consente più: è stato revocato o ha già inviato documenti. Lo revochi e si colleghi di nuovo. Non è stato salvato nulla.",
+  "refusalAccountingValue": "Il server ha rifiutato questo valore: verifichi il token, la chiave o l'emittente e riprovi. Non è stato salvato nulla.",
+  "acctJournalLogged": "{logged, plural, =0{Nessun nuovo documento registrato} =1{Un documento registrato} other{{logged} documenti registrati}}, {unchanged} invariati"
 }

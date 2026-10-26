@@ -39,7 +39,7 @@
   "acctTokenSave": "Connecter",
   "acctMapKindAccount": "Compte",
   "acctMapKindTax": "Code de TVA",
-  "acctMapKindParty": "Client ou fournisseur",
+  "acctMapKindParty": "Client",
   "acctMapKindItem": "Article",
   "acctMapsTitle": "Noms dans {target}",
   "acctMapsIntro": "Comment chaque compte, code de TVA, client et article de cette comptabilité s'appelle dans le système. Un envoi qui en demande un absent d'ici s'arrête et le nomme ; rien n'est remplacé par une valeur par défaut.",
@@ -89,5 +89,8 @@
   "acctTransferDocLine": "{number} · {kind} · {date}",
   "acctDeliveryRemote": "Dans le système : {number}",
   "acctDeliveryRemoteDraft": "un brouillon dans le système, pas encore comptabilisé",
-  "acctDeliveryAttempts": "{count, plural, =1{une tentative} other{{count} tentatives}}"
+  "acctDeliveryAttempts": "{count, plural, =1{une tentative} other{{count} tentatives}}",
+  "refusalAccountingClosed": "Cette connexion n'accepte plus cela : elle a été révoquée, ou elle a déjà envoyé des pièces. Révoquez-la et connectez-vous de nouveau. Rien n'a été enregistré.",
+  "refusalAccountingValue": "Le serveur a refusé cette valeur : vérifiez le jeton, la clé ou l'émetteur et réessayez. Rien n'a été enregistré.",
+  "acctJournalLogged": "{logged, plural, =0{Aucune nouvelle pièce enregistrée} =1{Une pièce enregistrée} other{{logged} pièces enregistrées}}, {unchanged} inchangées"
 }

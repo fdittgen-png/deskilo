@@ -436,6 +436,18 @@
   "@acctDeliverySent": {
     "description": "#2370 Delivery state: sent, no answer recorded yet."
   },
+  "acctJournalLogged": "{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged",
+  "@acctJournalLogged": {
+    "description": "#2370 Snack after the generic journal export: how many documents the file delivered and how many it carried unchanged.",
+    "placeholders": {
+      "logged": {
+        "type": "int"
+      },
+      "unchanged": {
+        "type": "int"
+      }
+    }
+  },
   "acctKindCreditNote": "Credit note",
   "@acctKindCreditNote": {
     "description": "#2370 Transfers list: the kind of document event a line carried."
@@ -512,7 +524,7 @@
   "@acctMapKindItem": {
     "description": "#2370 Mapping kind: a revenue role mapped to a remote item."
   },
-  "acctMapKindParty": "Customer or supplier",
+  "acctMapKindParty": "Customer",
   "@acctMapKindParty": {
     "description": "#2370 Mapping kind: a member mapped to a remote customer."
   },
@@ -22767,6 +22779,14 @@
   "refStatusRefunded": "Refunded",
   "refTypeCreditNote": "Credit note",
   "refTypeInvoice": "Invoice",
+  "refusalAccountingClosed": "This connection is closed for this: it was revoked, or it has already delivered. Revoke it and connect again. Nothing was saved.",
+  "@refusalAccountingClosed": {
+    "description": "#2370 Refusal (DKA02): the accounting connection was revoked, or it already delivered and its token cannot change."
+  },
+  "refusalAccountingValue": "The server refused this value: check the token, the key or the issuer and try again. Nothing was saved.",
+  "@refusalAccountingValue": {
+    "description": "#2370 Refusal (DKA03): the server refused a value of an accounting connection (token, key, issuer, file)."
+  },
   "refusalAlreadyDecided": "Someone has already decided this. The list shows the outcome.",
   "@refusalAlreadyDecided": {
     "description": "#1305 Shown when a validation was already decided by someone else"

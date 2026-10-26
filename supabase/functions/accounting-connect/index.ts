@@ -143,7 +143,8 @@ async function authorize(
   }
   const connectionId = String(row.id);
   const state = newState();
-  if (!await store(deps, connectionId, { secrets: { oauth_state: state }, patch: {} })) {
+  const issuedAt = (deps.now ?? (() => new Date()))().toISOString();
+  if (!await store(deps, connectionId, { secrets: { oauth_state: state, oauth_state_at: issuedAt }, patch: {} })) {
     return json({ error: "the connection could not be prepared" }, 500);
   }
   return json({
@@ -163,16 +164,24 @@ async function callback(deps: Deps, url: URL): Promise<Response> {
   const target = oauthTargets[held.target_id];
   const client = target ? clientOf(deps, held.target_id) : null;
   if (!target || !client) return page("This server cannot sign in to this target.", 503);
+  const now = (deps.now ?? (() => new Date()))();
+  const issuedAt = Date.parse(held.secrets.oauth_state_at ?? "");
+  if (!Number.isFinite(issuedAt) || now.getTime() - issuedAt > target.stateLifetimeMs) {
+    await store(deps, connectionId, { secrets: { oauth_state: "", oauth_state_at: "" }, patch: {} });
+    return page("This sign-in link has expired. Start again from DesKilo.", 400);
+  }
   if (!code) {
     const denied = (url.searchParams.get("error") ?? "access_denied").slice(0, 100);
-    await store(deps, connectionId, { secrets: { oauth_state: "" }, patch: { status: "error", status_detail: denied } });
+    await store(deps, connectionId, {
+      secrets: { oauth_state: "", oauth_state_at: "" },
+      patch: { status: "error", status_detail: denied },
+    });
     return page("The sign-in was not completed. You can close this page.", 400);
   }
-  const now = (deps.now ?? (() => new Date()))();
   const tokens = await exchangeCode(deps.fetcher ?? fetch, target, client, code, deps.redirectUri, now);
   if (isFailure(tokens)) {
     await store(deps, connectionId, {
-      secrets: { oauth_state: "" },
+      secrets: { oauth_state: "", oauth_state_at: "" },
       patch: { status: "error", status_detail: tokens.detail },
     });
     return page("The target refused the sign-in. You can close this page and try again.", 502);

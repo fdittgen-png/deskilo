@@ -177,6 +177,7 @@ export function connectedWrite(tokens: TokenSet, tenant?: string): {
       access_token: tokens.accessToken,
       refresh_token: tokens.refreshToken,
       oauth_state: "",
+      oauth_state_at: "",
     },
     patch: {
       status: "connected",

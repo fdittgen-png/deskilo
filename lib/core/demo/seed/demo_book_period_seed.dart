@@ -87,8 +87,6 @@ FakeAccountingConnectionRepository seedDemoAccountingConnections(
       remoteId: '48211',
       remoteNumber: 'F-${now.year}-0001',
       remoteState: 'posted',
-      sentAt: DateTime(now.year, 2),
-      acknowledgedAt: DateTime(now.year, 2),
     ),
     AccountingDelivery(
       id: 'demo-delivery-credit',
@@ -101,7 +99,6 @@ FakeAccountingConnectionRepository seedDemoAccountingConnections(
       payloadSha256: 'c' * 64,
       status: DeliveryStatus.conflict,
       error: 'no answer after send: timeout',
-      sentAt: DateTime(now.year, 2, 15),
     ),
   ],
 );

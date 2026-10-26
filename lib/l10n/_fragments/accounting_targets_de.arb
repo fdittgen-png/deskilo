@@ -39,7 +39,7 @@
   "acctTokenSave": "Verbinden",
   "acctMapKindAccount": "Konto",
   "acctMapKindTax": "Steuerschlüssel",
-  "acctMapKindParty": "Kunde oder Lieferant",
+  "acctMapKindParty": "Kunde",
   "acctMapKindItem": "Artikel",
   "acctMapsTitle": "Namen in {target}",
   "acctMapsIntro": "Wie jedes Konto, jeder Steuerschlüssel, jeder Kunde und jeder Artikel dieser Bücher im System heißt. Eine Übermittlung, die einen hier fehlenden braucht, hält an und nennt ihn; nichts wird durch einen Standardwert ersetzt.",
@@ -89,5 +89,8 @@
   "acctTransferDocLine": "{number} · {kind} · {date}",
   "acctDeliveryRemote": "Im System: {number}",
   "acctDeliveryRemoteDraft": "ein Entwurf im System, noch nicht gebucht",
-  "acctDeliveryAttempts": "{count, plural, =1{ein Versuch} other{{count} Versuche}}"
+  "acctDeliveryAttempts": "{count, plural, =1{ein Versuch} other{{count} Versuche}}",
+  "refusalAccountingClosed": "Diese Verbindung lässt das nicht mehr zu: Sie wurde widerrufen oder hat bereits übermittelt. Widerrufen Sie sie und verbinden Sie neu. Nichts wurde gespeichert.",
+  "refusalAccountingValue": "Der Server hat diesen Wert abgelehnt: Prüfen Sie Token, Schlüssel oder Aussteller und versuchen Sie es erneut. Nichts wurde gespeichert.",
+  "acctJournalLogged": "{logged, plural, =0{Kein neuer Beleg protokolliert} =1{Ein Beleg protokolliert} other{{logged} Belege protokolliert}}, {unchanged} unverändert"
 }

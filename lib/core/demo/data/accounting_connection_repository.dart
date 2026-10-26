@@ -7,8 +7,9 @@ import 'book_period_repository.dart';
 /// The accounting connections in memory, with the server's rules the
 /// screens show: one live connection per issuer and target, a token is
 /// kept and never read back, a revoked connection keeps its mappings and
-/// deliveries, a document a file carried with the same digest changes
-/// nothing. No target is reached: a sign-in answers that the demo has no
+/// deliveries, a connection that delivered keeps its token, a document a
+/// file carried with the same digest changes nothing and a changed one is a
+/// new delivery beside the earlier. No target is reached: a sign-in answers that the demo has no
 /// application registered with it.
 class FakeAccountingConnectionRepository
     implements AccountingConnectionRepository {
@@ -63,10 +64,27 @@ class FakeAccountingConnectionRepository
     String workspaceId,
   ) async => [
     for (final c in connections)
-      if (c.live) c,
+      if (c.live) _withDelivered(c),
     for (final c in connections)
-      if (!c.live) c,
+      if (!c.live) _withDelivered(c),
   ];
+
+  AccountingConnection _withDelivered(AccountingConnection c) =>
+      AccountingConnection(
+        id: c.id,
+        issuerSiteId: c.issuerSiteId,
+        targetId: c.targetId,
+        authKind: c.authKind,
+        status: c.status,
+        remoteTenantId: c.remoteTenantId,
+        displayName: c.displayName,
+        statusDetail: c.statusDetail,
+        connectedAt: c.connectedAt,
+        revokedAt: c.revokedAt,
+        secretsSet: c.secretsSet,
+        maps: c.maps,
+        delivered: deliveries.any((d) => d.connectionId == c.id),
+      );
 
   @override
   Future<AccountingConnection> openTokenConnection(
@@ -100,6 +118,9 @@ class FakeAccountingConnectionRepository
   }) async {
     final c = connections[_index(connectionId)];
     if (!c.live) throw StateError('this connection was revoked');
+    if (deliveries.any((d) => d.connectionId == c.id)) {
+      throw StateError('this connection has delivered: revoke it and connect again');
+    }
     return _replace(
       c,
       status: ConnectionStatus.connected,
@@ -226,7 +247,7 @@ class FakeAccountingConnectionRepository
     var unchanged = 0;
     var changed = 0;
     for (final doc in documents) {
-      final i = deliveries.indexWhere(
+      final i = deliveries.lastIndexWhere(
         (d) =>
             d.connectionId == null &&
             d.targetId == targetId &&
@@ -235,7 +256,7 @@ class FakeAccountingConnectionRepository
             d.eventDate == doc.date,
       );
       final row = AccountingDelivery(
-        id: i < 0 ? 'demo-delivery-${_next++}' : deliveries[i].id,
+        id: 'demo-delivery-${_next++}',
         targetId: targetId,
         bookExportId: export.id,
         documentKind: doc.kind,
@@ -244,8 +265,6 @@ class FakeAccountingConnectionRepository
         eventDate: doc.date,
         payloadSha256: doc.sha256,
         status: DeliveryStatus.generated,
-        attempts: i < 0 ? 1 : deliveries[i].attempts + 1,
-        recordedAt: today,
       );
       if (i < 0) {
         deliveries.add(row);
@@ -253,7 +272,7 @@ class FakeAccountingConnectionRepository
       } else if (deliveries[i].payloadSha256 == doc.sha256) {
         unchanged++;
       } else {
-        deliveries[i] = row;
+        deliveries.add(row);
         changed++;
       }
     }

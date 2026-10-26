@@ -686,6 +686,12 @@ abstract class AppLocalizations {
   /// **'Sent, waiting for the answer'**
   String get acctDeliverySent;
 
+  /// #2370 Snack after the generic journal export: how many documents the file delivered and how many it carried unchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged'**
+  String acctJournalLogged(int logged, int unchanged);
+
   /// #2370 Transfers list: the kind of document event a line carried.
   ///
   /// In en, this message translates to:
@@ -803,7 +809,7 @@ abstract class AppLocalizations {
   /// #2370 Mapping kind: a member mapped to a remote customer.
   ///
   /// In en, this message translates to:
-  /// **'Customer or supplier'**
+  /// **'Customer'**
   String get acctMapKindParty;
 
   /// #2370 Mapping kind: a tax component mapped to a remote tax code.
@@ -32195,6 +32201,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoice'**
   String get refTypeInvoice;
+
+  /// #2370 Refusal (DKA02): the accounting connection was revoked, or it already delivered and its token cannot change.
+  ///
+  /// In en, this message translates to:
+  /// **'This connection is closed for this: it was revoked, or it has already delivered. Revoke it and connect again. Nothing was saved.'**
+  String get refusalAccountingClosed;
+
+  /// #2370 Refusal (DKA03): the server refused a value of an accounting connection (token, key, issuer, file).
+  ///
+  /// In en, this message translates to:
+  /// **'The server refused this value: check the token, the key or the issuer and try again. Nothing was saved.'**
+  String get refusalAccountingValue;
 
   /// #1305 Shown when a validation was already decided by someone else
   ///

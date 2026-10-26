@@ -311,9 +311,11 @@ class _ConnectionCard extends ConsumerWidget {
     final l10n = context.l10n;
     final c = connection;
     final kind = c?.authKind;
+    // A connection that delivered keeps its token: another company is a
+    // new connection.
     final byToken = manage &&
         target.connectsBy.contains(AccountingAuthKind.token) &&
-        (kind == null || kind == AccountingAuthKind.token);
+        (kind == null || (kind == AccountingAuthKind.token && !c!.delivered));
     final signIn = manage &&
         target.connectsBy.contains(AccountingAuthKind.oauth2) &&
         (kind == null || kind == AccountingAuthKind.oauth2);

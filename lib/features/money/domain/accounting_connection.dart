@@ -79,9 +79,6 @@ enum AccountingMapKind {
       values.firstWhere((v) => v.wire == wire, orElse: () => account);
 }
 
-/// The party a party mapping names.
-enum AccountingPartyKind { member, site, supplier }
-
 final _role = RegExp(r'^[a-z_]{1,40}(:[A-Za-z0-9_.-]{1,60})?$');
 final _taxKey = RegExp(
   r'^[A-Z][A-Z0-9_]{0,15}\|[A-Z]{2}(-[A-Z0-9]{1,3})?\|'
@@ -103,8 +100,13 @@ bool accountingMapKeyValid(AccountingMapKind kind, String key) =>
       AccountingMapKind.party => _party.hasMatch(key),
     };
 
-/// The key of a party mapping.
-String partyMapKey(AccountingPartyKind kind, String id) => '${kind.name}:$id';
+/// The key of the party mapping of the member [memberId].
+String memberMapKey(String memberId) => 'member:$memberId';
+
+/// The shortest and the longest API token the server keeps
+/// (`set_accounting_token_v1`); accounting_connection_test pins the pair to
+/// the migration.
+const ({int min, int max}) accountingTokenLength = (min: 8, max: 4000);
 
 class AccountingMap {
   const AccountingMap({
@@ -167,8 +169,8 @@ class AccountingConnection {
     this.displayName = '',
     this.statusDetail = '',
     this.connectedAt,
-    this.tokenExpiresAt,
     this.revokedAt,
+    this.delivered = false,
     this.secretsSet = const [],
     this.maps = const [],
   });
@@ -185,7 +187,7 @@ class AccountingConnection {
       displayName: r.stringOr('display_name'),
       statusDetail: r.stringOr('status_detail'),
       connectedAt: r.dateTimeOrNull('connected_at'),
-      tokenExpiresAt: r.dateTimeOrNull('token_expires_at'),
+      delivered: r.boolOr('delivered', fallback: false),
       revokedAt: r.dateTimeOrNull('revoked_at'),
       secretsSet: r.strings('secrets_set'),
       maps: [for (final m in r.list('maps')) AccountingMap.fromJson(m)],
@@ -201,8 +203,11 @@ class AccountingConnection {
   final String displayName;
   final String statusDetail;
   final DateTime? connectedAt;
-  final DateTime? tokenExpiresAt;
   final DateTime? revokedAt;
+
+  /// Whether a document was delivered through it: its token then stays,
+  /// and another company is a new connection.
+  final bool delivered;
 
   /// The names of the secrets the server holds, never their values.
   final List<String> secretsSet;
@@ -248,10 +253,6 @@ class AccountingDelivery {
     this.remoteState = '',
     this.error = '',
     this.attempts = 1,
-    this.sentAt,
-    this.acknowledgedAt,
-    this.recordedByMemberId,
-    this.recordedAt,
   });
 
   factory AccountingDelivery.fromJson(Object? raw) {
@@ -272,10 +273,6 @@ class AccountingDelivery {
       status: DeliveryStatus.of(r.stringOrNull('status')),
       error: r.stringOr('error'),
       attempts: r.intOrNull('attempts') ?? 1,
-      sentAt: r.dateTimeOrNull('sent_at'),
-      acknowledgedAt: r.dateTimeOrNull('acknowledged_at'),
-      recordedByMemberId: r.stringOrNull('recorded_by_member_id'),
-      recordedAt: r.dateTimeOrNull('recorded_at'),
     );
   }
 
@@ -299,10 +296,6 @@ class AccountingDelivery {
   final DeliveryStatus status;
   final String error;
   final int attempts;
-  final DateTime? sentAt;
-  final DateTime? acknowledgedAt;
-  final String? recordedByMemberId;
-  final DateTime? recordedAt;
 }
 
 /// One file handed out, with the documents it carried.

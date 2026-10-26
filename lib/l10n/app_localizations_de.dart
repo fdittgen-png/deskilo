@@ -362,6 +362,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get acctDeliverySent => 'Gesendet, wartet auf die Antwort';
 
   @override
+  String acctJournalLogged(int logged, int unchanged) {
+    String _temp0 = intl.Intl.pluralLogic(
+      logged,
+      locale: localeName,
+      other: '$logged Belege protokolliert',
+      one: 'Ein Beleg protokolliert',
+      zero: 'Kein neuer Beleg protokolliert',
+    );
+    return '$_temp0, $unchanged unverändert';
+  }
+
+  @override
   String get acctKindCreditNote => 'Gutschrift';
 
   @override
@@ -419,7 +431,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get acctMapKindItem => 'Artikel';
 
   @override
-  String get acctMapKindParty => 'Kunde oder Lieferant';
+  String get acctMapKindParty => 'Kunde';
 
   @override
   String get acctMapKindTax => 'Steuerschlüssel';
@@ -19308,6 +19320,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get refTypeInvoice => 'Rechnung';
+
+  @override
+  String get refusalAccountingClosed =>
+      'Diese Verbindung lässt das nicht mehr zu: Sie wurde widerrufen oder hat bereits übermittelt. Widerrufen Sie sie und verbinden Sie neu. Nichts wurde gespeichert.';
+
+  @override
+  String get refusalAccountingValue =>
+      'Der Server hat diesen Wert abgelehnt: Prüfen Sie Token, Schlüssel oder Aussteller und versuchen Sie es erneut. Nichts wurde gespeichert.';
 
   @override
   String get refusalAlreadyDecided =>

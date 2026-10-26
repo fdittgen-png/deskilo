@@ -123,9 +123,11 @@ class _TokenDialogState extends ConsumerState<_TokenDialog> {
               key: const ValueKey('acct-token-value'),
               controller: _fields['token'],
               label: l10n.acctTokenField,
+              // Never offered to a password manager: the token is kept on
+              // the server only, and a revoke must leave no copy behind.
               obscureText: true,
               keyboardType: TextInputType.visiblePassword,
-              autofillHints: const [AutofillHints.password],
+              maxLength: accountingTokenLength.max,
               error: _tooShort ? l10n.acctTokenTooShort : null,
               onChanged: (_) {
                 if (_tooShort) setState(() => _tooShort = false);

@@ -21,6 +21,10 @@ export interface OAuthTarget {
   scopes: string[];
   /** The redirect's query parameter naming the remote company, if any. */
   tenantParam?: string;
+  /** How long a sign-in may take from the authorisation page to the
+   * redirect; an older state is refused before any exchange, so a redirect
+   * URL found later in a history or a referrer cannot connect a company. */
+  stateLifetimeMs: number;
 }
 
 export const oauthTargets: Record<string, OAuthTarget> = {
@@ -36,6 +40,8 @@ export const oauthTargets: Record<string, OAuthTarget> = {
       "file_attachments:all",
       "ledger_entries:all",
     ],
+    // A person signing in, not a batch: ten minutes.
+    stateLifetimeMs: 10 * 60 * 1000,
   },
 };
 
