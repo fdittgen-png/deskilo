@@ -924,4 +924,4 @@ revoke execute on function public.setup_level_catalogue() from public, anon, aut
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(595);
