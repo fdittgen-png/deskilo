@@ -10430,6 +10430,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get holidayWhitMonday => 'Whit Monday';
 
   @override
+  String get hubAccountingSubtitle =>
+      'Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place';
+
+  @override
+  String get hubAccountingTitle => 'Accounting & VAT';
+
+  @override
   String get hubCashSubtitle =>
       'Recorded money in and out, and what is still to pay';
 

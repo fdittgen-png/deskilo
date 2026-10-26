@@ -12377,6 +12377,14 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubAccountingSubtitle": "Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place",
+  "@hubAccountingSubtitle": {
+    "description": "the accounting and VAT page and its menu group"
+  },
+  "hubAccountingTitle": "Accounting & VAT",
+  "@hubAccountingTitle": {
+    "description": "the accounting and VAT page and its menu group"
+  },
   "hubCashSubtitle": "Recorded money in and out, and what is still to pay",
   "@hubCashSubtitle": {
     "description": "#2577 the cash page"

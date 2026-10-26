@@ -45,10 +45,11 @@ Future<void> _reveal(WidgetTester tester, String key) async {
       matching: find.byType(Scrollable));
   final group = switch (key) {
     'drawer-members' || 'drawer-roles' || 'drawer-nfc-config' => 'People & access',
-    'drawer-invoices' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' => 'Billing & payments',
+    'drawer-sales' || 'drawer-invoices' || 'drawer-services' || 'drawer-accessories' => 'Sales',
+    'drawer-cash' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' => 'Billing & payments',
     // #2313 — every report and the BI in their own group.
     'drawer-bi' || 'drawer-reports-finance' || 'drawer-reports-documents' || 'drawer-reports-templates' => 'Reporting',
-    'drawer-workspace-settings' || 'drawer-availability' || 'drawer-services' || 'drawer-accessories' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
+    'drawer-workspace-settings' || 'drawer-availability' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
     _ => null,
   };
   if (group != null && find.byKey(ValueKey(key)).evaluate().isEmpty) {
@@ -78,7 +79,7 @@ void main() {
     await tester.pumpAndSettle();
     if (!invoicing) {
       expect(find.byKey(const ValueKey('drawer-reports-finance')), findsNothing);
-      expect(find.text('Billing & payments'), findsNothing);
+      expect(find.byKey(const ValueKey('drawer-invoices')), findsNothing);
       return;
     }
     await _reveal(tester, 'drawer-reports-finance');
@@ -157,6 +158,7 @@ void main() {
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
     expect(find.text('People & access'), findsOneWidget);
+    expect(find.text('Sales'), findsOneWidget);
     expect(find.text('Billing & payments'), findsOneWidget);
     expect(find.text('Workspace setup'), findsOneWidget);
     expect(find.byKey(const ValueKey('drawer-members')), findsNothing);

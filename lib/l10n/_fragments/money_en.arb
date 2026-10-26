@@ -673,5 +673,13 @@
   "cashHubToPay": "To pay",
   "@cashHubToPay": {
     "description": "#2577 the cash page"
+  },
+  "hubAccountingTitle": "Accounting & VAT",
+  "@hubAccountingTitle": {
+    "description": "the accounting and VAT page and its menu group"
+  },
+  "hubAccountingSubtitle": "Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place",
+  "@hubAccountingSubtitle": {
+    "description": "the accounting and VAT page and its menu group"
   }
 }

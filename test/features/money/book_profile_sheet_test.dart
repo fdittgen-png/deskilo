@@ -129,10 +129,12 @@ void main() {
       isNull,
       reason: 'an external book names its system first',
     );
-    await tester.enterText(
-      find.byKey(const ValueKey('book-external')),
-      'DATEV',
-    );
+    // The software is picked from the list, never typed.
+    await tester.ensureVisible(find.byKey(const ValueKey('book-external')));
+    await tester.tap(find.byKey(const ValueKey('book-external')));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(find.text('DATEV Rechnungswesen').last);
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('book-fiscal-month')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('July').last);
@@ -147,7 +149,7 @@ void main() {
     final saved = books.saves.single;
     expect(saved.issuerSiteId, 's2');
     expect(saved.authority, BookAuthority.externalBook);
-    expect(saved.externalSystem, 'DATEV');
+    expect(saved.externalSystem, 'DATEV Rechnungswesen');
     expect(saved.fiscalYearStartMonth, 7);
     expect(saved.revision, 0, reason: 'a new version');
     expect(books.profiles.single.revision, 1);

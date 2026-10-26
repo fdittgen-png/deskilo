@@ -144,6 +144,8 @@ class MoneyViewData {
   bool get accountingConnectorsOn =>
       _on(WorkspaceFeature.accountingConnectors);
   bool get bankImportOn => _on(WorkspaceFeature.bankImport);
+  bool get vatManagementOn => _on(WorkspaceFeature.vatManagement);
+  bool get vatDeclarationsOn => _on(WorkspaceFeature.vatDeclarations);
 
   /// 0042 — the owner put this member on the package plan.
   bool get onPackagePlan => member?.overagePolicy == OveragePolicy.package;

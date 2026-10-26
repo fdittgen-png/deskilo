@@ -17273,6 +17273,18 @@ abstract class AppLocalizations {
   /// **'Whit Monday'**
   String get holidayWhitMonday;
 
+  /// the accounting and VAT page and its menu group
+  ///
+  /// In en, this message translates to:
+  /// **'Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place'**
+  String get hubAccountingSubtitle;
+
+  /// the accounting and VAT page and its menu group
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting & VAT'**
+  String get hubAccountingTitle;
+
   /// #2577 the cash page
   ///
   /// In en, this message translates to:

@@ -386,5 +386,7 @@
   "hubCashTitle": "Cassa",
   "hubCashSubtitle": "Entrate e uscite registrate, e ciò che resta da pagare",
   "cashHubInOut": "Entrate e uscite per mese",
-  "cashHubToPay": "Da pagare"
+  "cashHubToPay": "Da pagare",
+  "hubAccountingTitle": "Contabilità e IVA",
+  "hubAccountingSubtitle": "Libri, esportazioni e importazioni, software contabile, estratti conto, IVA e identità legale in un unico posto"
 }

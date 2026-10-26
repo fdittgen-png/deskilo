@@ -7307,6 +7307,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubAccountingSubtitle": "Bücher, Exporte und Importe, Buchhaltungssoftware, Kontoauszüge, MwSt und Rechtsidentität an einem Ort",
+  "hubAccountingTitle": "Buchhaltung & MwSt",
   "hubCashSubtitle": "Erfasste Ein- und Ausgänge und was noch zu zahlen ist",
   "hubCashTitle": "Geld",
   "hubPurchasesSubtitle": "Was der Raum kauft und schuldet: Ausgaben, Lieferantenrechnungen, Lieferanten, Mietvertrag, Ausstattung",

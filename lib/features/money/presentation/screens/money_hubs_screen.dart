@@ -103,3 +103,38 @@ class CashHubScreen extends ConsumerWidget {
     );
   }
 }
+
+/// `/money/accounting` — everything the books and the tax need, in one
+/// place: the export and import of the books, the accounting systems, the
+/// bank statements, the periods, the VAT and the legal identity. Each door
+/// opens the screen or sheet it always opened, with its own gate.
+class AccountingHubScreen extends ConsumerWidget {
+  const AccountingHubScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final doors = MoneyActionSet.accountingDoors(
+      context,
+      ref,
+      MoneyViewData.gates(ref),
+    );
+    return Scaffold(
+      appBar: AppBar(title: Text(context.l10n.hubAccountingTitle)),
+      body: ListView(
+        key: const ValueKey('accounting-hub'),
+        padding: AppSpacing.mdAll,
+        children: [
+          Text(
+            context.l10n.hubAccountingSubtitle,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          for (final door in doors) ...[
+            door,
+            const SizedBox(height: AppSpacing.sm),
+          ],
+        ],
+      ),
+    );
+  }
+}

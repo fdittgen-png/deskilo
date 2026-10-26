@@ -13,6 +13,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_book_profile.dart';
+import '../../domain/accounting_format.dart' show accountingTargets;
 import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
@@ -236,13 +237,10 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               ),
             ),
             if (_authority == BookAuthority.externalBook)
-              TextField(
-                key: const ValueKey('book-external'),
-                controller: _external,
-                onChanged: (_) => setState(() {}),
-                decoration: InputDecoration(
-                  labelText: l10n.bookExternalSystem,
-                ),
+              _SoftwareField(
+                country: workspace.countryCode,
+                value: _external.text,
+                onChanged: (v) => setState(() => _external.text = v),
               ),
             TextField(
               key: const ValueKey('book-currency'),
@@ -423,4 +421,42 @@ class BookProfileSection extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// The list the book's external software is chosen from.
+class _SoftwareField extends StatelessWidget {
+  const _SoftwareField({
+    required this.country,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final String country;
+  final String value;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) => DropdownButtonFormField<String>(
+    key: const ValueKey('book-external'),
+    initialValue: value.isEmpty ? null : value,
+    isExpanded: true,
+    decoration: InputDecoration(labelText: context.l10n.bookExternalSystem),
+    items: [
+      for (final name in _softwareChoices(country, value))
+        DropdownMenuItem(value: name, child: Text(name)),
+    ],
+    onChanged: (v) => onChanged(v ?? ''),
+  );
+}
+
+/// The software a space can name as its book: every product the accounting
+/// targets know in the space's country, by name, plus the one already stored
+/// so an earlier choice never vanishes from the list.
+List<String> _softwareChoices(String country, String stored) {
+  final names = <String>{
+    for (final t in accountingTargets)
+      if (t.offeredIn(country)) '${t.vendor} ${t.product}'.trim(),
+    if (stored.isNotEmpty) stored,
+  };
+  return names.toList()..sort();
 }

@@ -10508,6 +10508,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get holidayWhitMonday => 'Pfingstmontag';
 
   @override
+  String get hubAccountingSubtitle =>
+      'Bücher, Exporte und Importe, Buchhaltungssoftware, Kontoauszüge, MwSt und Rechtsidentität an einem Ort';
+
+  @override
+  String get hubAccountingTitle => 'Buchhaltung & MwSt';
+
+  @override
   String get hubCashSubtitle =>
       'Erfasste Ein- und Ausgänge und was noch zu zahlen ist';
 

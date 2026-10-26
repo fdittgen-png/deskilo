@@ -10524,6 +10524,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get holidayWhitMonday => 'Lundi de Pentecôte';
 
   @override
+  String get hubAccountingSubtitle =>
+      'Livre comptable, exports et imports, logiciel comptable, relevés bancaires, TVA et identité légale au même endroit';
+
+  @override
+  String get hubAccountingTitle => 'Comptabilité et TVA';
+
+  @override
   String get hubCashSubtitle =>
       'Entrées et sorties enregistrées, et ce qui reste à payer';
 

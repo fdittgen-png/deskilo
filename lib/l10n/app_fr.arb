@@ -7307,6 +7307,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubAccountingSubtitle": "Livre comptable, exports et imports, logiciel comptable, relevés bancaires, TVA et identité légale au même endroit",
+  "hubAccountingTitle": "Comptabilité et TVA",
   "hubCashSubtitle": "Entrées et sorties enregistrées, et ce qui reste à payer",
   "hubCashTitle": "Trésorerie",
   "hubPurchasesSubtitle": "Ce que l'espace achète et doit : dépenses, factures fournisseurs, fournisseurs, bail, équipements",

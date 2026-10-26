@@ -371,6 +371,63 @@ class MoneyActionSet {
           workspaceId: data.workspace!.id,
           held: {for (final p in ref.read(myPermissionsProvider)) p.wireName},
         ),
+      // #2568 — the rooms the space rents, for those who manage the plan.
+      if (data.externalRoomsOn &&
+          data.workspace != null &&
+          ref
+              .read(myPermissionsProvider)
+              .any((p) => p.wireName == roomRentalManagePermission))
+        RentedRoomsButton(
+          workspaceId: data.workspace!.id,
+          canMatch: ref
+              .read(myPermissionsProvider)
+              .any((p) => p.wireName == purchaseManagePermission),
+        ),
+    ];
+  }
+
+  /// The accounting side's doors, for the accounting page: the books'
+  /// periods, the accounting systems and their transfers, the bank
+  /// statements. Each keeps the gate it had on the purchases page.
+  static List<Widget> accountingDoors(
+    BuildContext context,
+    WidgetRef ref,
+    MoneyViewData data,
+  ) {
+    final l10n = context.l10n;
+    final held = {for (final p in ref.watch(myPermissionsProvider)) p.wireName};
+    bool has(List<String> any) =>
+        (data.member?.isOwner ?? false) || any.any(held.contains);
+    Widget door(String key, IconData icon, String title, String route) =>
+        ListTile(
+          key: ValueKey(key),
+          leading: Icon(icon),
+          title: Text(title),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+          onTap: () => context.push(route),
+        );
+    return [
+      // The export of the books is the register's: every format, one place.
+      if (data.invoicingOn && has(['viewFinances', 'issueInvoices']))
+        door('accounting-hub-export', Icons.file_download_outlined,
+            l10n.invoiceAccountingExport, '/invoice-register'),
+      if (data.invoicingOn && has(['workspaceSettings']))
+        door('accounting-hub-identity', Icons.badge_outlined,
+            l10n.legalIdentityTitle, '/legal-identity'),
+      if (data.vatManagementOn && has(['manageBilling']))
+        door('accounting-hub-vat', Icons.percent_outlined, l10n.vatTitle,
+            '/vat'),
+      if (data.invoicingOn &&
+          data.vatDeclarationsOn &&
+          has(['manageBilling', 'viewFinances']))
+        door('accounting-hub-vat-declarations', Icons.receipt_long_outlined,
+            l10n.vatDeclTitle, '/vat-declarations'),
+      if (data.invoicingOn && has(['manageBilling']))
+        door('accounting-hub-sequences', Icons.pin_outlined,
+            l10n.numberSequencesTitle, '/settings/number-sequences'),
+      if (data.invoicingOn && has(['manageIntegrations']))
+        door('accounting-hub-einvoice', Icons.cloud_upload_outlined,
+            l10n.einvoiceConfigTitle, '/einvoice-config'),
       // #2365 — the closed periods of the books and the export log, for the
       // owner and those who read the finances or export.
       if (data.accountingPeriodsOn && data.workspace != null)
@@ -389,18 +446,6 @@ class MoneyActionSet {
       // #2380 — the bank statements, for those who read the finances or
       // match payments.
       ?_bankButton(ref, data),
-      // #2568 — the rooms the space rents, for those who manage the plan.
-      if (data.externalRoomsOn &&
-          data.workspace != null &&
-          ref
-              .read(myPermissionsProvider)
-              .any((p) => p.wireName == roomRentalManagePermission))
-        RentedRoomsButton(
-          workspaceId: data.workspace!.id,
-          canMatch: ref
-              .read(myPermissionsProvider)
-              .any((p) => p.wireName == purchaseManagePermission),
-        ),
     ];
   }
 

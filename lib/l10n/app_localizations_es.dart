@@ -10496,6 +10496,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get holidayWhitMonday => 'Lunes de Pentecostés';
 
   @override
+  String get hubAccountingSubtitle =>
+      'Libros, exportaciones e importaciones, software contable, extractos bancarios, IVA e identidad legal en un solo lugar';
+
+  @override
+  String get hubAccountingTitle => 'Contabilidad e IVA';
+
+  @override
   String get hubCashSubtitle =>
       'Entradas y salidas registradas, y lo que queda por pagar';
 
