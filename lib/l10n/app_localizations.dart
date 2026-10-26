@@ -35466,6 +35466,12 @@ abstract class AppLocalizations {
   /// **'Choose a date'**
   String get reservePickDateTooltip;
 
+  /// #3068 the label of the plan skeleton on Reserve
+  ///
+  /// In en, this message translates to:
+  /// **'Loading the plan…'**
+  String get reservePlanLoading;
+
   /// #2631 resource_reserve: reserveRoomFor
   ///
   /// In en, this message translates to:

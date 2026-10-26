@@ -37,6 +37,7 @@ import '../space_subjects.dart';
 import '../widgets/booking_controls.dart';
 import '../widgets/list_space_tap.dart';
 import '../widgets/month_grid.dart';
+import '../widgets/plan_skeleton.dart';
 import '../widgets/reserve_canvas.dart';
 import '../widgets/reserve_view_menu.dart';
 import '../widgets/seat_list_view.dart';
@@ -250,7 +251,7 @@ class ReservePlanView extends ConsumerWidget {
             onAction: () => ref.invalidate(floorPlanProvider(level.id)),
           ),
         ),
-      _ => const LoadingView(),
+      _ => const PlanSkeleton(),
     };
   }
 

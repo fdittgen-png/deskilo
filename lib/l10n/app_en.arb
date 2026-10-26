@@ -25016,6 +25016,10 @@
   "@reservePickDateTooltip": {
     "description": "Tooltip of the calendar icon at the end of the Reserve hub's date strip, opening a date picker for days beyond the pills (#208)"
   },
+  "reservePlanLoading": "Loading the plan…",
+  "@reservePlanLoading": {
+    "description": "#3068 the label of the plan skeleton on Reserve"
+  },
   "reserveRoomFor": "Meeting room · {count} people",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",

@@ -21251,6 +21251,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservePickDateTooltip => 'Choisir une date';
 
   @override
+  String get reservePlanLoading => 'Chargement du plan…';
+
+  @override
   String reserveRoomFor(int count) {
     return 'Salle de réunion · $count personnes';
   }
