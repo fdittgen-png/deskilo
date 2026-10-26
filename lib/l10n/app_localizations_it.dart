@@ -238,6 +238,355 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le registrazioni sono cambiate o sono troppo grandi per una sola esportazione. Ricarichi il registro, o scelga un periodo più breve, e riprovi.';
 
   @override
+  String get acctConnConnectToken => 'Collega con un token API';
+
+  @override
+  String acctConnDetail(String detail) {
+    return 'Risposta del sistema: $detail';
+  }
+
+  @override
+  String get acctConnRefresh => 'Verifica il collegamento';
+
+  @override
+  String get acctConnRefused =>
+      'Il server ha rifiutato: verifichi di poter gestire la fatturazione.';
+
+  @override
+  String get acctConnReplaceToken => 'Sostituisci il token';
+
+  @override
+  String get acctConnRevoke => 'Revoca';
+
+  @override
+  String get acctConnRevokeConfirm =>
+      'Revocare questo collegamento? Il suo token viene dimenticato subito; le sue corrispondenze e gli invii già fatti restano elencati.';
+
+  @override
+  String get acctConnRevoked => 'Il collegamento è revocato.';
+
+  @override
+  String acctConnRevokedBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count collegamenti precedenti sono stati revocati',
+      one: 'Un collegamento precedente è stato revocato',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctConnSaved => 'Il collegamento è salvato.';
+
+  @override
+  String acctConnSignIn(String target) {
+    return 'Accedi a $target';
+  }
+
+  @override
+  String get acctConnSignInAgain => 'Accedi di nuovo';
+
+  @override
+  String get acctConnSignInFailed =>
+      'Non è stato possibile aprire la pagina di accesso.';
+
+  @override
+  String acctConnSignInNotConfigured(String target) {
+    return 'Questo server non ha alcuna applicazione registrata presso $target: si colleghi invece con un token API.';
+  }
+
+  @override
+  String get acctConnSignInOpened =>
+      'Completi l\'accesso nel browser, poi torni qui e verifichi il collegamento.';
+
+  @override
+  String acctConnSince(String date) {
+    return 'Collegato il $date';
+  }
+
+  @override
+  String get acctConnStatusConnected => 'Collegato';
+
+  @override
+  String get acctConnStatusError => 'Il collegamento non è riuscito';
+
+  @override
+  String get acctConnStatusExpired => 'Disconnesso: acceda di nuovo';
+
+  @override
+  String get acctConnStatusPending => 'In attesa dell\'accesso';
+
+  @override
+  String get acctConnStatusRevoked => 'Revocato';
+
+  @override
+  String acctConnTenant(String tenant) {
+    return 'Società: $tenant';
+  }
+
+  @override
+  String get acctDeliveryAcknowledged => 'Ricevuto dal sistema';
+
+  @override
+  String acctDeliveryAttempts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tentativi',
+      one: 'un tentativo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctDeliveryConflict =>
+      'Da verificare: la risposta manca o è diversa';
+
+  @override
+  String get acctDeliveryFailed => 'Rifiutato';
+
+  @override
+  String get acctDeliveryGenerated => 'File scritto';
+
+  @override
+  String acctDeliveryRemote(String number) {
+    return 'Nel sistema: $number';
+  }
+
+  @override
+  String get acctDeliveryRemoteDraft =>
+      'una bozza nel sistema, non ancora contabilizzata';
+
+  @override
+  String get acctDeliverySent => 'Inviato, in attesa della risposta';
+
+  @override
+  String get acctKindCreditNote => 'Nota di credito';
+
+  @override
+  String get acctKindExpense => 'Spesa';
+
+  @override
+  String get acctKindInvoice => 'Fattura';
+
+  @override
+  String get acctKindMemberReceipt => 'Giustificativo di un membro';
+
+  @override
+  String get acctKindOther => 'Altra scrittura';
+
+  @override
+  String get acctKindReceipt => 'Incasso';
+
+  @override
+  String get acctKindRefund => 'Rimborso';
+
+  @override
+  String get acctKindReimbursement => 'Rimborso a un membro';
+
+  @override
+  String get acctKindSupplierBill => 'Fattura fornitore';
+
+  @override
+  String get acctKindSupplierCreditNote => 'Nota di credito fornitore';
+
+  @override
+  String get acctKindSupplierPayment => 'Pagamento a un fornitore';
+
+  @override
+  String get acctKindVatRelease => 'IVA divenuta esigibile';
+
+  @override
+  String get acctKindWriteOff => 'Stralcio';
+
+  @override
+  String get acctMapAdd => 'Aggiungi una corrispondenza';
+
+  @override
+  String get acctMapDelete => 'Rimuovi la corrispondenza';
+
+  @override
+  String get acctMapKeyInvalid => 'Non è una chiave di questo tipo.';
+
+  @override
+  String get acctMapKind => 'Che cosa si associa';
+
+  @override
+  String get acctMapKindAccount => 'Conto';
+
+  @override
+  String get acctMapKindItem => 'Articolo';
+
+  @override
+  String get acctMapKindParty => 'Cliente o fornitore';
+
+  @override
+  String get acctMapKindTax => 'Codice IVA';
+
+  @override
+  String acctMapLine(String key, String remote) {
+    return '$key → $remote';
+  }
+
+  @override
+  String get acctMapParty => 'Membro';
+
+  @override
+  String get acctMapQualifier => 'Gruppo di aliquote (facoltativo)';
+
+  @override
+  String get acctMapRemoteCode => 'Codice nel sistema';
+
+  @override
+  String get acctMapRemoteId => 'Identificativo nel sistema (facoltativo)';
+
+  @override
+  String get acctMapRemoteMissing =>
+      'Indichi il codice o l\'identificativo che usa il sistema.';
+
+  @override
+  String get acctMapRemoteName => 'Nome nel sistema (facoltativo)';
+
+  @override
+  String get acctMapRole => 'Ruolo nella contabilità';
+
+  @override
+  String get acctMapTaxKey => 'Componente dell\'imposta';
+
+  @override
+  String get acctMapTaxKeyHelper =>
+      'imposta|autorità|trattamento|aliquota|versione, come il rapporto IVA li raggruppa: VAT|FR|taxed|20|2014';
+
+  @override
+  String acctMapsButton(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count corrispondenze',
+      one: 'Una corrispondenza',
+      zero: 'Corrispondenze',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctMapsEmpty => 'Non è ancora stato associato nulla.';
+
+  @override
+  String get acctMapsIntro =>
+      'Come si chiama nel sistema ogni conto, codice IVA, cliente e articolo di questa contabilità. Un invio che ne richiede uno assente qui si ferma e lo nomina; nulla viene sostituito da un valore predefinito.';
+
+  @override
+  String acctMapsTitle(String target) {
+    return 'Nomi in $target';
+  }
+
+  @override
+  String get acctTargetsIntro =>
+      'Dove va la contabilità di ogni emittente. Un sistema collegato riceve i documenti da sé; gli altri ricevono i file esportati dalla contabilità. Ogni trasferimento è elencato qui sotto con l\'impronta di ciò che ha portato.';
+
+  @override
+  String get acctTargetsLoadFailed =>
+      'Non è stato possibile caricare i sistemi contabili.';
+
+  @override
+  String get acctTargetsNoApiTarget =>
+      'Nessun sistema contabile di questo paese è ancora raggiunto da un collegamento: la contabilità parte tramite file, dall\'esportazione contabile.';
+
+  @override
+  String get acctTargetsNotConnected => 'Non collegato';
+
+  @override
+  String get acctTargetsTitle => 'Sistemi contabili';
+
+  @override
+  String acctTokenBody(String target) {
+    return 'Crei un token API nelle impostazioni di $target per questa società e lo incolli qui. Viene conservato cifrato sul server e non viene mai più mostrato.';
+  }
+
+  @override
+  String get acctTokenField => 'Token API';
+
+  @override
+  String get acctTokenName => 'Nome del collegamento';
+
+  @override
+  String get acctTokenSave => 'Collega';
+
+  @override
+  String acctTokenTenant(String target) {
+    return 'Identificativo della società presso $target (facoltativo)';
+  }
+
+  @override
+  String acctTokenTitle(String target) {
+    return 'Collega $target con un token API';
+  }
+
+  @override
+  String get acctTokenTooShort => 'Incolli il token completo.';
+
+  @override
+  String get acctTransferClosed => 'periodo chiuso';
+
+  @override
+  String acctTransferDocLine(String number, String kind, String date) {
+    return '$number · $kind · $date';
+  }
+
+  @override
+  String acctTransferDocuments(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documenti portati',
+      one: 'Un documento portato',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String acctTransferFile(String format, String from, String to) {
+    return 'File $format · $from – $to';
+  }
+
+  @override
+  String acctTransferFileMeta(String when, String who, int documents) {
+    String _temp0 = intl.Intl.pluralLogic(
+      documents,
+      locale: localeName,
+      other: '$documents documenti',
+      one: 'un documento',
+    );
+    return '$when da $who · $_temp0';
+  }
+
+  @override
+  String acctTransferSha(String digest) {
+    return 'SHA-256 $digest';
+  }
+
+  @override
+  String get acctTransfersEmpty =>
+      'In questo periodo non è stato consegnato né inviato nulla.';
+
+  @override
+  String get acctTransfersIntro =>
+      'Ogni file consegnato e ogni documento inviato nel periodo, con lo SHA-256 di ciò che è stato portato: la prova del collegamento digitale tra questa contabilità e il sistema contabile.';
+
+  @override
+  String acctTransfersPeriod(String year) {
+    return 'Anno $year';
+  }
+
+  @override
+  String get acctTransfersTitle => 'Trasferimenti';
+
+  @override
+  String get acctWhoUnknown => 'una persona che non è più nello spazio';
+
+  @override
   String get addressCountryLabel => 'Paese';
 
   @override
@@ -6725,6 +7074,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureAccountingBookTitle => 'Libro contabile';
+
+  @override
+  String get featureAccountingConnectorsDesc =>
+      'Collega la contabilità di ogni emittente al sistema contabile in cui è tenuta (Pennylane tramite la sua API, gli altri tramite file), nomina ogni conto, codice IVA e cliente come quel sistema li conosce ed elenca ogni file e ogni invio che ha portato un documento, con il suo SHA-256: il collegamento digitale che una verifica fiscale chiede di vedere.';
+
+  @override
+  String get featureAccountingConnectorsTitle => 'Sistemi contabili';
 
   @override
   String get featureAccountingPeriodsDesc =>

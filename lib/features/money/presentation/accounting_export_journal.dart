@@ -18,6 +18,7 @@ export '../application/generic_journal_export.dart'
         JournalNeedsRates,
         JournalPosted,
         journalCsvOf,
+        localBookOf,
         writtenWith;
 
 /// Builds a posted file through [build] (the generic journal, or #2365 the

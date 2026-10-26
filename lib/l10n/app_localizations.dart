@@ -506,6 +506,534 @@ abstract class AppLocalizations {
   /// **'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.'**
   String get accountingSourceRefused;
 
+  /// #2370 Button: connect with a pasted API token.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect with an API token'**
+  String get acctConnConnectToken;
+
+  /// #2370 Connection card: the system's own words about the state.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer of the system: {detail}'**
+  String acctConnDetail(String detail);
+
+  /// #2370 Button: ask the system for fresh tokens and show the state.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the connection'**
+  String get acctConnRefresh;
+
+  /// #2370 Error: the server refused a connection change.
+  ///
+  /// In en, this message translates to:
+  /// **'The server refused: check that you may manage the billing.'**
+  String get acctConnRefused;
+
+  /// #2370 Button: replace the API token of a connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace the token'**
+  String get acctConnReplaceToken;
+
+  /// #2370 Button and dialog title: revoke a connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke'**
+  String get acctConnRevoke;
+
+  /// #2370 Dialog: what revoking a connection does.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke this connection? Its token is forgotten at once; its mappings and the deliveries already made stay listed.'**
+  String get acctConnRevokeConfirm;
+
+  /// #2370 Snack: a connection was revoked.
+  ///
+  /// In en, this message translates to:
+  /// **'The connection is revoked.'**
+  String get acctConnRevoked;
+
+  /// #2370 Connection card: earlier connections of this issuer were revoked.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One earlier connection was revoked} other{{count} earlier connections were revoked}}'**
+  String acctConnRevokedBefore(int count);
+
+  /// #2370 Snack: a connection was saved.
+  ///
+  /// In en, this message translates to:
+  /// **'The connection is saved.'**
+  String get acctConnSaved;
+
+  /// #2370 Button: sign in to the system (OAuth).
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to {target}'**
+  String acctConnSignIn(String target);
+
+  /// #2370 Button: sign in again to a signed-out connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in again'**
+  String get acctConnSignInAgain;
+
+  /// #2370 Snack: the sign-in page could not be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'The sign-in page could not be opened.'**
+  String get acctConnSignInFailed;
+
+  /// #2370 Snack: this server registered no OAuth application with the system.
+  ///
+  /// In en, this message translates to:
+  /// **'This server has no application registered with {target}: connect with an API token instead.'**
+  String acctConnSignInNotConfigured(String target);
+
+  /// #2370 Snack: the sign-in continues in the browser.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the sign-in in your browser, then come back and check the connection.'**
+  String get acctConnSignInOpened;
+
+  /// #2370 Connection card: when the connection was made.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected on {date}'**
+  String acctConnSince(String date);
+
+  /// #2370 Connection state: the system may be delivered to.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get acctConnStatusConnected;
+
+  /// #2370 Connection state: the sign-in was refused or failed.
+  ///
+  /// In en, this message translates to:
+  /// **'The connection failed'**
+  String get acctConnStatusError;
+
+  /// #2370 Connection state: the system signed the issuer out.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed out: sign in again'**
+  String get acctConnStatusExpired;
+
+  /// #2370 Connection state: opened, the sign-in or token is not finished.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the sign-in'**
+  String get acctConnStatusPending;
+
+  /// #2370 Connection state: revoked by a billing manager.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked'**
+  String get acctConnStatusRevoked;
+
+  /// #2370 Connection card: the company at the system.
+  ///
+  /// In en, this message translates to:
+  /// **'Company: {tenant}'**
+  String acctConnTenant(String tenant);
+
+  /// #2370 Delivery state: the system received it and said so.
+  ///
+  /// In en, this message translates to:
+  /// **'Received by the system'**
+  String get acctDeliveryAcknowledged;
+
+  /// #2370 Transfers list: how many sends a delivery took.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{one attempt} other{{count} attempts}}'**
+  String acctDeliveryAttempts(int count);
+
+  /// #2370 Delivery state: the answer is missing or differs; a readback decides.
+  ///
+  /// In en, this message translates to:
+  /// **'To check: the answer is missing or differs'**
+  String get acctDeliveryConflict;
+
+  /// #2370 Delivery state: refused or blocked, with the reason beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Refused'**
+  String get acctDeliveryFailed;
+
+  /// #2370 Delivery state: the file was written; the system reads it on import.
+  ///
+  /// In en, this message translates to:
+  /// **'File written'**
+  String get acctDeliveryGenerated;
+
+  /// #2370 Transfers list: the document's number or id in the system.
+  ///
+  /// In en, this message translates to:
+  /// **'In the system: {number}'**
+  String acctDeliveryRemote(String number);
+
+  /// #2370 Transfers list: the system holds it as a draft, not posted.
+  ///
+  /// In en, this message translates to:
+  /// **'a draft in the system, not posted yet'**
+  String get acctDeliveryRemoteDraft;
+
+  /// #2370 Delivery state: sent, no answer recorded yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent, waiting for the answer'**
+  String get acctDeliverySent;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note'**
+  String get acctKindCreditNote;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get acctKindExpense;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get acctKindInvoice;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Member\'s receipt'**
+  String get acctKindMemberReceipt;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Other entry'**
+  String get acctKindOther;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment received'**
+  String get acctKindReceipt;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get acctKindRefund;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid back to a member'**
+  String get acctKindReimbursement;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier bill'**
+  String get acctKindSupplierBill;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier credit note'**
+  String get acctKindSupplierCreditNote;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment to a supplier'**
+  String get acctKindSupplierPayment;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT falling due'**
+  String get acctKindVatRelease;
+
+  /// #2370 Transfers list: the kind of document event a line carried.
+  ///
+  /// In en, this message translates to:
+  /// **'Write-off'**
+  String get acctKindWriteOff;
+
+  /// #2370 Mappings sheet button and dialog title: add a mapping.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a mapping'**
+  String get acctMapAdd;
+
+  /// #2370 Mappings sheet tooltip: remove a mapping.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the mapping'**
+  String get acctMapDelete;
+
+  /// #2370 Mapping dialog error: the key is not of this kind.
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a key of this kind.'**
+  String get acctMapKeyInvalid;
+
+  /// #2370 Mapping dialog field: what is mapped.
+  ///
+  /// In en, this message translates to:
+  /// **'What is mapped'**
+  String get acctMapKind;
+
+  /// #2370 Mapping kind: a book role mapped to a remote account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get acctMapKindAccount;
+
+  /// #2370 Mapping kind: a revenue role mapped to a remote item.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get acctMapKindItem;
+
+  /// #2370 Mapping kind: a member mapped to a remote customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer or supplier'**
+  String get acctMapKindParty;
+
+  /// #2370 Mapping kind: a tax component mapped to a remote tax code.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax code'**
+  String get acctMapKindTax;
+
+  /// #2370 Mappings sheet: one mapping, the app key and the remote name.
+  ///
+  /// In en, this message translates to:
+  /// **'{key} → {remote}'**
+  String acctMapLine(String key, String remote);
+
+  /// #2370 Mapping dialog field: the member mapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get acctMapParty;
+
+  /// #2370 Mapping dialog field: the rate group or provider of a qualified role, optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate group (optional)'**
+  String get acctMapQualifier;
+
+  /// #2370 Mapping dialog field: the code in the system.
+  ///
+  /// In en, this message translates to:
+  /// **'Code in the system'**
+  String get acctMapRemoteCode;
+
+  /// #2370 Mapping dialog field: the identifier in the system, optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Identifier in the system (optional)'**
+  String get acctMapRemoteId;
+
+  /// #2370 Mapping dialog error: neither code nor identifier given.
+  ///
+  /// In en, this message translates to:
+  /// **'Give the code or the identifier the system uses.'**
+  String get acctMapRemoteMissing;
+
+  /// #2370 Mapping dialog field: the name in the system, optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Name in the system (optional)'**
+  String get acctMapRemoteName;
+
+  /// #2370 Mapping dialog field: the role of the books.
+  ///
+  /// In en, this message translates to:
+  /// **'Role in the books'**
+  String get acctMapRole;
+
+  /// #2370 Mapping dialog field: the tax component key.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax component'**
+  String get acctMapTaxKey;
+
+  /// #2370 Mapping dialog helper: the shape of a tax component key; keep the example unchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'scheme|authority|treatment|rate|version, as the tax report groups it: VAT|FR|taxed|20|2014'**
+  String get acctMapTaxKeyHelper;
+
+  /// #2370 Button: the mappings of a connection, with their number.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Mappings} =1{One mapping} other{{count} mappings}}'**
+  String acctMapsButton(int count);
+
+  /// #2370 Mappings sheet: nothing mapped.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is mapped yet.'**
+  String get acctMapsEmpty;
+
+  /// #2370 Mappings sheet: what a mapping is for.
+  ///
+  /// In en, this message translates to:
+  /// **'What each account, tax code, customer and item of these books is called in the system. A delivery that needs one that is not here stops and names it; nothing is replaced by a default.'**
+  String get acctMapsIntro;
+
+  /// #2370 Mappings sheet: title.
+  ///
+  /// In en, this message translates to:
+  /// **'Names in {target}'**
+  String acctMapsTitle(String target);
+
+  /// #2370 Accounting systems sheet: what the sheet shows.
+  ///
+  /// In en, this message translates to:
+  /// **'Where the books of each issuer go. A connected system receives the documents itself; any other receives the files exported from the books. Every transfer is listed below with the digest of what it carried.'**
+  String get acctTargetsIntro;
+
+  /// #2370 Accounting systems sheet: the connections or transfers could not be read.
+  ///
+  /// In en, this message translates to:
+  /// **'The accounting systems could not be loaded.'**
+  String get acctTargetsLoadFailed;
+
+  /// #2370 Accounting systems sheet: no system of the country is reached by a connection.
+  ///
+  /// In en, this message translates to:
+  /// **'No accounting system of this country is reached by a connection yet: the books go by file, from the accounting export.'**
+  String get acctTargetsNoApiTarget;
+
+  /// #2370 Connection card: this issuer has no connection to this system.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected'**
+  String get acctTargetsNotConnected;
+
+  /// #2370 Accounting systems sheet: title and the door to it.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting systems'**
+  String get acctTargetsTitle;
+
+  /// #2370 Token dialog: where the token comes from and how it is kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an API token in {target}\'s settings for this company and paste it here. It is kept encrypted on the server and never shown again.'**
+  String acctTokenBody(String target);
+
+  /// #2370 Token dialog field: the API token.
+  ///
+  /// In en, this message translates to:
+  /// **'API token'**
+  String get acctTokenField;
+
+  /// #2370 Token dialog field: the name of the connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the connection'**
+  String get acctTokenName;
+
+  /// #2370 Token dialog button: connect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get acctTokenSave;
+
+  /// #2370 Token dialog field: the company identifier at the system, optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Company identifier at {target} (optional)'**
+  String acctTokenTenant(String target);
+
+  /// #2370 Token dialog: title.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect {target} with an API token'**
+  String acctTokenTitle(String target);
+
+  /// #2370 Token dialog error: the pasted token is too short.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the whole token.'**
+  String get acctTokenTooShort;
+
+  /// #2370 Transfers list: the file covers a closed period.
+  ///
+  /// In en, this message translates to:
+  /// **'closed period'**
+  String get acctTransferClosed;
+
+  /// #2370 Transfers list: one document, its number, kind and day.
+  ///
+  /// In en, this message translates to:
+  /// **'{number} · {kind} · {date}'**
+  String acctTransferDocLine(String number, String kind, String date);
+
+  /// #2370 Transfers list: the documents a file is the delivery of.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One document carried} other{{count} documents carried}}'**
+  String acctTransferDocuments(int count);
+
+  /// #2370 Transfers list: one file, its format and period.
+  ///
+  /// In en, this message translates to:
+  /// **'File {format} · {from} – {to}'**
+  String acctTransferFile(String format, String from, String to);
+
+  /// #2370 Transfers list: when, by whom and how many documents.
+  ///
+  /// In en, this message translates to:
+  /// **'{when} by {who} · {documents, plural, =1{one document} other{{documents} documents}}'**
+  String acctTransferFileMeta(String when, String who, int documents);
+
+  /// #2370 Transfers list: the digest of what was carried.
+  ///
+  /// In en, this message translates to:
+  /// **'SHA-256 {digest}'**
+  String acctTransferSha(String digest);
+
+  /// #2370 Transfers list: nothing in the year.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was handed out or delivered in this period.'**
+  String get acctTransfersEmpty;
+
+  /// #2370 Transfers list: what it shows and why.
+  ///
+  /// In en, this message translates to:
+  /// **'Every file handed out and every document delivered in the period, with the SHA-256 of what was carried: the evidence of the digital link from these books to the accounting system.'**
+  String get acctTransfersIntro;
+
+  /// #2370 Transfers list: the year shown.
+  ///
+  /// In en, this message translates to:
+  /// **'Year {year}'**
+  String acctTransfersPeriod(String year);
+
+  /// #2370 Transfers list: title.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfers'**
+  String get acctTransfersTitle;
+
+  /// #2370 Transfers list: the person who made a file is no longer known.
+  ///
+  /// In en, this message translates to:
+  /// **'someone no longer in the space'**
+  String get acctWhoUnknown;
+
   /// Country field on the member address sheet
   ///
   /// In en, this message translates to:
@@ -11062,6 +11590,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accounting book'**
   String get featureAccountingBookTitle;
+
+  /// #2370 Features screen: what the accounting systems feature does.
+  ///
+  /// In en, this message translates to:
+  /// **'Connects each issuer\'s books to the accounting system they are kept in (Pennylane through its API, the others by file), names each account, tax code and customer as that system knows it, and lists every file and delivery that carried a document with its SHA-256: the digital link a tax inspection asks to see.'**
+  String get featureAccountingConnectorsDesc;
+
+  /// #2370 Features screen: the accounting systems the books are handed to, a platform flag.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting systems'**
+  String get featureAccountingConnectorsTitle;
 
   /// #2365 accounting periods
   ///

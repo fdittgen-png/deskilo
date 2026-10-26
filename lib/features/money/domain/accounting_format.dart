@@ -483,7 +483,6 @@ const List<AccountingTarget> accountingTargets = [
 ];
 
 /// #2370 — the targets offered in [countryCode], in registry order.
-@visibleForTesting
 List<AccountingTarget> targetsFor(String countryCode) => [
   for (final t in accountingTargets)
     if (t.offeredIn(countryCode)) t,

@@ -217,6 +217,19 @@ const Map<String, String> _notExported = {
   'book_exports':
       '#2365 — the log of the files this server handed out, with their '
           'sha256; it describes exports of this server only',
+  'accounting_connections':
+      '#2370 — an issuer\'s link to an accounting system. It holds no token '
+          '(those are in Vault and no table readable by a member carries '
+          'one), but it is authority: a copy must not claim a connection '
+          'the copy never signed in to',
+  'accounting_maps':
+      '#2370 — what each key of these books is called in one connected '
+          'system; it belongs to that connection and travels with nothing '
+          'a fresh space could reach',
+  'accounting_deliveries':
+      '#2370 — what was handed to an accounting system, per document, '
+          'with its digest; evidence of this server\'s transfers, which a '
+          'copy never made',
   'supplier_bank_revisions':
       '#2567 — sensitive payee bank details and their change history; '
           'never part of a workbook that is shared on',

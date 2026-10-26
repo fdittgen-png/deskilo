@@ -21,9 +21,12 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_feature.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
+import 'accounting_targets_sheet.dart';
 import 'book_chart_sheet.dart';
 import 'book_periods_sheet.dart';
 import 'book_profile_sheet.dart';
@@ -66,6 +69,17 @@ class SetupAccountingStep extends ConsumerWidget {
                     workspaceId: workspaceId,
                     isOwner: isOwner,
                   ),
+                ),
+              ],
+              // The systems the books go to: a connection per issuer, the
+              // names each key has there, and the transfers.
+              if (ref
+                  .watch(enabledFeaturesSyncProvider)
+                  .contains(WorkspaceFeature.accountingConnectors)) ...[
+                const FormGap(),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: AccountingTargetsButton(workspaceId: workspaceId),
                 ),
               ],
             ],
