@@ -7,12 +7,13 @@ import '../vat_forms.dart';
 // decimals and computes `payableTax` from them without intermediate
 // rounding. The rate lines are 303/313/343 since the rates of 2024
 // (302/312/342 are the old rates' lines, for corrections).
-// Not mapped, on purpose: 205 (supplies opted for under art. 22 — the
-// return lines do not tell an opted letting from another taxed line;
-// the tax is shown openly on the invoice, which exercises the option),
-// 225 (transfer by notification), 235 (reductions of consideration: a
-// credit note nets in 200), 280 (miscellaneous), 382/383 (acquisition
-// tax: a space buying services from abroad adds the line itself), 410
+// 205 is the part of 200 that is an exempt letting the seller opted to
+// tax (art. 22), as each sales line states it; 383 the acquisition tax
+// (art. 45) on the services an expense says were bought from abroad, its
+// deductible share on 400/405 like any input tax.
+// Not mapped, on purpose: 225 (transfer by notification), 235
+// (reductions of consideration: a credit note nets in 200), 280
+// (miscellaneous), 382 (the acquisition tax at the rates before 2024), 410
 // (Einlageentsteuerung), 415/420 (corrections and reductions of input
 // tax). The net-tax-rate method (Saldosteuersatz) is another form.
 final chMwstSpec = VatFormSpec(
@@ -26,6 +27,13 @@ final chMwstSpec = VatFormSpec(
       base: [vatSales(categories: null)],
       baseKey: '200',
       always: true,
+    ),
+    const VatBoxSpec(
+      '205',
+      '',
+      formBox: 'mwst/205',
+      base: [vatOpted],
+      baseKey: '205',
     ),
     VatBoxSpec(
       '220',
@@ -92,9 +100,18 @@ final chMwstSpec = VatFormSpec(
       taxKey: '343',
     ),
     VatBoxSpec(
+      '383',
+      '',
+      formBox: 'mwst/383',
+      base: [vatSales(categories: vatAcquisition)],
+      tax: [vatSales(categories: vatAcquisition)],
+      baseKey: '383',
+      taxKey: '383',
+    ),
+    VatBoxSpec(
       '399',
       'Total geschuldete Steuer',
-      tax: [vatSales()],
+      tax: [vatSales(), vatSales(categories: vatAcquisition)],
       taxKey: '399',
       always: true,
     ),

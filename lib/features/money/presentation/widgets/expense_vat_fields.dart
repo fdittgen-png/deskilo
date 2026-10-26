@@ -5,17 +5,24 @@
 // deduct (with the deductible amount it makes, as the server rounds it)
 // and whether it bought a fixed asset (CA3 line 19, the Swiss 405, the
 // Spanish 30/31). Only a VAT-registered space with input VAT on is asked.
+// Where the return has a box for it (the Swiss 383), also whether it was
+// bought from a supplier abroad: its amount is then the base, and the space
+// owes the acquisition tax on it.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/submit_expense.dart';
+import '../../domain/vat_form_catalogue.dart';
 import '../../domain/vat_input.dart';
 import '../../domain/vat_rate.dart';
 import '../../domain/vat_regime.dart';
@@ -24,11 +31,33 @@ import '../vat_tax_point_labels.dart';
 
 /// What the person chose; [share] is the deductible share as typed.
 class ExpenseVatChoice {
-  ExpenseVatChoice(this.share);
+  ExpenseVatChoice(this.share, {this.acquisitionOffered = false});
+
+  /// #2360 — the choice for an expense of [workspace]: an acquisition from
+  /// abroad is offered only where today's return has a box for the tax it
+  /// then owes (the Swiss 383).
+  factory ExpenseVatChoice.of(
+    WidgetRef ref,
+    Workspace workspace,
+    TextEditingController share,
+  ) => ExpenseVatChoice(
+    share,
+    acquisitionOffered: vatFormTaxesAcquisitions(
+      workspace.countryCode,
+      ref.read(clockProvider).now(),
+    ),
+  );
 
   final TextEditingController share;
+
+  /// Whether the space may say the expense was bought from abroad.
+  final bool acquisitionOffered;
   double? percent;
   bool asset = false;
+
+  /// Bought from a supplier abroad: the amount carries no VAT and is the
+  /// base of the acquisition tax the space owes.
+  bool acquisition = false;
 
   /// The share typed, or null when it is not a number.
   double? get sharePct =>
@@ -40,6 +69,9 @@ class ExpenseVatChoice {
     return percent == null || (pct != null && pct >= 0 && pct <= 100);
   }
 
+  /// What the VAT says beyond its rate and share.
+  ExpenseVatFlags get flags => (asset: asset, acquisition: acquisition);
+
   /// The payload the RPCs take, or null without VAT.
   Map<String, Object?>? get payload => (percent ?? 0) <= 0
       ? null
@@ -47,6 +79,7 @@ class ExpenseVatChoice {
           'percent': percent,
           'deductible_pct': sharePct,
           if (asset) 'asset': true,
+          if (acquisition) 'acquisition': true,
         };
 }
 
@@ -93,8 +126,9 @@ Future<({List<double> percents, MoneyFormat currency})?> receiptVatContext(
 String expenseVatPercentLabel(AppLocalizations l10n, double percent) =>
     _percentLabel(l10n, percent);
 
-/// The fields, keyed `<keyPrefix>-vat-rate`, `-vat-deductible` and
-/// `-vat-asset`; [amount] is the gross amount as typed.
+/// The fields, keyed `<keyPrefix>-vat-rate`, `-vat-deductible`,
+/// `-vat-asset` and, where the choice offers it, `-vat-acquisition`;
+/// [amount] is the amount as typed (gross, or the base of an acquisition).
 List<Widget> expenseVatFields({
   required AppLocalizations l10n,
   required MoneyFormat currency,
@@ -136,27 +170,52 @@ List<Widget> expenseVatFields({
         helper: _deductibleHelper(l10n, currency, amount, choice),
         onChanged: (_) => refresh(),
       ),
-      SwitchListTile(
-        key: ValueKey('$keyPrefix-vat-asset'),
-        contentPadding: EdgeInsets.zero,
-        title: Text(words.expenseVatAsset),
-        subtitle: Text(words.expenseVatAssetHint),
-        value: choice.asset,
-        onChanged: (v) {
-          choice.asset = v;
-          refresh();
-        },
-      ),
+      ..._flagSwitches(words, choice, refresh, keyPrefix),
     ],
   ];
 }
+
+/// What the VAT says beyond its rate: a fixed asset and, where the choice
+/// offers it, a purchase from a supplier abroad.
+List<Widget> _flagSwitches(
+  AppLocalizations words,
+  ExpenseVatChoice choice,
+  VoidCallback refresh,
+  String keyPrefix,
+) => [
+  SwitchListTile(
+    key: ValueKey('$keyPrefix-vat-asset'),
+    contentPadding: EdgeInsets.zero,
+    title: Text(words.expenseVatAsset),
+    subtitle: Text(words.expenseVatAssetHint),
+    value: choice.asset,
+    onChanged: (v) {
+      choice.asset = v;
+      refresh();
+    },
+  ),
+  if (choice.acquisitionOffered)
+    SwitchListTile(
+      key: ValueKey('$keyPrefix-vat-acquisition'),
+      contentPadding: EdgeInsets.zero,
+      title: Text(words.expenseVatAcquisition),
+      subtitle: Text(words.expenseVatAcquisitionHint),
+      value: choice.acquisition,
+      onChanged: (v) {
+        choice.acquisition = v;
+        refresh();
+      },
+    ),
+];
 
 /// « 20 % », in the reader's number format.
 String _percentLabel(AppLocalizations l10n, double percent) =>
     '${NumberFormat.decimalPattern(l10n.localeName).format(percent)} %';
 
 /// The hint, and once amount and share are typed, the deductible VAT
-/// they make (`vatInputSplit`, the server's rounding).
+/// they make (`vatInputSplit`, the server's rounding); for an acquisition
+/// the tax owed on the amount and its deductible share
+/// (`vatAcquisitionSplit`).
 String _deductibleHelper(
   AppLocalizations l10n,
   MoneyFormat currency,
@@ -174,6 +233,13 @@ String _deductibleHelper(
       pct < 0 ||
       pct > 100) {
     return words.expenseVatDeductibleHint;
+  }
+  if (choice.acquisition) {
+    final owed = vatAcquisitionSplit(gross, percent, pct);
+    return words.expenseVatAcquisitionAmount(
+      currency.formatMinor(owed.taxCents),
+      currency.formatMinor(owed.deductibleCents),
+    );
   }
   final split = vatInputSplit(gross, percent, pct);
   return words.expenseVatDeductibleAmount(

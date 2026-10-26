@@ -58,7 +58,7 @@ Future<void> showExpenseSheet(
   // may deduct and whether it bought a fixed asset.
   final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
   if (!context.mounted) return;
-  final vat = ExpenseVatChoice(fields['deductible']);
+  final vat = ExpenseVatChoice.of(ref, workspace, fields['deductible']);
   void prefillUnit() {
     final cents = parseCentsInput(fields['amount'].text) ?? 0;
     final qty = int.tryParse(fields['supplyQuantity'].text) ?? 0;
@@ -79,7 +79,7 @@ Future<void> showExpenseSheet(
     supplyUnitPrice: fields['supplyUnit'].text,
     vatPercent: vat.percent,
     deductible: fields['deductible'].text,
-    asset: vat.asset,
+    vatFlags: vat.flags,
   );
   // #1449 — the reason the typed expense cannot be filed, shown in the
   // sheet; the sheet only closes on a draft the rules accept.

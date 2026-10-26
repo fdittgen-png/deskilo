@@ -64,5 +64,9 @@
   "scheduleVatInvalid": "Inserisca una quota detraibile tra 0 e 100.",
   "@scheduleVatInvalid": {
     "description": "#2357 input VAT: scheduleVatInvalid"
-  }
+  },
+  "expenseVatAcquisition": "Acquistato da un fornitore all'estero",
+  "expenseVatAcquisitionHint": "La fattura non riporta l'imposta di questo paese: l'importo è la base, lo spazio deve su di esso l'imposta sull'acquisto e ne detrae la quota. Lo indichi qui.",
+  "expenseVatAcquisitionAmount": "Imposta sull'acquisto dovuta: {tax} · detraibile: {deductible}",
+  "vatDeclAcquisitionTax": "Imposta sull'acquisto"
 }

@@ -34,10 +34,10 @@ class VatDeclarationRow {
 
   int get balanceCents => declaration.totalVatCents.abs();
 
-  /// A line names what it is beside its rate (deductible VAT, a
-  /// correction); the period's own sales do not.
+  /// A line names what it is beside its rate (deductible VAT, the
+  /// acquisition tax, a correction); the period's own sales do not.
   static bool hasNote(VatDeclarationLine line) =>
-      line.isCorrection || line.isInput;
+      line.isCorrection || line.isInput || line.isAcquisition;
 
   /// `20 %`, `5.5 %`: a whole rate without decimals.
   static String percentLabel(double percent) =>

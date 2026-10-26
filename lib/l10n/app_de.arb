@@ -5557,6 +5557,9 @@
   "expenseSupplyToggle": "Das ist ein Vorrat für den Raum",
   "expenseSupplyUnitPrice": "Stückpreis (was ein Verbrauch kostet)",
   "expenseSupplyUnitPriceHint": "Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.",
+  "expenseVatAcquisition": "Bei einem Lieferanten im Ausland gekauft",
+  "expenseVatAcquisitionAmount": "Geschuldete Bezugsteuer: {tax} · abziehbar: {deductible}",
+  "expenseVatAcquisitionHint": "Die Rechnung enthält keine Steuer dieses Landes: Der Betrag ist die Bemessungsgrundlage, der Bereich schuldet darauf die Bezugsteuer und zieht seinen Anteil als Vorsteuer ab.",
   "expenseVatAsset": "Ein Anlagegut",
   "@expenseVatAsset": {
     "description": "#2357 input VAT: expenseVatAsset"
@@ -18457,6 +18460,7 @@
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
   },
+  "vatDeclAcquisitionTax": "Bezugsteuer",
   "vatDeclAeat303": "AEAT-Datei (Modelo 303)",
   "@vatDeclAeat303": {
     "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"

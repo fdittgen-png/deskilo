@@ -5557,6 +5557,9 @@
   "expenseSupplyToggle": "È una scorta per lo spazio",
   "expenseSupplyUnitPrice": "Prezzo unitario (quanto costa un consumo)",
   "expenseSupplyUnitPriceHint": "Precompilato con importo ÷ quantità; arrotondi se vuole.",
+  "expenseVatAcquisition": "Acquistato da un fornitore all'estero",
+  "expenseVatAcquisitionAmount": "Imposta sull'acquisto dovuta: {tax} · detraibile: {deductible}",
+  "expenseVatAcquisitionHint": "La fattura non riporta l'imposta di questo paese: l'importo è la base, lo spazio deve su di esso l'imposta sull'acquisto e ne detrae la quota. Lo indichi qui.",
   "expenseVatAsset": "Un bene strumentale",
   "@expenseVatAsset": {
     "description": "#2357 input VAT: expenseVatAsset"
@@ -18457,6 +18460,7 @@
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
   },
+  "vatDeclAcquisitionTax": "Imposta sull'acquisto",
   "vatDeclAeat303": "File AEAT (Modelo 303)",
   "@vatDeclAeat303": {
     "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"

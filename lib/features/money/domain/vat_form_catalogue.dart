@@ -106,6 +106,20 @@ VatFormSpec? vatFormSpecFor(
   );
 }
 
+/// Whether the return [country] files for a period ending [on] has a box for
+/// the acquisition tax on services bought from abroad (CH 383): only there
+/// may an expense say it was bought so, since no other form would declare
+/// the tax it owes.
+bool vatFormTaxesAcquisitions(String country, DateTime on) {
+  final form = vatFormSpecFor(country, on);
+  if (form == null) return false;
+  return form.boxes.any(
+    (box) => [...box.base, ...box.tax].any(
+      (term) => term.selector?.categories?.contains(vatAcquisitionCategory) ?? false,
+    ),
+  );
+}
+
 /// A country without a form in the catalogue: one box per rate of the
 /// sales, and the deductible VAT.
 VatFormSpec genericVatForm(List<VatDeclarationLine> lines) {

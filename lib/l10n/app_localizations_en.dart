@@ -7254,6 +7254,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Prefilled from amount ÷ quantity; round up if you like.';
 
   @override
+  String get expenseVatAcquisition => 'Bought from a supplier abroad';
+
+  @override
+  String expenseVatAcquisitionAmount(String tax, String deductible) {
+    return 'Acquisition tax owed: $tax · deductible: $deductible';
+  }
+
+  @override
+  String get expenseVatAcquisitionHint =>
+      'The invoice carries no VAT of this country: the amount is the base, and the space owes the acquisition tax on it and deducts its share.';
+
+  @override
   String get expenseVatAsset => 'A fixed asset';
 
   @override
@@ -27374,6 +27386,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vatChangeNeedsSave =>
       'Save the rate first; then change it by law.';
+
+  @override
+  String get vatDeclAcquisitionTax => 'Acquisition tax';
 
   @override
   String get vatDeclAeat303 => 'AEAT file (Modelo 303)';

@@ -77,7 +77,8 @@ VatBoxSpec _resolved(
 /// the country's `rate` rows: the version in force on [periodEnd] first, any
 /// earlier or later version after it (a period that straddles a change of
 /// rate holds lines of both). Null where no rate row has the line's rate and
-/// category -- the line then belongs to no named group.
+/// category -- the line then belongs to no named group. The acquisition tax
+/// on a purchase from abroad takes the group of the sales rate it is at.
 String Function(VatDeclarationLine) lineGroupsFor(
   TaxReferenceSet reference,
   String country,
@@ -90,7 +91,12 @@ String Function(VatDeclarationLine) lineGroupsFor(
         () => reference.groupOfRate(
           country,
           line.percent,
-          line.category.isNotEmpty ? line.category : (line.percent > 0 ? 'S' : 'O'),
+          // An acquisition is taxed at one of the country's rates of a sale.
+          line.isAcquisition
+              ? 'S'
+              : line.category.isNotEmpty
+                  ? line.category
+                  : (line.percent > 0 ? 'S' : 'O'),
           asOf: day,
         ),
       );

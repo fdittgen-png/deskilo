@@ -7,8 +7,8 @@
 begin;
 select plan(9);
 
-select is((select count(*)::int from public.tax_reference where domain = 'form_box'), 15,
-          'the fifteen rated boxes of the UStVA, CA3, Modelo 303 and MWST are rows');
+select is((select count(*)::int from public.tax_reference where domain = 'form_box'), 17,
+          'the fifteen rated boxes of the UStVA, CA3, Modelo 303 and MWST are rows, and since 2026-10-26 the MWST''s 205 and 383 (#2360)');
 select is((select value -> 'groups' ->> 0 from public.tax_reference
             where domain = 'form_box' and country = 'DE' and key = 'ustva/Kz 81'), 'standard',
           'Kz 81 takes the standard group');

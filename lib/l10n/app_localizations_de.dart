@@ -7314,6 +7314,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.';
 
   @override
+  String get expenseVatAcquisition =>
+      'Bei einem Lieferanten im Ausland gekauft';
+
+  @override
+  String expenseVatAcquisitionAmount(String tax, String deductible) {
+    return 'Geschuldete Bezugsteuer: $tax · abziehbar: $deductible';
+  }
+
+  @override
+  String get expenseVatAcquisitionHint =>
+      'Die Rechnung enthält keine Steuer dieses Landes: Der Betrag ist die Bemessungsgrundlage, der Bereich schuldet darauf die Bezugsteuer und zieht seinen Anteil als Vorsteuer ab.';
+
+  @override
   String get expenseVatAsset => 'Ein Anlagegut';
 
   @override
@@ -27661,6 +27674,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get vatChangeNeedsSave =>
       'Speichern Sie den Satz zuerst; dann ändern Sie ihn per Gesetz.';
+
+  @override
+  String get vatDeclAcquisitionTax => 'Bezugsteuer';
 
   @override
   String get vatDeclAeat303 => 'AEAT-Datei (Modelo 303)';

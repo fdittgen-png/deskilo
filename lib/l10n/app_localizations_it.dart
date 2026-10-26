@@ -7299,6 +7299,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Precompilato con importo ÷ quantità; arrotondi se vuole.';
 
   @override
+  String get expenseVatAcquisition => 'Acquistato da un fornitore all\'estero';
+
+  @override
+  String expenseVatAcquisitionAmount(String tax, String deductible) {
+    return 'Imposta sull\'acquisto dovuta: $tax · detraibile: $deductible';
+  }
+
+  @override
+  String get expenseVatAcquisitionHint =>
+      'La fattura non riporta l\'imposta di questo paese: l\'importo è la base, lo spazio deve su di esso l\'imposta sull\'acquisto e ne detrae la quota. Lo indichi qui.';
+
+  @override
   String get expenseVatAsset => 'Un bene strumentale';
 
   @override
@@ -27627,6 +27639,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get vatChangeNeedsSave =>
       'Salvi prima l\'aliquota; poi la modifichi per legge.';
+
+  @override
+  String get vatDeclAcquisitionTax => 'Imposta sull\'acquisto';
 
   @override
   String get vatDeclAeat303 => 'File AEAT (Modelo 303)';
