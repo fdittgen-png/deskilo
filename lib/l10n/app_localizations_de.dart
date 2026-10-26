@@ -1425,6 +1425,33 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Ausstattungsregister ist aus: Kein Anlagenzugang ist bekannt.';
 
   @override
+  String get biBasisBookValuePeriod => 'Zeitraum der Buchwerte';
+
+  @override
+  String get biBasisCurrentState => 'Stand heute';
+
+  @override
+  String get biBasisDocumentDate => 'Datum des Belegs';
+
+  @override
+  String get biBasisInvoiceMonth => 'Monat der Rechnung';
+
+  @override
+  String get biBasisOccurrenceDue => 'Fälligkeitsdatum';
+
+  @override
+  String get biBasisPaymentMatchedAt => 'Datum der Zuordnung der Zahlung';
+
+  @override
+  String get biBasisPaymentReportedPaid => 'als bezahlt gemeldetes Datum';
+
+  @override
+  String get biBasisPeriodEnd => 'Ende des Zeitraums';
+
+  @override
+  String get biBasisReservationTime => 'gebuchte Zeit';
+
+  @override
   String get biBookingBasis =>
       'Reservierte Kapazität misst Buchungen, nicht die tatsächliche Anwesenheit.';
 
@@ -1577,6 +1604,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get biCoverageConfirmedValues => 'nur bestätigte Werte';
+
+  @override
+  String get biCoverageCurrentRecords => 'aktuelle Datensätze';
+
+  @override
+  String get biCoverageCurrentStateOnly => 'nur heute';
+
+  @override
+  String get biCoverageRecordedHistory => 'aufgezeichnete Historie';
+
+  @override
   String get biCurrentBasis =>
       'Der gesamte Zeitraum ist enthalten. Der Vergleich mit einem abgeschlossenen Zeitraum hat keine gleichwertige Basis.';
 
@@ -1616,10 +1655,550 @@ class AppLocalizationsDe extends AppLocalizations {
   String get biDimensionLevel => 'Ebene';
 
   @override
+  String get biEditorAddPage => 'Seite hinzufügen';
+
+  @override
+  String get biEditorAddVisual => 'Visualisierung hinzufügen';
+
+  @override
+  String get biEditorAsTable => 'Dieselben Werte als Tabelle';
+
+  @override
+  String get biEditorAxis => 'Senkrechte Achse';
+
+  @override
+  String biEditorAxisCut(String low) {
+    return 'Die Achse beginnt bei $low, nicht bei null.';
+  }
+
+  @override
+  String get biEditorAxisFit =>
+      'An die Werte angepasst (unter der Linie vermerkt)';
+
+  @override
+  String get biEditorAxisZero => 'Beginnt bei null';
+
+  @override
+  String get biEditorBackToEdit => 'Zurück zum Bearbeiten';
+
+  @override
+  String get biEditorBasisBookValue => 'nach Buchungszeitraum';
+
+  @override
+  String get biEditorBasisCurrentState => 'wie heute';
+
+  @override
+  String get biEditorBasisDocumentDate => 'nach Belegdatum';
+
+  @override
+  String get biEditorBasisInvoiceMonth => 'nach Rechnungsmonat';
+
+  @override
+  String get biEditorBasisOccurrenceDue => 'nach Fälligkeit';
+
+  @override
+  String get biEditorBasisPaymentMatched => 'nach zugeordneter Zahlung';
+
+  @override
+  String get biEditorBasisPeriodEnd => 'zum Periodenende';
+
+  @override
+  String get biEditorBasisReportedPaid => 'nach gemeldeter Zahlung';
+
+  @override
+  String get biEditorBasisReservationTime => 'nach gebuchter Zeit';
+
+  @override
+  String get biEditorChangeFigure => 'Ändern';
+
+  @override
+  String get biEditorChooseFigure => 'Kennzahl wählen';
+
+  @override
+  String get biEditorClose => 'Editor schließen';
+
+  @override
+  String biEditorColumns(String count) {
+    return '$count von 12 Spalten';
+  }
+
+  @override
+  String get biEditorConflict =>
+      'Jemand hat diesen Bericht gespeichert, seit Sie ihn geöffnet haben. Nichts wurde überschrieben: Laden Sie dessen Fassung neu (Ihre Änderungen entfallen) oder behalten Sie Ihre Änderungen als private Kopie.';
+
+  @override
+  String get biEditorCoverageConfirmed => 'nur bestätigte Werte';
+
+  @override
+  String get biEditorCoverageCurrentRecords => 'aktuelle Datensätze';
+
+  @override
+  String get biEditorCoverageHistory => 'erfasster Verlauf';
+
+  @override
+  String get biEditorCoverageTodayOnly => 'nur heute, ohne Verlauf';
+
+  @override
+  String get biEditorDelete => 'Löschen';
+
+  @override
+  String get biEditorDiscard => 'Verwerfen';
+
+  @override
+  String get biEditorDuplicate => 'Duplizieren';
+
+  @override
+  String get biEditorEarlier => 'Früher';
+
+  @override
+  String get biEditorEmptyPage =>
+      'Diese Seite hat noch keine Visualisierung. Fügen Sie eine aus dem Katalog hinzu.';
+
+  @override
+  String get biEditorFigure => 'Kennzahl';
+
+  @override
+  String biEditorFilterExcept(String what, String scope) {
+    return 'Alles außer $what · $scope';
+  }
+
+  @override
+  String biEditorFilterOnly(String what, String scope) {
+    return 'Nur $what · $scope';
+  }
+
+  @override
+  String biEditorFilteredBy(String group) {
+    return 'Zeigt nur $group (die Auswahl der Seite).';
+  }
+
+  @override
+  String get biEditorFilters => 'Filter';
+
+  @override
+  String get biEditorFormat => 'Zahlenformat';
+
+  @override
+  String get biEditorFormatAuto => 'Wie die Kennzahl';
+
+  @override
+  String get biEditorGrouping => 'Gruppiert nach';
+
+  @override
+  String get biEditorHeight => 'Höhe';
+
+  @override
+  String get biEditorHigher => 'Höher';
+
+  @override
+  String get biEditorInteraction => 'Ein Klick auf eine Gruppe';
+
+  @override
+  String get biEditorInteractionFilter =>
+      'Filtert die anderen Visualisierungen der Seite';
+
+  @override
+  String get biEditorInteractionNone => 'Bewirkt nichts';
+
+  @override
+  String get biEditorKeepAsCopy => 'Meine als private Kopie behalten';
+
+  @override
+  String get biEditorKeepEditing => 'Weiter bearbeiten';
+
+  @override
+  String get biEditorKeepSelection => 'Als Filter dieser Seite behalten';
+
+  @override
+  String get biEditorKind => 'Darstellung';
+
+  @override
+  String get biEditorKindBar => 'Balken';
+
+  @override
+  String get biEditorKindKpi => 'Kennzahl';
+
+  @override
+  String get biEditorKindLine => 'Linie';
+
+  @override
+  String get biEditorKindStackedBar => 'Gestapelter Balken';
+
+  @override
+  String get biEditorKindTable => 'Tabelle';
+
+  @override
+  String get biEditorKindText => 'Text';
+
+  @override
+  String get biEditorLater => 'Später';
+
+  @override
+  String get biEditorLeaveBody =>
+      'Ihre Änderungen an diesem Bericht sind noch nicht gespeichert.';
+
+  @override
+  String get biEditorLeaveTitle => 'Mit ungespeicherten Änderungen verlassen?';
+
+  @override
+  String get biEditorLegend => 'Legende';
+
+  @override
+  String get biEditorLower => 'Niedriger';
+
+  @override
+  String get biEditorMore => 'Weitere Speicheroptionen';
+
+  @override
+  String get biEditorNarrower => 'Schmaler';
+
+  @override
+  String get biEditorNewText => 'Schreiben Sie hier eine Erläuterung.';
+
+  @override
+  String get biEditorNoFilters =>
+      'Kein Filter: Jede Kennzahl zeigt alles, was Ihre Rechte erlauben.';
+
+  @override
+  String get biEditorNoGrouping => 'Nicht gruppiert';
+
+  @override
+  String get biEditorNoHistory =>
+      'Noch kein Verlauf für diese Kennzahl: Es gibt nichts, woraus sich ein Trend zeichnen ließe.';
+
+  @override
+  String get biEditorNotComposition =>
+      'Einige Teile sind negativ: Das ist kein Ganzes aus Teilen. Siehe Tabelle.';
+
+  @override
+  String get biEditorNotEditable =>
+      'Dieser Bericht kann hier nicht bearbeitet werden: Sie dürfen ihn nicht ändern, er enthält Kennzahlen, die Sie nicht lesen dürfen, oder es gibt ihn nicht mehr. Öffnen Sie ihn auf der Analyseseite oder speichern Sie dort eine Kopie.';
+
+  @override
+  String get biEditorNotFiltered =>
+      'Diese Kennzahl ist nicht so gruppiert: Sie zeigt ihr Ganzes, nicht die Auswahl.';
+
+  @override
+  String get biEditorOnePoint =>
+      'Nur ein bekannter Zeitraum: ein Punkt, kein Trend.';
+
+  @override
+  String get biEditorOpen => 'Bericht bearbeiten';
+
+  @override
+  String get biEditorOutsideScope =>
+      'Die Auswahl liegt außerhalb der Filter dieser Visualisierung: Sie zeigt weiter, was diese erlauben.';
+
+  @override
+  String biEditorPageDelete(String title) {
+    return '$title löschen';
+  }
+
+  @override
+  String biEditorPageEarlier(String title) {
+    return '$title nach vorn';
+  }
+
+  @override
+  String biEditorPageLater(String title) {
+    return '$title nach hinten';
+  }
+
+  @override
+  String get biEditorPageTitle => 'Seitentitel';
+
+  @override
+  String get biEditorPages => 'Seiten';
+
+  @override
+  String get biEditorPagesAndVisuals => 'Seiten und Visualisierungen';
+
+  @override
+  String get biEditorPalette => 'Farben';
+
+  @override
+  String get biEditorPaletteContrast => 'Hoher Kontrast';
+
+  @override
+  String get biEditorPaletteMono => 'Eine Farbe';
+
+  @override
+  String get biEditorPaletteStandard => 'Die Farben der App';
+
+  @override
+  String biEditorPlace(String position, String count) {
+    return 'Platz $position von $count';
+  }
+
+  @override
+  String get biEditorPreview => 'Vorschau, wie Lesende ihn sehen';
+
+  @override
+  String get biEditorProperties => 'Eigenschaften';
+
+  @override
+  String get biEditorPublish => 'Für den Arbeitsbereich veröffentlichen';
+
+  @override
+  String biEditorReadLabel(String title, String kind) {
+    return '$title, $kind';
+  }
+
+  @override
+  String get biEditorRedo => 'Wiederholen';
+
+  @override
+  String get biEditorRefusedAxis =>
+      'Nur die Achse einer Linie darf an die Werte angepasst werden; ein Balken beginnt bei null. Die Visualisierung bleibt unverändert.';
+
+  @override
+  String get biEditorRefusedDimension =>
+      'Diese Kennzahl lässt sich so nicht gruppieren. Die Visualisierung bleibt unverändert.';
+
+  @override
+  String get biEditorRefusedFormat =>
+      'Dieses Format würde die Einheit ändern: Ein Prozentsatz bleibt ein Prozentsatz, ein Betrag bleibt ein Betrag. Die Visualisierung bleibt unverändert.';
+
+  @override
+  String get biEditorRefusedLastPage =>
+      'Ein Bericht behält mindestens eine Seite.';
+
+  @override
+  String get biEditorRefusedLimit =>
+      'Dieser Bericht hat die Grenze des Bereichs für Seiten oder Visualisierungen erreicht.';
+
+  @override
+  String get biEditorRefusedMissing =>
+      'Diese Visualisierung ist nicht mehr auf dieser Seite.';
+
+  @override
+  String get biEditorRefusedNoGrouping =>
+      'Balken vergleichen Gruppen, und diese Kennzahl hat keine Gruppierung. Die Visualisierung bleibt unverändert.';
+
+  @override
+  String get biEditorRefusedNoHistory =>
+      'Eine Linie braucht einen Verlauf; diese Kennzahl zeigt nur den heutigen Stand. Die Visualisierung bleibt unverändert.';
+
+  @override
+  String get biEditorRefusedNotAdditive =>
+      'Nur eine Kennzahl, die sich addiert, ist ein Ganzes aus Teilen. Die Visualisierung bleibt unverändert.';
+
+  @override
+  String get biEditorRefusedSort =>
+      'Nach Wert sortieren braucht Gruppen. Die Visualisierung bleibt unverändert.';
+
+  @override
+  String get biEditorRefusedText => 'Ein Text trägt keine Kennzahl.';
+
+  @override
+  String get biEditorRefusedTextLength =>
+      'Ein Titel oder Text braucht 1 Zeichen bis zu seinem Höchstwert.';
+
+  @override
+  String get biEditorRefusedUnknown =>
+      'Diese Kennzahl dürfen Sie hier nicht zeigen.';
+
+  @override
+  String get biEditorRefusedWidens =>
+      'Ein Filter hier darf die Filter des Berichts nur einschränken, nie erweitern.';
+
+  @override
+  String get biEditorReload => 'Deren Fassung laden';
+
+  @override
+  String get biEditorRemoveFilter => 'Diesen Filter entfernen';
+
+  @override
+  String get biEditorReportProperties => 'Bericht und Seite';
+
+  @override
+  String get biEditorResetSelection => 'Auswahl zurücksetzen';
+
+  @override
+  String biEditorRows(String count) {
+    return '$count Zeilen';
+  }
+
+  @override
+  String get biEditorSaveCopy => 'Kopie speichern (privat)';
+
+  @override
+  String get biEditorSaved => 'Der Bericht ist gespeichert.';
+
+  @override
+  String biEditorScaleMax(String max) {
+    return 'Skala: 0 bis $max, die größte Gruppe';
+  }
+
+  @override
+  String get biEditorScalePercent => 'Skala: 0 bis 100 %';
+
+  @override
+  String get biEditorScopePage => 'diese Seite';
+
+  @override
+  String get biEditorScopeReport => 'ganzer Bericht';
+
+  @override
+  String get biEditorSelectHint =>
+      'Wählen Sie eine Visualisierung auf der Seite aus, um sie zu ändern.';
+
+  @override
+  String biEditorSelectionChip(String group) {
+    return 'Ausgewählt: $group';
+  }
+
+  @override
+  String get biEditorSort => 'Reihenfolge';
+
+  @override
+  String get biEditorSortHighFirst => 'Höchste zuerst';
+
+  @override
+  String get biEditorSortLowFirst => 'Niedrigste zuerst';
+
+  @override
+  String get biEditorSortNatural => 'Wie die Gruppen kommen';
+
+  @override
+  String biEditorSourceNote(String unit, String basis, String coverage) {
+    return '$unit · $basis · $coverage';
+  }
+
+  @override
+  String get biEditorSourceNoteToggle => 'Quellenhinweis';
+
+  @override
+  String get biEditorText => 'Text';
+
+  @override
+  String get biEditorTitle => 'Bericht-Editor';
+
+  @override
+  String get biEditorUndo => 'Rückgängig';
+
+  @override
+  String get biEditorUnitAmount => 'Betrag in seiner Währung';
+
+  @override
+  String get biEditorUnitCount => 'Anzahl';
+
+  @override
+  String get biEditorUnitPercent => 'Prozentsatz';
+
+  @override
+  String get biEditorValueLabels => 'Werte an den Markierungen';
+
+  @override
+  String get biEditorVisualDescription => 'Beschreibung';
+
+  @override
+  String biEditorVisualLabel(
+    String title,
+    String kind,
+    String position,
+    String count,
+    String span,
+  ) {
+    return '$title, $kind, Platz $position von $count, $span von 12 Spalten. Alt und Pfeiltasten verschieben, Umschalt und Pfeiltasten ändern die Größe, Entf entfernt.';
+  }
+
+  @override
+  String get biEditorVisualTitle => 'Angezeigter Titel';
+
+  @override
+  String get biEditorVisuals => 'Auf dieser Seite';
+
+  @override
+  String get biEditorWider => 'Breiter';
+
+  @override
+  String get biEditorWidth => 'Breite';
+
+  @override
   String get biEvolutionTitle => 'Entwicklung';
 
   @override
+  String get biExportAction => 'Bericht exportieren';
+
+  @override
+  String biExportComputedAt(String time) {
+    return 'Zahlen berechnet am $time. Dieser Export liest sie selbst: Haben sich die Daten seit der Anzeige des Dashboards geändert, weichen sie davon ab.';
+  }
+
+  @override
+  String biExportDigest(String hash) {
+    return 'Prüfwert $hash';
+  }
+
+  @override
+  String get biExportFailedEmpty =>
+      'In diesem Bericht lässt sich noch nichts exportieren.';
+
+  @override
+  String get biExportFailedForbidden =>
+      'Sie dürfen diese Zahlen nicht exportieren: Dafür braucht es das Recht, Daten zu exportieren, und das Recht, jede Zahl des Berichts zu lesen.';
+
+  @override
+  String get biExportFailedInvalid =>
+      'Aus diesem Bericht konnte kein Export erstellt werden.';
+
+  @override
+  String get biExportFailedOff =>
+      'Der Export dieser Dateiart ist in diesem Arbeitsbereich ausgeschaltet.';
+
+  @override
+  String get biExportFailedStale =>
+      'Der Bericht hat sich geändert, seit Sie ihn geöffnet haben. Öffnen Sie ihn erneut und exportieren Sie dann.';
+
+  @override
+  String get biExportFailedTooLarge =>
+      'Dieser Bericht verlangt mehr Zahlen, als ein Export tragen darf. Grenzen Sie ihn ein: weniger Seiten, Karten oder Zeiträume.';
+
+  @override
+  String get biExportFailedUnavailable =>
+      'Der Server hat nicht geantwortet. Es wurde nichts exportiert; versuchen Sie es erneut.';
+
+  @override
+  String get biExportFormatCsv => 'CSV (Daten)';
+
+  @override
+  String get biExportFormatPdf => 'PDF';
+
+  @override
+  String get biExportFormatXlsx => 'Arbeitsmappe (XLSX)';
+
+  @override
+  String biExportLeftOut(String count) {
+    return '$count Karten sind nicht in diesem Export: Ihre Zahl, ihre Filter oder ihre Gruppierung kann ein Export noch nicht beantworten.';
+  }
+
+  @override
   String get biExportPdf => 'Als PDF exportieren';
+
+  @override
+  String get biExportPreview => 'Zahlen lesen';
+
+  @override
+  String get biExportRecallNote =>
+      'Eine gespeicherte Datei ist eine Kopie dieser Zahlen: Sie kann später nicht zurückgeholt werden, auch wenn sich Ihre Rechte ändern.';
+
+  @override
+  String get biExportRefresh => 'Erneut lesen';
+
+  @override
+  String biExportRefreshedAt(String time) {
+    return 'Erneut gelesen am $time: neue Zahlen und ein neuer Prüfwert.';
+  }
+
+  @override
+  String get biExportSave => 'Datei speichern';
+
+  @override
+  String get biExportTaking => 'Die Zahlen für diesen Export werden gelesen …';
+
+  @override
+  String get biExportTitle => 'Bericht exportieren';
 
   @override
   String get biExposureDiffers =>
@@ -1780,6 +2359,142 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get biPdfTitle => 'Geschäftsanalyse';
+
+  @override
+  String get biPrintColBasis => 'Zusammengesetzt aus';
+
+  @override
+  String get biPrintColPeriod => 'Zeitraum';
+
+  @override
+  String get biPrintColStatus => 'Status';
+
+  @override
+  String get biPrintColValue => 'Wert';
+
+  @override
+  String get biPrintComplete =>
+      'Jede Zahl dieser Kopie ist bekannt und deckt ihren ganzen Zeitraum ab.';
+
+  @override
+  String get biPrintComputed => 'Berechnet';
+
+  @override
+  String get biPrintCurrency => 'Währung';
+
+  @override
+  String get biPrintDateBasis => 'Datumsbasis';
+
+  @override
+  String get biPrintFailed => 'nicht beantwortet';
+
+  @override
+  String get biPrintFilters => 'Filter';
+
+  @override
+  String get biPrintFooter => 'Fußzeile';
+
+  @override
+  String get biPrintHeader => 'Kopfzeile';
+
+  @override
+  String get biPrintLandscape => 'Querformat';
+
+  @override
+  String get biPrintLayoutAction => 'Drucklayout';
+
+  @override
+  String get biPrintLayoutApply => 'Dieses Layout verwenden';
+
+  @override
+  String get biPrintLayoutTitle => 'Drucklayout des Berichts';
+
+  @override
+  String get biPrintLeftOut => 'nicht in diesem Export';
+
+  @override
+  String get biPrintLineHelper => 'Reiner Text, auf jedem Blatt gedruckt.';
+
+  @override
+  String get biPrintLineInvalid =>
+      'Nur reiner Text: keine Zeilenumbrüche oder Steuerzeichen.';
+
+  @override
+  String get biPrintManagement =>
+      'Managementinformation, kein gesetzlicher Abschluss.';
+
+  @override
+  String get biPrintMarginNarrow => 'Schmal';
+
+  @override
+  String get biPrintMarginNormal => 'Normal';
+
+  @override
+  String get biPrintMarginWide => 'Breit';
+
+  @override
+  String get biPrintMargins => 'Ränder';
+
+  @override
+  String get biPrintNoFilters => 'keine';
+
+  @override
+  String get biPrintOrientation => 'Ausrichtung';
+
+  @override
+  String get biPrintPageBreaks => 'Jede Berichtsseite auf einem neuen Blatt';
+
+  @override
+  String get biPrintPaper => 'Papier';
+
+  @override
+  String get biPrintPaperA4 => 'A4';
+
+  @override
+  String get biPrintPaperLetter => 'US Letter';
+
+  @override
+  String get biPrintPartial =>
+      'Teilweise Kopie: Einige Zahlen sind unbekannt, decken nur einen Teil ihres Zeitraums ab oder sind nicht in diesem Export.';
+
+  @override
+  String get biPrintPeriod => 'Zeitraum';
+
+  @override
+  String get biPrintPortrait => 'Hochformat';
+
+  @override
+  String get biPrintProvenanceNote =>
+      'Arbeitsbereich, Bericht und Revision, Zeitraum, Datumsbasis, Währungen, Filter, der Zeitpunkt der Berechnung und ob die Zahlen vollständig sind, werden immer gedruckt.';
+
+  @override
+  String get biPrintQualified => 'teilweise';
+
+  @override
+  String get biPrintReport => 'Bericht';
+
+  @override
+  String biPrintRevision(String revision) {
+    return 'Revision $revision';
+  }
+
+  @override
+  String get biPrintSheetPreview => 'Blattvorschau';
+
+  @override
+  String get biPrintShowSources => 'Die Quelle jeder Zahl angeben';
+
+  @override
+  String get biPrintSnapshot => 'Prüfwert';
+
+  @override
+  String get biPrintUnknown => 'unbekannt';
+
+  @override
+  String get biPrintUnsaved => 'nicht gespeichert';
+
+  @override
+  String get biPrintWorkspace => 'Arbeitsbereich';
 
   @override
   String biProjectionBasis(int count) {
@@ -6691,7 +7406,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureDataExportDesc =>
-      'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen.';
+      'Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen, und die Analyseberichte als CSV-Datei oder Arbeitsmappe.';
 
   @override
   String get featureDataReportDesc =>
@@ -7228,7 +7943,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featurePdfExport => 'PDF-Export';
 
   @override
-  String get featurePdfExportDesc => 'Die Monatsrechnung als PDF exportieren.';
+  String get featurePdfExportDesc =>
+      'Die Monatsrechnung und die Analyseberichte als PDF exportieren.';
 
   @override
   String get featurePersonalInfo => 'Persönliche Angaben';
@@ -15405,11 +16121,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get overviewActiveMemberships => 'Aktive Mitgliedschaften';
 
   @override
+  String get overviewAddTile => 'Kachel anheften';
+
+  @override
   String get overviewAllIndicators => 'Alle Kennzahlen';
+
+  @override
+  String overviewCopiedAsReport(String name) {
+    return 'Als Bericht „$name“ gespeichert.';
+  }
+
+  @override
+  String get overviewCopyFrom => 'Aufteilung eines Berichts kopieren';
+
+  @override
+  String get overviewCopyTo => 'Als Bericht speichern';
 
   @override
   String get overviewCurrentState =>
       'Heutiger Wert: für einen vergangenen Zeitraum wird kein Verlauf gespeichert.';
+
+  @override
+  String get overviewCustomize => 'Anpassen';
 
   @override
   String get overviewGroupCapacity => 'Kapazität';
@@ -15430,11 +16163,45 @@ class AppLocalizationsDe extends AppLocalizations {
   String get overviewIndicators => 'Kennzahlen';
 
   @override
+  String get overviewLayoutConflict =>
+      'Ihre Aufteilung wurde seit dem Öffnen anderswo geändert. Nichts wurde überschrieben: Laden Sie sie neu und nehmen Sie Ihre Änderung erneut vor.';
+
+  @override
+  String get overviewLayoutLost =>
+      'Ihre Aufteilung konnte nicht gespeichert werden: Es kam keine Antwort. Ihre Änderungen bleiben erhalten; ein erneuter Versuch sendet dieselbe Speicherung, die nie doppelt angewendet wird.';
+
+  @override
+  String get overviewLayoutName => 'Meine Übersicht';
+
+  @override
+  String get overviewLayoutReload => 'Neu laden';
+
+  @override
+  String get overviewLayoutSave => 'Meine Aufteilung speichern';
+
+  @override
+  String get overviewLayoutSaved => 'Ihre Aufteilung ist gespeichert.';
+
+  @override
   String get overviewMembershipsDefinition =>
       'Die heute aktiven Mitgliedschaften des Raums, alle Rollen eingeschlossen: Mitgliedschaften, nicht einzelne Personen.';
 
   @override
+  String overviewMoveEarlier(String title) {
+    return '$title nach vorn';
+  }
+
+  @override
+  String overviewMoveLater(String title) {
+    return '$title nach hinten';
+  }
+
+  @override
   String get overviewNeedsAttention => 'Zu erledigen';
+
+  @override
+  String get overviewNoPinned =>
+      'Keine Kachel angeheftet: Heften Sie die Kennzahlen an, die Sie hier zuerst sehen möchten.';
 
   @override
   String overviewOverdueBasis(String count, String unknown, String held) {
@@ -15449,13 +16216,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get overviewOverdueTitle => 'Überfällige Forderungen';
 
   @override
+  String get overviewPinned => 'Ihre angehefteten Kacheln';
+
+  @override
   String get overviewThisMonth => 'Dieser Monat';
+
+  @override
+  String overviewTilePosition(String title, String position, String count) {
+    return '$title, Kachel $position von $count';
+  }
 
   @override
   String get overviewTitle => 'Überblick';
 
   @override
   String get overviewUnavailable => 'Nicht verfügbar';
+
+  @override
+  String overviewUnpinTile(String title) {
+    return '$title lösen';
+  }
 
   @override
   String get payConfigConfigured => 'Eingerichtet';

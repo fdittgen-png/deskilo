@@ -31,10 +31,14 @@ class PageSpec<T> {
   /// A full-screen task with a close button instead of a back arrow.
   final bool fullscreenDialog;
 
-  /// The route the router registers for this page.
-  GoRoute route() => GoRoute(
+  /// The route the router registers for this page. [guard], when given,
+  /// is asked after the argument check: a page a feature owns redirects
+  /// while the feature is off, like every other route it owns.
+  GoRoute route({GoRouterRedirect? guard}) => GoRoute(
     path: path,
-    redirect: (_, state) => state.extra is T ? null : fallback,
+    redirect: (context, state) => state.extra is T
+        ? guard?.call(context, state)
+        : fallback,
     pageBuilder: (_, state) => MaterialPage<Object?>(
       key: state.pageKey,
       fullscreenDialog: fullscreenDialog,

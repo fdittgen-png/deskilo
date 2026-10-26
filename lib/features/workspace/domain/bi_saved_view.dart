@@ -146,6 +146,9 @@ BiViewDefinition biSavedDefinition(BiSavedView open, BiQueryContext query) =>
     : BiViewDefinition.of(query);
 
 class BiSavedView {
+  /// The longest view name (`bi_view_save` refuses a longer one).
+  static const maxName = 80;
+
   const BiSavedView({
     required this.id,
     required this.scope,

@@ -12,8 +12,11 @@
 //     opens the analytics page; it never decides, pays or sends anything.
 //   * People: the active memberships (0536), a module like the others.
 //
-// No customising here yet (#2579/#2580 own saved layouts): a fixed,
-// registry-defined layout, no dead button.
+// C2 (#2580's saved layouts): with the report designer on, a reader of the
+// analytics may Customize — pin, unpin and reorder the tiles, copy a
+// report's layout, save it as a report. The layout is their own saved
+// report (bi_overview_layout.dart), so two people's layouts are independent
+// and it survives a restart; without one, the registry's grouped layout.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,17 +26,22 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/attention.dart';
 import '../../domain/bi_modules.dart';
+import '../../domain/bi_overview_layout.dart';
 import '../../domain/bi_query.dart';
+import '../../domain/bi_saved_view.dart';
 import '../../domain/kpi_contract.dart';
+import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/attention_providers.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/bi_module_section.dart';
+import '../widgets/overview_layout_editor.dart';
 import '../widgets/setup_resume_banner.dart';
 import 'attention_screen.dart';
 
 /// The groups of the key indicators, in their order.
+@visibleForTesting
 enum OverviewGroup { people, capacity, sales, purchases, cash }
 
 /// The group [module] is shown in.
@@ -56,11 +64,37 @@ String _groupLabel(AppLocalizations l10n, OverviewGroup g) => switch (g) {
   OverviewGroup.cash => l10n.overviewGroupCash,
 };
 
-class WorkspaceOverviewScreen extends ConsumerWidget {
+class WorkspaceOverviewScreen extends ConsumerStatefulWidget {
   const WorkspaceOverviewScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WorkspaceOverviewScreen> createState() =>
+      _WorkspaceOverviewScreenState();
+}
+
+class _WorkspaceOverviewScreenState
+    extends ConsumerState<WorkspaceOverviewScreen> {
+  var _customizing = false;
+  final _customize = FocusNode(debugLabel: 'overview-customize');
+
+  @override
+  void dispose() {
+    _customize.dispose();
+    super.dispose();
+  }
+
+  void _setCustomizing({required bool on}) {
+    setState(() => _customizing = on);
+    // Back from customizing, focus returns to the button that opened it.
+    if (!on) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _customize.requestFocus();
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final features = ref.watch(enabledFeaturesSyncProvider);
@@ -70,6 +104,16 @@ class WorkspaceOverviewScreen extends ConsumerWidget {
       for (final m in visibleBiModules(features, rights))
         if (biModuleViews.containsKey(m.id)) m,
     ];
+    // The person's own layout: only a reader of the analytics keeps views.
+    final analytics = rights.contains(WorkspacePermission.viewAnalytics);
+    final views = analytics && workspace != null
+        ? ref.watch(biViewsProvider(workspace.id)).value ?? const <BiSavedView>[]
+        : const <BiSavedView>[];
+    final canCustomize =
+        analytics &&
+        workspace != null &&
+        modules.isNotEmpty &&
+        features.contains(WorkspaceFeature.biReportDesigner);
     // #2869 — a configurer whose space is not set up yet sees where to
     // resume first.
     final setup = setupResumeBannerFor(ref, workspace?.id,
@@ -97,28 +141,13 @@ class WorkspaceOverviewScreen extends ConsumerWidget {
               AttentionRow(key: ValueKey('overview-attention-$i'), item: item),
           if (modules.isNotEmpty) ...[
             heading(l10n.overviewIndicators, 'overview-indicators'),
-            for (final group in OverviewGroup.values)
-              if (modules.where((m) => overviewGroupOf(m) == group).toList()
-                  case final inGroup when inGroup.isNotEmpty) ...[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                  child: Text(
-                    _groupLabel(l10n, group),
-                    key: ValueKey('overview-group-${group.name}'),
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ),
-                Wrap(
-                  spacing: AppSpacing.sm,
-                  runSpacing: AppSpacing.sm,
-                  children: [
-                    for (final m in inGroup)
-                      if (workspace != null)
-                        _IndicatorTile(workspaceId: workspace.id, module: m),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.md),
-              ],
+            if (workspace != null)
+              ..._indicators(
+                workspace.id,
+                modules,
+                views,
+                canCustomize: canCustomize,
+              ),
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: TextButton.icon(
@@ -133,11 +162,131 @@ class WorkspaceOverviewScreen extends ConsumerWidget {
       ),
     );
   }
+
+  /// The key indicators: Customize, then the person's layout being edited,
+  /// their pinned tiles, or the registry's groups.
+  List<Widget> _indicators(
+    String workspaceId,
+    List<BiModule> modules,
+    List<BiSavedView> views, {
+    required bool canCustomize,
+  }) {
+    final layout = biOverviewLayoutOf(views);
+    final report = layout?.definition?.report;
+    return [
+      if (canCustomize && !_customizing)
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: TextButton.icon(
+            key: const ValueKey('overview-customize'),
+            focusNode: _customize,
+            onPressed: () => _setCustomizing(on: true),
+            icon: const Icon(Icons.tune),
+            label: Text(context.l10n.overviewCustomize),
+          ),
+        ),
+      if (_customizing && canCustomize)
+        OverviewLayoutEditor(
+          workspaceId: workspaceId,
+          modules: modules,
+          layout: layout,
+          reports: [
+            for (final v in views)
+              if (v.definition?.report != null && v != layout) v,
+          ],
+          onClose: () => _setCustomizing(on: false),
+        )
+      // The person's own layout needs the designer: with it off, the
+      // registry's layout returns (and nothing is left nobody can change).
+      else if (canCustomize && report != null)
+        _Pinned(
+          workspaceId: workspaceId,
+          modules: [
+            for (final id in biTilesOf(report))
+              ?modules.where((m) => m.id == id).firstOrNull,
+          ],
+        )
+      else
+        _Grouped(workspaceId: workspaceId, modules: modules),
+    ];
+  }
+}
+
+/// The registry's layout: the tiles grouped Capacity / Sales / Purchases /
+/// Cash.
+class _Grouped extends StatelessWidget {
+  const _Grouped({required this.workspaceId, required this.modules});
+
+  final String workspaceId;
+  final List<BiModule> modules;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      for (final group in OverviewGroup.values)
+        if (modules.where((m) => overviewGroupOf(m) == group).toList()
+            case final inGroup when inGroup.isNotEmpty) ...[
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+            child: Text(
+              _groupLabel(context.l10n, group),
+              key: ValueKey('overview-group-${group.name}'),
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final m in inGroup)
+                _IndicatorTile(workspaceId: workspaceId, module: m),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+        ],
+    ],
+  );
+}
+
+/// The person's pinned tiles, in their order, without the registry groups.
+class _Pinned extends StatelessWidget {
+  const _Pinned({required this.workspaceId, required this.modules});
+
+  final String workspaceId;
+  final List<BiModule> modules;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: AppSpacing.md),
+    child: modules.isEmpty
+        ? Text(
+            context.l10n.overviewNoPinned,
+            key: const ValueKey('overview-pinned-empty'),
+          )
+        : Wrap(
+            key: const ValueKey('overview-pinned'),
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final m in modules)
+                _IndicatorTile(
+                  key: ValueKey('overview-pinned-${m.id}'),
+                  workspaceId: workspaceId,
+                  module: m,
+                ),
+            ],
+          ),
+  );
 }
 
 /// One module's current-month figure, in the module's own words.
 class _IndicatorTile extends ConsumerWidget {
-  const _IndicatorTile({required this.workspaceId, required this.module});
+  const _IndicatorTile({
+    super.key,
+    required this.workspaceId,
+    required this.module,
+  });
 
   final String workspaceId;
   final BiModule module;

@@ -76,6 +76,11 @@ final rows = <Row>[
   stay('no workspace: the help opens', '/help', zero),
   stay('no workspace: onboarding opens', '/onboarding?first=1', zero),
   stay('no workspace: the join scanner opens', '/scan-join', zero),
+  // #2521 — the person's settings and the device diagnostics are no
+  // workspace's: they open before any workspace and while pending.
+  stay('no workspace: the account settings open', '/settings', zero),
+  stay('no workspace: the device diagnostics open', '/developer', zero),
+  stay('pending: the account settings stay open', '/settings', pendingA),
   stay('no workspace: the wizard is not behind a workspace flag', '/server/new-instance', const RouteFacts(auth: AuthFact.signedIn, workspaces: WorkspacesFact.none, featureEnabled: _wizardOff)),
   stay('instance admin without membership reviews the server', '/server', zero),
   stay('workspaces loading: nothing moves', '/reserve', const RouteFacts(auth: AuthFact.signedIn, workspaces: WorkspacesFact.loading)),

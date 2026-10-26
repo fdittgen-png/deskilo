@@ -10,6 +10,7 @@ signed-out on  /attention -> /auth
 signed-out on  /auth -> (open)
 signed-out on  /availability -> /auth
 signed-out on  /bi -> /auth
+signed-out on  /bi/report/:id -> /auth
 signed-out on  /billing -> /auth
 signed-out on  /calendar -> /auth
 signed-out on  /connections -> /auth
@@ -132,6 +133,7 @@ signed-out off /attention -> /auth
 signed-out off /auth -> (open)
 signed-out off /availability -> /auth
 signed-out off /bi -> /auth
+signed-out off /bi/report/:id -> /auth
 signed-out off /billing -> /auth
 signed-out off /calendar -> /auth
 signed-out off /connections -> /auth
@@ -254,6 +256,7 @@ no-space on  /attention -> /me
 no-space on  /auth -> /me
 no-space on  /availability -> /me
 no-space on  /bi -> /me
+no-space on  /bi/report/:id -> /me
 no-space on  /billing -> /me
 no-space on  /calendar -> /me
 no-space on  /connections -> (open)
@@ -261,7 +264,7 @@ no-space on  /consent -> /me
 no-space on  /conversation/:conversationId -> /me
 no-space on  /database/assistant-approvals -> (open)
 no-space on  /deployment -> /me
-no-space on  /developer -> /me
+no-space on  /developer -> (open)
 no-space on  /directory -> /me
 no-space on  /discover -> (open)
 no-space on  /discover/workspace -> /discover
@@ -332,7 +335,7 @@ no-space on  /server-update -> /me
 no-space on  /server/new-instance -> (open)
 no-space on  /server/new-instance/first-start -> /server
 no-space on  /services -> /me
-no-space on  /settings -> /me
+no-space on  /settings -> (open)
 no-space on  /settings/assistant-setup -> /me
 no-space on  /settings/assistants -> /me
 no-space on  /settings/colours -> /me
@@ -376,6 +379,7 @@ no-space off /attention -> /me
 no-space off /auth -> /me
 no-space off /availability -> /me
 no-space off /bi -> /me
+no-space off /bi/report/:id -> /me
 no-space off /billing -> /me
 no-space off /calendar -> /me
 no-space off /connections -> (open)
@@ -383,7 +387,7 @@ no-space off /consent -> /me
 no-space off /conversation/:conversationId -> /me
 no-space off /database/assistant-approvals -> (open)
 no-space off /deployment -> /me
-no-space off /developer -> /me
+no-space off /developer -> (open)
 no-space off /directory -> /me
 no-space off /discover -> (open)
 no-space off /discover/workspace -> /discover
@@ -454,7 +458,7 @@ no-space off /server-update -> /me
 no-space off /server/new-instance -> (open)
 no-space off /server/new-instance/first-start -> /server
 no-space off /services -> /me
-no-space off /settings -> /me
+no-space off /settings -> (open)
 no-space off /settings/assistant-setup -> /me
 no-space off /settings/assistants -> /me
 no-space off /settings/colours -> /me
@@ -498,6 +502,7 @@ member on  /attention -> /
 member on  /auth -> /reserve
 member on  /availability -> /calendar
 member on  /bi -> /calendar
+member on  /bi/report/:id -> /calendar
 member on  /billing -> /calendar
 member on  /calendar -> (open)
 member on  /connections -> (open)
@@ -505,7 +510,7 @@ member on  /consent -> /reserve
 member on  /conversation/:conversationId -> (open)
 member on  /database/assistant-approvals -> (open)
 member on  /deployment -> /calendar
-member on  /developer -> /calendar
+member on  /developer -> (open)
 member on  /directory -> (open)
 member on  /discover -> (open)
 member on  /discover/workspace -> /discover
@@ -620,6 +625,7 @@ member off /attention -> /
 member off /auth -> /reserve
 member off /availability -> /messages
 member off /bi -> /messages
+member off /bi/report/:id -> /messages
 member off /billing -> /messages
 member off /calendar -> /messages
 member off /connections -> (open)
@@ -627,7 +633,7 @@ member off /consent -> /reserve
 member off /conversation/:conversationId -> /messages
 member off /database/assistant-approvals -> (open)
 member off /deployment -> /messages
-member off /developer -> /messages
+member off /developer -> (open)
 member off /directory -> /messages
 member off /discover -> (open)
 member off /discover/workspace -> /discover
@@ -671,10 +677,10 @@ member off /messages -> (open)
 member off /money -> /messages
 member off /money/cash -> /messages
 member off /money/purchases -> /messages
-member off /money/repartition -> (open)
+member off /money/repartition -> /messages
 member off /money/repartition-wizard -> /messages
 member off /money/sales -> /messages
-member off /money/settlement -> (open)
+member off /money/settlement -> /messages
 member off /money/status -> /messages
 member off /nfc-config -> /messages
 member off /oauth/consent -> (open)
@@ -742,6 +748,7 @@ admin on  /attention -> /
 admin on  /auth -> /reserve
 admin on  /availability -> /calendar
 admin on  /bi -> /calendar
+admin on  /bi/report/:id -> /calendar
 admin on  /billing -> /calendar
 admin on  /calendar -> (open)
 admin on  /connections -> (open)
@@ -864,6 +871,7 @@ admin off /attention -> /
 admin off /auth -> /reserve
 admin off /availability -> /messages
 admin off /bi -> /messages
+admin off /bi/report/:id -> /messages
 admin off /billing -> /messages
 admin off /calendar -> /messages
 admin off /connections -> (open)
@@ -915,10 +923,10 @@ admin off /messages -> (open)
 admin off /money -> /messages
 admin off /money/cash -> /messages
 admin off /money/purchases -> /messages
-admin off /money/repartition -> (open)
+admin off /money/repartition -> /messages
 admin off /money/repartition-wizard -> /messages
 admin off /money/sales -> /messages
-admin off /money/settlement -> (open)
+admin off /money/settlement -> /messages
 admin off /money/status -> /messages
 admin off /nfc-config -> /messages
 admin off /oauth/consent -> (open)
@@ -986,6 +994,7 @@ owner on  /attention -> /
 owner on  /auth -> /reserve
 owner on  /availability -> (open)
 owner on  /bi -> /calendar
+owner on  /bi/report/:id -> /calendar
 owner on  /billing -> (open)
 owner on  /calendar -> (open)
 owner on  /connections -> (open)
@@ -1071,7 +1080,7 @@ owner on  /settings/colours -> /settings
 owner on  /settings/number-sequences -> /settings
 owner on  /settings/payment-terms -> (open)
 owner on  /settings/personal-info -> (open)
-owner on  /settings/public-page -> (open)
+owner on  /settings/public-page -> /profiles
 owner on  /settings/questions -> /settings
 owner on  /settings/roles-of-this-space -> /settings
 owner on  /settings/sites -> /settings
@@ -1108,7 +1117,8 @@ owner off /attention -> /
 owner off /auth -> /reserve
 owner off /availability -> (open)
 owner off /bi -> /messages
-owner off /billing -> (open)
+owner off /bi/report/:id -> /messages
+owner off /billing -> /messages
 owner off /calendar -> /messages
 owner off /connections -> (open)
 owner off /consent -> /reserve
@@ -1159,17 +1169,17 @@ owner off /messages -> (open)
 owner off /money -> /messages
 owner off /money/cash -> /messages
 owner off /money/purchases -> /messages
-owner off /money/repartition -> (open)
+owner off /money/repartition -> /messages
 owner off /money/repartition-wizard -> /messages
 owner off /money/sales -> /messages
-owner off /money/settlement -> (open)
+owner off /money/settlement -> /messages
 owner off /money/status -> /messages
 owner off /nfc-config -> /messages
 owner off /oauth/consent -> (open)
 owner off /onboarding -> (open)
 owner off /p/:id -> (open)
 owner off /payment-config -> /messages
-owner off /payment-methods -> (open)
+owner off /payment-methods -> /messages
 owner off /pending -> /reserve
 owner off /plan -> /reserve
 owner off /privacy -> (open)
@@ -1193,7 +1203,7 @@ owner off /settings/colours -> /settings
 owner off /settings/number-sequences -> /settings
 owner off /settings/payment-terms -> /settings
 owner off /settings/personal-info -> /settings
-owner off /settings/public-page -> (open)
+owner off /settings/public-page -> /profiles
 owner off /settings/questions -> /settings
 owner off /settings/roles-of-this-space -> /settings
 owner off /settings/sites -> /settings

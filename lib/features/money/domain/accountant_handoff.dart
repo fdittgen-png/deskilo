@@ -108,6 +108,7 @@ class AccountantHandoff {
     required this.csvSha256,
     required this.csvBytes,
     required this.csvRows,
+    required this.columns,
   });
 
   final DateTime generatedAt;
@@ -131,6 +132,10 @@ class AccountantHandoff {
   /// Data rows the emitted file actually holds, parsed back.
   final int csvRows;
 
+  /// #2378 — the header of the emitted file: the fixed columns and the tax
+  /// key columns of the period, as written.
+  final List<String> columns;
+
   /// Nothing blocking: the file may be handed over as it is.
   bool get clean => !findings.any((f) => f.blocking);
 
@@ -139,7 +144,7 @@ class AccountantHandoff {
     'format_version': accountantCsvFormatVersion,
     'encoding': 'UTF-8',
     'delimiter': ',',
-    'columns': accountantCsvColumns,
+    'columns': columns,
     'generated_at': generatedAt.toUtc().toIso8601String(),
     'included': included,
     // #1885 — keys in a fixed order, so the same books read in another
@@ -317,9 +322,8 @@ AccountantHandoff buildAccountantHandoff({
 
   final rows = _parseAccountantCsvRows(csv).length;
   if (rows != included) {
-    findings.add(
-      HandoffFinding(HandoffFindingKind.rowCountMismatch, '$rows != $included'),
-    );
+    findings.add(HandoffFinding(
+        HandoffFindingKind.rowCountMismatch, '$rows != $included'));
   }
   final bytes = utf8.encode(csv);
   return AccountantHandoff._(
@@ -332,7 +336,18 @@ AccountantHandoff buildAccountantHandoff({
     csvSha256: sha256.convert(bytes).toString(),
     csvBytes: bytes.length,
     csvRows: rows,
+    columns: _accountantCsvHeader(csv),
   );
+}
+
+/// #2378 — the header line of an emitted accountant CSV, split: its names
+/// are never quoted ([accountantTaxKey] keeps them plain).
+List<String> _accountantCsvHeader(String csv) {
+  for (final line in const LineSplitter().convert(csv)) {
+    if (line.isEmpty || line.startsWith('#')) continue;
+    return line.split(',');
+  }
+  return const [];
 }
 
 /// #2365 — [accountantSourceDigest] of the documents in [kept] only: an

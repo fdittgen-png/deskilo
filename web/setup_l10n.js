@@ -748,7 +748,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "PDF export",
-    "Export the monthly bill as a PDF."
+    "Export the monthly bill and the analytics reports as a PDF."
    ],
    "seriesBooking": [
     "Series booking",
@@ -812,7 +812,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Data export (Excel)",
-    "Download all workspace data as an Excel workbook."
+    "Download all workspace data as an Excel workbook, and the analytics reports as a CSV file or a workbook."
    ],
    "workingHours": [
     "Working hours",
@@ -2387,7 +2387,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Export PDF",
-    "Exporter la facture mensuelle en PDF."
+    "Exporter la facture mensuelle et les rapports d’analyse en PDF."
    ],
    "seriesBooking": [
     "Réservation en série",
@@ -2451,7 +2451,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Export des données (Excel)",
-    "Télécharger toutes les données de l’espace dans un classeur Excel."
+    "Télécharger toutes les données de l’espace dans un classeur Excel, et les rapports d’analyse en fichier CSV ou en classeur."
    ],
    "workingHours": [
     "Horaires de travail",
@@ -4026,7 +4026,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "PDF-Export",
-    "Die Monatsrechnung als PDF exportieren."
+    "Die Monatsrechnung und die Analyseberichte als PDF exportieren."
    ],
    "seriesBooking": [
     "Serienbuchung",
@@ -4090,7 +4090,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Datenexport (Excel)",
-    "Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen."
+    "Alle Daten des Spaces als Excel-Arbeitsmappe herunterladen, und die Analyseberichte als CSV-Datei oder Arbeitsmappe."
    ],
    "workingHours": [
     "Arbeitszeiten",
@@ -5665,7 +5665,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Exportar PDF",
-    "Exportar la factura mensual como PDF."
+    "Exporte la factura mensual y los informes de análisis como PDF."
    ],
    "seriesBooking": [
     "Reserva en serie",
@@ -5729,7 +5729,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Exportación de datos (Excel)",
-    "Descargar todos los datos del espacio en un libro de Excel."
+    "Descargue todos los datos del espacio en un libro de Excel, y los informes de análisis como archivo CSV o libro."
    ],
    "workingHours": [
     "Horario laboral",
@@ -7304,7 +7304,7 @@ window.SETUP_L10N={
    ],
    "pdfExport": [
     "Esportazione PDF",
-    "Esporti la fattura mensile come PDF."
+    "Esporti la fattura mensile e i report di analisi come PDF."
    ],
    "seriesBooking": [
     "Prenotazione in serie",
@@ -7368,7 +7368,7 @@ window.SETUP_L10N={
    ],
    "dataExport": [
     "Esportazione dati (Excel)",
-    "Scaricare tutti i dati dello spazio in una cartella Excel."
+    "Scarichi tutti i dati dello spazio in una cartella Excel, e i report di analisi come file CSV o cartella di lavoro."
    ],
    "workingHours": [
     "Orario di lavoro",

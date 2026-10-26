@@ -34,9 +34,9 @@ authority. Widening one needs the authority's own spec in hand.
 | Sage 50 audit trail | exchange | GB, IE | a written-off rest is an SC to 8100 without tax |
 | Swiss booking journal (KMU accounts, Ziffer per row) | exchange | CH | Not a native Banana or bexio template: neither publishes its column specification. |
 | SAF-T, invoicing subset | subset | everywhere | `GeneralLedgerEntries` omitted unless the owner maps accounts; then sales cycle only, every transaction balances, credit notes reverse the sale, netted cash is posted, a written-off rest to the mapped loss account, in the sales journal (none mapped, none posted) |
-| Accountant CSV | exchange | everywhere | |
+| Accountant CSV | exchange | everywhere | format 3 (#2378): `tax_components` holds each invoice's taxes as frozen at issue (JSON, integer minor units; a total stored without components is marked `"split": false`), then one column per tax key of the period — `GST`, `HST`, `QST`, `PST` (Canada), `state_tax` / `local_tax` (US sales tax), `VAT <rate>` (an un-split total) — each the sum of its components |
 | Audit trail | exchange | everywhere | called a trail, never an "audit file"; write-offs are events, a credit note shows its signed value |
-| Archive bundle | exchange | everywhere | a fiscal year as one zip |
+| Archive bundle | exchange | everywhere | a fiscal year as one zip; `vat-account.csv` (#2378, the VAT account of UK VAT Regulations 1995 reg. 32) when the year has prepared or filed returns: per period output and input tax, corrections of earlier periods apart, payable = box 1 and allowable = box 4 of the return |
 
 ## The FEC as an import contract (#2376)
 
@@ -73,6 +73,12 @@ for the audit:
   and the scope: the entries DesKilo posts, not the company FEC while other
   books live elsewhere). A closed year's FEC is logged once in the export
   log; a later archive must carry the same bytes, or it is not made.
+  The archive of a calendar year carries the FEC of every fiscal year it
+  overlaps up to its latest document: with a year from 1 October, the
+  2026 archive holds the year closed on 30 September 2026 (final) and the
+  one running since 1 October (provisional), so every entry its register
+  lists is in one of its FECs; the manifest qualifies each, oldest first.
+  One changed closed year stops the archive, and nothing is logged.
 - **Books in the app.** The general ledger, the trial balance (general and
   auxiliary) and the journals with their summary print from the same
   postings, as report kinds of the designer.
@@ -98,7 +104,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
 | `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV, Ziffer per row | file | journal | CH | implemented | not named yet |
 | `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |
-| `accountant_csv` | DesKilo · Accountant CSV · format 2 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
+| `accountant_csv` | DesKilo · Accountant CSV · format 3 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `generic_journal_csv` | DesKilo · Generic journal CSV · compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `general_ledger` | DesKilo · General ledger · PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `trial_balance` | DesKilo · Trial balance · general and auxiliary, PDF from compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |

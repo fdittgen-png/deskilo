@@ -1,0 +1,101 @@
+{
+  "overviewCustomize": "Personalizar",
+  "@overviewCustomize": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewPinned": "Sus mosaicos fijados",
+  "@overviewPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewNoPinned": "No hay ningún mosaico fijado: fije las cifras que quiere ver aquí primero.",
+  "@overviewNoPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewAddTile": "Fijar un mosaico",
+  "@overviewAddTile": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewUnpinTile": "Desfijar {title}",
+  "@overviewUnpinTile": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveEarlier": "Adelantar {title}",
+  "@overviewMoveEarlier": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveLater": "Retrasar {title}",
+  "@overviewMoveLater": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewTilePosition": "{title}, mosaico {position} de {count}",
+  "@overviewTilePosition": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "position": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewCopyFrom": "Copiar la disposición de un informe",
+  "@overviewCopyFrom": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopyTo": "Guardar como informe",
+  "@overviewCopyTo": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopiedAsReport": "Guardado como el informe «{name}».",
+  "@overviewCopiedAsReport": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewLayoutSave": "Guardar mi disposición",
+  "@overviewLayoutSave": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutSaved": "Su disposición está guardada.",
+  "@overviewLayoutSaved": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutName": "Mi vista general",
+  "@overviewLayoutName": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutConflict": "Su disposición se cambió en otro lugar desde que la abrió. No se sobrescribió nada: recárguela y vuelva a hacer su cambio.",
+  "@overviewLayoutConflict": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutReload": "Recargar",
+  "@overviewLayoutReload": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutLost": "No se pudo guardar su disposición: no llegó respuesta. Sus cambios se conservan; reintentar envía el mismo guardado, que nunca se aplica dos veces.",
+  "@overviewLayoutLost": {
+    "description": "#2583 C2 overview layout"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "overviewCustomize": "Customize",
+  "@overviewCustomize": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewPinned": "Your pinned tiles",
+  "@overviewPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewNoPinned": "No tile is pinned: pin the figures you want to see here first.",
+  "@overviewNoPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewAddTile": "Pin a tile",
+  "@overviewAddTile": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewUnpinTile": "Unpin {title}",
+  "@overviewUnpinTile": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveEarlier": "Move {title} earlier",
+  "@overviewMoveEarlier": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveLater": "Move {title} later",
+  "@overviewMoveLater": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewTilePosition": "{title}, tile {position} of {count}",
+  "@overviewTilePosition": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "position": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewCopyFrom": "Copy a report’s layout",
+  "@overviewCopyFrom": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopyTo": "Save as a report",
+  "@overviewCopyTo": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopiedAsReport": "Saved as the report “{name}”.",
+  "@overviewCopiedAsReport": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewLayoutSave": "Save my layout",
+  "@overviewLayoutSave": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutSaved": "Your layout is saved.",
+  "@overviewLayoutSaved": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutName": "My overview",
+  "@overviewLayoutName": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutConflict": "Your layout was changed elsewhere since you opened it. Nothing was overwritten: reload it, then make your change again.",
+  "@overviewLayoutConflict": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutReload": "Reload",
+  "@overviewLayoutReload": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutLost": "Your layout could not be saved: no answer came back. Your changes are kept; retrying sends the same save again, it is never applied twice.",
+  "@overviewLayoutLost": {
+    "description": "#2583 C2 overview layout"
+  }
+}

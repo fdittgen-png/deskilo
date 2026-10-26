@@ -1,0 +1,101 @@
+{
+  "overviewCustomize": "Personalizzi",
+  "@overviewCustomize": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewPinned": "I Suoi riquadri fissati",
+  "@overviewPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewNoPinned": "Nessun riquadro fissato: fissi gli indicatori che vuole vedere qui per primi.",
+  "@overviewNoPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewAddTile": "Fissi un riquadro",
+  "@overviewAddTile": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewUnpinTile": "Sblocchi {title}",
+  "@overviewUnpinTile": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveEarlier": "Anticipi {title}",
+  "@overviewMoveEarlier": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveLater": "Posticipi {title}",
+  "@overviewMoveLater": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewTilePosition": "{title}, riquadro {position} di {count}",
+  "@overviewTilePosition": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "position": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewCopyFrom": "Copi la disposizione di un report",
+  "@overviewCopyFrom": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopyTo": "Salvi come report",
+  "@overviewCopyTo": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopiedAsReport": "Salvato come report «{name}».",
+  "@overviewCopiedAsReport": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewLayoutSave": "Salvi la mia disposizione",
+  "@overviewLayoutSave": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutSaved": "La Sua disposizione è salvata.",
+  "@overviewLayoutSaved": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutName": "La mia panoramica",
+  "@overviewLayoutName": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutConflict": "La Sua disposizione è stata modificata altrove da quando l’ha aperta. Non è stato sovrascritto nulla: la ricarichi e rifaccia la Sua modifica.",
+  "@overviewLayoutConflict": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutReload": "Ricarichi",
+  "@overviewLayoutReload": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutLost": "Non è stato possibile salvare la Sua disposizione: non è arrivata risposta. Le Sue modifiche restano; riprovare invia lo stesso salvataggio, mai applicato due volte.",
+  "@overviewLayoutLost": {
+    "description": "#2583 C2 overview layout"
+  }
+}

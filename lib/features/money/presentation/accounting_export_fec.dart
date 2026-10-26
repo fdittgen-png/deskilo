@@ -128,62 +128,92 @@ class FecExportActions {
     );
   }
 
-  /// Adds the year's FEC to the archive [files] of a space in [country]
-  /// (only France's archive carries one). A closed year's FEC is final,
-  /// logged once, and must match what was logged; false when the archive
-  /// must not be made (the person was told why).
+  /// Whether a fiscal year of the archive's [years] has books the engine
+  /// could not post: the person is told which roles or rates are missing,
+  /// and no archive is made.
+  bool archiveYearBlocked(List<GenericJournal> years) {
+    final l10n = context.l10n;
+    for (final journal in years) {
+      final said = switch (journal) {
+        JournalBlocked(:final roles) => l10n.journalBlocked(roles.join(', ')),
+        JournalNeedsRates(:final documents) => l10n.journalNeedsRates(
+          documents.join(', '),
+        ),
+        _ => null,
+      };
+      if (said != null) {
+        AppSnack.error(context, said);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// Adds the FEC of each fiscal year of [years] (the archive's posted
+  /// journals, oldest first; none when the space keeps no book, and the
+  /// documents then write the calendar [year]'s) to the archive [files] of
+  /// a space in [country] (only France's archive carries one). A closed
+  /// year's FEC is final, logged once, and must match what was logged;
+  /// false when the archive must not be made (the person was told why),
+  /// and then nothing is logged.
   Future<bool> addYearFec(
     Map<String, List<int>> files, {
     required String country,
-    required GenericJournal? posted,
+    required List<GenericJournal> years,
     required int year,
     required YearDocumentFec documents,
   }) async {
     if (!archiveCarriesFec(country)) return true;
-    final source = await _yearFec(posted, year, documents);
-    if (source == null) return false;
-    final (:fec, :period, :thirdParties) = source;
     final periods = await _periods();
-    final plan = archiveFecPlan(
-      fec: fec,
-      fileName: fecFileName(
-        scope.legalId,
-        period.to,
-        development: scope.development,
-      ),
-      year: period,
-      closed: fiscalYearClosed(periods, period),
-      exports: periods.exports,
-      contract: checkFecImportContract(
-        textBytes(fec),
+    final writes = <ArchiveFecWrite>[];
+    final finals = <({String fec, FiscalYear period})>[];
+    for (final posted in years.isEmpty ? const <GenericJournal?>[null] : years) {
+      final source = await _yearFec(posted, year, documents);
+      if (source == null) return false;
+      final (:fec, :period, :thirdParties) = source;
+      final plan = archiveFecPlan(
+        fec: fec,
+        fileName: fecFileName(
+          scope.legalId,
+          period.to,
+          development: scope.development,
+        ),
         year: period,
-        thirdPartyAccounts: thirdParties,
-      ),
-    );
-    if (!context.mounted) return false;
-    switch (plan) {
-      case ArchiveFecChanged(:final logged):
-        AppSnack.error(
-          context,
-          context.l10n.fecArchiveChanged(isoDay(logged.exportedAt)),
-        );
-        return false;
-      case ArchiveFecWrite(:final members, :final logNow):
-        addArchiveFec(files, country, members);
-        if (logNow) {
-          await ref
-              .read(bookPeriodCommandProvider)
-              .logExport(
-                scope.workspaceId,
-                formatId: archiveFecFormatId,
-                year: year,
-                content: fec,
-                documents: 0,
-                period: period,
-              );
-        }
-        return true;
+        closed: fiscalYearClosed(periods, period),
+        exports: periods.exports,
+        contract: checkFecImportContract(
+          textBytes(fec),
+          year: period,
+          thirdPartyAccounts: thirdParties,
+        ),
+      );
+      if (!context.mounted) return false;
+      switch (plan) {
+        case ArchiveFecChanged(:final logged):
+          AppSnack.error(
+            context,
+            context.l10n.fecArchiveChanged(isoDay(logged.exportedAt)),
+          );
+          return false;
+        case final ArchiveFecWrite write:
+          writes.add(write);
+          if (write.logNow) finals.add((fec: fec, period: period));
+      }
     }
+    addArchiveFec(files, country, archiveFecMembers(writes));
+    for (final (:fec, :period) in finals) {
+      await ref
+          .read(bookPeriodCommandProvider)
+          .logExport(
+            scope.workspaceId,
+            formatId: archiveFecFormatId,
+            year: year,
+            content: fec,
+            documents: 0,
+            period: period,
+          );
+    }
+    return true;
   }
 
   /// The book report [kindId] of the postings [posted], headed by
