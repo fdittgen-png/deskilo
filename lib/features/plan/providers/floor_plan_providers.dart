@@ -102,6 +102,16 @@ Future<Map<String, String>> targetNames(Ref ref) async {
       .fetchTargetNames(workspace.id);
 }
 
+/// seat/desk/office id → the id of its level, for the active workspace.
+@Riverpod(keepAlive: true)
+Future<Map<String, String>> targetLevels(Ref ref) async {
+  final workspace = await ref.watch(currentWorkspaceProvider.future);
+  if (workspace == null) return const {};
+  return ref
+      .watch(floorPlanRepositoryProvider)
+      .fetchTargetLevels(workspace.id);
+}
+
 /// #1273 — whether member surfaces name a level's only room by the level.
 /// One read shared by the list, the day, the week, the scan sheet and the
 /// canvas, so no two of them can disagree. A read, not a watch: callers

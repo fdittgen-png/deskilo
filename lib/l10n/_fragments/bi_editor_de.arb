@@ -635,5 +635,34 @@
   "biEditorRefusedTextLength": "Ein Titel oder Text braucht 1 Zeichen bis zu seinem Höchstwert.",
   "@biEditorRefusedTextLength": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorKeepSelectionReport": "Als Filter des ganzen Berichts behalten",
+  "@biEditorKeepSelectionReport": {
+    "description": "#2580 BI report editor: keep the page's selection as a filter of every page"
+  },
+  "biEditorScopeVisual": "dieses Element",
+  "@biEditorScopeVisual": {
+    "description": "#2580 BI report editor: scope of a filter that narrows one visual"
+  },
+  "biEditorVisualFilters": "Filter dieses Elements",
+  "@biEditorVisualFilters": {
+    "description": "#2580 BI report editor: heading of a visual's own filters"
+  },
+  "biEditorKeepSelectionVisual": "Hier nur {group} zeigen",
+  "@biEditorKeepSelectionVisual": {
+    "description": "#2580 BI report editor: limit only the selected visual to the page's selection",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorDrill": "Quelle anbieten",
+  "@biEditorDrill": {
+    "description": "#2580 BI report editor: whether a visual offers its figure's source"
+  },
+  "biEditorDrillHint": "Leser können öffnen, woraus sich diese Zahl ergibt, eingeschränkt wie dieses Element.",
+  "@biEditorDrillHint": {
+    "description": "#2580 BI report editor: what the source switch does"
   }
 }

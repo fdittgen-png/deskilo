@@ -1154,6 +1154,14 @@
   "@biEditorDiscard": {
     "description": "#2580 BI report editor"
   },
+  "biEditorDrill": "Offrire la fonte",
+  "@biEditorDrill": {
+    "description": "#2580 BI report editor: whether a visual offers its figure's source"
+  },
+  "biEditorDrillHint": "I lettori possono aprire ciò che compone questa cifra, ristretto come questo elemento visivo.",
+  "@biEditorDrillHint": {
+    "description": "#2580 BI report editor: what the source switch does"
+  },
   "biEditorDuplicate": "Duplichi",
   "@biEditorDuplicate": {
     "description": "#2580 BI report editor"
@@ -1250,6 +1258,19 @@
   "biEditorKeepSelection": "Conservi come filtro di questa pagina",
   "@biEditorKeepSelection": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorKeepSelectionReport": "Mantenere come filtro dell'intero report",
+  "@biEditorKeepSelectionReport": {
+    "description": "#2580 BI report editor: keep the page's selection as a filter of every page"
+  },
+  "biEditorKeepSelectionVisual": "Mostrare qui solo {group}",
+  "@biEditorKeepSelectionVisual": {
+    "description": "#2580 BI report editor: limit only the selected visual to the page's selection",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
   },
   "biEditorKind": "Mostrato come",
   "@biEditorKind": {
@@ -1552,6 +1573,10 @@
   "@biEditorScopeReport": {
     "description": "#2580 BI report editor"
   },
+  "biEditorScopeVisual": "questo elemento visivo",
+  "@biEditorScopeVisual": {
+    "description": "#2580 BI report editor: scope of a filter that narrows one visual"
+  },
   "biEditorSelectHint": "Selezioni una visualizzazione della pagina per modificarla.",
   "@biEditorSelectHint": {
     "description": "#2580 BI report editor"
@@ -1631,6 +1656,10 @@
   "biEditorVisualDescription": "Descrizione",
   "@biEditorVisualDescription": {
     "description": "#2580 BI report editor"
+  },
+  "biEditorVisualFilters": "Filtri di questo elemento visivo",
+  "@biEditorVisualFilters": {
+    "description": "#2580 BI report editor: heading of a visual's own filters"
   },
   "biEditorVisualLabel": "{title}, {kind}, posizione {position} di {count}, {span} colonne su 12. Alt e frecce lo spostano, Maiusc e frecce lo ridimensionano, Canc lo rimuove.",
   "@biEditorVisualLabel": {
@@ -1921,6 +1950,10 @@
   "biPrintFailed": "senza risposta",
   "@biPrintFailed": {
     "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFigures": "Cifre",
+  "@biPrintFigures": {
+    "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
   },
   "biPrintFilters": "Filtri",
   "@biPrintFilters": {
@@ -11178,7 +11211,9 @@
   "percentValue": "{value}%",
   "periodReservationsEmpty": "Nessuna prenotazione in questi mesi.",
   "periodReservationsFailed": "Non è stato possibile leggere le prenotazioni.",
+  "periodReservationsLevel": "Solo su {level}",
   "periodReservationsTitle": "Prenotazioni di {period}",
+  "periodReservationsUnknownLevel": "Questo non è un livello di questo spazio.",
   "periodReservationsUnnamed": "(posto senza nome)",
   "permAccessProd": "Entrare nello spazio di produzione",
   "@permAccessProd": {

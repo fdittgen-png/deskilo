@@ -70,7 +70,14 @@ void main() {
           _words,
         );
         expect(doc.sources, isEmpty);
-        expect(doc.provenance, hasLength(8));
+        expect(doc.provenance, hasLength(9));
+        expect(
+          doc.provenance
+              .firstWhere((l) => l.label == _en.biPrintFigures)
+              .value,
+          contains('capacity.seat_utilisation v1'),
+          reason: 'the figure\'s version is provenance, never hidden',
+        );
         expect(doc.qualification, _en.biPrintPartial);
         expect(doc.management, isNotNull);
         final shown = biPrintDocument(fixtureSnapshot(), _words).sources;

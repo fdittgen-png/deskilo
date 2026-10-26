@@ -137,6 +137,12 @@ void main() {
           _visual('v1', 0, {'drill': 'https://evil.example'}),
         ],
       ),
+      // #2580: a drill is the figure's own source or none, nothing else.
+      'a drill word other than none': _report(
+        visuals: [
+          _visual('v1', 0, {'drill': 'money.report'}),
+        ],
+      ),
       'an unknown type': _report(
         visuals: [
           _visual('v1', 0, {'type': 'pie3d'}),

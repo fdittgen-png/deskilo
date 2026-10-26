@@ -2104,6 +2104,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biEditorDiscard => 'Descartar';
 
   @override
+  String get biEditorDrill => 'Ofrecer la fuente';
+
+  @override
+  String get biEditorDrillHint =>
+      'Los lectores pueden abrir lo que compone esta cifra, acotado como este elemento visual.';
+
+  @override
   String get biEditorDuplicate => 'Duplicar';
 
   @override
@@ -2167,6 +2174,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biEditorKeepSelection => 'Conservar como filtro de esta página';
+
+  @override
+  String get biEditorKeepSelectionReport =>
+      'Mantener como filtro de todo el informe';
+
+  @override
+  String biEditorKeepSelectionVisual(String group) {
+    return 'Mostrar aquí solo $group';
+  }
 
   @override
   String get biEditorKind => 'Mostrado como';
@@ -2398,6 +2414,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biEditorScopeReport => 'todo el informe';
 
   @override
+  String get biEditorScopeVisual => 'este elemento visual';
+
+  @override
   String get biEditorSelectHint =>
       'Seleccione un visual de la página para cambiarlo.';
 
@@ -2449,6 +2468,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biEditorVisualDescription => 'Descripción';
+
+  @override
+  String get biEditorVisualFilters => 'Filtros de este elemento visual';
 
   @override
   String biEditorVisualLabel(
@@ -2744,6 +2766,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get biPrintFailed => 'sin respuesta';
+
+  @override
+  String get biPrintFigures => 'Cifras';
 
   @override
   String get biPrintFilters => 'Filtros';
@@ -16896,9 +16921,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get periodReservationsFailed => 'No se pudieron leer las reservas.';
 
   @override
+  String periodReservationsLevel(String level) {
+    return 'Solo en $level';
+  }
+
+  @override
   String periodReservationsTitle(String period) {
     return 'Reservas de $period';
   }
+
+  @override
+  String get periodReservationsUnknownLevel =>
+      'Este no es un nivel de este espacio.';
 
   @override
   String get periodReservationsUnnamed => '(lugar sin nombre)';

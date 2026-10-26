@@ -13,10 +13,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/pump_app.dart';
 
-Reservation _booking(String id, DateTime start) => Reservation(
+Reservation _booking(
+  String id,
+  DateTime start, {
+  String? seatId = 'seat-a1',
+  String? levelId,
+}) => Reservation(
   id: id,
   workspaceId: 'ws-1',
-  seatId: 'seat-a1',
+  seatId: seatId,
+  levelId: levelId,
   memberId: 'member-1',
   startsAt: start,
   endsAt: start.add(const Duration(hours: 4)),
@@ -59,6 +65,106 @@ void main() {
     }
     expect(find.textContaining('Ada'), findsNWidgets(3));
     expect(find.text('A1'), findsNWidgets(3));
+  });
+
+  test('a figure narrowed to one level opens that level only', () {
+    final drill = biModules
+        .firstWhere((m) => m.id == 'capacity.seat_utilisation')
+        .drill!;
+    expect(
+      drill.target(
+        const BiPeriod(BiGrain.month, 2026, 3),
+        levelId: 'level-a',
+      ),
+      '/reservations/period?from=2026-03&to=2026-03&level=level-a',
+    );
+    final finance = biModules
+        .firstWhere((m) => m.id == 'finance.invoiced')
+        .drill!;
+    expect(
+      finance.target(
+        const BiPeriod(BiGrain.month, 2026, 3),
+        levelId: 'level-a',
+      ),
+      isNot(contains('level')),
+      reason: 'a source that cannot narrow to a level is not told one',
+    );
+  });
+
+  testWidgets('narrowed to a level: its own bookings and those of its '
+      'places, the level named; a place off the plan is left out', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      const PeriodReservationsScreen(
+        fromMonth: '2026-03',
+        toMonth: '2026-03',
+        levelId: 'level-a',
+      ),
+      overrides: [
+        periodReservationsProvider('2026-03', '2026-03').overrideWith(
+          (ref) async => [
+            _booking('on-a', DateTime(2026, 3, 2, 9)),
+            _booking('on-b', DateTime(2026, 3, 2, 14), seatId: 'seat-b1'),
+            _booking(
+              'whole-a',
+              DateTime(2026, 3, 3, 9),
+              seatId: null,
+              levelId: 'level-a',
+            ),
+            _booking('gone', DateTime(2026, 3, 4, 9), seatId: 'seat-gone'),
+          ],
+        ),
+        bookingTargetLevelsProvider.overrideWith(
+          (ref) async => {'seat-a1': 'level-a', 'seat-b1': 'level-b'},
+        ),
+        bookingLevelNameProvider('level-a').overrideWith(
+          (ref) async => 'Ground',
+        ),
+        memberNamesProvider.overrideWith((ref) async => {'member-1': 'Ada'}),
+        bookingTargetNamesProvider.overrideWith(
+          (ref) async => {'seat-a1': 'A1'},
+        ),
+      ],
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('period-reservation-on-a')), findsOne);
+    expect(find.byKey(const ValueKey('period-reservation-whole-a')), findsOne);
+    expect(find.byKey(const ValueKey('period-reservation-on-b')), findsNothing);
+    expect(find.byKey(const ValueKey('period-reservation-gone')), findsNothing);
+    expect(find.text('On Ground only'), findsOneWidget);
+  });
+
+  testWidgets('a level this space does not hold lists nothing and says so, '
+      'never the whole space', (tester) async {
+    await pumpApp(
+      tester,
+      const PeriodReservationsScreen(
+        fromMonth: '2026-03',
+        toMonth: '2026-03',
+        levelId: 'level-elsewhere',
+      ),
+      overrides: [
+        periodReservationsProvider('2026-03', '2026-03').overrideWith(
+          (ref) async => [_booking('on-a', DateTime(2026, 3, 2, 9))],
+        ),
+        bookingTargetLevelsProvider.overrideWith(
+          (ref) async => {'seat-a1': 'level-a'},
+        ),
+        bookingLevelNameProvider('level-elsewhere').overrideWith(
+          (ref) async => null,
+        ),
+        memberNamesProvider.overrideWith((ref) async => const {}),
+        bookingTargetNamesProvider.overrideWith((ref) async => const {}),
+      ],
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('period-reservations-unknown-level')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('period-reservation-on-a')), findsNothing);
   });
 
   testWidgets('no booking in the months says so', (tester) async {

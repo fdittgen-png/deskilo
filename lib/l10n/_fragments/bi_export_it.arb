@@ -331,5 +331,9 @@
   "biPrintSheetPreview": "Anteprima del foglio",
   "@biPrintSheetPreview": {
     "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFigures": "Cifre",
+  "@biPrintFigures": {
+    "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
   }
 }

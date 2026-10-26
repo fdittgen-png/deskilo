@@ -250,8 +250,10 @@ class BiLineBody extends ConsumerWidget {
     );
     final currency = ref
         .watch(biModuleResultProvider(workspaceId, module.id, query))
-        .value
-        ?.currency;
+        // A current answer only: a refusal never shows what came before.
+        .asData
+        ?.value
+        .currency;
     final series = switch (answer) {
       AsyncData(:final value) => value,
       AsyncError() => null,

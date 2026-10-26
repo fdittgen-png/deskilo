@@ -293,6 +293,117 @@ void main() {
       expect(edit.refusal, BiEditRefusal.widens);
     });
 
+    test('a report filter is kept for every page, one per grouping', () {
+      final first = biAddReportFilter(
+        _empty(),
+        const BiReportFilter('level', 'eq', 'a'),
+      );
+      expect(first.report!.filters.single.value, 'a');
+      final replaced = biAddReportFilter(
+        first.report!,
+        const BiReportFilter('level', 'eq', 'b'),
+      );
+      expect(replaced.report!.filters.single.value, 'b');
+    });
+
+    test('a report filter that a page already narrows past is refused', () {
+      final narrowed = biAddPageFilter(
+        _empty(),
+        0,
+        const BiReportFilter('level', 'eq', 'a'),
+      ).report!;
+      expect(
+        biAddReportFilter(
+          narrowed,
+          const BiReportFilter('level', 'eq', 'b'),
+        ).refusal,
+        BiEditRefusal.widens,
+      );
+    });
+
+    test('a visual keeps a filter of its own, inside the page; it is '
+        'removed again', () {
+      final report = biAddVisual(
+        withReportFilter(),
+        0,
+        BiVisualType.kpi,
+        metricId: _capacity,
+      ).report!;
+      final id = report.pages.first.visuals.single.id;
+      final kept = biAddVisualFilter(
+        report,
+        0,
+        id,
+        const BiReportFilter('level', 'eq', 'a'),
+      );
+      final visual = kept.report!.pages.first.visuals.single;
+      expect(visual.filters.single.value, 'a');
+      expect(
+        BiReportDefinition.fromJson(
+          jsonDecode(jsonEncode(kept.report!.toJson())),
+        )!.pages.first.visuals.single.filters.single.value,
+        'a',
+        reason: 'the stored report keeps it',
+      );
+      expect(
+        biAddVisualFilter(
+          report,
+          0,
+          id,
+          const BiReportFilter('level', 'eq', 'c'),
+        ).refusal,
+        BiEditRefusal.widens,
+      );
+      expect(
+        biRemoveVisualFilter(kept.report!, 0, id, 0)
+            .report!
+            .pages
+            .first
+            .visuals
+            .single
+            .filters,
+        isEmpty,
+      );
+      expect(
+        biRemoveVisualFilter(kept.report!, 0, id, 3).refusal,
+        BiEditRefusal.missing,
+      );
+    });
+
+    test('a visual offers its source unless it is switched off', () {
+      final report = biAddVisual(
+        _empty(),
+        0,
+        BiVisualType.kpi,
+        metricId: _capacity,
+      ).report!;
+      final id = report.pages.first.visuals.single.id;
+      expect(report.pages.first.visuals.single.drills, isTrue);
+      final off = biSetDrill(report, 0, id, on: false).report!;
+      final stored = BiReportDefinition.fromJson(
+        jsonDecode(jsonEncode(off.toJson())),
+      )!;
+      expect(stored.pages.first.visuals.single.drills, isFalse);
+      expect(
+        biSetDrill(stored, 0, id, on: true).report!.pages.first.visuals.single
+            .drills,
+        isTrue,
+      );
+    });
+
+    test('a source narrows to a floor only when exactly one is named', () {
+      const a = BiReportFilter('level', 'eq', 'a');
+      expect(biSingleLevelOf(const [a]), 'a');
+      expect(biSingleLevelOf(const [a, a]), 'a');
+      expect(biSingleLevelOf(const []), isNull);
+      expect(
+        biSingleLevelOf(const [a, BiReportFilter('level', 'eq', 'b')]),
+        isNull,
+      );
+      expect(biSingleLevelOf(const [BiReportFilter('level', 'in', 'a,b')]), isNull);
+      expect(biSingleLevelOf(const [BiReportFilter('level', 'neq', 'a')]), isNull);
+    });
+
     test('removing a filter', () {
       final edit = biRemoveFilter(withReportFilter(), null, 0);
       expect(edit.report!.filters, isEmpty);

@@ -119,7 +119,7 @@ final class CostAllocationProvider
   }
 }
 
-String _$costAllocationHash() => r'035dcb49553257c5b255140e2d50bf3133f84e58';
+String _$costAllocationHash() => r'f760e86acc7d1005c1973ae3d2c8f6b36b7f16ce';
 
 /// One read per workspace and months.
 

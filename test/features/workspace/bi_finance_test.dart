@@ -87,6 +87,7 @@ Future<_Finance> _pump(
   WidgetTester tester, {
   Set<WorkspacePermission>? permissions,
   bool capacity = false,
+  ValueNotifier<Set<WorkspacePermission>>? live,
 }) async {
   tester.view.physicalSize = const Size(1200, 2600);
   tester.view.devicePixelRatio = 1.0;
@@ -113,6 +114,13 @@ Future<_Finance> _pump(
         ),
         if (permissions != null)
           myPermissionsProvider.overrideWithValue(permissions),
+        if (live != null)
+          myPermissionsProvider.overrideWith((ref) {
+            void changed() => ref.invalidateSelf();
+            live.addListener(changed);
+            ref.onDispose(() => live.removeListener(changed));
+            return live.value;
+          }),
       ],
       child: const DeskiloApp(),
     ),
@@ -348,6 +356,31 @@ void main() {
     );
     expect(find.byKey(const ValueKey('bi-cards-unavailable')), findsOneWidget);
     expect(finance.calls, isEmpty);
+  });
+
+  testWidgets('#2579 a right revoked while the figure is on screen: it is '
+      'asked again and the refusal replaces it, nothing read before stays', (
+    tester,
+  ) async {
+    const both = {
+      WorkspacePermission.viewAnalytics,
+      WorkspacePermission.viewFinances,
+    };
+    final live = ValueNotifier<Set<WorkspacePermission>>(both);
+    addTearDown(live.dispose);
+    final finance = await _pump(tester, live: live);
+    await _open(tester, '/bi?cards=finance.invoiced');
+    expect(_in(tester, 'finance.invoiced', 'bi-value'), '€1,234.56');
+    final asked = finance.calls.length;
+
+    // The server now refuses this reader, and the reader's rights change
+    // (as a refresh of the membership delivers it).
+    finance.failure = const KpiForbidden();
+    live.value = {...both, WorkspacePermission.exportData};
+    await tester.pumpAndSettle();
+    expect(finance.calls.length, greaterThan(asked));
+    expect(find.text('€1,234.56'), findsNothing);
+    expect(find.byKey(const ValueKey('bi-forbidden')), findsOneWidget);
   });
 
   testWidgets('a server refusal and a failure are said, never shown as 0', (

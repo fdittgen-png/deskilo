@@ -39,6 +39,12 @@ const biGroupBudget = 12;
 Duration? biRetry(int retryCount, Object error) =>
     error is BiRefused ? null : kpiRetry(retryCount, error);
 
+/// Module [moduleId], read under the reader's current rights.
+BiModule _readable(Ref ref, String moduleId) {
+  watchReaderRights(ref);
+  return biModules.firstWhere((m) => m.id == moduleId);
+}
+
 /// The workspace date the relative periods resolve against.
 DateTime _biToday(Ref ref) =>
     WorkspaceTime.dateOf(ref.read(clockProvider).now());
@@ -57,7 +63,7 @@ Future<BiResult> biModuleResult(
   String moduleId,
   BiQueryContext context,
 ) async {
-  final module = biModules.firstWhere((m) => m.id == moduleId);
+  final module = _readable(ref, moduleId);
   final unsupported = module.unsupported(context);
   if (unsupported.isNotEmpty) throw BiRefused(unsupported);
   final today = _biToday(ref);
@@ -141,7 +147,7 @@ Future<BiSeries> biModuleSeries(
   BiPeriod end,
   int count,
 ) async {
-  final module = biModules.firstWhere((m) => m.id == moduleId);
+  final module = _readable(ref, moduleId);
   final now = ref.read(clockProvider).now();
   final periods = [for (var i = count - 1; i >= 0; i--) end.shift(-i)];
   if (moduleId == 'capacity.seat_utilisation') {
@@ -401,9 +407,13 @@ BiViewRepository biViewRepository(Ref ref) =>
     SupabaseBiViewRepository(ref.watch(selectedWorkspaceClientProvider));
 
 /// The reader's private views and the workspace's team views.
+/// The saved views as the server shows them to this reader now: read again
+/// when a right changes, so a figure withheld since is withheld here too.
 @riverpod
-Future<List<BiSavedView>> biViews(Ref ref, String workspaceId) =>
-    ref.watch(biViewRepositoryProvider).list(workspaceId);
+Future<List<BiSavedView>> biViews(Ref ref, String workspaceId) {
+  watchReaderRights(ref);
+  return ref.watch(biViewRepositoryProvider).list(workspaceId);
+}
 
 @Riverpod(keepAlive: true)
 BiViewActions biViewActions(Ref ref) => BiViewActions(ref);

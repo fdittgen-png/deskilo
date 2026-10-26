@@ -13,7 +13,9 @@
 //     says so;
 //   * every chart has its table, so colour is never the only signal and a
 //     screen reader reads the same values.
-// Picking a group of a visual that filters reports it to the page.
+// Picking a group of a visual that filters reports it to the page. Its
+// source opens on the figure's months and, when the visual is narrowed to
+// one level, on that level's bookings only.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -110,6 +112,7 @@ class BiVisualBody extends ConsumerWidget {
           };
     final drill = module.drill;
     final mayDrill =
+        visual.drills &&
         drill != null &&
         ref.watch(myPermissionsProvider).contains(drill.permission);
     return Column(
@@ -144,7 +147,9 @@ class BiVisualBody extends ConsumerWidget {
             icon: const Icon(Icons.open_in_new),
             label: Text(l10n.biOpenSource),
             // push: Back returns to this report, its page and selection.
-            onPressed: () => context.push(drill.target(period)),
+            onPressed: () => context.push(
+              drill.target(period, levelId: biSingleLevelOf(filters)),
+            ),
           ),
       ],
     );

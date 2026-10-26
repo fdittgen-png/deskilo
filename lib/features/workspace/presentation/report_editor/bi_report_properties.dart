@@ -6,7 +6,7 @@
 // date basis and coverage), how it is shown (kind, grouping, sort, number
 // format), what a click on it does (filter the page, or nothing), its
 // presentation (legend, value labels, palette, a line's axis, the source
-// note) and its place on the grid — earlier, later, narrower, wider, lower,
+// note), its own filters and source, and its place on the grid — earlier, later, narrower, wider, lower,
 // higher, duplicate, delete — all buttons, no drag needed.
 //
 // Every choice goes through the binding rules: one the figure cannot keep
@@ -30,14 +30,17 @@ import 'bi_report_canvas.dart' show biVisualTitle;
 import 'bi_report_fields.dart';
 import 'bi_report_labels.dart';
 import 'bi_report_metric_picker.dart';
+import 'bi_report_visual_scope.dart';
 
 class BiPropertiesPanel extends ConsumerWidget {
   const BiPropertiesPanel({
     super.key,
+    required this.workspaceId,
     required this.provider,
     required this.onCommand,
   });
 
+  final String workspaceId;
   final BiReportEditorProvider provider;
   final VoidCallback onCommand;
 
@@ -49,6 +52,7 @@ class BiPropertiesPanel extends ConsumerWidget {
         ? _ReportProperties(provider: provider, onCommand: onCommand)
         : _VisualProperties(
             key: ValueKey('bi-props-${visual.id}'),
+            workspaceId: workspaceId,
             provider: provider,
             visual: visual,
             onCommand: onCommand,
@@ -108,11 +112,13 @@ class _ReportProperties extends ConsumerWidget {
 class _VisualProperties extends ConsumerWidget {
   const _VisualProperties({
     super.key,
+    required this.workspaceId,
     required this.provider,
     required this.visual,
     required this.onCommand,
   });
 
+  final String workspaceId;
   final BiReportEditorProvider provider;
   final BiReportVisual visual;
   final VoidCallback onCommand;
@@ -172,6 +178,13 @@ class _VisualProperties extends ConsumerWidget {
         else
           _Binding(visual: visual, bind: bind),
         _Presentation(visual: visual, bind: bind),
+        if (visual.type != BiVisualType.text)
+          BiVisualScope(
+            workspaceId: workspaceId,
+            provider: provider,
+            visual: visual,
+            onCommand: onCommand,
+          ),
         _Layout(provider: provider, visual: visual, onCommand: onCommand),
       ],
     );

@@ -2,7 +2,8 @@
 //
 // #2578 — the drill-through of the capacity figure: the bookings that make
 // it, for the months it was read over, day by day, each opening its
-// booking. Reading them changes nothing; changing the opening hours stays
+// booking; narrowed to one level when the figure was. Reading them changes
+// nothing; changing the opening hours stays
 // the availability screen's own, permission-gated action.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,16 +24,33 @@ class PeriodReservationsScreen extends ConsumerWidget {
     super.key,
     required this.fromMonth,
     required this.toMonth,
+    this.levelId,
   });
 
   /// `YYYY-MM`, both included.
   final String fromMonth;
   final String toMonth;
 
+  /// The level the figure was narrowed to; null for the whole space.
+  final String? levelId;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final rows = ref.watch(periodReservationsProvider(fromMonth, toMonth));
+    final level = levelId;
+    final rows = ref.watch(
+      level == null
+          ? periodReservationsProvider(fromMonth, toMonth)
+          : levelPeriodReservationsProvider(fromMonth, toMonth, level),
+    );
+    final named = level == null
+        ? null
+        : ref.watch(bookingLevelNameProvider(level));
+    // A level the plan of this space does not hold (mistyped, deleted, or
+    // another space's) lists nothing: the whole space is never shown in
+    // its place.
+    final foreign = named is AsyncData<String?> && named.value == null;
+    final levelName = named?.value;
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(bookingTargetNamesProvider).value ?? const {};
     final format = ref.watch(appFormatProvider);
@@ -46,8 +64,25 @@ class PeriodReservationsScreen extends ConsumerWidget {
               ? l10n.periodReservationsTitle(fromMonth)
               : l10n.periodReservationsTitle('$fromMonth – $toMonth'),
         ),
+        bottom: levelName == null
+            ? null
+            : PreferredSize(
+                preferredSize: const Size.fromHeight(kMinInteractiveDimension),
+                child: Padding(
+                  padding: AppSpacing.gutterAll,
+                  child: Text(
+                    l10n.periodReservationsLevel(levelName),
+                    key: const ValueKey('period-reservations-level'),
+                  ),
+                ),
+              ),
       ),
       body: switch (rows) {
+        _ when foreign => EmptyState(
+          key: const ValueKey('period-reservations-unknown-level'),
+          icon: Icons.layers_clear_outlined,
+          title: l10n.periodReservationsUnknownLevel,
+        ),
         AsyncData(:final value) when value.isEmpty => EmptyState(
           key: const ValueKey('period-reservations-empty'),
           icon: Icons.event_busy_outlined,

@@ -2089,6 +2089,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biEditorDiscard => 'Discard';
 
   @override
+  String get biEditorDrill => 'Offer the source';
+
+  @override
+  String get biEditorDrillHint =>
+      'Readers can open what makes this figure, narrowed like this visual.';
+
+  @override
   String get biEditorDuplicate => 'Duplicate';
 
   @override
@@ -2152,6 +2159,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biEditorKeepSelection => 'Keep as a filter of this page';
+
+  @override
+  String get biEditorKeepSelectionReport =>
+      'Keep as a filter of the whole report';
+
+  @override
+  String biEditorKeepSelectionVisual(String group) {
+    return 'Show only $group here';
+  }
 
   @override
   String get biEditorKind => 'Shown as';
@@ -2381,6 +2397,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biEditorScopeReport => 'whole report';
 
   @override
+  String get biEditorScopeVisual => 'this visual';
+
+  @override
   String get biEditorSelectHint => 'Select a visual on the page to change it.';
 
   @override
@@ -2431,6 +2450,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biEditorVisualDescription => 'Description';
+
+  @override
+  String get biEditorVisualFilters => 'Filters of this visual';
 
   @override
   String biEditorVisualLabel(
@@ -2726,6 +2748,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biPrintFailed => 'not answered';
+
+  @override
+  String get biPrintFigures => 'Figures';
 
   @override
   String get biPrintFilters => 'Filters';
@@ -16791,9 +16816,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get periodReservationsFailed => 'The bookings could not be read.';
 
   @override
+  String periodReservationsLevel(String level) {
+    return 'On $level only';
+  }
+
+  @override
   String periodReservationsTitle(String period) {
     return 'Bookings of $period';
   }
+
+  @override
+  String get periodReservationsUnknownLevel =>
+      'This is not a level of this space.';
 
   @override
   String get periodReservationsUnnamed => '(unnamed place)';
