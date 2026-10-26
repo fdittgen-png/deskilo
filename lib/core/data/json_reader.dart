@@ -188,6 +188,13 @@ class JsonReader {
     return value is List ? value : _shape(key, 'List?');
   }
 
+  /// A JSON array the wire must carry: an absent one is a shape error,
+  /// never an empty list.
+  List<Object?> requiredList(String key) {
+    final value = json[key];
+    return value is List ? value : _shape(key, 'List');
+  }
+
   /// A JSON array of strings the wire may omit: empty then.
   List<String> strings(String key) {
     final value = json[key];

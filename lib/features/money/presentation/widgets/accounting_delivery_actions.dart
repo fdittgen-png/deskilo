@@ -135,6 +135,7 @@ class _DeliveryDoorState extends ConsumerState<_DeliveryDoor> {
   @override
   Widget build(BuildContext context) => widget.door(
     context,
+    // recorder-key-exempt: handed to the door, whose control carries the key.
     onPressed: _running ? null : _deliverAndSay,
     busy: _running
         ? const SizedBox.square(dimension: AppSpacing.lg, child: LoadingView())

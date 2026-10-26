@@ -74,17 +74,9 @@ final class DeliveryRunDone extends DeliveryRun {
   /// another body (an error page, a renamed field) is never an empty run.
   factory DeliveryRunDone.fromJson(Object? raw) {
     final r = JsonReader.of(raw, context: 'delivery run');
-    final results = r.json['results'];
-    if (results is! List) {
-      throw JsonShapeException(
-        'delivery run',
-        'results',
-        'List',
-        results == null ? 'null' : '${results.runtimeType}',
-      );
-    }
     return DeliveryRunDone([
-      for (final d in results) DeliveryRunDocument.fromJson(d),
+      for (final d in r.requiredList('results'))
+        DeliveryRunDocument.fromJson(d),
     ]);
   }
 
