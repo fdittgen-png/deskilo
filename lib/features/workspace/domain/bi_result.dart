@@ -207,3 +207,38 @@ class BiRefused implements Exception {
   final Set<BiUnsupported> reasons;
   final bool groupBudgetExceeded;
 }
+
+/// The seat figure of [k]: reserved over offered seat hours, never the
+/// mean of ratios. The dashboard and every export read it from here.
+BiMeasure biSeatMeasure(SeatCapacityKpi k) => BiMeasure(
+  numerator: k.reservedSeatHours,
+  denominator: k.offeredSeatHours,
+  quality: k.quality,
+  reasons: k.reasons,
+  historySince: k.historySince,
+  detail: k,
+);
+
+/// One finance figure of [k]; a missing amount is unknown, never 0. An
+/// amount in another currency than the one it is shown beside
+/// ([currencyCompatible] false) is unknown too, never converted.
+BiMeasure biFinanceMeasure(
+  FinanceSummaryKpi k,
+  String moduleId, {
+  bool currencyCompatible = true,
+}) {
+  final minor = moduleId == 'finance.invoiced'
+      ? k.invoicedMinor
+      : k.collectedMinor;
+  final quality = {
+    ...k.quality,
+    if (minor == null || !currencyCompatible) KpiQuality.unavailable,
+  };
+  final unknown = quality.contains(KpiQuality.unavailable);
+  return BiMeasure(
+    numerator: minor ?? 0,
+    quality: {...quality, if (!unknown && minor == 0) KpiQuality.knownZero},
+    reasons: [...k.reasons, if (!currencyCompatible) 'currency_mix'],
+    detail: k,
+  );
+}

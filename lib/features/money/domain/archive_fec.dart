@@ -20,6 +20,9 @@ import 'fiscal_year.dart';
 /// The format id a final FEC is logged under.
 const String archiveFecFormatId = 'fec';
 
+/// The archive member that qualifies its FECs.
+const String _manifestName = 'fec-manifest.txt';
+
 /// What the archive does with its FEC.
 sealed class ArchiveFecPlan {
   const ArchiveFecPlan();
@@ -67,7 +70,7 @@ ArchiveFecPlan archiveFecPlan({
   return ArchiveFecWrite(
     {
       name: bytes,
-      'fec-manifest.txt': utf8.encode(
+      _manifestName: utf8.encode(
         _manifest(
           name: name,
           year: year,
@@ -81,6 +84,33 @@ ArchiveFecPlan archiveFecPlan({
     sha256: digest,
     logNow: closed && logged == null,
   );
+}
+
+/// The archive members of [writes], one per fiscal year, oldest first:
+/// every FEC under its own name, and one manifest that qualifies each of
+/// them in the same order, a blank line between two years.
+Map<String, List<int>> archiveFecMembers(List<ArchiveFecWrite> writes) {
+  final members = <String, List<int>>{};
+  final manifests = <List<int>>[];
+  for (final write in writes) {
+    for (final MapEntry(:key, :value) in write.members.entries) {
+      if (key == _manifestName) {
+        manifests.add(value);
+      } else {
+        members[key] = value;
+      }
+    }
+  }
+  if (manifests.isEmpty) return members;
+  return {
+    ...members,
+    _manifestName: [
+      for (var i = 0; i < manifests.length; i++) ...[
+        if (i > 0) ...utf8.encode('\r\n'),
+        ...manifests[i],
+      ],
+    ],
+  };
 }
 
 /// The earliest final FEC logged for exactly [year].

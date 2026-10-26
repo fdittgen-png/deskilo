@@ -85,6 +85,7 @@ import '../../features/reservations/providers/place_feedback_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/application/template_compare.dart';
+import '../../features/workspace/domain/bi_report_snapshot.dart';
 import '../../features/workspace/domain/cost_allocation_rules.dart';
 import '../../features/workspace/domain/kpi_overview.dart';
 import '../../features/workspace/domain/kpi_purchases.dart';
@@ -99,6 +100,7 @@ import '../../features/workspace/providers/local_setup_providers.dart';
 import '../../features/workspace/providers/overview_kpi_providers.dart';
 import '../../features/workspace/providers/sample_data_providers.dart';
 import '../../features/workspace/providers/template_search_providers.dart';
+import '../../features/workspace/providers/workbook_export_providers.dart' show biExportRepositoryProvider;
 import '../../features/workspace/providers/workspace_files_providers.dart';
 import '../../features/workspace/providers/workspace_host_providers.dart';
 import '../../features/workspace/providers/workspace_import_providers.dart';
@@ -258,12 +260,8 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
 List<Override> _serverOnlyOverrides() => [
   // #2582 — the purchase figures are _purchasingOverrides'; the cost
   // figures need the server's ledger of every source.
-  costKpiRepositoryProvider.overrideWithValue(
-    const UnavailableCostKpiRepository(),
-  ),
-  costAllocationRepositoryProvider.overrideWithValue(
-    const UnavailableCostAllocationRepository(),
-  ),
+  costKpiRepositoryProvider.overrideWithValue(const UnavailableCostKpiRepository()),
+  costAllocationRepositoryProvider.overrideWithValue(const UnavailableCostAllocationRepository()),
   // #2583 — the overview's own figures need the server.
   overviewKpiRepositoryProvider.overrideWithValue(
     const UnavailableOverviewKpiRepository(),
@@ -273,6 +271,8 @@ List<Override> _serverOnlyOverrides() => [
   sampleDataRepositoryProvider.overrideWithValue(
     const UnavailableSampleDataRepository(),
   ),
+  // #2581 — an export is answered by the server's export read only.
+  biExportRepositoryProvider.overrideWithValue(const UnavailableBiExportRepository()),
 ];
 
 /// The overrides that turn a scope into the Demo environment.

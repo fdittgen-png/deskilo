@@ -1,0 +1,335 @@
+{
+  "biExportAction": "Esporta il report",
+  "@biExportAction": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportTitle": "Esporta il report",
+  "@biExportTitle": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFormatPdf": "PDF",
+  "@biExportFormatPdf": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFormatCsv": "CSV (dati)",
+  "@biExportFormatCsv": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFormatXlsx": "Cartella di lavoro (XLSX)",
+  "@biExportFormatXlsx": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportPreview": "Leggi le cifre",
+  "@biExportPreview": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportTaking": "Lettura delle cifre per questa esportazione…",
+  "@biExportTaking": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportComputedAt": "Cifre calcolate il {time}. Questa esportazione le legge da sé: se i dati sono cambiati da quando è stata mostrata la dashboard, ne differiscono.",
+  "@biExportComputedAt": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "biExportRefreshedAt": "Riletto il {time}: nuove cifre e una nuova impronta.",
+  "@biExportRefreshedAt": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "biExportDigest": "Impronta {hash}",
+  "@biExportDigest": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "biExportSave": "Salva il file",
+  "@biExportSave": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportRefresh": "Rileggi",
+  "@biExportRefresh": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportRecallNote": "Un file salvato è una copia di queste cifre: non può essere richiamato in seguito, anche se i Suoi diritti cambiano.",
+  "@biExportRecallNote": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportLeftOut": "{count} schede non sono in questa esportazione: la loro cifra, i loro filtri o il loro raggruppamento non sono ancora esportabili.",
+  "@biExportLeftOut": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biExportFailedForbidden": "Non può esportare queste cifre: servono il diritto di esportare i dati e quello di leggere ogni cifra del report.",
+  "@biExportFailedForbidden": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedOff": "L’esportazione di questo tipo di file è disattivata in questo spazio.",
+  "@biExportFailedOff": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedTooLarge": "Questo report chiede più cifre di quante un’esportazione possa contenerne. Lo restringa: meno pagine, schede o periodi.",
+  "@biExportFailedTooLarge": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedStale": "Il report è cambiato da quando l’ha aperto. Lo riapra, poi esporti.",
+  "@biExportFailedStale": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedEmpty": "Niente in questo report può ancora essere esportato.",
+  "@biExportFailedEmpty": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedInvalid": "Non è stato possibile fare l’esportazione da questo report.",
+  "@biExportFailedInvalid": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biExportFailedUnavailable": "Il server non ha risposto. Non è stato esportato nulla; riprovi.",
+  "@biExportFailedUnavailable": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintWorkspace": "Spazio",
+  "@biPrintWorkspace": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintReport": "Report",
+  "@biPrintReport": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintRevision": "revisione {revision}",
+  "@biPrintRevision": {
+    "description": "#2581 analytical report print layout and exports",
+    "placeholders": {
+      "revision": {
+        "type": "String"
+      }
+    }
+  },
+  "biPrintUnsaved": "non salvato",
+  "@biPrintUnsaved": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPeriod": "Periodo",
+  "@biPrintPeriod": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintDateBasis": "Base della data",
+  "@biPrintDateBasis": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintCurrency": "Valuta",
+  "@biPrintCurrency": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFilters": "Filtri",
+  "@biPrintFilters": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintNoFilters": "nessuno",
+  "@biPrintNoFilters": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintComputed": "Calcolato",
+  "@biPrintComputed": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintSnapshot": "Impronta",
+  "@biPrintSnapshot": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintComplete": "Ogni cifra di questa copia è nota e copre tutto il suo periodo.",
+  "@biPrintComplete": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPartial": "Copia parziale: alcune cifre sono sconosciute, coprono solo parte del loro periodo o non sono in questa esportazione.",
+  "@biPrintPartial": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintManagement": "Informazione gestionale, non conti di legge.",
+  "@biPrintManagement": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLeftOut": "non in questa esportazione",
+  "@biPrintLeftOut": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintUnknown": "sconosciuto",
+  "@biPrintUnknown": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintQualified": "parziale",
+  "@biPrintQualified": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFailed": "senza risposta",
+  "@biPrintFailed": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintColPeriod": "Periodo",
+  "@biPrintColPeriod": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintColValue": "Valore",
+  "@biPrintColValue": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintColBasis": "Composto da",
+  "@biPrintColBasis": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintColStatus": "Stato",
+  "@biPrintColStatus": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisReservationTime": "tempo prenotato",
+  "@biBasisReservationTime": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisInvoiceMonth": "mese della fattura",
+  "@biBasisInvoiceMonth": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisPaymentMatchedAt": "data dell’abbinamento del pagamento",
+  "@biBasisPaymentMatchedAt": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisPaymentReportedPaid": "data dichiarata come pagata",
+  "@biBasisPaymentReportedPaid": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisDocumentDate": "data del documento",
+  "@biBasisDocumentDate": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisOccurrenceDue": "data di scadenza",
+  "@biBasisOccurrenceDue": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisBookValuePeriod": "periodo dei valori contabili",
+  "@biBasisBookValuePeriod": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisPeriodEnd": "fine del periodo",
+  "@biBasisPeriodEnd": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biBasisCurrentState": "com’è oggi",
+  "@biBasisCurrentState": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biCoverageRecordedHistory": "storico registrato",
+  "@biCoverageRecordedHistory": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biCoverageCurrentRecords": "registrazioni attuali",
+  "@biCoverageCurrentRecords": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biCoverageConfirmedValues": "solo valori confermati",
+  "@biCoverageConfirmedValues": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biCoverageCurrentStateOnly": "solo oggi",
+  "@biCoverageCurrentStateOnly": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLayoutAction": "Layout di stampa",
+  "@biPrintLayoutAction": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLayoutTitle": "Layout di stampa del report",
+  "@biPrintLayoutTitle": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLayoutApply": "Usa questo layout",
+  "@biPrintLayoutApply": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPaper": "Carta",
+  "@biPrintPaper": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPaperA4": "A4",
+  "@biPrintPaperA4": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPaperLetter": "Lettera USA",
+  "@biPrintPaperLetter": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintOrientation": "Orientamento",
+  "@biPrintOrientation": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPortrait": "Verticale",
+  "@biPrintPortrait": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLandscape": "Orizzontale",
+  "@biPrintLandscape": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintMargins": "Margini",
+  "@biPrintMargins": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintMarginNarrow": "Stretti",
+  "@biPrintMarginNarrow": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintMarginNormal": "Normali",
+  "@biPrintMarginNormal": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintMarginWide": "Ampi",
+  "@biPrintMarginWide": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintHeader": "Riga di intestazione",
+  "@biPrintHeader": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintFooter": "Riga a piè di pagina",
+  "@biPrintFooter": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLineHelper": "Testo semplice, stampato su ogni foglio.",
+  "@biPrintLineHelper": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintLineInvalid": "Solo testo semplice: niente a capo né caratteri di controllo.",
+  "@biPrintLineInvalid": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintPageBreaks": "Ogni pagina del report su un nuovo foglio",
+  "@biPrintPageBreaks": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintShowSources": "Indicare la fonte di ogni cifra",
+  "@biPrintShowSources": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintProvenanceNote": "Lo spazio, il report e la sua revisione, il periodo, la base della data, le valute, i filtri, quando sono state calcolate le cifre e se sono complete vengono sempre stampati.",
+  "@biPrintProvenanceNote": {
+    "description": "#2581 analytical report print layout and exports"
+  },
+  "biPrintSheetPreview": "Anteprima del foglio",
+  "@biPrintSheetPreview": {
+    "description": "#2581 analytical report print layout and exports"
+  }
+}

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2579 — the editor of a saved report (a v2 view): rename it, add, remove
-// and reorder the cards of the page on screen, add a page, save. The draft
-// is local and is never rebased silently onto someone else's save:
+// and reorder the cards of the page on screen, add a page, set its print
+// layout, save. The draft is local and is never rebased silently onto
+// someone else's save:
 //   * a save that lost the race (someone saved since this draft was read)
 //     keeps the draft and says so; the person then saves theirs over the
 //     newer version or discards it — both explicit;
@@ -28,6 +29,7 @@ import '../../domain/bi_report_limits.dart';
 import '../../domain/bi_saved_view.dart';
 import '../../providers/bi_providers.dart';
 import 'bi_module_section.dart' show biModuleViews;
+import 'bi_print_layout_sheet.dart';
 import 'bi_report_parts.dart';
 import 'bi_view_failure_text.dart';
 
@@ -62,6 +64,7 @@ class BiReportPanel extends ConsumerStatefulWidget {
 class _BiReportPanelState extends ConsumerState<BiReportPanel> {
   late final TextEditingController _name;
   late List<BiReportVisual> _visuals;
+  late BiPrintStyle _printStyle;
   late int _revision;
   var _dirty = false;
 
@@ -75,10 +78,9 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
   BiReportDefinition get _stored => widget.view.definition!.report!;
   int get _page => widget.pageIndex.clamp(0, _stored.pages.length - 1);
 
-  BiReportDefinition get _draft => _stored.withPage(
-    _page,
-    _stored.pages[_page].withVisuals(biRenumber(_visuals)),
-  );
+  BiReportDefinition get _draft => _stored
+      .withPage(_page, _stored.pages[_page].withVisuals(biRenumber(_visuals)))
+      .withPrintStyle(_printStyle);
 
   @override
   void initState() {
@@ -90,6 +92,7 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
   void _reset() {
     _name.text = widget.view.name;
     _visuals = biVisualsInOrder(_stored.pages[_page].visuals);
+    _printStyle = _stored.printStyle;
     _revision = widget.view.revision;
     _dirty = false;
     _conflict = false;
@@ -122,6 +125,18 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
     _failed = false;
     _requestId = null;
   });
+
+  /// The print layout, edited in its own sheet, joins the draft.
+  Future<void> _editPrintLayout() async {
+    final next = await showBiPrintLayoutSheet(context, _printStyle);
+    if (next == null || !mounted) return;
+    setState(() {
+      _printStyle = next;
+      _dirty = true;
+      _failed = false;
+      _requestId = null;
+    });
+  }
 
   /// Saves the draft at the revision it was read at, or — [overwrite], the
   /// person's explicit choice after a conflict — over the newest one.
@@ -350,6 +365,12 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
                       !_dirty && canAddCard && limits.canAddPage(_stored),
                   title: title,
                   onSelected: _addPage,
+                ),
+                OutlinedButton.icon(
+                  key: const ValueKey('bi-report-print-layout'),
+                  icon: const Icon(Icons.print_outlined),
+                  label: Text(l10n.biPrintLayoutAction),
+                  onPressed: _conflict ? null : _editPrintLayout,
                 ),
                 FilledButton(
                   key: const ValueKey('bi-report-save'),

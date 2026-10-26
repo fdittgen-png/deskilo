@@ -382,6 +382,7 @@ const Set<String> demoOverriddenProviders = {
   'sampleDataRepositoryProvider', // #2872
   'overviewKpiRepositoryProvider', // #2583
   'costAllocationRepositoryProvider', // #2582 C2
+  'biExportRepositoryProvider', // #2581
   'realtimeSyncProvider',
   'notificationServiceProvider',
   'appBadgeProvider',

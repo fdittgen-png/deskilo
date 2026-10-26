@@ -39,10 +39,12 @@ import '../domain/report_strings.dart';
 import '../domain/saf_t.dart';
 import '../domain/sage.dart';
 import '../domain/swiss_kmu.dart';
+import '../domain/vat_account.dart';
 import '../domain/vat_tax_point.dart';
 import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
+import '../providers/vat_declaration_providers.dart';
 import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
 import 'accounting_export_journal.dart';
@@ -90,6 +92,7 @@ class AccountingExportRun {
 
   /// The posted journal of a posted format, read with [books] (#2365).
   late final GenericJournal? posted;
+  late final List<GenericJournal> archiveYears; // the archive's, one per fiscal year
   late final List<VatTaxPointAmount> taxPoints;
   late final Map<String, String> memberNames;
 
@@ -104,6 +107,10 @@ class AccountingExportRun {
     for (final m in await ref.read(workspaceMembersProvider.future))
       m.id: m.memberNumber,
   };
+  /// #2378 — the archive's first file: the VAT account of the returns whose
+  /// period ends in [year] (reg. 32), when the space prepared any.
+  Future<Map<String, List<int>>> vatAccountFiles() async =>
+      archiveVatAccount(await ref.read(vatDeclarationsProvider.future), year);
   /// The workspace's calendar day of an instant.
   DateTime Function(DateTime instant) get workspaceDayOf =>
       WorkspaceTime.dateOf;
@@ -157,7 +164,7 @@ class AccountingExportRun {
       formatId: format.id, workspaceId: workspace.id, country: country, year: year, invoices: invoices));
   if (read == null || !context.mounted) return;
   books = read.books;
-  posted = read.posted;
+  posted = read.posted; archiveYears = read.archiveYears;
   matches = books.matches;
   // #2355 — when each invoice's VAT falls due, on the basis the
   // declaration uses: the FEC's collected VAT and DATEV's tax periods
@@ -440,8 +447,7 @@ class AccountingExportRun {
       action: () async {
         // #2365 — a local book's archive carries its posted FEC, the one
         // the FEC export writes; a role left unmapped stops the archive.
-        if (posted case JournalBlocked(:final roles)) return AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
-        if (posted case JournalNeedsRates(:final documents)) return AppSnack.error(context, l10n.journalNeedsRates(documents.join(', ')));
+        if (fecActions.archiveYearBlocked(archiveYears)) return;
         final yearInvoices = exported;
         // #1154 — the signature checks are independent server calls:
         // all of them in flight at once, not one round-trip per invoice.
@@ -451,12 +457,12 @@ class AccountingExportRun {
         final verdicts = await Future.wait<String>(
           yearInvoices.map((i) => repo.verifyInvoiceSignature(i.id)),
         );
+        final files = await vatAccountFiles();
         if (!context.mounted) return;
         final integrity = <String, String>{
           for (var i = 0; i < yearInvoices.length; i++)
             yearInvoices[i].id: verdicts[i],
         };
-        final files = <String, List<int>>{};
         for (final invoice in yearInvoices) {
           final pdf = await buildFacturXFile(
             context,
@@ -479,7 +485,7 @@ class AccountingExportRun {
           source: books.revisions,
         ));
         final fecAccounts = workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount);
-        if (!context.mounted || !await fecActions.addYearFec(files, country: country, posted: posted, year: year,
+        if (!context.mounted || !await fecActions.addYearFec(files, country: country, years: archiveYears, year: year,
             documents: (thirdParties: {fecAccounts.customers}, fec: () => buildFecFile(FecRequest(
           invoices: yearInvoices,
           matches: matches,

@@ -1,0 +1,101 @@
+{
+  "overviewCustomize": "Anpassen",
+  "@overviewCustomize": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewPinned": "Ihre angehefteten Kacheln",
+  "@overviewPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewNoPinned": "Keine Kachel angeheftet: Heften Sie die Kennzahlen an, die Sie hier zuerst sehen möchten.",
+  "@overviewNoPinned": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewAddTile": "Kachel anheften",
+  "@overviewAddTile": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewUnpinTile": "{title} lösen",
+  "@overviewUnpinTile": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveEarlier": "{title} nach vorn",
+  "@overviewMoveEarlier": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveLater": "{title} nach hinten",
+  "@overviewMoveLater": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewTilePosition": "{title}, Kachel {position} von {count}",
+  "@overviewTilePosition": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "position": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewCopyFrom": "Aufteilung eines Berichts kopieren",
+  "@overviewCopyFrom": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopyTo": "Als Bericht speichern",
+  "@overviewCopyTo": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopiedAsReport": "Als Bericht „{name}“ gespeichert.",
+  "@overviewCopiedAsReport": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewLayoutSave": "Meine Aufteilung speichern",
+  "@overviewLayoutSave": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutSaved": "Ihre Aufteilung ist gespeichert.",
+  "@overviewLayoutSaved": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutName": "Meine Übersicht",
+  "@overviewLayoutName": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutConflict": "Ihre Aufteilung wurde seit dem Öffnen anderswo geändert. Nichts wurde überschrieben: Laden Sie sie neu und nehmen Sie Ihre Änderung erneut vor.",
+  "@overviewLayoutConflict": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutReload": "Neu laden",
+  "@overviewLayoutReload": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutLost": "Ihre Aufteilung konnte nicht gespeichert werden: Es kam keine Antwort. Ihre Änderungen bleiben erhalten; ein erneuter Versuch sendet dieselbe Speicherung, die nie doppelt angewendet wird.",
+  "@overviewLayoutLost": {
+    "description": "#2583 C2 overview layout"
+  }
+}
