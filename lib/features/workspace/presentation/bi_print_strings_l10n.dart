@@ -44,6 +44,7 @@ BiPrintStrings biPrintStringsOf(
       unsaved: l10n.biPrintUnsaved,
       period: l10n.biPrintPeriod,
       dateBasis: l10n.biPrintDateBasis,
+      figures: l10n.biPrintFigures,
       currency: l10n.biPrintCurrency,
       filters: l10n.biPrintFilters,
       noFilters: l10n.biPrintNoFilters,

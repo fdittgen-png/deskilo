@@ -2402,6 +2402,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biPrintFailed => 'senza risposta';
 
   @override
+  String get biPrintFigures => 'Cifre';
+
+  @override
   String get biPrintFilters => 'Filtri';
 
   @override

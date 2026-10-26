@@ -6,7 +6,9 @@
 // one click asks the server once; the preview shows the frozen snapshot's
 // time, digest and qualification; Save writes exactly that snapshot (data
 // changed since is not in it) and a browser download is said as a request;
-// Read again is a new snapshot with its own time and digest; a refusal
+// Read again is a new snapshot with its own time and digest; a private
+// copy, a dismissed choice and the share sheet are each said as what they
+// are; the preview holds at 360 px with twice the text; a refusal
 // shows why and keeps no figure; another file is another export. A saved
 // report's print layout is edited, saved with the report, exported under
 // its id and revision, and shown in the preview.
@@ -18,6 +20,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
+import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/workspace/domain/bi_batch.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_snapshot.dart';
@@ -99,6 +102,8 @@ class _Saver {
 Future<(_Exports, _Saver, InMemoryBiViewRepository)> _pump(
   WidgetTester tester, {
   Set<WorkspacePermission>? permissions,
+  FileDeliveryMode delivery = FileDeliveryMode.direct,
+  FileShareOutcome shared = FileShareOutcome.sent,
 }) async {
   tester.view.physicalSize = const Size(1200, 2600);
   tester.view.devicePixelRatio = 1.0;
@@ -122,6 +127,9 @@ Future<(_Exports, _Saver, InMemoryBiViewRepository)> _pump(
           ),
           clock: FixedClock(DateTime(2026, 9, 15, 12)),
           biViews: views,
+          fileSharer:
+              ({required bytes, required fileName, required mimeType, text}) async =>
+                  shared,
         ),
         platformIsWebProvider.overrideWithValue(true),
         webShellProvider.overrideWithValue(true),
@@ -130,7 +138,7 @@ Future<(_Exports, _Saver, InMemoryBiViewRepository)> _pump(
         ),
         biExportRepositoryProvider.overrideWithValue(exports),
         typedFileSaverProvider.overrideWithValue(saver.call),
-        fileDeliveryModeProvider.overrideWithValue(FileDeliveryMode.direct),
+        fileDeliveryModeProvider.overrideWithValue(delivery),
         if (permissions != null)
           myPermissionsProvider.overrideWithValue(permissions),
       ],
@@ -304,6 +312,91 @@ void main() {
     expect(String.fromCharCodes(saver.saved.single.bytes.take(2)), 'PK');
     expect(find.text(_en.fileDownloadRequested(name)), findsOneWidget);
     expect(find.text(_en.commonSavedTo(name)), findsNothing);
+  });
+
+  testWidgets('on a 360 px screen with twice the text the preview, its '
+      'provenance and the save stay whole', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final (_, saver, _) = await _pump(tester);
+    tester.view.physicalSize = const Size(360, 2600);
+    await tester.pumpAndSettle();
+    await _open(tester, _page);
+    // The app bar's space chip still overflows at this size; it is the
+    // shell's (#3046). Taken here so the export's own layout is what the
+    // assertion below holds; the analytics toolbar and views bar hold.
+    tester.takeException();
+    await _tap(tester, 'bi-export-report');
+    await _tap(tester, 'bi-export-format-pdf');
+    await _tap(tester, 'bi-export-take');
+    expect(_key('bi-print-preview'), findsOneWidget);
+    expect(_text(tester, 'bi-export-digest'), _en.biExportDigest('1' * 12));
+    expect(tester.takeException(), isNull, reason: 'nothing overflows');
+    await _tap(tester, 'bi-export-save');
+    expect(saver.saved.single.name, endsWith('.pdf'));
+  });
+
+  testWidgets('a copy kept inside the app is named as such, never as a file '
+      'the person can open', (tester) async {
+    final (_, saver, _) = await _pump(tester);
+    saver.outcome = (name) => SavedPrivately('/app/documents/$name');
+    await _open(tester, _page);
+    await _tap(tester, 'bi-export-report');
+    await _tap(tester, 'bi-export-format-csv');
+    await _tap(tester, 'bi-export-take');
+    await _tap(tester, 'bi-export-save');
+    final name = saver.saved.single.name;
+    expect(find.text(_en.fileKeptInApp(name)), findsOneWidget);
+    expect(find.text(_en.commonSavedTo(name)), findsNothing);
+  });
+
+  testWidgets('on an iPhone: the choice dismissed is cancelled and writes '
+      'nothing; the share sheet is a hand-over, not a delivery', (
+    tester,
+  ) async {
+    final (exports, saver, _) = await _pump(
+      tester,
+      delivery: FileDeliveryMode.exportChooser,
+    );
+    await _open(tester, _page);
+    await _tap(tester, 'bi-export-report');
+    await _tap(tester, 'bi-export-format-csv');
+    await _tap(tester, 'bi-export-take');
+    // While the choice is open the export sheet shows its progress, so the
+    // frames are stepped rather than settled.
+    Future<void> step() async {
+      for (var i = 0; i < 10; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+    }
+
+    await tester.tap(find.byKey(const ValueKey('bi-export-save')));
+    await step();
+    expect(find.byKey(const ValueKey('file-export-share')), findsOneWidget);
+    // Dismissed without a choice, as a swipe down or Back does.
+    Navigator.of(
+      tester.element(find.byKey(const ValueKey('file-export-share'))),
+    ).pop();
+    await step();
+    expect(find.byKey(const ValueKey('file-export-share')), findsNothing);
+    expect(find.text(_en.fileDeliveryCancelled), findsOneWidget);
+    expect(saver.saved, isEmpty);
+    // Snack bars queue: the next one shows once this one is gone.
+    ScaffoldMessenger.of(
+      tester.element(find.text(_en.fileDeliveryCancelled)),
+    ).removeCurrentSnackBar();
+    await step();
+
+    await tester.tap(find.byKey(const ValueKey('bi-export-save')));
+    await step();
+    await tester.tap(find.byKey(const ValueKey('file-export-share')));
+    await step();
+    expect(
+      find.textContaining(_en.fileHandedToShareSheet('').trim()),
+      findsWidgets,
+    );
+    expect(saver.saved, isEmpty, reason: 'nothing was written to a file');
+    expect(exports.calls, hasLength(1), reason: 'one snapshot for both');
   });
 
   testWidgets(

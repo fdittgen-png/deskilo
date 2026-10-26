@@ -3,7 +3,9 @@
 // #2580 C2 — what narrows a report, from the editor's own controls: a floor
 // picked on a bar is kept for the whole report or for one visual alone, each
 // shown where it applies and saved with the report; a visual's source opens
-// the bookings of that floor only, and can be switched off.
+// the bookings of that floor only, and can be switched off. #2579: the grid
+// at a wide, a medium and a compact width with twice the text keeps every
+// visual and its reading order, and asks nothing again.
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
@@ -26,6 +28,8 @@ import '../../helpers/mock_providers.dart';
 
 /// Every read: level A 20/60, any other level 5/30, the whole 30/100.
 class _Kpis implements KpiRepository {
+  int calls = 0;
+
   @override
   Future<SeatCapacityKpi> seatCapacity(
     String workspaceId, {
@@ -33,6 +37,7 @@ class _Kpis implements KpiRepository {
     required DateTime to,
     String? levelId,
   }) async {
+    calls++;
     final (num r, num o) = switch (levelId) {
       null => (30, 100),
       'level-a' => (20, 60),
@@ -85,8 +90,9 @@ BiReportDefinition _report() => BiReportDefinition(
 
 Future<String> _pumpEditor(
   WidgetTester tester,
-  InMemoryBiViewRepository views,
-) async {
+  InMemoryBiViewRepository views, {
+  _Kpis? kpis,
+}) async {
   final id = (await views.save(
     'ws-1',
     scope: BiViewScope.private,
@@ -115,7 +121,7 @@ Future<String> _pumpEditor(
         ),
         platformIsWebProvider.overrideWithValue(true),
         webShellProvider.overrideWithValue(true),
-        kpiRepositoryProvider.overrideWithValue(_Kpis()),
+        kpiRepositoryProvider.overrideWithValue(kpis ?? _Kpis()),
       ],
       child: const DeskiloApp(),
     ),
@@ -225,5 +231,33 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('bi-prop-filters-none-v1')), findsOne);
+  });
+
+  testWidgets('wide, medium and compact with twice the text: every visual '
+      'in its reading order, and nothing is asked again', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final kpis = _Kpis();
+    await _pumpEditor(tester, InMemoryBiViewRepository(), kpis: kpis);
+    await _tap(tester, 'bi-editor-preview');
+    final asked = kpis.calls;
+    expect(asked, greaterThan(0));
+    for (final width in [1400.0, 700.0, 360.0]) {
+      tester.view.physicalSize = Size(width, 2600);
+      await tester.pumpAndSettle();
+      final first = tester.getTopLeft(
+        find.byKey(const ValueKey('bi-visual-v1')),
+      );
+      final second = tester.getTopLeft(
+        find.byKey(const ValueKey('bi-visual-v2')),
+      );
+      expect(
+        first.dy < second.dy || (first.dy == second.dy && first.dx < second.dx),
+        isTrue,
+        reason: 'at $width px the first visual still reads first',
+      );
+      expect(tester.takeException(), isNull, reason: 'no overflow at $width');
+    }
+    expect(kpis.calls, asked, reason: 'a layout change reads nothing');
   });
 }

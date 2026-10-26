@@ -88,11 +88,14 @@ class BiViewsBar extends ConsumerWidget {
               children: [
                 const Icon(Icons.bookmarks_outlined),
                 const SizedBox(width: AppSpacing.xs),
-                Text(
-                  open == null
-                      ? l10n.biViewStandard
-                      : menu.label(open),
-                  key: const ValueKey('bi-views-current'),
+                // A long name or large text wraps instead of running off.
+                Flexible(
+                  child: Text(
+                    open == null
+                        ? l10n.biViewStandard
+                        : menu.label(open),
+                    key: const ValueKey('bi-views-current'),
+                  ),
                 ),
                 const Icon(Icons.arrow_drop_down),
               ],

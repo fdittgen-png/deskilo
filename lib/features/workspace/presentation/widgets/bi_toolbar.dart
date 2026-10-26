@@ -122,9 +122,12 @@ class BiToolbar extends StatelessWidget {
           icon: const Icon(Icons.chevron_left),
           onPressed: () => shift(-1),
         ),
-        Text(
-          biPeriodLabel(p, l10n, locale),
-          key: ValueKey('bi-$keyName-label'),
+        // A long period name or large text wraps between the arrows.
+        Flexible(
+          child: Text(
+            biPeriodLabel(p, l10n, locale),
+            key: ValueKey('bi-$keyName-label'),
+          ),
         ),
         IconButton(
           key: ValueKey('bi-$keyName-next'),

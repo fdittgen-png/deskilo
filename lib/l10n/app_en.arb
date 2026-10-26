@@ -2878,6 +2878,10 @@
   "@biPrintFailed": {
     "description": "#2581 analytical report print layout and exports"
   },
+  "biPrintFigures": "Figures",
+  "@biPrintFigures": {
+    "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
+  },
   "biPrintFilters": "Filters",
   "@biPrintFilters": {
     "description": "#2581 analytical report print layout and exports"

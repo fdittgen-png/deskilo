@@ -33,6 +33,7 @@ class BiPrintStrings {
     required this.unsaved,
     required this.period,
     required this.dateBasis,
+    required this.figures,
     required this.currency,
     required this.filters,
     required this.noFilters,
@@ -55,6 +56,9 @@ class BiPrintStrings {
   final String unsaved;
   final String period;
   final String dateBasis;
+
+  /// The label of the line naming every figure by id, version and coverage.
+  final String figures;
   final String currency;
   final String filters;
   final String noFilters;
@@ -211,6 +215,15 @@ BiPrintDocument biPrintDocument(BiReportSnapshot s, BiPrintStrings w) {
         [
           for (final m in s.metrics)
             '${f.metricTitle(m.id)}: ${f.dateBasis(m.dateBasis)}',
+        ].join('; '),
+      ),
+      // Which definition of each figure was printed, and how much of its
+      // source it covers: provenance, so it shows with the sources hidden.
+      BiPrintLine(
+        w.figures,
+        [
+          for (final m in s.metrics)
+            '${m.id} v${m.version}: ${f.coverage(m.coverage)}',
         ].join('; '),
       ),
       BiPrintLine(

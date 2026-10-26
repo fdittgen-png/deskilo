@@ -64,6 +64,7 @@ Future<void> _pump(
   BiViewRepository views, {
   bool designer = true,
   _Finance? finance,
+  Map<String, bool>? flags,
 }) async {
   tester.view.physicalSize = const Size(1200, 2600);
   tester.view.devicePixelRatio = 1.0;
@@ -73,12 +74,14 @@ Future<void> _pump(
       overrides: [
         ...standardTestOverrides(
           workspace: FakeWorkspaceRepository.withWorkspace(
-            featureFlags: {
-              'invoicing': true,
-              'workspaceStatus': true,
-              'capacityKpi': true,
-              'biReportDesigner': designer,
-            },
+            featureFlags:
+                flags ??
+                {
+                  'invoicing': true,
+                  'workspaceStatus': true,
+                  'capacityKpi': true,
+                  'biReportDesigner': designer,
+                },
           ),
           clock: FixedClock(DateTime(2026, 3, 15, 12)),
           financeKpis: finance ?? _Finance(),
@@ -167,6 +170,33 @@ void main() {
     await _menu(tester, 'bi-views-open-${saved.id}');
     expect(find.byKey(const ValueKey('bi-report-card-v1')), findsOneWidget);
     expect(find.byKey(const ValueKey('bi-report-card-v2')), findsOneWidget);
+  });
+
+  testWidgets('a capacity-only space authors a report: no invoicing, no '
+      'workspace status, only the capacity figure and the designer', (
+    tester,
+  ) async {
+    final views = InMemoryBiViewRepository();
+    await _pump(
+      tester,
+      views,
+      flags: {'capacityKpi': true, 'biReportDesigner': true},
+    );
+    await _open(tester, '/bi?cards=capacity.seat_utilisation');
+    await _tap(tester, 'bi-views-duplicate-report');
+    final copy = (await views.list('ws-1')).single;
+    expect(_cards(copy), ['capacity.seat_utilisation']);
+
+    await _open(tester, '/bi/report/${copy.id}');
+    await _tap(tester, 'bi-visual-select-v1');
+    await _tap(tester, 'bi-prop-width-v1-more');
+    await _tap(tester, 'bi-editor-save');
+    final saved = (await views.list('ws-1')).single;
+    expect(saved.revision, 2);
+    expect(
+      saved.definition!.report!.pages.first.visuals.single.layout.span,
+      copy.definition!.report!.pages.first.visuals.single.layout.span + 1,
+    );
   });
 
   testWidgets('a save that lost the race keeps the draft until the person '

@@ -4159,6 +4159,12 @@ abstract class AppLocalizations {
   /// **'not answered'**
   String get biPrintFailed;
 
+  /// #2581 analytical report print: the line naming each figure by id, version and coverage
+  ///
+  /// In en, this message translates to:
+  /// **'Figures'**
+  String get biPrintFigures;
+
   /// #2581 analytical report print layout and exports
   ///
   /// In en, this message translates to:
