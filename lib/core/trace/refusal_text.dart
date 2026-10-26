@@ -39,6 +39,17 @@ enum KnownRefusal {
   /// #2370 (DKA03) — a value of an accounting connection the server refused
   /// (a token, a mapping key, an issuer, a file).
   accountingValueRefused,
+
+  /// #2380 (DKB01) — a bank movement decided meanwhile: matched,
+  /// reconciled or reviewed by another press or another person.
+  bankLineDecided,
+
+  /// #2380 (DKB02) — a bank movement and what it was confirmed against do
+  /// not go together (direction, currency, amount, state, workspace).
+  bankLineRefused,
+
+  /// #2380 (DKB03) — a bank statement file the server refuses whole.
+  bankFileRefused,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -80,6 +91,13 @@ const List<String> changedMeanwhileSubstrings = [
   'invoice already matched',
 ];
 
+/// #2380 — the bank statement codes of 0603.
+const Map<String, KnownRefusal> _bankRefusals = {
+  'DKB01': KnownRefusal.bankLineDecided,
+  'DKB02': KnownRefusal.bankLineRefused,
+  'DKB03': KnownRefusal.bankFileRefused,
+};
+
 /// Which family [error] belongs to, or null when it is none of them.
 KnownRefusal? knownRefusalOf(Object error) {
   // 42501 is Postgres's own insufficient_privilege — an RLS refusal or a
@@ -93,6 +111,8 @@ KnownRefusal? knownRefusalOf(Object error) {
     return KnownRefusal.accountingConnectionClosed;
   }
   if (serverErrorCode(error) == 'DKA03') return KnownRefusal.accountingValueRefused;
+  final bank = _bankRefusals[serverErrorCode(error)];
+  if (bank != null) return bank;
   final message = serverErrorMessage(error)?.toLowerCase();
   if (message == null) return null;
   if (isAuthError(error) &&
@@ -121,5 +141,8 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
         l10n.refusalVatRateVersioned,
       KnownRefusal.accountingConnectionClosed => l10n.refusalAccountingClosed,
       KnownRefusal.accountingValueRefused => l10n.refusalAccountingValue,
+      KnownRefusal.bankLineDecided => l10n.refusalBankLineDecided,
+      KnownRefusal.bankLineRefused => l10n.refusalBankLineRefused,
+      KnownRefusal.bankFileRefused => l10n.refusalBankFileRefused,
       null => null,
     };

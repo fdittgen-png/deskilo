@@ -143,7 +143,6 @@ int qrrCheckDigit(String digits) {
 /// The QRR reference of [number]: its digits, left-padded with zeros to
 /// 26, plus the check digit; null when [number] has no digit or more than
 /// 26.
-@visibleForTesting
 String? qrrReferenceOf(String number) {
   final digits = number.replaceAll(RegExp(r'\D'), '');
   if (digits.isEmpty || digits.length > 26) return null;
@@ -151,7 +150,6 @@ String? qrrReferenceOf(String number) {
   return '$body${qrrCheckDigit(body)}';
 }
 
-@visibleForTesting
 bool isValidQrr(String reference) =>
     RegExp(r'^\d{27}$').hasMatch(reference) &&
     qrrCheckDigit(reference.substring(0, 26)) ==
@@ -159,7 +157,6 @@ bool isValidQrr(String reference) =>
 
 /// The ISO 11649 creditor reference of [text] (letters and digits only,
 /// at most 21 of them); null when nothing usable is left.
-@visibleForTesting
 String? scorReferenceOf(String text) {
   final body = text.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
   if (body.isEmpty || body.length > 21) return null;
@@ -168,7 +165,6 @@ String? scorReferenceOf(String text) {
   return 'RF$check$body';
 }
 
-@visibleForTesting
 bool isValidScor(String reference) {
   final s = reference.replaceAll(' ', '').toUpperCase();
   if (!RegExp(r'^RF\d{2}[A-Z0-9]{1,21}$').hasMatch(s)) return false;

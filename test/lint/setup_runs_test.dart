@@ -40,7 +40,8 @@ void main() {
     );
     // A harness that silently stopped finding the steps would pass while
     // testing nothing.
-    expect(out, contains('steps: 13'));
+    // #2380 — the books' step (the bank statements) is the fourteenth.
+    expect(out, contains('steps: 14'));
     // #2868 — and the questions step round-trips through its own file.
     expect(out, contains('profile: round-trips'));
     // #2924 — the WebMCP tools and the drawn screen read the same,

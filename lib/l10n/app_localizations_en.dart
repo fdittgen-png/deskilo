@@ -1763,6 +1763,308 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgeTokenOnce => 'Save this QR now — it is shown only once.';
 
   @override
+  String get bankBasisAmount => 'same amount and payer';
+
+  @override
+  String get bankBasisCreditorReference => 'RF reference';
+
+  @override
+  String get bankBasisInvoiceNumber => 'invoice number in the text';
+
+  @override
+  String get bankBasisQrReference => 'QR reference';
+
+  @override
+  String bankConfirmReferences(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Confirm $count matches by reference',
+      one: 'Confirm 1 match by reference',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bankConfirmedReferences(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count payments matched.',
+      one: '1 payment matched.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bankCsvAccount => 'Account (IBAN)';
+
+  @override
+  String get bankCsvAccountHint =>
+      'A spreadsheet rarely names its account; the same account keeps its movements apart from another\'s.';
+
+  @override
+  String get bankCsvAmount => 'Amount column (or money in)';
+
+  @override
+  String bankCsvColumn(int n, String first) {
+    return 'Column $n ($first)';
+  }
+
+  @override
+  String get bankCsvCounterparty => 'Payer or payee column';
+
+  @override
+  String get bankCsvCounterpartyIban => 'Payer or payee IBAN column';
+
+  @override
+  String get bankCsvCurrency => 'Currency';
+
+  @override
+  String get bankCsvCurrencyColumn => 'Currency column, when the file has one';
+
+  @override
+  String get bankCsvDate => 'Date column';
+
+  @override
+  String get bankCsvDateFormat => 'Date format';
+
+  @override
+  String get bankCsvDebit => 'Money-out column, when apart';
+
+  @override
+  String get bankCsvDecimalComma => 'Amounts use a decimal comma';
+
+  @override
+  String get bankCsvDuplicateColumn =>
+      'A column is chosen twice: give each column one meaning.';
+
+  @override
+  String get bankCsvHeader => 'The first row names the columns';
+
+  @override
+  String bankCsvNeedsAccount(int max) {
+    return 'Name the account, in at most $max characters.';
+  }
+
+  @override
+  String get bankCsvNeedsAmount => 'Choose the amount column.';
+
+  @override
+  String get bankCsvNeedsCurrency =>
+      'Give the currency in three letters (EUR, CHF).';
+
+  @override
+  String get bankCsvNeedsDate => 'Choose the date column.';
+
+  @override
+  String get bankCsvNone => 'None';
+
+  @override
+  String get bankCsvReference => 'Reference column';
+
+  @override
+  String get bankCsvRemittance => 'Text column';
+
+  @override
+  String get bankCsvTitle => 'Read the spreadsheet';
+
+  @override
+  String get bankCsvTransactionId => 'Bank transaction id column';
+
+  @override
+  String get bankCsvValueDate => 'Value date column';
+
+  @override
+  String get bankFileTypeLabel => 'Bank statement';
+
+  @override
+  String get bankFormatCamt053 => 'ISO 20022 statement (camt.053)';
+
+  @override
+  String get bankFormatCamt054 => 'ISO 20022 notification (camt.054)';
+
+  @override
+  String get bankFormatCoda => 'CODA (Belgium)';
+
+  @override
+  String get bankFormatCsv => 'Spreadsheet (CSV)';
+
+  @override
+  String get bankFormatMt940 => 'SWIFT MT940';
+
+  @override
+  String get bankFormatOfx => 'OFX / QFX';
+
+  @override
+  String get bankFormatRead => 'Read';
+
+  @override
+  String get bankFormatTitle => 'Which file is this?';
+
+  @override
+  String get bankImportAction => 'Import a statement';
+
+  @override
+  String get bankImportFailed =>
+      'The statement could not be imported. Nothing was added.';
+
+  @override
+  String get bankImportRepeated =>
+      'This file was already imported. Nothing was added.';
+
+  @override
+  String bankImported(int created, int known, int review) {
+    return 'Imported: $created new, $known already known, $review to review.';
+  }
+
+  @override
+  String get bankLineDuplicate => 'Duplicate';
+
+  @override
+  String bankLineMatched(String number) {
+    return 'Settles $number';
+  }
+
+  @override
+  String get bankLineMoneyOut => 'Money out, to reconcile';
+
+  @override
+  String get bankLineOpen => 'To match';
+
+  @override
+  String bankLinePending(String number) {
+    return '$number: awaiting approval';
+  }
+
+  @override
+  String get bankLineReconciled => 'Reconciled with a recorded payment';
+
+  @override
+  String get bankLineRecorded => 'Payment recorded, no invoice yet';
+
+  @override
+  String get bankLineReview => 'Possibly imported already: review it';
+
+  @override
+  String get bankLineSaved => 'Saved.';
+
+  @override
+  String bankLineSuggested(String number, String why) {
+    return 'Suggested: $number ($why)';
+  }
+
+  @override
+  String get bankMatchConfirm => 'Confirm';
+
+  @override
+  String get bankMatchFailed =>
+      'The movement could not be matched. Nothing was changed.';
+
+  @override
+  String get bankMatchNoInvoice => 'No open invoice in this currency.';
+
+  @override
+  String get bankMatchPick => 'The invoice this payment settles';
+
+  @override
+  String bankMatchTitle(String amount) {
+    return 'Match $amount';
+  }
+
+  @override
+  String get bankOutNone => 'No payment of this amount is recorded as made.';
+
+  @override
+  String get bankOutTitle => 'The payment recorded as made';
+
+  @override
+  String bankRefusedAtLine(String reason, int line) {
+    return '$reason (line $line)';
+  }
+
+  @override
+  String get bankRefusedBadAmount =>
+      'An amount in the file is not a valid amount. Nothing was imported.';
+
+  @override
+  String get bankRefusedBadCurrency =>
+      'The file has an unknown currency, or several currencies on one account. Nothing was imported.';
+
+  @override
+  String get bankRefusedBadDate =>
+      'A date in the file is not a valid day. Nothing was imported.';
+
+  @override
+  String get bankRefusedEmpty =>
+      'The file holds no movement. Nothing was imported.';
+
+  @override
+  String bankRefusedMalformed(String format) {
+    return 'The file cannot be read as $format. Nothing was imported.';
+  }
+
+  @override
+  String get bankRefusedMissingAccount =>
+      'The file names no account. Nothing was imported.';
+
+  @override
+  String get bankRefusedTooLarge =>
+      'The file is larger than this server imports. Nothing was imported.';
+
+  @override
+  String get bankRefusedTooLong =>
+      'An account or a bank transaction id in the file is longer than a statement keeps. Nothing was imported.';
+
+  @override
+  String bankRefusedTooManyLines(int max) {
+    return 'The file has more than $max movements. Split it by period at the bank. Nothing was imported.';
+  }
+
+  @override
+  String get bankReviewBody =>
+      'Another statement holds a movement with the same day, amount and details, and the bank gave neither an identity. Keep it if it is a second payment.';
+
+  @override
+  String get bankReviewDuplicate => 'It is a duplicate';
+
+  @override
+  String get bankReviewKeep => 'Keep it';
+
+  @override
+  String get bankReviewTitle => 'Imported already?';
+
+  @override
+  String bankStatementCounts(int count, int open) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count movements',
+      one: '1 movement',
+    );
+    return '$_temp0, $open to do';
+  }
+
+  @override
+  String bankStatementPeriod(String account, String from, String to) {
+    return '$account · $from – $to';
+  }
+
+  @override
+  String get bankStatementsEmpty => 'No statement imported yet.';
+
+  @override
+  String get bankStatementsIntro =>
+      'Import the files your bank produces. Each movement is read once; the payments are matched to their invoices when you confirm.';
+
+  @override
+  String get bankStatementsLoadFailed =>
+      'The bank statements could not be loaded.';
+
+  @override
+  String get bankStatementsTitle => 'Bank statements';
+
+  @override
   String get baseRoleNote =>
       'Everyone has exactly one base role: User, Administrator, Co-owner or Owner. Other roles add to it; none takes anything away.';
 
@@ -7698,6 +8000,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureBadgeSignInTitle => 'Sign in with a badge';
+
+  @override
+  String get featureBankImportDesc =>
+      'Reads the bank\'s statement files (camt.053/054, MT940, CODA, OFX/QFX or a spreadsheet) into the space, each movement once, and suggests the invoice each payment settles by the QR or RF reference printed on it, its number or its amount; a person confirms every match, and the rest stays in a work list. A payment out reconciles a payment already recorded as made.';
+
+  @override
+  String get featureBankImportTitle => 'Bank statements';
 
   @override
   String get featureBiReportDesignerDesc =>
@@ -19380,6 +19689,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Someone has already decided this. The list shows the outcome.';
 
   @override
+  String get refusalBankFileRefused =>
+      'The server refused the statement whole (too large, too many movements, or several currencies). Nothing was imported.';
+
+  @override
+  String get refusalBankLineDecided =>
+      'This movement was decided meanwhile (matched, reconciled or reviewed). The list shows where it stands now.';
+
+  @override
+  String get refusalBankLineRefused =>
+      'This movement cannot settle that: its direction, currency, amount or state does not fit. Nothing was changed.';
+
+  @override
   String get refusalChangedMeanwhile =>
       'This changed in the meantime. Reopen it to see where it stands.';
 
@@ -21594,6 +21915,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'The most rows one batch of the accountant\'s valuations may carry, one row per asset. A larger file is refused as a whole; split it before importing.';
 
   @override
+  String get settingHintBankImportMaxBytes =>
+      'A larger file is refused whole before it is read.';
+
+  @override
+  String get settingHintBankImportMaxLines =>
+      'A statement with more is refused whole; split it by period at the bank.';
+
+  @override
+  String get settingHintBankMatchWindowDays =>
+      'How many days before a payment its invoice may have been issued to be suggested by amount and payer alone. A person always confirms.';
+
+  @override
   String get settingHintBiBatchMaxRequests =>
       'The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.';
 
@@ -21797,6 +22130,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelAssetsValuationMaxRows => 'Valuation rows per batch';
+
+  @override
+  String get settingLabelBankImportMaxBytes => 'Largest bank statement file';
+
+  @override
+  String get settingLabelBankImportMaxLines => 'Movements per bank statement';
+
+  @override
+  String get settingLabelBankMatchWindowDays =>
+      'Invoice window for a payment without reference';
 
   @override
   String get settingLabelBiBatchMaxRequests => 'Figures per report read';

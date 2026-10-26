@@ -56,6 +56,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.foreignCurrencyPurchases,
   // #2370 — the systems the books go to are asked for.
   WorkspaceFeature.accountingConnectors,
+  // #2380 — reading the bank's statements is asked for.
+  WorkspaceFeature.bankImport,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -216,6 +218,7 @@ void main() {
       'personalShell': true,
       'foreignCurrencyPurchases': true,
       'accountingConnectors': true,
+      'bankImport': true,
       'guestParticipation': true,
     });
 

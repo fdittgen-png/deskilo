@@ -714,5 +714,16 @@
  "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
  "supLookupRate": "Supplier lookups per minute",
  "supLookupRateHint": "The most supplier lookups one person may make per minute on this server; more are answered as busy and nothing is sent to the registry. Set in the app's settings.",
- "optPerMinute": "{n} per minute"
+ "optPerMinute": "{n} per minute",
+ "bankMaxBytes": "Largest bank statement file",
+ "bankMaxBytesHint": "A larger file is refused whole before it is read. A setting of the server, set in the app's settings.",
+ "bankMaxLines": "Movements per bank statement",
+ "bankMaxLinesHint": "A statement with more movements is refused whole; split it by period at the bank. Set in the app's settings.",
+ "bankMatchWindow": "Invoice window for a payment without reference",
+ "bankMatchWindowHint": "How many days before a payment its invoice may have been issued to be suggested by amount and payer alone; a person always confirms. Set in the app's settings.",
+ "optMegabytes": "{n} MB",
+ "optMovements": "{n} movements",
+ "accountingTitle": "Books and bank",
+ "accountingWhy": "How the bank's statement files are read into the space and matched to its invoices.",
+ "accountingOk": "The bank statements' bounds and suggestion window are set."
 }

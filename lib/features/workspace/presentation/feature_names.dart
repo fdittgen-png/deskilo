@@ -299,5 +299,6 @@ String _latestName(AppLocalizations l10n, WorkspaceFeature feature) =>
         l10n.featureForeignCurrencyPurchasesTitle,
       WorkspaceFeature.accountingConnectors =>
         l10n.featureAccountingConnectorsTitle,
+      WorkspaceFeature.bankImport => l10n.featureBankImportTitle,
       _ => feature.name,
     };

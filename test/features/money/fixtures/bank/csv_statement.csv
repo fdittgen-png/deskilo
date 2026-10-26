@@ -1,0 +1,5 @@
+Buchungstag;Valuta;Auftraggeber;IBAN;Verwendungszweck;Referenz;Gutschrift;Lastschrift;Bank-ID
+15.01.2026;16.01.2026;"Demo Member One";CH56 0483 5012 3456 7800 9;"Invoice 2026-0042; January";210000000003139471430009017;120,00;;TX-1
+20.01.2026;20.01.2026;"Demo ""Two"" Member";;"Payment
+RF18 5390 0754 7034";;"1.234,50";;TX-2
+22.01.2026;;Demo Supplier;;Office supplies;;;45,00;TX-3
