@@ -3,6 +3,8 @@
 // #2370 — the accounting target registry: every target is decided, a file
 // target writes its own format, the countries live on the target, and the
 // formats the sheet offers are the file targets of the registry.
+import 'dart:io';
+
 import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
@@ -88,6 +90,31 @@ void main() {
     }
     expect(formatsFor('FR').map((f) => f.id), isNot(contains('pennylane_api')));
     expect(formatsFor('DE').map((f) => f.id), isNot(contains('ebp_import')));
+  });
+
+  // The descriptor says which targets take a sign-in; the edge function's
+  // table says how. Neither may name a target the other does not.
+  test('an API target says how it is connected; a sign-in target is in the '
+      'edge function\'s table, and the table names nothing else', () {
+    for (final t in accountingTargets) {
+      expect(
+        t.connectsBy.isEmpty,
+        t.transport == AccountingTransport.file,
+        reason: t.id,
+      );
+    }
+    final table = File(
+      'supabase/functions/_shared/accounting_targets.ts',
+    ).readAsStringSync();
+    final body = table.substring(table.indexOf('oauthTargets'));
+    final inTable = {
+      for (final m in RegExp(r'^  ([a-z0-9_]+): \{', multiLine: true).allMatches(body))
+        m[1]!,
+    };
+    expect(inTable, {
+      for (final t in accountingTargets)
+        if (t.connectsBy.contains(AccountingAuthKind.oauth2)) t.id,
+    });
   });
 
   test('the FEC target names the client code of an auxiliary account', () {
