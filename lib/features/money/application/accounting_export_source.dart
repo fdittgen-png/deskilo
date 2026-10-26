@@ -89,9 +89,22 @@ const Set<String> _postedWhenLocalBook = {
 };
 
 /// The posted formats that name the accounts and the parties: the FEC,
-/// and #2376 the books printed from the postings.
-const Set<String> _postedFec = {'fec', _archiveFormat, ...bookReportFormats};
-const String _postedOnlyFormat = 'generic_journal_csv';
+/// #2376 the books printed from the postings, and #2377 the Swiss journal,
+/// whose rows name their customer or supplier.
+const Set<String> _postedFec = {
+  'fec',
+  _archiveFormat,
+  ...bookReportFormats,
+  ..._swissJournalFormats,
+};
+
+/// #2377 — the formats with no other source than the postings: the generic
+/// journal and the Swiss journal in its two layouts.
+const Set<String> _postedOnlyFormats = {
+  'generic_journal_csv',
+  ..._swissJournalFormats,
+};
+const Set<String> _swissJournalFormats = {'ch_kmu', 'banana_transactions'};
 const String _archiveFormat = 'bundle';
 
 /// #2376 — the day of the latest document the person exports, on the same
@@ -133,7 +146,7 @@ class AccountingExportSource {
     );
     if (books == null) return null;
     final posted =
-        formatId == _postedOnlyFormat ||
+        _postedOnlyFormats.contains(formatId) ||
         (_postedWhenLocalBook.contains(formatId) &&
             (formatId != _archiveFormat || archiveCarriesFec(country)) &&
             localBookOf(books.bookProfiles, year) != null);

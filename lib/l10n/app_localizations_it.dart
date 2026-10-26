@@ -11156,6 +11156,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceExportAuditTrail => 'Pista di controllo';
 
   @override
+  String get invoiceExportBanana =>
+      'Banana Contabilità+ (importazione di registrazioni)';
+
+  @override
   String get invoiceExportBundle => 'Archivio dell\'esercizio (zip)';
 
   @override
@@ -11197,7 +11201,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceExportSwissKmu =>
-      'Giornale delle registrazioni svizzero (CSV, conti PMI)';
+      'Giornale delle registrazioni svizzero (CSV, conti PMI, codici IVA)';
 
   @override
   String get invoiceExportTrialBalance =>
@@ -12051,6 +12055,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Questi acquisti sono in una valuta diversa da quella dello spazio e non hanno un tasso di cambio registrato; non è stato scritto nulla. Registri prima il tasso di ciascuno: $documents';
+  }
+
+  @override
+  String journalSwissTaxCodes(String keys) {
+    return 'Questi gruppi di aliquote non hanno un codice IVA nel riferimento fiscale; non è stato scritto nulla. Aggiunga prima i loro codici: $keys';
   }
 
   @override
@@ -24315,23 +24324,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get supportTitle => 'Dettagli per l’assistenza';
-
-  @override
-  String get swissKmuAccountsIntro =>
-      'I valori predefiniti sono le proposte del piano contabile svizzero PMI. Ogni riga indica la cifra del rendiconto IVA su cui cade; verifichi i conti con il suo fiduciario.';
-
-  @override
-  String get swissKmuAccountsTitle => 'Giornale delle registrazioni svizzero';
-
-  @override
-  String get swissKmuRevenueExempt => 'Ricavi esclusi, esportati o all\'estero';
-
-  @override
-  String get swissKmuRevenueNormal => 'Ricavi all\'aliquota normale';
-
-  @override
-  String get swissKmuRevenueReduced =>
-      'Ricavi all\'aliquota ridotta o di alloggio';
 
   @override
   String get symbolHint =>

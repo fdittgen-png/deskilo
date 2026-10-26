@@ -11185,6 +11185,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceExportAuditTrail => 'Piste d’audit';
 
   @override
+  String get invoiceExportBanana =>
+      'Banana Comptabilité+ (import d\'écritures)';
+
+  @override
   String get invoiceExportBundle => 'Archive de l\'exercice (zip)';
 
   @override
@@ -11226,7 +11230,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceExportSwissKmu =>
-      'Journal des écritures suisse (CSV, comptes PME)';
+      'Journal des écritures suisse (CSV, comptes PME, codes TVA)';
 
   @override
   String get invoiceExportTrialBalance =>
@@ -12077,6 +12081,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Ces achats sont dans une autre devise que celle de l’espace et n’ont pas de taux de change enregistré ; rien n’a été écrit. Enregistrez d’abord le taux de chacun : $documents';
+  }
+
+  @override
+  String journalSwissTaxCodes(String keys) {
+    return 'Ces groupes de taux n\'ont pas de code TVA dans le référentiel fiscal ; rien n\'a été écrit. Ajoutez d\'abord leurs codes : $keys';
   }
 
   @override
@@ -24368,24 +24377,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get supportTitle => 'Détails pour l’assistance';
-
-  @override
-  String get swissKmuAccountsIntro =>
-      'Les valeurs par défaut sont les propositions du plan comptable suisse PME. Chaque ligne nomme le chiffre du décompte TVA sur lequel elle tombe ; vérifiez les comptes avec votre fiduciaire.';
-
-  @override
-  String get swissKmuAccountsTitle => 'Journal des écritures suisse';
-
-  @override
-  String get swissKmuRevenueExempt =>
-      'Produits exclus de l\'impôt, exportés ou à l\'étranger';
-
-  @override
-  String get swissKmuRevenueNormal => 'Produits au taux normal';
-
-  @override
-  String get swissKmuRevenueReduced =>
-      'Produits au taux réduit ou d\'hébergement';
 
   @override
   String get symbolHint =>

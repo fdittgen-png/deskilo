@@ -13040,6 +13040,10 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportBanana": "Banana Accounting+ (transactions import)",
+  "@invoiceExportBanana": {
+    "description": "#2377 The Swiss journal under Banana's column names, on the accounting export sheet."
+  },
   "invoiceExportBundle": "Year archive (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"
@@ -13085,9 +13089,9 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
-  "invoiceExportSwissKmu": "Swiss booking journal (CSV, KMU accounts)",
+  "invoiceExportSwissKmu": "Swiss booking journal (CSV, KMU accounts, MWST codes)",
   "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
+    "description": "#2360/#2377 The Swiss journal of a local book on the accounting export sheet."
   },
   "invoiceExportTrialBalance": "Trial balance, general and auxiliary (PDF, from the book)",
   "@invoiceExportTrialBalance": {
@@ -14165,6 +14169,15 @@
     "description": "#3031 Posted export: purchases in another currency without a recorded rate.",
     "placeholders": {
       "documents": {
+        "type": "String"
+      }
+    }
+  },
+  "journalSwissTaxCodes": "These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: {keys}",
+  "@journalSwissTaxCodes": {
+    "description": "#2377 The Swiss journal refused: a taxed row's rate group has no MWST code.",
+    "placeholders": {
+      "keys": {
         "type": "String"
       }
     }
@@ -28282,26 +28295,6 @@
     }
   },
   "supportTitle": "Support details",
-  "swissKmuAccountsIntro": "The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuAccountsTitle": "Swiss booking journal",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuRevenueExempt": "Revenue exempt, exported or abroad",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  },
-  "swissKmuRevenueNormal": "Revenue at the normal rate",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Revenue at the reduced or accommodation rate",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
   "symbolHint": "A round mark of one or two letters on a colour, unique to this workspace — or use a photo below instead.",
   "@symbolHint": {
     "description": "workspace symbol"

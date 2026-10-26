@@ -11152,6 +11152,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceExportAuditTrail => 'Pista de auditoría';
 
   @override
+  String get invoiceExportBanana =>
+      'Banana Contabilidad+ (importación de asientos)';
+
+  @override
   String get invoiceExportBundle => 'Archivo del ejercicio (zip)';
 
   @override
@@ -11193,7 +11197,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceExportSwissKmu =>
-      'Diario de asientos suizo (CSV, cuentas KMU)';
+      'Diario de asientos suizo (CSV, cuentas PYME, códigos de IVA)';
 
   @override
   String get invoiceExportTrialBalance =>
@@ -12045,6 +12049,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: $documents';
+  }
+
+  @override
+  String journalSwissTaxCodes(String keys) {
+    return 'Estos grupos de tipos no tienen código de IVA en la referencia fiscal; no se ha escrito nada. Añada primero sus códigos: $keys';
   }
 
   @override
@@ -24297,24 +24306,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get supportTitle => 'Detalles de soporte';
-
-  @override
-  String get swissKmuAccountsIntro =>
-      'Los valores por defecto son las propuestas del plan contable suizo KMU. Cada fila nombra la cifra de la declaración de IVA suiza (MWST) en la que cae; revise las cuentas con su asesor.';
-
-  @override
-  String get swissKmuAccountsTitle => 'Diario de asientos suizo';
-
-  @override
-  String get swissKmuRevenueExempt =>
-      'Ingresos exentos, exportados o en el extranjero';
-
-  @override
-  String get swissKmuRevenueNormal => 'Ingresos al tipo normal';
-
-  @override
-  String get swissKmuRevenueReduced =>
-      'Ingresos al tipo reducido o de alojamiento';
 
   @override
   String get symbolHint =>

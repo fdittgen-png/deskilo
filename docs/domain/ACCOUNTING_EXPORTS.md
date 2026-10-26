@@ -102,7 +102,14 @@ reached and how far it is qualified. The table below is generated from it;
 | `datev_rechnungsdatenservice` | DATEV · Rechnungsdatenservice 1.0 · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
 | `datev_belegbilderservice` | DATEV · Belegbilderservice · DATEVconnect online, Marktplatz-Partnerschaft und SmartLogin | api | documents | AT, DE | specificationNeeded | not named yet |
 | `sage50` | Sage · Sage 50 Accounts · audit trail CSV | file | documents | GB, IE | implemented | not named yet |
-| `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV, Ziffer per row | file | journal | CH | implemented | not named yet |
+| `ch_kmu` | KMU-Kontenrahmen · Swiss booking journal · CSV from compute_postings, MWST code and Ziffer per row | file | journal | CH | implemented | not named yet |
+| `banana_transactions` | Banana · Banana Accounting+ · import of transactions, tab-separated text | file | journal | CH | implemented | Banana Accounting+ import of transactions, column names of the Transactions table |
+| `bexio_api` | bexio · bexio · API 2.0 (kb_invoice, kb_credit_voucher) | api | documents | CH | implemented | bexio API 2.0, kb_invoice and kb_credit_voucher |
+| `abacus_abaconnect` | Abacus · Abacus Finanzbuchhaltung · AbaConnect XML, licensed per interface | file | journal | CH | specificationNeeded | not named yet |
+| `sage50_extra_ch` | Sage · Sage 50 Extra / Sage Start (CH) · text import of Buchungen | file | journal | CH | specificationNeeded | not named yet |
+| `infoniqa_one` | Infoniqa · Infoniqa ONE · API | api | documents | CH | specificationNeeded | not named yet |
+| `klara` | Klara · Klara Business · API | api | documents | CH | specificationNeeded | not named yet |
+| `run_my_accounts` | Run my Accounts · Run my Accounts · API | api | documents | CH | specificationNeeded | not named yet |
 | `saft` | OECD · SAF-T · 2.0, ledger omitted | file | documents | everywhere | implemented | OECD SAF-T, ledger omitted on purpose |
 | `accountant_csv` | DesKilo · Accountant CSV · format 3 | file | documents | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |
 | `generic_journal_csv` | DesKilo · Generic journal CSV · compute_postings | file | journal | everywhere | implemented | DesKilo-defined, docs/domain/ACCOUNTING_EXPORTS.md |

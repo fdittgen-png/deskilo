@@ -38,6 +38,7 @@ import 'package:meta/meta.dart';
 
 import 'accountant_csv.dart';
 import 'accounting_target.dart';
+import 'accounting_targets_ch.dart';
 import 'accounting_targets_de.dart';
 
 export 'accounting_target.dart';
@@ -144,16 +145,6 @@ const _datevFormat = AccountingFormat(
 /// Sage 50's audit-trail CSV — the British and Irish import shape.
 const _sageFormat = AccountingFormat(
   id: 'sage50',
-  claim: FormatClaim.exchange,
-  extension: 'csv',
-  needsAccounts: true,
-);
-
-/// #2360 — the booking journal of a Swiss space: the accounts of the KMU
-/// chart and the Ziffer of the MWST-Abrechnung per row. An exchange file;
-/// not a native Banana or bexio template (neither publishes one).
-const _swissKmuFormat = AccountingFormat(
-  id: 'ch_kmu',
   claim: FormatClaim.exchange,
   extension: 'csv',
   needsAccounts: true,
@@ -330,18 +321,7 @@ const List<AccountingTarget> accountingTargets = [
     format: _sageFormat,
     customerIdRule: CustomerIdRule(maxLength: 8, charset: r'[A-Z0-9]+'),
   ),
-  AccountingTarget(
-    id: 'ch_kmu',
-    vendor: 'KMU-Kontenrahmen',
-    product: 'Swiss booking journal',
-    edition: 'CSV, Ziffer per row',
-    countries: {'CH'},
-    transport: AccountingTransport.file,
-    payload: AccountingPayload.journal,
-    operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff},
-    taxCodeModel: TaxCodeModel.perRate,
-    format: _swissKmuFormat,
-  ),
+  ...swissAccountingTargets,
   AccountingTarget(
     id: 'saft',
     vendor: 'OECD',

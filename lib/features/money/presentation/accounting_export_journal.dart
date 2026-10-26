@@ -59,6 +59,8 @@ Future<void> exportGenericJournal(
             ? l10n.journalFecPartyCode(named(FecBlock.partyCode))
             : l10n.journalFecMissingRate(named(FecBlock.missingRate)),
       );
+    case JournalTaxCodesMissing(:final keys):
+      AppSnack.error(context, l10n.journalSwissTaxCodes(keys.join(', ')));
     case JournalContractBroken(:final report):
       AppSnack.error(
         context,

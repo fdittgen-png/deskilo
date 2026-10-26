@@ -18389,6 +18389,12 @@ abstract class AppLocalizations {
   /// **'Audit trail'**
   String get invoiceExportAuditTrail;
 
+  /// #2377 The Swiss journal under Banana's column names, on the accounting export sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Banana Accounting+ (transactions import)'**
+  String get invoiceExportBanana;
+
   /// #957 archive bundle: invoiceExportBundle
   ///
   /// In en, this message translates to:
@@ -18461,10 +18467,10 @@ abstract class AppLocalizations {
   /// **'Sage 50 (audit trail)'**
   String get invoiceExportSage;
 
-  /// #2360: invoiceExportSwissKmu
+  /// #2360/#2377 The Swiss journal of a local book on the accounting export sheet.
   ///
   /// In en, this message translates to:
-  /// **'Swiss booking journal (CSV, KMU accounts)'**
+  /// **'Swiss booking journal (CSV, KMU accounts, MWST codes)'**
   String get invoiceExportSwissKmu;
 
   /// Accounting export sheet (#2376): the trial balance report
@@ -19918,6 +19924,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'These purchases are in another currency than the space\'s and have no recorded exchange rate, so nothing was written; record each one\'s rate first: {documents}'**
   String journalNeedsRates(String documents);
+
+  /// #2377 The Swiss journal refused: a taxed row's rate group has no MWST code.
+  ///
+  /// In en, this message translates to:
+  /// **'These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: {keys}'**
+  String journalSwissTaxCodes(String keys);
 
   /// No description provided for @journeyClosedPaid.
   ///
@@ -40090,36 +40102,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support details'**
   String get supportTitle;
-
-  /// #2360: swissKmuAccountsIntro
-  ///
-  /// In en, this message translates to:
-  /// **'The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.'**
-  String get swissKmuAccountsIntro;
-
-  /// #2360: swissKmuAccountsTitle
-  ///
-  /// In en, this message translates to:
-  /// **'Swiss booking journal'**
-  String get swissKmuAccountsTitle;
-
-  /// #2360: swissKmuRevenueExempt
-  ///
-  /// In en, this message translates to:
-  /// **'Revenue exempt, exported or abroad'**
-  String get swissKmuRevenueExempt;
-
-  /// #2360: swissKmuRevenueNormal
-  ///
-  /// In en, this message translates to:
-  /// **'Revenue at the normal rate'**
-  String get swissKmuRevenueNormal;
-
-  /// #2360: swissKmuRevenueReduced
-  ///
-  /// In en, this message translates to:
-  /// **'Revenue at the reduced or accommodation rate'**
-  String get swissKmuRevenueReduced;
 
   /// workspace symbol
   ///

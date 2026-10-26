@@ -1,26 +1,19 @@
 {
-  "invoiceExportSwissKmu": "Swiss booking journal (CSV, KMU accounts)",
+  "invoiceExportSwissKmu": "Swiss booking journal (CSV, KMU accounts, MWST codes)",
   "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
+    "description": "#2360/#2377 The Swiss journal of a local book on the accounting export sheet."
   },
-  "swissKmuAccountsTitle": "Swiss booking journal",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
+  "invoiceExportBanana": "Banana Accounting+ (transactions import)",
+  "@invoiceExportBanana": {
+    "description": "#2377 The Swiss journal under Banana's column names, on the accounting export sheet."
   },
-  "swissKmuAccountsIntro": "The defaults are the suggestions of the Swiss KMU chart of accounts. Each row names the Ziffer of the MWST return it lands on; check the accounts with your accountant.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuRevenueNormal": "Revenue at the normal rate",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Revenue at the reduced or accommodation rate",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
-  "swissKmuRevenueExempt": "Revenue exempt, exported or abroad",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
+  "journalSwissTaxCodes": "These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: {keys}",
+  "@journalSwissTaxCodes": {
+    "description": "#2377 The Swiss journal refused: a taxed row's rate group has no MWST code.",
+    "placeholders": {
+      "keys": {
+        "type": "String"
+      }
+    }
   }
 }

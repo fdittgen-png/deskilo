@@ -11177,6 +11177,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceExportAuditTrail => 'Prüfpfad';
 
   @override
+  String get invoiceExportBanana =>
+      'Banana Buchhaltung+ (Import von Buchungen)';
+
+  @override
   String get invoiceExportBundle => 'Jahresarchiv (zip)';
 
   @override
@@ -11218,7 +11222,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceExportSwissKmu =>
-      'Schweizer Buchungsjournal (CSV, KMU-Konten)';
+      'Schweizer Buchungsjournal (CSV, KMU-Konten, MWST-Codes)';
 
   @override
   String get invoiceExportTrialBalance =>
@@ -12069,6 +12073,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Diese Einkäufe sind in einer anderen Währung als der des Space und haben keinen erfassten Wechselkurs; es wurde nichts geschrieben. Erfassen Sie zuerst den Kurs jedes einzelnen: $documents';
+  }
+
+  @override
+  String journalSwissTaxCodes(String keys) {
+    return 'Für diese Satzgruppen gibt es in den Steuergrundlagen keinen MWST-Code; es wurde nichts geschrieben. Erfassen Sie zuerst ihre Codes: $keys';
   }
 
   @override
@@ -24346,24 +24355,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get supportTitle => 'Supportdetails';
-
-  @override
-  String get swissKmuAccountsIntro =>
-      'Die Vorgaben sind die Vorschläge des Schweizer Kontenrahmens KMU. Jede Zeile nennt die Ziffer der MWST-Abrechnung, auf der sie landet; prüfen Sie die Konten mit Ihrer Treuhänderin.';
-
-  @override
-  String get swissKmuAccountsTitle => 'Schweizer Buchungsjournal';
-
-  @override
-  String get swissKmuRevenueExempt =>
-      'Ertrag ausgenommen, exportiert oder im Ausland';
-
-  @override
-  String get swissKmuRevenueNormal => 'Ertrag zum Normalsatz';
-
-  @override
-  String get swissKmuRevenueReduced =>
-      'Ertrag zum reduzierten oder Beherbergungssatz';
 
   @override
   String get symbolHint =>

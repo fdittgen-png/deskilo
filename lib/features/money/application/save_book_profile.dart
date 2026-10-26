@@ -94,18 +94,27 @@ class BookProfiles {
 
   /// #2365 — the suggested chart taken in one go: each account saved, then
   /// the role it is proposed for mapped to it from [effectiveFrom]. Stops at
-  /// the first save that does not go through.
+  /// the first save that does not go through. An account the chart lists
+  /// twice is saved once and takes both roles; a role the chart proposes
+  /// twice is mapped to its first account, the later ones are only offered
+  /// (#2377: the KMU chart's 6500 and 6000 are both expenses).
   Future<BookSaveOutcome> adoptSuggested(
     List<SuggestedAccount> suggested, {
     required DateTime effectiveFrom,
     required List<BookMapping> current,
   }) async {
+    final savedByCode = <String, BookAccount>{};
+    final roles = <String>{};
     for (final s in suggested) {
       if (validateBookAccount(s.account).isNotEmpty) {
         return BookSaveOutcome.invalid;
       }
-      final saved = await _repository.saveBookAccount(s.account);
+      final saved =
+          savedByCode[s.account.code] ??
+          await _repository.saveBookAccount(s.account);
       if (saved == null) return BookSaveOutcome.stale;
+      savedByCode[s.account.code] = saved;
+      if (!roles.add('${s.role.wire}:${s.qualifier}')) continue;
       final mapped = await saveMapping(
         role: s.role,
         qualifier: s.qualifier,

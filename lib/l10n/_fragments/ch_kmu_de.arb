@@ -1,26 +1,5 @@
 {
-  "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten)",
-  "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
-  },
-  "swissKmuAccountsTitle": "Schweizer Buchungsjournal",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuAccountsIntro": "Die Vorgaben sind die Vorschläge des Schweizer Kontenrahmens KMU. Jede Zeile nennt die Ziffer der MWST-Abrechnung, auf der sie landet; prüfen Sie die Konten mit Ihrer Treuhänderin.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuRevenueNormal": "Ertrag zum Normalsatz",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Ertrag zum reduzierten oder Beherbergungssatz",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
-  "swissKmuRevenueExempt": "Ertrag ausgenommen, exportiert oder im Ausland",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  }
+  "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten, MWST-Codes)",
+  "invoiceExportBanana": "Banana Buchhaltung+ (Import von Buchungen)",
+  "journalSwissTaxCodes": "Für diese Satzgruppen gibt es in den Steuergrundlagen keinen MWST-Code; es wurde nichts geschrieben. Erfassen Sie zuerst ihre Codes: {keys}"
 }

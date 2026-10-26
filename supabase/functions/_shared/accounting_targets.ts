@@ -28,6 +28,23 @@ export interface OAuthTarget {
 }
 
 export const oauthTargets: Record<string, OAuthTarget> = {
+  // #2377 — spec: docs.bexio.com — "Authentication" (OpenID Connect on
+  // auth.bexio.com, realm bexio): the authorisation and token endpoints,
+  // offline_access for a refresh token, a scope per resource. Not yet
+  // verified against a registered bexio app.
+  bexio_api: {
+    authorizeUrl: "https://auth.bexio.com/realms/bexio/protocol/openid-connect/auth",
+    tokenUrl: "https://auth.bexio.com/realms/bexio/protocol/openid-connect/token",
+    scopes: [
+      "openid",
+      "offline_access",
+      "contact_show",
+      "kb_invoice_edit",
+      "kb_credit_voucher_edit",
+    ],
+    // A person signing in, not a batch: ten minutes.
+    stateLifetimeMs: 10 * 60 * 1000,
+  },
   // spec: developers.pennylane.com — "OAuth 2.0" (partner applications):
   // authorisation and token endpoints on app.pennylane.com, scopes per
   // resource. Not yet verified against a registered partner application.

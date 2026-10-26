@@ -7697,6 +7697,7 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportBanana": "Banana Contabilidad+ (importación de asientos)",
   "invoiceExportBundle": "Archivo del ejercicio (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"
@@ -7721,10 +7722,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
-  "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas KMU)",
-  "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
-  },
+  "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas PYME, códigos de IVA)",
   "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
   "invoiceExternalIssuingTitle": "Emita esta factura fuera de la aplicación",
   "invoiceFacturXDownload": "Descargar Factur-X (PDF)",
@@ -8398,6 +8396,7 @@
   "journalFecPartyCode": "El FEC necesita un código de cliente para cada tercero, de hasta 13 letras y cifras: asigne primero un número de miembro o de proveedor a: {names}",
   "journalNeedsLocalBook": "El diario sale de una contabilidad llevada aquí: configure primero el plan de cuentas del emisor.",
   "journalNeedsRates": "Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: {documents}",
+  "journalSwissTaxCodes": "Estos grupos de tipos no tienen código de IVA en la referencia fiscal; no se ha escrito nada. Añada primero sus códigos: {keys}",
   "journeyClosedPaid": "Pagada el {date} — cerrada",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -16635,26 +16634,6 @@
     }
   },
   "supportTitle": "Detalles de soporte",
-  "swissKmuAccountsIntro": "Los valores por defecto son las propuestas del plan contable suizo KMU. Cada fila nombra la cifra de la declaración de IVA suiza (MWST) en la que cae; revise las cuentas con su asesor.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuAccountsTitle": "Diario de asientos suizo",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuRevenueExempt": "Ingresos exentos, exportados o en el extranjero",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  },
-  "swissKmuRevenueNormal": "Ingresos al tipo normal",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Ingresos al tipo reducido o de alojamiento",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
   "symbolHint": "Una marca redonda de una o dos letras sobre un color, única de este espacio — o use una foto abajo.",
   "@symbolHint": {
     "description": "workspace symbol"

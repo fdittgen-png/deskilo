@@ -7697,6 +7697,7 @@
   "@invoiceExportAuditTrail": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportBanana": "Banana Contabilità+ (importazione di registrazioni)",
   "invoiceExportBundle": "Archivio dell'esercizio (zip)",
   "@invoiceExportBundle": {
     "description": "#957 archive bundle: invoiceExportBundle"
@@ -7721,10 +7722,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
-  "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI)",
-  "@invoiceExportSwissKmu": {
-    "description": "#2360: invoiceExportSwissKmu"
-  },
+  "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI, codici IVA)",
   "invoiceExportTrialBalance": "Bilancio di verifica, generale e ausiliario (PDF, dalla contabilità)",
   "invoiceExternalIssuingTitle": "Emetti questa fattura fuori dall’app",
   "invoiceFacturXDownload": "Scarica Factur-X (PDF)",
@@ -8398,6 +8396,7 @@
   "journalFecPartyCode": "Il FEC richiede un codice cliente per ogni terzo, fino a 13 lettere e cifre: assegni prima un numero di membro o di fornitore a: {names}",
   "journalNeedsLocalBook": "Il giornale nasce da una contabilità tenuta qui: configura prima il piano dei conti dell'emittente.",
   "journalNeedsRates": "Questi acquisti sono in una valuta diversa da quella dello spazio e non hanno un tasso di cambio registrato; non è stato scritto nulla. Registri prima il tasso di ciascuno: {documents}",
+  "journalSwissTaxCodes": "Questi gruppi di aliquote non hanno un codice IVA nel riferimento fiscale; non è stato scritto nulla. Aggiunga prima i loro codici: {keys}",
   "journeyClosedPaid": "Pagata il {date} — chiusa",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -16635,26 +16634,6 @@
     }
   },
   "supportTitle": "Dettagli per l’assistenza",
-  "swissKmuAccountsIntro": "I valori predefiniti sono le proposte del piano contabile svizzero PMI. Ogni riga indica la cifra del rendiconto IVA su cui cade; verifichi i conti con il suo fiduciario.",
-  "@swissKmuAccountsIntro": {
-    "description": "#2360: swissKmuAccountsIntro"
-  },
-  "swissKmuAccountsTitle": "Giornale delle registrazioni svizzero",
-  "@swissKmuAccountsTitle": {
-    "description": "#2360: swissKmuAccountsTitle"
-  },
-  "swissKmuRevenueExempt": "Ricavi esclusi, esportati o all'estero",
-  "@swissKmuRevenueExempt": {
-    "description": "#2360: swissKmuRevenueExempt"
-  },
-  "swissKmuRevenueNormal": "Ricavi all'aliquota normale",
-  "@swissKmuRevenueNormal": {
-    "description": "#2360: swissKmuRevenueNormal"
-  },
-  "swissKmuRevenueReduced": "Ricavi all'aliquota ridotta o di alloggio",
-  "@swissKmuRevenueReduced": {
-    "description": "#2360: swissKmuRevenueReduced"
-  },
   "symbolHint": "Un segno rotondo di una o due lettere su un colore, unico per questo spazio — oppure usi una foto qui sotto.",
   "@symbolHint": {
     "description": "workspace symbol"

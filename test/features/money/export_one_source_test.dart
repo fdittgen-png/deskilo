@@ -39,10 +39,25 @@ const _postedWhenLocalBook = {
   'general_ledger',
   'trial_balance',
   'journals',
+  // #2377 — the Swiss journal and its Banana layout.
+  'ch_kmu',
+  'banana_transactions',
 };
 
 /// The posted formats that also read the chart's names and the parties.
-const _named = {'fec', 'bundle', 'general_ledger', 'trial_balance', 'journals'};
+const _named = {
+  'fec',
+  'bundle',
+  'general_ledger',
+  'trial_balance',
+  'journals',
+  'ch_kmu',
+  'banana_transactions',
+};
+
+/// The formats with no source but the postings: without a local book they
+/// hold that answer.
+const _postedOnly = {'generic_journal_csv', 'ch_kmu', 'banana_transactions'};
 
 BookProfile _localBook({int startMonth = 1}) => BookProfile(
   id: 'p',
@@ -214,7 +229,7 @@ void main() {
           input.posted,
           posted
               ? isA<JournalPosted>()
-              : id == 'generic_journal_csv'
+              : _postedOnly.contains(id)
               ? isA<JournalNeedsLocalBook>()
               : isNull,
         );
