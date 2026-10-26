@@ -157,6 +157,16 @@ class AccountingConnectionCommands {
     );
   }
 
+  /// #2378 — the Transfers list of the calendar [year]: every file handed
+  /// out and every connection delivery, as the accountant's handoff report
+  /// quotes them beside the file.
+  Future<AccountingTransfers> yearTransfers(String workspaceId, int year) =>
+      _repository.fetchTransfers(
+        workspaceId,
+        DateTime(year),
+        DateTime(year, 12, 31),
+      );
+
   /// Records the documents the generic journal of [postings] carried in
   /// the logged file [bookExportId], one delivery each, for the issuer
   /// that keeps the book. The file is the accountant's already: a failed

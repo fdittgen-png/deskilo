@@ -111,7 +111,7 @@ class AccountantHandoff {
     required this.csvBytes,
     required this.csvRows,
     required this.columns,
-    required this.transfers,
+    this.transfers,
   });
 
   final DateTime generatedAt;
@@ -144,6 +144,23 @@ class AccountantHandoff {
   /// delivered to a connection. Null when the space keeps no Transfers list
   /// (the accounting systems are off); the report then quotes none.
   final AccountingTransfers? transfers;
+
+  /// This report quoting [transfers], the Transfers list of the period;
+  /// null quotes none.
+  AccountantHandoff quoting(AccountingTransfers? transfers) =>
+      AccountantHandoff._(
+        generatedAt: generatedAt,
+        included: included,
+        excluded: excluded,
+        totals: totals,
+        payments: payments,
+        findings: findings,
+        csvSha256: csvSha256,
+        csvBytes: csvBytes,
+        csvRows: csvRows,
+        columns: columns,
+        transfers: transfers,
+      );
 
   /// Nothing blocking: the file may be handed over as it is.
   bool get clean => !findings.any((f) => f.blocking);
@@ -274,14 +291,12 @@ List<List<String>> _parseAccountantCsvRows(String csv) {
 }
 
 /// The report for [csv], which [buildAccountantCsv] made from the same
-/// [invoices] and [matches]; it quotes [transfers] when the space keeps a
-/// Transfers list.
+/// [invoices] and [matches].
 AccountantHandoff buildAccountantHandoff({
   required List<Invoice> invoices,
   required Map<String, InvoiceMatch> matches,
   required String csv,
   required DateTime generatedAt,
-  AccountingTransfers? transfers,
 }) {
   final findings = <HandoffFinding>[];
   final excluded = <String, int>{};
@@ -398,7 +413,6 @@ AccountantHandoff buildAccountantHandoff({
     csvBytes: bytes.length,
     csvRows: rows,
     columns: _accountantCsvHeader(csv),
-    transfers: transfers,
   );
 }
 
