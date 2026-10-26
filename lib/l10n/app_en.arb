@@ -25018,6 +25018,15 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
+  "retentionExtendedBySetting": "{years} years from the document date (this space’s own setting)",
+  "@retentionExtendedBySetting": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
   "retentionFromDocument": "{years} years from the document date",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
@@ -25041,6 +25050,141 @@
     "description": "#2571 retention clocks",
     "placeholders": {
       "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionHoldClass": "Kind of record",
+  "@retentionHoldClass": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldEveryClass": "Every kind of record",
+  "@retentionHoldEveryClass": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldEveryIssuer": "Every issuer",
+  "@retentionHoldEveryIssuer": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldIssuer": "Issuer",
+  "@retentionHoldIssuer": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldPlace": "Place a hold",
+  "@retentionHoldPlace": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldPlaced": "The hold is in place.",
+  "@retentionHoldPlaced": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReason": "Reason",
+  "@retentionHoldReason": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReasonHelper": "Why the records must stay, for example a tax audit or a dispute.",
+  "@retentionHoldReasonHelper": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReasonMissing": "Name the reason, in at most {max} characters.",
+  "@retentionHoldReasonMissing": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionHoldRelease": "Release",
+  "@retentionHoldRelease": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReleaseReason": "Why the hold ends",
+  "@retentionHoldReleaseReason": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReleaseTitle": "Release this hold?",
+  "@retentionHoldReleaseTitle": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReleased": "The hold is released.",
+  "@retentionHoldReleased": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldSaveFailed": "The hold could not be saved. Nothing changed.",
+  "@retentionHoldSaveFailed": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldSince": "{what} · {issuer} · since {date}",
+  "@retentionHoldSince": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      },
+      "issuer": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionHoldsEmpty": "No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.",
+  "@retentionHoldsEmpty": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldsLoadFailed": "The holds could not be read.",
+  "@retentionHoldsLoadFailed": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldsTitle": "Legal holds",
+  "@retentionHoldsTitle": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionKeptHold": "Kept under a legal hold: {reason}",
+  "@retentionKeptHold": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionKeptReview": "Kept until a person reviews the retention rule",
+  "@retentionKeptReview": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionKeptReviewEnded": "Kept until a person reviews the retention rule; its period ended on {date}",
+  "@retentionKeptReviewEnded": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionKeptUntil": "Kept until {date} under {rule}",
+  "@retentionKeptUntil": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionPeriodEnded": "The retention period has ended: the space may review the erasure",
+  "@retentionPeriodEnded": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionResetRefused": "Nothing was deleted: the books must still be kept. {why}",
+  "@retentionResetRefused": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "why": {
         "type": "String"
       }
     }
@@ -26204,7 +26348,7 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
-  "settingHintRetentionUsYears": "Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.",
+  "settingHintRetentionUsYears": "Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },

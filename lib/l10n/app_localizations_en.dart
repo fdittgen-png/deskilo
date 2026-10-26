@@ -21040,6 +21040,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retentionClassVoucher => 'Vouchers';
 
   @override
+  String retentionExtendedBySetting(int years) {
+    return '$years years from the document date (this space’s own setting)';
+  }
+
+  @override
   String retentionFromDocument(int years) {
     return '$years years from the document date';
   }
@@ -21052,6 +21057,95 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String retentionHint(String country) {
     return 'How long $country makes this space keep each kind of record. The periods are reference data; a rule not yet confirmed has not been checked by a person with the authority to confirm it.';
+  }
+
+  @override
+  String get retentionHoldClass => 'Kind of record';
+
+  @override
+  String get retentionHoldEveryClass => 'Every kind of record';
+
+  @override
+  String get retentionHoldEveryIssuer => 'Every issuer';
+
+  @override
+  String get retentionHoldIssuer => 'Issuer';
+
+  @override
+  String get retentionHoldPlace => 'Place a hold';
+
+  @override
+  String get retentionHoldPlaced => 'The hold is in place.';
+
+  @override
+  String get retentionHoldReason => 'Reason';
+
+  @override
+  String get retentionHoldReasonHelper =>
+      'Why the records must stay, for example a tax audit or a dispute.';
+
+  @override
+  String retentionHoldReasonMissing(int max) {
+    return 'Name the reason, in at most $max characters.';
+  }
+
+  @override
+  String get retentionHoldRelease => 'Release';
+
+  @override
+  String get retentionHoldReleaseReason => 'Why the hold ends';
+
+  @override
+  String get retentionHoldReleaseTitle => 'Release this hold?';
+
+  @override
+  String get retentionHoldReleased => 'The hold is released.';
+
+  @override
+  String get retentionHoldSaveFailed =>
+      'The hold could not be saved. Nothing changed.';
+
+  @override
+  String retentionHoldSince(String what, String issuer, String date) {
+    return '$what · $issuer · since $date';
+  }
+
+  @override
+  String get retentionHoldsEmpty =>
+      'No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.';
+
+  @override
+  String get retentionHoldsLoadFailed => 'The holds could not be read.';
+
+  @override
+  String get retentionHoldsTitle => 'Legal holds';
+
+  @override
+  String retentionKeptHold(String reason) {
+    return 'Kept under a legal hold: $reason';
+  }
+
+  @override
+  String get retentionKeptReview =>
+      'Kept until a person reviews the retention rule';
+
+  @override
+  String retentionKeptReviewEnded(String date) {
+    return 'Kept until a person reviews the retention rule; its period ended on $date';
+  }
+
+  @override
+  String retentionKeptUntil(String date, String rule) {
+    return 'Kept until $date under $rule';
+  }
+
+  @override
+  String get retentionPeriodEnded =>
+      'The retention period has ended: the space may review the erasure';
+
+  @override
+  String retentionResetRefused(String why) {
+    return 'Nothing was deleted: the books must still be kept. $why';
   }
 
   @override
@@ -22109,7 +22203,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingHintRetentionUsYears =>
-      'Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.';
+      'Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.';
 
   @override
   String get settingHintSecurityBadgeLockoutFailures =>

@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/active_settings.dart';
+import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/vat/retention.dart';
 import '../../../../l10n/app_localizations.dart';
+import 'retention_holds_section.dart';
 
 /// The name of the document class [docClass] a retention rule is kept for.
 String retentionClassName(AppLocalizations l10n, String docClass) => switch (docClass) {
@@ -15,25 +19,36 @@ String retentionClassName(AppLocalizations l10n, String docClass) => switch (doc
 };
 
 /// How long [r] keeps a record and from when, in words.
-String retentionRuleText(AppLocalizations l10n, RetentionRule r) => r.from == 'document_date'
+String retentionRuleText(AppLocalizations l10n, RetentionRule r) => r.bySetting
+    ? l10n.retentionExtendedBySetting(r.years)
+    : r.from == 'document_date'
     ? l10n.retentionFromDocument(r.years)
     : l10n.retentionFromYearEnd(r.years);
 
 /// #2571 -- how long this space's country makes it keep each kind of record
-/// (the `retention` rows of the tax reference), with the statute and whether
-/// a person has confirmed the rule. Read-only: the rules are reference data.
-class RetentionClocksTile extends StatelessWidget {
-  const RetentionClocksTile({required this.country, super.key});
+/// (the `retention` rows of the tax reference, extended by a US space's own
+/// longer period), with the statute and whether a person has confirmed the
+/// rule, and the legal holds that keep records past every clock. The rules
+/// are reference data; only the holds are changed here.
+class RetentionClocksTile extends ConsumerWidget {
+  const RetentionClocksTile({required this.country, this.workspaceId, super.key});
 
   /// The workspace's country code; null while it is not known.
   final String? country;
 
+  /// The workspace whose holds the dialog lists; null: the rules only.
+  final String? workspaceId;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final country = this.country;
     if (country == null) return const SizedBox.shrink();
-    final rules = retentionRules(country);
+    final workspaceId = this.workspaceId;
+    final usYears = retentionExtendsBySetting(country)
+        ? ref.watch(activeSettingsProvider)?.read<int>('retention.us_years') ?? SettingDefaults.retentionUsYears
+        : SettingDefaults.retentionUsYears;
+    final rules = retentionRules(country, usYears: usYears);
     if (rules.isEmpty) return const SizedBox.shrink();
     return ListTile(
       key: const ValueKey('retention-clocks'),
@@ -68,6 +83,7 @@ class RetentionClocksTile extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                 ],
+                if (workspaceId != null) RetentionHoldsSection(workspaceId: workspaceId),
               ],
             ),
           ),

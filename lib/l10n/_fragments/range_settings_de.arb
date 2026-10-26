@@ -76,7 +76,7 @@
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
   },
-  "settingHintRetentionUsYears": "Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr oder weniger als die bundesweite Vorgabe verlangt. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+  "settingHintRetentionUsYears": "Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr als die bundesweite Vorgabe verlangt. Eine längere Frist gilt für alle Unterlagen; eine kürzere ändert nichts. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },

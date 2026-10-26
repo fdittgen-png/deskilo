@@ -35,6 +35,11 @@ bool isAuthError(Object error) => error is AuthException;
 String? serverErrorCode(Object error) =>
     error is PostgrestException ? error.code : null;
 
+/// The `detail` the database attached to its error, or null: where a
+/// refusal carries what it refused over (#2571, a retention assessment).
+String? serverErrorDetails(Object error) =>
+    error is PostgrestException ? error.details?.toString() : null;
+
 /// #1849 — an authentication failure that is only the network failing to
 /// answer (the SDK's own retryable-fetch class), not a refusal.
 bool isAuthTransportError(Object error) => error is AuthRetryableFetchException;

@@ -14346,6 +14346,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
+  "retentionExtendedBySetting": "{years} Jahre ab dem Belegdatum (eigene Einstellung dieses Space)",
   "retentionFromDocument": "{years} Jahre ab dem Belegdatum",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
@@ -14373,6 +14374,30 @@
       }
     }
   },
+  "retentionHoldClass": "Art der Unterlage",
+  "retentionHoldEveryClass": "Alle Arten von Unterlagen",
+  "retentionHoldEveryIssuer": "Alle Aussteller",
+  "retentionHoldIssuer": "Aussteller",
+  "retentionHoldPlace": "Sperre setzen",
+  "retentionHoldPlaced": "Die Sperre ist gesetzt.",
+  "retentionHoldReason": "Grund",
+  "retentionHoldReasonHelper": "Warum die Unterlagen bleiben müssen, etwa wegen einer Betriebsprüfung oder eines Streitfalls.",
+  "retentionHoldReasonMissing": "Nennen Sie den Grund, höchstens {max} Zeichen.",
+  "retentionHoldRelease": "Aufheben",
+  "retentionHoldReleaseReason": "Warum die Sperre endet",
+  "retentionHoldReleaseTitle": "Diese Sperre aufheben?",
+  "retentionHoldReleased": "Die Sperre ist aufgehoben.",
+  "retentionHoldSaveFailed": "Die Sperre konnte nicht gespeichert werden. Nichts wurde geändert.",
+  "retentionHoldSince": "{what} · {issuer} · seit {date}",
+  "retentionHoldsEmpty": "Keine Sperre aktiv. Eine Sperre hält Unterlagen über ihre Aufbewahrungsfrist hinaus, etwa für eine Prüfung oder einen Streitfall.",
+  "retentionHoldsLoadFailed": "Die Sperren konnten nicht gelesen werden.",
+  "retentionHoldsTitle": "Aufbewahrungssperren",
+  "retentionKeptHold": "Wegen einer Aufbewahrungssperre behalten: {reason}",
+  "retentionKeptReview": "Aufbewahrt, bis eine Person die Aufbewahrungsregel prüft",
+  "retentionKeptReviewEnded": "Aufbewahrt, bis eine Person die Aufbewahrungsregel prüft; ihre Frist endete am {date}",
+  "retentionKeptUntil": "Aufbewahrt bis {date} nach {rule}",
+  "retentionPeriodEnded": "Die Aufbewahrungsfrist ist abgelaufen: der Space kann die Löschung prüfen",
+  "retentionResetRefused": "Nichts wurde gelöscht: die Buchhaltung muss noch aufbewahrt werden. {why}",
   "retentionTitle": "Aufbewahrungsfristen",
   "@retentionTitle": {
     "description": "#2571 retention clocks"
@@ -15311,7 +15336,7 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
-  "settingHintRetentionUsYears": "Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr oder weniger als die bundesweite Vorgabe verlangt. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+  "settingHintRetentionUsYears": "Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr als die bundesweite Vorgabe verlangt. Eine längere Frist gilt für alle Unterlagen; eine kürzere ändert nichts. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },

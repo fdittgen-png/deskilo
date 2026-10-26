@@ -725,5 +725,8 @@
  "optMovements": "{n} movimientos",
  "accountingTitle": "Contabilidad y banco",
  "accountingWhy": "Cómo se leen los extractos del banco en el espacio y se concilian con sus facturas.",
- "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados."
+ "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados.",
+ "retUsYears": "Conservación de registros, estado de EE. UU.",
+ "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
+ "retUsRule": "Se aplica la regla de conservación"
 }

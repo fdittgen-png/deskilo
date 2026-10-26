@@ -79,4 +79,16 @@ void main() {
     // a country without rows of its own takes the shared rule
     expect(retentionNotice('ZZ', 2026), contains('invoice: 10 years'));
   });
+
+  test('a US space\'s own setting extends the rule and never shortens it (0604)', () {
+    List<int> years(int usYears) =>
+        [for (final r in retentionRules('US', usYears: usYears)) r.years];
+    expect(years(0), everyElement(4), reason: 'no setting: the rule');
+    expect(years(3), everyElement(4), reason: 'a shorter period changes nothing');
+    final extended = retentionRules('US', usYears: 7);
+    expect(extended.map((r) => r.years), everyElement(7));
+    expect(extended.every((r) => r.bySetting && r.from == 'document_date'), isTrue);
+    expect(retentionRules('GB', usYears: 30).map((r) => r.years), everyElement(6),
+        reason: 'the setting is a US space\'s only');
+  });
 }

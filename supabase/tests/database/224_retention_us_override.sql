@@ -1,9 +1,11 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2571 / 0481: a US space may set its state's retention years; 0 leaves the
--- rule in force; the setting never reaches another country or another space.
+-- #2571 / 0481, 0604: a US space may set its state's retention years; 0 leaves
+-- the rule in force, a shorter period changes nothing (0604: the setting only
+-- extends), a longer one extends every class; the setting never reaches
+-- another country or another space.
 -- Expected dates are written by hand: invoice dated 2020-06-01.
 begin;
-select plan(9);
+select plan(12);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -32,9 +34,14 @@ select is(public.retention_until(current_setting('t.us')::uuid, 'invoice', date 
 select is(public.setting_value(current_setting('t.us')::uuid, 'retention.us_years') #>> '{}', '0', 'the override defaults to 0');
 select is(public.set_setting(current_setting('t.us')::uuid, 'retention.us_years', '3'::jsonb, 'state asks 3')->>'status', 'saved',
   'the owner sets 3 years');
-select is(public.retention_until(current_setting('t.us')::uuid, 'invoice', date '2020-06-01'), date '2023-06-01',
-  'now an invoice of 2020-06-01 may go on 2023-06-01');
-select is(public.retention_rule(current_setting('t.us')::uuid, 'books') ->> 'years', '3', 'every class follows the setting');
+select is(public.retention_until(current_setting('t.us')::uuid, 'invoice', date '2020-06-01'), date '2024-06-01',
+  'a shorter period never shortens the rule: still 2024-06-01');
+select is(public.retention_rule(current_setting('t.us')::uuid, 'books') ->> 'years', '4', 'and the rule read stays 4 years');
+select is(public.set_setting(current_setting('t.us')::uuid, 'retention.us_years', '7'::jsonb, 'state asks 7')->>'status', 'saved',
+  'the owner sets 7 years');
+select is(public.retention_until(current_setting('t.us')::uuid, 'invoice', date '2020-06-01'), date '2027-06-01',
+  'now an invoice of 2020-06-01 is kept until 2027-06-01');
+select is(public.retention_rule(current_setting('t.us')::uuid, 'books') ->> 'years', '7', 'every class follows the longer setting');
 select throws_ok(format('select public.set_setting(%L, ''retention.us_years'', ''31''::jsonb, ''too long'')', current_setting('t.us')),
   null, null, 'over 30 years is refused');
 reset role;

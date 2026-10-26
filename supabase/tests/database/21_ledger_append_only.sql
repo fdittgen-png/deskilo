@@ -101,10 +101,14 @@ select lives_ok(
 
 -- The reset is the one operation allowed to empty the ledger, and it
 -- says so. Anything else that tries the same DELETE is refused above.
-select lives_ok(
+-- #2571 (0604): it empties the ledger only when retention allows it; these
+-- entries are this month's, so it refuses and deletes nothing (pgTAP 306
+-- proves the reset that runs).
+select throws_ok(
   format($$ select public.reset_workspace(%L) $$,
          current_setting('deskilo.ledger.ws')),
-  'reset_workspace still empties the ledger it is there to empty');
+  'DKE01', null,
+  'reset_workspace refuses to empty a ledger its retention still keeps');
 
 select * from finish();
 rollback;

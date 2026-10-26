@@ -96,6 +96,15 @@ void main() {
       }
     });
 
+    test('records still under retention: nothing was deleted (#2571, DKE01)', () {
+      final kept = _pg('retention: the books of this space are kept until 2036-12-31', code: 'DKE01');
+      expect(knownRefusalOf(kept), KnownRefusal.retentionKept);
+      expect(knownRefusalText(englishL10n, kept), contains('Nothing was deleted'));
+      // The code is the server's: the migration still raises it.
+      final sql = File('supabase/migrations/0604_retention_disposition.sql').readAsStringSync();
+      expect(sql, contains("errcode = 'DKE01'"));
+    });
+
     test('a bank statement explains its own refusals (#2380, DKB01-03)', () {
       final decided = _pg('this movement already settles an invoice', code: 'DKB01');
       expect(knownRefusalOf(decided), KnownRefusal.bankLineDecided);
