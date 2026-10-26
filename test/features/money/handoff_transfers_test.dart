@@ -114,8 +114,7 @@ AccountantHandoff _report({AccountingTransfers? transfers}) {
     matches: const {},
     csv: csv,
     generatedAt: at,
-    transfers: transfers,
-  );
+  ).quoting(transfers);
 }
 
 Map<String, Object?> _json(AccountantHandoff r) =>

@@ -120,12 +120,10 @@ class AccountingExportRun {
   /// #2378 — the Transfers list of the export year, which the handoff
   /// report quotes; null while the accounting systems are off, since the
   /// space then keeps no such list.
-  Future<AccountingTransfers?> yearTransfers() async =>
+  Future<AccountingTransfers?> handoffTransfers() async =>
       featureOn(ref.read(enabledFeatureKeysProvider), accountingConnectorsKey,
               byDefault: false)
-          ? ref
-              .read(accountingConnectionRepositoryProvider)
-              .fetchTransfers(workspace.id, DateTime(year), DateTime(year, 12, 31))
+          ? ref.read(accountingConnectionCommandProvider).yearTransfers(workspace.id, year)
           : null;
   /// The workspace's calendar day of an instant.
   DateTime Function(DateTime instant) get workspaceDayOf =>
@@ -375,8 +373,7 @@ class AccountingExportRun {
           matches: matches,
           csv: csv,
           generatedAt: now,
-          transfers: await yearTransfers(),
-        );
+        ).quoting(await handoffTransfers());
         if (!context.mounted) return;
         if (!await showAccountantHandoffPreflight(context, report)) return;
         // #1640 — a bounded recheck: the same documents read again from
