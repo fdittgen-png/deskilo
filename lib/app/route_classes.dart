@@ -198,6 +198,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/validation', RouteClass.workspace),
   RouteRule('/availability', RouteClass.workspace),
   RouteRule('/bi', RouteClass.workspace), // #1923
+  RouteRule('/bi/report/:id', RouteClass.workspace), // #2580
   RouteRule('/members', RouteClass.workspace),
   RouteRule('/editor', RouteClass.workspace),
   RouteRule('/editor/level/:levelId', RouteClass.workspace),

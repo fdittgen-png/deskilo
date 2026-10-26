@@ -12,6 +12,7 @@ import '../../features/plan/presentation/widgets/setup_places_step.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
+import '../../features/workspace/presentation/report_editor/bi_report_editor_screen.dart';
 import '../../features/workspace/presentation/screens/attention_screen.dart';
 import '../../features/workspace/presentation/screens/availability_screen.dart';
 import '../../features/workspace/presentation/screens/bi_screen.dart';
@@ -380,6 +381,22 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const BiScreen(),
+      routes: [
+        // #2580 — a saved report in its editor; Back returns to the
+        // analytics page it was opened from.
+        GoRoute(
+          path: 'report/:id',
+          redirect: env.guard(
+            const RouteAccess(
+              features: [WorkspaceFeature.biReportDesigner],
+              permission: WorkspacePermission.viewAnalytics,
+              to: '/bi',
+            ),
+          ),
+          builder: (context, state) =>
+              BiReportEditorScreen(viewId: state.pathParameters['id']!),
+        ),
+      ],
     ),
     GoRoute(
       path: '/members',

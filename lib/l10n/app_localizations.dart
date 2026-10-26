@@ -2869,6 +2869,810 @@ abstract class AppLocalizations {
   /// **'Level'**
   String get biDimensionLevel;
 
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Add a page'**
+  String get biEditorAddPage;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Add a visual'**
+  String get biEditorAddVisual;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'The same values as a table'**
+  String get biEditorAsTable;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Vertical axis'**
+  String get biEditorAxis;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'The axis starts at {low}, not at zero.'**
+  String biEditorAxisCut(String low);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Fitted to the values (said under the line)'**
+  String get biEditorAxisFit;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Starts at zero'**
+  String get biEditorAxisZero;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Back to editing'**
+  String get biEditorBackToEdit;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'by book period'**
+  String get biEditorBasisBookValue;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'as it is today'**
+  String get biEditorBasisCurrentState;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'by document date'**
+  String get biEditorBasisDocumentDate;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'by invoice month'**
+  String get biEditorBasisInvoiceMonth;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'by due date'**
+  String get biEditorBasisOccurrenceDue;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'by payment matched'**
+  String get biEditorBasisPaymentMatched;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'at period end'**
+  String get biEditorBasisPeriodEnd;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'by payment reported'**
+  String get biEditorBasisReportedPaid;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'by time booked'**
+  String get biEditorBasisReservationTime;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get biEditorChangeFigure;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a figure'**
+  String get biEditorChooseFigure;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Close the editor'**
+  String get biEditorClose;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of 12 columns'**
+  String biEditorColumns(String count);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Someone saved this report since you opened it. Nothing was overwritten: reload their version (your changes are dropped), or keep your changes as a private copy.'**
+  String get biEditorConflict;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'confirmed values only'**
+  String get biEditorCoverageConfirmed;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'current records'**
+  String get biEditorCoverageCurrentRecords;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'recorded history'**
+  String get biEditorCoverageHistory;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'today only, no history'**
+  String get biEditorCoverageTodayOnly;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get biEditorDelete;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get biEditorDiscard;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get biEditorDuplicate;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier'**
+  String get biEditorEarlier;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'This page has no visual yet. Add one from the catalogue.'**
+  String get biEditorEmptyPage;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Figure'**
+  String get biEditorFigure;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'All but {what} · {scope}'**
+  String biEditorFilterExcept(String what, String scope);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Only {what} · {scope}'**
+  String biEditorFilterOnly(String what, String scope);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Shows {group} only (the page’s selection).'**
+  String biEditorFilteredBy(String group);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get biEditorFilters;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Number format'**
+  String get biEditorFormat;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'As the figure says'**
+  String get biEditorFormatAuto;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Grouped by'**
+  String get biEditorGrouping;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get biEditorHeight;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Higher'**
+  String get biEditorHigher;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'A click on a group'**
+  String get biEditorInteraction;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Filters the other visuals of the page'**
+  String get biEditorInteractionFilter;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Does nothing'**
+  String get biEditorInteractionNone;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Keep mine as a private copy'**
+  String get biEditorKeepAsCopy;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get biEditorKeepEditing;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Keep as a filter of this page'**
+  String get biEditorKeepSelection;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Shown as'**
+  String get biEditorKind;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Bars'**
+  String get biEditorKindBar;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Figure'**
+  String get biEditorKindKpi;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Line'**
+  String get biEditorKindLine;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Stacked bar'**
+  String get biEditorKindStackedBar;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Table'**
+  String get biEditorKindTable;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get biEditorKindText;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get biEditorLater;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Your changes to this report are not saved yet.'**
+  String get biEditorLeaveBody;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Leave with unsaved changes?'**
+  String get biEditorLeaveTitle;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Legend'**
+  String get biEditorLegend;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Lower'**
+  String get biEditorLower;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'More save options'**
+  String get biEditorMore;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Narrower'**
+  String get biEditorNarrower;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Write an explanation here.'**
+  String get biEditorNewText;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'No filter: each figure shows everything your rights allow.'**
+  String get biEditorNoFilters;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Not grouped'**
+  String get biEditorNoGrouping;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'No history yet for this figure: there is nothing to draw a trend from.'**
+  String get biEditorNoHistory;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Some parts are negative: this is not a whole made of parts. See the table.'**
+  String get biEditorNotComposition;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'This report cannot be edited here: it is not yours to change, it holds figures you may not read, or it is no longer there. Open it from the analytics page, or save a copy of it there.'**
+  String get biEditorNotEditable;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'This figure is not grouped that way: it shows its whole, not the selection.'**
+  String get biEditorNotFiltered;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'One known period only: a point, not a trend.'**
+  String get biEditorOnePoint;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Edit report'**
+  String get biEditorOpen;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'The selection lies outside this visual’s filters: it keeps showing what they allow.'**
+  String get biEditorOutsideScope;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {title}'**
+  String biEditorPageDelete(String title);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move {title} earlier'**
+  String biEditorPageEarlier(String title);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Move {title} later'**
+  String biEditorPageLater(String title);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Page title'**
+  String get biEditorPageTitle;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Pages'**
+  String get biEditorPages;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Pages and visuals'**
+  String get biEditorPagesAndVisuals;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Colours'**
+  String get biEditorPalette;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'High contrast'**
+  String get biEditorPaletteContrast;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'One colour'**
+  String get biEditorPaletteMono;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'The app’s colours'**
+  String get biEditorPaletteStandard;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Place {position} of {count}'**
+  String biEditorPlace(String position, String count);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Preview as readers see it'**
+  String get biEditorPreview;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Properties'**
+  String get biEditorProperties;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Publish to the workspace'**
+  String get biEditorPublish;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'{title}, {kind}'**
+  String biEditorReadLabel(String title, String kind);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get biEditorRedo;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Only a line’s axis may be fitted to its values; a bar starts at zero. The visual is unchanged.'**
+  String get biEditorRefusedAxis;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'This figure is not answered by that grouping. The visual is unchanged.'**
+  String get biEditorRefusedDimension;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'That format would change the figure’s unit: a percentage stays a percentage, an amount stays an amount. The visual is unchanged.'**
+  String get biEditorRefusedFormat;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'A report keeps at least one page.'**
+  String get biEditorRefusedLastPage;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'This report has reached the space’s limit of pages or visuals.'**
+  String get biEditorRefusedLimit;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'That visual is no longer on this page.'**
+  String get biEditorRefusedMissing;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Bars compare groups, and this figure has no grouping. The visual is unchanged.'**
+  String get biEditorRefusedNoGrouping;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'A line needs a history; this figure is today’s state only. The visual is unchanged.'**
+  String get biEditorRefusedNoHistory;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Only a figure that adds up is a whole made of parts. The visual is unchanged.'**
+  String get biEditorRefusedNotAdditive;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Sorting by value needs groups to sort. The visual is unchanged.'**
+  String get biEditorRefusedSort;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'A text carries no figure.'**
+  String get biEditorRefusedText;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'A title or text needs 1 to its maximum number of characters.'**
+  String get biEditorRefusedTextLength;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'That figure is not one you may show here.'**
+  String get biEditorRefusedUnknown;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'A filter here may only narrow the report’s filters, never widen them.'**
+  String get biEditorRefusedWidens;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Reload theirs'**
+  String get biEditorReload;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this filter'**
+  String get biEditorRemoveFilter;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Report and page'**
+  String get biEditorReportProperties;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Reset selection'**
+  String get biEditorResetSelection;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'{count} rows'**
+  String biEditorRows(String count);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Save a copy (private)'**
+  String get biEditorSaveCopy;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'The report is saved.'**
+  String get biEditorSaved;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Scale: 0 to {max}, the largest group'**
+  String biEditorScaleMax(String max);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Scale: 0 to 100 %'**
+  String get biEditorScalePercent;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'this page'**
+  String get biEditorScopePage;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'whole report'**
+  String get biEditorScopeReport;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Select a visual on the page to change it.'**
+  String get biEditorSelectHint;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Selected: {group}'**
+  String biEditorSelectionChip(String group);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get biEditorSort;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Highest first'**
+  String get biEditorSortHighFirst;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Lowest first'**
+  String get biEditorSortLowFirst;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'As the groups come'**
+  String get biEditorSortNatural;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} · {basis} · {coverage}'**
+  String biEditorSourceNote(String unit, String basis, String coverage);
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Source note'**
+  String get biEditorSourceNoteToggle;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get biEditorText;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Report editor'**
+  String get biEditorTitle;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get biEditorUndo;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Amount in its currency'**
+  String get biEditorUnitAmount;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get biEditorUnitCount;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Percentage'**
+  String get biEditorUnitPercent;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Values written on the marks'**
+  String get biEditorValueLabels;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get biEditorVisualDescription;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'{title}, {kind}, place {position} of {count}, {span} of 12 columns. Alt and arrows move it, Shift and arrows resize it, Delete removes it.'**
+  String biEditorVisualLabel(
+    String title,
+    String kind,
+    String position,
+    String count,
+    String span,
+  );
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Title shown'**
+  String get biEditorVisualTitle;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'On this page'**
+  String get biEditorVisuals;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Wider'**
+  String get biEditorWider;
+
+  /// #2580 BI report editor
+  ///
+  /// In en, this message translates to:
+  /// **'Width'**
+  String get biEditorWidth;
+
   /// Business analytics dashboard: biEvolutionTitle
   ///
   /// In en, this message translates to:
@@ -25990,17 +26794,47 @@ abstract class AppLocalizations {
   /// **'Active memberships'**
   String get overviewActiveMemberships;
 
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Pin a tile'**
+  String get overviewAddTile;
+
   /// #2583 the workspace overview
   ///
   /// In en, this message translates to:
   /// **'All indicators'**
   String get overviewAllIndicators;
 
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Saved as the report “{name}”.'**
+  String overviewCopiedAsReport(String name);
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Copy a report’s layout'**
+  String get overviewCopyFrom;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Save as a report'**
+  String get overviewCopyTo;
+
   /// #2583 the overview's own figures
   ///
   /// In en, this message translates to:
   /// **'Today\'s figure: no history of it is kept for a past period.'**
   String get overviewCurrentState;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Customize'**
+  String get overviewCustomize;
 
   /// #2583 the workspace overview
   ///
@@ -26038,17 +26872,71 @@ abstract class AppLocalizations {
   /// **'Key indicators'**
   String get overviewIndicators;
 
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Your layout was changed elsewhere since you opened it. Nothing was overwritten: reload it, then make your change again.'**
+  String get overviewLayoutConflict;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Your layout could not be saved: no answer came back. Your changes are kept; retrying sends the same save again, it is never applied twice.'**
+  String get overviewLayoutLost;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'My overview'**
+  String get overviewLayoutName;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Reload'**
+  String get overviewLayoutReload;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Save my layout'**
+  String get overviewLayoutSave;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Your layout is saved.'**
+  String get overviewLayoutSaved;
+
   /// #2583 the overview's own figures
   ///
   /// In en, this message translates to:
   /// **'The memberships of the space that are active today, each role included: memberships, not distinct people.'**
   String get overviewMembershipsDefinition;
 
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Move {title} earlier'**
+  String overviewMoveEarlier(String title);
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Move {title} later'**
+  String overviewMoveLater(String title);
+
   /// #2583 the workspace overview
   ///
   /// In en, this message translates to:
   /// **'Needs attention'**
   String get overviewNeedsAttention;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'No tile is pinned: pin the figures you want to see here first.'**
+  String get overviewNoPinned;
 
   /// #2583 the overview's own figures
   ///
@@ -26068,11 +26956,23 @@ abstract class AppLocalizations {
   /// **'Overdue receivables'**
   String get overviewOverdueTitle;
 
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Your pinned tiles'**
+  String get overviewPinned;
+
   /// #2583 the workspace overview
   ///
   /// In en, this message translates to:
   /// **'This month'**
   String get overviewThisMonth;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'{title}, tile {position} of {count}'**
+  String overviewTilePosition(String title, String position, String count);
 
   /// #2583 the workspace overview
   ///
@@ -26085,6 +26985,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not available'**
   String get overviewUnavailable;
+
+  /// #2583 C2 overview layout
+  ///
+  /// In en, this message translates to:
+  /// **'Unpin {title}'**
+  String overviewUnpinTile(String title);
 
   /// Chip: provider is configured
   ///

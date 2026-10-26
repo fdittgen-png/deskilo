@@ -455,6 +455,7 @@ const List<RouteCoverage> routeCoverage = [
   ),
   RouteCoverage('/availability', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/bi', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/bi/report/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/members', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/editor', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
