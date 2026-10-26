@@ -398,6 +398,7 @@ class _MapDialogState extends ConsumerState<_MapDialog> {
           children: [
             DropdownButtonFormField<AccountingMapKind>(
               key: const ValueKey('acct-map-kind'),
+              isExpanded: true,
               initialValue: _kind,
               decoration: InputDecoration(labelText: l10n.acctMapKind),
               items: [
@@ -416,6 +417,7 @@ class _MapDialogState extends ConsumerState<_MapDialog> {
               AccountingMapKind.account || AccountingMapKind.item => [
                 DropdownButtonFormField<BookRole>(
                   key: const ValueKey('acct-map-role'),
+                  isExpanded: true,
                   initialValue: _role,
                   decoration: InputDecoration(labelText: l10n.acctMapRole),
                   items: [
@@ -446,6 +448,7 @@ class _MapDialogState extends ConsumerState<_MapDialog> {
               AccountingMapKind.party => [
                 DropdownButtonFormField<String>(
                   key: const ValueKey('acct-map-member'),
+                  isExpanded: true,
                   initialValue: _member,
                   decoration: InputDecoration(
                     labelText: l10n.acctMapParty,

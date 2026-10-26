@@ -94,14 +94,15 @@ void main() {
 
   // The descriptor says which targets take a sign-in; the edge function's
   // table says how. Neither may name a target the other does not.
-  test('an API target says how it is connected; a sign-in target is in the '
-      'edge function\'s table, and the table names nothing else', () {
+  test('a producible API target says how it is connected, a file target '
+      'never; a sign-in target is in the edge function\'s table, and the '
+      'table names nothing else', () {
     for (final t in accountingTargets) {
-      expect(
-        t.connectsBy.isEmpty,
-        t.transport == AccountingTransport.file,
-        reason: t.id,
-      );
+      if (t.transport == AccountingTransport.file) {
+        expect(t.connectsBy, isEmpty, reason: t.id);
+      } else if (t.capability.producible) {
+        expect(t.connectsBy, isNotEmpty, reason: t.id);
+      }
     }
     final table = File(
       'supabase/functions/_shared/accounting_targets.ts',

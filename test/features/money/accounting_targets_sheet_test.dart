@@ -17,7 +17,6 @@ import 'package:deskilo/features/money/providers/accounting_connection_providers
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
-import 'package:deskilo/features/workspace/providers/member_display_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
