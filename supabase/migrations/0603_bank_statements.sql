@@ -723,4 +723,4 @@ revoke execute on function public.outgoing_payments_guard() from public, anon, a
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(9999);
+select public.set_deskilo_schema_version(603);
