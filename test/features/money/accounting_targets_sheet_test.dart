@@ -6,11 +6,14 @@
 // transfers but no door to act; a sign-in where the server registered no
 // application says so; the transfers name each file's digest and the
 // documents it carried, and a connection delivery's state.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/accounting_connection_repository.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
+import 'package:deskilo/features/money/domain/accounting_delivery_run.dart';
 import 'package:deskilo/features/money/domain/book_period.dart';
 import 'package:deskilo/features/money/presentation/widgets/accounting_targets_sheet.dart';
 import 'package:deskilo/features/money/providers/accounting_connection_providers.dart';
@@ -162,6 +165,96 @@ void main() {
     expect(find.textContaining('no answer after send: timeout'), findsOneWidget);
   });
 
+  testWidgets('a billing manager delivers the year: the document whose answer was missing is read back', (tester) async {
+    final repo = seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today);
+    await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+    expect(find.text('Deliver 2026 to Pennylane — Atelier du Marché'), findsOneWidget);
+    // Only the delivery the target has not acknowledged can be sent again.
+    expect(find.byKey(const ValueKey('acct-redeliver-demo-delivery-credit')), findsOneWidget);
+    expect(find.byKey(const ValueKey('acct-redeliver-demo-delivery-invoice')), findsNothing);
+
+    await _tap(tester, 'acct-deliver-demo-connection-pennylane');
+    expect(find.text('Delivered: 1 · already there: 1 · to check: 0'), findsOneWidget);
+    expect(find.textContaining('Received by the system'), findsNWidgets(2));
+    expect(find.byKey(const ValueKey('acct-redeliver-demo-delivery-credit')), findsNothing);
+  });
+
+  testWidgets('one document is sent again on its own', (tester) async {
+    final repo = seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today);
+    await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+    await _tap(tester, 'acct-redeliver-demo-delivery-credit');
+    expect(repo.deliveries.map((d) => d.status), everyElement(DeliveryStatus.acknowledged));
+    expect(find.text('Delivered: 1 · already there: 0 · to check: 0'), findsOneWidget);
+  });
+
+  testWidgets('a reader has no door to deliver', (tester) async {
+    final repo = seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today);
+    await _open(tester, repo, permissions: {WorkspacePermission.viewFinances});
+    // The list is there, with the delivery a manager could send again.
+    expect(find.byKey(const ValueKey('acct-delivery-demo-delivery-credit')), findsOneWidget);
+    expect(find.byKey(const ValueKey('acct-deliver-demo-connection-pennylane')), findsNothing);
+    expect(find.byKey(const ValueKey('acct-redeliver-demo-delivery-credit')), findsNothing);
+  });
+
+  testWidgets('a delivery says what it waits for: an unmapped key, blocked books, a refused company', (tester) async {
+    final repo = _Answering(seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today));
+    await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+    final answers = {
+      'Delivered: 0 · already there: 0 · to check: 1 Map these first: account bank': const DeliveryRunDone([
+        DeliveryRunDocument(status: DeliveryRunStatus.blocked, missing: ['account bank']),
+      ]),
+      'The books of this period cannot be posted yet: bank. Nothing was delivered.':
+          const DeliveryRunBooksBlocked(['bank']),
+      'The accounting system refused this company: Custom transaction numbers is off. Nothing was delivered.':
+          const DeliveryRunTargetRefused('Custom transaction numbers is off'),
+      'This connection is signed out: connect it again, then deliver. Nothing was delivered.':
+          const DeliveryRunNotConnected(),
+      'The server refused: check that you may manage the billing. Nothing was delivered.':
+          const DeliveryRunNotAllowed(),
+    };
+    for (final MapEntry(key: said, value: answer) in answers.entries) {
+      repo.answer = answer;
+      await _tap(tester, 'acct-redeliver-demo-delivery-credit');
+      expect(find.text(said), findsOneWidget);
+      ScaffoldMessenger.of(tester.element(find.byType(Scaffold).first)).removeCurrentSnackBar();
+      await _frames(tester);
+    }
+    expect(repo.asked, answers.length, reason: 'one request per tap');
+  });
+
+  testWidgets('a door is disabled and busy while its run goes; a second tap starts nothing', (tester) async {
+    final pending = Completer<DeliveryRun>();
+    final repo = _Answering(seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today))
+      ..pending = pending;
+    await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+    const door = ValueKey('acct-redeliver-demo-delivery-credit');
+    await tester.tap(find.byKey(door));
+    await tester.pump();
+    expect(tester.widget<ButtonStyleButton>(find.byKey(door)).onPressed, isNull);
+    await tester.tap(find.byKey(door), warnIfMissed: false);
+    await tester.pump();
+    expect(repo.asked, 1);
+    pending.complete(const DeliveryRunDone([]));
+    await _frames(tester);
+    expect(tester.widget<ButtonStyleButton>(find.byKey(door)).onPressed, isNotNull);
+    expect(find.text('Nothing to deliver in this period.'), findsOneWidget);
+  });
+
+  testWidgets('a year stopped in one month names it and what went before it', (tester) async {
+    final repo = _Answering(seedDemoAccountingConnections(FakeBookPeriodRepository(today: _today), _today))
+      ..answers = [
+        const DeliveryRunDone([DeliveryRunDocument(status: DeliveryRunStatus.acknowledged)]),
+        const DeliveryRunBooksBlocked(['bank']),
+      ];
+    await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
+    await _tap(tester, 'acct-deliver-demo-connection-pennylane');
+    expect(
+      find.text('The books of this period cannot be posted yet: bank. Stopped at February 2026. Delivered before it: 1.'),
+      findsOneWidget,
+    );
+    expect(repo.asked, 2);
+  });
+
   testWidgets('the transfers move by year', (tester) async {
     final repo = _empty();
     await _open(tester, repo, permissions: {WorkspacePermission.viewFinances});
@@ -182,3 +275,39 @@ final _journalFile = BookExportRecord(
   rows: 3,
   documents: 1,
 );
+
+/// The demo repository answering every delivery with [answer].
+class _Answering extends FakeAccountingConnectionRepository {
+  _Answering(FakeAccountingConnectionRepository seeded)
+    : super(
+        books: seeded.books,
+        today: seeded.today,
+        connections: seeded.connections,
+        deliveries: seeded.deliveries,
+      );
+
+  DeliveryRun answer = const DeliveryRunDone([]);
+
+  /// One answer per request, in order, before [answer].
+  List<DeliveryRun> answers = const [];
+
+  /// When set, the next request waits for it.
+  Completer<DeliveryRun>? pending;
+  int asked = 0;
+
+  @override
+  Future<DeliveryRun> deliver(
+    String connectionId, {
+    required DateTime from,
+    required DateTime to,
+    ({String kind, String id})? document,
+  }) async {
+    asked++;
+    final waiting = pending;
+    if (waiting != null) {
+      pending = null;
+      return waiting.future;
+    }
+    return asked <= answers.length ? answers[asked - 1] : answer;
+  }
+}

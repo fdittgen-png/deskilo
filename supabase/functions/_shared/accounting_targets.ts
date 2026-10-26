@@ -27,6 +27,20 @@ export interface OAuthTarget {
   stateLifetimeMs: number;
 }
 
+// spec: developer.intuit.com — "OAuth 2.0" (Intuit apps): the authorisation
+// page on appcenter.intuit.com, the token endpoint on
+// oauth.platform.intuit.com, the accounting scope, and the redirect naming
+// the company in `realmId`. One Intuit application serves the three
+// countries. Not yet verified against a registered Intuit application.
+const quickbooksOnline: OAuthTarget = {
+  authorizeUrl: "https://appcenter.intuit.com/connect/oauth2",
+  tokenUrl: "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer",
+  scopes: ["com.intuit.quickbooks.accounting"],
+  tenantParam: "realmId",
+  // A person signing in, not a batch: ten minutes.
+  stateLifetimeMs: 10 * 60 * 1000,
+};
+
 export const oauthTargets: Record<string, OAuthTarget> = {
   // #2377 — spec: docs.bexio.com — "Authentication" (OpenID Connect on
   // auth.bexio.com, realm bexio): the authorisation and token endpoints,
@@ -60,6 +74,9 @@ export const oauthTargets: Record<string, OAuthTarget> = {
     // A person signing in, not a batch: ten minutes.
     stateLifetimeMs: 10 * 60 * 1000,
   },
+  quickbooks_online_us: { ...quickbooksOnline },
+  quickbooks_online_ca: { ...quickbooksOnline },
+  quickbooks_online_gb: { ...quickbooksOnline },
 };
 
 /** The environment variable holding [part] of [targetId]'s OAuth client. */

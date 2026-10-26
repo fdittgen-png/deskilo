@@ -327,6 +327,50 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String acctDeliverBooksBlocked(String subjects) {
+    return 'Les écritures de cette période ne peuvent pas encore être passées : $subjects.';
+  }
+
+  @override
+  String acctDeliverDone(int delivered, int unchanged, int attention) {
+    return 'Envoyées : $delivered · déjà reçues : $unchanged · à vérifier : $attention';
+  }
+
+  @override
+  String get acctDeliverFailed =>
+      'L\'envoi n\'a pas abouti. Rien de plus n\'a été envoyé ; réessayez plus tard.';
+
+  @override
+  String acctDeliverMissing(String keys) {
+    return 'Renseignez d\'abord ces correspondances : $keys';
+  }
+
+  @override
+  String get acctDeliverNotConnected =>
+      'Cette connexion est déconnectée : reconnectez-la, puis envoyez.';
+
+  @override
+  String get acctDeliverNothing => 'Rien à envoyer sur cette période.';
+
+  @override
+  String get acctDeliverNothingSent => 'Rien n\'a été envoyé.';
+
+  @override
+  String acctDeliverRefused(String detail) {
+    return 'Le logiciel comptable a refusé cette société : $detail.';
+  }
+
+  @override
+  String acctDeliverStoppedAt(String month, int count) {
+    return 'Arrêté à $month. Envoyées avant : $count.';
+  }
+
+  @override
+  String acctDeliverYear(String year, String target) {
+    return 'Envoyer $year à $target';
+  }
+
+  @override
   String get acctDeliveryAcknowledged => 'Reçu par le système';
 
   @override
@@ -494,6 +538,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String acctMapsTitle(String target) {
     return 'Noms dans $target';
   }
+
+  @override
+  String get acctRedeliver => 'Envoyer à nouveau';
 
   @override
   String get acctTargetNotDeliveredYet =>

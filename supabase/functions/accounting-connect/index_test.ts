@@ -14,7 +14,16 @@ const CONN = "33333333-3333-4333-8333-333333333333";
 
 type Call = { as: string; fn: string; args: Record<string, unknown> };
 
-function world(opts: { configured?: boolean; allowed?: boolean; token?: (body: URLSearchParams) => Response } = {}) {
+function world(
+  opts: {
+    configured?: boolean;
+    allowed?: boolean;
+    token?: (body: URLSearchParams) => Response;
+    target?: string;
+    api?: (url: URL) => Response | null;
+  } = {},
+) {
+  const target = opts.target ?? "pennylane_api";
   const calls: Call[] = [];
   const vault: Record<string, string> = {};
   let state: Record<string, unknown> = { status: "pending" };
@@ -24,11 +33,11 @@ function world(opts: { configured?: boolean; allowed?: boolean; token?: (body: U
       if (fn === "open_accounting_connection_v1" || fn === "accounting_connection_manageable_v1") {
         return Promise.resolve(opts.allowed === false
           ? { data: null, error: { code: "42501" } }
-          : { data: { id: CONN, target_id: "pennylane_api", auth_kind: "oauth2", status: "pending" }, error: null });
+          : { data: { id: CONN, target_id: target, auth_kind: "oauth2", status: "pending" }, error: null });
       }
       if (fn === "accounting_credentials_resolved") {
         return Promise.resolve({
-          data: { id: CONN, target_id: "pennylane_api", auth_kind: "oauth2", revoked: false, secrets: { ...vault } },
+          data: { id: CONN, target_id: target, auth_kind: "oauth2", revoked: false, secrets: { ...vault } },
           error: null,
         });
       }
@@ -47,15 +56,15 @@ function world(opts: { configured?: boolean; allowed?: boolean; token?: (body: U
     caller: () => answer("caller"),
     service: () => answer("service"),
     env: (name) => opts.configured === false ? undefined : ({
-      ACCOUNTING_PENNYLANE_API_CLIENT_ID: "app-id",
-      ACCOUNTING_PENNYLANE_API_CLIENT_SECRET: "app-secret",
+      [`ACCOUNTING_${target.toUpperCase()}_CLIENT_ID`]: "app-id",
+      [`ACCOUNTING_${target.toUpperCase()}_CLIENT_SECRET`]: "app-secret",
     } as Record<string, string>)[name],
     redirectUri: "https://x.test/functions/v1/accounting-connect",
-    fetcher: ((_url: string | URL | Request, init?: RequestInit) =>
+    fetcher: ((url: string | URL | Request, init?: RequestInit) =>
       Promise.resolve(
-        opts.token
+        opts.api?.(new URL(String(url))) ?? (opts.token
           ? opts.token(new URLSearchParams(String(init?.body)))
-          : new Response(JSON.stringify({ access_token: "AT-secret", refresh_token: "RT-secret", expires_in: 60 })),
+          : new Response(JSON.stringify({ access_token: "AT-secret", refresh_token: "RT-secret", expires_in: 60 }))),
       )) as typeof fetch,
     now: () => new Date("2026-10-25T10:00:00Z"),
   };
@@ -179,4 +188,29 @@ Deno.test("a delegated token, no token, a bad body and an unknown action are ref
   assertEquals((await handle(post({ action: "delete" }), w.deps)).status, 400);
   assertEquals((await handle(post({ ...start, target_id: "xero" }), w.deps)).status, 400);
   assertEquals(w.calls.length, 0);
+});
+
+Deno.test("a QuickBooks company without custom transaction numbers is refused at the sign-in, the preference named", async () => {
+  const realmCalls: string[] = [];
+  const w = world({
+    target: "quickbooks_online_us",
+    api: (url) => {
+      if (!url.pathname.startsWith("/v3/company/")) return null;
+      realmCalls.push(url.pathname);
+      return url.pathname.endsWith("/preferences")
+        ? Response.json({ Preferences: { SalesFormsPrefs: { CustomTxnNumbers: false } } })
+        : Response.json({ CompanyInfo: { Country: "US" } });
+    },
+  });
+  const res = await handle(post({ ...start, target_id: "quickbooks_online_us" }), w.deps);
+  const state = new URL((await res.json()).authorize_url).searchParams.get("state")!;
+  const back = await handle(
+    new Request(`https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}&realmId=9130350000000001`),
+    w.deps,
+  );
+  assertEquals(back.status, 409);
+  assertEquals(realmCalls, ["/v3/company/9130350000000001/companyinfo/9130350000000001", "/v3/company/9130350000000001/preferences"]);
+  assertEquals(w.state().status, "error");
+  assert(String(w.state().status_detail).includes("Custom transaction numbers"));
+  assertEquals(w.vault.access_token, undefined, "no token is kept for a refused company");
 });

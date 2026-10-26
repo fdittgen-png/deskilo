@@ -128,6 +128,7 @@ class AccountingTargetsView extends ConsumerWidget {
         AccountingTransfersList(
           workspaceId: workspaceId,
           memberNames: scope.memberNames,
+          manage: scope.manage,
         ),
       ],
     );

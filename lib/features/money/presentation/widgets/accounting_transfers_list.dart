@@ -16,6 +16,7 @@ import '../../domain/accounting_connection.dart';
 import '../../domain/posting.dart';
 import '../../providers/accounting_connection_providers.dart';
 import '../posting_kind_labels.dart';
+import 'accounting_delivery_actions.dart';
 import 'accounting_targets_sheet.dart';
 
 /// How many hex digits of a digest a line shows; the whole digest is one
@@ -48,10 +49,14 @@ class AccountingTransfersList extends ConsumerStatefulWidget {
   const AccountingTransfersList({
     required this.workspaceId,
     required this.memberNames,
+    required this.manage,
     super.key,
   });
 
   final String workspaceId;
+
+  /// Whether the reader is a billing manager: the doors that deliver show.
+  final bool manage;
 
   /// Member id → name, for who made each file.
   final Map<String, String> memberNames;
@@ -104,6 +109,8 @@ class _AccountingTransfersListState
             ),
           ],
         ),
+        if (widget.manage)
+          AccountingDeliverButtons(workspaceId: widget.workspaceId, year: _year),
         transfers.when(
           loading: () => const LoadingView(),
           error: (_, _) => Text(
@@ -117,7 +124,8 @@ class _AccountingTransfersListState
                 Text(l10n.acctTransfersEmpty, key: const ValueKey('acct-transfers-empty')),
               for (final f in t.files)
                 _FileTile(file: f, by: names[f.exportedByMemberId]),
-              for (final d in t.deliveries) _DeliveryTile(delivery: d),
+              for (final d in t.deliveries)
+                _DeliveryTile(delivery: d, manage: widget.manage),
             ],
           ),
         ),
@@ -198,9 +206,12 @@ class _FileTile extends StatelessWidget {
 
 /// One document delivered to a connection, with what the target answered.
 class _DeliveryTile extends StatelessWidget {
-  const _DeliveryTile({required this.delivery});
+  const _DeliveryTile({required this.delivery, required this.manage});
 
   final AccountingDelivery delivery;
+
+  /// Whether a document the target has not acknowledged may be sent again.
+  final bool manage;
 
   @override
   Widget build(BuildContext context) {
@@ -216,6 +227,9 @@ class _DeliveryTile extends StatelessWidget {
             : Icons.cloud_sync_outlined,
       ),
       title: Text(_documentLine(context, d)),
+      trailing: manage && d.status != DeliveryStatus.acknowledged
+          ? AccountingRedeliverButton(delivery: d)
+          : null,
       subtitle: Text(
         [
           targetLabel(d.targetId),

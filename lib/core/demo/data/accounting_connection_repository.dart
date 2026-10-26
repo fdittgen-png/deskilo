@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/money/domain/accounting_connection.dart';
+import '../../../features/money/domain/accounting_delivery_run.dart';
 import '../../../features/money/domain/accounting_target.dart';
 import '../../../features/money/domain/book_period.dart';
 import 'book_period_repository.dart';
@@ -10,7 +11,8 @@ import 'book_period_repository.dart';
 /// deliveries, a connection that delivered keeps its token, a document a
 /// file carried with the same digest changes nothing and a changed one is a
 /// new delivery beside the earlier. No target is reached: a sign-in answers that the demo has no
-/// application registered with it.
+/// application registered with it, and a delivery finds each document of
+/// the period already held by the target, as a readback would.
 class FakeAccountingConnectionRepository
     implements AccountingConnectionRepository {
   FakeAccountingConnectionRepository({
@@ -281,5 +283,49 @@ class FakeAccountingConnectionRepository
       unchanged: unchanged,
       changed: changed,
     );
+  }
+
+  @override
+  Future<DeliveryRun> deliver(
+    String connectionId, {
+    required DateTime from,
+    required DateTime to,
+    ({String kind, String id})? document,
+  }) async {
+    final c = connections[_index(connectionId)];
+    if (!c.live || c.status != ConnectionStatus.connected) {
+      return const DeliveryRunNotConnected();
+    }
+    final documents = <DeliveryRunDocument>[];
+    for (var i = 0; i < deliveries.length; i++) {
+      final d = deliveries[i];
+      if (d.connectionId != connectionId ||
+          !_overlaps(d.eventDate, d.eventDate, from, to) ||
+          (document != null &&
+              (d.documentKind != document.kind || d.documentId != document.id))) {
+        continue;
+      }
+      final held = d.status == DeliveryStatus.acknowledged;
+      if (!held) {
+        deliveries[i] = AccountingDelivery(
+          id: d.id,
+          targetId: d.targetId,
+          connectionId: d.connectionId,
+          documentKind: d.documentKind,
+          documentId: d.documentId,
+          documentNumber: d.documentNumber,
+          eventDate: d.eventDate,
+          payloadSha256: d.payloadSha256,
+          status: DeliveryStatus.acknowledged,
+          remoteId: d.remoteId.isEmpty ? 'demo-remote-${d.id}' : d.remoteId,
+          remoteNumber: d.documentNumber,
+          attempts: d.attempts,
+        );
+      }
+      documents.add(DeliveryRunDocument(
+        status: held ? DeliveryRunStatus.unchanged : DeliveryRunStatus.acknowledged,
+      ));
+    }
+    return DeliveryRunDone(documents);
   }
 }

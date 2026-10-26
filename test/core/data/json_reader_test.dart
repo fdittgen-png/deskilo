@@ -95,4 +95,13 @@ void main() {
       'JsonShapeException: my_rights_requests.id expected String, got null',
     );
   });
+
+  test('a required list is read, and an absent one is a shape error', () {
+    final r = JsonReader({'rows': [1, 2]}, context: 'run');
+    expect(r.requiredList('rows'), [1, 2]);
+    expect(
+      () => r.requiredList('results'),
+      throwsA(isA<JsonShapeException>()),
+    );
+  });
 }

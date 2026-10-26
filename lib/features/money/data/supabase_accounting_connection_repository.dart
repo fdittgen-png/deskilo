@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/time/date_text.dart';
 import '../domain/accounting_connection.dart';
+import '../domain/accounting_delivery_run.dart';
 import '../domain/accounting_target.dart';
 
 /// The accounting connections, mappings and transfers (0595) and the
@@ -17,6 +18,15 @@ class SupabaseAccountingConnectionRepository
   /// The HTTP status `accounting-connect` answers when this installation
   /// registered no application with the target.
   static const _notConfigured = 503;
+
+  /// The HTTP status of a delivery the server refused as a whole (the
+  /// books blocked, the target refusing the company, a signed-out
+  /// connection); its body says which.
+  static const _runRefused = 409;
+
+  /// The HTTP status of a caller the server refused: they may not deliver
+  /// for this connection or read these books.
+  static const _notAllowed = 403;
 
   Future<AccountingConnection> _connection(
     String fn,
@@ -171,4 +181,31 @@ class SupabaseAccountingConnectionRepository
       },
     ),
   );
+
+  @override
+  Future<DeliveryRun> deliver(
+    String connectionId, {
+    required DateTime from,
+    required DateTime to,
+    ({String kind, String id})? document,
+  }) async {
+    try {
+      final response = await _client.functions.invoke(
+        'accounting-connect',
+        body: {
+          'action': 'deliver',
+          'connection_id': connectionId,
+          'from': isoDay(from),
+          'to': isoDay(to),
+          if (document != null) 'document': {'kind': document.kind, 'id': document.id},
+        },
+      );
+      return DeliveryRunDone.fromJson(response.data);
+    } on FunctionException catch (e, st) {
+      if (e.status == _notAllowed) return const DeliveryRunNotAllowed();
+      final refusal = e.status == _runRefused ? deliveryRunRefusal(e.details) : null;
+      if (refusal != null) return refusal;
+      Error.throwWithStackTrace(e, st);
+    }
+  }
 }
