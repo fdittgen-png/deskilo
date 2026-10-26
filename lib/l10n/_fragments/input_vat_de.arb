@@ -64,5 +64,9 @@
   "scheduleVatInvalid": "Geben Sie einen abziehbaren Anteil zwischen 0 und 100 ein.",
   "@scheduleVatInvalid": {
     "description": "#2357 input VAT: scheduleVatInvalid"
-  }
+  },
+  "expenseVatAcquisition": "Bei einem Lieferanten im Ausland gekauft",
+  "expenseVatAcquisitionHint": "Die Rechnung enthält keine Steuer dieses Landes: Der Betrag ist die Bemessungsgrundlage, der Bereich schuldet darauf die Bezugsteuer und zieht seinen Anteil als Vorsteuer ab.",
+  "expenseVatAcquisitionAmount": "Geschuldete Bezugsteuer: {tax} · abziehbar: {deductible}",
+  "vatDeclAcquisitionTax": "Bezugsteuer"
 }

@@ -12863,6 +12863,24 @@ abstract class AppLocalizations {
   /// **'Prefilled from amount ÷ quantity; round up if you like.'**
   String get expenseSupplyUnitPriceHint;
 
+  /// #2360 input VAT: the switch for a service bought from a supplier abroad (acquisition tax, CH Ziffer 383)
+  ///
+  /// In en, this message translates to:
+  /// **'Bought from a supplier abroad'**
+  String get expenseVatAcquisition;
+
+  /// #2360 input VAT: the acquisition tax an expense owes and its deductible share
+  ///
+  /// In en, this message translates to:
+  /// **'Acquisition tax owed: {tax} · deductible: {deductible}'**
+  String expenseVatAcquisitionAmount(String tax, String deductible);
+
+  /// #2360 input VAT: what the acquisition switch means
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice carries no VAT of this country: the amount is the base, and the space owes the acquisition tax on it and deducts its share.'**
+  String get expenseVatAcquisitionHint;
+
   /// #2357 input VAT: expenseVatAsset
   ///
   /// In en, this message translates to:
@@ -43733,6 +43751,12 @@ abstract class AppLocalizations {
   /// **'Option for cash accounting'**
   String get taxRefCashOption;
 
+  /// #2360 tax reference: the line categories a return box adds beyond the sales (acquisition for the Swiss 383)
+  ///
+  /// In en, this message translates to:
+  /// **'Other line categories it adds (comma separated, e.g. acquisition)'**
+  String get taxRefCategories;
+
   /// #2477 tax reference: Field: VAT category code of a rate.
   ///
   /// In en, this message translates to:
@@ -46324,6 +46348,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save the rate first; then change it by law.'**
   String get vatChangeNeedsSave;
+
+  /// #2360 input VAT: the note beside a return line of acquisition tax
+  ///
+  /// In en, this message translates to:
+  /// **'Acquisition tax'**
+  String get vatDeclAcquisitionTax;
 
   /// #2363 VAT filing files (ES, IT): vatDeclAeat303
   ///

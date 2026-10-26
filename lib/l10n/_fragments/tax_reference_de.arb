@@ -307,5 +307,6 @@
   "taxRefOutsideVatPostalCodes": "Postleitzahl-Präfixe außerhalb der USt (durch Kommas getrennt)",
   "@taxRefOutsideVatPostalCodes": {
     "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
-  }
+  },
+  "taxRefCategories": "Weitere Zeilenkategorien, die sie zusammenzählt (durch Komma getrennt, z. B. acquisition)"
 }

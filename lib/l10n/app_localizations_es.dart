@@ -7604,6 +7604,19 @@ class AppLocalizationsEs extends AppLocalizations {
       'Prellenado con importe ÷ cantidad; redondee si quiere.';
 
   @override
+  String get expenseVatAcquisition =>
+      'Comprado a un proveedor en el extranjero';
+
+  @override
+  String expenseVatAcquisitionAmount(String tax, String deductible) {
+    return 'Impuesto por adquisición adeudado: $tax · deducible: $deductible';
+  }
+
+  @override
+  String get expenseVatAcquisitionHint =>
+      'La factura no lleva el impuesto de este país: el importe es la base, el espacio adeuda sobre él el impuesto por adquisición y deduce su parte.';
+
+  @override
   String get expenseVatAsset => 'Un bien de inversión';
 
   @override
@@ -26471,6 +26484,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefCashOption => 'Opción por el criterio de caja';
 
   @override
+  String get taxRefCategories =>
+      'Otras categorías de líneas que suma (separadas por comas, p. ej. acquisition)';
+
+  @override
   String get taxRefCategory => 'Categoría EN 16931';
 
   @override
@@ -28037,6 +28054,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get vatChangeNeedsSave =>
       'Guarde primero el tipo; después cámbielo por ley.';
+
+  @override
+  String get vatDeclAcquisitionTax => 'Impuesto por adquisición';
 
   @override
   String get vatDeclAeat303 => 'Fichero AEAT (Modelo 303)';

@@ -14,6 +14,11 @@ import 'vat_tax_point.dart';
 
 export 'vat_forms.dart' show VatFormBox;
 
+/// The category of an output line that is not a sale: the tax a space owes
+/// on a service it bought from a supplier abroad (CH Bezugsteuer, art. 45
+/// MWSTG), on the expense's amount as base (0413's `vat.acquisition`).
+const vatAcquisitionCategory = 'acquisition';
+
 /// One per-rate line of a VAT declaration (#534): everything the period's
 /// issued invoices taxed at [percent].
 class VatDeclarationLine {
@@ -30,9 +35,23 @@ class VatDeclarationLine {
     this.direction = 'output',
     this.components = const [],
     this.group = '',
+    this.optedNetCents = 0,
   });
 
   final double percent;
+
+  /// The part of [netCents] that is an exempt letting the seller opted to
+  /// tax (CH art. 22 MWSTG, Ziffer 205), as the server computed it; 0 on
+  /// any other line.
+  final int optedNetCents;
+
+  /// The acquisition tax owed on purchases from abroad, not a sale.
+  bool get isAcquisition => category == vatAcquisitionCategory;
+
+  /// Whether the line names what it is beside its rate (deductible VAT, the
+  /// acquisition tax, a correction): the screen and the printed return
+  /// alike; the period's own sales do not.
+  bool get namedBesideRate => isCorrection || isInput || isAcquisition;
 
   /// #2480 -- the fiscal group (`VatGroup.wire`) the rate this line was taxed
   /// at belongs to, read from the country's rate rows when a return form is
@@ -53,6 +72,7 @@ class VatDeclarationLine {
         direction: direction,
         components: components,
         group: group,
+        optedNetCents: optedNetCents,
       );
 
   /// #2357 — the UNCL5305 category the server keeps apart at one rate
@@ -90,6 +110,7 @@ class VatDeclarationLine {
         'net_cents': netCents,
         'vat_cents': vatCents,
         'invoice_count': invoiceCount,
+        if (optedNetCents != 0) 'opted_net_cents': optedNetCents,
         if (isInput) 'direction': 'input',
         if (components.isNotEmpty)
           'components': [for (final c in components) c.toJson()],
@@ -116,6 +137,7 @@ class VatDeclarationLine {
       correctsEnd: correction ? row.dateTimeOrNull('corrects_end') : null,
       direction: row.stringOr('direction') == 'input' ? 'input' : 'output',
       components: row.objects('components', VatComponent.fromReader),
+      optedNetCents: row.intOrNull('opted_net_cents') ?? 0,
     );
   }
 }

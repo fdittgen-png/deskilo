@@ -176,11 +176,17 @@ String _zifferOf(_Leg leg, TaxReferenceSet onDay) {
   // A released output tax lands on its rate line on its tax point, like the
   // taxed sale it was waiting for.
   if (tax != null || leg.line.role == BookRole.vatOutput) {
+    // The rate line of a sale: not the opted part of it (205), not the
+    // acquisition tax on a purchase (383).
     return _boxWhere((box) {
       final row = box.formBox == null
           ? null
           : onDay.lookup(TaxDomain.formBox, chMwstSpec.country, box.formBox!);
-      return (row?.value as FormBoxValue?)?.groups.contains(group) ?? false;
+      return ((row?.value as FormBoxValue?)?.groups.contains(group) ?? false) &&
+          _selects(
+            box,
+            (s) => !s.input && !s.opted && (s.categories?.containsAll(vatTaxable) ?? false),
+          );
     });
   }
   if (leg.line.role != BookRole.revenue) return '';

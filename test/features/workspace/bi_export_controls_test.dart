@@ -322,24 +322,7 @@ void main() {
     tester.view.physicalSize = const Size(360, 2600);
     await tester.pumpAndSettle();
     await _open(tester, _page);
-    // The app bar's space chip still overflows at this size; it is the
-    // shell's (#3046). Only that one is taken here: anything else (the
-    // analytics toolbar, the views bar, a second overflow) fails.
-    final shell = tester.takeException();
-    expect(
-      shell,
-      anyOf(
-        isNull,
-        // The chip's 38 px ring and its gap past the title box: exactly
-        // this one overflow, and no other.
-        predicate<Object>(
-          (e) =>
-              e is FlutterError &&
-              e.message == 'A RenderFlex overflowed by 16 pixels on the right.',
-          'the shell space chip overflow (#3046)',
-        ),
-      ),
-    );
+    expect(tester.takeException(), isNull, reason: 'the shell fits too');
     await _tap(tester, 'bi-export-report');
     await _tap(tester, 'bi-export-format-pdf');
     await _tap(tester, 'bi-export-take');

@@ -146,6 +146,7 @@ sealed class TaxValue {
           label: r.string('label'),
           groups: r.strings('groups'),
           excludeGroups: r.strings('exclude_groups'),
+          categories: r.strings('categories'),
         ),
       TaxDomain.accountMap => AccountMapValue(
           format: r.string('format'),
@@ -445,23 +446,22 @@ class TaxabilityValue extends TaxValue {
   Map<String, Object?> toJson() => {'status': status};
 }
 
-/// `form_box`: {label, groups?, exclude_groups?} -- a rated box of a return
-/// form (the key is `<form>/<box code>`, e.g. `ustva/Kz 81`). The box adds up
-/// the taxed lines whose fiscal group (`VatGroup.wire`) is in [groups], or --
-/// for a catch-all box -- is in none of [excludeGroups]; never a percent, so a
-/// change of a country's rate needs no change here. Which boxes exist and how
-/// they total stays in the form's code; the printed [label] is the form's own
-/// wording, in its language.
+/// `form_box` (key `<form>/<box code>`, e.g. `ustva/Kz 81`): the [label] a rated box prints, in the
+/// form's language, and the fiscal groups (`VatGroup.wire`) of the taxed lines it adds up -- [groups],
+/// or for a catch-all box every group but [excludeGroups], never a percent -- plus the [categories] of
+/// other lines it takes (CH 383: `acquisition`). Which boxes exist and how they total stays in code.
 class FormBoxValue extends TaxValue {
   const FormBoxValue({
     required this.label,
     this.groups = const [],
     this.excludeGroups = const [],
+    this.categories = const [],
   });
 
   final String label;
   final List<String> groups;
   final List<String> excludeGroups;
+  final List<String> categories;
 
   @override
   TaxDomain get domain => TaxDomain.formBox;
@@ -469,8 +469,8 @@ class FormBoxValue extends TaxValue {
   @override
   Map<String, Object?> toJson() => {
         'label': label,
-        if (groups.isNotEmpty) 'groups': groups,
-        if (excludeGroups.isNotEmpty) 'exclude_groups': excludeGroups,
+        for (final (k, v) in [('groups', groups), ('exclude_groups', excludeGroups), ('categories', categories)])
+          if (v.isNotEmpty) k: v,
       };
 }
 

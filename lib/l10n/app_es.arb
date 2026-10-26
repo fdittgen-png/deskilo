@@ -5637,6 +5637,9 @@
   "expenseSupplyToggle": "Es un suministro para el espacio",
   "expenseSupplyUnitPrice": "Precio unitario (lo que cuesta un consumo)",
   "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondee si quiere.",
+  "expenseVatAcquisition": "Comprado a un proveedor en el extranjero",
+  "expenseVatAcquisitionAmount": "Impuesto por adquisición adeudado: {tax} · deducible: {deductible}",
+  "expenseVatAcquisitionHint": "La factura no lleva el impuesto de este país: el importe es la base, el espacio adeuda sobre él el impuesto por adquisición y deduce su parte.",
   "expenseVatAsset": "Un bien de inversión",
   "@expenseVatAsset": {
     "description": "#2357 input VAT: expenseVatAsset"
@@ -17459,6 +17462,7 @@
   "@taxRefCashOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
   },
+  "taxRefCategories": "Otras categorías de líneas que suma (separadas por comas, p. ej. acquisition)",
   "taxRefCategory": "Categoría EN 16931",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."
@@ -18574,6 +18578,7 @@
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
   },
+  "vatDeclAcquisitionTax": "Impuesto por adquisición",
   "vatDeclAeat303": "Fichero AEAT (Modelo 303)",
   "@vatDeclAeat303": {
     "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"

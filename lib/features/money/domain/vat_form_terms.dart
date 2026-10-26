@@ -2,10 +2,14 @@
 //
 // #2357 — the terms the per-country VAT form files are written in: sales
 // and input-VAT line selectors and the roundings a form uses.
+import 'vat_declaration.dart';
 import 'vat_forms.dart';
 
 const vatTaxable = {'S'};
 const vatAsset = {'asset'};
+
+/// The acquisition tax owed on services bought from abroad (CH 383).
+const vatAcquisition = {vatAcquisitionCategory};
 
 VatTerm vatSales({
   Set<double>? rates,
@@ -23,6 +27,12 @@ VatTerm vatSales({
     schemes: schemes,
   ),
   factor: factor,
+);
+
+/// The part of the taxed sales that is an exempt letting the seller opted
+/// to tax (CH 205): a base, no tax.
+const vatOpted = VatTerm.lines(
+  VatLineSelector(categories: vatTaxable, opted: true),
 );
 
 VatTerm vatInput({

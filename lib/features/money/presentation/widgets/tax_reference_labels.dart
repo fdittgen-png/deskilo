@@ -47,3 +47,15 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
   TaxDomain.rateComponent => context.l10n.taxRefDomainRateComponent,
   TaxDomain.retention => context.l10n.taxRefDomainRetention,
 };
+
+/// The lists of a return box as the version form edits them, comma
+/// separated: the groups it takes, those it leaves out, and the line
+/// categories it adds beyond the sales; empty for any other value.
+Map<String, String> formBoxTexts(TaxValue? value) => switch (value) {
+  FormBoxValue(:final groups, :final excludeGroups, :final categories) => {
+    'groups': groups.join(', '),
+    'exclude_groups': excludeGroups.join(', '),
+    'categories': categories.join(', '),
+  },
+  _ => const {'groups': '', 'exclude_groups': '', 'categories': ''},
+};
