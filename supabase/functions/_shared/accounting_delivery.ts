@@ -26,6 +26,10 @@
 //
 // Pure: the store and the adapter are parameters (accounting_delivery_test.ts).
 
+/** The most of a target's words a delivery or a connection keeps
+ * (`accounting_connections.status_detail` holds 500). */
+export const DETAIL_LENGTH = 500;
+
 export type MapKind = "account" | "tax" | "party" | "item";
 
 /** One mapping of a connection: a key of the app, named on the target. */

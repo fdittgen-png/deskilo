@@ -46,7 +46,7 @@
 // names follow the Accounting API v3 reference; what was not verified
 // against a live realm says so in a `// spec:` comment.
 
-import type { AccountingMap, CreateOutcome, MapNeed, RemoteDocument } from "./accounting_delivery.ts";
+import { type AccountingMap, type CreateOutcome, DETAIL_LENGTH, type MapNeed, type RemoteDocument } from "./accounting_delivery.ts";
 import {
   accountNeeds,
   type AdapterContext,
@@ -167,10 +167,10 @@ async function qbo(fetchImpl: typeof fetch, cfg: Cfg, path: string, init: Reques
       },
     );
   } catch (error) {
-    return { ok: false, detail: String(error).slice(0, 500) };
+    return { ok: false, detail: String(error).slice(0, DETAIL_LENGTH) };
   }
   const text = await res.text();
-  if (!res.ok) return { ok: false, status: res.status, detail: `${res.status} ${faultOf(text).slice(0, 500)}` };
+  if (!res.ok) return { ok: false, status: res.status, detail: `${res.status} ${faultOf(text).slice(0, DETAIL_LENGTH)}` };
   try {
     const body = text ? JSON.parse(text) : {};
     return { ok: true, body: body && typeof body === "object" ? body : {} };

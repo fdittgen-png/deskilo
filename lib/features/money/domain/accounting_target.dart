@@ -9,8 +9,14 @@
 // of the TARGET, so the sheet, the coverage table and a future connection
 // read the same descriptor. The qualification stays the existing
 // [AccountingCapability], keyed by the target id.
+import '../../../core/vat/place_of_supply.dart' show isEuCountry;
 import 'accounting_capability.dart';
 import 'accounting_format.dart';
+
+/// A member of [AccountingTarget.countries] that stands for every EU member
+/// state, resolved against the `eu_member` rows of the tax reference: the
+/// list is data, never typed a second time.
+const accountingCountriesEu = '@eu';
 
 /// How the target is reached.
 enum AccountingTransport { file, api }
@@ -93,7 +99,9 @@ class AccountingTarget {
   final String product;
   final String edition;
 
-  /// Uppercase ISO country codes the target is offered in. Empty means
+  /// Uppercase ISO country codes the target is offered in;
+  /// [accountingCountriesEu] stands for every EU member state of the tax
+  /// reference. Empty means
   /// everywhere: a target with no national tie is useful to any
   /// accountant, and hiding it behind a country list would only make it
   /// unreachable for the countries that mandate nothing.
@@ -116,8 +124,12 @@ class AccountingTarget {
   /// sheet says nothing is sent yet.
   final bool runnerDelivers;
 
-  bool offeredIn(String countryCode) =>
-      countries.isEmpty || countries.contains(countryCode.toUpperCase());
+  bool offeredIn(String countryCode) {
+    final code = countryCode.toUpperCase();
+    return countries.isEmpty ||
+        countries.contains(code) ||
+        (countries.contains(accountingCountriesEu) && isEuCountry(code));
+  }
 
   /// The reviewed qualification of this target; one nobody reviewed is
   /// `unsupported` and blocked, never silently allowed.

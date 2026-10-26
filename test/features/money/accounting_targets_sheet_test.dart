@@ -44,7 +44,8 @@ Future<void> _open(
   FakeAccountingConnectionRepository repo, {
   required Set<WorkspacePermission> permissions,
 }) async {
-  tester.view.physicalSize = const Size(1200, 4000);
+  // Tall enough for every API target France is offered (Pennylane, Xero).
+  tester.view.physicalSize = const Size(1200, 6000);
   addTearDown(tester.view.resetPhysicalSize);
   await tester.pumpWidget(ProviderScope(
     overrides: [
@@ -69,6 +70,10 @@ FakeAccountingConnectionRepository _empty() =>
 
 const _card = 'pennylane_api-demo-site-studio';
 
+/// The connection state the Pennylane card reads.
+String? _state(WidgetTester tester) =>
+    tester.widget<Text>(find.byKey(const ValueKey('acct-connection-state-$_card'))).data;
+
 /// A route or a sheet opening or closing, and the dropdown menu: longer
 /// than the Material transitions they run (300 ms at most).
 const _transition = Duration(milliseconds: 400);
@@ -90,7 +95,7 @@ void main() {
   testWidgets('a billing manager connects with a token, maps a tax code and revokes', (tester) async {
     final repo = _empty();
     await _open(tester, repo, permissions: {WorkspacePermission.manageBilling});
-    expect(find.text('Not connected'), findsOneWidget);
+    expect(_state(tester), 'Not connected');
 
     await _tap(tester, 'acct-connect-token-$_card');
     await tester.enterText(find.byKey(const ValueKey('acct-token-value')), 'short');
@@ -125,7 +130,7 @@ void main() {
     await _tap(tester, 'acct-revoke-confirm');
     expect(repo.connections.single.live, isFalse);
     expect(repo.connections.single.maps, hasLength(1), reason: 'the mappings stay');
-    expect(find.text('Not connected'), findsOneWidget);
+    expect(_state(tester), 'Not connected');
     expect(find.text('One earlier connection was revoked'), findsOneWidget);
   });
 

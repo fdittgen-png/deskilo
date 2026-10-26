@@ -130,6 +130,8 @@ function world(opts: {
   /** An OAuth connection whose token expires at this instant. */
   oauthExpiresAt?: string;
   refresh?: () => Response;
+  /** The invoices table as the caller reads it; null refuses the read. */
+  invoices?: { id: string; replaces_number: string }[] | null;
 } = {}) {
   const log = deliveryLog();
   const pl = pennylane();
@@ -159,6 +161,16 @@ function world(opts: {
       }
       return Promise.resolve({ data: null, error: { code: "42883" } });
     },
+    from: (table: string) => ({
+      select: (columns: string) => ({
+        in: (column: string, values: string[]) => {
+          calls.push({ as: "caller", fn: `${table}.${columns}`, args: { [column]: values } });
+          if (opts.invoices === null) return Promise.resolve({ data: null, error: { code: "42501" } });
+          const rows = (opts.invoices ?? []).filter((r) => values.includes(r.id));
+          return Promise.resolve({ data: rows, error: null });
+        },
+      }),
+    }),
   };
   const service = {
     rpc: (fn: string, args: Record<string, unknown>) => {
@@ -363,4 +375,38 @@ Deno.test("a token about to expire is refreshed before the first call; a refused
   assertEquals(gone.order, ["token"]);
   assertEquals((gone.stored[0].p_patch as Record<string, unknown>).status, "expired");
   assertEquals(gone.log.rows.size, 0);
+});
+
+const CRN = "66666666-6666-4666-8666-666666666666";
+
+const creditNote = {
+  ...sale(CRN, "A-1", "2026-03-20"),
+  kind: "credit_note",
+  lines: [
+    { role: "customers", qualifier: null, account_code: "411", debit_cents: 0, credit_cents: 1200 },
+    { role: "revenue", qualifier: "standard", account_code: "706", debit_cents: 1000, credit_cents: 0 },
+    { role: "vat_output", qualifier: "standard", account_code: "44571", debit_cents: 200, credit_cents: 0 },
+  ],
+};
+
+Deno.test("the invoice a credit note corrects is read as the caller; a refused read delivers nothing", async () => {
+  const w = world({ postings: [sale(INV, "F-1", "2026-03-02"), creditNote], invoices: [{ id: CRN, replaces_number: "F-1" }] });
+  assertEquals((await run(w)).status, 200);
+  const read = w.calls.find((c) => c.fn === "invoices.id, replaces_number")!;
+  assertEquals([read.as, read.args], ["caller", { id: [CRN] }]);
+
+  // A read refused outright, and one row-level security answers empty.
+  for (const invoices of [null, []]) {
+    const refused = world({ postings: [creditNote], invoices });
+    const res = await run(refused);
+    assertEquals(res.status, 403);
+    assertEquals(refused.pl.st.posts, 0);
+    assertEquals(refused.log.rows.size, 0);
+  }
+});
+
+Deno.test("a period without a credit note reads no invoice", async () => {
+  const w = world();
+  assertEquals((await run(w)).status, 200);
+  assert(!w.calls.some((c) => c.fn.startsWith("invoices.")));
 });
