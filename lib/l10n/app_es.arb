@@ -1031,6 +1031,643 @@
   "biDepreciationNoCash": "Una amortización no mueve dinero.",
   "biDepreciationTitle": "Amortización contable (registrada)",
   "biDimensionLevel": "Planta",
+  "biEditorAddPage": "Añadir una página",
+  "@biEditorAddPage": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorAddVisual": "Añadir un visual",
+  "@biEditorAddVisual": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorAsTable": "Los mismos valores en tabla",
+  "@biEditorAsTable": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorAxis": "Eje vertical",
+  "@biEditorAxis": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorAxisCut": "El eje empieza en {low}, no en cero.",
+  "@biEditorAxisCut": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "low": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorAxisFit": "Ajustado a los valores (indicado bajo la línea)",
+  "@biEditorAxisFit": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorAxisZero": "Empieza en cero",
+  "@biEditorAxisZero": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBackToEdit": "Volver a editar",
+  "@biEditorBackToEdit": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisBookValue": "según el periodo contable",
+  "@biEditorBasisBookValue": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisCurrentState": "tal como está hoy",
+  "@biEditorBasisCurrentState": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisDocumentDate": "según la fecha del documento",
+  "@biEditorBasisDocumentDate": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisInvoiceMonth": "según el mes de factura",
+  "@biEditorBasisInvoiceMonth": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisOccurrenceDue": "según el vencimiento",
+  "@biEditorBasisOccurrenceDue": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisPaymentMatched": "según el pago conciliado",
+  "@biEditorBasisPaymentMatched": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisPeriodEnd": "al cierre del periodo",
+  "@biEditorBasisPeriodEnd": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisReportedPaid": "según el pago declarado",
+  "@biEditorBasisReportedPaid": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorBasisReservationTime": "según el tiempo reservado",
+  "@biEditorBasisReservationTime": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorChangeFigure": "Cambiar",
+  "@biEditorChangeFigure": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorChooseFigure": "Elegir una cifra",
+  "@biEditorChooseFigure": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorClose": "Cerrar el editor",
+  "@biEditorClose": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorColumns": "{count} de 12 columnas",
+  "@biEditorColumns": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorConflict": "Alguien guardó este informe desde que usted lo abrió. No se sobrescribió nada: recargue su versión (sus cambios se descartan) o conserve sus cambios como una copia privada.",
+  "@biEditorConflict": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorCoverageConfirmed": "solo valores confirmados",
+  "@biEditorCoverageConfirmed": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorCoverageCurrentRecords": "registros actuales",
+  "@biEditorCoverageCurrentRecords": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorCoverageHistory": "historial registrado",
+  "@biEditorCoverageHistory": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorCoverageTodayOnly": "solo hoy, sin historial",
+  "@biEditorCoverageTodayOnly": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorDelete": "Eliminar",
+  "@biEditorDelete": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorDiscard": "Descartar",
+  "@biEditorDiscard": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorDuplicate": "Duplicar",
+  "@biEditorDuplicate": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorEarlier": "Antes",
+  "@biEditorEarlier": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorEmptyPage": "Esta página aún no tiene ningún visual. Añada uno desde el catálogo.",
+  "@biEditorEmptyPage": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorFigure": "Cifra",
+  "@biEditorFigure": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorFilterExcept": "Todo salvo {what} · {scope}",
+  "@biEditorFilterExcept": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      },
+      "scope": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorFilterOnly": "Solo {what} · {scope}",
+  "@biEditorFilterOnly": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      },
+      "scope": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorFilteredBy": "Muestra solo {group} (la selección de la página).",
+  "@biEditorFilteredBy": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorFilters": "Filtros",
+  "@biEditorFilters": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorFormat": "Formato de número",
+  "@biEditorFormat": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorFormatAuto": "Según la cifra",
+  "@biEditorFormatAuto": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorGrouping": "Agrupado por",
+  "@biEditorGrouping": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorHeight": "Alto",
+  "@biEditorHeight": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorHigher": "Más alto",
+  "@biEditorHigher": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorInteraction": "Un clic en un grupo",
+  "@biEditorInteraction": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorInteractionFilter": "Filtra los demás visuales de la página",
+  "@biEditorInteractionFilter": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorInteractionNone": "No hace nada",
+  "@biEditorInteractionNone": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKeepAsCopy": "Conservar la mía como copia privada",
+  "@biEditorKeepAsCopy": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKeepEditing": "Seguir editando",
+  "@biEditorKeepEditing": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKeepSelection": "Conservar como filtro de esta página",
+  "@biEditorKeepSelection": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKind": "Mostrado como",
+  "@biEditorKind": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKindBar": "Barras",
+  "@biEditorKindBar": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKindKpi": "Cifra",
+  "@biEditorKindKpi": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKindLine": "Línea",
+  "@biEditorKindLine": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKindStackedBar": "Barra apilada",
+  "@biEditorKindStackedBar": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKindTable": "Tabla",
+  "@biEditorKindTable": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorKindText": "Texto",
+  "@biEditorKindText": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorLater": "Después",
+  "@biEditorLater": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorLeaveBody": "Sus cambios en este informe aún no están guardados.",
+  "@biEditorLeaveBody": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorLeaveTitle": "¿Salir con cambios sin guardar?",
+  "@biEditorLeaveTitle": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorLegend": "Leyenda",
+  "@biEditorLegend": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorLower": "Más bajo",
+  "@biEditorLower": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorMore": "Más opciones de guardado",
+  "@biEditorMore": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorNarrower": "Más estrecho",
+  "@biEditorNarrower": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorNewText": "Escriba aquí una explicación.",
+  "@biEditorNewText": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorNoFilters": "Sin filtro: cada cifra muestra todo lo que sus derechos permiten.",
+  "@biEditorNoFilters": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorNoGrouping": "Sin agrupar",
+  "@biEditorNoGrouping": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorNoHistory": "Todavía no hay historial para esta cifra: no hay nada con qué trazar una tendencia.",
+  "@biEditorNoHistory": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorNotComposition": "Algunas partes son negativas: no es un todo hecho de partes. Vea la tabla.",
+  "@biEditorNotComposition": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorNotEditable": "Este informe no se puede editar aquí: no le corresponde a usted cambiarlo, contiene cifras que usted no puede leer o ya no existe. Ábralo desde la página de análisis o guarde allí una copia.",
+  "@biEditorNotEditable": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorNotFiltered": "Esta cifra no se agrupa así: muestra su total, no la selección.",
+  "@biEditorNotFiltered": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorOnePoint": "Solo un periodo conocido: un punto, no una tendencia.",
+  "@biEditorOnePoint": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorOpen": "Editar el informe",
+  "@biEditorOpen": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorOutsideScope": "La selección queda fuera de los filtros de este visual: sigue mostrando lo que estos permiten.",
+  "@biEditorOutsideScope": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPageDelete": "Eliminar {title}",
+  "@biEditorPageDelete": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorPageEarlier": "Adelantar {title}",
+  "@biEditorPageEarlier": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorPageLater": "Retrasar {title}",
+  "@biEditorPageLater": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorPageTitle": "Título de la página",
+  "@biEditorPageTitle": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPages": "Páginas",
+  "@biEditorPages": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPagesAndVisuals": "Páginas y visuales",
+  "@biEditorPagesAndVisuals": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPalette": "Colores",
+  "@biEditorPalette": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPaletteContrast": "Alto contraste",
+  "@biEditorPaletteContrast": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPaletteMono": "Un solo color",
+  "@biEditorPaletteMono": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPaletteStandard": "Los colores de la app",
+  "@biEditorPaletteStandard": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPlace": "Posición {position} de {count}",
+  "@biEditorPlace": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "position": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorPreview": "Vista previa como la ven los lectores",
+  "@biEditorPreview": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorProperties": "Propiedades",
+  "@biEditorProperties": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorPublish": "Publicar para el espacio de trabajo",
+  "@biEditorPublish": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorReadLabel": "{title}, {kind}",
+  "@biEditorReadLabel": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorRedo": "Rehacer",
+  "@biEditorRedo": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedAxis": "Solo el eje de una línea puede ajustarse a los valores; una barra empieza en cero. El visual no cambia.",
+  "@biEditorRefusedAxis": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedDimension": "Esta cifra no se agrupa así. El visual no cambia.",
+  "@biEditorRefusedDimension": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedFormat": "Ese formato cambiaría la unidad de la cifra: un porcentaje sigue siendo porcentaje y un importe sigue siendo importe. El visual no cambia.",
+  "@biEditorRefusedFormat": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedLastPage": "Un informe conserva al menos una página.",
+  "@biEditorRefusedLastPage": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedLimit": "Este informe alcanzó el límite de páginas o visuales del espacio.",
+  "@biEditorRefusedLimit": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedMissing": "Ese visual ya no está en esta página.",
+  "@biEditorRefusedMissing": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedNoGrouping": "Las barras comparan grupos y esta cifra no tiene agrupación. El visual no cambia.",
+  "@biEditorRefusedNoGrouping": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedNoHistory": "Una línea necesita historial; esta cifra solo da el estado de hoy. El visual no cambia.",
+  "@biEditorRefusedNoHistory": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedNotAdditive": "Solo una cifra que se suma es un todo hecho de partes. El visual no cambia.",
+  "@biEditorRefusedNotAdditive": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedSort": "Ordenar por valor requiere grupos. El visual no cambia.",
+  "@biEditorRefusedSort": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedText": "Un texto no lleva ninguna cifra.",
+  "@biEditorRefusedText": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedTextLength": "Un título o texto necesita de 1 carácter hasta su máximo.",
+  "@biEditorRefusedTextLength": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedUnknown": "Esa cifra no es una que usted pueda mostrar aquí.",
+  "@biEditorRefusedUnknown": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRefusedWidens": "Un filtro aquí solo puede restringir los del informe, nunca ampliarlos.",
+  "@biEditorRefusedWidens": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorReload": "Recargar la suya",
+  "@biEditorReload": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRemoveFilter": "Quitar este filtro",
+  "@biEditorRemoveFilter": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorReportProperties": "Informe y página",
+  "@biEditorReportProperties": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorResetSelection": "Restablecer la selección",
+  "@biEditorResetSelection": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorRows": "{count} filas",
+  "@biEditorRows": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorSaveCopy": "Guardar una copia (privada)",
+  "@biEditorSaveCopy": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorSaved": "El informe está guardado.",
+  "@biEditorSaved": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorScaleMax": "Escala: 0 a {max}, el grupo mayor",
+  "@biEditorScaleMax": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorScalePercent": "Escala: 0 a 100 %",
+  "@biEditorScalePercent": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorScopePage": "esta página",
+  "@biEditorScopePage": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorScopeReport": "todo el informe",
+  "@biEditorScopeReport": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorSelectHint": "Seleccione un visual de la página para cambiarlo.",
+  "@biEditorSelectHint": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorSelectionChip": "Seleccionado: {group}",
+  "@biEditorSelectionChip": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "group": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorSort": "Orden",
+  "@biEditorSort": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorSortHighFirst": "Los más altos primero",
+  "@biEditorSortHighFirst": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorSortLowFirst": "Los más bajos primero",
+  "@biEditorSortLowFirst": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorSortNatural": "Como vienen los grupos",
+  "@biEditorSortNatural": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorSourceNote": "{unit} · {basis} · {coverage}",
+  "@biEditorSourceNote": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      },
+      "basis": {
+        "type": "String"
+      },
+      "coverage": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorSourceNoteToggle": "Nota de fuente",
+  "@biEditorSourceNoteToggle": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorText": "Texto",
+  "@biEditorText": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorTitle": "Editor de informes",
+  "@biEditorTitle": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorUndo": "Deshacer",
+  "@biEditorUndo": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorUnitAmount": "Importe en su moneda",
+  "@biEditorUnitAmount": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorUnitCount": "Número",
+  "@biEditorUnitCount": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorUnitPercent": "Porcentaje",
+  "@biEditorUnitPercent": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorValueLabels": "Valores escritos en las marcas",
+  "@biEditorValueLabels": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorVisualDescription": "Descripción",
+  "@biEditorVisualDescription": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorVisualLabel": "{title}, {kind}, posición {position} de {count}, {span} de 12 columnas. Alt y flechas lo mueven, Mayús y flechas cambian su tamaño, Supr lo elimina.",
+  "@biEditorVisualLabel": {
+    "description": "#2580 BI report editor",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      },
+      "position": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      },
+      "span": {
+        "type": "String"
+      }
+    }
+  },
+  "biEditorVisualTitle": "Título mostrado",
+  "@biEditorVisualTitle": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorVisuals": "En esta página",
+  "@biEditorVisuals": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorWider": "Más ancho",
+  "@biEditorWider": {
+    "description": "#2580 BI report editor"
+  },
+  "biEditorWidth": "Ancho",
+  "@biEditorWidth": {
+    "description": "#2580 BI report editor"
+  },
   "biEvolutionTitle": "Evolución",
   "@biEvolutionTitle": {
     "description": "Business analytics dashboard: biEvolutionTitle"
@@ -10242,22 +10879,121 @@
   "overagePolicyPackage": "Exigir comprar un paquete",
   "overagePolicyPayg": "Cobrar el exceso (pago por uso)",
   "overviewActiveMemberships": "Membresías activas",
+  "overviewAddTile": "Fijar un mosaico",
+  "@overviewAddTile": {
+    "description": "#2583 C2 overview layout"
+  },
   "overviewAllIndicators": "Todos los indicadores",
+  "overviewCopiedAsReport": "Guardado como el informe «{name}».",
+  "@overviewCopiedAsReport": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewCopyFrom": "Copiar la disposición de un informe",
+  "@overviewCopyFrom": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewCopyTo": "Guardar como informe",
+  "@overviewCopyTo": {
+    "description": "#2583 C2 overview layout"
+  },
   "overviewCurrentState": "Cifra de hoy: no se guarda historial para un periodo pasado.",
+  "overviewCustomize": "Personalizar",
+  "@overviewCustomize": {
+    "description": "#2583 C2 overview layout"
+  },
   "overviewGroupCapacity": "Capacidad",
   "overviewGroupCash": "Tesorería",
   "overviewGroupPeople": "Personas",
   "overviewGroupPurchases": "Compras",
   "overviewGroupSales": "Ventas",
   "overviewIndicators": "Indicadores clave",
+  "overviewLayoutConflict": "Su disposición se cambió en otro lugar desde que la abrió. No se sobrescribió nada: recárguela y vuelva a hacer su cambio.",
+  "@overviewLayoutConflict": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutLost": "No se pudo guardar su disposición: no llegó respuesta. Sus cambios se conservan; reintentar envía el mismo guardado, que nunca se aplica dos veces.",
+  "@overviewLayoutLost": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutName": "Mi vista general",
+  "@overviewLayoutName": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutReload": "Recargar",
+  "@overviewLayoutReload": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutSave": "Guardar mi disposición",
+  "@overviewLayoutSave": {
+    "description": "#2583 C2 overview layout"
+  },
+  "overviewLayoutSaved": "Su disposición está guardada.",
+  "@overviewLayoutSaved": {
+    "description": "#2583 C2 overview layout"
+  },
   "overviewMembershipsDefinition": "Las membresías del espacio activas hoy, todos los roles incluidos: membresías, no personas distintas.",
+  "overviewMoveEarlier": "Adelantar {title}",
+  "@overviewMoveEarlier": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewMoveLater": "Retrasar {title}",
+  "@overviewMoveLater": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "overviewNeedsAttention": "Pendiente",
+  "overviewNoPinned": "No hay ningún mosaico fijado: fije las cifras que quiere ver aquí primero.",
+  "@overviewNoPinned": {
+    "description": "#2583 C2 overview layout"
+  },
   "overviewOverdueBasis": "{count} facturas vencidas; {unknown} sin vencimiento probado y {held} en suspenso, aparte",
   "overviewOverdueDefinition": "Lo que los miembros aún deben de facturas emitidas pasado su vencimiento probado, tras abonos, pagos parciales y pérdidas, según las reglas de recordatorio. Una factura sin vencimiento probado, o en suspenso, se cuenta aparte y no entra en el importe.",
   "overviewOverdueTitle": "Cobros vencidos",
+  "overviewPinned": "Sus mosaicos fijados",
+  "@overviewPinned": {
+    "description": "#2583 C2 overview layout"
+  },
   "overviewThisMonth": "Este mes",
+  "overviewTilePosition": "{title}, mosaico {position} de {count}",
+  "@overviewTilePosition": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "position": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
   "overviewTitle": "Resumen",
   "overviewUnavailable": "No disponible",
+  "overviewUnpinTile": "Desfijar {title}",
+  "@overviewUnpinTile": {
+    "description": "#2583 C2 overview layout",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "payConfigConfigured": "Configurado",
   "payConfigIntro": "Introduzca cada proveedor de pago que quiera ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
   "payConfigNotConfigured": "Sin configurar",

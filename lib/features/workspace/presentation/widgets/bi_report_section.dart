@@ -10,6 +10,7 @@
 // figures), only copied.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -21,6 +22,7 @@ import '../../domain/bi_saved_view.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../report_editor/bi_report_editor_screen.dart' show biReportEditable;
 import 'bi_report_panel.dart';
 import 'bi_report_parts.dart';
 import 'bi_view_failure_text.dart';
@@ -56,12 +58,7 @@ class BiReportSection extends ConsumerWidget {
     final open = views.where((v) => v.id == openId).firstOrNull;
     final report = open?.definition?.report;
     final canShare = biCanShareViews(ref.watch(myPermissionsProvider));
-    final editing =
-        on &&
-            open != null &&
-            report != null &&
-            open.withheld == 0 &&
-            (open.scope == BiViewScope.private ? open.mine : canShare)
+    final editing = on && open != null && biReportEditable(open, canShare: canShare)
         ? open
         : null;
     final page = report == null ? 0 : _pageOf(report);
@@ -81,6 +78,17 @@ class BiReportSection extends ConsumerWidget {
               icon: const Icon(Icons.dashboard_customize_outlined),
               label: Text(context.l10n.biReportDuplicate),
               onPressed: () => _duplicate(context, ref, open),
+            ),
+          ),
+        if (editing != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+            child: TextButton.icon(
+              key: const ValueKey('bi-report-open-editor'),
+              icon: const Icon(Icons.edit_outlined),
+              label: Text(context.l10n.biEditorOpen),
+              // push: Back (and the editor's Close) return to this page.
+              onPressed: () => context.push('/bi/report/${editing.id}'),
             ),
           ),
         if (editing != null)

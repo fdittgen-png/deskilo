@@ -32,6 +32,9 @@ class BiReportPage {
   final List<BiReportFilter> filters;
   final List<BiReportVisual> visuals;
 
+  /// The longest page title (the server's bound too).
+  static const maxTitle = 80;
+
   BiReportPage withVisuals(List<BiReportVisual> next) =>
       BiReportPage(id: id, title: title, filters: filters, visuals: next);
 
@@ -52,7 +55,7 @@ class BiReportPage {
     final rawVisuals = r.raw('visuals') ?? const <Object?>[];
     final filters = biReportFilters(r.raw('filters'));
     if (id is! String || !biReportId.hasMatch(id)) return null;
-    if (title is! String || title.isEmpty || title.length > 80) return null;
+    if (title is! String || title.isEmpty || title.length > maxTitle) return null;
     if (filters == null || rawVisuals is! List) return null;
     final visuals = <BiReportVisual>[];
     for (final v in rawVisuals) {

@@ -2005,6 +2005,465 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biDimensionLevel => 'Niveau';
 
   @override
+  String get biEditorAddPage => 'Ajouter une page';
+
+  @override
+  String get biEditorAddVisual => 'Ajouter un visuel';
+
+  @override
+  String get biEditorAsTable => 'Les mêmes valeurs en tableau';
+
+  @override
+  String get biEditorAxis => 'Axe vertical';
+
+  @override
+  String biEditorAxisCut(String low) {
+    return 'L’axe commence à $low, pas à zéro.';
+  }
+
+  @override
+  String get biEditorAxisFit => 'Ajusté aux valeurs (indiqué sous la courbe)';
+
+  @override
+  String get biEditorAxisZero => 'Commence à zéro';
+
+  @override
+  String get biEditorBackToEdit => 'Revenir à la modification';
+
+  @override
+  String get biEditorBasisBookValue => 'selon la période comptable';
+
+  @override
+  String get biEditorBasisCurrentState => 'tel qu’aujourd’hui';
+
+  @override
+  String get biEditorBasisDocumentDate => 'selon la date du document';
+
+  @override
+  String get biEditorBasisInvoiceMonth => 'selon le mois de facture';
+
+  @override
+  String get biEditorBasisOccurrenceDue => 'selon l’échéance';
+
+  @override
+  String get biEditorBasisPaymentMatched => 'selon le paiement rapproché';
+
+  @override
+  String get biEditorBasisPeriodEnd => 'en fin de période';
+
+  @override
+  String get biEditorBasisReportedPaid => 'selon le paiement déclaré';
+
+  @override
+  String get biEditorBasisReservationTime => 'selon le temps réservé';
+
+  @override
+  String get biEditorChangeFigure => 'Changer';
+
+  @override
+  String get biEditorChooseFigure => 'Choisir un indicateur';
+
+  @override
+  String get biEditorClose => 'Fermer l’éditeur';
+
+  @override
+  String biEditorColumns(String count) {
+    return '$count colonnes sur 12';
+  }
+
+  @override
+  String get biEditorConflict =>
+      'Quelqu’un a enregistré ce rapport depuis que vous l’avez ouvert. Rien n’a été écrasé : rechargez sa version (vos modifications sont abandonnées) ou gardez vos modifications dans une copie privée.';
+
+  @override
+  String get biEditorCoverageConfirmed => 'valeurs confirmées seulement';
+
+  @override
+  String get biEditorCoverageCurrentRecords => 'enregistrements actuels';
+
+  @override
+  String get biEditorCoverageHistory => 'historique enregistré';
+
+  @override
+  String get biEditorCoverageTodayOnly =>
+      'aujourd’hui seulement, sans historique';
+
+  @override
+  String get biEditorDelete => 'Supprimer';
+
+  @override
+  String get biEditorDiscard => 'Abandonner';
+
+  @override
+  String get biEditorDuplicate => 'Dupliquer';
+
+  @override
+  String get biEditorEarlier => 'Avant';
+
+  @override
+  String get biEditorEmptyPage =>
+      'Cette page n’a pas encore de visuel. Ajoutez-en un depuis le catalogue.';
+
+  @override
+  String get biEditorFigure => 'Indicateur';
+
+  @override
+  String biEditorFilterExcept(String what, String scope) {
+    return 'Tout sauf $what · $scope';
+  }
+
+  @override
+  String biEditorFilterOnly(String what, String scope) {
+    return 'Seulement $what · $scope';
+  }
+
+  @override
+  String biEditorFilteredBy(String group) {
+    return 'Montre $group seulement (la sélection de la page).';
+  }
+
+  @override
+  String get biEditorFilters => 'Filtres';
+
+  @override
+  String get biEditorFormat => 'Format des nombres';
+
+  @override
+  String get biEditorFormatAuto => 'Selon l’indicateur';
+
+  @override
+  String get biEditorGrouping => 'Regroupé par';
+
+  @override
+  String get biEditorHeight => 'Hauteur';
+
+  @override
+  String get biEditorHigher => 'Plus haut';
+
+  @override
+  String get biEditorInteraction => 'Un clic sur un groupe';
+
+  @override
+  String get biEditorInteractionFilter =>
+      'Filtre les autres visuels de la page';
+
+  @override
+  String get biEditorInteractionNone => 'Ne fait rien';
+
+  @override
+  String get biEditorKeepAsCopy => 'Garder la mienne en copie privée';
+
+  @override
+  String get biEditorKeepEditing => 'Continuer à modifier';
+
+  @override
+  String get biEditorKeepSelection => 'Garder comme filtre de cette page';
+
+  @override
+  String get biEditorKind => 'Affiché en';
+
+  @override
+  String get biEditorKindBar => 'Barres';
+
+  @override
+  String get biEditorKindKpi => 'Chiffre';
+
+  @override
+  String get biEditorKindLine => 'Courbe';
+
+  @override
+  String get biEditorKindStackedBar => 'Barre empilée';
+
+  @override
+  String get biEditorKindTable => 'Tableau';
+
+  @override
+  String get biEditorKindText => 'Texte';
+
+  @override
+  String get biEditorLater => 'Après';
+
+  @override
+  String get biEditorLeaveBody =>
+      'Vos modifications de ce rapport ne sont pas encore enregistrées.';
+
+  @override
+  String get biEditorLeaveTitle => 'Quitter sans enregistrer ?';
+
+  @override
+  String get biEditorLegend => 'Légende';
+
+  @override
+  String get biEditorLower => 'Moins haut';
+
+  @override
+  String get biEditorMore => 'Autres options d’enregistrement';
+
+  @override
+  String get biEditorNarrower => 'Plus étroit';
+
+  @override
+  String get biEditorNewText => 'Écrivez une explication ici.';
+
+  @override
+  String get biEditorNoFilters =>
+      'Aucun filtre : chaque indicateur montre tout ce que vos droits permettent.';
+
+  @override
+  String get biEditorNoGrouping => 'Sans regroupement';
+
+  @override
+  String get biEditorNoHistory =>
+      'Pas encore d’historique pour cet indicateur : rien pour tracer une tendance.';
+
+  @override
+  String get biEditorNotComposition =>
+      'Certaines parts sont négatives : ce n’est pas un tout fait de parts. Voir le tableau.';
+
+  @override
+  String get biEditorNotEditable =>
+      'Ce rapport ne peut pas être modifié ici : il ne vous revient pas de le changer, il contient des chiffres que vous ne pouvez pas lire, ou il n’existe plus. Ouvrez-le depuis la page des analyses, ou enregistrez-en une copie.';
+
+  @override
+  String get biEditorNotFiltered =>
+      'Cet indicateur n’est pas regroupé ainsi : il montre son total, pas la sélection.';
+
+  @override
+  String get biEditorOnePoint =>
+      'Une seule période connue : un point, pas une tendance.';
+
+  @override
+  String get biEditorOpen => 'Modifier le rapport';
+
+  @override
+  String get biEditorOutsideScope =>
+      'La sélection sort des filtres de ce visuel : il continue de montrer ce qu’ils permettent.';
+
+  @override
+  String biEditorPageDelete(String title) {
+    return 'Supprimer $title';
+  }
+
+  @override
+  String biEditorPageEarlier(String title) {
+    return 'Avancer $title';
+  }
+
+  @override
+  String biEditorPageLater(String title) {
+    return 'Reculer $title';
+  }
+
+  @override
+  String get biEditorPageTitle => 'Titre de la page';
+
+  @override
+  String get biEditorPages => 'Pages';
+
+  @override
+  String get biEditorPagesAndVisuals => 'Pages et visuels';
+
+  @override
+  String get biEditorPalette => 'Couleurs';
+
+  @override
+  String get biEditorPaletteContrast => 'Contraste élevé';
+
+  @override
+  String get biEditorPaletteMono => 'Une seule couleur';
+
+  @override
+  String get biEditorPaletteStandard => 'Les couleurs de l’app';
+
+  @override
+  String biEditorPlace(String position, String count) {
+    return 'Place $position sur $count';
+  }
+
+  @override
+  String get biEditorPreview => 'Aperçu tel que les lecteurs le voient';
+
+  @override
+  String get biEditorProperties => 'Propriétés';
+
+  @override
+  String get biEditorPublish => 'Publier pour l’espace';
+
+  @override
+  String biEditorReadLabel(String title, String kind) {
+    return '$title, $kind';
+  }
+
+  @override
+  String get biEditorRedo => 'Rétablir';
+
+  @override
+  String get biEditorRefusedAxis =>
+      'Seul l’axe d’une courbe peut s’ajuster aux valeurs ; une barre part de zéro. Le visuel reste inchangé.';
+
+  @override
+  String get biEditorRefusedDimension =>
+      'Cet indicateur ne se regroupe pas ainsi. Le visuel reste inchangé.';
+
+  @override
+  String get biEditorRefusedFormat =>
+      'Ce format changerait l’unité de l’indicateur : un pourcentage reste un pourcentage, un montant reste un montant. Le visuel reste inchangé.';
+
+  @override
+  String get biEditorRefusedLastPage => 'Un rapport garde au moins une page.';
+
+  @override
+  String get biEditorRefusedLimit =>
+      'Ce rapport a atteint la limite de pages ou de visuels de l’espace.';
+
+  @override
+  String get biEditorRefusedMissing => 'Ce visuel n’est plus sur cette page.';
+
+  @override
+  String get biEditorRefusedNoGrouping =>
+      'Les barres comparent des groupes, et cet indicateur n’a pas de regroupement. Le visuel reste inchangé.';
+
+  @override
+  String get biEditorRefusedNoHistory =>
+      'Une courbe a besoin d’un historique ; cet indicateur ne donne que l’état du jour. Le visuel reste inchangé.';
+
+  @override
+  String get biEditorRefusedNotAdditive =>
+      'Seul un indicateur qui s’additionne forme un tout fait de parts. Le visuel reste inchangé.';
+
+  @override
+  String get biEditorRefusedSort =>
+      'Trier par valeur suppose des groupes à trier. Le visuel reste inchangé.';
+
+  @override
+  String get biEditorRefusedText => 'Un texte ne porte aucun indicateur.';
+
+  @override
+  String get biEditorRefusedTextLength =>
+      'Un titre ou un texte doit compter de 1 caractère à son maximum.';
+
+  @override
+  String get biEditorRefusedUnknown =>
+      'Cet indicateur n’est pas un de ceux que vous pouvez montrer ici.';
+
+  @override
+  String get biEditorRefusedWidens =>
+      'Un filtre ici ne peut que restreindre ceux du rapport, jamais les élargir.';
+
+  @override
+  String get biEditorReload => 'Recharger la sienne';
+
+  @override
+  String get biEditorRemoveFilter => 'Retirer ce filtre';
+
+  @override
+  String get biEditorReportProperties => 'Rapport et page';
+
+  @override
+  String get biEditorResetSelection => 'Réinitialiser la sélection';
+
+  @override
+  String biEditorRows(String count) {
+    return '$count rangées';
+  }
+
+  @override
+  String get biEditorSaveCopy => 'Enregistrer une copie (privée)';
+
+  @override
+  String get biEditorSaved => 'Le rapport est enregistré.';
+
+  @override
+  String biEditorScaleMax(String max) {
+    return 'Échelle : 0 à $max, le plus grand groupe';
+  }
+
+  @override
+  String get biEditorScalePercent => 'Échelle : 0 à 100 %';
+
+  @override
+  String get biEditorScopePage => 'cette page';
+
+  @override
+  String get biEditorScopeReport => 'tout le rapport';
+
+  @override
+  String get biEditorSelectHint =>
+      'Sélectionnez un visuel de la page pour le modifier.';
+
+  @override
+  String biEditorSelectionChip(String group) {
+    return 'Sélection : $group';
+  }
+
+  @override
+  String get biEditorSort => 'Ordre';
+
+  @override
+  String get biEditorSortHighFirst => 'Les plus élevés d’abord';
+
+  @override
+  String get biEditorSortLowFirst => 'Les plus bas d’abord';
+
+  @override
+  String get biEditorSortNatural => 'Dans l’ordre des groupes';
+
+  @override
+  String biEditorSourceNote(String unit, String basis, String coverage) {
+    return '$unit · $basis · $coverage';
+  }
+
+  @override
+  String get biEditorSourceNoteToggle => 'Note de source';
+
+  @override
+  String get biEditorText => 'Texte';
+
+  @override
+  String get biEditorTitle => 'Éditeur de rapport';
+
+  @override
+  String get biEditorUndo => 'Annuler';
+
+  @override
+  String get biEditorUnitAmount => 'Montant dans sa devise';
+
+  @override
+  String get biEditorUnitCount => 'Nombre';
+
+  @override
+  String get biEditorUnitPercent => 'Pourcentage';
+
+  @override
+  String get biEditorValueLabels => 'Valeurs écrites sur les marques';
+
+  @override
+  String get biEditorVisualDescription => 'Description';
+
+  @override
+  String biEditorVisualLabel(
+    String title,
+    String kind,
+    String position,
+    String count,
+    String span,
+  ) {
+    return '$title, $kind, place $position sur $count, $span colonnes sur 12. Alt et flèches le déplacent, Maj et flèches le redimensionnent, Suppr le retire.';
+  }
+
+  @override
+  String get biEditorVisualTitle => 'Titre affiché';
+
+  @override
+  String get biEditorVisuals => 'Sur cette page';
+
+  @override
+  String get biEditorWider => 'Plus large';
+
+  @override
+  String get biEditorWidth => 'Largeur';
+
+  @override
   String get biEvolutionTitle => 'Évolution';
 
   @override
@@ -16030,11 +16489,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get overviewActiveMemberships => 'Adhésions actives';
 
   @override
+  String get overviewAddTile => 'Épingler une tuile';
+
+  @override
   String get overviewAllIndicators => 'Tous les indicateurs';
+
+  @override
+  String overviewCopiedAsReport(String name) {
+    return 'Enregistré comme le rapport « $name ».';
+  }
+
+  @override
+  String get overviewCopyFrom => 'Copier la disposition d’un rapport';
+
+  @override
+  String get overviewCopyTo => 'Enregistrer comme rapport';
 
   @override
   String get overviewCurrentState =>
       'Chiffre du jour : aucun historique n\'en est gardé pour une période passée.';
+
+  @override
+  String get overviewCustomize => 'Personnaliser';
 
   @override
   String get overviewGroupCapacity => 'Capacité';
@@ -16055,11 +16531,45 @@ class AppLocalizationsFr extends AppLocalizations {
   String get overviewIndicators => 'Indicateurs clés';
 
   @override
+  String get overviewLayoutConflict =>
+      'Votre disposition a été modifiée ailleurs depuis son ouverture. Rien n’a été écrasé : rechargez-la, puis refaites votre changement.';
+
+  @override
+  String get overviewLayoutLost =>
+      'Votre disposition n’a pas pu être enregistrée : aucune réponse n’est revenue. Vos changements sont gardés ; réessayer renvoie le même enregistrement, jamais appliqué deux fois.';
+
+  @override
+  String get overviewLayoutName => 'Ma vue d’ensemble';
+
+  @override
+  String get overviewLayoutReload => 'Recharger';
+
+  @override
+  String get overviewLayoutSave => 'Enregistrer ma disposition';
+
+  @override
+  String get overviewLayoutSaved => 'Votre disposition est enregistrée.';
+
+  @override
   String get overviewMembershipsDefinition =>
       'Les adhésions de l\'espace actives aujourd\'hui, tous rôles compris : des adhésions, pas des personnes distinctes.';
 
   @override
+  String overviewMoveEarlier(String title) {
+    return 'Avancer $title';
+  }
+
+  @override
+  String overviewMoveLater(String title) {
+    return 'Reculer $title';
+  }
+
+  @override
   String get overviewNeedsAttention => 'À traiter';
+
+  @override
+  String get overviewNoPinned =>
+      'Aucune tuile épinglée : épinglez les indicateurs que vous voulez voir ici en premier.';
 
   @override
   String overviewOverdueBasis(String count, String unknown, String held) {
@@ -16074,13 +16584,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get overviewOverdueTitle => 'Créances échues';
 
   @override
+  String get overviewPinned => 'Vos tuiles épinglées';
+
+  @override
   String get overviewThisMonth => 'Ce mois-ci';
+
+  @override
+  String overviewTilePosition(String title, String position, String count) {
+    return '$title, tuile $position sur $count';
+  }
 
   @override
   String get overviewTitle => 'Vue d\'ensemble';
 
   @override
   String get overviewUnavailable => 'Non disponible';
+
+  @override
+  String overviewUnpinTile(String title) {
+    return 'Désépingler $title';
+  }
 
   @override
   String get payConfigConfigured => 'Configuré';

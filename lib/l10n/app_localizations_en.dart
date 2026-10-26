@@ -1988,6 +1988,462 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biDimensionLevel => 'Level';
 
   @override
+  String get biEditorAddPage => 'Add a page';
+
+  @override
+  String get biEditorAddVisual => 'Add a visual';
+
+  @override
+  String get biEditorAsTable => 'The same values as a table';
+
+  @override
+  String get biEditorAxis => 'Vertical axis';
+
+  @override
+  String biEditorAxisCut(String low) {
+    return 'The axis starts at $low, not at zero.';
+  }
+
+  @override
+  String get biEditorAxisFit => 'Fitted to the values (said under the line)';
+
+  @override
+  String get biEditorAxisZero => 'Starts at zero';
+
+  @override
+  String get biEditorBackToEdit => 'Back to editing';
+
+  @override
+  String get biEditorBasisBookValue => 'by book period';
+
+  @override
+  String get biEditorBasisCurrentState => 'as it is today';
+
+  @override
+  String get biEditorBasisDocumentDate => 'by document date';
+
+  @override
+  String get biEditorBasisInvoiceMonth => 'by invoice month';
+
+  @override
+  String get biEditorBasisOccurrenceDue => 'by due date';
+
+  @override
+  String get biEditorBasisPaymentMatched => 'by payment matched';
+
+  @override
+  String get biEditorBasisPeriodEnd => 'at period end';
+
+  @override
+  String get biEditorBasisReportedPaid => 'by payment reported';
+
+  @override
+  String get biEditorBasisReservationTime => 'by time booked';
+
+  @override
+  String get biEditorChangeFigure => 'Change';
+
+  @override
+  String get biEditorChooseFigure => 'Choose a figure';
+
+  @override
+  String get biEditorClose => 'Close the editor';
+
+  @override
+  String biEditorColumns(String count) {
+    return '$count of 12 columns';
+  }
+
+  @override
+  String get biEditorConflict =>
+      'Someone saved this report since you opened it. Nothing was overwritten: reload their version (your changes are dropped), or keep your changes as a private copy.';
+
+  @override
+  String get biEditorCoverageConfirmed => 'confirmed values only';
+
+  @override
+  String get biEditorCoverageCurrentRecords => 'current records';
+
+  @override
+  String get biEditorCoverageHistory => 'recorded history';
+
+  @override
+  String get biEditorCoverageTodayOnly => 'today only, no history';
+
+  @override
+  String get biEditorDelete => 'Delete';
+
+  @override
+  String get biEditorDiscard => 'Discard';
+
+  @override
+  String get biEditorDuplicate => 'Duplicate';
+
+  @override
+  String get biEditorEarlier => 'Earlier';
+
+  @override
+  String get biEditorEmptyPage =>
+      'This page has no visual yet. Add one from the catalogue.';
+
+  @override
+  String get biEditorFigure => 'Figure';
+
+  @override
+  String biEditorFilterExcept(String what, String scope) {
+    return 'All but $what · $scope';
+  }
+
+  @override
+  String biEditorFilterOnly(String what, String scope) {
+    return 'Only $what · $scope';
+  }
+
+  @override
+  String biEditorFilteredBy(String group) {
+    return 'Shows $group only (the page’s selection).';
+  }
+
+  @override
+  String get biEditorFilters => 'Filters';
+
+  @override
+  String get biEditorFormat => 'Number format';
+
+  @override
+  String get biEditorFormatAuto => 'As the figure says';
+
+  @override
+  String get biEditorGrouping => 'Grouped by';
+
+  @override
+  String get biEditorHeight => 'Height';
+
+  @override
+  String get biEditorHigher => 'Higher';
+
+  @override
+  String get biEditorInteraction => 'A click on a group';
+
+  @override
+  String get biEditorInteractionFilter =>
+      'Filters the other visuals of the page';
+
+  @override
+  String get biEditorInteractionNone => 'Does nothing';
+
+  @override
+  String get biEditorKeepAsCopy => 'Keep mine as a private copy';
+
+  @override
+  String get biEditorKeepEditing => 'Keep editing';
+
+  @override
+  String get biEditorKeepSelection => 'Keep as a filter of this page';
+
+  @override
+  String get biEditorKind => 'Shown as';
+
+  @override
+  String get biEditorKindBar => 'Bars';
+
+  @override
+  String get biEditorKindKpi => 'Figure';
+
+  @override
+  String get biEditorKindLine => 'Line';
+
+  @override
+  String get biEditorKindStackedBar => 'Stacked bar';
+
+  @override
+  String get biEditorKindTable => 'Table';
+
+  @override
+  String get biEditorKindText => 'Text';
+
+  @override
+  String get biEditorLater => 'Later';
+
+  @override
+  String get biEditorLeaveBody =>
+      'Your changes to this report are not saved yet.';
+
+  @override
+  String get biEditorLeaveTitle => 'Leave with unsaved changes?';
+
+  @override
+  String get biEditorLegend => 'Legend';
+
+  @override
+  String get biEditorLower => 'Lower';
+
+  @override
+  String get biEditorMore => 'More save options';
+
+  @override
+  String get biEditorNarrower => 'Narrower';
+
+  @override
+  String get biEditorNewText => 'Write an explanation here.';
+
+  @override
+  String get biEditorNoFilters =>
+      'No filter: each figure shows everything your rights allow.';
+
+  @override
+  String get biEditorNoGrouping => 'Not grouped';
+
+  @override
+  String get biEditorNoHistory =>
+      'No history yet for this figure: there is nothing to draw a trend from.';
+
+  @override
+  String get biEditorNotComposition =>
+      'Some parts are negative: this is not a whole made of parts. See the table.';
+
+  @override
+  String get biEditorNotEditable =>
+      'This report cannot be edited here: it is not yours to change, it holds figures you may not read, or it is no longer there. Open it from the analytics page, or save a copy of it there.';
+
+  @override
+  String get biEditorNotFiltered =>
+      'This figure is not grouped that way: it shows its whole, not the selection.';
+
+  @override
+  String get biEditorOnePoint => 'One known period only: a point, not a trend.';
+
+  @override
+  String get biEditorOpen => 'Edit report';
+
+  @override
+  String get biEditorOutsideScope =>
+      'The selection lies outside this visual’s filters: it keeps showing what they allow.';
+
+  @override
+  String biEditorPageDelete(String title) {
+    return 'Delete $title';
+  }
+
+  @override
+  String biEditorPageEarlier(String title) {
+    return 'Move $title earlier';
+  }
+
+  @override
+  String biEditorPageLater(String title) {
+    return 'Move $title later';
+  }
+
+  @override
+  String get biEditorPageTitle => 'Page title';
+
+  @override
+  String get biEditorPages => 'Pages';
+
+  @override
+  String get biEditorPagesAndVisuals => 'Pages and visuals';
+
+  @override
+  String get biEditorPalette => 'Colours';
+
+  @override
+  String get biEditorPaletteContrast => 'High contrast';
+
+  @override
+  String get biEditorPaletteMono => 'One colour';
+
+  @override
+  String get biEditorPaletteStandard => 'The app’s colours';
+
+  @override
+  String biEditorPlace(String position, String count) {
+    return 'Place $position of $count';
+  }
+
+  @override
+  String get biEditorPreview => 'Preview as readers see it';
+
+  @override
+  String get biEditorProperties => 'Properties';
+
+  @override
+  String get biEditorPublish => 'Publish to the workspace';
+
+  @override
+  String biEditorReadLabel(String title, String kind) {
+    return '$title, $kind';
+  }
+
+  @override
+  String get biEditorRedo => 'Redo';
+
+  @override
+  String get biEditorRefusedAxis =>
+      'Only a line’s axis may be fitted to its values; a bar starts at zero. The visual is unchanged.';
+
+  @override
+  String get biEditorRefusedDimension =>
+      'This figure is not answered by that grouping. The visual is unchanged.';
+
+  @override
+  String get biEditorRefusedFormat =>
+      'That format would change the figure’s unit: a percentage stays a percentage, an amount stays an amount. The visual is unchanged.';
+
+  @override
+  String get biEditorRefusedLastPage => 'A report keeps at least one page.';
+
+  @override
+  String get biEditorRefusedLimit =>
+      'This report has reached the space’s limit of pages or visuals.';
+
+  @override
+  String get biEditorRefusedMissing => 'That visual is no longer on this page.';
+
+  @override
+  String get biEditorRefusedNoGrouping =>
+      'Bars compare groups, and this figure has no grouping. The visual is unchanged.';
+
+  @override
+  String get biEditorRefusedNoHistory =>
+      'A line needs a history; this figure is today’s state only. The visual is unchanged.';
+
+  @override
+  String get biEditorRefusedNotAdditive =>
+      'Only a figure that adds up is a whole made of parts. The visual is unchanged.';
+
+  @override
+  String get biEditorRefusedSort =>
+      'Sorting by value needs groups to sort. The visual is unchanged.';
+
+  @override
+  String get biEditorRefusedText => 'A text carries no figure.';
+
+  @override
+  String get biEditorRefusedTextLength =>
+      'A title or text needs 1 to its maximum number of characters.';
+
+  @override
+  String get biEditorRefusedUnknown =>
+      'That figure is not one you may show here.';
+
+  @override
+  String get biEditorRefusedWidens =>
+      'A filter here may only narrow the report’s filters, never widen them.';
+
+  @override
+  String get biEditorReload => 'Reload theirs';
+
+  @override
+  String get biEditorRemoveFilter => 'Remove this filter';
+
+  @override
+  String get biEditorReportProperties => 'Report and page';
+
+  @override
+  String get biEditorResetSelection => 'Reset selection';
+
+  @override
+  String biEditorRows(String count) {
+    return '$count rows';
+  }
+
+  @override
+  String get biEditorSaveCopy => 'Save a copy (private)';
+
+  @override
+  String get biEditorSaved => 'The report is saved.';
+
+  @override
+  String biEditorScaleMax(String max) {
+    return 'Scale: 0 to $max, the largest group';
+  }
+
+  @override
+  String get biEditorScalePercent => 'Scale: 0 to 100 %';
+
+  @override
+  String get biEditorScopePage => 'this page';
+
+  @override
+  String get biEditorScopeReport => 'whole report';
+
+  @override
+  String get biEditorSelectHint => 'Select a visual on the page to change it.';
+
+  @override
+  String biEditorSelectionChip(String group) {
+    return 'Selected: $group';
+  }
+
+  @override
+  String get biEditorSort => 'Order';
+
+  @override
+  String get biEditorSortHighFirst => 'Highest first';
+
+  @override
+  String get biEditorSortLowFirst => 'Lowest first';
+
+  @override
+  String get biEditorSortNatural => 'As the groups come';
+
+  @override
+  String biEditorSourceNote(String unit, String basis, String coverage) {
+    return '$unit · $basis · $coverage';
+  }
+
+  @override
+  String get biEditorSourceNoteToggle => 'Source note';
+
+  @override
+  String get biEditorText => 'Text';
+
+  @override
+  String get biEditorTitle => 'Report editor';
+
+  @override
+  String get biEditorUndo => 'Undo';
+
+  @override
+  String get biEditorUnitAmount => 'Amount in its currency';
+
+  @override
+  String get biEditorUnitCount => 'Count';
+
+  @override
+  String get biEditorUnitPercent => 'Percentage';
+
+  @override
+  String get biEditorValueLabels => 'Values written on the marks';
+
+  @override
+  String get biEditorVisualDescription => 'Description';
+
+  @override
+  String biEditorVisualLabel(
+    String title,
+    String kind,
+    String position,
+    String count,
+    String span,
+  ) {
+    return '$title, $kind, place $position of $count, $span of 12 columns. Alt and arrows move it, Shift and arrows resize it, Delete removes it.';
+  }
+
+  @override
+  String get biEditorVisualTitle => 'Title shown';
+
+  @override
+  String get biEditorVisuals => 'On this page';
+
+  @override
+  String get biEditorWider => 'Wider';
+
+  @override
+  String get biEditorWidth => 'Width';
+
+  @override
   String get biEvolutionTitle => 'Evolution';
 
   @override
@@ -15882,11 +16338,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get overviewActiveMemberships => 'Active memberships';
 
   @override
+  String get overviewAddTile => 'Pin a tile';
+
+  @override
   String get overviewAllIndicators => 'All indicators';
+
+  @override
+  String overviewCopiedAsReport(String name) {
+    return 'Saved as the report “$name”.';
+  }
+
+  @override
+  String get overviewCopyFrom => 'Copy a report’s layout';
+
+  @override
+  String get overviewCopyTo => 'Save as a report';
 
   @override
   String get overviewCurrentState =>
       'Today\'s figure: no history of it is kept for a past period.';
+
+  @override
+  String get overviewCustomize => 'Customize';
 
   @override
   String get overviewGroupCapacity => 'Capacity';
@@ -15907,11 +16380,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get overviewIndicators => 'Key indicators';
 
   @override
+  String get overviewLayoutConflict =>
+      'Your layout was changed elsewhere since you opened it. Nothing was overwritten: reload it, then make your change again.';
+
+  @override
+  String get overviewLayoutLost =>
+      'Your layout could not be saved: no answer came back. Your changes are kept; retrying sends the same save again, it is never applied twice.';
+
+  @override
+  String get overviewLayoutName => 'My overview';
+
+  @override
+  String get overviewLayoutReload => 'Reload';
+
+  @override
+  String get overviewLayoutSave => 'Save my layout';
+
+  @override
+  String get overviewLayoutSaved => 'Your layout is saved.';
+
+  @override
   String get overviewMembershipsDefinition =>
       'The memberships of the space that are active today, each role included: memberships, not distinct people.';
 
   @override
+  String overviewMoveEarlier(String title) {
+    return 'Move $title earlier';
+  }
+
+  @override
+  String overviewMoveLater(String title) {
+    return 'Move $title later';
+  }
+
+  @override
   String get overviewNeedsAttention => 'Needs attention';
+
+  @override
+  String get overviewNoPinned =>
+      'No tile is pinned: pin the figures you want to see here first.';
 
   @override
   String overviewOverdueBasis(String count, String unknown, String held) {
@@ -15926,13 +16433,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get overviewOverdueTitle => 'Overdue receivables';
 
   @override
+  String get overviewPinned => 'Your pinned tiles';
+
+  @override
   String get overviewThisMonth => 'This month';
+
+  @override
+  String overviewTilePosition(String title, String position, String count) {
+    return '$title, tile $position of $count';
+  }
 
   @override
   String get overviewTitle => 'Overview';
 
   @override
   String get overviewUnavailable => 'Not available';
+
+  @override
+  String overviewUnpinTile(String title) {
+    return 'Unpin $title';
+  }
 
   @override
   String get payConfigConfigured => 'Configured';
