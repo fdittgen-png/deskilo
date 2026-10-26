@@ -24,7 +24,7 @@
 
       "lib/core/ui/canvas_controls.dart": 504,
 
-      "lib/core/vat/tax_value.dart": 540,
+      "lib/core/vat/tax_value.dart": 551,
 
       "lib/features/auth/data/supabase_auth_repository.dart": 581,
 

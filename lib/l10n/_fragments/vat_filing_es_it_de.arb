@@ -1,0 +1,63 @@
+{
+  "@@locale": "de",
+  "vatDeclAeat303": "AEAT-Datei (Modelo 303)",
+  "@vatDeclAeat303": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"
+  },
+  "vatDeclLipeXml": "LIPE-XML (periodische USt-Abrechnung)",
+  "@vatDeclLipeXml": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclLipeXml"
+  },
+  "vatDeclFilingEsIntro": "Die Sede der AEAT liest diese Datei in das Formular Modelo 303 ein; dort unterschreiben und übermitteln Sie es. Kreuzen Sie an, was für den Space gilt:",
+  "@vatDeclFilingEsIntro": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsIntro"
+  },
+  "vatDeclFilingEsMonthlyRefund": "Im Register für monatliche Erstattungen (REDEME) eingetragen",
+  "@vatDeclFilingEsMonthlyRefund": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsMonthlyRefund"
+  },
+  "vatDeclFilingEsSii": "Führt seine USt-Bücher über SII",
+  "@vatDeclFilingEsSii": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsSii"
+  },
+  "vatDeclFilingEsCashRecipient": "Erhält Leistungen, die nach dem Kassenkriterium besteuert werden",
+  "@vatDeclFilingEsCashRecipient": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsCashRecipient"
+  },
+  "vatDeclFilingItIntro": "Ihr Intermediär übermittelt diese Datei über Entratel. Eine Gesellschaft nennt die Person, die für sie unterschreibt; lassen Sie beide Felder leer, wenn Sie für sich selbst abgeben.",
+  "@vatDeclFilingItIntro": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItIntro"
+  },
+  "vatDeclFilingItDeclarantCf": "Steuernummer des Erklärenden (codice fiscale)",
+  "@vatDeclFilingItDeclarantCf": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantCf"
+  },
+  "vatDeclFilingItDeclarantRole": "Funktionscode des Erklärenden (codice carica)",
+  "@vatDeclFilingItDeclarantRole": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRole"
+  },
+  "vatDeclFilingItDeclarantRoleHelp": "Der Code aus der Tabelle der Agenzia delle Entrate: 1 bis 9 oder 11 bis 15.",
+  "@vatDeclFilingItDeclarantRoleHelp": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRoleHelp"
+  },
+  "vatDeclFilingFiscalCode": "Geben Sie den codice fiscale des Space als Registernummer ein (11 Ziffern für eine Gesellschaft, 16 Zeichen für eine Person): die Datei nennt ihn.",
+  "@vatDeclFilingFiscalCode": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingFiscalCode"
+  },
+  "vatDeclFilingDeclarant": "Der Erklärende braucht einen gültigen codice fiscale und einen codice carica von 1 bis 9 oder 11 bis 15.",
+  "@vatDeclFilingDeclarant": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingDeclarant"
+  },
+  "vatDeclFilingUnmappedBox": "Die Erklärung enthält Umsätze zu einem Satz, für den das Formular kein Feld hat; geben Sie diesen Zeitraum direkt im Formular ab.",
+  "@vatDeclFilingUnmappedBox": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingUnmappedBox"
+  },
+  "vatDeclFilingNegative": "Ein Feld dieser Erklärung ist negativ und die Datei hat dafür kein Vorzeichen; erfassen Sie die Berichtigung direkt im Formular.",
+  "@vatDeclFilingNegative": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingNegative"
+  },
+  "vatDeclFilingAnnualVolume": "Ein Space im SII gibt auf der letzten Erklärung das Jahresvolumen an, eine Seite, die diese Datei nicht schreibt; geben Sie den letzten Zeitraum direkt im Formular ab.",
+  "@vatDeclFilingAnnualVolume": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingAnnualVolume"
+  }
+}

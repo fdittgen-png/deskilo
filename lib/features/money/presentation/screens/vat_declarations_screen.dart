@@ -37,6 +37,7 @@ import '../report_actions.dart';
 import '../report_layout_actions.dart';
 import '../sales_tax_worksheet_actions.dart';
 import '../vat_filing_file_actions.dart';
+import '../vat_register_actions.dart';
 import '../vat_report_actions.dart';
 import '../vat_tax_point_labels.dart';
 import '../widgets/vat_declaration_card.dart';
@@ -422,6 +423,13 @@ class _VatDeclarationsScreenState
                 // New declaration: period + generate.
                 _periodRow(l10n, periods, period),
                 ..._exportButtons(context, period),
+                VatCountryRegisters(
+                  start: period.start,
+                  end: period.end,
+                  registers: ref
+                      .watch(enabledFeaturesSyncProvider)
+                      .contains(WorkspaceFeature.vatReport),
+                ),
                 SalesTaxWorksheetButton(start: period.start, end: period.end),
                 const SizedBox(height: AppSpacing.lg),
                 switch (declarationsAsync) {

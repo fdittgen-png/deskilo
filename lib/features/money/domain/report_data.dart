@@ -25,6 +25,7 @@ import 'invoice_sales_tax.dart';
 import 'payment_terms.dart';
 import 'period_label.dart';
 import 'report_strings.dart';
+import 'stamp_duty.dart';
 import 'vat_compliance.dart';
 import 'vat_components.dart';
 import 'vat_rate.dart';
@@ -196,6 +197,17 @@ Map<String, Object?> _invoiceLegalMentionData(
     for (final t in invoice.vatTotals)
       if (t.exemptionReason.isNotEmpty) t.exemptionReason,
   }.toList();
+  final statutory = statutoryMentionData((
+    workspace: workspace,
+    seller: invoice.sellerParty,
+    buyer: invoice.buyerParty,
+    reverseCharged: invoice.isReverseCharged,
+    counterpartyCategory: invoice.counterpartyCategory,
+    rateExemptionReasons: rateReasons,
+    frozen: invoice.legalClauses,
+  ), asOf: isoDay(invoice.issuedAt));
+  // The stamp duty is due because no VAT is: it is said under the reason.
+  final stamp = stampDutyMention(invoice);
   return {
     ...legalMentionData(
       strings,
@@ -212,15 +224,12 @@ Map<String, Object?> _invoiceLegalMentionData(
       legacy: isLegacyInvoice(invoice),
       memberCapacity: memberCapacity,
     ),
-    ...statutoryMentionData((
-      workspace: workspace,
-      seller: invoice.sellerParty,
-      buyer: invoice.buyerParty,
-      reverseCharged: invoice.isReverseCharged,
-      counterpartyCategory: invoice.counterpartyCategory,
-      rateExemptionReasons: rateReasons,
-      frozen: invoice.legalClauses,
-    ), asOf: isoDay(invoice.issuedAt)),
+    ...statutory,
+    if (stamp != null)
+      'exemption_reason': [statutory['exemption_reason'], stamp]
+          .whereType<String>()
+          .where((t) => t.isNotEmpty)
+          .join('\n'),
   };
 }
 

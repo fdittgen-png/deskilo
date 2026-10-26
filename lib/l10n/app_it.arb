@@ -8141,6 +8141,10 @@
   "@invoiceMissingSellerVatIdFormat": {
     "description": "#2359: invoiceMissingSellerVatIdFormat"
   },
+  "invoiceMissingTerritoryOutsideVat": "La sede si trova dove l’IVA dello Stato non si applica (Canarie: IGIC; Ceuta e Melilla: IPSI): DesKilo non vi emette ancora.",
+  "@invoiceMissingTerritoryOutsideVat": {
+    "description": "#2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat"
+  },
   "invoiceMissingTitle": "Completi questi dati prima dell'emissione",
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
@@ -17339,6 +17343,10 @@
     "description": "#2479 tax reference: Field: the threshold in minor units of the currency."
   },
   "taxRefChKmuKeys": "Giornale svizzero (formato ch_kmu): la chiave ch_kmu/tax:<gruppo> dà il codice IVA delle vendite di un gruppo di aliquote, ch_kmu/input:<gruppo> quello della sua imposta precedente su materiale e prestazioni (cifra 400), ch_kmu/asset:<gruppo> quello dell'imposta precedente su investimenti (cifra 405), come codice d'imposta; il codice deve esistere nella tabella IVA del file Banana.",
+  "taxRefChargeCents": "Importo dovuto oltre la soglia (unità minore, imposta di bollo)",
+  "@taxRefChargeCents": {
+    "description": "#2363 tax reference editor: taxRefChargeCents"
+  },
   "taxRefComponents": "Giurisdizioni, una per riga: livello, nome, percentuale (livello: state, county, city o district)",
   "@taxRefComponents": {
     "description": "#2362 sales tax: taxRefComponents"
@@ -17534,6 +17542,10 @@
   "taxRefOfflineCopy": "Copia inclusa nell'app: il server non è raggiungibile.",
   "@taxRefOfflineCopy": {
     "description": "#2477 tax reference: Banner: values come from the bundled copy."
+  },
+  "taxRefOutsideVatPostalCodes": "Prefissi di CAP fuori dall’IVA (separati da virgole)",
+  "@taxRefOutsideVatPostalCodes": {
+    "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
   },
   "taxRefPattern": "Formato",
   "@taxRefPattern": {
@@ -18384,6 +18396,43 @@
   "vatAccountField": "Conto IVA",
   "vatAccountHint": "Conto su cui l'esportazione contabile registra l'IVA incassata. Vuoto = 445710.",
   "vatAddRate": "Aggiungi un'aliquota",
+  "vatAnnualSummaryBase": "Imponibile",
+  "@vatAnnualSummaryBase": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryBase"
+  },
+  "vatAnnualSummaryBox": "Rigo",
+  "@vatAnnualSummaryBox": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryBox"
+  },
+  "vatAnnualSummaryButton": "{form} {year} (foglio annuale)",
+  "@vatAnnualSummaryButton": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryButton",
+    "placeholders": {
+      "form": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatAnnualSummaryEmpty": "Ancora nessuna dichiarazione preparata o presentata nel {year}.",
+  "@vatAnnualSummaryEmpty": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryEmpty",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatAnnualSummaryLabel": "Descrizione",
+  "@vatAnnualSummaryLabel": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryLabel"
+  },
+  "vatAnnualSummaryTax": "Imposta",
+  "@vatAnnualSummaryTax": {
+    "description": "#2363 VAT registers (ES, IT): vatAnnualSummaryTax"
+  },
   "vatChangeByLaw": "Modifica per legge",
   "@vatChangeByLaw": {
     "description": "#985 VAT versions and counterparty: vatChangeByLaw"
@@ -18399,6 +18448,10 @@
   "vatChangeNeedsSave": "Salvi prima l'aliquota; poi la modifichi per legge.",
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
+  },
+  "vatDeclAeat303": "File AEAT (Modelo 303)",
+  "@vatDeclAeat303": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"
   },
   "vatDeclBox": "Rigo",
   "@vatDeclBox": {
@@ -18449,11 +18502,59 @@
   "@vatDeclFiled": {
     "description": "Status chip: the owner filed the return with the tax authority (#2357)"
   },
+  "vatDeclFilingAnnualVolume": "Uno spazio nel SII dichiara il volume annuo delle operazioni nell’ultima liquidazione, una pagina che questo file non scrive; presenti l’ultimo periodo direttamente nel modulo.",
+  "@vatDeclFilingAnnualVolume": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingAnnualVolume"
+  },
   "vatDeclFilingBn": "Inserisca il numero d'impresa GST/HST dello spazio con il conto RT (123456789 RT0001): il file lo riporta.",
   "@vatDeclFilingBn": {
     "description": "#2361 VAT filing files: vatDeclFilingBn"
   },
-  "vatDeclFilingPeriod": "Una dichiarazione anticipata ELSTER copre un mese o un trimestre; la dichiarazione annuale si presenta a parte.",
+  "vatDeclFilingDeclarant": "Il dichiarante richiede un codice fiscale valido e un codice carica da 1 a 9 o da 11 a 15.",
+  "@vatDeclFilingDeclarant": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingDeclarant"
+  },
+  "vatDeclFilingEsCashRecipient": "Riceve operazioni soggette al criterio di cassa",
+  "@vatDeclFilingEsCashRecipient": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsCashRecipient"
+  },
+  "vatDeclFilingEsIntro": "La Sede dell’AEAT importa questo file nel modulo Modelo 303; poi Lei lo firma e lo presenta lì. Selezioni ciò che vale per lo spazio:",
+  "@vatDeclFilingEsIntro": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsIntro"
+  },
+  "vatDeclFilingEsMonthlyRefund": "Iscritto al registro dei rimborsi mensili (REDEME)",
+  "@vatDeclFilingEsMonthlyRefund": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsMonthlyRefund"
+  },
+  "vatDeclFilingEsSii": "Tiene i registri IVA tramite il SII",
+  "@vatDeclFilingEsSii": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingEsSii"
+  },
+  "vatDeclFilingFiscalCode": "Inserisca il codice fiscale dello spazio come numero di registrazione (11 cifre per una società, 16 caratteri per una persona): il file lo indica.",
+  "@vatDeclFilingFiscalCode": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingFiscalCode"
+  },
+  "vatDeclFilingItDeclarantCf": "Codice fiscale del dichiarante",
+  "@vatDeclFilingItDeclarantCf": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantCf"
+  },
+  "vatDeclFilingItDeclarantRole": "Codice carica del dichiarante",
+  "@vatDeclFilingItDeclarantRole": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRole"
+  },
+  "vatDeclFilingItDeclarantRoleHelp": "Il codice della tabella dell’Agenzia delle Entrate: da 1 a 9 o da 11 a 15.",
+  "@vatDeclFilingItDeclarantRoleHelp": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRoleHelp"
+  },
+  "vatDeclFilingItIntro": "Il Suo intermediario trasmette questo file tramite Entratel. Una società indica la persona che firma per essa; lasci vuoti entrambi i campi se presenta per sé.",
+  "@vatDeclFilingItIntro": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingItIntro"
+  },
+  "vatDeclFilingNegative": "Un rigo di questa dichiarazione è negativo e il file non ammette il segno; registri la rettifica direttamente nel modulo.",
+  "@vatDeclFilingNegative": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingNegative"
+  },
+  "vatDeclFilingPeriod": "Il file di una dichiarazione periodica copre un mese o un trimestre; la dichiarazione annuale si presenta a parte.",
   "@vatDeclFilingPeriod": {
     "description": "#2357 VAT filing files: vatDeclFilingPeriod"
   },
@@ -18468,6 +18569,10 @@
   "vatDeclFilingUid": "Inserisca il numero IDI dello spazio (CHE-123.456.789 con una cifra di controllo valida): il file lo cita.",
   "@vatDeclFilingUid": {
     "description": "#2360 VAT filing files: vatDeclFilingUid"
+  },
+  "vatDeclFilingUnmappedBox": "La dichiarazione contiene vendite a un’aliquota per cui il modello non ha un rigo; presenti questo periodo direttamente nel modulo.",
+  "@vatDeclFilingUnmappedBox": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclFilingUnmappedBox"
   },
   "vatDeclFilingVatNumber": "Inserisca il numero di partita IVA dello spazio (GB e nove cifre): il file lo indica.",
   "@vatDeclFilingVatNumber": {
@@ -18488,6 +18593,10 @@
   "vatDeclInvoices": "Fatture",
   "@vatDeclInvoices": {
     "description": "Invoice-count column"
+  },
+  "vatDeclLipeXml": "XML LIPE (liquidazione periodica IVA)",
+  "@vatDeclLipeXml": {
+    "description": "#2363 VAT filing files (ES, IT): vatDeclLipeXml"
   },
   "vatDeclMarkFiled": "Segna come presentata",
   "@vatDeclMarkFiled": {
@@ -18699,6 +18808,60 @@
   "vatRateRemoveTooltip": "Rimuovi",
   "vatRatesTile": "Aliquote IVA",
   "vatRegimeHint": "Questo spazio non è dichiarato soggetto a IVA, quindi le fatture non la espongono. Si cambia in Identità legale.",
+  "vatRegister347Empty": "Nessun cliente ha superato la soglia del modelo 347 nel {year}.",
+  "@vatRegister347Empty": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Empty",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatRegister347Sii": "Uno spazio che tiene i registri IVA tramite il SII non presenta il modelo 347: l’AEAT dispone già delle sue fatture.",
+  "@vatRegister347Sii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegister347Sii"
+  },
+  "vatRegisterActivity": "Attività: codice, tipo ed epigrafe IAE",
+  "@vatRegisterActivity": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivity"
+  },
+  "vatRegisterActivityHelp": "Come lo scrive l’AEAT, ad esempio A038612. Lo lasci vuoto per compilare Lei stesso le colonne dell’attività.",
+  "@vatRegisterActivityHelp": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivityHelp"
+  },
+  "vatRegisterActivityInvalid": "Un codice da A a D, due cifre di tipo e fino a quattro caratteri di epigrafe.",
+  "@vatRegisterActivityInvalid": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterActivityInvalid"
+  },
+  "vatRegisterEmpty": "Nessuna fattura è stata emessa in questo periodo.",
+  "@vatRegisterEmpty": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEmpty"
+  },
+  "vatRegisterEs347": "Modelo 347 {year} (CSV)",
+  "@vatRegisterEs347": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEs347",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "vatRegisterEsLibro": "Registro delle fatture emesse (XLSX AEAT)",
+  "@vatRegisterEsLibro": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEsLibro"
+  },
+  "vatRegisterEsSii": "SII: fatture emesse (XML)",
+  "@vatRegisterEsSii": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterEsSii"
+  },
+  "vatRegisterItRegistro": "Registro delle fatture emesse (CSV)",
+  "@vatRegisterItRegistro": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterItRegistro"
+  },
+  "vatRegisterNif": "Inserisca il NIF dello spazio come partita IVA (nove caratteri, con ES davanti se desidera): il file lo indica.",
+  "@vatRegisterNif": {
+    "description": "#2363 VAT registers (ES, IT): vatRegisterNif"
+  },
   "vatReportByRate": "Totali per aliquota",
   "@vatReportByRate": {
     "description": "#878 VAT review / report: vatReportByRate"

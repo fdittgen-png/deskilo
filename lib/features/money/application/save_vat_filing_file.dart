@@ -4,7 +4,7 @@
 // (Germany), the CA3 as an EDI-TVA interchange (France), written from the
 // form boxes and saved where the device keeps downloads. Nothing is
 // transmitted; the owner hands the file to the channel that files it.
-import 'dart:convert' show utf8;
+import 'dart:typed_data';
 
 import '../../../core/files/file_saver.dart';
 import '../domain/vat_declaration.dart';
@@ -23,16 +23,22 @@ class SaveVatFilingFile {
   String? get country => party?.fileCountry;
 
   /// Writes and saves the file; answers where it landed. Throws
-  /// [VatFilingFileException] when the period or [taxNumber] does not fit.
-  Future<String?> call(VatDeclaration declaration, {String taxNumber = ''}) {
+  /// [VatFilingFileException] when the period or one of [facts] does not fit.
+  Future<String?> call(
+    VatDeclaration declaration, {
+    VatFilingFacts facts = const VatFilingFacts(),
+  }) {
     final party = this.party;
     if (party == null) throw StateError('no workspace loaded');
     final file = vatFilingFile(
       declaration: declaration,
       party: party,
       now: _now(),
-      taxNumber: taxNumber,
+      facts: facts,
     );
-    return _save(bytes: utf8.encode(file.text), fileName: file.fileName);
+    return _save(
+      bytes: Uint8List.fromList(file.encoding.encode(file.text)),
+      fileName: file.fileName,
+    );
   }
 }

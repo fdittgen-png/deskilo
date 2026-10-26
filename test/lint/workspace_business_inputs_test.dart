@@ -56,7 +56,11 @@ const _clean = <String>[
 const _calendarBudget = 55;
 
 /// RATCHET: files reading the tax reference static. Only falls.
-const _taxBudget = 21;
+/// 2026-10-26 (#2363): 21 -> 22, `money/domain/stamp_duty.dart`: the Italian
+/// stamp duty is decided inside the FatturaPA writer and the invoice report
+/// data, neither of which receives the workspace context yet; it moves to the
+/// context with them.
+const _taxBudget = 22;
 
 final _calendarRead = RegExp(r'\bWorkspaceTime\.(?!install\()|\bWorkHours\.current\b');
 final _taxRead = RegExp(r'\bActiveTaxReference\.(?!install\()');

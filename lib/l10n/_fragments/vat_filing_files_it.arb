@@ -8,7 +8,7 @@
   "@vatDeclEdiTva": {
     "description": "#2357 VAT filing files: vatDeclEdiTva"
   },
-  "vatDeclFilingPeriod": "Una dichiarazione anticipata ELSTER copre un mese o un trimestre; la dichiarazione annuale si presenta a parte.",
+  "vatDeclFilingPeriod": "Il file di una dichiarazione periodica copre un mese o un trimestre; la dichiarazione annuale si presenta a parte.",
   "@vatDeclFilingPeriod": {
     "description": "#2357 VAT filing files: vatDeclFilingPeriod"
   },

@@ -19373,6 +19373,12 @@ abstract class AppLocalizations {
   /// **'The workspace\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)'**
   String get invoiceMissingSellerVatIdFormat;
 
+  /// #2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat
+  ///
+  /// In en, this message translates to:
+  /// **'The site is where the State’s VAT does not apply (Canary Islands: IGIC; Ceuta and Melilla: IPSI): DesKilo does not issue there yet.'**
+  String get invoiceMissingTerritoryOutsideVat;
+
   /// #1916 invoice essentials: invoiceMissingTitle
   ///
   /// In en, this message translates to:
@@ -42995,6 +43001,12 @@ abstract class AppLocalizations {
   /// **'Swiss journal (format ch_kmu): key ch_kmu/tax:<group> gives the MWST code of a rate group\'s sales, ch_kmu/input:<group> of its input tax on material and services (Ziffer 400), ch_kmu/asset:<group> of the input tax on an investment (Ziffer 405), as tax code; the code must exist in the Banana file\'s VAT table.'**
   String get taxRefChKmuKeys;
 
+  /// #2363 tax reference editor: taxRefChargeCents
+  ///
+  /// In en, this message translates to:
+  /// **'Charged once passed (minor units, stamp duty)'**
+  String get taxRefChargeCents;
+
   /// #2362 sales tax: taxRefComponents
   ///
   /// In en, this message translates to:
@@ -43288,6 +43300,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Showing the copy bundled with the app: the server could not be reached.'**
   String get taxRefOfflineCopy;
+
+  /// #2363 tax reference editor: taxRefOutsideVatPostalCodes
+  ///
+  /// In en, this message translates to:
+  /// **'Postal-code prefixes outside the VAT (comma-separated)'**
+  String get taxRefOutsideVatPostalCodes;
 
   /// #2477 tax reference: Field: regular expression for the identifier body.
   ///
@@ -45497,6 +45515,42 @@ abstract class AppLocalizations {
   /// **'Add a rate'**
   String get vatAddRate;
 
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryBase
+  ///
+  /// In en, this message translates to:
+  /// **'Base'**
+  String get vatAnnualSummaryBase;
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryBox
+  ///
+  /// In en, this message translates to:
+  /// **'Box'**
+  String get vatAnnualSummaryBox;
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryButton
+  ///
+  /// In en, this message translates to:
+  /// **'{form} {year} (annual sheet)'**
+  String vatAnnualSummaryButton(String form, String year);
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No prepared or filed return in {year} yet.'**
+  String vatAnnualSummaryEmpty(String year);
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get vatAnnualSummaryLabel;
+
+  /// #2363 VAT registers (ES, IT): vatAnnualSummaryTax
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get vatAnnualSummaryTax;
+
   /// #985 VAT versions and counterparty: vatChangeByLaw
   ///
   /// In en, this message translates to:
@@ -45520,6 +45574,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save the rate first; then change it by law.'**
   String get vatChangeNeedsSave;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclAeat303
+  ///
+  /// In en, this message translates to:
+  /// **'AEAT file (Modelo 303)'**
+  String get vatDeclAeat303;
 
   /// Box-code column
   ///
@@ -45587,16 +45647,88 @@ abstract class AppLocalizations {
   /// **'Filed'**
   String get vatDeclFiled;
 
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingAnnualVolume
+  ///
+  /// In en, this message translates to:
+  /// **'A space in SII states the year’s volume of operations on its last return, a page this file does not write; file the last period in the form itself.'**
+  String get vatDeclFilingAnnualVolume;
+
   /// #2361 VAT filing files: vatDeclFilingBn
   ///
   /// In en, this message translates to:
   /// **'Enter the GST/HST business number of the workspace with its RT account (123456789 RT0001): the file names it.'**
   String get vatDeclFilingBn;
 
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingDeclarant
+  ///
+  /// In en, this message translates to:
+  /// **'The declarant needs both a valid codice fiscale and a codice carica from 1 to 9 or 11 to 15.'**
+  String get vatDeclFilingDeclarant;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingEsCashRecipient
+  ///
+  /// In en, this message translates to:
+  /// **'Receives supplies taxed under the cash criterion'**
+  String get vatDeclFilingEsCashRecipient;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingEsIntro
+  ///
+  /// In en, this message translates to:
+  /// **'The AEAT Sede imports this file into the Modelo 303 form; you then sign and file it there. Tick what applies to the space:'**
+  String get vatDeclFilingEsIntro;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingEsMonthlyRefund
+  ///
+  /// In en, this message translates to:
+  /// **'Registered for monthly refunds (REDEME)'**
+  String get vatDeclFilingEsMonthlyRefund;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingEsSii
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps its VAT books through SII'**
+  String get vatDeclFilingEsSii;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingFiscalCode
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the codice fiscale of the workspace as its registration number (11 digits for a company, 16 characters for a person): the file names it.'**
+  String get vatDeclFilingFiscalCode;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantCf
+  ///
+  /// In en, this message translates to:
+  /// **'Declarant’s tax code (codice fiscale)'**
+  String get vatDeclFilingItDeclarantCf;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRole
+  ///
+  /// In en, this message translates to:
+  /// **'Declarant’s role code (codice carica)'**
+  String get vatDeclFilingItDeclarantRole;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingItDeclarantRoleHelp
+  ///
+  /// In en, this message translates to:
+  /// **'The code of the Agenzia delle Entrate’s table: 1 to 9 or 11 to 15.'**
+  String get vatDeclFilingItDeclarantRoleHelp;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingItIntro
+  ///
+  /// In en, this message translates to:
+  /// **'Your intermediary transmits this file through Entratel. A company names the person who signs for it; leave both fields empty when you file for yourself.'**
+  String get vatDeclFilingItIntro;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingNegative
+  ///
+  /// In en, this message translates to:
+  /// **'A box of this return is negative and the file has no sign for it; record the correction in the form itself.'**
+  String get vatDeclFilingNegative;
+
   /// #2357 VAT filing files: vatDeclFilingPeriod
   ///
   /// In en, this message translates to:
-  /// **'An ELSTER advance return covers a month or a quarter; the annual return is filed separately.'**
+  /// **'A periodic return file covers a month or a quarter; the annual return is filed separately.'**
   String get vatDeclFilingPeriod;
 
   /// #2357 VAT filing files: vatDeclFilingTaxNumber
@@ -45616,6 +45748,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter the UID of the workspace (CHE-123.456.789 with a valid check digit): the file names it.'**
   String get vatDeclFilingUid;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclFilingUnmappedBox
+  ///
+  /// In en, this message translates to:
+  /// **'The return holds sales at a rate the form has no box for; file this period in the form itself.'**
+  String get vatDeclFilingUnmappedBox;
 
   /// #2359 VAT filing files: vatDeclFilingVatNumber
   ///
@@ -45646,6 +45784,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoices'**
   String get vatDeclInvoices;
+
+  /// #2363 VAT filing files (ES, IT): vatDeclLipeXml
+  ///
+  /// In en, this message translates to:
+  /// **'LIPE XML (periodic VAT settlement)'**
+  String get vatDeclLipeXml;
 
   /// Manual-filing action
   ///
@@ -46012,6 +46156,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This workspace is not declared VAT-registered, so invoices show no VAT. Change that under Legal identity.'**
   String get vatRegimeHint;
+
+  /// #2363 VAT registers (ES, IT): vatRegister347Empty
+  ///
+  /// In en, this message translates to:
+  /// **'No customer passed the modelo 347 line in {year}.'**
+  String vatRegister347Empty(String year);
+
+  /// #2363 VAT registers (ES, IT): vatRegister347Sii
+  ///
+  /// In en, this message translates to:
+  /// **'A space that keeps its VAT books through SII files no modelo 347: the AEAT already holds its invoices.'**
+  String get vatRegister347Sii;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterActivity
+  ///
+  /// In en, this message translates to:
+  /// **'Activity: code, type and IAE heading'**
+  String get vatRegisterActivity;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterActivityHelp
+  ///
+  /// In en, this message translates to:
+  /// **'As the AEAT writes it, e.g. A038612. Leave it empty to fill in the activity columns yourself.'**
+  String get vatRegisterActivityHelp;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterActivityInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'A code from A to D, two digits of type and up to four characters of heading.'**
+  String get vatRegisterActivityInvalid;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterEmpty
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice was issued in this period.'**
+  String get vatRegisterEmpty;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterEs347
+  ///
+  /// In en, this message translates to:
+  /// **'Modelo 347 {year} (CSV)'**
+  String vatRegisterEs347(String year);
+
+  /// #2363 VAT registers (ES, IT): vatRegisterEsLibro
+  ///
+  /// In en, this message translates to:
+  /// **'Register of issued invoices (AEAT XLSX)'**
+  String get vatRegisterEsLibro;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterEsSii
+  ///
+  /// In en, this message translates to:
+  /// **'SII: issued invoices (XML)'**
+  String get vatRegisterEsSii;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterItRegistro
+  ///
+  /// In en, this message translates to:
+  /// **'Register of issued invoices (CSV)'**
+  String get vatRegisterItRegistro;
+
+  /// #2363 VAT registers (ES, IT): vatRegisterNif
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the NIF of the workspace as its VAT number (nine characters, ES first if you like): the file names it.'**
+  String get vatRegisterNif;
 
   /// #878 VAT review / report: vatReportByRate
   ///

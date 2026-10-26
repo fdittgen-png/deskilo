@@ -2,6 +2,9 @@
 import '../vat_form_terms.dart';
 import '../vat_forms.dart';
 
+/// The annual return the year's LIPE add up to.
+const itAnnualSummaryName = 'Dichiarazione IVA annuale';
+
 final itLipeSpec = VatFormSpec(
   country: 'IT',
   name: 'Liquidazione periodica IVA (quadro VP)',
