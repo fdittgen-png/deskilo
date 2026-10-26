@@ -171,7 +171,7 @@ void main() {
       'document_count': 0,
       'closed_period': false,
       'exported_at': '2026-03-02T08:00:00Z',
-      'deliveries': const [],
+      'deliveries': const <Object>[],
     });
     final again = AccountingDelivery.fromJson(
       _delivery(id: 'd-3', target: 'xero', sha: _xeroSha, connection: 'c-1'),
