@@ -307,5 +307,6 @@
   "taxRefOutsideVatPostalCodes": "Prefijos de código postal fuera del IVA (separados por comas)",
   "@taxRefOutsideVatPostalCodes": {
     "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
-  }
+  },
+  "taxRefCategories": "Otras categorías de líneas que suma (separadas por comas, p. ej. acquisition)"
 }

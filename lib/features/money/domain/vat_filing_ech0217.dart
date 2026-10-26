@@ -15,11 +15,12 @@ import 'vat_filing_files.dart';
 /// (TVA-0006), so it can differ by a few centimes from the form's tax line
 /// that adds the tax of each invoice.
 ///
-/// Not mapped: 205 (supplies opted for; the lines do not say which taxed
-/// supply was a letting that was exempt but for the option), 225, 235, 280,
-/// 382/383, 410, 415, 420 and the other flows of funds (9xx). A first filing
-/// is declared (`typeOfSubmission` 1); a rectification is another file.
-/// Validated against the published XSD `eCH-0217-2-0-0.xsd`.
+/// The supplies opted for (205) are `opted`, the acquisition tax (383) one
+/// `acquisitionTax` per rate, its tax owed in `payableTax` like a sale's.
+/// Not mapped: 225, 235, 280, 382, 410, 415, 420 and the other flows of
+/// funds (9xx). A first filing is declared (`typeOfSubmission` 1); a
+/// rectification is another file. Validated against the published XSD
+/// `eCH-0217-2-0-0.xsd` (tool/vat_filing/validate.sh).
 String ech0217Xml({
   required VatDeclaration declaration,
   required String uid,
@@ -32,10 +33,16 @@ String ech0217Xml({
   if (m == null || !isValidSwissUid(uid, requireSuffix: false)) {
     throw const VatFilingFileException(VatFilingFileProblem.uid);
   }
-  var total = 0, abroad = 0, toForeign = 0, exempt = 0;
+  var total = 0, abroad = 0, toForeign = 0, exempt = 0, opted = 0;
   var materials = 0, investments = 0;
   final turnoverByRate = <double, int>{};
+  final acquiredByRate = <double, int>{};
   for (final line in declaration.lines) {
+    if (line.isAcquisition) {
+      acquiredByRate[line.percent] =
+          (acquiredByRate[line.percent] ?? 0) + line.netCents;
+      continue;
+    }
     if (line.isInput) {
       if (line.category == 'asset') {
         investments += line.vatCents;
@@ -45,6 +52,7 @@ String ech0217Xml({
       continue;
     }
     total += line.netCents;
+    opted += line.optedNetCents;
     switch (line.category.isEmpty ? (line.percent > 0 ? 'S' : 'O') : line.category) {
       case 'Z' || 'G':
         toForeign += line.netCents;
@@ -57,17 +65,35 @@ String ech0217Xml({
     }
   }
   // payableTax: the sum of rate x turnover in hundredths of a centime
-  // (percent with two decimals x cents), less the input tax, half up.
+  // (percent with two decimals x cents), sales and acquisitions alike, less
+  // the input tax, half up.
   var taxMilli = 0;
-  turnoverByRate.forEach((rate, cents) {
+  void addTax(double rate, int cents) {
     taxMilli += (rate * 100).round() * cents;
-  });
+  }
+
+  turnoverByRate.forEach(addTax);
+  acquiredByRate.forEach(addTax);
   final dueMilli = taxMilli - (materials + investments) * 10000;
   final payable = dueMilli.sign * ((dueMilli.abs() + 5000) ~/ 10000);
-  final rates = turnoverByRate.keys.toList()..sort((a, b) => b.compareTo(a));
   final b = XmlBuilder()..processing('xml', 'version="1.0" encoding="UTF-8"');
   void amount(String name, int cents, {bool always = false}) {
     if (cents != 0 || always) b.element(name, nest: _francs(cents));
+  }
+
+  List<double> highestFirst(Map<double, int> byRate) =>
+      byRate.keys.toList()..sort((x, y) => y.compareTo(x));
+  void perRate(String name, Map<double, int> byRate) {
+    for (final rate in highestFirst(byRate)) {
+      b.element(
+        name,
+        nest: () {
+          b
+            ..element('taxRate', nest: rate.toStringAsFixed(2))
+            ..element('turnover', nest: _francs(byRate[rate]!));
+        },
+      );
+    }
   }
 
   b.element(
@@ -113,16 +139,9 @@ String ech0217Xml({
         'effectiveReportingMethod',
         nest: () {
           b.element('grossOrNet', nest: '1');
-          for (final rate in rates) {
-            b.element(
-              'suppliesPerTaxRate',
-              nest: () {
-                b
-                  ..element('taxRate', nest: rate.toStringAsFixed(2))
-                  ..element('turnover', nest: _francs(turnoverByRate[rate]!));
-              },
-            );
-          }
+          amount('opted', opted);
+          perRate('suppliesPerTaxRate', turnoverByRate);
+          perRate('acquisitionTax', acquiredByRate);
           amount('inputTaxMaterialAndServices', materials);
           amount('inputTaxInvestments', investments);
         },

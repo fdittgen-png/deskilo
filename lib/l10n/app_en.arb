@@ -9475,6 +9475,26 @@
   "expenseSupplyToggle": "This is a supply for the space",
   "expenseSupplyUnitPrice": "Unit price (what a consumption costs)",
   "expenseSupplyUnitPriceHint": "Prefilled from amount ÷ quantity; round up if you like.",
+  "expenseVatAcquisition": "Bought from a supplier abroad",
+  "@expenseVatAcquisition": {
+    "description": "#2360 input VAT: the switch for a service bought from a supplier abroad (acquisition tax, CH Ziffer 383)"
+  },
+  "expenseVatAcquisitionAmount": "Acquisition tax owed: {tax} · deductible: {deductible}",
+  "@expenseVatAcquisitionAmount": {
+    "description": "#2360 input VAT: the acquisition tax an expense owes and its deductible share",
+    "placeholders": {
+      "tax": {
+        "type": "String"
+      },
+      "deductible": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseVatAcquisitionHint": "The invoice carries no VAT of this country: the amount is the base, and the space owes the acquisition tax on it and deducts its share.",
+  "@expenseVatAcquisitionHint": {
+    "description": "#2360 input VAT: what the acquisition switch means"
+  },
   "expenseVatAsset": "A fixed asset",
   "@expenseVatAsset": {
     "description": "#2357 input VAT: expenseVatAsset"
@@ -31178,6 +31198,10 @@
   "@taxRefCashOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
   },
+  "taxRefCategories": "Other line categories it adds (comma separated, e.g. acquisition)",
+  "@taxRefCategories": {
+    "description": "#2360 tax reference: the line categories a return box adds beyond the sales (acquisition for the Swiss 383)"
+  },
   "taxRefCategory": "EN 16931 category",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."
@@ -32970,6 +32994,10 @@
   "vatChangeNeedsSave": "Save the rate first; then change it by law.",
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
+  },
+  "vatDeclAcquisitionTax": "Acquisition tax",
+  "@vatDeclAcquisitionTax": {
+    "description": "#2360 input VAT: the note beside a return line of acquisition tax"
   },
   "vatDeclAeat303": "AEAT file (Modelo 303)",
   "@vatDeclAeat303": {

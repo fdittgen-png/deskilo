@@ -59,14 +59,7 @@ class _VersionForm {
             AccountMapValue(:final taxCode) => taxCode,
             _ => '',
           },
-          'groups': switch (from?.value) {
-            FormBoxValue(:final groups) => groups.join(', '),
-            _ => '',
-          },
-          'exclude_groups': switch (from?.value) {
-            FormBoxValue(:final excludeGroups) => excludeGroups.join(', '),
-            _ => '',
-          },
+          ...formBoxTexts(from?.value),
           'percent': switch (from?.value) {
             RateValue(:final percent) => percentText(percent),
             RateComponentValue(:final percent) => percentText(percent),
@@ -212,6 +205,7 @@ class _VersionForm {
             label: fields.text('label'),
             groups: _groupList('groups'),
             excludeGroups: _groupList('exclude_groups'),
+            categories: _groupList('categories'),
           ),
         TaxDomain.accountMap => AccountMapValue(
             format: choice['format']!,
@@ -412,6 +406,7 @@ class _VersionForm {
             _text('label', l10n.taxRefLabel),
             _text('groups', l10n.taxRefGroups),
             _text('exclude_groups', l10n.taxRefExcludeGroups),
+            _text('categories', l10n.taxRefCategories),
           ],
         TaxDomain.accountMap => [
             _pick('format', l10n.taxRefFormat,

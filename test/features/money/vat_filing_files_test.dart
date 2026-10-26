@@ -9,6 +9,7 @@
 // special characters, one LIN per CA3 line with its amounts in whole
 // euros. The declarations screen saves the file of the space's country.
 import 'dart:async';
+import 'dart:io';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
@@ -30,6 +31,7 @@ VatDeclarationLine _line(
   int vat, {
   String category = 'S',
   String direction = 'output',
+  int opted = 0,
 }) => VatDeclarationLine(
   percent: percent,
   category: category,
@@ -38,7 +40,18 @@ VatDeclarationLine _line(
   vatCents: vat,
   invoiceCount: 1,
   direction: direction,
+  optedNetCents: opted,
 );
+
+/// Keeps [text] as [name] for tool/vat_filing/validate.sh, which reads it
+/// against the published schema, when VAT_FILING_SAMPLES_DIR is set.
+void _writeSample(String name, String text) {
+  final dir = Platform.environment['VAT_FILING_SAMPLES_DIR'];
+  if (dir == null || dir.isEmpty) return;
+  File('$dir/$name')
+    ..parent.createSync(recursive: true)
+    ..writeAsStringSync(text);
+}
 
 VatDeclaration _declaration(
   DateTime start,
@@ -104,6 +117,7 @@ void main() {
     );
 
     test('the declaration: header, turnover, the rates, the tax to pay', () {
+      _writeSample('ch_mwst.xml', text());
       final root = XmlDocument.parse(text()).rootElement;
       expect(root.name.local, 'VATDeclaration');
       expect(root.getAttribute('xmlns'), 'http://www.ech.ch/xmlns/eCH-0217/2');
@@ -153,6 +167,56 @@ void main() {
       expect(method.getElement('inputTaxInvestments')!.innerText, '2.43');
       // 8.1 % of 1000.49 + 2.6 % of 200.00 - 4.86 - 2.43, summed unrounded.
       expect(root.getElement('payableTax')!.innerText, '78.95');
+    });
+
+    test('205 is `opted` and 383 one `acquisitionTax` per rate, its tax in '
+        'payableTax; an acquisition is no consideration', () {
+      final xml = ech0217Xml(
+        declaration: _declaration(DateTime(2026, 7), DateTime(2026, 9, 30), [
+          _line(8.1, 1600000, 129600, opted: 1000000),
+          _line(8.1, 120000, 9720, category: vatAcquisitionCategory),
+          _line(2.6, 10000, 260, category: vatAcquisitionCategory),
+          _line(8.1, 120000, 8910, direction: 'input'),
+        ]),
+        uid: 'CHE-109.322.551 MWST',
+        organisationName: 'Cowork AG',
+        onReceipts: false,
+        generatedAt: DateTime.utc(2026, 10, 13, 8, 5, 9),
+      );
+      _writeSample('ch_mwst_opted_acquisition.xml', xml);
+      final root = XmlDocument.parse(xml).rootElement;
+      expect(
+        root.getElement('turnoverComputation')!
+            .getElement('totalConsideration')!
+            .innerText,
+        '16000.00',
+      );
+      final method = root.getElement('effectiveReportingMethod')!;
+      expect(
+        method.childElements.map((e) => e.name.local).toList(),
+        [
+          'grossOrNet',
+          'opted',
+          'suppliesPerTaxRate',
+          'acquisitionTax',
+          'acquisitionTax',
+          'inputTaxMaterialAndServices',
+        ],
+        reason: 'the order the schema prescribes',
+      );
+      expect(method.getElement('opted')!.innerText, '10000.00');
+      final acquired = method
+          .findElements('acquisitionTax')
+          .map(
+            (XmlElement e) => (
+              e.getElement('taxRate')!.innerText,
+              e.getElement('turnover')!.innerText,
+            ),
+          )
+          .toList();
+      expect(acquired, [('8.10', '1200.00'), ('2.60', '100.00')]);
+      // 8.1 % of 16 000.00 + 8.1 % of 1 200.00 + 2.6 % of 100.00 - 89.10.
+      expect(root.getElement('payableTax')!.innerText, '1306.70');
     });
 
     test('a space on the received consideration says so', () {

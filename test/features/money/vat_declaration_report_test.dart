@@ -65,4 +65,54 @@ void main() {
     );
     expect(declaration.status, 'draft');
   });
+
+  test('the acquisition tax names itself beside the sales at its rate', () {
+    final declaration = VatDeclaration(
+      id: 'sep',
+      workspaceId: 'workspace',
+      periodStart: DateTime.utc(2026, 9),
+      periodEnd: DateTime.utc(2026, 9, 30),
+      status: 'prepared',
+      createdAt: DateTime.utc(2026, 10),
+      currency: 'CHF',
+      totalNetCents: 1600000,
+      totalVatCents: 138570,
+      invoiceCount: 2,
+      lines: const [
+        VatDeclarationLine(
+          percent: 8.1,
+          category: 'S',
+          grossCents: 1729600,
+          netCents: 1600000,
+          vatCents: 129600,
+          invoiceCount: 2,
+        ),
+        VatDeclarationLine(
+          percent: 8.1,
+          category: vatAcquisitionCategory,
+          grossCents: 1297200,
+          netCents: 1200000,
+          vatCents: 97200,
+          invoiceCount: 2,
+        ),
+      ],
+    );
+    final data = vatDeclarationReportData(
+      declaration: declaration,
+      workspaceName: 'Example',
+      vatId: 'CHE109322551',
+      countryCode: 'CH',
+      disclaimer: 'Preparation only',
+      statusLabel: 'Prepared',
+      money: (cents) => '$cents',
+      date: (date) => date.toIso8601String(),
+      rate: (rate) => '$rate %',
+      lineNote: (line) => line.isAcquisition ? 'Acquisition tax' : '',
+    );
+    final rates = [
+      for (final row in data['vat_rate_totals']! as List)
+        (row as Map<String, Object?>)['rate'],
+    ];
+    expect(rates, ['8.1 %', 'Acquisition tax · 8.1 %']);
+  });
 }

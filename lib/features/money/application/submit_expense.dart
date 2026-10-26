@@ -32,6 +32,12 @@ enum ExpenseOutcome {
   submitted,
 }
 
+/// What an expense's VAT says beyond its rate and share: #2357 — it bought
+/// a fixed asset (CA3 line 19); #2360 — it was bought from a supplier
+/// abroad, so the amount carries no VAT and is the base of the acquisition
+/// tax the space owes (CH 383).
+typedef ExpenseVatFlags = ({bool asset, bool acquisition});
+
 /// What the person typed, as text, exactly as the sheet holds it.
 class ExpenseDraft {
   const ExpenseDraft({
@@ -46,7 +52,7 @@ class ExpenseDraft {
     this.supplyUnitPrice = '',
     this.vatPercent,
     this.deductible = '100',
-    this.asset = false,
+    this.vatFlags = (asset: false, acquisition: false),
   });
 
   final String amount;
@@ -68,8 +74,7 @@ class ExpenseDraft {
   /// The share of that VAT the space may deduct, in percent, as typed.
   final String deductible;
 
-  /// #2357 — the expense bought a fixed asset (CA3 line 19).
-  final bool asset;
+  final ExpenseVatFlags vatFlags;
 
   double? get deductiblePct =>
       double.tryParse(deductible.trim().replaceAll(',', '.'));
@@ -80,7 +85,8 @@ class ExpenseDraft {
       : {
           'percent': vatPercent,
           'deductible_pct': deductiblePct,
-          if (asset) 'asset': true,
+          if (vatFlags.asset) 'asset': true,
+          if (vatFlags.acquisition) 'acquisition': true,
         };
 
   int? get amountCents => parseCentsInput(amount);

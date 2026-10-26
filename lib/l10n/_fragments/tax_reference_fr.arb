@@ -307,5 +307,6 @@
   "taxRefOutsideVatPostalCodes": "Préfixes de code postal hors TVA (séparés par des virgules)",
   "@taxRefOutsideVatPostalCodes": {
     "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
-  }
+  },
+  "taxRefCategories": "Autres catégories de lignes qu'elle additionne (séparées par des virgules, p. ex. acquisition)"
 }
