@@ -12467,6 +12467,12 @@ abstract class AppLocalizations {
   /// **'Denmark: the law requires a registered digital bookkeeping system, and DesKilo is not one. Deliver your invoices to a registered system ({systems}) or hand your accountant the SAF-T DK standard export it makes. No file here meets that duty by itself.'**
   String exportDenmarkRegisteredSystem(String systems);
 
+  /// #2373 Accounting export sheet: products of the country (Sage 100 France, Sage 50 Germany) that import one of the offered files, and which one to choose.
+  ///
+  /// In en, this message translates to:
+  /// **'{products} {count, plural, =1{imports} other{import}} this file: choose “{format}” below.'**
+  String exportImportedVia(String products, int count, String format);
+
   /// Accounting export sheet (#2379): a file from the local book is the complete books only if everything passes through the app
   ///
   /// In en, this message translates to:
@@ -20140,6 +20146,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The SAF-T file was not made: {gaps}'**
   String journalSafTRefused(String gaps);
+
+  /// #2373 Sage 50 export: the audit trail was refused, with the reasons (each a sageBlock).
+  ///
+  /// In en, this message translates to:
+  /// **'The Sage 50 file was not written: {reasons}'**
+  String journalSageRefused(String reasons);
 
   /// #2377 The Swiss journal refused: a taxed row's rate group has no MWST code.
   ///
@@ -35639,6 +35651,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sage export'**
   String get sageAccountsTitle;
+
+  /// #2373 Sage 50 export: one reason the file was refused, by kind.
+  ///
+  /// In en, this message translates to:
+  /// **'{kind, select, accountReference{{subject} has no number Sage can take as its Account Reference (at most 8 capitals and digits)} fieldTooLong{{subject} is longer than the Sage column} deferredTax{the tax of {subject} waits for its tax point, which Sage 50 does not import} currency{{subject} is not in the base currency} taxCode{no Sage tax code for {subject}} other{{subject}}}'**
+  String sageBlock(String kind, String subject);
 
   /// #669 - accounting export formats
   ///

@@ -38,7 +38,16 @@ void main() {
 
   test('a producible file target writes its own format; ids are unique', () {
     for (final t in accountingTargets) {
-      if (t.transport == AccountingTransport.file && t.capability.producible) {
+      // #2373 — a product that imports another target's file writes
+      // none of its own; the target it imports is a producible file one.
+      if (t.importsTargetId case final via?) {
+        expect(t.format, isNull, reason: t.id);
+        final imported = accountingTargets.firstWhere((x) => x.id == via);
+        expect(imported.format?.id, via, reason: t.id);
+        expect(imported.capability.producible, isTrue, reason: t.id);
+        expect(t.countries.difference(imported.countries), isEmpty, reason: t.id);
+      } else if (t.transport == AccountingTransport.file &&
+          t.capability.producible) {
         expect(t.format?.id, t.id);
       }
       // A target nobody can produce yet writes nothing.

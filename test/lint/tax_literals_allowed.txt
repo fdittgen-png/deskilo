@@ -53,8 +53,10 @@ lib/features/money/presentation/vat_filing_file_actions.dart :: 'DE' => _askTaxN
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'ES' => askSpanishFilingFacts(context, l10n), :: 1 :: what each country's filing file asks beyond the settings: the question of that file's own builder (structure)
 lib/features/money/presentation/vat_filing_file_actions.dart :: 'IT' => askItalianDeclarant(context, l10n), :: 1 :: what each country's filing file asks beyond the settings: the question of that file's own builder (structure)
 lib/features/money/presentation/widgets/negotiation_card.dart :: '0 %', :: 1 :: UI: the "no discount" placeholder, not a tax value
+lib/features/money/domain/accounting_targets_sage.dart :: countries: {'US', 'CA', 'GB'}, :: 1 :: the countries a product (Sage Intacct) is sold in, a target descriptor, not a tax value
 lib/features/money/domain/vat_form_catalogue.dart :: 'ES' => esAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
 lib/features/money/domain/vat_form_catalogue.dart :: 'IT' => itAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
 lib/features/money/domain/vat_register_es.dart :: 'AE' => ( :: 1 :: EN 16931 category (UNCL5305) to the AEAT's calificación and clave: a standard's fixed code
 lib/features/money/domain/vat_registers.dart :: 'ES' => const [ :: 1 :: which national register builders a country uses: structure (a new country is new code)
 lib/features/money/domain/vat_registers.dart :: 'IT' => const [VatRegisterKind.itRegistro], :: 1 :: which national register builders a country uses: structure (a new country is new code)
+lib/features/money/domain/sage.dart :: 'AE' => _tax(euCustomer ? 'tax_eu_services' : 'tax_reverse_charge'), :: 1 :: EN 16931 category to the role of the Sage 50 code row (sage/tax_eu_services, sage/tax_reverse_charge): the codes themselves are reference rows

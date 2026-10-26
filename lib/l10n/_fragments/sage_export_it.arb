@@ -1,0 +1,6 @@
+{
+  "@@locale": "it",
+  "journalSageRefused": "Il file Sage 50 non è stato scritto: {reasons}",
+  "sageBlock": "{kind, select, accountReference{{subject} non ha alcun numero che Sage accetti come Account Reference (al massimo 8 maiuscole e cifre)} fieldTooLong{{subject} supera la colonna di Sage} deferredTax{l’IVA di {subject} attende la sua esigibilità, che Sage 50 non importa} currency{{subject} non è nella valuta di base} taxCode{nessun codice IVA di Sage per {subject}} other{{subject}}}",
+  "exportImportedVia": "{products} {count, plural, =1{importa} other{importano}} questo file: scelga «{format}» qui sotto."
+}

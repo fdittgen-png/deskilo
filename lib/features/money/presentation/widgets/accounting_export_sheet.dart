@@ -164,26 +164,7 @@ class _FormatTile extends StatelessWidget {
         _ => Icons.description_outlined,
       };
 
-  String get _name => switch (format.id) {
-        'fec' => l10n.invoiceExportFec,
-        'saft' => l10n.invoiceExportSafT,
-        'saft_pt' => l10n.invoiceExportSafTPt,
-        'saft_no' => l10n.invoiceExportSafTNo,
-        'faia_lu' => l10n.invoiceExportFaiaLu,
-        'saft_oecd_full' => l10n.invoiceExportSafTFull,
-        'datev' => l10n.invoiceExportDatev,
-        'sage50' => l10n.invoiceExportSage,
-        'ch_kmu' => l10n.invoiceExportSwissKmu,
-        'banana_transactions' => l10n.invoiceExportBanana,
-        'accountant_csv' =>
-          l10n.invoiceExportAccountantCsv,
-        'generic_journal_csv' => l10n.invoiceExportGenericJournal,
-        'audit_trail' => l10n.invoiceExportAuditTrail,
-        'fr_ereporting' => l10n.invoiceExportFrEReporting,
-        'bundle' => l10n.invoiceExportBundle,
-        'gobd' => l10n.invoiceExportGobd,
-        _ => format.id,
-      };
+  String get _name => accountingFormatName(l10n, format.id);
 
   /// What the file claims. Deliberately blunt: this is the sentence that
   /// stops someone filing an accountant's working file as a tax return.
@@ -193,3 +174,25 @@ class _FormatTile extends StatelessWidget {
         FormatClaim.subset => l10n.exportClaimSubset,
       };
 }
+
+/// The name of the format [id] on screen.
+String accountingFormatName(AppLocalizations l10n, String id) => switch (id) {
+  'fec' => l10n.invoiceExportFec,
+  'saft' => l10n.invoiceExportSafT,
+  'saft_pt' => l10n.invoiceExportSafTPt,
+  'saft_no' => l10n.invoiceExportSafTNo,
+  'faia_lu' => l10n.invoiceExportFaiaLu,
+  'saft_oecd_full' => l10n.invoiceExportSafTFull,
+  'datev' => l10n.invoiceExportDatev,
+  'sage50' => l10n.invoiceExportSage,
+  'ch_kmu' => l10n.invoiceExportSwissKmu,
+  'banana_transactions' => l10n.invoiceExportBanana,
+  'accountant_csv' =>
+    l10n.invoiceExportAccountantCsv,
+  'generic_journal_csv' => l10n.invoiceExportGenericJournal,
+  'audit_trail' => l10n.invoiceExportAuditTrail,
+  'fr_ereporting' => l10n.invoiceExportFrEReporting,
+  'bundle' => l10n.invoiceExportBundle,
+  'gobd' => l10n.invoiceExportGobd,
+  _ => id,
+};

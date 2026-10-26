@@ -31,11 +31,11 @@ import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_ubl.dart';
 import 'package:deskilo/features/money/domain/report_strings.dart';
 import 'package:deskilo/features/money/domain/saf_t.dart';
-import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'support/datev_collective.dart';
+import 'support/sage_files.dart';
 
 const _write = bool.fromEnvironment('WRITE_GOLDEN');
 const _dir = 'test/features/money/goldens/exports';
@@ -198,12 +198,7 @@ Map<String, String Function()> _files() => {
     consultantNumber: '1234567',
     clientNumber: '54321',
   )),
-  'sage.csv': () => buildSageFile(
-    invoices: _invoices,
-    matches: _matches,
-    accounts: const SageAccounts(),
-    customerRef: (invoice) => invoice.memberName,
-  ),
+  'sage.csv': () => sageOfInvoices(_invoices, _matches, country: 'FR'),
   'accountant.csv': () => buildAccountantCsv(
     invoices: _invoices,
     matches: _matches,

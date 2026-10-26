@@ -13,6 +13,7 @@ import 'package:deskilo/features/money/domain/sage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';
+import 'support/sage_files.dart';
 import 'support/seeded_export_year.dart';
 
 int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
@@ -125,27 +126,31 @@ void main() {
   });
 
   group('Sage', () {
-    List<String> sage({Map<String, InvoiceMatch>? matches}) => buildSageFile(
-      invoices: SeededExportYear.invoices,
-      matches: matches ?? SeededExportYear.matches,
-      accounts: const SageAccounts(),
-      customerRef: (i) => i.memberId,
+    List<String> sage({Map<String, InvoiceMatch>? matches}) => sageOfInvoices(
+      SeededExportYear.invoices,
+      matches ?? SeededExportYear.matches,
+      country: 'FR',
     ).split('\r\n');
 
-    test('the written-off rest is a sales credit to the bad-debt nominal, without tax', () {
+    test('the written-off rest is journalled from the debtors to the bad-debt nominal, without tax', () {
       final rows = sage().where((l) => l.contains('Write-off INV-3')).toList();
-      expect(rows, hasLength(1));
-      final f = rows.single.split(',');
-      expect(f[0], 'SC');
-      expect(f[2], '8100');
-      expect(f[4], '25/05/2026');
-      expect(f[7], '40.00');
-      expect(f[8], const SageAccounts().noTax);
-      expect(f[9], '0.00');
+      expect(rows, hasLength(2));
+      const accounts = SageAccounts();
+      final debit = rows.first.split(',');
+      final credit = rows.last.split(',');
+      expect([debit[0], credit[0]], ['JD', 'JC']);
+      expect([debit[2], credit[2]], [accounts.writeOff, accounts.debtors]);
+      for (final f in [debit, credit]) {
+        expect(f[1], '""', reason: 'a journal names no customer');
+        expect(f[4], '25/05/2026');
+        expect(f[7], '40.00');
+        expect(f[8], accounts.noTax);
+        expect(f[9], '0.00');
+      }
     });
 
     test('nothing is written off for an invoice that was not, nor for a pending match', () {
-      expect(sage().where((l) => l.contains('Write-off')), hasLength(1));
+      expect(sage().where((l) => l.contains('Write-off')), hasLength(2));
       final pending = {
         ...SeededExportYear.matches,
         SeededExportYear.inv3.id: InvoiceMatch(

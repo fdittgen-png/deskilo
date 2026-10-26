@@ -7481,6 +7481,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String exportImportedVia(String products, int count, String format) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'importieren',
+      one: 'importiert',
+    );
+    return '$products $_temp0 diese Datei: Wählen Sie unten „$format“.';
+  }
+
+  @override
   String get exportLocalBookOnly =>
       'Aus den Buchungen Ihrer lokalen Buchführung erstellt: Ihre vollständigen Bücher nur, wenn jeder Geschäftsvorfall über DesKilo läuft.';
 
@@ -12218,6 +12229,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String journalSafTRefused(String gaps) {
     return 'Die SAF-T-Datei wurde nicht erstellt: $gaps';
+  }
+
+  @override
+  String journalSageRefused(String reasons) {
+    return 'Die Sage-50-Datei wurde nicht geschrieben: $reasons';
   }
 
   @override
@@ -21317,6 +21333,21 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get sageAccountsTitle => 'Sage-Export';
+
+  @override
+  String sageBlock(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'accountReference':
+          '$subject hat keine Nummer, die Sage als Account Reference annimmt (höchstens 8 Großbuchstaben und Ziffern)',
+      'fieldTooLong': '$subject ist länger als die Sage-Spalte',
+      'deferredTax':
+          'die Steuer von $subject wartet auf ihren Steuerzeitpunkt, den Sage 50 nicht importiert',
+      'currency': '$subject ist nicht in der Basiswährung',
+      'taxCode': 'kein Sage-Steuercode für $subject',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get sageTaxCode => 'Steuerschlüssel (T1 / T0 / T9)';

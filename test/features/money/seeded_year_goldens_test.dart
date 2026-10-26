@@ -58,9 +58,12 @@ import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
 import 'package:deskilo/features/money/domain/saf_t.dart';
 import 'package:deskilo/features/money/domain/sage.dart';
+import 'package:deskilo/features/money/domain/sage_documents.dart';
+import 'package:deskilo/features/money/domain/sage_postings.dart';
 import 'package:deskilo/features/money/domain/vat_rate.dart';
 import 'package:deskilo/features/money/domain/vat_tax_point.dart';
 import 'package:deskilo/features/money/presentation/datev_profile.dart';
+import 'package:deskilo/features/money/presentation/posting_kind_labels.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/money/presentation/vat_report_actions.dart';
 import 'package:deskilo/features/money/presentation/vat_tax_point_labels.dart';
@@ -508,12 +511,37 @@ final Map<String, Future<String> Function()> _files = {
   'fec_local_book.txt': () async => _postedFec(await _read('fec', local: true)),
   'sage50.csv': () async {
     final b = (await _read('sage50', country: 'GB')).books;
-    return buildSageFile(
+    final trail = sageRowsOfInvoices(
       invoices: b.invoices,
       matches: b.matches,
       accounts: const SageAccounts(),
-      customerRef: (invoice) => invoice.memberId,
+      customers: const SageCustomers(
+        memberNumbers: {'m1': _memberNumber},
+        sellerCountry: 'FR',
+      ),
+      baseCurrency: 'EUR',
+      groupOf: (t) =>
+          ActiveTaxReference.current.groupOfRate('FR', t.percent, t.category),
     );
+    expect(trail.blockers, isEmpty);
+    return sageFile(trail.rows);
+  },
+  // #2373 — a local book's audit trail, from its one postings read.
+  'sage50_local_book.csv': () async {
+    final journal = _posted(await _read('sage50', local: true, country: 'GB'));
+    final trail = sageRowsOfPostings(
+      journal.postings,
+      book: (
+        accounts: const SageAccounts(),
+        customers: const SageCustomers(memberNumbers: {}, sellerCountry: 'FR'),
+        baseCurrency: journal.functionalCurrency!,
+      ),
+      parties: journal.parties,
+      documents: {for (final i in SeededExportYear.acceptanceInvoices) i.id: i},
+      kindText: (kind) => postingKindLabel(_l10n, kind),
+    );
+    expect(trail.blockers, isEmpty);
+    return sageFile(trail.rows);
   },
   'saft_pt.xml': () async =>
       _safT(await _read('saft_pt', country: 'PT'), portugal: true),
@@ -756,6 +784,35 @@ void main() {
   test('Sage writes the credit note as SC', () async {
     final rows = (await _files['sage50.csv']!()).split('\r\n');
     expect(rows.where((r) => r.startsWith('SC,')), isNotEmpty);
+  });
+
+  // #2373 — a local book's Sage 50 file is its postings, read once: SC for
+  // CN-1, SP for its refund, PI at T1 for B-1, JD/JC for INV-3's write-off,
+  // SI at T1 and T5 on the two-rate INV-1, 18 columns, every Account
+  // Reference a number of at most eight characters.
+  test('the local book\'s Sage 50 file books every event of the year', () async {
+    final rows = [
+      for (final r in (await _files['sage50_local_book.csv']!()).split('\r\n').skip(1))
+        if (r.isNotEmpty) r.split(','),
+    ];
+    List<String> types(String number) => [
+      for (final r in rows)
+        if (r[5] == '"$number"') r[0],
+    ];
+    expect(rows.every((r) => r.length == sageColumns.length), isTrue);
+    expect(types('CN-1'), ['SC', 'SP']);
+    expect(types('INV-3'), containsAllInOrder(['SI', 'SR', 'JD', 'JD', 'JC']));
+    final bill = rows.where((r) => r[5] == '"B-1"' && r[0] == 'PI').single;
+    expect(bill[8], const SageAccounts().taxCode);
+    expect(
+      [for (final r in rows) if (r[5] == '"INV-1"' && r[0] == 'SI') r[8]],
+      [const SageAccounts().taxCode, const SageAccounts().codeOf('reduced', 'S')!],
+    );
+    for (final r in rows) {
+      final account = r[1].replaceAll('"', '');
+      expect(account.length, lessThanOrEqualTo(8));
+      expect(account, isNot(contains('-')));
+    }
   });
 
   test('the year\'s output VAT equals the books\' collected-VAT lines, the '
