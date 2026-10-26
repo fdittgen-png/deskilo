@@ -4,7 +4,7 @@
 -- rolled-back transaction) so the mechanism is proved without claiming any
 -- country's law. Expected dates are written by hand from those rows.
 begin;
-select plan(43);
+select plan(48);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00009999' || lpad(n::text, 4, '0'))::uuid;
@@ -31,8 +31,9 @@ $$;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(i), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        'u' || i || '@keep.test', '', now(), now(), now()
-  from generate_series(1, 4) i;
--- 1 owns Keep, 2 is a plain member of Keep, 3 owns Other, 4 is a member of Keep who erases.
+  from generate_series(1, 5) i;
+-- 1 owns Keep, 2 is a plain member of Keep, 3 owns Other, 4 is a member of Keep who erases,
+-- 5 is an admin of Keep: viewFinances by the default matrix, not manageBilling.
 insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)
 values ('Keep', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"invoicing": true, "accountingBook": true}'),
        ('Other', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(3), '{}'),
@@ -43,6 +44,7 @@ insert into public.members (workspace_id, user_id, is_owner, is_admin)
 values (pg_temp.ws('Keep'), pg_temp.u(1), true, true),
        (pg_temp.ws('Keep'), pg_temp.u(2), false, false),
        (pg_temp.ws('Keep'), pg_temp.u(4), false, false),
+       (pg_temp.ws('Keep'), pg_temp.u(5), false, true),
        (pg_temp.ws('Other'), pg_temp.u(3), true, true),
        (pg_temp.ws('Nowhere'), pg_temp.u(3), true, true);
 -- Keep has two issuers under different rules; Other has one.
@@ -60,7 +62,8 @@ values ('retention', 'ZZ', 'books', '2000-01-01', '2025-01-01', '{"years":5,"fro
        ('retention', 'ZZ', 'books', '2025-01-01', null, '{"years":3,"from":"fiscal_year_end"}', 'synthetic ZZ books rule, shortened', true),
        ('retention', 'ZY', 'books', '2000-01-01', null, '{"years":2,"from":"document_date"}', 'synthetic ZY books rule', true),
        ('retention', 'ZZ', 'invoice', '2000-01-01', null, '{"years":7,"from":"document_date"}', 'synthetic ZZ invoice rule', true),
-       ('retention', 'ZZ', 'correspondence', '2000-01-01', null, '{"years":1,"from":"document_date"}', 'synthetic ZZ letters rule', false);
+       ('retention', 'ZZ', 'correspondence', '2000-01-01', null, '{"years":1,"from":"document_date"}', 'synthetic ZZ letters rule', false),
+       ('retention', 'ZZ', 'archive', '2000-01-01', null, '{"years":1,"from":"document_date"}', 'synthetic ZZ archive rule', true);
 
 -- ── the issuer's fiscal calendar ──────────────────────────────────────
 select is(pg_temp.assess('North', array['books'], date '2019-06-01') ->> 'disposition', 'review_required',
@@ -105,6 +108,9 @@ update public.workspaces set country_code = 'BQ' where id = pg_temp.ws('Nowhere'
 select ok((public.retention_assess(pg_temp.ws('Nowhere'), null, array['books'], date '2001-01-01') -> 'reasons') ? 'default_rule',
   'a country without rows falls to the shared default, which never authorises');
 
+select ok((pg_temp.assess('North', array['archive'], date '1990-01-01') -> 'reasons') ? 'no_rule_on_date',
+  'a document older than every version of its rule reads today''s rule, and says it is not its own');
+
 -- ── overlapping rules: the latest end wins ────────────────────────────
 select is(pg_temp.assess('North', array['books', 'invoice'], date '2019-06-01') ->> 'retain_until', '2026-06-01',
   'an invoice that is also a book entry: the 7-year invoice rule outlasts the books');
@@ -129,6 +135,18 @@ select throws_ok(format('select public.place_retention_hold(%L, null, null, ''  
   '22023', 'a hold names its reason', 'and its reason');
 select set_config('t.hold', public.place_retention_hold(pg_temp.ws('Keep'), pg_temp.site('South'), 'books', 'tax audit 2026') ->> 'id', true);
 select is(jsonb_array_length(public.retention_holds(pg_temp.ws('Keep'))), 1, 'the owner reads the hold');
+select throws_ok(format('select public.place_retention_hold(%L, %L, ''books'', ''again'')', pg_temp.ws('Keep'), pg_temp.site('South')),
+  '23505', 'this hold is already in place', 'a second hold of the same scope is refused, not stacked');
+reset role;
+select pg_temp.act_as(pg_temp.u(5));
+select throws_ok(format('select public.place_retention_hold(%L, null, null, ''audit'')', pg_temp.ws('Keep')),
+  '42501', null, 'reading the finances is not managing billing: no hold');
+reset role;
+select pg_temp.act_as(pg_temp.u(3));
+select throws_ok(format('select public.retention_holds(%L)', pg_temp.ws('Keep')), '42501', null,
+  'a stranger reads no hold');
+select throws_ok(format('select public.release_retention_hold(%L, ''not mine'')', current_setting('t.hold')),
+  '42501', null, 'and releases none');
 reset role;
 select is(pg_temp.assess('South', array['books'], date '2019-06-01') ->> 'disposition', 'retain',
   'an ended clock under a hold is retained');

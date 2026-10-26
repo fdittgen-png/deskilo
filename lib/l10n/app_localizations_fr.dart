@@ -21291,8 +21291,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Pourquoi les pièces doivent rester, par exemple un contrôle fiscal ou un litige.';
 
   @override
-  String get retentionHoldReasonMissing =>
-      'Indiquez le motif, en 500 caractères au plus.';
+  String retentionHoldReasonMissing(int max) {
+    return 'Indiquez le motif, en $max caractères au plus.';
+  }
 
   @override
   String get retentionHoldRelease => 'Lever';
@@ -21318,6 +21319,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get retentionHoldsEmpty =>
       'Aucune conservation imposée. Elle garde des pièces au-delà de leur durée de conservation, pour un contrôle ou un litige.';
+
+  @override
+  String get retentionHoldsLoadFailed =>
+      'Les conservations imposées n’ont pas pu être lues.';
 
   @override
   String get retentionHoldsTitle => 'Conservations imposées';

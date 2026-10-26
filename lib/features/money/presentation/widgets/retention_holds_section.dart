@@ -11,6 +11,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/vat/retention.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../application/retention_holds.dart';
 import '../../domain/retention_hold.dart';
 import '../../providers/book_profile_providers.dart';
@@ -28,14 +29,16 @@ class RetentionHoldsSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
+    final loaded = ref.watch(retentionHoldsProvider);
     final holds = [
-      for (final h
-          in ref.watch(retentionHoldsProvider).value ?? const <RetentionHold>[])
+      for (final h in loaded.value ?? const <RetentionHold>[])
         if (h.active) h,
     ];
     final scope = ref.watch(accountingSystemsScopeProvider);
     final sites = scope.issuers;
-    final canManage = scope.permissions.contains(retentionHoldPermission);
+    final canManage = scope.permissions.contains(
+      WorkspacePermission.manageBilling.wireName,
+    );
     final day = DateFormat.yMMMd(
       Localizations.localeOf(context).toLanguageTag(),
     );
@@ -45,7 +48,16 @@ class RetentionHoldsSection extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(l10n.retentionHoldsTitle, style: theme.textTheme.titleSmall),
-        if (holds.isEmpty)
+        // A refused or failed read is said as such, never as "no hold".
+        if (loaded case AsyncError(:final error))
+          Text(
+            knownRefusalText(l10n, error) ?? l10n.retentionHoldsLoadFailed,
+            key: const ValueKey('retention-holds-failed'),
+            style: theme.textTheme.bodySmall,
+          )
+        else if (!loaded.hasValue)
+          const LinearProgressIndicator()
+        else if (holds.isEmpty)
           Text(l10n.retentionHoldsEmpty, style: theme.textTheme.bodySmall),
         for (final h in holds)
           ListTile(
@@ -109,7 +121,7 @@ class RetentionHoldsSection extends ConsumerWidget {
         onDispose: fields.dispose,
         validate: () => retentionHoldReasonValid(fields.text('reason'))
             ? const {}
-            : {'reason': l10n.retentionHoldReasonMissing},
+            : {'reason': l10n.retentionHoldReasonMissing(retentionHoldReasonMax)},
         onSubmit: () async {
           try {
             final outcome = await ref
@@ -122,7 +134,7 @@ class RetentionHoldsSection extends ConsumerWidget {
                 );
             return outcome == RetentionHoldOutcome.done
                 ? null
-                : l10n.retentionHoldReasonMissing;
+                : l10n.retentionHoldReasonMissing(retentionHoldReasonMax);
           } on Object catch (e, st) {
             TraceLogger.instance.error(
               'money',
@@ -194,7 +206,7 @@ class RetentionHoldsSection extends ConsumerWidget {
         onDispose: fields.dispose,
         validate: () => retentionHoldReasonValid(fields.text('reason'))
             ? const {}
-            : {'reason': l10n.retentionHoldReasonMissing},
+            : {'reason': l10n.retentionHoldReasonMissing(retentionHoldReasonMax)},
         onSubmit: () async {
           try {
             final outcome = await ref
@@ -202,7 +214,7 @@ class RetentionHoldsSection extends ConsumerWidget {
                 .release(hold.id, fields.text('reason'));
             return outcome == RetentionHoldOutcome.done
                 ? null
-                : l10n.retentionHoldReasonMissing;
+                : l10n.retentionHoldReasonMissing(retentionHoldReasonMax);
           } on Object catch (e, st) {
             TraceLogger.instance.error(
               'money',

@@ -80,7 +80,7 @@ void main() {
     expect(retentionNotice('ZZ', 2026), contains('invoice: 10 years'));
   });
 
-  test('a US space\'s own setting extends the rule and never shortens it (9999)', () {
+  test('a US space\'s own setting extends the rule and never shortens it (0604)', () {
     List<int> years(int usYears) =>
         [for (final r in retentionRules('US', usYears: usYears)) r.years];
     expect(years(0), everyElement(4), reason: 'no setting: the rule');

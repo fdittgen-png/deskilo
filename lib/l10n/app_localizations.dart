@@ -35547,8 +35547,8 @@ abstract class AppLocalizations {
   /// #2571 retention holds and dispositions
   ///
   /// In en, this message translates to:
-  /// **'Name the reason, in at most 500 characters.'**
-  String get retentionHoldReasonMissing;
+  /// **'Name the reason, in at most {max} characters.'**
+  String retentionHoldReasonMissing(int max);
 
   /// #2571 retention holds and dispositions
   ///
@@ -35591,6 +35591,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.'**
   String get retentionHoldsEmpty;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The holds could not be read.'**
+  String get retentionHoldsLoadFailed;
 
   /// #2571 retention holds and dispositions
   ///

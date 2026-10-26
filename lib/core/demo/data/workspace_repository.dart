@@ -306,6 +306,7 @@ class FakeWorkspaceRepository implements WorkspaceRepository {
 
   /// Workspace ids passed to [resetWorkspace], for assertions.
   final resetWorkspaceCalls = <String>[];
+  String? Function(String workspaceId)? booksKept; // #2571: the retention assessment (JSON) that refuses a reset, null when the books may go
 
   /// Last opacity passed to [setDeskOpacity]; also updates the seeded row.
   int? lastDeskOpacity;

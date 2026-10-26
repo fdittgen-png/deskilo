@@ -135,7 +135,7 @@ void main() {
   });
 
   testWidgets('the records the space keeps say until when and under which '
-      'rule, or that a hold keeps them (9999)', (tester) async {
+      'rule, or that a hold keeps them (0604)', (tester) async {
     Map<String, Object?> kept(String disposition, {String? until, bool hold = false}) => {
       'disposition': disposition,
       'retain_until': until,

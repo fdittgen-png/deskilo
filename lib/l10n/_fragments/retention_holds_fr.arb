@@ -9,7 +9,7 @@
   "retentionHoldEveryIssuer": "Tous les émetteurs",
   "retentionHoldReason": "Motif",
   "retentionHoldReasonHelper": "Pourquoi les pièces doivent rester, par exemple un contrôle fiscal ou un litige.",
-  "retentionHoldReasonMissing": "Indiquez le motif, en 500 caractères au plus.",
+  "retentionHoldReasonMissing": "Indiquez le motif, en {max} caractères au plus.",
   "retentionHoldSince": "{what} · {issuer} · depuis le {date}",
   "retentionHoldRelease": "Lever",
   "retentionHoldReleaseTitle": "Lever cette conservation ?",
@@ -23,5 +23,6 @@
   "retentionPeriodEnded": "La durée de conservation a pris fin : l’espace peut examiner l’effacement",
   "retentionResetRefused": "Rien n’a été supprimé : la comptabilité doit encore être conservée. {why}",
   "retentionExtendedBySetting": "{years} ans à partir de la date du document (réglage propre à cet espace)",
-  "retentionHoldSaveFailed": "La conservation n'a pas pu être enregistrée. Rien n'a changé."
+  "retentionHoldSaveFailed": "La conservation n'a pas pu être enregistrée. Rien n'a changé.",
+  "retentionHoldsLoadFailed": "Les conservations imposées n’ont pas pu être lues."
 }

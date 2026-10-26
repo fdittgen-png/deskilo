@@ -21274,8 +21274,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Warum die Unterlagen bleiben müssen, etwa wegen einer Betriebsprüfung oder eines Streitfalls.';
 
   @override
-  String get retentionHoldReasonMissing =>
-      'Nennen Sie den Grund, höchstens 500 Zeichen.';
+  String retentionHoldReasonMissing(int max) {
+    return 'Nennen Sie den Grund, höchstens $max Zeichen.';
+  }
 
   @override
   String get retentionHoldRelease => 'Aufheben';
@@ -21301,6 +21302,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get retentionHoldsEmpty =>
       'Keine Sperre aktiv. Eine Sperre hält Unterlagen über ihre Aufbewahrungsfrist hinaus, etwa für eine Prüfung oder einen Streitfall.';
+
+  @override
+  String get retentionHoldsLoadFailed =>
+      'Die Sperren konnten nicht gelesen werden.';
 
   @override
   String get retentionHoldsTitle => 'Aufbewahrungssperren';

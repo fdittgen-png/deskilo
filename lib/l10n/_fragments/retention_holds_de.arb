@@ -9,7 +9,7 @@
   "retentionHoldEveryIssuer": "Alle Aussteller",
   "retentionHoldReason": "Grund",
   "retentionHoldReasonHelper": "Warum die Unterlagen bleiben müssen, etwa wegen einer Betriebsprüfung oder eines Streitfalls.",
-  "retentionHoldReasonMissing": "Nennen Sie den Grund, höchstens 500 Zeichen.",
+  "retentionHoldReasonMissing": "Nennen Sie den Grund, höchstens {max} Zeichen.",
   "retentionHoldSince": "{what} · {issuer} · seit {date}",
   "retentionHoldRelease": "Aufheben",
   "retentionHoldReleaseTitle": "Diese Sperre aufheben?",
@@ -23,5 +23,6 @@
   "retentionPeriodEnded": "Die Aufbewahrungsfrist ist abgelaufen: der Space kann die Löschung prüfen",
   "retentionResetRefused": "Nichts wurde gelöscht: die Buchhaltung muss noch aufbewahrt werden. {why}",
   "retentionExtendedBySetting": "{years} Jahre ab dem Belegdatum (eigene Einstellung dieses Space)",
-  "retentionHoldSaveFailed": "Die Sperre konnte nicht gespeichert werden. Nichts wurde geändert."
+  "retentionHoldSaveFailed": "Die Sperre konnte nicht gespeichert werden. Nichts wurde geändert.",
+  "retentionHoldsLoadFailed": "Die Sperren konnten nicht gelesen werden."
 }

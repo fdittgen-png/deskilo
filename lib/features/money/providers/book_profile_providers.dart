@@ -63,9 +63,13 @@ RetentionHoldRepository retentionHoldRepository(Ref ref) =>
 RetentionHolds retentionHoldCommands(Ref ref) =>
     RetentionHolds(ref.watch(retentionHoldRepositoryProvider));
 
+/// A refused or failed read of the holds is shown at once, not retried
+/// behind a spinner: the dialog says it could not read them.
+Duration? _holdsNoRetry(int count, Object error) => null;
+
 /// Every hold of the current workspace, the active ones first; invalidated
 /// after a change.
-@riverpod
+@Riverpod(retry: _holdsNoRetry)
 Future<List<RetentionHold>> retentionHolds(Ref ref) async {
   final repository = ref.watch(retentionHoldRepositoryProvider);
   final workspace = await ref.watch(currentWorkspaceProvider.future);

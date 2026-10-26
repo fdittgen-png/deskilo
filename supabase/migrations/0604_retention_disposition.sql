@@ -9,7 +9,7 @@
 --      manageBilling, placed and released with manageBilling while
 --      accountingBook is on; a hold keeps working when the flag is off.
 --   2. retention_rule_for  the US setting retention.us_years EXTENDS the rule
---      and never shortens it.
+--      and never shortens it; its registry note says so.
 --   3. retention_assess(workspace, issuer site, classes, document date)
 --      returns every rule that applies to the document, with its source and
 --      the day its clock ends, the holds over it, the latest of those days,
@@ -84,6 +84,22 @@ end;
 $fn$;
 revoke execute on function public.retention_rule_for(uuid, text) from public, anon, authenticated;
 
+-- The registry row of 0481 said a shorter period applies; from here it only
+-- extends. The block declares the row for a new installation, the update
+-- corrects it where 0481 already wrote it.
+-- BEGIN GENERATED SEED (dart run tool/build_settings_seed.dart)
+insert into public.setting_definitions
+  (key, type, default_value, min_value, max_value, unit, group_key, scopes,
+   edit_permission, floor_value, editable, choices, source, note)
+values
+('retention.us_years', 'int', '0'::jsonb, 0, 30, 'years', 'vat', array['workspace'], 'manageBilling', null, true, null, 'retention_rule_for, retention_assess (0604)', 'Years a US space keeps its records when its state asks for longer than the federal default of the retention rule. A longer period extends every kind of record; a shorter one changes nothing. 0 means the rule applies. Never legal advice: confirm the period of your state.')
+on conflict (key) do nothing;
+-- END GENERATED SEED
+update public.setting_definitions
+   set source = 'retention_rule_for, retention_assess (0604)',
+       note = 'Years a US space keeps its records when its state asks for longer than the federal default of the retention rule. A longer period extends every kind of record; a shorter one changes nothing. 0 means the rule applies. Never legal advice: confirm the period of your state.'
+ where key = 'retention.us_years';
+
 -- ── 3. the assessment ─────────────────────────────────────────────────
 create or replace function public.retention_assess(
   p_workspace_id uuid, p_issuer_site_id uuid, p_classes text[], p_document_date date)
@@ -103,6 +119,7 @@ declare
   v_on date;
   v_seen uuid[];
   v_found boolean;
+  v_dated boolean;
   v_row record;
   v_base date;
   v_until date;
@@ -149,6 +166,8 @@ begin
   foreach v_class in array coalesce(p_classes, '{}'::text[]) loop
     v_seen := '{}';
     v_found := false;
+    -- The first pass reads the rule in force on the document's own date.
+    v_dated := p_document_date is not null;
     foreach v_on in array array[coalesce(p_document_date, v_today), v_today] loop
       select t.id, t.country, t.valid_from, (t.value ->> 'years')::int as years, t.value ->> 'from' as start,
              t.source, t.confirmed
@@ -159,6 +178,12 @@ begin
          and t.valid_from <= v_on and (t.valid_to is null or t.valid_to > v_on)
        order by (t.country = '*'), t.valid_from desc
        limit 1;
+      if not found and v_dated then
+        -- No version was in force on the document's date: today's rule is
+        -- read, but it is not the document's own.
+        v_reasons := array_append(v_reasons, 'no_rule_on_date');
+      end if;
+      v_dated := false;
       if not found or v_row.id = any (v_seen) then continue; end if;
       v_seen := v_seen || v_row.id;
       v_found := true;
@@ -401,6 +426,13 @@ begin
   end if;
   if char_length(btrim(coalesce(p_reason, ''))) not between 1 and 500 then
     raise exception 'a hold names its reason' using errcode = '22023';
+  end if;
+  -- One active hold per scope: a second tap does not stack a duplicate.
+  if exists (select 1 from public.retention_holds h
+              where h.workspace_id = p_workspace_id and h.released_at is null
+                and h.issuer_site_id is not distinct from p_issuer_site_id
+                and h.doc_class is not distinct from p_doc_class) then
+    raise exception 'this hold is already in place' using errcode = '23505';
   end if;
   insert into public.retention_holds (workspace_id, issuer_site_id, doc_class, reason, placed_by)
   values (p_workspace_id, p_issuer_site_id, p_doc_class, btrim(p_reason), auth.uid())

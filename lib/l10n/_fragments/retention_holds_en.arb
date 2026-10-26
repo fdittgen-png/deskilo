@@ -36,9 +36,14 @@
   "@retentionHoldReasonHelper": {
     "description": "#2571 retention holds and dispositions"
   },
-  "retentionHoldReasonMissing": "Name the reason, in at most 500 characters.",
+  "retentionHoldReasonMissing": "Name the reason, in at most {max} characters.",
   "@retentionHoldReasonMissing": {
-    "description": "#2571 retention holds and dispositions"
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
   },
   "retentionHoldSince": "{what} · {issuer} · since {date}",
   "@retentionHoldSince": {
@@ -133,6 +138,10 @@
   },
   "retentionHoldSaveFailed": "The hold could not be saved. Nothing changed.",
   "@retentionHoldSaveFailed": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldsLoadFailed": "The holds could not be read.",
+  "@retentionHoldsLoadFailed": {
     "description": "#2571 retention holds and dispositions"
   }
 }

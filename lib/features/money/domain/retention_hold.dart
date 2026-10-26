@@ -5,10 +5,6 @@
 // it with a reason. A released hold stays readable.
 import '../../../core/data/json_reader.dart';
 
-/// The permission whose holder places and releases a hold, by its wire
-/// name: the server checks the same one.
-const retentionHoldPermission = 'manageBilling';
-
 /// The longest reason a hold or its release may give (the server's bound).
 const retentionHoldReasonMax = 500;
 

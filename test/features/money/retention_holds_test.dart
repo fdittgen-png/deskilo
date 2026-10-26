@@ -6,12 +6,14 @@
 // right sees the holds and no action.
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
+import 'package:deskilo/features/money/domain/retention_hold.dart';
 import 'package:deskilo/features/money/presentation/widgets/retention_clocks_tile.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/pump_app.dart';
 
@@ -23,6 +25,31 @@ const _workspace = Workspace(
   timezone: 'Europe/Paris',
   inviteCode: 'x',
 );
+
+/// A server that refuses: the read, or the placing, with [code].
+class _Refusing extends FakeRetentionHoldRepository {
+  _Refusing({this.readCode, this.placeCode}) : super(now: () => DateTime(2026, 10, 26, 9));
+
+  final String? readCode;
+  final String? placeCode;
+
+  @override
+  Future<List<RetentionHold>> fetchHolds(String workspaceId) async {
+    if (readCode != null) throw PostgrestException(message: 'refused', code: readCode);
+    return super.fetchHolds(workspaceId);
+  }
+
+  @override
+  Future<RetentionHold> placeHold({
+    required String workspaceId,
+    String? issuerSiteId,
+    String? docClass,
+    required String reason,
+  }) async {
+    if (placeCode != null) throw PostgrestException(message: 'refused', code: placeCode);
+    return super.placeHold(workspaceId: workspaceId, reason: reason);
+  }
+}
 
 Future<FakeRetentionHoldRepository> _open(
   WidgetTester tester, {
@@ -137,5 +164,22 @@ void main() {
       find.byKey(ValueKey('retention-hold-release-${repo.holds.single.id}')),
       findsNothing,
     );
+  });
+
+  testWidgets('a refused or failed read says so, never "no hold"', (tester) async {
+    await _open(tester, permissions: {'viewFinances'}, repository: _Refusing(readCode: '42501'));
+    expect(find.textContaining('You do not have the permission'), findsOneWidget);
+    expect(find.textContaining('No hold is in place'), findsNothing);
+  });
+
+  testWidgets('a hold the server refuses to place names the refusal and keeps the sheet', (tester) async {
+    final repo = _Refusing(placeCode: '42501');
+    await _open(tester, permissions: {'manageBilling'}, repository: repo);
+    await _tap(tester, find.byKey(const ValueKey('retention-hold-place')));
+    await tester.enterText(find.byKey(const ValueKey('retention-hold-reason')), 'audit');
+    await _tap(tester, find.byKey(const ValueKey('retention-hold-save')));
+    expect(repo.holds, isEmpty);
+    expect(find.textContaining('You do not have the permission'), findsOneWidget);
+    expect(find.byKey(const ValueKey('retention-hold-save')), findsOneWidget);
   });
 }

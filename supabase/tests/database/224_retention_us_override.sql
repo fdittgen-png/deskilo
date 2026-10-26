@@ -1,11 +1,11 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #2571 / 0481, 9999: a US space may set its state's retention years; 0 leaves
--- the rule in force, a shorter period changes nothing (9999: the setting only
+-- #2571 / 0481, 0604: a US space may set its state's retention years; 0 leaves
+-- the rule in force, a shorter period changes nothing (0604: the setting only
 -- extends), a longer one extends every class; the setting never reaches
 -- another country or another space.
 -- Expected dates are written by hand: invoice dated 2020-06-01.
 begin;
-select plan(11);
+select plan(12);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin

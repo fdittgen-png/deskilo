@@ -6,16 +6,13 @@ import 'package:intl/intl.dart';
 import '../../l10n/app_localizations.dart';
 import '../data/server_error.dart';
 import '../vat/retention_assessment.dart';
+import 'refusal_text.dart';
 import 'trace_logger.dart';
-
-/// The SQLSTATE of a destructive step the server refused because the
-/// records it would remove are still under retention.
-const _retentionRefusalCode = 'DKE01';
 
 /// The assessment a retention refusal carries, or null when [error] is not
 /// one.
 RetentionAssessment? retentionRefusalOf(Object error) {
-  if (serverErrorCode(error) != _retentionRefusalCode) return null;
+  if (knownRefusalOf(error) != KnownRefusal.retentionKept) return null;
   final details = serverErrorDetails(error);
   if (details == null) return null;
   try {

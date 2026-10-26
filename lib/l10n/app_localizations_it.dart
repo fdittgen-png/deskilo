@@ -21250,8 +21250,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Perché i documenti devono restare, per esempio una verifica fiscale o una controversia.';
 
   @override
-  String get retentionHoldReasonMissing =>
-      'Indichi il motivo, in 500 caratteri al massimo.';
+  String retentionHoldReasonMissing(int max) {
+    return 'Indichi il motivo, in $max caratteri al massimo.';
+  }
 
   @override
   String get retentionHoldRelease => 'Revochi';
@@ -21277,6 +21278,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get retentionHoldsEmpty =>
       'Nessun blocco attivo. Un blocco conserva i documenti oltre il periodo di conservazione, per una verifica o una controversia.';
+
+  @override
+  String get retentionHoldsLoadFailed =>
+      'Non è stato possibile leggere i blocchi.';
 
   @override
   String get retentionHoldsTitle => 'Blocchi di conservazione';

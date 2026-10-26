@@ -1,13 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
 import '../../../features/money/domain/accounting_amount.dart';
 import '../../../features/money/domain/book_chart.dart';
 import '../../../features/money/domain/book_profile.dart';
 import '../../../features/money/domain/book_profile_repository.dart';
+import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/posting.dart';
 import '../../../features/money/domain/posting_rules.dart';
 import '../../../features/money/domain/posting_rules_purchases.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/retention_hold.dart';
+import '../../time/date_text.dart';
+import '../../vat/retention.dart';
 import '../../vat/tax_reference_active.dart';
 import 'money_repository.dart';
 import 'purchase_exchange_rates.dart';
@@ -279,4 +284,61 @@ class FakeRetentionHoldRepository implements RetentionHoldRepository {
       releaseReason: reason.trim(),
     );
   }
+}
+
+/// #2571 — the demo space's holds: one in place over its books, one
+/// released, so the retention dialog shows both states.
+FakeRetentionHoldRepository seedDemoRetentionHolds(String workspaceId, DateTime today) {
+  final repo = FakeRetentionHoldRepository(now: () => today);
+  repo.holds
+    ..add(RetentionHold(
+      id: 'hold-demo-audit',
+      workspaceId: workspaceId,
+      docClass: 'books',
+      reason: 'Tax audit of the last two fiscal years',
+      placedAt: today.subtract(const Duration(days: 30)),
+    ))
+    ..add(RetentionHold(
+      id: 'hold-demo-dispute',
+      workspaceId: workspaceId,
+      reason: 'Dispute with a former member',
+      placedAt: today.subtract(const Duration(days: 200)),
+      releasedAt: today.subtract(const Duration(days: 60)),
+      releaseReason: 'Settled out of court',
+    ));
+  return repo;
+}
+
+/// The class of record the books are kept under.
+const _booksClass = 'books';
+
+/// #2571 — what the demo's books are under when the space is reset, as
+/// `retention_assess_records` answers (JSON), or null when they may go: the
+/// latest ledger row's clock under the space's books rule, or a hold.
+String? demoBooksKept(
+  String workspaceId,
+  String country, {
+  required List<LedgerEntry> ledger,
+  required FakeRetentionHoldRepository holds,
+  required DateTime today,
+}) {
+  if (ledger.isEmpty) return null;
+  final latest = ledger.map((e) => e.createdAt).reduce((a, b) => a.isAfter(b) ? a : b);
+  final rule = retentionRules(country).where((r) => r.docClass == _booksClass).firstOrNull;
+  final held = [
+    for (final h in holds.holds)
+      if (h.workspaceId == workspaceId && h.active && (h.docClass == null || h.docClass == _booksClass))
+        {'reason': h.reason},
+  ];
+  final until = rule == null ? null : retentionRuleUntil(rule, latest);
+  final running = until != null && until.isAfter(today);
+  if (held.isEmpty && !running && (rule?.confirmed ?? false)) return null;
+  return jsonEncode({
+    'disposition': held.isNotEmpty || running ? 'retain' : 'review_required',
+    'retain_until': until == null ? null : isoDay(until),
+    'indefinite': held.isNotEmpty,
+    'rule': rule == null ? null : {'source': rule.source},
+    'holds': held,
+    'reasons': [if (rule == null) 'no_rule' else if (!rule.confirmed) 'unconfirmed'],
+  });
 }

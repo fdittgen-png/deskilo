@@ -340,7 +340,7 @@ final class RetentionHoldsProvider
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: _holdsNoRetry,
         name: r'retentionHoldsProvider',
         isAutoDispose: true,
         dependencies: null,
@@ -362,4 +362,4 @@ final class RetentionHoldsProvider
   }
 }
 
-String _$retentionHoldsHash() => r'5f1408f3691b7e52b1499e570143867fb4602e63';
+String _$retentionHoldsHash() => r'4aa2260086fbd507ab36856c5babc788f6c52d0a';

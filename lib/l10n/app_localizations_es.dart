@@ -21230,8 +21230,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Por qué deben conservarse los registros, por ejemplo una inspección fiscal o un litigio.';
 
   @override
-  String get retentionHoldReasonMissing =>
-      'Indique el motivo, en 500 caracteres como máximo.';
+  String retentionHoldReasonMissing(int max) {
+    return 'Indique el motivo, en $max caracteres como máximo.';
+  }
 
   @override
   String get retentionHoldRelease => 'Levantar';
@@ -21257,6 +21258,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get retentionHoldsEmpty =>
       'No hay ninguna retención. Una retención conserva los registros más allá de su plazo, para una auditoría o un litigio.';
+
+  @override
+  String get retentionHoldsLoadFailed =>
+      'No se han podido leer las retenciones.';
 
   @override
   String get retentionHoldsTitle => 'Retenciones legales';

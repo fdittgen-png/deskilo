@@ -101,8 +101,8 @@ select lives_ok(
 
 -- The reset is the one operation allowed to empty the ledger, and it
 -- says so. Anything else that tries the same DELETE is refused above.
--- #2571 (9999): it empties the ledger only when retention allows it; these
--- entries are this month's, so it refuses and deletes nothing (pgTAP 9999
+-- #2571 (0604): it empties the ledger only when retention allows it; these
+-- entries are this month's, so it refuses and deletes nothing (pgTAP 306
 -- proves the reset that runs).
 select throws_ok(
   format($$ select public.reset_workspace(%L) $$,

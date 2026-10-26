@@ -21080,8 +21080,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Why the records must stay, for example a tax audit or a dispute.';
 
   @override
-  String get retentionHoldReasonMissing =>
-      'Name the reason, in at most 500 characters.';
+  String retentionHoldReasonMissing(int max) {
+    return 'Name the reason, in at most $max characters.';
+  }
 
   @override
   String get retentionHoldRelease => 'Release';
@@ -21107,6 +21108,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get retentionHoldsEmpty =>
       'No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.';
+
+  @override
+  String get retentionHoldsLoadFailed => 'The holds could not be read.';
 
   @override
   String get retentionHoldsTitle => 'Legal holds';
