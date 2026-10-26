@@ -557,7 +557,7 @@ begin
                      'id', p.id, 'amount_cents', p.amount_cents, 'paid_on', p.reported_paid_on,
                      'reference', p.reference,
                      'payee', coalesce(
-                        (select pr.display_name from public.members m
+                        (select public.profile_full_name(pr) from public.members m
                            join public.profiles pr on pr.id = m.user_id
                           where m.id = p.payee_member_id),
                         (select su.name from public.suppliers su where su.id = p.payee_supplier_id), ''))
