@@ -19,6 +19,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_format.dart';
+import '../domain/accounting_targets_saft.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
@@ -48,6 +49,7 @@ import '../providers/vat_declaration_providers.dart';
 import 'accounting_export_fec.dart';
 import 'accounting_export_german.dart';
 import 'accounting_export_journal.dart';
+import 'accounting_export_saft.dart';
 import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
 import 'invoice_actions.dart';
@@ -137,6 +139,7 @@ class AccountingExportRun {
   final chosen = await showAccountingExportSheet(
     context,
     formats: exportFormatsOf(ref, country),
+    notices: [if (registeredSystemsFor(country) case final s when s.isNotEmpty) l10n.exportDenmarkRegisteredSystem(s.join(', '))],
   );
   if (chosen == null || !context.mounted) return;
   format = chosen;
@@ -210,17 +213,23 @@ class AccountingExportRun {
       case 'journals':
         await fecActions.bookReport(format.id, posted, letterhead: {'workspace': workspace.name,
             'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace)});
+      case 'saft_no':
+      case 'faia_lu':
+      case 'saft_oecd_full':
+        await safTFinancialExport();
       case 'generic_journal_csv':
         await exportGenericJournal(context, () async => writtenWith(posted!, journalCsvOf),
-            save: (content) => save(content, named('journal')));
+            save: saveJournal);
     }
   }
 
-  Future<void> save(String content, String fileName, [FiscalYear? period]) async {
+  /// Saves and logs [content]; answers the log row's id, null when nothing
+  /// was logged.
+  Future<String?> save(String content, String fileName, [FiscalYear? period]) async {
     final bytes = Uint8List.fromList(utf8.encode(content));
-    if (!context.mounted) return;
+    if (!context.mounted) return null;
     await savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName);
-    await ref.read(bookPeriodCommandProvider).logExport(workspace.id, formatId: format.id,
+    return ref.read(bookPeriodCommandProvider).logExport(workspace.id, formatId: format.id,
         year: year, content: content, documents: exported.length, period: period);
   }
 

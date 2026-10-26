@@ -50,6 +50,7 @@ import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/features/money/providers/accounting_connection_providers.dart';
 import 'package:deskilo/features/money/providers/asset_providers.dart';
 import 'package:deskilo/features/money/providers/asset_valuation_providers.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
@@ -221,7 +222,7 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
 List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
-  final purchasing = main.purchasing;
+  final purchasing = main.purchasing, bookPeriods = seedDemoBookPeriods(fixture.seededAt);
   return [
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
     supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
@@ -231,10 +232,9 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
     bookProfileRepositoryProvider.overrideWithValue(main.books),
     premisesLeaseRepositoryProvider.overrideWithValue(main.lease),
     workspaceAssetRepositoryProvider.overrideWithValue(main.assets),
-    // #2365 — last year's books, closed and exported.
-    bookPeriodRepositoryProvider.overrideWithValue(
-      seedDemoBookPeriods(fixture.seededAt),
-    ),
+    // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.
+    bookPeriodRepositoryProvider.overrideWithValue(bookPeriods),
+    accountingConnectionRepositoryProvider.overrideWithValue(seedDemoAccountingConnections(bookPeriods, fixture.seededAt)),
     // #2568 — the rooms the demo space rents.
     roomRentalRepositoryProvider.overrideWithValue(
       seedDemoRooms(fixture.seededAt),

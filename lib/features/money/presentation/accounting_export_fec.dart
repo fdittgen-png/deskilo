@@ -21,6 +21,7 @@ import '../domain/book_period.dart';
 import '../domain/fec.dart';
 import '../domain/fec_import_contract.dart';
 import '../domain/fiscal_year.dart';
+import '../domain/saf_t_financial.dart';
 import '../providers/book_period_providers.dart';
 import 'accounting_export_journal.dart';
 import 'book_report_actions.dart';
@@ -34,7 +35,8 @@ typedef FecExportScope = ({
 });
 
 /// The formats of [country] the space may choose: the books printed from
-/// the postings only where the space keeps a book.
+/// the postings, and #2379 the SAF-T Financial files written from them,
+/// only where the space keeps a book.
 List<AccountingFormat> exportFormatsOf(WidgetRef ref, String country) {
   final book = featureOn(
     ref.read(enabledFeatureKeysProvider),
@@ -43,7 +45,10 @@ List<AccountingFormat> exportFormatsOf(WidgetRef ref, String country) {
   );
   return [
     for (final f in formatsFor(country))
-      if (book || !bookReportFormats.contains(f.id)) f,
+      if (book ||
+          !(bookReportFormats.contains(f.id) ||
+              safTFinancialFormats.contains(f.id)))
+        f,
   ];
 }
 

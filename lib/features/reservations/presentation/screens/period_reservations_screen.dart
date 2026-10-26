@@ -43,10 +43,14 @@ class PeriodReservationsScreen extends ConsumerWidget {
           ? periodReservationsProvider(fromMonth, toMonth)
           : levelPeriodReservationsProvider(fromMonth, toMonth, level),
     );
-    final levelName = level == null
+    final named = level == null
         ? null
-        : ref.watch(bookingLevelNameProvider(level)).value ??
-              l10n.periodReservationsUnnamed;
+        : ref.watch(bookingLevelNameProvider(level));
+    // A level the plan of this space does not hold (mistyped, deleted, or
+    // another space's) lists nothing: the whole space is never shown in
+    // its place.
+    final foreign = named is AsyncData<String?> && named.value == null;
+    final levelName = named?.value;
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final targets = ref.watch(bookingTargetNamesProvider).value ?? const {};
     final format = ref.watch(appFormatProvider);
@@ -74,6 +78,11 @@ class PeriodReservationsScreen extends ConsumerWidget {
               ),
       ),
       body: switch (rows) {
+        _ when foreign => EmptyState(
+          key: const ValueKey('period-reservations-unknown-level'),
+          icon: Icons.layers_clear_outlined,
+          title: l10n.periodReservationsUnknownLevel,
+        ),
         AsyncData(:final value) when value.isEmpty => EmptyState(
           key: const ValueKey('period-reservations-empty'),
           icon: Icons.event_busy_outlined,

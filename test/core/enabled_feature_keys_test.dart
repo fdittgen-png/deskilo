@@ -21,6 +21,10 @@ void main() {
       foreignCurrencyPurchasesKey,
       WorkspaceFeature.foreignCurrencyPurchases.dbKey,
     );
+    expect(
+      accountingConnectorsKey,
+      WorkspaceFeature.accountingConnectors.dbKey,
+    );
   });
 
   test('unwired, a question is answered with the registry default', () {

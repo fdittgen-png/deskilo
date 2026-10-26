@@ -7,6 +7,7 @@ import '../application/accounting_export_source.dart';
 import '../application/generic_journal_export.dart';
 import '../application/save_book_profile.dart';
 import '../data/supabase_book_profile_repository.dart';
+import '../domain/accounting_connection.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile.dart';
 import '../domain/book_profile_repository.dart';
@@ -51,6 +52,19 @@ Future<({List<BookAccount> accounts, List<BookMapping> mappings})> bookChart(
 
 /// #2365 — what one accounting export reads: the one source response of the
 /// year, and for a posted format the postings of the posting engine.
+/// #2370 — what the accounting systems sheet needs of the space: its
+/// country, its issuers, the reader's rights and the members' names.
+final accountingSystemsScopeProvider = Provider.autoDispose<AccountingSystemsScope>(
+  (ref) => AccountingSystemsScope(
+    countryCode: ref.watch(currentWorkspaceProvider).value?.countryCode ?? '',
+    issuers: {
+      for (final s in [...?ref.watch(sitesProvider).value]) s.id: s.name,
+    },
+    permissions: {for (final p in ref.watch(myPermissionsProvider)) p.wireName},
+    memberNames: ref.watch(memberNamesProvider).value ?? const {},
+  ),
+);
+
 final accountingExportSourceProvider = Provider<AccountingExportSource>(
   (ref) => AccountingExportSource(
     ref.watch(accountingSourceQueriesProvider),

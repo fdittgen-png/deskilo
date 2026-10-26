@@ -420,7 +420,7 @@ class _VersionForm {
         TaxDomain.accountMap => [
             _pick('format', l10n.taxRefFormat,
                 const ['coa', 'fec', 'datev', 'sage', 'saf_t']),
-            _text('role', l10n.taxRefRole),
+            _text('role', l10n.taxRefRole), Text(l10n.taxRefSafTKeys), // #2379
             _text('account', l10n.taxRefAccount),
             _text('tax_code', l10n.taxRefTaxCode),
             _text('label', l10n.taxRefLabel),

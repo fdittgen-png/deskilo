@@ -391,6 +391,19 @@ void main() {
       );
     });
 
+    test('a source narrows to a floor only when exactly one is named', () {
+      const a = BiReportFilter('level', 'eq', 'a');
+      expect(biSingleLevelOf(const [a]), 'a');
+      expect(biSingleLevelOf(const [a, a]), 'a');
+      expect(biSingleLevelOf(const []), isNull);
+      expect(
+        biSingleLevelOf(const [a, BiReportFilter('level', 'eq', 'b')]),
+        isNull,
+      );
+      expect(biSingleLevelOf(const [BiReportFilter('level', 'in', 'a,b')]), isNull);
+      expect(biSingleLevelOf(const [BiReportFilter('level', 'neq', 'a')]), isNull);
+    });
+
     test('removing a filter', () {
       final edit = biRemoveFilter(withReportFilter(), null, 0);
       expect(edit.report!.filters, isEmpty);

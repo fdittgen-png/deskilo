@@ -23,13 +23,12 @@
 ///    generic SAF-T is this: the OECD tree with `GeneralLedgerEntries`
 ///    omitted on purpose.
 ///
-/// WHAT IS DELIBERATELY ABSENT, and why the epic stays open. The
-/// ACCOUNTING variants of SAF-T — Portugal's `TaxAccountingBasis` 'C'
-/// and 'I', Norway's, Luxembourg's FAIA, Poland's JPK_KR, Romania's
-/// D406 — mandate `GeneralLedgerEntries` over a full chart of accounts.
-/// DesKilo holds invoices and payments, not a ledger. That is a
-/// data-model gap, not a formatting one, and no amount of exporting
-/// closes it. Sage's German lines (KHK / Office Line) and the
+/// The ACCOUNTING variants of SAF-T mandate `GeneralLedgerEntries` over a
+/// chart of accounts. #2379 writes them from a local book's postings
+/// (`accounting_targets_saft.dart`): Norway's and Luxembourg's FAIA, and
+/// the OECD tree. Portugal's `TaxAccountingBasis` 'C' stays absent (it
+/// needs certified software), and Poland's JPK_KR, Romania's D406,
+/// Lithuania's and Austria's each wait for their own profile. Sage's German lines (KHK / Office Line) and the
 /// per-country Sage products each need their own vendor import spec,
 /// which is not public.
 library;
@@ -39,6 +38,7 @@ import 'package:meta/meta.dart';
 import 'accountant_csv.dart';
 import 'accounting_target.dart';
 import 'accounting_targets_de.dart';
+import 'accounting_targets_saft.dart';
 
 export 'accounting_target.dart';
 
@@ -342,6 +342,7 @@ const List<AccountingTarget> accountingTargets = [
     taxCodeModel: TaxCodeModel.perRate,
     format: _swissKmuFormat,
   ),
+  ...safTFinancialTargets,
   AccountingTarget(
     id: 'saft',
     vendor: 'OECD',
@@ -456,6 +457,9 @@ const List<AccountingTarget> accountingTargets = [
     operations: {AccountingOperation.sale, AccountingOperation.credit, AccountingOperation.receipt, AccountingOperation.refund, AccountingOperation.writeOff, AccountingOperation.attachment},
     taxCodeModel: TaxCodeModel.perRate,
     customerIdRule: CustomerIdRule(maxLength: 13, charset: r'[A-Z0-9]+'),
+    // A company API token from Pennylane's settings, or a sign-in where
+    // the installation registered a Pennylane partner application.
+    connectsBy: {AccountingAuthKind.token, AccountingAuthKind.oauth2},
   ),
   AccountingTarget(
     id: 'cegid_quadra_ascii',
@@ -482,7 +486,6 @@ const List<AccountingTarget> accountingTargets = [
 ];
 
 /// #2370 — the targets offered in [countryCode], in registry order.
-@visibleForTesting
 List<AccountingTarget> targetsFor(String countryCode) => [
   for (final t in accountingTargets)
     if (t.offeredIn(countryCode)) t,

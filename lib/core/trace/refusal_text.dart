@@ -31,6 +31,14 @@ enum KnownRefusal {
   /// #2356 (DKV01) — a new percent on a VAT rate already on issued
   /// invoices: the change is a new version from a date.
   vatRateVersioned,
+
+  /// #2370 (DKA02) — an accounting connection closed for the change: it was
+  /// revoked, or it delivered and its token stays.
+  accountingConnectionClosed,
+
+  /// #2370 (DKA03) — a value of an accounting connection the server refused
+  /// (a token, a mapping key, an issuer, a file).
+  accountingValueRefused,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -79,6 +87,12 @@ KnownRefusal? knownRefusalOf(Object error) {
   if (serverErrorCode(error) == '42501') return KnownRefusal.permission;
   if (serverErrorCode(error) == 'DK423') return KnownRefusal.moneyLocaleLocked;
   if (serverErrorCode(error) == 'DKV01') return KnownRefusal.vatRateVersioned;
+  // #2370 — DKA01: the issuer was connected meanwhile, by someone else.
+  if (serverErrorCode(error) == 'DKA01') return KnownRefusal.changedMeanwhile;
+  if (serverErrorCode(error) == 'DKA02') {
+    return KnownRefusal.accountingConnectionClosed;
+  }
+  if (serverErrorCode(error) == 'DKA03') return KnownRefusal.accountingValueRefused;
   final message = serverErrorMessage(error)?.toLowerCase();
   if (message == null) return null;
   if (isAuthError(error) &&
@@ -105,5 +119,7 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
         l10n.refusalMoneyLocaleLocked,
       KnownRefusal.vatRateVersioned =>
         l10n.refusalVatRateVersioned,
+      KnownRefusal.accountingConnectionClosed => l10n.refusalAccountingClosed,
+      KnownRefusal.accountingValueRefused => l10n.refusalAccountingValue,
       null => null,
     };

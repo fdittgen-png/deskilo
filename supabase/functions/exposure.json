@@ -1,6 +1,10 @@
 {
   "x-doc": "#1614 — every Edge function and who may call it. user_facing and system functions refuse a delegated (MCP) token before any privileged work (_shared/delegated.ts refuseDelegated); webhooks authenticate by the provider's own signature or by fetching the object back, never by a bearer token. test/lint/edge_exposure_test.dart keeps this file and the directory in step.",
   "functions": {
+    "accounting-connect": {
+      "class": "user_facing",
+      "authority": "a billing manager's native session, checked by open_accounting_connection_v1 / accounting_connection_manageable_v1; the target's redirect by the state kept in Vault"
+    },
     "badge-signin": {
       "class": "user_facing",
       "authority": "badge proof, then a minted native session"

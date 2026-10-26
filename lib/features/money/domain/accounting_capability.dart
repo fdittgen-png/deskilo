@@ -102,6 +102,60 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     obligations: {},
     specification: 'OECD SAF-T, ledger omitted on purpose',
   ),
+  // #2379 — read against the authority's published schema in CI, and
+  // refused while the chart map is incomplete. The postings are the local
+  // book's, not necessarily the entity's complete books, and no authority
+  // has received one yet.
+  'saft_no': AccountingCapability(
+    formatId: 'saft_no',
+    state: QualificationState.locallyValidated,
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
+    specification:
+        'Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd',
+  ),
+  'faia_lu': AccountingCapability(
+    formatId: 'faia_lu',
+    state: QualificationState.locallyValidated,
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
+    specification: 'AED FAIA 2.01, FAIA_v_2.01_full.xsd',
+  ),
+  // The OECD publishes its 2.0 schema only inside its guidance; the file
+  // is read against Luxembourg's publication of the same tree.
+  'saft_oecd_full': AccountingCapability(
+    formatId: 'saft_oecd_full',
+    state: QualificationState.implemented,
+    obligations: {},
+    specification:
+        'OECD SAF-T 2.0 guidance (2010), read against FAIA_v_2.01_full.xsd',
+  ),
+  // Denmark: not a file but a registered system; the routes wait for the
+  // SAF-T DK profile and the systems' API agreements.
+  'denmark_registered_system': AccountingCapability(
+    formatId: 'denmark_registered_system',
+    state: QualificationState.specificationNeeded,
+  ),
+  'saft_dk': AccountingCapability(
+    formatId: 'saft_dk',
+    state: QualificationState.specificationNeeded,
+  ),
+  'economic_api': AccountingCapability(
+    formatId: 'economic_api',
+    state: QualificationState.specificationNeeded,
+  ),
+  'dinero_api': AccountingCapability(
+    formatId: 'dinero_api',
+    state: QualificationState.specificationNeeded,
+  ),
+  'billy_api': AccountingCapability(
+    formatId: 'billy_api',
+    state: QualificationState.specificationNeeded,
+  ),
   'datev': AccountingCapability(
     formatId: 'datev',
     state: QualificationState.locallyValidated,

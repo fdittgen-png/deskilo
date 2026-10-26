@@ -133,8 +133,10 @@ Map<String, String> biGroupNames(
           .copyWith(groupBy: dimension);
   final groups = ref
       .watch(biModuleResultProvider(workspaceId, module.id, query))
-      .value
-      ?.groups;
+      // A current answer only: a refusal never names what came before.
+      .asData
+      ?.value
+      .groups;
   return {
     for (final r in [...?groups]) r.key: ?r.label,
   };

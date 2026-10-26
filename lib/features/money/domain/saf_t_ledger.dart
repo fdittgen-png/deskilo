@@ -218,7 +218,8 @@ List<SafTLedgerTransaction> safTWriteOffs(
         ),
 ];
 
-const _postedJournalNames = {
+/// The name of each journal in a SAF-T file.
+const safTJournalNames = {
   PostingJournal.sales: 'Sales',
   PostingJournal.bank: 'Bank',
   PostingJournal.purchases: 'Purchases',
@@ -237,7 +238,7 @@ safTPostedJournals(List<Posting> postings) {
       if (postings.any((p) => p.journal == journal))
         (
           journal.code,
-          _postedJournalNames[journal]!,
+          safTJournalNames[journal]!,
           [
             for (final p in postings)
               if (p.journal == journal)

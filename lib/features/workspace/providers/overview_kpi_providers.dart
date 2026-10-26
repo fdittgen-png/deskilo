@@ -7,6 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../data/supabase_kpi_repository.dart';
 import '../data/supabase_overview_kpi_repository.dart';
 import '../domain/kpi_overview.dart';
+import 'kpi_providers.dart';
 import 'operation_context_providers.dart';
 
 part 'overview_kpi_providers.g.dart';
@@ -23,6 +24,9 @@ Future<OverviewFigure> overviewFigure(
   String kpiId,
   String fromMonth,
   String toMonth,
-) => ref
-    .watch(overviewKpiRepositoryProvider)
-    .figure(workspaceId, kpiId, fromMonth: fromMonth, toMonth: toMonth);
+) {
+  watchReaderRights(ref);
+  return ref
+      .watch(overviewKpiRepositoryProvider)
+      .figure(workspaceId, kpiId, fromMonth: fromMonth, toMonth: toMonth);
+}

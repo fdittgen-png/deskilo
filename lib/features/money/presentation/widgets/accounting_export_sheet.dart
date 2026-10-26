@@ -9,6 +9,7 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_capability.dart';
 import '../../domain/accounting_format.dart';
+import '../../domain/saf_t_financial.dart';
 
 /// Picks the accounting export (#669).
 ///
@@ -21,9 +22,13 @@ import '../../domain/accounting_format.dart';
 /// Ordered by the registry: the country's regulatory file first when
 /// there is one. Someone under audit is looking for one specific thing
 /// and should not have to read past three alternatives to find it.
+///
+/// #2379 — [notices] are what the country's duty needs said before any
+/// file is chosen (Denmark: a registered system, not a file).
 Future<AccountingFormat?> showAccountingExportSheet(
   BuildContext context, {
   required List<AccountingFormat> formats,
+  List<String> notices = const [],
 }) async {
   if (formats.isEmpty) return null;
   final l10n = context.l10n;
@@ -61,6 +66,15 @@ Future<AccountingFormat?> showAccountingExportSheet(
                 ),
               ]),
               const SizedBox(height: AppSpacing.lg),
+              for (final notice in notices)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+                  child: Text(
+                    notice,
+                    key: const ValueKey('accounting-export-notice'),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
               for (final format in formats)
                 _FormatTile(format: format, l10n: l10n),
             ],
@@ -102,7 +116,12 @@ class _FormatTile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  l10n.exportNoCompleteBooks,
+                  // #2379 — a file of the local book's postings is complete
+                  // books when everything passes through the app; one
+                  // rebuilt from documents never is.
+                  safTFinancialFormats.contains(format.id)
+                      ? l10n.exportLocalBookOnly
+                      : l10n.exportNoCompleteBooks,
                   key: const ValueKey('accounting-export-incomplete-books'),
                   style: Theme.of(context)
                       .textTheme
@@ -131,7 +150,11 @@ class _FormatTile extends StatelessWidget {
 
   IconData get _icon => switch (format.id) {
         'fec' || 'datev' || 'sage50' || 'ch_kmu' => Icons.table_chart_outlined,
-        'saft' || 'saft_pt' => Icons.code_outlined,
+        'saft' ||
+        'saft_pt' ||
+        'saft_no' ||
+        'faia_lu' ||
+        'saft_oecd_full' => Icons.code_outlined,
         'audit_trail' => Icons.fact_check_outlined,
         'bundle' || 'gobd' => Icons.archive_outlined,
         _ => Icons.description_outlined,
@@ -141,6 +164,9 @@ class _FormatTile extends StatelessWidget {
         'fec' => l10n.invoiceExportFec,
         'saft' => l10n.invoiceExportSafT,
         'saft_pt' => l10n.invoiceExportSafTPt,
+        'saft_no' => l10n.invoiceExportSafTNo,
+        'faia_lu' => l10n.invoiceExportFaiaLu,
+        'saft_oecd_full' => l10n.invoiceExportSafTFull,
         'datev' => l10n.invoiceExportDatev,
         'sage50' => l10n.invoiceExportSage,
         'ch_kmu' => l10n.invoiceExportSwissKmu,

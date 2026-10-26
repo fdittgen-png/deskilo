@@ -160,6 +160,7 @@ More on how the pieces fit: [Architecture](Architecture).
 | `send-e-invoice` | posts an issued invoice to the workspace's e-invoicing provider (ADR 0010) |
 | `send-push` | fans a notification event out to devices (FCM) |
 | `vies-check` | asks the EU VIES service whether a VAT number is valid |
+| `accounting-connect` | signs an issuer in to an accounting system (OAuth code exchange, refresh); the tokens go to Vault, never to the client |
 | `deskilo-mcp` | the Model Context Protocol endpoint: the same processes, roles and approvals as the app |
 | `stripe-webhook`, `mollie-webhook`, `paypal-webhook` | payment confirmations, authenticated by the provider's own signature or by fetching the object back |
 
@@ -394,6 +395,7 @@ Scripts behind the jobs live in `scripts/` (coverage gate, perf gate, generated-
 | Germany, Austria | **DATEV EXTF Buchungsstapel**, an exchange file for the accountant | `datev.dart` |
 | Accounting exchange | **SAF-T, invoicing subset** (header, master files, sales invoices; optional sales-cycle postings that balance), stamped with the app version. Not a complete audit file | `saf_t.dart`, `saf_t_ledger.dart` |
 | Accounting | Sage export (net and tax as separate columns) | `sage.dart` |
+| Accounting systems | one descriptor per product edition (file and API targets), a connection per issuer with its tokens in Vault, mappings by key, one delivery per document with its sha256 and the transfers list | `accounting_target.dart`, `accounting_connection.dart`, edge function `accounting-connect`, `_shared/accounting_delivery.ts` |
 | VAT | **Directive 2006/112/EC**: rates and categories, exemptions, reverse charge (art. 196), place of supply, tax point and prepayments; one setting for when VAT falls due | `lib/core/vat`, `vat_*.dart`, ADRs 0015 to 0017 |
 | VAT returns | periodic declaration per rate; **recapitulative statement** (EU sales list, art. 262); a filed period is locked | `vat_declaration.dart`, `recapitulative_statement.dart`, `vat_period_lock.dart`, ADR 0039 |
 | VAT numbers | syntax check and **VIES** lookup | `vat_compliance.dart`, edge function `vies-check` |

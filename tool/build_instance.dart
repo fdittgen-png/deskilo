@@ -17,6 +17,11 @@ import 'dart:io';
 /// Webhooks are called by the payment providers, not by a signed-in
 /// member: they verify their own signatures and must not demand a JWT.
 const Map<String, bool> functionVerifyJwt = {
+  // #2370 — the accounting target's sign-in redirect carries no JWT; the
+  // state kept in Vault is its authority, and every POST action asks the
+  // database with the caller's own token. Tested in
+  // supabase/functions/accounting-connect/index_test.ts.
+  'accounting-connect': false,
   'badge-signin': true,
   // #1616 — the MCP endpoint verifies every bearer itself (auth.getUser,
   // delegated tokens only) before any handler, and serves anonymous

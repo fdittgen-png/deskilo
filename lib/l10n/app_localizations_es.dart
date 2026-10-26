@@ -239,6 +239,367 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.';
 
   @override
+  String get acctConnConnectToken => 'Conectar con un token de API';
+
+  @override
+  String acctConnDetail(String detail) {
+    return 'Respuesta del sistema: $detail';
+  }
+
+  @override
+  String get acctConnRefresh => 'Comprobar la conexión';
+
+  @override
+  String get acctConnRefused =>
+      'El servidor lo ha rechazado: compruebe que puede gestionar la facturación.';
+
+  @override
+  String get acctConnReplaceToken => 'Sustituir el token';
+
+  @override
+  String get acctConnRevoke => 'Revocar';
+
+  @override
+  String get acctConnRevokeConfirm =>
+      '¿Revocar esta conexión? Su token se olvida de inmediato; sus correspondencias y los envíos ya hechos siguen en la lista.';
+
+  @override
+  String get acctConnRevoked => 'La conexión está revocada.';
+
+  @override
+  String acctConnRevokedBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Se revocaron $count conexiones anteriores',
+      one: 'Se revocó una conexión anterior',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctConnSaved => 'La conexión está guardada.';
+
+  @override
+  String acctConnSignIn(String target) {
+    return 'Iniciar sesión en $target';
+  }
+
+  @override
+  String get acctConnSignInAgain => 'Volver a iniciar sesión';
+
+  @override
+  String get acctConnSignInFailed =>
+      'No se ha podido abrir la página de inicio de sesión.';
+
+  @override
+  String acctConnSignInNotConfigured(String target) {
+    return 'Este servidor no tiene ninguna aplicación registrada en $target: conéctese mejor con un token de API.';
+  }
+
+  @override
+  String get acctConnSignInOpened =>
+      'Termine el inicio de sesión en su navegador, vuelva y compruebe la conexión.';
+
+  @override
+  String acctConnSince(String date) {
+    return 'Conectada el $date';
+  }
+
+  @override
+  String get acctConnStatusConnected => 'Conectado';
+
+  @override
+  String get acctConnStatusError => 'La conexión ha fallado';
+
+  @override
+  String get acctConnStatusExpired => 'Sesión cerrada: inicie sesión de nuevo';
+
+  @override
+  String get acctConnStatusPending => 'A la espera del inicio de sesión';
+
+  @override
+  String get acctConnStatusRevoked => 'Revocada';
+
+  @override
+  String acctConnTenant(String tenant) {
+    return 'Empresa: $tenant';
+  }
+
+  @override
+  String get acctDeliveryAcknowledged => 'Recibido por el sistema';
+
+  @override
+  String acctDeliveryAttempts(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count intentos',
+      one: 'un intento',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctDeliveryConflict =>
+      'Por comprobar: la respuesta falta o difiere';
+
+  @override
+  String get acctDeliveryFailed => 'Rechazado';
+
+  @override
+  String get acctDeliveryGenerated => 'Fichero escrito';
+
+  @override
+  String acctDeliveryRemote(String number) {
+    return 'En el sistema: $number';
+  }
+
+  @override
+  String get acctDeliveryRemoteDraft =>
+      'un borrador en el sistema, aún sin contabilizar';
+
+  @override
+  String get acctDeliverySent => 'Enviado, a la espera de la respuesta';
+
+  @override
+  String acctJournalLogged(int logged, int unchanged) {
+    String _temp0 = intl.Intl.pluralLogic(
+      logged,
+      locale: localeName,
+      other: '$logged documentos registrados',
+      one: 'Un documento registrado',
+      zero: 'Ningún documento nuevo registrado',
+    );
+    return '$_temp0, $unchanged sin cambios';
+  }
+
+  @override
+  String get acctKindCreditNote => 'Factura rectificativa';
+
+  @override
+  String get acctKindExpense => 'Gasto';
+
+  @override
+  String get acctKindInvoice => 'Factura';
+
+  @override
+  String get acctKindMemberReceipt => 'Justificante de un miembro';
+
+  @override
+  String get acctKindOther => 'Otro asiento';
+
+  @override
+  String get acctKindReceipt => 'Cobro';
+
+  @override
+  String get acctKindRefund => 'Reembolso';
+
+  @override
+  String get acctKindReimbursement => 'Devolución a un miembro';
+
+  @override
+  String get acctKindSupplierBill => 'Factura de proveedor';
+
+  @override
+  String get acctKindSupplierCreditNote => 'Abono de proveedor';
+
+  @override
+  String get acctKindSupplierPayment => 'Pago a un proveedor';
+
+  @override
+  String get acctKindVatRelease => 'IVA devengada';
+
+  @override
+  String get acctKindWriteOff => 'Cancelación por incobrable';
+
+  @override
+  String get acctMapAdd => 'Añadir una correspondencia';
+
+  @override
+  String get acctMapDelete => 'Quitar la correspondencia';
+
+  @override
+  String get acctMapKeyInvalid => 'No es una clave de este tipo.';
+
+  @override
+  String get acctMapKind => 'Lo que se hace corresponder';
+
+  @override
+  String get acctMapKindAccount => 'Cuenta';
+
+  @override
+  String get acctMapKindItem => 'Artículo';
+
+  @override
+  String get acctMapKindParty => 'Cliente';
+
+  @override
+  String get acctMapKindTax => 'Código de impuesto';
+
+  @override
+  String acctMapLine(String key, String remote) {
+    return '$key → $remote';
+  }
+
+  @override
+  String get acctMapParty => 'Miembro';
+
+  @override
+  String get acctMapQualifier => 'Grupo de tipos (opcional)';
+
+  @override
+  String get acctMapRemoteCode => 'Código en el sistema';
+
+  @override
+  String get acctMapRemoteId => 'Identificador en el sistema (opcional)';
+
+  @override
+  String get acctMapRemoteMissing =>
+      'Indique el código o el identificador que usa el sistema.';
+
+  @override
+  String get acctMapRemoteName => 'Nombre en el sistema (opcional)';
+
+  @override
+  String get acctMapRole => 'Función en la contabilidad';
+
+  @override
+  String get acctMapTaxKey => 'Componente del impuesto';
+
+  @override
+  String get acctMapTaxKeyHelper =>
+      'impuesto|autoridad|tratamiento|tipo|versión, como el informe de impuestos los agrupa: VAT|FR|taxed|20|2014';
+
+  @override
+  String acctMapsButton(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count correspondencias',
+      one: 'Una correspondencia',
+      zero: 'Correspondencias',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get acctMapsEmpty => 'Todavía no hay ninguna correspondencia.';
+
+  @override
+  String get acctMapsIntro =>
+      'Cómo se llama en el sistema cada cuenta, código de impuesto, cliente y artículo de esta contabilidad. Un envío que necesite uno que no esté aquí se detiene y lo nombra; nada se sustituye por un valor por defecto.';
+
+  @override
+  String acctMapsTitle(String target) {
+    return 'Nombres en $target';
+  }
+
+  @override
+  String get acctTargetsIntro =>
+      'Adónde va la contabilidad de cada emisor. Un sistema conectado recibe los documentos por sí mismo; los demás reciben los ficheros exportados de la contabilidad. Cada transferencia figura abajo con la huella de lo que llevó.';
+
+  @override
+  String get acctTargetsLoadFailed =>
+      'No se han podido cargar los sistemas contables.';
+
+  @override
+  String get acctTargetsNoApiTarget =>
+      'Ningún sistema contable de este país se alcanza todavía por conexión: la contabilidad sale por fichero, desde la exportación contable.';
+
+  @override
+  String get acctTargetsNotConnected => 'Sin conectar';
+
+  @override
+  String get acctTargetsTitle => 'Sistemas contables';
+
+  @override
+  String acctTokenBody(String target) {
+    return 'Cree un token de API en la configuración de $target para esta empresa y péguelo aquí. Se guarda cifrado en el servidor y no vuelve a mostrarse.';
+  }
+
+  @override
+  String get acctTokenField => 'Token de API';
+
+  @override
+  String get acctTokenName => 'Nombre de la conexión';
+
+  @override
+  String get acctTokenSave => 'Conectar';
+
+  @override
+  String acctTokenTenant(String target) {
+    return 'Identificador de la empresa en $target (opcional)';
+  }
+
+  @override
+  String acctTokenTitle(String target) {
+    return 'Conectar $target con un token de API';
+  }
+
+  @override
+  String get acctTokenTooShort => 'Pegue el token completo.';
+
+  @override
+  String get acctTransferClosed => 'periodo cerrado';
+
+  @override
+  String acctTransferDocLine(String number, String kind, String date) {
+    return '$number · $kind · $date';
+  }
+
+  @override
+  String acctTransferDocuments(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count documentos llevados',
+      one: 'Un documento llevado',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String acctTransferFile(String format, String from, String to) {
+    return 'Fichero $format · $from – $to';
+  }
+
+  @override
+  String acctTransferFileMeta(String when, String who, int documents) {
+    String _temp0 = intl.Intl.pluralLogic(
+      documents,
+      locale: localeName,
+      other: '$documents documentos',
+      one: 'un documento',
+    );
+    return '$when por $who · $_temp0';
+  }
+
+  @override
+  String acctTransferSha(String digest) {
+    return 'SHA-256 $digest';
+  }
+
+  @override
+  String get acctTransfersEmpty =>
+      'No se entregó ni envió nada en este periodo.';
+
+  @override
+  String get acctTransfersIntro =>
+      'Cada fichero entregado y cada documento enviado en el periodo, con el SHA-256 de lo que se llevó: la prueba del enlace digital entre esta contabilidad y el sistema contable.';
+
+  @override
+  String acctTransfersPeriod(String year) {
+    return 'Año $year';
+  }
+
+  @override
+  String get acctTransfersTitle => 'Transferencias';
+
+  @override
+  String get acctWhoUnknown => 'alguien que ya no está en el espacio';
+
+  @override
   String get addressCountryLabel => 'País';
 
   @override
@@ -7045,6 +7406,15 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String exportDenmarkRegisteredSystem(String systems) {
+    return 'Dinamarca: la ley exige un sistema de contabilidad digital registrado, y DesKilo no lo es. Envíe sus facturas a un sistema registrado ($systems) o entregue a su asesor la exportación estándar SAF-T DK que este genera. Ningún archivo de aquí cumple esa obligación por sí solo.';
+  }
+
+  @override
+  String get exportLocalBookOnly =>
+      'Elaborado a partir de los asientos de su contabilidad local: su contabilidad completa solo si todas las operaciones de la empresa pasan por DesKilo.';
+
+  @override
   String get exportNoCompleteBooks =>
       'Reconstruido a partir de facturas y pagos — DesKilo no lleva contabilidad por partida doble, así que no son sus libros completos. Su asesor los completa.';
 
@@ -7209,6 +7579,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureAccountingBookTitle => 'Libro contable';
+
+  @override
+  String get featureAccountingConnectorsDesc =>
+      'Conecta la contabilidad de cada emisor con el sistema contable en el que se lleva (Pennylane por su API, los demás por fichero), nombra cada cuenta, código de impuesto y cliente como ese sistema los conoce, y lista cada fichero y cada envío que llevó un documento, con su SHA-256: el enlace digital que una inspección fiscal pide ver.';
+
+  @override
+  String get featureAccountingConnectorsTitle => 'Sistemas contables';
 
   @override
   String get featureAccountingPeriodsDesc =>
@@ -10818,6 +11195,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceExportDatev => 'DATEV (Buchungsstapel)';
 
   @override
+  String get invoiceExportFaiaLu => 'FAIA (Luxemburgo)';
+
+  @override
   String get invoiceExportFec => 'FEC (Francia, exigido en una inspección)';
 
   @override
@@ -10841,6 +11221,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceExportSafT => 'SAF-T (XML, internacional)';
+
+  @override
+  String get invoiceExportSafTFull =>
+      'SAF-T con el libro mayor (XML, internacional)';
+
+  @override
+  String get invoiceExportSafTNo => 'SAF-T Financial (Noruega)';
 
   @override
   String get invoiceExportSafTPt => 'SAF-T (Portugal)';
@@ -11702,6 +12089,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String journalNeedsRates(String documents) {
     return 'Estas compras están en otra moneda distinta de la del espacio y no tienen tipo de cambio registrado; no se ha escrito nada. Registre primero el tipo de cada una: $documents';
+  }
+
+  @override
+  String journalOpeningRefused(String from, String to, String reason) {
+    return 'Los saldos de apertura (del $from al $to) no se han podido contabilizar: $reason';
+  }
+
+  @override
+  String journalSafTRefused(String gaps) {
+    return 'El archivo SAF-T no se ha generado: $gaps';
   }
 
   @override
@@ -16553,6 +16950,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get periodReservationsUnknownLevel =>
+      'Este no es un nivel de este espacio.';
+
+  @override
   String get periodReservationsUnnamed => '(lugar sin nombre)';
 
   @override
@@ -18958,6 +19359,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get refTypeInvoice => 'Factura';
 
   @override
+  String get refusalAccountingClosed =>
+      'Esta conexión ya no lo admite: se revocó o ya ha enviado documentos. Revóquela y vuelva a conectarse. No se ha guardado nada.';
+
+  @override
+  String get refusalAccountingValue =>
+      'El servidor ha rechazado este valor: compruebe el token, la clave o el emisor e inténtelo de nuevo. No se ha guardado nada.';
+
+  @override
   String get refusalAlreadyDecided =>
       'Alguien ya lo ha decidido. La lista muestra el resultado.';
 
@@ -20721,7 +21130,29 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get saftContactIntro =>
+      'El archivo de la administración indica una persona de contacto, y el de Luxemburgo también un teléfono. Solo se escribe en este archivo.';
+
+  @override
+  String get saftContactTitle => 'Contacto para este archivo';
+
+  @override
   String get saftDocumentsOnly => 'Solo documentos';
+
+  @override
+  String saftGap(String kind, String subject) {
+    String _temp0 = intl.Intl.selectLogic(kind, {
+      'standardAccount': 'ninguna cuenta estándar para $subject',
+      'standardTaxCode': 'ningún código de IVA estándar para $subject',
+      'taxRate': 'ningún tipo de IVA para $subject',
+      'company': 'falta el campo $subject de la empresa',
+      'contact': 'el campo $subject de la persona de contacto',
+      'party': 'falta $subject en un cliente o proveedor',
+      'tooLong': '$subject supera la longitud que admite el archivo',
+      'other': '$subject',
+    });
+    return '$_temp0';
+  }
 
   @override
   String get saftLedgerIntro =>
@@ -25644,6 +26075,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get taxRefRole => 'Función';
+
+  @override
+  String get taxRefSafTKeys =>
+      'SAF-T Financial (formato saf_t): la clave saf_t/<rol> asigna las cuentas de un rol contable a su código estándar, introducido como cuenta (Noruega: el GroupingCode, con su GroupingCategory como etiqueta; Luxemburgo: el StandardAccountID); la clave saf_t/tax:<output|input>:<grupo> indica el código de IVA estándar de un grupo de tipos como código de impuesto (Noruega).';
 
   @override
   String get taxRefSave => 'Guardar la versión';

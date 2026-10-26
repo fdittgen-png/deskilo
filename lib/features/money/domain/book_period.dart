@@ -157,6 +157,7 @@ abstract class BookPeriodRepository {
 
   Future<BookPeriod> reopen(String workspaceId, String periodId, String reason);
 
-  /// Logs a file handed out: format, period, digest, size.
-  Future<void> recordExport(String workspaceId, BookExportRecord record);
+  /// Logs a file handed out: format, period, digest, size. Answers the
+  /// log row's id, or null when the space keeps no log.
+  Future<String?> recordExport(String workspaceId, BookExportRecord record);
 }
