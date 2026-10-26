@@ -224,8 +224,8 @@ const Map<String, String> _notExported = {
           'the copy never signed in to',
   'accounting_maps':
       '#2370 — what each key of these books is called in one connected '
-          'system; it belongs to that connection and travels with nothing '
-          'a fresh space could reach',
+          'system; it belongs to that connection, and a copy holds no '
+          'connection to read it',
   'accounting_deliveries':
       '#2370 — what was handed to an accounting system, per document, '
           'with its digest; evidence of this server\'s transfers, which a '

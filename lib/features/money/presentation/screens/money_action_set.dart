@@ -9,8 +9,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/accounting_connection.dart'
+    show accountingTransferReaders;
 import '../../domain/premises_lease.dart' show leaseManagePermission;
 import '../../domain/purchase.dart' show
         purchaseDecidePermission,
@@ -35,13 +36,6 @@ import 'money_view_data.dart';
 /// The buttons of the Money tab, each built once and placed by whichever
 /// layout is on (#720): classic column, landscape side panel or the faces.
 /// Grouped by MEANING — what pays, what asks, what documents (#486 UX).
-/// Who reads the accounting transfers: the server's `accounting_reader`.
-const Set<WorkspacePermission> _readsTransfers = {
-  WorkspacePermission.viewFinances,
-  WorkspacePermission.exportData,
-  WorkspacePermission.manageBilling,
-};
-
 class MoneyActionSet {
   MoneyActionSet._({
     required this.recordPayment,
@@ -385,7 +379,9 @@ class MoneyActionSet {
       // that carried them, for those who read the finances, export or bill.
       if (data.accountingConnectorsOn &&
           data.workspace != null &&
-          ref.read(myPermissionsProvider).any(_readsTransfers.contains))
+          ref
+              .read(myPermissionsProvider)
+              .any((p) => accountingTransferReaders.contains(p.wireName)))
         AccountingTargetsButton(workspaceId: data.workspace!.id),
       // #2568 — the rooms the space rents, for those who manage the plan.
       if (data.externalRoomsOn &&

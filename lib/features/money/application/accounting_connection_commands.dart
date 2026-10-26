@@ -12,7 +12,7 @@ import '../domain/posting.dart';
 
 /// The fewest characters a pasted API token can have: the server refuses
 /// shorter ones (`set_accounting_token_v1`), so the form says it first.
-const int minimumTokenLength = 8;
+const int _minimumTokenLength = 8;
 
 /// Why a mapping cannot be saved as typed.
 enum MapDraftProblem { key, remote }
@@ -43,7 +43,7 @@ class AccountingConnectionCommands {
     required String token,
     required String remoteTenantId,
   }) async {
-    if (token.trim().length < minimumTokenLength) return null;
+    if (token.trim().length < _minimumTokenLength) return null;
     final opened = await _repository.openTokenConnection(
       workspaceId,
       issuerSiteId: issuerSiteId,
@@ -63,7 +63,7 @@ class AccountingConnectionCommands {
     AccountingConnection connection, {
     required String token,
   }) async {
-    if (token.trim().length < minimumTokenLength) return null;
+    if (token.trim().length < _minimumTokenLength) return null;
     return _repository.setToken(
       connection.id,
       token: token.trim(),

@@ -407,8 +407,7 @@ enum WorkspaceFeature {
   premisesLease,
   assetRegister,
   externalRooms,
-  /// #2365 periods, #2579 reports, #2582 purchases, #2583 overview, #2869
-  /// guide, #2862 data report, #3031 bills in another currency (OFF).
+  /// #2365 periods, #2579 reports, #2582 purchases, #2583 overview, #2869 guide, #2862 data report, #3031 bills in another currency, #2370 accounting systems (OFF).
   accountingPeriods,
   biReportDesigner,
   purchaseAnalytics,
@@ -417,8 +416,6 @@ enum WorkspaceFeature {
   dataReport,
   personalShell,
   foreignCurrencyPurchases,
-  /// #2370 — the accounting target systems: connections, mappings and the
-  /// transfers list (OFF).
   accountingConnectors;
 
   /// The key of this feature inside `workspaces.feature_flags`.

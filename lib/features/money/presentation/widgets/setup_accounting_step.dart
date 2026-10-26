@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -21,8 +22,6 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
@@ -73,9 +72,11 @@ class SetupAccountingStep extends ConsumerWidget {
               ],
               // The systems the books go to: a connection per issuer, the
               // names each key has there, and the transfers.
-              if (ref
-                  .watch(enabledFeaturesSyncProvider)
-                  .contains(WorkspaceFeature.accountingConnectors)) ...[
+              if (featureOn(
+                ref.watch(enabledFeatureKeysProvider),
+                accountingConnectorsKey,
+                byDefault: false,
+              )) ...[
                 const FormGap(),
                 Align(
                   alignment: AlignmentDirectional.centerStart,

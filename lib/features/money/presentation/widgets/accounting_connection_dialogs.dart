@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// The forms of an accounting connection: the API token it is reached with
-// (kept encrypted on the server, never shown again) and the mappings a
-// delivery reads, each key named as the target knows it.
+// The mappings of an accounting connection: what a delivery reads, each key
+// of the books named as the target knows it.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,157 +10,12 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
-import '../../../workspace/domain/site.dart';
-import '../../../workspace/providers/member_display_providers.dart';
 import '../../application/accounting_connection_commands.dart';
 import '../../domain/accounting_connection.dart';
-import '../../domain/accounting_format.dart';
 import '../../domain/book_chart.dart';
 import '../../providers/accounting_connection_providers.dart';
 import 'accounting_targets_sheet.dart';
 import 'book_chart_sheet.dart';
-
-/// Connects [issuer] to [target] with a pasted API token, or replaces the
-/// token of [connection]. True when saved.
-Future<bool?> showTokenDialog(
-  BuildContext context, {
-  required String workspaceId,
-  required AccountingTarget target,
-  required Site issuer,
-  AccountingConnection? connection,
-}) => showDialog<bool>(
-  context: context,
-  builder: (_) => _TokenDialog(
-    workspaceId: workspaceId,
-    target: target,
-    issuer: issuer,
-    connection: connection,
-  ),
-);
-
-class _TokenDialog extends ConsumerStatefulWidget {
-  const _TokenDialog({
-    required this.workspaceId,
-    required this.target,
-    required this.issuer,
-    required this.connection,
-  });
-
-  final String workspaceId;
-  final AccountingTarget target;
-  final Site issuer;
-  final AccountingConnection? connection;
-
-  @override
-  ConsumerState<_TokenDialog> createState() => _TokenDialogState();
-}
-
-class _TokenDialogState extends ConsumerState<_TokenDialog> {
-  late final _fields = FormControllers({
-    'name': '${targetLabel(widget.target.id)} — ${widget.issuer.name}',
-    'token': '',
-    'tenant': '',
-  });
-  var _tooShort = false;
-
-  @override
-  void dispose() {
-    _fields.dispose();
-    super.dispose();
-  }
-
-  Future<void> _save() async {
-    final navigator = Navigator.of(context);
-    final commands = ref.read(accountingConnectionCommandProvider);
-    AccountingConnection? saved;
-    final ok = await runGuarded(
-      context,
-      domain: 'money',
-      message: 'accounting token failed',
-      errorText: context.l10n.acctConnRefused,
-      action: () async {
-        final existing = widget.connection;
-        saved = existing == null
-            ? await commands.connectWithToken(
-                widget.workspaceId,
-                issuerSiteId: widget.issuer.id,
-                targetId: widget.target.id,
-                displayName: _fields['name'].text,
-                token: _fields['token'].text,
-                remoteTenantId: _fields['tenant'].text,
-              )
-            : await commands.replaceToken(existing, token: _fields['token'].text);
-      },
-    );
-    if (!mounted || !ok) return;
-    if (saved == null) {
-      setState(() => _tooShort = true);
-      return;
-    }
-    navigator.pop(true);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final name = targetLabel(widget.target.id);
-    return AlertDialog(
-      title: Text(l10n.acctTokenTitle(name)),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(l10n.acctTokenBody(name)),
-            const FormGap(),
-            if (widget.connection == null) ...[
-              AppTextField(
-                key: const ValueKey('acct-token-name'),
-                controller: _fields['name'],
-                label: l10n.acctTokenName,
-                maxLength: 120,
-              ),
-              const FormGap(),
-            ],
-            AppTextField(
-              key: const ValueKey('acct-token-value'),
-              controller: _fields['token'],
-              label: l10n.acctTokenField,
-              obscureText: true,
-              keyboardType: TextInputType.visiblePassword,
-              autofillHints: const [AutofillHints.password],
-              error: _tooShort ? l10n.acctTokenTooShort : null,
-              onChanged: (_) {
-                if (_tooShort) setState(() => _tooShort = false);
-              },
-            ),
-            if (widget.connection == null) ...[
-              const FormGap(),
-              AppTextField(
-                key: const ValueKey('acct-token-tenant'),
-                controller: _fields['tenant'],
-                label: l10n.acctTokenTenant(name),
-                maxLength: 200,
-              ),
-            ],
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('acct-token-cancel'),
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-        ),
-        FilledButton(
-          key: const ValueKey('acct-token-save'),
-          onPressed: _save,
-          child: Text(l10n.acctTokenSave),
-        ),
-      ],
-    );
-  }
-}
 
 /// The mappings of [connection], with the doors to add, change and remove
 /// one for a billing manager.
@@ -170,18 +24,20 @@ Future<void> showMappingsSheet(
   required String workspaceId,
   required AccountingConnection connection,
   required bool manage,
+  required Map<String, String> memberNames,
 }) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
-  builder: (_) => MappingsView(
+  builder: (_) => _MappingsView(
     workspaceId: workspaceId,
     connectionId: connection.id,
     manage: manage,
+    memberNames: memberNames,
   ),
 );
 
 /// The words of a mapping kind.
-String mapKindLabel(BuildContext context, AccountingMapKind kind) {
+String _mapKindLabel(BuildContext context, AccountingMapKind kind) {
   final l10n = context.l10n;
   return switch (kind) {
     AccountingMapKind.account => l10n.acctMapKindAccount,
@@ -191,18 +47,20 @@ String mapKindLabel(BuildContext context, AccountingMapKind kind) {
   };
 }
 
-@visibleForTesting
-class MappingsView extends ConsumerWidget {
-  const MappingsView({
+class _MappingsView extends ConsumerWidget {
+  const _MappingsView({
     required this.workspaceId,
     required this.connectionId,
     required this.manage,
-    super.key,
+    required this.memberNames,
   });
 
   final String workspaceId;
   final String connectionId;
   final bool manage;
+
+  /// Member id → name, for the party mappings.
+  final Map<String, String> memberNames;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -210,14 +68,14 @@ class MappingsView extends ConsumerWidget {
     final all = ref.watch(accountingConnectionsProvider(workspaceId)).value;
     final c = all?.where((x) => x.id == connectionId).firstOrNull;
     if (c == null) return const SizedBox.shrink();
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final names = memberNames;
     Future<void> edit([AccountingMap? map]) async {
       final saved = await showDialog<bool>(
         context: context,
         builder: (_) => _MapDialog(
-          workspaceId: workspaceId,
           connectionId: c.id,
           map: map,
+          memberNames: names,
         ),
       );
       if (saved == true) ref.invalidate(accountingConnectionsProvider(workspaceId));
@@ -263,8 +121,8 @@ class MappingsView extends ConsumerWidget {
             title: Text(l10n.acctMapLine(keyText(m), m.remote)),
             subtitle: Text(
               m.remoteName.isEmpty
-                  ? mapKindLabel(context, m.kind)
-                  : '${mapKindLabel(context, m.kind)} · ${m.remoteName}',
+                  ? _mapKindLabel(context, m.kind)
+                  : '${_mapKindLabel(context, m.kind)} · ${m.remoteName}',
             ),
             onTap: manage && c.live ? () => edit(m) : null,
             trailing: manage && c.live
@@ -293,14 +151,14 @@ class MappingsView extends ConsumerWidget {
 
 class _MapDialog extends ConsumerStatefulWidget {
   const _MapDialog({
-    required this.workspaceId,
     required this.connectionId,
     required this.map,
+    required this.memberNames,
   });
 
-  final String workspaceId;
   final String connectionId;
   final AccountingMap? map;
+  final Map<String, String> memberNames;
 
   @override
   ConsumerState<_MapDialog> createState() => _MapDialogState();
@@ -386,11 +244,11 @@ class _MapDialogState extends ConsumerState<_MapDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final names = widget.memberNames;
     final keyError = _problem == MapDraftProblem.key ? l10n.acctMapKeyInvalid : null;
     final editing = widget.map != null;
     return AlertDialog(
-      title: Text(editing ? mapKindLabel(context, _kind) : l10n.acctMapAdd),
+      title: Text(editing ? _mapKindLabel(context, _kind) : l10n.acctMapAdd),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -403,7 +261,7 @@ class _MapDialogState extends ConsumerState<_MapDialog> {
               decoration: InputDecoration(labelText: l10n.acctMapKind),
               items: [
                 for (final k in AccountingMapKind.values)
-                  DropdownMenuItem(value: k, child: Text(mapKindLabel(context, k))),
+                  DropdownMenuItem(value: k, child: Text(_mapKindLabel(context, k))),
               ],
               onChanged: editing
                   ? null

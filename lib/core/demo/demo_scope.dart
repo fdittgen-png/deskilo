@@ -222,8 +222,7 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
 List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
-  final purchasing = main.purchasing;
-  final bookPeriods = seedDemoBookPeriods(fixture.seededAt);
+  final purchasing = main.purchasing, bookPeriods = seedDemoBookPeriods(fixture.seededAt);
   return [
     eInvoiceInboxRepositoryProvider.overrideWithValue(purchasing.inbox),
     supplierRepositoryProvider.overrideWithValue(purchasing.suppliers),
@@ -233,12 +232,9 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
     bookProfileRepositoryProvider.overrideWithValue(main.books),
     premisesLeaseRepositoryProvider.overrideWithValue(main.lease),
     workspaceAssetRepositoryProvider.overrideWithValue(main.assets),
-    // #2365 — last year's books, closed and exported; #2370 the studio's
-    // connection to Pennylane and what it carried.
+    // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.
     bookPeriodRepositoryProvider.overrideWithValue(bookPeriods),
-    accountingConnectionRepositoryProvider.overrideWithValue(
-      seedDemoAccountingConnections(bookPeriods, fixture.seededAt),
-    ),
+    accountingConnectionRepositoryProvider.overrideWithValue(seedDemoAccountingConnections(bookPeriods, fixture.seededAt)),
     // #2568 — the rooms the demo space rents.
     roomRentalRepositoryProvider.overrideWithValue(
       seedDemoRooms(fixture.seededAt),

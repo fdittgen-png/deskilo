@@ -18,13 +18,12 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/site.dart';
-import '../../../workspace/domain/workspace_permission.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_connection.dart';
 import '../../domain/accounting_format.dart';
 import '../../providers/accounting_connection_providers.dart';
+import '../../providers/book_profile_providers.dart';
 import 'accounting_connection_dialogs.dart';
+import 'accounting_token_dialog.dart';
 import 'accounting_transfers_list.dart';
 
 Future<void> _showAccountingTargetsSheet(
@@ -51,8 +50,8 @@ class AccountingTargetsButton extends StatelessWidget {
   );
 }
 
-/// The state of [c] in words.
-String connectionStatusLabel(AppLocalizations l10n, ConnectionStatus s) =>
+/// The state of a connection in words.
+String _connectionStatusLabel(AppLocalizations l10n, ConnectionStatus s) =>
     switch (s) {
       ConnectionStatus.pending => l10n.acctConnStatusPending,
       ConnectionStatus.connected => l10n.acctConnStatusConnected,
@@ -80,17 +79,12 @@ class AccountingTargetsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final country =
-        ref.watch(currentWorkspaceProvider).value?.countryCode ?? '';
+    final scope = ref.watch(accountingSystemsScopeProvider);
     final apiTargets = [
-      for (final t in targetsFor(country))
+      for (final t in targetsFor(scope.countryCode))
         if (t.transport == AccountingTransport.api && t.capability.producible)
           t,
     ];
-    final manage = ref
-        .watch(myPermissionsProvider)
-        .contains(WorkspacePermission.manageBilling);
-    final sites = ref.watch(sitesProvider).value ?? const <Site>[];
     final connections = ref.watch(accountingConnectionsProvider(workspaceId));
     return SheetShell(
       title: l10n.acctTargetsTitle,
@@ -109,27 +103,32 @@ class AccountingTargetsView extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               for (final target in apiTargets)
-                for (final site in sites)
+                for (final issuer in scope.issuers.entries)
                   _ConnectionCard(
-                    key: ValueKey('acct-connection-${target.id}-${site.id}'),
+                    key: ValueKey('acct-connection-${target.id}-${issuer.key}'),
                     workspaceId: workspaceId,
                     target: target,
-                    site: site,
-                    connection: _liveOf(all, target.id, site.id),
+                    issuerId: issuer.key,
+                    issuerName: issuer.value,
+                    connection: _liveOf(all, target.id, issuer.key),
                     revoked: [
                       for (final c in all)
                         if (!c.live &&
                             c.targetId == target.id &&
-                            c.issuerSiteId == site.id)
+                            c.issuerSiteId == issuer.key)
                           c,
                     ],
-                    manage: manage,
+                    manage: scope.manage,
+                    memberNames: scope.memberNames,
                   ),
             ],
           ),
         ),
         const FormGap.large(),
-        AccountingTransfersList(workspaceId: workspaceId),
+        AccountingTransfersList(
+          workspaceId: workspaceId,
+          memberNames: scope.memberNames,
+        ),
       ],
     );
   }
@@ -152,19 +151,23 @@ class _ConnectionCard extends ConsumerWidget {
   const _ConnectionCard({
     required this.workspaceId,
     required this.target,
-    required this.site,
+    required this.issuerId,
+    required this.issuerName,
     required this.connection,
     required this.revoked,
     required this.manage,
+    required this.memberNames,
     super.key,
   });
 
   final String workspaceId;
   final AccountingTarget target;
-  final Site site;
+  final String issuerId;
+  final String issuerName;
   final AccountingConnection? connection;
   final List<AccountingConnection> revoked;
   final bool manage;
+  final Map<String, String> memberNames;
 
   void _changed(WidgetRef ref) =>
       ref.invalidate(accountingConnectionsProvider(workspaceId));
@@ -174,7 +177,8 @@ class _ConnectionCard extends ConsumerWidget {
       context,
       workspaceId: workspaceId,
       target: target,
-      issuer: site,
+      issuerId: issuerId,
+      issuerName: issuerName,
       connection: connection,
     );
     if (saved != true || !context.mounted) return;
@@ -195,9 +199,9 @@ class _ConnectionCard extends ConsumerWidget {
             .read(accountingConnectionCommandProvider)
             .startSignIn(
               workspaceId,
-              issuerSiteId: site.id,
+              issuerSiteId: issuerId,
               targetId: target.id,
-              displayName: '${targetLabel(target.id)} — ${site.name}',
+              displayName: '${targetLabel(target.id)} — $issuerName',
               connectionId: connection?.id,
             );
       },
@@ -286,10 +290,10 @@ class _ConnectionCard extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$name · ${site.name}', style: Theme.of(context).textTheme.titleMedium),
+            Text('$name · $issuerName', style: Theme.of(context).textTheme.titleMedium),
             Text(
-              c == null ? l10n.acctTargetsNotConnected : connectionStatusLabel(l10n, c.status),
-              key: ValueKey('acct-connection-state-${target.id}-${site.id}'),
+              c == null ? l10n.acctTargetsNotConnected : _connectionStatusLabel(l10n, c.status),
+              key: ValueKey('acct-connection-state-${target.id}-$issuerId'),
               style: c != null && c.needsAttention
                   ? TextStyle(color: Theme.of(context).colorScheme.error)
                   : null,
@@ -311,36 +315,37 @@ class _ConnectionCard extends ConsumerWidget {
               children: [
                 if (manage && byToken && (c == null || c.authKind == AccountingAuthKind.token))
                   TextButton(
-                    key: ValueKey('acct-connect-token-${target.id}-${site.id}'),
+                    key: ValueKey('acct-connect-token-${target.id}-$issuerId'),
                     onPressed: () => _token(context, ref),
                     child: Text(c == null ? l10n.acctConnConnectToken : l10n.acctConnReplaceToken),
                   ),
                 if (manage && signIn && (c == null || c.authKind == AccountingAuthKind.oauth2))
                   TextButton(
-                    key: ValueKey('acct-sign-in-${target.id}-${site.id}'),
+                    key: ValueKey('acct-sign-in-${target.id}-$issuerId'),
                     onPressed: () => _signIn(context, ref),
                     child: Text(c == null ? l10n.acctConnSignIn(name) : l10n.acctConnSignInAgain),
                   ),
                 if (manage && c != null && c.authKind == AccountingAuthKind.oauth2)
                   TextButton(
-                    key: ValueKey('acct-refresh-${target.id}-${site.id}'),
+                    key: ValueKey('acct-refresh-${target.id}-$issuerId'),
                     onPressed: () => _refresh(context, ref),
                     child: Text(l10n.acctConnRefresh),
                   ),
                 if (c != null)
                   TextButton(
-                    key: ValueKey('acct-maps-${target.id}-${site.id}'),
+                    key: ValueKey('acct-maps-${target.id}-$issuerId'),
                     onPressed: () => showMappingsSheet(
                       context,
                       workspaceId: workspaceId,
                       connection: c,
                       manage: manage,
+                      memberNames: memberNames,
                     ),
                     child: Text(l10n.acctMapsButton(c.maps.length)),
                   ),
                 if (manage && c != null)
                   TextButton(
-                    key: ValueKey('acct-revoke-${target.id}-${site.id}'),
+                    key: ValueKey('acct-revoke-${target.id}-$issuerId'),
                     onPressed: () => _revoke(context, ref),
                     child: Text(l10n.acctConnRevoke),
                   ),

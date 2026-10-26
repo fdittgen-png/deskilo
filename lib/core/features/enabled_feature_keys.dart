@@ -28,3 +28,7 @@ const String accountingBookKey = 'accountingBook';
 /// A supplier's bill in another currency than the space's, with the
 /// exchange rate recorded on it.
 const String foreignCurrencyPurchasesKey = 'foreignCurrencyPurchases';
+
+/// The accounting systems the books go to, and the transfers that carried
+/// them.
+const String accountingConnectorsKey = 'accountingConnectors';

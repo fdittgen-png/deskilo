@@ -12,7 +12,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/member_display_providers.dart';
 import '../../domain/accounting_connection.dart';
 import '../../domain/posting.dart';
 import '../../providers/accounting_connection_providers.dart';
@@ -26,7 +25,7 @@ String _short(String sha) =>
     sha.length > _shortDigest ? '${sha.substring(0, _shortDigest)}…' : sha;
 
 /// The words of a document event.
-String documentKindLabel(AppLocalizations l10n, String wire) =>
+String _documentKindLabel(AppLocalizations l10n, String wire) =>
     switch (PostingKind.values.where((k) => k.wire == wire).firstOrNull) {
       PostingKind.invoice => l10n.acctKindInvoice,
       PostingKind.creditNote => l10n.acctKindCreditNote,
@@ -43,7 +42,7 @@ String documentKindLabel(AppLocalizations l10n, String wire) =>
       null => l10n.acctKindOther,
     };
 
-String deliveryStatusLabel(AppLocalizations l10n, DeliveryStatus s) =>
+String _deliveryStatusLabel(AppLocalizations l10n, DeliveryStatus s) =>
     switch (s) {
       DeliveryStatus.generated => l10n.acctDeliveryGenerated,
       DeliveryStatus.sent => l10n.acctDeliverySent,
@@ -53,9 +52,16 @@ String deliveryStatusLabel(AppLocalizations l10n, DeliveryStatus s) =>
     };
 
 class AccountingTransfersList extends ConsumerStatefulWidget {
-  const AccountingTransfersList({required this.workspaceId, super.key});
+  const AccountingTransfersList({
+    required this.workspaceId,
+    required this.memberNames,
+    super.key,
+  });
 
   final String workspaceId;
+
+  /// Member id → name, for who made each file.
+  final Map<String, String> memberNames;
 
   @override
   ConsumerState<AccountingTransfersList> createState() =>
@@ -78,7 +84,7 @@ class _AccountingTransfersListState
         to: DateTime(_year, 12, 31),
       )),
     );
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final names = widget.memberNames;
     String day(DateTime d) => material.formatMediumDate(d);
     return Column(
       key: const ValueKey('acct-transfers'),
@@ -152,7 +158,7 @@ class _AccountingTransfersListState
                         title: Text(
                           l10n.acctTransferDocLine(
                             d.documentNumber,
-                            documentKindLabel(l10n, d.documentKind),
+                            _documentKindLabel(l10n, d.documentKind),
                             day(d.eventDate),
                           ),
                         ),
@@ -172,14 +178,14 @@ class _AccountingTransfersListState
                   title: Text(
                     l10n.acctTransferDocLine(
                       d.documentNumber,
-                      documentKindLabel(l10n, d.documentKind),
+                      _documentKindLabel(l10n, d.documentKind),
                       day(d.eventDate),
                     ),
                   ),
                   subtitle: Text(
                     [
                       targetLabel(d.targetId),
-                      deliveryStatusLabel(l10n, d.status),
+                      _deliveryStatusLabel(l10n, d.status),
                       if (d.remoteNumber.isNotEmpty || d.remoteId.isNotEmpty)
                         l10n.acctDeliveryRemote(
                           d.remoteNumber.isNotEmpty ? d.remoteNumber : d.remoteId,

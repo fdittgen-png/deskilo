@@ -5,11 +5,14 @@
 // map first). The decision is `application/generic_journal_export.dart`.
 import 'package:flutter/material.dart';
 
+import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/fec_postings.dart';
+import '../providers/accounting_connection_providers.dart';
+import 'accounting_export_run.dart';
 
 export '../application/generic_journal_export.dart'
     show
@@ -18,7 +21,6 @@ export '../application/generic_journal_export.dart'
         JournalNeedsRates,
         JournalPosted,
         journalCsvOf,
-        localBookOf,
         writtenWith;
 
 /// Builds a posted file through [build] (the generic journal, or #2365 the
@@ -65,5 +67,32 @@ Future<void> exportGenericJournal(
     // A journal not yet written is not a file; never saved as one.
     case JournalPosted() || null:
       return;
+  }
+}
+
+/// #2370 — the generic journal, saved and logged, and with the accounting
+/// systems on, each document it carried recorded with its own digest: a
+/// re-delivery of the same books changes nothing.
+extension JournalDeliveries on AccountingExportRun {
+  Future<void> saveJournal(String content) async {
+    final exportId = await save(content, named('journal'));
+    final journal = posted;
+    final issuer = localBookOf(bookProfiles, year)?.issuerSiteId;
+    if (exportId == null || journal is! JournalPosted || issuer == null) return;
+    final on = featureOn(
+      ref.read(enabledFeatureKeysProvider),
+      accountingConnectorsKey,
+      byDefault: false,
+    );
+    if (!on) return;
+    await ref
+        .read(accountingConnectionCommandProvider)
+        .logJournalFile(
+          workspace.id,
+          bookExportId: exportId,
+          targetId: format.id,
+          issuerSiteId: issuer,
+          postings: journal.postings,
+        );
   }
 }

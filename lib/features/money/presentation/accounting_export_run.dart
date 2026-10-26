@@ -15,7 +15,6 @@ import '../../../core/time/workspace_time.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
@@ -41,7 +40,6 @@ import '../domain/saf_t.dart';
 import '../domain/sage.dart';
 import '../domain/swiss_kmu.dart';
 import '../domain/vat_tax_point.dart';
-import '../providers/accounting_connection_providers.dart';
 import '../providers/book_period_providers.dart';
 import '../providers/book_profile_providers.dart';
 import '../providers/money_providers.dart';
@@ -208,7 +206,7 @@ class AccountingExportRun {
             'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace)});
       case 'generic_journal_csv':
         await exportGenericJournal(context, () async => writtenWith(posted!, journalCsvOf),
-            save: _saveJournal);
+            save: saveJournal);
     }
   }
 
@@ -220,19 +218,6 @@ class AccountingExportRun {
     await savePdfToDownloads(context, ref, bytes: bytes, fileName: fileName);
     return ref.read(bookPeriodCommandProvider).logExport(workspace.id, formatId: format.id,
         year: year, content: content, documents: exported.length, period: period);
-  }
-
-  /// #2370 — the generic journal, saved and logged, and with the accounting
-  /// systems on, each document it carried recorded with its own digest: a
-  /// re-delivery of the same books changes nothing.
-  Future<void> _saveJournal(String content) async {
-    final exportId = await save(content, named('journal'));
-    final journal = posted;
-    final issuer = localBookOf(bookProfiles, year)?.issuerSiteId;
-    if (exportId == null || journal is! JournalPosted || issuer == null) return;
-    if (!ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.accountingConnectors)) return;
-    await ref.read(accountingConnectionCommandProvider).logJournalFile(workspace.id,
-        bookExportId: exportId, targetId: format.id, issuerSiteId: issuer, postings: journal.postings);
   }
 
   FecExportActions get fecActions =>

@@ -12,6 +12,37 @@
 import '../../../core/data/json_reader.dart';
 import 'accounting_target.dart';
 
+/// The right that connects, maps and revokes (the server's
+/// `accounting_connector_actor`).
+const String accountingConnectPermission = 'manageBilling';
+
+/// The rights that read the connections and the transfers (the server's
+/// `accounting_reader`, beside the owner).
+const Set<String> accountingTransferReaders = {
+  'viewFinances',
+  'exportData',
+  accountingConnectPermission,
+};
+
+/// What the accounting systems need of the space: its country (which
+/// targets it is offered), its issuers by id, the rights the reader holds
+/// (by name) and its members' names.
+class AccountingSystemsScope {
+  const AccountingSystemsScope({
+    required this.countryCode,
+    required this.issuers,
+    required this.permissions,
+    required this.memberNames,
+  });
+
+  final String countryCode;
+  final Map<String, String> issuers;
+  final Set<String> permissions;
+  final Map<String, String> memberNames;
+
+  bool get manage => permissions.contains(accountingConnectPermission);
+}
+
 /// The state of a connection as the screen shows it.
 enum ConnectionStatus {
   pending('pending'),
