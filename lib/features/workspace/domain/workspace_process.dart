@@ -156,6 +156,7 @@ const workspaceProcesses = <WorkspaceProcess>[
     ]),
     WorkspaceSubprocess('collection', [
       WorkspaceFeature.onlinePayments,
+      WorkspaceFeature.bankImport,
       WorkspaceFeature.dunning,
       WorkspaceFeature.paymentReminders,
     ]),

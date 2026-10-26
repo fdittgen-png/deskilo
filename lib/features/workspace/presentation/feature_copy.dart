@@ -290,6 +290,7 @@ String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
         l10n.featureForeignCurrencyPurchasesDesc,
       WorkspaceFeature.accountingConnectors =>
         l10n.featureAccountingConnectorsDesc,
+      WorkspaceFeature.bankImport => l10n.featureBankImportDesc,
       _ => feature.name,
     };
 

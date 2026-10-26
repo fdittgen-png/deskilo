@@ -148,6 +148,7 @@ begin
       "assetRegister": false,
       "autoCheckInOut": false,
       "badgeSignIn": false,
+      "bankImport": false,
       "biReportDesigner": false,
       "bookForOthers": true,
       "bookingGate": true,

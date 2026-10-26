@@ -384,4 +384,15 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.accountingBook,
     defaultOn: false,
   ),
+  // The bank's own statements read into the space: each movement once,
+  // matched to an invoice by the reference the payer typed and confirmed
+  // by a person, or kept in a work list. Asked for: it needs the space's
+  // bank files and someone who reconciles them.
+  WorkspaceFeature.bankImport: FeatureManifestEntry(
+    feature: WorkspaceFeature.bankImport,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.invoicing,
+    defaultOn: false,
+  ),
 };

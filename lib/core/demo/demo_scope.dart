@@ -52,6 +52,7 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/accounting_connection_providers.dart';
 import 'package:deskilo/features/money/providers/asset_providers.dart';
+import 'package:deskilo/features/money/providers/bank_statement_providers.dart';
 import 'package:deskilo/features/money/providers/asset_valuation_providers.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
@@ -133,6 +134,7 @@ import '../theme/theme_controller.dart';
 import '../time/clock.dart';
 import '../webmcp/webmcp_device_switch.dart';
 import 'data/action_confirmation_repository.dart';
+import 'data/bank_statement_repository.dart';
 import 'data/demo_setup_repository.dart';
 import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
@@ -235,6 +237,8 @@ List<Override> _purchasingOverrides(DemoFixture fixture, _MainBooks main) {
     // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.
     bookPeriodRepositoryProvider.overrideWithValue(bookPeriods),
     accountingConnectionRepositoryProvider.overrideWithValue(seedDemoAccountingConnections(bookPeriods, fixture.seededAt)),
+    // #2380 — the demo space's last bank statement, two payments by reference.
+    bankStatementRepositoryProvider.overrideWithValue(seedDemoBankStatements(fixture.money, fixture.seededAt)),
     // #2568 — the rooms the demo space rents.
     roomRentalRepositoryProvider.overrideWithValue(
       seedDemoRooms(fixture.seededAt),
