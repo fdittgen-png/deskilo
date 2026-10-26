@@ -19,6 +19,7 @@ import '../domain/office.dart';
 import '../domain/plan_image.dart';
 import '../domain/seat.dart';
 import '../domain/seat_context.dart';
+import 'place_index.dart';
 import 'plan_media_steps.dart';
 import 'plan_media_sweep.dart';
 
@@ -225,57 +226,12 @@ class SupabaseFloorPlanRepository implements FloorPlanRepository {
   }
 
   @override
-  Future<Map<String, String>> fetchTargetNames(String workspaceId) async {
-    // #2011 — every table paged to the end, ordered by id: an unranged
-    // select stops at the server's cap and a target past it would lose its
-    // name. A failed page fails the read (the provider shows it as
-    // unavailable), never a shorter map.
-    Future<List<Map<String, dynamic>>> names(String table) => fetchAllPages(
-          table: table,
-          build: () => _client
-              .from(table)
-              .select('id, name')
-              .eq('workspace_id', workspaceId)
-              .order('id', ascending: true),
-        );
-    final seatRows = await names('seats');
-    // Desks joined (0059): whole-desk reservations name their table.
-    final deskRows = await names('desks');
-    final officeRows = await names('offices');
-    return {
-      for (final r in [...seatRows, ...deskRows, ...officeRows])
-        r['id'] as String: r['name'] as String,
-    };
-  }
+  Future<Map<String, String>> fetchTargetNames(String workspaceId) =>
+      fetchPlaceNames(_client, workspaceId);
 
   @override
-  Future<Map<String, String>> fetchTargetLevels(String workspaceId) async {
-    // Every table paged to the end, like the names: a place past the
-    // server's cap would otherwise fall out of its level's bookings.
-    Future<List<Map<String, dynamic>>> rows(String table, String parent) =>
-        fetchAllPages(
-          table: table,
-          build: () => _client
-              .from(table)
-              .select('id, $parent')
-              .eq('workspace_id', workspaceId)
-              .order('id', ascending: true),
-        );
-    final officeLevel = {
-      for (final r in await rows('offices', 'level_id'))
-        r['id'] as String: r['level_id'] as String,
-    };
-    final deskLevel = <String, String>{
-      for (final r in await rows('desks', 'office_id'))
-        r['id'] as String: ?officeLevel[r['office_id']],
-    };
-    return {
-      ...officeLevel,
-      ...deskLevel,
-      for (final r in await rows('seats', 'desk_id'))
-        r['id'] as String: ?deskLevel[r['desk_id']],
-    };
-  }
+  Future<Map<String, String>> fetchTargetLevels(String workspaceId) =>
+      fetchPlaceLevels(_client, workspaceId);
 
   // #182: four small keyed reads along seats → desks → offices → levels
   // instead of one PostgREST FK-embedded select — the plain form is

@@ -108,6 +108,11 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
     reason: 'demo records: the German space\'s document titles as it '
         'stores them',
   ),
+  'lib/core/demo/seed/demo_network_seed.dart': (
+    allowed: 2,
+    reason: 'demo records: the page titles of a saved report as a space '
+        'stores them',
+  ),
   'lib/core/demo/seed/demo_money_seed.dart': (
     allowed: 5,
     reason: 'demo records: VAT rate labels and an expense title as a '
