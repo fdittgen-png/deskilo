@@ -58,7 +58,7 @@ Future<void> showExpenseSheet(
   // may deduct and whether it bought a fixed asset.
   final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
   if (!context.mounted) return;
-  final vat = ExpenseVatChoice.of(ref, workspace, fields['deductible']);
+  final vat = ExpenseVatChoice.of(ref, workspace.countryCode, fields['deductible']);
   void prefillUnit() {
     final cents = parseCentsInput(fields['amount'].text) ?? 0;
     final qty = int.tryParse(fields['supplyQuantity'].text) ?? 0;

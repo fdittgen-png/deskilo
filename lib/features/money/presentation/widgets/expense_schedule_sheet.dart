@@ -234,7 +234,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
   // #2357 — the VAT every occurrence will carry.
   final vatPercents = await expenseVatPercents(ref, workspace.vatRegime);
   if (!context.mounted) return false;
-  final vat = ExpenseVatChoice.of(ref, workspace, TextEditingController(text: '100'));
+  final vat = ExpenseVatChoice.of(ref, workspace.countryCode, TextEditingController(text: '100'));
 
   final submitted = await showAppSheet<bool>(
     context: context,

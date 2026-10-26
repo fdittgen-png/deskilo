@@ -18,7 +18,6 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/workspace.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/submit_expense.dart';
@@ -33,17 +32,18 @@ import '../vat_tax_point_labels.dart';
 class ExpenseVatChoice {
   ExpenseVatChoice(this.share, {this.acquisitionOffered = false});
 
-  /// #2360 — the choice for an expense of [workspace]: an acquisition from
+  /// #2360 — the choice for an expense of a space in [countryCode]: an
+  /// acquisition from
   /// abroad is offered only where today's return has a box for the tax it
   /// then owes (the Swiss 383).
   factory ExpenseVatChoice.of(
     WidgetRef ref,
-    Workspace workspace,
+    String countryCode,
     TextEditingController share,
   ) => ExpenseVatChoice(
     share,
     acquisitionOffered: vatFormTaxesAcquisitions(
-      workspace.countryCode,
+      countryCode,
       ref.read(clockProvider).now(),
     ),
   );
