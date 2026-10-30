@@ -66,7 +66,7 @@ const realtimeTables = [
 @visibleForTesting
 const workspaceScopedTables = {
   'reservations', 'levels', 'offices', 'desks', 'seats', 'plan_images',
-  'events', 'ledger_entries', 'payment_intents', 'invoices', 'services',
+  'events', 'event_decisions', 'ledger_entries', 'payment_intents', 'invoices', 'services',
   'accessories', 'seat_accessories', 'closure_days', 'quota_extensions',
   'fee_bands', 'packages', 'validation_policies',
 };
