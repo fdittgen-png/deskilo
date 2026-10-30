@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'feature_countries.dart';
 
 export 'feature_countries.dart';
@@ -416,7 +415,8 @@ enum WorkspaceFeature {
   personalShell,
   foreignCurrencyPurchases,
   accountingConnectors,
-  bankImport, planDecor;
+  bankImport,
+  planDecor;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

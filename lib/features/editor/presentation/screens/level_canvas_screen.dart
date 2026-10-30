@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/canvas_controls.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -160,7 +161,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           : EditorToolbar(
               armed: _tool,
               onArm: (tool) => unawaited(_arm(tool)),
-              decorOn: ref.watch(planDecorOnProvider),
+              decorOn: featureOn(
+                ref.watch(enabledFeatureKeysProvider),
+                planDecorFeatureKey,
+                byDefault: true,
+              ),
             ),
       // Keep the canvas mounted whenever we have ANY plan to show — the last
       // fetched one during a reload. Matching only AsyncData here swapped in a

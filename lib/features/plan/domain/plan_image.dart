@@ -61,5 +61,8 @@ sealed class PlanImage with _$PlanImage implements SystemStamped {
   }) = _PlanImage;
 }
 
+/// The key of the flag that offers the Shapes tool (`planDecor`).
+const planDecorFeatureKey = 'planDecor';
+
 /// Whether [image] is a photo with an object to fetch, not a drawn symbol.
 bool isPhotoImage(PlanImage image) => image.kind == null;

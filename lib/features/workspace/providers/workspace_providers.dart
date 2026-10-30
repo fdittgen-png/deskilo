@@ -2,7 +2,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart' show Color;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../app/theme.dart';
@@ -56,12 +55,6 @@ part 'workspace_providers.g.dart';
 /// composition root puts it in its scope's overrides.
 final enabledFeatureKeysFromWorkspace = enabledFeatureKeysProvider.overrideWith(
   (ref) => {for (final f in ref.watch(enabledFeaturesSyncProvider)) f.dbKey},
-);
-
-/// #3074 -- whether the plan editor offers the Shapes tool (the planDecor
-/// flag); the editor asks this, not the feature enum.
-final planDecorOnProvider = Provider<bool>(
-  (ref) => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.planDecor),
 );
 
 /// #2564 O1 -- the OPERATIONS half: everything done to the selected

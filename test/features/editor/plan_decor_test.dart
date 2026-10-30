@@ -10,6 +10,7 @@ import 'package:deskilo/features/editor/application/level_canvas_edits.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/plan_image.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_decor_paint.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -86,6 +87,10 @@ void main() {
         recorder.endRecording().dispose();
       }
     }
+  });
+
+  test('the editor asks the flag by the key the enum registers', () {
+    expect(planDecorFeatureKey, WorkspaceFeature.planDecor.dbKey);
   });
 
   test('the wire names are the server kinds', () {
