@@ -196,9 +196,14 @@ class EventFeedItem extends FeedItem {
     required super.unread,
     required super.category,
     this.count = 1,
+    this.unreadCount = 0,
   });
 
   final WorkspaceEvent event;
+
+  /// How many of the [count] events are unread: a fold that straddles the
+  /// seen cutoff within one minute is partly read.
+  final int unreadCount;
 
   /// How many identical events this row stands for (#3067): the same type,
   /// verb, actor, subject and status in the same minute.
@@ -241,6 +246,7 @@ List<FeedItem> _collapseRepeats(List<FeedItem> feed) {
         unread: last.unread || item.unread,
         category: last.category,
         count: last.count + item.count,
+        unreadCount: last.unreadCount + item.unreadCount,
       );
     } else {
       out.add(item);
@@ -279,6 +285,7 @@ List<FeedItem> buildNotificationFeed({
         at: event.createdAt,
         unread: isNew(event),
         category: categoryOfEvent(event),
+        unreadCount: isNew(event) ? 1 : 0,
       ),
   ];
   final filtered = items.where((item) {
@@ -302,11 +309,19 @@ List<FeedItem> buildNotificationFeed({
 
 /// How many unread things the feed shows (#3067): a collapsed row counts
 /// as the events it stands for, so the header equals what the list holds.
+@visibleForTesting
 int unreadFeedCount(List<FeedItem> feed) => feed.fold(
       0,
       (sum, item) =>
-          item.unread ? sum + (item is EventFeedItem ? item.count : 1) : sum,
+          item is EventFeedItem
+              ? sum + item.unreadCount
+              : (item.unread ? sum + 1 : sum),
     );
+
+/// The number the bell badge and the inbox header both say (#3067): the
+/// decisions waiting for the reader plus the unread things the list shows.
+int inboxAttentionCount({required int pending, required List<FeedItem> feed}) =>
+    pending + unreadFeedCount(feed);
 
 /// One fold of the grouped feed (#598). [key] is what the group IS —
 /// a [NotificationCategory] (type), a local-midnight [DateTime] (date)

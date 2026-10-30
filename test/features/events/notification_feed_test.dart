@@ -101,6 +101,28 @@ void main() {
       expect(unreadFeedCount(rows), 3);
     });
 
+    test('the bell and the header say one number: decisions plus unread', () {
+      final rows = feed(
+        [_event('a', t0), _event('b', t0.add(const Duration(minutes: 5)))],
+        seen: t0.subtract(const Duration(seconds: 1)),
+      );
+      expect(inboxAttentionCount(pending: 2, feed: rows), 4);
+      expect(inboxAttentionCount(pending: 0, feed: const []), 0);
+    });
+
+    test('a fold across the seen cutoff counts only its unread events', () {
+      final rows = feed(
+        [
+          _event('a', t0.add(const Duration(seconds: 10))),
+          _event('b', t0.add(const Duration(seconds: 40))),
+        ],
+        seen: t0.add(const Duration(seconds: 20)),
+      );
+      expect(rows, hasLength(1));
+      expect((rows.single as EventFeedItem).count, 2);
+      expect(unreadFeedCount(rows), 1);
+    });
+
     test('the collapsed row is unread when any of them is', () {
       final rows = feed(
         [
