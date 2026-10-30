@@ -68,6 +68,7 @@ signed-out on  /money/repartition-wizard -> /auth
 signed-out on  /money/sales -> /auth
 signed-out on  /money/settlement -> /auth
 signed-out on  /money/status -> /auth
+signed-out on  /money/suppliers -> /auth
 signed-out on  /nfc-config -> /auth
 signed-out on  /oauth/consent -> /auth
 signed-out on  /onboarding -> /auth
@@ -192,6 +193,7 @@ signed-out off /money/repartition-wizard -> /auth
 signed-out off /money/sales -> /auth
 signed-out off /money/settlement -> /auth
 signed-out off /money/status -> /auth
+signed-out off /money/suppliers -> /auth
 signed-out off /nfc-config -> /auth
 signed-out off /oauth/consent -> /auth
 signed-out off /onboarding -> /auth
@@ -316,6 +318,7 @@ no-space on  /money/repartition-wizard -> /me
 no-space on  /money/sales -> /me
 no-space on  /money/settlement -> /me
 no-space on  /money/status -> /me
+no-space on  /money/suppliers -> /me
 no-space on  /nfc-config -> /me
 no-space on  /oauth/consent -> (open)
 no-space on  /onboarding -> (open)
@@ -440,6 +443,7 @@ no-space off /money/repartition-wizard -> /me
 no-space off /money/sales -> /me
 no-space off /money/settlement -> /me
 no-space off /money/status -> /me
+no-space off /money/suppliers -> /me
 no-space off /nfc-config -> /me
 no-space off /oauth/consent -> (open)
 no-space off /onboarding -> (open)
@@ -564,6 +568,7 @@ member on  /money/repartition-wizard -> /calendar
 member on  /money/sales -> /calendar
 member on  /money/settlement -> (open)
 member on  /money/status -> /money
+member on  /money/suppliers -> /calendar
 member on  /nfc-config -> /calendar
 member on  /oauth/consent -> (open)
 member on  /onboarding -> (open)
@@ -688,6 +693,7 @@ member off /money/repartition-wizard -> /messages
 member off /money/sales -> /messages
 member off /money/settlement -> /messages
 member off /money/status -> /messages
+member off /money/suppliers -> /messages
 member off /nfc-config -> /messages
 member off /oauth/consent -> (open)
 member off /onboarding -> (open)
@@ -812,6 +818,7 @@ admin on  /money/repartition-wizard -> /calendar
 admin on  /money/sales -> (open)
 admin on  /money/settlement -> (open)
 admin on  /money/status -> /money
+admin on  /money/suppliers -> (open)
 admin on  /nfc-config -> (open)
 admin on  /oauth/consent -> (open)
 admin on  /onboarding -> (open)
@@ -936,6 +943,7 @@ admin off /money/repartition-wizard -> /messages
 admin off /money/sales -> /messages
 admin off /money/settlement -> /messages
 admin off /money/status -> /messages
+admin off /money/suppliers -> /messages
 admin off /nfc-config -> /messages
 admin off /oauth/consent -> (open)
 admin off /onboarding -> (open)
@@ -1060,6 +1068,7 @@ owner on  /money/repartition-wizard -> /money
 owner on  /money/sales -> (open)
 owner on  /money/settlement -> (open)
 owner on  /money/status -> /money
+owner on  /money/suppliers -> (open)
 owner on  /nfc-config -> (open)
 owner on  /oauth/consent -> (open)
 owner on  /onboarding -> (open)
@@ -1184,6 +1193,7 @@ owner off /money/repartition-wizard -> /messages
 owner off /money/sales -> /messages
 owner off /money/settlement -> /messages
 owner off /money/status -> /messages
+owner off /money/suppliers -> /messages
 owner off /nfc-config -> /messages
 owner off /oauth/consent -> (open)
 owner off /onboarding -> (open)

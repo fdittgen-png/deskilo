@@ -24925,6 +24925,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suppliersSavedOpen => 'Open';
 
   @override
+  String get suppliersSearch => 'Search by name, number or tax ID';
+
+  @override
   String get suppliersTaxUnverified => 'Tax identifier not verified';
 
   @override

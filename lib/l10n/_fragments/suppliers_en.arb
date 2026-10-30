@@ -207,5 +207,9 @@
         "type": "String"
       }
     }
+  },
+  "suppliersSearch": "Search by name, number or tax ID",
+  "@suppliersSearch": {
+    "description": "#3070 the search field of the suppliers screen"
   }
 }

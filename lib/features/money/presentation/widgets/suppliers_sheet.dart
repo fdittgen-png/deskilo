@@ -36,10 +36,18 @@ class SuppliersView extends ConsumerWidget {
   const SuppliersView({
     required this.workspaceId,
     this.lookupOn = false,
+    this.embedded = false,
+    this.query = '',
     super.key,
   });
 
   final String workspaceId;
+
+  /// #3070 — on a screen of its own, not in a sheet: a plain list.
+  final bool embedded;
+
+  /// #3070 — what the list is narrowed to: a name, a number or a tax id.
+  final String query;
 
   /// Whether the form may ask a company registry (#2863).
   final bool lookupOn;
@@ -160,14 +168,22 @@ class SuppliersView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final suppliers =
+    final all =
         ref.watch(suppliersProvider(workspaceId)).value ?? const <Supplier>[];
+    final needle = query.trim().toLowerCase();
+    final suppliers = needle.isEmpty
+        ? all
+        : [
+            for (final s in all)
+              if ('${s.number} ${s.name} ${s.taxIdEntered}'
+                  .toLowerCase()
+                  .contains(needle))
+                s,
+          ];
     final reviews =
         ref.watch(supplierReviewsProvider(workspaceId)).value ??
         const <SupplierReview>[];
-    return SheetShell(
-      title: l10n.suppliersTitle,
-      children: [
+    final children = <Widget>[
         const SizedBox(height: AppSpacing.sm),
         Text(
           l10n.suppliersIntro,
@@ -232,8 +248,14 @@ class SuppliersView extends ConsumerWidget {
               ],
             ),
           ),
-      ],
-    );
+    ];
+    return embedded
+        ? ListView(
+            key: const ValueKey('suppliers-list'),
+            padding: AppSpacing.mdAll,
+            children: children,
+          )
+        : SheetShell(title: l10n.suppliersTitle, children: children);
   }
 
   static String _taxLine(AppLocalizations l10n, Supplier s) {

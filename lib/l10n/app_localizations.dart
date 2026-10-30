@@ -41321,6 +41321,12 @@ abstract class AppLocalizations {
   /// **'Open'**
   String get suppliersSavedOpen;
 
+  /// #3070 the search field of the suppliers screen
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, number or tax ID'**
+  String get suppliersSearch;
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:

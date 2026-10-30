@@ -16849,6 +16849,7 @@
     "description": "#2567 suppliers"
   },
   "suppliersSavedOpen": "Abrir",
+  "suppliersSearch": "Buscar por nombre, número o NIF",
   "suppliersTaxUnverified": "Identificador fiscal no verificado",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"
