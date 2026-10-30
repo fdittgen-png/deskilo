@@ -11,7 +11,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_foreground.g.dart';
 
 /// [state] seen by the person: resumed, or inactive in front of them.
-@visibleForTesting
 bool isForeground(AppLifecycleState state) =>
     state == AppLifecycleState.resumed || state == AppLifecycleState.inactive;
 
