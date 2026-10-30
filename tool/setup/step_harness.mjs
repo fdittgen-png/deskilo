@@ -640,6 +640,14 @@ const fakeContext = () => {
   if (shapes.length < 5) fail(`answers: ${shapes.length} legacy fixtures`);
   console.log(`answers: round-trip; ${shapes.length} legacy files load as before`);
 }
+// #3075 — a fresh page with only the name typed produces no blocker: a
+// default is not an answer, and blocks nothing until the owner changes it.
+{
+  load('en', { name: 'Fresh Space' });
+  const blockers = globalThis.window.__setup.findings().filter((x) => x.lvl === 'err').map((x) => x.t);
+  if (blockers.length) fail('defaults: a fresh page with a name has blockers: ' + blockers.join(' | '));
+  console.log('defaults: a fresh page with only a name has 0 blockers');
+}
 console.log('steps:', globalThis.__STEPS.length, '| features:', globalThis.__FEATURES.length);
 console.log('locales:', LOCALES.join(','));
 if (failed) { console.log(`\n${failed} failure(s)`); process.exit(1); }
