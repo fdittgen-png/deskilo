@@ -13,7 +13,7 @@
 -- it needs no fixture and it covers every table at once, so a table
 -- added next year is covered the day it is added.
 begin;
-select plan(6);
+select plan(8);
 
 -- 1. RLS on, everywhere.
 --
@@ -107,6 +107,36 @@ select cmp_ok(
     where n.nspname = 'public' and c.relkind = 'r'),
   '>=', 50,
   'the whole migration history replays onto an empty database'
+);
+
+-- 7. An anonymous caller holds SELECT on no table (#3095).
+--
+-- Every anon read was already refused or empty, but only because of RLS and
+-- of helpers that raise; the grant itself was the other half of a double lock
+-- that had one key. The one table an app reads before anybody signs in says
+-- so with a policy for `anon`.
+select is_empty(
+  $$ select c.relname
+       from pg_class c join pg_namespace n on n.oid = c.relnamespace
+      where n.nspname = 'public' and c.relkind in ('r', 'v', 'm', 'p')
+        and c.relname <> 'deskilo_schema_version'
+        and has_table_privilege('anon', c.oid, 'select') $$,
+  'anon holds SELECT on no public table but the schema version'
+);
+
+-- 8. The default privileges hand `anon` nothing (#3095).
+--
+-- A new function or table is closed to an anonymous caller until a migration
+-- opens it on purpose.
+select is_empty(
+  $$ select d.defaclobjtype::text
+       from pg_default_acl d join pg_namespace n on n.oid = d.defaclnamespace
+      where n.nspname = 'public' and pg_get_userbyid(d.defaclrole) = 'postgres'
+        and d.defaclobjtype in ('r', 'f')
+        and exists (select 1 from aclexplode(d.defaclacl) a
+                     where a.grantee = (select oid from pg_roles where rolname = 'anon')
+                        or a.grantee = 0 and d.defaclobjtype = 'f') $$,
+  'the postgres defaults in public grant anon nothing and PUBLIC no function'
 );
 
 select * from finish();
