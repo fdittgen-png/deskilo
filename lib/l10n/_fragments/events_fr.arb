@@ -116,5 +116,12 @@
     "description": "#1088 an event type this build does not know: the row still shows"
   },
   "eventOpenSource": "Ouvrir le document d'achat",
-  "eventSourceNotFound": "Aucun document d'achat n'a été classé pour cette demande, ou vous ne pouvez pas le voir."
+  "eventSourceNotFound": "Aucun document d'achat n'a été classé pour cette demande, ou vous ne pouvez pas le voir.",
+  "eventActionCreated": "créé",
+  "eventActionModified": "modifié",
+  "eventActionCancelled": "annulé",
+  "eventActionSubmitted": "soumis",
+  "eventActionApproved": "approuvé",
+  "eventActionRejected": "rejeté",
+  "eventActionUnknown": "mis à jour"
 }

@@ -116,5 +116,12 @@
     "description": "#1088 an event type this build does not know: the row still shows"
   },
   "eventOpenSource": "Einkaufsbeleg öffnen",
-  "eventSourceNotFound": "Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen."
+  "eventSourceNotFound": "Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.",
+  "eventActionCreated": "erstellt",
+  "eventActionModified": "geändert",
+  "eventActionCancelled": "storniert",
+  "eventActionSubmitted": "eingereicht",
+  "eventActionApproved": "genehmigt",
+  "eventActionRejected": "abgelehnt",
+  "eventActionUnknown": "aktualisiert"
 }

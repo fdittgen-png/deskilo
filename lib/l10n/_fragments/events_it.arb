@@ -116,5 +116,12 @@
     "description": "#1088 an event type this build does not know: the row still shows"
   },
   "eventOpenSource": "Apri il documento di acquisto",
-  "eventSourceNotFound": "Nessun documento di acquisto è stato archiviato per questa richiesta, oppure non può vederlo."
+  "eventSourceNotFound": "Nessun documento di acquisto è stato archiviato per questa richiesta, oppure non può vederlo.",
+  "eventActionCreated": "creato",
+  "eventActionModified": "modificato",
+  "eventActionCancelled": "annullato",
+  "eventActionSubmitted": "inviato",
+  "eventActionApproved": "approvato",
+  "eventActionRejected": "rifiutato",
+  "eventActionUnknown": "aggiornato"
 }

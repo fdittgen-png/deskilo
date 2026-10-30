@@ -84,3 +84,16 @@ String notificationCategoryLabel(
       l10n.notifCategoryMembers,
   };
 }
+
+/// The verb of an event line in the reader's language (#3067): a row never
+/// shows the wire word ("created") inside a translated sentence.
+String eventActionLabel(AppLocalizations l10n, EventAction action) =>
+    switch (action) {
+      EventAction.created => l10n.eventActionCreated,
+      EventAction.modified => l10n.eventActionModified,
+      EventAction.cancelled => l10n.eventActionCancelled,
+      EventAction.submitted => l10n.eventActionSubmitted,
+      EventAction.approved => l10n.eventActionApproved,
+      EventAction.rejected => l10n.eventActionRejected,
+      EventAction.unknown => l10n.eventActionUnknown,
+    };

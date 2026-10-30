@@ -182,6 +182,15 @@ void main() {
     }
   });
 
+  test('#3067 — every event action reads in words, never as its wire name', () {
+    for (final action in EventAction.values) {
+      final label = eventActionLabel(englishL10n, action);
+      expect(label, isNot(action.name == 'unknown' ? '' : action.name),
+          reason: action.name);
+      expect(label, isNotEmpty, reason: action.name);
+    }
+  });
+
   testWidgets('a tap opens the screen where the decision is made', (
     tester,
   ) async {

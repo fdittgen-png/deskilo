@@ -8906,6 +8906,34 @@
   "@eventAccept": {
     "description": "Confirm button on a pending event"
   },
+  "eventActionApproved": "approved",
+  "@eventActionApproved": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionCancelled": "cancelled",
+  "@eventActionCancelled": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionCreated": "created",
+  "@eventActionCreated": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionModified": "changed",
+  "@eventActionModified": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionRejected": "rejected",
+  "@eventActionRejected": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionSubmitted": "submitted",
+  "@eventActionSubmitted": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionUnknown": "updated",
+  "@eventActionUnknown": {
+    "description": "#3067 the verb of an event line, in words"
+  },
   "eventAutoValidated": "Auto-validated",
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
