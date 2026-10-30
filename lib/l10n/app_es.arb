@@ -13056,6 +13056,13 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationCraNone": "No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio.",
+  "recordsLocationCraNotice": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Nada declara esta instalación en Canadá.",
+  "recordsLocationCraOutside": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Esta instalación está declarada fuera de Canadá.",
+  "recordsLocationCraReference": "Autorización de la CRA: {reference}",
+  "recordsLocationHosted": "Alojado en {country}, según lo declara el operador de esta instalación",
+  "recordsLocationTitle": "Dónde se conservan los registros",
+  "recordsLocationUndeclared": "No declarado por el operador de esta instalación: la aplicación no indica ningún lugar",
   "refFacetMonth": "Mes",
   "refFacetPerson": "Persona",
   "refFacetStatus": "Estado",
@@ -14315,6 +14322,7 @@
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
   "reservePickDateTooltip": "Elegir una fecha",
+  "reservePlanLoading": "Cargando el plano…",
   "reserveRoomFor": "Sala de reuniones · {count} personas",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
@@ -15197,6 +15205,7 @@
   "@settingGroupReadiness": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupRecords": "Lugar de conservación de los registros",
   "settingGroupSecurity": "Límites de seguridad y acceso",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15351,6 +15360,8 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintRecordsCraReference": "Para una empresa canadiense: la referencia de la autorización de la CRA (ETA s.286, ITA s.230) cuando sus registros se conservan fuera de Canadá. Vacío significa que no se ha registrado ninguna.",
+  "settingHintRecordsHostingCountry": "Dos letras (ISO 3166), p. ej. CA o DE, según lo que su contrato de alojamiento indique para la base de datos y sus copias de seguridad. Vacío significa no declarado: la aplicación no indica entonces ningún lugar.",
   "settingHintRetentionUsYears": "Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más que la norma federal. Un plazo más largo se aplica a todos los registros; uno más corto no cambia nada. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -15517,6 +15528,8 @@
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelRecordsCraReference": "Autorización de la CRA para conservar los registros fuera de Canadá",
+  "settingLabelRecordsHostingCountry": "País donde esta instalación conserva sus datos",
   "settingLabelRetentionUsYears": "Conservación en EE. UU., estado (años)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"

@@ -1,0 +1,14 @@
+{
+  "settingGroupRecords": "Luogo di conservazione delle scritture",
+  "settingLabelRecordsHostingCountry": "Paese in cui questa installazione conserva i suoi dati",
+  "settingHintRecordsHostingCountry": "Due lettere (ISO 3166), ad es. CA o DE, secondo quanto il Suo contratto di hosting indica per il database e i suoi backup. Vuoto significa non dichiarato: l'app non indica allora alcun luogo.",
+  "settingLabelRecordsCraReference": "Autorizzazione della CRA a conservare le scritture fuori dal Canada",
+  "settingHintRecordsCraReference": "Per un'impresa canadese: il riferimento dell'autorizzazione della CRA (ETA s.286, ITA s.230) quando le sue scritture sono conservate fuori dal Canada. Vuoto significa che non ne è registrata alcuna.",
+  "recordsLocationTitle": "Dove sono conservate le scritture",
+  "recordsLocationHosted": "Ospitato in {country}, come dichiara il gestore di questa installazione",
+  "recordsLocationUndeclared": "Non dichiarato dal gestore di questa installazione: l'app non indica alcun luogo",
+  "recordsLocationCraNotice": "Un'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Nulla dichiara questa installazione in Canada.",
+  "recordsLocationCraOutside": "Un'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Questa installazione è dichiarata fuori dal Canada.",
+  "recordsLocationCraReference": "Autorizzazione della CRA: {reference}",
+  "recordsLocationCraNone": "Nessuna autorizzazione della CRA è registrata. Un responsabile della fatturazione la registra nelle impostazioni dello spazio."
+}

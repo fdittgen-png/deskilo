@@ -20,7 +20,11 @@ class SettingsCommands {
           'false' => false,
           _ => null,
         },
-      SettingType.text || SettingType.choice => t.isEmpty ? null : t,
+      // Empty text is a value: the documented "nothing declared" state of a
+      // text row, and a choice that lists '' (#2378 review).
+      SettingType.text => t,
+      SettingType.choice =>
+        t.isEmpty && !definition.choices.contains('') ? null : t,
     };
   }
 

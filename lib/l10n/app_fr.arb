@@ -13056,6 +13056,13 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationCraNone": "Aucune autorisation de l'ARC n'est enregistrée. Un gestionnaire de facturation l'enregistre dans les paramètres de l'espace.",
+  "recordsLocationCraNotice": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Rien ne déclare cette installation au Canada.",
+  "recordsLocationCraOutside": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Cette installation est déclarée hors du Canada.",
+  "recordsLocationCraReference": "Autorisation de l'ARC : {reference}",
+  "recordsLocationHosted": "Hébergé en {country}, selon la déclaration de l'exploitant de cette installation",
+  "recordsLocationTitle": "Où les registres sont conservés",
+  "recordsLocationUndeclared": "Non déclaré par l'exploitant de cette installation : l'application n'indique aucun lieu",
   "refFacetMonth": "Mois",
   "refFacetPerson": "Personne",
   "refFacetStatus": "Statut",
@@ -14315,6 +14322,7 @@
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
   "reservePickDateTooltip": "Choisir une date",
+  "reservePlanLoading": "Chargement du plan…",
   "reserveRoomFor": "Salle de réunion · {count} personnes",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
@@ -15197,6 +15205,7 @@
   "@settingGroupReadiness": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupRecords": "Lieu de conservation des registres",
   "settingGroupSecurity": "Limites de sécurité et d'accès",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15351,6 +15360,8 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintRecordsCraReference": "Pour une entreprise canadienne : la référence de l'autorisation de l'ARC (LTA art. 286, LIR art. 230) lorsque ses registres sont conservés hors du Canada. Vide signifie qu'aucune n'est enregistrée.",
+  "settingHintRecordsHostingCountry": "Deux lettres (ISO 3166), par ex. CA ou DE, selon ce que votre contrat d'hébergement indique pour la base de données et ses sauvegardes. Vide signifie non déclaré : l'application n'indique alors aucun lieu.",
   "settingHintRetentionUsYears": "Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus que la règle fédérale. Une durée plus longue s'applique à toutes les pièces ; une durée plus courte ne change rien. 0 signifie que la règle de conservation s'applique. Pas un conseil juridique : vérifiez le délai de votre État.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -15517,6 +15528,8 @@
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelRecordsCraReference": "Autorisation de l'ARC de conserver les registres hors du Canada",
+  "settingLabelRecordsHostingCountry": "Pays où cette installation conserve ses données",
   "settingLabelRetentionUsYears": "Conservation aux États-Unis, État (années)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"

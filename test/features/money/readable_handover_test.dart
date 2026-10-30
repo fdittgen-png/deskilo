@@ -12,11 +12,19 @@ import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/gobd_package.dart';
 import 'package:deskilo/features/money/domain/gobd_tables.dart';
 import 'package:deskilo/features/money/domain/readable_handover.dart';
+import 'package:deskilo/features/money/domain/records_location.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';
 
 const _readme = 'tables/README.txt';
+
+/// A Canadian space on an installation its operator declared in Germany.
+const _toronto = RecordsLocation(
+  issuerCountry: 'CA',
+  hostingCountry: 'DE',
+  craReference: '',
+);
 
 GobdRequest _request() => GobdRequest(
   supplierName: 'Maple Desk Ltd',
@@ -52,7 +60,7 @@ void main() {
     // Built from the same request, the bytes are the GoBD package's. The
     // archive's own request differs in one table on purpose: its audit
     // trail is the archive's audit-trail.csv, with the files handed out.
-    final files = readableHandoverFiles(_request());
+    final files = readableHandoverFiles(_request(), _toronto);
     final gobd = buildGobdPackage(_request());
     final tables = gobdTables(_request());
     expect(files.keys.toSet(), {
@@ -70,7 +78,7 @@ void main() {
 
   test('the README describes every column of every table in English', () {
     final lines = const LineSplitter().convert(
-      _text(readableHandoverFiles(_request()), _readme),
+      _text(readableHandoverFiles(_request(), _toronto), _readme),
     );
     expect(
       lines.first,
@@ -94,7 +102,7 @@ void main() {
   });
 
   test('the README states the format and the scope', () {
-    final readme = _text(readableHandoverFiles(_request()), _readme);
+    final readme = _text(readableHandoverFiles(_request(), _toronto), _readme);
     expect(readme, contains('fields separated by ";"'));
     expect(readme, contains('DD.MM.YYYY'));
     expect(readme, contains('not the complete general ledger'));
@@ -104,7 +112,7 @@ void main() {
 
   test('the document files are named where the archive holds them', () {
     final belege = _text(
-      readableHandoverFiles(_request()),
+      readableHandoverFiles(_request(), _toronto),
       'tables/belege.csv',
     );
     final first = SeededExportYear.acceptanceInvoices.first;
@@ -122,8 +130,66 @@ void main() {
         invoices: const [],
         matches: const {},
       ),
+      _toronto,
     );
     expect(files['tables/rechnungen.csv'], isEmpty);
     expect(_text(files, _readme), contains('tables/rechnungen.csv: '));
+  });
+
+  test('the README states where the records are kept, as declared', () {
+    String readme(RecordsLocation location) =>
+        _text(readableHandoverFiles(_request(), location), _readme);
+    // A Canadian space on an installation declared in Germany: the region,
+    // the rule and that no CRA authorisation is recorded.
+    expect(const LineSplitter().convert(readme(_toronto)).sublist(2, 5), [
+      'Records location: hosted in DE, as the operator of this '
+          'installation declares it.',
+      'These records are kept outside Canada (ETA s.286, ITA s.230).',
+      'CRA authorisation reference: none recorded.',
+    ]);
+    // Its authorisation, once recorded, is quoted.
+    expect(
+      readme(
+        const RecordsLocation(
+          issuerCountry: 'CA',
+          hostingCountry: 'DE',
+          craReference: 'CRA-2026-0042',
+        ),
+      ),
+      contains('CRA authorisation reference: CRA-2026-0042.'),
+    );
+    // Nothing declared: nothing is asserted, and a Canadian space still
+    // reads that nothing places its records in Canada.
+    final undeclared = readme(
+      const RecordsLocation(
+        issuerCountry: 'CA',
+        hostingCountry: null,
+        craReference: '',
+      ),
+    );
+    expect(undeclared, contains('not declared by the operator'));
+    expect(
+      undeclared,
+      contains('Nothing declares these records kept in Canada'),
+    );
+    // In Canada, or a British space: no Canadian notice.
+    for (final location in const [
+      RecordsLocation(
+        issuerCountry: 'CA',
+        hostingCountry: 'CA',
+        craReference: '',
+      ),
+      RecordsLocation(
+        issuerCountry: 'GB',
+        hostingCountry: 'DE',
+        craReference: '',
+      ),
+    ]) {
+      expect(readme(location), isNot(contains('ETA s.286')));
+      expect(
+        readme(location),
+        contains('hosted in ${location.hostingCountry}'),
+      );
+    }
   });
 }

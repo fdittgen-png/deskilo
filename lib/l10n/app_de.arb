@@ -13056,6 +13056,13 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationCraNone": "Keine CRA-Genehmigung erfasst. Eine Person mit Abrechnungsrechten erfasst sie in den Einstellungen des Bereichs.",
+  "recordsLocationCraNotice": "Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Nichts erklärt diese Installation als in Kanada.",
+  "recordsLocationCraOutside": "Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Diese Installation ist außerhalb Kanadas erklärt.",
+  "recordsLocationCraReference": "CRA-Genehmigung: {reference}",
+  "recordsLocationHosted": "Gehostet in {country}, wie der Betreiber dieser Installation es erklärt",
+  "recordsLocationTitle": "Wo die Aufzeichnungen aufbewahrt werden",
+  "recordsLocationUndeclared": "Vom Betreiber dieser Installation nicht erklärt: Die App nennt keinen Ort",
   "refFacetMonth": "Monat",
   "refFacetPerson": "Person",
   "refFacetStatus": "Status",
@@ -14315,6 +14322,7 @@
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
   "reservePickDateTooltip": "Datum wählen",
+  "reservePlanLoading": "Plan wird geladen …",
   "reserveRoomFor": "Besprechungsraum · {count} Personen",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
@@ -15197,6 +15205,7 @@
   "@settingGroupReadiness": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupRecords": "Aufbewahrungsort der Aufzeichnungen",
   "settingGroupSecurity": "Sicherheits- und Zugriffsgrenzen",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15351,6 +15360,8 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintRecordsCraReference": "Für ein kanadisches Unternehmen: das Aktenzeichen der CRA-Genehmigung (ETA s.286, ITA s.230), wenn seine Aufzeichnungen außerhalb Kanadas aufbewahrt werden. Leer heißt, es ist keine erfasst.",
+  "settingHintRecordsHostingCountry": "Zwei Buchstaben (ISO 3166), z. B. CA oder DE, wie Ihr Hosting-Vertrag den Ort der Datenbank und ihrer Sicherungen angibt. Leer heißt nicht erklärt: Die App nennt dann keinen Ort.",
   "settingHintRetentionUsYears": "Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr als die bundesweite Vorgabe verlangt. Eine längere Frist gilt für alle Unterlagen; eine kürzere ändert nichts. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -15517,6 +15528,8 @@
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelRecordsCraReference": "CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas",
+  "settingLabelRecordsHostingCountry": "Land, in dem diese Installation ihre Daten aufbewahrt",
   "settingLabelRetentionUsYears": "Aufbewahrung in den USA, Bundesstaat (Jahre)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"

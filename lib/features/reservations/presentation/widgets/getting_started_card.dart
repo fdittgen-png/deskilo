@@ -74,6 +74,7 @@ class ReserveHelpHost extends ConsumerWidget {
     if (setupResumeBannerFor(
           ref,
           workspaceId,
+          compact: true,
           configures: standing == MembershipStanding.owner ||
               standing == MembershipStanding.administrator,
         )
