@@ -1,7 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 -- (one column on event_decisions, backfilled; a before-insert trigger that
--- fills it from the event; an index; no policy change)
+-- fills it from the event; an index; the personal_native_session policy
+-- dropped, because the table is now a workspace table like events)
 --
 -- 0611 (#3099 slice B, PERF-2 of the performance audit) -- a decision
 -- belongs to the workspace of its event. The column lets the realtime
@@ -37,5 +38,11 @@ alter table public.event_decisions alter column workspace_id set not null;
 
 create index if not exists event_decisions_workspace_idx
   on public.event_decisions (workspace_id);
+
+-- 0564 gave every table without workspace_id the restrictive
+-- personal_native_session policy. With the column, event_decisions is a
+-- workspace table, and it keeps exactly what events has: its select policy
+-- (member of the event's workspace) and mcp_delegated_deny.
+drop policy if exists personal_native_session on public.event_decisions;
 
 select public.set_deskilo_schema_version(611);
