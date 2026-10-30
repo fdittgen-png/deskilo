@@ -41,6 +41,12 @@ void main() {
     expect(demoLinkRoutes.difference(known), isEmpty);
   });
 
+  test('a link may open the settings, where the resume banner is (#3077)', () {
+    expect(demoLinkRoutes, contains('/settings'));
+    expect(DemoLink.parse({'space': 'leipzig', 'persona': 'owner', 'to': '/settings'}).to,
+        '/settings');
+  });
+
   test('the link applies once', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);

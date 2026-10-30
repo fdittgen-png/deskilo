@@ -21,6 +21,7 @@ const demoLinkRoutes = {
   '/reserve',
   '/setup',
   '/workspace-settings',
+  '/settings', // #3077 — the settings' resume banner, for a tester
   '/workspace-overview',
   '/features',
   '/calendar',
