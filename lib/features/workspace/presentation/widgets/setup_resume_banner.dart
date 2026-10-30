@@ -96,3 +96,15 @@ List<ReadinessSection>? watchWorkspaceReadiness(
   WidgetRef ref,
   String workspaceId,
 ) => ref.watch(workspaceReadinessProvider(workspaceId)).value;
+
+/// #3077 — whether the setup guide still has a milestone open for
+/// [workspaceId]: the sidebar offers its door only then.
+bool setupGuideOpenFor(WidgetRef ref, String? workspaceId) {
+  if (workspaceId == null ||
+      !ref
+          .watch(enabledFeaturesSyncProvider)
+          .contains(WorkspaceFeature.setupGuide)) {
+    return false;
+  }
+  return ref.watch(workspaceSetupStatusProvider(workspaceId)).value?.nextMilestone != null;
+}

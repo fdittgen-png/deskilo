@@ -47,6 +47,7 @@ class DrawerEntries {
     required this.currentIndex,
     required this.onBranch,
     required this.go,
+    this.setupOpen = false,
   });
 
   final BuildContext context;
@@ -58,6 +59,9 @@ class DrawerEntries {
   final List<String> tabTitles;
   final int currentIndex;
   final ValueChanged<int> onBranch;
+
+  /// #3077 — the setup guide has a milestone open: its door is offered.
+  final bool setupOpen;
 
   /// Leaves the drawer and goes (or pushes) to [route].
   final void Function(String route, {bool push}) go;
@@ -183,8 +187,22 @@ class DrawerEntries {
     ];
   }
 
+  /// #3077 — the setup guide's door, first in the workspace group, while a
+  /// milestone is open.
+  List<DrawerEntry> setupGuide() => [
+        if (setupOpen && may(WorkspacePermission.workspaceSettings))
+          DrawerEntry(
+            'drawer-setup-guide',
+            Icons.checklist_outlined,
+            l10n.setupGuideTitle,
+            () => go('/setup'),
+            route: '/setup',
+          ),
+      ];
+
   List<DrawerEntry> administration() {
     return <DrawerEntry>[
+
       if (may(WorkspacePermission.workspaceSettings))
         DrawerEntry(
           'drawer-workspace-settings',

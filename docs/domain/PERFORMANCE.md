@@ -285,3 +285,8 @@ there is no analytics, by design (`PRIVACY.md`), and the trace log is
 local to the device and redacted (#1240). Measuring a p95 would mean
 adding telemetry, which is a privacy decision and not a performance one.
 It is listed here so the absence is a decision rather than an oversight.
+
+## Audit of 2026-10-30 (#2961)
+
+`PERFORMANCE_AUDIT_2026-10-30.md` holds the measured server state (dev statistics and an EXPLAIN of the events page), the client paths that repeat work, and the CI timings. The budgets in the table above are unchanged. What was not measured is listed there with a device recipe. The fixes are #3098–#3103, each with a counter test.
+
