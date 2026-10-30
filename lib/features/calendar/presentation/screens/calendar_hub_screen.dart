@@ -95,6 +95,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     _from = today;
     _to = today;
     _selection = CalendarSelection(view: CalendarView.agenda, anchor: today);
+    // #3065 — /calendar?view=alerts opens the alerts on reload or a link.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) requestAlertsIfAddressAsks(context, ref);
+    });
   }
 
   bool get _viewsOn => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.calendarViews);
