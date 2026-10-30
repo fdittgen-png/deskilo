@@ -11556,6 +11556,8 @@
   "@placeFeedbackFavorite": {
     "description": "#2185 place feedback"
   },
+  "placeFeedbackMine": "Votre note : {n, plural, =1{1 étoile} other{{n} étoiles}}",
+  "placeFeedbackMineNone": "Vous ne l'avez pas notée",
   "placeFeedbackNoRating": "Pas encore de note",
   "@placeFeedbackNoRating": {
     "description": "#2185 place feedback"

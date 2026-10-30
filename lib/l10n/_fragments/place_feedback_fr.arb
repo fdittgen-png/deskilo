@@ -47,5 +47,7 @@
   "placeFeedbackFailed": "Enregistrement impossible. Réessayez.",
   "@placeFeedbackFailed": {
     "description": "#2185 place feedback"
-  }
+  },
+  "placeFeedbackMine": "Votre note : {n, plural, =1{1 étoile} other{{n} étoiles}}",
+  "placeFeedbackMineNone": "Vous ne l'avez pas notée"
 }

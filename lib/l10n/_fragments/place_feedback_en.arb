@@ -47,5 +47,14 @@
   "placeFeedbackFailed": "Could not save. Please try again.",
   "@placeFeedbackFailed": {
     "description": "#2185 place feedback"
+  },
+  "placeFeedbackMine": "Your rating: {n, plural, =1{1 star} other{{n} stars}}",
+  "@placeFeedbackMine": {
+    "description": "#3064 the member's own rating, apart from the average",
+    "placeholders": {"n": {"type": "int"}}
+  },
+  "placeFeedbackMineNone": "You have not rated it",
+  "@placeFeedbackMineNone": {
+    "description": "#3064 the member has not rated this place"
   }
 }

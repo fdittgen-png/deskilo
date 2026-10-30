@@ -90,6 +90,7 @@ class PlaceFeedbackBar extends ConsumerWidget {
                   key: starKey(id, n),
                   style: round,
                   tooltip: l10n.placeFeedbackStars(n),
+                  isSelected: (mine ?? 0) >= n,
                   icon: Icon(
                     (mine ?? 0) >= n ? Icons.star : Icons.star_border,
                     color: (mine ?? 0) >= n ? theme.colorScheme.tertiary : null,
@@ -99,6 +100,18 @@ class PlaceFeedbackBar extends ConsumerWidget {
                       kind: kind, id: id, stars: mine == n ? null : n)),
                 ),
             ]),
+          ),
+          // #3064 — the member's own rating apart from the average: five
+          // filled stars are the member's, never the place's average.
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: AppSpacing.md),
+            child: Text(
+              key: ValueKey('place-mine-$id'),
+              mine == null
+                  ? l10n.placeFeedbackMineNone
+                  : l10n.placeFeedbackMine(mine),
+              style: theme.textTheme.bodySmall,
+            ),
           ),
           Row(children: [
             const SizedBox(width: AppSpacing.md),

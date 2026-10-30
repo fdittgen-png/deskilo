@@ -43,6 +43,25 @@ Future<void> _pumpChips(
 }
 
 void main() {
+  testWidgets('#3064 — the own rating is stated apart from the average',
+      (tester) async {
+    await _pump(tester);
+    // Average only: nothing of the member's is filled, and the line says so.
+    expect(find.text('4.0 · 2 ratings'), findsOneWidget);
+    expect(find.byKey(const ValueKey('place-mine-s1')), findsOneWidget);
+    expect(find.text('You have not rated it'), findsOneWidget);
+    expect(find.byIcon(Icons.star), findsNothing);
+
+    // Own rating: the line names it and exactly that many stars are filled.
+    await tester.tap(find.byKey(PlaceFeedbackBar.starKey('s1', 2)));
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('Your rating: 2 stars'), findsOneWidget);
+    expect(find.byIcon(Icons.star), findsNWidgets(2));
+    expect(find.text('3.3 · 3 ratings'), findsOneWidget,
+        reason: 'the average counts the new rating, on its own line');
+  });
+
   testWidgets('a heart, five stars and what everybody gave', (tester) async {
     final repo = await _pump(tester);
     expect(find.text('4.0 · 2 ratings'), findsOneWidget);

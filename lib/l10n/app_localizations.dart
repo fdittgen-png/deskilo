@@ -29250,6 +29250,18 @@ abstract class AppLocalizations {
   /// **'Add to favourites'**
   String get placeFeedbackFavorite;
 
+  /// #3064 the member's own rating, apart from the average
+  ///
+  /// In en, this message translates to:
+  /// **'Your rating: {n, plural, =1{1 star} other{{n} stars}}'**
+  String placeFeedbackMine(int n);
+
+  /// #3064 the member has not rated this place
+  ///
+  /// In en, this message translates to:
+  /// **'You have not rated it'**
+  String get placeFeedbackMineNone;
+
   /// #2185 place feedback
   ///
   /// In en, this message translates to:
