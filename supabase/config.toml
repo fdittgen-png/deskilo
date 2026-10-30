@@ -68,3 +68,27 @@ enabled = false
 
 [edge_runtime]
 enabled = false
+
+# #3094 E11 — the functions that must NOT demand a JWT at the gateway: a CI
+# deploy (`supabase functions deploy`) otherwise turns verification on for
+# them and the payment webhooks, the MCP endpoint, the accounting redirect and
+# the federation inbox stop answering. Mirrors `functionVerifyJwt` in
+# tool/build_instance.dart; test/lint/function_verify_jwt_test.dart keeps the
+# two in step.
+[functions.accounting-connect]
+verify_jwt = false
+
+[functions.deskilo-mcp]
+verify_jwt = false
+
+[functions.federation-inbox]
+verify_jwt = false
+
+[functions.mollie-webhook]
+verify_jwt = false
+
+[functions.paypal-webhook]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
