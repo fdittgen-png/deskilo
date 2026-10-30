@@ -50,7 +50,13 @@ export async function refused(res: Response): Promise<Submission> {
 export const unreachable = (error: unknown): Submission => ({
   status: "failed",
   externalId: "",
-  detail: clip(String(error)),
+  // A refused destination (#3090) keeps its fixed key; anything else is
+  // the platform or the network speaking, clipped for the log.
+  detail: error instanceof Error &&
+      (error.message === "destination_not_allowed" ||
+        error.message === "redirect_refused")
+    ? error.message
+    : clip(String(error)),
   receipt: {},
 });
 
