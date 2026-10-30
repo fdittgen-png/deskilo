@@ -37590,6 +37590,12 @@ abstract class AppLocalizations {
   /// **'Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.'**
   String get settingHintPresenceOnlineWindowMinutes;
 
+  /// #3098 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes the app must have been out of sight (in the background, a hidden tab, a sleeping kiosk) before it re-reads everything it shows when it comes back. Switching windows never re-reads; a lost live connection always does.'**
+  String get settingHintPresenceResyncAfterAwayMinutes;
+
   /// #2574 maker-checker settings
   ///
   /// In en, this message translates to:
@@ -37937,6 +37943,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online window'**
   String get settingLabelPresenceOnlineWindowMinutes;
+
+  /// #3098 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-read after being away'**
+  String get settingLabelPresenceResyncAfterAwayMinutes;
 
   /// #2574 maker-checker settings
   ///

@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:deskilo/core/presence/presence_heartbeat.dart';
 import 'package:deskilo/core/presence/presence_rules.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Hand-cranked [Timer]: the test fires ticks itself.
@@ -29,9 +30,16 @@ class _FakeTimer implements Timer {
   int get tick => 0;
 }
 
+class _Clock implements Clock {
+  DateTime instant = DateTime.utc(2026, 10, 30, 9);
+  @override
+  DateTime now() => instant;
+}
+
 class _Harness {
   _Harness({this.failing = false}) {
     heartbeat = PresenceHeartbeat(
+      clock: clock,
       touch: () async {
         touches += 1;
         if (failing) throw StateError('touch failing (test)');
@@ -46,6 +54,7 @@ class _Harness {
   }
 
   final bool failing;
+  final clock = _Clock();
   late final PresenceHeartbeat heartbeat;
   int touches = 0;
   final List<Duration> intervals = [];
@@ -92,11 +101,27 @@ void main() {
     final h = _Harness();
     h.heartbeat.setSignedIn(signedIn: true);
     h.heartbeat.setForeground(foreground: false);
+    h.clock.instant =
+        h.clock.instant.add(PresenceRules.heartbeatInterval);
     h.heartbeat.setForeground(foreground: true);
     await Future<void>.delayed(Duration.zero);
 
     expect(h.touches, 2);
     expect(h.timers, hasLength(2));
+    expect(h.heartbeat.isRunning, isTrue);
+  });
+
+  test('#3098 — resumes within one interval touch at most once', () async {
+    final h = _Harness();
+    h.heartbeat.setSignedIn(signedIn: true);
+    for (var i = 0; i < 5; i++) {
+      h.clock.instant = h.clock.instant.add(const Duration(seconds: 20));
+      h.heartbeat.setForeground(foreground: false);
+      h.heartbeat.setForeground(foreground: true);
+    }
+    await Future<void>.delayed(Duration.zero);
+
+    expect(h.touches, 1);
     expect(h.heartbeat.isRunning, isTrue);
   });
 

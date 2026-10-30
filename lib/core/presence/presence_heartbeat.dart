@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../time/clock.dart';
 import '../trace/trace_logger.dart';
 import 'presence_rules.dart';
 
@@ -18,8 +19,9 @@ Timer _defaultTimerFactory(Duration interval, void Function() onTick) =>
 /// Foreground last-seen heartbeat (#223).
 ///
 /// Runs only while BOTH hold: the user is signed in and the app is
-/// foregrounded (resumed). On every transition into that state it fires
-/// [touch] immediately, then every [PresenceRules.heartbeatInterval];
+/// in front (resumed or inactive). On every transition into that state it fires
+/// [touch] immediately (unless the last beat is younger than one interval,
+/// #3098), then every [PresenceRules.heartbeatInterval];
 /// leaving the state cancels the timer. Touch failures are logged to the
 /// trace and never surfaced — presence is strictly best-effort.
 ///
@@ -29,10 +31,12 @@ Timer _defaultTimerFactory(Duration interval, void Function() onTick) =>
 class PresenceHeartbeat {
   PresenceHeartbeat({
     required this._touch,
+    required this._clock,
     this._timerFactory = _defaultTimerFactory,
   });
 
   final Future<void> Function() _touch;
+  final Clock _clock;
   final PeriodicTimerFactory _timerFactory;
 
   bool _signedIn = false;
@@ -40,6 +44,7 @@ class PresenceHeartbeat {
   // the app has just been launched into the foreground.
   bool _foreground = true;
   Timer? _timer;
+  DateTime? _lastTouch;
 
   /// True while the periodic timer is armed (signed in + foregrounded).
   bool get isRunning => _timer != null;
@@ -63,7 +68,14 @@ class PresenceHeartbeat {
   void _recompute() {
     final shouldRun = _signedIn && _foreground;
     if (shouldRun && _timer == null) {
-      unawaited(_touchSafely());
+      // #3098 — coming back within one interval of the last beat does not
+      // beat again: on web every focus change used to stamp the profile.
+      // The worst gap is two intervals, still inside the online window.
+      final last = _lastTouch;
+      if (last == null ||
+          _clock.now().difference(last) >= PresenceRules.heartbeatInterval) {
+        unawaited(_touchSafely());
+      }
       _timer = _timerFactory(
         PresenceRules.heartbeatInterval,
         () => unawaited(_touchSafely()),
@@ -75,6 +87,7 @@ class PresenceHeartbeat {
   }
 
   Future<void> _touchSafely() async {
+    _lastTouch = _clock.now();
     try {
       await _touch();
     } on Object catch (e, st) {

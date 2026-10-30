@@ -14,7 +14,7 @@ part of 'presence_providers.dart';
 /// Signed out, the provider builds to nothing — no timer exists at all.
 /// Signing in/out rebuilds it (the same authStateProvider gate the
 /// workspace providers use); while built, an [AppLifecycleListener]
-/// pauses the heartbeat whenever the app leaves the resumed state.
+/// pauses the heartbeat whenever the app leaves the screen (#3098).
 
 @ProviderFor(presenceBootstrap)
 final presenceBootstrapProvider = PresenceBootstrapProvider._();
@@ -25,7 +25,7 @@ final presenceBootstrapProvider = PresenceBootstrapProvider._();
 /// Signed out, the provider builds to nothing — no timer exists at all.
 /// Signing in/out rebuilds it (the same authStateProvider gate the
 /// workspace providers use); while built, an [AppLifecycleListener]
-/// pauses the heartbeat whenever the app leaves the resumed state.
+/// pauses the heartbeat whenever the app leaves the screen (#3098).
 
 final class PresenceBootstrapProvider
     extends $FunctionalProvider<void, void, void>
@@ -36,7 +36,7 @@ final class PresenceBootstrapProvider
   /// Signed out, the provider builds to nothing — no timer exists at all.
   /// Signing in/out rebuilds it (the same authStateProvider gate the
   /// workspace providers use); while built, an [AppLifecycleListener]
-  /// pauses the heartbeat whenever the app leaves the resumed state.
+  /// pauses the heartbeat whenever the app leaves the screen (#3098).
   PresenceBootstrapProvider._()
     : super(
         from: null,
@@ -70,4 +70,4 @@ final class PresenceBootstrapProvider
   }
 }
 
-String _$presenceBootstrapHash() => r'530664d687d03ab6a615431b4754b8aaf2519141';
+String _$presenceBootstrapHash() => r'7076520102c65441f4514ee9f473f756f289f775';

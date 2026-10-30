@@ -22522,6 +22522,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Minuti dopo l\'ultimo segno di vita in cui una persona conta ancora come online. Tenerlo sopra il battito di 2 minuti.';
 
   @override
+  String get settingHintPresenceResyncAfterAwayMinutes =>
+      'Minuti in cui l\'app deve essere rimasta fuori vista (in background, una scheda nascosta, un chiosco in standby) prima di rileggere tutto ciò che mostra al ritorno. Cambiare finestra non rilegge mai; una connessione in diretta persa rilegge sempre.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Un pagamento di almeno questo importo non può essere registrato da chi ha approvato la fattura che salda. 0 disattiva la regola.';
 
@@ -22742,6 +22746,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Finestra online';
+
+  @override
+  String get settingLabelPresenceResyncAfterAwayMinutes =>
+      'Rileggi dopo un\'assenza';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

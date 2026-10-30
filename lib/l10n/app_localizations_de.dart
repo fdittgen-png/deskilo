@@ -22547,6 +22547,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Minuten nach dem letzten Lebenszeichen, in denen eine Person noch als online gilt. Über dem 2-Minuten-Herzschlag halten.';
 
   @override
+  String get settingHintPresenceResyncAfterAwayMinutes =>
+      'Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'Eine Zahlung ab diesem Betrag darf nicht von der Person erfasst werden, die die zugehörige Rechnung freigegeben hat. 0 schaltet die Regel aus.';
 
@@ -22759,6 +22763,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Online-Fenster';
+
+  @override
+  String get settingLabelPresenceResyncAfterAwayMinutes =>
+      'Nach Abwesenheit neu laden';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

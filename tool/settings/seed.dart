@@ -359,6 +359,28 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'resume_resync',
+    row: (
+      key: 'presence.resync_after_away_minutes',
+      type: 'duration',
+      defaultValue: 2,
+      min: 1,
+      max: 1440,
+      unit: 'minutes',
+      group: 'presence',
+      scopes: ['platform', 'workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'ResumeResyncObserver (#3098)',
+      note: 'Minutes the app must have been out of sight (in the background, '
+          'a hidden tab, a sleeping kiosk) before it re-reads everything it '
+          'shows when it comes back. A focus change never re-reads; a lost '
+          'live connection always does, whatever this value.',
+    ),
+  ),
+  (
     since: 'messaging_windows',
     row: (
       key: 'messaging.edit_window_minutes',
