@@ -40,6 +40,10 @@ import '../widgets/small_business_notice.dart';
 /// This screen only wires the pieces together: the rows live in
 /// [InvoiceArchiveTab] / [ToInvoiceTab] / [OpenInvoicesTab], the actions in
 /// invoice_actions.dart.
+/// #3072 — the room under the lists for the extended floating button (its
+/// height plus the margin the scaffold gives it).
+const double _fabClearance = 88;
+
 class InvoicesScreen extends ConsumerWidget {
   const InvoicesScreen({super.key});
 
@@ -193,11 +197,16 @@ class InvoicesScreen extends ConsumerWidget {
           else
             InvoicingSummaryBar(currency: currency),
           Expanded(
-            child: TabBarView(children: [
-              _toInvoiceTab(context, ref, currency),
-              _openTab(context, ref, currency, facts),
-              archive,
-            ]),
+            // #3072 — room under the lists for the floating button, so it
+            // never covers the action of the last row.
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: _fabClearance),
+              child: TabBarView(children: [
+                _toInvoiceTab(context, ref, currency),
+                _openTab(context, ref, currency, facts),
+                archive,
+              ]),
+            ),
           ),
         ]),
       ),
