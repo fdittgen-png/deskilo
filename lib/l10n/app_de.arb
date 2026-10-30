@@ -5477,6 +5477,10 @@
     }
   },
   "eventOpenSource": "Einkaufsbeleg öffnen",
+  "eventOutcomeApplied": "Erledigt",
+  "eventOutcomeConfirmed": "Bestätigt",
+  "eventOutcomePending": "Wartet auf eine Entscheidung",
+  "eventOutcomeRejected": "Abgelehnt",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
   "@eventPaymentTermsChangeLine": {

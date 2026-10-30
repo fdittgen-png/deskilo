@@ -5477,6 +5477,10 @@
     }
   },
   "eventOpenSource": "Ouvrir le document d'achat",
+  "eventOutcomeApplied": "Fait",
+  "eventOutcomeConfirmed": "Confirmé",
+  "eventOutcomePending": "En attente d'une décision",
+  "eventOutcomeRejected": "Refusé",
   "eventPaymentSubmitted": "{actor} a enregistré un paiement de {amount}",
   "eventPaymentTermsChangeLine": "{actor} demande de fixer les conditions de paiement : {terms}",
   "@eventPaymentTermsChangeLine": {

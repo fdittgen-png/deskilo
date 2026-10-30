@@ -32,21 +32,38 @@ String _groupingLabel(AppLocalizations l10n, FeedGrouping grouping) =>
 /// #196 -- the semantic outcome trailing an event: pending waits,
 /// applied/confirmed succeeded (green), rejected failed (red). Expired and
 /// unknown (#1088) events carry no outcome mark.
-Widget? eventOutcomeMark(BuildContext context, EventStatus status) =>
-    switch (status) {
-      EventStatus.pending => const Icon(Icons.hourglass_top, size: 18),
-      EventStatus.applied || EventStatus.confirmed => Icon(
+Widget? eventOutcomeMark(BuildContext context, EventStatus status) {
+  final l10n = context.l10n;
+  // #3067 — the mark is a bare icon: it names itself for a screen reader and
+  // on long press, never as a tick nobody can read.
+  Widget named(String label, Widget icon) =>
+      Tooltip(message: label, child: Semantics(label: label, child: icon));
+  return switch (status) {
+    EventStatus.pending => named(
+      l10n.eventOutcomePending,
+      const Icon(Icons.hourglass_top, size: 18),
+    ),
+    EventStatus.applied || EventStatus.confirmed => named(
+      status == EventStatus.applied
+          ? l10n.eventOutcomeApplied
+          : l10n.eventOutcomeConfirmed,
+      Icon(
         Icons.check_circle_outline,
         size: 18,
         color: AppStatusColors.successOf(Theme.of(context).brightness),
       ),
-      EventStatus.rejected => Icon(
+    ),
+    EventStatus.rejected => named(
+      l10n.eventOutcomeRejected,
+      Icon(
         Icons.cancel_outlined,
         size: 18,
         color: Theme.of(context).colorScheme.error,
       ),
-      EventStatus.expired || EventStatus.unknown => null,
-    };
+    ),
+    EventStatus.expired || EventStatus.unknown => null,
+  };
+}
 
 /// The feed's filter lines (#581): categories, read state with the sort
 /// toggle, and -- when regrouping is on (#598) -- the grouping axis. Every

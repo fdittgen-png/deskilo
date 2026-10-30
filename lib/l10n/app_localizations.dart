@@ -12473,6 +12473,30 @@ abstract class AppLocalizations {
   /// **'Open the purchase document'**
   String get eventOpenSource;
 
+  /// #3067 the name of the status mark on an event row
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get eventOutcomeApplied;
+
+  /// #3067 the name of the status mark on an event row
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get eventOutcomeConfirmed;
+
+  /// #3067 the name of the status mark on an event row
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a decision'**
+  String get eventOutcomePending;
+
+  /// #3067 the name of the status mark on an event row
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get eventOutcomeRejected;
+
   /// Feed line for payment events
   ///
   /// In en, this message translates to:

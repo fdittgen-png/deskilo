@@ -288,5 +288,21 @@
   "@eventRepeatedMarker": {
     "description": "#3067 how many identical events a collapsed row stands for",
     "placeholders": {"count": {"type": "int"}}
+  },
+  "eventOutcomeApplied": "Done",
+  "@eventOutcomeApplied": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomeConfirmed": "Confirmed",
+  "@eventOutcomeConfirmed": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomePending": "Waiting for a decision",
+  "@eventOutcomePending": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomeRejected": "Rejected",
+  "@eventOutcomeRejected": {
+    "description": "#3067 the name of the status mark on an event row"
   }
 }

@@ -7376,6 +7376,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eventOpenSource => 'Einkaufsbeleg öffnen';
 
   @override
+  String get eventOutcomeApplied => 'Erledigt';
+
+  @override
+  String get eventOutcomeConfirmed => 'Bestätigt';
+
+  @override
+  String get eventOutcomePending => 'Wartet auf eine Entscheidung';
+
+  @override
+  String get eventOutcomeRejected => 'Abgelehnt';
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor hat eine Zahlung von $amount erfasst';
   }
