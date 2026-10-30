@@ -25,10 +25,18 @@ void main() {
         find.byKey(const ValueKey('booking-charge-context')),
         findsOneWidget,
       );
+      // #3066 — the rating is collapsed below the context, one tap away.
+      final rate = find.byKey(const ValueKey('booking-rate-place'));
       expect(
         tester.getTopLeft(resource).dy,
-        lessThan(tester.getTopLeft(find.byType(PlaceFeedbackBar)).dy),
+        lessThan(tester.getTopLeft(rate).dy),
       );
+      expect(find.byType(PlaceFeedbackBar), findsNothing);
+      await tester.ensureVisible(rate);
+      await tester.tap(rate);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      expect(find.byType(PlaceFeedbackBar), findsOneWidget);
       final confirm = find.byKey(const ValueKey('booking-confirm'));
       expect(tester.getRect(confirm).bottom, lessThanOrEqualTo(640));
       await tester.tap(confirm);

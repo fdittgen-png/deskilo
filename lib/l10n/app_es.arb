@@ -2857,6 +2857,7 @@
   "bookingOutsideWalkUpError": "Fuera del horario de apertura solo es posible un check-in espontáneo, no una reserva por adelantado.",
   "bookingOverlapsAnother": "El puesto ya está reservado durante parte de este tiempo.",
   "bookingPastError": "Esta reserva está completamente en el pasado.",
+  "bookingRatePlace": "Valorar este puesto",
   "bookingRecordedPastSpaceWhen": "{space} registrado: {when}. Ese periodo ya ha terminado, así que se conserva como una visita pasada.",
   "@bookingRecordedPastSpaceWhen": {
     "placeholders": {
@@ -18066,7 +18067,7 @@
       }
     }
   },
-  "uxBookingChargePending": "El cargo y el uso del cupo se calcularán según el plan del miembro. El importe final no está disponible aquí.",
+  "uxBookingChargePending": "El importe y el uso de la cuota dependen del plan del miembro y se liquidan en el extracto.",
   "uxBookingCheckInHelp": "Marcar también mi presencia al confirmar esta reserva.",
   "uxBookingFor": "Reserva para",
   "uxBookingModesHelp": "Reservar mantiene el intervalo elegido. Registrarse ahora cambia al intervalo actual y marca su presencia.",

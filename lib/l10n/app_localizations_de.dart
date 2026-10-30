@@ -4191,6 +4191,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Buchung liegt vollständig in der Vergangenheit.';
 
   @override
+  String get bookingRatePlace => 'Diesen Platz bewerten';
+
+  @override
   String bookingRecordedPastSpaceWhen(String space, String when) {
     return '$space erfasst: $when. Dieser Zeitraum ist bereits vorbei, die Buchung bleibt als vergangener Besuch erhalten.';
   }
@@ -27586,7 +27589,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get uxBookingChargePending =>
-      'Kosten und Kontingentverbrauch werden gemäß dem Tarif des Mitglieds berechnet. Ein endgültiger Betrag ist hier nicht verfügbar.';
+      'Gebühr und Kontingentverbrauch hängen vom Tarif des Mitglieds ab und werden auf der Abrechnung ausgewiesen.';
 
   @override
   String get uxBookingCheckInHelp =>

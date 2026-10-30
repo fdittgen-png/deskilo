@@ -159,5 +159,6 @@
       }
     }
   },
-  "reservationNoteOverNotCheckedIn": "Cette période est terminée sans arrivée enregistrée."
+  "reservationNoteOverNotCheckedIn": "Cette période est terminée sans arrivée enregistrée.",
+  "bookingRatePlace": "Noter cette place"
 }
