@@ -77,7 +77,7 @@ void main() {
       'Availability',
       'Services',
       'Accessories',
-      'Billing',
+      'Pricing & packages',
       'Features',
       'Validation rules',
       'Workspace ID & QR',
