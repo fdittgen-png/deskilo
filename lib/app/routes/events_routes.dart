@@ -43,7 +43,9 @@ List<RouteBase> eventsRoutes(RouteEnv env) {
                       .show(InboxTab.alerts),
           ),
         );
-        return inCalendar ? '/calendar' : '/messages';
+        // #3065 — the address names the view, so reload and Back return to
+        // the alerts, not to the calendar's first view.
+        return inCalendar ? '/calendar?view=alerts' : '/messages';
       },
     ),
     GoRoute(

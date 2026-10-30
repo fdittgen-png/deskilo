@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// A request to put the calendar hub on its Alerts view — made by the bell,
 /// the `/events` path and a tapped alert row, consumed by the hub.
@@ -19,3 +21,21 @@ class CalendarAlertsRequest extends Notifier<bool> {
 
 final calendarAlertsRequestProvider =
     NotifierProvider<CalendarAlertsRequest, bool>(CalendarAlertsRequest.new);
+
+/// #3065 — whether the address itself names the Alerts view
+/// (`/calendar?view=alerts`, where `/events` lands): a reload or a shared
+/// link opens the alerts, not the calendar's first view.
+bool _addressAsksAlerts(BuildContext context) =>
+    GoRouter.maybeOf(context)
+        ?.routeInformationProvider
+        .value
+        .uri
+        .queryParameters['view'] ==
+    'alerts';
+
+/// Puts the hub on its Alerts view when the address asks for it.
+void requestAlertsIfAddressAsks(BuildContext context, WidgetRef ref) {
+  if (_addressAsksAlerts(context)) {
+    ref.read(calendarAlertsRequestProvider.notifier).request();
+  }
+}
