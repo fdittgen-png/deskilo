@@ -50,5 +50,6 @@
   "featureDetailHeldBack": "Activée, mais en attente : elle nécessite {feature}, qui est désactivée.",
   "featureDetailOff": "Désactivée.",
   "featureDetailNone": "Rien.",
-  "featureDetailGrantsPermission": "Accorde aux administrateurs l'autorisation « {permission} »."
+  "featureDetailGrantsPermission": "Accorde aux administrateurs l'autorisation « {permission} ».",
+  "processOffNote": "Désactivé : {features}"
 }

@@ -30924,6 +30924,12 @@ abstract class AppLocalizations {
   /// **'Already the case — nothing to change.'**
   String get processNothingToDo;
 
+  /// #3072 which features a partial process has switched off
+  ///
+  /// In en, this message translates to:
+  /// **'Switched off: {features}'**
+  String processOffNote(String features);
+
   /// No description provided for @processOperations.
   ///
   /// In en, this message translates to:

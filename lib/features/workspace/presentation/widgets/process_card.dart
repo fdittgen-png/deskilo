@@ -69,6 +69,17 @@ class ProcessCard extends StatelessWidget {
   /// Keys for the subprocess rows, so a search hit can scroll to one.
   final Map<String, GlobalKey> subprocessKeys;
 
+  /// #3072 — "Partial" says which features are switched off: the first
+  /// few by name, then how many more.
+  String _offNote(AppLocalizations l10n) {
+    final off = [for (final s in status.subprocesses) ...s.off];
+    final shown = [for (final f in off.take(3)) featureName(l10n, f)];
+    final more = off.length - shown.length;
+    return l10n.processOffNote(
+      more > 0 ? '${shown.join(', ')} +$more' : shown.join(', '),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -85,6 +96,7 @@ class ProcessCard extends StatelessWidget {
       if (status.heldBackCount > 0)
         l10n.processHeldBack(status.heldBackCount),
       if (status.outsidePrerequisites.isNotEmpty) _alsoNeeds(l10n),
+      if (status.state == ProcessState.partial) _offNote(l10n),
     ];
     final stateLabel = processStateLabel(l10n, status.state);
 
