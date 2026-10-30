@@ -274,7 +274,7 @@ class ReserveHubHeader extends ConsumerWidget {
     return GettingStartedFacts(
       workspaceName: workspace?.name ?? '',
       production: workspace != null && !workspace.isDevelopment,
-      membership: factOf(member).map(_standing),
+      membership: factOf(member).map(standingOf),
       dayOpen: availability.known
           ? Fact.ready(availability.open)
           : ref.watch(openWeekdaysProvider).hasError ||
@@ -292,11 +292,14 @@ class ReserveHubHeader extends ConsumerWidget {
     );
   }
 
-  static MembershipStanding _standing(Member? m) => m == null
+  /// What the hub says a person is here. A co-owner acts as the owner
+  /// (#3077): the first screen never speaks to them as a plain member.
+  @visibleForTesting
+  static MembershipStanding standingOf(Member? m) => m == null
       ? MembershipStanding.inactive
       : switch (m.status) {
           MemberStatus.pending => MembershipStanding.pending,
-          MemberStatus.active => m.isOwner
+          MemberStatus.active => m.actsAsOwner
               ? MembershipStanding.owner
               : m.isAdmin
                   ? MembershipStanding.administrator
