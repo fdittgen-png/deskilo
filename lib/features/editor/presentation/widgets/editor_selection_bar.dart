@@ -24,6 +24,7 @@ class EditorSelectionBar extends StatelessWidget {
     required this.onDuplicate,
     required this.onDelete,
     required this.onDismiss,
+    this.onRotate,
   });
 
   final ElementKind kind;
@@ -39,6 +40,9 @@ class EditorSelectionBar extends StatelessWidget {
 
   final VoidCallback onDelete;
   final VoidCallback onDismiss;
+
+  /// Turns a drawn symbol a quarter; null for everything else.
+  final VoidCallback? onRotate;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +77,13 @@ class EditorSelectionBar extends StatelessWidget {
                   tooltip: l10n.editorDuplicate,
                   icon: const Icon(Icons.content_copy_outlined),
                   onPressed: onDuplicate,
+                ),
+              if (onRotate != null)
+                IconButton(
+                  key: const ValueKey('editor-selection-rotate'),
+                  tooltip: l10n.editorRotate,
+                  icon: const Icon(Icons.rotate_right),
+                  onPressed: onRotate,
                 ),
               if (onEdit != null)
                 IconButton(

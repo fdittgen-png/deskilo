@@ -153,7 +153,7 @@ PlacementProblem? marqueeProblem(
       final office = plan.officeAtCell(rect.x, rect.y);
       if (office == null) return PlacementProblem.outsideParent;
       return validateDeskPlacement(rect, office, plan.desks);
-    case EditorTool.seat || EditorTool.image || null:
+    case EditorTool.seat || EditorTool.image || EditorTool.decor || null:
       return null;
   }
 }
@@ -169,7 +169,7 @@ Set<String>? dropTargetsFor(FloorPlan plan, EditorTool? tool) => switch (tool) {
   EditorTool.seat => {for (final d in plan.desks) d.id},
   // An office may go anywhere on the floor, and an image too, so
   // dimming would be a lie about a rule that does not exist.
-  EditorTool.office || EditorTool.image || null => null,
+  EditorTool.office || EditorTool.image || EditorTool.decor || null => null,
 };
 
 /// A seat that would stand at [anchor] on [desk], for the placement rules.

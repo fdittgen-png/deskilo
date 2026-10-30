@@ -7,7 +7,6 @@ import 'package:deskilo/features/plan/domain/floor_plan_repository.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/office.dart';
-import 'package:deskilo/features/plan/domain/plan_image.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/plan/domain/seat_context.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
@@ -291,6 +290,34 @@ class FakeFloorPlanRepository implements FloorPlanRepository {
       throw StateError('answer lost'); // #2012: committed, answer lost
     }
     return image;
+  }
+
+  @override
+  Future<PlanImage> createPlanDecor({
+    required String workspaceId,
+    required String levelId,
+    required GridRect rect,
+    required PlanDecorKind kind,
+    String? imageId,
+  }) async {
+    final existing = planImages.where((im) => im.id == imageId);
+    if (existing.isNotEmpty) return existing.first;
+    final image = PlanImage(
+      id: imageId ?? 'img-${_imgSeq++}',
+      levelId: levelId,
+      rect: rect,
+      kind: kind,
+    );
+    planImages.add(image);
+    return image;
+  }
+
+  @override
+  Future<void> setPlanDecorTurns(String imageId, int quarterTurns) async {
+    final i = planImages.indexWhere((im) => im.id == imageId);
+    if (i >= 0) {
+      planImages[i] = planImages[i].copyWith(quarterTurns: quarterTurns);
+    }
   }
 
   @override

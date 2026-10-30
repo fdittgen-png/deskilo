@@ -5734,6 +5734,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get decisionSurfaceEmptyDetail => 'Tout est traité.';
 
   @override
+  String get decorCouch => 'Canapé';
+
+  @override
+  String get decorDoor => 'Porte';
+
+  @override
+  String get decorKitchen => 'Cuisine';
+
+  @override
+  String get decorPillar => 'Pilier';
+
+  @override
+  String get decorTable => 'Table';
+
+  @override
+  String get decorWall => 'Mur';
+
+  @override
+  String get decorWc => 'WC';
+
+  @override
+  String get decorWindow => 'Fenêtre';
+
+  @override
   String get defaultPeriodNone => 'Sans préférence (journée complète)';
 
   @override
@@ -6693,6 +6717,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get editorConnectorType2 => 'Type 2';
 
   @override
+  String get editorDecorPaletteHint =>
+      'Dessinez la salle telle qu\'elle est : murs, portes et fenêtres l\'encadrent, le reste l\'aménage.';
+
+  @override
   String get editorDeleteElementConfirm =>
       'Supprimer cet élément ? Tout ce qui y est placé sera aussi supprimé.';
 
@@ -6732,6 +6760,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editorEmptyFloorTitle => 'Cet étage est vide';
+
+  @override
+  String get editorHintDecor =>
+      'Touchez le plan pour poser la forme ; faites-la glisser pour la placer';
 
   @override
   String get editorHintDesk =>
@@ -6851,6 +6883,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get editorRoomProperties => 'Salle de réunion';
 
   @override
+  String get editorRotate => 'Pivoter';
+
+  @override
   String get editorSeatNameDefault => 'Place';
 
   @override
@@ -6901,6 +6936,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editorTitle => 'Éditeur d\'espace';
+
+  @override
+  String get editorToolDecor => 'Formes';
 
   @override
   String get editorToolDesk => 'Table';
@@ -7380,6 +7418,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventOpenSource => 'Ouvrir le document d\'achat';
 
   @override
+  String get eventOutcomeApplied => 'Fait';
+
+  @override
+  String get eventOutcomeConfirmed => 'Confirmé';
+
+  @override
+  String get eventOutcomePending => 'En attente d\'une décision';
+
+  @override
+  String get eventOutcomeRejected => 'Refusé';
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor a enregistré un paiement de $amount';
   }
@@ -7410,6 +7460,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String eventRejectedBy(String name, String when) {
     return 'Refusé par $name · $when';
+  }
+
+  @override
+  String eventRepeatedMarker(int count) {
+    return '×$count';
   }
 
   @override
@@ -8821,6 +8876,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featurePlaceFeedbackTitle => 'Favoris et notes';
+
+  @override
+  String get featurePlanDecorDesc =>
+      'Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l\'outil Formes disparaît, les formes déjà dessinées restent.';
+
+  @override
+  String get featurePlanDecorTitle => 'Dessiner la salle sur le plan';
 
   @override
   String get featurePlanMemberPhotosDesc =>

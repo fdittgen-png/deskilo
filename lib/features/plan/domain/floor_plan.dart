@@ -6,7 +6,11 @@ import 'office.dart';
 import 'plan_image.dart';
 import 'seat.dart';
 
+// The drawn symbols travel with the plan that holds them.
+export 'plan_image.dart' show PlanDecorKind, PlanImage, isPhotoImage, planDecorFeatureKey;
+
 part 'floor_plan.freezed.dart';
+
 
 /// Everything drawn on one level.
 @freezed

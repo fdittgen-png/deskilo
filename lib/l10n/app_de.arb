@@ -3976,6 +3976,14 @@
   "@decisionSurfaceEmptyDetail": {
     "description": "#1247: decisionSurfaceEmptyDetail"
   },
+  "decorCouch": "Sofa",
+  "decorDoor": "Tür",
+  "decorKitchen": "Küche",
+  "decorPillar": "Säule",
+  "decorTable": "Tisch",
+  "decorWall": "Wand",
+  "decorWc": "WC",
+  "decorWindow": "Fenster",
   "defaultPeriodNone": "Keine Präferenz (ganzer Tag)",
   "defaultPeriodTitle": "Standard-Buchungszeitraum",
   "demoEntryAction": "Den Demobereich erkunden",
@@ -4900,6 +4908,7 @@
   "@editorConnectorType2": {
     "description": "#2631 resource_editor: editorConnectorType2"
   },
+  "editorDecorPaletteHint": "Zeichnen Sie den Raum, wie er ist: Wände, Türen und Fenster rahmen ihn, der Rest möbliert ihn.",
   "editorDeleteElementConfirm": "Dieses Element löschen? Alles darauf wird ebenfalls entfernt.",
   "editorDeleteElementConfirmAudit": "Dieses Element löschen? Alles darauf Platzierte wird ebenfalls entfernt. Buchungen, die darauf verweisen, behalten einen Text-Schnappschuss für Audits; offene Buchungen werden storniert.",
   "@editorDeleteElementConfirmAudit": {
@@ -4918,6 +4927,7 @@
   "editorEmptyFloorAction": "Ersten Raum zeichnen",
   "editorEmptyFloorBody": "Alles liegt in einem Raum: zeichnen Sie einen, stellen Sie Tische hinein und dann Plätze auf die Tische.",
   "editorEmptyFloorTitle": "Diese Etage ist leer",
+  "editorHintDecor": "Tippen Sie auf den Plan, um die Form abzulegen; ziehen Sie sie an ihren Platz",
   "editorHintDesk": "In einem Raum ziehen, um einen Tisch zu zeichnen",
   "editorHintImage": "Tippen, wo das Bild hin soll",
   "editorHintOffice": "Ziehen, um einen Raum zu zeichnen",
@@ -4994,6 +5004,7 @@
   "@editorRoomProperties": {
     "description": "#2631 resource_editor: editorRoomProperties"
   },
+  "editorRotate": "Drehen",
   "editorSeatNameDefault": "Platz",
   "editorSeatNameLabel": "Name des Platzes",
   "editorSeatNfcDuplicate": "Dieser Tag ist bereits mit einem anderen Stuhl verknüpft.",
@@ -5028,6 +5039,7 @@
     "description": "#2631 resource_editor: editorSlotWorkspace"
   },
   "editorTitle": "Workspace-Editor",
+  "editorToolDecor": "Formen",
   "editorToolDesk": "Tisch",
   "editorToolErase": "Löschen",
   "editorToolImage": "Bild",
@@ -5478,6 +5490,10 @@
     }
   },
   "eventOpenSource": "Einkaufsbeleg öffnen",
+  "eventOutcomeApplied": "Erledigt",
+  "eventOutcomeConfirmed": "Bestätigt",
+  "eventOutcomePending": "Wartet auf eine Entscheidung",
+  "eventOutcomeRejected": "Abgelehnt",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5496,6 +5512,7 @@
   "eventQuotaRequested": "{actor} beantragt {halfDays} zusätzliche halbe Tage für {period}",
   "eventReject": "Ablehnen",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",
+  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} hat die Reservierung von {target} storniert",
   "eventReservationCreated": "{actor} hat {target} reserviert",
   "eventReservationDeleteCheckedIn": "eingecheckt",
@@ -6235,6 +6252,8 @@
   "@featurePlaceFeedbackTitle": {
     "description": "#2185 place feedback"
   },
+  "featurePlanDecorDesc": "Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben.",
+  "featurePlanDecorTitle": "Den Raum im Plan zeichnen",
   "featurePlanMemberPhotosDesc": "Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.",
   "featurePlanMemberPhotosTitle": "Mitgliederfotos auf dem Plan",
   "featurePlanObjectDeleteDesc": "Inhaber können Ebenen, Büros, Tische und Sitzplätze auch dann löschen, wenn frühere Reservierungen darauf verweisen — die Buchungen behalten einen Text-Schnappschuss für Audits und Berichte.",

@@ -230,6 +230,7 @@ begin
       "personalInfo": true,
       "personalShell": false,
       "placeFeedback": true,
+      "planDecor": true,
       "planMemberPhotos": false,
       "planObjectDelete": true,
       "premisesLease": false,

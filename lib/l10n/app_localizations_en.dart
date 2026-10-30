@@ -5693,6 +5693,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get decisionSurfaceEmptyDetail => 'Everything is answered.';
 
   @override
+  String get decorCouch => 'Couch';
+
+  @override
+  String get decorDoor => 'Door';
+
+  @override
+  String get decorKitchen => 'Kitchen';
+
+  @override
+  String get decorPillar => 'Pillar';
+
+  @override
+  String get decorTable => 'Table';
+
+  @override
+  String get decorWall => 'Wall';
+
+  @override
+  String get decorWc => 'WC';
+
+  @override
+  String get decorWindow => 'Window';
+
+  @override
   String get defaultPeriodNone => 'No preference (full day)';
 
   @override
@@ -6645,6 +6669,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorConnectorType2 => 'Type 2';
 
   @override
+  String get editorDecorPaletteHint =>
+      'Draw the room as it is: walls, doors and windows frame it, the rest furnishes it.';
+
+  @override
   String get editorDeleteElementConfirm =>
       'Delete this element? Anything placed on it is removed too.';
 
@@ -6684,6 +6712,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorEmptyFloorTitle => 'This floor is empty';
+
+  @override
+  String get editorHintDecor =>
+      'Tap the plan to drop the shape; drag it to place it';
 
   @override
   String get editorHintDesk => 'Drag inside an office to draw a desk';
@@ -6800,6 +6832,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorRoomProperties => 'Meeting room';
 
   @override
+  String get editorRotate => 'Rotate';
+
+  @override
   String get editorSeatNameDefault => 'Seat';
 
   @override
@@ -6847,6 +6882,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorTitle => 'Workspace editor';
+
+  @override
+  String get editorToolDecor => 'Shapes';
 
   @override
   String get editorToolDesk => 'Desk';
@@ -7320,6 +7358,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventOpenSource => 'Open the purchase document';
 
   @override
+  String get eventOutcomeApplied => 'Done';
+
+  @override
+  String get eventOutcomeConfirmed => 'Confirmed';
+
+  @override
+  String get eventOutcomePending => 'Waiting for a decision';
+
+  @override
+  String get eventOutcomeRejected => 'Rejected';
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor recorded a payment of $amount';
   }
@@ -7350,6 +7400,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String eventRejectedBy(String name, String when) {
     return 'Declined by $name · $when';
+  }
+
+  @override
+  String eventRepeatedMarker(int count) {
+    return '×$count';
   }
 
   @override
@@ -8744,6 +8799,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featurePlaceFeedbackTitle => 'Favourites and ratings';
+
+  @override
+  String get featurePlanDecorDesc =>
+      'Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay.';
+
+  @override
+  String get featurePlanDecorTitle => 'Draw the room on the plan';
 
   @override
   String get featurePlanMemberPhotosDesc =>

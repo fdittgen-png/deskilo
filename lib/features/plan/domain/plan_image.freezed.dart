@@ -15,7 +15,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PlanImage {
 
- String get id; String get levelId; GridRect get rect; String get storagePath;/// #992 — the server's stamp on this row.
+ String get id; String get levelId; GridRect get rect; String? get storagePath;/// 0607 — the symbol this draws instead of a photo.
+ PlanDecorKind? get kind;/// 0607 — clockwise quarter turns of a symbol, 0..3.
+ int get quarterTurns;/// #992 — the server's stamp on this row.
  SystemColumns get system;
 /// Create a copy of PlanImage
 /// with the given fields replaced by the non-null parameter values.
@@ -28,20 +30,20 @@ $PlanImageCopyWith<PlanImage> get copyWith => _$PlanImageCopyWithImpl<PlanImage>
 @override
 bool operator ==(Object other) {
   final _this = this as PlanImage;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlanImage&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.levelId, _this.levelId) || other.levelId == _this.levelId)&&(identical(other.rect, _this.rect) || other.rect == _this.rect)&&(identical(other.storagePath, _this.storagePath) || other.storagePath == _this.storagePath)&&(identical(other.system, _this.system) || other.system == _this.system));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlanImage&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.levelId, _this.levelId) || other.levelId == _this.levelId)&&(identical(other.rect, _this.rect) || other.rect == _this.rect)&&(identical(other.storagePath, _this.storagePath) || other.storagePath == _this.storagePath)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.quarterTurns, _this.quarterTurns) || other.quarterTurns == _this.quarterTurns)&&(identical(other.system, _this.system) || other.system == _this.system));
 }
 
 
 @override
 int get hashCode {
   final _this = this as PlanImage;
-  return Object.hash(runtimeType,_this.id,_this.levelId,_this.rect,_this.storagePath,_this.system);
+  return Object.hash(runtimeType,_this.id,_this.levelId,_this.rect,_this.storagePath,_this.kind,_this.quarterTurns,_this.system);
 }
 
 @override
 String toString() {
   final _this = this as PlanImage;
-  return 'PlanImage(id: ${_this.id}, levelId: ${_this.levelId}, rect: ${_this.rect}, storagePath: ${_this.storagePath}, system: ${_this.system})';
+  return 'PlanImage(id: ${_this.id}, levelId: ${_this.levelId}, rect: ${_this.rect}, storagePath: ${_this.storagePath}, kind: ${_this.kind}, quarterTurns: ${_this.quarterTurns}, system: ${_this.system})';
 }
 
 
@@ -52,7 +54,7 @@ abstract mixin class $PlanImageCopyWith<$Res>  {
   factory $PlanImageCopyWith(PlanImage value, $Res Function(PlanImage) _then) = _$PlanImageCopyWithImpl;
 @useResult
 $Res call({
- String id, String levelId, GridRect rect, String storagePath, SystemColumns system
+ String id, String levelId, GridRect rect, String? storagePath, PlanDecorKind? kind, int quarterTurns, SystemColumns system
 });
 
 
@@ -69,13 +71,15 @@ class _$PlanImageCopyWithImpl<$Res>
 
 /// Create a copy of PlanImage
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? levelId = null,Object? rect = null,Object? storagePath = null,Object? system = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? levelId = null,Object? rect = null,Object? storagePath = freezed,Object? kind = freezed,Object? quarterTurns = null,Object? system = null,}) {
   return _then(PlanImage(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nullable_to_non_nullable
 as String,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
-as GridRect,storagePath: null == storagePath ? _self.storagePath : storagePath // ignore: cast_nullable_to_non_nullable
-as String,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as GridRect,storagePath: freezed == storagePath ? _self.storagePath : storagePath // ignore: cast_nullable_to_non_nullable
+as String?,kind: freezed == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as PlanDecorKind?,quarterTurns: null == quarterTurns ? _self.quarterTurns : quarterTurns // ignore: cast_nullable_to_non_nullable
+as int,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
 }
@@ -167,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String levelId,  GridRect rect,  String storagePath,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String levelId,  GridRect rect,  String? storagePath,  PlanDecorKind? kind,  int quarterTurns,  SystemColumns system)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PlanImage() when $default != null:
-return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.system);case _:
+return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.kind,_that.quarterTurns,_that.system);case _:
   return orElse();
 
 }
@@ -188,10 +192,10 @@ return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.system
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String levelId,  GridRect rect,  String storagePath,  SystemColumns system)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String levelId,  GridRect rect,  String? storagePath,  PlanDecorKind? kind,  int quarterTurns,  SystemColumns system)  $default,) {final _that = this;
 switch (_that) {
 case _PlanImage():
-return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.system);}
+return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.kind,_that.quarterTurns,_that.system);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -205,10 +209,10 @@ return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.system
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String levelId,  GridRect rect,  String storagePath,  SystemColumns system)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String levelId,  GridRect rect,  String? storagePath,  PlanDecorKind? kind,  int quarterTurns,  SystemColumns system)?  $default,) {final _that = this;
 switch (_that) {
 case _PlanImage() when $default != null:
-return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.system);case _:
+return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.kind,_that.quarterTurns,_that.system);case _:
   return null;
 
 }
@@ -220,13 +224,17 @@ return $default(_that.id,_that.levelId,_that.rect,_that.storagePath,_that.system
 
 
 class _PlanImage implements PlanImage {
-  const _PlanImage({required this.id, required this.levelId, required this.rect, required this.storagePath, this.system = SystemColumns.none});
+  const _PlanImage({required this.id, required this.levelId, required this.rect, this.storagePath, this.kind, this.quarterTurns = 0, this.system = SystemColumns.none});
   
 
 @override final  String id;
 @override final  String levelId;
 @override final  GridRect rect;
-@override final  String storagePath;
+@override final  String? storagePath;
+/// 0607 — the symbol this draws instead of a photo.
+@override final  PlanDecorKind? kind;
+/// 0607 — clockwise quarter turns of a symbol, 0..3.
+@override@JsonKey() final  int quarterTurns;
 /// #992 — the server's stamp on this row.
 @override@JsonKey() final  SystemColumns system;
 
@@ -240,18 +248,18 @@ _$PlanImageCopyWith<_PlanImage> get copyWith => __$PlanImageCopyWithImpl<_PlanIm
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlanImage&&(identical(other.id, id) || other.id == id)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.storagePath, storagePath) || other.storagePath == storagePath)&&(identical(other.system, system) || other.system == system));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlanImage&&(identical(other.id, id) || other.id == id)&&(identical(other.levelId, levelId) || other.levelId == levelId)&&(identical(other.rect, rect) || other.rect == rect)&&(identical(other.storagePath, storagePath) || other.storagePath == storagePath)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.quarterTurns, quarterTurns) || other.quarterTurns == quarterTurns)&&(identical(other.system, system) || other.system == system));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,levelId,rect,storagePath,system);
+    return Object.hash(runtimeType,id,levelId,rect,storagePath,kind,quarterTurns,system);
 }
 
 @override
 String toString() {
-    return 'PlanImage(id: $id, levelId: $levelId, rect: $rect, storagePath: $storagePath, system: $system)';
+    return 'PlanImage(id: $id, levelId: $levelId, rect: $rect, storagePath: $storagePath, kind: $kind, quarterTurns: $quarterTurns, system: $system)';
 }
 
 
@@ -262,7 +270,7 @@ abstract mixin class _$PlanImageCopyWith<$Res> implements $PlanImageCopyWith<$Re
   factory _$PlanImageCopyWith(_PlanImage value, $Res Function(_PlanImage) _then) = __$PlanImageCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String levelId, GridRect rect, String storagePath, SystemColumns system
+ String id, String levelId, GridRect rect, String? storagePath, PlanDecorKind? kind, int quarterTurns, SystemColumns system
 });
 
 
@@ -279,13 +287,15 @@ class __$PlanImageCopyWithImpl<$Res>
 
 /// Create a copy of PlanImage
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? levelId = null,Object? rect = null,Object? storagePath = null,Object? system = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? levelId = null,Object? rect = null,Object? storagePath = freezed,Object? kind = freezed,Object? quarterTurns = null,Object? system = null,}) {
   return _then(_PlanImage(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,levelId: null == levelId ? _self.levelId : levelId // ignore: cast_nullable_to_non_nullable
 as String,rect: null == rect ? _self.rect : rect // ignore: cast_nullable_to_non_nullable
-as GridRect,storagePath: null == storagePath ? _self.storagePath : storagePath // ignore: cast_nullable_to_non_nullable
-as String,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
+as GridRect,storagePath: freezed == storagePath ? _self.storagePath : storagePath // ignore: cast_nullable_to_non_nullable
+as String?,kind: freezed == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as PlanDecorKind?,quarterTurns: null == quarterTurns ? _self.quarterTurns : quarterTurns // ignore: cast_nullable_to_non_nullable
+as int,system: null == system ? _self.system : system // ignore: cast_nullable_to_non_nullable
 as SystemColumns,
   ));
 }

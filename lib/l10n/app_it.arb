@@ -3976,6 +3976,14 @@
   "@decisionSurfaceEmptyDetail": {
     "description": "#1247: decisionSurfaceEmptyDetail"
   },
+  "decorCouch": "Divano",
+  "decorDoor": "Porta",
+  "decorKitchen": "Cucina",
+  "decorPillar": "Pilastro",
+  "decorTable": "Tavolo",
+  "decorWall": "Muro",
+  "decorWc": "WC",
+  "decorWindow": "Finestra",
   "defaultPeriodNone": "Nessuna preferenza (giornata intera)",
   "defaultPeriodTitle": "Periodo di prenotazione predefinito",
   "demoEntryAction": "Esplora lo spazio dimostrativo",
@@ -4900,6 +4908,7 @@
   "@editorConnectorType2": {
     "description": "#2631 resource_editor: editorConnectorType2"
   },
+  "editorDecorPaletteHint": "Disegna la sala com'è: muri, porte e finestre la inquadrano, il resto la arreda.",
   "editorDeleteElementConfirm": "Eliminare questo elemento? Anche tutto ciò che vi è posizionato sopra verrà rimosso.",
   "editorDeleteElementConfirmAudit": "Eliminare questo elemento? Anche tutto ciò che vi è collocato viene rimosso. Le prenotazioni che vi fanno riferimento conservano un'istantanea di testo per gli audit; le prenotazioni aperte vengono annullate.",
   "@editorDeleteElementConfirmAudit": {
@@ -4918,6 +4927,7 @@
   "editorEmptyFloorAction": "Disegna la prima stanza",
   "editorEmptyFloorBody": "Tutto sta dentro una stanza: ne disegni una, vi metta dei tavoli e poi i posti sui tavoli.",
   "editorEmptyFloorTitle": "Questo piano è vuoto",
+  "editorHintDecor": "Tocca la pianta per posare la forma; trascinala al suo posto",
   "editorHintDesk": "Trascini dentro una stanza per disegnare un tavolo",
   "editorHintImage": "Tocchi dove va l'immagine",
   "editorHintOffice": "Trascini per disegnare una stanza",
@@ -4994,6 +5004,7 @@
   "@editorRoomProperties": {
     "description": "#2631 resource_editor: editorRoomProperties"
   },
+  "editorRotate": "Ruota",
   "editorSeatNameDefault": "Posto",
   "editorSeatNameLabel": "Nome del posto",
   "editorSeatNfcDuplicate": "Questo tag è già collegato a un'altra sedia.",
@@ -5028,6 +5039,7 @@
     "description": "#2631 resource_editor: editorSlotWorkspace"
   },
   "editorTitle": "Editor dello spazio",
+  "editorToolDecor": "Forme",
   "editorToolDesk": "Scrivania",
   "editorToolErase": "Cancella",
   "editorToolImage": "Immagine",
@@ -5478,6 +5490,10 @@
     }
   },
   "eventOpenSource": "Apri il documento di acquisto",
+  "eventOutcomeApplied": "Fatto",
+  "eventOutcomeConfirmed": "Confermato",
+  "eventOutcomePending": "In attesa di una decisione",
+  "eventOutcomeRejected": "Rifiutato",
   "eventPaymentSubmitted": "{actor} ha registrato un pagamento di {amount}",
   "eventPaymentTermsChangeLine": "{actor} chiede di fissare le condizioni di pagamento: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5496,6 +5512,7 @@
   "eventQuotaRequested": "{actor} richiede {halfDays} mezze giornate extra per {period}",
   "eventReject": "Rifiuta",
   "eventRejectedBy": "Rifiutato da {name} · {when}",
+  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} ha annullato la prenotazione di {target}",
   "eventReservationCreated": "{actor} ha prenotato {target}",
   "eventReservationDeleteCheckedIn": "con check-in",
@@ -6235,6 +6252,8 @@
   "@featurePlaceFeedbackTitle": {
     "description": "#2185 place feedback"
   },
+  "featurePlanDecorDesc": "I proprietari disegnano la sala reale con muri, porte, finestre, pilastri, tavoli, divani, WC e cucina. Disattivato: lo strumento Forme scompare; le forme già disegnate restano.",
+  "featurePlanDecorTitle": "Disegnare la sala sulla pianta",
   "featurePlanMemberPhotosDesc": "I posti occupati nella scheda Piantina e nel hub Prenota mostrano la foto del profilo al posto dell’iniziale.",
   "featurePlanMemberPhotosTitle": "Foto dei membri sulla piantina",
   "featurePlanObjectDeleteDesc": "I proprietari possono eliminare piani, uffici, tavoli e posti anche se prenotazioni passate vi fanno riferimento: le prenotazioni conservano un'istantanea di testo per audit e report.",

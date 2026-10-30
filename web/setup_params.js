@@ -227,7 +227,7 @@ const FEATURE_HELP={calendarTab:'calendar',calendarHub:'calendar',eventsTab:'val
  nfcSeatTags:'tags',spaceQrCodes:'whole',levelBooking:'whole',adminLevelAssign:'whole',bookingPolicies:'booking',
  workingHours:'availability',roleManagement:'roles',roleAssignment:'roles',coOwner:'roles',deletionRequests:'validation',
  vatManagement:'vat',vatDeclarations:'vat',einvoiceCustomerDelivery:'einvoice',memberReports:'faces',
- regionalFormats:'region',dataAccessLog:'privacy',memberDataExport:'privacy',planMemberPhotos:'plan',planObjectDelete:'plan'};
+ regionalFormats:'region',dataAccessLog:'privacy',memberDataExport:'privacy',planMemberPhotos:'plan',planObjectDelete:'plan',planDecor:'plan'};
 const STEP_HELP={identity:'identity',levels:'features',features:'features',availability:'availability',plan:'plan',billing:'billing',services:'services',pay:'pay',accounting:'pay',legal:'legal',roles:'validation',members:'members',summary:'features',review:'identity'};
 // The guide section a ? or ⓘ opens, as [app location key, anchor]: the
 // answer's own (HELP), else its feature's (FEATURE_HELP), else its step's

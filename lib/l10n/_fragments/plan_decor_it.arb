@@ -1,0 +1,14 @@
+{
+  "editorToolDecor": "Forme",
+  "editorHintDecor": "Tocca la pianta per posare la forma; trascinala al suo posto",
+  "editorDecorPaletteHint": "Disegna la sala com'è: muri, porte e finestre la inquadrano, il resto la arreda.",
+  "editorRotate": "Ruota",
+  "decorWall": "Muro",
+  "decorDoor": "Porta",
+  "decorWindow": "Finestra",
+  "decorPillar": "Pilastro",
+  "decorTable": "Tavolo",
+  "decorCouch": "Divano",
+  "decorWc": "WC",
+  "decorKitchen": "Cucina"
+}

@@ -3976,6 +3976,14 @@
   "@decisionSurfaceEmptyDetail": {
     "description": "#1247: decisionSurfaceEmptyDetail"
   },
+  "decorCouch": "Canapé",
+  "decorDoor": "Porte",
+  "decorKitchen": "Cuisine",
+  "decorPillar": "Pilier",
+  "decorTable": "Table",
+  "decorWall": "Mur",
+  "decorWc": "WC",
+  "decorWindow": "Fenêtre",
   "defaultPeriodNone": "Sans préférence (journée complète)",
   "defaultPeriodTitle": "Période de réservation par défaut",
   "demoEntryAction": "Explorer l'espace de démonstration",
@@ -4900,6 +4908,7 @@
   "@editorConnectorType2": {
     "description": "#2631 resource_editor: editorConnectorType2"
   },
+  "editorDecorPaletteHint": "Dessinez la salle telle qu'elle est : murs, portes et fenêtres l'encadrent, le reste l'aménage.",
   "editorDeleteElementConfirm": "Supprimer cet élément ? Tout ce qui y est placé sera aussi supprimé.",
   "editorDeleteElementConfirmAudit": "Supprimer cet élément ? Tout ce qui y est placé est également retiré. Les réservations qui y font référence gardent un instantané texte pour les audits ; les réservations ouvertes sont annulées.",
   "@editorDeleteElementConfirmAudit": {
@@ -4918,6 +4927,7 @@
   "editorEmptyFloorAction": "Dessiner la première pièce",
   "editorEmptyFloorBody": "Tout se trouve dans une pièce : dessinez-en une, placez-y des tables, puis des places sur les tables.",
   "editorEmptyFloorTitle": "Cet étage est vide",
+  "editorHintDecor": "Touchez le plan pour poser la forme ; faites-la glisser pour la placer",
   "editorHintDesk": "Faites glisser dans un bureau pour dessiner une table",
   "editorHintImage": "Touchez l'endroit où placer l'image",
   "editorHintOffice": "Faites glisser pour dessiner un bureau",
@@ -4994,6 +5004,7 @@
   "@editorRoomProperties": {
     "description": "#2631 resource_editor: editorRoomProperties"
   },
+  "editorRotate": "Pivoter",
   "editorSeatNameDefault": "Place",
   "editorSeatNameLabel": "Nom de la place",
   "editorSeatNfcDuplicate": "Ce tag est déjà associé à une autre chaise.",
@@ -5028,6 +5039,7 @@
     "description": "#2631 resource_editor: editorSlotWorkspace"
   },
   "editorTitle": "Éditeur d'espace",
+  "editorToolDecor": "Formes",
   "editorToolDesk": "Table",
   "editorToolErase": "Effacer",
   "editorToolImage": "Image",
@@ -5478,6 +5490,10 @@
     }
   },
   "eventOpenSource": "Ouvrir le document d'achat",
+  "eventOutcomeApplied": "Fait",
+  "eventOutcomeConfirmed": "Confirmé",
+  "eventOutcomePending": "En attente d'une décision",
+  "eventOutcomeRejected": "Refusé",
   "eventPaymentSubmitted": "{actor} a enregistré un paiement de {amount}",
   "eventPaymentTermsChangeLine": "{actor} demande de fixer les conditions de paiement : {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5496,6 +5512,7 @@
   "eventQuotaRequested": "{actor} demande {halfDays} demi-journées supplémentaires pour {period}",
   "eventReject": "Refuser",
   "eventRejectedBy": "Refusé par {name} · {when}",
+  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} a annulé la réservation de {target}",
   "eventReservationCreated": "{actor} a réservé {target}",
   "eventReservationDeleteCheckedIn": "pointée",
@@ -6235,6 +6252,8 @@
   "@featurePlaceFeedbackTitle": {
     "description": "#2185 place feedback"
   },
+  "featurePlanDecorDesc": "Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l'outil Formes disparaît, les formes déjà dessinées restent.",
+  "featurePlanDecorTitle": "Dessiner la salle sur le plan",
   "featurePlanMemberPhotosDesc": "Les places occupées de l'onglet Plan et du hub Réserver affichent la photo de profil de l'occupant au lieu de l'initiale.",
   "featurePlanMemberPhotosTitle": "Photos des membres sur le plan",
   "featurePlanObjectDeleteDesc": "Les propriétaires peuvent supprimer niveaux, bureaux, tables et places même si d'anciennes réservations y font référence — les réservations gardent un instantané texte pour les audits et rapports.",

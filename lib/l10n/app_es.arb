@@ -3976,6 +3976,14 @@
   "@decisionSurfaceEmptyDetail": {
     "description": "#1247: decisionSurfaceEmptyDetail"
   },
+  "decorCouch": "Sofá",
+  "decorDoor": "Puerta",
+  "decorKitchen": "Cocina",
+  "decorPillar": "Pilar",
+  "decorTable": "Mesa",
+  "decorWall": "Pared",
+  "decorWc": "WC",
+  "decorWindow": "Ventana",
   "defaultPeriodNone": "Sin preferencia (día completo)",
   "defaultPeriodTitle": "Período de reserva predeterminado",
   "demoEntryAction": "Explorar el espacio de demostración",
@@ -4900,6 +4908,7 @@
   "@editorConnectorType2": {
     "description": "#2631 resource_editor: editorConnectorType2"
   },
+  "editorDecorPaletteHint": "Dibuje la sala tal como es: paredes, puertas y ventanas la enmarcan, el resto la amuebla.",
   "editorDeleteElementConfirm": "¿Eliminar este elemento? Todo lo colocado sobre él también se eliminará.",
   "editorDeleteElementConfirmAudit": "¿Eliminar este elemento? Todo lo colocado sobre él también se elimina. Las reservas que hacen referencia a él conservan una instantánea de texto para auditorías; las reservas abiertas se cancelan.",
   "@editorDeleteElementConfirmAudit": {
@@ -4918,6 +4927,7 @@
   "editorEmptyFloorAction": "Dibujar la primera sala",
   "editorEmptyFloorBody": "Todo va dentro de una sala: dibuje una, ponga mesas dentro y luego puestos en las mesas.",
   "editorEmptyFloorTitle": "Esta planta está vacía",
+  "editorHintDecor": "Toque el plano para soltar la forma; arrástrela a su sitio",
   "editorHintDesk": "Arrastre dentro de una sala para dibujar una mesa",
   "editorHintImage": "Toque dónde debe ir la imagen",
   "editorHintOffice": "Arrastre para dibujar una sala",
@@ -4994,6 +5004,7 @@
   "@editorRoomProperties": {
     "description": "#2631 resource_editor: editorRoomProperties"
   },
+  "editorRotate": "Girar",
   "editorSeatNameDefault": "Asiento",
   "editorSeatNameLabel": "Nombre del asiento",
   "editorSeatNfcDuplicate": "Esta etiqueta ya está vinculada a otra silla.",
@@ -5028,6 +5039,7 @@
     "description": "#2631 resource_editor: editorSlotWorkspace"
   },
   "editorTitle": "Editor del espacio",
+  "editorToolDecor": "Formas",
   "editorToolDesk": "Mesa",
   "editorToolErase": "Borrar",
   "editorToolImage": "Imagen",
@@ -5478,6 +5490,10 @@
     }
   },
   "eventOpenSource": "Abrir el documento de compra",
+  "eventOutcomeApplied": "Hecho",
+  "eventOutcomeConfirmed": "Confirmado",
+  "eventOutcomePending": "A la espera de una decisión",
+  "eventOutcomeRejected": "Rechazado",
   "eventPaymentSubmitted": "{actor} registró un pago de {amount}",
   "eventPaymentTermsChangeLine": "{actor} pide fijar las condiciones de pago: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5496,6 +5512,7 @@
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
   "eventReject": "Rechazar",
   "eventRejectedBy": "Rechazado por {name} · {when}",
+  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} canceló la reserva de {target}",
   "eventReservationCreated": "{actor} reservó {target}",
   "eventReservationDeleteCheckedIn": "registrada",
@@ -6235,6 +6252,8 @@
   "@featurePlaceFeedbackTitle": {
     "description": "#2185 place feedback"
   },
+  "featurePlanDecorDesc": "Los propietarios dibujan la sala real con paredes, puertas, ventanas, pilares, mesas, sofás, WC y cocina. Desactivado: la herramienta Formas desaparece; las formas ya dibujadas permanecen.",
+  "featurePlanDecorTitle": "Dibujar la sala en el plano",
   "featurePlanMemberPhotosDesc": "Los asientos ocupados en la pestaña Plano y en el centro Reservar muestran la foto de perfil del ocupante en lugar de la inicial.",
   "featurePlanMemberPhotosTitle": "Fotos de los miembros en el plano",
   "featurePlanObjectDeleteDesc": "Los propietarios pueden eliminar plantas, oficinas, mesas y asientos aunque reservas pasadas hagan referencia a ellos: las reservas conservan una instantánea de texto para auditorías e informes.",

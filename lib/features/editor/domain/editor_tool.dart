@@ -6,4 +6,4 @@
 /// Selecting is what the canvas does when NO tool is armed (the field
 /// is nullable), and deleting belongs to the selection rather than to a
 /// mode nobody could see they were in.
-enum EditorTool { office, desk, seat, image }
+enum EditorTool { office, desk, seat, image, decor }

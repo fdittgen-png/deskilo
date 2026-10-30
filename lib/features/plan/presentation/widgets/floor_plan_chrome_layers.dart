@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../../domain/grid_geometry.dart';
 import 'drop_target_paint.dart';
 import 'floor_plan_painter.dart';
+import 'plan_decor_paint.dart';
 import 'plan_paint_helpers.dart';
 
 /// Background photo (0036), illustration images (0037) and the grid.
@@ -47,6 +48,17 @@ void _paintBackgroundPhoto(Canvas canvas, Size size, FloorPlanPainter p) {
 
 void _paintIllustrations(Canvas canvas, FloorPlanPainter p) {
   for (final image in p.plan.images) {
+    final kind = image.kind;
+    if (kind != null) {
+      paintPlanDecor(
+        canvas,
+        gridRectToPx(image.rect, p.cellSize),
+        kind,
+        image.quarterTurns,
+        p.colorScheme,
+      );
+      continue;
+    }
     final img = p.images[image.id];
     if (img == null) continue;
     final dst = gridRectToPx(image.rect, p.cellSize);

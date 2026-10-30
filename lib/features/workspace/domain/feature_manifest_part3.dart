@@ -395,4 +395,12 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.invoicing,
     defaultOn: false,
   ),
+  // #3074 — the owner draws the real room on the plan: walls, doors,
+  // windows, pillars, tables, couches, WC and kitchen. OFF hides the
+  // Shapes tool; the symbols already drawn keep painting.
+  WorkspaceFeature.planDecor: FeatureManifestEntry(
+    feature: WorkspaceFeature.planDecor,
+    surface: FeatureSurface.reserve,
+    tier: FeatureTier.core,
+  ),
 };

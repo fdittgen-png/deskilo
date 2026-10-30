@@ -1,0 +1,14 @@
+{
+  "editorToolDecor": "Formes",
+  "editorHintDecor": "Touchez le plan pour poser la forme ; faites-la glisser pour la placer",
+  "editorDecorPaletteHint": "Dessinez la salle telle qu'elle est : murs, portes et fenêtres l'encadrent, le reste l'aménage.",
+  "editorRotate": "Pivoter",
+  "decorWall": "Mur",
+  "decorDoor": "Porte",
+  "decorWindow": "Fenêtre",
+  "decorPillar": "Pilier",
+  "decorTable": "Table",
+  "decorCouch": "Canapé",
+  "decorWc": "WC",
+  "decorKitchen": "Cuisine"
+}

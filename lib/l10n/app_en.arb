@@ -7045,6 +7045,38 @@
   "@decisionSurfaceEmptyDetail": {
     "description": "#1247: decisionSurfaceEmptyDetail"
   },
+  "decorCouch": "Couch",
+  "@decorCouch": {
+    "description": "#3074 the plan's drawn shapes: decorCouch"
+  },
+  "decorDoor": "Door",
+  "@decorDoor": {
+    "description": "#3074 the plan's drawn shapes: decorDoor"
+  },
+  "decorKitchen": "Kitchen",
+  "@decorKitchen": {
+    "description": "#3074 the plan's drawn shapes: decorKitchen"
+  },
+  "decorPillar": "Pillar",
+  "@decorPillar": {
+    "description": "#3074 the plan's drawn shapes: decorPillar"
+  },
+  "decorTable": "Table",
+  "@decorTable": {
+    "description": "#3074 the plan's drawn shapes: decorTable"
+  },
+  "decorWall": "Wall",
+  "@decorWall": {
+    "description": "#3074 the plan's drawn shapes: decorWall"
+  },
+  "decorWc": "WC",
+  "@decorWc": {
+    "description": "#3074 the plan's drawn shapes: decorWc"
+  },
+  "decorWindow": "Window",
+  "@decorWindow": {
+    "description": "#3074 the plan's drawn shapes: decorWindow"
+  },
   "defaultPeriodNone": "No preference (full day)",
   "defaultPeriodTitle": "Default booking period",
   "demoEntryAction": "Explore the demo workspace",
@@ -8184,6 +8216,10 @@
   "@editorConnectorType2": {
     "description": "#2631 resource_editor: editorConnectorType2"
   },
+  "editorDecorPaletteHint": "Draw the room as it is: walls, doors and windows frame it, the rest furnishes it.",
+  "@editorDecorPaletteHint": {
+    "description": "#3074 the plan's drawn shapes: editorDecorPaletteHint"
+  },
   "editorDeleteElementConfirm": "Delete this element? Anything placed on it is removed too.",
   "@editorDeleteElementConfirm": {
     "description": "Confirmation body for the erase tool"
@@ -8231,6 +8267,10 @@
   "editorEmptyFloorTitle": "This floor is empty",
   "@editorEmptyFloorTitle": {
     "description": "#1216 the card shown on a level nobody has drawn on yet"
+  },
+  "editorHintDecor": "Tap the plan to drop the shape; drag it to place it",
+  "@editorHintDecor": {
+    "description": "#3074 the plan's drawn shapes: editorHintDecor"
   },
   "editorHintDesk": "Drag inside an office to draw a desk",
   "@editorHintDesk": {
@@ -8380,6 +8420,10 @@
   "@editorRoomProperties": {
     "description": "#2631 resource_editor: editorRoomProperties"
   },
+  "editorRotate": "Rotate",
+  "@editorRotate": {
+    "description": "#3074 the plan's drawn shapes: editorRotate"
+  },
   "editorSeatNameDefault": "Seat",
   "@editorSeatNameDefault": {
     "description": "Default seat name prefix; a number is appended"
@@ -8428,6 +8472,10 @@
   "editorTitle": "Workspace editor",
   "@editorTitle": {
     "description": "App-bar title of the owner-only workspace editor"
+  },
+  "editorToolDecor": "Shapes",
+  "@editorToolDecor": {
+    "description": "#3074 the plan's drawn shapes: editorToolDecor"
   },
   "editorToolDesk": "Desk",
   "@editorToolDesk": {
@@ -9085,6 +9133,22 @@
   "@eventOpenSource": {
     "description": "#2573 open the purchase an expense request was filed as"
   },
+  "eventOutcomeApplied": "Done",
+  "@eventOutcomeApplied": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomeConfirmed": "Confirmed",
+  "@eventOutcomeConfirmed": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomePending": "Waiting for a decision",
+  "@eventOutcomePending": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomeRejected": "Rejected",
+  "@eventOutcomeRejected": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
   "eventPaymentSubmitted": "{actor} recorded a payment of {amount}",
   "@eventPaymentSubmitted": {
     "description": "Feed line for payment events",
@@ -9159,6 +9223,15 @@
       },
       "when": {
         "type": "String"
+      }
+    }
+  },
+  "eventRepeatedMarker": "×{count}",
+  "@eventRepeatedMarker": {
+    "description": "#3067 how many identical events a collapsed row stands for",
+    "placeholders": {
+      "count": {
+        "type": "int"
       }
     }
   },
@@ -10501,6 +10574,14 @@
   "featurePlaceFeedbackTitle": "Favourites and ratings",
   "@featurePlaceFeedbackTitle": {
     "description": "#2185 place feedback"
+  },
+  "featurePlanDecorDesc": "Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay.",
+  "@featurePlanDecorDesc": {
+    "description": "#3074 the plan shapes flag"
+  },
+  "featurePlanDecorTitle": "Draw the room on the plan",
+  "@featurePlanDecorTitle": {
+    "description": "#3074 the plan shapes flag"
   },
   "featurePlanMemberPhotosDesc": "Occupied seats on the Plan tab and Reserve hub show the occupant's profile photo instead of the initial.",
   "featurePlanMemberPhotosTitle": "Member photos on the plan",

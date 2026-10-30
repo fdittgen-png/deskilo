@@ -258,5 +258,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "featurePlanDecorTitle": "Dessiner la salle sur le plan",
+  "featurePlanDecorDesc": "Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l'outil Formes disparaît, les formes déjà dessinées restent."
 }
