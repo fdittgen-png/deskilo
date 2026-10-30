@@ -444,7 +444,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 feed: feed,
                 matchingPending: pendingForMe.where((event) => filter.categories.isEmpty ||
                     filter.categories.contains(categoryOfEvent(event))).toList(),
-                unreadCount: unreadIds.length,
+                unreadCount: unreadFeedCount(feed),
                 names: names,
                 targets: targets,
                 currency: currency,

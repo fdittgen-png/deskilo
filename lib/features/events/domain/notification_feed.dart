@@ -300,6 +300,14 @@ List<FeedItem> buildNotificationFeed({
   return _collapseRepeats(filtered);
 }
 
+/// How many unread things the feed shows (#3067): a collapsed row counts
+/// as the events it stands for, so the header equals what the list holds.
+int unreadFeedCount(List<FeedItem> feed) => feed.fold(
+      0,
+      (sum, item) =>
+          item.unread ? sum + (item is EventFeedItem ? item.count : 1) : sum,
+    );
+
 /// One fold of the grouped feed (#598). [key] is what the group IS —
 /// a [NotificationCategory] (type), a local-midnight [DateTime] (date)
 /// or a member id [String] (user); [id] is its stable widget-key form.

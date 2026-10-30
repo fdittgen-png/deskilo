@@ -88,6 +88,19 @@ void main() {
       expect(feed([pending('a'), pending('b')]), hasLength(2));
     });
 
+    test('the header counts what the list holds, collapsed rows included', () {
+      final rows = feed(
+        [
+          _event('a', t0),
+          _event('b', t0.add(const Duration(seconds: 5))),
+          _event('c', t0.add(const Duration(minutes: 5))),
+        ],
+        seen: t0.subtract(const Duration(seconds: 1)),
+      );
+      expect(rows, hasLength(2));
+      expect(unreadFeedCount(rows), 3);
+    });
+
     test('the collapsed row is unread when any of them is', () {
       final rows = feed(
         [
