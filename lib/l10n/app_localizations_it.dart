@@ -22562,6 +22562,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Minuti in cui si contano i tentativi errati e per cui un badge bloccato resta bloccato. Può solo essere allungata.';
 
   @override
+  String get settingHintSecurityBadgePinMinLength =>
+      'Il minimo di cifre di un nuovo PIN del badge. I PIN già impostati continuano a funzionare finché non vengono cambiati.';
+
+  @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.';
 
@@ -22778,6 +22782,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgeLockoutMinutes =>
       'Durata del blocco del badge';
+
+  @override
+  String get settingLabelSecurityBadgePinMinLength =>
+      'PIN del badge: lunghezza minima';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

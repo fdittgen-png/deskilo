@@ -127,7 +127,7 @@ select ok(not (public.preview_my_member_profile('space_mate') ? 'operational'),'
 
 -- ── the badge PIN hash is not on the profile row any more ───────────
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001833a2","role":"authenticated"}',true);
-select lives_ok($$select public.set_badge_pin('4826')$$,'the subject sets a badge PIN');
+select lives_ok($$select public.set_badge_pin('482615')$$,'the subject sets a badge PIN');
 select ok(public.has_badge_pin(),'and the app sees that a PIN is set');
 -- 0351 (#1833 B): a space mate reads no raw row at all now; the operational
 -- reader still does, and finds no hash on it.

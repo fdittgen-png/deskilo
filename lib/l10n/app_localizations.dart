@@ -37650,6 +37650,12 @@ abstract class AppLocalizations {
   /// **'Minutes over which wrong PIN attempts are counted and for which a locked badge stays locked. Can only be lengthened.'**
   String get settingHintSecurityBadgeLockoutMinutes;
 
+  /// #3091 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The fewest digits a new badge PIN may have. PINs set earlier keep working until they are changed.'**
+  String get settingHintSecurityBadgePinMinLength;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -37991,6 +37997,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Badge lockout time'**
   String get settingLabelSecurityBadgeLockoutMinutes;
+
+  /// #3091 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortest badge PIN'**
+  String get settingLabelSecurityBadgePinMinLength;
 
   /// #2485 settings: Setting label.
   ///
