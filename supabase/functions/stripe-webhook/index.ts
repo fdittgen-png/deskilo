@@ -7,6 +7,11 @@
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 
+/** #3093 E5 — the one body of every answer given BEFORE the signature is
+ * checked: an unsigned caller learns nothing about which stage refused (the
+ * statuses stay, because Stripe's redelivery depends on them). */
+const NOT_READY = "not_ready";
+
 // #2014 — a failed credential READ is not an absent credential: it throws
 // (the caller answers 500 so Stripe retries) instead of silently falling
 // back to the installation's environment secret.
@@ -125,16 +130,16 @@ export async function handle(
     .maybeSingle();
   if (lookupError) {
     console.error("stripe webhook: intent lookup failed");
-    return new Response("lookup_failed", { status: 500 });
+    return new Response(NOT_READY, { status: 500 });
   }
   if (!intent) {
     const age = deps.nowS() - Number(event.created ?? 0);
     if (age < EARLY_CALLBACK_WINDOW_S) {
       // The order id may not be stored yet: ask for a redelivery.
-      console.log("stripe webhook: session not associated yet, retry", sessionId);
-      return new Response("not_associated_yet", { status: 503 });
+      console.log("stripe webhook: session not associated yet, retry");
+      return new Response(NOT_READY, { status: 503 });
     }
-    console.log("stripe webhook: unknown session, ignoring", sessionId);
+    console.log("stripe webhook: unknown session, ignoring");
     return new Response("ok", { status: 200 });
   }
   let secret: string;
@@ -142,12 +147,12 @@ export async function handle(
     secret = await webhookSecret(admin, intent.workspace_id, deps.env);
   } catch {
     console.error("stripe webhook: credential lookup failed");
-    return new Response("lookup_failed", { status: 500 });
+    return new Response(NOT_READY, { status: 500 });
   }
   if (!secret) {
     // Not consumed: once the secret is configured, a redelivery settles.
-    console.log("stripe webhook not configured for workspace", intent.workspace_id);
-    return new Response("not_configured", { status: 503 });
+    console.log("stripe webhook not configured for a workspace");
+    return new Response(NOT_READY, { status: 503 });
   }
   if (
     !(await validSignature(
