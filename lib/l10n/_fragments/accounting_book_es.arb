@@ -8,6 +8,7 @@
   "bookAuthorityLocal": "DesKilo lleva el libro",
   "bookAuthorityExternal": "Sistema externo",
   "bookExternalSystem": "Sistema que hace fe",
+  "bookExternalOther": "Otro…",
   "bookCurrency": "Moneda funcional",
   "bookFiscalStart": "El ejercicio empieza el",
   "bookBasisAccrual": "Criterio de devengo",

@@ -261,6 +261,7 @@ const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'fec',
     vendor: 'DGFiP',
+    authority: true,
     product: 'FEC',
     edition: 'BIC/IS, art. A47 A-1 LPF',
     countries: {'FR'},
@@ -277,6 +278,7 @@ const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'fr_ereporting',
     vendor: 'DGFiP',
+    authority: true,
     product: 'e-reporting',
     edition: 'flows 10.1-10.4',
     countries: {'FR'},
@@ -289,6 +291,7 @@ const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'saft_pt',
     vendor: 'Autoridade Tributária',
+    authority: true,
     product: 'SAF-T (PT)',
     edition: '1.04_01, TaxAccountingBasis F',
     countries: {'PT'},
@@ -331,6 +334,7 @@ const List<AccountingTarget> accountingTargets = [
   AccountingTarget(
     id: 'saft',
     vendor: 'OECD',
+    authority: true,
     product: 'SAF-T',
     edition: '2.0, ledger omitted',
     countries: <String>{},
@@ -342,7 +346,7 @@ const List<AccountingTarget> accountingTargets = [
   ),
   AccountingTarget(
     id: 'accountant_csv',
-    vendor: 'DesKilo',
+    vendor: deskiloVendor,
     product: 'Accountant CSV',
     edition: 'format $accountantCsvFormatVersion',
     countries: <String>{},
@@ -355,7 +359,7 @@ const List<AccountingTarget> accountingTargets = [
   ),
   AccountingTarget(
     id: 'generic_journal_csv',
-    vendor: 'DesKilo',
+    vendor: deskiloVendor,
     product: 'Generic journal CSV',
     edition: 'compute_postings',
     countries: <String>{},
@@ -367,7 +371,7 @@ const List<AccountingTarget> accountingTargets = [
   ),
   AccountingTarget(
     id: 'general_ledger',
-    vendor: 'DesKilo',
+    vendor: deskiloVendor,
     product: 'General ledger',
     edition: 'PDF from compute_postings',
     countries: <String>{},
@@ -379,7 +383,7 @@ const List<AccountingTarget> accountingTargets = [
   ),
   AccountingTarget(
     id: 'trial_balance',
-    vendor: 'DesKilo',
+    vendor: deskiloVendor,
     product: 'Trial balance',
     edition: 'general and auxiliary, PDF from compute_postings',
     countries: <String>{},
@@ -391,7 +395,7 @@ const List<AccountingTarget> accountingTargets = [
   ),
   AccountingTarget(
     id: 'journals',
-    vendor: 'DesKilo',
+    vendor: deskiloVendor,
     product: 'Journals',
     edition: 'per journal and summary, PDF from compute_postings',
     countries: <String>{},
@@ -403,7 +407,7 @@ const List<AccountingTarget> accountingTargets = [
   ),
   AccountingTarget(
     id: 'audit_trail',
-    vendor: 'DesKilo',
+    vendor: deskiloVendor,
     product: 'Audit trail',
     edition: 'CSV',
     countries: <String>{},
@@ -415,7 +419,7 @@ const List<AccountingTarget> accountingTargets = [
   ),
   AccountingTarget(
     id: 'bundle',
-    vendor: 'DesKilo',
+    vendor: deskiloVendor,
     product: 'Fiscal-year archive',
     edition: 'PDF/A-3 bundle',
     countries: <String>{},

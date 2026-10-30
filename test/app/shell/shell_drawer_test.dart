@@ -45,10 +45,11 @@ Future<void> _reveal(WidgetTester tester, String key) async {
       matching: find.byType(Scrollable));
   final group = switch (key) {
     'drawer-members' || 'drawer-roles' || 'drawer-nfc-config' => 'People & access',
-    'drawer-invoices' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' => 'Billing & payments',
+    'drawer-sales' || 'drawer-invoices' || 'drawer-services' || 'drawer-accessories' => 'Sales',
+    'drawer-cash' || 'drawer-billing' || 'drawer-payment-methods' || 'drawer-payment-config' => 'Billing & payments',
     // #2313 — every report and the BI in their own group.
     'drawer-bi' || 'drawer-reports-finance' || 'drawer-reports-documents' || 'drawer-reports-templates' => 'Reporting',
-    'drawer-workspace-settings' || 'drawer-availability' || 'drawer-services' || 'drawer-accessories' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
+    'drawer-workspace-settings' || 'drawer-availability' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
     _ => null,
   };
   if (group != null && find.byKey(ValueKey(key)).evaluate().isEmpty) {
@@ -78,7 +79,7 @@ void main() {
     await tester.pumpAndSettle();
     if (!invoicing) {
       expect(find.byKey(const ValueKey('drawer-reports-finance')), findsNothing);
-      expect(find.text('Billing & payments'), findsNothing);
+      expect(find.byKey(const ValueKey('drawer-invoices')), findsNothing);
       return;
     }
     await _reveal(tester, 'drawer-reports-finance');
@@ -157,6 +158,7 @@ void main() {
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
     expect(find.text('People & access'), findsOneWidget);
+    expect(find.text('Sales'), findsOneWidget);
     expect(find.text('Billing & payments'), findsOneWidget);
     expect(find.text('Workspace setup'), findsOneWidget);
     expect(find.byKey(const ValueKey('drawer-members')), findsNothing);
@@ -172,6 +174,61 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('drawer-members')), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Accounting & VAT is a sub-group of Billing & payments that '
+      'opens the accounting page', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+        featureFlags: const {'moneyTab': true, 'invoicing': true});
+    await _pump(tester, web: true, workspace: workspace);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('Accounting & VAT'), findsNothing,
+        reason: 'closed with its group');
+    await _reveal(tester, 'drawer-cash');
+    await tester.scrollUntilVisible(find.text('Accounting & VAT'), 80,
+        scrollable: find.descendant(
+            of: find.byKey(const ValueKey('shell-drawer')),
+            matching: find.byType(Scrollable)));
+    await tester.tap(find.text('Accounting & VAT'));
+    await tester.pump(const Duration(seconds: 1));
+    await _reveal(tester, 'drawer-accounting');
+    expect(find.byKey(const ValueKey('drawer-legal-identity')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('drawer-accounting')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('accounting-hub')), findsOneWidget);
+  });
+
+  testWidgets('a member with no finance right sees neither Sales nor '
+      'Billing & payments, header included', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace(
+      featureFlags: const {'customRoles': true, 'moneyTab': true, 'invoicing': true},
+    )..myMember = const Member(
+        id: 'member-1',
+        workspaceId: 'ws-1',
+        userId: 'user-1',
+        isAdmin: false,
+        isOwner: false,
+        status: MemberStatus.active,
+      );
+    final roles = FakeWorkspaceRoles()
+      ..callerMemberId = 'member-1'
+      ..roles.add(const WorkspaceRole(
+        id: 'role-m',
+        key: 'members',
+        names: {'en': 'Members'},
+        permissions: {WorkspacePermission.manageMembers},
+      ))
+      ..assignments['role-m'] = ['member-1'];
+    await _pump(tester, web: true, workspace: workspace, roles: roles);
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('People & access'), findsOneWidget);
+    expect(find.text('Sales'), findsNothing);
+    expect(find.text('Billing & payments'), findsNothing);
+    expect(find.text('Accounting & VAT'), findsNothing);
   });
 
   testWidgets('native keeps the bar and has no drawer', (tester) async {

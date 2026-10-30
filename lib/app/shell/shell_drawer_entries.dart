@@ -119,6 +119,70 @@ class DrawerEntries {
     ];
   }
 
+  /// The sales, purchases, cash and accounting pages of #2577, each one
+  /// door for whoever holds what its page asks.
+  List<DrawerEntry> money() {
+    final money = features.contains(WorkspaceFeature.moneyTab);
+    final sales = features.contains(WorkspaceFeature.invoicing) &&
+        (may(WorkspacePermission.viewFinances) ||
+            may(WorkspacePermission.issueInvoices) ||
+            may(WorkspacePermission.manageBilling));
+    return <DrawerEntry>[
+      if (sales)
+        DrawerEntry('drawer-sales', Icons.sell_outlined, l10n.hubSalesTitle,
+            () => go('/money/sales'),
+            route: '/money/sales'),
+      if (features.contains(WorkspaceFeature.purchases) &&
+          (may(WorkspacePermission.viewMyMoney) ||
+              may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.managePurchases)))
+        DrawerEntry('drawer-purchases', Icons.shopping_cart_outlined,
+            l10n.hubPurchasesTitle, () => go('/money/purchases'),
+            route: '/money/purchases'),
+      if (money &&
+          (may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.manageBilling) ||
+              may(WorkspacePermission.managePurchases)))
+        DrawerEntry('drawer-cash', Icons.account_balance_outlined,
+            l10n.hubCashTitle, () => go('/money/cash'),
+            route: '/money/cash'),
+    ];
+  }
+
+  /// The accounting and VAT sub-group of Finance: the one place the books,
+  /// their export and import, the VAT and the legal identity are reached.
+  List<DrawerEntry> accounting() {
+    final invoicing = features.contains(WorkspaceFeature.invoicing);
+    final billing = may(WorkspacePermission.manageBilling);
+    return <DrawerEntry>[
+      if (features.contains(WorkspaceFeature.moneyTab) &&
+          accountingPageRights.any(may))
+        DrawerEntry('drawer-accounting', Icons.menu_book_outlined,
+            l10n.hubAccountingTitle, () => go('/money/accounting'),
+            route: '/money/accounting'),
+      if (invoicing &&
+          (may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.issueInvoices)))
+        DrawerEntry('drawer-accounting-export', Icons.file_download_outlined,
+            l10n.invoiceAccountingExport, () => go('/invoice-register'),
+            route: '/invoice-register'),
+      if (features.contains(WorkspaceFeature.vatManagement) && billing)
+        DrawerEntry('drawer-vat', Icons.percent_outlined, l10n.vatTitle,
+            () => go('/vat'),
+            route: '/vat'),
+      if (invoicing &&
+          features.contains(WorkspaceFeature.vatDeclarations) &&
+          (billing || may(WorkspacePermission.viewFinances)))
+        DrawerEntry('drawer-vat-declarations', Icons.receipt_long_outlined,
+            l10n.vatDeclTitle, () => go('/vat-declarations'),
+            route: '/vat-declarations'),
+      if (invoicing && may(WorkspacePermission.workspaceSettings))
+        DrawerEntry('drawer-legal-identity', Icons.badge_outlined,
+            l10n.legalIdentityTitle, () => go('/legal-identity'),
+            route: '/legal-identity'),
+    ];
+  }
+
   List<DrawerEntry> administration() {
     return <DrawerEntry>[
       if (may(WorkspacePermission.workspaceSettings))

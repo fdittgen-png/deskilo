@@ -8,6 +8,7 @@
   "bookAuthorityLocal": "DesKilo tiene il libro",
   "bookAuthorityExternal": "Sistema esterno",
   "bookExternalSystem": "Sistema che fa fede",
+  "bookExternalOther": "Altro…",
   "bookCurrency": "Valuta funzionale",
   "bookFiscalStart": "L’esercizio inizia il",
   "bookBasisAccrual": "Competenza",

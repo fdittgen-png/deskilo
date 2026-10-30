@@ -9,6 +9,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -17,6 +18,7 @@ import '../../domain/book_chart.dart';
 import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
 import 'book_chart_sheet.dart';
+import 'book_software_field.dart';
 import 'records_location_tile.dart';
 import 'retention_clocks_tile.dart';
 
@@ -67,6 +69,43 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   String? _issuer;
   var _authority = BookAuthority.preAccounting;
   final _external = TextEditingController();
+
+  /// The person chose "Other…": the software is typed, not picked.
+  bool _otherSoftware = false;
+
+  /// A stored software the list does not offer in this country (kept from
+  /// an earlier choice or another country) is shown as "Other…" with its
+  /// name in the text field, never appended to the list.
+  bool _unlisted(String country) =>
+      _external.text.isNotEmpty &&
+      !BookSoftwareField.isListed(country, _external.text);
+
+  /// The software picked from the list, or null for "Other…", which
+  /// starts the typed field empty; typing into it keeps the choice.
+  void _software(String? picked) => setState(() {
+        if (picked == null && !_otherSoftware) _external.clear();
+        _otherSoftware = picked == null;
+        if (picked != null) _external.text = picked;
+      });
+
+  /// The external book's software: the list, and the typed field after
+  /// "Other…".
+  List<Widget> _softwareFields(AppLocalizations l10n, String country) => [
+        BookSoftwareField(
+          key: const ValueKey('book-external-field'),
+          country: country,
+          value: _external.text,
+          other: _otherSoftware || _unlisted(country),
+          onChanged: _software,
+        ),
+        if (_otherSoftware || _unlisted(country))
+          AppTextField(
+            key: const ValueKey('book-external-other'),
+            controller: _external,
+            label: l10n.bookExternalSystem,
+            onChanged: (_) => _software(null),
+          ),
+      ];
   final _currency = TextEditingController();
   var _month = 1;
   var _day = 1;
@@ -237,14 +276,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               ),
             ),
             if (_authority == BookAuthority.externalBook)
-              TextField(
-                key: const ValueKey('book-external'),
-                controller: _external,
-                onChanged: (_) => setState(() {}),
-                decoration: InputDecoration(
-                  labelText: l10n.bookExternalSystem,
-                ),
-              ),
+              ..._softwareFields(l10n, workspace.countryCode),
             TextField(
               key: const ValueKey('book-currency'),
               controller: _currency,

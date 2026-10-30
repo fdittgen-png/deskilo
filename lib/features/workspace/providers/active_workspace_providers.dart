@@ -9,6 +9,9 @@ import '../../../core/storage/active_workspace_store.dart';
 import '../../../core/trace/trace_logger.dart';
 import 'workspace_providers.dart';
 
+// #2577: the accounting page's gate, one set, reached through the providers seam.
+export '../domain/workspace_permission.dart' show accountingPageRights;
+
 part 'active_workspace_providers.g.dart';
 
 /// The persisted active-profile choice (#89). At START-UP the user's

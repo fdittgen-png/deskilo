@@ -2628,7 +2628,7 @@
       }
     }
   },
-  "billingTitle": "Abrechnung",
+  "billingTitle": "Tarife und Pakete",
   "billingUsageAuto": "Automatisch erstellen",
   "billingUsageOff": "Schalten Sie „Monatsabschluss-Rechnungen“ unter Funktionen ein, um das zu nutzen.",
   "billingUsageSection": "Der gerade beendete Monat",
@@ -2659,6 +2659,7 @@
   "bookChartTitle": "Kontenplan · {site}",
   "bookCurrency": "Buchungswährung",
   "bookEffectiveFrom": "Gültig ab {date}",
+  "bookExternalOther": "Anderes…",
   "bookExternalSystem": "Maßgebliches System",
   "bookFiscalPreview": "Geschäftsjahr {label}: {start} – {end}",
   "bookFiscalStart": "Das Geschäftsjahr beginnt am",
@@ -7310,6 +7311,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubAccountingSubtitle": "Bücher, Exporte und Importe, Buchhaltungssoftware, Kontoauszüge, MwSt und Rechtsidentität an einem Ort",
+  "hubAccountingTitle": "Buchhaltung & MwSt",
   "hubCashSubtitle": "Erfasste Ein- und Ausgänge und was noch zu zahlen ist",
   "hubCashTitle": "Geld",
   "hubPurchasesSubtitle": "Was der Raum kauft und schuldet: Ausgaben, Lieferantenrechnungen, Lieferanten, Mietvertrag, Ausstattung",

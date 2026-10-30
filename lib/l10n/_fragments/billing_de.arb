@@ -1,6 +1,6 @@
 {
   "@@locale": "de",
-  "billingTitle": "Abrechnung",
+  "billingTitle": "Tarife und Pakete",
   "billingFeeBands": "Gebührenbänder",
   "billingBandFrom": "ab {from} %",
   "billingBandTo": "Bis %",

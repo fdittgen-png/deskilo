@@ -300,3 +300,16 @@ Map<String, dynamic> everydayMatrix() => {
         ..._everydayPermissionNames,
       ],
     };
+
+/// #2577 -- who reaches the accounting page (`/money/accounting`), any one
+/// of these: one set for the route, the drawer entry and the Money tab's
+/// tile, so no door shows a page its route refuses and no route admits a
+/// person the menu hides it from. Each door on the page keeps its own gate.
+const Set<WorkspacePermission> accountingPageRights = {
+  WorkspacePermission.viewFinances,
+  WorkspacePermission.manageBilling,
+  WorkspacePermission.issueInvoices,
+  WorkspacePermission.exportData,
+  WorkspacePermission.workspaceSettings,
+  WorkspacePermission.manageIntegrations,
+};

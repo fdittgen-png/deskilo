@@ -3769,7 +3769,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get billingTitle => 'Billing';
+  String get billingTitle => 'Pricing & packages';
 
   @override
   String get billingUsageAuto => 'Issue automatically';
@@ -3848,6 +3848,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String bookEffectiveFrom(String date) {
     return 'Takes effect from $date';
   }
+
+  @override
+  String get bookExternalOther => 'Other…';
 
   @override
   String get bookExternalSystem => 'Authoritative system';
@@ -10440,6 +10443,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Whit Monday';
+
+  @override
+  String get hubAccountingSubtitle =>
+      'Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place';
+
+  @override
+  String get hubAccountingTitle => 'Accounting & VAT';
 
   @override
   String get hubCashSubtitle =>

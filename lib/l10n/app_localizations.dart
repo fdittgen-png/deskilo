@@ -6400,7 +6400,7 @@ abstract class AppLocalizations {
   /// Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry
   ///
   /// In en, this message translates to:
-  /// **'Billing'**
+  /// **'Pricing & packages'**
   String get billingTitle;
 
   /// No description provided for @billingUsageAuto.
@@ -6540,6 +6540,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Takes effect from {date}'**
   String bookEffectiveFrom(String date);
+
+  /// #2577 the book software picker: a software the catalogue does not list, typed by the person
+  ///
+  /// In en, this message translates to:
+  /// **'Other…'**
+  String get bookExternalOther;
 
   /// #1869 accounting book sheet
   ///
@@ -17290,6 +17296,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whit Monday'**
   String get holidayWhitMonday;
+
+  /// the accounting and VAT page and its menu group
+  ///
+  /// In en, this message translates to:
+  /// **'Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place'**
+  String get hubAccountingSubtitle;
+
+  /// the accounting and VAT page and its menu group
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting & VAT'**
+  String get hubAccountingTitle;
 
   /// #2577 the cash page
   ///

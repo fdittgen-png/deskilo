@@ -141,7 +141,7 @@ class ShellDrawer extends ConsumerWidget {
     Widget tile(DrawerEntry e) =>
         DrawerTile(entry: e, path: path, badge: badgeOf(e));
     Widget group(String id, String title, IconData icon, Set<String> keys,
-            {List<DrawerEntry>? from}) =>
+            {List<DrawerEntry>? from, List<Widget> after = const []}) =>
         DrawerGroup(
           id: id,
           title: title,
@@ -152,6 +152,7 @@ class ShellDrawer extends ConsumerWidget {
           ],
           path: path,
           tile: tile,
+          after: after,
         );
 
     final content = SafeArea(
@@ -198,13 +199,10 @@ class ShellDrawer extends ConsumerWidget {
               group('people', labels.uxNavPeople, Icons.group_outlined, {
                 'drawer-members', 'drawer-roles', 'drawer-nfc-config',
               }),
-              group('finance', labels.uxNavFinance, Icons.receipt_long_outlined, {
-                'drawer-invoices', 'drawer-billing', 'drawer-payment-methods',
-                'drawer-payment-config',
-              }),
+              ..._financeGroups(group, tile, entries, administration),
               group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
-                'drawer-workspace-settings', 'drawer-availability', 'drawer-services',
-                'drawer-accessories', 'drawer-features', 'drawer-editor',
+                'drawer-workspace-settings', 'drawer-availability',
+                'drawer-features', 'drawer-editor',
               }),
             ],
             const Divider(),
@@ -217,4 +215,47 @@ class ShellDrawer extends ConsumerWidget {
             color: theme.colorScheme.surfaceContainerLow, child: content)
         : Drawer(key: const ValueKey('shell-drawer'), child: content);
   }
+}
+
+typedef _GroupBuilder = Widget Function(
+  String id,
+  String title,
+  IconData icon,
+  Set<String> keys, {
+  List<DrawerEntry>? from,
+  List<Widget> after,
+});
+
+/// The sales, purchases and finance groups of the drawer: Sales and
+/// Purchases open their pages and carry what is sold, Finance carries the
+/// accounting and VAT sub-group.
+List<Widget> _financeGroups(
+  _GroupBuilder group,
+  Widget Function(DrawerEntry) tile,
+  DrawerEntries entries,
+  List<DrawerEntry> administration,
+) {
+  final labels = entries.l10n;
+  final money = entries.money();
+  final accounting = entries.accounting();
+  final all = [...money, ...administration];
+  return [
+    group('sales', labels.hubSalesTitle, Icons.sell_outlined, {
+      'drawer-sales', 'drawer-invoices', 'drawer-services',
+      'drawer-accessories',
+    }, from: all),
+    for (final e in money)
+      if (e.key == 'drawer-purchases') tile(e),
+    group('finance', labels.uxNavFinance, Icons.receipt_long_outlined, {
+      'drawer-cash', 'drawer-billing', 'drawer-payment-methods',
+      'drawer-payment-config',
+    }, from: all, after: [
+      // Built only with a door inside: an empty sub-group would keep the
+      // Finance header for a member with no finance entry at all.
+      if (accounting.isNotEmpty)
+        group('accounting', labels.hubAccountingTitle, Icons.menu_book_outlined, {
+          for (final e in accounting) e.key,
+        }, from: accounting),
+    ]),
+  ];
 }

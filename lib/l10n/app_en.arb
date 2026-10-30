@@ -4789,7 +4789,7 @@
       }
     }
   },
-  "billingTitle": "Billing",
+  "billingTitle": "Pricing & packages",
   "@billingTitle": {
     "description": "Owner billing editor (#128): fee bands + subscription levels; screen title and settings entry"
   },
@@ -4868,6 +4868,10 @@
         "type": "String"
       }
     }
+  },
+  "bookExternalOther": "Other…",
+  "@bookExternalOther": {
+    "description": "#2577 the book software picker: a software the catalogue does not list, typed by the person"
   },
   "bookExternalSystem": "Authoritative system",
   "@bookExternalSystem": {
@@ -12396,6 +12400,14 @@
   "holidayWhitMonday": "Whit Monday",
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
+  },
+  "hubAccountingSubtitle": "Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place",
+  "@hubAccountingSubtitle": {
+    "description": "the accounting and VAT page and its menu group"
+  },
+  "hubAccountingTitle": "Accounting & VAT",
+  "@hubAccountingTitle": {
+    "description": "the accounting and VAT page and its menu group"
   },
   "hubCashSubtitle": "Recorded money in and out, and what is still to pay",
   "@hubCashSubtitle": {

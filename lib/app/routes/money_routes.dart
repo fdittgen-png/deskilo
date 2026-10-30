@@ -162,6 +162,13 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
       builder: (context, state) => const SalesHubScreen(),
     ),
     GoRoute(
+      path: '/money/accounting',
+      redirect: env.guard(
+        const RouteAccess(features: [WorkspaceFeature.moneyTab], to: '/money'),
+      ),
+      builder: (context, state) => const AccountingHubScreen(),
+    ),
+    GoRoute(
       path: '/money/cash',
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.moneyTab], to: '/money'),

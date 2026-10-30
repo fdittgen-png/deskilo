@@ -28,6 +28,7 @@ import '../widgets/consumption_sheet.dart';
 import '../widgets/equipment_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
+import '../widgets/management_tile.dart';
 import '../widgets/money_faces_view.dart';
 import '../widgets/premises_lease_sheet.dart';
 import '../widgets/purchases_sheet.dart';
@@ -51,6 +52,7 @@ class MoneyActionSet {
     required this.purchasesHub,
     required this.salesHub,
     required this.cashHub,
+    required this.accountingHub,
   });
 
   /// Reads the member, the enabled features and the sheets' wiring of
@@ -73,7 +75,7 @@ class MoneyActionSet {
       buyPackage: data.onPackagePlan ? _buyPackage(l10n, ops, currency) : null,
       requestButtons: _requestButtons(context, ref, l10n, ops, data),
       purchaseButtons: _purchaseButtons(context, ref, l10n, data),
-      invoices: _managementTile(
+      invoices: managementTile(
         on: data.invoicingOn,
         key: 'invoices-button',
         icon: Icons.receipt_long_outlined,
@@ -81,7 +83,7 @@ class MoneyActionSet {
         subtitle: l10n.uxNavFinance,
         onTap: () => context.push('/invoices'),
       ),
-      status: _managementTile(
+      status: managementTile(
         on: data.statusToolOn,
         key: 'workspace-status-button',
         icon: Icons.account_balance_outlined,
@@ -90,7 +92,7 @@ class MoneyActionSet {
         onTap: () => context.push('/money/status'),
       ),
       // #2577 — the purchase and the sales side, each on its own page.
-      purchasesHub: _managementTile(
+      purchasesHub: managementTile(
         on: data.purchasesOn && (data.member?.isAdmin ?? false),
         key: 'purchases-hub-button',
         icon: Icons.shopping_cart_outlined,
@@ -98,7 +100,7 @@ class MoneyActionSet {
         subtitle: l10n.hubPurchasesSubtitle,
         onTap: () => context.push('/money/purchases'),
       ),
-      cashHub: _managementTile(
+      cashHub: managementTile(
         on: (data.statusToolOn || data.purchasesOn) &&
             (data.member?.isAdmin ?? false),
         key: 'cash-hub-button',
@@ -107,7 +109,19 @@ class MoneyActionSet {
         subtitle: l10n.hubCashSubtitle,
         onTap: () => context.push('/money/cash'),
       ),
-      salesHub: _managementTile(
+      // The books, the tax and the identity: the page's own gate, so the
+      // classic bar without a drawer reaches it too.
+      accountingHub: managementTile(
+        on: data.moneyTabOn &&
+            ((data.member?.isOwner ?? false) ||
+                ref.read(myPermissionsProvider).any(accountingPageRights.contains)),
+        key: 'accounting-hub-button',
+        icon: Icons.menu_book_outlined,
+        title: l10n.hubAccountingTitle,
+        subtitle: l10n.hubAccountingSubtitle,
+        onTap: () => context.push('/money/accounting'),
+      ),
+      salesHub: managementTile(
         on: data.invoicingOn && (data.member?.isAdmin ?? false),
         key: 'sales-hub-button',
         icon: Icons.sell_outlined,
@@ -115,7 +129,7 @@ class MoneyActionSet {
         subtitle: l10n.hubSalesSubtitle,
         onTap: () => context.push('/money/sales'),
       ),
-      wizard: _managementTile(
+      wizard: managementTile(
         on: data.repartitionWizardOn,
         key: 'repartition-wizard-button',
         icon: Icons.pie_chart_outline,
@@ -156,10 +170,11 @@ class MoneyActionSet {
   final Widget? purchasesHub;
   final Widget? salesHub;
   final Widget? cashHub;
+  final Widget? accountingHub;
 
   /// The workspace tools in their order.
   List<Widget> get workspaceTools =>
-      [?invoices, ?status, ?wizard, ?salesHub, ?purchasesHub, ?cashHub];
+      [?invoices, ?status, ?wizard, ?salesHub, ?purchasesHub, ?cashHub, ?accountingHub];
 
   bool get hasWorkspaceTools => workspaceTools.isNotEmpty;
 
@@ -371,6 +386,63 @@ class MoneyActionSet {
           workspaceId: data.workspace!.id,
           held: {for (final p in ref.read(myPermissionsProvider)) p.wireName},
         ),
+      // #2568 — the rooms the space rents, for those who manage the plan.
+      if (data.externalRoomsOn &&
+          data.workspace != null &&
+          ref
+              .read(myPermissionsProvider)
+              .any((p) => p.wireName == roomRentalManagePermission))
+        RentedRoomsButton(
+          workspaceId: data.workspace!.id,
+          canMatch: ref
+              .read(myPermissionsProvider)
+              .any((p) => p.wireName == purchaseManagePermission),
+        ),
+    ];
+  }
+
+  /// The accounting side's doors, for the accounting page: the books'
+  /// periods, the accounting systems and their transfers, the bank
+  /// statements. Each keeps the gate it had on the purchases page.
+  static List<Widget> accountingDoors(
+    BuildContext context,
+    WidgetRef ref,
+    MoneyViewData data,
+  ) {
+    final l10n = context.l10n;
+    final held = {for (final p in ref.watch(myPermissionsProvider)) p.wireName};
+    bool has(List<String> any) =>
+        (data.member?.isOwner ?? false) || any.any(held.contains);
+    Widget door(String key, IconData icon, String title, String route) =>
+        ListTile(
+          key: ValueKey(key),
+          leading: Icon(icon),
+          title: Text(title),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+          onTap: () => context.push(route),
+        );
+    return [
+      // The export of the books is the register's: every format, one place.
+      if (data.invoicingOn && has(['viewFinances', 'issueInvoices']))
+        door('accounting-hub-export', Icons.file_download_outlined,
+            l10n.invoiceAccountingExport, '/invoice-register'),
+      if (data.invoicingOn && has(['workspaceSettings']))
+        door('accounting-hub-identity', Icons.badge_outlined,
+            l10n.legalIdentityTitle, '/legal-identity'),
+      if (data.vatManagementOn && has(['manageBilling']))
+        door('accounting-hub-vat', Icons.percent_outlined, l10n.vatTitle,
+            '/vat'),
+      if (data.invoicingOn &&
+          data.vatDeclarationsOn &&
+          has(['manageBilling', 'viewFinances']))
+        door('accounting-hub-vat-declarations', Icons.receipt_long_outlined,
+            l10n.vatDeclTitle, '/vat-declarations'),
+      if (data.numberSequencesOn && has(['manageBilling']))
+        door('accounting-hub-sequences', Icons.pin_outlined,
+            l10n.numberSequencesTitle, '/settings/number-sequences'),
+      if (data.invoicingOn && has(['manageIntegrations']))
+        door('accounting-hub-einvoice', Icons.cloud_upload_outlined,
+            l10n.einvoiceConfigTitle, '/einvoice-config'),
       // #2365 — the closed periods of the books and the export log, for the
       // owner and those who read the finances or export.
       if (data.accountingPeriodsOn && data.workspace != null)
@@ -389,18 +461,6 @@ class MoneyActionSet {
       // #2380 — the bank statements, for those who read the finances or
       // match payments.
       ?_bankButton(ref, data),
-      // #2568 — the rooms the space rents, for those who manage the plan.
-      if (data.externalRoomsOn &&
-          data.workspace != null &&
-          ref
-              .read(myPermissionsProvider)
-              .any((p) => p.wireName == roomRentalManagePermission))
-        RentedRoomsButton(
-          workspaceId: data.workspace!.id,
-          canMatch: ref
-              .read(myPermissionsProvider)
-              .any((p) => p.wireName == purchaseManagePermission),
-        ),
     ];
   }
 
@@ -420,25 +480,4 @@ class MoneyActionSet {
       canReconcile: owner || held.contains(bankReconcilePermission),
     );
   }
-
-  static Widget? _managementTile({
-    required bool on,
-    required String key,
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required VoidCallback onTap,
-  }) =>
-      on
-          ? ListTile(
-              key: ValueKey(key),
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(icon),
-              title: Text(title),
-              subtitle: Text(subtitle),
-              // Not chevron_right: the period bar owns that icon here.
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: onTap,
-            )
-          : null;
 }

@@ -8,6 +8,7 @@
   "bookAuthorityLocal": "DesKilo führt die Bücher",
   "bookAuthorityExternal": "Externes System",
   "bookExternalSystem": "Maßgebliches System",
+  "bookExternalOther": "Anderes…",
   "bookCurrency": "Buchungswährung",
   "bookFiscalStart": "Das Geschäftsjahr beginnt am",
   "bookBasisAccrual": "Soll-Versteuerung",

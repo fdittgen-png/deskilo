@@ -386,5 +386,7 @@
   "hubCashTitle": "Trésorerie",
   "hubCashSubtitle": "Entrées et sorties enregistrées, et ce qui reste à payer",
   "cashHubInOut": "Entrées et sorties par mois",
-  "cashHubToPay": "À payer"
+  "cashHubToPay": "À payer",
+  "hubAccountingTitle": "Comptabilité et TVA",
+  "hubAccountingSubtitle": "Livre comptable, exports et imports, logiciel comptable, relevés bancaires, TVA et identité légale au même endroit"
 }

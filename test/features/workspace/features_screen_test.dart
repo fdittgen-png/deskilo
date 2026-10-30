@@ -125,7 +125,7 @@ void main() {
 
     expect(find.text('Services'), findsNothing);
     // The owner tiles around it stay.
-    expect(find.text('Billing'), findsOneWidget);
+    expect(find.text('Pricing & packages'), findsOneWidget);
     expect(find.text('Features'), findsOneWidget);
   });
 

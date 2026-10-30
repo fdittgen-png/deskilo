@@ -40,6 +40,7 @@ Future<({FakeBookProfileRepository books, String ws})> _pump(
   WidgetTester tester, {
   Map<String, dynamic> flags = _flags,
   bool seeded = false,
+  BookProfile Function(String ws)? seed,
 }) async {
   final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags);
   final ws = workspace.workspaces.first.id;
@@ -65,6 +66,7 @@ Future<({FakeBookProfileRepository books, String ws})> _pump(
   );
   final books = FakeBookProfileRepository();
   if (seeded) books.profiles.add(_profile(ws, 1));
+  if (seed != null) books.profiles.add(seed(ws));
   await tester.binding.setSurfaceSize(const Size(800, 2400));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(
@@ -129,10 +131,12 @@ void main() {
       isNull,
       reason: 'an external book names its system first',
     );
-    await tester.enterText(
-      find.byKey(const ValueKey('book-external')),
-      'DATEV',
-    );
+    // The software is picked from the list, never typed.
+    await tester.ensureVisible(find.byKey(const ValueKey('book-external')));
+    await tester.tap(find.byKey(const ValueKey('book-external')));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(find.text('DATEV Rechnungswesen').last);
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('book-fiscal-month')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('July').last);
@@ -147,7 +151,7 @@ void main() {
     final saved = books.saves.single;
     expect(saved.issuerSiteId, 's2');
     expect(saved.authority, BookAuthority.externalBook);
-    expect(saved.externalSystem, 'DATEV');
+    expect(saved.externalSystem, 'DATEV Rechnungswesen');
     expect(saved.fiscalYearStartMonth, 7);
     expect(saved.revision, 0, reason: 'a new version');
     expect(books.profiles.single.revision, 1);
@@ -188,5 +192,75 @@ void main() {
       reason: 'nothing was overwritten',
     );
     expect(find.textContaining('Someone saved this book'), findsOneWidget);
+  });
+
+  testWidgets('a software the catalogue does not offer here is "Other…" '
+      'with its name in the field, and is saved unchanged', (tester) async {
+    // A DE space whose books are kept in Holded (an ES product).
+    final r = await _pump(
+      tester,
+      seed: (ws) => BookProfile(
+        id: 'b1',
+        workspaceId: ws,
+        issuerSiteId: 's1',
+        authority: BookAuthority.externalBook,
+        externalSystem: 'Holded',
+        functionalCurrency: 'EUR',
+        fiscalYearStartMonth: 1,
+        fiscalYearStartDay: 1,
+        basis: AccountingBasis.accrual,
+        effectiveFrom: DateTime(2026),
+        revision: 1,
+      ),
+    );
+    final tile = find.byKey(const ValueKey('book-version-s1-2026-01-01'));
+    await tester.scrollUntilVisible(
+      tile,
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(tile);
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('Holded'), findsOneWidget, reason: 'in the text field');
+    expect(find.byKey(const ValueKey('book-external-other')), findsOneWidget,
+        reason: 'a name outside the list is Other…, not an item');
+    final save = find.byKey(const ValueKey('book-save'));
+    await tester.ensureVisible(save);
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(save);
+    await tester.pump(const Duration(seconds: 1));
+    expect(r.books.saves.single.externalSystem, 'Holded');
+  });
+
+  testWidgets('"Other…" reveals the field for a software the list lacks; '
+      'the app\'s exports and the authorities are no software', (
+    tester,
+  ) async {
+    final books = (await _pump(tester)).books;
+    await _openBook(tester);
+    await _pickIssuer(tester, 'Atelier · 222');
+    await tester.tap(
+      find.byKey(const ValueKey('book-authority-external_book')),
+    );
+    await tester.pump(const Duration(seconds: 1));
+    await tester.ensureVisible(find.byKey(const ValueKey('book-external')));
+    await tester.tap(find.byKey(const ValueKey('book-external')));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('DesKilo General ledger'), findsNothing);
+    expect(find.text('BMF GoBD Datenträgerüberlassung'), findsNothing);
+    expect(find.text('OECD SAF-T'), findsNothing);
+    await tester.tap(find.text('Other…').last);
+    await tester.pump(const Duration(seconds: 1));
+    final other = find.byKey(const ValueKey('book-external-other'));
+    expect(other, findsOneWidget);
+    await tester.enterText(other, 'Holded');
+    await tester.pump();
+    final save = find.byKey(const ValueKey('book-save'));
+    await tester.ensureVisible(save);
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(save);
+    await tester.pump(const Duration(seconds: 1));
+    expect(books.saves.single.externalSystem, 'Holded');
   });
 }

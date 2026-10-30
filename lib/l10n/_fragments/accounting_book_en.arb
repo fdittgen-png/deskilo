@@ -35,6 +35,10 @@
   "@bookExternalSystem": {
     "description": "#1869 accounting book sheet"
   },
+  "bookExternalOther": "Other…",
+  "@bookExternalOther": {
+    "description": "#2577 the book software picker: a software the catalogue does not list, typed by the person"
+  },
   "bookCurrency": "Functional currency",
   "@bookCurrency": {
     "description": "#1869 accounting book sheet"

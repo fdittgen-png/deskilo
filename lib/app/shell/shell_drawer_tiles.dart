@@ -61,8 +61,12 @@ class DrawerGroup extends StatelessWidget {
     required this.entries,
     required this.path,
     required this.tile,
+    this.after = const [],
     super.key,
   });
+
+  /// Widgets after the entries: a sub-group of the group.
+  final List<Widget> after;
 
   final String id;
   final String title;
@@ -74,7 +78,7 @@ class DrawerGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final active = entries.any((e) => _isCurrent(e, path));
-    if (entries.isEmpty) return const SizedBox.shrink();
+    if (entries.isEmpty && after.isEmpty) return const SizedBox.shrink();
     return ExpansionTile(
       key: PageStorageKey('drawer-group-$id-$active'),
       initiallyExpanded: active,
@@ -83,7 +87,7 @@ class DrawerGroup extends StatelessWidget {
       title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
       shape: const Border(),
       collapsedShape: const Border(),
-      children: [for (final e in entries) tile(e)],
+      children: [for (final e in entries) tile(e), ...after],
     );
   }
 }

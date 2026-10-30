@@ -3793,7 +3793,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get billingTitle => 'Facturación';
+  String get billingTitle => 'Tarifas y paquetes';
 
   @override
   String get billingUsageAuto => 'Emitir automáticamente';
@@ -3872,6 +3872,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String bookEffectiveFrom(String date) {
     return 'Vigente desde el $date';
   }
+
+  @override
+  String get bookExternalOther => 'Otro…';
 
   @override
   String get bookExternalSystem => 'Sistema que hace fe';
@@ -10507,6 +10510,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Lunes de Pentecostés';
+
+  @override
+  String get hubAccountingSubtitle =>
+      'Libros, exportaciones e importaciones, software contable, extractos bancarios, IVA e identidad legal en un solo lugar';
+
+  @override
+  String get hubAccountingTitle => 'Contabilidad e IVA';
 
   @override
   String get hubCashSubtitle =>

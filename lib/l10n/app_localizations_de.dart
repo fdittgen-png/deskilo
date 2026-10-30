@@ -3799,7 +3799,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get billingTitle => 'Abrechnung';
+  String get billingTitle => 'Tarife und Pakete';
 
   @override
   String get billingUsageAuto => 'Automatisch erstellen';
@@ -3879,6 +3879,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String bookEffectiveFrom(String date) {
     return 'Gültig ab $date';
   }
+
+  @override
+  String get bookExternalOther => 'Anderes…';
 
   @override
   String get bookExternalSystem => 'Maßgebliches System';
@@ -10519,6 +10522,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get holidayWhitMonday => 'Pfingstmontag';
+
+  @override
+  String get hubAccountingSubtitle =>
+      'Bücher, Exporte und Importe, Buchhaltungssoftware, Kontoauszüge, MwSt und Rechtsidentität an einem Ort';
+
+  @override
+  String get hubAccountingTitle => 'Buchhaltung & MwSt';
 
   @override
   String get hubCashSubtitle =>

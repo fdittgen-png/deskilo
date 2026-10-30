@@ -2628,7 +2628,7 @@
       }
     }
   },
-  "billingTitle": "Fatturazione",
+  "billingTitle": "Tariffe e pacchetti",
   "billingUsageAuto": "Emetti automaticamente",
   "billingUsageOff": "Attivi «Fatture di fine mese» in Funzionalità per usarlo.",
   "billingUsageSection": "Il mese appena concluso",
@@ -2659,6 +2659,7 @@
   "bookChartTitle": "Piano dei conti · {site}",
   "bookCurrency": "Valuta funzionale",
   "bookEffectiveFrom": "In vigore dal {date}",
+  "bookExternalOther": "Altro…",
   "bookExternalSystem": "Sistema che fa fede",
   "bookFiscalPreview": "Esercizio {label}: {start} – {end}",
   "bookFiscalStart": "L’esercizio inizia il",
@@ -7310,6 +7311,8 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "hubAccountingSubtitle": "Libri, esportazioni e importazioni, software contabile, estratti conto, IVA e identità legale in un unico posto",
+  "hubAccountingTitle": "Contabilità e IVA",
   "hubCashSubtitle": "Entrate e uscite registrate, e ciò che resta da pagare",
   "hubCashTitle": "Cassa",
   "hubPurchasesSubtitle": "Ciò che lo spazio acquista e deve: spese, fatture fornitori, fornitori, locazione, attrezzature",
