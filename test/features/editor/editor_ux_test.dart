@@ -65,15 +65,17 @@ void main() {
         (tester) async {
       await pumpCanvas(tester);
       await tester.tap(tool(EditorTool.decor));
+      await tester.pump();
       await tester.pump(const Duration(seconds: 1));
       for (final kind in PlanDecorKind.values) {
         expect(find.byKey(ValueKey('decor-kind-${kind.name}')), findsOneWidget);
       }
-      expect(tester.widget<EditorToolbar>(_toolbar).armed, isNull,
+      expect((tester.element(_toolbar).widget as EditorToolbar).armed, isNull,
           reason: 'nothing is armed until a shape is chosen');
       await tester.tap(find.byKey(const ValueKey('decor-kind-wall')));
+      await tester.pump();
       await tester.pump(const Duration(seconds: 1));
-      expect(tester.widget<EditorToolbar>(_toolbar).armed, EditorTool.decor);
+      expect((tester.element(_toolbar).widget as EditorToolbar).armed, EditorTool.decor);
     });
 
     testWidgets('a second tap on the armed tool puts the canvas back to '
