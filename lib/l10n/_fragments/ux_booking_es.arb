@@ -2,7 +2,7 @@
   "uxWorkspaceTime": "Hora del espacio",
   "uxDeviceTime": "Su hora",
   "uxBookingFor": "Reserva para",
-  "uxBookingChargePending": "El cargo y el uso del cupo se calcularán según el plan del miembro. El importe final no está disponible aquí.",
+  "uxBookingChargePending": "El importe y el uso de la cuota dependen del plan del miembro y se liquidan en el extracto.",
   "uxBookingModesHelp": "Reservar mantiene el intervalo elegido. Registrarse ahora cambia al intervalo actual y marca su presencia.",
   "uxBookingCheckInHelp": "Marcar también mi presencia al confirmar esta reserva.",
   "uxManageResource": "Gestionar recurso"

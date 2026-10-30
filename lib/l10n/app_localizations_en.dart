@@ -4157,6 +4157,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingPastError => 'This booking lies entirely in the past.';
 
   @override
+  String get bookingRatePlace => 'Rate this place';
+
+  @override
   String bookingRecordedPastSpaceWhen(String space, String when) {
     return 'Recorded $space: $when. That period is already over, so it is kept as a past visit.';
   }
@@ -27348,7 +27351,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uxBookingChargePending =>
-      'The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.';
+      'The charge and allowance used depend on the member’s plan and are settled on the statement.';
 
   @override
   String get uxBookingCheckInHelp =>

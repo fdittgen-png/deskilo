@@ -4189,6 +4189,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette réservation est entièrement dans le passé.';
 
   @override
+  String get bookingRatePlace => 'Noter cette place';
+
+  @override
   String bookingRecordedPastSpaceWhen(String space, String when) {
     return '$space enregistré : $when. Cette période est déjà passée : la réservation est conservée comme une visite passée.';
   }
@@ -27651,7 +27654,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get uxBookingChargePending =>
-      'Le montant et l’utilisation du forfait seront calculés selon le plan du membre. Le montant final n’est pas disponible ici.';
+      'Le montant et l’utilisation du forfait dépendent du plan du membre et sont réglés sur le relevé.';
 
   @override
   String get uxBookingCheckInHelp =>

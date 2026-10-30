@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../domain/place_feedback.dart';
 import 'booking_window_summary.dart';
+import 'place_feedback_bar.dart';
 
 /// Keeps confirmation reachable while the draft and secondary details scroll.
 class BookingSheetFrame extends StatelessWidget {
@@ -124,4 +126,19 @@ class BookingManagementOptions extends StatelessWidget {
       ],
     );
   }
+}
+
+/// #3066 — the rating of the place is one tap away, not above the button.
+class BookingRateOption extends StatelessWidget {
+  const BookingRateOption({super.key, required this.seatId});
+  final String seatId;
+
+  @override
+  Widget build(BuildContext context) => ExpansionTile(
+    key: const ValueKey('booking-rate-place'),
+    tilePadding: EdgeInsets.zero,
+    childrenPadding: EdgeInsets.zero,
+    title: Text(context.l10n.bookingRatePlace),
+    children: [PlaceFeedbackBar(kind: PlaceKind.seat, id: seatId)],
+  );
 }

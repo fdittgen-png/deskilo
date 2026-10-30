@@ -251,5 +251,9 @@
   "reservationNoteOverNotCheckedIn": "This period is over without a check-in.",
   "@reservationNoteOverNotCheckedIn": {
     "description": "Reservation details: the period ended and nobody checked in"
+  },
+  "bookingRatePlace": "Rate this place",
+  "@bookingRatePlace": {
+    "description": "#3066 the collapsed rating row of the booking sheet"
   }
 }

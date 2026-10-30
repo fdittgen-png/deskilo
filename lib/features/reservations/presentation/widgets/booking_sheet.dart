@@ -13,12 +13,10 @@ import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../domain/booking_gate.dart';
 import '../../domain/picked_time.dart';
-import '../../domain/place_feedback.dart';
 import '../../domain/reservation_repository.dart';
 import 'booking_range_text.dart';
 import 'booking_review_summary.dart';
 import 'booking_sheet_parts.dart';
-import 'place_feedback_bar.dart';
 
 /// What the booking sheet returns: the chosen window (start + end), an
 /// optional recurrence and who the booking is for (null/self = caller).
@@ -354,9 +352,7 @@ class _BookingSheetState extends State<BookingSheet> {
             if (refusal != null) _refusalRow(refusal, l10n),
             if (_showRepeat) _moreOptions(l10n),
             if (_liveWindow) _checkInSwitch(l10n),
-            if (widget.seatId != null) ...[
-              PlaceFeedbackBar(kind: PlaceKind.seat, id: widget.seatId!),
-            ],
+            if (widget.seatId != null) BookingRateOption(seatId: widget.seatId!),
             if (widget.allowBlocking)
               BookingManagementOptions(onBlock: () => Navigator.of(context).pop(
                 BookingChoice(_start, _end, null, null, null, block: true))),

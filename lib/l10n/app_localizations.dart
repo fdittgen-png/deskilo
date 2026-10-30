@@ -7081,6 +7081,12 @@ abstract class AppLocalizations {
   /// **'This booking lies entirely in the past.'**
   String get bookingPastError;
 
+  /// #3066 the collapsed rating row of the booking sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Rate this place'**
+  String get bookingRatePlace;
+
   /// Booking confirmation when the booked period had already ended today: the booking is recorded as a past visit
   ///
   /// In en, this message translates to:
@@ -45530,7 +45536,7 @@ abstract class AppLocalizations {
   /// No description provided for @uxBookingChargePending.
   ///
   /// In en, this message translates to:
-  /// **'The charge and allowance usage will be calculated according to the member’s plan. A final amount is not available here.'**
+  /// **'The charge and allowance used depend on the member’s plan and are settled on the statement.'**
   String get uxBookingChargePending;
 
   /// No description provided for @uxBookingCheckInHelp.
