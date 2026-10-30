@@ -34,22 +34,22 @@ select lives_ok(
 select throws_ok(
   $$insert into public.plan_images (workspace_id, level_id, x, y, w, h, kind)
     values (current_setting('deskilo.decor.ws')::uuid, current_setting('deskilo.decor.lv')::uuid, 1, 1, 2, 2, 'sofa')$$,
-  '23514', null, 'a kind the server does not know is refused');
+  '23514', 'new row for relation "plan_images" violates check constraint "plan_images_kind_check"', 'a kind the server does not know is refused');
 
 select throws_ok(
   $$insert into public.plan_images (workspace_id, level_id, x, y, w, h, kind, storage_path)
     values (current_setting('deskilo.decor.ws')::uuid, current_setting('deskilo.decor.lv')::uuid, 1, 1, 2, 2, 'door', 'a/img/b')$$,
-  '23514', null, 'a symbol with a photo object is refused');
+  '23514', 'new row for relation "plan_images" violates check constraint "plan_images_photo_or_symbol"', 'a symbol with a photo object is refused');
 
 select throws_ok(
   $$insert into public.plan_images (workspace_id, level_id, x, y, w, h)
     values (current_setting('deskilo.decor.ws')::uuid, current_setting('deskilo.decor.lv')::uuid, 1, 1, 2, 2)$$,
-  '23514', null, 'an image with neither a photo nor a kind is refused');
+  '23514', 'new row for relation "plan_images" violates check constraint "plan_images_photo_or_symbol"', 'an image with neither a photo nor a kind is refused');
 
 select throws_ok(
   $$insert into public.plan_images (workspace_id, level_id, x, y, w, h, kind, quarter_turns)
     values (current_setting('deskilo.decor.ws')::uuid, current_setting('deskilo.decor.lv')::uuid, 1, 1, 2, 2, 'pillar', 4)$$,
-  '23514', null, 'four quarter turns is not a turn count');
+  '23514', 'new row for relation "plan_images" violates check constraint "plan_images_quarter_turns_check"', 'four quarter turns is not a turn count');
 
 select lives_ok(
   $$insert into public.plan_images (workspace_id, level_id, x, y, w, h, storage_path)

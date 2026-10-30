@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
--- (the builtin template's row is rewritten; no workspace's stored flags move)
+-- (the registries and the two transfer functions are restated; no stored row moves)
 --
 -- 0608 (#3074) -- the drawn symbols of the plan travel and have their flag.
 --
@@ -255,13 +255,16 @@ begin
     end if;
     -- images by their path under the prefix
     for v_i in select value from jsonb_array_elements(coalesce(v_l->'images', '[]'::jsonb)) loop
-      -- a drawn symbol (0607) has a kind and no object: it is found by its
-      -- kind and place, so a repeated transfer adds no second wall.
+      -- a drawn symbol (0607) has a kind and no object: it is found by its kind
+      -- and its whole footprint (x, y, w, h), so a repeated transfer adds no
+      -- second wall and two walls sharing a corner stay two. The trade-off: a
+      -- symbol resized in the source arrives as a new one beside the old.
       if v_i->>'kind' is not null then
-        update public.plan_images set w = (v_i->>'w')::int, h = (v_i->>'h')::int,
-               quarter_turns = coalesce((v_i->>'quarter_turns')::smallint, 0)
+        update public.plan_images
+           set quarter_turns = coalesce((v_i->>'quarter_turns')::smallint, 0)
          where level_id = v_lid and kind = v_i->>'kind'
-           and x = (v_i->>'x')::int and y = (v_i->>'y')::int;
+           and x = (v_i->>'x')::int and y = (v_i->>'y')::int
+           and w = (v_i->>'w')::int and h = (v_i->>'h')::int;
         if not found then
           insert into public.plan_images (workspace_id, level_id, x, y, w, h, kind, quarter_turns)
           values (p_workspace_id, v_lid, (v_i->>'x')::int, (v_i->>'y')::int, (v_i->>'w')::int, (v_i->>'h')::int,

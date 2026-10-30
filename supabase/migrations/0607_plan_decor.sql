@@ -1,5 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- risk: additive
+-- risk: transforming
+-- (storage_path may now be null; every existing row meets the new checks)
 --
 -- 0607 (#3074) -- the real room on the plan: a plan image may be a drawn
 -- symbol instead of a photo. `kind` names the symbol (wall, door, window,

@@ -2464,7 +2464,7 @@ routine public.membership_snapshot_apply(p_body jsonb, p_source uuid, p_event uu
 routine public.membership_snapshot_digest(p_entries jsonb) -> text | function | invoker | stable | exec: | body:8611fd1e0d7c
 routine public.membership_snapshot_drain() -> jsonb | function | definer | volatile | exec: | body:20708c64e5c1
 routine public.membership_snapshot_issue() -> jsonb | function | definer | volatile | exec: | body:32e6e257c08a
-routine public.merge_floor_plan(p_workspace_id uuid, p_tree jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:335bc44f5ad9
+routine public.merge_floor_plan(p_workspace_id uuid, p_tree jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:704c671e7436
 routine public.message_body_workspaces(p_body text) -> uuid[] | function | definer | stable | exec:service_role | body:048f72b54450
 routine public.message_history(p_kind text, p_message_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c152cb52fbea
 routine public.message_info(p_message_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a6a50c7f9c71

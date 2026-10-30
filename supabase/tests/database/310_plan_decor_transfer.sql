@@ -4,7 +4,7 @@
 -- names the symbol's kind and turns beside the photo's path, the merge into a
 -- second workspace recreates both, and a repeated merge adds no second wall.
 begin;
-select plan(4);
+select plan(5);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -24,6 +24,9 @@ begin
   insert into public.levels (workspace_id, name, sort_order) values (ws, 'L', 0) returning id into lv;
   insert into public.plan_images (workspace_id, level_id, x, y, w, h, kind, quarter_turns)
   values (ws, lv, 1, 1, 1, 12, 'wall', 1);
+  -- the L-corner: a second wall sharing the first one's origin
+  insert into public.plan_images (workspace_id, level_id, x, y, w, h, kind, quarter_turns)
+  values (ws, lv, 1, 1, 12, 1, 'wall', 0);
   insert into public.plan_images (workspace_id, level_id, x, y, w, h, storage_path)
   values (ws, lv, 4, 4, 16, 12, ws || '/img/photo');
   perform set_config('deskilo.dt.ws', ws::text, false);
@@ -36,12 +39,12 @@ select pg_temp.seed();
 
 select is(
   (select jsonb_array_length(public.export_floor_plan(current_setting('deskilo.dt.ws')::uuid) -> 0 -> 'images')),
-  2, 'the export names the symbol and the photo');
+  3, 'the export names both walls and the photo');
 
 select is(
   (select count(*)::int from public.plan_images i join public.levels l on l.id = i.level_id
     where l.workspace_id = current_setting('deskilo.dt.ws2')::uuid),
-  2, 'a repeated merge adds no second wall');
+  3, 'two merges leave two walls and the photo: the L-corner stays two');
 
 select is(
   (select count(*)::int from public.plan_images i join public.levels l on l.id = i.level_id
@@ -54,6 +57,12 @@ select is(
     where l.workspace_id = current_setting('deskilo.dt.ws2')::uuid
       and i.storage_path = current_setting('deskilo.dt.ws2') || '/img/photo'),
   1, 'the photo lands under the target workspace prefix');
+
+select is(
+  (select count(*)::int from public.plan_images i join public.levels l on l.id = i.level_id
+    where l.workspace_id = current_setting('deskilo.dt.ws2')::uuid
+      and i.kind = 'wall' and i.x = 1 and i.y = 1),
+  2, 'two walls sharing an origin are two rows in the target');
 
 select * from finish();
 rollback;
