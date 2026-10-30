@@ -5717,6 +5717,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get decisionSurfaceEmptyDetail => 'È tutto sistemato.';
 
   @override
+  String get decorCouch => 'Divano';
+
+  @override
+  String get decorDoor => 'Porta';
+
+  @override
+  String get decorKitchen => 'Cucina';
+
+  @override
+  String get decorPillar => 'Pilastro';
+
+  @override
+  String get decorTable => 'Tavolo';
+
+  @override
+  String get decorWall => 'Muro';
+
+  @override
+  String get decorWc => 'WC';
+
+  @override
+  String get decorWindow => 'Finestra';
+
+  @override
   String get defaultPeriodNone => 'Nessuna preferenza (giornata intera)';
 
   @override
@@ -6677,6 +6701,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get editorConnectorType2 => 'Tipo 2';
 
   @override
+  String get editorDecorPaletteHint =>
+      'Disegna la sala com\'è: muri, porte e finestre la inquadrano, il resto la arreda.';
+
+  @override
   String get editorDeleteElementConfirm =>
       'Eliminare questo elemento? Anche tutto ciò che vi è posizionato sopra verrà rimosso.';
 
@@ -6716,6 +6744,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorEmptyFloorTitle => 'Questo piano è vuoto';
+
+  @override
+  String get editorHintDecor =>
+      'Tocca la pianta per posare la forma; trascinala al suo posto';
 
   @override
   String get editorHintDesk =>
@@ -6835,6 +6867,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get editorRoomProperties => 'Sala riunioni';
 
   @override
+  String get editorRotate => 'Ruota';
+
+  @override
   String get editorSeatNameDefault => 'Posto';
 
   @override
@@ -6885,6 +6920,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorTitle => 'Editor dello spazio';
+
+  @override
+  String get editorToolDecor => 'Forme';
 
   @override
   String get editorToolDesk => 'Scrivania';
@@ -8797,6 +8835,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featurePlaceFeedbackTitle => 'Preferiti e valutazioni';
+
+  @override
+  String get featurePlanDecorDesc =>
+      'I proprietari disegnano la sala reale con muri, porte, finestre, pilastri, tavoli, divani, WC e cucina. Disattivato: lo strumento Forme scompare; le forme già disegnate restano.';
+
+  @override
+  String get featurePlanDecorTitle => 'Disegnare la sala sulla pianta';
 
   @override
   String get featurePlanMemberPhotosDesc =>

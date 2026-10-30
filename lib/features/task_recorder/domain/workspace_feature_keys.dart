@@ -45,6 +45,7 @@ const Set<String> workspaceFeatureKeys = {
   'vatDeclarations',
   'einvoiceCustomerDelivery',
   'planObjectDelete',
+  'planDecor',
   'notificationGrouping',
   'bookingPolicies',
   'nfcSeatTags',

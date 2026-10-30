@@ -59,6 +59,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.calendarFileExport,
         WorkspaceFeature.spaceQrCodes,
         WorkspaceFeature.planObjectDelete,
+        WorkspaceFeature.planDecor,
       },
     ),
     SetupLevel(

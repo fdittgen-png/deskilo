@@ -13,6 +13,8 @@ import '../../domain/office.dart';
 import '../../domain/seat.dart';
 import 'floor_plan_painter.dart';
 
+export 'decor_palette_sheet.dart' show decorKindLabel, decorOrImageName, pickDecorKind, selectedDecorOf;
+
 /// Geometry of the read-only plan canvases — ONE source of truth for the
 /// numbers plan_screen, reserve_screen and the editor used to re-declare
 /// ("matches the live plan's"). The zoom limits and pan margin live on

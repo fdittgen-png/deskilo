@@ -64,6 +64,7 @@ const workspaceProcesses = <WorkspaceProcess>[
     WorkspaceSubprocess('structure', [
       WorkspaceFeature.multiSite,
       WorkspaceFeature.planObjectDelete,
+      WorkspaceFeature.planDecor,
       WorkspaceFeature.adminSeatBlocking,
     ]),
     WorkspaceSubprocess('availability', [

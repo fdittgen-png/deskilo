@@ -153,7 +153,7 @@ class ReserveCanvas extends ConsumerWidget {
             100,
         background: ref.watch(levelBackgroundProvider(level.id)).value,
         images: {
-          for (final image in plan.images)
+          for (final image in plan.images.where(isPhotoImage))
             // Single watch per image (perf audit): the double watch
             // subscribed twice per image on every rebuild.
             image.id: ?ref.watch(planImageProvider(image.id)).value,

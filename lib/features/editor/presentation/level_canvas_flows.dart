@@ -354,6 +354,37 @@ class LevelCanvasFlows {
     );
   }
 
+  /// Draws a [kind] symbol with its top-left cell at [cell]; [onPlaced] runs
+  /// after the plan refresh.
+  Future<void> placeDecor(
+    BuildContext context,
+    CanvasCell cell,
+    PlanDecorKind kind, {
+    required VoidCallback onPlaced,
+  }) async {
+    final workspaceId = _workspaceId;
+    if (workspaceId == null) return;
+    final size = kind.defaultSize;
+    final x = cell.x.clamp(0, PlanCanvasMetrics.cells - size.w);
+    final y = cell.y.clamp(0, PlanCanvasMetrics.cells - size.h);
+    final imageId = newRequestId();
+    await runPlanMediaWrite(
+      context,
+      busy: busy,
+      trace: 'place decor failed',
+      write: () => edits.createDecor(
+        workspaceId,
+        kind: kind,
+        rect: GridRect(x: x, y: y, w: size.w, h: size.h),
+        imageId: imageId,
+      ),
+      onDone: () {
+        _refresh();
+        onPlaced();
+      },
+    );
+  }
+
   /// Owner picks a photo/blueprint of the real space as this level's
   /// background (0036); it's uploaded and painted behind the grid.
   Future<void> pickBackground(BuildContext context) async {

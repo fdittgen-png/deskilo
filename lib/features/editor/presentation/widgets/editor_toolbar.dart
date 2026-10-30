@@ -30,6 +30,7 @@ class EditorToolbar extends StatelessWidget {
     super.key,
     required this.armed,
     required this.onArm,
+    this.decorOn = true,
   });
 
   /// The tool a drag or tap currently belongs to, or null — the resting
@@ -38,6 +39,9 @@ class EditorToolbar extends StatelessWidget {
 
   /// Arm a tool, or pass null to go back to selecting.
   final ValueChanged<EditorTool?> onArm;
+
+  /// The planDecor flag: the Shapes tool is offered only while it is on.
+  final bool decorOn;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +72,12 @@ class EditorToolbar extends StatelessWidget {
                 Icons.add_photo_alternate_outlined,
                 l10n.editorToolImage,
               ),
+              if (decorOn)
+                (
+                  EditorTool.decor,
+                  Icons.category_outlined,
+                  l10n.editorToolDecor,
+                ),
             ])
               Expanded(
                 child: _ToolButton(

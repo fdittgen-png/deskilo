@@ -26,6 +26,7 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
     _F.meetingRooms,
     _F.parking,
     _F.planObjectDelete,
+    _F.planDecor,
     _F.multiSite,
     _F.nfcSeatTags,
     _F.spaceQrCodes,

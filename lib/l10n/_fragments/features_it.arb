@@ -258,5 +258,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "featurePlanDecorTitle": "Disegnare la sala sulla pianta",
+  "featurePlanDecorDesc": "I proprietari disegnano la sala reale con muri, porte, finestre, pilastri, tavoli, divani, WC e cucina. Disattivato: lo strumento Forme scompare; le forme già disegnate restano."
 }

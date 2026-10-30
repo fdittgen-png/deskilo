@@ -9643,6 +9643,54 @@ abstract class AppLocalizations {
   /// **'Everything is answered.'**
   String get decisionSurfaceEmptyDetail;
 
+  /// #3074 the plan's drawn shapes: decorCouch
+  ///
+  /// In en, this message translates to:
+  /// **'Couch'**
+  String get decorCouch;
+
+  /// #3074 the plan's drawn shapes: decorDoor
+  ///
+  /// In en, this message translates to:
+  /// **'Door'**
+  String get decorDoor;
+
+  /// #3074 the plan's drawn shapes: decorKitchen
+  ///
+  /// In en, this message translates to:
+  /// **'Kitchen'**
+  String get decorKitchen;
+
+  /// #3074 the plan's drawn shapes: decorPillar
+  ///
+  /// In en, this message translates to:
+  /// **'Pillar'**
+  String get decorPillar;
+
+  /// #3074 the plan's drawn shapes: decorTable
+  ///
+  /// In en, this message translates to:
+  /// **'Table'**
+  String get decorTable;
+
+  /// #3074 the plan's drawn shapes: decorWall
+  ///
+  /// In en, this message translates to:
+  /// **'Wall'**
+  String get decorWall;
+
+  /// #3074 the plan's drawn shapes: decorWc
+  ///
+  /// In en, this message translates to:
+  /// **'WC'**
+  String get decorWc;
+
+  /// #3074 the plan's drawn shapes: decorWindow
+  ///
+  /// In en, this message translates to:
+  /// **'Window'**
+  String get decorWindow;
+
   /// No description provided for @defaultPeriodNone.
   ///
   /// In en, this message translates to:
@@ -11293,6 +11341,12 @@ abstract class AppLocalizations {
   /// **'Type 2'**
   String get editorConnectorType2;
 
+  /// #3074 the plan's drawn shapes: editorDecorPaletteHint
+  ///
+  /// In en, this message translates to:
+  /// **'Draw the room as it is: walls, doors and windows frame it, the rest furnishes it.'**
+  String get editorDecorPaletteHint;
+
   /// Confirmation body for the erase tool
   ///
   /// In en, this message translates to:
@@ -11364,6 +11418,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This floor is empty'**
   String get editorEmptyFloorTitle;
+
+  /// #3074 the plan's drawn shapes: editorHintDecor
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the plan to drop the shape; drag it to place it'**
+  String get editorHintDecor;
 
   /// #1216 what the next gesture does while the desk tool is armed
   ///
@@ -11587,6 +11647,12 @@ abstract class AppLocalizations {
   /// **'Meeting room'**
   String get editorRoomProperties;
 
+  /// #3074 the plan's drawn shapes: editorRotate
+  ///
+  /// In en, this message translates to:
+  /// **'Rotate'**
+  String get editorRotate;
+
   /// Default seat name prefix; a number is appended
   ///
   /// In en, this message translates to:
@@ -11682,6 +11748,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace editor'**
   String get editorTitle;
+
+  /// #3074 the plan's drawn shapes: editorToolDecor
+  ///
+  /// In en, this message translates to:
+  /// **'Shapes'**
+  String get editorToolDecor;
 
   /// Canvas tool: drag to draw a desk inside an office
   ///
@@ -14440,6 +14512,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Favourites and ratings'**
   String get featurePlaceFeedbackTitle;
+
+  /// #3074 the plan shapes flag
+  ///
+  /// In en, this message translates to:
+  /// **'Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay.'**
+  String get featurePlanDecorDesc;
+
+  /// #3074 the plan shapes flag
+  ///
+  /// In en, this message translates to:
+  /// **'Draw the room on the plan'**
+  String get featurePlanDecorTitle;
 
   /// No description provided for @featurePlanMemberPhotosDesc.
   ///

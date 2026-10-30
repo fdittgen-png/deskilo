@@ -258,5 +258,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "featurePlanDecorTitle": "Dibujar la sala en el plano",
+  "featurePlanDecorDesc": "Los propietarios dibujan la sala real con paredes, puertas, ventanas, pilares, mesas, sofás, WC y cocina. Desactivado: la herramienta Formas desaparece; las formas ya dibujadas permanecen."
 }

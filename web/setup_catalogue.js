@@ -598,6 +598,10 @@ window.SETUP_REGISTRY={
   [
    "bankImport",
    false
+  ],
+  [
+   "planDecor",
+   true
   ]
  ],
  "requires": {
@@ -1106,6 +1110,7 @@ window.SETUP_PROCESSES=[
     "features": [
      "multiSite",
      "planObjectDelete",
+     "planDecor",
      "adminSeatBlocking"
     ]
    },
@@ -1396,7 +1401,8 @@ window.SETUP_LEVELS={
       "bookingPolicies",
       "seatDayTimeline",
       "bookingGate",
-      "calendarFileExport"
+      "calendarFileExport",
+      "planDecor"
      ],
      "needs": {}
     },

@@ -1336,6 +1336,10 @@ window.SETUP_L10N={
    "bankImport": [
     "Bank statements",
     "Reads the bank's statement files (camt.053/054, MT940, CODA, OFX/QFX or a spreadsheet) into the space, each movement once, and suggests the invoice each payment settles by the QR or RF reference printed on it, its number or its amount; a person confirms every match, and the rest stays in a work list. A payment out reconciles a payment already recorded as made."
+   ],
+   "planDecor": [
+    "Draw the room on the plan",
+    "Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay."
    ]
   },
   "process": {
@@ -3002,6 +3006,10 @@ window.SETUP_L10N={
    "bankImport": [
     "Relevés bancaires",
     "Lit les relevés de la banque (camt.053/054, MT940, CODA, OFX/QFX ou un tableur) dans l'espace, chaque mouvement une seule fois, et propose la facture que chaque paiement règle d'après la référence QR ou RF imprimée dessus, son numéro ou son montant ; une personne confirme chaque rapprochement, le reste demeure dans une liste de travail. Un paiement sortant rapproche un paiement déjà enregistré comme effectué."
+   ],
+   "planDecor": [
+    "Dessiner la salle sur le plan",
+    "Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l'outil Formes disparaît, les formes déjà dessinées restent."
    ]
   },
   "process": {
@@ -4668,6 +4676,10 @@ window.SETUP_L10N={
    "bankImport": [
     "Kontoauszüge",
     "Liest die Kontoauszugsdateien der Bank (camt.053/054, MT940, CODA, OFX/QFX oder eine Tabelle) in den Space ein, jede Bewegung nur einmal, und schlägt die Rechnung vor, die eine Zahlung begleicht – anhand der darauf gedruckten QR- oder RF-Referenz, ihrer Nummer oder ihres Betrags; jede Zuordnung bestätigt eine Person, der Rest bleibt in einer Arbeitsliste. Eine ausgehende Zahlung gleicht eine bereits als geleistet erfasste Zahlung ab."
+   ],
+   "planDecor": [
+    "Den Raum im Plan zeichnen",
+    "Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben."
    ]
   },
   "process": {
@@ -6334,6 +6346,10 @@ window.SETUP_L10N={
    "bankImport": [
     "Extractos bancarios",
     "Lee los extractos del banco (camt.053/054, MT940, CODA, OFX/QFX o una hoja de cálculo) en el espacio, cada movimiento una sola vez, y propone la factura que liquida cada pago por la referencia QR o RF impresa en ella, su número o su importe; una persona confirma cada conciliación y el resto queda en una lista de trabajo. Un pago saliente concilia un pago ya registrado como realizado."
+   ],
+   "planDecor": [
+    "Dibujar la sala en el plano",
+    "Los propietarios dibujan la sala real con paredes, puertas, ventanas, pilares, mesas, sofás, WC y cocina. Desactivado: la herramienta Formas desaparece; las formas ya dibujadas permanecen."
    ]
   },
   "process": {
@@ -8000,6 +8016,10 @@ window.SETUP_L10N={
    "bankImport": [
     "Estratti conto",
     "Legge gli estratti conto della banca (camt.053/054, MT940, CODA, OFX/QFX o un foglio di calcolo) nello spazio, ogni movimento una sola volta, e propone la fattura che ogni pagamento salda in base al riferimento QR o RF stampato su di essa, al suo numero o al suo importo; una persona conferma ogni abbinamento e il resto rimane in un elenco di lavoro. Un pagamento in uscita riconcilia un pagamento già registrato come effettuato."
+   ],
+   "planDecor": [
+    "Disegnare la sala sulla pianta",
+    "I proprietari disegnano la sala reale con muri, porte, finestre, pilastri, tavoli, divani, WC e cucina. Disattivato: lo strumento Forme scompare; le forme già disegnate restano."
    ]
   },
   "process": {

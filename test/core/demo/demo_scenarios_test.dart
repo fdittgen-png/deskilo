@@ -246,6 +246,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   ),
   WorkspaceFeature.siteDocuments: _toggle('reserved flag (internal)'),
   WorkspaceFeature.planObjectDelete: _toggle('the plan editor deletes'),
+  WorkspaceFeature.planDecor: _toggle('the plan editor draws shapes'),
   WorkspaceFeature.adminSeatBlocking: _action(
     _admin,
     'Chiara blocks a seat '
