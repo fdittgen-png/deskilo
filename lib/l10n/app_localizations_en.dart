@@ -22339,6 +22339,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Minutes after its last sign of life that a person still counts as online. Keep it above the 2-minute heartbeat.';
 
   @override
+  String get settingHintPresenceResyncAfterAwayMinutes =>
+      'Minutes the app must have been out of sight (in the background, a hidden tab, a sleeping kiosk) before it re-reads everything it shows when it comes back. Switching windows never re-reads; a lost live connection always does.';
+
+  @override
   String get settingHintPurchasePaymentChecker =>
       'A payment of at least this amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.';
 
@@ -22537,6 +22541,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelPresenceOnlineWindowMinutes => 'Online window';
+
+  @override
+  String get settingLabelPresenceResyncAfterAwayMinutes =>
+      'Re-read after being away';
 
   @override
   String get settingLabelPurchasePaymentChecker =>

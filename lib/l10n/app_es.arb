@@ -15366,6 +15366,7 @@
   "@settingHintPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintPresenceResyncAfterAwayMinutes": "Minutos que la aplicación debe haber estado fuera de la vista (en segundo plano, una pestaña oculta, un quiosco en reposo) antes de volver a leer todo lo que muestra al regresar. Cambiar de ventana nunca vuelve a leer; una conexión en directo perdida siempre lo hace.",
   "settingHintPurchasePaymentChecker": "Un pago de al menos este importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.",
   "@settingHintPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"
@@ -15534,6 +15535,7 @@
   "@settingLabelPresenceOnlineWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelPresenceResyncAfterAwayMinutes": "Releer tras una ausencia",
   "settingLabelPurchasePaymentChecker": "Pagos que registra una segunda persona desde (unidades monetarias)",
   "@settingLabelPurchasePaymentChecker": {
     "description": "#2574 maker-checker settings"

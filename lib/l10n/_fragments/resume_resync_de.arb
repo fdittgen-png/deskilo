@@ -1,0 +1,5 @@
+{
+  "@@locale": "de",
+  "settingLabelPresenceResyncAfterAwayMinutes": "Nach Abwesenheit neu laden",
+  "settingHintPresenceResyncAfterAwayMinutes": "Minuten, die die App außer Sicht gewesen sein muss (im Hintergrund, verdeckter Tab, schlafendes Kiosk-Gerät), bevor sie beim Zurückkehren alles neu lädt, was sie zeigt. Ein Fensterwechsel lädt nie neu; eine verlorene Live-Verbindung immer."
+}

@@ -1,0 +1,5 @@
+{
+  "@@locale": "fr",
+  "settingLabelPresenceResyncAfterAwayMinutes": "Relire après une absence",
+  "settingHintPresenceResyncAfterAwayMinutes": "Minutes pendant lesquelles l'application doit être restée hors de vue (en arrière-plan, onglet masqué, borne en veille) avant de relire tout ce qu'elle affiche à son retour. Changer de fenêtre ne relit jamais ; une connexion en direct perdue relit toujours."
+}
