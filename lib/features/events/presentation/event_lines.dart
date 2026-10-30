@@ -169,8 +169,7 @@ String eventLine(
             EventType.commitmentVariance,
         _) =>
       _recordOrLeaseLine(l10n, event, actor, currency),
-    _ => '${eventTypeLabel(l10n, event.type)} · '
-        '${eventActionLabel(l10n, event.action)}',
+    _ => eventFallbackLine(l10n, event),
   };
   // Service charges name no actor in the title, so always say whose bill
   // it lands on; other types only when an admin acted for someone else.

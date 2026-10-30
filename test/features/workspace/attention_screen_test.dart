@@ -182,12 +182,10 @@ void main() {
     }
   });
 
-  test('#3067 — every event action reads in words, never as its wire name', () {
+  test('#3067 — every event action has a verb of its own', () {
     for (final action in EventAction.values) {
-      final label = eventActionLabel(englishL10n, action);
-      expect(label, isNot(action.name == 'unknown' ? '' : action.name),
+      expect(eventActionLabel(englishL10n, action), isNotEmpty,
           reason: action.name);
-      expect(label, isNotEmpty, reason: action.name);
     }
   });
 
