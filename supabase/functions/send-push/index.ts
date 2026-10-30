@@ -12,6 +12,7 @@
 // (docs/guides/push-setup.md). Absent -> the function no-ops politely so
 // the trigger never fails.
 
+import { mayTriggerPush } from "./push_caller.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 
@@ -443,6 +444,10 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
   // #1614 — system-only: a delegated (MCP) token never triggers a push.
   const delegated = refuseDelegated(req);
   if (delegated) return delegated;
+  // #3092 — only the trigger (shared secret) or the service role.
+  if (!mayTriggerPush(req, Deno.env.get("PUSH_SHARED_SECRET"))) {
+    return Response.json({ error: "unauthorized" }, { status: 401 });
+  }
   const saRaw = Deno.env.get("FCM_SERVICE_ACCOUNT");
   if (!saRaw) {
     return Response.json({ skipped: "FCM_SERVICE_ACCOUNT not set" });
