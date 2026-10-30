@@ -12337,6 +12337,48 @@ abstract class AppLocalizations {
   /// **'Accept'**
   String get eventAccept;
 
+  /// #3067 the verb of an event line, in words
+  ///
+  /// In en, this message translates to:
+  /// **'approved'**
+  String get eventActionApproved;
+
+  /// #3067 the verb of an event line, in words
+  ///
+  /// In en, this message translates to:
+  /// **'cancelled'**
+  String get eventActionCancelled;
+
+  /// #3067 the verb of an event line, in words
+  ///
+  /// In en, this message translates to:
+  /// **'created'**
+  String get eventActionCreated;
+
+  /// #3067 the verb of an event line, in words
+  ///
+  /// In en, this message translates to:
+  /// **'changed'**
+  String get eventActionModified;
+
+  /// #3067 the verb of an event line, in words
+  ///
+  /// In en, this message translates to:
+  /// **'rejected'**
+  String get eventActionRejected;
+
+  /// #3067 the verb of an event line, in words
+  ///
+  /// In en, this message translates to:
+  /// **'submitted'**
+  String get eventActionSubmitted;
+
+  /// #3067 the verb of an event line, in words
+  ///
+  /// In en, this message translates to:
+  /// **'updated'**
+  String get eventActionUnknown;
+
   /// Feed marker for a deletion the rule settled itself, with no peer review (#636)
   ///
   /// In en, this message translates to:

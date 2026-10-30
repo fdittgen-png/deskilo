@@ -5383,6 +5383,13 @@
   },
   "errorOffline": "Sin conexión: no se ha enviado nada. Inténtelo de nuevo cuando vuelva a estar en línea.",
   "eventAccept": "Aceptar",
+  "eventActionApproved": "aprobado",
+  "eventActionCancelled": "cancelado",
+  "eventActionCreated": "creado",
+  "eventActionModified": "modificado",
+  "eventActionRejected": "rechazado",
+  "eventActionSubmitted": "enviado",
+  "eventActionUnknown": "actualizado",
   "eventAutoValidated": "Validado automáticamente",
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"

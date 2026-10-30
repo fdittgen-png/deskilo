@@ -182,6 +182,13 @@ void main() {
     }
   });
 
+  test('#3067 — every event action has a verb of its own', () {
+    for (final action in EventAction.values) {
+      expect(eventActionLabel(englishL10n, action), isNotEmpty,
+          reason: action.name);
+    }
+  });
+
   testWidgets('a tap opens the screen where the decision is made', (
     tester,
   ) async {

@@ -255,5 +255,33 @@
   },
   "@eventSourceNotFound": {
     "description": "#2573 open the purchase an expense request was filed as"
+  },
+  "eventActionCreated": "created",
+  "@eventActionCreated": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionModified": "changed",
+  "@eventActionModified": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionCancelled": "cancelled",
+  "@eventActionCancelled": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionSubmitted": "submitted",
+  "@eventActionSubmitted": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionApproved": "approved",
+  "@eventActionApproved": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionRejected": "rejected",
+  "@eventActionRejected": {
+    "description": "#3067 the verb of an event line, in words"
+  },
+  "eventActionUnknown": "updated",
+  "@eventActionUnknown": {
+    "description": "#3067 the verb of an event line, in words"
   }
 }

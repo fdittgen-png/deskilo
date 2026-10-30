@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart' show visibleForTesting;
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/notification_feed.dart';
 import '../domain/workspace_event.dart';
@@ -84,3 +86,23 @@ String notificationCategoryLabel(
       l10n.notifCategoryMembers,
   };
 }
+
+/// The line of an event type that has no sentence of its own: the type and
+/// the verb, both in words.
+String eventFallbackLine(AppLocalizations l10n, WorkspaceEvent event) =>
+    '${eventTypeLabel(l10n, event.type)} · '
+    '${eventActionLabel(l10n, event.action)}';
+
+/// The verb of an event line in the reader's language (#3067): a row never
+/// shows the wire word ("created") inside a translated sentence.
+@visibleForTesting
+String eventActionLabel(AppLocalizations l10n, EventAction action) =>
+    switch (action) {
+      EventAction.created => l10n.eventActionCreated,
+      EventAction.modified => l10n.eventActionModified,
+      EventAction.cancelled => l10n.eventActionCancelled,
+      EventAction.submitted => l10n.eventActionSubmitted,
+      EventAction.approved => l10n.eventActionApproved,
+      EventAction.rejected => l10n.eventActionRejected,
+      EventAction.unknown => l10n.eventActionUnknown,
+    };

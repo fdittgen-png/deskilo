@@ -7219,6 +7219,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventAccept => 'Accept';
 
   @override
+  String get eventActionApproved => 'approved';
+
+  @override
+  String get eventActionCancelled => 'cancelled';
+
+  @override
+  String get eventActionCreated => 'created';
+
+  @override
+  String get eventActionModified => 'changed';
+
+  @override
+  String get eventActionRejected => 'rejected';
+
+  @override
+  String get eventActionSubmitted => 'submitted';
+
+  @override
+  String get eventActionUnknown => 'updated';
+
+  @override
   String get eventAutoValidated => 'Auto-validated';
 
   @override
