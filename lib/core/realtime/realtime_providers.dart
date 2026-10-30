@@ -4,12 +4,14 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../backend/context_client_providers.dart';
+import '../time/clock.dart';
 import '../trace/trace_logger.dart';
 import '../ui/app_durations.dart';
 import 'invalidation_map.dart';
 import 'invalidation_registry.dart' show InvalidationScope;
 import 'realtime_sync.dart';
 import 'realtime_wiring.dart';
+import 'resume_resync.dart';
 
 part 'realtime_providers.g.dart';
 
@@ -46,22 +48,6 @@ enum RealtimeTarget {
 /// (a series booking writes dozens of rows) becomes one refetch.
 @visibleForTesting
 const kRealtimeDebounce = AppDurations.realtimeDebounce;
-
-/// Watches app lifecycle for the invalidator: while the app was
-/// backgrounded the realtime socket may have been paused by the OS with
-/// no error ever surfacing, so RESUME triggers a full resync (#577).
-/// Kiosks that sleep overnight wake up fresh instead of showing
-/// yesterday's plan.
-class ResumeResyncObserver with WidgetsBindingObserver {
-  ResumeResyncObserver(this.onResume);
-
-  final void Function() onResume;
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) onResume();
-  }
-}
 
 /// Subscribes to ONE target's change feed and invalidates
 /// exactly the providers of that target's scope that cache each table — so every device,
@@ -109,10 +95,16 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     // which changes are missed.
     _teardown();
     if (workspaceId == null) return;
-    _observer = ResumeResyncObserver(() {
-      _pending.add(kResyncSignal);
-      _batchWindow ??= Timer(kRealtimeDebounce, _flush);
-    });
+    // #3098 — read when the app comes back, never watched: a settings
+    // change must not rebuild (and so reopen) the channel.
+    _observer = ResumeResyncObserver(
+      onResume: () {
+        _pending.add(kResyncSignal);
+        _batchWindow ??= Timer(kRealtimeDebounce, _flush);
+      },
+      now: () => ref.read(clockProvider).now(),
+      threshold: () => ref.read(resumeResyncAfterProvider),
+    );
     WidgetsBinding.instance.addObserver(_observer!);
     final feed = switch (target) {
       RealtimeTarget.workspace => sync.watch(workspaceId),
