@@ -60,3 +60,6 @@ sealed class PlanImage with _$PlanImage implements SystemStamped {
     @Default(SystemColumns.none) SystemColumns system,
   }) = _PlanImage;
 }
+
+/// Whether [image] is a photo with an object to fetch, not a drawn symbol.
+bool isPhotoImage(PlanImage image) => image.kind == null;

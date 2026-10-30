@@ -75,7 +75,6 @@ String featureDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
           l10n.featureEinvoiceCustomerDeliveryDesc,
         WorkspaceFeature.planObjectDelete =>
           l10n.featurePlanObjectDeleteDesc,
-        WorkspaceFeature.planDecor => l10n.featurePlanDecorDesc,
         WorkspaceFeature.notificationGrouping =>
           l10n.featureNotificationGroupingDesc,
         WorkspaceFeature.bookingPolicies =>
@@ -292,6 +291,7 @@ String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.accountingConnectors =>
         l10n.featureAccountingConnectorsDesc,
       WorkspaceFeature.bankImport => l10n.featureBankImportDesc,
+      WorkspaceFeature.planDecor => l10n.featurePlanDecorDesc,
       _ => feature.name,
     };
 

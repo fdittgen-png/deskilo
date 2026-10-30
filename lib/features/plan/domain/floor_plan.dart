@@ -7,7 +7,7 @@ import 'plan_image.dart';
 import 'seat.dart';
 
 // The drawn symbols travel with the plan that holds them.
-export 'plan_image.dart' show PlanDecorKind, PlanImage;
+export 'plan_image.dart' show PlanDecorKind, PlanImage, isPhotoImage;
 
 part 'floor_plan.freezed.dart';
 

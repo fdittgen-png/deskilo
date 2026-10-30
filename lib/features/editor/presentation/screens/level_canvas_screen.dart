@@ -12,7 +12,6 @@ import '../../../plan/domain/floor_plan_editing.dart';
 import '../../../plan/domain/grid_geometry.dart';
 import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/level_canvas_edits.dart';
 import '../../application/level_canvas_rules.dart';
@@ -161,9 +160,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
           : EditorToolbar(
               armed: _tool,
               onArm: (tool) => unawaited(_arm(tool)),
-              decorOn: ref
-                  .watch(enabledFeaturesSyncProvider)
-                  .contains(WorkspaceFeature.planDecor),
+              decorOn: ref.watch(planDecorOnProvider),
             ),
       // Keep the canvas mounted whenever we have ANY plan to show — the last
       // fetched one during a reload. Matching only AsyncData here swapped in a

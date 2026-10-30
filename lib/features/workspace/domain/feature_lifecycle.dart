@@ -320,7 +320,6 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.vatDeclarations: _ownerBeta,
   WorkspaceFeature.einvoiceCustomerDelivery: _einvoiceTransmit,
   WorkspaceFeature.planObjectDelete: _ownerBeta,
-  WorkspaceFeature.planDecor: _ownerBeta,
   WorkspaceFeature.notificationGrouping: _ownerBeta,
   WorkspaceFeature.bookingPolicies: _booking,
   WorkspaceFeature.nfcSeatTags: _ownerBeta,
@@ -416,7 +415,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.recapitulativeStatement: _ownerBeta,
   WorkspaceFeature.inputVat: _ownerBeta,
   WorkspaceFeature.configurableSettings: _ownerBeta,
-  WorkspaceFeature.salesTax: _ownerBeta, WorkspaceFeature.meetingRooms: _ownerBeta, WorkspaceFeature.parking: _ownerBeta, WorkspaceFeature.webMcp: _ownerBeta, WorkspaceFeature.purchases: _ownerBeta, WorkspaceFeature.premisesLease: _ownerBeta, WorkspaceFeature.assetRegister: _ownerBeta, WorkspaceFeature.externalRooms: _ownerBeta, WorkspaceFeature.accountingPeriods: _ownerBeta, WorkspaceFeature.biReportDesigner: _ownerBeta, WorkspaceFeature.workspaceOverview: _ownerBeta, WorkspaceFeature.setupGuide: _ownerBeta, WorkspaceFeature.dataReport: _ownerBeta, WorkspaceFeature.purchaseAnalytics: _ownerBeta, WorkspaceFeature.personalShell: _ownerBeta, WorkspaceFeature.bankImport: _ownerBeta, WorkspaceFeature.foreignCurrencyPurchases: _ownerBeta, WorkspaceFeature.accountingConnectors: _ownerBeta,
+  WorkspaceFeature.salesTax: _ownerBeta, WorkspaceFeature.meetingRooms: _ownerBeta, WorkspaceFeature.parking: _ownerBeta, WorkspaceFeature.webMcp: _ownerBeta, WorkspaceFeature.purchases: _ownerBeta, WorkspaceFeature.premisesLease: _ownerBeta, WorkspaceFeature.assetRegister: _ownerBeta, WorkspaceFeature.externalRooms: _ownerBeta, WorkspaceFeature.accountingPeriods: _ownerBeta, WorkspaceFeature.biReportDesigner: _ownerBeta, WorkspaceFeature.workspaceOverview: _ownerBeta, WorkspaceFeature.setupGuide: _ownerBeta, WorkspaceFeature.dataReport: _ownerBeta, WorkspaceFeature.purchaseAnalytics: _ownerBeta, WorkspaceFeature.personalShell: _ownerBeta, WorkspaceFeature.bankImport: _ownerBeta, WorkspaceFeature.foreignCurrencyPurchases: _ownerBeta, WorkspaceFeature.accountingConnectors: _ownerBeta, WorkspaceFeature.planDecor: _ownerBeta,
 };
 
 /// Keys that were registered once and are gone. They stay here so a
