@@ -6238,6 +6238,8 @@
   "@featurePlaceFeedbackTitle": {
     "description": "#2185 place feedback"
   },
+  "featurePlanDecorDesc": "Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben.",
+  "featurePlanDecorTitle": "Den Raum im Plan zeichnen",
   "featurePlanMemberPhotosDesc": "Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.",
   "featurePlanMemberPhotosTitle": "Mitgliederfotos auf dem Plan",
   "featurePlanObjectDeleteDesc": "Inhaber können Ebenen, Büros, Tische und Sitzplätze auch dann löschen, wenn frühere Reservierungen darauf verweisen — die Buchungen behalten einen Text-Schnappschuss für Audits und Berichte.",

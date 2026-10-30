@@ -6238,6 +6238,8 @@
   "@featurePlaceFeedbackTitle": {
     "description": "#2185 place feedback"
   },
+  "featurePlanDecorDesc": "Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l'outil Formes disparaît, les formes déjà dessinées restent.",
+  "featurePlanDecorTitle": "Dessiner la salle sur le plan",
   "featurePlanMemberPhotosDesc": "Les places occupées de l'onglet Plan et du hub Réserver affichent la photo de profil de l'occupant au lieu de l'initiale.",
   "featurePlanMemberPhotosTitle": "Photos des membres sur le plan",
   "featurePlanObjectDeleteDesc": "Les propriétaires peuvent supprimer niveaux, bureaux, tables et places même si d'anciennes réservations y font référence — les réservations gardent un instantané texte pour les audits et rapports.",

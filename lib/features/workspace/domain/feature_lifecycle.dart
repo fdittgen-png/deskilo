@@ -320,6 +320,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.vatDeclarations: _ownerBeta,
   WorkspaceFeature.einvoiceCustomerDelivery: _einvoiceTransmit,
   WorkspaceFeature.planObjectDelete: _ownerBeta,
+  WorkspaceFeature.planDecor: _ownerBeta,
   WorkspaceFeature.notificationGrouping: _ownerBeta,
   WorkspaceFeature.bookingPolicies: _booking,
   WorkspaceFeature.nfcSeatTags: _ownerBeta,

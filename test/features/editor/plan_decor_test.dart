@@ -49,10 +49,26 @@ void main() {
       kind: PlanDecorKind.table,
       imageId: 'd2',
     );
-    await LevelCanvasEdits(repo, levelId: 'level-1').rotateDecor(image);
+    await LevelCanvasEdits(repo, levelId: 'level-1').rotateDecor(image, cells: 120);
     final turned = repo.planImages.single;
     expect(turned.rect, const GridRect(x: 12, y: 8, w: 4, h: 8));
     expect(turned.quarterTurns, 1);
+  });
+
+  test('turning a long wall at the right edge keeps it on the grid', () async {
+    final repo = FakeFloorPlanRepository();
+    final image = await repo.createPlanDecor(
+      workspaceId: 'ws-1',
+      levelId: 'level-1',
+      rect: const GridRect(x: 108, y: 0, w: 12, h: 1),
+      kind: PlanDecorKind.wall,
+      imageId: 'd3',
+    );
+    await LevelCanvasEdits(repo, levelId: 'level-1')
+        .rotateDecor(image, cells: 120);
+    final turned = repo.planImages.single.rect;
+    expect(turned.x + turned.w, lessThanOrEqualTo(120));
+    expect(turned.y, greaterThanOrEqualTo(0));
   });
 
   test('every kind paints at every turn', () {

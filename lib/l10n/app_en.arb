@@ -10514,6 +10514,14 @@
   "@featurePlaceFeedbackTitle": {
     "description": "#2185 place feedback"
   },
+  "featurePlanDecorDesc": "Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay.",
+  "@featurePlanDecorDesc": {
+    "description": "#3074 the plan shapes flag"
+  },
+  "featurePlanDecorTitle": "Draw the room on the plan",
+  "@featurePlanDecorTitle": {
+    "description": "#3074 the plan shapes flag"
+  },
   "featurePlanMemberPhotosDesc": "Occupied seats on the Plan tab and Reserve hub show the occupant's profile photo instead of the initial.",
   "featurePlanMemberPhotosTitle": "Member photos on the plan",
   "featurePlanObjectDeleteDesc": "Owners may delete levels, offices, desks and seats even when past reservations reference them — the bookings keep a text snapshot for audits and reports.",

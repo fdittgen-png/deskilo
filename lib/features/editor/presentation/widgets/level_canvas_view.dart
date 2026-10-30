@@ -96,7 +96,8 @@ class LevelCanvasView extends ConsumerWidget {
               background: ref.watch(levelBackgroundProvider(levelId)).value,
               images: {
                 for (final image in plan.images)
-                  if (ref.watch(planImageProvider(image.id)).value != null)
+                  if (image.kind == null &&
+                      ref.watch(planImageProvider(image.id)).value != null)
                     image.id: ref.watch(planImageProvider(image.id)).value!,
               },
               plan: plan,

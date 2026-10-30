@@ -102,12 +102,14 @@ class LevelCanvasEdits {
   );
 
   /// Turns the symbol [image] a quarter clockwise about its centre: the
-  /// footprint swaps its sides and the symbol keeps its place.
-  Future<void> rotateDecor(PlanImage image) async {
+  /// footprint swaps its sides and the symbol keeps its place, inside the
+  /// [cells]-square grid.
+  Future<void> rotateDecor(PlanImage image, {required int cells}) async {
     final r = image.rect;
     final cx2 = 2 * r.x + r.w, cy2 = 2 * r.y + r.h;
-    final x = ((cx2 - r.h) / 2).floor().clamp(0, 1 << 20);
-    final y = ((cy2 - r.w) / 2).floor().clamp(0, 1 << 20);
+    // Turned about its centre, and kept on the grid.
+    final x = ((cx2 - r.h) / 2).floor().clamp(0, cells - r.h);
+    final y = ((cy2 - r.w) / 2).floor().clamp(0, cells - r.w);
     await _repository.updatePlanImageRect(
       image.id,
       GridRect(x: x, y: y, w: r.h, h: r.w),

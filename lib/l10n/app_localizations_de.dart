@@ -8825,6 +8825,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featurePlaceFeedbackTitle => 'Favoriten und Bewertungen';
 
   @override
+  String get featurePlanDecorDesc =>
+      'Eigentümer zeichnen den echten Raum mit Wänden, Türen, Fenstern, Säulen, Tischen, Sofas, WC und Küche. Aus: Das Formen-Werkzeug verschwindet, bereits gezeichnete Formen bleiben.';
+
+  @override
+  String get featurePlanDecorTitle => 'Den Raum im Plan zeichnen';
+
+  @override
   String get featurePlanMemberPhotosDesc =>
       'Belegte Plätze im Plan-Tab und im Reservieren-Hub zeigen das Profilfoto statt der Initiale.';
 

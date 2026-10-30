@@ -14465,6 +14465,18 @@ abstract class AppLocalizations {
   /// **'Favourites and ratings'**
   String get featurePlaceFeedbackTitle;
 
+  /// #3074 the plan shapes flag
+  ///
+  /// In en, this message translates to:
+  /// **'Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay.'**
+  String get featurePlanDecorDesc;
+
+  /// #3074 the plan shapes flag
+  ///
+  /// In en, this message translates to:
+  /// **'Draw the room on the plan'**
+  String get featurePlanDecorTitle;
+
   /// No description provided for @featurePlanMemberPhotosDesc.
   ///
   /// In en, this message translates to:

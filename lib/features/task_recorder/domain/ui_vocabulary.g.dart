@@ -7038,6 +7038,8 @@ const Set<String> uiLabelKeys = {
   'featurePersonalShellTitle',
   'featurePlaceFeedbackDesc',
   'featurePlaceFeedbackTitle',
+  'featurePlanDecorDesc',
+  'featurePlanDecorTitle',
   'featurePlanMemberPhotosDesc',
   'featurePlanMemberPhotosTitle',
   'featurePlanObjectDeleteDesc',

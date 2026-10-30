@@ -8757,6 +8757,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featurePlaceFeedbackTitle => 'Favourites and ratings';
 
   @override
+  String get featurePlanDecorDesc =>
+      'Owners draw the real room with walls, doors, windows, pillars, tables, couches, WC and kitchen. Off hides the Shapes tool; shapes already drawn stay.';
+
+  @override
+  String get featurePlanDecorTitle => 'Draw the room on the plan';
+
+  @override
   String get featurePlanMemberPhotosDesc =>
       'Occupied seats on the Plan tab and Reserve hub show the occupant\'s profile photo instead of the initial.';
 

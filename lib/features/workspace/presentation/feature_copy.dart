@@ -75,6 +75,7 @@ String featureDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
           l10n.featureEinvoiceCustomerDeliveryDesc,
         WorkspaceFeature.planObjectDelete =>
           l10n.featurePlanObjectDeleteDesc,
+        WorkspaceFeature.planDecor => l10n.featurePlanDecorDesc,
         WorkspaceFeature.notificationGrouping =>
           l10n.featureNotificationGroupingDesc,
         WorkspaceFeature.bookingPolicies =>

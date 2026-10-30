@@ -416,7 +416,8 @@ enum WorkspaceFeature {
   personalShell,
   foreignCurrencyPurchases,
   accountingConnectors,
-  bankImport;
+  bankImport,
+  planDecor;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

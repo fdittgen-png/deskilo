@@ -8834,6 +8834,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featurePlaceFeedbackTitle => 'Favoris et notes';
 
   @override
+  String get featurePlanDecorDesc =>
+      'Les propriétaires dessinent la salle réelle avec murs, portes, fenêtres, piliers, tables, canapés, WC et cuisine. Désactivé : l\'outil Formes disparaît, les formes déjà dessinées restent.';
+
+  @override
+  String get featurePlanDecorTitle => 'Dessiner la salle sur le plan';
+
+  @override
   String get featurePlanMemberPhotosDesc =>
       'Les places occupées de l\'onglet Plan et du hub Réserver affichent la photo de profil de l\'occupant au lieu de l\'initiale.';
 
