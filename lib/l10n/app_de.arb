@@ -16843,6 +16843,7 @@
     "description": "#2567 suppliers"
   },
   "suppliersSavedOpen": "Öffnen",
+  "suppliersSearch": "Nach Name, Nummer oder Steuer-ID suchen",
   "suppliersTaxUnverified": "Steuernummer nicht geprüft",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

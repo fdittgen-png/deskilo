@@ -20,6 +20,7 @@ import '../../features/money/presentation/screens/payment_config_screen.dart';
 import '../../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../../features/money/presentation/screens/report_editor_screen.dart';
 import '../../features/money/presentation/screens/services_screen.dart';
+import '../../features/money/presentation/screens/suppliers_screen.dart';
 import '../../features/money/presentation/screens/vat_declarations_screen.dart';
 import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
@@ -153,6 +154,17 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
         const RouteAccess(features: [WorkspaceFeature.purchases], to: '/money'),
       ),
       builder: (context, state) => const PurchasesHubScreen(),
+    ),
+    // #3070 — the suppliers as a screen: list, search, a deep link.
+    GoRoute(
+      path: '/money/suppliers',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.supplyExpenses],
+          to: '/money',
+        ),
+      ),
+      builder: (context, state) => const SuppliersScreen(),
     ),
     GoRoute(
       path: '/money/sales',

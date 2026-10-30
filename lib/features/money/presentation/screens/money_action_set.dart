@@ -33,7 +33,6 @@ import '../widgets/money_faces_view.dart';
 import '../widgets/premises_lease_sheet.dart';
 import '../widgets/purchases_sheet.dart';
 import '../widgets/rented_rooms_sheet.dart';
-import '../widgets/suppliers_sheet.dart';
 import 'money_screen_ops.dart';
 import 'money_view_data.dart';
 
@@ -330,11 +329,7 @@ class MoneyActionSet {
       if (data.suppliersOn && data.workspace != null)
         OutlinedButton.icon(
           key: const ValueKey('suppliers-button'),
-          onPressed: () => showSuppliersSheet(
-            context,
-            data.workspace!.id,
-            lookupOn: data.supplierLookupOn,
-          ),
+          onPressed: () => context.push('/money/suppliers'),
           icon: const Icon(Icons.storefront_outlined),
           label: fitted(l10n.suppliersTitle),
         ),

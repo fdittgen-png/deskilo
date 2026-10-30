@@ -16843,6 +16843,7 @@
     "description": "#2567 suppliers"
   },
   "suppliersSavedOpen": "Apri",
+  "suppliersSearch": "Cerca per nome, numero o codice fiscale",
   "suppliersTaxUnverified": "Identificativo fiscale non verificato",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

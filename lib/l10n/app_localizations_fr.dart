@@ -25172,6 +25172,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suppliersSavedOpen => 'Ouvrir';
 
   @override
+  String get suppliersSearch => 'Rechercher par nom, numéro ou numéro fiscal';
+
+  @override
   String get suppliersTaxUnverified => 'Identifiant fiscal non vérifié';
 
   @override

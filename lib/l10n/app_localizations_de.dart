@@ -25146,6 +25146,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get suppliersSavedOpen => 'Öffnen';
 
   @override
+  String get suppliersSearch => 'Nach Name, Nummer oder Steuer-ID suchen';
+
+  @override
   String get suppliersTaxUnverified => 'Steuernummer nicht geprüft';
 
   @override

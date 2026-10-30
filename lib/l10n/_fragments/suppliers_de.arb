@@ -207,5 +207,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "suppliersSearch": "Nach Name, Nummer oder Steuer-ID suchen"
 }
