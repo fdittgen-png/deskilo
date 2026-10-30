@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "settingLabelPresenceResyncAfterAwayMinutes": "Releer tras una ausencia",
+  "settingHintPresenceResyncAfterAwayMinutes": "Minutos que la aplicación debe haber estado fuera de la vista (en segundo plano, una pestaña oculta, un quiosco en reposo) antes de volver a leer todo lo que muestra al regresar. Cambiar de ventana nunca vuelve a leer; una conexión en directo perdida siempre lo hace."
+}

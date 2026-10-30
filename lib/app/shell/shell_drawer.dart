@@ -20,6 +20,7 @@ import '../../features/events/providers/attention_providers.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
 import '../../features/workspace/domain/workspace_permission.dart';
+import '../../features/workspace/presentation/widgets/setup_resume_banner.dart' show setupGuideOpenFor;
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
@@ -111,9 +112,10 @@ class ShellDrawer extends ConsumerWidget {
       currentIndex: currentIndex,
       onBranch: onBranch,
       go: go,
+      setupOpen: setupGuideOpenFor(ref, workspace?.id),
     );
     final navigation = entries.navigation();
-    final administration = entries.administration();
+    final administration = [...entries.setupGuide(), ...entries.administration()];
     final member = ref.watch(myMemberProvider).value;
     final sections = reportingSections(
       features: features,
@@ -201,7 +203,7 @@ class ShellDrawer extends ConsumerWidget {
               }),
               ..._financeGroups(group, tile, entries, administration),
               group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
-                'drawer-workspace-settings', 'drawer-availability',
+                'drawer-setup-guide', 'drawer-workspace-settings', 'drawer-availability',
                 'drawer-features', 'drawer-editor',
               }),
             ],

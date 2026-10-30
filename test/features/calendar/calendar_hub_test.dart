@@ -14,6 +14,7 @@ import 'package:deskilo/features/reservations/providers/reservation_providers.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
@@ -191,5 +192,20 @@ void main() {
     await pumpHub(tester, flags: const {'calendarHub': false});
     expect(find.byKey(const ValueKey('calendar-feed')), findsNothing);
     expect(find.byKey(const ValueKey('calendar-date-button')), findsNothing);
+  });
+
+  testWidgets('#3065 — /events lands on an address that names the alerts, and '
+      'a link to it opens them', (tester) async {
+    await pumpHub(tester, size: const Size(800, 1100));
+    expect(find.byKey(const ValueKey('calendar-alerts-view')), findsNothing);
+    final context = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(context).go('/events');
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('calendar-alerts-view')), findsOneWidget);
+    expect(
+      GoRouter.of(context).routeInformationProvider.value.uri.toString(),
+      '/calendar?view=alerts',
+    );
   });
 }

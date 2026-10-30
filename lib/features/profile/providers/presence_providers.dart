@@ -2,7 +2,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/lifecycle/app_foreground.dart';
 import '../../../core/presence/presence_heartbeat.dart';
+import '../../../core/time/clock.dart';
 import '../../auth/providers/auth_providers.dart';
 import 'profile_providers.dart';
 
@@ -14,7 +16,7 @@ part 'presence_providers.g.dart';
 /// Signed out, the provider builds to nothing — no timer exists at all.
 /// Signing in/out rebuilds it (the same authStateProvider gate the
 /// workspace providers use); while built, an [AppLifecycleListener]
-/// pauses the heartbeat whenever the app leaves the resumed state.
+/// pauses the heartbeat whenever the app leaves the screen (#3098).
 @Riverpod(keepAlive: true)
 void presenceBootstrap(Ref ref) {
   final signedIn = ref.watch(authStateProvider).value != null;
@@ -25,10 +27,12 @@ void presenceBootstrap(Ref ref) {
     // when a beat actually fires, and its failures stay inside the
     // heartbeat's best-effort catch.
     touch: () => ref.read(profileRepositoryProvider).touchLastSeen(),
+    clock: ref.watch(clockProvider),
   );
   final lifecycle = AppLifecycleListener(
+    // #3098 — inactive (focus lost, a system sheet) is still in front.
     onStateChange: (state) =>
-        heartbeat.setForeground(foreground: state == AppLifecycleState.resumed),
+        heartbeat.setForeground(foreground: isForeground(state)),
   );
   ref.onDispose(() {
     lifecycle.dispose();
@@ -39,7 +43,7 @@ void presenceBootstrap(Ref ref) {
   // i.e. foregrounded — PresenceHeartbeat already defaults to that.
   final initial = WidgetsBinding.instance.lifecycleState;
   if (initial != null) {
-    heartbeat.setForeground(foreground: initial == AppLifecycleState.resumed);
+    heartbeat.setForeground(foreground: isForeground(initial));
   }
   heartbeat.setSignedIn(signedIn: true);
 }

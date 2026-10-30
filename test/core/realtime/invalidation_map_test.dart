@@ -5,8 +5,8 @@
 // manual invalidation each kept a private copy.
 import 'package:deskilo/app/realtime_invalidations.dart';
 import 'package:deskilo/core/realtime/invalidation_map.dart';
-import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/core/realtime/realtime_sync.dart';
+import 'package:deskilo/core/realtime/resume_resync.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:flutter/widgets.dart';
@@ -95,11 +95,24 @@ void main() {
   test('the resume observer fires on RESUMED only — backgrounding must '
       'not trigger refetch storms', () {
     var calls = 0;
-    final observer = ResumeResyncObserver(() => calls++)
+    var now = DateTime.utc(2026, 10, 30);
+    final observer = ResumeResyncObserver(
+      onResume: () => calls++,
+      now: () => now,
+      threshold: () => Duration.zero,
+    )
       ..didChangeAppLifecycleState(AppLifecycleState.paused)
       ..didChangeAppLifecycleState(AppLifecycleState.inactive)
       ..didChangeAppLifecycleState(AppLifecycleState.hidden);
     expect(calls, 0);
+    observer.didChangeAppLifecycleState(AppLifecycleState.resumed);
+    expect(calls, 1);
+    // #3098 — a focus change alone (inactive → resumed) is not an absence.
+    observer
+      ..didChangeAppLifecycleState(AppLifecycleState.inactive)
+      ..didChangeAppLifecycleState(AppLifecycleState.resumed);
+    expect(calls, 1);
+    now = now.add(const Duration(hours: 1));
     observer.didChangeAppLifecycleState(AppLifecycleState.resumed);
     expect(calls, 1);
   });

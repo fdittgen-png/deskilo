@@ -26,6 +26,7 @@ import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
 import { requiredFields, status as askStatus, submit } from "./connectors.ts";
+import { clientDetail, safeFetch } from "./connectors/safe_fetch.ts";
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -330,6 +331,7 @@ Deno.serve(async (req) => {
         sent.provider,
       ),
       sent.external_id,
+      safeFetch(),
     );
     await admin.from("invoice_transmissions").update({
       receipt: answer.receipt,
@@ -338,7 +340,7 @@ Deno.serve(async (req) => {
     }).eq("id", sent.id);
     return json({
       status: answer.status,
-      detail: answer.detail,
+      detail: clientDetail(answer.status, answer.detail),
       receipt: answer.receipt,
     });
   }
@@ -378,9 +380,15 @@ Deno.serve(async (req) => {
         ? { scheme: payload.receiver_scheme ?? "", id: payload.receiver_id }
         : undefined,
     },
+    safeFetch(),
   );
-  if (outcome.status === "failed") {
-    console.error("send-e-invoice: transmission failed", outcome.detail);
+  // #3090 — the provider's own words are for the server log only: the row
+  // an administrator can read and the answer both carry the fixed key.
+  if (outcome.status !== "accepted") {
+    console.error(
+      `send-e-invoice: transmission ${outcome.status}`,
+      outcome.detail,
+    );
   }
 
   // #1078 — the caller was already resolved at the top; this used to
@@ -398,7 +406,7 @@ Deno.serve(async (req) => {
     status: outcome.status,
     external_id: outcome.externalId,
     document_hash: hash,
-    detail: outcome.detail,
+    detail: clientDetail(outcome.status, outcome.detail),
     by_name: profile?.display_name ?? "",
     environment,
     destination,
@@ -412,7 +420,7 @@ Deno.serve(async (req) => {
   return json({
     status: outcome.status,
     external_id: outcome.externalId,
-    detail: outcome.detail,
+    detail: clientDetail(outcome.status, outcome.detail),
     environment,
     destination,
   }, outcome.status === "accepted" ? 200 : 502);

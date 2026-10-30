@@ -52,7 +52,7 @@ cannot write the ledger, the invoices or the reservations directly.
 | T1 | A member reads another workspace's data — rows **and storage objects** | RLS on every table; storage policies scoped to the workspace folder | `10_tenancy_isolation.sql`, `11_tenancy_matrix.sql` (#1226, #1227); `12_storage_tenancy.sql` for storage, added with 0215 after a hand-made broad read was found live on `floor-plans` |
 | T2 | A member reads another member's invoice | `invoices_select` scoped to the member or an issuer permission | none (#1227) |
 | T3 | Privilege escalation to admin | `has_permission`, role matrix, last-owner protection; row policies read the matrix, never `is_admin_of` (0216, #1321) | `supabase/tests/database/13_matrix_policies.sql` (a narrowed admin row loses the rows), `test/lint/rls_matrix_gate_test.dart` |
-| T4 | A `SECURITY DEFINER` function answers for any workspace | 54 of 57 client-reachable functions check the caller | **3 do not** (#1228) |
+| T4 | A `SECURITY DEFINER` function answers for any workspace | every client-callable definer function establishes the caller and the row's workspace | audit 2026-10-30 (`AUDIT_2026-10-30.md` C6): none answers for a foreign workspace; six Low oracles/references remain (#3095) |
 | T5 | Anonymous execution of a definer function | `revoke … from anon`, swept by `0191` | `migration_grants_test` — source text, forward-looking only |
 | T6 | Invitation abuse: a code redeemed by the wrong person, or replayed | single-use personal codes, workspace-scoped | Dart tests |
 | T7 | A QR or NFC badge photographed and replayed | hashed credentials, revocable, PIN as a second factor for sign-in | Dart tests; the SQL gate is untested |
@@ -65,6 +65,9 @@ cannot write the ledger, the invoices or the reservations directly.
 | T14 | **A malicious administrator** empties a workspace or rewrites its money | delegated actions need confirmations (0017), nobody validates their own event (0086), invoices are immutable | partially — the confirmation rules are tested against fakes |
 | T15 | Diagnostic data leaking through a shared log | device-local only, no telemetry | **no redaction** (#1240) |
 | T16 | A stale session after removal | membership status checked server-side on every call | Dart tests |
+| T17 | SSRF through an endpoint an administrator configures | https-only, private ranges refused | **open** (#3090) |
+| T18 | Badge PIN brute force, badge enumeration on the kiosk | per-badge lockout | **margins too thin** (#3091) |
+| T19 | CI supply chain: an unpinned action or CLI in a job holding secrets | pinning, checksums, secret scanning | **open** (#3094) |
 
 ## Residual risk, stated plainly
 
@@ -73,8 +76,8 @@ not. Sixteen threats, and **the database that enforces most of the
 mitigations is never executed by a test**. That single fact is the
 project's largest security risk, and it is #1226.
 
-T4 is a live finding rather than a hypothetical: three functions answer
-for any workspace id handed to them.
+T4 was a live finding (#1228); the 2026-10-30 audit found no function that
+answers for a foreign workspace. The open items are on the edges: T17–T19.
 
 T14 is the one with no technical answer. An administrator of a workspace
 can legitimately do almost everything in it; what limits them is the
