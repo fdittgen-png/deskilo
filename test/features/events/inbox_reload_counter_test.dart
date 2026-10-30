@@ -94,7 +94,11 @@ void main() {
       container.listen(eventsProvider, (_, _) {}),
       container.listen(eventDecisionsProvider, (_, _) {}),
     ];
-    addTearDown(() => subs.forEach((s) => s.close()));
+    addTearDown(() {
+      for (final s in subs) {
+        s.close();
+      }
+    });
     await container.read(
       realtimeInvalidatorProvider(RealtimeTarget.workspace).future,
     );
