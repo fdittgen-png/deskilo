@@ -5,7 +5,7 @@
 | Commit | `cccb39623` (origin/master during the audit) |
 | Server | dev project `zwzbynivewivvjmripeb`, PostgreSQL 17.6 (aarch64); `pg_stat_statements` accumulated since 2026-07-07 (stats reset). That is the dev workload: owner, testers and agents, mostly demo data. Volumes are small: the largest table is `events` with 785 rows. |
 | Server method | read-only catalog/statistics queries; `EXPLAIN (ANALYZE, BUFFERS)` of a SELECT only, impersonating an active owner inside `begin … rollback` |
-| Client method | static reading of the boot, realtime, cache, events, reservations and plan paths at the commit above, with file:line evidence. No device trace. |
+| Client method | static reading of the boot, realtime, cache, events, reservations and plan paths at the commit above; the key citations are in the summary table (paths under `lib/`), and the full evidence is in each issue. No device trace. |
 | CI method | GitHub Actions job timings of the last 10 successful `quality.yml` runs on master |
 | Not run | real-device startup, frame timings, memory and energy (no lab device in this audit); production telemetry (none is collected); load tests (not authorized) |
 
@@ -23,12 +23,12 @@ The one server hot spot is the RLS helper `event_types_in_view()`. It costs **10
 
 | ID | User impact | Evidence confidence | Finding | Issue |
 |---|---|---|---|---|
-| PERF-1 | High (web: every alt-tab) | High, code + statistics | resume resync on `inactive → resumed`, ×2 targets, busts the plan cache; heartbeat on every resume | #3098 |
-| PERF-2 | High (inbox, badge) | High, code + EXPLAIN + statistics | sweep + 100 events + decisions per signal; unfiltered decisions binding; `event_types_in_view()` 104 ms | #3099 |
-| PERF-3 | Medium (every booking) | High for the mapping, medium for the sweep share (statement text not attributable) | `sweep_day_end` before every window read; `targetNames` refetched per booking and stale on rename; serial place reads | #3100 |
-| PERF-4/5 | Medium, grows with tenants and online users | Code; scaling argued, not measured | unfiltered DELETE bindings on 18 tables; `touch_last_seen` on the published `profiles` | #3101 |
-| PERF-6..9 | Medium (boot, long sessions) | Code | serial warm-up, wasted warm read, 194 KB UI-isolate JSON parse, cache key churn, double fetch after own mutation, 17 MB `bundle.json` shipped | #3102 |
-| PERF-10 | Medium on failure paths | Code | hot providers on Riverpod's default 10× retry; fatal events sweep | #3103 |
+| PERF-1 | High (web: every alt-tab) | High, code + statistics | resume resync on `inactive → resumed`, ×2 targets, busts the plan cache; heartbeat on every resume (`core/realtime/realtime_providers.dart:55-63,112-115,154-179`; `app/shell/shell_effects.dart:118-119`; `core/presence/presence_heartbeat.dart:63-70`) | #3098 |
+| PERF-2 | High (inbox, badge) | High, code + EXPLAIN + statistics | sweep + 100 events + decisions per signal; unfiltered decisions binding; `event_types_in_view()` 104 ms (`features/events/providers/realtime_invalidations.dart:10`; `features/events/data/supabase_event_repository.dart:56`; `core/realtime/realtime_sync.dart:44,92-93`) | #3099 |
+| PERF-3 | Medium (every booking) | High for the mapping, medium for the sweep share (statement text not attributable) | `sweep_day_end` before every window read; `targetNames` refetched per booking and stale on rename; serial place reads (`features/reservations/data/supabase_reservation_repository.dart:66,77`; `features/plan/providers/realtime_invalidations.dart:13-15,37`; `features/plan/data/place_index.dart:37`) | #3100 |
+| PERF-4/5 | Medium, grows with tenants and online users | Code; scaling argued, not measured | unfiltered DELETE bindings on 18 tables; `touch_last_seen` on the published `profiles` (`core/realtime/realtime_sync.dart:91,93,98-102`; `core/presence/presence_rules.dart:12`) | #3101 |
+| PERF-6..9 | Medium (boot, long sessions) | Code | serial warm-up, wasted warm read, 194 KB UI-isolate JSON parse, cache key churn, double fetch after own mutation, 16.5 MB `bundle.json` shipped (`app/boot.dart:65-86`; `main.dart:42`; `features/reservations/providers/reservation_providers.dart:104-113`; `core/cache/cache_store.dart:86-87,237`) | #3102 |
+| PERF-10 | Medium on failure paths | Code | hot providers on Riverpod's default 10× retry; fatal events sweep (`features/events/providers/event_providers.dart:30-109`; `main.dart:115-138`) | #3103 |
 
 Every finding is bounded by its issue, which states a counter test (calls counted on the demo fakes) that fails before the change and passes after it. That is the regression control the issue asks for.
 
@@ -71,7 +71,7 @@ Every finding is bounded by its issue, which states a counter test (calls counte
 
 ## CI (quality.yml on master, last 10 successful runs)
 
-- **End to end:** 25 to 50 minutes (median about 28).
+- **End to end:** 25 to 50 minutes (median about 30: 24 25 26 27 27 32 33 38 47 50).
 - **Slowest jobs (latest run):** `quality · test · money and workspace` 24 min, `quality · test · gates` 22 min, `quality · database` 21 min, `quality · test · other features` 20 min. They run in parallel, so the critical path is about 24 min plus queue and setup.
 - No correctness or security job should leave the PR gate to make this faster. The suite-cost work belongs to #2599 (one screen harness, files cost what they prove), which is already in the implementer's queue.
 
