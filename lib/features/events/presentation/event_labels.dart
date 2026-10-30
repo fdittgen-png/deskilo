@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart' show visibleForTesting;
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/notification_feed.dart';
 import '../domain/workspace_event.dart';
@@ -93,6 +95,7 @@ String eventFallbackLine(AppLocalizations l10n, WorkspaceEvent event) =>
 
 /// The verb of an event line in the reader's language (#3067): a row never
 /// shows the wire word ("created") inside a translated sentence.
+@visibleForTesting
 String eventActionLabel(AppLocalizations l10n, EventAction action) =>
     switch (action) {
       EventAction.created => l10n.eventActionCreated,
