@@ -9133,6 +9133,22 @@
   "@eventOpenSource": {
     "description": "#2573 open the purchase an expense request was filed as"
   },
+  "eventOutcomeApplied": "Done",
+  "@eventOutcomeApplied": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomeConfirmed": "Confirmed",
+  "@eventOutcomeConfirmed": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomePending": "Waiting for a decision",
+  "@eventOutcomePending": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventOutcomeRejected": "Rejected",
+  "@eventOutcomeRejected": {
+    "description": "#3067 the name of the status mark on an event row"
+  },
   "eventPaymentSubmitted": "{actor} recorded a payment of {amount}",
   "@eventPaymentSubmitted": {
     "description": "Feed line for payment events",
@@ -9207,6 +9223,15 @@
       },
       "when": {
         "type": "String"
+      }
+    }
+  },
+  "eventRepeatedMarker": "×{count}",
+  "@eventRepeatedMarker": {
+    "description": "#3067 how many identical events a collapsed row stands for",
+    "placeholders": {
+      "count": {
+        "type": "int"
       }
     }
   },

@@ -7418,6 +7418,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventOpenSource => 'Ouvrir le document d\'achat';
 
   @override
+  String get eventOutcomeApplied => 'Fait';
+
+  @override
+  String get eventOutcomeConfirmed => 'Confirmé';
+
+  @override
+  String get eventOutcomePending => 'En attente d\'une décision';
+
+  @override
+  String get eventOutcomeRejected => 'Refusé';
+
+  @override
   String eventPaymentSubmitted(String actor, String amount) {
     return '$actor a enregistré un paiement de $amount';
   }
@@ -7448,6 +7460,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String eventRejectedBy(String name, String when) {
     return 'Refusé par $name · $when';
+  }
+
+  @override
+  String eventRepeatedMarker(int count) {
+    return '×$count';
   }
 
   @override

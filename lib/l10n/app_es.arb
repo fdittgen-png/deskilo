@@ -5490,6 +5490,10 @@
     }
   },
   "eventOpenSource": "Abrir el documento de compra",
+  "eventOutcomeApplied": "Hecho",
+  "eventOutcomeConfirmed": "Confirmado",
+  "eventOutcomePending": "A la espera de una decisión",
+  "eventOutcomeRejected": "Rechazado",
   "eventPaymentSubmitted": "{actor} registró un pago de {amount}",
   "eventPaymentTermsChangeLine": "{actor} pide fijar las condiciones de pago: {terms}",
   "@eventPaymentTermsChangeLine": {
@@ -5508,6 +5512,7 @@
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
   "eventReject": "Rechazar",
   "eventRejectedBy": "Rechazado por {name} · {when}",
+  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} canceló la reserva de {target}",
   "eventReservationCreated": "{actor} reservó {target}",
   "eventReservationDeleteCheckedIn": "registrada",

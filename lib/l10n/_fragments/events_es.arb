@@ -123,5 +123,10 @@
   "eventActionSubmitted": "enviado",
   "eventActionApproved": "aprobado",
   "eventActionRejected": "rechazado",
-  "eventActionUnknown": "actualizado"
+  "eventActionUnknown": "actualizado",
+  "eventRepeatedMarker": "×{count}",
+  "eventOutcomeApplied": "Hecho",
+  "eventOutcomeConfirmed": "Confirmado",
+  "eventOutcomePending": "A la espera de una decisión",
+  "eventOutcomeRejected": "Rechazado"
 }

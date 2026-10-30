@@ -239,12 +239,15 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
     WorkspaceEvent event, {
     required bool unread,
     required EventFeedFacts facts,
+    int count = 1,
   }) {
     final decisions = facts.decisions[event.id] ?? const <EventDecision>[];
     return ListTile(
                         leading: Icon(_icon(event)),
                         title: Text(
-                          _line(l10n, event, facts.names, facts.targets, facts.currency),
+                          count > 1
+                              ? '${_line(l10n, event, facts.names, facts.targets, facts.currency)} ${l10n.eventRepeatedMarker(count)}'
+                              : _line(l10n, event, facts.names, facts.targets, facts.currency),
                           style: unread
                               ? const TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -321,12 +324,13 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         myMemberId: facts.myMemberId,
                         unread: unread,
                       ),
-                    EventFeedItem(:final event, :final unread) =>
+                    EventFeedItem(:final event, :final unread, :final count) =>
                       _eventTile(
                         context,
                         l10n,
                         event,
                         unread: unread,
+                        count: count,
                         facts: facts,
                       ),
                   };
@@ -440,7 +444,14 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 feed: feed,
                 matchingPending: pendingForMe.where((event) => filter.categories.isEmpty ||
                     filter.categories.contains(categoryOfEvent(event))).toList(),
-                unreadCount: unreadIds.length,
+                unreadCount: inboxAttentionCount(
+                  pending: pendingForMe
+                      .where((e) =>
+                          filter.categories.isEmpty ||
+                          filter.categories.contains(categoryOfEvent(e)))
+                      .length,
+                  feed: feed,
+                ),
                 names: names,
                 targets: targets,
                 currency: currency,

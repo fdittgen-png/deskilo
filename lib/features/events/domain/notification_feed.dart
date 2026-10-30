@@ -195,9 +195,64 @@ class EventFeedItem extends FeedItem {
     required super.at,
     required super.unread,
     required super.category,
+    this.count = 1,
+    this.unreadCount = 0,
   });
 
   final WorkspaceEvent event;
+
+  /// How many of the [count] events are unread: a fold that straddles the
+  /// seen cutoff within one minute is partly read.
+  final int unreadCount;
+
+  /// How many identical events this row stands for (#3067): the same type,
+  /// verb, actor, subject and status in the same minute.
+  final int count;
+}
+
+/// Whether [b] repeats [a]: nothing a reader could tell apart but the
+/// instant, and that to the minute. A pending event is never a repeat — each
+/// one is a decision someone has to take.
+bool _repeats(EventFeedItem a, EventFeedItem b) {
+  final x = a.event;
+  final y = b.event;
+  bool sameMinute(DateTime p, DateTime q) =>
+      p.year == q.year &&
+      p.month == q.month &&
+      p.day == q.day &&
+      p.hour == q.hour &&
+      p.minute == q.minute;
+  return x.status != EventStatus.pending &&
+      y.status != EventStatus.pending &&
+      x.type == y.type &&
+      x.action == y.action &&
+      x.status == y.status &&
+      x.actorMemberId == y.actorMemberId &&
+      x.subjectMemberId == y.subjectMemberId &&
+      x.payload.toString() == y.payload.toString() &&
+      sameMinute(a.at.toUtc(), b.at.toUtc());
+}
+
+/// Folds consecutive identical events of an already-sorted feed into one
+/// row with a count (#3067); the row is unread when any of them is.
+List<FeedItem> _collapseRepeats(List<FeedItem> feed) {
+  final out = <FeedItem>[];
+  for (final item in feed) {
+    final last = out.isEmpty ? null : out.last;
+    if (item is EventFeedItem && last is EventFeedItem && _repeats(last, item)) {
+      out[out.length - 1] = EventFeedItem(
+        last.event,
+        at: last.at,
+        unread: last.unread || item.unread,
+        category: last.category,
+        count: last.count + item.count,
+        unreadCount: last.unreadCount + item.unreadCount,
+      );
+    } else {
+      out.add(item);
+    }
+  }
+  return out;
 }
 
 /// Mixes notes and events into one date-sorted feed under the user's
@@ -230,6 +285,7 @@ List<FeedItem> buildNotificationFeed({
         at: event.createdAt,
         unread: isNew(event),
         category: categoryOfEvent(event),
+        unreadCount: isNew(event) ? 1 : 0,
       ),
   ];
   final filtered = items.where((item) {
@@ -248,8 +304,24 @@ List<FeedItem> buildNotificationFeed({
           ? b.at.compareTo(a.at)
           : a.at.compareTo(b.at),
     );
-  return filtered;
+  return _collapseRepeats(filtered);
 }
+
+/// How many unread things the feed shows (#3067): a collapsed row counts
+/// as the events it stands for, so the header equals what the list holds.
+@visibleForTesting
+int unreadFeedCount(List<FeedItem> feed) => feed.fold(
+      0,
+      (sum, item) =>
+          item is EventFeedItem
+              ? sum + item.unreadCount
+              : (item.unread ? sum + 1 : sum),
+    );
+
+/// The number the bell badge and the inbox header both say (#3067): the
+/// decisions waiting for the reader plus the unread things the list shows.
+int inboxAttentionCount({required int pending, required List<FeedItem> feed}) =>
+    pending + unreadFeedCount(feed);
 
 /// One fold of the grouped feed (#598). [key] is what the group IS —
 /// a [NotificationCategory] (type), a local-midnight [DateTime] (date)
