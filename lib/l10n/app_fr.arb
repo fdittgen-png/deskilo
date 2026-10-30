@@ -5495,6 +5495,7 @@
   "eventQuotaRequested": "{actor} demande {halfDays} demi-journées supplémentaires pour {period}",
   "eventReject": "Refuser",
   "eventRejectedBy": "Refusé par {name} · {when}",
+  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} a annulé la réservation de {target}",
   "eventReservationCreated": "{actor} a réservé {target}",
   "eventReservationDeleteCheckedIn": "pointée",

@@ -123,5 +123,6 @@
   "eventActionSubmitted": "eingereicht",
   "eventActionApproved": "genehmigt",
   "eventActionRejected": "abgelehnt",
-  "eventActionUnknown": "aktualisiert"
+  "eventActionUnknown": "aktualisiert",
+  "eventRepeatedMarker": "×{count}"
 }

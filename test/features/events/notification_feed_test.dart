@@ -41,6 +41,67 @@ MemberNote _note(String id, DateTime at) => MemberNote(
 void main() {
   final t0 = DateTime.utc(2026, 5, 13, 8);
 
+  group('#3067 — identical consecutive events collapse', () {
+    List<FeedItem> feed(List<WorkspaceEvent> events, {DateTime? seen}) =>
+        buildNotificationFeed(
+          events: events,
+          notes: const [],
+          unreadNoteIds: const {},
+          eventsSeenBefore: seen,
+          filter: const NotificationFilterState(),
+        );
+
+    test('three of the same minute are one row with a count', () {
+      final rows = feed([
+        _event('a', t0),
+        _event('b', t0.add(const Duration(seconds: 20))),
+        _event('c', t0.add(const Duration(seconds: 40))),
+      ]);
+      expect(rows, hasLength(1));
+      expect((rows.single as EventFeedItem).count, 3);
+    });
+
+    test('another minute, type, actor or payload keeps its own row', () {
+      expect(
+        feed([_event('a', t0), _event('b', t0.add(const Duration(minutes: 1)))]),
+        hasLength(2),
+      );
+      expect(
+        feed([
+          _event('a', t0),
+          _event('b', t0, type: EventType.payment),
+        ]),
+        hasLength(2),
+      );
+      expect(
+        feed([
+          _event('a', t0, payload: const {'n': 1}),
+          _event('b', t0, payload: const {'n': 2}),
+        ]),
+        hasLength(2),
+      );
+    });
+
+    test('a pending decision is never folded into another', () {
+      WorkspaceEvent pending(String id) => _event(id, t0)
+          .copyWith(status: EventStatus.pending);
+      expect(feed([pending('a'), pending('b')]), hasLength(2));
+    });
+
+    test('the collapsed row is unread when any of them is', () {
+      final rows = feed(
+        [
+          _event('a', t0.subtract(const Duration(hours: 1))),
+          _event('b', t0.add(const Duration(seconds: 5))),
+          _event('c', t0),
+        ],
+        seen: t0.subtract(const Duration(seconds: 1)),
+      );
+      expect(rows, hasLength(2));
+      expect(rows.first.unread, isTrue);
+    });
+  });
+
   test('notes and events interleave strictly by date, newest first', () {
     final feed = buildNotificationFeed(
       events: [

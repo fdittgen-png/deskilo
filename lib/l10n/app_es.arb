@@ -5495,6 +5495,7 @@
   "eventQuotaRequested": "{actor} solicita {halfDays} medias jornadas extra para {period}",
   "eventReject": "Rechazar",
   "eventRejectedBy": "Rechazado por {name} · {when}",
+  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} canceló la reserva de {target}",
   "eventReservationCreated": "{actor} reservó {target}",
   "eventReservationDeleteCheckedIn": "registrada",

@@ -12515,6 +12515,12 @@ abstract class AppLocalizations {
   /// **'Declined by {name} · {when}'**
   String eventRejectedBy(String name, String when);
 
+  /// #3067 how many identical events a collapsed row stands for
+  ///
+  /// In en, this message translates to:
+  /// **'×{count}'**
+  String eventRepeatedMarker(int count);
+
   /// Feed line for a cancelled reservation
   ///
   /// In en, this message translates to:

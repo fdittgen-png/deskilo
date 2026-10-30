@@ -283,5 +283,10 @@
   "eventActionUnknown": "updated",
   "@eventActionUnknown": {
     "description": "#3067 the verb of an event line, in words"
+  },
+  "eventRepeatedMarker": "×{count}",
+  "@eventRepeatedMarker": {
+    "description": "#3067 how many identical events a collapsed row stands for",
+    "placeholders": {"count": {"type": "int"}}
   }
 }

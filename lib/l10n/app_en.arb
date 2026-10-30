@@ -9158,6 +9158,15 @@
       }
     }
   },
+  "eventRepeatedMarker": "×{count}",
+  "@eventRepeatedMarker": {
+    "description": "#3067 how many identical events a collapsed row stands for",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "eventReservationCancelled": "{actor} cancelled the booking of {target}",
   "@eventReservationCancelled": {
     "description": "Feed line for a cancelled reservation",

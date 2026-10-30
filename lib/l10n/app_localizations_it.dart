@@ -7397,6 +7397,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String eventRepeatedMarker(int count) {
+    return '×$count';
+  }
+
+  @override
   String eventReservationCancelled(String actor, String target) {
     return '$actor ha annullato la prenotazione di $target';
   }
