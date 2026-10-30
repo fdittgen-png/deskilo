@@ -17689,6 +17689,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get placeFeedbackFavorite => 'Ajouter aux favoris';
 
   @override
+  String placeFeedbackMine(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n étoiles',
+      one: '1 étoile',
+    );
+    return 'Votre note : $_temp0';
+  }
+
+  @override
+  String get placeFeedbackMineNone => 'Vous ne l\'avez pas notée';
+
+  @override
   String get placeFeedbackNoRating => 'Pas encore de note';
 
   @override

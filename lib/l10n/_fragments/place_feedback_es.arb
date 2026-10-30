@@ -47,5 +47,7 @@
   "placeFeedbackFailed": "No se pudo guardar. Inténtelo de nuevo.",
   "@placeFeedbackFailed": {
     "description": "#2185 place feedback"
-  }
+  },
+  "placeFeedbackMine": "Su valoración: {n, plural, =1{1 estrella} other{{n} estrellas}}",
+  "placeFeedbackMineNone": "No la ha valorado"
 }

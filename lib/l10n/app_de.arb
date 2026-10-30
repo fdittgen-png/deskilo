@@ -11566,6 +11566,8 @@
   "@placeFeedbackFavorite": {
     "description": "#2185 place feedback"
   },
+  "placeFeedbackMine": "Ihre Bewertung: {n, plural, =1{1 Stern} other{{n} Sterne}}",
+  "placeFeedbackMineNone": "Sie haben nicht bewertet",
   "placeFeedbackNoRating": "Noch keine Bewertung",
   "@placeFeedbackNoRating": {
     "description": "#2185 place feedback"
