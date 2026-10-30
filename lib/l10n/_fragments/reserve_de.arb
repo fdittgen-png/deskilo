@@ -159,5 +159,6 @@
       }
     }
   },
-  "reservationNoteOverNotCheckedIn": "Dieser Zeitraum ist ohne Check-in vorbei."
+  "reservationNoteOverNotCheckedIn": "Dieser Zeitraum ist ohne Check-in vorbei.",
+  "bookingRatePlace": "Diesen Platz bewerten"
 }

@@ -2,7 +2,7 @@
   "uxWorkspaceTime": "Ora dello spazio",
   "uxDeviceTime": "La sua ora",
   "uxBookingFor": "Prenotazione per",
-  "uxBookingChargePending": "L’importo e il consumo del piano saranno calcolati secondo il piano del membro. L’importo finale non è disponibile qui.",
+  "uxBookingChargePending": "L’importo e l’uso della quota dipendono dal piano del socio e vengono saldati nell’estratto conto.",
   "uxBookingModesHelp": "Prenotare mantiene l’intervallo scelto. Registrarsi ora passa all’intervallo attuale e indica la sua presenza.",
   "uxBookingCheckInHelp": "Indicare anche la mia presenza alla conferma di questa prenotazione.",
   "uxManageResource": "Gestisci risorsa"

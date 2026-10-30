@@ -2857,6 +2857,7 @@
   "bookingOutsideWalkUpError": "Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.",
   "bookingOverlapsAnother": "Der Platz ist in einem Teil dieser Zeit bereits gebucht.",
   "bookingPastError": "Diese Buchung liegt vollständig in der Vergangenheit.",
+  "bookingRatePlace": "Diesen Platz bewerten",
   "bookingRecordedPastSpaceWhen": "{space} erfasst: {when}. Dieser Zeitraum ist bereits vorbei, die Buchung bleibt als vergangener Besuch erhalten.",
   "@bookingRecordedPastSpaceWhen": {
     "placeholders": {
@@ -18080,7 +18081,7 @@
       }
     }
   },
-  "uxBookingChargePending": "Kosten und Kontingentverbrauch werden gemäß dem Tarif des Mitglieds berechnet. Ein endgültiger Betrag ist hier nicht verfügbar.",
+  "uxBookingChargePending": "Gebühr und Kontingentverbrauch hängen vom Tarif des Mitglieds ab und werden auf der Abrechnung ausgewiesen.",
   "uxBookingCheckInHelp": "Bei Bestätigung dieser Reservierung auch meine Anwesenheit melden.",
   "uxBookingFor": "Buchung für",
   "uxBookingModesHelp": "Reservieren behält den gewählten Zeitraum. Jetzt einchecken wechselt zum aktuellen Zeitraum und meldet Sie als anwesend.",
