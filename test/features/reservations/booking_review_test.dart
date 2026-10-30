@@ -10,6 +10,23 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/screens/reserve_hub.dart';
 
 void main() {
+  // #3066 — the invariant: the Reserve button stays inside the screen, with
+  // the rating collapsed, on a desktop window and on a phone.
+  for (final size in const [Size(1192, 760), Size(390, 844)]) {
+    testWidgets('the confirm button is visible at ${size.width.toInt()}x'
+        '${size.height.toInt()}', (tester) async {
+      await pumpHub(tester, size: size);
+      await tester.tapAt(seatCenter(tester));
+      await tester.pumpAndSettle();
+      final confirm = find.byKey(const ValueKey('booking-confirm'));
+      expect(confirm, findsOneWidget);
+      expect(tester.getRect(confirm).bottom, lessThanOrEqualTo(size.height));
+      expect(find.byType(PlaceFeedbackBar), findsNothing,
+          reason: 'the rating is one tap away, not above the button');
+      expect(tester.takeException(), isNull);
+    });
+  }
+
   testWidgets(
     'real seat entry names its context before feedback and keeps confirm visible',
     (tester) async {
