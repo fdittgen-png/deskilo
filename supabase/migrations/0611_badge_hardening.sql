@@ -2,7 +2,7 @@
 -- risk: transforming
 -- (two functions are restated; no stored row moves)
 --
--- 0610 (#3091, SEC-E2 of the #2960 audit) -- the badge PIN is longer by
+-- 0611 (#3091, SEC-E2 of the #2960 audit) -- the badge PIN is longer by
 -- default and the lockout grows.
 --
 --   1. security.badge_pin_min_length (4..8, default 6): the fewest digits a
@@ -170,4 +170,4 @@ $function$;
 revoke execute on function public.set_badge_pin(text) from public, anon;
 grant execute on function public.set_badge_pin(text) to authenticated;
 
-select public.set_deskilo_schema_version(610);
+select public.set_deskilo_schema_version(611);

@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3091 / 0610: a new badge PIN has at least the registry's minimum number of
+-- #3091 / 0611: a new badge PIN has at least the registry's minimum number of
 -- digits (6 by default), and the badge lockout grows — the configured failures
 -- within the configured window lock for that window, twice as many within an
 -- hour lock for the hour, three times as many within a day for the day.
