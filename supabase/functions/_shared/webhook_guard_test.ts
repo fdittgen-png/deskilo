@@ -6,31 +6,12 @@
 import {
   assert,
   assertEquals,
-  assertFalse,
   assertThrows,
 } from "jsr:@std/assert@1";
 import {
   configOf,
-  MAX_TRANSMISSION_SKEW_MS,
   redactedProviderLog,
-  transmissionFresh,
 } from "./webhook_guard.ts";
-
-const now = Date.parse("2026-10-30T12:00:00Z");
-
-Deno.test("a transmission more than five minutes off is stale", () => {
-  assert(transmissionFresh("2026-10-30T11:56:00Z", now));
-  assert(transmissionFresh("2026-10-30T12:04:00Z", now));
-  assertFalse(transmissionFresh("2026-10-30T11:54:00Z", now));
-  assertFalse(transmissionFresh("2026-10-30T12:06:00Z", now));
-  assertEquals(MAX_TRANSMISSION_SKEW_MS, 300_000);
-});
-
-Deno.test("a missing or unreadable transmission time is not fresh", () => {
-  assertFalse(transmissionFresh(null, now));
-  assertFalse(transmissionFresh("", now));
-  assertFalse(transmissionFresh("yesterday", now));
-});
 
 Deno.test("a failed credential read throws instead of falling back", () => {
   assertThrows(

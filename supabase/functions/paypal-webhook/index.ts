@@ -18,7 +18,6 @@
 import {
   configOf,
   redactedProviderLog,
-  transmissionFresh,
 } from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { toMinor } from "../_shared/money.ts";
@@ -134,11 +133,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
   if (!cfg.webhook_id || !cfg.client_id) {
     console.log("paypal webhook not configured for workspace", intent.workspace_id);
     return respond("not_configured", 200);
-  }
-
-  // #3093 E7 — a transmission whose own time is not recent is a replay.
-  if (!transmissionFresh(req.headers.get("paypal-transmission-time"), Date.now())) {
-    return respond("stale_transmission", 400);
   }
 
   // Verify the transmission against PayPal before trusting anything. An

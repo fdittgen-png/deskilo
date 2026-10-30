@@ -2,24 +2,8 @@
 //
 // #3093 — the small guards the payment webhooks and the VAT check share, pure
 // so each is testable: a credential read that fails is an error, never a quiet
-// fall back to the installation's key; a provider's transmission time must be
-// recent; a provider's body is never logged whole; a database error never
+// fall back to the installation's key; a provider's body is never logged whole; a database error never
 // travels to the caller.
-
-/** The most a webhook's own timestamp may be off the clock. */
-export const MAX_TRANSMISSION_SKEW_MS = 5 * 60 * 1000;
-
-/** Whether the provider's transmission [time] (an ISO timestamp) is within
- * [skewMs] of [now]; a missing or unreadable time is not fresh. */
-export function transmissionFresh(
-  time: string | null | undefined,
-  now: number,
-  skewMs: number = MAX_TRANSMISSION_SKEW_MS,
-): boolean {
-  if (!time) return false;
-  const at = Date.parse(time);
-  return Number.isFinite(at) && Math.abs(now - at) <= skewMs;
-}
 
 /** The stored credential config of a read, or an error when the read
  * failed: the caller answers 500 (the provider retries) instead of using
