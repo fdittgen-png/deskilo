@@ -35,6 +35,8 @@ Deno.test("only a public https destination passes", async () => {
       "https://[::1]/x",
       "https://[fd00::1]/x",
       "https://[::ffff:10.0.0.1]/x",
+      "https://[64:ff9b::a00:1]/x",
+      "https://[2002:a00:1::]/x",
       "https://rebind.example.com/x",
       "https://mixed.example.com/x",
       "https://unknown.example.com/x",

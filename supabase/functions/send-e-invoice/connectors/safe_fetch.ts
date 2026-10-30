@@ -40,6 +40,13 @@ function ipv4(address: string): number[] | null {
   return octets.every((o) => o >= 0 && o <= 255) ? octets : null;
 }
 
+/** The IPv4 address two hex groups of an IPv6 literal spell. */
+function embedded(high: string, low: string): string {
+  const hi = parseInt(high, 16);
+  const lo = parseInt(low, 16);
+  return `${hi >> 8}.${hi & 255}.${lo >> 8}.${lo & 255}`;
+}
+
 /** Whether [address] (IPv4 or IPv6 literal) may be called: false for every
  * range that is not the public internet. */
 export function isPublicAddress(address: string): boolean {
@@ -63,11 +70,14 @@ export function isPublicAddress(address: string): boolean {
   if (mapped) return isPublicAddress(mapped[1]);
   // The URL parser writes a mapped IPv4 address as two hex groups.
   const hex = v6.match(/^::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})$/);
-  if (hex) {
-    const hi = parseInt(hex[1], 16);
-    const lo = parseInt(hex[2], 16);
-    return isPublicAddress(`${hi >> 8}.${hi & 255}.${lo >> 8}.${lo & 255}`);
-  }
+  if (hex) return isPublicAddress(embedded(hex[1], hex[2]));
+  // NAT64 (64:ff9b::/96) and 6to4 (2002::/16) wrap an IPv4 address: decode it
+  // and judge that, so neither is a way round the private ranges.
+  const nat64 = v6.match(/^64:ff9b::([0-9a-f]{1,4}):([0-9a-f]{1,4})$/);
+  if (nat64) return isPublicAddress(embedded(nat64[1], nat64[2]));
+  const sixToFour = v6.match(/^2002:([0-9a-f]{1,4}):([0-9a-f]{1,4}):/);
+  if (sixToFour) return isPublicAddress(embedded(sixToFour[1], sixToFour[2]));
+  if (v6.startsWith("64:ff9b:")) return false; // any other NAT64 form
   if (/^f[cd]/.test(v6)) return false; // unique local fc00::/7
   if (/^fe[89ab]/.test(v6)) return false; // link-local fe80::/10
   if (/^ff/.test(v6)) return false; // multicast
