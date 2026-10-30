@@ -290,3 +290,14 @@ It is listed here so the absence is a decision rather than an oversight.
 
 `PERFORMANCE_AUDIT_2026-10-30.md` holds the measured server state (dev statistics and an EXPLAIN of the events page), the client paths that repeat work, and the CI timings. The budgets in the table above are unchanged. What was not measured is listed there with a device recipe. The fixes are #3098–#3103, each with a counter test.
 
+
+### The events page and `event_types_in_view()` (#3099, 0612)
+
+The 100-row events page, as the owner of the busiest dev workspace, `EXPLAIN (ANALYZE, BUFFERS)` through RLS, measured on 2026-10-30:
+
+| | page (Limit) | `event_types_in_view` (SubPlan 1) | shared hits |
+|---|---|---|---|
+| before (0400 helper) | 46.6 ms | 44.6 ms | 1,794 |
+| after (0612 helper) | 21.1 ms | 19.8 ms | 1,440 |
+
+The plan is unchanged (`events_workspace_created_idx`, hashed SubPlan 1). Only the helper got cheaper: it used to call `event_type_view_permissions(type)` once per held permission and event type. Now each type maps to its permissions once. For the person in 22 workspaces, the helper returns the same 594 rows (0 differing) in 70 ms instead of 131. `30_query_budgets.sql` holds the page under 100 ms at 5,000 events (dev: 8 ms after, 30 ms before).
