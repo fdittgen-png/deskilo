@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/build_instance.dart' show functionVerifyJwt;
+import 'lint_sources.dart';
 
 void main() {
   test('config.toml and the instance builder agree on verify_jwt', () {
@@ -37,7 +38,7 @@ void main() {
     );
     for (final slug in functionVerifyJwt.keys) {
       expect(
-        Directory('supabase/functions/$slug').existsSync(),
+        directoryAt('supabase/functions/$slug').existsSync(),
         isTrue,
         reason: '$slug is not a function directory',
       );

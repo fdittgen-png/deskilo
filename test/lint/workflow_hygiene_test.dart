@@ -15,6 +15,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 /// Third-party actions not yet pinned by SHA.
 const int _unpinnedThirdPartyActions = 37;
 
@@ -24,18 +26,12 @@ const int _workflowsWithoutPermissions = 6;
 /// Lines with an `inputs` expression inside a `run:` block.
 const int _inputsInsideRun = 21;
 
-List<File> _workflowFiles() => Directory('.github/workflows')
-    .listSync()
-    .whereType<File>()
-    .where((f) => f.path.endsWith('.yml'))
-    .toList();
+List<File> _workflowFiles() => filesWithExtension('.github/workflows', '.yml');
 
 List<File> _allActionFiles() => [
   ..._workflowFiles(),
-  ...Directory('.github/actions')
-      .listSync(recursive: true)
-      .whereType<File>()
-      .where((f) => f.path.endsWith('action.yml')),
+  for (final f in filesWithExtension('.github/actions', '.yml', recursive: true))
+    if (f.path.endsWith('action.yml')) f,
 ];
 
 void main() {
