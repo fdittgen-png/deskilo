@@ -11,7 +11,19 @@ import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_classes.dart';
 
-/// Workspace identity, deliberately not a workspace switcher.
+/// The side of the ring a branded space's avatar wears on the chip.
+const double _ringSide = 38;
+
+/// The radius of the space's avatar on the chip.
+const double _avatarRadius = 16;
+
+/// The narrowest name column worth keeping the avatar for: below the room
+/// for the avatar, its gap and this, the chip shows the name alone.
+const double _minNameWidth = 64;
+
+/// Workspace identity, deliberately not a workspace switcher. It fits any
+/// title box the app bar leaves it: the avatar is dropped where it would
+/// crowd out the name, and the name ellipsizes.
 class SpaceChip extends ConsumerWidget {
   const SpaceChip({super.key, required this.tabTitle});
   final String tabTitle;
@@ -21,53 +33,63 @@ class SpaceChip extends ConsumerWidget {
     final l10n = context.l10n;
     final space = ref.watch(currentWorkspaceProvider).value;
     final text = Theme.of(context).textTheme;
-    return Row(
-      key: const ValueKey('space-chip'),
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (space != null)
-          switch (spaceBrand(space)) {
-            // #2313 — a ring in the space's colour and pattern.
-            final brand? => SizedBox.square(
-              key: const ValueKey('space-chip-brand'),
-              dimension: 38,
-              child: ClipOval(
-                child: BrandSwatch(
-                  color: brand.color,
-                  pattern: brand.pattern,
-                  child: Center(
-                    child: WorkspaceAvatar(workspace: space, radius: 16),
+    final brand = space == null ? null : spaceBrand(space);
+    final avatarSide = brand != null ? _ringSide : 2 * _avatarRadius;
+    return LayoutBuilder(
+      builder: (context, constraints) => Row(
+        key: const ValueKey('space-chip'),
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (space != null &&
+              constraints.maxWidth >=
+                  avatarSide + AppSpacing.sm + _minNameWidth) ...[
+            if (brand != null)
+              // #2313 — a ring in the space's colour and pattern.
+              SizedBox.square(
+                key: const ValueKey('space-chip-brand'),
+                dimension: _ringSide,
+                child: ClipOval(
+                  child: BrandSwatch(
+                    color: brand.color,
+                    pattern: brand.pattern,
+                    child: Center(
+                      child: WorkspaceAvatar(
+                        workspace: space,
+                        radius: _avatarRadius,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              )
+            else
+              WorkspaceAvatar(workspace: space, radius: _avatarRadius),
+            const SizedBox(width: AppSpacing.sm),
+          ],
+          Flexible(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${l10n.appTitle} · ${space?.name ?? ''}',
+                  key: const ValueKey('space-chip-name'),
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                  style: text.labelLarge,
+                ),
+                Text(
+                  tabTitle,
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                  style: text.titleMedium,
+                ),
+              ],
             ),
-            null => WorkspaceAvatar(workspace: space, radius: 16),
-          },
-        const SizedBox(width: AppSpacing.sm),
-        Flexible(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${l10n.appTitle} · ${space?.name ?? ''}',
-                key: const ValueKey('space-chip-name'),
-                maxLines: 1,
-                softWrap: false,
-                overflow: TextOverflow.ellipsis,
-                style: text.labelLarge,
-              ),
-              Text(
-                tabTitle,
-                maxLines: 1,
-                softWrap: false,
-                overflow: TextOverflow.ellipsis,
-                style: text.titleMedium,
-              ),
-            ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -714,6 +714,11 @@
  "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
  "supLookupRate": "Supplier lookups per minute",
  "supLookupRateHint": "The most supplier lookups one person may make per minute on this server; more are answered as busy and nothing is sent to the registry. Set in the app's settings.",
+ "recordsHostingCountry": "Where this server keeps its data",
+ "recordsHostingNone": "Not declared",
+ "recordsHostingCountryHint": "The country where the database and its backups are, as your hosting contract states it. The app says only what you declare here; left undeclared, it states no location. Set in the app's platform settings.",
+ "recordsCraReference": "CRA authorisation to keep records outside Canada",
+ "recordsCraReferenceHint": "A Canadian business keeps its records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). If your server is outside Canada, the reference of that authorisation; leave it empty if you hold none. Set in the app's workspace settings.",
  "optPerMinute": "{n} per minute",
  "bankMaxBytes": "Largest bank statement file",
  "bankMaxBytesHint": "A larger file is refused whole before it is read. A setting of the server, set in the app's settings.",
@@ -725,5 +730,8 @@
  "optMovements": "{n} movements",
  "accountingTitle": "Books and bank",
  "accountingWhy": "How the bank's statement files are read into the space and matched to its invoices.",
- "accountingOk": "The bank statements' bounds and suggestion window are set."
+ "accountingOk": "The bank statements' bounds and suggestion window are set.",
+ "retUsYears": "US state record retention",
+ "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
+ "retUsRule": "The retention rule applies"
 }

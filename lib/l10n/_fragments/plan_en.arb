@@ -339,5 +339,9 @@
   "a11ySeatBlocked": "not available",
   "@a11ySeatBlocked": {
     "description": "Screen-reader state of a blocked seat."
+  },
+  "reservePlanLoading": "Loading the plan…",
+  "@reservePlanLoading": {
+    "description": "#3068 the label of the plan skeleton on Reserve"
   }
 }

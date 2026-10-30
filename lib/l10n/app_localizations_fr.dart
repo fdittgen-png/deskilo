@@ -7621,6 +7621,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Prérempli avec montant ÷ quantité ; arrondissez si vous voulez.';
 
   @override
+  String get expenseVatAcquisition =>
+      'Acheté auprès d\'un fournisseur à l\'étranger';
+
+  @override
+  String expenseVatAcquisitionAmount(String tax, String deductible) {
+    return 'Impôt sur les acquisitions dû : $tax · déductible : $deductible';
+  }
+
+  @override
+  String get expenseVatAcquisitionHint =>
+      'La facture ne porte pas la TVA de ce pays : le montant en est la base, l\'espace doit l\'impôt sur les acquisitions et en déduit sa part.';
+
+  @override
   String get expenseVatAsset => 'Une immobilisation';
 
   @override
@@ -19804,6 +19817,35 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible tant que le mode tournage est actif : ce formulaire affiche une personne inventée, et l\'enregistrer écraserait les vraies coordonnées de quelqu\'un. Désactivez d\'abord le mode tournage.';
 
   @override
+  String get recordsLocationCraNone =>
+      'Aucune autorisation de l\'ARC n\'est enregistrée. Un gestionnaire de facturation l\'enregistre dans les paramètres de l\'espace.';
+
+  @override
+  String get recordsLocationCraNotice =>
+      'Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l\'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Rien ne déclare cette installation au Canada.';
+
+  @override
+  String get recordsLocationCraOutside =>
+      'Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l\'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Cette installation est déclarée hors du Canada.';
+
+  @override
+  String recordsLocationCraReference(String reference) {
+    return 'Autorisation de l\'ARC : $reference';
+  }
+
+  @override
+  String recordsLocationHosted(String country) {
+    return 'Hébergé en $country, selon la déclaration de l\'exploitant de cette installation';
+  }
+
+  @override
+  String get recordsLocationTitle => 'Où les registres sont conservés';
+
+  @override
+  String get recordsLocationUndeclared =>
+      'Non déclaré par l\'exploitant de cette installation : l\'application n\'indique aucun lieu';
+
+  @override
   String get refFacetMonth => 'Mois';
 
   @override
@@ -21219,6 +21261,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservePickDateTooltip => 'Choisir une date';
 
   @override
+  String get reservePlanLoading => 'Chargement du plan…';
+
+  @override
   String reserveRoomFor(int count) {
     return 'Salle de réunion · $count personnes';
   }
@@ -21261,6 +21306,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get retentionClassVoucher => 'Pièces justificatives';
 
   @override
+  String retentionExtendedBySetting(int years) {
+    return '$years ans à partir de la date du document (réglage propre à cet espace)';
+  }
+
+  @override
   String retentionFromDocument(int years) {
     return '$years ans à partir de la date du document';
   }
@@ -21273,6 +21323,96 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String retentionHint(String country) {
     return 'Combien de temps $country impose à cet espace de conserver chaque type de pièce. Les durées sont des données de référence ; une règle non encore confirmée n\'a pas été vérifiée par une personne habilitée à la confirmer.';
+  }
+
+  @override
+  String get retentionHoldClass => 'Type de pièce';
+
+  @override
+  String get retentionHoldEveryClass => 'Tous les types de pièces';
+
+  @override
+  String get retentionHoldEveryIssuer => 'Tous les émetteurs';
+
+  @override
+  String get retentionHoldIssuer => 'Émetteur';
+
+  @override
+  String get retentionHoldPlace => 'Imposer une conservation';
+
+  @override
+  String get retentionHoldPlaced => 'La conservation est imposée.';
+
+  @override
+  String get retentionHoldReason => 'Motif';
+
+  @override
+  String get retentionHoldReasonHelper =>
+      'Pourquoi les pièces doivent rester, par exemple un contrôle fiscal ou un litige.';
+
+  @override
+  String retentionHoldReasonMissing(int max) {
+    return 'Indiquez le motif, en $max caractères au plus.';
+  }
+
+  @override
+  String get retentionHoldRelease => 'Lever';
+
+  @override
+  String get retentionHoldReleaseReason => 'Pourquoi la conservation prend fin';
+
+  @override
+  String get retentionHoldReleaseTitle => 'Lever cette conservation ?';
+
+  @override
+  String get retentionHoldReleased => 'La conservation est levée.';
+
+  @override
+  String get retentionHoldSaveFailed =>
+      'La conservation n\'a pas pu être enregistrée. Rien n\'a changé.';
+
+  @override
+  String retentionHoldSince(String what, String issuer, String date) {
+    return '$what · $issuer · depuis le $date';
+  }
+
+  @override
+  String get retentionHoldsEmpty =>
+      'Aucune conservation imposée. Elle garde des pièces au-delà de leur durée de conservation, pour un contrôle ou un litige.';
+
+  @override
+  String get retentionHoldsLoadFailed =>
+      'Les conservations imposées n’ont pas pu être lues.';
+
+  @override
+  String get retentionHoldsTitle => 'Conservations imposées';
+
+  @override
+  String retentionKeptHold(String reason) {
+    return 'Conservé au titre d’une conservation imposée : $reason';
+  }
+
+  @override
+  String get retentionKeptReview =>
+      'Conservé jusqu’à ce qu’une personne vérifie la règle de conservation';
+
+  @override
+  String retentionKeptReviewEnded(String date) {
+    return 'Conservé jusqu’à ce qu’une personne vérifie la règle de conservation ; sa durée a pris fin le $date';
+  }
+
+  @override
+  String retentionKeptUntil(String date, String rule) {
+    return 'Conservé jusqu’au $date selon $rule';
+  }
+
+  @override
+  String get retentionPeriodEnded =>
+      'La durée de conservation a pris fin : l’espace peut examiner l’effacement';
+
+  @override
+  String retentionResetRefused(String why) {
+    return 'Rien n’a été supprimé : la comptabilité doit encore être conservée. $why';
   }
 
   @override
@@ -22137,6 +22277,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingGroupReadiness => 'Mise en service';
 
   @override
+  String get settingGroupRecords => 'Lieu de conservation des registres';
+
+  @override
   String get settingGroupSecurity => 'Limites de sécurité et d\'accès';
 
   @override
@@ -22342,8 +22485,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.';
 
   @override
+  String get settingHintRecordsCraReference =>
+      'Pour une entreprise canadienne : la référence de l\'autorisation de l\'ARC (LTA art. 286, LIR art. 230) lorsque ses registres sont conservés hors du Canada. Vide signifie qu\'aucune n\'est enregistrée.';
+
+  @override
+  String get settingHintRecordsHostingCountry =>
+      'Deux lettres (ISO 3166), par ex. CA ou DE, selon ce que votre contrat d\'hébergement indique pour la base de données et ses sauvegardes. Vide signifie non déclaré : l\'application n\'indique alors aucun lieu.';
+
+  @override
   String get settingHintRetentionUsYears =>
-      'Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus ou moins que la règle fédérale. 0 signifie que la règle de conservation s\'applique. Pas un conseil juridique : vérifiez le délai de votre État.';
+      'Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus que la règle fédérale. Une durée plus longue s\'applique à toutes les pièces ; une durée plus courte ne change rien. 0 signifie que la règle de conservation s\'applique. Pas un conseil juridique : vérifiez le délai de votre État.';
 
   @override
   String get settingHintSecurityBadgeLockoutFailures =>
@@ -22547,6 +22698,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingLabelReadinessRecentExportDays => 'Fenêtre d’export récent';
+
+  @override
+  String get settingLabelRecordsCraReference =>
+      'Autorisation de l\'ARC de conserver les registres hors du Canada';
+
+  @override
+  String get settingLabelRecordsHostingCountry =>
+      'Pays où cette installation conserve ses données';
 
   @override
   String get settingLabelRetentionUsYears =>
@@ -26470,6 +26629,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefCashOption => 'Option pour les encaissements';
 
   @override
+  String get taxRefCategories =>
+      'Autres catégories de lignes qu\'elle additionne (séparées par des virgules, p. ex. acquisition)';
+
+  @override
   String get taxRefCategory => 'Catégorie EN 16931';
 
   @override
@@ -28041,6 +28204,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get vatChangeNeedsSave =>
       'Enregistrez d\'abord le taux ; puis changez-le par la loi.';
+
+  @override
+  String get vatDeclAcquisitionTax => 'Impôt sur les acquisitions';
 
   @override
   String get vatDeclAeat303 => 'Fichier AEAT (Modelo 303)';

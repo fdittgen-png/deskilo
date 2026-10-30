@@ -45,7 +45,13 @@ class VatLineSelector {
     this.correction,
     this.vatSign = 0,
     this.schemes,
+    this.opted = false,
   });
+
+  /// Only the part of a line's base that is an exempt supply the seller
+  /// opted to tax (CH Ziffer 205, `VatDeclarationLine.optedNetCents`); such
+  /// a term adds up no tax.
+  final bool opted;
 
   /// #2361 — only these taxes of a line that is made of several (`GST`,
   /// `HST`, `QST`): the term then adds up the matching components, not the
@@ -66,7 +72,8 @@ class VatLineSelector {
   /// none of the country's groups counts as "other". Null for no exclusion.
   final Set<String>? excludeGroups;
 
-  /// Only these categories; null for any.
+  /// Only these categories; null for any category of a sale (the
+  /// acquisition tax on a purchase is picked only by its own category).
   final Set<String>? categories;
 
   /// Only corrections (true), only the period's own lines (false), or both.
@@ -89,6 +96,7 @@ class VatLineSelector {
         correction: correction,
         vatSign: vatSign,
         schemes: schemes,
+        opted: opted,
       );
 
   /// Whether [line] is picked; [VatDeclarationLine.group] is the fiscal
@@ -98,7 +106,9 @@ class VatLineSelector {
       (rates == null || rates!.contains(line.percent)) &&
       (groups == null || groups!.contains(line.group)) &&
       (excludeGroups == null || !excludeGroups!.contains(line.group)) &&
-      (categories == null || categories!.contains(_category(line))) &&
+      (categories == null
+          ? !line.isAcquisition
+          : categories!.contains(_category(line))) &&
       (correction == null || line.isCorrection == correction) &&
       (vatSign == 0 || line.vatCents.sign == vatSign);
 }
@@ -108,6 +118,7 @@ class VatLineSelector {
 /// without the server's split is split here with the same arithmetic.
 int _amountOf(
     VatLineSelector selector, VatDeclarationLine line, bool ofTax, String country) {
+  if (selector.opted) return ofTax ? 0 : line.optedNetCents;
   final schemes = selector.schemes;
   if (schemes == null) return ofTax ? line.vatCents : line.netCents;
   final parts = line.components.isNotEmpty

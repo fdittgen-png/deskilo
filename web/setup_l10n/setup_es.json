@@ -714,6 +714,11 @@
  "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
  "supLookupRate": "Búsquedas de proveedores por minuto",
  "supLookupRateHint": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor; las demás se responden como ocupadas y no se envía nada al registro. Se ajusta en la configuración de la app.",
+ "recordsHostingCountry": "Dónde conserva este servidor sus datos",
+ "recordsHostingNone": "No declarado",
+ "recordsHostingCountryHint": "El país donde se encuentran la base de datos y sus copias de seguridad, tal como lo indica su contrato de alojamiento. La aplicación solo dice lo que usted declara aquí; sin declaración, no indica ningún lugar. Se ajusta en la configuración de la plataforma de la aplicación.",
+ "recordsCraReference": "Autorización de la CRA para conservar los registros fuera de Canadá",
+ "recordsCraReferenceHint": "Una empresa canadiense conserva sus registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Si su servidor está fuera de Canadá, la referencia de esa autorización; déjelo vacío si no tiene ninguna. Se ajusta en la configuración del espacio de la aplicación.",
  "optPerMinute": "{n} por minuto",
  "bankMaxBytes": "Tamaño máximo de un extracto bancario",
  "bankMaxBytesHint": "Un archivo mayor se rechaza entero antes de leerse. Ajuste del servidor, en la configuración de la app.",
@@ -725,5 +730,8 @@
  "optMovements": "{n} movimientos",
  "accountingTitle": "Contabilidad y banco",
  "accountingWhy": "Cómo se leen los extractos del banco en el espacio y se concilian con sus facturas.",
- "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados."
+ "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados.",
+ "retUsYears": "Conservación de registros, estado de EE. UU.",
+ "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
+ "retUsRule": "Se aplica la regla de conservación"
 }

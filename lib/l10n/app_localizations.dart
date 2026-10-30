@@ -12869,6 +12869,24 @@ abstract class AppLocalizations {
   /// **'Prefilled from amount ÷ quantity; round up if you like.'**
   String get expenseSupplyUnitPriceHint;
 
+  /// #2360 input VAT: the switch for a service bought from a supplier abroad (acquisition tax, CH Ziffer 383)
+  ///
+  /// In en, this message translates to:
+  /// **'Bought from a supplier abroad'**
+  String get expenseVatAcquisition;
+
+  /// #2360 input VAT: the acquisition tax an expense owes and its deductible share
+  ///
+  /// In en, this message translates to:
+  /// **'Acquisition tax owed: {tax} · deductible: {deductible}'**
+  String expenseVatAcquisitionAmount(String tax, String deductible);
+
+  /// #2360 input VAT: what the acquisition switch means
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice carries no VAT of this country: the amount is the base, and the space owes the acquisition tax on it and deducts its share.'**
+  String get expenseVatAcquisitionHint;
+
   /// #2357 input VAT: expenseVatAsset
   ///
   /// In en, this message translates to:
@@ -32886,6 +32904,48 @@ abstract class AppLocalizations {
   /// **'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.'**
   String get recordingPrivacyWriteRefused;
 
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'No CRA authorisation is recorded. A billing manager records it in the workspace settings.'**
+  String get recordsLocationCraNone;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). Nothing declares this installation in Canada.'**
+  String get recordsLocationCraNotice;
+
+  /// #2378 the accounting settings: a Canadian space whose installation is declared in another country
+  ///
+  /// In en, this message translates to:
+  /// **'A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). This installation is declared outside Canada.'**
+  String get recordsLocationCraOutside;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'CRA authorisation: {reference}'**
+  String recordsLocationCraReference(String reference);
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Hosted in {country}, as the operator of this installation declares it'**
+  String recordsLocationHosted(String country);
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Where the records are kept'**
+  String get recordsLocationTitle;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Not declared by the operator of this installation: the app states no location'**
+  String get recordsLocationUndeclared;
+
   /// No description provided for @refFacetMonth.
   ///
   /// In en, this message translates to:
@@ -35424,6 +35484,12 @@ abstract class AppLocalizations {
   /// **'Choose a date'**
   String get reservePickDateTooltip;
 
+  /// #3068 the label of the plan skeleton on Reserve
+  ///
+  /// In en, this message translates to:
+  /// **'Loading the plan…'**
+  String get reservePlanLoading;
+
   /// #2631 resource_reserve: reserveRoomFor
   ///
   /// In en, this message translates to:
@@ -35496,6 +35562,12 @@ abstract class AppLocalizations {
   /// **'Vouchers'**
   String get retentionClassVoucher;
 
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'{years} years from the document date (this space’s own setting)'**
+  String retentionExtendedBySetting(int years);
+
   /// #2571 retention clocks
   ///
   /// In en, this message translates to:
@@ -35513,6 +35585,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How long {country} makes this space keep each kind of record. The periods are reference data; a rule not yet confirmed has not been checked by a person with the authority to confirm it.'**
   String retentionHint(String country);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of record'**
+  String get retentionHoldClass;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Every kind of record'**
+  String get retentionHoldEveryClass;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Every issuer'**
+  String get retentionHoldEveryIssuer;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Issuer'**
+  String get retentionHoldIssuer;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Place a hold'**
+  String get retentionHoldPlace;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The hold is in place.'**
+  String get retentionHoldPlaced;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get retentionHoldReason;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Why the records must stay, for example a tax audit or a dispute.'**
+  String get retentionHoldReasonHelper;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Name the reason, in at most {max} characters.'**
+  String retentionHoldReasonMissing(int max);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Release'**
+  String get retentionHoldRelease;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Why the hold ends'**
+  String get retentionHoldReleaseReason;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Release this hold?'**
+  String get retentionHoldReleaseTitle;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The hold is released.'**
+  String get retentionHoldReleased;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The hold could not be saved. Nothing changed.'**
+  String get retentionHoldSaveFailed;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'{what} · {issuer} · since {date}'**
+  String retentionHoldSince(String what, String issuer, String date);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.'**
+  String get retentionHoldsEmpty;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The holds could not be read.'**
+  String get retentionHoldsLoadFailed;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Legal holds'**
+  String get retentionHoldsTitle;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kept under a legal hold: {reason}'**
+  String retentionKeptHold(String reason);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kept until a person reviews the retention rule'**
+  String get retentionKeptReview;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kept until a person reviews the retention rule; its period ended on {date}'**
+  String retentionKeptReviewEnded(String date);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Kept until {date} under {rule}'**
+  String retentionKeptUntil(String date, String rule);
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'The retention period has ended: the space may review the erasure'**
+  String get retentionPeriodEnded;
+
+  /// #2571 retention holds and dispositions
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was deleted: the books must still be kept. {why}'**
+  String retentionResetRefused(String why);
 
   /// #2571 retention clocks
   ///
@@ -36912,6 +37128,12 @@ abstract class AppLocalizations {
   /// **'Readiness'**
   String get settingGroupReadiness;
 
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Records location'**
+  String get settingGroupRecords;
+
   /// #2485 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -37224,10 +37446,22 @@ abstract class AppLocalizations {
   /// **'Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.'**
   String get settingHintReadinessRecentExportDays;
 
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'For a Canadian business: the reference of the CRA authorisation (ETA s.286, ITA s.230) when its records are kept outside Canada. Empty means none is recorded.'**
+  String get settingHintRecordsCraReference;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Two letters (ISO 3166), e.g. CA or DE, as your hosting contract states where the database and its backups are. Empty means not declared: the app then states no location.'**
+  String get settingHintRecordsHostingCountry;
+
   /// #2571 retention settings
   ///
   /// In en, this message translates to:
-  /// **'Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.'**
+  /// **'Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.'**
   String get settingHintRetentionUsYears;
 
   /// #2485 settings: Setting hint.
@@ -37553,6 +37787,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recent export window'**
   String get settingLabelReadinessRecentExportDays;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'CRA authorisation to keep records outside Canada'**
+  String get settingLabelRecordsCraReference;
+
+  /// #2378 records location
+  ///
+  /// In en, this message translates to:
+  /// **'Country where this installation keeps its data'**
+  String get settingLabelRecordsHostingCountry;
 
   /// #2571 retention settings
   ///
@@ -43601,6 +43847,12 @@ abstract class AppLocalizations {
   /// **'Option for cash accounting'**
   String get taxRefCashOption;
 
+  /// #2360 tax reference: the line categories a return box adds beyond the sales (acquisition for the Swiss 383)
+  ///
+  /// In en, this message translates to:
+  /// **'Other line categories it adds (comma separated, e.g. acquisition)'**
+  String get taxRefCategories;
+
   /// #2477 tax reference: Field: VAT category code of a rate.
   ///
   /// In en, this message translates to:
@@ -46192,6 +46444,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save the rate first; then change it by law.'**
   String get vatChangeNeedsSave;
+
+  /// #2360 input VAT: the note beside a return line of acquisition tax
+  ///
+  /// In en, this message translates to:
+  /// **'Acquisition tax'**
+  String get vatDeclAcquisitionTax;
 
   /// #2363 VAT filing files (ES, IT): vatDeclAeat303
   ///

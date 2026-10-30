@@ -5638,6 +5638,9 @@
   "expenseSupplyToggle": "Das ist ein Vorrat für den Raum",
   "expenseSupplyUnitPrice": "Stückpreis (was ein Verbrauch kostet)",
   "expenseSupplyUnitPriceHint": "Vorbelegt mit Betrag ÷ Menge; runden Sie nach Belieben.",
+  "expenseVatAcquisition": "Bei einem Lieferanten im Ausland gekauft",
+  "expenseVatAcquisitionAmount": "Geschuldete Bezugsteuer: {tax} · abziehbar: {deductible}",
+  "expenseVatAcquisitionHint": "Die Rechnung enthält keine Steuer dieses Landes: Der Betrag ist die Bemessungsgrundlage, der Bereich schuldet darauf die Bezugsteuer und zieht seinen Anteil als Vorsteuer ab.",
   "expenseVatAsset": "Ein Anlagegut",
   "@expenseVatAsset": {
     "description": "#2357 input VAT: expenseVatAsset"
@@ -13044,6 +13047,13 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationCraNone": "Keine CRA-Genehmigung erfasst. Eine Person mit Abrechnungsrechten erfasst sie in den Einstellungen des Bereichs.",
+  "recordsLocationCraNotice": "Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Nichts erklärt diese Installation als in Kanada.",
+  "recordsLocationCraOutside": "Ein kanadisches Unternehmen bewahrt seine Bücher und Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Diese Installation ist außerhalb Kanadas erklärt.",
+  "recordsLocationCraReference": "CRA-Genehmigung: {reference}",
+  "recordsLocationHosted": "Gehostet in {country}, wie der Betreiber dieser Installation es erklärt",
+  "recordsLocationTitle": "Wo die Aufzeichnungen aufbewahrt werden",
+  "recordsLocationUndeclared": "Vom Betreiber dieser Installation nicht erklärt: Die App nennt keinen Ort",
   "refFacetMonth": "Monat",
   "refFacetPerson": "Person",
   "refFacetStatus": "Status",
@@ -14303,6 +14313,7 @@
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
   "reservePickDateTooltip": "Datum wählen",
+  "reservePlanLoading": "Plan wird geladen …",
   "reserveRoomFor": "Besprechungsraum · {count} Personen",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
@@ -14349,6 +14360,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
+  "retentionExtendedBySetting": "{years} Jahre ab dem Belegdatum (eigene Einstellung dieses Space)",
   "retentionFromDocument": "{years} Jahre ab dem Belegdatum",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
@@ -14376,6 +14388,30 @@
       }
     }
   },
+  "retentionHoldClass": "Art der Unterlage",
+  "retentionHoldEveryClass": "Alle Arten von Unterlagen",
+  "retentionHoldEveryIssuer": "Alle Aussteller",
+  "retentionHoldIssuer": "Aussteller",
+  "retentionHoldPlace": "Sperre setzen",
+  "retentionHoldPlaced": "Die Sperre ist gesetzt.",
+  "retentionHoldReason": "Grund",
+  "retentionHoldReasonHelper": "Warum die Unterlagen bleiben müssen, etwa wegen einer Betriebsprüfung oder eines Streitfalls.",
+  "retentionHoldReasonMissing": "Nennen Sie den Grund, höchstens {max} Zeichen.",
+  "retentionHoldRelease": "Aufheben",
+  "retentionHoldReleaseReason": "Warum die Sperre endet",
+  "retentionHoldReleaseTitle": "Diese Sperre aufheben?",
+  "retentionHoldReleased": "Die Sperre ist aufgehoben.",
+  "retentionHoldSaveFailed": "Die Sperre konnte nicht gespeichert werden. Nichts wurde geändert.",
+  "retentionHoldSince": "{what} · {issuer} · seit {date}",
+  "retentionHoldsEmpty": "Keine Sperre aktiv. Eine Sperre hält Unterlagen über ihre Aufbewahrungsfrist hinaus, etwa für eine Prüfung oder einen Streitfall.",
+  "retentionHoldsLoadFailed": "Die Sperren konnten nicht gelesen werden.",
+  "retentionHoldsTitle": "Aufbewahrungssperren",
+  "retentionKeptHold": "Wegen einer Aufbewahrungssperre behalten: {reason}",
+  "retentionKeptReview": "Aufbewahrt, bis eine Person die Aufbewahrungsregel prüft",
+  "retentionKeptReviewEnded": "Aufbewahrt, bis eine Person die Aufbewahrungsregel prüft; ihre Frist endete am {date}",
+  "retentionKeptUntil": "Aufbewahrt bis {date} nach {rule}",
+  "retentionPeriodEnded": "Die Aufbewahrungsfrist ist abgelaufen: der Space kann die Löschung prüfen",
+  "retentionResetRefused": "Nichts wurde gelöscht: die Buchhaltung muss noch aufbewahrt werden. {why}",
   "retentionTitle": "Aufbewahrungsfristen",
   "@retentionTitle": {
     "description": "#2571 retention clocks"
@@ -15160,6 +15196,7 @@
   "@settingGroupReadiness": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupRecords": "Aufbewahrungsort der Aufzeichnungen",
   "settingGroupSecurity": "Sicherheits- und Zugriffsgrenzen",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15314,7 +15351,9 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
-  "settingHintRetentionUsYears": "Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr oder weniger als die bundesweite Vorgabe verlangt. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+  "settingHintRecordsCraReference": "Für ein kanadisches Unternehmen: das Aktenzeichen der CRA-Genehmigung (ETA s.286, ITA s.230), wenn seine Aufzeichnungen außerhalb Kanadas aufbewahrt werden. Leer heißt, es ist keine erfasst.",
+  "settingHintRecordsHostingCountry": "Zwei Buchstaben (ISO 3166), z. B. CA oder DE, wie Ihr Hosting-Vertrag den Ort der Datenbank und ihrer Sicherungen angibt. Leer heißt nicht erklärt: Die App nennt dann keinen Ort.",
+  "settingHintRetentionUsYears": "Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr als die bundesweite Vorgabe verlangt. Eine längere Frist gilt für alle Unterlagen; eine kürzere ändert nichts. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
@@ -15480,6 +15519,8 @@
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelRecordsCraReference": "CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas",
+  "settingLabelRecordsHostingCountry": "Land, in dem diese Installation ihre Daten aufbewahrt",
   "settingLabelRetentionUsYears": "Aufbewahrung in den USA, Bundesstaat (Jahre)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -17437,6 +17478,7 @@
   "@taxRefCashOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
   },
+  "taxRefCategories": "Weitere Zeilenkategorien, die sie zusammenzählt (durch Komma getrennt, z. B. acquisition)",
   "taxRefCategory": "EN-16931-Kategorie",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."
@@ -18552,6 +18594,7 @@
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
   },
+  "vatDeclAcquisitionTax": "Bezugsteuer",
   "vatDeclAeat303": "AEAT-Datei (Modelo 303)",
   "@vatDeclAeat303": {
     "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"

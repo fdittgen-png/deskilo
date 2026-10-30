@@ -719,6 +719,11 @@ window.SETUP_L10N={
    "supLookupWaitHint": "How long the server waits for the company registry (VIES) when someone looks up a supplier's VAT number, before it says the registry did not answer. Set in the app's settings.",
    "supLookupRate": "Supplier lookups per minute",
    "supLookupRateHint": "The most supplier lookups one person may make per minute on this server; more are answered as busy and nothing is sent to the registry. Set in the app's settings.",
+   "recordsHostingCountry": "Where this server keeps its data",
+   "recordsHostingNone": "Not declared",
+   "recordsHostingCountryHint": "The country where the database and its backups are, as your hosting contract states it. The app says only what you declare here; left undeclared, it states no location. Set in the app's platform settings.",
+   "recordsCraReference": "CRA authorisation to keep records outside Canada",
+   "recordsCraReferenceHint": "A Canadian business keeps its records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). If your server is outside Canada, the reference of that authorisation; leave it empty if you hold none. Set in the app's workspace settings.",
    "optPerMinute": "{n} per minute",
    "bankMaxBytes": "Largest bank statement file",
    "bankMaxBytesHint": "A larger file is refused whole before it is read. A setting of the server, set in the app's settings.",
@@ -730,7 +735,10 @@ window.SETUP_L10N={
    "optMovements": "{n} movements",
    "accountingTitle": "Books and bank",
    "accountingWhy": "How the bank's statement files are read into the space and matched to its invoices.",
-   "accountingOk": "The bank statements' bounds and suggestion window are set."
+   "accountingOk": "The bank statements' bounds and suggestion window are set.",
+   "retUsYears": "US state record retention",
+   "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
+   "retUsRule": "The retention rule applies"
   },
   "feature": {
    "calendarTab": [
@@ -2377,6 +2385,11 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) quand quelqu'un recherche le numéro de TVA d'un fournisseur, avant d'indiquer que le registre n'a pas répondu. Se règle dans les paramètres de l'app.",
    "supLookupRate": "Recherches fournisseur par minute",
    "supLookupRateHint": "Le nombre maximal de recherches fournisseur qu'une personne peut faire par minute sur ce serveur ; au-delà, la recherche est signalée comme occupée et rien n'est envoyé au registre. Se règle dans les paramètres de l'app.",
+   "recordsHostingCountry": "Où ce serveur conserve ses données",
+   "recordsHostingNone": "Non déclaré",
+   "recordsHostingCountryHint": "Le pays où se trouvent la base de données et ses sauvegardes, tel que l'indique votre contrat d'hébergement. L'application ne dit que ce que vous déclarez ici ; sans déclaration, elle n'indique aucun lieu. Se règle dans les paramètres de la plateforme de l'application.",
+   "recordsCraReference": "Autorisation de l'ARC de conserver les registres hors du Canada",
+   "recordsCraReferenceHint": "Une entreprise canadienne conserve ses registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Si votre serveur est hors du Canada, la référence de cette autorisation ; laissez vide si vous n'en avez pas. Se règle dans les paramètres de l'espace de l'application.",
    "optPerMinute": "{n} par minute",
    "bankMaxBytes": "Taille maximale d'un relevé bancaire",
    "bankMaxBytesHint": "Un fichier plus grand est refusé en entier avant d'être lu. Réglage du serveur, dans les paramètres de l'app.",
@@ -2388,7 +2401,10 @@ window.SETUP_L10N={
    "optMovements": "{n} mouvements",
    "accountingTitle": "Comptabilité et banque",
    "accountingWhy": "Comment les relevés de la banque sont lus dans l'espace et rapprochés de ses factures.",
-   "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées."
+   "accountingOk": "Les limites des relevés bancaires et la fenêtre de proposition sont réglées.",
+   "retUsYears": "Conservation des pièces, État américain",
+   "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
+   "retUsRule": "La règle de conservation s'applique"
   },
   "feature": {
    "calendarTab": [
@@ -4035,6 +4051,11 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
    "supLookupRate": "Lieferantensuchen pro Minute",
    "supLookupRateHint": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf; weitere werden als ausgelastet beantwortet und nicht an das Register gesendet. Wird in den Einstellungen der App festgelegt.",
+   "recordsHostingCountry": "Wo dieser Server seine Daten aufbewahrt",
+   "recordsHostingNone": "Nicht erklärt",
+   "recordsHostingCountryHint": "Das Land, in dem die Datenbank und ihre Sicherungen liegen, wie Ihr Hosting-Vertrag es angibt. Die App sagt nur, was Sie hier erklären; ohne Erklärung nennt sie keinen Ort. Wird in den Plattformeinstellungen der App eingestellt.",
+   "recordsCraReference": "CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas",
+   "recordsCraReferenceHint": "Ein kanadisches Unternehmen bewahrt seine Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Steht Ihr Server außerhalb Kanadas, das Aktenzeichen dieser Genehmigung; leer lassen, wenn Sie keine haben. Wird in den Einstellungen des Bereichs in der App eingestellt.",
    "optPerMinute": "{n} pro Minute",
    "bankMaxBytes": "Größte Kontoauszugsdatei",
    "bankMaxBytesHint": "Eine größere Datei wird vollständig abgelehnt, bevor sie gelesen wird. Eine Servereinstellung, in den Einstellungen der App.",
@@ -4046,7 +4067,10 @@ window.SETUP_L10N={
    "optMovements": "{n} Bewegungen",
    "accountingTitle": "Buchhaltung und Bank",
    "accountingWhy": "Wie die Kontoauszugsdateien der Bank in den Space gelesen und seinen Rechnungen zugeordnet werden.",
-   "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt."
+   "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt.",
+   "retUsYears": "Aufbewahrung, US-Bundesstaat",
+   "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+   "retUsRule": "Die Aufbewahrungsregel gilt"
   },
   "feature": {
    "calendarTab": [
@@ -5693,6 +5717,11 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Cuánto espera el servidor al registro de empresas (VIES) cuando alguien busca el número de IVA de un proveedor, antes de indicar que el registro no respondió. Se ajusta en la configuración de la app.",
    "supLookupRate": "Búsquedas de proveedores por minuto",
    "supLookupRateHint": "El máximo de búsquedas de proveedores que una persona puede hacer por minuto en este servidor; las demás se responden como ocupadas y no se envía nada al registro. Se ajusta en la configuración de la app.",
+   "recordsHostingCountry": "Dónde conserva este servidor sus datos",
+   "recordsHostingNone": "No declarado",
+   "recordsHostingCountryHint": "El país donde se encuentran la base de datos y sus copias de seguridad, tal como lo indica su contrato de alojamiento. La aplicación solo dice lo que usted declara aquí; sin declaración, no indica ningún lugar. Se ajusta en la configuración de la plataforma de la aplicación.",
+   "recordsCraReference": "Autorización de la CRA para conservar los registros fuera de Canadá",
+   "recordsCraReferenceHint": "Una empresa canadiense conserva sus registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Si su servidor está fuera de Canadá, la referencia de esa autorización; déjelo vacío si no tiene ninguna. Se ajusta en la configuración del espacio de la aplicación.",
    "optPerMinute": "{n} por minuto",
    "bankMaxBytes": "Tamaño máximo de un extracto bancario",
    "bankMaxBytesHint": "Un archivo mayor se rechaza entero antes de leerse. Ajuste del servidor, en la configuración de la app.",
@@ -5704,7 +5733,10 @@ window.SETUP_L10N={
    "optMovements": "{n} movimientos",
    "accountingTitle": "Contabilidad y banco",
    "accountingWhy": "Cómo se leen los extractos del banco en el espacio y se concilian con sus facturas.",
-   "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados."
+   "accountingOk": "Los límites de los extractos bancarios y la ventana de propuesta están ajustados.",
+   "retUsYears": "Conservación de registros, estado de EE. UU.",
+   "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
+   "retUsRule": "Se aplica la regla de conservación"
   },
   "feature": {
    "calendarTab": [
@@ -7351,6 +7383,11 @@ window.SETUP_L10N={
    "supLookupWaitHint": "Quanto il server attende il registro delle imprese (VIES) quando qualcuno cerca la partita IVA di un fornitore, prima di indicare che il registro non ha risposto. Si imposta nelle impostazioni dell'app.",
    "supLookupRate": "Ricerche fornitore al minuto",
    "supLookupRateHint": "Il numero massimo di ricerche fornitore che una persona può fare al minuto su questo server; le altre risultano occupate e non viene inviato nulla al registro. Si imposta nelle impostazioni dell'app.",
+   "recordsHostingCountry": "Dove questo server conserva i suoi dati",
+   "recordsHostingNone": "Non dichiarato",
+   "recordsHostingCountryHint": "Il paese in cui si trovano il database e i suoi backup, come indica il Suo contratto di hosting. L'app dice solo ciò che Lei dichiara qui; senza dichiarazione non indica alcun luogo. Si imposta nelle impostazioni della piattaforma dell'app.",
+   "recordsCraReference": "Autorizzazione della CRA a conservare le scritture fuori dal Canada",
+   "recordsCraReferenceHint": "Un'impresa canadese conserva le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Se il Suo server è fuori dal Canada, il riferimento di tale autorizzazione; lasci vuoto se non ne ha. Si imposta nelle impostazioni dello spazio dell'app.",
    "optPerMinute": "{n} al minuto",
    "bankMaxBytes": "Dimensione massima di un estratto conto",
    "bankMaxBytesHint": "Un file più grande viene rifiutato per intero prima di essere letto. Impostazione del server, nelle impostazioni dell'app.",
@@ -7362,7 +7399,10 @@ window.SETUP_L10N={
    "optMovements": "{n} movimenti",
    "accountingTitle": "Contabilità e banca",
    "accountingWhy": "Come gli estratti conto della banca vengono letti nello spazio e abbinati alle sue fatture.",
-   "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati."
+   "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati.",
+   "retUsYears": "Conservazione dei documenti, stato USA",
+   "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
+   "retUsRule": "Vale la regola di conservazione"
   },
   "feature": {
    "calendarTab": [

@@ -9479,6 +9479,26 @@
   "expenseSupplyToggle": "This is a supply for the space",
   "expenseSupplyUnitPrice": "Unit price (what a consumption costs)",
   "expenseSupplyUnitPriceHint": "Prefilled from amount ÷ quantity; round up if you like.",
+  "expenseVatAcquisition": "Bought from a supplier abroad",
+  "@expenseVatAcquisition": {
+    "description": "#2360 input VAT: the switch for a service bought from a supplier abroad (acquisition tax, CH Ziffer 383)"
+  },
+  "expenseVatAcquisitionAmount": "Acquisition tax owed: {tax} · deductible: {deductible}",
+  "@expenseVatAcquisitionAmount": {
+    "description": "#2360 input VAT: the acquisition tax an expense owes and its deductible share",
+    "placeholders": {
+      "tax": {
+        "type": "String"
+      },
+      "deductible": {
+        "type": "String"
+      }
+    }
+  },
+  "expenseVatAcquisitionHint": "The invoice carries no VAT of this country: the amount is the base, and the space owes the acquisition tax on it and deducts its share.",
+  "@expenseVatAcquisitionHint": {
+    "description": "#2360 input VAT: what the acquisition switch means"
+  },
   "expenseVatAsset": "A fixed asset",
   "@expenseVatAsset": {
     "description": "#2357 input VAT: expenseVatAsset"
@@ -23507,6 +23527,44 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationCraNone": "No CRA authorisation is recorded. A billing manager records it in the workspace settings.",
+  "@recordsLocationCraNone": {
+    "description": "#2378 records location"
+  },
+  "recordsLocationCraNotice": "A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). Nothing declares this installation in Canada.",
+  "@recordsLocationCraNotice": {
+    "description": "#2378 records location"
+  },
+  "recordsLocationCraOutside": "A Canadian business keeps its books and records in Canada unless the CRA authorises another place (ETA s.286, ITA s.230). This installation is declared outside Canada.",
+  "@recordsLocationCraOutside": {
+    "description": "#2378 the accounting settings: a Canadian space whose installation is declared in another country"
+  },
+  "recordsLocationCraReference": "CRA authorisation: {reference}",
+  "@recordsLocationCraReference": {
+    "description": "#2378 records location",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "recordsLocationHosted": "Hosted in {country}, as the operator of this installation declares it",
+  "@recordsLocationHosted": {
+    "description": "#2378 records location",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "recordsLocationTitle": "Where the records are kept",
+  "@recordsLocationTitle": {
+    "description": "#2378 records location"
+  },
+  "recordsLocationUndeclared": "Not declared by the operator of this installation: the app states no location",
+  "@recordsLocationUndeclared": {
+    "description": "#2378 records location"
+  },
   "refFacetMonth": "Month",
   "refFacetPerson": "Person",
   "refFacetStatus": "Status",
@@ -24970,6 +25028,10 @@
   "@reservePickDateTooltip": {
     "description": "Tooltip of the calendar icon at the end of the Reserve hub's date strip, opening a date picker for days beyond the pills (#208)"
   },
+  "reservePlanLoading": "Loading the plan…",
+  "@reservePlanLoading": {
+    "description": "#3068 the label of the plan skeleton on Reserve"
+  },
   "reserveRoomFor": "Meeting room · {count} people",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
@@ -25030,6 +25092,15 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
+  "retentionExtendedBySetting": "{years} years from the document date (this space’s own setting)",
+  "@retentionExtendedBySetting": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
   "retentionFromDocument": "{years} years from the document date",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
@@ -25053,6 +25124,141 @@
     "description": "#2571 retention clocks",
     "placeholders": {
       "country": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionHoldClass": "Kind of record",
+  "@retentionHoldClass": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldEveryClass": "Every kind of record",
+  "@retentionHoldEveryClass": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldEveryIssuer": "Every issuer",
+  "@retentionHoldEveryIssuer": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldIssuer": "Issuer",
+  "@retentionHoldIssuer": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldPlace": "Place a hold",
+  "@retentionHoldPlace": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldPlaced": "The hold is in place.",
+  "@retentionHoldPlaced": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReason": "Reason",
+  "@retentionHoldReason": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReasonHelper": "Why the records must stay, for example a tax audit or a dispute.",
+  "@retentionHoldReasonHelper": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReasonMissing": "Name the reason, in at most {max} characters.",
+  "@retentionHoldReasonMissing": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "retentionHoldRelease": "Release",
+  "@retentionHoldRelease": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReleaseReason": "Why the hold ends",
+  "@retentionHoldReleaseReason": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReleaseTitle": "Release this hold?",
+  "@retentionHoldReleaseTitle": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldReleased": "The hold is released.",
+  "@retentionHoldReleased": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldSaveFailed": "The hold could not be saved. Nothing changed.",
+  "@retentionHoldSaveFailed": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldSince": "{what} · {issuer} · since {date}",
+  "@retentionHoldSince": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      },
+      "issuer": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionHoldsEmpty": "No hold is in place. A hold keeps records past their retention period, for an audit or a dispute.",
+  "@retentionHoldsEmpty": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldsLoadFailed": "The holds could not be read.",
+  "@retentionHoldsLoadFailed": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionHoldsTitle": "Legal holds",
+  "@retentionHoldsTitle": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionKeptHold": "Kept under a legal hold: {reason}",
+  "@retentionKeptHold": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionKeptReview": "Kept until a person reviews the retention rule",
+  "@retentionKeptReview": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionKeptReviewEnded": "Kept until a person reviews the retention rule; its period ended on {date}",
+  "@retentionKeptReviewEnded": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionKeptUntil": "Kept until {date} under {rule}",
+  "@retentionKeptUntil": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
+  "retentionPeriodEnded": "The retention period has ended: the space may review the erasure",
+  "@retentionPeriodEnded": {
+    "description": "#2571 retention holds and dispositions"
+  },
+  "retentionResetRefused": "Nothing was deleted: the books must still be kept. {why}",
+  "@retentionResetRefused": {
+    "description": "#2571 retention holds and dispositions",
+    "placeholders": {
+      "why": {
         "type": "String"
       }
     }
@@ -26008,6 +26214,10 @@
   "@settingGroupReadiness": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupRecords": "Records location",
+  "@settingGroupRecords": {
+    "description": "#2378 records location"
+  },
   "settingGroupSecurity": "Security and access limits",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -26216,7 +26426,15 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
-  "settingHintRetentionUsYears": "Years a US space keeps its records when its state asks for more or less than the federal default. 0 means the retention rule applies. Never legal advice: confirm the period of your state.",
+  "settingHintRecordsCraReference": "For a Canadian business: the reference of the CRA authorisation (ETA s.286, ITA s.230) when its records are kept outside Canada. Empty means none is recorded.",
+  "@settingHintRecordsCraReference": {
+    "description": "#2378 records location"
+  },
+  "settingHintRecordsHostingCountry": "Two letters (ISO 3166), e.g. CA or DE, as your hosting contract states where the database and its backups are. Empty means not declared: the app then states no location.",
+  "@settingHintRecordsHostingCountry": {
+    "description": "#2378 records location"
+  },
+  "settingHintRetentionUsYears": "Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
@@ -26435,6 +26653,14 @@
   "settingLabelReadinessRecentExportDays": "Recent export window",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelRecordsCraReference": "CRA authorisation to keep records outside Canada",
+  "@settingLabelRecordsCraReference": {
+    "description": "#2378 records location"
+  },
+  "settingLabelRecordsHostingCountry": "Country where this installation keeps its data",
+  "@settingLabelRecordsHostingCountry": {
+    "description": "#2378 records location"
   },
   "settingLabelRetentionUsYears": "Record retention, US state (years)",
   "@settingLabelRetentionUsYears": {
@@ -30988,6 +31214,10 @@
   "@taxRefCashOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
   },
+  "taxRefCategories": "Other line categories it adds (comma separated, e.g. acquisition)",
+  "@taxRefCategories": {
+    "description": "#2360 tax reference: the line categories a return box adds beyond the sales (acquisition for the Swiss 383)"
+  },
   "taxRefCategory": "EN 16931 category",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."
@@ -32780,6 +33010,10 @@
   "vatChangeNeedsSave": "Save the rate first; then change it by law.",
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
+  },
+  "vatDeclAcquisitionTax": "Acquisition tax",
+  "@vatDeclAcquisitionTax": {
+    "description": "#2360 input VAT: the note beside a return line of acquisition tax"
   },
   "vatDeclAeat303": "AEAT file (Modelo 303)",
   "@vatDeclAeat303": {

@@ -6,6 +6,7 @@
 // And, before erasing, what goes and what stays.
 import '../../../core/data/json_reader.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/vat/retention_assessment.dart';
 
 /// The kinds of request the server accepts.
 const rightsRequestKinds = [
@@ -107,6 +108,7 @@ class ErasureStore {
     this.basis,
     this.period,
     this.note,
+    this.retention,
   });
 
   factory ErasureStore._read(JsonReader r) => ErasureStore(
@@ -115,6 +117,7 @@ class ErasureStore {
     basis: r.stringOrNull('basis'),
     period: r.stringOrNull('period'),
     note: r.stringOrNull('note'),
+    retention: RetentionAssessment.fromJson(r.raw('retention')),
   );
 
   final String store;
@@ -122,6 +125,10 @@ class ErasureStore {
   final String? basis;
   final String? period;
   final String? note;
+
+  /// #2571 — what retention says of the records this store keeps (invoices,
+  /// the ledger): held, kept until a day, or for a person to review.
+  final RetentionAssessment? retention;
 }
 
 /// `preview_my_erasure`: what erasing would remove, restrict, keep (with

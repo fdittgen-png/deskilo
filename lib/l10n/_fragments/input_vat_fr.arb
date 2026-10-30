@@ -64,5 +64,9 @@
   "scheduleVatInvalid": "Saisissez une part déductible entre 0 et 100.",
   "@scheduleVatInvalid": {
     "description": "#2357 input VAT: scheduleVatInvalid"
-  }
+  },
+  "expenseVatAcquisition": "Acheté auprès d'un fournisseur à l'étranger",
+  "expenseVatAcquisitionHint": "La facture ne porte pas la TVA de ce pays : le montant en est la base, l'espace doit l'impôt sur les acquisitions et en déduit sa part.",
+  "expenseVatAcquisitionAmount": "Impôt sur les acquisitions dû : {tax} · déductible : {deductible}",
+  "vatDeclAcquisitionTax": "Impôt sur les acquisitions"
 }

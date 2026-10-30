@@ -19,6 +19,7 @@ import '../../domain/book_profile.dart';
 import '../../providers/book_profile_providers.dart';
 import 'book_chart_sheet.dart';
 import 'book_software_field.dart';
+import 'records_location_tile.dart';
 import 'retention_clocks_tile.dart';
 
 String _bookAuthorityLabel(AppLocalizations l10n, BookAuthority a) =>
@@ -420,7 +421,11 @@ class BookProfileSection extends ConsumerWidget {
           trailing: const Icon(Icons.add),
           onTap: () => _showBookProfileSheet(context),
         ),
-        RetentionClocksTile(country: ref.watch(currentWorkspaceProvider).value?.countryCode),
+        RetentionClocksTile(
+          country: ref.watch(currentWorkspaceProvider).value?.countryCode,
+          workspaceId: ref.watch(currentWorkspaceProvider).value?.id,
+        ),
+        RecordsLocationTile(country: ref.watch(currentWorkspaceProvider).value?.countryCode),
         for (final site in sites.values)
           ListTile(
             key: ValueKey('book-chart-${site.id}'),

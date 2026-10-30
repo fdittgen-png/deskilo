@@ -307,5 +307,9 @@
   "taxRefOutsideVatPostalCodes": "Postal-code prefixes outside the VAT (comma-separated)",
   "@taxRefOutsideVatPostalCodes": {
     "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
+  },
+  "taxRefCategories": "Other line categories it adds (comma separated, e.g. acquisition)",
+  "@taxRefCategories": {
+    "description": "#2360 tax reference: the line categories a return box adds beyond the sales (acquisition for the Swiss 383)"
   }
 }

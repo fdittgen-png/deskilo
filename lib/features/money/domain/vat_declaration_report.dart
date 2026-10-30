@@ -79,8 +79,8 @@ Map<String, Object?> vatDeclarationReportData({
     for (final line in declaration.lines)
       {
         // #2357 — a correction line names the return it corrects; an
-        // input line says it is deductible VAT.
-        'rate': (line.isCorrection || line.isInput) && lineNote != null
+        // input line says it is deductible VAT; the acquisition tax says so.
+        'rate': line.namedBesideRate && lineNote != null
             ? '${lineNote(line)} · ${rate(line.percent)}'
             : rate(line.percent),
         'net': money(line.netCents),

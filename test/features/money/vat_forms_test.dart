@@ -182,6 +182,75 @@ void main() {
     },
   );
 
+  group('Switzerland — the supplies opted for and the acquisition tax', () {
+    // An opted bare letting: 10 000.00 of the 16 000.00 taxed at 8.1 %; a
+    // service bought abroad for 1 200.00, 97.20 owed, 89.10 of it deductible.
+    final lines = [
+      const VatDeclarationLine(
+        percent: 8.1,
+        category: 'S',
+        grossCents: 1729600,
+        netCents: 1600000,
+        vatCents: 129600,
+        invoiceCount: 2,
+        optedNetCents: 1000000,
+      ),
+      const VatDeclarationLine(
+        percent: 8.1,
+        category: vatAcquisitionCategory,
+        grossCents: 129720,
+        netCents: 120000,
+        vatCents: 9720,
+        invoiceCount: 2,
+      ),
+      const VatDeclarationLine(
+        percent: 8.1,
+        category: 'S',
+        grossCents: 128910,
+        netCents: 120000,
+        vatCents: 8910,
+        invoiceCount: 2,
+        direction: 'input',
+      ),
+    ];
+
+    test('205 is the opted part of 200; 383 the tax owed on the purchases, '
+        'added to 399 and deducted on 400', () {
+      final form = _form('CH', lines);
+      expect(form['200']!.$1, 1600000, reason: 'an acquisition is no sale');
+      expect(form['205']!.$1, 1000000);
+      expect(form['299']!.$1, 1600000);
+      expect(form['303'], (1600000, 129600), reason: '205 stays in 303');
+      expect(form['383'], (120000, 9720));
+      expect(form['399']!.$2, 129600 + 9720);
+      expect(form['400']!.$2, 8910);
+      expect(form['500']!.$2, 129600 + 9720 - 8910);
+    });
+
+    test('the boxes print the words of their tax reference rows', () {
+      final boxes = {
+        for (final b in vatFormBoxes(
+          'CH',
+          lines,
+          periodEnd: DateTime(2026, 9, 30),
+        ))
+          b.code: b.label,
+      };
+      expect(boxes['205'], startsWith('In Ziffer 200 enthaltene Entgelte'));
+      expect(boxes['383'], 'Bezugsteuer (Art. 45-49)');
+    });
+
+    test('a return without an acquisition box ignores the line, and only '
+        'Switzerland offers the choice on an expense', () {
+      final fr = _form('FR', lines.take(2).toList());
+      expect(fr['A1']!.$1, 1600000, reason: 'the French form sums the sale');
+      expect(fr['16']!.$2, 129600);
+      expect(vatFormTaxesAcquisitions('CH', DateTime(2026, 9, 30)), isTrue);
+      expect(vatFormTaxesAcquisitions('FR', DateTime(2026, 9, 30)), isFalse);
+      expect(vatFormTaxesAcquisitions('NO', DateTime(2026, 9, 30)), isFalse);
+    });
+  });
+
   test('Canada — line 101 in whole dollars, corrections on 104 and 107', () {
     final form = _form('CA', [
       _sale(13, 100000, 13000),

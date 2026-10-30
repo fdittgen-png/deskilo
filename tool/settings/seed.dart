@@ -11,6 +11,8 @@
 // This file is the only place outside the database where a default lives.
 import 'dart:convert';
 
+import 'package:deskilo/core/country/country_catalog.dart';
+
 /// One registry row, as the tool declares it.
 typedef SettingSeed = ({
   String key,
@@ -31,7 +33,7 @@ typedef SettingSeed = ({
 
 /// Every registry row, sorted by key. `since` names the migration that
 /// created a row, so a later migration's block holds only its own rows.
-const List<({SettingSeed row, String since})> settingSeeds = [
+final List<({SettingSeed row, String since})> settingSeeds = [
   (
     since: 'settings_registry',
     row: (
@@ -547,7 +549,7 @@ const List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
-    since: 'retention_us_override',
+    since: 'retention_disposition',
     row: (
       key: 'retention.us_years',
       type: 'int',
@@ -561,8 +563,8 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       floor: null,
       editable: true,
       choices: null,
-      source: 'retention_rule_for (0481)',
-      note: 'Years a US space keeps its records when its state asks for more or less than the federal default of the retention rule. 0 means the rule applies. Never legal advice: confirm the period of your state.',
+      source: 'retention_rule_for, retention_assess (0604)',
+      note: 'Years a US space keeps its records when its state asks for longer than the federal default of the retention rule. A longer period extends every kind of record; a shorter one changes nothing. 0 means the rule applies. Never legal advice: confirm the period of your state.',
     ),
   ),
   (
@@ -1038,6 +1040,44 @@ const List<({SettingSeed row, String since})> settingSeeds = [
       choices: null,
       source: 'bank statement matching (#2380)',
       note: 'How many days before a movement an invoice may have been issued to be suggested for it by its amount and payer alone, when the movement carries no reference. A suggestion is always confirmed by a person.',
+    ),
+  ),
+  (
+    since: 'records_location',
+    row: (
+      key: 'records.cra_authorisation_reference',
+      type: 'text',
+      defaultValue: '',
+      min: null,
+      max: 64,
+      unit: '',
+      group: 'records',
+      scopes: ['workspace'],
+      editPermission: 'manageBilling',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'records location (#2378): ETA s.286, ITA s.230',
+      note: 'The reference of the CRA authorisation that lets a Canadian business keep its records outside Canada. Empty means none is recorded; the app then says the records are kept outside Canada without one.',
+    ),
+  ),
+  (
+    since: 'records_location',
+    row: (
+      key: 'records.hosting_country',
+      type: 'enum',
+      defaultValue: '',
+      min: null,
+      max: null,
+      unit: '',
+      group: 'records',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: ['', for (final c in CountryCatalog.countries) c.code],
+      source: 'records location (#2378): the operator\'s declaration',
+      note: 'The country (ISO 3166-1 alpha-2) where this installation keeps its database and backups, as its operator declares it from the hosting contract: one of the countries the app knows, or empty. Empty means not declared: the app then states no location.',
     ),
   ),
 ];

@@ -20,7 +20,8 @@
 // October is filed November corrects nothing again.
 //
 // And input VAT (0408, `170_input_vat.sql`): the base and the deductible
-// share of an expense, rounded as the server rounds them.
+// share of an expense, rounded as the server rounds them; and the
+// acquisition tax of a service bought abroad (`0605_ch_mwst_205_383.sql`).
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -459,6 +460,29 @@ void main() {
     test('a share outside 0..100 is held to it', () {
       expect(vatInputSplit(12000, 20, 150).deductibleCents, 2000);
       expect(vatInputSplit(12000, 20, -5).deductibleCents, 0);
+    });
+  });
+
+  group('acquisition tax — the 0605_ch_mwst_205_383.sql fixture', () {
+    test('the tax owed on the amount and the share deducted', () {
+      expect(vatAcquisitionSplit(10000, 8.1, 100), (taxCents: 810, deductibleCents: 810));
+      expect(vatAcquisitionSplit(2000, 8.1, 50), (taxCents: 162, deductibleCents: 81));
+      expect(vatAcquisitionSplit(500, 8.1, 50), (taxCents: 41, deductibleCents: 21),
+          reason: '40.50 and 20.25, half away from zero');
+      expect(vatAcquisitionSplit(-1000, 8.1, 100), (taxCents: -81, deductibleCents: -81));
+    });
+
+    test('the September return: 12.96 + 9.72 owed, 10.53 deducted', () {
+      final owed = [
+        vatAcquisitionSplit(10000, 8.1, 100),
+        vatAcquisitionSplit(2000, 8.1, 50),
+      ];
+      final acquisition = owed.fold(0, (s, x) => s + x.taxCents);
+      final deducted = owed.fold(0, (s, x) => s + x.deductibleCents) +
+          vatInputSplit(2162, 8.1, 100).deductibleCents;
+      expect(acquisition, 972);
+      expect(deducted, 1053);
+      expect(1296 + acquisition - deducted, 1215);
     });
   });
 

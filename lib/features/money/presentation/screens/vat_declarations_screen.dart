@@ -163,8 +163,9 @@ class _VatDeclarationsScreenState
   }
 
   /// #2357 — what a line is beside its rate: « Deductible VAT » for an
-  /// expense's VAT, « Correction of September 2026 » for a correction of
-  /// a filed return; '' for the period's own sales.
+  /// expense's VAT, « Acquisition tax » for the tax owed on services bought
+  /// from abroad, « Correction of September 2026 » for a correction of a
+  /// filed return; '' for the period's own sales.
   String _lineNote(AppLocalizations l10n, VatDeclarationLine line) {
     final words = vatWords(l10n);
     final start = line.correctsStart;
@@ -176,6 +177,7 @@ class _VatDeclarationsScreenState
             : vatFilingPeriodLabel(l10n, (start: start, end: end)));
     return [
       if (line.isInput) words.vatDeclInputVat,
+      if (line.isAcquisition) words.vatDeclAcquisitionTax,
       if (correction.isNotEmpty) correction,
     ].join(' · ');
   }

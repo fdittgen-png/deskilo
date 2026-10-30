@@ -714,6 +714,11 @@
  "supLookupWaitHint": "Wie lange der Server auf das Unternehmensregister (VIES) wartet, wenn jemand die USt-IdNr. eines Lieferanten sucht, bevor er meldet, dass das Register nicht geantwortet hat. Wird in den Einstellungen der App festgelegt.",
  "supLookupRate": "Lieferantensuchen pro Minute",
  "supLookupRateHint": "Wie viele Lieferantensuchen eine Person auf diesem Server höchstens pro Minute stellen darf; weitere werden als ausgelastet beantwortet und nicht an das Register gesendet. Wird in den Einstellungen der App festgelegt.",
+ "recordsHostingCountry": "Wo dieser Server seine Daten aufbewahrt",
+ "recordsHostingNone": "Nicht erklärt",
+ "recordsHostingCountryHint": "Das Land, in dem die Datenbank und ihre Sicherungen liegen, wie Ihr Hosting-Vertrag es angibt. Die App sagt nur, was Sie hier erklären; ohne Erklärung nennt sie keinen Ort. Wird in den Plattformeinstellungen der App eingestellt.",
+ "recordsCraReference": "CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas",
+ "recordsCraReferenceHint": "Ein kanadisches Unternehmen bewahrt seine Aufzeichnungen in Kanada auf, sofern die CRA keinen anderen Ort genehmigt (ETA s.286, ITA s.230). Steht Ihr Server außerhalb Kanadas, das Aktenzeichen dieser Genehmigung; leer lassen, wenn Sie keine haben. Wird in den Einstellungen des Bereichs in der App eingestellt.",
  "optPerMinute": "{n} pro Minute",
  "bankMaxBytes": "Größte Kontoauszugsdatei",
  "bankMaxBytesHint": "Eine größere Datei wird vollständig abgelehnt, bevor sie gelesen wird. Eine Servereinstellung, in den Einstellungen der App.",
@@ -725,5 +730,8 @@
  "optMovements": "{n} Bewegungen",
  "accountingTitle": "Buchhaltung und Bank",
  "accountingWhy": "Wie die Kontoauszugsdateien der Bank in den Space gelesen und seinen Rechnungen zugeordnet werden.",
- "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt."
+ "accountingOk": "Die Grenzen der Kontoauszüge und das Vorschlagsfenster sind eingestellt.",
+ "retUsYears": "Aufbewahrung, US-Bundesstaat",
+ "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
+ "retUsRule": "Die Aufbewahrungsregel gilt"
 }

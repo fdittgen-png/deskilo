@@ -10,7 +10,6 @@ import 'tax_reference.dart';
 import 'tax_reference_active.dart';
 
 /// The document classes a retention rule is kept for.
-@visibleForTesting
 const retentionClasses = ['invoice', 'books', 'correspondence', 'voucher'];
 
 extension RetentionQueries on TaxReferenceSet {
@@ -71,28 +70,51 @@ DateTime retentionRuleUntil(
 );
 
 /// #2571 — one rule of [country] as the tax reference holds it.
+/// [bySetting]: the space's own longer period (`retention.us_years`) stands
+/// in for the row, as `retention_rule_for` does.
 typedef RetentionRule = ({
   String docClass,
   int years,
   String from,
   bool confirmed,
   String source,
+  bool bySetting,
 });
 
+/// The country whose spaces may extend the rule with `retention.us_years`.
+const _usYearsCountry = 'US';
+
+/// True when a space of [country] may extend its rules with its own
+/// `retention.us_years`.
+bool retentionExtendsBySetting(String country) => country.trim().toUpperCase() == _usYearsCountry;
+
 /// The rules in force for [country] (the shared rule where it has none),
-/// one per document class that has one, in class order.
-List<RetentionRule> retentionRules(String country, {TaxReferenceSet? reference}) {
+/// one per document class that has one, in class order. A US space's
+/// [usYears] replaces a SHORTER rule and never a longer one.
+List<RetentionRule> retentionRules(String country, {TaxReferenceSet? reference, int usYears = 0}) {
   final set = reference ?? ActiveTaxReference.current;
+  final extends_ = retentionExtendsBySetting(country);
   return [
     for (final docClass in retentionClasses)
       if (set.retentionRowOf(country, docClass) case final row?)
-        (
-          docClass: docClass,
-          years: (row.value as RetentionValue).years,
-          from: (row.value as RetentionValue).from,
-          confirmed: row.confirmed,
-          source: row.source,
-        ),
+        if (extends_ && usYears > (row.value as RetentionValue).years)
+          (
+            docClass: docClass,
+            years: usYears,
+            from: 'document_date',
+            confirmed: row.confirmed,
+            source: row.source,
+            bySetting: true,
+          )
+        else
+          (
+            docClass: docClass,
+            years: (row.value as RetentionValue).years,
+            from: (row.value as RetentionValue).from,
+            confirmed: row.confirmed,
+            source: row.source,
+            bySetting: false,
+          ),
   ];
 }
 

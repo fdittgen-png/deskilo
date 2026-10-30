@@ -307,5 +307,6 @@
   "taxRefOutsideVatPostalCodes": "Prefissi di CAP fuori dall’IVA (separati da virgole)",
   "@taxRefOutsideVatPostalCodes": {
     "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
-  }
+  },
+  "taxRefCategories": "Altre categorie di righe che somma (separate da virgole, ad es. acquisition)"
 }

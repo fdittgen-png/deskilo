@@ -5638,6 +5638,9 @@
   "expenseSupplyToggle": "Es un suministro para el espacio",
   "expenseSupplyUnitPrice": "Precio unitario (lo que cuesta un consumo)",
   "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondee si quiere.",
+  "expenseVatAcquisition": "Comprado a un proveedor en el extranjero",
+  "expenseVatAcquisitionAmount": "Impuesto por adquisición adeudado: {tax} · deducible: {deductible}",
+  "expenseVatAcquisitionHint": "La factura no lleva el impuesto de este país: el importe es la base, el espacio adeuda sobre él el impuesto por adquisición y deduce su parte.",
   "expenseVatAsset": "Un bien de inversión",
   "@expenseVatAsset": {
     "description": "#2357 input VAT: expenseVatAsset"
@@ -13044,6 +13047,13 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationCraNone": "No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio.",
+  "recordsLocationCraNotice": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Nada declara esta instalación en Canadá.",
+  "recordsLocationCraOutside": "Una empresa canadiense conserva sus libros y registros en Canadá salvo que la CRA autorice otro lugar (ETA s.286, ITA s.230). Esta instalación está declarada fuera de Canadá.",
+  "recordsLocationCraReference": "Autorización de la CRA: {reference}",
+  "recordsLocationHosted": "Alojado en {country}, según lo declara el operador de esta instalación",
+  "recordsLocationTitle": "Dónde se conservan los registros",
+  "recordsLocationUndeclared": "No declarado por el operador de esta instalación: la aplicación no indica ningún lugar",
   "refFacetMonth": "Mes",
   "refFacetPerson": "Persona",
   "refFacetStatus": "Estado",
@@ -14303,6 +14313,7 @@
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
   "reservePickDateTooltip": "Elegir una fecha",
+  "reservePlanLoading": "Cargando el plano…",
   "reserveRoomFor": "Sala de reuniones · {count} personas",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
@@ -14349,6 +14360,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
+  "retentionExtendedBySetting": "{years} años desde la fecha del documento (ajuste propio de este espacio)",
   "retentionFromDocument": "{years} años desde la fecha del documento",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
@@ -14376,6 +14388,30 @@
       }
     }
   },
+  "retentionHoldClass": "Tipo de registro",
+  "retentionHoldEveryClass": "Todos los tipos de registro",
+  "retentionHoldEveryIssuer": "Todos los emisores",
+  "retentionHoldIssuer": "Emisor",
+  "retentionHoldPlace": "Establecer una retención",
+  "retentionHoldPlaced": "La retención está establecida.",
+  "retentionHoldReason": "Motivo",
+  "retentionHoldReasonHelper": "Por qué deben conservarse los registros, por ejemplo una inspección fiscal o un litigio.",
+  "retentionHoldReasonMissing": "Indique el motivo, en {max} caracteres como máximo.",
+  "retentionHoldRelease": "Levantar",
+  "retentionHoldReleaseReason": "Por qué termina la retención",
+  "retentionHoldReleaseTitle": "¿Levantar esta retención?",
+  "retentionHoldReleased": "La retención se ha levantado.",
+  "retentionHoldSaveFailed": "No se ha podido guardar la retención. No ha cambiado nada.",
+  "retentionHoldSince": "{what} · {issuer} · desde el {date}",
+  "retentionHoldsEmpty": "No hay ninguna retención. Una retención conserva los registros más allá de su plazo, para una auditoría o un litigio.",
+  "retentionHoldsLoadFailed": "No se han podido leer las retenciones.",
+  "retentionHoldsTitle": "Retenciones legales",
+  "retentionKeptHold": "Se conserva por una retención legal: {reason}",
+  "retentionKeptReview": "Se conserva hasta que una persona revise la regla de conservación",
+  "retentionKeptReviewEnded": "Se conserva hasta que una persona revise la regla de conservación; su plazo terminó el {date}",
+  "retentionKeptUntil": "Se conserva hasta el {date} según {rule}",
+  "retentionPeriodEnded": "El plazo de conservación ha terminado: el espacio puede revisar el borrado",
+  "retentionResetRefused": "No se ha borrado nada: la contabilidad aún debe conservarse. {why}",
   "retentionTitle": "Plazos de conservación",
   "@retentionTitle": {
     "description": "#2571 retention clocks"
@@ -15160,6 +15196,7 @@
   "@settingGroupReadiness": {
     "description": "#2487 settings: Settings group title."
   },
+  "settingGroupRecords": "Lugar de conservación de los registros",
   "settingGroupSecurity": "Límites de seguridad y acceso",
   "@settingGroupSecurity": {
     "description": "#2485 settings: Settings group title."
@@ -15314,7 +15351,9 @@
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
   },
-  "settingHintRetentionUsYears": "Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más o menos que la norma federal. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.",
+  "settingHintRecordsCraReference": "Para una empresa canadiense: la referencia de la autorización de la CRA (ETA s.286, ITA s.230) cuando sus registros se conservan fuera de Canadá. Vacío significa que no se ha registrado ninguna.",
+  "settingHintRecordsHostingCountry": "Dos letras (ISO 3166), p. ej. CA o DE, según lo que su contrato de alojamiento indique para la base de datos y sus copias de seguridad. Vacío significa no declarado: la aplicación no indica entonces ningún lugar.",
+  "settingHintRetentionUsYears": "Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más que la norma federal. Un plazo más largo se aplica a todos los registros; uno más corto no cambia nada. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
@@ -15480,6 +15519,8 @@
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelRecordsCraReference": "Autorización de la CRA para conservar los registros fuera de Canadá",
+  "settingLabelRecordsHostingCountry": "País donde esta instalación conserva sus datos",
   "settingLabelRetentionUsYears": "Conservación en EE. UU., estado (años)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -17437,6 +17478,7 @@
   "@taxRefCashOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for cash accounting."
   },
+  "taxRefCategories": "Otras categorías de líneas que suma (separadas por comas, p. ej. acquisition)",
   "taxRefCategory": "Categoría EN 16931",
   "@taxRefCategory": {
     "description": "#2477 tax reference: Field: VAT category code of a rate."
@@ -18552,6 +18594,7 @@
   "@vatChangeNeedsSave": {
     "description": "#985 VAT versions and counterparty: vatChangeNeedsSave"
   },
+  "vatDeclAcquisitionTax": "Impuesto por adquisición",
   "vatDeclAeat303": "Fichero AEAT (Modelo 303)",
   "@vatDeclAeat303": {
     "description": "#2363 VAT filing files (ES, IT): vatDeclAeat303"

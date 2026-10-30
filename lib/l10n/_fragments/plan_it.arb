@@ -76,5 +76,6 @@
   "a11ySeatReserved": "prenotato",
   "a11ySeatOccupied": "occupato",
   "a11ySeatMine": "il suo posto",
-  "a11ySeatBlocked": "non disponibile"
+  "a11ySeatBlocked": "non disponibile",
+  "reservePlanLoading": "Caricamento della pianta…"
 }

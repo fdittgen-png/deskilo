@@ -1,0 +1,14 @@
+{
+  "settingGroupRecords": "Lieu de conservation des registres",
+  "settingLabelRecordsHostingCountry": "Pays où cette installation conserve ses données",
+  "settingHintRecordsHostingCountry": "Deux lettres (ISO 3166), par ex. CA ou DE, selon ce que votre contrat d'hébergement indique pour la base de données et ses sauvegardes. Vide signifie non déclaré : l'application n'indique alors aucun lieu.",
+  "settingLabelRecordsCraReference": "Autorisation de l'ARC de conserver les registres hors du Canada",
+  "settingHintRecordsCraReference": "Pour une entreprise canadienne : la référence de l'autorisation de l'ARC (LTA art. 286, LIR art. 230) lorsque ses registres sont conservés hors du Canada. Vide signifie qu'aucune n'est enregistrée.",
+  "recordsLocationTitle": "Où les registres sont conservés",
+  "recordsLocationHosted": "Hébergé en {country}, selon la déclaration de l'exploitant de cette installation",
+  "recordsLocationUndeclared": "Non déclaré par l'exploitant de cette installation : l'application n'indique aucun lieu",
+  "recordsLocationCraNotice": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Rien ne déclare cette installation au Canada.",
+  "recordsLocationCraOutside": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Cette installation est déclarée hors du Canada.",
+  "recordsLocationCraReference": "Autorisation de l'ARC : {reference}",
+  "recordsLocationCraNone": "Aucune autorisation de l'ARC n'est enregistrée. Un gestionnaire de facturation l'enregistre dans les paramètres de l'espace."
+}

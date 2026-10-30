@@ -15,6 +15,7 @@ import 'dart:convert';
 import '../../../core/time/date_text.dart';
 import 'gobd_package.dart';
 import 'gobd_tables.dart';
+import 'records_location.dart';
 
 /// The countries whose archive carries the readable handover: those that
 /// prescribe no national audit file and ask for readable electronic
@@ -259,10 +260,19 @@ _English _englishOf(GobdTable t) {
   return english!;
 }
 
-String _readme(GobdRequest r, List<GobdTable> tables) {
+String _readme(
+  GobdRequest r,
+  List<GobdTable> tables,
+  RecordsLocation location,
+) {
   final b = StringBuffer()
     ..write('Readable handover: ${r.supplierName}, ')
-    ..write('${isoDay(r.from)} to ${isoDay(r.to)}\r\n\r\n')
+    ..write('${isoDay(r.from)} to ${isoDay(r.to)}\r\n\r\n');
+  for (final line in location.archiveLines) {
+    b.write('$line\r\n');
+  }
+  b
+    ..write('\r\n')
     ..write(
       'These tables are the sub-ledger of the invoicing kept in DesKilo: '
       'invoices, credit notes, payments, member accounts, shared costs and '
@@ -294,12 +304,16 @@ String _readme(GobdRequest r, List<GobdTable> tables) {
 }
 
 /// The readable handover of [r]: every table under `tables/` and its
-/// README. The voucher files themselves are not repeated; the `belege`
-/// table names where the archive holds them.
-Map<String, List<int>> readableHandoverFiles(GobdRequest r) {
+/// README, which states where the records are kept as [location] says.
+/// The voucher files themselves are not repeated; the `belege` table names
+/// where the archive holds them.
+Map<String, List<int>> readableHandoverFiles(
+  GobdRequest r,
+  RecordsLocation location,
+) {
   final tables = gobdTables(r);
   return {
-    _readmePath: utf8.encode(_readme(r, tables)),
+    _readmePath: utf8.encode(_readme(r, tables, location)),
     for (final t in tables)
       '$_handoverFolder/${t.url}': utf8.encode(gobdTableCsv(t, r.dayOf)),
   };
