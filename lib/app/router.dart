@@ -71,6 +71,9 @@ GoRouter router(Ref ref) {
     // Where a cold start goes, once it is known (resume_places.dart).
     ..listen(startPlaceProvider, (_, _) => reask());
 
+  // #3065 — a screen opened with push shows its own address, so reload and
+  // Back return to it and it can be shared.
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   final env = RouteEnv(ref);
   router = GoRouter(
     // The Reserve hub is the app's home (the centre button's form): it
