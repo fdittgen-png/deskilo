@@ -407,18 +407,14 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     }
     final decor = _decorKind;
     if (_tool == EditorTool.decor && decor != null) {
-      await _flows.placeDecor(context, cell, decor, onPlaced: () {
-        if (mounted) setState(() => _tool = null);
-      });
+      await _flows.placeDecor(context, cell, decor, onPlaced: _disarm);
       return;
     }
     if (_tool == EditorTool.image) {
       await _flows.placeImage(context, cell,
           // Back to the resting state so the fresh image can be moved or
           // resized at once.
-          onPlaced: () {
-            if (mounted) setState(() => _tool = null);
-          });
+          onPlaced: _disarm);
       return;
     }
     // No tool armed (#1216): a tap selects — handles appear and dragging
@@ -447,6 +443,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
   /// The shape the next tap draws (#3074), chosen from the palette.
   PlanDecorKind? _decorKind;
+
+  /// Back to the resting state so a fresh element can be moved or resized.
+  void _disarm() {
+    if (mounted) setState(() => _tool = null);
+  }
 
   /// Arms [tool]; the shapes tool first asks which shape to draw.
   Future<void> _arm(EditorTool? tool) async {

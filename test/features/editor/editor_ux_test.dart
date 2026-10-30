@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #1216 — the level canvas asked its user to hold six tools in their
-// head, on a row that showed four.
+// #1216 — the invariant: the level canvas never asks its user to hold more
+// tools in their head than its row shows (#3074: the shapes tool is the
+// fifth).
 //
 // The two that fell off the end were Select, the tool the editor rests
 // in, and Office, the one a new floor needs first. Select is not a tool
@@ -11,6 +12,7 @@
 import 'package:deskilo/features/editor/domain/editor_tool.dart';
 import 'package:deskilo/features/editor/presentation/widgets/editor_selection_bar.dart';
 import 'package:deskilo/features/editor/presentation/widgets/editor_toolbar.dart';
+import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +56,24 @@ void main() {
       for (final t in EditorTool.values) {
         expect(tool(t), findsOneWidget, reason: t.name);
       }
-      // The row that replaced six segments fits four, and the canvas
+      // The row that replaced six segments fits five, and the canvas
       // rests without a tool rather than spending one on "Select".
-      expect(EditorTool.values, hasLength(4));
+      expect(EditorTool.values, hasLength(5));
+    });
+
+    testWidgets('the shapes tool asks which shape, then arms it (#3074)',
+        (tester) async {
+      await pumpCanvas(tester);
+      await tester.tap(tool(EditorTool.decor));
+      await tester.pump(const Duration(seconds: 1));
+      for (final kind in PlanDecorKind.values) {
+        expect(find.byKey(ValueKey('decor-kind-${kind.name}')), findsOneWidget);
+      }
+      expect(tester.widget<EditorToolbar>(_toolbar).armed, isNull,
+          reason: 'nothing is armed until a shape is chosen');
+      await tester.tap(find.byKey(const ValueKey('decor-kind-wall')));
+      await tester.pump(const Duration(seconds: 1));
+      expect(tester.widget<EditorToolbar>(_toolbar).armed, EditorTool.decor);
     });
 
     testWidgets('a second tap on the armed tool puts the canvas back to '
