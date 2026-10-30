@@ -140,7 +140,7 @@ reset role;
 update public.workspaces set feature_flags = '{"badgeSignIn":true,"nfcBadges":true,"kioskMode":true}' where id = '00000000-0000-4000-8000-0000001833b2';
 insert into public.member_badges(workspace_id,member_id,token_hash,auth_enabled) values
  ('00000000-0000-4000-8000-0000001833b2','00000000-0000-4000-8000-0000001833c8',public.badge_token_hash('UID-1833'),true);
-select is(public.badge_auth_verify('UID-1833','4826')->>'user_id','00000000-0000-4000-8000-0000001833a2','the right PIN still signs in through the moved hash');
+select is(public.badge_auth_verify('UID-1833','482615')->>'user_id','00000000-0000-4000-8000-0000001833a2','the right PIN still signs in through the moved hash');
 select is(public.badge_auth_verify('UID-1833','9173')->>'reason','refused','a wrong PIN is refused');
 select throws_ok($$update public.profiles set pin_hash = 'x' where id = '00000000-0000-4000-8000-0000001833a2'$$,'23514',null,'nothing writes a hash back onto the profile');
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001833a2","role":"authenticated"}',true);

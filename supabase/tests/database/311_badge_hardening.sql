@@ -4,7 +4,7 @@
 -- within the configured window lock for that window, twice as many within an
 -- hour lock for the hour, three times as many within a day for the day.
 begin;
-select plan(9);
+select plan(10);
 
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
@@ -60,6 +60,22 @@ select is(pg_temp.verdict('9a000000000000a4'), 'locked', '15 failures within a d
 -- Older than a day counts for nothing.
 select pg_temp.failed('9a000000000000a5', 15, interval '25 hours');
 select is(pg_temp.verdict('9a000000000000a5'), 'refused', 'failures older than a day are forgotten');
+
+-- ── a real badge driven to the lock answers like an unknown tag ─────────
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags)
+values ('00000000-0000-4000-8000-0000003092b1', 'Badge hardening', 'FR', 'EUR', 'Europe/Paris',
+        '00000000-0000-4000-8000-000000003091', '{"badgeSignIn":true,"nfcBadges":true}');
+insert into public.members (id, workspace_id, user_id, is_owner, is_admin, co_owner, status)
+values ('00000000-0000-4000-8000-0000003092c1', '00000000-0000-4000-8000-0000003092b1',
+        '00000000-0000-4000-8000-000000003091', true, true, 'none', 'active');
+insert into public.member_badges (workspace_id, member_id, token_hash, auth_enabled)
+values ('00000000-0000-4000-8000-0000003092b1', '00000000-0000-4000-8000-0000003092c1',
+        public.badge_token_hash('9b00000000000001'), true);
+select pg_temp.failed('9b00000000000001', 5, interval '1 minute');
+select pg_temp.failed('9b00000000000002', 5, interval '1 minute');
+select is(public.badge_auth_verify('9b00000000000001', '000000'),
+          public.badge_auth_verify('9b00000000000002', '000000'),
+  'a real badge at the lock returns exactly what an unknown tag at the lock returns');
 
 select * from finish();
 rollback;
