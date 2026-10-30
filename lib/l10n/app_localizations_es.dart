@@ -25121,6 +25121,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get suppliersSavedOpen => 'Abrir';
 
   @override
+  String get suppliersSearch => 'Buscar por nombre, número o NIF';
+
+  @override
   String get suppliersTaxUnverified => 'Identificador fiscal no verificado';
 
   @override

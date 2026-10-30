@@ -112,6 +112,32 @@ void main() {
     expect(repo.suppliers.single.isActive, isTrue);
   });
 
+  testWidgets('#3070 — the suppliers screen narrows its list to the search',
+      (tester) async {
+    final repo = FakeSupplierRepository();
+    await repo.save('ws', const SupplierDraft(name: 'ACME'));
+    await repo.save('ws', const SupplierDraft(name: 'Beta'));
+    Widget view(String query) => ProviderScope(
+      overrides: [supplierRepositoryProvider.overrideWithValue(repo)],
+      child: MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: SuppliersView(workspaceId: 'ws', embedded: true, query: query),
+        ),
+      ),
+    );
+    await tester.pumpWidget(view(''));
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('1 · ACME'), findsOneWidget);
+    expect(find.text('2 · Beta'), findsOneWidget);
+    await tester.pumpWidget(view('bet'));
+    await tester.pump();
+    expect(find.text('1 · ACME'), findsNothing);
+    expect(find.text('2 · Beta'), findsOneWidget);
+  });
+
   testWidgets('a review is resolved by linking to a candidate', (tester) async {
     final repo = FakeSupplierRepository();
     final id = await repo.save('ws', const SupplierDraft(name: 'ACME'));

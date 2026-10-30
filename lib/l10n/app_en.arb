@@ -29423,6 +29423,10 @@
   "@suppliersSavedOpen": {
     "description": "#2863 supplier lookup"
   },
+  "suppliersSearch": "Search by name, number or tax ID",
+  "@suppliersSearch": {
+    "description": "#3070 the search field of the suppliers screen"
+  },
   "suppliersTaxUnverified": "Tax identifier not verified",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"
