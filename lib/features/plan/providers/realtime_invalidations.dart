@@ -11,8 +11,10 @@ final planInvalidations = [
   // cache refetches straight back into the stale bundle.
   InvalidationContribution(
     const ['levels', 'offices', 'desks', 'seats', 'plan_images'],
-    // A place moved to another level moves its bookings with it.
-    [levelsProvider, floorPlanProvider, targetLevelsProvider],
+    // A place moved to another level moves its bookings with it. #3100 —
+    // a renamed place renames it in the calendar, the inbox and the
+    // directory.
+    [levelsProvider, floorPlanProvider, targetNamesProvider, targetLevelsProvider],
     bustsPlanCache: true,
   ),
   // Seat accessory data rides the floor plan fetch, and its cache.
@@ -32,9 +34,5 @@ final planInvalidations = [
       targetLevelsProvider,
     ],
     bustsPlanCache: true,
-  ),
-  InvalidationContribution(
-    const ['reservations'],
-    [targetNamesProvider, targetLevelsProvider],
   ),
 ];
