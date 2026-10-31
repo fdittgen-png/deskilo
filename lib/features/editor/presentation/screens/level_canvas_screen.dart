@@ -261,11 +261,11 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
     );
   }
 
-  /// A drawing tool owns the drag as a marquee; with a selection (#101)
-  /// the drag moves or resizes it — deselect (tap empty space) to pan the
-  /// viewport again.
+  bool get _drawingWall => _tool == EditorTool.decor && _decorKind == PlanDecorKind.wall;
+
+  /// Drawing owns the drag; a selection moves or resizes instead.
   CanvasGestures _gestures(FloorPlan plan) {
-    final drawing = _tool == EditorTool.office || _tool == EditorTool.desk;
+    final drawing = _tool == EditorTool.office || _tool == EditorTool.desk || _drawingWall;
     final selecting = _tool == null && _selectedId != null;
     void onTapUp(TapUpDetails d) =>
         unawaited(_handleTap(plan, d.localPosition));
@@ -310,7 +310,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
   void _marqueeTo(FloorPlan plan, CanvasCell cell) {
     final start = _dragStart;
     if (start == null) return;
-    final rect = rectBetween(start, cell);
+    final rect = _drawingWall ? wallBetween(start, cell) : rectBetween(start, cell);
     setState(() {
       _marquee = rect;
       _marqueeValid = marqueeProblem(plan, _tool, rect) == null;
@@ -402,6 +402,9 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
       await _flows.createOffice(context, plan, rect);
     } else if (_tool == EditorTool.desk) {
       await _flows.createDesk(context, plan, rect);
+    } else if (_drawingWall) {
+      await _flows.placeDecor(context, (x: rect.x, y: rect.y), PlanDecorKind.wall,
+          drawnRect: rect, onPlaced: _disarm);
     }
   }
 

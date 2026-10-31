@@ -567,6 +567,10 @@
       }
     }
   },
+  "acctKindAcquisitionTax": "Acquisition tax",
+  "@acctKindAcquisitionTax": {
+    "description": "#3152 accounting: the posting kind of the tax owed on a service bought abroad (CH Bezugsteuer, reverse charge)."
+  },
   "acctKindCreditNote": "Credit note",
   "@acctKindCreditNote": {
     "description": "#2370 Transfers list: the kind of document event a line carried."
@@ -2420,6 +2424,10 @@
         "type": "int"
       }
     }
+  },
+  "bankStatementOriginal": "Download the original file",
+  "@bankStatementOriginal": {
+    "description": "#2380 bank statements: tooltip of the action that downloads the imported file as it was."
   },
   "bankStatementPeriod": "{account} · {from} – {to}",
   "@bankStatementPeriod": {
@@ -8268,7 +8276,7 @@
   "@editorEmptyFloorTitle": {
     "description": "#1216 the card shown on a level nobody has drawn on yet"
   },
-  "editorHintDecor": "Tap the plan to drop the shape; drag it to place it",
+  "editorHintDecor": "Tap to drop a shape; drag to draw a wall along the grid",
   "@editorHintDecor": {
     "description": "#3074 the plan's drawn shapes: editorHintDecor"
   },
@@ -8501,6 +8509,8 @@
   "@editorToolSelect": {
     "description": "Canvas tool: select/inspect elements, pan and zoom"
   },
+  "editorWallSaved": "Wall drawn",
+  "editorWallUndo": "Undo",
   "einvoiceConfigClear": "Remove the platform",
   "@einvoiceConfigClear": {
     "description": "Button: forget the platform"
@@ -16732,6 +16742,10 @@
       }
     }
   },
+  "mcpConfirmInvitee": "Invitation for",
+  "@mcpConfirmInvitee": {
+    "description": "#3132 mcp_confirmation: the label of the person an assistant proposes to invite"
+  },
   "mcpConfirmLevel": "{process}: {level}",
   "@mcpConfirmLevel": {
     "description": "#2873 mcp_confirmation",
@@ -17550,6 +17564,10 @@
   "mcpOpSetupHours": "Set the opening days and hours",
   "@mcpOpSetupHours": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_opening_hours)"
+  },
+  "mcpOpSetupInvite": "Invite a person",
+  "@mcpOpSetupInvite": {
+    "description": "#2394 generated from contracts/mcp/operations.json (create_invitations)"
   },
   "mcpOpSetupLevels": "See the setup levels",
   "@mcpOpSetupLevels": {
@@ -23665,6 +23683,14 @@
   "recordingPrivacyWriteRefused": "Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody's real details. Switch filming mode off first.",
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
+  },
+  "recordsLocationAoNotice": "A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.",
+  "@recordsLocationAoNotice": {
+    "description": "#2375 the accounting settings: a German space whose installation declares no country"
+  },
+  "recordsLocationAoOutside": "A German business keeps its electronic books in Germany or another EU member state; elsewhere it needs the tax office's permission (§ 146 Abs. 2b AO). This installation is declared outside the EU.",
+  "@recordsLocationAoOutside": {
+    "description": "#2375 the accounting settings: a German space whose installation is declared outside the EU"
   },
   "recordsLocationCraNone": "No CRA authorisation is recorded. A billing manager records it in the workspace settings.",
   "@recordsLocationCraNone": {

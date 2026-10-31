@@ -13,7 +13,21 @@ import '../../tool/quality_rows/selection.dart';
 
 const _required = 'analyze · l10n gate · test · coverage';
 const _attempt = '-attempt-\${{ github.run_attempt }}';
-const _shardJobs = {gateShard: 'gate', moneyShard: 'money', restShard: 'rest'};
+const _shardJobs = {
+  gateShard: 'gate',
+  moneyShard: 'money',
+  workspaceShard: 'workspace',
+  restShard: 'rest',
+};
+
+/// #3166 — each shard's cap: the feature shards keep 45 minutes of
+/// margin until two loaded runs of the four-way split are measured.
+const _timeouts = {
+  gateShard: '30',
+  moneyShard: '45',
+  workspaceShard: '45',
+  restShard: '45',
+};
 
 YamlMap _jobs() =>
     (loadYaml(File('.github/workflows/quality.yml').readAsStringSync())
@@ -39,7 +53,7 @@ void main() {
         reason: 'concurrency is explicit, not the runner default',
       );
       expect(run, contains('--file-reporter json:shard/tests.jsonl'));
-      expect('${job['timeout-minutes']}', '30');
+      expect('${job['timeout-minutes']}', _timeouts[shard], reason: shard);
       final uploads = [
         for (final s in job['steps'] as YamlList)
           if ('${(s as YamlMap)['uses']}'.startsWith('actions/upload-artifact'))

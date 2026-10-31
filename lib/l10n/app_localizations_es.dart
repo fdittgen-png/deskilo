@@ -446,6 +446,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Impuesto sobre adquisiciones';
+
+  @override
   String get acctKindCreditNote => 'Factura rectificativa';
 
   @override
@@ -2061,6 +2064,9 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0, $open pendientes';
   }
+
+  @override
+  String get bankStatementOriginal => 'Descargar el archivo original';
 
   @override
   String bankStatementPeriod(String account, String from, String to) {
@@ -6751,7 +6757,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get editorHintDecor =>
-      'Toque el plano para soltar la forma; arrástrela a su sitio';
+      'Toque para colocar una forma; arrastre para dibujar una pared en la cuadrícula';
 
   @override
   String get editorHintDesk =>
@@ -6946,6 +6952,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get editorToolSelect => 'Seleccionar';
+
+  @override
+  String get editorWallSaved => 'Pared dibujada';
+
+  @override
+  String get editorWallUndo => 'Deshacer';
 
   @override
   String get einvoiceConfigClear => 'Eliminar la plataforma';
@@ -14095,6 +14107,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get mcpConfirmInvitee => 'Invitación para';
+
+  @override
   String mcpConfirmLevel(String process, String level) {
     return '$process: $level';
   }
@@ -14759,6 +14774,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpOpSetupHours => 'Fijar los días y horarios de apertura';
+
+  @override
+  String get mcpOpSetupInvite => 'Invitar a una persona';
 
   @override
   String get mcpOpSetupLevels => 'Ver los niveles de configuración';
@@ -19871,6 +19889,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get recordingPrivacyWriteRefused =>
       'No mientras el modo grabación esté activo: este formulario muestra una persona inventada, y guardarlo sobrescribiría los datos reales de alguien. Desactive antes el modo grabación.';
+
+  @override
+  String get recordsLocationAoNotice =>
+      'Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE (§ 146 apdo. 2a AO). Nada declara esta instalación allí.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE; fuera de ella necesita la autorización de la oficina tributaria (§ 146 apdo. 2b AO). Esta instalación está declarada fuera de la UE.';
 
   @override
   String get recordsLocationCraNone =>

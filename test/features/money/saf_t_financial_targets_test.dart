@@ -169,6 +169,16 @@ void main() {
       capabilityOfTarget('saft_dk').state,
       QualificationState.locallyValidated,
     );
+    // #2379 — Romania's D406 tree is read against ANAF's schema in CI: an
+    // exchange file, never the monthly return itself.
+    expect(
+      capabilityOfTarget('saft_ro').state,
+      QualificationState.locallyValidated,
+    );
+    expect(
+      formatsFor('RO').where((f) => f.claim == FormatClaim.regulatory),
+      isEmpty,
+    );
     for (final id in [
       'denmark_registered_system',
       'economic_api',

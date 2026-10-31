@@ -10,5 +10,7 @@
   "recordsLocationCraNotice": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Rien ne déclare cette installation au Canada.",
   "recordsLocationCraOutside": "Une entreprise canadienne conserve ses livres et registres au Canada, sauf si l'ARC autorise un autre lieu (LTA art. 286, LIR art. 230). Cette installation est déclarée hors du Canada.",
   "recordsLocationCraReference": "Autorisation de l'ARC : {reference}",
-  "recordsLocationCraNone": "Aucune autorisation de l'ARC n'est enregistrée. Un gestionnaire de facturation l'enregistre dans les paramètres de l'espace."
+  "recordsLocationCraNone": "Aucune autorisation de l'ARC n'est enregistrée. Un gestionnaire de facturation l'enregistre dans les paramètres de l'espace.",
+  "recordsLocationAoNotice": "Une entreprise allemande tient ses livres électroniques en Allemagne ou dans un autre État membre de l'UE (§ 146 al. 2a AO). Rien ne déclare cette installation dans l'UE.",
+  "recordsLocationAoOutside": "Une entreprise allemande tient ses livres électroniques en Allemagne ou dans un autre État membre de l'UE ; ailleurs, il lui faut l'autorisation du centre des impôts (§ 146 al. 2b AO). Cette installation est déclarée hors de l'UE."
 }

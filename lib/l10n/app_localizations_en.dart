@@ -443,6 +443,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Acquisition tax';
+
+  @override
   String get acctKindCreditNote => 'Credit note';
 
   @override
@@ -2044,6 +2047,9 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0, $open to do';
   }
+
+  @override
+  String get bankStatementOriginal => 'Download the original file';
 
   @override
   String bankStatementPeriod(String account, String from, String to) {
@@ -6715,7 +6721,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorHintDecor =>
-      'Tap the plan to drop the shape; drag it to place it';
+      'Tap to drop a shape; drag to draw a wall along the grid';
 
   @override
   String get editorHintDesk => 'Drag inside an office to draw a desk';
@@ -6903,6 +6909,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorToolSelect => 'Select';
+
+  @override
+  String get editorWallSaved => 'Wall drawn';
+
+  @override
+  String get editorWallUndo => 'Undo';
 
   @override
   String get einvoiceConfigClear => 'Remove the platform';
@@ -14005,6 +14017,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get mcpConfirmInvitee => 'Invitation for';
+
+  @override
   String mcpConfirmLevel(String process, String level) {
     return '$process: $level';
   }
@@ -14661,6 +14676,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpSetupHours => 'Set the opening days and hours';
+
+  @override
+  String get mcpOpSetupInvite => 'Invite a person';
 
   @override
   String get mcpOpSetupLevels => 'See the setup levels';
@@ -19732,6 +19750,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get recordingPrivacyWriteRefused =>
       'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.';
+
+  @override
+  String get recordsLocationAoNotice =>
+      'A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'A German business keeps its electronic books in Germany or another EU member state; elsewhere it needs the tax office\'s permission (§ 146 Abs. 2b AO). This installation is declared outside the EU.';
 
   @override
   String get recordsLocationCraNone =>
