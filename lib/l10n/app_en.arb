@@ -10171,7 +10171,7 @@
     "description": "#2568 rented rooms"
   },
   "featureFinanceFacesDesc": "The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.",
-  "featureFinanceFacesTitle": "Finances in four faces",
+  "featureFinanceFacesTitle": "Statement, payments, invoices, documents",
   "featureForeignCurrencyPurchasesDesc": "A supplier's bill in another currency than the space's, with the exchange rate recorded on it. The books and the FEC read it in the space's currency at that rate and keep the original amount beside it; a bill without its rate is refused.",
   "@featureForeignCurrencyPurchasesDesc": {
     "description": "#3031 Features screen: what bills in another currency change."
@@ -10430,7 +10430,7 @@
   },
   "featureMessagesHubDesc": "One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.",
   "featureMessagesHubTitle": "Messages, reworked",
-  "featureMoneyTab": "Money tab",
+  "featureMoneyTab": "Statement and balance",
   "@featureMoneyTab": {
     "description": "Feature switch: the Money bottom tab"
   },

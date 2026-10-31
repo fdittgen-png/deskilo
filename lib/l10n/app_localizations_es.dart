@@ -8440,7 +8440,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanzas en cuatro vistas';
+  String get featureFinanceFacesTitle =>
+      'Extracto, pagos, facturas, documentos';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8730,7 +8731,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureMessagesHubTitle => 'Mensajes, renovados';
 
   @override
-  String get featureMoneyTab => 'Pestaña Finanzas';
+  String get featureMoneyTab => 'Extracto y saldo';
 
   @override
   String get featureMoneyTabDesc => 'Facturas mensuales, pagos y gastos.';

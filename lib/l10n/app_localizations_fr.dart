@@ -8457,7 +8457,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finances en quatre volets';
+  String get featureFinanceFacesTitle =>
+      'Relevé, paiements, factures, documents';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8747,7 +8748,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureMessagesHubTitle => 'Messages repensés';
 
   @override
-  String get featureMoneyTab => 'Onglet Finances';
+  String get featureMoneyTab => 'Relevé et solde';
 
   @override
   String get featureMoneyTabDesc =>

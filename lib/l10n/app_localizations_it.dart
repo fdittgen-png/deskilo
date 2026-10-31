@@ -8438,7 +8438,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanze in quattro viste';
+  String get featureFinanceFacesTitle =>
+      'Estratto, pagamenti, fatture, documenti';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8727,7 +8728,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureMessagesHubTitle => 'Messaggi, rinnovati';
 
   @override
-  String get featureMoneyTab => 'Scheda Finanze';
+  String get featureMoneyTab => 'Estratto e saldo';
 
   @override
   String get featureMoneyTabDesc => 'Fatture mensili, pagamenti e spese.';

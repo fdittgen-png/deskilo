@@ -106,7 +106,7 @@ Future<Uint8List> _build({
   ],
   List<ConfigFeatureGroup> featureGroups = const [
     (process: 'Coordination', features: ['Calendar tab']),
-    (process: 'Money', features: ['Money tab']),
+    (process: 'Money', features: ['Statement and balance']),
   ],
   List<String> closureLabels = const ['Jul 14, 2026 — Bastille Day'],
   String kind = 'workspace_configuration',

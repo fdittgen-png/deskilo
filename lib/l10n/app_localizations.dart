@@ -13850,7 +13850,7 @@ abstract class AppLocalizations {
   /// No description provided for @featureFinanceFacesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Finances in four faces'**
+  /// **'Statement, payments, invoices, documents'**
   String get featureFinanceFacesTitle;
 
   /// #3031 Features screen: what bills in another currency change.
@@ -14348,7 +14348,7 @@ abstract class AppLocalizations {
   /// Feature switch: the Money bottom tab
   ///
   /// In en, this message translates to:
-  /// **'Money tab'**
+  /// **'Statement and balance'**
   String get featureMoneyTab;
 
   /// One-line description under the Money tab switch

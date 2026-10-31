@@ -5991,7 +5991,7 @@
     "description": "#2568 rented rooms"
   },
   "featureFinanceFacesDesc": "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.",
-  "featureFinanceFacesTitle": "Finanzen in vier Ansichten",
+  "featureFinanceFacesTitle": "Abrechnung, Zahlungen, Rechnungen, Dokumente",
   "featureForeignCurrencyPurchasesDesc": "Eine Lieferantenrechnung in einer anderen Währung als der des Space, mit dem darauf erfassten Wechselkurs. Die Buchhaltung und der FEC lesen sie zu diesem Kurs in der Währung des Space und behalten den Originalbetrag daneben; eine Rechnung ohne Kurs wird abgelehnt.",
   "featureForeignCurrencyPurchasesTitle": "Einkäufe in anderer Währung",
   "featureFormHelpHintsDesc": "Ein ausblendbares Tipp-Karussell auf jedem Hauptbildschirm und ein kleines ? neben jedem Parameter und Eingabefeld — ein Tipp öffnet das Handbuch am richtigen Abschnitt. In den Einstellungen wiederherstellbar.",
@@ -6176,7 +6176,7 @@
   },
   "featureMessagesHubDesc": "Eine Posteingangsleiste (Alle / Ungelesen / Archiviert und Suche), anheften, stumm, archivieren und als ungelesen markieren auf einem Thread, die Unterhaltung als ganze Seite mit Datumstrennern, ein Anhängen-Menü und ein behaltener Entwurf im Editor, eine Person mit einem Tipp geöffnet. Aus: der Posteingang mit zwei Leisten und der Thread als Blatt.",
   "featureMessagesHubTitle": "Nachrichten, überarbeitet",
-  "featureMoneyTab": "Finanzen-Tab",
+  "featureMoneyTab": "Abrechnung und Saldo",
   "featureMoneyTabDesc": "Monatsrechnungen, Zahlungen und Ausgaben.",
   "featureMore": "Mehr",
   "featureMultiSite": "Standorte",
