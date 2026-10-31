@@ -19939,6 +19939,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible tant que le mode tournage est actif : ce formulaire affiche une personne inventée, et l\'enregistrer écraserait les vraies coordonnées de quelqu\'un. Désactivez d\'abord le mode tournage.';
 
   @override
+  String get recordsLocationAoNotice =>
+      'Une entreprise allemande tient ses livres électroniques en Allemagne ou dans un autre État membre de l\'UE (§ 146 al. 2a AO). Rien ne déclare cette installation dans l\'UE.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'Une entreprise allemande tient ses livres électroniques en Allemagne ou dans un autre État membre de l\'UE ; ailleurs, il lui faut l\'autorisation du centre des impôts (§ 146 al. 2b AO). Cette installation est déclarée hors de l\'UE.';
+
+  @override
   String get recordsLocationCraNone =>
       'Aucune autorisation de l\'ARC n\'est enregistrée. Un gestionnaire de facturation l\'enregistre dans les paramètres de l\'espace.';
 

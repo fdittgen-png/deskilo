@@ -13082,6 +13082,8 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsLocationAoNotice": "Un'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell'UE (§ 146 co. 2a AO). Nulla dichiara questa installazione lì.",
+  "recordsLocationAoOutside": "Un'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell'UE; altrove serve l'autorizzazione dell'ufficio delle imposte (§ 146 co. 2b AO). Questa installazione è dichiarata fuori dall'UE.",
   "recordsLocationCraNone": "Nessuna autorizzazione della CRA è registrata. Un responsabile della fatturazione la registra nelle impostazioni dello spazio.",
   "recordsLocationCraNotice": "Un'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Nulla dichiara questa installazione in Canada.",
   "recordsLocationCraOutside": "Un'impresa canadese conserva i suoi libri e le sue scritture in Canada, salvo che la CRA autorizzi un altro luogo (ETA s.286, ITA s.230). Questa installazione è dichiarata fuori dal Canada.",

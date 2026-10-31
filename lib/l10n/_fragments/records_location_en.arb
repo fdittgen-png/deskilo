@@ -56,5 +56,13 @@
   "recordsLocationCraNone": "No CRA authorisation is recorded. A billing manager records it in the workspace settings.",
   "@recordsLocationCraNone": {
     "description": "#2378 records location"
+  },
+  "recordsLocationAoNotice": "A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.",
+  "recordsLocationAoOutside": "A German business keeps its electronic books in Germany or another EU member state; elsewhere it needs the tax office's permission (§ 146 Abs. 2b AO). This installation is declared outside the EU.",
+  "@recordsLocationAoNotice": {
+    "description": "#2375 the accounting settings: a German space whose installation declares no country"
+  },
+  "@recordsLocationAoOutside": {
+    "description": "#2375 the accounting settings: a German space whose installation is declared outside the EU"
   }
 }
