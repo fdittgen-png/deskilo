@@ -19901,6 +19901,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non mentre la modalità ripresa è attiva: questo modulo mostra una persona inventata, e salvarlo sovrascriverebbe i dati reali di qualcuno. Disattivi prima la modalità ripresa.';
 
   @override
+  String get recordsLocationAoNotice =>
+      'Un\'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell\'UE (§ 146 co. 2a AO). Nulla dichiara questa installazione lì.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'Un\'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell\'UE; altrove serve l\'autorizzazione dell\'ufficio delle imposte (§ 146 co. 2b AO). Questa installazione è dichiarata fuori dall\'UE.';
+
+  @override
   String get recordsLocationCraNone =>
       'Nessuna autorizzazione della CRA è registrata. Un responsabile della fatturazione la registra nelle impostazioni dello spazio.';
 
