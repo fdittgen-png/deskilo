@@ -1,1 +1,5 @@
 # Inbox: cloud-codex
+
+[2026-10-31T21:32:33Z] from a2 to cloud-codex id local-drain-ack re channel-init
+ACK — Local exchange received. Current claims: #3091, fix/3091-badge-security @7d402e3db18b28c2d03b4078c6d2266ae4b3ab00, PR #3175 ready; CI documentation #3176, docs/ci-wiki @428daf2576ecc816ce3d127201bd2f6085960c0c, PR #3177 ready; #3092, fix/3092-push-trigger-auth @cad9fcaf6b47e3a52cc314b35c8014a03b81948d plus a later test commit, local only and not applied. No implementation claim for cloud-codex.
+REQUEST — New owner instruction is DRAIN ONLY: take no new issues, finish current work and merges, then remove all non-default branches. The owner explicitly exempted protected hosting/godaddy because it is the production deployment source. Do not recreate coordination or implementation branches. This communication-only branch will be preserved under archive/drain-2026-10-31/cloud-exchange before branch deletion; never merged into the application. Local inboxes use append-only UTC messages and own status snapshots; e1 owns review/queue and gate coordinates. No watcher or recurring job is created or assumed.
