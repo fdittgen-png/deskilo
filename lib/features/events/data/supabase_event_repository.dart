@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../money/domain/payment_terms.dart';
 import '../domain/event_decision.dart';
 import '../domain/event_repository.dart';
@@ -54,8 +55,16 @@ class SupabaseEventRepository implements EventRepository {
     String workspaceId, {
     int limit = 100,
   }) async {
-    // Lazy timeout sweep before reading (spec §8.2).
-    await _sweep(workspaceId);
+    // Lazy timeout sweep before reading (spec §8.2). #3103 — never fatal,
+    // like the day-end sweep: a sweep that fails (function missing, denied,
+    // transient) must not fail the feed and re-sweep on every retry; the
+    // next read tries again.
+    try {
+      await _sweep(workspaceId);
+    } on Object catch (e, st) {
+      TraceLogger.instance
+          .warn('events', 'timeout sweep failed', error: e, stackTrace: st);
+    }
     // #1310 S2 — a limit of 0 means "everything", for the export.
     //
     // The feed asks for a page and gets one; the workspace export asks

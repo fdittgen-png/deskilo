@@ -13,6 +13,7 @@ import 'app/finance_hosts_wiring.dart';
 import 'app/private_values_wiring.dart';
 import 'app/realtime_invalidations.dart';
 import 'app/server_choice_app.dart';
+import 'core/cache/read_retry.dart';
 import 'core/data/system_columns.dart';
 import 'core/files/file_saver.dart';
 import 'core/instance/tax_reference_bundle_asset.dart';
@@ -116,6 +117,8 @@ Future<void> main() async {
     ProviderScope(
       // #742 — every provider failure lands in the trace.
       observers: const [TraceProviderObserver()],
+      // #3103 — no tenfold retry of a denial; two quick ones for a blip.
+      retry: readRetry,
       overrides: [
         notificationServiceProvider.overrideWithValue(notifications),
         notificationTapsProvider.overrideWithValue(taps),
