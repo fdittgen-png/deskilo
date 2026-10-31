@@ -14095,6 +14095,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get mcpConfirmInvitee => 'Invitación para';
+
+  @override
   String mcpConfirmLevel(String process, String level) {
     return '$process: $level';
   }
@@ -14759,6 +14762,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mcpOpSetupHours => 'Fijar los días y horarios de apertura';
+
+  @override
+  String get mcpOpSetupInvite => 'Invitar a una persona';
 
   @override
   String get mcpOpSetupLevels => 'Ver los niveles de configuración';

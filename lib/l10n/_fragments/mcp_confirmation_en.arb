@@ -153,5 +153,9 @@
         "type": "String"
       }
     }
+  },
+  "mcpConfirmInvitee": "Invitation for",
+  "@mcpConfirmInvitee": {
+    "description": "#3132 mcp_confirmation: the label of the person an assistant proposes to invite"
   }
 }
