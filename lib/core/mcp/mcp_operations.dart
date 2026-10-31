@@ -10,56 +10,6 @@ export 'mcp_contract.g.dart';
 /// The contract version these specs were generated from.
 const int mcpContractVersion = 1;
 
-/// #1801 — every status an MCP envelope may carry.
-const List<String> mcpStatuses = [
-  'completed',
-  'pending_validation',
-  'requires_confirmation',
-  'denied',
-  'conflict',
-  'validation_error',
-  'not_found',
-  'rate_limited',
-];
-
-/// Names no input may carry: identity, role, SQL, targets, approval state.
-const Set<String> mcpForbiddenInputs = {
-  'actor',
-  'actor_id',
-  'user_id',
-  'role',
-  'roles',
-  'permission',
-  'permissions',
-  'is_admin',
-  'is_owner',
-  'sql',
-  'query',
-  'table',
-  'rpc',
-  'function',
-  'url',
-  'approval',
-  'approved',
-  'decided_by',
-  'status_override',
-  'secret',
-  'password',
-  'api_key',
-  'token',
-  'access_token',
-  'client_secret',
-  'private_key',
-  'credentials',
-};
-
-/// #1809 — every field an answer discloses only when the installation
-/// maximum, the workspace policy and the person's consent all name it
-/// (#1645). The app offers exactly these, never a hand-written list.
-const List<String> mcpOptionalFields = [
-  'name',
-];
-
 /// Every catalogued operation, handler or not.
 const Map<String, McpOperationSpec> mcpOperations = {
   'list_workspaces': McpOperationSpec(
@@ -447,6 +397,19 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'step': McpField(McpFieldType.enum_, required: true, values: ['invite', 'services', 'new_members', 'notifications', 'limits', 'kiosk', 'purchases', 'lease', 'assets', 'look', 'public_page', 'documents', 'reminders', 'recovery', 'assistant'], param: 'p_step'),
     },
     output: ['step', 'state', 'marked'], group: 'setup',
+  ),
+  'set_workspace_basics': McpOperationSpec(
+    id: 'set_workspace_basics', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.permission, permission: 'workspaceSettings', features: ['mcpAccess', 'setupGuide'],
+    scope: McpScope.workspace, mutation: McpMutation.write, idempotent: true, nativeConfirmation: true,
+    fields: {
+      'request_id': McpField(McpFieldType.uuid, required: true),
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'timezone': McpField(McpFieldType.text, maxLength: 64),
+      'default_locale': McpField(McpFieldType.text, maxLength: 5),
+      'address': McpField(McpFieldType.text, maxLength: 300),
+    },
+    output: ['changes', 'field', 'from', 'to'], group: 'setup',
   ),
   'set_opening_hours': McpOperationSpec(
     id: 'set_opening_hours', rpc: null, handler: true, dispatch: true,

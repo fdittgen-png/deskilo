@@ -14751,6 +14751,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpSetFavorite => 'Marcar lugares como favoritos';
 
   @override
+  String get mcpOpSetupBasics =>
+      'Fijar la zona horaria, el idioma y la dirección';
+
+  @override
   String get mcpOpSetupClosures => 'Añadir días de cierre';
 
   @override

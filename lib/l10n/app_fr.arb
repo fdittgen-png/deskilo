@@ -9983,6 +9983,7 @@
   "mcpOpReservationDeletion": "Demander la suppression d'une réservation commencée",
   "mcpOpRespond": "Répondre à une demande de validation",
   "mcpOpSetFavorite": "Marquer des lieux en favoris",
+  "mcpOpSetupBasics": "Définir le fuseau horaire, la langue et l'adresse",
   "mcpOpSetupClosures": "Ajouter des jours de fermeture",
   "mcpOpSetupHours": "Définir les jours et heures d'ouverture",
   "mcpOpSetupLevels": "Voir les niveaux de mise en place",

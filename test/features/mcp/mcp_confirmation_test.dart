@@ -186,6 +186,31 @@ void main() {
     expect(find.textContaining(RegExp(r'Day starts: 0?8[:.]00.* → 0?9[:.]00')), findsOneWidget);
   });
 
+  testWidgets('a change of basics names the zone, the language and the '
+      'address from their value to the new one', (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'set_workspace_basics',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'timezone': 'Europe/Berlin', 'address': ''},
+        target: {
+          'kind': 'workspace_basics',
+          'changes': [
+            {'field': 'timezone', 'from': 'Europe/Paris', 'to': 'Europe/Berlin'},
+            {'field': 'address', 'from': 'Old street', 'to': ''},
+          ],
+        },
+      ),
+    );
+    expect(find.text('Set the time zone, language and address'), findsOneWidget);
+    expect(find.textContaining('Time zone: Europe/Paris → Europe/Berlin'), findsOneWidget);
+    expect(find.textContaining('Workspace address: Old street → —'), findsOneWidget);
+  });
+
   testWidgets('closure days name each day and the reason', (tester) async {
     await pump(
       tester,
