@@ -3443,6 +3443,8 @@ Sie möchten, dass Mitglieder sich mit dem Antippen einer Karte einchecken, ohne
 - Die Badge-Verwaltung lässt Sie auch einen **Neuer Badge** ausstellen, einen **Widerrufen** und **Als PDF speichern** zum Drucken. Ein widerrufenes Badge lässt sich endgültig löschen.
 - **Meldet mich an** ist standardmäßig aus: Ein Badge, das Sie eincheckt, meldet Sie nicht an, bis das Mitglied es wählt.
 - Jedes Mitglied kann sein eigenes Badge auch in seinen persönlichen Einstellungen erstellen.
+- Sicherheit der Badge-Anmeldung: Fehlgeschlagene PIN-Versuche aller Karten eines Workspaces teilen ein Limit, standardmäßig 50 innerhalb des Sperrfensters (standardmäßig 15 Minuten). In den Workspace-Einstellungen → Sicherheit kann ein Eigentümer das Limit auf 1–50 senken. Sobald es erreicht ist, pausiert die Badge-Anmeldung, bis die Versuche aus dem Zeitfenster fallen; Eigentümer erhalten eine Warnung in den Ereignissen. Andere Workspaces bleiben verfügbar. Der Fragebogen hält das gewählte Limit als Antwort zur Eingabe in der App fest.
+- Beim Verwalten der Badges eines Mitglieds erscheint ein Hinweis zur PIN-Erneuerung, wenn die erfasste Länge unter dem aktuellen Minimum liegt oder unbekannt ist, weil die PIN vor der Längenerfassung gesetzt wurde. Ältere PINs bleiben bis zur Änderung durch ihren Inhaber gültig; die Verwaltung zeigt weder PIN noch Hash an.
 
 **Siehe auch:** [Ein Wand-Tablet für den Check-in](help:user.kiosk.mode)
 

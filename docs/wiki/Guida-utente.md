@@ -3596,11 +3596,11 @@ Vuole che i membri facciano il check-in avvicinando una tessera, senza telefono.
 - Il gestore dei badge permette anche di emettere un **Nuovo badge**, di ritirarne uno con **Revoca** e di usare **Salva come PDF** per stamparlo. Un badge revocato può essere eliminato definitivamente.
 - **Mi fa accedere** è disattivato per impostazione predefinita: un badge che registra il check-in non fa accedere finché il membro non lo sceglie.
 - Ogni membro può anche creare il proprio badge nelle sue impostazioni personali.
+- Sicurezza dell’accesso con badge: i PIN errati di tutte le carte dello spazio condividono un limite, 50 per impostazione predefinita nella finestra di blocco (15 minuti per impostazione predefinita). Nelle impostazioni dello spazio → Sicurezza un proprietario può ridurlo a 1–50. Quando viene raggiunto, l’accesso con badge si sospende finché i tentativi escono dalla finestra e i proprietari ricevono un avviso negli eventi. Gli altri spazi restano disponibili. Il questionario conserva il limite scelto come risposta da inserire nell’app.
+- Quando si gestiscono i badge di un membro, un avviso chiede di rinnovare il PIN se la lunghezza registrata è inferiore al minimo attuale o sconosciuta perché il PIN precede la registrazione della lunghezza. I vecchi PIN funzionano fino alla modifica da parte del titolare; la gestione non rivela né il PIN né il suo hash.
 
 **Vedi anche:** [Un tablet a muro per il check-in](#modalità-chiosco-un-tablet-a-muro-per-il-check-in)
 
-- Sicurezza dell’accesso con badge (#3091): i PIN errati di tutte le carte dello spazio condividono un limite, 50 per impostazione predefinita nella finestra di blocco (15 minuti per impostazione predefinita). Nelle impostazioni dello spazio → Sicurezza un proprietario può ridurlo a 1–50. Quando viene raggiunto, l’accesso con badge si sospende finché i tentativi escono dalla finestra e i proprietari ricevono un avviso negli eventi. Gli altri spazi restano disponibili. Il questionario conserva il limite scelto come risposta da inserire nell’app.
-- Quando si gestiscono i badge di un membro, un avviso chiede di rinnovare il PIN se la lunghezza registrata è inferiore al minimo attuale o sconosciuta perché il PIN precede la registrazione della lunghezza. I vecchi PIN funzionano fino alla modifica da parte del titolare; la gestione non rivela né il PIN né il suo hash.
 
 <!-- anchor: user.documents.add -->
 ### Aggiungere un documento alla biblioteca

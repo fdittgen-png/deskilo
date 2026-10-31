@@ -167,40 +167,40 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   }
 
   IconData _icon(WorkspaceEvent event) {
-    return switch (event.type) {
-      EventType.reservation => event.action == EventAction.cancelled
-          ? Icons.event_busy
-          : Icons.event_seat,
-      EventType.payment => Icons.payments_outlined,
-      EventType.expense => Icons.receipt_long_outlined,
-      EventType.adjustment => Icons.tune,
-      EventType.serviceCharge => Icons.room_service_outlined,
-      EventType.quota => Icons.hourglass_top_outlined,
-      EventType.memberJoin => Icons.person_add_alt,
-      EventType.spaceReservation => Icons.meeting_room_outlined,
-      EventType.roleChange => Icons.admin_panel_settings_outlined,
-      EventType.invoicePayment => Icons.price_check_outlined,
-      EventType.reservationDelete => Icons.delete_outline,
-      EventType.invoiceWriteoff => Icons.money_off_csred_outlined,
-      EventType.invoiceReminder => Icons.notification_important_outlined,
-      EventType.priceNegotiation => Icons.handshake_outlined,
-      EventType.expenseSchedule => Icons.event_repeat_outlined,
-      EventType.expenseRepartition => Icons.call_split,
-    EventType.usageCorrection => Icons.timelapse_outlined,
-    EventType.usageRecordDelete => Icons.playlist_remove_outlined,
-    EventType.paymentTermsChange ||
-    EventType.leaseChange ||
-    EventType.commitmentVariance => Icons.request_quote_outlined,
-    EventType.invoiceIssue => Icons.receipt_long_outlined,
-    EventType.invoiceVoid => Icons.cancel_presentation_outlined,
-    EventType.refund => Icons.undo_outlined,
-    EventType.memberStatusChange => Icons.person_off_outlined,
-    EventType.subscriptionChange => Icons.percent_outlined,
-    EventType.matrixChange => Icons.admin_panel_settings_outlined,
-    EventType.badgeSecurityAlert => Icons.security_outlined,
-    // #1088 — a type this build does not know gets the neutral mark.
-    EventType.unknown => Icons.info_outline,
+    if (event.type == EventType.reservation) {
+      return event.action == EventAction.cancelled ? Icons.event_busy : Icons.event_seat;
+    }
+    const icons = <EventType, IconData>{
+      EventType.payment: Icons.payments_outlined,
+      EventType.expense: Icons.receipt_long_outlined,
+      EventType.adjustment: Icons.tune,
+      EventType.serviceCharge: Icons.room_service_outlined,
+      EventType.quota: Icons.hourglass_top_outlined,
+      EventType.memberJoin: Icons.person_add_alt,
+      EventType.spaceReservation: Icons.meeting_room_outlined,
+      EventType.roleChange: Icons.admin_panel_settings_outlined,
+      EventType.invoicePayment: Icons.price_check_outlined,
+      EventType.reservationDelete: Icons.delete_outline,
+      EventType.invoiceWriteoff: Icons.money_off_csred_outlined,
+      EventType.invoiceReminder: Icons.notification_important_outlined,
+      EventType.priceNegotiation: Icons.handshake_outlined,
+      EventType.expenseSchedule: Icons.event_repeat_outlined,
+      EventType.expenseRepartition: Icons.call_split,
+      EventType.usageCorrection: Icons.timelapse_outlined,
+      EventType.usageRecordDelete: Icons.playlist_remove_outlined,
+      EventType.paymentTermsChange: Icons.request_quote_outlined,
+      EventType.leaseChange: Icons.request_quote_outlined,
+      EventType.commitmentVariance: Icons.request_quote_outlined,
+      EventType.invoiceIssue: Icons.receipt_long_outlined,
+      EventType.invoiceVoid: Icons.cancel_presentation_outlined,
+      EventType.refund: Icons.undo_outlined,
+      EventType.memberStatusChange: Icons.person_off_outlined,
+      EventType.subscriptionChange: Icons.percent_outlined,
+      EventType.matrixChange: Icons.admin_panel_settings_outlined,
+      EventType.badgeSecurityAlert: Icons.security_outlined,
+      EventType.unknown: Icons.info_outline,
     };
+    return icons[event.type] ?? Icons.info_outline;
   }
 
   String? _quorumProgress(

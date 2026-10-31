@@ -8,6 +8,9 @@ alter table public.account_badge_pins
 
 alter table public.badge_auth_attempts
   add column if not exists workspace_id uuid references public.workspaces(id) on delete cascade;
+-- These service-only records now carry a workspace; no client read or write
+-- policy is granted by the personal-session restriction that preceded it.
+drop policy if exists personal_native_session on public.badge_auth_attempts;
 create index if not exists badge_auth_attempts_workspace_failures
   on public.badge_auth_attempts (workspace_id, attempted_at desc) where not succeeded;
 
