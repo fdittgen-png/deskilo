@@ -19,5 +19,6 @@ String postingKindLabel(AppLocalizations l10n, PostingKind kind) =>
       PostingKind.supplierPayment => l10n.acctKindSupplierPayment,
       PostingKind.vatRelease => l10n.acctKindVatRelease,
       PostingKind.memberReceipt => l10n.acctKindMemberReceipt,
+      PostingKind.acquisitionTax => l10n.acctKindAcquisitionTax,
       PostingKind.reimbursement => l10n.acctKindReimbursement,
     };

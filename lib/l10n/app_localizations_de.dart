@@ -446,6 +446,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Bezugsteuer';
+
+  @override
   String get acctKindCreditNote => 'Gutschrift';
 
   @override
@@ -2060,6 +2063,9 @@ class AppLocalizationsDe extends AppLocalizations {
     );
     return '$_temp0, $open offen';
   }
+
+  @override
+  String get bankStatementOriginal => 'Originaldatei herunterladen';
 
   @override
   String bankStatementPeriod(String account, String from, String to) {
@@ -6761,7 +6767,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get editorHintDecor =>
-      'Tippen Sie auf den Plan, um die Form abzulegen; ziehen Sie sie an ihren Platz';
+      'Tippen Sie, um eine Form abzulegen; ziehen Sie, um eine Wand am Raster zu zeichnen';
 
   @override
   String get editorHintDesk =>
@@ -6956,6 +6962,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get editorToolSelect => 'Auswahl';
+
+  @override
+  String get editorWallSaved => 'Wand gezeichnet';
+
+  @override
+  String get editorWallUndo => 'Rückgängig';
 
   @override
   String get einvoiceConfigClear => 'Plattform entfernen';
@@ -19913,6 +19925,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get recordingPrivacyWriteRefused =>
       'Nicht, solange der Aufnahmemodus aktiv ist: Dieses Formular zeigt eine erfundene Person, und Speichern würde damit die echten Angaben einer Person überschreiben. Schalten Sie den Aufnahmemodus zuerst aus.';
+
+  @override
+  String get recordsLocationAoNotice =>
+      'Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat (§ 146 Abs. 2a AO). Nichts weist diese Installation dort aus.';
+
+  @override
+  String get recordsLocationAoOutside =>
+      'Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat; anderswo nur mit Bewilligung des Finanzamts (§ 146 Abs. 2b AO). Diese Installation ist außerhalb der EU angegeben.';
 
   @override
   String get recordsLocationCraNone =>

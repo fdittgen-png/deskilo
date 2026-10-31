@@ -15,6 +15,10 @@ const _required = 'analyze · l10n gate · test · coverage';
 const _attempt = '-attempt-\${{ github.run_attempt }}';
 const _shardJobs = {gateShard: 'gate', moneyShard: 'money', restShard: 'rest'};
 
+/// #3166 — each shard's cap: money and rest measured 22.8 and 22.7 min on
+/// a green run, so their cap is 45 until the shards are rebalanced.
+const _timeouts = {gateShard: '30', moneyShard: '45', restShard: '45'};
+
 YamlMap _jobs() =>
     (loadYaml(File('.github/workflows/quality.yml').readAsStringSync())
             as YamlMap)['jobs']
@@ -39,7 +43,7 @@ void main() {
         reason: 'concurrency is explicit, not the runner default',
       );
       expect(run, contains('--file-reporter json:shard/tests.jsonl'));
-      expect('${job['timeout-minutes']}', '30');
+      expect('${job['timeout-minutes']}', _timeouts[shard], reason: shard);
       final uploads = [
         for (final s in job['steps'] as YamlList)
           if ('${(s as YamlMap)['uses']}'.startsWith('actions/upload-artifact'))
