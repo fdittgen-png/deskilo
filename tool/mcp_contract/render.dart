@@ -873,7 +873,7 @@ Map<String, String> renderMcpContract(Map<String, dynamic> contract) {
     generatedPaths.openapi: prettyJson(openapi),
     generatedPaths.webOpenapi: prettyJson(openapi),
     generatedPaths.labels: labels.toString(),
-    generatedPaths.dartTypes: '${types.toString()}\n$shared',
+    generatedPaths.dartTypes: '${types.toString()}\n${shared.toString().trimRight()}\n',
     generatedPaths.webmcp: renderWebMcpTools(contract),
     ...arb,
   };

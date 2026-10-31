@@ -173,4 +173,3 @@ const Set<String> mcpForbiddenInputs = {
 const List<String> mcpOptionalFields = [
   'name',
 ];
-
