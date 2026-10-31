@@ -30,7 +30,7 @@ typedef VatAcquisition = ({
 
 /// The document number an acquisition entry carries: the expense names no
 /// number, so the start of its id (the server writes the same).
-String acquisitionNumber(String expenseId) =>
+String _acquisitionNumber(String expenseId) =>
     expenseId.length <= 8 ? expenseId : expenseId.substring(0, 8);
 
 /// The acquisition-tax entries of [acquisitions] on [book]; [groupOf] names
@@ -52,7 +52,7 @@ Posting _entry(VatAcquisition a, PostingBook book, String group) {
     date: a.day,
     kind: PostingKind.acquisitionTax,
     documentId: a.expenseId,
-    documentNumber: acquisitionNumber(a.expenseId),
+    documentNumber: _acquisitionNumber(a.expenseId),
     lines: [
       ?postingLine(
         BookRole.vatInput,
