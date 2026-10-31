@@ -13,9 +13,9 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:deskilo/core/data/sweep_throttle.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/data/supabase_event_repository.dart';
-import 'package:deskilo/features/events/data/sweep_throttle.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
