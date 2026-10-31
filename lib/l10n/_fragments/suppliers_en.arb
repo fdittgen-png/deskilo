@@ -28,6 +28,14 @@
   "@suppliersRestore": {
     "description": "#2567 suppliers"
   },
+  "suppliersStanding": "Last bill {date} · {amount} this year",
+  "@suppliersStanding": {
+    "description": "#3070 supplier list: the date of the last bill and what the supplier cost this year",
+    "placeholders": {
+      "date": {"type": "String"},
+      "amount": {"type": "String"}
+    }
+  },
   "suppliersArchivedTag": "archived",
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"

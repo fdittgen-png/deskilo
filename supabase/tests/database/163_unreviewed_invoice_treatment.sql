@@ -36,6 +36,7 @@ begin
 
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

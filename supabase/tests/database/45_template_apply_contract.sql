@@ -35,6 +35,7 @@ begin
   execute 'set local role authenticated';
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Every item a change-set announces, flattened.
 create or replace function pg_temp.items(p_groups jsonb) returns setof jsonb language sql as $items$
@@ -42,6 +43,7 @@ create or replace function pg_temp.items(p_groups jsonb) returns setof jsonb lan
     from jsonb_array_elements(coalesce(p_groups, '[]'::jsonb)) g,
          jsonb_array_elements(coalesce(g.value->'items', '[]'::jsonb)) i;
 $items$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Configuration rows of `p_before` that `p_after` no longer holds, or holds
 -- inactive. A fee schedule is replaced whole by design (32).
@@ -55,6 +57,7 @@ create or replace function pg_temp.lost(p_before jsonb, p_after jsonb) returns i
         where public.entity_row_key(t.key, a.value) = public.entity_row_key(t.key, r.value)
           and not ((r.value->>'active')::boolean is true and (a.value->>'active')::boolean is not true));
 $lost$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                         email_confirmed_at, created_at, updated_at)

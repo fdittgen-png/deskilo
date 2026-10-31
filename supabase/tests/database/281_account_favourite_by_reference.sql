@@ -18,16 +18,22 @@ select plan(27);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('0000281e' || lpad(p_n::text, 4, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('0000281a000' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_c text) returns text language sql as $$
   select pg_temp.inst(p_c) || ':' || pg_temp.id('0000281f0001') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.w(p_n int) returns uuid language sql as $$
   select pg_temp.id('0000281f000' || (p_n + 1)) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.here(p_n int) returns text language sql as $$
   select network_id from public.workspaces where id = pg_temp.w(p_n) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A fact as the apply stores it, under the source's epoch.
 create function pg_temp.fact(p_u int, p_c text, p_status text) returns void language sql as $$
   insert into public.membership_facts (user_id, network_id, issuer, source_installation_id,
@@ -35,6 +41,7 @@ create function pg_temp.fact(p_u int, p_c text, p_status text) returns void lang
   select pg_temp.u(p_u), pg_temp.ref(p_c), 'https://p281.test/auth/v1', pg_temp.inst(p_c), 1,
          p_status, now(), now() + interval '900 seconds', e.enrolled_at, gen_random_uuid()
     from public.enrolled_installations e where e.installation_id = pg_temp.inst(p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One call as u(p_n): 'true'/'false' (is_favorite after it) or the SQLSTATE.
 create function pg_temp.fav(p_n int, p_ref text, p_on boolean) returns text language plpgsql as $$
 begin
@@ -48,6 +55,7 @@ begin
 exception when others then
   return sqlstate;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- u(p_n)'s favourites: a local one by its workspace name, a foreign one by
 -- the last character of its installation; '-' when none.
 create function pg_temp.favs(p_n int) returns text language sql as $$
@@ -55,6 +63,7 @@ create function pg_temp.favs(p_n int) returns text language sql as $$
                              ',' order by coalesce(w.name, right(split_part(f.workspace_network_id, ':', 1), 1)) collate "C"), '-')
     from public.workspace_favorites f left join public.workspaces w on w.id = f.workspace_id
    where f.user_id = pg_temp.u(p_n) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- What u(p_n)'s reference list says of p_ref: is_favorite, or 'none'.
 create function pg_temp.listed(p_n int, p_ref text) returns text language plpgsql as $$
 declare v jsonb;
@@ -65,6 +74,7 @@ begin
    where e ->> 'network_id' = p_ref;
   return coalesce(v ->> 'is_favorite', 'none');
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create temp table r (k text primary key, v text);
 
 -- ── fixtures ──────────────────────────────────────────────────────────

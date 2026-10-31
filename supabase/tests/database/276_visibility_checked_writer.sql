@@ -18,25 +18,33 @@ select plan(37);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('00002558c' || lpad(p_n::text, 3, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.w(p_n int) returns uuid language sql as $$
   select pg_temp.id('00002558d' || lpad(p_n::text, 3, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('000002558a0' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A space hosted here, and W-x's space with the SAME local UUID as One.
 create function pg_temp.here(p_n int) returns text language sql as $$
   select network_id from public.workspaces where id = pg_temp.w(p_n) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_c text) returns text language sql as $$
   select pg_temp.inst(p_c) || ':' || pg_temp.w(1) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.act_as(p_n int) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims',
     jsonb_build_object('sub', pg_temp.u(p_n), 'role', 'authenticated')::text, true);
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.exp(p_audience text, p_refs text[] default '{}') returns jsonb
 language sql as $$
   select jsonb_build_object('audience', p_audience, 'workspace_refs', to_jsonb(p_refs)) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The checked write as user [p_n]: 'ok' or the SQLSTATE it raised.
 create function pg_temp.cas(p_n int, p_field text, p_audience text, p_refs text[],
   p_expected jsonb) returns text language plpgsql as $$
@@ -47,11 +55,13 @@ begin
 exception when others then
   return sqlstate;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- What user [p_n] has saved for [p_field], read in its own statement.
 create function pg_temp.saved(p_n int, p_field text) returns jsonb language plpgsql as $$
 begin
   return public.account_visibility_saved_field(pg_temp.u(p_n), p_field);
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Whether [p_sql], run as user [p_n], left the account lock held: the
 -- lock before and after, as 'false true' when the call took it.
 create function pg_temp.locks(p_n int, p_sql text) returns text language plpgsql as $$
@@ -68,6 +78,7 @@ begin
     and l.pid = pg_backend_pid() and l.granted and l.objsubid = 1
     and ((l.classid::bigint << 32) | l.objid::bigint) = v_key)::text;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── fixtures, by direct insert ───────────────────────────────────────────
 -- u1: the caller, active in One, exited from Two; u2: active in One;

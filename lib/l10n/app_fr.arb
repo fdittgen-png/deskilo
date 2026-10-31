@@ -15348,6 +15348,7 @@
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Secondes entre deux contrôles, par un appareil, des demandes dont le délai est dépassé. Une telle demande apparaît expirée au plus tard après ce temps. 0 contrôle avant chaque lecture de la boîte.",
   "settingHintMessagingMessageRequestsPerDay": "Nombre de demandes de message qu'une personne peut envoyer par jour à des personnes qui ne les ont pas autorisées. Peut seulement être diminué.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
@@ -15518,6 +15519,7 @@
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Contrôle des délais de la boîte",
   "settingLabelMessagingMessageRequestsPerDay": "Demandes de message par jour",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."
@@ -16087,7 +16089,6 @@
   "setupLevelName": "{key, select, bookings_simple{Places partagées} bookings_resources{Salles et ressources} bookings_measured{Usage mesuré} community_basic{Simple} community_organised{Organisée} money_none{Pas d’argent} money_statements{Relevés} money_invoices{Factures} payments_off{Par virement} payments_online{En ligne} tax_none{Pas de TVA} tax_vat{TVA} tax_books{Comptabilité} purchases_none{Aucun} purchases_expenses{Dépenses} purchases_full{Achats complets} presentation_basic{Simple} presentation_branded{Vos couleurs} presentation_public{Page publique} operations_basic{Simple} operations_insight{Indicateurs} operations_advanced{Avancé} assistant_off{Désactivé} assistant_on{Activé} other{{key}}}",
   "setupLevelsApplied": "Votre espace fait désormais ce que vous avez choisi.",
   "setupLevelsApply": "Appliquer",
-  "setupLevelsBecause": "Parce que {reason}",
   "setupLevelsChoice": "Ce qu’il lui faut",
   "setupLevelsConfirmOff": "Certaines fonctions seront désactivées. Leurs données restent, mais elles ne fonctionnent plus jusqu’à leur réactivation.",
   "setupLevelsConflict": "Les fonctions ont changé entre-temps. Regardez à nouveau, puis appliquez.",
@@ -16098,8 +16099,8 @@
   "setupLevelsQuestions": "À propos de votre espace",
   "setupLevelsSeeDemo": "Le voir dans la démo",
   "setupLevelsStepsFollow": "À régler ensuite dans le guide : {steps}",
-  "setupLevelsSwitchOff": "Désactive : {features}",
-  "setupLevelsSwitchOn": "Active : {features}",
+  "setupLevelsSwitchOff": "Votre espace n’aura plus :",
+  "setupLevelsSwitchOn": "Votre espace obtient :",
   "setupLevelsTitle": "Ce que fait votre espace",
   "setupLimitsPerMember": "Une autorisation fixée sur la page d’un membre passe avant le nombre de places indiqué ici.",
   "setupLimitsPreviewAhead": "{days, plural, =1{Vous pouvez réserver jusqu’à un jour à l’avance.} other{Vous pouvez réserver jusqu’à {days} jours à l’avance.}}",
@@ -16181,7 +16182,7 @@
   "setupPublicPageNotPublished": "Non publiée : personne en dehors de l’espace ne voit cette page.",
   "setupPurchaseSidePreview": "Les membres ne voient rien de cela : c’est l’affaire de ceux qui gèrent l’argent.",
   "setupQuestion": "{key, select, association{L’espace est géré par une association, une coopérative ou un club} approve_bookings{Les réservations attendent une validation ; les membres ne réservent pas directement} members_owe_money{Les membres doivent de l’argent à l’espace (loyer, carnets, extras)} issue_invoices{Vous émettez des factures} pay_online{Les membres paient en ligne} vat_registered{L’espace est assujetti à la TVA} keep_books{Vous tenez une comptabilité} tracks_purchases{Vous suivez les achats de l’espace} several_rooms_or_sites{Plusieurs salles, une salle de réunion ou plusieurs sites} door_tablet{Une tablette à l’entrée enregistre les arrivées} public_page{Une page publique présente l’espace} organised{Comités, rôles propres ou validations à plusieurs} other{{key}}}",
-  "setupReason": "{key, select, door_tablet{une tablette à l’entrée enregistre les arrivées} keeps_books{vous tenez une comptabilité} later{un assistant peut venir plus tard} members_only{seuls les membres voient l’espace} members_owe{les membres doivent de l’argent à l’espace} no_money{aucun argent ne circule} no_purchases{l’espace ne suit pas ses achats} no_vat{l’espace n’est pas assujetti à la TVA} organised{plusieurs personnes décident ensemble} pay_by_transfer{les membres paient par virement} pay_online{les membres paient en ligne} public_page{l’espace a une page publique} several_rooms{il y a plusieurs salles ou sites} shared_places{les membres partagent les places} small_community{une petite communauté} start_simple{commencer simplement} tracks_purchases{vous suivez les achats de l’espace} vat_registered{l’espace est assujetti à la TVA} issues_invoices{vous émettez des factures} association{une association décide ensemble, avec son bureau} approve_bookings{les réservations attendent une validation} other{{key}}}",
+  "setupReason": "{key, select, door_tablet{Parce qu’une tablette à l’entrée enregistre les arrivées} keeps_books{Parce que vous tenez une comptabilité} later{Parce qu’un assistant peut venir plus tard} members_only{Parce que seuls les membres voient l’espace} members_owe{Parce que les membres doivent de l’argent à l’espace} no_money{Parce qu’aucun argent ne circule} no_purchases{Parce que l’espace ne suit pas ses achats} no_vat{Parce que l’espace n’est pas assujetti à la TVA} organised{Parce que plusieurs personnes décident ensemble} pay_by_transfer{Parce que les membres paient par virement} pay_online{Parce que les membres paient en ligne} public_page{Parce que l’espace a une page publique} several_rooms{Parce qu’il y a plusieurs salles ou sites} shared_places{Parce que les membres partagent les places} small_community{Parce que la communauté est petite} start_simple{Parce que vous voulez commencer simplement} tracks_purchases{Parce que vous suivez les achats de l’espace} vat_registered{Parce que l’espace est assujetti à la TVA} issues_invoices{Parce que vous émettez des factures} association{Parce qu’une association décide ensemble, avec son bureau} approve_bookings{Parce que les réservations attendent une validation} other{{key}}}",
   "setupRightsApplied": "Les membres ont déjà ces droits.",
   "setupRightsApplyFailed": "Les droits n’ont pas pu être modifiés. Réessayez.",
   "setupRightsNeedsManageRoles": "Seule une personne qui gère les rôles peut changer ce que les membres peuvent faire.",
@@ -16855,6 +16856,7 @@
   },
   "suppliersSavedOpen": "Ouvrir",
   "suppliersSearch": "Rechercher par nom, numéro ou numéro fiscal",
+  "suppliersStanding": "Dernière facture le {date} · {amount} cette année",
   "suppliersTaxUnverified": "Identifiant fiscal non vérifié",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

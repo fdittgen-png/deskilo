@@ -12,18 +12,25 @@ select plan(40);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('00002563e' || lpad(p_n::text, 3, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.iss() returns text language sql as $$ select 'https://p.test/auth/v1' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- W-A, W-B, P and a stranger, by letter.
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('000002563a0' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ws() returns uuid language sql as $$ select pg_temp.id('000002563f01') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_c text) returns text language sql as $$ select pg_temp.inst(p_c) || ':' || pg_temp.ws() $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- plpgsql, not an inlinable SQL function: its own statement takes a fresh
 -- snapshot, so it sees what an earlier go() in the same statement wrote.
 create function pg_temp.sees(p_field text, p_viewer int) returns text language plpgsql as $$
 begin return public.account_field_visible_to(pg_temp.u(1), p_field, pg_temp.u(p_viewer))::text; end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mine(p_c text) returns text language plpgsql as $$
 declare v jsonb;
 begin
@@ -33,6 +40,7 @@ begin
   perform set_config('request.jwt.claims', '', true);
   return coalesce((v->>'freshness') || ' ' || coalesce(v->>'status', '-'), 'none');
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── P: fixtures ───────────────────────────────────────────────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);
@@ -82,6 +90,7 @@ returns jsonb language sql as $$
     'issuer', p_issuer, 'subject', pg_temp.u(p_u), 'network_id', pg_temp.ref(coalesce(p_ws, p_s)),
     'revision', p_r, 'status', p_st, 'asserted_at', p_at,
     'valid_until', p_at + interval '900 seconds') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Signs the fact as its source would and posts it to the inbox.
 create function pg_temp.go(p_e int, p_s text, p_u int, p_r int, p_st text,
   p_at timestamptz default now(), p_issuer text default pg_temp.iss(), p_ws text default null)
@@ -103,6 +112,7 @@ begin
     (select jsonb_object_agg('x-deskilo-' || key, value) from jsonb_each(v_h)),
     encode(convert_to(v_body::text, 'UTF8'), 'base64'))->>'outcome';
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the doors ─────────────────────────────────────────────────────────
 select is((select count(*)::int from pg_policy
@@ -214,6 +224,7 @@ values (public.installation_id(), pg_temp.u(4), pg_temp.iss(), pg_temp.u(1)::tex
 create function pg_temp.out() returns text language sql as $$
   select string_agg(status, '<' order by revision, asserted_at) from public.membership_fact_outbox
    where subject = pg_temp.u(1)::text $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── W: a membership change commits its fact ───────────────────────────
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status)

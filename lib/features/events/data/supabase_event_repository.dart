@@ -2,7 +2,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
+import '../../../core/data/sweep_throttle.dart';
 import '../../../core/data/system_columns.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../money/domain/payment_terms.dart';
 import '../domain/event_decision.dart';
 import '../domain/event_repository.dart';
@@ -10,31 +12,20 @@ import '../domain/validation_policy.dart';
 import '../domain/workspace_event.dart';
 
 class SupabaseEventRepository implements EventRepository {
-  SupabaseEventRepository(this._client);
+  SupabaseEventRepository(this._client, {required this._sweeps});
 
   final SupabaseClient _client;
 
   /// #1909 — one timeout sweep in flight per workspace: concurrent feed
   /// reads (several screens refreshing at once) share it instead of each
-  /// running the multi-pass sweep.
-  final _sweeps = <String, Future<void>>{};
+  /// running the multi-pass sweep. #3099 — and at most one per interval.
+  final SweepThrottle _sweeps;
 
-  Future<void> _sweep(String workspaceId) {
-    final running = _sweeps[workspaceId];
-    if (running != null) return running;
-    final started = _runSweep(workspaceId);
-    _sweeps[workspaceId] = started;
-    return started;
-  }
-
-  Future<void> _runSweep(String workspaceId) async {
-    try {
-      await _client.rpc<dynamic>('sweep_pending_events',
-          params: {'p_workspace_id': workspaceId});
-    } finally {
-      _sweeps.remove(workspaceId)?.ignore(); // that is this future: done
-    }
-  }
+  Future<void> _sweep(String workspaceId) => _sweeps.run(
+        workspaceId,
+        () => _client.rpc<dynamic>('sweep_pending_events',
+            params: {'p_workspace_id': workspaceId}),
+      );
 
   /// #1909 — newest first in the order the index already holds
   /// (`created_at DESC` is NULLS FIRST; the column is NOT NULL, so this is
@@ -54,8 +45,16 @@ class SupabaseEventRepository implements EventRepository {
     String workspaceId, {
     int limit = 100,
   }) async {
-    // Lazy timeout sweep before reading (spec §8.2).
-    await _sweep(workspaceId);
+    // Lazy timeout sweep before reading (spec §8.2). #3103 — never fatal,
+    // like the day-end sweep: a sweep that fails (function missing, denied,
+    // transient) must not fail the feed and re-sweep on every retry; the
+    // next read tries again.
+    try {
+      await _sweep(workspaceId);
+    } on Object catch (e, st) {
+      TraceLogger.instance
+          .warn('events', 'timeout sweep failed', error: e, stackTrace: st);
+    }
     // #1310 S2 — a limit of 0 means "everything", for the export.
     //
     // The feed asks for a page and gets one; the workspace export asks

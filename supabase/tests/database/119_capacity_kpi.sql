@@ -95,6 +95,7 @@ begin
   perform set_config('kpi.stranger', u_x::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -103,6 +104,7 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.kpi(p_level text default null) returns jsonb
 language sql as $$
@@ -111,6 +113,7 @@ language sql as $$
                                   current_setting('kpi.to')::timestamptz,
                                   p_level::uuid);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

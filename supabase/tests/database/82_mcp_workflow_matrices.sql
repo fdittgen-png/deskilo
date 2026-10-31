@@ -28,12 +28,14 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.call(p_user uuid, p_op text, p_args jsonb, p_request uuid) returns jsonb language plpgsql as $$
 begin
   perform pg_temp.act_as(p_user, 'claude-test');
   return public.mcp_execute_v1(current_setting('t.i')::uuid, current_setting('t.a')::uuid, p_op, p_args, p_request);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.confirm_and_run(p_user uuid, p_op text, p_args jsonb, p_request uuid) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -44,6 +46,7 @@ begin
   return pg_temp.call(p_user, p_op, p_args, p_request);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- Seeded as postgres: eligibility, a connection and its consent.
 create function pg_temp.connect(p_user uuid, p_ops text[]) returns void language plpgsql as $$
 begin
@@ -57,6 +60,7 @@ begin
   select id, current_setting('t.a')::uuid, p_ops, 'workspace' from public.mcp_connections where local_user_id = p_user;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('t.i', public.installation_id()::text, true);
 select set_config('t.ops', 'request_subscription_change,request_member_status_change,request_invoice_void,respond_to_validation', true);

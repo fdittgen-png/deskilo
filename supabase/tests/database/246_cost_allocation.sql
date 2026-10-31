@@ -39,9 +39,11 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000025821' || p)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One approved bill of 10 March with one operating line of p_net, untaxed.
 create function pg_temp.bill(p_category text, p_ref text, p_net int) returns uuid language plpgsql as $$
 declare v uuid;
@@ -61,26 +63,31 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.save(p_user text, p_rule uuid, p_expected int, p_body jsonb, p_request uuid default null)
 returns jsonb language sql as $$
   select pg_temp.call(pg_temp.u(p_user),
     format('select public.save_cost_allocation_rule_v1(%L, %L, %s, %L::jsonb, %L)', pg_temp.u('b1'), p_rule,
       coalesce(p_expected, 0), p_body, coalesce(p_request, gen_random_uuid())));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.offices(p_w1 int, p_w2 int, p_w3 int) returns jsonb language sql as $$
   select jsonb_build_array(
     jsonb_build_object('resource_kind', 'office', 'resource_id', '00000000-0000-4000-8000-000002582103', 'weight', p_w3),
     jsonb_build_object('resource_kind', 'office', 'resource_id', '00000000-0000-4000-8000-000002582101', 'weight', p_w1),
     jsonb_build_object('resource_kind', 'office', 'resource_id', '00000000-0000-4000-8000-000002582102', 'weight', p_w2));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.march() returns jsonb language sql as $$
   select pg_temp.call(pg_temp.u('a1'),
     format('select public.kpi_cost_allocation(%L, %L, %L)', pg_temp.u('b1'), '2026-03', '2026-03'));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.shares(p jsonb) returns text language sql as $$
   select string_agg(r ->> 'allocated_minor', '/' order by r ->> 'resource_id')
     from jsonb_array_elements(p -> 'resources') r;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000025821a1","role":"authenticated"}',true);
 set local role authenticated;
 

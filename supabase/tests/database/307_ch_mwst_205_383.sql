@@ -90,6 +90,7 @@ begin
   perform set_config('ch.ws_de', ws_de::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -97,16 +98,19 @@ begin
     json_build_object('sub', current_setting('ch.' || p_who), 'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.flag(p_on boolean) returns void language sql as $f$
   update public.workspaces set feature_flags = feature_flags || jsonb_build_object('inputVat', p_on)
    where id = current_setting('ch.ws')::uuid;
 $f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.sept() returns uuid language sql as $q$
   select id from public.vat_declarations
    where workspace_id = current_setting('ch.ws')::uuid and period_start = '2026-09-01';
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- The stored line of [p_category], of the input tax or of the output.
 create or replace function pg_temp.line(p_category text, p_input boolean) returns jsonb language sql as $q$
@@ -114,6 +118,7 @@ create or replace function pg_temp.line(p_category text, p_input boolean) return
    where d.id = pg_temp.sept() and l ->> 'category' = p_category
      and (l ->> 'direction' = 'input') is not distinct from (case when p_input then true end);
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

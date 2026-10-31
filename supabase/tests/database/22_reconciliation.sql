@@ -49,6 +49,7 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -56,6 +57,7 @@ create or replace function pg_temp.findings() returns text[] language sql as $$
   select coalesce(array_agg(r."check" order by r."check"), '{}')
     from public.reconcile_workspace(current_setting('deskilo.recon.ws')::uuid) r;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ------------------------------------------------------------ it is clean
 select is(pg_temp.findings(), '{}'::text[],

@@ -22,6 +22,7 @@ create or replace function pg_temp.missing(p_parties jsonb, p_totals jsonb defau
   select public.invoice_essentials_missing('00000000-0000-4000-8000-0000001917b1',
     '00000000-0000-4000-8000-0000001917c2', p_parties, p_totals);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.missing('{"seller":{"street":"","city":""},"buyer":{"name":"B"}}'),
   array['seller_address'], 'no street and no city: the seller address is missing');

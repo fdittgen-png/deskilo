@@ -13,20 +13,28 @@ select plan(24);
 
 create function pg_temp.id(p_tail text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-' || p_tail)::uuid $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(p_n int) returns uuid language sql as $$
   select pg_temp.id('0000280e' || lpad(p_n::text, 4, '0')) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.iss() returns text language sql as $$ select 'https://p280.test/auth/v1' $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inst(p_c text) returns uuid language sql as $$
   select pg_temp.id('0000280a000' || p_c) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.ref(p_c text, p_k int) returns text language sql as $$
   select pg_temp.inst(p_c) || ':' || pg_temp.id('0000280f000' || p_k) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- One snapshot entry of W-A, as a one-element list (lists concatenate).
 create function pg_temp.e(p_n int, p_k int, p_r int, p_st text) returns jsonb language sql as $$
   select jsonb_build_array(jsonb_build_array(pg_temp.u(p_n)::text, pg_temp.ref('a', p_k), p_r, p_st)) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.h(p_entries jsonb) returns text language sql as $$
   select public.membership_snapshot_digest(p_entries) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.full_list() returns jsonb language sql as $$
   select pg_temp.e(1, 1, 10, 'active') || pg_temp.e(1, 2, 12, 'paused') $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- P's facts about u1/u2 as source+workspace/person=status@revision.
 create function pg_temp.st() returns text language plpgsql as $$
 declare v text;
@@ -37,6 +45,7 @@ begin
     from public.membership_facts where user_id in (pg_temp.u(1), pg_temp.u(2));
   return v;
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── P: fixtures (u1 consented to W-A and W-B, u2 to W-A) ──────────────
 select public.operator_set_installation_roles(array['personal_home', 'workspace_host']);
@@ -89,10 +98,12 @@ begin
     (select jsonb_object_agg('x-deskilo-' || key, value) from jsonb_each(v_h)),
     encode(convert_to(v_body::text, 'UTF8'), 'base64'))->>'outcome';
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.f(p_e int, p_s text, p_u int, p_k int, p_r int, p_st text)
 returns text language sql as $$
   select pg_temp.post(p_s, p_e, jsonb_build_object('kind', 'membership_fact', 'subject', pg_temp.u(p_u),
     'network_id', pg_temp.ref(p_s, p_k), 'revision', p_r, 'status', p_st)) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A page of W-A's snapshot p_snap: watermark, page/pages, count, hash, entries.
 create function pg_temp.pg(p_e int, p_snap int, p_wm int, p_page int, p_pages int, p_cnt int,
   p_hash text, p_entries jsonb, p_at timestamptz default now())
@@ -100,7 +111,9 @@ returns text language sql as $$
   select pg_temp.post('a', p_e, jsonb_build_object('kind', 'membership_snapshot',
     'snapshot_id', pg_temp.id('0000280b00' || lpad(p_snap::text, 2, '0')), 'watermark', p_wm,
     'page', p_page, 'pages', p_pages, 'count', p_cnt, 'hash', p_hash, 'entries', p_entries), p_at) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.z() returns text language sql as $$ select repeat('0', 64) $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── the doors ─────────────────────────────────────────────────────────
 select is_empty($$select p.proname || ' ' || r from pg_proc p
@@ -176,6 +189,7 @@ begin
   perform set_config('deskilo.federation_retention', 'on', true);
   delete from public.identity_status_outbox where event_id = (select event_id from iso where n = p_n);
 end $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select is((select count(*)::int from iso), 6, 'six assertions');
 select throws_ok($$delete from public.identity_status_outbox where event_id = (select event_id from iso where n = 1)$$,
   '55000', null, 'no delete outside the purge');

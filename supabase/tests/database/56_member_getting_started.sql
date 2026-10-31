@@ -13,6 +13,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                         email_confirmed_at, created_at, updated_at)
@@ -50,6 +51,7 @@ create function pg_temp.book(p_day_offset integer) returns uuid language sql as 
     (current_setting('deskilo.gs.day')::date + p_day_offset + time '12:00') at time zone 'Europe/Paris',
     false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.act_as('00000000-0000-4000-8000-000000001655');
 select is(public.join_workspace(current_setting('deskilo.gs.code')),

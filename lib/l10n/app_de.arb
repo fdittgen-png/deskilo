@@ -15348,6 +15348,7 @@
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Sekunden zwischen zwei Prüfungen, durch ein Gerät, auf Anfragen mit abgelaufener Frist. Eine solche Anfrage erscheint höchstens so viel später als abgelaufen. 0 prüft vor jedem Lesen des Posteingangs.",
   "settingHintMessagingMessageRequestsPerDay": "Wie viele Nachrichtenanfragen eine Person pro Tag an Personen senden darf, die sie nicht erlaubt haben. Kann nur verringert werden.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
@@ -15518,6 +15519,7 @@
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Fristprüfung des Posteingangs",
   "settingLabelMessagingMessageRequestsPerDay": "Nachrichtenanfragen pro Tag",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."
@@ -16087,7 +16089,6 @@
   "setupLevelName": "{key, select, bookings_simple{Geteilte Plätze} bookings_resources{Räume und Ressourcen} bookings_measured{Gemessene Nutzung} community_basic{Einfach} community_organised{Organisiert} money_none{Kein Geld} money_statements{Kontoauszüge} money_invoices{Rechnungen} payments_off{Per Überweisung} payments_online{Online} tax_none{Keine USt.} tax_vat{USt.} tax_books{Buchhaltung} purchases_none{Keiner} purchases_expenses{Ausgaben} purchases_full{Voller Einkauf} presentation_basic{Einfach} presentation_branded{Ihre Farben} presentation_public{Öffentliche Seite} operations_basic{Einfach} operations_insight{Kennzahlen} operations_advanced{Fortgeschritten} assistant_off{Aus} assistant_on{An} other{{key}}}",
   "setupLevelsApplied": "Ihr Raum tut jetzt, was Sie gewählt haben.",
   "setupLevelsApply": "Anwenden",
-  "setupLevelsBecause": "Weil {reason}",
   "setupLevelsChoice": "Was er braucht",
   "setupLevelsConfirmOff": "Einige Funktionen werden ausgeschaltet. Ihre Daten bleiben, aber sie arbeiten nicht mehr, bis sie wieder eingeschaltet werden.",
   "setupLevelsConflict": "Die Funktionen haben sich inzwischen geändert. Sehen Sie erneut nach und wenden Sie dann an.",
@@ -16098,8 +16099,8 @@
   "setupLevelsQuestions": "Über Ihren Raum",
   "setupLevelsSeeDemo": "In der Demo ansehen",
   "setupLevelsStepsFollow": "Danach im Assistenten einrichten: {steps}",
-  "setupLevelsSwitchOff": "Schaltet aus: {features}",
-  "setupLevelsSwitchOn": "Schaltet ein: {features}",
+  "setupLevelsSwitchOff": "Ihr Raum erhält nicht mehr:",
+  "setupLevelsSwitchOn": "Ihr Raum erhält:",
   "setupLevelsTitle": "Was Ihr Raum tut",
   "setupLimitsPerMember": "Ein Kontingent auf der Seite eines Mitglieds geht der Zahl der Plätze hier vor.",
   "setupLimitsPreviewAhead": "{days, plural, =1{Sie können bis zu einen Tag im Voraus buchen.} other{Sie können bis zu {days} Tage im Voraus buchen.}}",
@@ -16181,7 +16182,7 @@
   "setupPublicPageNotPublished": "Nicht veröffentlicht: Niemand außerhalb des Bereichs sieht diese Seite.",
   "setupPurchaseSidePreview": "Mitglieder sehen davon nichts: Es bleibt bei denen, die das Geld verwalten.",
   "setupQuestion": "{key, select, association{Ein Verein, eine Genossenschaft oder ein Club betreibt den Raum} approve_bookings{Buchungen warten auf eine Freigabe; Mitglieder buchen nicht direkt} members_owe_money{Mitglieder schulden dem Raum Geld (Miete, Karten, Extras)} issue_invoices{Sie stellen Rechnungen} pay_online{Mitglieder zahlen online} vat_registered{Der Raum ist umsatzsteuerpflichtig} keep_books{Sie führen Bücher} tracks_purchases{Sie verfolgen, was der Raum einkauft} several_rooms_or_sites{Mehrere Räume, ein Besprechungsraum oder mehrere Standorte} door_tablet{Ein Tablet am Eingang erfasst die Ankunft} public_page{Eine öffentliche Seite zeigt den Raum} organised{Gremien, eigene Rollen oder Freigaben durch mehrere} other{{key}}}",
-  "setupReason": "{key, select, door_tablet{ein Tablet am Eingang die Ankunft erfasst} keeps_books{Sie Bücher führen} later{ein Assistent später kommen kann} members_only{nur Mitglieder den Raum sehen} members_owe{Mitglieder dem Raum Geld schulden} no_money{kein Geld fließt} no_purchases{der Raum keine Einkäufe verfolgt} no_vat{der Raum nicht umsatzsteuerpflichtig ist} organised{mehrere gemeinsam entscheiden} pay_by_transfer{Mitglieder per Überweisung zahlen} pay_online{Mitglieder online zahlen} public_page{der Raum eine öffentliche Seite hat} several_rooms{es mehrere Räume oder Standorte gibt} shared_places{Mitglieder die Plätze teilen} small_community{die Gemeinschaft klein ist} start_simple{es einfach beginnen soll} tracks_purchases{Sie verfolgen, was der Raum einkauft} vat_registered{der Raum umsatzsteuerpflichtig ist} issues_invoices{Sie Rechnungen stellen} association{ein Verein mit seinem Vorstand gemeinsam entscheidet} approve_bookings{Buchungen auf eine Freigabe warten} other{{key}}}",
+  "setupReason": "{key, select, door_tablet{Weil ein Tablet am Eingang die Ankunft erfasst} keeps_books{Weil Sie Bücher führen} later{Weil ein Assistent später kommen kann} members_only{Weil nur Mitglieder den Raum sehen} members_owe{Weil Mitglieder dem Raum Geld schulden} no_money{Weil kein Geld fließt} no_purchases{Weil der Raum keine Einkäufe verfolgt} no_vat{Weil der Raum nicht umsatzsteuerpflichtig ist} organised{Weil mehrere gemeinsam entscheiden} pay_by_transfer{Weil Mitglieder per Überweisung zahlen} pay_online{Weil Mitglieder online zahlen} public_page{Weil der Raum eine öffentliche Seite hat} several_rooms{Weil es mehrere Räume oder Standorte gibt} shared_places{Weil Mitglieder die Plätze teilen} small_community{Weil die Gemeinschaft klein ist} start_simple{Weil Sie einfach beginnen möchten} tracks_purchases{Weil Sie verfolgen, was der Raum einkauft} vat_registered{Weil der Raum umsatzsteuerpflichtig ist} issues_invoices{Weil Sie Rechnungen stellen} association{Weil ein Verein mit seinem Vorstand gemeinsam entscheidet} approve_bookings{Weil Buchungen auf eine Freigabe warten} other{{key}}}",
   "setupRightsApplied": "Mitglieder haben diese Rechte bereits.",
   "setupRightsApplyFailed": "Die Rechte konnten nicht geändert werden. Bitte versuchen Sie es erneut.",
   "setupRightsNeedsManageRoles": "Nur wer Rollen verwaltet, kann ändern, was Mitglieder dürfen.",
@@ -16855,6 +16856,7 @@
   },
   "suppliersSavedOpen": "Öffnen",
   "suppliersSearch": "Nach Name, Nummer oder Steuer-ID suchen",
+  "suppliersStanding": "Letzte Rechnung am {date} · {amount} in diesem Jahr",
   "suppliersTaxUnverified": "Steuernummer nicht geprüft",
   "@suppliersTaxUnverified": {
     "description": "#2567 suppliers"

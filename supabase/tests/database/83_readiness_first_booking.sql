@@ -29,6 +29,7 @@ reset role;
 create function pg_temp.fb(p text) returns jsonb language sql as $$
   select e from jsonb_array_elements(current_setting(p)::jsonb) e where e->>'section' = 'first_booking'
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select is(pg_temp.fb('t.r0')->>'state', 'needs_configuration', 'a new space has not been used yet');
 select is(pg_temp.fb('t.r1')->>'state', 'needs_configuration', 'a cancelled booking is not a first booking');
 select is(pg_temp.fb('t.r2')->>'state', 'ready', 'one booking that stands is');

@@ -40,6 +40,7 @@ reset role;
 create function pg_temp.rec(p text) returns jsonb language sql as $$
   select e from jsonb_array_elements(current_setting(p)::jsonb) e where e->>'section' = 'recovery'
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select is(pg_temp.rec('t.r0')->>'reason', 'no_evidence', 'a new space has no recovery evidence');
 select is(pg_temp.rec('t.r0')->>'state', 'unverified', 'and stays unverified');
 select is(pg_temp.rec('t.r1')->>'state', 'ready', 'a recorded export makes recovery ready');

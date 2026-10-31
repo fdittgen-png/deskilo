@@ -361,7 +361,7 @@ final class MyUpcomingReservationsProvider
 }
 
 String _$myUpcomingReservationsHash() =>
-    r'510da65c16d475b12fe5f5f80a6845ebd939512b';
+    r'64b37704ef8270f915e712b95c91bbf1358802f7';
 
 /// Reservations of the active workspace intersecting the given LOCAL
 /// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):

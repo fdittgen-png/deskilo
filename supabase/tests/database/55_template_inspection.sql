@@ -27,11 +27,13 @@ begin
   execute 'set local role authenticated';
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.inspect(p_key text, p_owner uuid) returns jsonb language sql as $$
   select public.inspect_workspace_template((select id from public.workspace_templates
     where key = p_key and owner_workspace_id is not distinct from p_owner));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                         email_confirmed_at, created_at, updated_at)

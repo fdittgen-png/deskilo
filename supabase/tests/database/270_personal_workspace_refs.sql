@@ -26,11 +26,13 @@ begin
     'sub', p_user, 'role', 'authenticated')::text, true);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.nobody() returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', '', true);
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.sqlstate_of(p_sql text) returns text language plpgsql as $$
 begin
   execute p_sql;
@@ -39,23 +41,29 @@ exception when others then
   return sqlstate;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002563a' || lpad(n::text, 3, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.w(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00002563c' || lpad(n::text, 3, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- A reference on this installation, and one on another installation.
 create function pg_temp.here(n int) returns text language sql as $$
   select public.installation_id()::text || ':' || pg_temp.w(n)::text;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.away(n int) returns text language sql as $$
   select '00000000-0000-4000-8000-0000025630ff:' || pg_temp.w(n)::text;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The caller's reference to [p_ref], from the reader.
 create function pg_temp.ref_of(p jsonb, p_ref text) returns jsonb language sql as $$
   select e from jsonb_array_elements(p -> 'refs') e where e ->> 'network_id' = p_ref;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ── fixtures, by direct insert ───────────────────────────────────────────
 -- u1: the caller, active in One, exited from Two. u2: active in One.

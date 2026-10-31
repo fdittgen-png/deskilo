@@ -12,6 +12,7 @@ create function pg_temp.identity_event(p_scope text, p_client text default
     'client_id', p_client, 'scope', p_scope,
     'user_metadata', jsonb_build_object('scope', 'openid', 'enabled', true))));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select public.operator_register_identity_federation_client(
   '00000000-0000-4000-8000-000000016481',

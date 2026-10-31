@@ -13,6 +13,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:deskilo/core/data/sweep_throttle.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/data/supabase_event_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -42,7 +44,15 @@ void main() {
       authOptions: const AuthClientOptions(autoRefreshToken: false),
     );
     addTearDown(client.dispose);
-    return SupabaseEventRepository(client);
+    // #3099 — an interval of 0: every read sweeps, as before the throttle,
+    // so the coalescing below is the only thing under test.
+    return SupabaseEventRepository(
+      client,
+      sweeps: SweepThrottle(
+        clock: FixedClock(DateTime.utc(2026, 10, 31)),
+        interval: () => Duration.zero,
+      ),
+    );
   }
 
   setUp(() {

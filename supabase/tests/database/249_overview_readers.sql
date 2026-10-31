@@ -24,12 +24,14 @@ insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status) val
 create function pg_temp.u(p text) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-0000025830' || p)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.inv(p_id text, p_issued timestamptz, p_total int) returns void language sql as $$
   insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,
                                currency, member_name, workspace_name, issuer_name, signature, issued_at)
   values (pg_temp.u(p_id), pg_temp.u('b1'), pg_temp.u('c2'), pg_temp.u('c1'), 'O-' || p_id, 'T', '[]'::jsonb,
           p_total, 'EUR', 'A', 'Overview', 'Owner', 'sig', p_issued);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.call(p_user text, p_fn text, p_from text, p_to text) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -39,6 +41,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.inv('d1', '2025-01-10 10:00+01', 1200);
 insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, status, note, by_name)

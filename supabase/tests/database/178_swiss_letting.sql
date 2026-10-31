@@ -51,10 +51,12 @@ begin
   return mm;
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.missing(mm uuid) returns text[] language sql as $q$
   select public.invoice_issue_readiness(m.workspace_id, m.id, '2026-09') from public.members m where m.id = mm;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 
 create or replace function pg_temp.gaps(mm uuid) returns text[] language sql as $q$
@@ -63,6 +65,7 @@ create or replace function pg_temp.gaps(mm uuid) returns text[] language sql as 
          unnest(public.invoice_issue_readiness(m.workspace_id, m.id, '2026-09')) x
    where m.id = mm;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.legal(mm uuid, j jsonb) returns uuid language plpgsql as $q$
 begin
@@ -70,6 +73,7 @@ begin
   return mm;
 end;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.exempt_rate(mm uuid) returns uuid language plpgsql as $q$
 begin
@@ -79,6 +83,7 @@ begin
   return mm;
 end;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select isnt(pg_temp.seller('FR','EUR','vat_registered','FR12345678901','123456789', 'consumer', tag => '-fr'), null, 'a French seller exists');
 select isnt(pg_temp.seller('GB','GBP','vat_registered','GB123456789','12345678', 'business', tag => '-uk'), null, 'a UK seller exists');

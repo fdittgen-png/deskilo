@@ -42,6 +42,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.bill(p_ref text, p_day text, p_gross int) returns text language sql as $$
   select pg_temp.call('00000000-0000-4000-8000-0000002582a1',
     format('select public.save_purchase_draft_v1(%L, %L, 0, %L::jsonb)', '00000000-0000-4000-8000-0000002582b1',
@@ -50,10 +51,12 @@ create function pg_temp.bill(p_ref text, p_day text, p_gross int) returns text l
         'lines', jsonb_build_array(jsonb_build_object('description', p_ref, 'gross_cents', p_gross,
           'net_cents', p_gross, 'tax_cents', 0)))::text)) ->> 'purchase_id';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.kpi(p_user text, p_from text, p_to text) returns jsonb language sql as $$
   select pg_temp.call(('00000000-0000-4000-8000-0000002582' || p_user)::uuid,
     format('select public.kpi_purchases_summary(%L, %L, %L)', '00000000-0000-4000-8000-0000002582b1', p_from, p_to));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.err(p_user text, p_from text, p_to text) returns text language plpgsql as $$
 begin
   perform pg_temp.kpi(p_user, p_from, p_to);
@@ -62,6 +65,7 @@ exception when others then
   return sqlstate;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002582a1","role":"authenticated"}',true);
 set local role authenticated;

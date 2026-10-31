@@ -58,6 +58,7 @@ begin
   perform set_config('deskilo.pw.plain', u_plain::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -66,10 +67,12 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.ws() returns uuid language sql as $$
   select current_setting('deskilo.pw.ws')::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

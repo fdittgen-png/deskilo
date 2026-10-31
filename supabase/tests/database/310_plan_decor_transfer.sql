@@ -35,6 +35,7 @@ begin
   perform public.merge_floor_plan(ws2, public.export_floor_plan(ws));
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
 select is(

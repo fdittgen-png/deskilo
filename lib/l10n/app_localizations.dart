@@ -37536,6 +37536,12 @@ abstract class AppLocalizations {
   /// **'Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.'**
   String get settingHintMessagingInboxPollSeconds;
 
+  /// #3099 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds between two checks, by one device, for requests whose deadline has passed. Such a request shows as timed out at most this much later. 0 checks before every read of the inbox.'**
+  String get settingHintMessagingInboxSweepIntervalSeconds;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -37889,6 +37895,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inbox refresh'**
   String get settingLabelMessagingInboxPollSeconds;
+
+  /// #3099 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox timeout check'**
+  String get settingLabelMessagingInboxSweepIntervalSeconds;
 
   /// #2485 settings: Setting label.
   ///
@@ -39419,12 +39431,6 @@ abstract class AppLocalizations {
   /// **'Apply'**
   String get setupLevelsApply;
 
-  /// #2868 setup levels: setupLevelsBecause
-  ///
-  /// In en, this message translates to:
-  /// **'Because {reason}'**
-  String setupLevelsBecause(String reason);
-
   /// #2868 setup levels: setupLevelsChoice
   ///
   /// In en, this message translates to:
@@ -39485,17 +39491,17 @@ abstract class AppLocalizations {
   /// **'Then set them up in the guide: {steps}'**
   String setupLevelsStepsFollow(String steps);
 
-  /// #2868 setup levels: setupLevelsSwitchOff
+  /// #3076 setup levels preview: setupLevelsSwitchOff
   ///
   /// In en, this message translates to:
-  /// **'Switches off: {features}'**
-  String setupLevelsSwitchOff(String features);
+  /// **'Your space no longer gets:'**
+  String get setupLevelsSwitchOff;
 
-  /// #2868 setup levels: setupLevelsSwitchOn
+  /// #3076 setup levels preview: setupLevelsSwitchOn
   ///
   /// In en, this message translates to:
-  /// **'Switches on: {features}'**
-  String setupLevelsSwitchOn(String features);
+  /// **'Your space gets:'**
+  String get setupLevelsSwitchOn;
 
   /// #2868 setup levels: setupLevelsTitle
   ///
@@ -39986,7 +39992,7 @@ abstract class AppLocalizations {
   /// #2868 setup levels: setupReason
   ///
   /// In en, this message translates to:
-  /// **'{key, select, door_tablet{a tablet at the door checks people in} keeps_books{you keep accounting books} later{an assistant can come later} members_only{only members see the space} members_owe{members owe the space money} no_money{no money changes hands} no_purchases{the space buys nothing it tracks} no_vat{the space is not registered for VAT} organised{several people decide together} pay_by_transfer{members pay by transfer} pay_online{members pay online} public_page{the space has a public page} several_rooms{there are several rooms or sites} shared_places{members share the places} small_community{a small community} start_simple{start simple} tracks_purchases{you track what the space buys} vat_registered{the space is registered for VAT} issues_invoices{you issue invoices} association{an association decides together, with its board} approve_bookings{bookings wait for an approval} other{{key}}}'**
+  /// **'{key, select, door_tablet{Because a tablet at the door checks people in} keeps_books{Because you keep accounting books} later{Because an assistant can come later} members_only{Because only members see the space} members_owe{Because members owe the space money} no_money{Because no money changes hands} no_purchases{Because the space buys nothing it tracks} no_vat{Because the space is not registered for VAT} organised{Because several people decide together} pay_by_transfer{Because members pay by transfer} pay_online{Because members pay online} public_page{Because the space has a public page} several_rooms{Because there are several rooms or sites} shared_places{Because members share the places} small_community{Because the community is small} start_simple{Because you want to start simple} tracks_purchases{Because you track what the space buys} vat_registered{Because the space is registered for VAT} issues_invoices{Because you issue invoices} association{Because an association decides together, with its board} approve_bookings{Because bookings wait for an approval} other{{key}}}'**
   String setupReason(String key);
 
   /// #2870 setup steps: setupRightsApplied
@@ -41356,6 +41362,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search by name, number or tax ID'**
   String get suppliersSearch;
+
+  /// #3070 supplier list: the date of the last bill and what the supplier cost this year
+  ///
+  /// In en, this message translates to:
+  /// **'Last bill {date} · {amount} this year'**
+  String suppliersStanding(String date, String amount);
 
   /// #2567 suppliers
   ///

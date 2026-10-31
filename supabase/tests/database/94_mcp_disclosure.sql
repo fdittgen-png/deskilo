@@ -29,6 +29,7 @@ begin
   execute 'set local role authenticated';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The member's availability answer in a workspace, through a client.
 create function pg_temp.avail(p_ws text, p_client text default 'claude-test') returns jsonb language plpgsql as $$
 declare v jsonb;
@@ -40,10 +41,12 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- How many items carry a name.
 create function pg_temp.named(p_ws text, p_client text default 'claude-test') returns integer language sql as $$
   select count(*)::integer from jsonb_array_elements(pg_temp.avail(p_ws, p_client)->'data'->'items') r where r ? 'name';
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The refusal a statement raises for a caller, or 'no error'.
 create function pg_temp.err(p_user uuid, p_client text, p_sql text) returns text language plpgsql as $$
 begin
@@ -58,6 +61,7 @@ begin
   return 'no error';
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The owner saves workspace X's policy with these optional fields.
 create function pg_temp.policy(p_ws text, p_fields text[]) returns jsonb language plpgsql as $$
 declare v jsonb;
@@ -70,6 +74,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.maximum(p_fields text[]) returns jsonb language plpgsql as $$
 declare v jsonb;
 begin
@@ -79,6 +84,7 @@ begin
   return v;
 end;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 -- The member's consent for a client in a workspace, seeded as postgres.
 create function pg_temp.consent(p_ws text, p_fields text[], p_client text default 'claude-test') returns void language sql as $$
   update public.mcp_connection_scopes s set optional_fields = p_fields
@@ -87,6 +93,7 @@ create function pg_temp.consent(p_ws text, p_fields text[], p_client text defaul
      and c.local_user_id = '00000000-0000-4000-8000-0000001645a2'
      and s.workspace_id = current_setting('t.' || p_ws)::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('t.i', public.installation_id()::text, true);
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at) values

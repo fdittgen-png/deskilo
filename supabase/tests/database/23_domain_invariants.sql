@@ -102,6 +102,7 @@ begin
       where workspace_id = other_ws limit 1), false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -113,6 +114,7 @@ begin
                       'role', 'authenticated')::text, false);
 end;
 $be$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ---------------------------------------- a seat holds one booking at a time
 --

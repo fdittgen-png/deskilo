@@ -179,6 +179,7 @@
  "availHalfDayHours": "Horas que valen media jornada",
  "availFullDayHours": "Horas que valen una jornada",
  "availClosures": "Días de cierre",
+ "tableRemoveRow": "Eliminar esta fila",
  "colDate": "Fecha",
  "availAddClosure": "Añadir un día de cierre",
  "availPolicies": "Políticas de reserva",

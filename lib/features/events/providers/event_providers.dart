@@ -2,8 +2,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/data/sweep_throttle.dart';
 import '../../../core/realtime/invalidation_map.dart';
 import '../../../core/realtime/realtime_wiring.dart';
+import '../../../core/settings/active_settings.dart';
+import '../../../core/settings/setting_defaults.g.dart';
+import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_event_repository.dart';
 import '../domain/event_decision.dart';
@@ -22,9 +26,29 @@ class EventTrail {
 }
 
 
+const _sweepKey = 'messaging.inbox_sweep_interval_seconds';
+
+/// #3099 — how long a workspace's timeout sweep stays fresh. The registry
+/// default stands while the settings load, or on a server without the key.
+final _inboxSweepIntervalProvider = Provider<Duration>((ref) {
+  final settings = ref.watch(activeSettingsProvider);
+  return Duration(
+    seconds: settings != null && settings.definitions.containsKey(_sweepKey)
+        ? settings.read<int>(_sweepKey)
+        : SettingDefaults.messagingInboxSweepIntervalSeconds,
+  );
+});
+
 @Riverpod(keepAlive: true)
-EventRepository eventRepository(Ref ref) =>
-    SupabaseEventRepository(ref.watch(selectedWorkspaceClientProvider));
+EventRepository eventRepository(Ref ref) => SupabaseEventRepository(
+      ref.watch(selectedWorkspaceClientProvider),
+      // #3099 — read at each sweep, never watched: a settings change must
+      // not rebuild the repository (and lose the throttle's memory).
+      sweeps: SweepThrottle(
+        clock: ref.watch(clockProvider),
+        interval: () => ref.read(_inboxSweepIntervalProvider),
+      ),
+    );
 
 /// The active workspace's event feed, newest first (server-scoped by role).
 @riverpod

@@ -58,6 +58,7 @@ begin
   perform set_config('vl.member', u_m::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -65,16 +66,19 @@ begin
     json_build_object('sub', current_setting('vl.' || p_who), 'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.decl(p_start date) returns uuid language sql as $q$
   select id from public.vat_declarations
    where workspace_id = current_setting('vl.ws')::uuid and period_start = p_start;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.row_md5(p_start date) returns text language sql as $q$
   select md5(to_jsonb(d)::text) from public.vat_declarations d
    where workspace_id = current_setting('vl.ws')::uuid and period_start = p_start;
 $q$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 

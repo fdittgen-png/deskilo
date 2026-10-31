@@ -41,6 +41,7 @@ begin
     json_build_object('sub', u::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -80,6 +81,7 @@ begin
   perform set_config('deskilo.test.order', v_order, false);
 end;
 $pay$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.pay();
 

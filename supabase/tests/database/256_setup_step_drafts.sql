@@ -28,16 +28,20 @@ create function pg_temp.save(p_payload jsonb, p_expected int, p_request text, p_
 returns jsonb language sql as $$
   select public.save_setup_step_draft('00000000-0000-4000-8000-0000002869b1', p_step, p_payload, p_expected, p_request::uuid)
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.draft() returns jsonb language sql as $$
   select public.get_setup_step_draft('00000000-0000-4000-8000-0000002869b1', 'basics')
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.status() returns jsonb language sql as $$
   select public.workspace_setup_status('00000000-0000-4000-8000-0000002869b1')
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_user(p_suffix text) returns text language sql as $$
   select set_config('request.jwt.claims',
     json_build_object('sub', '00000000-0000-4000-8000-0000002869' || p_suffix, 'role', 'authenticated')::text, true)
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.as_user('a1');
 create temp table before_drafts as select pg_temp.status() as status;

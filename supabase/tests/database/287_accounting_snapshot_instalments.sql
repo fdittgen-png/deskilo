@@ -55,6 +55,7 @@ begin
   perform set_config('sn.is', isx::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 select set_config('request.jwt.claims',

@@ -31,6 +31,7 @@ returns void language sql as $$
                 'net_cents', net, 'vat_cents', gross - net) || comps),
           jsonb_build_object('seller_country', cc, 'vat_exigibility', 'invoice'));
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.inv('00000000-0000-4000-8000-0000002361b2','00000000-0000-4000-8000-0000002361c2','CA-1','CA',14.975,114975,100000,
                    public.vat_components_entry('CA',14.975,100000,14975));
 select pg_temp.inv('00000000-0000-4000-8000-0000002361b2','00000000-0000-4000-8000-0000002361c2','CA-2','CA',5,10500,10000,
@@ -45,6 +46,7 @@ create or replace function pg_temp.line(ws uuid, p numeric, dir text) returns js
   select l from public.vat_return_summary(ws, '2026-09-01', '2026-12-31') s, jsonb_array_elements(s.lines) l
    where (l ->> 'percent')::numeric = p and coalesce(l ->> 'direction', 'output') = dir;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is((select string_agg(c ->> 'scheme' || ':' || (c ->> 'tax_cents'), ' ' order by o)
              from jsonb_array_elements(pg_temp.line('00000000-0000-4000-8000-0000002361b2', 14.975, 'output') -> 'components') with ordinality t(c, o)),

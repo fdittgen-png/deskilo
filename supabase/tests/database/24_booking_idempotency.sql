@@ -67,6 +67,7 @@ begin
     json_build_object('sub', u_mine::text, 'role', 'authenticated')::text, false);
 end;
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
@@ -81,6 +82,7 @@ language sql as $$
     current_setting('deskilo.queue.from')::timestamptz + interval '4 hours',
     false);
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- ---------------------------------------------------------- the replay
 do $first$

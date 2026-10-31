@@ -13,6 +13,7 @@ import 'app/finance_hosts_wiring.dart';
 import 'app/private_values_wiring.dart';
 import 'app/realtime_invalidations.dart';
 import 'app/server_choice_app.dart';
+import 'core/cache/read_retry.dart';
 import 'core/data/system_columns.dart';
 import 'core/files/file_saver.dart';
 import 'core/instance/tax_reference_bundle_asset.dart';
@@ -38,8 +39,9 @@ import 'features/workspace/providers/workspace_roles_providers.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // #2478 — the VAT functions answer from the bundled reference data until
-  // the installation's own rows replace it.
-  await installBundledTaxReference();
+  // the installation's own rows replace it. #3102 — parsed off the UI
+  // isolate while the start-up below runs; awaited before the first screen.
+  final taxReference = installBundledTaxReference();
 
   // Always-on error trace (#144): file-backed logger plus global hooks for
   // framework and platform errors. Installed first so even boot failures
@@ -58,6 +60,7 @@ Future<void> main() async {
     return false;
   })) {
     final chosen = Completer<void>();
+    await taxReference;
     runApp(ProviderScope(
       overrides: [
         enabledFeaturesSyncProvider
@@ -116,6 +119,8 @@ Future<void> main() async {
     ProviderScope(
       // #742 — every provider failure lands in the trace.
       observers: const [TraceProviderObserver()],
+      // #3103 — no tenfold retry of a denial; two quick ones for a blip.
+      retry: readRetry,
       overrides: [
         notificationServiceProvider.overrideWithValue(notifications),
         notificationTapsProvider.overrideWithValue(taps),
@@ -136,6 +141,7 @@ Future<void> main() async {
       child: const DeskiloRoot(),
     ),
   );
+  await taxReference;
   final state = await boot.settle(Future<void>.delayed(kEssentialBootDeadline));
   if (state == BootState.ready) return startApp();
   trace.warn('boot', 'essential start-up ${state.name}: recovery screen shown');

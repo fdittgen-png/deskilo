@@ -26,6 +26,7 @@ create or replace function pg_temp.gaps(p_vat_id text) returns text[] language s
       jsonb_build_array(jsonb_build_object('category','S','percent',8.1,'gross_cents',10810,
                                            'net_cents',10000,'vat_cents',810)))) x;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select is(pg_temp.gaps('CHE-109.322.551 MWST'), '{}'::text[], 'the printed form is accepted');
 select is(pg_temp.gaps('CHE109322551MWST'), '{}'::text[], 'without punctuation');

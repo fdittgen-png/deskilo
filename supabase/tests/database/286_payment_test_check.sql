@@ -30,10 +30,12 @@ insert into public.members(workspace_id,user_id,is_owner,is_admin,status) values
 create function pg_temp.check(p_ws text) returns jsonb language sql as $$
   select public.payment_test_check(('00000000-0000-4000-8000-0000002871' || p_ws)::uuid)
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.mode(p_ws text, p_provider text) returns text language sql as $$
   select p->>'mode' from jsonb_array_elements(pg_temp.check(p_ws)->'providers') p
    where p->>'provider' = p_provider
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002871a1","role":"authenticated"}',true);
 

@@ -35,6 +35,7 @@ create function pg_temp.readiness() returns text[] language sql as $$
   select public.invoice_issue_readiness('00000000-0000-4000-8000-0000002875b1',
     '00000000-0000-4000-8000-0000002875c2', '2026-09')
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000002875a1","role":"authenticated"}',true);
 

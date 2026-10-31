@@ -29,16 +29,20 @@ create function pg_temp.save(p_answers jsonb, p_levels jsonb, p_expected int, p_
 returns jsonb language sql as $$
   select public.save_setup_journey('00000000-0000-4000-8000-0000002868b1', p_answers, p_levels, p_expected, p_request::uuid)
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.journey() returns jsonb language sql as $$
   select public.get_setup_journey('00000000-0000-4000-8000-0000002868b1')
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.status() returns jsonb language sql as $$
   select public.workspace_setup_status('00000000-0000-4000-8000-0000002868b1')
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 create function pg_temp.as_user(p_suffix text) returns text language sql as $$
   select set_config('request.jwt.claims',
     json_build_object('sub', '00000000-0000-4000-8000-0000002868' || p_suffix, 'role', 'authenticated')::text, true)
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.as_user('a1');
 create temp table before_journeys as

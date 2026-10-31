@@ -64,6 +64,7 @@ begin
   perform set_config('bx.role_e', r_e::text, false);
 end
 $seed$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.act_as(p_who text) returns void language plpgsql as $act$
 begin
@@ -72,16 +73,19 @@ begin
                       'role', 'authenticated')::text, true);
 end
 $act$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.cap(p_key text) returns jsonb language sql as $c$
   select jsonb_build_object('request_key', p_key, 'metric_id', 'capacity.seat_utilisation',
                             'from', '2026-09-01T00:00:00Z', 'to', '2026-10-01T00:00:00Z')
 $c$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.fin(p_key text) returns jsonb language sql as $f$
   select jsonb_build_object('request_key', p_key, 'metric_id', 'finance.invoiced',
                             'from_month', '2026-09', 'to_month', '2026-09')
 $f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 -- Exports as p_who (from p_ws, default the space) and returns the answer,
 -- or the SQLSTATE refused.
@@ -97,6 +101,7 @@ exception when others then
   return jsonb_build_object('refused', sqlstate);
 end
 $e$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.call(p_who text, p_sql text) returns text
 language plpgsql as $c$
@@ -108,6 +113,7 @@ exception when others then
   return sqlstate;
 end
 $c$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 create or replace function pg_temp.style(p_style jsonb) returns boolean language sql as $s$
   select public.bi_report_valid(jsonb_build_object(
@@ -119,6 +125,7 @@ create or replace function pg_temp.style(p_style jsonb) returns boolean language
         'layout', jsonb_build_object('order', 0, 'span', 6, 'height', 2))))),
     'printStyle', p_style))
 $s$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 
 select pg_temp.seed();
 
