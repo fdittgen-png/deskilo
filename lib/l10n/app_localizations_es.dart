@@ -2063,6 +2063,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get bankStatementOriginal => 'Descargar el archivo original';
+
+  @override
   String bankStatementPeriod(String account, String from, String to) {
     return '$account · $from – $to';
   }
