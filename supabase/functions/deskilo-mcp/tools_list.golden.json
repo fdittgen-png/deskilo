@@ -372,6 +372,19 @@
     "input": "912827c23382fa07",
     "output": "a17d819e76025b35"
   },
+  "set_workspace_basics": {
+    "name": "deskilo_set_workspace_basics",
+    "title": "Set the workspace time zone, language and address",
+    "annotations": {
+      "title": "Set the workspace time zone, language and address",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "04c386957add048b",
+    "output": "62b16cfc197d87f2"
+  },
   "set_opening_hours": {
     "name": "deskilo_set_opening_hours",
     "title": "Set the opening days and hours",

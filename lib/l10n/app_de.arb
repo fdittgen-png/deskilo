@@ -9984,6 +9984,7 @@
   "mcpOpReservationDeletion": "Löschung einer bereits begonnenen Buchung beantragen",
   "mcpOpRespond": "Auf eine Freigabeanfrage antworten",
   "mcpOpSetFavorite": "Plätze als Favoriten markieren",
+  "mcpOpSetupBasics": "Zeitzone, Sprache und Adresse festlegen",
   "mcpOpSetupClosures": "Schließtage hinzufügen",
   "mcpOpSetupHours": "Öffnungstage und -zeiten festlegen",
   "mcpOpSetupLevels": "Die Einrichtungsstufen sehen",
@@ -15255,6 +15256,7 @@
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingHintBiBatchTimeBudgetMs": "Wie lange eine Berichtsabfrage rechnen darf, bevor die noch nicht erreichten Kennzahlen als über Budget gemeldet werden; die Seite zeigt, was sie hat. Unter dem Anfrage-Timeout des Servers halten.",
   "settingHintBiReportMaxBytes": "Die größte gespeicherte Berichtsdefinition in Bytes ihres gespeicherten Textes. Die Plattform speichert nie mehr als 65536; eine Definition enthält Fragen, nie Zahlen.",
   "@settingHintBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15426,6 +15428,7 @@
   "@settingLabelBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingLabelBiBatchTimeBudgetMs": "Zeitbudget einer Berichtsabfrage",
   "settingLabelBiReportMaxBytes": "Größe einer Berichtsdefinition",
   "@settingLabelBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15694,6 +15697,7 @@
   "@settingUnitHours": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitMilliseconds": "ms",
   "settingUnitMinutes": "Minuten",
   "@settingUnitMinutes": {
     "description": "#2484 settings: Unit."

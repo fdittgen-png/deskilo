@@ -30,6 +30,7 @@
   "mcpOpSetupLevelsPreview": "Previsualizar un cambio de niveles",
   "mcpOpSetupLevelsApply": "Cambiar los niveles de configuración",
   "mcpOpSetupStepMark": "Marcar un paso como hecho o para más tarde",
+  "mcpOpSetupBasics": "Fijar la zona horaria, el idioma y la dirección",
   "mcpOpSetupHours": "Fijar los días y horarios de apertura",
   "mcpOpSetupClosures": "Añadir días de cierre",
   "mcpOpSetupNumbering": "Fijar la numeración de los documentos"

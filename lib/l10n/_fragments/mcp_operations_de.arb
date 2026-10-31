@@ -30,6 +30,7 @@
   "mcpOpSetupLevelsPreview": "Eine Änderung der Stufen vorab ansehen",
   "mcpOpSetupLevelsApply": "Die Einrichtungsstufen ändern",
   "mcpOpSetupStepMark": "Einen Einrichtungsschritt als erledigt oder für später markieren",
+  "mcpOpSetupBasics": "Zeitzone, Sprache und Adresse festlegen",
   "mcpOpSetupHours": "Öffnungstage und -zeiten festlegen",
   "mcpOpSetupClosures": "Schließtage hinzufügen",
   "mcpOpSetupNumbering": "Die Nummerierung der Belege festlegen"

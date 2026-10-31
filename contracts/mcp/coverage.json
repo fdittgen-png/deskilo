@@ -1,8 +1,8 @@
 {
  "contract": "deskilo.mcp.coverage",
  "version": 1,
- "_comment": "#1632 — every implemented MCP tool mapped to the executable tests that prove it; checked by tool/mcp_coverage.dart and test/tool/mcp_coverage_test.dart. A change to contracts/mcp/operations.json changes contract_sha256: review this map, then record the new fingerprint.",
- "contract_sha256": "0f21f404ff1e7bc9125149ef796b9c19486786a7de09770b8d21a6220fde764a",
+ "_comment": "#1632 \u2014 every implemented MCP tool mapped to the executable tests that prove it; checked by tool/mcp_coverage.dart and test/tool/mcp_coverage_test.dart. A change to contracts/mcp/operations.json changes contract_sha256: review this map, then record the new fingerprint.",
+ "contract_sha256": "6221aef1f23ee570fe7808825a14a772c4fa3b9ca1ae4c7a1029f8556472f9d9",
  "catalogue_tests": [
   "test/tool/mcp_contract_test.dart",
   "test/features/mcp/mcp_native_contract_parity_test.dart",
@@ -343,6 +343,17 @@
    ],
    "state": [
     "supabase/tests/database/259_mcp_setup_operations.sql"
+   ]
+  },
+  "set_workspace_basics": {
+   "positive": [
+    "supabase/tests/database/316_mcp_set_workspace_basics.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/316_mcp_set_workspace_basics.sql"
+   ],
+   "state": [
+    "supabase/tests/database/316_mcp_set_workspace_basics.sql"
    ]
   },
   "explain_setup_step": {
