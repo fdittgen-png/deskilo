@@ -2421,6 +2421,10 @@
       }
     }
   },
+  "bankStatementOriginal": "Download the original file",
+  "@bankStatementOriginal": {
+    "description": "#2380 bank statements: tooltip of the action that downloads the imported file as it was."
+  },
   "bankStatementPeriod": "{account} · {from} – {to}",
   "@bankStatementPeriod": {
     "description": "#2380 Bank statements: one statement, its account and period.",

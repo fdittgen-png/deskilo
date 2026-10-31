@@ -455,6 +455,8 @@ storage.objects.avatars_delete
 storage.objects.avatars_insert
 storage.objects.avatars_select
 storage.objects.avatars_update
+storage.objects.bank_originals_insert
+storage.objects.bank_originals_select
 storage.objects.floor_plans_delete
 storage.objects.floor_plans_delete_sites
 storage.objects.floor_plans_insert
