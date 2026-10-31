@@ -45,23 +45,31 @@ outputs:
 runs:
   using: composite
   steps:
-    # #3144 — the Supabase images come from public.ecr.aws, not from
-    # anonymous Docker Hub, whose pull quota ("Data limit exceeded") lost
-    # four database runs on 2026-10-31. Set for the rest of the job, so
-    # `supabase test db` (its pg_prove container) pulls from there too.
+    # #3144 — the Supabase images come from GHCR, pulled as this job (its
+    # own token), not anonymously: anonymous Docker Hub ("Data limit
+    # exceeded", four database runs lost on 2026-10-31) and anonymous ECR
+    # Public (the same, on the next run) both ran out. Set for the rest of
+    # the job, so `supabase test db` (its pg_prove container) uses it too. A
+    # failed login falls back to an anonymous GHCR pull.
     - shell: bash
-      run: echo "SUPABASE_INTERNAL_IMAGE_REGISTRY=public.ecr.aws" >> "$GITHUB_ENV"
+      env:
+        TOKEN: ${{ github.token }}
+        ACTOR: ${{ github.actor }}
+      run: |
+        echo "SUPABASE_INTERNAL_IMAGE_REGISTRY=ghcr.io" >> "$GITHUB_ENV"
+        echo "$TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin \
+          || echo "::warning::local stack: GHCR login failed; pulling anonymously"
     - shell: bash
       env:
         WORKDIR: ${{ inputs.workdir }}
       run: supabase start ${WORKDIR:+--workdir "$WORKDIR"}
     # #3144 — the proof the registry was honoured: no Supabase image of this
-    # stack was pulled from Docker Hub.
+    # stack was pulled from Docker Hub or ECR Public.
     - shell: bash
       run: |
-        from_hub=$(docker images --format '{{.Repository}}:{{.Tag}}' | grep -E '^(docker\.io/)?supabase/' || true)
+        from_hub=$(docker images --format '{{.Repository}}:{{.Tag}}' | grep -E '^(docker\.io/|public\.ecr\.aws/)?supabase/' || true)
         if [ -n "$from_hub" ]; then
-          echo "::error::local stack: Supabase images from Docker Hub: $from_hub"
+          echo "::error::local stack: Supabase images not from GHCR: $from_hub"
           exit 1
         fi
         echo "local stack: Supabase images from $SUPABASE_INTERNAL_IMAGE_REGISTRY:"
