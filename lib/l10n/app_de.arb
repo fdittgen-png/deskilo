@@ -9989,6 +9989,7 @@
   "mcpOpSetupLevels": "Die Einrichtungsstufen sehen",
   "mcpOpSetupLevelsApply": "Die Einrichtungsstufen ändern",
   "mcpOpSetupLevelsPreview": "Eine Änderung der Stufen vorab ansehen",
+  "mcpOpSetupMemberRights": "Mitgliedern Buchen und Nutzen des Raums erlauben",
   "mcpOpSetupNumbering": "Die Nummerierung der Belege festlegen",
   "mcpOpSetupStatus": "Sehen, wie weit die Einrichtung ist",
   "mcpOpSetupStepExplain": "Einen Einrichtungsschritt erklären",

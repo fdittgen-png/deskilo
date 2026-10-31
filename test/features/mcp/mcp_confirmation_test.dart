@@ -211,6 +211,30 @@ void main() {
     expect(find.textContaining('Workspace address: Old street → —'), findsOneWidget);
   });
 
+  testWidgets('a member-rights request lists each permission from no to '
+      'yes', (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'set_member_permissions_preset',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'preset': 'members_can_book'},
+        target: {
+          'kind': 'member_rights',
+          'changes': [
+            {'field': 'makeReservations', 'from': false, 'to': true},
+            {'field': 'viewCalendar', 'from': false, 'to': true},
+          ],
+        },
+      ),
+    );
+    expect(find.text('Let members book and use the space'), findsOneWidget);
+    expect(find.textContaining('→ Yes'), findsNWidgets(2));
+  });
+
   testWidgets('closure days name each day and the reason', (tester) async {
     await pump(
       tester,

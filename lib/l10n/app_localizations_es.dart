@@ -14770,6 +14770,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpSetupLevelsPreview => 'Previsualizar un cambio de niveles';
 
   @override
+  String get mcpOpSetupMemberRights =>
+      'Permitir a los miembros reservar y usar el espacio';
+
+  @override
   String get mcpOpSetupNumbering => 'Fijar la numeración de los documentos';
 
   @override

@@ -411,6 +411,17 @@ const Map<String, McpOperationSpec> mcpOperations = {
     },
     output: ['changes', 'field', 'from', 'to'], group: 'setup',
   ),
+  'set_member_permissions_preset': McpOperationSpec(
+    id: 'set_member_permissions_preset', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.permission, permission: 'manageRoles', features: ['mcpAccess', 'setupGuide'],
+    scope: McpScope.workspace, mutation: McpMutation.write, idempotent: true, nativeConfirmation: true,
+    fields: {
+      'request_id': McpField(McpFieldType.uuid, required: true),
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'preset': McpField(McpFieldType.enum_, required: true, values: ['members_can_book']),
+    },
+    output: ['changes', 'field', 'from', 'to'], group: 'setup',
+  ),
   'set_opening_hours': McpOperationSpec(
     id: 'set_opening_hours', rpc: null, handler: true, dispatch: true,
     authority: McpAuthority.permission, permission: 'workspaceSettings', features: ['mcpAccess', 'setupGuide'],

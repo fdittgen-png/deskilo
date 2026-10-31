@@ -31,6 +31,7 @@
   "mcpOpSetupLevelsApply": "Cambiare i livelli di configurazione",
   "mcpOpSetupStepMark": "Segnare un passo come fatto o per dopo",
   "mcpOpSetupBasics": "Impostare il fuso orario, la lingua e l'indirizzo",
+  "mcpOpSetupMemberRights": "Consentire ai membri di prenotare e usare lo spazio",
   "mcpOpSetupHours": "Impostare i giorni e gli orari di apertura",
   "mcpOpSetupClosures": "Aggiungere giorni di chiusura",
   "mcpOpSetupNumbering": "Impostare la numerazione dei documenti"

@@ -127,6 +127,10 @@
   "@mcpOpSetupBasics": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_workspace_basics)"
   },
+  "mcpOpSetupMemberRights": "Let members book and use the space",
+  "@mcpOpSetupMemberRights": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_member_permissions_preset)"
+  },
   "mcpOpSetupHours": "Set the opening days and hours",
   "@mcpOpSetupHours": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_opening_hours)"

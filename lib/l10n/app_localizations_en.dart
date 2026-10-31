@@ -14672,6 +14672,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpSetupLevelsPreview => 'Preview a change of levels';
 
   @override
+  String get mcpOpSetupMemberRights => 'Let members book and use the space';
+
+  @override
   String get mcpOpSetupNumbering => 'Set how documents are numbered';
 
   @override
