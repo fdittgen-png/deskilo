@@ -1,0 +1,12 @@
+name: deskilo_asset_gzip
+description: >-
+  A Flutter asset transformer that gzips an asset at build time,
+  deterministically (#3102). The repository keeps the plain file.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.0
+
+dev_dependencies:
+  test: ^1.25.0
