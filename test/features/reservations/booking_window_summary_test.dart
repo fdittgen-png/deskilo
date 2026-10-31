@@ -82,4 +82,55 @@ void main() {
       },
     );
   }
+
+  testWidgets('#3068 the caption is one line; the tooltip keeps all of it', (
+    tester,
+  ) async {
+    WorkspaceTime.install('Europe/Berlin');
+    addTearDown(WorkspaceTime.reset);
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final day = DateTime(2026, 10, 25);
+    await pumpApp(
+      tester,
+      Scaffold(
+        body: BookingWindowSummary(
+          window: HalfDayWindows.morning(day),
+          today: DateTime(day.year, day.month, day.day - 1),
+          timezone: 'Europe/Berlin',
+        ),
+      ),
+      overrides: [
+        appFormatProvider.overrideWithValue(
+          const AppFormat(
+            locale: 'en_US',
+            currencyCode: 'EUR',
+            clock: ClockPref.h24,
+            timeZoneMode: TimeZoneMode.device,
+          ),
+        ),
+      ],
+    );
+    await tester.pumpAndSettle();
+    final text = tester.widget<Text>(
+      find.byKey(const ValueKey('booking-window-summary')),
+    );
+    expect(text.maxLines, 1);
+    expect(text.overflow, TextOverflow.ellipsis);
+    final tip = tester.widget<Tooltip>(
+      find.ancestor(
+        of: find.byKey(const ValueKey('booking-window-summary')),
+        matching: find.byType(Tooltip),
+      ),
+    );
+    expect(tip.message, text.data);
+    final lineHeight = Theme.of(
+      tester.element(find.byKey(const ValueKey('booking-window-summary'))),
+    ).textTheme.bodySmall!;
+    expect(
+      tester.getSize(find.byKey(const ValueKey('booking-window-summary'))).height,
+      lessThan(lineHeight.fontSize! * (lineHeight.height ?? 1.5) * 1.5),
+    );
+  });
 }
