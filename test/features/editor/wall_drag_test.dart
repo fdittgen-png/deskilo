@@ -110,10 +110,9 @@ void main() {
         repo = _FaultyWalls()
           ..levels.addAll(plans.levels)
           ..offices.addAll(plans.offices);
-        overrides.removeWhere(
-          (entry) => entry.origin == floorPlanRepositoryProvider,
-        );
-        overrides.add(floorPlanRepositoryProvider.overrideWithValue(repo));
+        overrides
+          ..removeWhere((entry) => entry.origin == floorPlanRepositoryProvider)
+          ..add(floorPlanRepositoryProvider.overrideWithValue(repo));
       },
     );
     await _armWall(tester);
