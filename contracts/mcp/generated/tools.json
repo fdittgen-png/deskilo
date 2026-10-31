@@ -3577,6 +3577,115 @@
       }
     },
     {
+      "name": "deskilo_create_invitations",
+      "title": "Invite a person to the workspace",
+      "description": "The setup step 'invite': an invitation for one member, named by first and last name (at least one). It is never an admin invitation and the join code is never returned to you: the person who confirms sees it in the DesKilo app and passes it on. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows who is invited; then call again with the same request_id and arguments. The answer names the invitation (invitation_id) and its status, nothing that lets anyone join.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "first_name": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "The first name of the person to invite.",
+            "examples": [
+              "Camille"
+            ]
+          },
+          "last_name": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "The last name of the person to invite.",
+            "examples": [
+              "Martin"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id"
+        ]
+      },
+      "outputSchema": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "schema_version": {
+            "const": 1
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operation": {
+            "const": "create_invitations"
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "pending_validation",
+              "requires_confirmation",
+              "denied",
+              "conflict",
+              "validation_error",
+              "not_found",
+              "rate_limited"
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "annotations": {
+        "title": "Invite a person to the workspace",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
       "name": "deskilo_set_opening_hours",
       "title": "Set the opening days and hours",
       "description": "The setup step 'hours', as its screen does it: the weekdays members can book and the working day (start, half-day boundary, end, in minutes after midnight on the workspace clock: 08:00 = 480). Give only what changes; the result must keep at least one open weekday and start < boundary < end. The half-day and full-day booking periods follow these hours. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows exactly what changes; then call again with the same request_id and arguments. A change made in the meantime makes the proposal stale: preview again with a new request_id.",

@@ -23260,6 +23260,12 @@ abstract class AppLocalizations {
   /// **'{field}: {from} → {to}'**
   String mcpConfirmFieldChange(String field, String from, String to);
 
+  /// #3132 mcp_confirmation: the label of the person an assistant proposes to invite
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation for'**
+  String get mcpConfirmInvitee;
+
   /// #2873 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -24339,6 +24345,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set the opening days and hours'**
   String get mcpOpSetupHours;
+
+  /// #2394 generated from contracts/mcp/operations.json (create_invitations)
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a person'**
+  String get mcpOpSetupInvite;
 
   /// #2394 generated from contracts/mcp/operations.json (list_setup_levels)
   ///

@@ -16732,6 +16732,10 @@
       }
     }
   },
+  "mcpConfirmInvitee": "Invitation for",
+  "@mcpConfirmInvitee": {
+    "description": "#3132 mcp_confirmation: the label of the person an assistant proposes to invite"
+  },
   "mcpConfirmLevel": "{process}: {level}",
   "@mcpConfirmLevel": {
     "description": "#2873 mcp_confirmation",
@@ -17550,6 +17554,10 @@
   "mcpOpSetupHours": "Set the opening days and hours",
   "@mcpOpSetupHours": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_opening_hours)"
+  },
+  "mcpOpSetupInvite": "Invite a person",
+  "@mcpOpSetupInvite": {
+    "description": "#2394 generated from contracts/mcp/operations.json (create_invitations)"
   },
   "mcpOpSetupLevels": "See the setup levels",
   "@mcpOpSetupLevels": {

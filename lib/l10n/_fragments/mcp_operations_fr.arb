@@ -31,6 +31,7 @@
   "mcpOpSetupLevelsApply": "Changer les niveaux de mise en place",
   "mcpOpSetupStepMark": "Marquer une étape comme faite ou pour plus tard",
   "mcpOpSetupBasics": "Définir le fuseau horaire, la langue et l'adresse",
+  "mcpOpSetupInvite": "Inviter une personne",
   "mcpOpSetupHours": "Définir les jours et heures d'ouverture",
   "mcpOpSetupClosures": "Ajouter des jours de fermeture",
   "mcpOpSetupNumbering": "Définir la numérotation des documents"
