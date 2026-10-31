@@ -1,10 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- risk: destructive
--- (profiles.last_seen_at is dropped after its values are copied into
--- public.presence in the same transaction; the value is a heartbeat at most
--- two minutes old, so nothing of record is lost). Backup to take first:
--- the platform's routine database backup covers it; a copy of
--- `select id, last_seen_at from public.profiles` is enough to restore it)
+-- risk: additive
+-- (a new unpublished table, filled from profiles.last_seen_at; the heartbeat
+-- and the projections move to it; profiles.last_seen_at stays, unwritten,
+-- for apps that still read it -- its drop is a later contract step)
 --
 -- 0616 (#3123, PERF-5 of the performance audit) -- the presence heartbeat
 -- stops writing the published profiles table. touch_last_seen updated
@@ -143,6 +141,5 @@ returns jsonb language sql stable security definer set search_path = public as $
 $fn$;
 revoke execute on function public.member_profile_projection(uuid, text[]) from public, anon, authenticated;
 
-alter table public.profiles drop column last_seen_at;
 
 select public.set_deskilo_schema_version(616);

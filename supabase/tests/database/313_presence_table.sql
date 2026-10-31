@@ -26,8 +26,8 @@ $seed$;
 
 select pg_temp.seed();
 
-select hasnt_column('public', 'profiles', 'last_seen_at',
-  'profiles no longer carries the heartbeat');
+select has_column('public', 'profiles', 'last_seen_at',
+  'profiles keeps the column, unwritten, for apps that still read it');
 select is((select count(*)::int from pg_publication_tables
             where pubname = 'supabase_realtime' and tablename = 'presence'), 0,
   'presence is not published');
