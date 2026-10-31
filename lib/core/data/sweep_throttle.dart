@@ -5,7 +5,7 @@
 // once per workspace per `messaging.inbox_sweep_interval_seconds`; reads in
 // between see the feed as of the last sweep. #1909's coalescing stays:
 // concurrent reads share the sweep in flight.
-import '../../../core/time/clock.dart';
+import '../time/clock.dart';
 
 class SweepThrottle {
   SweepThrottle({required this.clock, required this.interval});
