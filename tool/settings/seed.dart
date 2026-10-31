@@ -1102,6 +1102,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'The country (ISO 3166-1 alpha-2) where this installation keeps its database and backups, as its operator declares it from the hosting contract: one of the countries the app knows, or empty. Empty means not declared: the app then states no location.',
     ),
   ),
+  (
+    since: 'badge_hardening',
+    row: (
+      key: 'security.badge_pin_min_length',
+      type: 'int',
+      defaultValue: 6,
+      min: 4,
+      max: 8,
+      unit: 'characters',
+      group: 'security',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'set_badge_pin (0123, 0319, #3091)',
+      note: 'The fewest digits a new badge PIN may have. A PIN set earlier keeps working until its owner changes it. A short PIN falls to a guessing script in days, so 6 is the default.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

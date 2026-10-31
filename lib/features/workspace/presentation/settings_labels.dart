@@ -91,6 +91,7 @@ String _bankSettingLabel(AppLocalizations l10n, String key) => switch (key) {
 String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'records.hosting_country' => l10n.settingLabelRecordsHostingCountry,
       'records.cra_authorisation_reference' => l10n.settingLabelRecordsCraReference,
+      'security.badge_pin_min_length' => l10n.settingLabelSecurityBadgePinMinLength,
       _ => key,
     };
 
@@ -169,6 +170,7 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'bank.match_window_days' => l10n.settingHintBankMatchWindowDays,
       'records.hosting_country' => l10n.settingHintRecordsHostingCountry,
       'records.cra_authorisation_reference' => l10n.settingHintRecordsCraReference,
+      'security.badge_pin_min_length' => l10n.settingHintSecurityBadgePinMinLength,
       _ => null,
     };
 

@@ -26576,6 +26576,10 @@
   "@settingHintSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintSecurityBadgePinMinLength": "The fewest digits a new badge PIN may have. PINs set earlier keep working until they are changed.",
+  "@settingHintSecurityBadgePinMinLength": {
+    "description": "#3091 settings: Setting hint."
+  },
   "settingHintSecurityInvitationExpiryDays": "Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -26807,6 +26811,10 @@
   "settingLabelSecurityBadgeLockoutMinutes": "Badge lockout time",
   "@settingLabelSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelSecurityBadgePinMinLength": "Shortest badge PIN",
+  "@settingLabelSecurityBadgePinMinLength": {
+    "description": "#3091 settings: Setting label."
   },
   "settingLabelSecurityInvitationExpiryDays": "Invitation validity",
   "@settingLabelSecurityInvitationExpiryDays": {

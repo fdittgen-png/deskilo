@@ -71,5 +71,7 @@
   "settingUnitPerDay": "par jour",
   "@settingUnitPerDay": {
     "description": "#2485 settings: Unit."
-  }
+  },
+  "settingLabelSecurityBadgePinMinLength": "PIN de badge : longueur minimale",
+  "settingHintSecurityBadgePinMinLength": "Le moins de chiffres qu'un nouveau PIN de badge peut avoir. Les PIN déjà définis continuent de fonctionner jusqu'à leur changement."
 }

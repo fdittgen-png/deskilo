@@ -15395,6 +15395,7 @@
   "@settingHintSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintSecurityBadgePinMinLength": "Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien.",
   "settingHintSecurityInvitationExpiryDays": "Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -15564,6 +15565,7 @@
   "@settingLabelSecurityBadgeLockoutMinutes": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelSecurityBadgePinMinLength": "PIN de tarjeta: longitud mínima",
   "settingLabelSecurityInvitationExpiryDays": "Validez de una invitación",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
