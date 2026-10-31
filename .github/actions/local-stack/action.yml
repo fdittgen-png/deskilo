@@ -49,16 +49,20 @@ runs:
     # own token), not anonymously: anonymous Docker Hub ("Data limit
     # exceeded", four database runs lost on 2026-10-31) and anonymous ECR
     # Public (the same, on the next run) both ran out. Set for the rest of
-    # the job, so `supabase test db` (its pg_prove container) uses it too. A
-    # failed login falls back to an anonymous GHCR pull.
+    # the job, so `supabase test db` (its pg_prove container) uses it too.
+    # The calling job grants `packages: read`; a failed login fails here,
+    # loudly, rather than falling back to an anonymous quota.
     - shell: bash
       env:
         TOKEN: ${{ github.token }}
         ACTOR: ${{ github.actor }}
       run: |
         echo "SUPABASE_INTERNAL_IMAGE_REGISTRY=ghcr.io" >> "$GITHUB_ENV"
-        echo "$TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin \
-          || echo "::warning::local stack: GHCR login failed; pulling anonymously"
+        if ! echo "$TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin; then
+          echo "::error::local stack: GHCR login as the job failed — does the job grant packages: read?"
+          exit 1
+        fi
+        echo "local stack: pulling the Supabase images from ghcr.io, authenticated as the job"
     - shell: bash
       env:
         WORKDIR: ${{ inputs.workdir }}
