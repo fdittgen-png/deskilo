@@ -74,14 +74,19 @@ part 'workspace_xml_part2.dart';
 ///   so a v2 document is a valid v3 document.
 /// Secrets never travel: the invite code, the e-invoice and payment
 /// provider credentials. Neither does anything transactional.
+///
+/// Schema v5 (#3074): v4 plus `<decor kind x y w h turns/>` under a
+/// `<level>`, after its offices — the walls, doors, windows, pillars,
+/// tables, couches, WCs and kitchens drawn on the plan. A photo placed on
+/// the plan (a picture, not a symbol) does not travel.
 abstract final class WorkspaceXmlSchema {
   /// The version the app EXPORTS.
-  static const int version = 4;
+  static const int version = 5;
 
   /// The versions the parser ACCEPTS: v1 (pre-accessories, #164), v2
-  /// (#180), v3 (#916) and v4 (#2860). Anything else was exported by a
+  /// (#180), v3 (#916), v4 (#2860) and v5 (#3074). Anything else was exported by a
   /// newer app → unsupported.
-  static const Set<int> supportedVersions = {1, 2, 3, 4};
+  static const Set<int> supportedVersions = {1, 2, 3, 4, 5};
 
   static const String rootElement = 'deskilo-workspace';
   static const String versionAttr = 'version';
@@ -139,6 +144,13 @@ abstract final class WorkspaceXmlSchema {
   static const String slotMinutesAttr = 'slot-minutes';
   static const String areaKindAttr = 'area-kind';
   static const String vatRateAttr = 'vat-rate';
+
+  // v5 (#3074): the drawn room — a wall, a door, a window, a pillar, a table,
+  // a couch, a WC or a kitchen on a level, by its stored word, its rect and
+  // its clockwise quarter turns. Optional: a v4 file has none.
+  static const String decorElement = 'decor';
+  static const String kindAttr = 'kind';
+  static const String turnsAttr = 'turns';
   static const String configurationElement =
       WorkspaceXmlConfigurationSchema.element;
 }

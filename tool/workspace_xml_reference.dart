@@ -9,6 +9,7 @@
 // so the writer cannot grow an attribute the published schema does not
 // name. Enumerated values come from the domain enums the parser reads.
 import 'package:deskilo/features/plan/domain/office.dart';
+import 'package:deskilo/features/plan/domain/plan_image.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 
 /// What an attribute holds.
@@ -68,7 +69,7 @@ class XmlElementSpec {
 }
 
 /// The version this reference describes.
-const workspaceXmlReferenceVersion = 4;
+const workspaceXmlReferenceVersion = 5;
 
 const _root = 'deskilo-workspace';
 const _plan = '$_root/floor-plan/level';
@@ -110,7 +111,7 @@ const _wholeBookable = XmlAttributeSpec(
   since: 3,
 );
 
-/// Every element of v4, parents before children.
+/// Every element of v5, parents before children.
 final workspaceXmlElements = <XmlElementSpec>[
   const XmlElementSpec(
     _root,
@@ -119,7 +120,7 @@ final workspaceXmlElements = <XmlElementSpec>[
       XmlAttributeSpec(
         'version',
         XmlValue.count,
-        'The format version; this app writes 4 and reads 1 to 4.',
+        'The format version; this app writes 5 and reads 1 to 5.',
         required: true,
       ),
     ],
@@ -251,6 +252,30 @@ final workspaceXmlElements = <XmlElementSpec>[
         XmlValue.text,
         'The site, by its name.',
         since: 3,
+      ),
+    ],
+  ),
+  XmlElementSpec(
+    '$_plan/decor',
+    'A symbol drawn on the level: a wall, a door, a window, a pillar, a '
+    'table, a couch, a WC or a kitchen. A photo placed on the plan does not '
+    'travel.',
+    since: 5,
+    attributes: [
+      XmlAttributeSpec(
+        'kind',
+        XmlValue.word,
+        'What is drawn.',
+        required: true,
+        since: 5,
+        values: [for (final k in PlanDecorKind.values) k.name],
+      ),
+      ..._rect,
+      const XmlAttributeSpec(
+        'turns',
+        XmlValue.count,
+        'Clockwise quarter turns, 0 to 3; absent means none.',
+        since: 5,
       ),
     ],
   ),
