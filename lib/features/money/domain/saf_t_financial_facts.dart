@@ -178,22 +178,33 @@ class SafTFinancialFacts {
       );
     for (final (i, c) in ordered.indexed) {
       c.code = '${i + 1}';
-      if (norway) {
+      if (_standardTaxKey(c) case final key?) {
         final row = rows.lookup(
           TaxDomain.accountMap,
           profile.country,
-          'saf_t/tax:${c.direction.name}:${c.group}',
+          'saf_t/tax:$key',
         );
         final standard = row?.country == profile.country
             ? (row?.value as AccountMapValue?)?.taxCode ?? ''
             : '';
-        if (standard.isEmpty) {
-          gap(SafTGapKind.standardTaxCode, '${c.direction.name}:${c.group}');
-        }
+        if (standard.isEmpty) gap(SafTGapKind.standardTaxCode, key);
         c.standardCode = standard;
       }
     }
     return {for (final c in ordered) c.identity: c};
+  }
+
+  /// The key of [c]'s standard code in the profile's map: Norway's by rate
+  /// group; Romania's by the rate itself, since ANAF's codes name the
+  /// percentage (19 % and 21 % are two codes); none elsewhere.
+  String? _standardTaxKey(SafTTaxCode c) {
+    if (norway) return '${c.direction.name}:${c.group}';
+    if (!profile.romaniaShape) return null;
+    final percent = (c.rate.value as RateValue).percent;
+    final text = percent == percent.roundToDouble()
+        ? '${percent.round()}'
+        : '$percent';
+    return '${c.direction.name}:$text';
   }
 
   SafTTaxDirection? directionOf(PostingLine l) => switch (l.role) {
@@ -331,14 +342,13 @@ class SafTFinancialFacts {
     fits('PostalCode', postalCode);
   }
 
-  /// #2379 — Denmark's company states its VAT registration and its bank
-  /// account.
-  void _checkDenmarkCompany() {
-    if (!profile.denmarkShape) return;
-    if (r.company.vatId.trim().isEmpty) {
+  /// #2379 — Denmark's company states its VAT registration; Denmark's and
+  /// Romania's, their bank account.
+  void _checkCompanyAccounts() {
+    if (profile.denmarkShape && r.company.vatId.trim().isEmpty) {
       gap(SafTGapKind.company, 'TaxRegistration');
     }
-    if (r.companyIban.trim().isEmpty) {
+    if (profile.bankAccountRequired && r.companyIban.trim().isEmpty) {
       gap(SafTGapKind.company, 'BankAccount');
     }
   }
@@ -349,7 +359,7 @@ class SafTFinancialFacts {
       gap(SafTGapKind.company, 'RegistrationNumber');
     }
     if (company.name.trim().isEmpty) gap(SafTGapKind.company, 'Name');
-    _checkDenmarkCompany();
+    _checkCompanyAccounts();
     // The file states the company's own taxes; a seller of another country
     // than the profile's is not the declaration it makes.
     if (profile.country.isNotEmpty && taxCountry != profile.country) {

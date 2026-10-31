@@ -230,6 +230,7 @@ class AccountingExportRun {
             'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace)});
       case 'saft_no':
       case 'saft_dk':
+      case 'saft_ro':
       case 'faia_lu':
       case 'saft_oecd_full':
         await safTFinancialExport();
