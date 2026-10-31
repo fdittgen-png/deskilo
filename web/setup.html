@@ -444,7 +444,7 @@ function render(){
  document.getElementById('bar').style.width=Math.round((idx)/(list.length-1)*100)+'%';
  document.getElementById('stepno').textContent=mode==='wizard'?T('setupStep',{current:idx+1,total:list.length}):'';
  const rail=document.getElementById('rail');rail.textContent='';
- STEPS.forEach((st,i)=>{const s=stepStatus(st);const b=h('button',{class:'step'+(st.id===cur&&mode==='wizard'?' cur':'')+(s==='na'?' na':''),type:'button',onclick:()=>{if(s!=='na')go(st.id)}},h('span',{class:'dot '+s}),(i+1)+' · '+st.title);rail.append(b)});
+ list.forEach((st,i)=>{const s=stepStatus(st);const b=h('button',{class:'step'+(st.id===cur&&mode==='wizard'?' cur':''),type:'button',onclick:()=>go(st.id)},h('span',{class:'dot '+s}),(i+1)+' · '+st.title);rail.append(b)});
  document.getElementById('allmode').checked=mode==='all';
  document.getElementById('expertview').checked=expertView();
  document.getElementById('expertwrap').style.display=on('setupGuide')?'':'none';
@@ -454,7 +454,7 @@ function render(){
  // never drawn either — so the wizard became a dead end with no way
  // forward and no message. (That is exactly what `avail` did to step 2.)
  // Now the step says so, and everything else still works.
- for(const st of show){const n=STEPS.indexOf(st)+1;
+ for(const st of show){const n=list.indexOf(st)+1;
   let body;
   try{body=st.build(st)}
   catch(e){console.error('setup step "'+st.id+'" failed',e);
