@@ -91,7 +91,7 @@ const realtimeDeletionsTable = 'realtime_deletions';
 
 /// The table a deletion signal names, when it is one this feed renders.
 @visibleForTesting
-String? deletionSignal(Map<String, dynamic> newRecord) {
+String? deletionSignal(Map<String, Object?> newRecord) {
   final table = newRecord['table_name'];
   return table is String && workspaceScopedTables.contains(table) ? table : null;
 }
