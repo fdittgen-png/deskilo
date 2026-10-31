@@ -109,6 +109,9 @@ dependencies:
   package_info_plus: ^10.2.1
 
 dev_dependencies:
+  # #3102 — the build-time gzip of the instance bundle (asset transformer).
+  deskilo_asset_gzip:
+    path: packages/deskilo_asset_gzip
   # #1017 — the documentation screenshot pipeline (tool/media.dart):
   # merge, crop, downscale. Tool-only; the app never decodes an image
   # itself.
@@ -167,7 +170,15 @@ flutter:
     - assets/pdf/
     # The schema and the edge functions of a NEW instance, bundled by
     # `dart run tool/build_instance.dart` for the instance wizard (#977).
-    - assets/instance/
+    # #3102 — gzipped at build time (17 MB of SQL and sources, 3 MB packed);
+    # the repository keeps the plain file the tools and lints read.
+    - path: assets/instance/bundle.json
+      transformers:
+        - package: deskilo_asset_gzip
+    - assets/instance/contract.txt
+    - assets/instance/policies.txt
+    - assets/instance/settings_registry.json
+    - assets/instance/tax_reference.json
   # The SAME Roboto files the PDF embeds, as a Flutter family — the
   # report design surface renders glyph-identical to the document (#548).
   fonts:
