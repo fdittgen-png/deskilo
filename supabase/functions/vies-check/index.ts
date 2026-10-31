@@ -14,6 +14,7 @@
 // which blocks the reverse charge instead of silently charging domestic
 // VAT.
 
+import { REFUSED_CODE } from "../_shared/webhook_guard.ts";
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
@@ -117,7 +118,8 @@ if (import.meta.main) {
       p_member_id: memberId,
     });
     if (error || !subject) {
-      return json({ error: error?.message ?? "refused" }, 403);
+      // #3093 E9 — one fixed code; the text of a database error names tables.
+      return json({ error: REFUSED_CODE }, 403);
     }
     const s = subject as Subject;
     if (!s.number || !s.country_code) {

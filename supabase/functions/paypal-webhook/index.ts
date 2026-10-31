@@ -15,6 +15,10 @@
 // never settles: the RPC is only ever called with the provider's own
 // amount, in the intent's currency.
 
+import {
+  configOf,
+  redactedProviderLog,
+} from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { toMinor } from "../_shared/money.ts";
 import { paypalApi } from "../_shared/providers.ts";
@@ -32,13 +36,14 @@ async function paypalConfig(
   admin: SupabaseClient,
   workspaceId: string,
 ): Promise<Record<string, string>> {
-  const { data } = await admin
-    .from("payment_credentials")
-    .select("config")
-    .eq("workspace_id", workspaceId)
-    .eq("provider", "paypal")
-    .maybeSingle();
-  const stored = (data?.config ?? {}) as Record<string, string>;
+  const stored = configOf(
+    await admin
+      .from("payment_credentials")
+      .select("config")
+      .eq("workspace_id", workspaceId)
+      .eq("provider", "paypal")
+      .maybeSingle(),
+  );
   return {
     client_id: stored.client_id ?? Deno.env.get("PAYPAL_CLIENT_ID") ?? "",
     secret: stored.secret ?? Deno.env.get("PAYPAL_SECRET") ?? "",
@@ -116,7 +121,15 @@ Deno.serve(async (req: Request): Promise<Response> => {
     console.log("paypal webhook: unknown order, ignoring", orderId);
     return respond("ok", 200);
   }
-  const cfg = await paypalConfig(admin, intent.workspace_id);
+  // #3093 E6 — a failed credential read is an error the provider retries,
+  // never a quiet fall back to the installation's key.
+  let cfg: Record<string, string>;
+  try {
+    cfg = await paypalConfig(admin, intent.workspace_id);
+  } catch (e) {
+    console.error("paypal webhook credential read failed", String(e));
+    return respond("config_unavailable", 500);
+  }
   if (!cfg.webhook_id || !cfg.client_id) {
     console.log("paypal webhook not configured for workspace", intent.workspace_id);
     return respond("not_configured", 200);
@@ -149,7 +162,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
     if (!verifyRes.ok) throw new Error(`verify ${verifyRes.status}`);
     const verification = await verifyRes.json();
     if (verification.verification_status !== "SUCCESS") {
-      console.error("paypal webhook verification FAILED", verification);
+      console.error("paypal webhook verification FAILED", {
+        status: verification.verification_status,
+      });
       return respond("verification_failed", 400);
     }
   } catch (e) {
@@ -222,7 +237,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       }
       const detail = await res.text();
       if (!(res.status === 422 && detail.includes("ORDER_ALREADY_CAPTURED"))) {
-        console.error("paypal capture failed", res.status, detail);
+        console.error("paypal capture failed", redactedProviderLog(res.status, detail));
         return respond("capture_failed", 500);
       }
       // Captured already (another path, another request id): READ the
