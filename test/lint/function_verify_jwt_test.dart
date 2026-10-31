@@ -44,4 +44,17 @@ void main() {
       );
     }
   });
+
+  // #3092 — send-push reads the caller's role from the bearer JWT, so the
+  // gateway must verify it; the default must not be left to chance.
+  test('send-push keeps the gateway JWT check on', () {
+    final toml = File('supabase/config.toml').readAsStringSync();
+    expect(
+      RegExp(r'^\[functions\.send-push\]\s*\n\s*verify_jwt\s*=\s*true',
+              multiLine: true)
+          .hasMatch(toml),
+      isTrue,
+    );
+    expect(functionVerifyJwt['send-push'] ?? true, isTrue);
+  });
 }
