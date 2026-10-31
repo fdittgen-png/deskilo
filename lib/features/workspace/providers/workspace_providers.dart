@@ -160,7 +160,7 @@ class DefaultWorkspaceId extends _$DefaultWorkspaceId {
   }
 }
 
-/// The active workspace (profile).
+/// The active workspace (profile). #3102: list and choice are read together.
 @Riverpod(keepAlive: true)
 Future<Workspace?> currentWorkspace(Ref ref) async {
   // #2562 -- a workspace selected on a connected installation is read
@@ -172,11 +172,11 @@ Future<Workspace?> currentWorkspace(Ref ref) async {
     final read = ref.watch(connectedWorkspaceReaderProvider);
     return readConnectedWorkspace(pool, read, split.source, split.workspaceId);
   }
-  final workspaces = await ref.watch(myWorkspacesProvider.future);
-  if (workspaces.isEmpty) return null;
-  final chosenId = await ref.watch(activeWorkspaceIdProvider.future);
-  return workspaces.where((w) => w.id == chosenId).firstOrNull ??
-      workspaces.first;
+  final (choice, list) = (ref.watch(activeWorkspaceIdProvider.future), ref.watch(myWorkspacesProvider.future));
+  final workspaces = await list;
+  if (workspaces.isEmpty) return choice.then((_) => null, onError: (Object _) => null);
+  final chosenId = await choice;
+  return workspaces.where((w) => w.id == chosenId).firstOrNull ?? workspaces.first;
 }
 
 /// #1449 — starting a workspace: what a creation needs before it is one,
