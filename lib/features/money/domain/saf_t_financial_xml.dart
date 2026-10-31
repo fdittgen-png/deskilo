@@ -107,6 +107,13 @@ class SafTFinancialXml extends SafTFinancialFacts {
               },
             );
             taxRegistration(c.vatId);
+            // #2379 — Denmark requires the company's bank account.
+            if (profile.denmarkShape && r.companyIban.isNotEmpty) {
+              builder.element(
+                'BankAccount',
+                nest: () => tag('IBANNumber', r.companyIban),
+              );
+            }
           },
         );
         tag('DefaultCurrencyCode', r.currency);
@@ -119,6 +126,8 @@ class SafTFinancialXml extends SafTFinancialFacts {
         );
         tag('HeaderComment', _headerComment);
         tag('TaxAccountingBasis', profile.accountingBasis);
+        // #2379 — the entity whose books these are (the company itself).
+        if (profile.taxEntityRequired) tag('TaxEntity', c.name);
       },
     );
   }
@@ -137,7 +146,13 @@ class SafTFinancialXml extends SafTFinancialFacts {
         if (accounts.isNotEmpty) {
           builder.element(
             'GeneralLedgerAccounts',
-            nest: () => accounts.forEach(account),
+            nest: () {
+              if (profile.denmarkShape) {
+                tag('NameOfStandardAccount', SafTFinancialProfile.dkStandardChart.$1);
+                tag('VersionOfStandardAccount', SafTFinancialProfile.dkStandardChart.$2);
+              }
+              accounts.forEach(account);
+            },
           );
         }
         if (customers.isNotEmpty) {
@@ -217,6 +232,8 @@ class SafTFinancialXml extends SafTFinancialFacts {
     builder.element(
       element,
       nest: () {
+        // Denmark: the party's number first, then who it is.
+        if (profile.denmarkShape) tag(idElement, number);
         tag('Name', partyName(number, entry.party, details));
         if (details != null && hasAddress(details.city, details.postalCode)) {
           address(
@@ -227,7 +244,7 @@ class SafTFinancialXml extends SafTFinancialFacts {
           );
         }
         taxRegistration(details?.vatId ?? '');
-        tag(idElement, number);
+        if (!profile.denmarkShape) tag(idElement, number);
         if (norway) {
           for (final a in accounts) {
             builder.element(
@@ -325,7 +342,12 @@ class SafTFinancialXml extends SafTFinancialFacts {
             nest: () {
               tag('JournalID', journal.code);
               tag('Description', safTJournalNames[journal]!);
-              tag('Type', journal.code);
+              tag(
+                'Type',
+                profile.denmarkShape
+                    ? SafTFinancialProfile.dkJournalType(journal)
+                    : journal.code,
+              );
               postings.forEach(transaction);
             },
           );
@@ -356,6 +378,8 @@ class SafTFinancialXml extends SafTFinancialFacts {
             party.number,
           );
         }
+        // Denmark: the record's id in the system that produced it.
+        if (profile.denmarkShape) tag('SystemID', transactionIdOf(p));
         for (final l in p.lines) {
           line(p, l);
         }
@@ -375,6 +399,12 @@ class SafTFinancialXml extends SafTFinancialFacts {
         if (original != null) {
           tag('CurrencyCode', original.currency);
           tag('CurrencyAmount', minorToText(original.minor, original.currency));
+        } else if (profile.denmarkShape) {
+          // #2379 — Denmark states every amount's currency, even the
+          // book's own (at a rate of one).
+          tag('CurrencyCode', value.currency);
+          tag('CurrencyAmount', amount(value.minor));
+          tag('ExchangeRate', '1');
         }
       },
     );

@@ -5,6 +5,8 @@
 // decisions on its movements. The server checks the flag, the rights, the
 // line count and every match again; this refuses only what cannot be
 // right, before anything is sent.
+import 'dart:typed_data';
+
 import 'package:crypto/crypto.dart';
 
 import '../../../core/trace/trace_logger.dart';
@@ -75,9 +77,9 @@ class BankImportCommands {
 
   final BankStatementRepository _repository;
 
-  /// Reads [bytes] as [format] under [settings]' bounds and imports the
-  /// statement; a file that cannot be read is refused whole and nothing
-  /// is sent.
+  /// Reads [bytes] as [format] under [settings]' bounds, keeps the file as
+  /// the statement's original and imports the statement; a file that
+  /// cannot be read is refused whole and nothing is sent.
   Future<BankImportOutcome> importFile(
     String workspaceId, {
     required List<int> bytes,
@@ -100,12 +102,33 @@ class BankImportCommands {
       );
       return (result: null, refused: e);
     }
+    final digest = sha256.convert(bytes).toString();
     final result = await _repository.importStatement(
       workspaceId,
       statement: statement,
-      sourceSha256: sha256.convert(bytes).toString(),
+      sourceSha256: digest,
       fileName: _cut(fileName, BankColumnWidths.fileName),
     );
+    // #2380 — the original after its statement: the server keeps a file only
+    // for a statement its uploader imported (0621). A failed upload of a new
+    // statement throws; importing the same file again finds it repeated and
+    // keeps the file then. A repeated file another member imported is theirs
+    // to keep, so its refusal is logged, not reported.
+    try {
+      await _repository.storeOriginal(
+        workspaceId,
+        sourceSha256: digest,
+        bytes: bytes,
+      );
+    } catch (e, st) {
+      if (!result.repeated) rethrow;
+      TraceLogger.instance.warn(
+        'money',
+        'bank original of a repeated statement not kept: $e',
+        error: e,
+        stackTrace: st,
+      );
+    }
     return (result: result, refused: null);
   }
 
@@ -154,6 +177,10 @@ class BankImportCommands {
     StoredBankLine line, {
     required String outgoingPaymentId,
   }) => _repository.reconcileOut(line.id, outgoingPaymentId: outgoingPaymentId);
+
+  /// #2380 — the original file of [statement], as it was imported.
+  Future<Uint8List> original(String workspaceId, StoredBankStatement statement) =>
+      _repository.fetchOriginal(workspaceId, statement.sourceSha256);
 }
 
 /// What a spreadsheet's mapping still lacks, field by field.

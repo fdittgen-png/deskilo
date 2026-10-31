@@ -162,9 +162,15 @@ void main() {
       formatsFor('DK').where((f) => f.claim == FormatClaim.regulatory),
       isEmpty,
     );
+    // #2379 — the SAF-T DK file is written and read against the published
+    // schema in CI: an exchange file, locally validated, never a claim to
+    // meet the registered-system duty.
+    expect(
+      capabilityOfTarget('saft_dk').state,
+      QualificationState.locallyValidated,
+    );
     for (final id in [
       'denmark_registered_system',
-      'saft_dk',
       'economic_api',
       'dinero_api',
       'billy_api',

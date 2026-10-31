@@ -11,6 +11,7 @@ import '../domain/saf_t_financial.dart';
 import '../providers/supplier_providers.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
+import 'e_invoice_identity.dart' show workspaceIban;
 import 'invoice_actions.dart';
 import 'widgets/saft_contact_dialog.dart';
 
@@ -56,6 +57,7 @@ extension SafTFinancialExports on AccountingExportRun {
       parties: books.parties,
       partyDetails: parties,
       company: company,
+      companyIban: workspaceIban(workspace),
       contact: contact,
       currency: books.functionalCurrency ?? workspace.currencyCode,
       softwareVersion: safTSoftwareVersion,

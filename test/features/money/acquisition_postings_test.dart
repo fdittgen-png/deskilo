@@ -5,7 +5,7 @@
 //   * fully deductible: Dr 1170 81.00 / Cr 2200 81.00;
 //   * 60 % deductible:  Dr 1170 48.60, Dr 6500 32.40 / Cr 2200 81.00.
 // The entry is on the expense's tax point, in the purchases journal, and
-// balances. pgTAP 316 holds the server engine to the same entries.
+// balances. pgTAP 318 holds the server engine to the same entries.
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/posting.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';

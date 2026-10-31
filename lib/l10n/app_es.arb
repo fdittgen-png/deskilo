@@ -883,6 +883,7 @@
   "bankReviewKeep": "Conservarlo",
   "bankReviewTitle": "¿Ya importado?",
   "bankStatementCounts": "{count, plural, =1{1 movimiento} other{{count} movimientos}}, {open} pendientes",
+  "bankStatementOriginal": "Descargar el archivo original",
   "bankStatementPeriod": "{account} · {from} – {to}",
   "bankStatementsEmpty": "Aún no se ha importado ningún extracto.",
   "bankStatementsIntro": "Importe los archivos que genera su banco. Cada movimiento se lee una sola vez; los pagos se concilian con sus facturas cuando usted confirma.",
@@ -9984,6 +9985,7 @@
   "mcpOpReservationDeletion": "Pedir la eliminación de una reserva ya iniciada",
   "mcpOpRespond": "Responder a una solicitud de validación",
   "mcpOpSetFavorite": "Marcar lugares como favoritos",
+  "mcpOpSetupBasics": "Fijar la zona horaria, el idioma y la dirección",
   "mcpOpSetupClosures": "Añadir días de cierre",
   "mcpOpSetupHours": "Fijar los días y horarios de apertura",
   "mcpOpSetupLevels": "Ver los niveles de configuración",
@@ -15255,6 +15257,7 @@
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingHintBiBatchTimeBudgetMs": "Cuánto puede calcular una lectura de informe antes de que las cifras aún no alcanzadas se den como fuera de presupuesto; la página muestra lo que tiene. Manténgalo por debajo del tiempo de espera del servidor.",
   "settingHintBiReportMaxBytes": "La mayor definición de informe guardada, en bytes de su texto almacenado. La plataforma nunca guarda más de 65536; una definición contiene preguntas, nunca cifras.",
   "@settingHintBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15426,6 +15429,7 @@
   "@settingLabelBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingLabelBiBatchTimeBudgetMs": "Presupuesto de tiempo de una lectura de informe",
   "settingLabelBiReportMaxBytes": "Tamaño de una definición de informe",
   "@settingLabelBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15694,6 +15698,7 @@
   "@settingUnitHours": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitMilliseconds": "ms",
   "settingUnitMinutes": "minutos",
   "@settingUnitMinutes": {
     "description": "#2484 settings: Unit."

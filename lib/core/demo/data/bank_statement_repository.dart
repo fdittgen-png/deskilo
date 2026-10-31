@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 
@@ -67,6 +68,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
         openCount: _lines[s.id]!.where((l) => l.status.isOpen).length,
         statementRef: s.statementRef,
         fileName: s.fileName,
+        sourceSha256: s.sourceSha256,
         openingCents: s.openingCents,
         closingCents: s.closingCents,
       ),
@@ -98,6 +100,33 @@ class FakeBankStatementRepository implements BankStatementRepository {
           r.payment,
     ],
   );
+
+  /// #2380 — the originals kept, by workspace and digest.
+  final originals = <String, Uint8List>{};
+
+  /// How many times an original was stored (tests: once per file).
+  int originalWrites = 0;
+
+  @override
+  Future<void> storeOriginal(
+    String workspaceId, {
+    required String sourceSha256,
+    required List<int> bytes,
+  }) async {
+    originalWrites++;
+    originals.putIfAbsent(
+        '$workspaceId/$sourceSha256', () => Uint8List.fromList(bytes));
+  }
+
+  @override
+  Future<Uint8List> fetchOriginal(
+    String workspaceId,
+    String sourceSha256,
+  ) async {
+    final bytes = originals['$workspaceId/$sourceSha256'];
+    if (bytes == null) throw StateError('no original $sourceSha256');
+    return bytes;
+  }
 
   @override
   Future<BankImportResult> importStatement(
@@ -164,6 +193,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
         openCount: stored.length,
         statementRef: statement.statementId,
         fileName: fileName,
+        sourceSha256: sourceSha256,
         openingCents: statement.openingCents,
         closingCents: statement.closingCents,
       ),

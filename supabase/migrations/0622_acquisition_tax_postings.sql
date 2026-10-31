@@ -16,7 +16,7 @@
 --   Dr expenses            the share that is not deductible, if any
 --   Cr vat_output:<group>  the tax owed
 --
--- The Dart reference is posting_rules_acquisitions.dart; pgTAP 316 holds
+-- The Dart reference is posting_rules_acquisitions.dart; pgTAP 318 holds
 -- this engine to its hand-worked entries.
 
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
