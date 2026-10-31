@@ -89,6 +89,12 @@ begin
   insert into public.members (workspace_id, user_id, is_owner, is_admin, subscription_pct)
   values (ws, u_full, false, false, 100) returning id into m_full;
 
+  -- The members joined long before the months asserted below: `member_statement`
+  -- reads a month before the member's joined_at as 'not yet a member' (0 half days,
+  -- no invoice), and joined_at defaults to now(), so an unpinned fixture goes red
+  -- on the first day of the month after the one the expectations name.
+  update public.members set joined_at = timestamptz '2026-01-01 00:00:00+00' where workspace_id = ws;
+
   -- A closure the workspace decided for itself, on a Saturday so that it
   -- changes no monthly number: it exists to be still there afterwards.
   insert into public.closure_days (workspace_id, day, reason)

@@ -47,6 +47,12 @@ begin
                                 overage_fee_cents)
   values (ws, 0, 50, 5000, 0), (ws, 50, 100, 10000, 0);
 
+  -- The members joined long before the months asserted below: `member_statement`
+  -- reads a month before the member's joined_at as 'not yet a member' (0 half days,
+  -- no invoice), and joined_at defaults to now(), so an unpinned fixture goes red
+  -- on the first day of the month after the one the expectations name.
+  update public.members set joined_at = timestamptz '2026-01-01 00:00:00+00' where workspace_id = ws;
+
   perform set_config('deskilo.spec.ws', ws::text, false);
   perform set_config('deskilo.spec.member', m_member::text, false);
   perform set_config('request.jwt.claims',
