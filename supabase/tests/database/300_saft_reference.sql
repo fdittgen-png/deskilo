@@ -34,8 +34,8 @@ select ok((select bool_and(public.tax_reference_valid('account_map', value)
             where domain = 'account_map' and key like 'saf\_t/%'),
           'every row is a valid saf_t row whose role is its key');
 select is((select count(*)::int from public.tax_reference
-            where domain = 'account_map' and key like 'saf\_t/%' and country not in ('NO', 'LU')), 0,
-          'only Norway and Luxembourg carry SAF-T standard codes');
+            where domain = 'account_map' and key like 'saf\_t/%' and country not in ('NO', 'LU', 'RO')), 0,
+          'only Norway, Luxembourg and Romania (0626) carry SAF-T standard codes');
 select is((select count(*)::int from public.tax_reference
             where domain = 'account_map' and key like 'saf\_t/%' and confirmed), 0,
           'the codes stay unconfirmed until an accountant has checked them');
