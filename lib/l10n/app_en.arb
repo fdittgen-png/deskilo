@@ -17581,6 +17581,10 @@
   "@mcpOpSetupLevelsPreview": {
     "description": "#2394 generated from contracts/mcp/operations.json (preview_setup_levels)"
   },
+  "mcpOpSetupMemberRights": "Let members book and use the space",
+  "@mcpOpSetupMemberRights": {
+    "description": "#2394 generated from contracts/mcp/operations.json (set_member_permissions_preset)"
+  },
   "mcpOpSetupNumbering": "Set how documents are numbered",
   "@mcpOpSetupNumbering": {
     "description": "#2394 generated from contracts/mcp/operations.json (set_number_sequence)"

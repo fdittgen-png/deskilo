@@ -24394,6 +24394,12 @@ abstract class AppLocalizations {
   /// **'Preview a change of levels'**
   String get mcpOpSetupLevelsPreview;
 
+  /// #2394 generated from contracts/mcp/operations.json (set_member_permissions_preset)
+  ///
+  /// In en, this message translates to:
+  /// **'Let members book and use the space'**
+  String get mcpOpSetupMemberRights;
+
   /// #2394 generated from contracts/mcp/operations.json (set_number_sequence)
   ///
   /// In en, this message translates to:

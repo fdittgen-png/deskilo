@@ -14801,6 +14801,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Visualizzare in anteprima un cambio di livelli';
 
   @override
+  String get mcpOpSetupMemberRights =>
+      'Consentire ai membri di prenotare e usare lo spazio';
+
+  @override
   String get mcpOpSetupNumbering => 'Impostare la numerazione dei documenti';
 
   @override

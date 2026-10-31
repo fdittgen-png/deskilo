@@ -14817,6 +14817,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Änderung der Stufen vorab ansehen';
 
   @override
+  String get mcpOpSetupMemberRights =>
+      'Mitgliedern Buchen und Nutzen des Raums erlauben';
+
+  @override
   String get mcpOpSetupNumbering => 'Die Nummerierung der Belege festlegen';
 
   @override

@@ -2382,11 +2382,12 @@ routine public.mcp_op_request_reservation_deletion(c mcp_call_context, p_args js
 routine public.mcp_op_request_subscription_change(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:ac638c874781
 routine public.mcp_op_respond_to_validation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:77f4a4942b8f
 routine public.mcp_op_set_favorite(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d4e9976095ff
+routine public.mcp_op_set_member_permissions_preset(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:fe8cde0611c8
 routine public.mcp_op_set_number_sequence(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:468ed786c617
 routine public.mcp_op_set_opening_hours(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:47b6bbe331db
 routine public.mcp_op_set_workspace_basics(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4eec85af0fed
 routine public.mcp_op_update_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:bff39598b3aa
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d6e778d4d843
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:405813bdc0fd
 routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
 routine public.mcp_outcome(p_status text, p_data jsonb, p_code text) -> jsonb | function | invoker | immutable | exec:service_role | body:94cac01e58f4
@@ -2425,6 +2426,7 @@ routine public.mcp_target_apply_setup_levels(p_workspace_id uuid, p_args jsonb) 
 routine public.mcp_target_create_invitations(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f8a6f13a2bb0
 routine public.mcp_target_mark_setup_step(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:99326e24d844
 routine public.mcp_target_of(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:b7500fa5c676
+routine public.mcp_target_set_member_permissions_preset(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ae3b20833fc4
 routine public.mcp_target_set_number_sequence(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:409f38986b2f
 routine public.mcp_target_set_opening_hours(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2c87a40d293f
 routine public.mcp_target_set_workspace_basics(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:396aaf8f5d0a
@@ -2915,6 +2917,7 @@ routine public.setup_level_arguments() -> text[] | function | invoker | immutabl
 routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:e97b1dee5897
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e6938ac89e2d
+routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
 routine public.setup_numbering_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c64909ab9fba
 routine public.setup_step_acknowledge(p_workspace_id uuid, p_step text) -> readiness_acknowledgements | function | definer | volatile | exec:service_role | body:54d48a072d2e
 routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d9f446bc1494

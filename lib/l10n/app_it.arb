@@ -9995,6 +9995,7 @@
   "mcpOpSetupLevels": "Vedere i livelli di configurazione",
   "mcpOpSetupLevelsApply": "Cambiare i livelli di configurazione",
   "mcpOpSetupLevelsPreview": "Visualizzare in anteprima un cambio di livelli",
+  "mcpOpSetupMemberRights": "Consentire ai membri di prenotare e usare lo spazio",
   "mcpOpSetupNumbering": "Impostare la numerazione dei documenti",
   "mcpOpSetupStatus": "Vedere a che punto è la configurazione",
   "mcpOpSetupStepExplain": "Spiegare un passo della configurazione",
