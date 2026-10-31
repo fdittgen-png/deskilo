@@ -127,13 +127,13 @@ enum SafTFinancialProfile {
   /// the schema 2.1: `Standardkontoplanen`, version `20230131`).
   static const dkStandardChart = ('Standardkontoplanen', '20230131');
 
-  /// The journal type Denmark's schema knows for [code]: receivables,
+  /// The journal type Denmark's schema knows for [journal]: receivables,
   /// payables, adjustments, else the general ledger.
-  static String dkJournalType(String code) => switch (code) {
-    'VE' => 'AR',
-    'HA' => 'AP',
-    'OD' => 'AJ',
-    _ => 'GL',
+  static String dkJournalType(PostingJournal journal) => switch (journal) {
+    PostingJournal.sales => 'AR',
+    PostingJournal.purchases => 'AP',
+    PostingJournal.other => 'AJ',
+    PostingJournal.bank => 'GL',
   };
 
   static SafTFinancialProfile? ofFormat(String formatId) => [
@@ -239,6 +239,7 @@ class SafTFinancialRequest {
     required this.softwareVersion,
     required this.createdAt,
     required this.reference,
+    this.companyIban = '',
   });
 
   final SafTFinancialProfile profile;
@@ -269,6 +270,9 @@ class SafTFinancialRequest {
 
   /// The reference store: the rates and the profile's mappings.
   final TaxReferenceSet reference;
+
+  /// #2379 — the company's IBAN, which Denmark's header requires.
+  final String companyIban;
 }
 
 /// What a missing fact is about.

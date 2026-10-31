@@ -107,6 +107,13 @@ class SafTFinancialXml extends SafTFinancialFacts {
               },
             );
             taxRegistration(c.vatId);
+            // #2379 — Denmark requires the company's bank account.
+            if (profile.denmarkShape && r.companyIban.isNotEmpty) {
+              builder.element(
+                'BankAccount',
+                nest: () => tag('IBANNumber', r.companyIban),
+              );
+            }
           },
         );
         tag('DefaultCurrencyCode', r.currency);
@@ -225,16 +232,8 @@ class SafTFinancialXml extends SafTFinancialFacts {
     builder.element(
       element,
       nest: () {
-        // Denmark carries a party by its number, account and balances only.
-        if (profile.denmarkShape) {
-          tag(idElement, number);
-          final a = accounts.single;
-          tag('AccountID', a);
-          final open = netOf(r.opening, a);
-          balance('Opening', open);
-          balance('Closing', open + netOf(r.postings, a));
-          return;
-        }
+        // Denmark: the party's number first, then who it is.
+        if (profile.denmarkShape) tag(idElement, number);
         tag('Name', partyName(number, entry.party, details));
         if (details != null && hasAddress(details.city, details.postalCode)) {
           address(
@@ -245,7 +244,7 @@ class SafTFinancialXml extends SafTFinancialFacts {
           );
         }
         taxRegistration(details?.vatId ?? '');
-        tag(idElement, number);
+        if (!profile.denmarkShape) tag(idElement, number);
         if (norway) {
           for (final a in accounts) {
             builder.element(
@@ -346,7 +345,7 @@ class SafTFinancialXml extends SafTFinancialFacts {
               tag(
                 'Type',
                 profile.denmarkShape
-                    ? SafTFinancialProfile.dkJournalType(journal.code)
+                    ? SafTFinancialProfile.dkJournalType(journal)
                     : journal.code,
               );
               postings.forEach(transaction);
@@ -400,6 +399,12 @@ class SafTFinancialXml extends SafTFinancialFacts {
         if (original != null) {
           tag('CurrencyCode', original.currency);
           tag('CurrencyAmount', minorToText(original.minor, original.currency));
+        } else if (profile.denmarkShape) {
+          // #2379 — Denmark states every amount's currency, even the
+          // book's own (at a rate of one).
+          tag('CurrencyCode', value.currency);
+          tag('CurrencyAmount', amount(value.minor));
+          tag('ExchangeRate', '1');
         }
       },
     );
