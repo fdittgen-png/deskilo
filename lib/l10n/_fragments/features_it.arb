@@ -22,7 +22,7 @@
   "featureCalendarTabDesc": "Panoramica mensile di prenotazioni e giorni di chiusura.",
   "featureEventsTab": "Scheda Eventi",
   "featureEventsTabDesc": "Cronologia delle attività e conferme in sospeso.",
-  "featureMoneyTab": "Scheda Finanze",
+  "featureMoneyTab": "Estratto e saldo",
   "featureMoneyTabDesc": "Fatture mensili, pagamenti e spese.",
   "featureServices": "Servizi",
   "featureServicesDesc": "Catalogo dei servizi e registrazione dei consumi.",
@@ -161,7 +161,7 @@
   "@featureMemberDataExportDesc": {
     "description": "#718/#719"
   },
-  "featureFinanceFacesTitle": "Finanze in quattro viste",
+  "featureFinanceFacesTitle": "Estratto, pagamenti, fatture, documenti",
   "featureFinanceFacesDesc": "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna.",
   "featurePaymentRemindersTitle": "Solleciti di pagamento automatici",
   "featurePaymentRemindersDesc": "Le fatture aperte oltre il termine configurato ricevono i livelli di sollecito automaticamente — un avviso nel feed del membro e una notifica, una volta al giorno. Disattivato: sollecitare resta un gesto manuale.",

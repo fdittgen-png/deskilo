@@ -8448,7 +8448,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finanzen in vier Ansichten';
+  String get featureFinanceFacesTitle =>
+      'Abrechnung, Zahlungen, Rechnungen, Dokumente';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8739,7 +8740,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureMessagesHubTitle => 'Nachrichten, überarbeitet';
 
   @override
-  String get featureMoneyTab => 'Finanzen-Tab';
+  String get featureMoneyTab => 'Abrechnung und Saldo';
 
   @override
   String get featureMoneyTabDesc => 'Monatsrechnungen, Zahlungen und Ausgaben.';

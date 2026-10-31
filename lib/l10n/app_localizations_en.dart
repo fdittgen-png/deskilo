@@ -8384,7 +8384,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.';
 
   @override
-  String get featureFinanceFacesTitle => 'Finances in four faces';
+  String get featureFinanceFacesTitle =>
+      'Statement, payments, invoices, documents';
 
   @override
   String get featureForeignCurrencyPurchasesDesc =>
@@ -8674,7 +8675,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureMessagesHubTitle => 'Messages, reworked';
 
   @override
-  String get featureMoneyTab => 'Money tab';
+  String get featureMoneyTab => 'Statement and balance';
 
   @override
   String get featureMoneyTabDesc => 'Monthly bills, payments and expenses.';

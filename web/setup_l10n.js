@@ -750,7 +750,7 @@ window.SETUP_L10N={
     "Activity feed and pending confirmations."
    ],
    "moneyTab": [
-    "Money tab",
+    "Statement and balance",
     "Monthly bills, payments and expenses."
    ],
    "services": [
@@ -938,7 +938,7 @@ window.SETUP_L10N={
     "Every member can export their data as one file (GDPR art. 20) and leave the workspace with their personal data cleared (art. 17) from Settings → Privacy & data."
    ],
    "financeFaces": [
-    "Finances in four faces",
+    "Statement, payments, invoices, documents",
     "The Finances tab reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column."
    ],
    "paymentReminders": [
@@ -2420,7 +2420,7 @@ window.SETUP_L10N={
     "Fil d'activité et confirmations en attente."
    ],
    "moneyTab": [
-    "Onglet Finances",
+    "Relevé et solde",
     "Factures mensuelles, paiements et dépenses."
    ],
    "services": [
@@ -2608,7 +2608,7 @@ window.SETUP_L10N={
     "Chaque membre peut exporter ses données en un fichier (RGPD art. 20) et quitter l'espace avec ses données personnelles effacées (art. 17) depuis Réglages → Confidentialité et données."
    ],
    "financeFaces": [
-    "Finances en quatre volets",
+    "Relevé, paiements, factures, documents",
     "L'onglet Finances se lit en quatre volets — Relevé, Paiements, Factures, Documents — sous un même sélecteur de mois, chacun avec son aide. Désactivé : une seule colonne."
    ],
    "paymentReminders": [
@@ -4090,7 +4090,7 @@ window.SETUP_L10N={
     "Aktivitätsverlauf und ausstehende Bestätigungen."
    ],
    "moneyTab": [
-    "Finanzen-Tab",
+    "Abrechnung und Saldo",
     "Monatsrechnungen, Zahlungen und Ausgaben."
    ],
    "services": [
@@ -4278,7 +4278,7 @@ window.SETUP_L10N={
     "Jedes Mitglied kann seine Daten als eine Datei exportieren (DSGVO Art. 20) und den Bereich mit gelöschten persönlichen Daten verlassen (Art. 17), unter Einstellungen → Datenschutz & Daten."
    ],
    "financeFaces": [
-    "Finanzen in vier Ansichten",
+    "Abrechnung, Zahlungen, Rechnungen, Dokumente",
     "Der Finanzen-Tab hat vier Ansichten — Abrechnung, Zahlungen, Rechnungen, Dokumente — unter einem Monatswähler, jede mit eigener Hilfe. Aus: eine einzige Spalte."
    ],
    "paymentReminders": [
@@ -5760,7 +5760,7 @@ window.SETUP_L10N={
     "Actividad y confirmaciones pendientes."
    ],
    "moneyTab": [
-    "Pestaña Finanzas",
+    "Extracto y saldo",
     "Facturas mensuales, pagos y gastos."
    ],
    "services": [
@@ -5948,7 +5948,7 @@ window.SETUP_L10N={
     "Cada miembro puede exportar sus datos en un archivo (RGPD art. 20) y abandonar el espacio con sus datos personales borrados (art. 17) desde Ajustes → Privacidad y datos."
    ],
    "financeFaces": [
-    "Finanzas en cuatro vistas",
+    "Extracto, pagos, facturas, documentos",
     "La pestaña Finanzas se lee en cuatro vistas — Extracto, Pagos, Facturas, Documentos — bajo un mismo selector de mes, cada una con su ayuda. Desactivado: una sola columna."
    ],
    "paymentReminders": [
@@ -7430,7 +7430,7 @@ window.SETUP_L10N={
     "Cronologia delle attività e conferme in sospeso."
    ],
    "moneyTab": [
-    "Scheda Finanze",
+    "Estratto e saldo",
     "Fatture mensili, pagamenti e spese."
    ],
    "services": [
@@ -7618,7 +7618,7 @@ window.SETUP_L10N={
     "Ogni membro può esportare i propri dati in un file (GDPR art. 20) e lasciare lo spazio con i dati personali cancellati (art. 17) da Impostazioni → Privacy e dati."
    ],
    "financeFaces": [
-    "Finanze in quattro viste",
+    "Estratto, pagamenti, fatture, documenti",
     "La scheda Finanze si legge in quattro viste — Estratto, Pagamenti, Fatture, Documenti — sotto un unico selettore di mese, ognuna con la sua guida. Disattivato: una sola colonna."
    ],
    "paymentReminders": [
