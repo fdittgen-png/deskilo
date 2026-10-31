@@ -20,9 +20,13 @@ values
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
+-- Member only, like bi_batch_limit (0509): a stranger's batch is refused
+-- by the batch's own checks, never by reading another space's setting.
 create or replace function public.bi_batch_time_budget_ms(p_workspace_id uuid)
 returns int language sql stable security definer set search_path = public as $fn$
-  select coalesce((public.setting_value(p_workspace_id, 'bi.batch_time_budget_ms') #>> '{}')::int, 4000);
+  select case when public.is_member_of(p_workspace_id)
+              then coalesce((public.setting_value(p_workspace_id, 'bi.batch_time_budget_ms') #>> '{}')::int, 4000)
+              else 4000 end;
 $fn$;
 revoke execute on function public.bi_batch_time_budget_ms(uuid) from public, anon, authenticated;
 
@@ -37,7 +41,7 @@ declare
   v_def jsonb;
   v_meta jsonb;
   v_started timestamptz := clock_timestamp();
-  v_budget interval := make_interval(secs => public.bi_batch_time_budget_ms(p_workspace_id) / 1000.0);
+  v_budget interval;
 begin
   if auth.uid() is null then
     raise exception 'not signed in' using errcode = '42501';
@@ -47,6 +51,8 @@ begin
     raise exception 'a batch has between 1 and % requests', public.bi_batch_limit(p_workspace_id)
       using errcode = '22023';
   end if;
+  -- Read after the batch's own checks, so they answer first.
+  v_budget := make_interval(secs => public.bi_batch_time_budget_ms(p_workspace_id) / 1000.0);
   for r in select * from jsonb_array_elements(p_requests) loop
     v_metric := r ->> 'metric_id';
     -- Only the metrics this batch answers; their descriptor is the registry's.
