@@ -12,7 +12,7 @@
 //
 // TWO STEPS, ONE FORM.
 //   {uid}        -> who is this? display name + avatar flag. No e-mail,
-//                   no attempt consumed: a fumbled scan must not lock a
+//                   no user id (#3091), no attempt consumed: a fumbled scan must not lock a
 //                   member out before they have typed anything.
 //   {uid, pin}   -> a one-time token the client exchanges for a session
 //                   via supabase.auth.verifyOtp. The session is minted by
@@ -25,6 +25,15 @@
 
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import {
+  callerOf,
+  identifyAnswer,
+  IdentifyLimiter,
+  UID_PATTERN,
+} from "./badge_guard.ts";
+
+// #3091 — the identify step needs no PIN, so it has its own ceiling per caller.
+const identifyLimiter = new IdentifyLimiter();
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -33,7 +42,8 @@ const supabase = createClient(
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
@@ -71,7 +81,10 @@ Deno.serve(async (req) => {
   // A UID is lowercase hex without separators — the same normalization
   // register_nfc_badge applies. Reject anything else before it reaches
   // the database rather than hashing arbitrary input.
-  if (!uid || !/^[0-9a-f]{4,64}$/.test(uid)) return refused("refused");
+  if (!uid || !UID_PATTERN.test(uid)) return refused("refused");
+  if (pin === undefined && !identifyLimiter.allow(callerOf(req))) {
+    return refused("locked"); // the same wait-a-while answer a lockout gives
+  }
   if (pin !== undefined && !/^[0-9]{4,8}$/.test(pin)) return refused("refused");
 
   const { data, error } = await supabase.rpc("badge_auth_verify", {
@@ -82,35 +95,32 @@ Deno.serve(async (req) => {
     console.error("badge_auth_verify failed", error.message);
     return refused("refused");
   }
-  if (!data?.ok) return refused(data?.reason === "locked" ? "locked" : "refused");
+  if (!data?.ok) {
+    return refused(data?.reason === "locked" ? "locked" : "refused");
+  }
 
   // IDENTIFY — hand back just enough for the form to say whose PIN it is
   // asking for. Never the e-mail: that would make a scanned tag a way to
   // harvest addresses.
   if (pin === undefined) {
-    return json({
-      ok: true,
-      step: "identify",
-      display_name: data.display_name ?? "",
-      has_avatar: data.has_avatar === true,
-      user_id: data.user_id,
-    });
+    return json(identifyAnswer(data));
   }
 
   // AUTHENTICATE — the PIN matched. Turn the verified user into a
   // one-time link and return only its token hash; the client exchanges
   // that for a session itself, so no access token is ever assembled here.
-  const { data: userData, error: userError } =
-    await supabase.auth.admin.getUserById(data.user_id);
+  const { data: userData, error: userError } = await supabase.auth.admin
+    .getUserById(data.user_id);
   if (userError || !userData?.user?.email) {
     console.error("no e-mail for verified badge user", userError?.message);
     return refused("refused");
   }
 
-  const { data: link, error: linkError } = await supabase.auth.admin.generateLink({
-    type: "magiclink",
-    email: userData.user.email,
-  });
+  const { data: link, error: linkError } = await supabase.auth.admin
+    .generateLink({
+      type: "magiclink",
+      email: userData.user.email,
+    });
   if (linkError || !link?.properties?.hashed_token) {
     console.error("generateLink failed", linkError?.message);
     return refused("refused");

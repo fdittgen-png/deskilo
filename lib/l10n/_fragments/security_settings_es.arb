@@ -71,5 +71,7 @@
   "settingUnitPerDay": "por día",
   "@settingUnitPerDay": {
     "description": "#2485 settings: Unit."
-  }
+  },
+  "settingLabelSecurityBadgePinMinLength": "PIN de tarjeta: longitud mínima",
+  "settingHintSecurityBadgePinMinLength": "Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien."
 }

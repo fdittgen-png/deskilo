@@ -127,7 +127,7 @@ select ok(not (public.preview_my_member_profile('space_mate') ? 'operational'),'
 
 -- ── the badge PIN hash is not on the profile row any more ───────────
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001833a2","role":"authenticated"}',true);
-select lives_ok($$select public.set_badge_pin('4826')$$,'the subject sets a badge PIN');
+select lives_ok($$select public.set_badge_pin('482615')$$,'the subject sets a badge PIN');
 select ok(public.has_badge_pin(),'and the app sees that a PIN is set');
 -- 0351 (#1833 B): a space mate reads no raw row at all now; the operational
 -- reader still does, and finds no hash on it.
@@ -140,7 +140,7 @@ reset role;
 update public.workspaces set feature_flags = '{"badgeSignIn":true,"nfcBadges":true,"kioskMode":true}' where id = '00000000-0000-4000-8000-0000001833b2';
 insert into public.member_badges(workspace_id,member_id,token_hash,auth_enabled) values
  ('00000000-0000-4000-8000-0000001833b2','00000000-0000-4000-8000-0000001833c8',public.badge_token_hash('UID-1833'),true);
-select is(public.badge_auth_verify('UID-1833','4826')->>'user_id','00000000-0000-4000-8000-0000001833a2','the right PIN still signs in through the moved hash');
+select is(public.badge_auth_verify('UID-1833','482615')->>'user_id','00000000-0000-4000-8000-0000001833a2','the right PIN still signs in through the moved hash');
 select is(public.badge_auth_verify('UID-1833','9173')->>'reason','refused','a wrong PIN is refused');
 select throws_ok($$update public.profiles set pin_hash = 'x' where id = '00000000-0000-4000-8000-0000001833a2'$$,'23514',null,'nothing writes a hash back onto the profile');
 select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000001833a2","role":"authenticated"}',true);

@@ -114,6 +114,8 @@ abstract final class SettingDefaults {
   static const int securityBadgeLockoutFailures = 5;
   /// `security.badge_lockout_minutes`
   static const int securityBadgeLockoutMinutes = 15;
+  /// `security.badge_pin_min_length`
+  static const int securityBadgePinMinLength = 6;
   /// `security.invitation_expiry_days`
   static const int securityInvitationExpiryDays = 14;
   /// `vat.vies_evidence_days`
