@@ -117,6 +117,9 @@ class LevelCanvasEdits {
     await _repository.setPlanDecorTurns(image.id, (image.quarterTurns + 1) % 4);
   }
 
+  /// Removes the symbol created by the last drawing gesture.
+  Future<void> undoDecor(String imageId) => _repository.deletePlanImage(imageId);
+
   Future<void> setBackground(String workspaceId, PickedImage image) =>
       _repository.setLevelBackground(
         workspaceId,

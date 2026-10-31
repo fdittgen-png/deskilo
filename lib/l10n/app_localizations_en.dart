@@ -6718,7 +6718,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorHintDecor =>
-      'Tap the plan to drop the shape; drag it to place it';
+      'Tap to drop a shape; drag to draw a wall along the grid';
 
   @override
   String get editorHintDesk => 'Drag inside an office to draw a desk';
@@ -6906,6 +6906,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorToolSelect => 'Select';
+
+  @override
+  String get editorWallSaved => 'Wall drawn';
+
+  @override
+  String get editorWallUndo => 'Undo';
 
   @override
   String get einvoiceConfigClear => 'Remove the platform';
