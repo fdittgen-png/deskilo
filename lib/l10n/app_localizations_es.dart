@@ -22467,6 +22467,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Segundos entre dos actualizaciones de la bandeja de entrada y su contador de no leídos. Valores más bajos cargan más el servidor.';
 
   @override
+  String get settingHintMessagingInboxSweepIntervalSeconds =>
+      'Segundos entre dos controles, por un dispositivo, de las solicitudes cuyo plazo ha vencido. Una solicitud así aparece vencida como mucho este tiempo después. 0 controla antes de cada lectura de la bandeja.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'Cuántas solicitudes de mensaje puede enviar una persona por día a quienes no las han permitido. Solo se puede reducir.';
 
@@ -22694,6 +22698,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelMessagingInboxPollSeconds =>
       'Actualización de la bandeja de entrada';
+
+  @override
+  String get settingLabelMessagingInboxSweepIntervalSeconds =>
+      'Control de plazos de la bandeja';
 
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>

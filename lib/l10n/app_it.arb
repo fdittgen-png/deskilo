@@ -15348,6 +15348,7 @@
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Secondi tra due controlli, da parte di un dispositivo, delle richieste con scadenza superata. Una tale richiesta appare scaduta al più tardi dopo questo tempo. 0 controlla prima di ogni lettura della casella.",
   "settingHintMessagingMessageRequestsPerDay": "Quante richieste di messaggio una persona può inviare al giorno a chi non le ha consentite. Può solo essere ridotto.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
@@ -15518,6 +15519,7 @@
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Controllo scadenze della casella",
   "settingLabelMessagingMessageRequestsPerDay": "Richieste di messaggio al giorno",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."

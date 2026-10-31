@@ -37536,6 +37536,12 @@ abstract class AppLocalizations {
   /// **'Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.'**
   String get settingHintMessagingInboxPollSeconds;
 
+  /// #3099 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Seconds between two checks, by one device, for requests whose deadline has passed. Such a request shows as timed out at most this much later. 0 checks before every read of the inbox.'**
+  String get settingHintMessagingInboxSweepIntervalSeconds;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -37889,6 +37895,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inbox refresh'**
   String get settingLabelMessagingInboxPollSeconds;
+
+  /// #3099 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox timeout check'**
+  String get settingLabelMessagingInboxSweepIntervalSeconds;
 
   /// #2485 settings: Setting label.
   ///

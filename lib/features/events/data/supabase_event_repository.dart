@@ -9,33 +9,23 @@ import '../domain/event_decision.dart';
 import '../domain/event_repository.dart';
 import '../domain/validation_policy.dart';
 import '../domain/workspace_event.dart';
+import 'sweep_throttle.dart';
 
 class SupabaseEventRepository implements EventRepository {
-  SupabaseEventRepository(this._client);
+  SupabaseEventRepository(this._client, {required this._sweeps});
 
   final SupabaseClient _client;
 
   /// #1909 — one timeout sweep in flight per workspace: concurrent feed
   /// reads (several screens refreshing at once) share it instead of each
-  /// running the multi-pass sweep.
-  final _sweeps = <String, Future<void>>{};
+  /// running the multi-pass sweep. #3099 — and at most one per interval.
+  final SweepThrottle _sweeps;
 
-  Future<void> _sweep(String workspaceId) {
-    final running = _sweeps[workspaceId];
-    if (running != null) return running;
-    final started = _runSweep(workspaceId);
-    _sweeps[workspaceId] = started;
-    return started;
-  }
-
-  Future<void> _runSweep(String workspaceId) async {
-    try {
-      await _client.rpc<dynamic>('sweep_pending_events',
-          params: {'p_workspace_id': workspaceId});
-    } finally {
-      _sweeps.remove(workspaceId)?.ignore(); // that is this future: done
-    }
-  }
+  Future<void> _sweep(String workspaceId) => _sweeps.run(
+        workspaceId,
+        () => _client.rpc<dynamic>('sweep_pending_events',
+            params: {'p_workspace_id': workspaceId}),
+      );
 
   /// #1909 — newest first in the order the index already holds
   /// (`created_at DESC` is NULLS FIRST; the column is NOT NULL, so this is

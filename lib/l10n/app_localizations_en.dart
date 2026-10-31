@@ -22305,6 +22305,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Seconds between two refreshes of the inbox and its unread badge. Lower values load the server more.';
 
   @override
+  String get settingHintMessagingInboxSweepIntervalSeconds =>
+      'Seconds between two checks, by one device, for requests whose deadline has passed. Such a request shows as timed out at most this much later. 0 checks before every read of the inbox.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'How many message requests one person may send per day to people who have not allowed them. Can only be lowered.';
 
@@ -22517,6 +22521,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelMessagingInboxPollSeconds => 'Inbox refresh';
+
+  @override
+  String get settingLabelMessagingInboxSweepIntervalSeconds =>
+      'Inbox timeout check';
 
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>

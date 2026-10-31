@@ -15348,6 +15348,7 @@
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Sekunden zwischen zwei Prüfungen, durch ein Gerät, auf Anfragen mit abgelaufener Frist. Eine solche Anfrage erscheint höchstens so viel später als abgelaufen. 0 prüft vor jedem Lesen des Posteingangs.",
   "settingHintMessagingMessageRequestsPerDay": "Wie viele Nachrichtenanfragen eine Person pro Tag an Personen senden darf, die sie nicht erlaubt haben. Kann nur verringert werden.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
@@ -15518,6 +15519,7 @@
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Fristprüfung des Posteingangs",
   "settingLabelMessagingMessageRequestsPerDay": "Nachrichtenanfragen pro Tag",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."

@@ -15348,6 +15348,7 @@
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Segundos entre dos controles, por un dispositivo, de las solicitudes cuyo plazo ha vencido. Una solicitud así aparece vencida como mucho este tiempo después. 0 controla antes de cada lectura de la bandeja.",
   "settingHintMessagingMessageRequestsPerDay": "Cuántas solicitudes de mensaje puede enviar una persona por día a quienes no las han permitido. Solo se puede reducir.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
@@ -15518,6 +15519,7 @@
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Control de plazos de la bandeja",
   "settingLabelMessagingMessageRequestsPerDay": "Solicitudes de mensaje por día",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."

@@ -22513,6 +22513,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sekunden zwischen zwei Aktualisierungen des Posteingangs und seines Ungelesen-Zählers. Niedrigere Werte belasten den Server stärker.';
 
   @override
+  String get settingHintMessagingInboxSweepIntervalSeconds =>
+      'Sekunden zwischen zwei Prüfungen, durch ein Gerät, auf Anfragen mit abgelaufener Frist. Eine solche Anfrage erscheint höchstens so viel später als abgelaufen. 0 prüft vor jedem Lesen des Posteingangs.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'Wie viele Nachrichtenanfragen eine Person pro Tag an Personen senden darf, die sie nicht erlaubt haben. Kann nur verringert werden.';
 
@@ -22731,6 +22735,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelMessagingInboxPollSeconds =>
       'Aktualisierung des Posteingangs';
+
+  @override
+  String get settingLabelMessagingInboxSweepIntervalSeconds =>
+      'Fristprüfung des Posteingangs';
 
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>

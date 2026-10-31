@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Control de plazos de la bandeja",
+  "settingHintMessagingInboxSweepIntervalSeconds": "Segundos entre dos controles, por un dispositivo, de las solicitudes cuyo plazo ha vencido. Una solicitud así aparece vencida como mucho este tiempo después. 0 controla antes de cada lectura de la bandeja."
+}
