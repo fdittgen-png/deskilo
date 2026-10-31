@@ -735,5 +735,7 @@
  "accountingOk": "I limiti degli estratti conto e la finestra di proposta sono impostati.",
  "retUsYears": "Conservazione dei documenti, stato USA",
  "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
- "retUsRule": "Vale la regola di conservazione"
+ "retUsRule": "Vale la regola di conservazione",
+ "badgeFailureLimit": "Tentativi falliti di accesso con badge per spazio",
+ "badgeFailureLimitHint": "Dopo questo numero di PIN errati nello spazio, l’accesso con badge si sospende per la finestra di blocco e i proprietari ricevono un avviso. Scegliere da 1 a 50 nelle impostazioni dello spazio → Sicurezza; 50 per impostazione predefinita. Il file XML conserva la risposta; inserirla nell’app."
 }

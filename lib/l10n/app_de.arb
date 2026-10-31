@@ -719,6 +719,8 @@
   "@badgePinNotSet": {
     "description": "#662 - badge sign-in"
   },
+  "badgePinReviewNotice": "Die Länge dieser älteren PIN ist unbekannt oder unterschreitet das aktuelle Minimum. Bitten Sie das Mitglied, sie in den eigenen Einstellungen zu ändern. Die bisherige PIN bleibt gültig.",
+  "badgePinReviewUnavailable": "Der PIN-Prüfstatus ist nicht verfügbar. Versuchen Sie es erneut, bevor Sie annehmen, dass diese PIN das aktuelle Minimum erfüllt.",
   "badgePinSaveFailed": "Server nicht erreichbar. Ihre PIN wurde nicht geändert — bitte erneut versuchen.",
   "@badgePinSaveFailed": {
     "description": "#1086 the PIN save or clear could not reach the server"
@@ -5411,6 +5413,17 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
+  "eventBadgeSecurityAlert": "Die Badge-Anmeldung ist nach {failures} Fehlversuchen innerhalb von {minutes} Minuten gesperrt. Prüfen Sie die Badges und bitten Sie Mitglieder, sich bis zum Ablauf der Sperre per E-Mail anzumelden.",
+  "@eventBadgeSecurityAlert": {
+    "placeholders": {
+      "failures": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "eventCommitmentVarianceLine": "{actor} akzeptiert eine Abweichung von {amount} auf {reference} (fällig {date}): {reason}",
   "eventExpenseDeviation": "validiert {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{actor} verteilt „{title}“ — {amount} auf {count} Mitglieder",
@@ -5579,6 +5592,7 @@
   "eventSourceNotFound": "Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.",
   "eventSystemDecider": "System",
   "eventTypeAdjustment": "Korrektur",
+  "eventTypeBadgeSecurityAlert": "Schutz der Badge-Anmeldung",
   "eventTypeCommitmentVariance": "Mietabweichung",
   "eventTypeExpense": "Ausgabe",
   "eventTypeExpenseRepartition": "Gemeinsame Ausgabe",
@@ -15412,6 +15426,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Die wenigsten Ziffern, die eine neue Badge-PIN haben darf. Bereits gesetzte PINs gelten, bis sie geändert werden.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Fehlversuche im Bereich innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Die Grenze kann nur gesenkt werden.",
   "settingHintSecurityInvitationExpiryDays": "Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -15587,6 +15602,7 @@
     "description": "#2485 settings: Setting label."
   },
   "settingLabelSecurityBadgePinMinLength": "Kürzeste Badge-PIN",
+  "settingLabelSecurityBadgeWorkspaceFailureLimit": "Grenze für Badge-Fehlversuche im Bereich",
   "settingLabelSecurityInvitationExpiryDays": "Gültigkeit einer Einladung",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."

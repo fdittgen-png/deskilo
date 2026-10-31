@@ -16,3 +16,4 @@
 - [Architecture](Architecture)
 - [Implementation](Implementation)
 - [Technical reference](Technical-Reference)
+- [CI and automation](CI-and-Automation)

@@ -273,34 +273,8 @@ String _openPositionLabel(BillPdfStrings strings, WorkspaceEvent event) {
       return strings.eventPayment;
     case EventType.expense:
       return strings.eventExpense;
-    // Quota requests carry no amount, so they never surface as open
-    // positions — the fallback label keeps the switch exhaustive.
-    case EventType.expenseRepartition:
-    case EventType.expenseSchedule:
-    case EventType.usageCorrection:
-    case EventType.usageRecordDelete:
-    case EventType.paymentTermsChange:
-    case EventType.quota:
-    case EventType.invoiceWriteoff:
-      case EventType.invoiceReminder:
-      case EventType.priceNegotiation:
-    case EventType.reservationDelete:
-    case EventType.roleChange:
-    case EventType.memberJoin:
-    case EventType.reservation:
-    case EventType.spaceReservation:
-    case EventType.invoicePayment:
-    case EventType.invoiceIssue:
-    case EventType.invoiceVoid:
-    case EventType.refund:
-    case EventType.memberStatusChange:
-    case EventType.subscriptionChange:
-    case EventType.matrixChange ||
-        EventType.leaseChange ||
-        EventType.commitmentVariance:
-    case EventType.adjustment:
-    // #1088 — never an open position; the fallback keeps it exhaustive.
-    case EventType.unknown:
+    // All other event kinds carry no billable open position.
+    default:
       return strings.eventAdjustment;
   }
 }

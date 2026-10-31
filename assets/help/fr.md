@@ -3443,6 +3443,8 @@ Vous voulez que les membres pointent en approchant une carte, sans téléphone.
 - Le gestionnaire de badges permet aussi d'émettre un **Nouveau badge**, d'en **Révoquer** un et de l'**Enregistrer en PDF** pour l'imprimer. Un badge révoqué peut être supprimé définitivement.
 - **Me connecte** est désactivé par défaut : un badge qui vous pointe ne vous connecte pas tant que le membre ne le choisit pas.
 - Chaque membre peut aussi créer son propre badge dans ses réglages personnels.
+- Sécurité de la connexion par badge : les échecs de PIN de toutes les cartes de l’espace partagent un plafond, de 50 par défaut pendant la fenêtre de blocage (15 minutes par défaut). Dans les paramètres de l’espace → Sécurité, un propriétaire peut abaisser ce plafond entre 1 et 50. Lorsqu’il est atteint, la connexion par badge est suspendue jusqu’à la sortie des tentatives de cette fenêtre et les propriétaires reçoivent une alerte dans les événements. Les autres espaces restent disponibles. Le questionnaire conserve le plafond choisi comme réponse à saisir dans l’application.
+- Lorsque vous gérez les badges d’un membre, un avis demande de renouveler le PIN si sa longueur enregistrée est inférieure au minimum actuel ou inconnue parce qu’il a été créé avant le suivi de longueur. Les anciens PIN restent utilisables jusqu’à leur modification par leur propriétaire ; le gestionnaire ne révèle ni le PIN ni son empreinte.
 
 **Voir aussi:** [Une tablette murale pour le pointage](help:user.kiosk.mode)
 

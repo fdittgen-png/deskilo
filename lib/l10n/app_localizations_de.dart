@@ -1695,6 +1695,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get badgePinNotSet => 'Noch keine PIN';
 
   @override
+  String get badgePinReviewNotice =>
+      'Die Länge dieser älteren PIN ist unbekannt oder unterschreitet das aktuelle Minimum. Bitten Sie das Mitglied, sie in den eigenen Einstellungen zu ändern. Die bisherige PIN bleibt gültig.';
+
+  @override
+  String get badgePinReviewUnavailable =>
+      'Der PIN-Prüfstatus ist nicht verfügbar. Versuchen Sie es erneut, bevor Sie annehmen, dass diese PIN das aktuelle Minimum erfüllt.';
+
+  @override
   String get badgePinSaveFailed =>
       'Server nicht erreichbar. Ihre PIN wurde nicht geändert — bitte erneut versuchen.';
 
@@ -7355,6 +7363,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eventAutoValidated => 'Automatisch bestätigt';
 
   @override
+  String eventBadgeSecurityAlert(int failures, int minutes) {
+    return 'Die Badge-Anmeldung ist nach $failures Fehlversuchen innerhalb von $minutes Minuten gesperrt. Prüfen Sie die Badges und bitten Sie Mitglieder, sich bis zum Ablauf der Sperre per E-Mail anzumelden.';
+  }
+
+  @override
   String eventCommitmentVarianceLine(
     String actor,
     String amount,
@@ -7538,6 +7551,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeAdjustment => 'Korrektur';
+
+  @override
+  String get eventTypeBadgeSecurityAlert => 'Schutz der Badge-Anmeldung';
 
   @override
   String get eventTypeCommitmentVariance => 'Mietabweichung';
@@ -22654,6 +22670,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die wenigsten Ziffern, die eine neue Badge-PIN haben darf. Bereits gesetzte PINs gelten, bis sie geändert werden.';
 
   @override
+  String get settingHintSecurityBadgeWorkspaceFailureLimit =>
+      'Fehlversuche im Bereich innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Die Grenze kann nur gesenkt werden.';
+
+  @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.';
 
@@ -22885,6 +22905,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelSecurityBadgePinMinLength => 'Kürzeste Badge-PIN';
+
+  @override
+  String get settingLabelSecurityBadgeWorkspaceFailureLimit =>
+      'Grenze für Badge-Fehlversuche im Bereich';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

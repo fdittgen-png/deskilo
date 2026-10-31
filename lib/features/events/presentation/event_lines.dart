@@ -169,7 +169,7 @@ String eventLine(
             EventType.commitmentVariance,
         _) =>
       _recordOrLeaseLine(l10n, event, actor, currency),
-    _ => eventFallbackLine(l10n, event),
+    _ => _securityOrFallbackLine(l10n, event),
   };
   // Service charges name no actor in the title, so always say whose bill
   // it lands on; other types only when an admin acted for someone else.
@@ -267,3 +267,11 @@ String eventWhen(WorkspaceEvent event, AppFormat format) {
       '${format.time(end)}';
   return '$range · $created';
 }
+
+String _securityOrFallbackLine(AppLocalizations l10n, WorkspaceEvent event) =>
+    event.type == EventType.badgeSecurityAlert
+        ? l10n.eventBadgeSecurityAlert(
+            (event.payload['failures'] as num?)?.toInt() ?? 0,
+            (event.payload['window_minutes'] as num?)?.toInt() ?? 0,
+          )
+        : eventFallbackLine(l10n, event);

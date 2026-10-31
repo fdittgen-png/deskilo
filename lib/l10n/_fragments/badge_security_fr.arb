@@ -1,0 +1,18 @@
+{
+  "eventTypeBadgeSecurityAlert": "Protection de la connexion par badge",
+  "eventBadgeSecurityAlert": "La connexion par badge est suspendue après {failures} échecs en {minutes} minutes. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.",
+  "badgePinReviewNotice": "La longueur de ce code ancien est inconnue ou inférieure au minimum actuel. Demandez au membre de le modifier dans ses propres réglages. Son code actuel reste utilisable.",
+  "badgePinReviewUnavailable": "La vérification du code est indisponible. Réessayez avant de considérer que ce code respecte le minimum actuel.",
+  "settingLabelSecurityBadgeWorkspaceFailureLimit": "Plafond des échecs de badge de l’espace",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Échecs de code dans cet espace pendant la période de verrouillage avant suspension et alerte des propriétaires. Ce plafond peut seulement être réduit.",
+  "@eventBadgeSecurityAlert": {
+    "placeholders": {
+      "failures": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
+}

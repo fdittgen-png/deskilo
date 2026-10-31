@@ -1219,6 +1219,26 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'The fewest digits a new badge PIN may have. A PIN set earlier keeps working until its owner changes it. A short PIN falls to a guessing script in days, so 6 is the default.',
     ),
   ),
+  (
+    since: 'badge_workspace_security',
+    row: (
+      key: 'security.badge_workspace_failure_limit',
+      type: 'int',
+      defaultValue: 50,
+      min: 1,
+      max: 50,
+      unit: 'attempts',
+      group: 'security',
+      scopes: ['platform', 'workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'badge workspace sign-in failure ceiling',
+      note: 'Failed PIN attempts across all badges of one workspace within the badge lockout window. Reaching this ceiling pauses badge sign-in and alerts the owners. May be tightened, never loosened.',
+    ),
+  ),
+
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";

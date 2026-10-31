@@ -104,6 +104,10 @@ class SupabaseWorkspaceRepository
   @override Future<void> setMemberLevelPermission(String memberId, {required bool allowed}) => _setMemberLevelPermissionImpl(memberId, allowed: allowed);
   @override Future<void> setMemberKiosk(String memberId, {required bool isKiosk}) => _setMemberKioskImpl(memberId, isKiosk: isKiosk);
   @override Future<List<MemberBadge>> fetchMemberBadges(String workspaceId) => _fetchMemberBadgesImpl(workspaceId);
+  @override Future<bool> badgePinNeedsReview(String workspaceId, String memberId) async =>
+      await _client.rpc<bool>('badge_pin_needs_review', params: {
+        'p_workspace_id': workspaceId, 'p_member_id': memberId,
+      });
   @override Future<IssuedBadge> issueMemberBadge(String workspaceId, String memberId, {String label = ''}) => _issueMemberBadgeImpl(workspaceId, memberId, label: label);
   @override Future<IssuedBadge> issueMyBadge(String workspaceId, {String label = ''}) => _issueMyBadgeImpl(workspaceId, label: label);
   @override Future<void> registerMyNfcBadge(String workspaceId, {required String uid, String label = ''}) => _registerMyNfcBadgeImpl(workspaceId, uid: uid, label: label);

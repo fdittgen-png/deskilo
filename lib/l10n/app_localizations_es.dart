@@ -1693,6 +1693,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get badgePinNotSet => 'Sin PIN todavía';
 
   @override
+  String get badgePinReviewNotice =>
+      'La longitud de este PIN antiguo es desconocida o inferior al mínimo actual. Pida al miembro que lo cambie en sus propios ajustes. Su PIN actual sigue funcionando.';
+
+  @override
+  String get badgePinReviewUnavailable =>
+      'El estado de revisión del PIN no está disponible. Reinténtelo antes de dar por hecho que cumple el mínimo actual.';
+
+  @override
   String get badgePinSaveFailed =>
       'No se pudo contactar con el servidor. Su PIN no ha cambiado: inténtelo de nuevo.';
 
@@ -7343,6 +7351,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventAutoValidated => 'Validado automáticamente';
 
   @override
+  String eventBadgeSecurityAlert(int failures, int minutes) {
+    return 'El acceso con tarjeta se ha bloqueado tras $failures intentos fallidos en $minutes minutos. Revise las tarjetas y pida a los miembros que accedan por correo mientras termina el bloqueo.';
+  }
+
+  @override
   String eventCommitmentVarianceLine(
     String actor,
     String amount,
@@ -7526,6 +7539,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeAdjustment => 'Ajuste';
+
+  @override
+  String get eventTypeBadgeSecurityAlert => 'Protección del acceso con tarjeta';
 
   @override
   String get eventTypeCommitmentVariance => 'Diferencia de alquiler';
@@ -22609,6 +22625,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien.';
 
   @override
+  String get settingHintSecurityBadgeWorkspaceFailureLimit =>
+      'Intentos de PIN fallidos en este espacio durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Solo se puede reducir.';
+
+  @override
   String get settingHintSecurityInvitationExpiryDays =>
       'Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.';
 
@@ -22851,6 +22871,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgePinMinLength =>
       'PIN de tarjeta: longitud mínima';
+
+  @override
+  String get settingLabelSecurityBadgeWorkspaceFailureLimit =>
+      'Límite de fallos de tarjeta del espacio';
 
   @override
   String get settingLabelSecurityInvitationExpiryDays =>

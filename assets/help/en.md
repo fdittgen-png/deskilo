@@ -3443,6 +3443,8 @@ You want members to check in by tapping a card, with no phone.
 - The badge manager also lets you issue a **New badge**, **Revoke** one, and **Save as PDF** for printing. A revoked badge can be deleted for good.
 - **Signs me in** is off by default: a badge that checks you in does not log you in until the member chooses to.
 - Each member can also make their own badge in their personal settings.
+- Badge sign-in security: failed PIN attempts across all cards of the workspace share a ceiling, 50 by default during the badge lockout window (15 minutes by default). Workspace settings → Security lets an owner tighten the ceiling to 1–50. Reaching it pauses badge sign-in until attempts leave that window and sends the owners an alert in Events. Other workspaces keep working. The setup questionnaire records the chosen ceiling as an answer to enter in the app.
+- When you manage a member’s badges, a notice asks for a PIN refresh if its recorded length is below the current minimum or its length is unknown because it was set before length tracking. Older PINs keep working until their owner changes them; the badge manager never reveals the PIN or its hash.
 
 **See also:** [A wall tablet for check-in](help:user.kiosk.mode)
 

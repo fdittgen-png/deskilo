@@ -38,7 +38,7 @@ Set<String> _workspaceScopedTables() {
   // `alter table … add column workspace_id` — a table can gain the
   // column long after it was created.
   final added = RegExp(
-    r'alter table (?:only )?public\.(\w+)[\s\S]{0,200}?'
+    r'alter table (?:only )?public\.(\w+)[^;]{0,200}?'
     r'add column (?:if not exists )?workspace_id',
     caseSensitive: false,
   );
@@ -75,6 +75,7 @@ final Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'badge_auth_attempts': 'service-only attack signals, including token hashes and unknown tags; never disclose credential probes in a workspace workbook (#3091)',
   'workspace_favorites': 'a person\'s own favourite workspaces (#2185): personal data returned by export_my_data to the person it belongs to, not a workspace\'s portable configuration',
   'workspace_ratings': 'a person\'s own 0-5 star ratings of workspaces (#2185): personal data returned by export_my_data to the person it belongs to, not a workspace\'s portable configuration',
   'resource_favorites': 'a member\'s own marks on places (#2185): personal data, returned by export_my_data to the member it belongs to; the places they point at are exported',
