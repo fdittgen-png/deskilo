@@ -10,6 +10,10 @@ name: CI · F-Droid no-GMS audit
 # (#787 — AGP's 'Dependency metadata' failed exactly this on !47409,
 # after the dex scan had already come back clean).
 
+# #3094 G4 — least privilege: nothing here writes to the repository.
+permissions:
+  contents: read
+
 on:
   pull_request:
     paths:

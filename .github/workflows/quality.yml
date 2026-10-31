@@ -16,6 +16,10 @@ name: CI · Quality report
 # lets one report cover both halves instead of two workflows each knowing
 # half the answer.
 
+# #3094 G4 — least privilege: nothing here writes to the repository.
+permissions:
+  contents: read
+
 on:
   push:
     branches: [master]

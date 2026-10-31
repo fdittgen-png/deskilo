@@ -101,18 +101,27 @@ jobs:
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           # ASC_API_KEY_FILEPATH was exported by the decode step above.
           FASTLANE_DISABLE_COLORS: '1'
+          # #3094 G6 — inputs reach the script through the environment, never
+          # pasted into it: a crafted value is data, not a command.
+          IN_CREATE_GROUP: ${{ inputs.create_external_group }}
+          IN_EMAIL: ${{ inputs.email }}
+          IN_GROUPS: ${{ inputs.groups }}
+          IN_ROLE: ${{ inputs.role }}
+          IN_RESEND: ${{ inputs.resend }}
+          IN_FIRST_NAME: ${{ inputs.first_name }}
+          IN_LAST_NAME: ${{ inputs.last_name }}
         run: |
-          if [ "${{ inputs.create_external_group }}" = "true" ]; then
+          if [ "$IN_CREATE_GROUP" = "true" ]; then
             bundle exec fastlane create_external_group
             exit 0
           fi
           bundle exec fastlane manage_testers \
-            email:"${{ inputs.email }}" \
-            groups:"${{ inputs.groups }}" \
-            role:"${{ inputs.role }}" \
-            resend:"${{ inputs.resend }}" \
-            first_name:"${{ inputs.first_name }}" \
-            last_name:"${{ inputs.last_name }}"
+            email:"$IN_EMAIL" \
+            groups:"$IN_GROUPS" \
+            role:"$IN_ROLE" \
+            resend:"$IN_RESEND" \
+            first_name:"$IN_FIRST_NAME" \
+            last_name:"$IN_LAST_NAME"
 
       - name: Clean up decoded API key
         if: always()
@@ -120,13 +129,17 @@ jobs:
 
       - name: Summary
         if: always()
+        env:
+          IN_EMAIL: ${{ inputs.email }}
+          IN_GROUPS: ${{ inputs.groups != '' && inputs.groups || 'ALL external (or internal if no external group exists)' }}
+          IN_ROLE: ${{ inputs.role }}
         run: |
           {
             echo "## iOS TestFlight Tester"
             echo ""
-            echo "- **Email:** ${{ inputs.email }}"
-            echo "- **Groups:** ${{ inputs.groups != '' && inputs.groups || 'ALL external (or internal if no external group exists)' }}"
-            echo "- **Internal role (if invited):** ${{ inputs.role }}"
+            echo "- **Email:** $IN_EMAIL"
+            echo "- **Groups:** $IN_GROUPS"
+            echo "- **Internal role (if invited):** $IN_ROLE"
             echo "- **Bundle ID:** de.deskilo.app"
             echo "- **Trigger:** ${{ github.event_name }}"
           } >> "$GITHUB_STEP_SUMMARY"
