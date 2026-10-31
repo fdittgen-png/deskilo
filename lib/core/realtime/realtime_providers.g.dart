@@ -158,7 +158,7 @@ final class RealtimeInvalidatorProvider
 }
 
 String _$realtimeInvalidatorHash() =>
-    r'97614decfc951e78eb3d11f9911b0be28ad2deb5';
+    r'90ed7c2279455cbc821b7d3e294a5b6917ac446e';
 
 /// Subscribes to ONE target's change feed and invalidates
 /// exactly the providers of that target's scope that cache each table — so every device,

@@ -9,6 +9,7 @@ import '../trace/trace_logger.dart';
 import '../ui/app_durations.dart';
 import 'invalidation_map.dart';
 import 'invalidation_registry.dart' show InvalidationScope;
+import 'own_refresh_ledger.dart';
 import 'realtime_sync.dart';
 import 'realtime_wiring.dart';
 import 'resume_resync.dart';
@@ -146,7 +147,11 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
     final entries = tables.contains(kResyncSignal)
         ? mappedTables.map(lookupHere)
         : tables.map(lookupHere);
-    unawaited(_applyAll(entries.toList(growable: false), _generation));
+    unawaited(_applyAll(
+      entries.toList(growable: false),
+      _generation,
+      resync: tables.contains(kResyncSignal),
+    ));
   }
 
   /// #2019 — batches that actually invalidated (tests).
@@ -164,8 +169,9 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
   /// each provider is invalidated once, however many tables named it.
   Future<void> _applyAll(
     List<TableInvalidation> entries,
-    int generation,
-  ) async {
+    int generation, {
+    bool resync = false,
+  }) async {
     if (entries.any((e) => e.bustsPlanCache)) {
       try {
         await ref.read(planCacheBusterProvider)();
@@ -181,8 +187,13 @@ class RealtimeInvalidator extends _$RealtimeInvalidator {
       }
     }
     if (!ref.mounted || generation != _generation) return;
+    // #3102 — what this device's own write just refreshed is not fetched
+    // again by its echo; a resync refreshes everything.
+    final ledger = ref.read(ownRefreshLedgerProvider);
     final providers = {
-      for (final entry in entries) ...entry.providers,
+      for (final entry in entries)
+        for (final p in entry.providers)
+          if (resync || !ledger.isFresh(p)) p,
     };
     for (final provider in providers) {
       ref.invalidate(provider);

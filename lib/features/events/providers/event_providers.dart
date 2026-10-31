@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/realtime/invalidation_map.dart';
+import '../../../core/realtime/own_refresh_ledger.dart';
 import '../../../core/realtime/realtime_wiring.dart';
 import '../../../core/settings/active_settings.dart';
 import '../../../core/settings/setting_defaults.g.dart';
@@ -144,9 +145,13 @@ Future<int> myPendingEventCount(Ref ref) async =>
 /// realtime invalidator uses, so the local and remote freshness paths
 /// cannot drift apart again.
 void invalidateBookingData(WidgetRef ref) {
-  for (final table in bookingMutationTables) {
-    for (final provider in ref.read(invalidationLookupProvider)(table).providers) {
-      ref.invalidate(provider);
-    }
+  final providers = {
+    for (final table in bookingMutationTables)
+      ...ref.read(invalidationLookupProvider)(table).providers,
+  };
+  // #3102 — the realtime echo of this write skips what it refreshes here.
+  ref.read(ownRefreshLedgerProvider).mark(providers);
+  for (final provider in providers) {
+    ref.invalidate(provider);
   }
 }

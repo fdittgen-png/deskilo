@@ -10,6 +10,11 @@ abstract final class AppDurations {
   /// A burst of realtime changes: one refresh after it settles.
   static const Duration realtimeDebounce = Duration(milliseconds: 300);
 
+  /// #3102 — how long a realtime echo of this device's own write skips the
+  /// providers that write already refreshed: the debounce plus a network
+  /// round trip, with room to spare.
+  static const Duration ownEchoWindow = Duration(seconds: 2);
+
   /// Editing a setup step: its draft is saved once the person pauses.
   static const Duration draftAutosave = Duration(milliseconds: 800);
 }
