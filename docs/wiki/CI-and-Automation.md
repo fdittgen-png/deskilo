@@ -2,7 +2,7 @@
 
 This page explains what DesKilo's GitHub Actions workflows run, which results block a merge, what they publish, and how to diagnose a failure. Start with the [Actions dashboard](https://github.com/fdittgen-png/deskilo/actions) for a particular run.
 
-**Verified on 31 October 2026**, against [master at `340830d5a3`](https://github.com/fdittgen-png/deskilo/tree/340830d5a3236d3af86dbccc728f067c7e2f2d7b/.github/workflows) and the live `master` branch-protection API. The linked source files are the authority when the implementation changes. Cron times below are **UTC**, so their local time changes with daylight saving.
+**Verified on 31 October 2026**, against [master at `5db10f44bf`](https://github.com/fdittgen-png/deskilo/tree/5db10f44bf6e1c0550a2c56ccdfa2a88c906bba8/.github/workflows) and the live `master` branch-protection API. The linked source files are the authority when the implementation changes. Cron times below are **UTC**, so their local time changes with daylight saving.
 
 ## Contents
 
