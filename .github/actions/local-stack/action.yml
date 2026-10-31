@@ -45,10 +45,27 @@ outputs:
 runs:
   using: composite
   steps:
+    # #3144 — the Supabase images come from public.ecr.aws, not from
+    # anonymous Docker Hub, whose pull quota ("Data limit exceeded") lost
+    # four database runs on 2026-10-31. Set for the rest of the job, so
+    # `supabase test db` (its pg_prove container) pulls from there too.
+    - shell: bash
+      run: echo "SUPABASE_INTERNAL_IMAGE_REGISTRY=public.ecr.aws" >> "$GITHUB_ENV"
     - shell: bash
       env:
         WORKDIR: ${{ inputs.workdir }}
       run: supabase start ${WORKDIR:+--workdir "$WORKDIR"}
+    # #3144 — the proof the registry was honoured: no Supabase image of this
+    # stack was pulled from Docker Hub.
+    - shell: bash
+      run: |
+        from_hub=$(docker images --format '{{.Repository}}:{{.Tag}}' | grep -E '^(docker\.io/)?supabase/' || true)
+        if [ -n "$from_hub" ]; then
+          echo "::error::local stack: Supabase images from Docker Hub: $from_hub"
+          exit 1
+        fi
+        echo "local stack: Supabase images from $SUPABASE_INTERNAL_IMAGE_REGISTRY:"
+        docker images --format '{{.Repository}}:{{.Tag}}' | grep -F "$SUPABASE_INTERNAL_IMAGE_REGISTRY/supabase/" || true
     - id: address
       shell: bash
       env:

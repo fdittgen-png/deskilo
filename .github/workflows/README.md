@@ -91,7 +91,7 @@ a lockfile. `test/lint/workflow_source_identity_test.dart` reads the YAML
 and holds that shape (#1446 C4, `docs/ci/CI_BASELINE.md`).
 
 The database job starts its local Supabase stack **once**, through
-`.github/actions/local-stack` — the migration replay from empty, with the
+`.github/actions/local-stack` — the migration replay from empty (images from public.ecr.aws, #3144), with the
 database address as its output — and every discipline after it attaches
 to that stack; nothing under `scripts/` starts one. Fixtures that stay in
 the shared database (the restore seed) run after the steps that expect
