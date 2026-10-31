@@ -2,7 +2,9 @@
 -- risk: destructive
 -- (profiles.last_seen_at is dropped after its values are copied into
 -- public.presence in the same transaction; the value is a heartbeat at most
--- two minutes old, so nothing of record is lost)
+-- two minutes old, so nothing of record is lost). Backup to take first:
+-- the platform's routine database backup covers it; a copy of
+-- `select id, last_seen_at from public.profiles` is enough to restore it)
 --
 -- 0616 (#3123, PERF-5 of the performance audit) -- the presence heartbeat
 -- stops writing the published profiles table. touch_last_seen updated
