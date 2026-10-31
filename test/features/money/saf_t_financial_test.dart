@@ -288,6 +288,16 @@ void main() {
             .innerText,
       );
 
+      test('the same book gives the same bytes', () {
+        String xml() => switch (buildSafTFinancial(
+          _request(profile, country: country, standardRateOnly: country == 'DK'),
+        )) {
+          SafTFinancialFile(:final xml) => xml,
+          SafTFinancialRefused(:final gaps) => fail('refused: $gaps'),
+        };
+        expect(xml(), xml());
+      });
+
       test('declares its namespace and version', () {
         expect(doc.rootElement.namespaceUri, profile.namespace);
         expect(
@@ -585,6 +595,20 @@ void main() {
         ),
       ),
       [const SafTGap(SafTGapKind.company, 'Address')],
+    );
+  });
+
+  test('Denmark names a company without its VAT number', () {
+    expect(
+      _gaps(
+        _request(
+          SafTFinancialProfile.denmark,
+          country: 'DK',
+          standardRateOnly: true,
+          company: _company('DK').copyWith(vatId: ''),
+        ),
+      ),
+      [const SafTGap(SafTGapKind.company, 'TaxRegistration')],
     );
   });
 
