@@ -211,6 +211,28 @@ void main() {
     expect(find.textContaining('Workspace address: Old street → —'), findsOneWidget);
   });
 
+  testWidgets('an invitation names the person to invite', (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'create_invitations',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'first_name': 'Camille', 'last_name': 'Martin'},
+        target: {
+          'kind': 'invitation',
+          'changes': [
+            {'field': 'invitee', 'from': null, 'to': 'Camille Martin'},
+          ],
+        },
+      ),
+    );
+    expect(find.text('Invite a person'), findsOneWidget);
+    expect(find.textContaining('Invitation for: — → Camille Martin'), findsOneWidget);
+  });
+
   testWidgets('closure days name each day and the reason', (tester) async {
     await pump(
       tester,
