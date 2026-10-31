@@ -103,21 +103,32 @@ class BankImportCommands {
       return (result: null, refused: e);
     }
     final digest = sha256.convert(bytes).toString();
-    // #2380 — the original first: a statement is never imported without the
-    // file it was read from. A failed upload throws and imports nothing; a
-    // failed import after it leaves the file under its digest, which the
-    // next attempt keeps as it is.
-    await _repository.storeOriginal(
-      workspaceId,
-      sourceSha256: digest,
-      bytes: bytes,
-    );
     final result = await _repository.importStatement(
       workspaceId,
       statement: statement,
       sourceSha256: digest,
       fileName: _cut(fileName, BankColumnWidths.fileName),
     );
+    // #2380 — the original after its statement: the server keeps a file only
+    // for a statement its uploader imported (0621). A failed upload of a new
+    // statement throws; importing the same file again finds it repeated and
+    // keeps the file then. A repeated file another member imported is theirs
+    // to keep, so its refusal is logged, not reported.
+    try {
+      await _repository.storeOriginal(
+        workspaceId,
+        sourceSha256: digest,
+        bytes: bytes,
+      );
+    } catch (e, st) {
+      if (!result.repeated) rethrow;
+      TraceLogger.instance.warn(
+        'money',
+        'bank original of a repeated statement not kept: $e',
+        error: e,
+        stackTrace: st,
+      );
+    }
     return (result: result, refused: null);
   }
 

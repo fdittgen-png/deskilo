@@ -303,7 +303,7 @@ void main() {
     expect(money.invoiceMatchesStore['id-539007547034']!.resolution, 'under_accepted');
   });
 
-  test('#2380 — the original is kept before the statement is imported, '
+  test('#2380 — the original is kept with the statement it produced, '
       'and read back byte for byte', () async {
     final bytes = _fixture('camt054_notification.xml');
     final outcome = await import(bytes, BankFileFormat.camt054);
@@ -316,30 +316,43 @@ void main() {
     expect(bank.originals, hasLength(1));
   });
 
-  test('#2380 — a file whose original cannot be kept is not imported', () async {
-    final failing = _NoOriginals(money: money, today: DateTime.utc(2026, 10, 26));
-    await expectLater(
-      BankImportCommands(failing).importFile(
-        'ws-1',
-        bytes: _fixture('camt054_notification.xml'),
-        fileName: 'f',
-        format: BankFileFormat.camt054,
-        settings: _settings,
-      ),
-      throwsStateError,
+  test('#2380 — an original the first import could not keep is kept by the '
+      'next import of the same file', () async {
+    final flaky = _NoOriginals(money: money, today: DateTime.utc(2026, 10, 26));
+    final commands = BankImportCommands(flaky);
+    final bytes = _fixture('camt054_notification.xml');
+    Future<BankImportOutcome> once() => commands.importFile(
+      'ws-1',
+      bytes: bytes,
+      fileName: 'f',
+      format: BankFileFormat.camt054,
+      settings: _settings,
     );
-    expect(await failing.fetchStatements('ws-1'), isEmpty);
+    await expectLater(once(), throwsStateError);
+    expect(await flaky.fetchStatements('ws-1'), hasLength(1));
+    expect(flaky.originals, isEmpty);
+    flaky.failing = false;
+    expect((await once()).result!.repeated, isTrue);
+    expect(flaky.originals, hasLength(1));
   });
 }
 
 class _NoOriginals extends FakeBankStatementRepository {
   _NoOriginals({required super.money, required super.today});
 
+  bool failing = true;
+
   @override
   Future<void> storeOriginal(
     String workspaceId, {
     required String sourceSha256,
     required List<int> bytes,
-  }) async =>
-      throw StateError('storage unavailable (test)');
+  }) {
+    if (failing) throw StateError('storage unavailable (test)');
+    return super.storeOriginal(
+      workspaceId,
+      sourceSha256: sourceSha256,
+      bytes: bytes,
+    );
+  }
 }

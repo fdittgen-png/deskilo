@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
--- (one private storage bucket; two helpers; two storage policies, read and
+-- (one private storage bucket; three helpers; two storage policies, read and
 -- insert; no update and no delete, so a stored original stays;
 -- bank_statements_v1 restated whole from 0603 with source_sha256)
 --
@@ -13,8 +13,11 @@
 --   statement's own source_sha256 names its file and no column is needed.
 --
 -- Who: a reader of the statements (bank_statement_reader) reads them; the
--- one who may import (issueInvoices) stores them; never an assistant's
--- token, never with the feature off. Nobody updates or deletes an original:
+-- one who may import (issueInvoices) stores them, and only the file of a
+-- statement they imported themselves; never an assistant's token, never
+-- with the feature off. A name no statement carries is refused, so nobody
+-- fills the bucket with files nobody can delete, and nobody supplies the
+-- original of a statement imported before 0621: that one has none. Nobody updates or deletes an original:
 -- the file is part of the books (retention class 'books', #2571), and it
 -- leaves only with the space's own retained data. The workspace export
 -- does not copy it: it is the bank's document, kept here as received.
@@ -49,6 +52,19 @@ $fn$;
 revoke execute on function public.bank_original_access(uuid, boolean) from public, anon;
 grant execute on function public.bank_original_access(uuid, boolean) to authenticated;
 
+-- Whether [p_name] is the original of a statement the caller imported.
+create or replace function public.bank_original_imported(p_name text)
+returns boolean language sql stable security definer set search_path = public as $fn$
+  select exists (
+    select 1 from public.bank_statements s
+      join public.members m on m.id = s.imported_by_member_id
+     where s.workspace_id = public.bank_original_workspace(p_name)
+       and s.source_sha256 = split_part(p_name, '/', 2)
+       and m.user_id = auth.uid());
+$fn$;
+revoke execute on function public.bank_original_imported(text) from public, anon;
+grant execute on function public.bank_original_imported(text) to authenticated;
+
 drop policy if exists bank_originals_select on storage.objects;
 create policy bank_originals_select on storage.objects for select to authenticated
   using (bucket_id = 'bank-statements'
@@ -57,7 +73,8 @@ create policy bank_originals_select on storage.objects for select to authenticat
 drop policy if exists bank_originals_insert on storage.objects;
 create policy bank_originals_insert on storage.objects for insert to authenticated
   with check (bucket_id = 'bank-statements'
-              and public.bank_original_access(public.bank_original_workspace(name), true));
+              and public.bank_original_access(public.bank_original_workspace(name), true)
+              and public.bank_original_imported(name));
 
 -- The statement names its original: the client reads it at
 -- <workspace_id>/<source_sha256>.
