@@ -20,14 +20,14 @@ import 'dart:async';
 
 import '../domain/bi_batch.dart';
 
-/// The most requests one outgoing batch carries: the server's default
-/// bound (`bi.batch_max_requests`, 0508). Callers are packed whole.
-const _batchMax = 60;
-
 class BiQueryCoordinator implements KpiBatchReader {
-  BiQueryCoordinator(this._inner);
+  /// [batchMax] — the most requests one outgoing batch carries: the
+  /// workspace's `bi.batch_max_requests` (0508), the same bound the server
+  /// refuses above (#2578). Read per batch; callers are packed whole.
+  BiQueryCoordinator(this._inner, {required this._batchMax});
 
   final KpiBatchReader _inner;
+  final int Function() _batchMax;
 
   final _waiting = <_Call>[];
   final _inflight = <String, Completer<BiBatchEntry>>{};
@@ -55,6 +55,7 @@ class BiQueryCoordinator implements KpiBatchReader {
     // A caller's requests stay together (one snapshot); callers are packed
     // into batches of at most [_batchMax] figures not already
     // asked.
+    final batchMax = _batchMax();
     calls.sort((a, b) => a.workspaceId.compareTo(b.workspaceId));
     var batch = _Batch();
     for (final c in calls) {
@@ -65,7 +66,7 @@ class BiQueryCoordinator implements KpiBatchReader {
       final extra = fresh.where((id) => !batch.has(c.workspaceId, id)).length;
       if (batch.size > 0 &&
           (batch.workspaceId != c.workspaceId ||
-              batch.size + extra > _batchMax)) {
+              batch.size + extra > batchMax)) {
         _dispatch(batch);
         batch = _Batch();
       }
