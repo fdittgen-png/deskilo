@@ -26492,6 +26492,10 @@
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Seconds between two checks, by one device, for requests whose deadline has passed. Such a request shows as timed out at most this much later. 0 checks before every read of the inbox.",
+  "@settingHintMessagingInboxSweepIntervalSeconds": {
+    "description": "#3099 settings: Setting hint."
+  },
   "settingHintMessagingMessageRequestsPerDay": "How many message requests one person may send per day to people who have not allowed them. Can only be lowered.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
@@ -26723,6 +26727,10 @@
   "settingLabelMessagingInboxPollSeconds": "Inbox refresh",
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Inbox timeout check",
+  "@settingLabelMessagingInboxSweepIntervalSeconds": {
+    "description": "#3099 settings: Setting label."
   },
   "settingLabelMessagingMessageRequestsPerDay": "Message requests per day",
   "@settingLabelMessagingMessageRequestsPerDay": {

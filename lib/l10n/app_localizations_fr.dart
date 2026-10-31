@@ -22525,6 +22525,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Secondes entre deux actualisations de la boîte de réception et de son badge de non-lus. Des valeurs plus basses chargent davantage le serveur.';
 
   @override
+  String get settingHintMessagingInboxSweepIntervalSeconds =>
+      'Secondes entre deux contrôles, par un appareil, des demandes dont le délai est dépassé. Une telle demande apparaît expirée au plus tard après ce temps. 0 contrôle avant chaque lecture de la boîte.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'Nombre de demandes de message qu\'une personne peut envoyer par jour à des personnes qui ne les ont pas autorisées. Peut seulement être diminué.';
 
@@ -22747,6 +22751,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelMessagingInboxPollSeconds =>
       'Actualisation de la boîte de réception';
+
+  @override
+  String get settingLabelMessagingInboxSweepIntervalSeconds =>
+      'Contrôle des délais de la boîte';
 
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>

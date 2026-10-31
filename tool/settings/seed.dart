@@ -381,6 +381,28 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'event_types_in_view_once',
+    row: (
+      key: 'messaging.inbox_sweep_interval_seconds',
+      type: 'duration',
+      defaultValue: 60,
+      min: 0,
+      max: 3600,
+      unit: 'seconds',
+      group: 'messaging',
+      scopes: ['platform', 'workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'SweepThrottle (#3099)',
+      note: 'Seconds between two timeout sweeps of a workspace\'s pending '
+          'requests by one device. A request whose deadline passed is '
+          'shown as timed out at most this much later. 0 sweeps before '
+          'every read of the inbox.',
+    ),
+  ),
+  (
     since: 'messaging_windows',
     row: (
       key: 'messaging.edit_window_minutes',

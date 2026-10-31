@@ -1,6 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
--- (event_types_in_view restated whole; same signature, same rows, same ACL)
+-- (event_types_in_view restated whole; same signature, same rows, same ACL;
+-- one row of the settings registry)
 --
 -- 0612 (#3099 slice D, PERF-2 of the performance audit) -- the RLS helper
 -- of events and event_decisions cost 104 ms of a 135 ms 100-row events
@@ -38,5 +39,18 @@ language sql stable security definer set search_path = public as $fn$
 $fn$;
 revoke execute on function public.event_types_in_view() from public, anon;
 grant execute on function public.event_types_in_view() to authenticated;
+
+-- #3099 slice C -- messaging.inbox_sweep_interval_seconds: how often one
+-- device runs sweep_pending_events before reading a workspace's events.
+-- Only the client reads it.
+
+-- BEGIN GENERATED SEED (dart run tool/build_settings_seed.dart)
+insert into public.setting_definitions
+  (key, type, default_value, min_value, max_value, unit, group_key, scopes,
+   edit_permission, floor_value, editable, choices, source, note)
+values
+('messaging.inbox_sweep_interval_seconds', 'duration', '60'::jsonb, 0, 3600, 'seconds', 'messaging', array['platform', 'workspace'], 'workspaceSettings', null, true, null, 'SweepThrottle (#3099)', 'Seconds between two timeout sweeps of a workspace''s pending requests by one device. A request whose deadline passed is shown as timed out at most this much later. 0 sweeps before every read of the inbox.')
+on conflict (key) do nothing;
+-- END GENERATED SEED
 
 select public.set_deskilo_schema_version(612);

@@ -72,6 +72,8 @@ abstract final class SettingDefaults {
   static const int messagingInboxPageSize = 50;
   /// `messaging.inbox_poll_seconds`
   static const int messagingInboxPollSeconds = 30;
+  /// `messaging.inbox_sweep_interval_seconds`
+  static const int messagingInboxSweepIntervalSeconds = 60;
   /// `messaging.message_requests_per_day`
   static const int messagingMessageRequestsPerDay = 10;
   /// `messaging.thread_poll_seconds`

@@ -22482,6 +22482,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Secondi tra due aggiornamenti della posta in arrivo e del suo contatore dei non letti. Valori più bassi caricano di più il server.';
 
   @override
+  String get settingHintMessagingInboxSweepIntervalSeconds =>
+      'Secondi tra due controlli, da parte di un dispositivo, delle richieste con scadenza superata. Una tale richiesta appare scaduta al più tardi dopo questo tempo. 0 controlla prima di ogni lettura della casella.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'Quante richieste di messaggio una persona può inviare al giorno a chi non le ha consentite. Può solo essere ridotto.';
 
@@ -22705,6 +22709,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelMessagingInboxPollSeconds =>
       'Aggiornamento della posta in arrivo';
+
+  @override
+  String get settingLabelMessagingInboxSweepIntervalSeconds =>
+      'Controllo scadenze della casella';
 
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>
