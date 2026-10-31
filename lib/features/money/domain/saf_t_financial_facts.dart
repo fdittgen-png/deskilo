@@ -360,7 +360,9 @@ class SafTFinancialFacts {
     fits('Telephone', r.contact.phone);
     for (final a in accounts) {
       id(a, _longIdLength);
-      if (profile.country.isNotEmpty && standards[a] == null) {
+      if (profile.country.isNotEmpty &&
+          profile.standardAccountRequired &&
+          standards[a] == null) {
         gap(SafTGapKind.standardAccount, '$a ${accountName(a)}');
       }
       if (standards[a] case final standard?) {

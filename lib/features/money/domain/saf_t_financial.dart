@@ -66,6 +66,23 @@ enum SafTFinancialProfile {
     // The schema's fixed value.
     taxType: 'TVA',
     taxDescription: 'Taxe sur la valeur ajoutée',
+  ),
+
+  /// #2379 — Erhvervsstyrelsen's Danish SAF-T Financial 2.1 (bogføringslov
+  /// 2022, digital bookkeeping): the OECD tree in its own namespace, with
+  /// the tax entity required in the header. The standard chart account
+  /// (`StandardAccountID`) is optional in the schema and is not written.
+  denmark(
+    formatId: 'saft_dk',
+    country: 'DK',
+    namespace: 'urn:StandardAuditFile-Taxation-Financial:DK',
+    version: '2.1',
+    // The authority's own sample's value.
+    accountingBasis: 'Regnskabsdata',
+    taxType: 'VAT',
+    taxDescription: 'Merværdiafgift',
+    taxEntityRequired: true,
+    standardAccountRequired: false,
   );
 
   const SafTFinancialProfile({
@@ -76,6 +93,8 @@ enum SafTFinancialProfile {
     required this.accountingBasis,
     required this.taxType,
     required this.taxDescription,
+    this.taxEntityRequired = false,
+    this.standardAccountRequired = true,
   });
 
   /// The export format this profile writes.
@@ -91,6 +110,13 @@ enum SafTFinancialProfile {
 
   /// The tax table's description of [taxType].
   final String taxDescription;
+
+  /// Whether the header names its tax entity (Denmark: required).
+  final bool taxEntityRequired;
+
+  /// Whether every account must map to the authority's standard account
+  /// (Norway, Luxembourg); Denmark's schema leaves it optional.
+  final bool standardAccountRequired;
 
   static SafTFinancialProfile? ofFormat(String formatId) => [
     for (final p in values)

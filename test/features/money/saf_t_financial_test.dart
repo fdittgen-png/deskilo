@@ -170,6 +170,9 @@ InvoiceParty _company(String country) => InvoiceParty(
   vatRegime: 'standard',
 );
 
+/// A posting that names no reduced rate group on any line.
+bool _standardOnly(Posting p) => p.lines.every((l) => l.qualifier != 'reduced');
+
 SafTFinancialRequest _request(
   SafTFinancialProfile profile, {
   String country = 'NO',
@@ -181,16 +184,19 @@ SafTFinancialRequest _request(
   ),
   Map<String, SafTParty>? partyDetails,
   InvoiceParty? company,
+  // #2379 — Denmark has one VAT rate: its sample is the standard-rate part
+  // of the seeded year, as a Danish book would hold it.
+  bool standardRateOnly = false,
 }) => SafTFinancialRequest(
   profile: profile,
   period: _period,
   postings: [
     for (final p in _all)
-      if (_period.contains(p.date)) p,
+      if (_period.contains(p.date) && (!standardRateOnly || _standardOnly(p))) p,
   ],
   opening: [
     for (final p in _all)
-      if (p.date.isBefore(_period.from)) p,
+      if (p.date.isBefore(_period.from) && (!standardRateOnly || _standardOnly(p))) p,
   ],
   accountNames: {for (final (_, code, _, name) in _chart) code: name},
   accountTypes: {for (final (_, code, type, _) in _chart) code: type},
@@ -249,9 +255,12 @@ void main() {
     (SafTFinancialProfile.oecd, 'FR'),
     (SafTFinancialProfile.norway, 'NO'),
     (SafTFinancialProfile.luxembourg, 'LU'),
+    (SafTFinancialProfile.denmark, 'DK'),
   ]) {
     group(profile.formatId, () {
-      final doc = _file(_request(profile, country: country));
+      final doc = _file(
+        _request(profile, country: country, standardRateOnly: country == 'DK'),
+      );
       final ledger = doc.findAllElements('GeneralLedgerEntries').single;
       final lines = ledger.findAllElements('Line').toList();
       bool debit(XmlElement l) => l.findElements('DebitAmount').isNotEmpty;

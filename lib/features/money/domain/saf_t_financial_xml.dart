@@ -119,6 +119,8 @@ class SafTFinancialXml extends SafTFinancialFacts {
         );
         tag('HeaderComment', _headerComment);
         tag('TaxAccountingBasis', profile.accountingBasis);
+        // #2379 — the entity whose books these are (the company itself).
+        if (profile.taxEntityRequired) tag('TaxEntity', c.name);
       },
     );
   }
