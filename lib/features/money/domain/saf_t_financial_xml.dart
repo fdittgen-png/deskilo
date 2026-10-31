@@ -37,12 +37,17 @@ class SafTFinancialXml extends SafTFinancialFacts {
         header();
         masterFiles();
         generalLedger();
+        sourceDocuments();
       },
     );
     return SafTFinancialFile(
       builder.buildDocument().toXmlString(pretty: true, indent: '  '),
     );
   }
+
+  /// The source documents section: none in the OECD tree this writer
+  /// emits; Romania's writer states its empty sections.
+  void sourceDocuments() {}
 
   void tag(String name, String value) =>
       builder.element(name, nest: () => builder.text(value));
@@ -108,7 +113,7 @@ class SafTFinancialXml extends SafTFinancialFacts {
             );
             taxRegistration(c.vatId);
             // #2379 — Denmark requires the company's bank account.
-            if (profile.denmarkShape && r.companyIban.isNotEmpty) {
+            if (profile.bankAccountRequired && r.companyIban.isNotEmpty) {
               builder.element(
                 'BankAccount',
                 nest: () => tag('IBANNumber', r.companyIban),
@@ -268,7 +273,7 @@ class SafTFinancialXml extends SafTFinancialFacts {
     );
   }
 
-  String _taxDescription(SafTTaxCode c) =>
+  String taxDescriptionOf(SafTTaxCode c) =>
       '${c.direction == SafTTaxDirection.output ? 'Output' : 'Input'} '
       '${(c.rate.value as RateValue).label}';
 
@@ -293,7 +298,7 @@ class SafTFinancialXml extends SafTFinancialFacts {
                     isoDay(DateTime(end.year, end.month, end.day - 1)),
                   );
                 }
-                tag('Description', text(_taxDescription(c)));
+                tag('Description', text(taxDescriptionOf(c)));
                 tag('TaxPercentage', taxPercentOf(c));
                 tag('Country', taxCountry);
                 if (norway) {
@@ -399,9 +404,9 @@ class SafTFinancialXml extends SafTFinancialFacts {
         if (original != null) {
           tag('CurrencyCode', original.currency);
           tag('CurrencyAmount', minorToText(original.minor, original.currency));
-        } else if (profile.denmarkShape) {
-          // #2379 — Denmark states every amount's currency, even the
-          // book's own (at a rate of one).
+        } else if (profile.currencyAlways) {
+          // #2379 — Denmark and Romania state every amount's currency,
+          // even the book's own (at a rate of one).
           tag('CurrencyCode', value.currency);
           tag('CurrencyAmount', amount(value.minor));
           tag('ExchangeRate', '1');

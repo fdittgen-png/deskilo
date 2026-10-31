@@ -446,6 +446,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Impuesto sobre adquisiciones';
+
+  @override
   String get acctKindCreditNote => 'Factura rectificativa';
 
   @override
@@ -2061,6 +2064,9 @@ class AppLocalizationsEs extends AppLocalizations {
     );
     return '$_temp0, $open pendientes';
   }
+
+  @override
+  String get bankStatementOriginal => 'Descargar el archivo original';
 
   @override
   String bankStatementPeriod(String account, String from, String to) {
@@ -6751,7 +6757,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get editorHintDecor =>
-      'Toque el plano para soltar la forma; arrástrela a su sitio';
+      'Toque para colocar una forma; arrastre para dibujar una pared en la cuadrícula';
 
   @override
   String get editorHintDesk =>
@@ -6946,6 +6952,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get editorToolSelect => 'Seleccionar';
+
+  @override
+  String get editorWallSaved => 'Pared dibujada';
+
+  @override
+  String get editorWallUndo => 'Deshacer';
 
   @override
   String get einvoiceConfigClear => 'Eliminar la plataforma';

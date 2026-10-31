@@ -443,6 +443,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Acquisition tax';
+
+  @override
   String get acctKindCreditNote => 'Credit note';
 
   @override
@@ -2044,6 +2047,9 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0, $open to do';
   }
+
+  @override
+  String get bankStatementOriginal => 'Download the original file';
 
   @override
   String bankStatementPeriod(String account, String from, String to) {
@@ -6715,7 +6721,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorHintDecor =>
-      'Tap the plan to drop the shape; drag it to place it';
+      'Tap to drop a shape; drag to draw a wall along the grid';
 
   @override
   String get editorHintDesk => 'Drag inside an office to draw a desk';
@@ -6903,6 +6909,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editorToolSelect => 'Select';
+
+  @override
+  String get editorWallSaved => 'Wall drawn';
+
+  @override
+  String get editorWallUndo => 'Undo';
 
   @override
   String get einvoiceConfigClear => 'Remove the platform';

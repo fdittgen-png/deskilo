@@ -24,6 +24,7 @@ import 'book_chart.dart';
 import 'fiscal_year.dart';
 import 'invoice.dart';
 import 'posting.dart';
+import 'saf_t_financial_ro.dart';
 import 'saf_t_financial_xml.dart';
 import 'supplier.dart';
 
@@ -84,6 +85,22 @@ enum SafTFinancialProfile {
     taxDescription: 'VAT',
     taxEntityRequired: true,
     standardAccountRequired: false,
+  ),
+
+  /// #2379 — ANAF's D406 (Romanian SAF-T, schema Ro_SAFT 2.4.9): the OECD
+  /// tree in ANAF's namespace, every account on the national chart, every
+  /// VAT line under ANAF's tax code of its rate (saf_t_financial_ro.dart).
+  romania(
+    formatId: 'saft_ro',
+    country: 'RO',
+    namespace: 'mfp:anaf:dgti:d406t:declaratie:v1',
+    // ANAF's guidance: the OECD version the declaration restricts.
+    version: '2.0',
+    // The schema's value for a company keeping commercial accounts.
+    accountingBasis: 'A',
+    // ANAF's tax type of VAT (nomenclature TAX-IMP).
+    taxType: '300',
+    taxDescription: 'TVA',
   );
 
   const SafTFinancialProfile({
@@ -122,6 +139,17 @@ enum SafTFinancialProfile {
   /// #2379 — Denmark's file names the standard chart it refers to (the
   /// schema's fixed values) and carries its parties by number only.
   bool get denmarkShape => this == SafTFinancialProfile.denmark;
+
+  /// #2379 — Romania's D406 departs from the OECD tree in its own writer.
+  bool get romaniaShape => this == SafTFinancialProfile.romania;
+
+  /// Whether the company's header names its bank account (Denmark,
+  /// Romania).
+  bool get bankAccountRequired => denmarkShape || romaniaShape;
+
+  /// Whether every amount states its currency, even the book's own at a
+  /// rate of one (Denmark, Romania).
+  bool get currencyAlways => denmarkShape || romaniaShape;
 
   /// The standard chart Denmark's `GeneralLedgerAccounts` names (fixed by
   /// the schema 2.1: `Standardkontoplanen`, version `20230131`).
@@ -271,7 +299,8 @@ class SafTFinancialRequest {
   /// The reference store: the rates and the profile's mappings.
   final TaxReferenceSet reference;
 
-  /// #2379 — the company's IBAN, which Denmark's header requires.
+  /// #2379 — the company's IBAN, which Denmark's and Romania's headers
+  /// require.
   final String companyIban;
 }
 
@@ -335,4 +364,7 @@ final class SafTFinancialRefused extends SafTFinancialResult {
 
 /// The SAF-T Financial file of [request], or why there is none.
 SafTFinancialResult buildSafTFinancial(SafTFinancialRequest request) =>
-    SafTFinancialXml(request).write();
+    (request.profile.romaniaShape
+            ? SafTRomaniaXml(request)
+            : SafTFinancialXml(request))
+        .write();

@@ -222,7 +222,10 @@ jobs:
   money:
     name: quality · test · money and workspace
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # #3166 — measured 22.8 min (money) and 22.7 min (other) on a green
+    # run of 2026-10-31; a busy morning crossed 30 and the cancel lost the
+    # log. 45 is the margin until the shards are rebalanced.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -301,7 +304,10 @@ jobs:
   rest:
     name: quality · test · other features
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # #3166 — measured 22.8 min (money) and 22.7 min (other) on a green
+    # run of 2026-10-31; a busy morning crossed 30 and the cancel lost the
+    # log. 45 is the margin until the shards are rebalanced.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
