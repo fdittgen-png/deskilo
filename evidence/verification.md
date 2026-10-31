@@ -90,3 +90,7 @@ the Mac exchange. e1 retains arming/merge and closure review; no merge is
 claimed by this receipt. A later source change requires appropriate new
 SHA-bound verification/review rather than reusing this result.
 
+Subsequent authoritative PR check: #3180 MERGED at 2026-10-31T23:21:13Z,
+merge SHA c61c94aa9fbaa3b2220436a2577d3e7c4e37fdd8, source head unchanged.
+This supersedes OPEN in the first-green observation above.
+
