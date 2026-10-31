@@ -373,6 +373,15 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
   else console.log('names: every control is named');
 }
 
+// #3075 — touch targets: on a coarse pointer the chips, buttons, selects,
+// inputs and the help symbols are at least 44 px.
+{
+  const rule = /@media\(pointer:coarse\)\{([^@]*?)\}\}/.exec(html);
+  if (!rule || !/min-height:44px/.test(rule[1])) fail('targets: no 44 px minimum on a coarse pointer');
+  else for (const sel of ['.step', '.chip', '.help', 'select', 'button']) if (!rule[1].split('{')[0].includes(sel)) fail(`targets: ${sel} is not in the 44 px rule`);
+  console.log('targets: a coarse pointer gets 44 px targets');
+}
+
 // #2501 — the WebMCP tools, against a fake modelContext. An agent here is a
 // function that calls the tools the page registered.
 const fakeContext = () => {
