@@ -16,6 +16,8 @@ abstract final class SettingDefaults {
   static const int bankMatchWindowDays = 60;
   /// `bi.batch_max_requests`
   static const int biBatchMaxRequests = 60;
+  /// `bi.batch_time_budget_ms`
+  static const int biBatchTimeBudgetMs = 4000;
   /// `bi.report_max_bytes`
   static const int biReportMaxBytes = 65536;
   /// `bi.report_max_pages`

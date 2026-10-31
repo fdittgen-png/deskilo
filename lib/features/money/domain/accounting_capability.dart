@@ -133,6 +133,16 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     specification:
         'Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd',
   ),
+  'saft_dk': AccountingCapability(
+    formatId: 'saft_dk',
+    state: QualificationState.locallyValidated,
+    obligations: {
+      Obligation.completePostedBooks,
+      Obligation.targetAcceptance,
+    },
+    specification:
+        'Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd',
+  ),
   'faia_lu': AccountingCapability(
     formatId: 'faia_lu',
     state: QualificationState.locallyValidated,
@@ -151,14 +161,11 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     specification:
         'OECD SAF-T 2.0 guidance (2010), read against FAIA_v_2.01_full.xsd',
   ),
-  // Denmark: not a file but a registered system; the routes wait for the
-  // SAF-T DK profile and the systems' API agreements.
+  // Denmark: a registered system is the main route; the SAF-T DK file
+  // (#2379, above) is its standard export, and the systems wait for their
+  // API agreements.
   'denmark_registered_system': AccountingCapability(
     formatId: 'denmark_registered_system',
-    state: QualificationState.specificationNeeded,
-  ),
-  'saft_dk': AccountingCapability(
-    formatId: 'saft_dk',
     state: QualificationState.specificationNeeded,
   ),
   'economic_api': AccountingCapability(

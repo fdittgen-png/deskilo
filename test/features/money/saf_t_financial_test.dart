@@ -162,13 +162,28 @@ TaxReferenceSet _reference({List<TaxReferenceRow>? maps}) => TaxReferenceSet([
 InvoiceParty _company(String country) => InvoiceParty(
   name: 'Cowork',
   street: 'Storgata 1',
-  city: country == 'NO' ? 'Oslo' : 'Luxembourg',
-  postalCode: country == 'NO' ? '0155' : 'L-1611',
+  city: switch (country) {
+    'NO' => 'Oslo',
+    'DK' => 'København Ø',
+    _ => 'Luxembourg',
+  },
+  postalCode: switch (country) {
+    'NO' => '0155',
+    'DK' => '2100',
+    _ => 'L-1611',
+  },
   country: country,
-  legalId: '999999999',
-  vatId: country == 'NO' ? 'NO999999999MVA' : 'LU12345678',
+  legalId: country == 'DK' ? '10150817' : '999999999',
+  vatId: switch (country) {
+    'NO' => 'NO999999999MVA',
+    'DK' => 'DK10150817',
+    _ => 'LU12345678',
+  },
   vatRegime: 'standard',
 );
+
+/// A posting that names no reduced rate group on any line.
+bool _standardOnly(Posting p) => p.lines.every((l) => l.qualifier != 'reduced');
 
 SafTFinancialRequest _request(
   SafTFinancialProfile profile, {
@@ -181,16 +196,19 @@ SafTFinancialRequest _request(
   ),
   Map<String, SafTParty>? partyDetails,
   InvoiceParty? company,
+  // #2379 — Denmark has one VAT rate: its sample is the standard-rate part
+  // of the seeded year, as a Danish book would hold it.
+  bool standardRateOnly = false,
 }) => SafTFinancialRequest(
   profile: profile,
   period: _period,
   postings: [
     for (final p in _all)
-      if (_period.contains(p.date)) p,
+      if (_period.contains(p.date) && (!standardRateOnly || _standardOnly(p))) p,
   ],
   opening: [
     for (final p in _all)
-      if (p.date.isBefore(_period.from)) p,
+      if (p.date.isBefore(_period.from) && (!standardRateOnly || _standardOnly(p))) p,
   ],
   accountNames: {for (final (_, code, _, name) in _chart) code: name},
   accountTypes: {for (final (_, code, type, _) in _chart) code: type},
@@ -205,14 +223,17 @@ SafTFinancialRequest _request(
           postalCode: 'L-4002',
           country: 'LU',
         ),
-        safTPartyKey('supplier', '17'): const SafTParty(
+        safTPartyKey('supplier', '17'): SafTParty(
           name: 'Nettoyage Pézenas',
+          // Denmark's address starts with its street.
+          street: country == 'DK' ? '2 quai du Port' : '',
           city: 'Pézenas',
           postalCode: '34120',
           country: 'FR',
         ),
       },
   company: company ?? _company(country),
+  companyIban: country == 'DK' ? 'DK5000400440116243' : '',
   contact: contact,
   currency: 'EUR',
   softwareVersion: '1.0.3',
@@ -249,9 +270,12 @@ void main() {
     (SafTFinancialProfile.oecd, 'FR'),
     (SafTFinancialProfile.norway, 'NO'),
     (SafTFinancialProfile.luxembourg, 'LU'),
+    (SafTFinancialProfile.denmark, 'DK'),
   ]) {
     group(profile.formatId, () {
-      final doc = _file(_request(profile, country: country));
+      final doc = _file(
+        _request(profile, country: country, standardRateOnly: country == 'DK'),
+      );
       final ledger = doc.findAllElements('GeneralLedgerEntries').single;
       final lines = ledger.findAllElements('Line').toList();
       bool debit(XmlElement l) => l.findElements('DebitAmount').isNotEmpty;
@@ -263,6 +287,16 @@ void main() {
             .single
             .innerText,
       );
+
+      test('the same book gives the same bytes', () {
+        String xml() => switch (buildSafTFinancial(
+          _request(profile, country: country, standardRateOnly: country == 'DK'),
+        )) {
+          SafTFinancialFile(:final xml) => xml,
+          SafTFinancialRefused(:final gaps) => fail('refused: $gaps'),
+        };
+        expect(xml(), xml());
+      });
 
       test('declares its namespace and version', () {
         expect(doc.rootElement.namespaceUri, profile.namespace);
@@ -346,7 +380,9 @@ void main() {
               .fold(0, (x, y) => x + y);
           expect(side('Closing'), side('Opening') + year, reason: code);
         }
-        // March's sale is still open on the customers on 1 April.
+        // March's sale is still open on the customers on 1 April. (Its
+        // reduced-rate lines are not in Denmark's standard-rate sample.)
+        if (country == 'DK') return;
         final customers = doc
             .findAllElements('Account')
             .firstWhere(
@@ -559,6 +595,20 @@ void main() {
         ),
       ),
       [const SafTGap(SafTGapKind.company, 'Address')],
+    );
+  });
+
+  test('Denmark names a company without its VAT number', () {
+    expect(
+      _gaps(
+        _request(
+          SafTFinancialProfile.denmark,
+          country: 'DK',
+          standardRateOnly: true,
+          company: _company('DK').copyWith(vatId: ''),
+        ),
+      ),
+      [const SafTGap(SafTGapKind.company, 'TaxRegistration')],
     );
   });
 

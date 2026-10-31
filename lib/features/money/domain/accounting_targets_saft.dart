@@ -25,6 +25,18 @@ const _faiaLuFormat = AccountingFormat(
   needsLegalId: true,
 );
 
+/// #2379 — Erhvervsstyrelsen's SAF-T Financial 2.1, read against the
+/// published schema in CI; refused while the company has no VAT
+/// registration or bank account, or a party no street address. An
+/// exchange file, not a regulatory one: Denmark's duty is a registered
+/// bookkeeping system, which this file does not make DesKilo.
+const _saftDkFormat = AccountingFormat(
+  id: 'saft_dk',
+  claim: FormatClaim.exchange,
+  extension: 'xml',
+  needsLegalId: true,
+);
+
 /// The OECD 2.0 tree with the ledger, no national restriction: what an
 /// auditor's or an accountant's software reads anywhere.
 const _saftOecdFullFormat = AccountingFormat(
@@ -74,7 +86,7 @@ const List<AccountingTarget> safTFinancialTargets = [
   // Denmark (Bogføringsloven 2022): the duty is to keep the books in a
   // registered digital bookkeeping system; DesKilo is not one. The two
   // lawful routes are delivering to a registered system and the
-  // Erhvervsstyrelsen's SAF-T DK standard export. Decided, not reachable.
+  // Erhvervsstyrelsen's SAF-T DK standard export (#2379: the file, 2.1).
   AccountingTarget(
     id: 'denmark_registered_system',
     vendor: 'Erhvervsstyrelsen',
@@ -92,12 +104,13 @@ const List<AccountingTarget> safTFinancialTargets = [
     vendor: 'Erhvervsstyrelsen',
     authority: true,
     product: 'SAF-T DK',
-    edition: 'standard export with the standard chart mapping',
+    edition: '2.1',
     countries: {'DK'},
     transport: AccountingTransport.file,
     payload: AccountingPayload.journal,
     operations: _ledgerOperations,
     taxCodeModel: TaxCodeModel.perRate,
+    format: _saftDkFormat,
   ),
   // The registered systems a Danish space delivers to: candidates, each
   // waiting for its API agreement.

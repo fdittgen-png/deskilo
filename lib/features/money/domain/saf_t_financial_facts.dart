@@ -322,10 +322,25 @@ class SafTFinancialFacts {
   }) {
     if (faiaShape && (city.trim().isEmpty || postalCode.trim().isEmpty)) {
       missing();
+    } else if (profile.denmarkShape && street.trim().isEmpty) {
+      // #2379 — Denmark's address starts with its street.
+      missing();
     }
     fits('StreetName', streetLine(street));
     fits('City', city);
     fits('PostalCode', postalCode);
+  }
+
+  /// #2379 — Denmark's company states its VAT registration and its bank
+  /// account.
+  void _checkDenmarkCompany() {
+    if (!profile.denmarkShape) return;
+    if (r.company.vatId.trim().isEmpty) {
+      gap(SafTGapKind.company, 'TaxRegistration');
+    }
+    if (r.companyIban.trim().isEmpty) {
+      gap(SafTGapKind.company, 'BankAccount');
+    }
   }
 
   void check() {
@@ -334,6 +349,7 @@ class SafTFinancialFacts {
       gap(SafTGapKind.company, 'RegistrationNumber');
     }
     if (company.name.trim().isEmpty) gap(SafTGapKind.company, 'Name');
+    _checkDenmarkCompany();
     // The file states the company's own taxes; a seller of another country
     // than the profile's is not the declaration it makes.
     if (profile.country.isNotEmpty && taxCountry != profile.country) {
@@ -360,7 +376,9 @@ class SafTFinancialFacts {
     fits('Telephone', r.contact.phone);
     for (final a in accounts) {
       id(a, _longIdLength);
-      if (profile.country.isNotEmpty && standards[a] == null) {
+      if (profile.country.isNotEmpty &&
+          profile.standardAccountRequired &&
+          standards[a] == null) {
         gap(SafTGapKind.standardAccount, '$a ${accountName(a)}');
       }
       if (standards[a] case final standard?) {

@@ -178,7 +178,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `saft_no` | Skatteetaten · SAF-T Financial · 1.30 | file | journal | NO | locallyValidated | Skatteetaten SAF-T Financial 1.30, Norwegian_SAF-T_Financial_Schema_v_1.30.xsd |
 | `faia_lu` | Administration de l'enregistrement · FAIA · 2.01 | file | journal | LU | locallyValidated | AED FAIA 2.01, FAIA_v_2.01_full.xsd |
 | `denmark_registered_system` | Erhvervsstyrelsen · Registered digital bookkeeping system · Bogføringsloven 2022 | api | documents | DK | specificationNeeded | not named yet |
-| `saft_dk` | Erhvervsstyrelsen · SAF-T DK · standard export with the standard chart mapping | file | journal | DK | specificationNeeded | not named yet |
+| `saft_dk` | Erhvervsstyrelsen · SAF-T DK · 2.1 | file | journal | DK | locallyValidated | Erhvervsstyrelsen SAF-T Financial 2.1, Danish_SAF-T_Financial_Schema_v_2_1.xsd |
 | `economic_api` | Visma · e-conomic · REST API | api | documents | DK | specificationNeeded | not named yet |
 | `dinero_api` | Visma · Dinero · API | api | documents | DK | specificationNeeded | not named yet |
 | `billy_api` | Billy · Billy · API v2 | api | documents | DK | specificationNeeded | not named yet |
