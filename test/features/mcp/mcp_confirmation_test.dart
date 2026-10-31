@@ -232,7 +232,12 @@ void main() {
       ),
     );
     expect(find.text('Let members book and use the space'), findsOneWidget);
-    expect(find.textContaining('→ Yes'), findsNWidgets(2));
+    expect(
+      find.textContaining(
+        'Book and use reservations: No → Yes\nSee the calendar: No → Yes',
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('closure days name each day and the reason', (tester) async {
