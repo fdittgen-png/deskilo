@@ -355,6 +355,35 @@ for (const locale of LOCALES) if (xmls[locale] !== reference) fail(`[${locale}] 
   console.log('processes:', processes);
 }
 
+// #3075 — every text input, select and textarea a step draws has a name a
+// screen reader can announce: an aria-label, or a label around it.
+{
+  load('en', { name: 'Names Space' });
+  const unnamed = [];
+  const walk = (step, n, inLabel) => { for (const c of (n.children || [])) {
+    if (typeof c !== 'object') continue;
+    const control = ['SELECT', 'TEXTAREA'].includes(c.tagName)
+      || (c.tagName === 'INPUT' && !['checkbox', 'radio', 'hidden'].includes(c.attrs.type));
+    if (control && !inLabel && !c.attrs['aria-label'] && !c.attrs['aria-labelledby']) unnamed.push(step.id);
+    const text = (n) => (n.children || []).map((k) => (typeof k === 'object' ? text(k) : String(k))).join('') + (n._text || '');
+    if (c.tagName === 'BUTTON' && !/[\p{L}\p{N}]/u.test(text(c)) && !c.attrs['aria-label']) unnamed.push(step.id + ':button');
+    walk(step, c, inLabel || c.tagName === 'LABEL'); } };
+  for (const step of globalThis.__STEPS) for (const k of step.build()) if (k && typeof k === 'object') { if (k.tagName === 'LABEL') walk(step, k, true); walk(step, k, k.tagName === 'LABEL'); }
+  const byStep = unnamed.reduce((m, id) => ({ ...m, [id]: (m[id] || 0) + 1 }), {});
+  console.log('names: controls without a name per step:', JSON.stringify(byStep));
+  if (unnamed.length) fail(`names: ${unnamed.length} controls have no accessible name (${JSON.stringify(byStep)})`);
+  else console.log('names: every control is named');
+}
+
+// #3075 — touch targets: on a coarse pointer the chips, buttons, selects,
+// inputs and the help symbols are at least 44 px.
+{
+  const rule = /@media\(pointer:coarse\)\{([^@]*?)\}\}/.exec(html);
+  if (!rule || !/min-height:44px/.test(rule[1])) fail('targets: no 44 px minimum on a coarse pointer');
+  else for (const sel of ['.step', '.chip', '.help', 'select', 'button']) if (!rule[1].split('{')[0].includes(sel)) fail(`targets: ${sel} is not in the 44 px rule`);
+  console.log('targets: a coarse pointer gets 44 px targets');
+}
+
 // #2501 — the WebMCP tools, against a fake modelContext. An agent here is a
 // function that calls the tools the page registered.
 const fakeContext = () => {

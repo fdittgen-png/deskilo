@@ -179,6 +179,7 @@
  "availHalfDayHours": "Hours worth a half day",
  "availFullDayHours": "Hours worth a full day",
  "availClosures": "Closure days",
+ "tableRemoveRow": "Remove this row",
  "colDate": "Date",
  "availAddClosure": "Add a closure day",
  "availPolicies": "Booking policies",

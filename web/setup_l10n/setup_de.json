@@ -179,6 +179,7 @@
  "availHalfDayHours": "Stunden für einen halben Tag",
  "availFullDayHours": "Stunden für einen ganzen Tag",
  "availClosures": "Schließtage",
+ "tableRemoveRow": "Diese Zeile entfernen",
  "colDate": "Datum",
  "availAddClosure": "Schließtag hinzufügen",
  "availPolicies": "Buchungsregeln",
