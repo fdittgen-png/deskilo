@@ -23553,11 +23553,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupLevelsApply => 'Apply';
 
   @override
-  String setupLevelsBecause(String reason) {
-    return 'Because $reason';
-  }
-
-  @override
   String get setupLevelsChoice => 'What it needs';
 
   @override
@@ -24035,27 +24030,27 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String setupReason(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
-      'door_tablet': 'a tablet at the door checks people in',
-      'keeps_books': 'you keep accounting books',
-      'later': 'an assistant can come later',
-      'members_only': 'only members see the space',
-      'members_owe': 'members owe the space money',
-      'no_money': 'no money changes hands',
-      'no_purchases': 'the space buys nothing it tracks',
-      'no_vat': 'the space is not registered for VAT',
-      'organised': 'several people decide together',
-      'pay_by_transfer': 'members pay by transfer',
-      'pay_online': 'members pay online',
-      'public_page': 'the space has a public page',
-      'several_rooms': 'there are several rooms or sites',
-      'shared_places': 'members share the places',
-      'small_community': 'a small community',
-      'start_simple': 'start simple',
-      'tracks_purchases': 'you track what the space buys',
-      'vat_registered': 'the space is registered for VAT',
-      'issues_invoices': 'you issue invoices',
-      'association': 'an association decides together, with its board',
-      'approve_bookings': 'bookings wait for an approval',
+      'door_tablet': 'Because a tablet at the door checks people in',
+      'keeps_books': 'Because you keep accounting books',
+      'later': 'Because an assistant can come later',
+      'members_only': 'Because only members see the space',
+      'members_owe': 'Because members owe the space money',
+      'no_money': 'Because no money changes hands',
+      'no_purchases': 'Because the space buys nothing it tracks',
+      'no_vat': 'Because the space is not registered for VAT',
+      'organised': 'Because several people decide together',
+      'pay_by_transfer': 'Because members pay by transfer',
+      'pay_online': 'Because members pay online',
+      'public_page': 'Because the space has a public page',
+      'several_rooms': 'Because there are several rooms or sites',
+      'shared_places': 'Because members share the places',
+      'small_community': 'Because a small community',
+      'start_simple': 'Because start simple',
+      'tracks_purchases': 'Because you track what the space buys',
+      'vat_registered': 'Because the space is registered for VAT',
+      'issues_invoices': 'Because you issue invoices',
+      'association': 'Because an association decides together, with its board',
+      'approve_bookings': 'Because bookings wait for an approval',
       'other': '$key',
     });
     return '$_temp0';

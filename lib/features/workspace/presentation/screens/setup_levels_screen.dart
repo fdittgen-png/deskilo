@@ -138,9 +138,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
             process: p,
             level: vector[p]!,
             reason: vector[p] == recommended[p]!.level
-                ? l10n.setupLevelsBecause(
-                    l10n.setupReason(recommended[p]!.reason),
-                  )
+                ? l10n.setupReason(recommended[p]!.reason)
                 : null,
             onChanged: (level) => setState(() => _chosen[p] = level),
           ),

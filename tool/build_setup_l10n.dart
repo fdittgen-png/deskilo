@@ -184,7 +184,6 @@ const _journeyStrings = [
   'setupLevelsQuestions',
   'setupLevelsPresets',
   'setupLevelsChoice',
-  'setupLevelsBecause',
   'setupLevelsGap',
   'setupObligationsTitle',
   'setupObligationUnconfirmed',
