@@ -7,8 +7,8 @@
 begin;
 select plan(9);
 
-select is((select count(*)::int from public.tax_reference where domain = 'account_map'), 181,
-          'eleven charts, the FEC rows and the Sage rows are seeded, the posting roles of 0520 and 0521 and the DATEV reduced rate of 0522 and the SKR04 plan of 0523, the DATEV BU-Schlüssel of 0593, the GB, IE and CA charts of 0594 and the SAF-T standard codes of NO and LU (#2379), and the MWST codes and KMU accounts of the Swiss journal (#2377), and the Sage reverse-charge codes (#2373)');
+select is((select count(*)::int from public.tax_reference where domain = 'account_map'), 207,
+          'eleven charts, the FEC rows and the Sage rows are seeded, the posting roles of 0520 and 0521 and the DATEV reduced rate of 0522 and the SKR04 plan of 0523, the DATEV BU-Schlüssel of 0593, the GB, IE and CA charts of 0594 and the SAF-T standard codes of NO and LU (#2379), and the MWST codes and KMU accounts of the Swiss journal (#2377), and the Sage reverse-charge codes (#2373), and Romania''s D406 chart accounts and VAT codes (0626, #2379)');
 select is((select value ->> 'account' from public.tax_reference
             where domain = 'account_map' and country = 'FR' and key = 'coa/04-vat'), '445710',
           'the French chart books the collected VAT on 445710');

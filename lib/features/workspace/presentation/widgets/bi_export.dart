@@ -19,6 +19,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/settings/active_settings.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -74,7 +75,7 @@ Future<void> exportBiPdf(
             m.id,
             grain,
             result.period,
-            biSeriesLength(grain),
+            biSeriesLength(grain, ref.read(activeSettingsProvider)),
           ).future,
         );
         BiResult? grouped;

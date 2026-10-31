@@ -276,4 +276,33 @@ void main() {
     expect(find.text('Invoices'), findsOneWidget);
     expect(find.text('Prefix: INV- → F-\nRestart: Every year → Never'), findsOneWidget);
   });
+
+  testWidgets('a member-rights request lists each permission from no to '
+      'yes', (tester) async {
+    await pump(
+      tester,
+      const ActionConfirmation(
+        id: _id,
+        status: ConfirmationStatus.pending,
+        operation: 'set_member_permissions_preset',
+        workspaceName: 'Kraftwerk',
+        clientName: 'Test assistant',
+        arguments: {'preset': 'members_can_book'},
+        target: {
+          'kind': 'member_rights',
+          'changes': [
+            {'field': 'makeReservations', 'from': false, 'to': true},
+            {'field': 'viewCalendar', 'from': false, 'to': true},
+          ],
+        },
+      ),
+    );
+    expect(find.text('Let members book and use the space'), findsOneWidget);
+    expect(
+      find.textContaining(
+        'Book and use reservations: No → Yes\nSee the calendar: No → Yes',
+      ),
+      findsOneWidget,
+    );
+  });
 }

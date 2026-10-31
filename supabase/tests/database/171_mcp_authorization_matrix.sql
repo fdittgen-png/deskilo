@@ -289,7 +289,7 @@ select is(pg_temp.says('ad', 'get_availability', jsonb_build_object('starts_at',
 -- or manageBilling, none of which an administrator holds by default: those
 -- operations are forbidden, not hidden.
 select is(pg_temp.refused(pg_temp.call('ad', 'get_capabilities')),
-  '{"request_refund": "not_exposed", "mark_setup_step": "forbidden", "get_setup_status": "forbidden", "list_setup_levels": "forbidden", "apply_setup_levels": "forbidden", "preview_setup_levels": "forbidden", "explain_setup_step": "forbidden", "set_workspace_basics": "forbidden", "set_opening_hours": "forbidden", "add_closure_days": "forbidden", "set_number_sequence": "forbidden"}'::jsonb,
+  '{"request_refund": "not_exposed", "mark_setup_step": "forbidden", "get_setup_status": "forbidden", "list_setup_levels": "forbidden", "apply_setup_levels": "forbidden", "preview_setup_levels": "forbidden", "explain_setup_step": "forbidden", "set_workspace_basics": "forbidden", "set_member_permissions_preset": "forbidden", "set_opening_hours": "forbidden", "add_closure_days": "forbidden", "set_number_sequence": "forbidden"}'::jsonb,
   'the administrator is refused only what the workspace does not expose, and setting the space up');
 select is(pg_temp.says('ad', 'create_invitations', '{"first_name": "Camille"}'),
   'requires_confirmation', 'an administrator with manageMembers may propose an invitation, never send it without confirmation');

@@ -1,0 +1,10 @@
+{
+  "@@locale": "es",
+  "settingLabelBiSeriesMonths": "Longitud de la evolución mensual",
+  "settingHintBiSeriesMonths": "Cuántos meses muestra una evolución mensual, el actual incluido: 13 es un año y el mismo mes del año anterior.",
+  "settingLabelBiSeriesQuarters": "Longitud de la evolución trimestral",
+  "settingHintBiSeriesQuarters": "Cuántos trimestres muestra una evolución trimestral, el actual incluido: 9 son dos años y el mismo trimestre de hace dos años.",
+  "settingLabelBiSeriesYears": "Longitud de la evolución anual",
+  "settingHintBiSeriesYears": "Cuántos años muestra una evolución anual, el actual incluido.",
+  "settingUnitQuarters": "trimestres"
+}

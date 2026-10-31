@@ -14788,6 +14788,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpOpSetupLevelsPreview => 'Previsualizar un cambio de niveles';
 
   @override
+  String get mcpOpSetupMemberRights =>
+      'Permitir a los miembros reservar y usar el espacio';
+
+  @override
   String get mcpOpSetupNumbering => 'Fijar la numeración de los documentos';
 
   @override
@@ -22401,6 +22405,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'El máximo de tarjetas de un informe guardado en todas sus páginas. La plataforma nunca guarda más de 24; un informe por encima del límite se rechaza al guardarlo, nunca se recorta.';
 
   @override
+  String get settingHintBiSeriesMonths =>
+      'Cuántos meses muestra una evolución mensual, el actual incluido: 13 es un año y el mismo mes del año anterior.';
+
+  @override
+  String get settingHintBiSeriesQuarters =>
+      'Cuántos trimestres muestra una evolución trimestral, el actual incluido: 9 son dos años y el mismo trimestre de hace dos años.';
+
+  @override
+  String get settingHintBiSeriesYears =>
+      'Cuántos años muestra una evolución anual, el actual incluido.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.';
 
@@ -22639,6 +22655,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelBiReportMaxVisuals => 'Tarjetas por informe';
+
+  @override
+  String get settingLabelBiSeriesMonths => 'Longitud de la evolución mensual';
+
+  @override
+  String get settingLabelBiSeriesQuarters =>
+      'Longitud de la evolución trimestral';
+
+  @override
+  String get settingLabelBiSeriesYears => 'Longitud de la evolución anual';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -22926,6 +22952,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'por hora';
+
+  @override
+  String get settingUnitQuarters => 'trimestres';
 
   @override
   String get settingUnitRequests => 'consultas';

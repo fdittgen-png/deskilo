@@ -120,7 +120,10 @@ class FakeAccountingConnectionRepository
   }) async {
     final c = connections[_index(connectionId)];
     if (!c.live) throw StateError('this connection was revoked');
-    if (deliveries.any((d) => d.connectionId == c.id)) {
+    // #2370 — like set_accounting_token_v1: after a delivery, only for the
+    // company the connection recorded.
+    if (deliveries.any((d) => d.connectionId == c.id) &&
+        (c.remoteTenantId.isEmpty || remoteTenantId != c.remoteTenantId)) {
       throw StateError('this connection has delivered: revoke it and connect again');
     }
     return _replace(

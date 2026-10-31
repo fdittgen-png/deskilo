@@ -14801,6 +14801,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Visualizzare in anteprima un cambio di livelli';
 
   @override
+  String get mcpOpSetupMemberRights =>
+      'Consentire ai membri di prenotare e usare lo spazio';
+
+  @override
   String get mcpOpSetupNumbering => 'Impostare la numerazione dei documenti';
 
   @override
@@ -22422,6 +22426,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il numero massimo di schede di un report salvato su tutte le pagine. La piattaforma non ne conserva mai più di 24; un report oltre il limite viene rifiutato al salvataggio, mai tagliato.';
 
   @override
+  String get settingHintBiSeriesMonths =>
+      'Quanti mesi mostra un andamento mensile, quello in corso compreso: 13 sono un anno e lo stesso mese dell\'anno prima.';
+
+  @override
+  String get settingHintBiSeriesQuarters =>
+      'Quanti trimestri mostra un andamento trimestrale, quello in corso compreso: 9 sono due anni e lo stesso trimestre di due anni prima.';
+
+  @override
+  String get settingHintBiSeriesYears =>
+      'Quanti anni mostra un andamento annuale, quello in corso compreso.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fisso: l\'anticipo massimo, in giorni, di una fattura d\'abbonamento prima dell\'inizio del mese.';
 
@@ -22659,6 +22675,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingLabelBiReportMaxVisuals => 'Schede per report';
+
+  @override
+  String get settingLabelBiSeriesMonths => 'Lunghezza dell\'andamento mensile';
+
+  @override
+  String get settingLabelBiSeriesQuarters =>
+      'Lunghezza dell\'andamento trimestrale';
+
+  @override
+  String get settingLabelBiSeriesYears => 'Lunghezza dell\'andamento annuale';
 
   @override
   String get settingLabelBillingMaxAdvanceDays =>
@@ -22947,6 +22973,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'all\'ora';
+
+  @override
+  String get settingUnitQuarters => 'trimestri';
 
   @override
   String get settingUnitRequests => 'richieste';

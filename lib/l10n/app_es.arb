@@ -9995,6 +9995,7 @@
   "mcpOpSetupLevels": "Ver los niveles de configuración",
   "mcpOpSetupLevelsApply": "Cambiar los niveles de configuración",
   "mcpOpSetupLevelsPreview": "Previsualizar un cambio de niveles",
+  "mcpOpSetupMemberRights": "Permitir a los miembros reservar y usar el espacio",
   "mcpOpSetupNumbering": "Fijar la numeración de los documentos",
   "mcpOpSetupStatus": "Ver en qué punto está la configuración",
   "mcpOpSetupStepExplain": "Explicar un paso de la configuración",
@@ -15276,6 +15277,9 @@
   "@settingHintBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingHintBiSeriesMonths": "Cuántos meses muestra una evolución mensual, el actual incluido: 13 es un año y el mismo mes del año anterior.",
+  "settingHintBiSeriesQuarters": "Cuántos trimestres muestra una evolución trimestral, el actual incluido: 9 son dos años y el mismo trimestre de hace dos años.",
+  "settingHintBiSeriesYears": "Cuántos años muestra una evolución anual, el actual incluido.",
   "settingHintBillingMaxAdvanceDays": "Fijo: la antelación máxima, en días, de una factura de suscripción antes de empezar el mes.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -15448,6 +15452,9 @@
   "@settingLabelBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingLabelBiSeriesMonths": "Longitud de la evolución mensual",
+  "settingLabelBiSeriesQuarters": "Longitud de la evolución trimestral",
+  "settingLabelBiSeriesYears": "Longitud de la evolución anual",
   "settingLabelBillingMaxAdvanceDays": "Antelación de la factura de suscripción",
   "@settingLabelBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting label."
@@ -15725,6 +15732,7 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitQuarters": "trimestres",
   "settingUnitRequests": "consultas",
   "@settingUnitRequests": {
     "description": "#2578 BI settings"

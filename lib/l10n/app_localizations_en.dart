@@ -14690,6 +14690,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpOpSetupLevelsPreview => 'Preview a change of levels';
 
   @override
+  String get mcpOpSetupMemberRights => 'Let members book and use the space';
+
+  @override
   String get mcpOpSetupNumbering => 'Set how documents are numbered';
 
   @override
@@ -22238,6 +22241,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'The most cards one saved report may hold over all its pages. The platform never stores more than 24; a report over the limit is refused when it is saved, never cut.';
 
   @override
+  String get settingHintBiSeriesMonths =>
+      'How many months a monthly evolution shows, the current one included: 13 is a year and the same month a year ago.';
+
+  @override
+  String get settingHintBiSeriesQuarters =>
+      'How many quarters a quarterly evolution shows, the current one included: 9 is two years and the same quarter two years ago.';
+
+  @override
+  String get settingHintBiSeriesYears =>
+      'How many years a yearly evolution shows, the current one included.';
+
+  @override
   String get settingHintBillingMaxAdvanceDays =>
       'Fixed: the longest lead, in days, of a subscription invoice before the month starts.';
 
@@ -22470,6 +22485,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelBiReportMaxVisuals => 'Cards per report';
+
+  @override
+  String get settingLabelBiSeriesMonths => 'Monthly evolution length';
+
+  @override
+  String get settingLabelBiSeriesQuarters => 'Quarterly evolution length';
+
+  @override
+  String get settingLabelBiSeriesYears => 'Yearly evolution length';
 
   @override
   String get settingLabelBillingMaxAdvanceDays => 'Subscription invoice lead';
@@ -22739,6 +22763,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingUnitPerHour => 'per hour';
+
+  @override
+  String get settingUnitQuarters => 'quarters';
 
   @override
   String get settingUnitRequests => 'requests';

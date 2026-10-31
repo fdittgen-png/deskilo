@@ -10,6 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' show WidgetRef;
 import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/settings/setting_defaults.g.dart';
+import '../../../core/settings/settings.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../plan/providers/floor_plan_providers.dart';
@@ -126,13 +128,19 @@ Future<BiResult> biModuleResult(
   };
 }
 
-/// How many periods the evolution looks back over, by grain: a year of
-/// months, two years of quarters, five years.
-int biSeriesLength(BiGrain grain) => switch (grain) {
-  BiGrain.month => 13,
-  BiGrain.quarter => 9,
-  BiGrain.year => 5,
-};
+/// How many periods the evolution looks back over, by grain: the
+/// workspace's `bi.series_*` settings (#2578), the registry defaults while
+/// [settings] load or on a server without the keys.
+int biSeriesLength(BiGrain grain, SettingsSet? settings) {
+  final (key, fallback) = switch (grain) {
+    BiGrain.month => ('bi.series_months', SettingDefaults.biSeriesMonths),
+    BiGrain.quarter => ('bi.series_quarters', SettingDefaults.biSeriesQuarters),
+    BiGrain.year => ('bi.series_years', SettingDefaults.biSeriesYears),
+  };
+  return settings != null && settings.definitions.containsKey(key)
+      ? settings.read<int>(key)
+      : fallback;
+}
 
 /// The module's own figure for each of the [count] periods ending at
 /// [end], oldest first. Each is the same read the page makes for one

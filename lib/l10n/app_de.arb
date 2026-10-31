@@ -9995,6 +9995,7 @@
   "mcpOpSetupLevels": "Die Einrichtungsstufen sehen",
   "mcpOpSetupLevelsApply": "Die Einrichtungsstufen ändern",
   "mcpOpSetupLevelsPreview": "Eine Änderung der Stufen vorab ansehen",
+  "mcpOpSetupMemberRights": "Mitgliedern Buchen und Nutzen des Raums erlauben",
   "mcpOpSetupNumbering": "Die Nummerierung der Belege festlegen",
   "mcpOpSetupStatus": "Sehen, wie weit die Einrichtung ist",
   "mcpOpSetupStepExplain": "Einen Einrichtungsschritt erklären",
@@ -15276,6 +15277,9 @@
   "@settingHintBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingHintBiSeriesMonths": "Wie viele Monate eine Monatsentwicklung zeigt, der laufende eingeschlossen: 13 sind ein Jahr und derselbe Monat des Vorjahres.",
+  "settingHintBiSeriesQuarters": "Wie viele Quartale eine Quartalsentwicklung zeigt, das laufende eingeschlossen: 9 sind zwei Jahre und dasselbe Quartal vor zwei Jahren.",
+  "settingHintBiSeriesYears": "Wie viele Jahre eine Jahresentwicklung zeigt, das laufende eingeschlossen.",
   "settingHintBillingMaxAdvanceDays": "Fest: Der längste Vorlauf in Tagen einer Abo-Rechnung vor Monatsbeginn.",
   "@settingHintBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting hint."
@@ -15448,6 +15452,9 @@
   "@settingLabelBiReportMaxVisuals": {
     "description": "#2579 report limits"
   },
+  "settingLabelBiSeriesMonths": "Länge der Monatsentwicklung",
+  "settingLabelBiSeriesQuarters": "Länge der Quartalsentwicklung",
+  "settingLabelBiSeriesYears": "Länge der Jahresentwicklung",
   "settingLabelBillingMaxAdvanceDays": "Vorlauf der Abo-Rechnung",
   "@settingLabelBillingMaxAdvanceDays": {
     "description": "#2486 settings: Setting label."
@@ -15725,6 +15732,7 @@
   "@settingUnitPerHour": {
     "description": "#2485 settings: Unit."
   },
+  "settingUnitQuarters": "Quartale",
   "settingUnitRequests": "Anfragen",
   "@settingUnitRequests": {
     "description": "#2578 BI settings"
