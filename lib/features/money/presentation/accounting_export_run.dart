@@ -229,6 +229,7 @@ class AccountingExportRun {
         await fecActions.bookReport(format.id, posted, letterhead: {'workspace': workspace.name,
             'workspace_address': workspace.address, 'currency': workspace.currencyCode, ...legalMentionData(words, workspace)});
       case 'saft_no':
+      case 'saft_dk':
       case 'faia_lu':
       case 'saft_oecd_full':
         await safTFinancialExport();
