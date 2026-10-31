@@ -100,11 +100,9 @@ const STEPS=[
   // #2378 — where the data lives, as the operator declares it; never inferred.
   selectEl(T('recordsHostingCountry'),'records.hostingCountry',[['',T('recordsHostingNone')],...COUNTRIES.map(c=>[c[0],countryName(c[0])])],T('recordsHostingCountryHint'),null,'identity'),
   ...(S.country==='CA'?[input(T('recordsCraReference'),'records.craReference',T('recordsCraReferenceHint'),'text','','identity')]:[]),
-  // #2488 — the display and creation fallbacks of an installation (never a tax or issuer fact).
   selectEl(T('regionCurrency'),'region.currency',REGION_CURRENCIES().map(c=>[c,c]),T('regionCurrencyHint'),null,'identity'),
   selectEl(T('regionCountry'),'region.country',COUNTRIES.map(c=>[c[0],countryName(c[0])]),T('regionCountryHint'),null,'identity'),
   selectEl(T('regionLocale'),'region.locale',FORMAT_LOCALES.map(l=>[l,l]),T('regionLocaleHint'),null,'identity'),
-  // #2488 — the discovery map's tile server and address lookup; empty = the app's default.
   input(T('mapTiles'),'map.tiles',T('mapTilesHint'),'url','https://tile.openstreetmap.org/{z}/{x}/{y}.png','identity'),
   input(T('mapGeocoder'),'map.geocoder',T('mapGeocoderHint'),'url','https://photon.komoot.io/api/','identity'),
   )),

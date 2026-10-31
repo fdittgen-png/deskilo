@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../country/country_catalog.dart';
+import '../settings/region_defaults.dart';
 import '../settings/setting_defaults.g.dart';
 
 part 'device_locale.g.dart';
@@ -43,3 +45,12 @@ Country initialCountryFor(
   };
   return CountryCatalog.byCode(byLanguage ?? fallbackCountry);
 }
+
+/// [initialCountryFor] for this device, falling back to the platform's
+/// default country (`locale.default_country`).
+final initialCountryProvider = Provider<Country>(
+  (ref) => initialCountryFor(
+    ref.watch(deviceLocaleProvider),
+    fallbackCountry: ref.watch(regionDefaultsProvider).country,
+  ),
+);
