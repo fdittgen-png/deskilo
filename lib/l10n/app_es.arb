@@ -235,6 +235,7 @@
   "acctEntraTenant": "Inquilino (id. de directorio o dominio)",
   "acctEntraTitle": "Conectar {target} con una aplicación de Microsoft Entra",
   "acctJournalLogged": "{logged, plural, =0{Ningún documento nuevo registrado} =1{Un documento registrado} other{{logged} documentos registrados}}, {unchanged} sin cambios",
+  "acctKindAcquisitionTax": "Impuesto sobre adquisiciones",
   "acctKindCreditNote": "Factura rectificativa",
   "acctKindExpense": "Gasto",
   "acctKindInvoice": "Factura",

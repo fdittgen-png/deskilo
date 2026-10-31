@@ -800,6 +800,12 @@ abstract class AppLocalizations {
   /// **'{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged'**
   String acctJournalLogged(int logged, int unchanged);
 
+  /// #3152 accounting: the posting kind of the tax owed on a service bought abroad (CH Bezugsteuer, reverse charge).
+  ///
+  /// In en, this message translates to:
+  /// **'Acquisition tax'**
+  String get acctKindAcquisitionTax;
+
   /// #2370 Transfers list: the kind of document event a line carried.
   ///
   /// In en, this message translates to:

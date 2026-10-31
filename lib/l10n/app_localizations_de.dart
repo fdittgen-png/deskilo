@@ -446,6 +446,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Bezugsteuer';
+
+  @override
   String get acctKindCreditNote => 'Gutschrift';
 
   @override

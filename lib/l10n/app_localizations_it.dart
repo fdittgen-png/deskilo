@@ -446,6 +446,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get acctKindAcquisitionTax => 'Imposta sull\'acquisto';
+
+  @override
   String get acctKindCreditNote => 'Nota di credito';
 
   @override

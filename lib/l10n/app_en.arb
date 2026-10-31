@@ -567,6 +567,10 @@
       }
     }
   },
+  "acctKindAcquisitionTax": "Acquisition tax",
+  "@acctKindAcquisitionTax": {
+    "description": "#3152 accounting: the posting kind of the tax owed on a service bought abroad (CH Bezugsteuer, reverse charge)."
+  },
   "acctKindCreditNote": "Credit note",
   "@acctKindCreditNote": {
     "description": "#2370 Transfers list: the kind of document event a line carried."

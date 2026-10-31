@@ -235,6 +235,7 @@
   "acctEntraTenant": "Locataire (ID d'annuaire ou domaine)",
   "acctEntraTitle": "Connecter {target} avec une application Microsoft Entra",
   "acctJournalLogged": "{logged, plural, =0{Aucune nouvelle pièce enregistrée} =1{Une pièce enregistrée} other{{logged} pièces enregistrées}}, {unchanged} inchangées",
+  "acctKindAcquisitionTax": "Impôt sur les acquisitions",
   "acctKindCreditNote": "Avoir",
   "acctKindExpense": "Dépense",
   "acctKindInvoice": "Facture",

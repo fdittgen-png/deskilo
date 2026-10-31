@@ -106,7 +106,11 @@ enum PostingKind {
   /// #2365 (0524) — a member's approved receipt, credited to the member's
   /// account, and the money paid back to them.
   memberReceipt('member_receipt'),
-  reimbursement('reimbursement');
+  reimbursement('reimbursement'),
+
+  /// #3152 (0622) — the acquisition tax of a service bought abroad: input
+  /// VAT for its deductible share, output VAT for the tax owed.
+  acquisitionTax('acquisition_tax');
 
   const PostingKind(this.wire);
   final String wire;
