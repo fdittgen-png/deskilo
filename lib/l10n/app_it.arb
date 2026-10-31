@@ -15348,6 +15348,7 @@
   "@settingHintMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Secondi tra due controlli, da parte di un dispositivo, delle richieste con scadenza superata. Una tale richiesta appare scaduta al più tardi dopo questo tempo. 0 controlla prima di ogni lettura della casella.",
   "settingHintMessagingMessageRequestsPerDay": "Quante richieste di messaggio una persona può inviare al giorno a chi non le ha consentite. Può solo essere ridotto.",
   "@settingHintMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting hint."
@@ -15518,6 +15519,7 @@
   "@settingLabelMessagingInboxPollSeconds": {
     "description": "#2487 settings: Setting label."
   },
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Controllo scadenze della casella",
   "settingLabelMessagingMessageRequestsPerDay": "Richieste di messaggio al giorno",
   "@settingLabelMessagingMessageRequestsPerDay": {
     "description": "#2485 settings: Setting label."
@@ -16087,7 +16089,6 @@
   "setupLevelName": "{key, select, bookings_simple{Posti condivisi} bookings_resources{Sale e risorse} bookings_measured{Uso misurato} community_basic{Semplice} community_organised{Organizzata} money_none{Nessun denaro} money_statements{Estratti} money_invoices{Fatture} payments_off{Con bonifico} payments_online{Online} tax_none{Nessuna IVA} tax_vat{IVA} tax_books{Contabilità} purchases_none{Nessuno} purchases_expenses{Spese} purchases_full{Acquisti completi} presentation_basic{Semplice} presentation_branded{I suoi colori} presentation_public{Pagina pubblica} operations_basic{Semplice} operations_insight{Indicatori} operations_advanced{Avanzata} assistant_off{Spento} assistant_on{Acceso} other{{key}}}",
   "setupLevelsApplied": "Il suo spazio ora fa ciò che ha scelto.",
   "setupLevelsApply": "Applica",
-  "setupLevelsBecause": "Perché {reason}",
   "setupLevelsChoice": "Che cosa serve",
   "setupLevelsConfirmOff": "Alcune funzioni saranno disattivate. I loro dati restano, ma smettono di funzionare finché non vengono riattivate.",
   "setupLevelsConflict": "Le funzioni sono cambiate nel frattempo. Guardi di nuovo, poi applichi.",
@@ -16098,8 +16099,8 @@
   "setupLevelsQuestions": "Sul suo spazio",
   "setupLevelsSeeDemo": "Vederlo nella demo",
   "setupLevelsStepsFollow": "Le configuri poi nella guida: {steps}",
-  "setupLevelsSwitchOff": "Disattiva: {features}",
-  "setupLevelsSwitchOn": "Attiva: {features}",
+  "setupLevelsSwitchOff": "Lo spazio non avrà più:",
+  "setupLevelsSwitchOn": "Lo spazio ottiene:",
   "setupLevelsTitle": "Che cosa fa il suo spazio",
   "setupLimitsPerMember": "Un’autorizzazione impostata sulla pagina di un membro prevale sul numero di posti indicato qui.",
   "setupLimitsPreviewAhead": "{days, plural, =1{Può prenotare fino a un giorno prima.} other{Può prenotare fino a {days} giorni prima.}}",
@@ -16181,7 +16182,7 @@
   "setupPublicPageNotPublished": "Non pubblicata: nessuno al di fuori dello spazio vede questa pagina.",
   "setupPurchaseSidePreview": "I membri non vedono nulla di tutto ciò: resta a chi gestisce il denaro.",
   "setupQuestion": "{key, select, association{Lo spazio è gestito da un’associazione, una cooperativa o un club} approve_bookings{Le prenotazioni attendono un’approvazione; i membri non prenotano direttamente} members_owe_money{I membri devono denaro allo spazio (affitto, carnet, extra)} issue_invoices{Emette fatture} pay_online{I membri pagano online} vat_registered{Lo spazio è soggetto a IVA} keep_books{Tiene la contabilità} tracks_purchases{Segue gli acquisti dello spazio} several_rooms_or_sites{Più sale, una sala riunioni o più sedi} door_tablet{Un tablet all’ingresso registra gli arrivi} public_page{Una pagina pubblica presenta lo spazio} organised{Comitati, ruoli propri o approvazioni di più persone} other{{key}}}",
-  "setupReason": "{key, select, door_tablet{un tablet all’ingresso registra gli arrivi} keeps_books{tiene la contabilità} later{un assistente può arrivare più tardi} members_only{solo i membri vedono lo spazio} members_owe{i membri devono denaro allo spazio} no_money{non circola denaro} no_purchases{lo spazio non segue i suoi acquisti} no_vat{lo spazio non è soggetto a IVA} organised{più persone decidono insieme} pay_by_transfer{i membri pagano con bonifico} pay_online{i membri pagano online} public_page{lo spazio ha una pagina pubblica} several_rooms{ci sono più sale o sedi} shared_places{i membri condividono i posti} small_community{è una piccola comunità} start_simple{conviene iniziare in modo semplice} tracks_purchases{segue gli acquisti dello spazio} vat_registered{lo spazio è soggetto a IVA} issues_invoices{emette fatture} association{un’associazione decide insieme, con il suo consiglio} approve_bookings{le prenotazioni attendono un’approvazione} other{{key}}}",
+  "setupReason": "{key, select, door_tablet{Perché un tablet all’ingresso registra gli arrivi} keeps_books{Perché tiene la contabilità} later{Perché un assistente può arrivare più tardi} members_only{Perché solo i membri vedono lo spazio} members_owe{Perché i membri devono denaro allo spazio} no_money{Perché non circola denaro} no_purchases{Perché lo spazio non segue i suoi acquisti} no_vat{Perché lo spazio non è soggetto a IVA} organised{Perché più persone decidono insieme} pay_by_transfer{Perché i membri pagano con bonifico} pay_online{Perché i membri pagano online} public_page{Perché lo spazio ha una pagina pubblica} several_rooms{Perché ci sono più sale o sedi} shared_places{Perché i membri condividono i posti} small_community{Perché è una piccola comunità} start_simple{Perché conviene iniziare in modo semplice} tracks_purchases{Perché segue gli acquisti dello spazio} vat_registered{Perché lo spazio è soggetto a IVA} issues_invoices{Perché emette fatture} association{Perché un’associazione decide insieme, con il suo consiglio} approve_bookings{Perché le prenotazioni attendono un’approvazione} other{{key}}}",
   "setupRightsApplied": "I membri hanno già questi diritti.",
   "setupRightsApplyFailed": "Non è stato possibile modificare i diritti. Riprovi.",
   "setupRightsNeedsManageRoles": "Solo chi gestisce i ruoli può cambiare ciò che i membri possono fare.",

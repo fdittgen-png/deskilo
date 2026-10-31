@@ -22513,6 +22513,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sekunden zwischen zwei Aktualisierungen des Posteingangs und seines Ungelesen-Zählers. Niedrigere Werte belasten den Server stärker.';
 
   @override
+  String get settingHintMessagingInboxSweepIntervalSeconds =>
+      'Sekunden zwischen zwei Prüfungen, durch ein Gerät, auf Anfragen mit abgelaufener Frist. Eine solche Anfrage erscheint höchstens so viel später als abgelaufen. 0 prüft vor jedem Lesen des Posteingangs.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'Wie viele Nachrichtenanfragen eine Person pro Tag an Personen senden darf, die sie nicht erlaubt haben. Kann nur verringert werden.';
 
@@ -22731,6 +22735,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelMessagingInboxPollSeconds =>
       'Aktualisierung des Posteingangs';
+
+  @override
+  String get settingLabelMessagingInboxSweepIntervalSeconds =>
+      'Fristprüfung des Posteingangs';
 
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>
@@ -23791,11 +23799,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLevelsApply => 'Anwenden';
 
   @override
-  String setupLevelsBecause(String reason) {
-    return 'Weil $reason';
-  }
-
-  @override
   String get setupLevelsChoice => 'Was er braucht';
 
   @override
@@ -23834,14 +23837,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String setupLevelsSwitchOff(String features) {
-    return 'Schaltet aus: $features';
-  }
+  String get setupLevelsSwitchOff => 'Ihr Raum erhält nicht mehr:';
 
   @override
-  String setupLevelsSwitchOn(String features) {
-    return 'Schaltet ein: $features';
-  }
+  String get setupLevelsSwitchOn => 'Ihr Raum erhält:';
 
   @override
   String get setupLevelsTitle => 'Was Ihr Raum tut';
@@ -24274,27 +24273,28 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String setupReason(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
-      'door_tablet': 'ein Tablet am Eingang die Ankunft erfasst',
-      'keeps_books': 'Sie Bücher führen',
-      'later': 'ein Assistent später kommen kann',
-      'members_only': 'nur Mitglieder den Raum sehen',
-      'members_owe': 'Mitglieder dem Raum Geld schulden',
-      'no_money': 'kein Geld fließt',
-      'no_purchases': 'der Raum keine Einkäufe verfolgt',
-      'no_vat': 'der Raum nicht umsatzsteuerpflichtig ist',
-      'organised': 'mehrere gemeinsam entscheiden',
-      'pay_by_transfer': 'Mitglieder per Überweisung zahlen',
-      'pay_online': 'Mitglieder online zahlen',
-      'public_page': 'der Raum eine öffentliche Seite hat',
-      'several_rooms': 'es mehrere Räume oder Standorte gibt',
-      'shared_places': 'Mitglieder die Plätze teilen',
-      'small_community': 'die Gemeinschaft klein ist',
-      'start_simple': 'es einfach beginnen soll',
-      'tracks_purchases': 'Sie verfolgen, was der Raum einkauft',
-      'vat_registered': 'der Raum umsatzsteuerpflichtig ist',
-      'issues_invoices': 'Sie Rechnungen stellen',
-      'association': 'ein Verein mit seinem Vorstand gemeinsam entscheidet',
-      'approve_bookings': 'Buchungen auf eine Freigabe warten',
+      'door_tablet': 'Weil ein Tablet am Eingang die Ankunft erfasst',
+      'keeps_books': 'Weil Sie Bücher führen',
+      'later': 'Weil ein Assistent später kommen kann',
+      'members_only': 'Weil nur Mitglieder den Raum sehen',
+      'members_owe': 'Weil Mitglieder dem Raum Geld schulden',
+      'no_money': 'Weil kein Geld fließt',
+      'no_purchases': 'Weil der Raum keine Einkäufe verfolgt',
+      'no_vat': 'Weil der Raum nicht umsatzsteuerpflichtig ist',
+      'organised': 'Weil mehrere gemeinsam entscheiden',
+      'pay_by_transfer': 'Weil Mitglieder per Überweisung zahlen',
+      'pay_online': 'Weil Mitglieder online zahlen',
+      'public_page': 'Weil der Raum eine öffentliche Seite hat',
+      'several_rooms': 'Weil es mehrere Räume oder Standorte gibt',
+      'shared_places': 'Weil Mitglieder die Plätze teilen',
+      'small_community': 'Weil die Gemeinschaft klein ist',
+      'start_simple': 'Weil Sie einfach beginnen möchten',
+      'tracks_purchases': 'Weil Sie verfolgen, was der Raum einkauft',
+      'vat_registered': 'Weil der Raum umsatzsteuerpflichtig ist',
+      'issues_invoices': 'Weil Sie Rechnungen stellen',
+      'association':
+          'Weil ein Verein mit seinem Vorstand gemeinsam entscheidet',
+      'approve_bookings': 'Weil Buchungen auf eine Freigabe warten',
       'other': '$key',
     });
     return '$_temp0';

@@ -22467,6 +22467,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Segundos entre dos actualizaciones de la bandeja de entrada y su contador de no leídos. Valores más bajos cargan más el servidor.';
 
   @override
+  String get settingHintMessagingInboxSweepIntervalSeconds =>
+      'Segundos entre dos controles, por un dispositivo, de las solicitudes cuyo plazo ha vencido. Una solicitud así aparece vencida como mucho este tiempo después. 0 controla antes de cada lectura de la bandeja.';
+
+  @override
   String get settingHintMessagingMessageRequestsPerDay =>
       'Cuántas solicitudes de mensaje puede enviar una persona por día a quienes no las han permitido. Solo se puede reducir.';
 
@@ -22694,6 +22698,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelMessagingInboxPollSeconds =>
       'Actualización de la bandeja de entrada';
+
+  @override
+  String get settingLabelMessagingInboxSweepIntervalSeconds =>
+      'Control de plazos de la bandeja';
 
   @override
   String get settingLabelMessagingMessageRequestsPerDay =>
@@ -23749,11 +23757,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupLevelsApply => 'Aplicar';
 
   @override
-  String setupLevelsBecause(String reason) {
-    return 'Porque $reason';
-  }
-
-  @override
   String get setupLevelsChoice => 'Lo que necesita';
 
   @override
@@ -23791,14 +23794,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String setupLevelsSwitchOff(String features) {
-    return 'Desactiva: $features';
-  }
+  String get setupLevelsSwitchOff => 'Su espacio deja de tener:';
 
   @override
-  String setupLevelsSwitchOn(String features) {
-    return 'Activa: $features';
-  }
+  String get setupLevelsSwitchOn => 'Su espacio obtiene:';
 
   @override
   String get setupLevelsTitle => 'Lo que hace su espacio';
@@ -24231,27 +24230,27 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String setupReason(String key) {
     String _temp0 = intl.Intl.selectLogic(key, {
-      'door_tablet': 'una tableta en la entrada registra las llegadas',
-      'keeps_books': 'lleva la contabilidad',
-      'later': 'un asistente puede venir más tarde',
-      'members_only': 'solo los miembros ven el espacio',
-      'members_owe': 'los miembros deben dinero al espacio',
-      'no_money': 'no circula dinero',
-      'no_purchases': 'el espacio no sigue sus compras',
-      'no_vat': 'el espacio no está sujeto al IVA',
-      'organised': 'varias personas deciden juntas',
-      'pay_by_transfer': 'los miembros pagan por transferencia',
-      'pay_online': 'los miembros pagan en línea',
-      'public_page': 'el espacio tiene una página pública',
-      'several_rooms': 'hay varias salas o sedes',
-      'shared_places': 'los miembros comparten las plazas',
-      'small_community': 'es una comunidad pequeña',
-      'start_simple': 'conviene empezar sencillo',
-      'tracks_purchases': 'sigue lo que compra el espacio',
-      'vat_registered': 'el espacio está sujeto al IVA',
-      'issues_invoices': 'emite facturas',
-      'association': 'una asociación decide en conjunto, con su junta',
-      'approve_bookings': 'las reservas esperan una aprobación',
+      'door_tablet': 'Porque una tableta en la entrada registra las llegadas',
+      'keeps_books': 'Porque lleva la contabilidad',
+      'later': 'Porque un asistente puede venir más tarde',
+      'members_only': 'Porque solo los miembros ven el espacio',
+      'members_owe': 'Porque los miembros deben dinero al espacio',
+      'no_money': 'Porque no circula dinero',
+      'no_purchases': 'Porque el espacio no sigue sus compras',
+      'no_vat': 'Porque el espacio no está sujeto al IVA',
+      'organised': 'Porque varias personas deciden juntas',
+      'pay_by_transfer': 'Porque los miembros pagan por transferencia',
+      'pay_online': 'Porque los miembros pagan en línea',
+      'public_page': 'Porque el espacio tiene una página pública',
+      'several_rooms': 'Porque hay varias salas o sedes',
+      'shared_places': 'Porque los miembros comparten las plazas',
+      'small_community': 'Porque es una comunidad pequeña',
+      'start_simple': 'Porque conviene empezar sencillo',
+      'tracks_purchases': 'Porque sigue lo que compra el espacio',
+      'vat_registered': 'Porque el espacio está sujeto al IVA',
+      'issues_invoices': 'Porque emite facturas',
+      'association': 'Porque una asociación decide en conjunto, con su junta',
+      'approve_bookings': 'Porque las reservas esperan una aprobación',
       'other': '$key',
     });
     return '$_temp0';

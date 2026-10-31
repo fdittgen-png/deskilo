@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "settingLabelMessagingInboxSweepIntervalSeconds": "Inbox timeout check",
+  "@settingLabelMessagingInboxSweepIntervalSeconds": {
+    "description": "#3099 settings: Setting label."
+  },
+  "settingHintMessagingInboxSweepIntervalSeconds": "Seconds between two checks, by one device, for requests whose deadline has passed. Such a request shows as timed out at most this much later. 0 checks before every read of the inbox.",
+  "@settingHintMessagingInboxSweepIntervalSeconds": {
+    "description": "#3099 settings: Setting hint."
+  }
+}

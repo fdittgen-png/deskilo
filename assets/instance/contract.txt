@@ -2115,7 +2115,7 @@ routine public.erase_my_membership(p_workspace_id uuid) -> void | function | def
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
 routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:2e3e2610f711
-routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:6149227a9717
+routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:5f4ba165c976
 routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
 routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:88b1b882d2e1
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
