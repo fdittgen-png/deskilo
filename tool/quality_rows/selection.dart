@@ -10,10 +10,16 @@
 // the plan is proved against the walk (ShardPlan.problems) before any
 // result is trusted.
 //
-//   gate   everything outside test/features/ (lint, tool, i18n, a11y, ux,
-//          perf, app, core, helpers holding tests, anything new)
-//   money  test/features/money/ and test/features/workspace/
-//   rest   the other feature folders
+//   gate       everything outside test/features/ (lint, tool, i18n, ux,
+//              perf, core, helpers holding tests, anything new) except
+//              test/app/ and test/a11y/
+//   money      test/features/money/ and test/features/reservations/
+//   workspace  test/features/workspace/, me/, events/ and auth/
+//   rest       the other feature folders, test/app/ and test/a11y/
+//
+// #3166 — four shards balanced on measured times (run 41203025194): the
+// gate job also carries about 400 s of analysis and codegen, so it keeps
+// fewer tests; the three others take about the same summed test time.
 //
 // Each file belongs to exactly one shard, and a shard is a list of single
 // files: selecting a directory and one of its files would run the file
@@ -25,6 +31,17 @@ import 'shards.dart';
 const gateShard = 'gate';
 const moneyShard = 'money';
 const restShard = 'rest';
+const workspaceShard = 'workspace';
+
+/// #3166 — the folders each non-gate shard runs, by measured weight.
+const _moneyFolders = ['test/features/money/', 'test/features/reservations/'];
+const _workspaceFolders = [
+  'test/features/workspace/',
+  'test/features/me/',
+  'test/features/events/',
+  'test/features/auth/',
+];
+const _restRoots = ['test/app/', 'test/a11y/'];
 
 /// Every `*_test.dart` under [root]/test, repository-relative, sorted.
 List<String> requiredTestFiles({String root = '.'}) {
@@ -44,11 +61,11 @@ List<String> requiredTestFiles({String root = '.'}) {
 
 /// The shard that runs [path] under the default plan.
 String shardOf(String path) {
+  bool under(List<String> roots) => roots.any(path.startsWith);
+  if (under(_restRoots)) return restShard;
   if (!path.startsWith('test/features/')) return gateShard;
-  if (path.startsWith('test/features/money/') ||
-      path.startsWith('test/features/workspace/')) {
-    return moneyShard;
-  }
+  if (under(_moneyFolders)) return moneyShard;
+  if (under(_workspaceFolders)) return workspaceShard;
   return restShard;
 }
 
@@ -58,6 +75,7 @@ List<ShardSpec> defaultShards(Iterable<String> files) {
   final by = <String, List<String>>{
     gateShard: [],
     moneyShard: [],
+    workspaceShard: [],
     restShard: [],
   };
   for (final f in files) {

@@ -13,11 +13,21 @@ import '../../tool/quality_rows/selection.dart';
 
 const _required = 'analyze · l10n gate · test · coverage';
 const _attempt = '-attempt-\${{ github.run_attempt }}';
-const _shardJobs = {gateShard: 'gate', moneyShard: 'money', restShard: 'rest'};
+const _shardJobs = {
+  gateShard: 'gate',
+  moneyShard: 'money',
+  workspaceShard: 'workspace',
+  restShard: 'rest',
+};
 
-/// #3166 — each shard's cap: money and rest measured 22.8 and 22.7 min on
-/// a green run, so their cap is 45 until the shards are rebalanced.
-const _timeouts = {gateShard: '30', moneyShard: '45', restShard: '45'};
+/// #3166 — each shard's cap: the feature shards keep 45 minutes of
+/// margin until two loaded runs of the four-way split are measured.
+const _timeouts = {
+  gateShard: '30',
+  moneyShard: '45',
+  workspaceShard: '45',
+  restShard: '45',
+};
 
 YamlMap _jobs() =>
     (loadYaml(File('.github/workflows/quality.yml').readAsStringSync())
