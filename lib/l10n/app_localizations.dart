@@ -37386,6 +37386,12 @@ abstract class AppLocalizations {
   /// **'The most figures one report page may ask for in a single read. A page that needs more is split into several reads; a batch over the limit is refused whole.'**
   String get settingHintBiBatchMaxRequests;
 
+  /// #2578 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How long one report read may compute before the figures not reached yet are answered as over budget, so the page shows what it has. Keep it below the server\'s request timeout.'**
+  String get settingHintBiBatchTimeBudgetMs;
+
   /// #2579 report limits
   ///
   /// In en, this message translates to:
@@ -37745,6 +37751,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Figures per report read'**
   String get settingLabelBiBatchMaxRequests;
+
+  /// #2578 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Report read time budget'**
+  String get settingLabelBiBatchTimeBudgetMs;
 
   /// #2579 report limits
   ///
@@ -38201,6 +38213,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'hours'**
   String get settingUnitHours;
+
+  /// #2578 settings: unit of a duration in milliseconds.
+  ///
+  /// In en, this message translates to:
+  /// **'ms'**
+  String get settingUnitMilliseconds;
 
   /// #2484 settings: Unit.
   ///

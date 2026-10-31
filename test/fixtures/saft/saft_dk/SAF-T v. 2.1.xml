@@ -1,0 +1,4430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuditFile xmlns="urn:StandardAuditFile-Taxation-Financial:DK" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Header>
+		<AuditFileVersion>2.1</AuditFileVersion>
+		<AuditFileCountry>DK</AuditFileCountry>
+		<AuditFileRegion>DK-84</AuditFileRegion>
+		<AuditFileDateCreated>2027-01-01</AuditFileDateCreated>
+		<SoftwareCompanyName>Erhversstyrelsen</SoftwareCompanyName>
+		<SoftwareID>ERST Test</SoftwareID>
+		<SoftwareVersion>6.7</SoftwareVersion>
+		<Company>
+			<RegistrationNumber>10150817</RegistrationNumber>
+			<Name>Erhversstyrelsen</Name>
+			<Address>
+				<StreetName>Langelinje Álle</StreetName>
+				<Number>17</Number>
+				<Building>Dahlerups Pakhus</Building>
+				<City>København Ø</City>
+				<PostalCode>2100</PostalCode>
+				<Region>DK-84</Region>
+				<Country>DK</Country>
+			</Address>
+			<Contact>
+				<ContactPerson>
+					<Title>Hr.</Title>
+					<FirstName>Hans</FirstName>
+					<Initials>HH</Initials>
+					<LastName>Hansen</LastName>
+					<OtherTitles>Afdelingsleder</OtherTitles>
+				</ContactPerson>
+				<Telephone>35291000</Telephone>
+				<Fax>Nej</Fax>
+				<Email>digitalbogfoering@erst.dk</Email>
+				<MobilePhone>35291000</MobilePhone>
+			</Contact>
+			<TaxRegistration>
+				<TaxRegistrationNumber>DK10150817</TaxRegistrationNumber>
+				<TaxType>VAT</TaxType>
+				<TaxAuthority>Skattestyrelsen</TaxAuthority>
+				<Country>DK</Country>
+			</TaxRegistration>
+			<BankAccount>
+				<IBANNumber>DK7602164069173195</IBANNumber>
+				<BIC>1234</BIC>
+				<CurrencyCode>EUR</CurrencyCode>
+				<AccountID>58200</AccountID>
+			</BankAccount>
+			<BankAccount>
+				<BankAccountNumber>1234567891011</BankAccountNumber>
+				<SortCode>1234</SortCode>
+				<CurrencyCode>DKK</CurrencyCode>
+				<AccountID>58201</AccountID>
+			</BankAccount>
+		</Company>
+		<DefaultCurrencyCode>DKK</DefaultCurrencyCode>
+		<SelectionCriteria>
+			<CompanyEntity>Team ABIR</CompanyEntity>
+			<SelectionStartDate>2026-01-01</SelectionStartDate>
+			<SelectionEndDate>2026-12-31</SelectionEndDate>
+			<PeriodStartYear>2026</PeriodStartYear>
+		</SelectionCriteria>
+		<HeaderComment>Kontakt os for hjælp</HeaderComment>
+		<TaxAccountingBasis>Regnskabsdata</TaxAccountingBasis>
+		<TaxEntity>DFV</TaxEntity>
+		<UserID>J15L12U14</UserID>
+	</Header>
+	<MasterFiles>
+		<GeneralLedgerAccounts>
+			<NameOfStandardAccount>Standardkontoplanen</NameOfStandardAccount>
+			<VersionOfStandardAccount>20260101</VersionOfStandardAccount>
+			<Account>
+				<AccountID>1010</AccountID>
+				<AccountDescription>Salg af varer og ydelser </AccountDescription>
+				<StandardAccountID>1010</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1050</AccountID>
+				<AccountDescription>Salg af varer udland, EU</AccountDescription>
+				<StandardAccountID>1050</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1100</AccountID>
+				<AccountDescription>Salg af varer udland, ikke-EU</AccountDescription>
+				<StandardAccountID>1100</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1150</AccountID>
+				<AccountDescription>Salg af ydelser udland, EU</AccountDescription>
+				<StandardAccountID>1150</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1200</AccountID>
+				<AccountDescription>Salg af ydelser udland, ikke-EU</AccountDescription>
+				<StandardAccountID>1200</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1210</AccountID>
+				<AccountDescription>Salgsrabatter</AccountDescription>
+				<StandardAccountID>1210</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1250</AccountID>
+				<AccountDescription>Salgsfragt</AccountDescription>
+				<StandardAccountID>1250</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1300</AccountID>
+				<AccountDescription>Regulering igangværende arbejder</AccountDescription>
+				<StandardAccountID>1300</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1410</AccountID>
+				<AccountDescription>Varelagerregulering på lagre af færdigvarer og varer under fremstilling</AccountDescription>
+				<StandardAccountID>1410</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1430</AccountID>
+				<AccountDescription>Nedskrivning på lagre af færdigvarer og varer under fremstilling</AccountDescription>
+				<StandardAccountID>1430</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1450</AccountID>
+				<AccountDescription>Andel af nedskrivning på lagre af færdigvarer og varer under fremstilling (ej fradragsberettiget skattemæssigt)</AccountDescription>
+				<StandardAccountID>1450</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1460</AccountID>
+				<AccountDescription>Øvrige ændringer på lagre af færdigvarer og varer under fremstilling</AccountDescription>
+				<StandardAccountID>1460</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1496</AccountID>
+				<AccountDescription>Arbejde udført for egen regning og opført under aktiver</AccountDescription>
+				<StandardAccountID>1496</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1510</AccountID>
+				<AccountDescription>Gevinst ved salg af immaterielle anlægsaktiver</AccountDescription>
+				<StandardAccountID>1510</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1530</AccountID>
+				<AccountDescription>Gevinst ved salg af materielle anlægsaktiver</AccountDescription>
+				<StandardAccountID>1530</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1545</AccountID>
+				<AccountDescription>Offentlige tilskud</AccountDescription>
+				<StandardAccountID>1545</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1550</AccountID>
+				<AccountDescription>Øvrige andre driftsindtægter</AccountDescription>
+				<StandardAccountID>1550</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1610</AccountID>
+				<AccountDescription>Varekøb</AccountDescription>
+				<StandardAccountID>1610</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1630</AccountID>
+				<AccountDescription>Varekøb udland, EU</AccountDescription>
+				<StandardAccountID>1630</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1650</AccountID>
+				<AccountDescription>Varekøb udland, ikke-EU</AccountDescription>
+				<StandardAccountID>1650</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1660</AccountID>
+				<AccountDescription>Ydelseskøb</AccountDescription>
+				<StandardAccountID>1660</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1710</AccountID>
+				<AccountDescription>Ydelseskøb udland, EU</AccountDescription>
+				<StandardAccountID>1710</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1740</AccountID>
+				<AccountDescription>Ydelseskøb, udland, ikke-EU</AccountDescription>
+				<StandardAccountID>1740</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1745</AccountID>
+				<AccountDescription>Underleverandører (varer/ydelser leveret til kunder)</AccountDescription>
+				<StandardAccountID>1745</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1760</AccountID>
+				<AccountDescription>Fragtomkostninger</AccountDescription>
+				<StandardAccountID>1760</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1770</AccountID>
+				<AccountDescription>Varelagerregulering på lagre af råvarer og hjælpematerialer</AccountDescription>
+				<StandardAccountID>1770</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1800</AccountID>
+				<AccountDescription>Nedskrivning på varelager</AccountDescription>
+				<StandardAccountID>1800</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1801</AccountID>
+				<AccountDescription>Øvrige produktionsomkostninger</AccountDescription>
+				<StandardAccountID>1801</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1805</AccountID>
+				<AccountDescription>Andel af nedskrivning på varelager (ej fradragsberettiget skattemæssigt)</AccountDescription>
+				<StandardAccountID>1805</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1807</AccountID>
+				<AccountDescription>Værdi af eget vareforbrug (kun klasse A)</AccountDescription>
+				<StandardAccountID>1807</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1850</AccountID>
+				<AccountDescription>Annoncering og reklame</AccountDescription>
+				<StandardAccountID>1850</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1870</AccountID>
+				<AccountDescription>Udstillinger og dekoration</AccountDescription>
+				<StandardAccountID>1870</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1910</AccountID>
+				<AccountDescription>Repræsentationsomkostninger, skattemæssigt begrænset fradrag</AccountDescription>
+				<StandardAccountID>1910</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1930</AccountID>
+				<AccountDescription>Repræsentationsomkostninger, fuld fradragsret skattemæssigt</AccountDescription>
+				<StandardAccountID>1930</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1950</AccountID>
+				<AccountDescription>Andre salgsomkostninger</AccountDescription>
+				<StandardAccountID>1950</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>1990</AccountID>
+				<AccountDescription>Gaver og blomster</AccountDescription>
+				<StandardAccountID>1990</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2000</AccountID>
+				<AccountDescription>Rejseomkostninger (salgsomkostning)</AccountDescription>
+				<StandardAccountID>2000</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2030</AccountID>
+				<AccountDescription>Husleje</AccountDescription>
+				<StandardAccountID>2030</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2050</AccountID>
+				<AccountDescription>El</AccountDescription>
+				<StandardAccountID>2050</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2060</AccountID>
+				<AccountDescription>Elafgift</AccountDescription>
+				<StandardAccountID>2060</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2070</AccountID>
+				<AccountDescription>Vand</AccountDescription>
+				<StandardAccountID>2070</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2080</AccountID>
+				<AccountDescription>Varme</AccountDescription>
+				<StandardAccountID>2080</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2085</AccountID>
+				<AccountDescription>Privat andel el, vand og varme (kun klasse A)</AccountDescription>
+				<StandardAccountID>2085</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2090</AccountID>
+				<AccountDescription>Vandafgift</AccountDescription>
+				<StandardAccountID>2090</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2100</AccountID>
+				<AccountDescription>Olie- og flaskegasafgift</AccountDescription>
+				<StandardAccountID>2100</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2110</AccountID>
+				<AccountDescription>Kulafgift</AccountDescription>
+				<StandardAccountID>2110</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2120</AccountID>
+				<AccountDescription>Naturgas- og bygasafgift</AccountDescription>
+				<StandardAccountID>2120</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2130</AccountID>
+				<AccountDescription>Co2-afgift</AccountDescription>
+				<StandardAccountID>2130</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2140</AccountID>
+				<AccountDescription>Øvrige afgifter</AccountDescription>
+				<StandardAccountID>2140</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2150</AccountID>
+				<AccountDescription>Rengøring og renovation (affaldshåndtering)</AccountDescription>
+				<StandardAccountID>2150</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2160</AccountID>
+				<AccountDescription>Reparation og vedligeholdelse</AccountDescription>
+				<StandardAccountID>2160</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2170</AccountID>
+				<AccountDescription>Reparation og vedligeholdelse, ejendom skattemæssigt afskrivningsberettiget, bygning 1</AccountDescription>
+				<StandardAccountID>2170</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2180</AccountID>
+				<AccountDescription>Forsikringer til lokaler og bygninger</AccountDescription>
+				<StandardAccountID>2180</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2190</AccountID>
+				<AccountDescription>Ejendomsskatter</AccountDescription>
+				<StandardAccountID>2190</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2200</AccountID>
+				<AccountDescription>Andre lokaleomkostninger</AccountDescription>
+				<StandardAccountID>2200</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2230</AccountID>
+				<AccountDescription>Småanskaffelser under skattemæssig grænse for småaktiver</AccountDescription>
+				<StandardAccountID>2230</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2240</AccountID>
+				<AccountDescription>Småanskaffelser over skattemæssig grænse for småaktiver</AccountDescription>
+				<StandardAccountID>2240</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2255</AccountID>
+				<AccountDescription>Forskningsomkostninger</AccountDescription>
+				<StandardAccountID>2255</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2260</AccountID>
+				<AccountDescription>Udviklingsomkostninger</AccountDescription>
+				<StandardAccountID>2260</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2265</AccountID>
+				<AccountDescription>Andel af forskningsomkostninger (berettiget til forhøjet skattemæssigt fradrag)</AccountDescription>
+				<StandardAccountID>2265</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2266</AccountID>
+				<AccountDescription>Andel af udviklingsomkostninger (berettiget til forhøjet skattemæssigt fradrag)</AccountDescription>
+				<StandardAccountID>2266</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2280</AccountID>
+				<AccountDescription>Tab på tilgodehavender fra salg og tjenesteydelser</AccountDescription>
+				<StandardAccountID>2280</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2290</AccountID>
+				<AccountDescription>Regulering af nedskrivning på tilgodehavender fra salg og tjenesteydelser</AccountDescription>
+				<StandardAccountID>2290</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2295</AccountID>
+				<AccountDescription>Andel af regulering af nedskrivning på tilgodehavender fra salg og tjenesteydelser  (ej fradragsberettiget skattemæssigt)</AccountDescription>
+				<StandardAccountID>2295</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2310</AccountID>
+				<AccountDescription>It-udstyr (hardware, software inkl. licenser og abonnementer)</AccountDescription>
+				<StandardAccountID>2310</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2350</AccountID>
+				<AccountDescription>Kantineomkostninger</AccountDescription>
+				<StandardAccountID>2350</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2370</AccountID>
+				<AccountDescription>Kontingenter</AccountDescription>
+				<StandardAccountID>2370</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2375</AccountID>
+				<AccountDescription>Aviser og blade</AccountDescription>
+				<StandardAccountID>2375</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2380</AccountID>
+				<AccountDescription>Faglitteratur</AccountDescription>
+				<StandardAccountID>2380</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2390</AccountID>
+				<AccountDescription>Porto og gebyrer</AccountDescription>
+				<StandardAccountID>2390</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2410</AccountID>
+				<AccountDescription>Telefon og internet mv. (kun virksomhed)</AccountDescription>
+				<StandardAccountID>2410</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2430</AccountID>
+				<AccountDescription>Privat andel / fri-telefon (kun klasse A) </AccountDescription>
+				<StandardAccountID>2430</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2450</AccountID>
+				<AccountDescription>Kontorartikler</AccountDescription>
+				<StandardAccountID>2450</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2460</AccountID>
+				<AccountDescription>Leje og operationelle leasingydelser (ekskl. husleje)</AccountDescription>
+				<StandardAccountID>2460</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2470</AccountID>
+				<AccountDescription>Rejseomkostninger (administrationsomkostning)</AccountDescription>
+				<StandardAccountID>2470</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2480</AccountID>
+				<AccountDescription>Vikarassistance</AccountDescription>
+				<StandardAccountID>2480</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2510</AccountID>
+				<AccountDescription>Konsulentydelser</AccountDescription>
+				<StandardAccountID>2510</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2530</AccountID>
+				<AccountDescription>Leasingomkostninger, personbiler</AccountDescription>
+				<StandardAccountID>2530</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2540</AccountID>
+				<AccountDescription>Driftsomkostninger, personbiler</AccountDescription>
+				<StandardAccountID>2540</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2548</AccountID>
+				<AccountDescription>Leasingomkostninger, blandet benyttet personbil (kun klasse A) </AccountDescription>
+				<StandardAccountID>2548</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2550</AccountID>
+				<AccountDescription>Privat andel af biludgifter (kun klasse A)</AccountDescription>
+				<StandardAccountID>2550</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2560</AccountID>
+				<AccountDescription>Driftsomkostninger, varebiler</AccountDescription>
+				<StandardAccountID>2560</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2567</AccountID>
+				<AccountDescription>Leasingomkostninger, blandet benyttet varebil (kun klasse A)</AccountDescription>
+				<StandardAccountID>2567</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2569</AccountID>
+				<AccountDescription>Leasingomkostninger, varebiler</AccountDescription>
+				<StandardAccountID>2569</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2580</AccountID>
+				<AccountDescription>Privat andel af blandet benyttet varebil (kun klasse A)</AccountDescription>
+				<StandardAccountID>2580</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2620</AccountID>
+				<AccountDescription>Parkeringsomkostninger</AccountDescription>
+				<StandardAccountID>2620</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2650</AccountID>
+				<AccountDescription>Øvrige forsikringer</AccountDescription>
+				<StandardAccountID>2650</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2660</AccountID>
+				<AccountDescription>Offentlige gebyrer og bøder (ej fradragsberettiget skattemæssigt)</AccountDescription>
+				<StandardAccountID>2660</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2670</AccountID>
+				<AccountDescription>Revision og regnskabsmæssig assistance</AccountDescription>
+				<StandardAccountID>2670</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2680</AccountID>
+				<AccountDescription>Advokatmæssig assistance</AccountDescription>
+				<StandardAccountID>2680</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2690</AccountID>
+				<AccountDescription>Øvrige rådgivningshonorarer</AccountDescription>
+				<StandardAccountID>2690</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2700</AccountID>
+				<AccountDescription>Ej skattemæssigt fradragsberettigede rådgivningshonorarer</AccountDescription>
+				<StandardAccountID>2700</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2710</AccountID>
+				<AccountDescription>Administrationsvederlag/management fee</AccountDescription>
+				<StandardAccountID>2710</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2720</AccountID>
+				<AccountDescription>Øreafrunding/kassedifferencer</AccountDescription>
+				<StandardAccountID>2720</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2810</AccountID>
+				<AccountDescription>Andre eksterne omkostninger</AccountDescription>
+				<StandardAccountID>2810</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2845</AccountID>
+				<AccountDescription>AM Bidragspligtig A-Indkomst</AccountDescription>
+				<StandardAccountID>2845</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2846</AccountID>
+				<AccountDescription>AM Bidragsfri A-Indkomst</AccountDescription>
+				<StandardAccountID>2846</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2847</AccountID>
+				<AccountDescription>B-honorar</AccountDescription>
+				<StandardAccountID>2847</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2860</AccountID>
+				<AccountDescription>Feriepenge og SH-tillæg</AccountDescription>
+				<StandardAccountID>2860</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2865</AccountID>
+				<AccountDescription>Ferietillæg</AccountDescription>
+				<StandardAccountID>2865</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2866</AccountID>
+				<AccountDescription>Feriepengeforpligtelse, regulering</AccountDescription>
+				<StandardAccountID>2866</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2870</AccountID>
+				<AccountDescription>Jubilæumsgratiale og fratrædelsesgodtgørelse </AccountDescription>
+				<StandardAccountID>2870</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2880</AccountID>
+				<AccountDescription>Bestyrelseshonorar</AccountDescription>
+				<StandardAccountID>2880</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2885</AccountID>
+				<AccountDescription>Lønrefusioner</AccountDescription>
+				<StandardAccountID>2885</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2887</AccountID>
+				<AccountDescription>Personalegoder</AccountDescription>
+				<StandardAccountID>2887</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2888</AccountID>
+				<AccountDescription>Fri bil</AccountDescription>
+				<StandardAccountID>2888</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2895</AccountID>
+				<AccountDescription>Skattefri rejse- og befordringsgodtgørelse </AccountDescription>
+				<StandardAccountID>2895</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2896</AccountID>
+				<AccountDescription>Kursusudgifter</AccountDescription>
+				<StandardAccountID>2896</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2897</AccountID>
+				<AccountDescription>ATP, medarbejder</AccountDescription>
+				<StandardAccountID>2897</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2898</AccountID>
+				<AccountDescription>ATP, arbejdsgiver</AccountDescription>
+				<StandardAccountID>2898</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2910</AccountID>
+				<AccountDescription>Pensioner, arbejdsgiver</AccountDescription>
+				<StandardAccountID>2910</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2920</AccountID>
+				<AccountDescription>Vederlag til afløsning af pensionstilsagn </AccountDescription>
+				<StandardAccountID>2920</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2925</AccountID>
+				<AccountDescription>Øvrige pensionsomkostninger</AccountDescription>
+				<StandardAccountID>2925</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2930</AccountID>
+				<AccountDescription>Øvrige omkostninger til social sikring</AccountDescription>
+				<StandardAccountID>2930</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2946</AccountID>
+				<AccountDescription>Lønsumsafgift</AccountDescription>
+				<StandardAccountID>2946</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>2947</AccountID>
+				<AccountDescription>Arbejdsskadeforsikringer</AccountDescription>
+				<StandardAccountID>2947</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3000</AccountID>
+				<AccountDescription>Af- og nedskrivninger af erhvervede immaterielle anlægsaktiver</AccountDescription>
+				<StandardAccountID>3000</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3010</AccountID>
+				<AccountDescription>Af- og nedskrivninger af goodwill</AccountDescription>
+				<StandardAccountID>3010</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3020</AccountID>
+				<AccountDescription>Af- og nedskrivninger af grunde og bygninger</AccountDescription>
+				<StandardAccountID>3020</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3030</AccountID>
+				<AccountDescription>Af- og nedskrivninger af produktionsanlæg og maskiner</AccountDescription>
+				<StandardAccountID>3030</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3040</AccountID>
+				<AccountDescription>Af- og nedskrivninger af indretning af lejede lokaler</AccountDescription>
+				<StandardAccountID>3040</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3050</AccountID>
+				<AccountDescription>Af- og nedskrivninger af andre anlæg, driftsmateriel og inventar</AccountDescription>
+				<StandardAccountID>3050</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3060</AccountID>
+				<AccountDescription>Af- og nedskrivninger af software</AccountDescription>
+				<StandardAccountID>3060</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3070</AccountID>
+				<AccountDescription>Af- og nedskrivninger af finansielt leasede grunde og bygninger</AccountDescription>
+				<StandardAccountID>3070</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3080</AccountID>
+				<AccountDescription>Af- og nedskrivninger af finansielt leasede produktionsanlæg og maskiner</AccountDescription>
+				<StandardAccountID>3080</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3090</AccountID>
+				<AccountDescription>Af- og nedskrivninger af finansielt leasede andre anlæg, driftsmateriel og inventar</AccountDescription>
+				<StandardAccountID>3090</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3095</AccountID>
+				<AccountDescription>Privat andel af af- og nedskrivninger (kun klasse A)</AccountDescription>
+				<StandardAccountID>3095</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3097</AccountID>
+				<AccountDescription>Gevinst ved salg af andre anlæg, driftsmateriel og inventar blandet benyttet (kun klasse A)</AccountDescription>
+				<StandardAccountID>3097</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3099</AccountID>
+				<AccountDescription>Tab ved salg af andre anlæg, driftsmateriel og inventar blandet benyttet (kun klasse A)</AccountDescription>
+				<StandardAccountID>3099</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3130</AccountID>
+				<AccountDescription>Nedskrivning af omsætningsaktiver, som overstiger normale nedskrivninger</AccountDescription>
+				<StandardAccountID>3130</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3160</AccountID>
+				<AccountDescription>Tab ved salg af immaterielle anlægsaktiver</AccountDescription>
+				<StandardAccountID>3160</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3165</AccountID>
+				<AccountDescription>Tab ved salg af materielle anlægsaktiver</AccountDescription>
+				<StandardAccountID>3165</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3170</AccountID>
+				<AccountDescription>Øvrige andre driftsomkostninger</AccountDescription>
+				<StandardAccountID>3170</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3185</AccountID>
+				<AccountDescription>Værdireguleringer af investeringsejendomme</AccountDescription>
+				<StandardAccountID>3185</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3193</AccountID>
+				<AccountDescription>Modtagne udbytter fra tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3193</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3194</AccountID>
+				<AccountDescription>Gevinst ved afhændelse af kapitalandele i tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3194</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3196</AccountID>
+				<AccountDescription>Tab ved afhændelse af kapitalandele i tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3196</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3197</AccountID>
+				<AccountDescription>Nedskrivning af kapitalandele i tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3197</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3198</AccountID>
+				<AccountDescription>Tilbageførsel af nedskrivning af kapitalandele i tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3198</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3200</AccountID>
+				<AccountDescription>Øvrige indtægter af kapitalandele i tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3200</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3211</AccountID>
+				<AccountDescription>Modtagne udbytter fra associerede virksomheder</AccountDescription>
+				<StandardAccountID>3211</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3212</AccountID>
+				<AccountDescription>Gevinst ved afhændelse af kapitalandele i associerede virksomheder</AccountDescription>
+				<StandardAccountID>3212</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3214</AccountID>
+				<AccountDescription>Tab ved afhændelse af kapitalandele i associerede virksomheder</AccountDescription>
+				<StandardAccountID>3214</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3215</AccountID>
+				<AccountDescription>Nedskrivning af kapitalandele i associerede virksomheder</AccountDescription>
+				<StandardAccountID>3215</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3216</AccountID>
+				<AccountDescription>Tilbageførsel af nedskrivning af kapitalandele i associerede virksomheder</AccountDescription>
+				<StandardAccountID>3216</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3217</AccountID>
+				<AccountDescription>Øvrige indtægter af kapitalandele i associerede virksomheder</AccountDescription>
+				<StandardAccountID>3217</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3221</AccountID>
+				<AccountDescription>Modtagne udbytter fra kapitalinteresser</AccountDescription>
+				<StandardAccountID>3221</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3222</AccountID>
+				<AccountDescription>Gevinst ved afhændelse af kapitalinteresser</AccountDescription>
+				<StandardAccountID>3222</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3224</AccountID>
+				<AccountDescription>Tab ved afhændelse af kapitalinteresser</AccountDescription>
+				<StandardAccountID>3224</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3225</AccountID>
+				<AccountDescription>Nedskrivning af kapitalinteresser</AccountDescription>
+				<StandardAccountID>3225</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3226</AccountID>
+				<AccountDescription>Tilbageførsel af nedskrivning af kapitalinteresser</AccountDescription>
+				<StandardAccountID>3226</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3230</AccountID>
+				<AccountDescription>Øvrige indtægter af kapitalinteresser</AccountDescription>
+				<StandardAccountID>3230</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3252</AccountID>
+				<AccountDescription>Resultatandele, der hidrører fra tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3252</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3262</AccountID>
+				<AccountDescription>Resultatandele, der hidrører fra associerede virksomheder</AccountDescription>
+				<StandardAccountID>3262</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3272</AccountID>
+				<AccountDescription>Resultatandele, der hidrører fra kapitalinteresser</AccountDescription>
+				<StandardAccountID>3272</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3380</AccountID>
+				<AccountDescription>Udbytte fra unoterede porteføljeaktier (bruttoudbytte)</AccountDescription>
+				<StandardAccountID>3380</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3385</AccountID>
+				<AccountDescription>Kursgevinster af andre kapitalandele, værdipapirer og tilgodehavender, der er anlægsaktiver</AccountDescription>
+				<StandardAccountID>3385</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3390</AccountID>
+				<AccountDescription>Renteindtægter af andre kapitalandele, værdipapirer og tilgodehavender, der er anlægsaktiver</AccountDescription>
+				<StandardAccountID>3390</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3395</AccountID>
+				<AccountDescription>Værdiregulering af andre kapitalandele og værdipaprer, der er anlægsaktiver</AccountDescription>
+				<StandardAccountID>3395</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3400</AccountID>
+				<AccountDescription>Øvrige indtægter af andre kapitalandele, værdipapirer og tilgodehavender, der er anlægsaktiver</AccountDescription>
+				<StandardAccountID>3400</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3440</AccountID>
+				<AccountDescription>Andre finansielle indtægter fra tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3440</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3445</AccountID>
+				<AccountDescription>Renteindtægter fra tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3445</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3470</AccountID>
+				<AccountDescription>Renter fra banker</AccountDescription>
+				<StandardAccountID>3470</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3490</AccountID>
+				<AccountDescription>Renter vedr. tilgodehavende fra salg af varer og tjenesteydelser</AccountDescription>
+				<StandardAccountID>3490</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3510</AccountID>
+				<AccountDescription>Rentetillæg mv. fra det offentlige (ej skattepligtig)</AccountDescription>
+				<StandardAccountID>3510</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3530</AccountID>
+				<AccountDescription>Øvrige finansielle indtægter</AccountDescription>
+				<StandardAccountID>3530</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3535</AccountID>
+				<AccountDescription>Valutakursregulering (gevinst)</AccountDescription>
+				<StandardAccountID>3535</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3536</AccountID>
+				<AccountDescription>Værdiregulering af børsnoterede værdipapirer, der er omsætningsaktiver</AccountDescription>
+				<StandardAccountID>3536</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3537</AccountID>
+				<AccountDescription>Værdiregulering af andre kapitalandele og værdipaprer, der er omsætningsaktiver</AccountDescription>
+				<StandardAccountID>3537</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3560</AccountID>
+				<AccountDescription>Nedskrivning af finansielle anlægs- og omsætningsaktiver</AccountDescription>
+				<StandardAccountID>3560</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3590</AccountID>
+				<AccountDescription>Finansielle omkostninger, der hidrører fra tilknyttede virksomheder</AccountDescription>
+				<StandardAccountID>3590</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3596</AccountID>
+				<AccountDescription>Valutakursreguleringer, udenlandske dattervirksomheder</AccountDescription>
+				<StandardAccountID>3596</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3610</AccountID>
+				<AccountDescription>Valutakursregulering (tab)</AccountDescription>
+				<StandardAccountID>3610</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3630</AccountID>
+				<AccountDescription>Kurstab på likvider, bankgæld og prioritetsgæld</AccountDescription>
+				<StandardAccountID>3630</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3640</AccountID>
+				<AccountDescription>Renter på finansiel leasinggæld </AccountDescription>
+				<StandardAccountID>3640</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3650</AccountID>
+				<AccountDescription>Renter vedr. leverandører af varer og tjenesteydelser</AccountDescription>
+				<StandardAccountID>3650</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3670</AccountID>
+				<AccountDescription>Renter til banker og realkreditinstitutter</AccountDescription>
+				<StandardAccountID>3670</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3675</AccountID>
+				<AccountDescription>Renter til det offentlige (ej fradragsberettiget skattemæssigt)</AccountDescription>
+				<StandardAccountID>3675</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3690</AccountID>
+				<AccountDescription>Øvrige finansielle omkostninger</AccountDescription>
+				<StandardAccountID>3690</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3740</AccountID>
+				<AccountDescription>Årets skat (skat af årets skattepligtige indkomst)</AccountDescription>
+				<StandardAccountID>3740</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3760</AccountID>
+				<AccountDescription>Årets regulering af udskudt skat</AccountDescription>
+				<StandardAccountID>3760</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3780</AccountID>
+				<AccountDescription>Regulering af skat vedrørende tidligere år</AccountDescription>
+				<StandardAccountID>3780</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>3810</AccountID>
+				<AccountDescription>Andre skatter</AccountDescription>
+				<StandardAccountID>3810</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5010</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, Kostpris primo</AccountDescription>
+				<StandardAccountID>5010</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5011</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, Årets tilgange</AccountDescription>
+				<StandardAccountID>5011</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5012</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, Årets afgange</AccountDescription>
+				<StandardAccountID>5012</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5015</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, Intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>5015</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5020</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, opskrivninger primo</AccountDescription>
+				<StandardAccountID>5020</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5021</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, Årets opskrivninger</AccountDescription>
+				<StandardAccountID>5021</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5022</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, årets tilbageførsler af tidligere års opskrivninger</AccountDescription>
+				<StandardAccountID>5022</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5030</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, Af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5030</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5031</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, Årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5031</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5032</AccountID>
+				<AccountDescription>Færdiggjort udviklingsprojekter, herunder patenter og lignende rettigheder, der stammer fra udviklingsprojekter, Tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5032</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5042</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, kostpris primo</AccountDescription>
+				<StandardAccountID>5042</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5043</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, årets tilgange</AccountDescription>
+				<StandardAccountID>5043</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5044</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, årets afgange</AccountDescription>
+				<StandardAccountID>5044</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5050</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, Opskrivninger primo</AccountDescription>
+				<StandardAccountID>5050</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5051</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, Årets opskrivninger</AccountDescription>
+				<StandardAccountID>5051</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5052</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, Tilbageførte opskrivninger fra tidligere år</AccountDescription>
+				<StandardAccountID>5052</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5055</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, Af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5055</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5056</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5056</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5057</AccountID>
+				<AccountDescription>Erhvervede immaterielle anlægsaktiver, tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5057</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5062</AccountID>
+				<AccountDescription>Goodwill, kostpris primo</AccountDescription>
+				<StandardAccountID>5062</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5063</AccountID>
+				<AccountDescription>Goodwill, årets tilgange</AccountDescription>
+				<StandardAccountID>5063</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5064</AccountID>
+				<AccountDescription>Goodwill, årets afgange</AccountDescription>
+				<StandardAccountID>5064</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5075</AccountID>
+				<AccountDescription>Goodwill, af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5075</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5076</AccountID>
+				<AccountDescription>Goodwill, årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5076</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5077</AccountID>
+				<AccountDescription>Goodwill, tilbageførte afskrivninger</AccountDescription>
+				<StandardAccountID>5077</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5085</AccountID>
+				<AccountDescription>Udviklingsprojekter under udførelse og forudbetalinger for immaterielle anlægsaktiver, Kostpris primo</AccountDescription>
+				<StandardAccountID>5085</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5090</AccountID>
+				<AccountDescription>Udviklingsprojekter under udførelse og forudbetalinger for immaterielle anlægsaktiver, Årets tilgange</AccountDescription>
+				<StandardAccountID>5090</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5095</AccountID>
+				<AccountDescription>Udviklingsprojekter under udførelse og forudbetalinger for immaterielle anlægsaktiver, Årets afgange</AccountDescription>
+				<StandardAccountID>5095</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5100</AccountID>
+				<AccountDescription>Udviklingsprojekter under udførelse og forudbetalinger for immaterielle anlægsaktiver, Intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>5100</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5110</AccountID>
+				<AccountDescription>Udviklingsprojekter under udførelse og forudbetalinger for immaterielle anlægsaktiver, Af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5110</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5111</AccountID>
+				<AccountDescription>Udviklingsprojekter under udførelse og forudbetalinger for immaterielle anlægsaktiver, Årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5111</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5112</AccountID>
+				<AccountDescription>Udviklingsprojekter under udførelse og forudbetalinger for immaterielle anlægsaktiver, Tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5112</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5160</AccountID>
+				<AccountDescription>Investeringsejendomme, kostpris primo</AccountDescription>
+				<StandardAccountID>5160</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5170</AccountID>
+				<AccountDescription>Investeringsejendomme, årets tilgange </AccountDescription>
+				<StandardAccountID>5170</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5180</AccountID>
+				<AccountDescription>Investeringsejendomme, årets afgange </AccountDescription>
+				<StandardAccountID>5180</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5185</AccountID>
+				<AccountDescription>Investeringsejendomme, intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>5185</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5190</AccountID>
+				<AccountDescription>Investeringsejendomme, årets forbedringer</AccountDescription>
+				<StandardAccountID>5190</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5200</AccountID>
+				<AccountDescription>Investeringsejendomme, værdireguleringer primo</AccountDescription>
+				<StandardAccountID>5200</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5201</AccountID>
+				<AccountDescription>Investeringsejendomme, årets værdireguleringer</AccountDescription>
+				<StandardAccountID>5201</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5205</AccountID>
+				<AccountDescription>Investeringsejendomme, Af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5205</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5210</AccountID>
+				<AccountDescription>Investeringsejendomme, årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5210</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5220</AccountID>
+				<AccountDescription>Investeringsejendomme, tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5220</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5240</AccountID>
+				<AccountDescription>Investeringsejendomme under opførelse, kostpris primo</AccountDescription>
+				<StandardAccountID>5240</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5250</AccountID>
+				<AccountDescription>Investeringsejendomme under opførelse, årets tilgange </AccountDescription>
+				<StandardAccountID>5250</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5260</AccountID>
+				<AccountDescription>Investeringsejendomme under opførelse, årets afgange </AccountDescription>
+				<StandardAccountID>5260</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5265</AccountID>
+				<AccountDescription>Investeringsejendomme, intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>5265</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5280</AccountID>
+				<AccountDescription>Investeringsejendomme under opførelse, øvrige værdireguleringer primo</AccountDescription>
+				<StandardAccountID>5280</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5281</AccountID>
+				<AccountDescription>Investeringsejendomme under opførelse, årets værdireguleringer</AccountDescription>
+				<StandardAccountID>5281</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5282</AccountID>
+				<AccountDescription>Investeringsejendomme under opførelse, nedskrivninger, primo</AccountDescription>
+				<StandardAccountID>5282</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5290</AccountID>
+				<AccountDescription>Investeringsejendomme under opførelse, årets nedskrivninger</AccountDescription>
+				<StandardAccountID>5290</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5300</AccountID>
+				<AccountDescription>Investeringsejendomme under opførelse, tilbageførte nedskrivninger</AccountDescription>
+				<StandardAccountID>5300</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5320</AccountID>
+				<AccountDescription>Grunde og bygninger, kostpris primo</AccountDescription>
+				<StandardAccountID>5320</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5330</AccountID>
+				<AccountDescription>Grunde og bygninger, årets tilgange </AccountDescription>
+				<StandardAccountID>5330</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5340</AccountID>
+				<AccountDescription>Grunde og bygninger, årets afgange </AccountDescription>
+				<StandardAccountID>5340</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5350</AccountID>
+				<AccountDescription>Grunde og bygninger, årets forbedringer</AccountDescription>
+				<StandardAccountID>5350</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5370</AccountID>
+				<AccountDescription>Grunde og bygninger, værdireguleringer primo</AccountDescription>
+				<StandardAccountID>5370</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5371</AccountID>
+				<AccountDescription>Grunde og bygninger, årets værdireguleringer</AccountDescription>
+				<StandardAccountID>5371</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5372</AccountID>
+				<AccountDescription>Grunde og bygninger, Af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5372</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5390</AccountID>
+				<AccountDescription>Grunde og bygninger, årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5390</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5400</AccountID>
+				<AccountDescription>Grunde og bygninger, tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5400</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5420</AccountID>
+				<AccountDescription>Produktionsanlæg og maskiner, kostpris primo</AccountDescription>
+				<StandardAccountID>5420</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5430</AccountID>
+				<AccountDescription>Produktionsanlæg og maskiner, årets tilgange</AccountDescription>
+				<StandardAccountID>5430</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5440</AccountID>
+				<AccountDescription>Produktionsanlæg og maskiner, årets afgange</AccountDescription>
+				<StandardAccountID>5440</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5450</AccountID>
+				<AccountDescription>Produktionsanlæg og maskiner, Værdireguleringer primo</AccountDescription>
+				<StandardAccountID>5450</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5451</AccountID>
+				<AccountDescription>Produktionsanlæg og maskiner, Årets værdireguleringer</AccountDescription>
+				<StandardAccountID>5451</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5452</AccountID>
+				<AccountDescription>Produktionsanlæg og maskiner, Af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5452</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5470</AccountID>
+				<AccountDescription>Produktionsanlæg og maskiner, årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5470</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5480</AccountID>
+				<AccountDescription>Produktionsanlæg og maskiner, tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5480</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5500</AccountID>
+				<AccountDescription>Indretning af lejede lokaler, kostpris primo</AccountDescription>
+				<StandardAccountID>5500</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5510</AccountID>
+				<AccountDescription>Indretning af lejede lokaler, årets tilgange</AccountDescription>
+				<StandardAccountID>5510</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5520</AccountID>
+				<AccountDescription>Indretning af lejede lokaler, årets afgange</AccountDescription>
+				<StandardAccountID>5520</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5530</AccountID>
+				<AccountDescription>Indretning af lejede lokaler, Værdireguleringer primo</AccountDescription>
+				<StandardAccountID>5530</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5531</AccountID>
+				<AccountDescription>Indretning af lejede lokaler, Årets værdireguleringer</AccountDescription>
+				<StandardAccountID>5531</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5532</AccountID>
+				<AccountDescription>Indretning af lejede lokaler, Af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5532</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5540</AccountID>
+				<AccountDescription>Indretning af lejede lokaler, årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5540</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5550</AccountID>
+				<AccountDescription>Indretning af lejede lokaler, tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5550</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5570</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar, kostpris primo</AccountDescription>
+				<StandardAccountID>5570</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5580</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar, årets tilgange</AccountDescription>
+				<StandardAccountID>5580</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5590</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar, årets afgange</AccountDescription>
+				<StandardAccountID>5590</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5600</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar, Værdireguleringer primo</AccountDescription>
+				<StandardAccountID>5600</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5601</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar, Årets værdireguleringer</AccountDescription>
+				<StandardAccountID>5601</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5602</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar, Af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5602</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5610</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar, årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5610</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5620</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar, tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5620</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5640</AccountID>
+				<AccountDescription>Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver, kostpris primo</AccountDescription>
+				<StandardAccountID>5640</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5650</AccountID>
+				<AccountDescription>Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver, årets tilgange</AccountDescription>
+				<StandardAccountID>5650</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5660</AccountID>
+				<AccountDescription>Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver, årets afgange</AccountDescription>
+				<StandardAccountID>5660</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5670</AccountID>
+				<AccountDescription>Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver, værdireguleringer primo</AccountDescription>
+				<StandardAccountID>5670</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5671</AccountID>
+				<AccountDescription>Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver, årets værdireguleringer</AccountDescription>
+				<StandardAccountID>5671</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5675</AccountID>
+				<AccountDescription>Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver, nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5675</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5676</AccountID>
+				<AccountDescription>Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver, årets nedskrivninger</AccountDescription>
+				<StandardAccountID>5676</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5677</AccountID>
+				<AccountDescription>Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver, tilbageførte nedskrivninger</AccountDescription>
+				<StandardAccountID>5677</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5682</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, kostpris primo (kun klasse A)</AccountDescription>
+				<StandardAccountID>5682</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5683</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, Årets tilgange (kun klasse A)</AccountDescription>
+				<StandardAccountID>5683</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5684</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, Årets afgange (kun klasse A)</AccountDescription>
+				<StandardAccountID>5684</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5685</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, Værdireguleringer primo (kun klasse A)</AccountDescription>
+				<StandardAccountID>5685</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5686</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, Årets værdireguleringer (kun klasse A)</AccountDescription>
+				<StandardAccountID>5686</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5687</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, Af- og nedskrivninger primo (kun klasse A)</AccountDescription>
+				<StandardAccountID>5687</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5688</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, Årets af- og nedskrivninger (kun klasse A)</AccountDescription>
+				<StandardAccountID>5688</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5689</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, tilbageførte af- og nedskrivninger (kun klasse A)</AccountDescription>
+				<StandardAccountID>5689</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5690</AccountID>
+				<AccountDescription>Andre anlæg, driftsmateriel og inventar blandet benyttet, Gevinst og tab (kun klasse A)</AccountDescription>
+				<StandardAccountID>5690</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5710</AccountID>
+				<AccountDescription>Finansielt leasede aktiver, Kostpris primo</AccountDescription>
+				<StandardAccountID>5710</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5720</AccountID>
+				<AccountDescription>Finansielt leasede aktiver, årets tilgange</AccountDescription>
+				<StandardAccountID>5720</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5730</AccountID>
+				<AccountDescription>Finansielt leasede aktiver, årets afgange</AccountDescription>
+				<StandardAccountID>5730</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5740</AccountID>
+				<AccountDescription>Finansielt leasede aktiver, værdireguleringer primo</AccountDescription>
+				<StandardAccountID>5740</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5741</AccountID>
+				<AccountDescription>Finansielt leasede aktiver, årets værdireguleringer</AccountDescription>
+				<StandardAccountID>5741</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5745</AccountID>
+				<AccountDescription>Finansielt leasede aktiver, af- og nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5745</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5750</AccountID>
+				<AccountDescription>Finansielt leasede aktiver, årets af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5750</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5760</AccountID>
+				<AccountDescription>Finansielt leasede aktiver, tilbageførte af- og nedskrivninger</AccountDescription>
+				<StandardAccountID>5760</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5800</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, kostpris primo</AccountDescription>
+				<StandardAccountID>5800</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5810</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, årets tilgange</AccountDescription>
+				<StandardAccountID>5810</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5820</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, årets afgange</AccountDescription>
+				<StandardAccountID>5820</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5825</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>5825</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5829</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, opskrivninger primo</AccountDescription>
+				<StandardAccountID>5829</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5830</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, årets opskrivninger</AccountDescription>
+				<StandardAccountID>5830</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5831</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, årets tilbageførsler af tidligere års opskrivninger</AccountDescription>
+				<StandardAccountID>5831</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5835</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5835</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5836</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, årets nedskrivninger</AccountDescription>
+				<StandardAccountID>5836</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5837</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder, årets tilbageførsler af tidligere års nedskrivninger</AccountDescription>
+				<StandardAccountID>5837</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5842</AccountID>
+				<AccountDescription>Tilgodehavender hos tilknyttede virksomheder (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5842</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5843</AccountID>
+				<AccountDescription>Tilgodehavender hos tilknyttede virksomheder, nedskrivninger primo (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5843</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5844</AccountID>
+				<AccountDescription>Tilgodehavender hos tilknyttede virksomheder, nedskrivninger i årets løb (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5844</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5845</AccountID>
+				<AccountDescription>Tilgodehavender hos tilknyttede virksomheder, tilbageførsel af tidligere års nedskrivninger (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5845</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5852</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, kostpris primo</AccountDescription>
+				<StandardAccountID>5852</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5853</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, årets tilgange</AccountDescription>
+				<StandardAccountID>5853</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5854</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, årets afgange</AccountDescription>
+				<StandardAccountID>5854</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5855</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>5855</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5860</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, opskrivninger primo</AccountDescription>
+				<StandardAccountID>5860</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5861</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, årets opskrivninger</AccountDescription>
+				<StandardAccountID>5861</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5862</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, årets tilbageførsler af tidligere års opskrivninger</AccountDescription>
+				<StandardAccountID>5862</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5870</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5870</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5871</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, årets nedskrivninger</AccountDescription>
+				<StandardAccountID>5871</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5872</AccountID>
+				<AccountDescription>Kapitalandele i associerede virksomheder, årets tilbageførsler af tidligere års nedskrivninger</AccountDescription>
+				<StandardAccountID>5872</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5882</AccountID>
+				<AccountDescription>Tilgodehavender hos associerede virksomheder (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5882</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5883</AccountID>
+				<AccountDescription>Tilgodehavender hos associerede virksomheder, nedskrivninger primo (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5883</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5884</AccountID>
+				<AccountDescription>Tilgodehavender hos associerede virksomheder, nedskrivninger i årets løb (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5884</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5885</AccountID>
+				<AccountDescription>Tilgodehavender hos associerede virksomheder, tilbageførsel af tidligere års nedskrivninger (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5885</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5900</AccountID>
+				<AccountDescription>Kapitalinteresser, kostpris primo</AccountDescription>
+				<StandardAccountID>5900</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5910</AccountID>
+				<AccountDescription>Kapitalinteresser, årets tilgange</AccountDescription>
+				<StandardAccountID>5910</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5920</AccountID>
+				<AccountDescription>Kapitalinteresser, årets afgange</AccountDescription>
+				<StandardAccountID>5920</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5925</AccountID>
+				<AccountDescription>Kapitalinteresser, intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>5925</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5929</AccountID>
+				<AccountDescription>Kapitalinteresser, opskrivninger primo</AccountDescription>
+				<StandardAccountID>5929</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5930</AccountID>
+				<AccountDescription>Kapitalinteresser, årets opskrivninger</AccountDescription>
+				<StandardAccountID>5930</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5931</AccountID>
+				<AccountDescription>Kapitalinteresser, årets tilbageførsler af tidligere års opskrivninger</AccountDescription>
+				<StandardAccountID>5931</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5935</AccountID>
+				<AccountDescription>Kapitalinteresser, nedskrivninger primo</AccountDescription>
+				<StandardAccountID>5935</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5940</AccountID>
+				<AccountDescription>Kapitalinteresser, årets nedskrivninger</AccountDescription>
+				<StandardAccountID>5940</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5950</AccountID>
+				<AccountDescription>Kapitalinteresser, årets tilbageførsler af tidligere års nedskrivninger</AccountDescription>
+				<StandardAccountID>5950</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5970</AccountID>
+				<AccountDescription>Tilgodehavender hos kapitalinteresser (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5970</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5980</AccountID>
+				<AccountDescription>Tilgodehavender hos kapitalinteresser, nedskrivninger primo (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5980</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5984</AccountID>
+				<AccountDescription>Tilgodehavender hos kapitalinteresser, nedskrivninger i årets løb (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5984</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>5985</AccountID>
+				<AccountDescription>Tilgodehavender hos kapitalinteresser, tilbageførsel af tidligere års nedskrivninger (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>5985</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6000</AccountID>
+				<AccountDescription>Andre værdipapirer og kapitalandele</AccountDescription>
+				<StandardAccountID>6000</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6020</AccountID>
+				<AccountDescription>Udskudte skatteaktiver (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>6020</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6030</AccountID>
+				<AccountDescription>Øvrige tilgodehavender (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>6030</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6040</AccountID>
+				<AccountDescription>Deposita (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>6040</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6061</AccountID>
+				<AccountDescription>Tilgodehavender hos direktionen (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>6061</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6062</AccountID>
+				<AccountDescription>Tilgodehavender hos bestyrelsen (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>6062</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6063</AccountID>
+				<AccountDescription>Tilgodehavender hos tilsynsråd (anlægsaktiv)</AccountDescription>
+				<StandardAccountID>6063</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6064</AccountID>
+				<AccountDescription>Tilgodehavender hos repræsentantskab (anlægsaktiv) </AccountDescription>
+				<StandardAccountID>6064</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6080</AccountID>
+				<AccountDescription>Råvarer og hjælpematerialer, kostpris primo</AccountDescription>
+				<StandardAccountID>6080</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6081</AccountID>
+				<AccountDescription>Råvarer og hjælpematerialer, årets tilgange</AccountDescription>
+				<StandardAccountID>6081</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6082</AccountID>
+				<AccountDescription>Råvarer og hjælpematerialer, årets afgange</AccountDescription>
+				<StandardAccountID>6082</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6083</AccountID>
+				<AccountDescription>Råvarer og hjælpematerialer, intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>6083</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6085</AccountID>
+				<AccountDescription>Råvarer og hjælpematerialer, nedskrivninger primo</AccountDescription>
+				<StandardAccountID>6085</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6090</AccountID>
+				<AccountDescription>Råvarer og hjælpematerialer, årets nedskrivning</AccountDescription>
+				<StandardAccountID>6090</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6091</AccountID>
+				<AccountDescription>Råvarer og hjælpematerialer, tilbageførsel af tidligere års nedskrivninger</AccountDescription>
+				<StandardAccountID>6091</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6110</AccountID>
+				<AccountDescription>Varer under fremstilling, kostpris primo</AccountDescription>
+				<StandardAccountID>6110</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6111</AccountID>
+				<AccountDescription>Varer under fremstilling, årets tilgange</AccountDescription>
+				<StandardAccountID>6111</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6112</AccountID>
+				<AccountDescription>Varer under fremstilling, årets afgange</AccountDescription>
+				<StandardAccountID>6112</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6113</AccountID>
+				<AccountDescription>Varer under fremstilling, intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>6113</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6115</AccountID>
+				<AccountDescription>Varer under fremstilling, nedskrivninger primo</AccountDescription>
+				<StandardAccountID>6115</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6120</AccountID>
+				<AccountDescription>Varer under fremstilling, årets nedskrivning</AccountDescription>
+				<StandardAccountID>6120</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6121</AccountID>
+				<AccountDescription>Varer under fremstilling, tilbageførsel af tidligere års nedskrivninger</AccountDescription>
+				<StandardAccountID>6121</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6140</AccountID>
+				<AccountDescription>Fremstillede varer og handelsvarer, kostpris primo</AccountDescription>
+				<StandardAccountID>6140</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6141</AccountID>
+				<AccountDescription>Fremstillede varer og handelsvarer, årets tilgange</AccountDescription>
+				<StandardAccountID>6141</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6142</AccountID>
+				<AccountDescription>Fremstillede varer og handelsvarer, årets afgange</AccountDescription>
+				<StandardAccountID>6142</StandardAccountID>
+				<AccountType>Sale</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6143</AccountID>
+				<AccountDescription>Fremstillede varer og handelsvarer, intern overførsel til/fra andre poster</AccountDescription>
+				<StandardAccountID>6143</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6145</AccountID>
+				<AccountDescription>Fremstillede varer og handelsvarer, nedskrivninger primo</AccountDescription>
+				<StandardAccountID>6145</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6150</AccountID>
+				<AccountDescription>Fremstillede varer og handelsvarer, årets nedskrivning</AccountDescription>
+				<StandardAccountID>6150</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6151</AccountID>
+				<AccountDescription>Fremstillede varer og handelsvarer, tilbageførsel af tidligere års nedskrivninger</AccountDescription>
+				<StandardAccountID>6151</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6170</AccountID>
+				<AccountDescription>Forudbetalinger for varer</AccountDescription>
+				<StandardAccountID>6170</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6190</AccountID>
+				<AccountDescription>Tilgodehavender fra salg og tjenesteydelser</AccountDescription>
+				<StandardAccountID>6190</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6200</AccountID>
+				<AccountDescription>Tilgodehavender fra salg og tjenesteydelser, nedskrivninger primo</AccountDescription>
+				<StandardAccountID>6200</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6201</AccountID>
+				<AccountDescription>Nedskrivninger i årets løb</AccountDescription>
+				<StandardAccountID>6201</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6202</AccountID>
+				<AccountDescription>Tilbageførsel af tidligere års nedskrivninger</AccountDescription>
+				<StandardAccountID>6202</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6240</AccountID>
+				<AccountDescription>Igangværende arbejder for fremmed regning</AccountDescription>
+				<StandardAccountID>6240</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6252</AccountID>
+				<AccountDescription>Tilgodehavender hos tilknyttede virksomheder (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6252</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6255</AccountID>
+				<AccountDescription>Tilgodehavender hos tilknyttede virksomheder, nedskrivninger primo (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6255</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6256</AccountID>
+				<AccountDescription>Tilgodehavender hos tilknyttede virksomheder, nedskrivninger i årets løb</AccountDescription>
+				<StandardAccountID>6256</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6257</AccountID>
+				<AccountDescription>Tilgodehavender hos tilknyttede virksomheder, tilbageførsel af tidligere års nedskrivninger (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6257</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6262</AccountID>
+				<AccountDescription>Tilgodehavender hos associerede virksomheder (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6262</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6265</AccountID>
+				<AccountDescription>Tilgodehavender hos associerede virksomheder, nedskrivninger primo (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6265</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6266</AccountID>
+				<AccountDescription>Tilgodehavender hos associerede virksomheder, nedskrivninger i årets løb (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6266</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6267</AccountID>
+				<AccountDescription>Tilgodehavender hos associerede virksomheder, tilbageførsel af tidligere års nedskrivninger (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6267</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6282</AccountID>
+				<AccountDescription>Tilgodehavender hos kapitalinteresser (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6282</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6285</AccountID>
+				<AccountDescription>Tilgodehavender hos kapitalinteresser, nedskrivninger primo (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6285</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6286</AccountID>
+				<AccountDescription>Tilgodehavender hos kapitalinteresser, nedskrivninger i årets løb (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6286</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6287</AccountID>
+				<AccountDescription>Tilgodehavender hos kapitalinteresser, tilbageførsel af tidligere års nedskrivninger (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6287</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6305</AccountID>
+				<AccountDescription>Udskudte skatteaktiver (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6305</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6310</AccountID>
+				<AccountDescription>Tilgodehavende kildeskat (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6310</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6315</AccountID>
+				<AccountDescription>Tilgodehavende selskabsskat (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6315</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6320</AccountID>
+				<AccountDescription>Tilgodehavende moms (kortfristede)</AccountDescription>
+				<StandardAccountID>6320</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6330</AccountID>
+				<AccountDescription>Øvrige tilgodehavender (kortfristede)</AccountDescription>
+				<StandardAccountID>6330</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6350</AccountID>
+				<AccountDescription>Krav på indbetaling af virksomhedskapital og overkurs</AccountDescription>
+				<StandardAccountID>6350</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6365</AccountID>
+				<AccountDescription>Tilgodehavender hos direktionen (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6365</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6370</AccountID>
+				<AccountDescription>Tilgodehavender hos bestyrelsens (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6370</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6375</AccountID>
+				<AccountDescription>Tilgodehavender hos tilsynsråd (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6375</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6376</AccountID>
+				<AccountDescription>Tilgodehavender hos repræsentantskab (omsætningsaktiv)</AccountDescription>
+				<StandardAccountID>6376</StandardAccountID>
+				<AccountType>Asset</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6390</AccountID>
+				<AccountDescription>Periodeafgrænsningsposter, der kan opretholdes skattemæssigt</AccountDescription>
+				<StandardAccountID>6390</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6400</AccountID>
+				<AccountDescription>Periodeafgrænsningsposter, der ikke kan opretholdes skattemæssigt</AccountDescription>
+				<StandardAccountID>6400</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6420</AccountID>
+				<AccountDescription>Kapitalandele i tilknyttede virksomheder som ikke er bestemt til vedvarende eje</AccountDescription>
+				<StandardAccountID>6420</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6450</AccountID>
+				<AccountDescription>Andre værdipapirer og kapitalandele som ikke er bestemt til vedvarende eje</AccountDescription>
+				<StandardAccountID>6450</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6470</AccountID>
+				<AccountDescription>Likvide beholdninger</AccountDescription>
+				<StandardAccountID>6470</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6480</AccountID>
+				<AccountDescription>Bankkonto</AccountDescription>
+				<StandardAccountID>6480</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6510</AccountID>
+				<AccountDescription>Registreret kapital mv.</AccountDescription>
+				<StandardAccountID>6510</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6520</AccountID>
+				<AccountDescription>Indbetalt registreret kapital mv.</AccountDescription>
+				<StandardAccountID>6520</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6525</AccountID>
+				<AccountDescription>Ikke indbetalt registreret kapital mv.</AccountDescription>
+				<StandardAccountID>6525</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6540</AccountID>
+				<AccountDescription>Overkurs ved emission</AccountDescription>
+				<StandardAccountID>6540</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6560</AccountID>
+				<AccountDescription>Reserve for opskrivninger</AccountDescription>
+				<StandardAccountID>6560</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6800</AccountID>
+				<AccountDescription>Reserve for nettoopskrivning efter den indre værdis metode</AccountDescription>
+				<StandardAccountID>6800</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6810</AccountID>
+				<AccountDescription>Reserve for udlån og sikkerhedsstillelse</AccountDescription>
+				<StandardAccountID>6810</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6830</AccountID>
+				<AccountDescription>Reserve for ikke indbetalt virksomhedskapital og overkurs</AccountDescription>
+				<StandardAccountID>6830</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6840</AccountID>
+				<AccountDescription>Reserve for udviklingsomkostninger</AccountDescription>
+				<StandardAccountID>6840</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6870</AccountID>
+				<AccountDescription>Øvrige lovpligtige reserver</AccountDescription>
+				<StandardAccountID>6870</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6890</AccountID>
+				<AccountDescription>Vedtægtsmæssige reserver</AccountDescription>
+				<StandardAccountID>6890</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6910</AccountID>
+				<AccountDescription>Øvrige reserver</AccountDescription>
+				<StandardAccountID>6910</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6914</AccountID>
+				<AccountDescription>Reserve for iværksætterselskaber</AccountDescription>
+				<StandardAccountID>6914</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6915</AccountID>
+				<AccountDescription>Egenkapital primo (kun klasse A)</AccountDescription>
+				<StandardAccountID>6915</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6916</AccountID>
+				<AccountDescription>Årets resultat (kun klasse A)</AccountDescription>
+				<StandardAccountID>6916</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6917</AccountID>
+				<AccountDescription>Fri bil (kun klasse A)</AccountDescription>
+				<StandardAccountID>6917</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6918</AccountID>
+				<AccountDescription>Rejse og befordringsgodtgørelse (kun klasse A)</AccountDescription>
+				<StandardAccountID>6918</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6919</AccountID>
+				<AccountDescription>Fri telefon (Kun klasse A)</AccountDescription>
+				<StandardAccountID>6919</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6920</AccountID>
+				<AccountDescription>Private andele (Kun klasse A)</AccountDescription>
+				<StandardAccountID>6920</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6921</AccountID>
+				<AccountDescription>Private afskrivninger (Kun klasse A)</AccountDescription>
+				<StandardAccountID>6921</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6922</AccountID>
+				<AccountDescription>Driftsudgifter uden fradrag (Kun klasse A)</AccountDescription>
+				<StandardAccountID>6922</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6923</AccountID>
+				<AccountDescription>Privat hævet (kun klasse A)</AccountDescription>
+				<StandardAccountID>6923</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6924</AccountID>
+				<AccountDescription>Privat indskud (kun klasse A)</AccountDescription>
+				<StandardAccountID>6924</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6935</AccountID>
+				<AccountDescription>Overført resultat, primo</AccountDescription>
+				<StandardAccountID>6935</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6940</AccountID>
+				<AccountDescription>Overført resultat, jf. resultatdisponering</AccountDescription>
+				<StandardAccountID>6940</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6955</AccountID>
+				<AccountDescription>Foreslået udbytte, primo</AccountDescription>
+				<StandardAccountID>6955</StandardAccountID>
+				<AccountType>Other</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6956</AccountID>
+				<AccountDescription>Udloddet udbytte</AccountDescription>
+				<StandardAccountID>6956</StandardAccountID>
+				<AccountType>Expense</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6960</AccountID>
+				<AccountDescription>Foreslået udbytte jf. resultatdisponeringen</AccountDescription>
+				<StandardAccountID>6960</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>6985</AccountID>
+				<AccountDescription>Hensættelser til pensioner og lignende forpligtelser</AccountDescription>
+				<StandardAccountID>6985</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7010</AccountID>
+				<AccountDescription>Hensættelser til udskudt skat</AccountDescription>
+				<StandardAccountID>7010</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7040</AccountID>
+				<AccountDescription>Andre hensatte forpligtelser</AccountDescription>
+				<StandardAccountID>7040</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7055</AccountID>
+				<AccountDescription>Gæld, der er optaget ved udstedelse af obligationer (langfristet)</AccountDescription>
+				<StandardAccountID>7055</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7065</AccountID>
+				<AccountDescription>Konvertible og udbyttegivende gældsbreve (langfristet)</AccountDescription>
+				<StandardAccountID>7065</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7110</AccountID>
+				<AccountDescription>Gæld til kredit- og realkreditinstitutter (langfristet)</AccountDescription>
+				<StandardAccountID>7110</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7120</AccountID>
+				<AccountDescription>Gæld til banker (langfristet)</AccountDescription>
+				<StandardAccountID>7120</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7125</AccountID>
+				<AccountDescription>Leasingforpligtelser (langfristet)</AccountDescription>
+				<StandardAccountID>7125</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7126</AccountID>
+				<AccountDescription>Øvrig langfristet gæld</AccountDescription>
+				<StandardAccountID>7126</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7145</AccountID>
+				<AccountDescription>Modtagne forudbetalinger fra kunder (langfristet)</AccountDescription>
+				<StandardAccountID>7145</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7155</AccountID>
+				<AccountDescription>Leverandører af varer og tjenesteydelser (langfristet)</AccountDescription>
+				<StandardAccountID>7155</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7165</AccountID>
+				<AccountDescription>Vekselgæld (langfristet)</AccountDescription>
+				<StandardAccountID>7165</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7175</AccountID>
+				<AccountDescription>Gæld til tilknyttede virksomheder (langfristet)</AccountDescription>
+				<StandardAccountID>7175</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7185</AccountID>
+				<AccountDescription>Gæld til kapitalinteresser (langfristet)</AccountDescription>
+				<StandardAccountID>7185</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7195</AccountID>
+				<AccountDescription>Anden gæld (langfristet)</AccountDescription>
+				<StandardAccountID>7195</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7210</AccountID>
+				<AccountDescription>Gæld til virksomhedssdeltagere og ledelse (langfristet)</AccountDescription>
+				<StandardAccountID>7210</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7230</AccountID>
+				<AccountDescription>Deposita (langfristet)</AccountDescription>
+				<StandardAccountID>7230</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7240</AccountID>
+				<AccountDescription>Leasingforpligtelse (langfristet)</AccountDescription>
+				<StandardAccountID>7240</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7250</AccountID>
+				<AccountDescription>Skyldig selskabsskat (langfristet)</AccountDescription>
+				<StandardAccountID>7250</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7265</AccountID>
+				<AccountDescription>Periodeafgrænsningsposter (langfristet)</AccountDescription>
+				<StandardAccountID>7265</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7285</AccountID>
+				<AccountDescription>Gæld, der er optaget ved udstedelse af obligationer (kortfristet)</AccountDescription>
+				<StandardAccountID>7285</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7295</AccountID>
+				<AccountDescription>Konvertible og udbyttegivende gældsbreve (kortfristet)</AccountDescription>
+				<StandardAccountID>7295</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7310</AccountID>
+				<AccountDescription>Gæld til kredit- og realkreditinstitutter (kortfristet)</AccountDescription>
+				<StandardAccountID>7310</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7330</AccountID>
+				<AccountDescription>Gæld til banker (kortfristet)</AccountDescription>
+				<StandardAccountID>7330</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7345</AccountID>
+				<AccountDescription>Leasingforpligtelser (kortfristet)</AccountDescription>
+				<StandardAccountID>7345</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7350</AccountID>
+				<AccountDescription>Øvrig kortfristet gæld</AccountDescription>
+				<StandardAccountID>7350</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7410</AccountID>
+				<AccountDescription>Modtagne forudbetalinger fra kunder (kortfristet)</AccountDescription>
+				<StandardAccountID>7410</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7440</AccountID>
+				<AccountDescription>Leverandører af varer og tjenesteydelser (kortfristet)</AccountDescription>
+				<StandardAccountID>7440</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7455</AccountID>
+				<AccountDescription>Igangværende arbejder for fremmed regning (kortfristet gæld)</AccountDescription>
+				<StandardAccountID>7455</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7456</AccountID>
+				<AccountDescription>Modtagne acontobetalinger (kortfristet gæld)</AccountDescription>
+				<StandardAccountID>7456</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7465</AccountID>
+				<AccountDescription>Vekselgæld (kortfristet)</AccountDescription>
+				<StandardAccountID>7465</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7510</AccountID>
+				<AccountDescription>Gæld til tilknyttede virksomheder (kortfristet)</AccountDescription>
+				<StandardAccountID>7510</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7535</AccountID>
+				<AccountDescription>Gæld til kapitalinteresser (kortfristet)</AccountDescription>
+				<StandardAccountID>7535</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7590</AccountID>
+				<AccountDescription>Gæld til virksomhedsdeltagere og ledelse (kortfristet)</AccountDescription>
+				<StandardAccountID>7590</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7610</AccountID>
+				<AccountDescription>Deposita (kortfristet)</AccountDescription>
+				<StandardAccountID>7610</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7680</AccountID>
+				<AccountDescription>Salgsmoms</AccountDescription>
+				<StandardAccountID>7680</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7700</AccountID>
+				<AccountDescription>Moms af varekøb udland, EU og ikke-EU</AccountDescription>
+				<StandardAccountID>7700</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7720</AccountID>
+				<AccountDescription>Moms af ydelseskøb udland, EU og ikke-EU</AccountDescription>
+				<StandardAccountID>7720</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7740</AccountID>
+				<AccountDescription>Købsmoms</AccountDescription>
+				<StandardAccountID>7740</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7760</AccountID>
+				<AccountDescription>Olie- og flaskegasafgift</AccountDescription>
+				<StandardAccountID>7760</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7780</AccountID>
+				<AccountDescription>Elafgift</AccountDescription>
+				<StandardAccountID>7780</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7800</AccountID>
+				<AccountDescription>Naturgas- og bygasafgift</AccountDescription>
+				<StandardAccountID>7800</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7810</AccountID>
+				<AccountDescription>Kulafgift</AccountDescription>
+				<StandardAccountID>7810</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7820</AccountID>
+				<AccountDescription>Vandafgift</AccountDescription>
+				<StandardAccountID>7820</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7830</AccountID>
+				<AccountDescription>Co2-afgift</AccountDescription>
+				<StandardAccountID>7830</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7840</AccountID>
+				<AccountDescription>Skyldig moms</AccountDescription>
+				<StandardAccountID>7840</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7860</AccountID>
+				<AccountDescription>Skyldig løn og gager</AccountDescription>
+				<StandardAccountID>7860</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7880</AccountID>
+				<AccountDescription>Skyldig bonus og tantieme</AccountDescription>
+				<StandardAccountID>7880</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7900</AccountID>
+				<AccountDescription>Skyldige feriepenge</AccountDescription>
+				<StandardAccountID>7900</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7920</AccountID>
+				<AccountDescription>Skyldig A-skat</AccountDescription>
+				<StandardAccountID>7920</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7940</AccountID>
+				<AccountDescription>Skyldigt AM-bidrag</AccountDescription>
+				<StandardAccountID>7940</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7960</AccountID>
+				<AccountDescription>Skyldigt ATP-bidrag</AccountDescription>
+				<StandardAccountID>7960</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>7980</AccountID>
+				<AccountDescription>Skyldigt AMP-bidrag</AccountDescription>
+				<StandardAccountID>7980</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>8000</AccountID>
+				<AccountDescription>Anden skyldig pension</AccountDescription>
+				<StandardAccountID>8000</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>8010</AccountID>
+				<AccountDescription>Skyldig arbejdsgiverbidrag (samlet betaling)</AccountDescription>
+				<StandardAccountID>8010</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>8030</AccountID>
+				<AccountDescription>Skyldig feriepengeforpligtigelse</AccountDescription>
+				<StandardAccountID>8030</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>8035</AccountID>
+				<AccountDescription>Skyldigt ferietillæg</AccountDescription>
+				<StandardAccountID>8035</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>8040</AccountID>
+				<AccountDescription>Øvrig anden gæld</AccountDescription>
+				<StandardAccountID>8040</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>8045</AccountID>
+				<AccountDescription>Modtagne offentlige tilskud til senere beskatning</AccountDescription>
+				<StandardAccountID>8045</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+			<Account>
+				<AccountID>8070</AccountID>
+				<AccountDescription>Periodeafgrænsningsposter (kortfristet)</AccountDescription>
+				<StandardAccountID>8070</StandardAccountID>
+				<AccountType>Liability</AccountType>
+				<OpeningDebitBalance>0</OpeningDebitBalance>
+				<ClosingDebitBalance>1</ClosingDebitBalance>
+			</Account>
+		</GeneralLedgerAccounts>
+		<Customers>
+			<Customer>
+				<CustomerID>DK-12345</CustomerID>
+				<CVR>19552101</CVR>
+				<EntityType>Government</EntityType>
+				<SE-nr>39914158</SE-nr>
+				<Name>Skattestyrelsen</Name>
+				<Address>
+					<StreetName>Nykøbingvej</StreetName>
+					<Number>76</Number>
+					<Building>45</Building>
+					<City>Sakskøbing</City>
+					<PostalCode>4990</PostalCode>
+					<Country>DK</Country>
+				</Address>
+				<Contact>
+					<ContactPerson>
+						<Title>Hr.</Title>
+						<FirstName>Jens</FirstName>
+						<Initials>JJ</Initials>
+						<LastName>Jensen</LastName>
+						<OtherTitles>Chefkonsulent</OtherTitles>
+					</ContactPerson>
+					<Telephone>72221818</Telephone>
+					<Fax>Nej</Fax>
+					<Email>digitalbogfoering@erst.dk</Email>
+					<MobilePhone>72221818</MobilePhone>
+				</Contact>
+				<TaxRegistration>
+					<TaxRegistrationNumber>DK19551101</TaxRegistrationNumber>
+					<TaxType>VAT</TaxType>
+					<Country>DK</Country>
+				</TaxRegistration>
+				<BankAccount>
+					<IBANNumber>SKAT IBAN</IBANNumber>
+					<BIC>1234</BIC>
+					<CurrencyCode>DKK</CurrencyCode>
+					<AccountID>12345</AccountID>
+				</BankAccount>
+				<SelfBillingIndicator>Yes</SelfBillingIndicator>
+				<AccountID>54321</AccountID>
+				<OpeningDebitBalance>10000</OpeningDebitBalance>
+				<ClosingDebitBalance>100000</ClosingDebitBalance>
+			</Customer>
+		</Customers>
+		<Suppliers>
+			<Supplier>
+				<SupplierID>DK-12345</SupplierID>
+				<RegistrationNumber>ABCDEFG19552101</RegistrationNumber>
+				<EntityType>Government</EntityType>
+				<SE-nr>39914158</SE-nr>
+				<Name>Skattestyrelsen</Name>
+				<Address>
+					<StreetName>Nykøbingvej</StreetName>
+					<Number>76</Number>
+					<Building>45</Building>
+					<City>Sakskøbing</City>
+					<PostalCode>4990</PostalCode>
+					<Country>DK</Country>
+				</Address>
+				<Contact>
+					<ContactPerson>
+						<Title>Hr.</Title>
+						<FirstName>Jens</FirstName>
+						<Initials>JJ</Initials>
+						<LastName>Jensen</LastName>
+						<OtherTitles>Chefkonsulent</OtherTitles>
+					</ContactPerson>
+					<Telephone>72221818</Telephone>
+					<Fax>Nej</Fax>
+					<Email>digitalbogfoering@erst.dk</Email>
+					<MobilePhone>72221818</MobilePhone>
+				</Contact>
+				<TaxRegistration>
+					<TaxRegistrationNumber>DK19551101</TaxRegistrationNumber>
+					<TaxType>VAT</TaxType>
+					<Country>DK</Country>
+				</TaxRegistration>
+				<BankAccount>
+					<IBANNumber>SKAT IBAN</IBANNumber>
+					<BIC>1234</BIC>
+					<CurrencyCode>DKK</CurrencyCode>
+					<AccountID>12345</AccountID>
+				</BankAccount>
+				<SelfBillingIndicator>No</SelfBillingIndicator>
+				<AccountID>98765</AccountID>
+				<OpeningCreditBalance>100000</OpeningCreditBalance>
+				<ClosingDebitBalance>10000</ClosingDebitBalance>
+			</Supplier>
+		</Suppliers>
+		<TaxTable>
+			<TaxTableEntry>
+				<TaxType>VAT</TaxType>
+				<Description>VAT</Description>
+				<TaxCodeDetails>
+					<TaxCode>Salg25</TaxCode>
+					<StandardTaxCode>S1</StandardTaxCode>
+					<EffectiveDate>2010-01-01</EffectiveDate>
+					<ExpirationDate>2099-12-31</ExpirationDate>
+					<Description>Salgsmoms (udgående moms)</Description>
+					<TaxPercentage>25</TaxPercentage>
+					<Country>DK</Country>
+				</TaxCodeDetails>
+			</TaxTableEntry>
+		</TaxTable>
+		<UOMTable>
+			<UOMTableEntry>
+				<UnitOfMeasure>12 Stk</UnitOfMeasure>
+				<Description>Dusin</Description>
+			</UOMTableEntry>
+		</UOMTable>
+		<AnalysisTypeTable>
+			<AnalysisTypeTableEntry>
+				<AnalysisType>Projekt</AnalysisType>
+				<AnalysisTypeDescription>Projekt for fremmed regning</AnalysisTypeDescription>
+				<AnalysisID>123-AER</AnalysisID>
+				<AnalysisIDDescription>AER fase 123</AnalysisIDDescription>
+			</AnalysisTypeTableEntry>
+		</AnalysisTypeTable>
+		<Products>
+			<Product>
+				<ProductCode>5678R</ProductCode>
+				<GoodsServicesID>Goods</GoodsServicesID>
+				<Description>Tandhjul 50 MM</Description>
+				<ProductCommodityCode>Export</ProductCommodityCode>
+				<ValuationMethod>FIFO</ValuationMethod>
+				<UOMBase>MM</UOMBase>
+				<UOMStandard>MM</UOMStandard>
+			</Product>
+		</Products>
+		<PhysicalStock>
+			<PhysicalStockEntry>
+				<WarehouseID>Lager i Herlev</WarehouseID>
+				<LocationID>Hylde 12</LocationID>
+				<ProductCode>12345</ProductCode>
+				<StockAccountNo>12-3-45</StockAccountNo>
+				<StockAccountCommodityCode>Export</StockAccountCommodityCode>
+				<PhysicalStockOwnerID>HH123</PhysicalStockOwnerID>
+				<OpeningStockQuantity>20</OpeningStockQuantity>
+				<ClosingStockQuantity>19</ClosingStockQuantity>
+			</PhysicalStockEntry>
+		</PhysicalStock>
+		<Owners>
+			<Owner>
+				<OwnerID>1234</OwnerID>
+				<CVR>12345678</CVR>
+				<EntityType>Company</EntityType>
+				<SE-nr>12345678</SE-nr>
+				<Name>Hans Hansen</Name>
+				<Address>
+					<StreetName>Langelinje allé</StreetName>
+					<Number>17</Number>
+					<City>København</City>
+					<PostalCode>2100</PostalCode>
+					<Country>DK</Country>
+				</Address>
+			</Owner>
+		</Owners>
+		<Assets>
+			<Asset>
+				<AssetID>VW ID.4</AssetID>
+				<AccountID>Konto til anskaffelser</AccountID>
+				<Description>Firmabil</Description>
+				<DateOfAcquisition>2024-01-24</DateOfAcquisition>
+				<Valuations>
+					<Valuation>
+						<AcquisitionAndProductionCostsBegin>100000</AcquisitionAndProductionCostsBegin>
+						<AcquisitionAndProductionCostsEnd>110000</AcquisitionAndProductionCostsEnd>
+						<DepreciationForPeriod>0</DepreciationForPeriod>
+						<BookValueEnd>110000</BookValueEnd>
+					</Valuation>
+				</Valuations>
+			</Asset>
+		</Assets>
+	</MasterFiles>
+	<GeneralLedgerEntries>
+		<NumberOfEntries>13</NumberOfEntries>
+		<TotalDebit>61100</TotalDebit>
+		<TotalCredit>61100</TotalCredit>
+		<Journal>
+			<JournalID>01</JournalID>
+			<Description>Butik Vesterbro</Description>
+			<Type>GL</Type>
+			<Transaction>
+				<TransactionID>1</TransactionID>
+				<Period>1</Period>
+				<PeriodYear>2023</PeriodYear>
+				<TransactionDate>2023-02-01</TransactionDate>
+				<Description>Faktura 1</Description>
+				<SystemEntryDate>2023-02-05</SystemEntryDate>
+				<GLPostingDate>2023-02-01</GLPostingDate>
+				<CustomerID>Debitor 1</CustomerID>
+				<SystemID>8462</SystemID>
+				<!--In the event of transaction number or ID on line level, use multiple SystemID - one for each line! -->
+				<SystemID>8463</SystemID>
+				<Line>
+					<RecordID>1</RecordID>
+					<AccountID>1010</AccountID>
+					<Analysis>
+						<AnalysisType>Projekt</AnalysisType>
+						<AnalysisID>123-AER</AnalysisID>
+						<AnalysisAmount>
+							<Amount>40000</Amount>
+							<CurrencyCode>DKK</CurrencyCode>
+							<CurrencyAmount>40000</CurrencyAmount>
+							<ExchangeRate>1.0</ExchangeRate>
+						</AnalysisAmount>
+					</Analysis>
+					<Description>Salg af konsulentydelser</Description>
+					<CreditAmount>
+						<Amount>32000</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>32000</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</CreditAmount>
+					<TaxInformation>
+						<TaxCode>S25</TaxCode>
+						<StandardTaxCode>S1</StandardTaxCode>
+						<StandardTaxCodeDescription>Momspligtige salg (DK), 25% moms</StandardTaxCodeDescription>
+						<Country>DK</Country>
+						<TaxPercentage>25</TaxPercentage>
+						<TaxBase>32000</TaxBase>
+						<TaxBaseDescription>Timer</TaxBaseDescription>
+						<TaxAmount>
+							<Amount>8000</Amount>
+							<CurrencyCode>DKK</CurrencyCode>
+							<CurrencyAmount>8000</CurrencyAmount>
+							<ExchangeRate>1.0</ExchangeRate>
+						</TaxAmount>
+						<Deductibles>
+							<NonDeductibleAmount>0</NonDeductibleAmount>
+							<DeductibleAmount>8000</DeductibleAmount>
+						</Deductibles>
+					</TaxInformation>
+				</Line>
+				<Line>
+					<RecordID>2</RecordID>
+					<AccountID>7680</AccountID>
+					<Description>Salg af konsulentydelser</Description>
+					<CreditAmount>
+						<Amount>8000</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>8000</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</CreditAmount>
+				</Line>
+				<Line>
+					<RecordID>3</RecordID>
+					<AccountID>6190</AccountID>
+					<CustomerID>Debitor 1</CustomerID>
+					<Description>Tilgodehavende fra faktura 1</Description>
+					<DebitAmount>
+						<Amount>40000</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>40000</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+				</Line>
+			</Transaction>
+		</Journal>
+		<Journal>
+			<JournalID>2</JournalID>
+			<Description>Butik Vesterbro</Description>
+			<Type>GL</Type>
+			<Transaction>
+				<TransactionID>2</TransactionID>
+				<Period>2</Period>
+				<PeriodYear>2023</PeriodYear>
+				<TransactionDate>2023-02-01</TransactionDate>
+				<Description>POWER</Description>
+				<SystemEntryDate>2023-03-05</SystemEntryDate>
+				<GLPostingDate>2023-03-01</GLPostingDate>
+				<SupplierID>Leverandør 1</SupplierID>
+				<SystemID>8463</SystemID>
+				<Line>
+					<RecordID>4</RecordID>
+					<AccountID>2240</AccountID>
+					<Analysis>
+						<AnalysisType>Projekt</AnalysisType>
+						<AnalysisID>123-AER</AnalysisID>
+						<AnalysisAmount>
+							<Amount>20000</Amount>
+							<CurrencyCode>DKK</CurrencyCode>
+							<CurrencyAmount>20000</CurrencyAmount>
+							<ExchangeRate>1.0</ExchangeRate>
+						</AnalysisAmount>
+					</Analysis>
+					<Description>Køb af PC</Description>
+					<DebitAmount>
+						<Amount>16000</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>16000</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+					<TaxInformation>
+						<TaxCode>K25</TaxCode>
+						<StandardTaxCode>K1</StandardTaxCode>
+						<StandardTaxCodeDescription>Indgående moms (DK), fuld fradrag (100%)</StandardTaxCodeDescription>
+						<Country>DK</Country>
+						<TaxPercentage>25</TaxPercentage>
+						<TaxBase>16000</TaxBase>
+						<TaxBaseDescription>STK</TaxBaseDescription>
+						<TaxAmount>
+							<Amount>4000</Amount>
+							<CurrencyCode>DKK</CurrencyCode>
+							<CurrencyAmount>4000</CurrencyAmount>
+							<ExchangeRate>1.0</ExchangeRate>
+						</TaxAmount>
+					</TaxInformation>
+				</Line>
+				<Line>
+					<RecordID>5</RecordID>
+					<AccountID>7740</AccountID>
+					<Description>Moms på PC</Description>
+					<DebitAmount>
+						<Amount>4000</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>4000</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+				</Line>
+				<Line>
+					<RecordID>6</RecordID>
+					<AccountID>6480</AccountID>
+					<Description>Bank 1</Description>
+					<CreditAmount>
+						<Amount>20000</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>20000</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</CreditAmount>
+				</Line>
+			</Transaction>
+		</Journal>
+		<Journal>
+			<JournalID>03</JournalID>
+			<Description>Restaurant Østerbro</Description>
+			<Type>GL</Type>
+			<Transaction>
+				<TransactionID>3</TransactionID>
+				<Period>1</Period>
+				<PeriodYear>2023</PeriodYear>
+				<TransactionDate>2023-02-01</TransactionDate>
+				<Description>Faktura 1</Description>
+				<SystemEntryDate>2023-02-05</SystemEntryDate>
+				<GLPostingDate>2023-02-01</GLPostingDate>
+				<SupplierID>123456</SupplierID>
+				<SystemID>8462</SystemID>
+				<Line>
+					<RecordID>7</RecordID>
+					<AccountID>1930</AccountID>
+					<Description>Restaurant ERST</Description>
+					<DebitAmount>
+						<Amount>950</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>950</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+					<TaxInformation>
+						<TaxCode>K070</TaxCode>
+						<StandardTaxCode>K070</StandardTaxCode>
+						<StandardTaxCodeDescription>Repræsentationsmoms, delvist fradragsberettiget (25%)</StandardTaxCodeDescription>
+						<Country>DK</Country>
+						<TaxPercentage>25</TaxPercentage>
+						<TaxBase>800</TaxBase>
+						<TaxBaseDescription>amount</TaxBaseDescription>
+						<TaxAmount>
+							<Amount>200</Amount>
+							<CurrencyCode>DKK</CurrencyCode>
+							<CurrencyAmount>200</CurrencyAmount>
+							<ExchangeRate>1.0</ExchangeRate>
+						</TaxAmount>
+						<Deductibles>
+							<NonDeductibleAmount>150</NonDeductibleAmount>
+							<DeductibleAmount>50</DeductibleAmount>
+						</Deductibles>
+					</TaxInformation>
+				</Line>
+				<Line>
+					<RecordID>8</RecordID>
+					<AccountID>7740</AccountID>
+					<Description>Restaurant ERST (moms)</Description>
+					<DebitAmount>
+						<Amount>50</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>50</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+				</Line>
+				<Line>
+					<RecordID>9</RecordID>
+					<AccountID>1610</AccountID>
+					<Description>Køb af vareprøver</Description>
+					<DebitAmount>
+						<Amount>50</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>50</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+					<TaxInformation>
+						<TaxCode>K010</TaxCode>
+						<StandardTaxCode>K010</StandardTaxCode>
+						<StandardTaxCodeDescription>Indgående moms (DK), fuld fradrag (100%)</StandardTaxCodeDescription>
+						<Country>DK</Country>
+						<TaxPercentage>25</TaxPercentage>
+						<TaxBase>40</TaxBase>
+						<TaxBaseDescription>amount</TaxBaseDescription>
+						<TaxAmount>
+							<Amount>10</Amount>
+							<CurrencyCode>DKK</CurrencyCode>
+							<CurrencyAmount>10</CurrencyAmount>
+							<ExchangeRate>1.0</ExchangeRate>
+						</TaxAmount>
+					</TaxInformation>
+				</Line>
+				<Line>
+					<RecordID>10</RecordID>
+					<AccountID>7740</AccountID>
+					<Description>Køb af vareprøver (moms)</Description>
+					<DebitAmount>
+						<Amount>10</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>10</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+				</Line>
+				<Line>
+					<RecordID>11</RecordID>
+					<AccountID>2375</AccountID>
+					<Description>Køb af aviser</Description>
+					<DebitAmount>
+						<Amount>30</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>30</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+					<TaxInformation>
+						<TaxCode>K030</TaxCode>
+						<StandardTaxCode>K030</StandardTaxCode>
+						<StandardTaxCodeDescription>Momsfritaget køb, Ingen fradrag, ingen moms på køb</StandardTaxCodeDescription>
+						<Country>DK</Country>
+						<TaxPercentage>0</TaxPercentage>
+						<TaxBase>30</TaxBase>
+						<TaxBaseDescription>amount</TaxBaseDescription>
+						<TaxAmount>
+							<Amount>0</Amount>
+							<CurrencyCode>DKK</CurrencyCode>
+							<CurrencyAmount>0</CurrencyAmount>
+							<ExchangeRate>1.0</ExchangeRate>
+						</TaxAmount>
+					</TaxInformation>
+				</Line>
+				<Line>
+					<RecordID>12</RecordID>
+					<AccountID>3650</AccountID>
+					<Description>Renter, forsinket betaling</Description>
+					<DebitAmount>
+						<Amount>20</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>20</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</DebitAmount>
+				</Line>
+				<Line>
+					<RecordID>13</RecordID>
+					<AccountID>123456</AccountID>
+					<SupplierID>123456</SupplierID>
+					<Description>Restaurant ERST</Description>
+					<CreditAmount>
+						<Amount>1100</Amount>
+						<CurrencyCode>DKK</CurrencyCode>
+						<CurrencyAmount>1100</CurrencyAmount>
+						<ExchangeRate>1.0</ExchangeRate>
+					</CreditAmount>
+				</Line>
+			</Transaction>
+		</Journal>
+	</GeneralLedgerEntries>
+</AuditFile>

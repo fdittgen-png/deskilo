@@ -66,6 +66,24 @@ enum SafTFinancialProfile {
     // The schema's fixed value.
     taxType: 'TVA',
     taxDescription: 'Taxe sur la valeur ajoutée',
+  ),
+
+  /// #2379 — Erhvervsstyrelsen's Danish SAF-T Financial 2.1 (bogføringslov
+  /// 2022, digital bookkeeping): the OECD tree in its own namespace, with
+  /// the tax entity required in the header. The standard chart account
+  /// (`StandardAccountID`) is optional in the schema and is not written.
+  denmark(
+    formatId: 'saft_dk',
+    country: 'DK',
+    namespace: 'urn:StandardAuditFile-Taxation-Financial:DK',
+    version: '2.1',
+    // The authority's own sample's value.
+    accountingBasis: 'Regnskabsdata',
+    taxType: 'VAT',
+    // The schema's only value.
+    taxDescription: 'VAT',
+    taxEntityRequired: true,
+    standardAccountRequired: false,
   );
 
   const SafTFinancialProfile({
@@ -76,6 +94,8 @@ enum SafTFinancialProfile {
     required this.accountingBasis,
     required this.taxType,
     required this.taxDescription,
+    this.taxEntityRequired = false,
+    this.standardAccountRequired = true,
   });
 
   /// The export format this profile writes.
@@ -91,6 +111,30 @@ enum SafTFinancialProfile {
 
   /// The tax table's description of [taxType].
   final String taxDescription;
+
+  /// Whether the header names its tax entity (Denmark: required).
+  final bool taxEntityRequired;
+
+  /// Whether every account must map to the authority's standard account
+  /// (Norway, Luxembourg); Denmark's schema leaves it optional.
+  final bool standardAccountRequired;
+
+  /// #2379 — Denmark's file names the standard chart it refers to (the
+  /// schema's fixed values) and carries its parties by number only.
+  bool get denmarkShape => this == SafTFinancialProfile.denmark;
+
+  /// The standard chart Denmark's `GeneralLedgerAccounts` names (fixed by
+  /// the schema 2.1: `Standardkontoplanen`, version `20230131`).
+  static const dkStandardChart = ('Standardkontoplanen', '20230131');
+
+  /// The journal type Denmark's schema knows for [journal]: receivables,
+  /// payables, adjustments, else the general ledger.
+  static String dkJournalType(PostingJournal journal) => switch (journal) {
+    PostingJournal.sales => 'AR',
+    PostingJournal.purchases => 'AP',
+    PostingJournal.other => 'AJ',
+    PostingJournal.bank => 'GL',
+  };
 
   static SafTFinancialProfile? ofFormat(String formatId) => [
     for (final p in values)
@@ -195,6 +239,7 @@ class SafTFinancialRequest {
     required this.softwareVersion,
     required this.createdAt,
     required this.reference,
+    this.companyIban = '',
   });
 
   final SafTFinancialProfile profile;
@@ -225,6 +270,9 @@ class SafTFinancialRequest {
 
   /// The reference store: the rates and the profile's mappings.
   final TaxReferenceSet reference;
+
+  /// #2379 — the company's IBAN, which Denmark's header requires.
+  final String companyIban;
 }
 
 /// What a missing fact is about.

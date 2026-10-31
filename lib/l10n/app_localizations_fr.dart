@@ -22429,6 +22429,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plus grand nombre de chiffres qu\'une page de rapport peut demander en une seule lecture. Une page qui en demande plus est scindée en plusieurs lectures ; un lot au-delà est refusé en entier.';
 
   @override
+  String get settingHintBiBatchTimeBudgetMs =>
+      'Durée de calcul d\'une lecture de rapport avant que les chiffres non atteints soient signalés hors budget ; la page montre ce qu\'elle a. Restez sous le délai de requête du serveur.';
+
+  @override
   String get settingHintBiReportMaxBytes =>
       'La plus grande définition de rapport enregistrée, en octets de son texte stocké. La plateforme n\'en stocke jamais plus de 65536 ; une définition contient des questions, jamais des chiffres.';
 
@@ -22665,6 +22669,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelBiBatchMaxRequests =>
       'Chiffres par lecture de rapport';
+
+  @override
+  String get settingLabelBiBatchTimeBudgetMs =>
+      'Budget de temps d\'une lecture de rapport';
 
   @override
   String get settingLabelBiReportMaxBytes =>
@@ -22941,6 +22949,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingUnitHours => 'heures';
+
+  @override
+  String get settingUnitMilliseconds => 'ms';
 
   @override
   String get settingUnitMinutes => 'minutes';

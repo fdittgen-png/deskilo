@@ -15257,6 +15257,7 @@
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingHintBiBatchTimeBudgetMs": "Quanto può calcolare una lettura del report prima che le cifre non ancora raggiunte risultino fuori budget; la pagina mostra ciò che ha. Tenerlo sotto il timeout delle richieste del server.",
   "settingHintBiReportMaxBytes": "La più grande definizione di report salvata, in byte del suo testo memorizzato. La piattaforma non ne conserva mai più di 65536; una definizione contiene domande, mai cifre.",
   "@settingHintBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15428,6 +15429,7 @@
   "@settingLabelBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingLabelBiBatchTimeBudgetMs": "Budget di tempo di una lettura del report",
   "settingLabelBiReportMaxBytes": "Dimensione di una definizione di report",
   "@settingLabelBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15696,6 +15698,7 @@
   "@settingUnitHours": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitMilliseconds": "ms",
   "settingUnitMinutes": "minuti",
   "@settingUnitMinutes": {
     "description": "#2484 settings: Unit."

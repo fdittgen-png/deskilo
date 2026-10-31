@@ -15257,6 +15257,7 @@
   "@settingHintBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingHintBiBatchTimeBudgetMs": "Durée de calcul d'une lecture de rapport avant que les chiffres non atteints soient signalés hors budget ; la page montre ce qu'elle a. Restez sous le délai de requête du serveur.",
   "settingHintBiReportMaxBytes": "La plus grande définition de rapport enregistrée, en octets de son texte stocké. La plateforme n'en stocke jamais plus de 65536 ; une définition contient des questions, jamais des chiffres.",
   "@settingHintBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15428,6 +15429,7 @@
   "@settingLabelBiBatchMaxRequests": {
     "description": "#2578 BI settings"
   },
+  "settingLabelBiBatchTimeBudgetMs": "Budget de temps d'une lecture de rapport",
   "settingLabelBiReportMaxBytes": "Taille d'une définition de rapport",
   "@settingLabelBiReportMaxBytes": {
     "description": "#2579 report limits"
@@ -15696,6 +15698,7 @@
   "@settingUnitHours": {
     "description": "#2484 settings: Unit."
   },
+  "settingUnitMilliseconds": "ms",
   "settingUnitMinutes": "minutes",
   "@settingUnitMinutes": {
     "description": "#2484 settings: Unit."

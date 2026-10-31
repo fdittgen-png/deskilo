@@ -71,6 +71,7 @@ String _federationSettingLabel(AppLocalizations l10n, String key) => switch (key
 
 /// #2579 -- the bounds of a saved report.
 String _biReportSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'bi.batch_time_budget_ms' => l10n.settingLabelBiBatchTimeBudgetMs,
       'bi.report_max_pages' => l10n.settingLabelBiReportMaxPages,
       'bi.report_max_visuals' => l10n.settingLabelBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingLabelBiReportMaxBytes,
@@ -164,6 +165,7 @@ String? _federationSettingHint(AppLocalizations l10n, String key) => switch (key
 
 /// #2579 -- the bounds of a saved report.
 String? _biReportSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'bi.batch_time_budget_ms' => l10n.settingHintBiBatchTimeBudgetMs,
       'bi.report_max_pages' => l10n.settingHintBiReportMaxPages,
       'bi.report_max_visuals' => l10n.settingHintBiReportMaxVisuals,
       'bi.report_max_bytes' => l10n.settingHintBiReportMaxBytes,
@@ -204,6 +206,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
 
 String settingUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {
       'seconds' => l10n.settingUnitSeconds,
+      'milliseconds' => l10n.settingUnitMilliseconds,
       'minutes' => l10n.settingUnitMinutes,
       'hours' => l10n.settingUnitHours,
       'days' => l10n.settingUnitDays,
