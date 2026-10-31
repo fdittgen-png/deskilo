@@ -206,8 +206,8 @@ class AccountingConnection {
   final DateTime? connectedAt;
   final DateTime? revokedAt;
 
-  /// Whether a document was delivered through it: its token then stays,
-  /// and another company is a new connection.
+  /// Whether a document was delivered through it: another company is then
+  /// a new connection.
   final bool delivered;
 
   /// The names of the secrets the server holds, never their values.
@@ -215,6 +215,13 @@ class AccountingConnection {
   final List<AccountingMap> maps;
 
   bool get live => revokedAt == null;
+
+  /// #2370 — whether a new token may replace this one: always before the
+  /// first delivery; after it only for the company the connection
+  /// recorded, so a routine rotation keeps its maps and its deliveries.
+  bool get tokenRotatable =>
+      authKind == AccountingAuthKind.token &&
+      (!delivered || remoteTenantId.isNotEmpty);
 
   /// Whether a person must act before anything can be delivered: signed out
   /// at the target, never finished, or refused.
