@@ -4,8 +4,6 @@
 // entries span workspaces (the person's list, memberships, default
 // workspace, the messenger); a workspace target never applies them.
 // Composed in lib/app/realtime_invalidations.dart.
-import '../../../core/realtime/invalidation_map.dart'
-    show kProfilePresenceSignal;
 import '../../../core/realtime/invalidation_registry.dart';
 import 'conversation_providers.dart';
 import 'workspace_providers.dart';
@@ -25,10 +23,11 @@ final workspaceInvalidations = [
     const ['members', 'profiles'],
     [memberNamesProvider],
   ),
-  // The presence signal refreshes the directory's profiles and nothing else
-  // (#2495: moved from members).
+  // #2495: moved from members. #3123 — presence no longer arrives here:
+  // the heartbeat writes the unpublished presence table, and the profiles
+  // refresh themselves once per heartbeat interval (memberProfiles).
   InvalidationContribution(
-    const ['profiles', kProfilePresenceSignal],
+    const ['profiles'],
     [memberProfilesProvider],
   ),
   // Flags, granularity, rules and the availability config all derive from

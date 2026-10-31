@@ -143,6 +143,7 @@ const Set<String> _exported = {
   'account_conversations', 'account_messages', 'public_directory_sources',
   'account_field_audience', 'account_field_audience_spaces', // #1823: own visibility choices.
   'account_about', // #1823: own profession and bio.
+  'presence', // #3123: the last-seen heartbeat, moved out of profiles.
   'workspace_applications', // #1791: account ownership of the subject's requests.
   'workspace_application_messages', // #1791: own replies and admission discussions.
   'member_preference_overrides', // #1791: own scoped preferences accompany the profile.
