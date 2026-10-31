@@ -147,6 +147,7 @@
  "identityTimezoneHint": "Nombre IANA. Todas las franjas de reserva se anclan a ella; cada miembro puede ver la hora en la suya.",
  "identityLanguage": "Idioma del espacio",
  "identityLanguageHint": "Las invitaciones y los informes se redactan en él de forma predeterminada.",
+ "identityAdvanced": "Avanzado: servidor y red",
  "identityAddress": "Dirección postal",
  "identityAddressHint": "Se imprime en las facturas y en el recibo del quiosco.",
  "identityAddressPlaceholder": "Calle Mayor 12, 28013 Madrid",

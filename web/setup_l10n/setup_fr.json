@@ -147,6 +147,7 @@
  "identityTimezoneHint": "Nom IANA. Tous les créneaux de réservation s'y ancrent ; chaque membre peut afficher l'heure dans le sien.",
  "identityLanguage": "Langue de l'espace",
  "identityLanguageHint": "Les invitations et rapports y sont rédigés par défaut.",
+ "identityAdvanced": "Avancé : serveur et réseau",
  "identityAddress": "Adresse postale",
  "identityAddressHint": "Imprimée sur les factures et le reçu de la borne.",
  "identityAddressPlaceholder": "12 rue Exemple, 34120 Pézenas",
