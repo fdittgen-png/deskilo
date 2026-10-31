@@ -3,7 +3,7 @@
 // FCM fanout (#426): the 0084 events trigger POSTs {event_id} here; this
 // function loads the event ITSELF with the service role and computes the
 // recipients — the caller is never trusted with recipients or content, so
-// a spoofed call can at worst re-announce a real event. UnifiedPush
+// only an authenticated database trigger or service caller may deliver. UnifiedPush
 // endpoints are still POSTed directly from the trigger; this function
 // handles the fcm:<token> rows, which need an OAuth2-signed FCM v1 call
 // pg_net cannot make.
@@ -430,33 +430,33 @@ export async function fcmAccessToken(sa: {
 
 export async function handle(
   req: Request,
-  supabase: SupabaseClient = db(),
+  supabase?: SupabaseClient,
 ): Promise<Response> {
-  try {
-    return await deliver(req, supabase);
-  } catch (e) {
-    if ((e as Error).message !== "recipient query failed") throw e;
-    return Response.json({ error: "recipients unknown" }, { status: 502 });
-  }
-}
-
-async function deliver(req: Request, supabase: SupabaseClient): Promise<Response> {
-  // #1614 — system-only: a delegated (MCP) token never triggers a push.
   const delegated = refuseDelegated(req);
   if (delegated) return delegated;
-  // #3092 — only the trigger (shared secret) or the service role.
-  if (!mayTriggerPush(req, Deno.env.get("PUSH_SHARED_SECRET"))) {
+  if (!mayTriggerPush(req, Deno.env.get("PUSH_SHARED_SECRET"),
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"))) {
     return Response.json({ error: "unauthorized" }, { status: 401 });
   }
+  try {
+    await deliver(req, supabase ?? db());
+  } catch {
+    // Delivery diagnostics belong in private logs, never an identifier oracle.
+    console.error("send-push delivery failed");
+  }
+  return Response.json({ accepted: true }, { status: 202 });
+}
+
+async function deliver(req: Request, supabase: SupabaseClient): Promise<void> {
   const saRaw = Deno.env.get("FCM_SERVICE_ACCOUNT");
   if (!saRaw) {
-    return Response.json({ skipped: "FCM_SERVICE_ACCOUNT not set" });
+    return;
   }
   const sa = JSON.parse(saRaw);
 
   const { event_id, note_id } = await req.json().catch(() => ({}));
   if (!event_id && !note_id) {
-    return Response.json({ error: "event_id or note_id required" }, { status: 400 });
+    return;
   }
 
   let kind: string;
@@ -478,7 +478,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
       .select("id, workspace_id, from_member_id, to_member_id, conversation_id")
       .eq("id", note_id)
       .maybeSingle();
-    if (!note) return Response.json({ error: "unknown note" }, { status: 404 });
+    if (!note) return;
     kind = "member_note";
     workspaceId = note.workspace_id;
     object = {
@@ -543,7 +543,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
       .select("id, workspace_id, type, action, status, actor_member_id, subject_member_id")
       .eq("id", event_id)
       .maybeSingle();
-    if (!event) return Response.json({ error: "unknown event" }, { status: 404 });
+    if (!event) return;
 
     const eventKind = event.status === "pending"
       ? "pending_request"
@@ -552,7 +552,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
       : event.type === "invoice_reminder"
       ? "invoice_reminder"
       : null;
-    if (!eventKind) return Response.json({ skipped: "kind not pushed" });
+    if (!eventKind) return;
     kind = eventKind;
     workspaceId = event.workspace_id;
     object = { kind: "event", id: event.id };
@@ -580,7 +580,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
       recipients = [{ id: event.subject_member_id }];
     }
   }
-  if (recipients.length === 0) return Response.json({ sent: 0 });
+  if (recipients.length === 0) return;
 
   const endpoints: { member_id: string; endpoint: string }[] = [];
   for (const ids of chunked(recipients.map((m) => m.id))) {
@@ -596,7 +596,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
       ),
     );
   }
-  if (endpoints.length === 0) return Response.json({ sent: 0 });
+  if (endpoints.length === 0) return;
 
   const token = await cachedAccessToken(sa);
 
@@ -659,7 +659,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<Response
       await supabase.from("push_endpoints").delete().eq("endpoint", ep.endpoint);
     }
   }
-  return Response.json({ ...tally, failed: results.length - tally.sent });
+  console.info("send-push delivery outcomes", tally);
 }
 
 if (import.meta.main) Deno.serve((req) => handle(req));

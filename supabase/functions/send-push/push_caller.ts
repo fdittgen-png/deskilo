@@ -1,15 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3092 — who may ask send-push to ring someone. The database triggers call
-// it with the publishable (anon) key, which anyone holding the app can read:
-// without a check of its own, that key re-sends real notifications and tells
-// the caller which ids exist. With PUSH_SHARED_SECRET set, a call must carry
-// it (header `x-deskilo-push-secret`, held by the trigger in Vault) or a
-// service-role JWT; anything else is refused before the body is read.
-//
-// Rollout: until the operator sets PUSH_SHARED_SECRET the function behaves as
-// before (and says so in its log), so the order of the two deployment steps
-// — function first, then the trigger's header — cannot break delivery.
+// The database trigger carries a secret read from Vault. A public API key
+// alone never authorizes delivery, even before an installation is configured.
 
 export const PUSH_SECRET_HEADER = "x-deskilo-push-secret";
 
@@ -24,42 +16,16 @@ export function sameSecret(a: string, b: string): boolean {
   return diff === 0;
 }
 
-/** The `role` claim of a bearer JWT (the gateway has verified its
- * signature); null when it is not a JWT. */
-export function bearerRole(req: Request): string | null {
-  const bearer = (req.headers.get("authorization") ?? "").replace(
-    /^Bearer\s+/i,
-    "",
-  );
-  const payload = bearer.split(".")[1];
-  if (!payload) return null;
-  try {
-    const json = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
-    const claims = JSON.parse(json);
-    return typeof claims.role === "string" ? claims.role : null;
-  } catch {
-    return null;
-  }
-}
-
-let warned = false;
-
-/** Whether [req] may trigger a push, given the operator's [secret]. */
+/** Only the configured trigger secret or exact service credential authorizes a call.
+ * A decoded JWT role is never proof of its signature. Missing configuration
+ * fails closed instead of exposing the notification fanout to publishable keys. */
 export function mayTriggerPush(
   req: Request,
   secret: string | undefined,
+  serviceKey: string | undefined,
 ): boolean {
-  if (!secret) {
-    if (!warned) {
-      warned = true;
-      console.warn(
-        "send-push: PUSH_SHARED_SECRET is not set — any holder of the " +
-          "publishable key can trigger a push (#3092)",
-      );
-    }
-    return true;
-  }
   const sent = req.headers.get(PUSH_SECRET_HEADER);
-  if (sent && sameSecret(sent, secret)) return true;
-  return bearerRole(req) === "service_role";
+  if (secret && sent && sameSecret(sent, secret)) return true;
+  const bearer = (req.headers.get("authorization") ?? "").match(/^Bearer\s+(.+)$/i)?.[1];
+  return !!(serviceKey && bearer && sameSecret(bearer, serviceKey));
 }
