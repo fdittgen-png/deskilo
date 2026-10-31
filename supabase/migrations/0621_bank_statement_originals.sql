@@ -68,6 +68,9 @@ grant execute on function public.bank_original_imported(text) to authenticated;
 drop policy if exists bank_originals_select on storage.objects;
 create policy bank_originals_select on storage.objects for select to authenticated
   using (bucket_id = 'bank-statements'
+         -- The file's folder is its workspace (the instance doctor reads
+         -- every storage read for the folder that owns the file).
+         and (storage.foldername(name))[1] = public.bank_original_workspace(name)::text
          and public.bank_original_access(public.bank_original_workspace(name), false));
 
 drop policy if exists bank_originals_insert on storage.objects;
