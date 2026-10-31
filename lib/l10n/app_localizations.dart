@@ -39473,17 +39473,17 @@ abstract class AppLocalizations {
   /// **'Then set them up in the guide: {steps}'**
   String setupLevelsStepsFollow(String steps);
 
-  /// #2868 setup levels: setupLevelsSwitchOff
+  /// #3076 setup levels preview: setupLevelsSwitchOff
   ///
   /// In en, this message translates to:
-  /// **'Switches off: {features}'**
-  String setupLevelsSwitchOff(String features);
+  /// **'Your space no longer gets:'**
+  String get setupLevelsSwitchOff;
 
-  /// #2868 setup levels: setupLevelsSwitchOn
+  /// #3076 setup levels preview: setupLevelsSwitchOn
   ///
   /// In en, this message translates to:
-  /// **'Switches on: {features}'**
-  String setupLevelsSwitchOn(String features);
+  /// **'Your space gets:'**
+  String get setupLevelsSwitchOn;
 
   /// #2868 setup levels: setupLevelsTitle
   ///

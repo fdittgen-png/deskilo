@@ -23845,14 +23845,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String setupLevelsSwitchOff(String features) {
-    return 'Désactive : $features';
-  }
+  String get setupLevelsSwitchOff => 'Votre espace n’aura plus :';
 
   @override
-  String setupLevelsSwitchOn(String features) {
-    return 'Active : $features';
-  }
+  String get setupLevelsSwitchOn => 'Votre espace obtient :';
 
   @override
   String get setupLevelsTitle => 'Ce que fait votre espace';

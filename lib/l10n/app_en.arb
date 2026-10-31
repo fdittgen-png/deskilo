@@ -28048,23 +28048,13 @@
       }
     }
   },
-  "setupLevelsSwitchOff": "Switches off: {features}",
+  "setupLevelsSwitchOff": "Your space no longer gets:",
   "@setupLevelsSwitchOff": {
-    "description": "#2868 setup levels: setupLevelsSwitchOff",
-    "placeholders": {
-      "features": {
-        "type": "String"
-      }
-    }
+    "description": "#3076 setup levels preview: setupLevelsSwitchOff"
   },
-  "setupLevelsSwitchOn": "Switches on: {features}",
+  "setupLevelsSwitchOn": "Your space gets:",
   "@setupLevelsSwitchOn": {
-    "description": "#2868 setup levels: setupLevelsSwitchOn",
-    "placeholders": {
-      "features": {
-        "type": "String"
-      }
-    }
+    "description": "#3076 setup levels preview: setupLevelsSwitchOn"
   },
   "setupLevelsTitle": "What your space does",
   "@setupLevelsTitle": {

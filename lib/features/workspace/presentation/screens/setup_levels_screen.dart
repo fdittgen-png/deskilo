@@ -35,7 +35,7 @@ import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
-import '../feature_names.dart';
+import '../feature_copy.dart';
 import '../widgets/setup_obligations_card.dart';
 
 class SetupLevelsScreen extends ConsumerStatefulWidget {
@@ -347,8 +347,17 @@ class _Preview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    String names(List<WorkspaceFeature> fs) =>
-        fs.map((f) => featureName(l10n, f)).join(', ');
+    // #3076 — what the space gets, in the member-facing words of the
+    // manifest, never the switches' own names.
+    List<Widget> outcomes(String heading, List<WorkspaceFeature> fs, Key key) =>
+        [
+          Text(heading, key: key, style: Theme.of(context).textTheme.titleSmall),
+          for (final f in fs)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: Text('• ${featureDescription(l10n, f)}'),
+            ),
+        ];
     return Card(
       key: const ValueKey('setup-levels-preview'),
       child: Padding(
@@ -358,9 +367,10 @@ class _Preview extends StatelessWidget {
           children: [
             if (change.isEmpty) Text(l10n.setupLevelsNoChange),
             if (change.switchOn.isNotEmpty)
-              Text(
-                l10n.setupLevelsSwitchOn(names(change.switchOn)),
-                key: const ValueKey('setup-levels-on'),
+              ...outcomes(
+                l10n.setupLevelsSwitchOn,
+                change.switchOn,
+                const ValueKey('setup-levels-on'),
               ),
             if (setupStepsFor(change.switchOn) case final steps
                 when steps.isNotEmpty) ...[
@@ -374,9 +384,10 @@ class _Preview extends StatelessWidget {
             ],
             if (change.switchOff.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.sm),
-              Text(
-                l10n.setupLevelsSwitchOff(names(change.switchOff)),
-                key: const ValueKey('setup-levels-off'),
+              ...outcomes(
+                l10n.setupLevelsSwitchOff,
+                change.switchOff,
+                const ValueKey('setup-levels-off'),
               ),
             ],
           ],

@@ -23591,14 +23591,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String setupLevelsSwitchOff(String features) {
-    return 'Switches off: $features';
-  }
+  String get setupLevelsSwitchOff => 'Your space no longer gets:';
 
   @override
-  String setupLevelsSwitchOn(String features) {
-    return 'Switches on: $features';
-  }
+  String get setupLevelsSwitchOn => 'Your space gets:';
 
   @override
   String get setupLevelsTitle => 'What your space does';

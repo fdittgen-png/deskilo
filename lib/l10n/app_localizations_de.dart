@@ -23823,14 +23823,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String setupLevelsSwitchOff(String features) {
-    return 'Schaltet aus: $features';
-  }
+  String get setupLevelsSwitchOff => 'Ihr Raum erhält nicht mehr:';
 
   @override
-  String setupLevelsSwitchOn(String features) {
-    return 'Schaltet ein: $features';
-  }
+  String get setupLevelsSwitchOn => 'Ihr Raum erhält:';
 
   @override
   String get setupLevelsTitle => 'Was Ihr Raum tut';
